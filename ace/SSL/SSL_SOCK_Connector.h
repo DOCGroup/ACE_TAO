@@ -44,13 +44,8 @@
  * "data-mode" sockets.  Therefore, there's no need to inherit
  * ACE_SSL_SOCK_Connector from ACE_SSL_SOCK.
  *
- * Since SSL is record-oriented, some additional steps must be taken
- * to make the ACE_SSL_SOCK_Connector interact properly with the
- * Reactor (if one is used) when performing non-blocking connect()
- * calls.  In particular, the ACE_SSL_SOCK_Connector registers an
- * event handler with the Reactor set in the constructor or in the
- * ACE_SSL_SOCK_Connector::reactor() method.  If no Reactor is
- * explicitly set, the singleton Reactor instance will be used.
+ * Since SSL is record-oriented, some additional work is done after
+ * the plain socket is connected.
  *
  * @note The user must currently ensure that only one thread services
  *       a given SSL session at any given time since some underlying
@@ -63,8 +58,7 @@ class ACE_SSL_Export ACE_SSL_SOCK_Connector
 public:
 
   /// Default constructor.
-  ACE_SSL_SOCK_Connector (ACE_Reactor *reactor =
-                            ACE_Reactor::instance ());
+  ACE_SSL_SOCK_Connector (void);
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
@@ -88,10 +82,8 @@ public:
                           int reuse_addr = 0,
                           int flags = 0,
                           int perms = 0,
-                          int protocol_family = PF_INET,
-                          int protocol = 0,
-                          ACE_Reactor *reactor =
-                            ACE_Reactor::instance ());
+                          int protocol_family = ACE_PROTOCOL_FAMILY_INET,
+                          int protocol = 0);
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
@@ -119,10 +111,8 @@ public:
                           u_long flags = 0,
                           int reuse_addr = 0,
                           int perms = 0,
-                          int protocol_family = PF_INET,
-                          int protocol = 0,
-                          ACE_Reactor *reactor =
-                            ACE_Reactor::instance ());
+                          int protocol_family = ACE_PROTOCOL_FAMILY_INET,
+                          int protocol = 0);
 
   /// Default dtor.
   ~ACE_SSL_SOCK_Connector (void);
@@ -149,7 +139,7 @@ public:
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
-               int protocol_family = PF_INET,
+               int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                int protocol = 0);
 
   /**
@@ -178,7 +168,7 @@ public:
                u_long flags = 0,
 	       int reuse_addr = 0,
 	       int perms = 0,
-	       int protocol_family = PF_INET,
+	       int protocol_family = ACE_PROTOCOL_FAMILY_INET,
 	       int protocol = 0);
 
   /**
@@ -194,14 +184,6 @@ public:
   /// Resets any event associations on this handle
   int reset_new_handle (ACE_HANDLE handle);
 
-  /// Set the Reactor used when completing the SSL active
-  /// connection.
-  void reactor (ACE_Reactor *r);
-
-  /// Return the Reactor used when completing the SSL active
-  /// connection.
-  ACE_Reactor *reactor (void) const;
-
   /// Meta-type info
   //@{
   typedef ACE_INET_Addr PEER_ADDR;
@@ -216,9 +198,6 @@ public:
 
 protected:
 
-  /// Complete blocking SSL active connection.
-  int ssl_connect (ACE_SSL_SOCK_Stream &new_stream);
-
   /// Complete non-blocking SSL active connection.
   int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                    const ACE_Time_Value *timeout);
@@ -229,9 +208,6 @@ private:
   /// It is default contructed, and subsequently used by connect().
   ACE_SOCK_Connector connector_;
 
-  /// Pointer to the Reactor responsible for dispatching the event
-  /// handler responsible for completing the SSL active connection.
-  ACE_Reactor *reactor_;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

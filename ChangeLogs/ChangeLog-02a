@@ -1,3 +1,29 @@
+Thu Dec 20 11:34:51 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Acceptor.(h cpp i):
+        * ace/SSL/SSL_SOCK_Connector.(h cpp i):	Series of changes:
+             - Does not use an ACE_Reactor any longer. Waiting for socket
+               I/O possibility is done using ACE::select. It's simpler and
+               doesn't suffer on Win32.
+             - The basic socket acceptance is referred to ACE_SOCK_Acceptor,
+               so the shared_accept_start and shared_accept_finish methods
+               are gone (in SSL_SOCK_Acceptor.*; no affect on Connector).
+             - The timed and non-timed versions of ssl_accept/connect are
+               now combined into one function. The timeout value passed to
+               the ACE_SSL_SOCK_Acceptor::accept() method is used, and it
+               correctly drives ACE::accept.
+
+        * ace/SSL/SSL_Connecto_Handler.(cpp h):
+        * ace/SSL/SSL_Accept_Handler.(cpp h): These are no longer needed.
+          since all of the accept handshaking activity is paced by
+          ACE::accept, not a reactor.
+
+        * ace/SSL/Makefile:
+        * ace/SSL/Makefile.bor:
+        * ace/SSL/ACE_SSL.dsp:
+        * ace/SSL/ACE_SSL_LIB.dsp: Removed SSL_Accept_Handler and
+          SSL_Connect_Handler.
+
 Thu Dec 20 09:03:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 	* Makefile.bor:
