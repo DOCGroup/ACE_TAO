@@ -27,7 +27,7 @@ static char *IOR_file = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:f:d");
+  ACE_Get_Opt get_opts (argc, argv, "k:f:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -40,10 +40,6 @@ parse_args (int argc, char **argv)
       case 'f':
         IOR_file = get_opts.optarg;
         break;
-
-      case 'd':
-	TAO_debug_level++;
-	break; 
 
       case '?':
       default:
