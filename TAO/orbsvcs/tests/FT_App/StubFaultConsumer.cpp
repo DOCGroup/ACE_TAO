@@ -149,7 +149,7 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
       argv [0]
       ));
   }
-#endif  NO_ARGS_FOR_NOW
+#endif  /* NO_ARGS_FOR_NOW */
   return optionError;
 }
 
