@@ -1,0 +1,107 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 012</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 012</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Passing classes through ACE_Message_Queue</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+<P>
+In the previous tutorial we moved our complex data into the queue by
+copy()ing it directly into the message block's data area.  I hope that
+most readers got a queasy feeling when I did that.  It just isn't a
+good idea...
+<P>
+A better idea would be to teach the message queue about our data types
+(or at least a baseclass) so that it can more efficiently handle things:
+<P>
+<HR WIDTH="100%">
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>BLOCK_H</font>
+<font color=blue>#define</font> <font color=purple>BLOCK_H</font>
+
+<font color=blue>#include</font> "<font color=green>work.h</font>"
+
+<font color=red>/*
+  We derive a Message_Block from ACE_Message_Block and teach it about
+  our Unit_Of_Work object.  When our task's svc() method pulls a block
+  out of the queue, it can then invoke the virtual methods of the work
+  object safely.  In this implementation we've also retained the
+  original ACE_Message_Block functionallity so that we can use the
+  underlying ACE_Data_Block objects to store data other than our
+  Unit_Of_Work.
+*/</font>
+class Message_Block : public ACE_Message_Block
+{
+public:
+    typedef ACE_Message_Block inherited;
+
+     <font color=red>/*
+       Construct our underlying ACE_Message_Block with the requested
+       data size and initialize our Unit_Of_Work pointer with the
+       given object instance.  Note that this Message_Block instance
+       now assumes ownership of the Unit_Of_Work and will delete it
+       when the Message_Block is deleted.
+     */</font>
+    Message_Block( size_t size, Unit_Of_Work * _data )
+            : inherited(size), data_(_data)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Message_Block ctor 0x%x for 0x%x\n</font>", (void *) this, data_));
+        }
+
+        ~Message_Block(void)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Message_Block dtor 0x%x for 0x%x\n</font>", (void *) this, data_));
+            delete data_;
+        }
+
+     <font color=red>/*
+       Return the Unit_Of_Work so that the task can invoke methods on
+       it.
+     */</font>
+    Unit_Of_Work * data(void)
+        {
+            return this->data_;
+        }
+
+protected:
+    Unit_Of_Work * data_;
+
+     <font color=red>/*
+       Disallow these very dangerous operations.
+       If we were to copy a Message_Block object then the data_
+       pointer would get copied and we would eventually end up
+       deleting the same object multiple times!  That's not good.  By
+       preventing the copy, we can avoid this.
+     */</font>
+    Message_Block &operator= (const Message_Block &);
+    Message_Block (const Message_Block &);
+};
+
+<font color=blue>#endif</font>
+</PRE>
+<HR WIDTH="100%">
+<P>
+Ok, this looks pretty good.  We just construct our specialized
+Message_Block instead of the generic ACE_Message_Block and let it
+carry our data along.  When our application is done with the message
+block and release()es it, we know that our work object will also be
+taken care of.
+<P>
+Let's now go to main() and see what we had to change there to use this
+specialization.
+<P>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>
+
