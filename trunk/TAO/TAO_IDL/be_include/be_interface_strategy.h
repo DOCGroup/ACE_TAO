@@ -97,7 +97,7 @@ public:
   int strategy_type ();
   // Return the type of the strategy.
 
-  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
+  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state) = 0;
   // Change the sate if necessary
 
 protected:
