@@ -11,6 +11,7 @@
 #endif /* ACE_WIN32 */
 
 #include "ace/Log_Record.h"
+#include "ace/Time_Value.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
