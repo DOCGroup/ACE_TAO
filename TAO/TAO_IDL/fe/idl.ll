@@ -493,27 +493,37 @@ idl_store_pragma (char *buf)
   int crunched = 0;
 
   // Remove all the blanks between the '#' and the 'pragma'.
-  if (*sp != 'p')
+  while (*sp != 'p')
     {
-      while (*sp != 'p')
+      ++sp;
+      ++crunched;
+    }
+
+  char *tp = buf + 1;
+
+  // This copies the crunched string back to the original, and
+  // also compensates for the behavior of the Sun preprocessor,
+  // which put spaces around the double colons of a non-quoted
+  // scoped name, a case which is possible in #pragma version.
+  while (*sp != '\n')
+    {
+      if (*sp == ' ' && *(sp + 1) == ':')
         {
-          ++sp;
           ++crunched;
         }
-
-      char *tp = buf + 1;
-
-      while (*sp != '\n')
+      else if (*sp == ':' && *(sp + 1) == ' ')
+        {
+          *tp = *sp;
+          ++crunched;
+          ++sp;
+          ++tp;
+        }
+      else
         {
           *tp = *sp;
           ++tp;
-          ++sp;
         }
-    }
 
-  // Remove the final '\n'.
-  while (*sp != '\n')
-    {
       ++sp;
     }
 
@@ -556,7 +566,7 @@ idl_store_pragma (char *buf)
             {
               UTL_Scope *top_scope = idl_global->scopes ().top ();
               top_scope->has_prefix (1);
-              top_scope->prefix_scope (top_scope);
+              ScopeAsDecl (top_scope)->prefix_scope (top_scope);
             }
 
           idl_global->pragma_prefixes ().push (new_prefix);

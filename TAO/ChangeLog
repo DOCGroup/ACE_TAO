@@ -1,3 +1,14 @@
+Fri Oct 18 22:23:53 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Fixed a problem with the SunCC preprocessor. When processing a
+          non-quoted scoped name, as may occur in #pragma version, typeid, 
+          or typeprefix, this preprocessor regards the double colons as 
+          separate tokens and bookends them with spaces. Had to add code to
+          check for this and strip out the spaces.
+
 Fri Oct 18 16:49:04 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	*
