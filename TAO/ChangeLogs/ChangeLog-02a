@@ -1,3 +1,18 @@
+Thu Sep 21 19:27:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_produce.cpp:
+
+	  Recently some cleanup code was added at the end of
+	  the method BE_produce(). This code is now abstracted
+	  into a method BE_cleanup(), which is called at the 
+	  end of BE_produce, and also by BE_abort(), so that the
+	  cleanup can be executed even if code generation is not
+	  completed.
+
+	* TAO_IDL/be_include/be_decl.h:
+
+	  Cosmetic changes.
+
 Thu Sep 21 18:29:07 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Abstract_Servant_Base.h:
