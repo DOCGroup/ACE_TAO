@@ -12,8 +12,8 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
-        HTBP \
         . \
+        HTBP \
         RMCast \
         SSL
 

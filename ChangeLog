@@ -1,3 +1,8 @@
+Fri Nov 12 18:30:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Makefile.am: Moved HTBP down under '.' to make sure
+	  libTest_Output is built first.
+
 Fri Nov 12 17:23:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* bin/bin.mpc:
