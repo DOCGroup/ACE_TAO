@@ -1,0 +1,13 @@
+project(dd_node): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_server {
+  exename = dd_node 
+  libs += wrappers TAO_Messaging
+  Source_Files {
+    cpuload.cpp
+    DD_servantS.cpp
+    DD_servantC.cpp
+    DD_servant_i.cpp
+    DD_node.cpp
+    chain_dsui_vars.cpp
+  }
+}
+
