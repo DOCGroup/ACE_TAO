@@ -1,3 +1,10 @@
+Mon Aug 16 15:30:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Task.cpp (svc_run): Added "defined (ACE_WIN32)" to the
+	  "defined (__IBMCPP__)" test for how to cast a thread result.
+	  __IBMCPP__ is defined for both Windows (where the alternate cast
+	  is needed) and AIX (where it is prohibited).
+
 Mon Aug 16 11:54:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ACE.h (debug):
