@@ -8,6 +8,8 @@
 #include <openssl/err.h>
 
 #include "SSL_SOCK_Stream.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_select.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "SSL_SOCK_Stream.i"

@@ -7,6 +7,7 @@
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Default_Constants.h"
+#include "ace/OS_Memory.h"
 
 ACE_INLINE int
 ACE_OS::access (const char *path, int amode)

@@ -9,6 +9,10 @@ ACE_RCSID(ace, OS_NS_wchar, "$Id$")
 # include "ace/OS_NS_wchar.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#if defined (ACE_HAS_WCHAR)
+#  include "ace/OS_NS_ctype.h"
+#endif /* ACE_HAS_WCHAR */
+
 // The following wcs*_emulation methods were created based on BSD code:
 /*-
  * Copyright (c) 1991, 1993
