@@ -1,3 +1,11 @@
+Wed Mar 31 11:46:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/fuzz.pl:
+
+	  Removed checks for certain things like OS.h inclusions and such
+	  since we may not have time to  fix them before the BFO. Once we
+	  clean the rest of the stuff for BFO, will add this back.
+
 Wed Mar 31 17:31:54 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * include/makeinclude/platform_g++_common.GNU:
