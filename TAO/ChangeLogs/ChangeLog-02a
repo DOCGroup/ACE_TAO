@@ -1,3 +1,12 @@
+Wed Sep 13 14:26:48 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tests/Portable_Interceptors/Benchmark/server.dsp:
+        * tests/Portable_Interceptors/Benchmark/client.dsp: Fixed IDL
+	  compilation rules.
+
+        * tests/Portable_Interceptors/Benchmark/client.cpp: Fixed unused
+	  argument warnings.
+
 Wed Sep 13 12:26:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
