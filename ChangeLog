@@ -1,3 +1,11 @@
+Tue Feb  1 11:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ace_tests.lst:
+          Added !VxWorks for the WFMO_Reactor tests. The perl script for those
+          tests detects windows or not, but with VxWorks we are using Windows
+          as host, but do a cross environment test. This prevents us from
+          running these tests on a VxWorks target.
+
 Mon Jan 31 20:48:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Proactor_Test.cpp (TestData):
