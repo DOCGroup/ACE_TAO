@@ -1,7 +1,13 @@
+Tue Feb 25 09:57:07 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Clean up the generated targets with the GNU Makefiles.
+
 Tue Feb 25 09:24:06 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.cpp: Added an emulation for localtime_r() for WinCE.  Thanks to
-	  Martin Brown <mpatalberta@yahoo.com> for reporting this.
+        * ace/OS.cpp: Added an emulation for localtime_r() for WinCE.  Thanks to
+          Martin Brown <mpatalberta@yahoo.com> for reporting this.
 
 Tue Feb 25 08:40:12 2003  Chad Elliott  <elliott_c@ociweb.com>
 
