@@ -14,20 +14,22 @@
 //
 // ============================================================================
 
-// main () has three arguments, so we can't use
-// ACE_HAS_NONSTATIC_OBJECT_MANAGER.  We don't need it, anyways.
-#include "ace/inc_user_config.h"
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
-# undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-
 #include "test_config.h"
 #include "ace/OS.h"
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
 
 int
-main (int argc, char *[], char* envp[])
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+// ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
+// arguments.  And with it, we can't use spawn.
+main (int argc, char *[])
+{
+      ACE_UNUSED_ARG (argc);
+      ::putenv("TEST_VALUE_POSITIVE=10.2");
+      ::putenv("TEST_VALUE_NEGATIVE=-10.2");
+#else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+  main (int argc, char *[], char* envp[])
 {
   if (argc == 1)
     {
@@ -41,15 +43,29 @@ main (int argc, char *[], char* envp[])
       options.setenv("TEST_VALUE_NEGATIVE", "%s", "-10.2");
 
       ACE_Process p;
-      ACE_ASSERT (p.spawn (options) != -1);
+      pid_t result = p.spawn (options);
+      ACE_ASSERT (result != -1);
       p.wait ();
     }
   else
+#endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
     {
       // In this case we're the child
       ACE_START_TEST ("Env_Value_Test");
 
-#define TEST_THIS(type,varname,defval,expval) do { ACE_Env_Value<type> val(varname, (defval)); ACE_ASSERT (val == (expval)); } while (0)
+#define TEST_THIS(type,varname,defval,expval) \
+      do \
+        { \
+          ACE_Env_Value<type> val (varname, (defval)); \
+          if (val != (expval)) \
+            { \
+              ACE_ERROR ((LM_ERROR, \
+                               "val %u does not expected value of %u\n", \
+                               (u_int) val, (u_int) (expval))); \
+            } \
+          ACE_ASSERT (val == (expval)); \
+        } \
+      while (0)
 
       TEST_THIS (int, "TEST_VALUE_POSITIVE", 4, 10);
       TEST_THIS (double, "TEST_VALUE_POSITIVE", -1.0, 10.2);
