@@ -84,6 +84,6 @@ private:
 #endif /* 0 */
 };
 
-ACE_SVC_FACTORY_DECLARE (TAO_Default_Server_Strategy_Factory)
+ACE_FACTORY_DECLARE (TAO, TAO_Default_Server_Strategy_Factory)
 
 #endif /* TAO_DEFAULT_SERVER_FACTORY_H */
