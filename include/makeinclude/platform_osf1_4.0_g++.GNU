@@ -18,8 +18,5 @@ ARFLAGS		= ruvZ
 RANLIB		= /usr/bin/true
 SOFLAGS		= -shared $(CPPFLAGS)
 SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-PRELIB		= (echo "main() { }" > gcctemp.c && \
-		  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-		  $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) -lACE $(LIBS); \
-		  status=$$?; rm -f gcctemp*; exit $$status)
+PRELIB		= @true
 

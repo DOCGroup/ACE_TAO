@@ -27,7 +27,4 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
 ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
-PRELIB  = (echo "int main() { return 0; }" > gcctemp.c && \
-          $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-          $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) -lACE $(LIBS); \
-          status=$$?; exit $$status)
+PRELIB  = @true
