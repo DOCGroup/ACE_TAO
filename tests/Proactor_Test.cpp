@@ -52,9 +52,6 @@ ACE_RCSID (tests,
 
 #endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) */
 
-//  Some debug helper functions
-static int disable_signal (int sigmin, int sigmax);
-
 // Proactor Type (UNIX only, Win32 ignored) 0-default, 1 -AIOCB,
 // 2-SIG, 3-SUN, 4-CALLBACK
 typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CALLBACK } ProactorType;
@@ -86,7 +83,6 @@ static size_t threads = 1;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // Log options
-static int logflag  = 0; // 0 STDERR, 1 FILE
 static int loglevel = 0; // 0 full , 1 only errors
 
 static const size_t MIN_TIME = 1;    // min 1 sec
@@ -109,6 +105,36 @@ public:
   LogLocker () { ACE_LOG_MSG->acquire (); }
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
+
+
+
+// Function to remove signals from the signal mask.
+static int
+disable_signal (int sigmin, int sigmax)
+{
+#ifndef ACE_WIN32
+
+  sigset_t signal_set;
+  if (sigemptyset (&signal_set) == - 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("sigemptyset failed")));
+
+  for (int i = sigmin; i <= sigmax; i++)
+    sigaddset (&signal_set, i);
+
+  //  Put the <signal_set>.
+  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("pthread_sigmask failed")));
+#else
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
+#endif /* ACE_WIN32 */
+
+  return 1;
+}
 
 
 // *************************************************************
@@ -209,7 +235,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 #  endif /* sun */
 
 #  if defined (__sgi)
-    case 4:
+    case CALLBACK:
       ACE_NEW_RETURN (proactor,
                       ACE_POSIX_CB_Proactor (max_op),
                       -1);
@@ -219,18 +245,15 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 #  endif
 
     default:
-      ACE_NEW_RETURN (proactor,
-                      ACE_POSIX_SIG_Proactor (max_op),
-                      -1);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = SIG\n")));
+                  ACE_TEXT ("(%t) Create Proactor Type = DEFAULT\n")));
       break;
   }
 
 #endif // (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
   ACE_NEW_RETURN (this->proactor_,
-                  ACE_Proactor (proactor, 1),
+                  ACE_Proactor (proactor, !(proactor == 0)),
                   -1);
 
   ACE_Proactor::instance (this->proactor_);
@@ -310,7 +333,7 @@ MyTask::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) MyTask started\n")));
 
-  ::disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
+  disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
 
   // signal that we are ready
   sem_.release (1);
@@ -348,7 +371,7 @@ protected:
   /// socket completes.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
 
-  /// This is called when an asynchronous <write> to the file
+  /// This is called when an asynchronous <write> to the socket
   /// completes.
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
@@ -516,7 +539,7 @@ Receiver::~Receiver (void)
   this->handle_= ACE_INVALID_HANDLE;
 }
 
-//  return true if we alive, false  we commited suicide
+// return true if we alive, false if we commited suicide
 int
 Receiver::check_destroy (void)
 {
@@ -778,7 +801,7 @@ class Sender : public ACE_Service_Handler
   friend class Connector;
 public:
 
-  /// This is called after the new connection has been accepted.
+  /// This is called after the new connection has been established.
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
 
@@ -954,7 +977,7 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   //             ACE_Proactor *proactor = 0,
   //             int validate_new_connection = 0 );
 
-  if (this->open ( 1, 0, 1 ) != 0)
+  if (this->open (1, 0, 1) != 0)
   {
      ACE_ERROR ((LM_ERROR,
                  ACE_LIB_TEXT ("%p\n"),
@@ -1050,7 +1073,7 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
   else if (this->initiate_write_stream () == 0)
     {
       if (duplex != 0)
-        // Start an asynchronous read file
+        // Start an asynchronous read
         this->initiate_read_stream ();
     }
 
@@ -1324,25 +1347,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1) // no arguments , so one button test
     {
-      both = 1;               // client and server simultaneosly
+      both = 1;                       // client and server simultaneosly
 #if defined(ACE_WIN32) || defined(sun)
-      duplex = 1;             // full duplex is on
+      duplex = 1;                     // full duplex is on
 #else   // Linux,IRIX - weak AIO implementation
-      duplex = 0;             // full duplex is off
+      duplex = 0;                     // full duplex is off
 #endif
-      host = ACE_TEXT ("localhost");      // server to connect
+      host = ACE_LOCALHOST;           // server to connect
       port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
-      max_aio_operations = 512;      // POSIX Proactor params
+      max_aio_operations = 512;       // POSIX Proactor params
 #if defined (sun)
-      proactor_type = SUN;             // Proactor type for SunOS
+      proactor_type = SUN;            // Proactor type for SunOS
 #else
-      proactor_type = AIOCB;           // Proactor type = default
+      proactor_type = DEFAULT;        // Proactor type = default
 #endif
-      threads = 3;            // size of Proactor thread pool
-      senders = 20;            // number of senders
-      logflag = 1;           // log to : 0 STDERR / 1 FILE
-      loglevel = 0;           // log level : 0 full/ 1 only errors
-      seconds = 20;            // time to run in seconds
+      threads = 3;                    // size of Proactor thread pool
+      senders = 20;                   // number of senders
+      loglevel = 0;                   // log level : 0 full/ 1 only errors
+      seconds = 20;                   // time to run in seconds
       return 0;
     }
 
@@ -1407,13 +1429,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (::parse_args (argc, argv) == -1)
     return -1;
 
-  ::disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
-  ::disable_signal (SIGPIPE, SIGPIPE);
+  disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
+  disable_signal (SIGPIPE, SIGPIPE);
 
   MyTask    task1;
   Acceptor  acceptor;
   Connector connector;
-  ACE_INET_Addr   addr (port, host);
 
   if (task1.start (threads,
                    proactor_type,
@@ -1423,16 +1444,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (both != 0 || host == 0) // Acceptor
         {
-          // Simplify, initial read with  zero size
+          // Simplify, initial read with zero size
           if (acceptor.open (ACE_INET_Addr (port), 0, 1) == 0)
             rc = 1;
         }
 
       if (both != 0 || host != 0)
         {
+          ACE_INET_Addr addr;
           if (host == 0)
-            host = ACE_TEXT ("localhost");
+            host = ACE_LOCALHOST;
 
+          if (addr.set (port, host) == -1)
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+          else
             rc += connector.start (addr, senders);
         }
 
@@ -1457,33 +1482,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
 
   return 0;
-}
-
-static int
-disable_signal (int sigmin, int sigmax)
-{
-#ifndef ACE_WIN32
-
-  sigset_t signal_set;
-  if (sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
-
-  for (int i = sigmin; i <= sigmax; i++)
-    sigaddset (&signal_set, i);
-
-  //  Put the <signal_set>.
-  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("pthread_sigmask failed")));
-#else
-  ACE_UNUSED_ARG (sigmin);
-  ACE_UNUSED_ARG (sigmax);
-#endif /* ACE_WIN32 */
-
-  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
