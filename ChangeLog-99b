@@ -1,3 +1,9 @@
+Fri Feb 12 16:36:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SOCK_IO.{h,i,cpp} (send,recv): Changed the iovec version of
+	  sendv/recvv back to send/recv to maintain backward
+	  compatibility.  Thanks to Steve for pointing this out.
+
 Fri Feb 12 15:37:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: split FILES up into subsets.  See
