@@ -520,9 +520,6 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
   ACE_TRY
     {
       CORBA::TypeCode_var tc = this->current_member_->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       switch (special->type ())
       {
@@ -683,6 +680,8 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
 }
 
 int 
@@ -994,13 +993,13 @@ TAO_Notify_Constraint_Visitor::visit_in (
           if (bag.expr_type () == TAO_ETCL_COMPONENT)
             {
               const CORBA::Any *component = (const CORBA::Any *) bag;
-              CORBA::TCKind kind;
+              CORBA::TCKind kind = CORBA::tk_null;
 
               ACE_DECLARE_NEW_CORBA_ENV;
               ACE_TRY
                 {
                   CORBA::TypeCode_var tc = component->type ();
-                  kind = TAO_DynAnyFactory::unalias (tc
+                  kind = TAO_DynAnyFactory::unalias (tc.in ()
                                                      TAO_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
@@ -1069,7 +1068,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
   ACE_TRY
     {
       CORBA::TypeCode_var type = any->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type
+      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ()
                                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
