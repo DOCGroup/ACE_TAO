@@ -218,6 +218,7 @@ Many of the C++ wrappers and higher-level components have been
 described in issues of the C++ Report, as well as in proceedings of
 the following journals, conferences, and workshops:
 
+        . The OOPSLA '96 conference in San Jose, CA, October 1996
         . 4th IEEE International Conference on Software Reuse in
           Orlando, Florida, April 1996.
         . The SIGS OOP conference in Munich, Germany, February, 1996
@@ -240,207 +241,20 @@ the following journals, conferences, and workshops:
         . The 2nd SIGS C++ World conference, October, 1993
         . IEE Distributed Systems Engineering Journal, December 1994.
 
-A collection of white papers and tutorial handouts are included with
-the release.  The documentation is stored in the ACE-documentation
-directory on wuarchive.wustl.edu (approximately 4 meg compressed).
-
-This directory contains postscript versions of various papers that
-describe different aspects of ACE.  You might want to read SUG-94.ps
-first, since it gives an overview of the toolkit.
-
-Document                Published in or presented at
---------                ----------------------------
-Acceptor-Connector.ps   "Acceptor and Connector: Design Patterns for
-			Actively and Passively Initializing Network
-			Services." Presented at the EuroPLoP
-			workshop held in conjunction with the ECOOP
-			'95 conference, August 1995 
-
-ACE-concurrency.ps	"An OO Encapsulation of Lightweight OS
-			Concurrency Mechanisms in the ACE Toolkit."
-			Washington University technical report WUCS-95-31. 
-
-ACT.ps			"Asynchronous Completion Token" submitted to
-			the ``3rd Pattern Languages of Programs
-			conference,'' Allerton Park, Illinois,
-			September, 1996. 
-
-Active-Objects.ps	"Active Object: an Object Behavioral Pattern
-			for Concurrent Programming," the proceedings
-			of the Pattern Languages of Programs Conference,
-			September 1995 
-
-Atomic_Op-94.ps		"Transparently Parameterizing Synchronization
-			into a Concurrent Distributed Application",
-			C++ Report, July/August 1994 
-
-C++-report-col1.ps	C++ Report Object Interconnections Column 1
-C++-report-col2.ps	C++ Report Object Interconnections Column 2
-C++-report-col3.ps	C++ Report Object Interconnections Column 3
-C++-report-col4.ps	C++ Report Object Interconnections Column 4
-C++-report-col5.ps	C++ Report Object Interconnections Column 5
-C++-report-col6.ps	C++ Report Object Interconnections Column 6
-C++-report-col7.ps	C++ Report Object Interconnections Column 7
-
-C++-USENIX-94.ps	"ASX: an Object-Oriented Framework for
-			Developing Distributed Applications," 6th
-			USENIX C++ Conference, April 1994 
-
-C++-world-93.ps		"An Object-Oriented Framework for Developing
-			Network Server Daemons", 2nd C++ World
-			conference, Dallas, Texas, October 1993
-
-C++-wrappers.ps		"Systems Programming with C++ Wrappers:
-			Encapsulating Interprocess Communication
-			Services with Object-Oriented Interfaces", C++
-			Report, September/October 1992 
-
-CACM-95.ps		"Experience Using Design Patterns to Develop
-			Reuseable Object-Oriented Communication
-			Software," Communications of the ACM, Special
-			Issue on Object-Oriented Experiences, Vol. 38,
-			No. 10, October, 1995.
-
-COOTS-95.ps		"Object-Oriented Components for High-speed
-			Network Programming," 1st USENIX Conference on
-			Object-Oriented Technologies, April 1995.
-
-COOTS-96.ps		"Design and Performance of an Object-Oriented
-		        Framework for Electronic Medical Imaging," 
-			2nd USENIX Conference on Object-Oriented
-			Technologies, June 1996.  
-
-Connector.ps		"A Design Pattern for Actively Initializing Network
-			Services," C++ Report, January 1996
-
-daemon-design-94.ps	"A Domain Analysis of Network Daemon Design
-			Dimensions", C++ Report, March/April 1994 
-
-DC-Locking.ps		Double-Checked Locking, submitted to the ``3rd 
-			Pattern Languages of Programs conference,''
-			Allerton Park, Illinois, September, 1996.
-
-ECOOP-95.ps		"Experiences Using Design Patterns to Evolve
-			System Software Across Diverse OS Platforms,"
-			ECOOP '95 conference, August 1995
-
-External-Polymorphism.ps "External Polymorphism: an Object Structural
-			Pattern for Transparently Extending Concrete
-			Data Types," submitted to the ``3rd Pattern
-			Languages of Programs conference,''
-			Allerton Park, Illinois, September, 1996.
-
-EuroPLoP.ps		Acceptor and Connector, Design Patterns for
-			Initializing Communication Services, 
-			1st European Conference on Pattern Languages
-			of Programs, Kloster Irsee, July, 1996.
-
-IPC_SAP-92.ps		"IPC_SAP: An Object-Oriented Interface to
-			Interprocess Communication Services" C++
-			Report, November/December 1992 
-
-JPDC-96.ps		"The Performance of Alternative Threading
-			Architectures for Parallel Communication
-			Subsystems", Submitted to the Journal
-			of Parallel and Distributed Computing.
-
-PLoP-94.ps		"Reactor: An Object Behavioral Pattern for
-			Concurrent Event Demultiplexing and Event
-			Handler Dispatching," Pattern Languages of
-			Programs Conference, August 1994 
-
-PLoP-95.ps		"Half-Sync/Half-Async: A Pattern for Efficient
-			and Well-structured Concurrent I/O Systems."
-			Pattern Languages of Programs Conference,
-			September 1995 
-
-Reactor1-93.ps		"The Reactor: An Object-Oriented Interface for
-			Event-Driven UNIX I/O Multiplexing (Part 1 of
-			2)" C++ Report, February 1993 
-
-Reactor2-93.ps		"The Object-Oriented Design and Implementation
-			of the Reactor: A C++ Wrapper for UNIX I/O
-			Multiplexing (Part 2 of 2)" C++ Report,
-			September/October 1993 
-
-IWCDS.ps		"The Service Configurator Framework: An
-			Extensible Architecture for Dynamically
-			Configuring Concurrent, Multi-Service Network
-			Daemons", 2nd IEEE International Workshop on 
-			Configurable Distributed Systems, March 1994 
-
-Service-Configurator.ps "Service Configurator,"  submitted to the ``3rd 
-			Pattern Languages of Programs conference,''
-			Allerton Park, Illinois, September, 1996.
-
-SIGCOMM-95.ps		"AITPM: a Strategy for Integrating IP
-			with ATM," SIGCOMM '95, August, 1995.
-
-SIGCOMM-96.ps		"Measuring the Performance of Communication
-			Middleware on High-Speed Networks," SIGCOMM
-			'96, August, 1996.
-
-SUG-94.ps		"The ADAPTIVE Communication Environment:
-			An Object-Oriented Network Programming Toolkit 
-			for Developing Communication Software",
-			11th and 12th Sun Users Group Conference,
-			December 1993 and June 1994 
-
-TAPOS-95.ps		"A System of Reusable Design Patterns for 
-			Communication Software," The
-			Journal of Theory and Practice of Object
-			Systems Special Issue on Patterns and Pattern
-			Languages 
-
-TSS-pattern.ps		"Thread-Specific Storage: A Pattern for
-			Reducing Locking Overhead in Concurrent
-			Programs," submitted to the ``3rd Pattern
-			Languages of Programs conference,''
-			Allerton Park, Illinois, September, 1996.
+A collection of white papers and tutorial handouts are included at
+ftp://wuarchive.wustl.edu/languages/c++/ACE/ACE-documentation.  This
+directory contains postscript versions of various papers that describe
+different aspects of ACE.  The documentation is approximately 6 meg
+compressed.
 
 I update these papers periodically to reflect changes to the ACE
 architecture.  Therefore, you might want to check the date on the
 files to make sure that you have read the most recent versions of
 these papers.
 
-ACE TUTORIALS
-
-I update these papers periodically to reflect changes to the ACE
-architecture.  Therefore, you might want to check the date on the
-files to make sure that you have read the most recent versions of
-these papers.
-
-There may not be enough space on this ftp server to store the
-following tutorial handouts:
-
-OOCP-tutorial4.ps       SIGS Object Expo, June 1995.
-                        SIGS OOP '95 conference, February, 1995;
-                        USENIX Winter Conference, January 1995; 
-
-OONP-tutorial4.ps       ECOOP conference, August 1995
-                        USENIX Conference on Object-Oriented Technologies, 
-                                June 1995;
-                        3rd SIGS C++ World conference, November, 1994;
-                        9th ACM OOPSLA conference, October 1994; 
-                        6th USENIX C++ Conference, April 1994; 
-                        2nd SIGS C++ World conference, October 1993; 
-
-CORBA4.ps               "Measuring the Performance of Object-Oriented
-                        Components for High-speed Network Programming,"
-                        Object Expo, June 1995;
-                        USENIX Conference on Object-Oriented
-                                Technologies, June 1995 
-                        HP Labs, June 1995
-
-corba4.ps               "An Overview of CORBA"
-                        Washington University Distributed Operating
-                        Systems class  
-
-These handouts are available via WWW at URL:
+This material is also available available via the WWW at URL:
 
 http://www.cs.wustl.edu/~schmidt/
-
-as at wuarchive.wustl.edu in the directory /languages/c++/ACE.
 
 BUILDING AND INSTALLING ACE
 
@@ -457,39 +271,13 @@ platforms) using Sun C++ 4.x and GNU G++ 2.7.x.  The release has also
 been ported to SCO UNIX, HP-UX, SGI, OSF/1, AIX, Linux, Windows NT and
 Windows '95.  I expect that major portions of the release will port
 easily to other platforms.  If you can help port ACE to other
-platforms I'd appreciate it. 
+platforms I'd appreciate it.
 
 ACE MAILING LIST
 
 A mailing list is available for discussing bug fixes, enhancements,
 and porting issues regarding ACE.  Please send mail to me at the
 ace-users-request@cs.wustl.edu if you'd like to join the mailing list.
-
-COPYRIGHT INFORMATION FOR ACE
-
-ACE is copyrighted Douglas C. Schmidt and his research group at
-Washington University.  You are free to do anything you like with the
-ACE source code such as including it in commercial software, as long
-as you include this copyright statement along with code built using
-ACE.  
-
-You are under no obligation to freely redistribute any of your source
-code that is built using ACE (be aware that rpc++ is distributed under
-the GNU GPL, which has a different copyright policy). Please note,
-however, that you may not do anything to the ACE code that will
-prevent it from being distributed freely (such as copyrighting it).
-Naturally, neither I nor my research group is responsible for any
-problems caused by using ACE.
-
-My goal is to see ACE continue to evolve and become a more
-comprehensive, robust, and well-documented C++ class library that is
-freely available to researchers and developers.  If you have any
-improvements, suggestions, and or comments, I'd like to hear about it.
-
-        Thanks,
-        
-        Douglas C. Schmidt 
-        schmidt@cs.wustl.edu 
 
 ACKNOWLEDGEMENTS
         
@@ -675,6 +463,7 @@ Samuel_Bercovici <Samuel_Bercovici_at_EFT__AD2@mail.icomverse.com>
 Per Andersson <Per.Andersson@hfera.ericsson.se>
 Anthony McConnell <Tonym@datel.demon.co.uk>
 Mark Rabotnikov <mark@usp.elscintcorp.co.il>
+John Bossom <John.Bossom@Cognos.COM>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
@@ -686,3 +475,12 @@ Finally, I'd also like to thank Todd L. Montgomery
 <tmont@cerc.wvu.edu>, fellow heavy metal head, for fulfilling his
 quest to get ACE to compile with GCC!
 
+In conclusion, my goal is to see ACE continue to evolve and become a
+more comprehensive, robust, and well-documented C++ class library that
+is freely available to researchers and developers.  If you have any
+improvements, suggestions, and or comments, I'd like to hear about it.
+
+        Thanks,
+        
+		Douglas C. Schmidt
+	        schmidt@cs.wustl.edu 

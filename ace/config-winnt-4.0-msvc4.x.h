@@ -109,7 +109,10 @@
 // #define ACE_HAS_ORBIX
 // #define ACE_HAS_MT_ORBIX
 
+// Uncomment the following line if you want to use template typedefs,
+// which are well-supported with MSVC++ 4.2.
 #define ACE_HAS_TEMPLATE_TYPEDEFS
+
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_UTSNAME_T
 #define ACE_LACKS_SEMBUF_T

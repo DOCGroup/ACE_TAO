@@ -166,14 +166,14 @@ class ACE_Export ACE_Task_Exit
   // = TITLE
   //    Keep exit information for a Task in thread specific storage so
   //    that the Task::close() method will get called no matter how
-  //    the thread exits (e.g., via Thread::exit() or by "falling off
-  //    the end of Task::svc_run").
+  //    the thread exits (e.g., via <Thread::exit>, C++ or Win32
+  //    exception, "falling off the end" of <Task::svc_run>, etc.).
   //
   // = DESCRIPTION
   //    This clever little helper class is stored in thread-specific
-  //    storage using the ACE_TSS wrapper.  When a thread
-  //    exits the ACE_TSS::cleanup() function calls
-  //    "delete" on this object, thereby closing it down gracefully.
+  //    storage using the <ACE_TSS> wrapper.  When a thread exits the
+  //    <ACE_TSS::cleanup> function deletes this object, thereby
+  //    closing it down gracefully.
 {
 public:
   ACE_Task_Exit (void);

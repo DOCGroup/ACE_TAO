@@ -15,7 +15,7 @@ typedef ACE_HANDLE ROUTING_KEY;
 class Peer_Router;
 class Peer_Router_Context;
 
-class Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
+class Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
   // = TITLE
   //     Receive input from a Peer and forward to the appropriate
   //     <Peer_Router>.
@@ -92,7 +92,7 @@ private:
   // Private to ensure dynamic allocation.
 };
 
-class Peer_Router : public ACE_Task<ACE_MT_SYNCH>
+class Peer_Router : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //     This abstract base class provides mechanisms for routing
   //     messages to/from a ACE_Stream from/to one or more peers (which
@@ -113,7 +113,7 @@ protected:
   Peer_Router_Context *context (void) const;
   // Returns the routing context.
 
-  typedef ACE_Task<ACE_MT_SYNCH> inherited;
+  typedef ACE_Task<ACE_SYNCH> inherited;
   // Helpful typedef.
 
 private:

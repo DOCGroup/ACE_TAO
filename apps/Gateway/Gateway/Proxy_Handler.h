@@ -26,7 +26,7 @@
 // Forward declaration.
 class ACE_Event_Channel;
 
-class Proxy_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
+class Proxy_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
   // = TITLE
   //     Proxy_Handler contains info about connection state and addressing.
   //
