@@ -67,6 +67,11 @@ public:
   // = TAO extension. It makes it easier to write generic code.
   static CORBA_Exception* _narrow (CORBA_Exception* x);
 
+  void print_exception (const char *info,
+                        FILE *f=stdout) const;
+  // Print the exception <ex> to output determined by f.
+  // This function is not CORBA compliant.
+
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
