@@ -108,9 +108,13 @@ project(Deployment_svnt) : taolib_with_idl, portableserver {
   libpaths     += $(ACE_ROOT)/lib
 
   IDL_Files {
+    NodeApplication_CallBack.idl
   }
 
   Source_Files {
+    NodeApplication_CallBackC.cpp
+    NodeApplication_CallBackS.cpp
+    NodeApp_CB_Impl.cpp
     DeploymentS.cpp
   }
 }
