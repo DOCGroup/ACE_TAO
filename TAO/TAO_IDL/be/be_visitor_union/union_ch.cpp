@@ -182,12 +182,10 @@ int be_visitor_union_ch::visit_union (be_union *node)
       *os << "} u_;" << be_nl << be_nl;
 
       // The reset method (TAO extension).
-      *os << "// TAO extensions." << be_nl;
+      *os << "// TAO extension." << be_nl;
       *os << "void _reset (" << bt->nested_type_name (node)
           << ", CORBA::Boolean /* finalize */);" << be_nl;
       *os << "// Frees any allocated storage." << be_nl << be_nl;
-      *os << "void _reset (void);" << be_nl;
-      *os << "// Calls the above reset with finalize = 1." << be_uidt_nl;
       *os << "}; //" << node->name () << be_nl << be_nl;
 
       if (!node->is_local ())
