@@ -20,21 +20,25 @@
 #include "ace/OS.h"
 
 template <class TYPE>
-class ACE_Managed_Cleanup : public ACE_Cleanup
+class ACE_Cleanup_Adapter : public ACE_Cleanup
   // = TITLE
   //     Adapter for ACE_Cleanup objects that allows them to be readily
   //     managed by the ACE_Object_Manager.
   //
   // = DESCRIPTION
   //     This template class wraps adapts an object of any type to be
-  //     an ACE_Cleanup object.  It can then be destroyed type-safely
-  //     by the ACE_Object_Manager.
+  //     an ACE_Cleanup object.  The object can then be destroyed
+  //     type-safely by the ACE_Object_Manager.
 {
 public:
-  ACE_Managed_Cleanup (void);
+  ACE_Cleanup_Adapter (void);
+  // Default constructor.
+
   TYPE &object (void);
+  // Accessor for contained object.
 private:
   TYPE object_;
+  // Contained object.
 };
 
 template <class TYPE>
