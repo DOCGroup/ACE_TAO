@@ -4,7 +4,7 @@
 #include "roa.h"
 #include "debug.h"
 
-ROA_Handler::ROA_Handler (ACE_Thread_Manager* t)
+TAO_OA_Connection_Handler::TAO_OA_Connection_Handler (ACE_Thread_Manager* t)
   : SUPERCLASS (t)
 {
   // Grab the singleton...at some later point in time we can provide
@@ -14,7 +14,7 @@ ROA_Handler::ROA_Handler (ACE_Thread_Manager* t)
 }
 
 int
-ROA_Handler::open (void*)
+TAO_OA_Connection_Handler::open (void*)
 {
   ACE_INET_Addr addr;
 
@@ -29,31 +29,35 @@ ROA_Handler::open (void*)
 }
 
 int
-ROA_Handler::handle_close (ACE_HANDLE handle,
+TAO_OA_Connection_Handler::handle_close (ACE_HANDLE handle,
 			   ACE_Reactor_Mask rm)
 {
-  ACE_DEBUG  ((LM_DEBUG, " (%P|%t) ROA_Handler::handle_close (%d,%d)\n", handle, rm));
+  ACE_DEBUG  ((LM_DEBUG, " (%P|%t) TAO_OA_Connection_Handler::handle_close (%d,%d)\n", handle, rm));
   return SUPERCLASS::handle_close (handle, rm);
 }
 
 int
-ROA_Handler::svc (void)
+TAO_OA_Connection_Handler::svc (void)
 {
+  // This method is called when an instance is "activated", i.e., turned
+  // into an active object.  Presumably, activation spawns a thread with this
+  // method as the "worker function".
   int result = 0;
 
-  ACE_DEBUG  ((LM_DEBUG, " (%P|%t) ROA_Handler::svc begin\n"));
+  ACE_DEBUG  ((LM_DEBUG, " (%P|%t) TAO_OA_Connection_Handler::svc begin\n"));
 
-  // @@ This is an important method, please add a comment here.
-
+  // Here we simply synthesize the "typical" event loop one might find
+  // in a reactive handler, except that this can simply block waiting for
+  // input.
   while ((result = handle_input ()) >= 0)
     continue;
-  ACE_DEBUG  ((LM_DEBUG, " (%P|%t) ROA_Handler::svc end\n"));
+  ACE_DEBUG  ((LM_DEBUG, " (%P|%t) TAO_OA_Connection_Handler::svc end\n"));
   
   return result;
 }
 
 int
-ROA_Handler::handle_input (ACE_HANDLE handle)
+TAO_OA_Connection_Handler::handle_input (ACE_HANDLE handle)
 {
   // CJCXXX The tasks of this method should change to something like
   // the following:
@@ -99,7 +103,7 @@ ROA_Handler::handle_input (ACE_HANDLE handle)
 
   if  (env.exception  () != 0) 
     {
-      dexc  (env, "ROA_Handler, handle incoming message");
+      dexc  (env, "TAO_OA_Connection_Handler, handle incoming message");
       env.clear  ();
     }
   return ret;
@@ -111,7 +115,7 @@ ROA_Handler::handle_input (ACE_HANDLE handle)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 // Direct
-template class ACE_Acceptor<ROA_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 // Indirect
 template class ACE_Task<ACE_NULL_SYNCH>;// ACE_Svc_Handler

@@ -16,21 +16,20 @@
 // only mutual exclusion relates to reference counting and
 // construction.
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-#include	<orb.h>
+#include <assert.h>
+#include <limits.h>
+#include <string.h>
+#include <orb.h>
 
-#include	"debug.h"
-#include	"cdr.h"
-#include	"thread.h"
+#include "debug.h"
+#include "cdr.h"
 
 #if !defined (VXWORKS)
-#include	<memory.h>
+#include <memory.h>
 #endif
-#include	<sys/types.h>
+#include <sys/types.h>
 
-#include	<initguid.h>
+#include <initguid.h>
 
 
 void

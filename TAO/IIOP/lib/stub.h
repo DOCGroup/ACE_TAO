@@ -6,7 +6,7 @@
 //    TAO
 // 
 // = FILENAME
-//    thread.h
+//    stub.h
 //
 // = DESCRIPTION
 //     
@@ -24,7 +24,10 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
-// 
+//
+// = VERSION
+//     $Id$
+//
 // ============================================================================
 
 #if !defined (TAO_STUB_H)
@@ -37,7 +40,7 @@
 
 // Descriptions of parameters.
 
-enum param_type 
+enum TAO_Param_Type 
 // = TITLE
 // Parameter mode of a given parameter.
 {	
@@ -47,7 +50,7 @@ enum param_type
   PARAM_RETURN 	// = PARAM_OUT
 };
 
-struct paramdata 
+struct TAO_Param_Data 
   // = TITLE
   // Description of a single parameter.
   //
@@ -71,14 +74,14 @@ struct paramdata
   CORBA_TypeCode_ptr tc; 
   // Type of param.
 
-  param_type mode; 
+  TAO_Param_Type mode; 
   // Its mode.
 
   size_t value_size;
   // zero or tc->size ().
 };
 
-struct calldata 
+struct TAO_Call_Data 
 // = TITLE
 // Descriptions of operations, as used by the stub interpreter.  Only
 // interpretive marshaling/unmarshaling is used, and the stubs don't
@@ -103,7 +106,7 @@ struct calldata
   u_int param_count;
   // # parameters.
 
-  const paramdata *params;	
+  const TAO_Param_Data *params;	
   // Their descriptions.
 
   // The exceptions allowed by this operation can be listed in any
@@ -133,11 +136,11 @@ struct calldata
 //
 // typedef void (*skeleton)(CORBA_ServerRequest &, CORBA_Environment &);
 
-struct skel_entry 
+struct TAO_Skel_Entry 
 // = TITLE
 // table of these per implementation
 {	
-  const calldata *op_descriptor;
+  const TAO_Call_Data *op_descriptor;
   TAO_Skeleton impl_skeleton;
 };
 
@@ -156,7 +159,7 @@ class ACE_Svc_Export STUB_Object : public IUnknown
 {
 public:
   virtual void do_call (CORBA_Environment &env,
-			const calldata *info,
+			const TAO_Call_Data *info,
 			...) = 0;
   // The "stub interpreter" method parameters are:
   //

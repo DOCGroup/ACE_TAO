@@ -399,6 +399,7 @@ CDR::grow (size_t newsize)
   if (newsize == 0) 
     {
       // @@ Can we replace the magic number 4096 with a const or enum?
+      // I defer to Andy on this since he has much more experience... --cjc
       if (length < 4096)
 	new_len = length + 4096;
       else

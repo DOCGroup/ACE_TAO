@@ -29,8 +29,8 @@
 #    include <corba/stub.h>
 #  endif /* __IIOP_BUILD */
 
-#  include "connmgr.h"
 #  include "iiopobj.h"		// XXX -- not generic!
+#  include "factories.h"
 
 // XXX this same typedef is used in other places, e.g. iiopobj.hh
 typedef CORBA_SEQUENCE <CORBA_Octet> opaque;
@@ -175,38 +175,36 @@ public:
 
   // = Request, Reply headers
 
-  // @@ It would be very useful to add comments to the fields in each
-  // of these structs and enums.
   struct RequestHeader 
   {
-    ServiceContextList service_info;
-    CORBA_ULong request_id;
-    CORBA_Boolean response_expected;
-    opaque object_key;
-    CORBA_String operation;
-    CORBA_Principal_ptr	requesting_principal;
+    ServiceContextList service_info;    // @@ More info needed
+    CORBA_ULong request_id;             // Unique identifier for a request
+    CORBA_Boolean response_expected;    // true if this request requires a response
+    opaque object_key;                  // @@ the object key of the destination object (is this right?)
+    CORBA_String operation;             // Name of the operation being performed
+    CORBA_Principal_ptr	requesting_principal;   // Identifies the requester
   };
 
   enum ReplyStatusType 
   {
-    NO_EXCEPTION,
-    USER_EXCEPTION,
-    SYSTEM_EXCEPTION,
-    LOCATION_FORWARD
+    NO_EXCEPTION,                       // Request completed successfully
+    USER_EXCEPTION,                     // Request terminated with user exception
+    SYSTEM_EXCEPTION,                   // Request terminated with system exception
+    LOCATION_FORWARD                    // @@ More info
   };
 
   struct ReplyHeader 
   {
-    ServiceContextList service_info;
-    CORBA_ULong request_id;
-    ReplyStatusType reply_status;
+    ServiceContextList service_info;    // @@ More info
+    CORBA_ULong request_id;             // Unique identifier of the request for which this is a reply
+    ReplyStatusType reply_status;       // Status of the reply (see above enum)
   };
 
   // = Cancellation -- applies both to Requests and LocateRequests.
 
   struct CancelRequestHeader 
   {
-    CORBA_ULong request_id;
+    CORBA_ULong request_id;             // Unique identifier of the request being cancelled
   };
 
   // = Location service support
@@ -267,7 +265,7 @@ public:
 
   private:
     // @@ Please add comments.
-    IIOP_Object *_data;
+    IIOP_Object *data_;
 
     const char *opname;
 
