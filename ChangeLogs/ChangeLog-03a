@@ -1,6 +1,13 @@
+Mon Aug 27 18:14:38 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * bin/nightlybuilds/builds.lst (WEB):
+
+          Added the IA-64 builds back again. We now have a faster machine
+          running a better version of Linux.
+
 Mon Aug 27 09:39:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Timer_Queue_T.i (get_dispatch_info): 
+	* ace/Timer_Queue_T.i (get_dispatch_info):
 	* ace/Timer_Queue_T.h: Fixed the compile problem in VXWORKS
 	  builds. How could I forget that there are a few compilers which
 	  cannot grok traits?
