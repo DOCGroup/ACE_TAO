@@ -1,195 +1,199 @@
+Fri Jul 10 22:06:16 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * CDR.i (do_byte_swap): added explicit int return type.
+
 Fri Jul 10 17:51:13 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/bd_str_seq.cpp:
-	* Param_Test/ub_str_seq.cpp:
-	  DII tests now work.
+        * Param_Test/bd_str_seq.cpp:
+        * Param_Test/ub_str_seq.cpp:
+          DII tests now work.
 
-	* Param_Test/bd_short_seq.cpp:
-	* Param_Test/ub_short_seq.cpp:
-	* Param_Test/bd_long_seq.cpp:
-	* Param_Test/ub_long_seq.cpp:
-	  Minor changes in notation - no new functionality.
-	
+        * Param_Test/bd_short_seq.cpp:
+        * Param_Test/ub_short_seq.cpp:
+        * Param_Test/bd_long_seq.cpp:
+        * Param_Test/ub_long_seq.cpp:
+          Minor changes in notation - no new functionality.
+
 Fri Jul 10 17:29:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Mcast/Makefile: 
-	* orbsvcs/tests/EC_Mcast/svc.conf: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	  Added the first implementation of a UDP/Mcast based gateway to
-	  the EC. The current classes require a lot of manual
-	  configuration.
-	  Also implemented a small test to show the usage.
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/EC_Mcast/svc.conf:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Added the first implementation of a UDP/Mcast based gateway to
+          the EC. The current classes require a lot of manual
+          configuration.
+          Also implemented a small test to show the usage.
 
-	* tao/CDR.h: 
-	* tao/CDR.i: 
-	* tao/CDR.cpp: 
-	  Give access to external users of the swap_<n> methods, also
-	  provide an accesor for the byte swapping flag in OutputCDRs.
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/CDR.cpp:
+          Give access to external users of the swap_<n> methods, also
+          provide an accesor for the byte swapping flag in OutputCDRs.
 
-	* tao/GIOP.cpp: 
-	  Use the new byte swap accessor.
+        * tao/GIOP.cpp:
+          Use the new byte swap accessor.
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Completed support for gateways that are interested in the
-	  supplier list changes. It is now possible to add Gateways
-	  *after* the consumer or supplier list has stabilized.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Completed support for gateways that are interested in the
+          supplier list changes. It is now possible to add Gateways
+          *after* the consumer or supplier list has stabilized.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	  Do nothing if receive a supplier update.
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          Do nothing if receive a supplier update.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	  Destroy the Event Channel *after* the consumers unsubscribe from
-	  it.
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          Destroy the Event Channel *after* the consumers unsubscribe from
+          it.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
-	  Before a normal exit we unbind the Event Service (and, if local,
-	  the Scheduling Service) from the Naming Service.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Before a normal exit we unbind the Event Service (and, if local,
+          the Scheduling Service) from the Naming Service.
 
 Fri Jul 10 17:03:11 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp: 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.h: 
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp: 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trader.{h, cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_T.h:
- 	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
-	Addressed a number of memory leaks in the Trading
-	Service. However, typecodes still leak oodles of memory.
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.{h, cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+        Addressed a number of memory leaks in the Trading
+        Service. However, typecodes still leak oodles of memory.
 
-	* orbsvcs/Trading_Service/Trading_Service.cpp:
-	Cleans self up properly after catching SIGINT.
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        Cleans self up properly after catching SIGINT.
 
-	* orbsvcs/tests/Trading/TT_Info.cpp:
-	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
-	* orbsvcs/tests/Trading/export_test.cpp:
-	Aesthetic changes.
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        Aesthetic changes.
 
 Fri Jul 10 16:35:21 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/client.cpp:
-	  Fixed bug in DII arg list creation.
-	
-	* TAO/tests/Param_Test/bd_short_seq.cpp:
-	* TAO/tests/Param_Test/bd_long_seq.cpp:
-	* TAO/tests/Param_Test/ub_short_seq.cpp:
-	* TAO/tests/Param_Test/ub_long_seq.cpp:
-	  DII tests now work.
+        * TAO/tests/Param_Test/client.cpp:
+          Fixed bug in DII arg list creation.
 
-	* TAO/tests/Param_Test/any.cpp:
-	  Made some changes - not done yet. DII test still doesn't work.
+        * TAO/tests/Param_Test/bd_short_seq.cpp:
+        * TAO/tests/Param_Test/bd_long_seq.cpp:
+        * TAO/tests/Param_Test/ub_short_seq.cpp:
+        * TAO/tests/Param_Test/ub_long_seq.cpp:
+          DII tests now work.
+
+        * TAO/tests/Param_Test/any.cpp:
+          Made some changes - not done yet. DII test still doesn't work.
 
 Fri Jul 10 15:32:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* docs/implrepo.html: Another pass.
+        * docs/implrepo.html: Another pass.
 
 Fri Jul 10 12:21:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/Makefile: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	  Fixed errors and warnings reported by David.
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          Fixed errors and warnings reported by David.
 
 Fri Jul 10 00:32:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp: 
-	  The skeletons were not releasing the strings allocated while
-	  demarshalling the arguments.
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+          The skeletons were not releasing the strings allocated while
+          demarshalling the arguments.
 
-	* docs/implrepo.html: 
-	  Another pass at the design document.
+        * docs/implrepo.html:
+          Another pass at the design document.
 
 Thu Jul 09 23:02:48 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (create_internal_lock): Change method to watch out
- 	  for platforms without threads.  Thanks to Hongyin Quan
- 	  <hq1@arl.wustl.edu> for pointing this out.
+        * tao/POA.cpp (create_internal_lock): Change method to watch out
+          for platforms without threads.  Thanks to Hongyin Quan
+          <hq1@arl.wustl.edu> for pointing this out.
 
 Thu Jul  9 17:48:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* docs/implrepo.html: Carlos's comments have been addressed.
+        * docs/implrepo.html: Carlos's comments have been addressed.
 
 Thu Jul  9 15:12:35 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tao/deep_free.cpp: wasn't freeing string fields of structs.
+        * tao/deep_free.cpp: wasn't freeing string fields of structs.
 
-	* tests/Quoter/Makefile: removed STL vestige.
+        * tests/Quoter/Makefile: removed STL vestige.
 
 Wed Jul  8 21:08:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/implrepo.html: 
-	  Quick revision and added comments with remaining issues.
+        * docs/implrepo.html:
+          Quick revision and added comments with remaining issues.
 
 Wed Jul  8 19:01:02 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* docs/implrepo.html: Another big revision of the paper. 
+        * docs/implrepo.html: Another big revision of the paper.
 
 Wed Jul  8 17:13:00 1998  Jeff Parsons  <jp4@cs.wustl.edu>
 
-	* TAO/tests/Cubit/TAO/DII_Cubit/client.cpp,
-	  TAO/tests/Cubit/TAO/DII_Cubit/client.h,
-	  TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit.dsw,
-	  TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.cpp,
-	  TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.dsp,
-	  TAO/tests/Cubit/TAO/DII_Cubit/README,
-	  TAO/tests/Cubit/TAO/DII_Cubit/Makefile:
-	  Combined client.h and client.cpp into one file,
-	  initialized the return variables in all the Cubit 
-	  operations (to get rid of some UMRs in Purify),
-	  removed the one-button test file DII_Cubit_Test.cpp
-	  and the corresponding project file in VC (the perl
-	  script does the same thing and more safely), updated
-	  the DII_Cubit.dsw, Makefile and README files.
+        * TAO/tests/Cubit/TAO/DII_Cubit/client.cpp,
+          TAO/tests/Cubit/TAO/DII_Cubit/client.h,
+          TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit.dsw,
+          TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.cpp,
+          TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.dsp,
+          TAO/tests/Cubit/TAO/DII_Cubit/README,
+          TAO/tests/Cubit/TAO/DII_Cubit/Makefile:
+          Combined client.h and client.cpp into one file,
+          initialized the return variables in all the Cubit
+          operations (to get rid of some UMRs in Purify),
+          removed the one-button test file DII_Cubit_Test.cpp
+          and the corresponding project file in VC (the perl
+          script does the same thing and more safely), updated
+          the DII_Cubit.dsw, Makefile and README files.
 
 Tue Jul  8 14:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: When changing the RtecEventComm.id
-	  file or the RtecScheduler.idl file, it is needed to 
-	  recompile the RtecEventChannelAdmin.idl file. This is a common
-	  problem. So the programmer has to take care that the 
-	  dependencies in the Makefile or VC++ project file 
-	  are set properly.
+        * orbsvcs/orbsvcs/orbsvcs.dsp: When changing the RtecEventComm.id
+          file or the RtecScheduler.idl file, it is needed to
+          recompile the RtecEventChannelAdmin.idl file. This is a common
+          problem. So the programmer has to take care that the
+          dependencies in the Makefile or VC++ project file
+          are set properly.
 
-	* orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp,
-	  orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java,
-	  orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java.JDK1.2,
-	  orbsvcs/tests/Simulator/README:
-	  Simplified the event data.
+        * orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp,
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java,
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java.JDK1.2,
+          orbsvcs/tests/Simulator/README:
+          Simplified the event data.
 
 Tue Jul  7 22:11:17 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
-	  Fixed DEC cxx errors, addressed a memory leak.
+        * orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+          Fixed DEC cxx errors, addressed a memory leak.
 
 Tue Jul  7 20:48:37 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Connect.{h,cpp}:  Revert my previous changes.
+        * tao/Connect.{h,cpp}:  Revert my previous changes.
 
 Tue Jul  7 19:47:15 198   Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO/tao/Request.cpp: Slight modification (Andy's
-	  suggestion) to send_oneway (), getting rid of an
-	  error message when shutting down the Cubit server
-	  via DII.
+        * TAO/tao/Request.cpp: Slight modification (Andy's
+          suggestion) to send_oneway (), getting rid of an
+          error message when shutting down the Cubit server
+          via DII.
 
 Tue Jul  7 19:25:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.cpp:
-	  New file that implements a "one-button" DII Cubit test.
-	* DII_Cubit/Makefile: Added a build for dii_cubit_test.exe.
-	* DII_Cubit/DII_Cubit_Test.dsp: New project in the workspace.
-	* DII_Cubit/DII_Cubit.dsw: Updated workspace (new project).
+        * tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.cpp:
+          New file that implements a "one-button" DII Cubit test.
+        * DII_Cubit/Makefile: Added a build for dii_cubit_test.exe.
+        * DII_Cubit/DII_Cubit_Test.dsp: New project in the workspace.
+        * DII_Cubit/DII_Cubit.dsw: Updated workspace (new project).
 
 Tue Jul  7 08:21:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
