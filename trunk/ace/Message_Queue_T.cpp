@@ -862,7 +862,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
       this->cur_count_--;
 
       this->cur_bytes_ -= temp1->total_size ();
-      this->cur_length_ -= temp->total_length ();
+      this->cur_length_ -= temp1->total_length ();
     }
 
   return result;
