@@ -85,15 +85,30 @@ FRAMEWORK_COMPONENT_TEST = Framework_Component_Test
 ## Build the shared libraries needed for the DLL_Test and the
 ## Service_Config_DLL test. 
 ## libdir = $(shell pwd)
-lib_LTLIBRARIES = libDLL_Test.la libService_Config_DLL.la libTest_Output.la
+lib_LTLIBRARIES = \
+  libDLL_Test.la \
+  libFramework_Component_DLL.la \
+  libService_Config_DLL.la \
+  libTest_Output.la
 
-libTest_Output_la_SOURCES = Test_Output.cpp test_config.h
+libTest_Output_la_SOURCES = \
+  Test_Output.cpp Test_Output_Export.h test_config.h
 libTest_Output_la_LIBADD = $(top_builddir)/ace/libACE.la
 
 libDLL_Test_la_SOURCES = DLL_Test_Impl.cpp DLL_Test_Impl.h
 libDLL_Test_la_LDFLAGS = -module
 
-libService_Config_DLL_la_SOURCES = Service_Config_DLL.cpp Service_Config_DLL.h
+libFramework_Component_DLL_la_SOURCES = \
+  Framework_Component_DLL.cpp \
+  Framework_Component_DLL.h \
+  Framework_Component_DLL_Export.h
+libFramework_Component_DLL_la_LDFLAGS = -module
+libFramework_Component_DLL_la_LIBADD = $(top_builddir)/ace/libACE.la
+
+libService_Config_DLL_la_SOURCES = \
+  Service_Config_DLL.cpp \
+  Service_Config_DLL.h \
+  Service_Config_DLL_Export.h
 libService_Config_DLL_la_LDFLAGS = -module
 libService_Config_DLL_la_LIBADD = $(top_builddir)/ace/libACE.la
 
@@ -306,6 +321,8 @@ FlReactor_Test_SOURCES = FlReactor_Test.cpp
 
 Framework_Component_Test_SOURCES = Framework_Component_Test.cpp \
                                    Framework_Component_Test.h
+Framework_Component_Test_DEPENDENCIES = \
+  libFramework_Component_DLL.la libTest_Output.la
 
 Future_Test_SOURCES = Future_Test.cpp
 
@@ -370,8 +387,7 @@ Message_Queue_Test_Ex_SOURCES = Message_Queue_Test_Ex.cpp \
 
 Multicast_Test_SOURCES = Multicast_Test.cpp
 
-Multihomed_INET_Addr_Test_SOURCES = Multihomed_INET_Addr_Test.cpp \
-                                    Multihomed_INET_Addr_Test.h
+Multihomed_INET_Addr_Test_SOURCES = Multihomed_INET_Addr_Test.cpp
 
 Naming_Test_SOURCES = Naming_Test.cpp
 
