@@ -1,7 +1,17 @@
+Mon Feb  7 21:49:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/TAO_FTORB_Utils.pc.in:
+        * orbsvcs/orbsvcs/TAO_FT_ClientORB.pc.in:
+        * orbsvcs/orbsvcs/TAO_FT_ServerORB.pc.in:
+        * orbsvcs/orbsvcs/TAO_FaultTolerance.pc.in:
+        * orbsvcs/orbsvcs/TAO_PortableGroup.pc.in:
+
+          New files, pkg-config *.pc templates.
+
 Mon Feb  7 21:54:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynStruct_i.cpp (to_any):
-        
+
           Removed unused local variable.
 
 Mon Feb  7 21:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -1870,21 +1880,12 @@ Sat Jan 22 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan 21 17:10:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-        * orbsvcs/orbsvcs/TAO_FTORB_Utils.pc.in:
-        * orbsvcs/orbsvcs/TAO_FT_ClientORB.pc.in:
-        * orbsvcs/orbsvcs/TAO_FT_ServerORB.pc.in:
-        * orbsvcs/orbsvcs/TAO_FaultTolerance.pc.in:
-        * orbsvcs/orbsvcs/TAO_PortableGroup.pc.in:
-
-          New files, pkg-config *.pc templates.
-
         * orbsvcs/orbsvcs/FTORB.mpc:
         * orbsvcs/orbsvcs/FaultTolerance.mpc:
         * orbsvcs/orbsvcs/Makefile.am:
         * orbsvcs/orbsvcs/PortableGroup.mpc:
 
           Added Pkgconfig_Files definitions.
-
 
 Fri Jan 21 18:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
