@@ -1,3 +1,11 @@
+Fri Dec  1 17:10:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/tmplinst.cpp:
+
+	  Changed explicit instantiation of auto_ptr<char> to
+	  ACE_Auto_Basic_Ptr<char>, to reflect the recent change
+	  in ConstantDef_i.cpp.
+
 Fri Dec  1 15:09:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Latency/multi_threaded.pl:
