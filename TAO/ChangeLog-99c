@@ -1,49 +1,54 @@
+Tue May 11 14:34:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/{client,server}.cpp:
+          removed unnecessary #includes of "tests/test_config.h".
+
 Tue May 11 14:17:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DomainS.cpp:
-	  Added some ACE_UNUSED_ARGs for generated code that has
-	  been commented out, and a marshaling exception because
-	  this method (ConstructionPolicy::make_domain_manager) is
-	  not yet implemented.
+        * tao/DomainS.cpp:
+          Added some ACE_UNUSED_ARGs for generated code that has
+          been commented out, and a marshaling exception because
+          this method (ConstructionPolicy::make_domain_manager) is
+          not yet implemented.
 
 Tue May 11 13:51:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/releasenotes/TODO.html:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
-	* orbsvcs/tests/Event/Basic/Shutdown.cpp:
-	* orbsvcs/tests/Event/Basic/Shutdown.h:
-	* orbsvcs/tests/Event/lib/Consumer.cpp:
-	* orbsvcs/tests/Event/lib/Driver.cpp:
-	* orbsvcs/tests/Event/lib/Driver.h:
-	* orbsvcs/tests/Event/lib/Supplier.cpp:
-	  Completed the implementation of the destroy() method in the new
-	  Event Channel. It was not invoking the disconnect_push_XXX()
-	  operations on its list of suppliers and consumers.
+        * docs/releasenotes/TODO.html:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Shutdown.cpp:
+        * orbsvcs/tests/Event/Basic/Shutdown.h:
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/Event/lib/Supplier.cpp:
+          Completed the implementation of the destroy() method in the new
+          Event Channel. It was not invoking the disconnect_push_XXX()
+          operations on its list of suppliers and consumers.
 
 Tue May 11 13:45:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/WrongTransactionC.{h,cpp}:
-	* tao/corbafwd.h:
-	* tao/Typecode_Constants.cpp:
-	* tao/TAO.dsp:
-	* tao/TAO_Staatic.dsp:
-	* tao/Makefile:
-	  Added WrongTransaction exception. It applies to Requests
-	  so it is not part of minimum CORBA. Also, while the spec
-	  does not say so explicitly, it seems to be thrown only
-	  on the client side, so only that part of the generated
-	  code is here. If this turns out not to be the case,
-	  server side code will have to be added.
+        * tao/WrongTransactionC.{h,cpp}:
+        * tao/corbafwd.h:
+        * tao/Typecode_Constants.cpp:
+        * tao/TAO.dsp:
+        * tao/TAO_Staatic.dsp:
+        * tao/Makefile:
+          Added WrongTransaction exception. It applies to Requests
+          so it is not part of minimum CORBA. Also, while the spec
+          does not say so explicitly, it seems to be thrown only
+          on the client side, so only that part of the generated
+          code is here. If this turns out not to be the case,
+          server side code will have to be added.
 
 Tue May 11 13:25:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
