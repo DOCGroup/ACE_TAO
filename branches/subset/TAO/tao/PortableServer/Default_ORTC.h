@@ -26,13 +26,11 @@
 #define _TAO_IDL_ORIG_DEFAULT_ORTC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/ObjectReferenceTemplateC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

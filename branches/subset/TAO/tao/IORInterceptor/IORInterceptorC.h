@@ -38,7 +38,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ObjectReferenceTemplateC.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
 #include "iorinterceptor_export.h"
 
 #if defined (TAO_EXPORT_MACRO)

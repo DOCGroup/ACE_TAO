@@ -32,7 +32,7 @@
 #define _TAO_IDL_ORIG_PORTABLEINTERCEPTORC_H_
 
 #include "ace/pre.h"
-#include "TAO_Export.h"
+#include "PI_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +40,6 @@
 
 #include "CurrentC.h"
 #include "DynamicC.h"
-#include "ObjectReferenceTemplateC.h"
 #include "Messaging_SyncScopeC.h"
 #include "IOPC.h"
 #include "PolicyC.h"

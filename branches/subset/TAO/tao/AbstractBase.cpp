@@ -1,7 +1,7 @@
 // "$Id$"
 
 #include "tao/AbstractBase.h"
-
+#include "tao/ValueBase.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/ValueFactory.h"
