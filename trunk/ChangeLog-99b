@@ -1,11 +1,23 @@
 Sun Jun 27 20:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests: Added the *.icc project files for the IBM C++ compiler.
-	  Thanks to Rene Matteau <matteau@ca.ibm.com> for contributing
- 	  these.
+        Added support for IBM's VisualAge C++ compiler.  Thanks to Rene
+	Matteau <matteau@ca.ibm.com> for contributing the following fixes:
 
-	* ace/WIN32_Proactor.cpp,
-	  ace/WIN32_Asynch_IO.cpp: Added back some initializers to keep EGCS happy. 
+	* ace/Basic_Types.h: Added #defines for ACE_INT64_LITERAL.
+
+	* ace/config-win32-common.h: #include the
+ 	  config-win32-visualagecpp.h file.
+
+	* ace: Added the following files for the IBM VisualAge C++ compiler:
+  
+          ace-lib.icc - WinNT configuration file to create a static library
+	  ace-dll.icc - WinNT configuration file to create a dynamic library
+	  config-win32-visualagecpp.h  - VisualAge C++ defines
+  
+	* tests: Added the icc.bat and makeicc.pl files, which build the
+	  tests for the IBM VisualAge C++ compiler.
+
+	* tests: Added the *.icc project files for the IBM VisualAge C++ compiler. 
 
 Sun Jun 27 18:17:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -15,6 +27,9 @@ Sun Jun 27 18:17:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  ACE_TRY_ENV variable.
 
 Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* ace/WIN32_Proactor.cpp,
+	  ace/WIN32_Asynch_IO.cpp: Added back some initializers to keep EGCS happy. 
 
         * ace/config-g++-common.h: Added ACE_LACKS_AUTO_PTR to work
           around an omission within the EGCS standard library.
