@@ -10,15 +10,15 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	Cubit \
-	POA \
+DIRS  = CDR \
+        Cubit \
+	OctetSeq \
 	Param_Test \
-	Thruput \
-	CDR \
-	OctetSeq 
+	POA \
+	Quoter \
+	Thruput
 
 # The following tests have not been updated yet
-#	Quoter
 # 	Demux_Test
 
 #----------------------------------------------------------------------------
