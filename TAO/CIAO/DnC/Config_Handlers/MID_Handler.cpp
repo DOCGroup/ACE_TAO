@@ -74,13 +74,6 @@ namespace CIAO
                       IR_Handler ir_handler (iter_, false);
                       ir_handler.process_ImplementationRequirement
                         (mid.deployRequirement[i]);
-//                      nia_handler.process_NamedImplementationArtifact
-//                        (mid.primaryArtifact[i]);
-/*
-                      Requirement_Handler::process_Requirement
-                         (this->iter_,
-                          mid.deployRequirement[i]);
-*/
                     }
                   else if (length > 1)
                     {
@@ -415,11 +408,6 @@ namespace CIAO
               IR_Handler ir_handler (iter_, false);
               ir_handler.process_ImplementationRequirement
                 (mid_req);
-/*
-              Requirement_Handler::process_Requirement
-                  (href_iter,
-                   mid_req);
-*/
             }
         }
 
