@@ -345,4 +345,7 @@ JAWS_HTTP_10_Parse_Task::parse_header_value (JAWS_HTTP_10_Request *info,
           return 0;
         }
     }
+
+  // NOT REACHED
+  return 1;
 }
