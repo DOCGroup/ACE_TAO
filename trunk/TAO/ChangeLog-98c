@@ -1,3 +1,10 @@
+Thu Apr  9 20:15:41 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp (init): Added code to
+	recognize the -o option to output the Naming Service ior to a file
+	to avoid setting the NameService env. variable when multiple
+	naming services are running.
+
 Thu Apr  9 20:14:04 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Added a
