@@ -7,6 +7,7 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Managed_Object.h"
+#include "ace/Synch.h"
 
 template <class TYPE>
 ACE_Managed_Cleanup<TYPE>::ACE_Managed_Cleanup (void)
