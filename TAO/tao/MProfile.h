@@ -26,7 +26,7 @@ class TAO_Profile;
 typedef TAO_Profile * TAO_Profile_ptr;
 // @@ Fred, please don't create global typedefs that aren't prefixed
 // by TAO_.
-typedef CORBA::ULong PHandle; 
+typedef CORBA::ULong TAO_PHandle; 
 
 class TAO_Export TAO_MProfile 
 {
@@ -76,12 +76,12 @@ public:
   // return a pointer to the current profile, will not increment
   // referecne pointer.
 
-  TAO_Profile_ptr get_profile (PHandle handle);
+  TAO_Profile_ptr get_profile (TAO_PHandle handle);
   // Return a pointer to the profile referenced by handle void
 
-  // rem_profile (PHandle handle); let's wait.
+  // rem_profile (TAO_PHandle handle); let's wait.
 
-  PHandle get_current_handle (void);
+  TAO_PHandle get_current_handle (void);
   // Returns the index for the current profile.
 
   CORBA::ULong profile_count (void);
@@ -132,14 +132,14 @@ private:
   TAO_Profile_ptr *pfiles_;
   // Actual list of profiles.
 
-  PHandle current_;
+  TAO_PHandle current_;
   // Points to the next prfoile to be used.
   // 0 ... size_
 
-  PHandle size_;
+  TAO_PHandle size_;
   // Max size of array
 
-  PHandle last_;
+  TAO_PHandle last_;
   // Index plus 1 of last valid entry!  May be < size_
 };
 
