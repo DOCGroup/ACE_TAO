@@ -1063,7 +1063,7 @@ Tue Mar 23 09:27:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ImplRepo_Service/Makefile,Time_Service/Makefile,
           tests/ImplRepo/Makefile,tests/Time/Makefile:
-          only build if the orbsvcs library was build with the respective
+          only build if the orbsvcs library was built with the respective
           TAO_ORBSVCS component.
 
 Tue Mar 23 09:01:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
