@@ -3,11 +3,22 @@
 
 // The following configuration file is designed to work for OS
 // platforms running AIX 4.x using the IBM C++ compiler (xlC),
-// Visual Age C++ or g++/egcs.
+// Visual Age C++ or g++.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 #include "ace/pre.h"
+
+// Both IBM and g++ compilers set _THREAD_SAFE if compiler is asked to compile
+// threaded code (xlC_r, as opposed to xlC; and g++ -pthread)
+#  if defined (ACE_HAS_THREADS)
+#    undef ACE_HAS_THREADS
+#  endif
+#  if defined (_THREAD_SAFE)
+#    define ACE_HAS_THREADS 1
+#  else
+#    define ACE_HAS_THREADS 0
+#  endif /* _THREAD_SAFE */
 
 #if defined (__xlC__) || defined (__IBMCPP__)
    // AIX xlC, IBM C/C++, and Visual Age C++ compilers
@@ -17,7 +28,7 @@
 // Compiler does this with a builtin - it's not in libc.
 #  define ACE_HAS_ALLOCA
 
-   // Compiler supports the ssize_t typedef.
+// Compiler supports the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
 
 // When using the preprocessor, Ignore info msg; invalid #pragma
@@ -36,9 +47,6 @@
 #    endif /* __xlC__ < 0x0500 */
 #    define ACE_TEMPLATES_REQUIRE_PRAGMA
      // If compiling without thread support, turn off ACE's thread capability.
-#    if !defined (_THREAD_SAFE)
-#      define ACE_HAS_THREADS 0
-#    endif /* _THREAD_SAFE */
 #  endif
 
    // These are for Visual Age C++ only
@@ -82,6 +90,9 @@
 #ifndef AIX
 #  define AIX
 #endif /* AIX */
+
+// Pick up all the detectable settings.
+#include "ace/config-posix.h"
 
 // AIX shared libs look strangely like archive libs until you look inside
 // them.
@@ -255,12 +266,7 @@
 // the tid_t (kernel thread ID) if called from a thread.
 // Thanks very much to Chris Lahey for straightening this out.
 
-// Unless threads are specifically turned off, build with them enabled.
-#if !defined (ACE_HAS_THREADS)
-#  define ACE_HAS_THREADS 1
-#endif
-
-#if (ACE_HAS_THREADS != 0)
+#if defined (ACE_HAS_THREADS)
 #  if !defined (ACE_MT_SAFE)
 #    define ACE_MT_SAFE 1
 #  endif
