@@ -1,0 +1,28 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/tests/Interoperable_Naming/
+//
+// = FILENAME
+//    Web_Server.idl
+//
+// = DESCRIPTION
+//     IDL schema definition for Web server interface.
+//
+// = AUTHORS
+//     Priyanka Gontla <pgontla@ece.uci.edu>
+//
+//
+// ============================================================================
+
+IDL schema definition for Web server interface.
+
+module Web_Server
+{
+  interface Iterator_Factory
+  {
+  };
+
+};
