@@ -21,7 +21,7 @@
 #define TAO_GIOP_MESSAGE_LITE_H
 
 #include "tao/GIOP_Server_Request.h"
-#include "tao/GIOP_Assorted_Headers.h"
+#include "tao/GIOP_Message_Headers.h"
 #include "tao/target_specification.h"
 #include "tao/GIOP_Utils.h"
 
