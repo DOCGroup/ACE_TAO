@@ -560,6 +560,67 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 	(because calls would run at the priority of the client).
 	<P></P>
       </LI>
+      <LI><B>Single-threaded vs. Multi-threaded Connection Handlers</B>
+
+	The <CODE>Client_Connection_Handler</CODE> is the component in
+	TAO that writes the requests to the underlying transport
+	socket;
+	this is also the component that reads the response back from
+	the server.
+	<P>While waiting for this response new requests to the local
+	  ORB can arrive, this is the so-called nested upcall support.
+	  TAO supports two mechanisms for handling nested upcalls,
+	  the default uses the leader-follower model to allow multiple
+	  threads to wait on a single reactor for several concurrent
+	  requests;
+	  sometimes this configuration can be an overkill,
+	  if only one thread is using a reactor at the same time a
+	  lighter weight implementation can be used.
+	</P>
+	<P>This configuration is controled by the
+	  <CODE>-ORBclientconnectionhandler</CODE> option,
+	  good opportunities to use this option are:
+	</P>
+	<UL>
+	  <LI>Single threaded servers</LI>
+	  <LI>Servers running in ORB-per-thread mode</LI>
+	  <LI>Pure clients that will never receive a request</LI>
+	</UL>
+	<P></P>
+      </LI>
+      <LI><B>Allocator for input CDR streams</B>
+	Normally the application has no access to this buffer, and it
+	is only used on the demarshaling of arguments (or results).
+	It is almost always better to use the
+	"<CODE>-ORBinputcdrallocator tss</CODE>" option since it will
+	allocate memory from a thread specific allocator and it will
+	not need locks to manage that memory.
+	
+	<P>In some cases the user <I>may</I> gain access to the CDR
+	  stream buffer:
+	  TAO makes no copies when demarshaling octet sequences,
+	  instead the octet sequence simply points to the CDR buffer,
+	  since the octet sequence does not own this buffer a copy must
+	  be made if the user wants to keep the buffer after the
+	  upcall.
+	</P>
+	
+	<P>The user can, however, increase the reference count on the
+	  CDR stream buffer, thus allowing her to extend the lifetime
+	  of this buffer.
+	  Still passing this buffer to another thread and attempting
+	  to release it in that thread will result in some memory leak
+	  or corruption.
+	  Users willing to use this feature of TAO can still do so,
+	  <B>if</B> they use a global allocator for their input CDR
+	  stream, but that will introduce extra locking on the
+	  critical path.
+	</P>
+
+	<P>As the reader can see this is an option that has limited
+	  applicability and requires careful consideration of the
+	  tradeoffs involved.</P>
+      </LI>
 
     </UL>
 
