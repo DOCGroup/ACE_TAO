@@ -158,7 +158,7 @@ namespace Kokyu
    *
    */
   template <class QoSDesc>
-  class Kokyu_Export MUF_Comparator
+  class MUF_Comparator
   {
     public:
     typedef typename QoSDesc::Criticality_t Criticality_t;
