@@ -121,8 +121,18 @@ namespace Sender_Impl
       ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual ::Components::ConsumerDescriptions *
-      get_registered_consumer (const char *publisher_name
+      get_registered_consumers (const char *publisher_name
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual void
+      deactivate_facet (const char *obj_id
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual void
+      update_port_activator (const char *obj_id
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
       // CIAO-specific.

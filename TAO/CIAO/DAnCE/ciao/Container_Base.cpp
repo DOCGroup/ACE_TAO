@@ -422,6 +422,14 @@ namespace CIAO
   }
 
   void
+  Session_Container::deactivate_facet (PortableServer::ObjectId &oid
+                                       ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  }
+
+  void
   Session_Container::delete_servant_map
     (PortableServer::ObjectId &
      ACE_ENV_ARG_DECL)

@@ -55,6 +55,10 @@ namespace CIAO
 
     virtual ~Servant_Activator (void);
 
+    bool update_port_activator (const PortableServer::ObjectId &oid
+      ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     /// Template methods overridden to get callbacks.
     /**
      * If you would like to know the details of the following two

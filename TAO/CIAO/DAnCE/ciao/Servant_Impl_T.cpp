@@ -161,6 +161,29 @@ namespace CIAO
             typename EXEC_VAR,
             typename CONTEXT>
   void
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::activate_component (
+      ACE_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    if (this->is_activated () == 0)
+      {
+        this->ciao_preactivate (
+                ACE_ENV_SINGLE_ARG_PARAMETER);
+
+        this->ciao_activate (
+                ACE_ENV_SINGLE_ARG_PARAMETER);
+
+        this->ciao_postactivate (
+                ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename CONTEXT>
+  void
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::ciao_preactivate (
       ACE_ENV_SINGLE_ARG_DECL
     )
