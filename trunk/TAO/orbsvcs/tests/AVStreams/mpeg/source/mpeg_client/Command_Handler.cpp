@@ -280,6 +280,9 @@ Command_Handler::init_video (void)
         }
       else
         {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s %d\n",
+                      __FILE__,__LINE__));
           shared->nextFrame = 1;
           shared->nextGroup = 0;
           shared->currentFrame = shared->currentGroup = shared->currentDisplay = 0;
@@ -477,7 +480,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
           free(ah);
           free(af);
           ::close(sp[0]);
-          ::close (videoSocket);
+          //        ::close (videoSocket);
           if (audioSocket >= 0)
             ComCloseFd(audioSocket);
           ABdeleteBuf();
@@ -495,7 +498,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
           break;
         default:
           ::close(sp[1]);
-          ::close(dataSocket);
+          //          ::close(dataSocket);
           {
             int bytes, res;
             /* passing all messages of INIT frame to VB here. */
@@ -1392,9 +1395,6 @@ Command_Handler::connect_to_server (char *address,
   ACE_INET_Addr server_udp_addr (server_port,
                                  address);
 
-  this->dgram_.set_handle (*data_fd);
-
-
   if (this->dgram_.open (server_udp_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Command_Handler::connect_to_server:%p\n",
@@ -1406,6 +1406,9 @@ Command_Handler::connect_to_server (char *address,
   //  *ctr_fd = this->stream_.get_handle ();
   *ctr_fd = *data_fd = this->dgram_.get_handle ();
   // set both the control and data socket the same UDP socket.
+  ACE_DEBUG ((LM_DEBUG,
+              "Control and data fd = %d\n",
+              *ctr_fd));
   return 0;
 }
 

@@ -233,6 +233,8 @@ static void CmdWrite(unsigned char * buf, int size)
 static void SocketRead(int s, char *buf, int size)
 { int val, remain = size;
   char * ptr = buf;
+  fprintf (stderr, "SocketRead: videoSocket = %d\n",
+           videoSocket);
   for (;;)
   {
     val = read(s, ptr, remain);
