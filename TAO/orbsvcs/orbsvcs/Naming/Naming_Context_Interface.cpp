@@ -472,7 +472,7 @@ TAO_Naming_Context::to_url (const char * addr,
 
   /// Concatenate the seperator between the addr and Name
   dest += ACE_OS::strlen(dest);
-  dest = ACE_OS::strcat (dest, "/");
+  dest = ACE_OS::strcat (dest, "#");
 
   /// move to end of dest string
   dest += ACE_OS::strlen(dest);
