@@ -1,3 +1,11 @@
+Sat Jan 19 09:22:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Transport.cpp: Just swapped a couple of
+	  #includes. The dependency generation was getting messed up
+	  somehow.
+
+	* orbsvcs/orbsvcs/Makefile.av: Fixed the dependencies.
+
 Sat Jan 19 09:03:32 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: 

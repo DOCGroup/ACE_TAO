@@ -117,8 +117,9 @@ AVSVC_COMPONENTS:
 
 
 .obj/AVStreamsS.o .obj/AVStreamsS.so .shobj/AVStreamsS.o .shobj/AVStreamsS.so: AVStreamsS.cpp AVStreamsS.h CosPropertyServiceS.h \
-  $(ACE_ROOT)/ace/pre.h CosPropertyServiceC.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -312,7 +313,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Property/property_export.h CosPropertyServiceC.i \
+  AV/AV_export.h CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -329,8 +330,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
   CosPropertyServiceS_T.cpp CosPropertyServiceS.i AVStreamsC.h \
-  AV/AV_export.h AVStreamsC.i AVStreamsS_T.h AVStreamsS_T.i \
-  AVStreamsS_T.cpp AVStreamsS.i \
+  AVStreamsC.i AVStreamsS_T.h AVStreamsS_T.i AVStreamsS_T.cpp \
+  AVStreamsS.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
   $(ACE_ROOT)/ace/Map.h \
@@ -1354,8 +1355,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  AV/AV_export.h CosPropertyServiceC.h Property/property_export.h \
-  CosPropertyServiceC.i AVStreamsC.i \
+  AV/AV_export.h CosPropertyServiceC.h CosPropertyServiceC.i AVStreamsC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
@@ -1461,8 +1461,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/PortableInterceptor.h \
   $(TAO_ROOT)/tao/RequestInfo_Util.h \
-  $(TAO_ROOT)/tao/ClientRequestInfo.h \
-  $(TAO_ROOT)/tao/ClientRequestInfo.inl \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
@@ -1768,8 +1768,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/PortableInterceptor.h \
   $(TAO_ROOT)/tao/RequestInfo_Util.h \
-  $(TAO_ROOT)/tao/ClientRequestInfo.h \
-  $(TAO_ROOT)/tao/ClientRequestInfo.inl \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
@@ -2075,8 +2075,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/PortableInterceptor.h \
   $(TAO_ROOT)/tao/RequestInfo_Util.h \
-  $(TAO_ROOT)/tao/ClientRequestInfo.h \
-  $(TAO_ROOT)/tao/ClientRequestInfo.inl \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
@@ -2401,7 +2401,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -2425,8 +2424,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -2693,7 +2692,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   AV/AV_export.h \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -2850,8 +2848,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/Endpoint_Strategy.h \
   AV/Endpoint_Strategy_T.h \
@@ -3113,7 +3111,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -3550,7 +3547,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -3574,8 +3570,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -3919,7 +3915,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -3943,8 +3938,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -4316,7 +4311,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -4340,8 +4334,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -4683,7 +4677,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -4707,8 +4700,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -4734,11 +4727,13 @@ AVSVC_COMPONENTS:
   sfpC.h \
   sfpC.i \
   AV/Policy.h AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h \
-  AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \ \
-  AV/RTCP.h \
+  AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTCP.h \
   AV/UDP.h \
   AV/RTP.h \
-  AV/RTCP_Channel.h AV/RTCP_Packet.h AV/TCP.h \
+  AV/Protocol_Factory.h \
+  AV/Policy.h \
+  AV/MCast.h \
+  AV/RTCP_Channel.h AV/RTP.h AV/RTCP_Packet.h AV/TCP.h \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -4954,7 +4949,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -5090,8 +5084,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -5321,7 +5315,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -5457,8 +5450,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -5685,7 +5678,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -6008,7 +6000,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -6323,7 +6314,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -6467,8 +6457,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -6838,7 +6828,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -6862,8 +6851,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -7112,7 +7101,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -7441,7 +7429,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -7768,7 +7755,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -7909,8 +7895,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/Endpoint_Strategy.h \
   AV/Endpoint_Strategy_T.h \
@@ -8149,7 +8135,6 @@ AVSVC_COMPONENTS:
   AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h AV/AV_Core.h \
   AVStreamsC.h \
   CosPropertyServiceC.h \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
@@ -8281,8 +8266,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
@@ -8627,7 +8612,6 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Property/property_export.h \
   CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -8651,8 +8635,8 @@ AVSVC_COMPONENTS:
   AVStreamsS_T.cpp \
   AVStreamsS.i \
   Property/CosPropertyService_i.h \
+  Property/property_export.h \
   CosNamingC.h \
-  Naming/naming_export.h \
   CosNamingC.i \
   AV/AV_Core.h \
   AV/Endpoint_Strategy.h \
