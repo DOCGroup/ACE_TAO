@@ -1,6 +1,15 @@
+Thu Jun  3 17:28:49 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+	  Formatted the output a bit to make the message more reflective.
+
+	* DnC/ciao/CCM_Core.mpc:
+	  Moved the callback implementation from deployment servant to
+	  stub.
+
 Thu Jun  3 16:25:58 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/DnC_Dump.cpp: 
+	* DnC/Config_Handlers/DnC_Dump.cpp:
 
 	Added the dump code for ComponentPropertyDescription::type (CORBA::TypeCode).
 
@@ -8,19 +17,19 @@ Thu Jun  3 16:15:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DnC/NodeApplication/NodeApplication.mpc:
         * DnC/ciao/CCM_Core.mpc:
-        
+
           Some tweaks to the MPC files.
 
 Thu Jun  3 16:10:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
-        
+
           Forgot to remove generated members of the servant class that
           have been moved to the base classes.
 
 Thu Jun  3 16:07:35 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/DnC_Dump.h: 
+	* DnC/Config_Handlers/DnC_Dump.h:
 	* DnC/Config_Handlers/DnC_Dump.cpp:
 
 	Added the methods required to dump referenced values
