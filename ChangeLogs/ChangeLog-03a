@@ -1,3 +1,12 @@
+Wed Nov  8 14:40:25 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-all.h
+
+          Fix a build problem on HP-UX 11.00 with aCC A.03.25.  The macro
+          used to determine the use of the std namespace changed from
+          RWSTD_NO_NAMESPACE to _NAMESPACE_STD.  NOTE: I did preserve the
+          check for RWSTD_NO_NAMESPACE with aCC versions less than A.03.25.
+
 Wed Nov  8 10:27:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/generate_doxygen.pl:
