@@ -1,3 +1,35 @@
+Sun May  6 10:02:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Handler.cpp:
+	* tao/GIOP_Message_Handler.h:
+	* tao/GIOP_Message_Handler.inl: Changed the error handling
+	  conditions. When we come across a read failure with EWOULDBLOCK
+	  we used to ask the reactor to call us back. This caused
+	  thrashing when the application received a signal. We dont ask
+	  the reactor to call us back, instead we just return a zero to
+	  the reactor. Further, changed the error codes to match the
+	  reactor semantics.
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Transport.cpp: Made sure that we pass the error codes
+	  from the GIOP layer, as is to the reactor. We dont manipulate
+	  the return values as we did before. The return values just match
+	  the reactor semantics ie. returns -1 on error, 1 for a quick
+	  callback and a zero for everything is fine case.
+
+	* tao/Wait_On_Read.cpp: The wait () call used to loop on
+	  reply_received flag alone. We now use a temporary variable also
+	  for the looping similar to the way other Wait strategies
+	  loop. The other strategies used a reactor and adhered to the
+	  reactor semantics. The Wait_On_Read did not use a reactor and
+	  followed a different semantics for success and failure. This
+	  created confusion at the protocol implementation level. 
+
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.cpp: Replicated the changes from
+	  IIOP.
+
 Sun May  6 9:49:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:

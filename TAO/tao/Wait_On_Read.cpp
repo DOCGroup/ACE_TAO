@@ -22,16 +22,32 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                         int &reply_received)
 {
   reply_received = 0;
-  while (reply_received == 0)
+
+  // Do the same sort of looping that is done in other wait
+  // strategies.
+  int retval = 0;
+  while (1)
     {
-      reply_received =
+      retval =
         this->transport_->read_process_message (max_wait_time, 1);
+
+      // If we got our reply, no need to run the loop any
+      // further.
+      if (reply_received)
+        break;
+
+      // @@ We are not checking for timeouts here...
+
+      // If we got an error just break
+      if (retval == -1)
+        break;
     }
 
-  if (reply_received == -1)
+  if (reply_received == -1 || retval == -1)
     {
       this->transport_->close_connection ();
     }
+
   return (reply_received == 1 ? 0 : reply_received);
 }
 

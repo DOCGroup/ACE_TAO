@@ -116,17 +116,21 @@ TAO_SHMIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
       this->tms_->connection_closed ();
       return -1;
     }
-  if (result == 0)
+  if (result < 2)
     return result;
 
   // Now we know that we have been able to read the complete message
   // here.. We loop here to see whether we have read more than one
   // message in our read.
-  do
+
+  // Set the result state
+  result = 1;
+
+  // See we use the reactor semantics again
+  while (result > 0)
     {
       result = this->process_message ();
     }
-  while (result > 1);
 
   return result;
 }
@@ -231,6 +235,13 @@ TAO_SHMIOP_Transport::reactor_signalling (void)
 int
 TAO_SHMIOP_Transport::process_message (void)
 {
+  // Check whether we have messages for processing
+  int retval =
+    this->messaging_object_->more_messages ();
+
+  if (retval <= 0)
+    return retval;
+
   // Get the <message_type> that we have received
   TAO_Pluggable_Message_Type t =
     this->messaging_object_->message_type ();
@@ -338,8 +349,7 @@ TAO_SHMIOP_Transport::process_message (void)
       return -1;
     }
 
-
-  return this->messaging_object_->more_messages ();
+  return 1;
 }
 
 void

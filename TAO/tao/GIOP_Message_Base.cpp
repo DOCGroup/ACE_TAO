@@ -185,22 +185,38 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
 {
   // Call the handler to read and do a simple parse of the header of
   // the message.
-  int retval = this->message_handler_.read_parse_message (transport);
+  int retval =
+    this->message_handler_.read_messages (transport);
 
   if (retval < 1)
     return retval;
 
-  // Get the message state
-  TAO_GIOP_Message_State &state =
-    this->message_handler_.message_state ();
+  retval = this->message_handler_.parse_message_header ();
 
-  // Set the state internally for parsing and generating messages
-  this->set_state (state.giop_version.major,
-                   state.giop_version.minor);
 
-  retval =  this->message_handler_.is_message_ready (transport);
+  // Error in the message that was received
+  if (retval == -1)
+    return -1;
+  // If -2, we want the reactor to call us back, so return 1
+  else if (retval == -2)
+    return 1;
 
-  return retval;
+  if (retval != 0)
+    {
+      // Get the message state
+      TAO_GIOP_Message_State &state =
+        this->message_handler_.message_state ();
+
+      // Set the state internally for parsing and generating messages
+      this->set_state (state.giop_version.major,
+                       state.giop_version.minor);
+    }
+
+  // We return 2, it is ugly. But the reactor semantics has made us to
+  // limp :(
+  return 2;
+
+
 }
 
 int
@@ -1147,12 +1163,12 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (void)
 int
 TAO_GIOP_Message_Base::more_messages (void)
 {
-  // Does the handler have more messages for processing?
-  int retval  = this->message_handler_.more_messages ();
+  int retval =
+    this->message_handler_.is_message_ready ();
 
-  if (retval == TAO_MESSAGE_BLOCK_COMPLETE ||
-      retval == TAO_MESSAGE_BLOCK_INCOMPLETE)
-    return 1;
+  if (retval <= 0)
+    return retval;
+
 
   // Get the message state
   TAO_GIOP_Message_State &state =
@@ -1161,13 +1177,6 @@ TAO_GIOP_Message_Base::more_messages (void)
   // Set the state internally for parsing and generating messages
   this->set_state (state.giop_version.major,
                    state.giop_version.minor);
-
-  // retval =  this->message_handler_.is_message_ready ();
-
-  if (retval == 1)
-    {
-      return TAO_MESSAGE_BLOCK_NEEDS_PROCESSING;
-    }
 
   return retval;
 }
