@@ -24,9 +24,7 @@ FILES	= Concrete_Proxy_Handlers \
 	  Proxy_Handler_Connector
 
 LSRC	= $(addsuffix .cpp,$(FILES))
-
 LDLIBS	= -lGateway
-
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
@@ -54,7 +52,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.shobj/Concrete_Proxy_Handlers.so: Concrete_Proxy_Handlers.cpp Event_Channel.h \
+.obj/Concrete_Proxy_Handlers.o .shobj/Concrete_Proxy_Handlers.so: Concrete_Proxy_Handlers.cpp Event_Channel.h \
  Proxy_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -162,7 +160,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h \
  Concrete_Proxy_Handlers.h
-.shobj/Config_Files.so: Config_Files.cpp \
+.obj/Config_Files.o .shobj/Config_Files.so: Config_Files.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/iosfwd.h \
@@ -176,7 +174,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  Config_Files.h File_Parser.h
-.shobj/File_Parser.so: File_Parser.cpp \
+.obj/File_Parser.o .shobj/File_Parser.so: File_Parser.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/iosfwd.h \
@@ -190,7 +188,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  File_Parser.h
-.shobj/Gateway.so: Gateway.cpp \
+.obj/Gateway.o .shobj/Gateway.so: Gateway.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -299,7 +297,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h Gateway.h
-.shobj/Event_Channel.so: Event_Channel.cpp Proxy_Handler_Connector.h \
+.obj/Event_Channel.o .shobj/Event_Channel.so: Event_Channel.cpp Proxy_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -405,7 +403,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h
-.shobj/Event_Forwarding_Discriminator.so: Event_Forwarding_Discriminator.cpp \
+.obj/Event_Forwarding_Discriminator.o .shobj/Event_Forwarding_Discriminator.so: Event_Forwarding_Discriminator.cpp \
  Event_Forwarding_Discriminator.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -437,7 +435,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  Consumer_Dispatch_Set.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i
-.shobj/Proxy_Handler.so: Proxy_Handler.cpp Event_Channel.h \
+.obj/Proxy_Handler.o .shobj/Proxy_Handler.so: Proxy_Handler.cpp Event_Channel.h \
  Proxy_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -545,7 +543,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h \
  Concrete_Proxy_Handlers.h
-.shobj/Proxy_Handler_Acceptor.so: Proxy_Handler_Acceptor.cpp Event_Channel.h \
+.obj/Proxy_Handler_Acceptor.o .shobj/Proxy_Handler_Acceptor.so: Proxy_Handler_Acceptor.cpp Event_Channel.h \
  Proxy_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -652,7 +650,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  Consumer_Dispatch_Set.h Event_Forwarding_Discriminator.h
-.shobj/Proxy_Handler_Connector.so: Proxy_Handler_Connector.cpp \
+.obj/Proxy_Handler_Connector.o .shobj/Proxy_Handler_Connector.so: Proxy_Handler_Connector.cpp \
  Proxy_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
