@@ -24,6 +24,12 @@ Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
           defined (and older versions of these export files did not do 
           that).
 
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+        * examples/Shared_Malloc/test_malloc.cpp:
+
+          Changed empty ;'s in if statements to {} to remove warnings.
+
+
         * bin/msvc_auto_compile.pl:
 
           Added a -u option that tells the script to pass the /USEENV
@@ -40,7 +46,6 @@ Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
         * apps/Gateway/Peer/Peer.dsp:
         * apps/Gateway/Peer/peerd.dsp:
         * apps/JAWS/clients/Caching/Caching.dsp:
-        * apps/JAWS/server/HTTP_Helpers.cpp:
         * apps/JAWS/server/jaws.dsp:
         * apps/JAWS2/server.dsp:
         * apps/JAWS2/HTTPU/HTTPU.DSP:
@@ -103,7 +108,6 @@ Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
         * examples/Shared_Malloc/multiple_mallocs.dsp:
         * examples/Shared_Malloc/persistence.dsp:
         * examples/Shared_Malloc/position_independent_malloc.dsp:
-        * examples/Shared_Malloc/test_malloc.cpp:
         * examples/Web_Crawler/Web_Crawler.dsp:
         * performance-tests/Misc/basic_perf.dsp:
         * performance-tests/Misc/childbirth_time.dsp:
