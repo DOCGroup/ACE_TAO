@@ -22,6 +22,18 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 #include "ace/config.h"
 
+#if defined (ACE_HAS_ANSI_CASTS)
+# define ACE_static_cast(TYPE, EXPR)       static_cast<TYPE> (EXPR)
+# define ACE_const_cast(TYPE, EXPR)        const_cast<TYPE> (EXPR)
+# define ACE_reinterpret_cast(TYPE, EXPR)  reinterpret_cast<TYPE> (EXPR)
+# define ACE_dynamic_cast(TYPE, EXPR)      dynamic_cast<TYPE> (EXPR)
+#else
+# define ACE_static_cast(TYPE, EXPR)       (TYPE) (EXPR)
+# define ACE_const_cast(TYPE, EXPR)        (TYPE) (EXPR)
+# define ACE_reinterpret_cast(TYPE, EXPR)  (TYPE) (EXPR)
+# define ACE_dynamic_cast(TYPE, EXPR)      (TYPE) (EXPR)
+#endif /* ACE_HAS_ANSI_CASTS */
+
 // Deal with MSVC++ insanity for CORBA...
 #if defined (ACE_WIN32) && !defined (ACE_ORBIX_HAS_NAMESPACES)
 #define ACE_CORBA_1(NAME) CORBA_##NAME

@@ -1,3 +1,11 @@
+Sun Nov 09 22:18:30 1997    <irfan@TWOSTEP>
+
+	* ace/config-win32-common.h (ACE_HAS_ANSI_CASTS): VC++ compilers
+ 	  support ANSI style casts.
+
+	* ace/OS.h (ACE_static_cast): Added ANSI style cast macros to ACE.
+  	  Thanks to Stephen Coy <stevec@magna.com.au> for suggesting this.
+
 Sun Nov  9 21:34:16 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS: Enhanced ACE_OS so that it *always* defines
