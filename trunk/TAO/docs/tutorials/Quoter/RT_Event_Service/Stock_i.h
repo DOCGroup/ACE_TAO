@@ -17,6 +17,7 @@ public:
   Quoter_Stock_i (const char *symbol,
                   const char *full_name,
                   CORBA::Double price);
+  ~Quoter_Stock_i (void);
 
   char *symbol () throw (CORBA::SystemException);
   char *full_name () throw (CORBA::SystemException);
@@ -33,7 +34,7 @@ private:
 
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
 
-  POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i> supplier_personality_;
+  POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i> &supplier_personality_;
 };
 
 #endif /* TAO_TUTORIAL_QUOTER_RT_EVENT_SERVICE_STOCK_I_H */
