@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_UPIPE_ACCEPTOR_H
-#include "ace/pre.h"
 #define ACE_UPIPE_ACCEPTOR_H
+#include "ace/pre.h"
 
 #include "ace/UPIPE_Stream.h"
 

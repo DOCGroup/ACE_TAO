@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_MAP_T_H
-#include "ace/pre.h"
 #define ACE_MAP_T_H
+#include "ace/pre.h"
 
 #include "ace/Map.h"
 #include "ace/Pair.h"

@@ -28,8 +28,8 @@
 // ============================================================================
 
 #ifndef ACE_WIN32_ASYNCH_IO_H
-#include "ace/pre.h"
 #define ACE_WIN32_ASYNCH_IO_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

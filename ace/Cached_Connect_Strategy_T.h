@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef CACHED_CONNECT_STRATEGY_T_H
-#include "ace/pre.h"
 #define CACHED_CONNECT_STRATEGY_T_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

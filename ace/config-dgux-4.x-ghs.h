@@ -5,8 +5,8 @@
 // 4.x platforms using the Green Hills Multi C++ compiler.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #define ACE_DGUX
 

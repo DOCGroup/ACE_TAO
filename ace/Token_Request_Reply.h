@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef ACE_TOKEN_REQUEST_REPLY_H
-#include "ace/pre.h"
 #define ACE_TOKEN_REQUEST_REPLY_H
+#include "ace/pre.h"
 
 #include "ace/Local_Tokens.h"
 

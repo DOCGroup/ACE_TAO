@@ -5,8 +5,8 @@
 // common to all Win32/MSVC/MFC combinations.
 
 #ifndef ACE_WIN32_MSVC_H
-#include "ace/pre.h"
 #define ACE_WIN32_MSVC_H
+#include "ace/pre.h"
 
 #if defined (_MSC_VER)
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_MAP_MANAGER_H
-#include "ace/pre.h"
 #define ACE_MAP_MANAGER_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

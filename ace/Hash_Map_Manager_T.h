@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_HASH_MAP_MANAGER_T_H
-#include "ace/pre.h"
 #define ACE_HASH_MAP_MANAGER_T_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "ace/Functor.h"

@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef ACE_LOCK_SOCK_ACCEPTOR_H
-#include "ace/pre.h"
 #define ACE_LOCK_SOCK_ACCEPTOR_H
+#include "ace/pre.h"
 
 #include "ace/SOCK_Acceptor.h"
 

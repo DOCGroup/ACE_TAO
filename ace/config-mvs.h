@@ -4,8 +4,8 @@
 // Config file for MVS with OpenEdition
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 // The following #defines are hacks to get around things
 // that seem to be missing or different in MVS land

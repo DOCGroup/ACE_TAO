@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_THREAD_MANAGER_H
-#include "ace/pre.h"
 #define ACE_THREAD_MANAGER_H
+#include "ace/pre.h"
 
 #include "ace/Thread.h"
 

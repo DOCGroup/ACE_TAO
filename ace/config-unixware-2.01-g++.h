@@ -4,8 +4,8 @@
 // The following configuration file is designed to work
 // for Unixware platforms running UnixWare 2.01.
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 // See README for what the ACE_HAS... and ACE_LACKS... macros mean
 

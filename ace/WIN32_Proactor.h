@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef ACE_WIN32_PROACTOR_H
-#include "ace/pre.h"
 #define ACE_WIN32_PROACTOR_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "ace/WIN32_Asynch_IO.h"

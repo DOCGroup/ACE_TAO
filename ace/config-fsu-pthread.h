@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef ACE_CONFIG_FSU_PTHREAD_H
-#include "ace/pre.h"
 #define ACE_CONFIG_FSU_PTHREAD_H
+#include "ace/pre.h"
 
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 

@@ -8,8 +8,8 @@
 // and configures based on those.
 
 #ifndef ACE_CYGWIN32_COMMON_H
-#include "ace/pre.h"
 #define ACE_CYGWIN32_COMMON_H
+#include "ace/pre.h"
 
 #define CYGWIN32
 

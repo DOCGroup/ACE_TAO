@@ -6,8 +6,8 @@
 // variety of compilers.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #if defined (ACE_HAS_WINCE) || defined (UNDER_CE)
 # include "ace/config-WinCE.h"

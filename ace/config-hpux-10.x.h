@@ -17,8 +17,8 @@
 #define HPUX_10
 
 #ifndef _HPUX_SOURCE
-#include "ace/pre.h"
 #define _HPUX_SOURCE
+#include "ace/pre.h"
 #endif
 
 // Some things are different for 10.10 vs. 10.20 vs. 10.30

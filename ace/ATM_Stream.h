@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_ATM_STREAM_H
-#include "ace/pre.h"
 #define ACE_ATM_STREAM_H
+#include "ace/pre.h"
 
 #include "ace/ATM_Addr.h"
 #include "ace/ATM_Params.h"

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SVC_HANDLER_H
-#include "ace/pre.h"
 #define ACE_SVC_HANDLER_H
+#include "ace/pre.h"
 
 // Forward decls.
 class ACE_Connection_Recycling_Strategy;

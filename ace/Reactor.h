@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_REACTOR_H
-#include "ace/pre.h"
 #define ACE_REACTOR_H
+#include "ace/pre.h"
 
 class ACE_Reactor_Impl;
 

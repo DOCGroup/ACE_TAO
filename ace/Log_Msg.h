@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_LOG_MSG_H
-#include "ace/pre.h"
 #define ACE_LOG_MSG_H
+#include "ace/pre.h"
 
 // This stuff must come first to avoid problems with circular
 // headers...

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_UNIX_ADDR_H
-#include "ace/pre.h"
 #define ACE_UNIX_ADDR_H
+#include "ace/pre.h"
 
 #include "ace/Addr.h"
 

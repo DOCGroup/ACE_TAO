@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef ACE_TYPED_SV_MESSAGE_H
-#include "ace/pre.h"
 #define ACE_TYPED_SV_MESSAGE_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

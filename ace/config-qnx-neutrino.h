@@ -4,8 +4,8 @@
 // 2.0 (Beta) with GNU C++ and the POSIX (pthread) threads package.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #define _POSIX_C_SOURCE 199506
 #define _QNX_SOURCE

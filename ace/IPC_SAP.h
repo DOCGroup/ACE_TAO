@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_IPC_SAP_H
-#include "ace/pre.h"
 #define ACE_IPC_SAP_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

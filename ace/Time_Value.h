@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_TIME_VALUE_H
-#include "ace/pre.h"
 #define ACE_TIME_VALUE_H
+#include "ace/pre.h"
 
 // This file is no longer used and is only here due to backwards
 // compatibility.  All the functionality has been merged into OS.h.

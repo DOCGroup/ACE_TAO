@@ -30,8 +30,8 @@
 // ============================================================================
 
 #ifndef ACE_TP_REACTOR_H
-#include "ace/pre.h"
 #define ACE_TP_REACTOR_H
+#include "ace/pre.h"
 
 #include "ace/Select_Reactor.h"
 

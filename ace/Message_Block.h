@@ -21,8 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #ifndef ACE_MESSAGE_BLOCK_H
-#include "ace/pre.h"
 #define ACE_MESSAGE_BLOCK_H
+#include "ace/pre.h"
 
 #include "ace/Malloc.h"
 

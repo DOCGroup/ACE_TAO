@@ -5,8 +5,8 @@
 // Indigo2EX running Irix 6.5 platform using the KAI C++ compiler.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #include "ace/config-kcc-common.h"
 

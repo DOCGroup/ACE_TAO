@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_MALLOC_BASE_H
-#include "ace/pre.h"
 #define ACE_MALLOC_BASE_H
+#include "ace/pre.h"
 
 // The definition of this class is located in Malloc.cpp.
 

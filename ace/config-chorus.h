@@ -8,8 +8,8 @@
 // It uses the Chorus POSIX threads interface.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #define CHORUS 3.1b
 #if defined (linux)

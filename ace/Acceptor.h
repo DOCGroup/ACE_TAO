@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_ACCEPTOR_H
-#include "ace/pre.h"
 #define ACE_ACCEPTOR_H
+#include "ace/pre.h"
 
 #include "ace/Service_Config.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_PROCESS_MANAGER_H
-#include "ace/pre.h"
 #define ACE_PROCESS_MANAGER_H
+#include "ace/pre.h"
 
 #include "ace/Synch.h"
 #include "ace/Reactor.h"

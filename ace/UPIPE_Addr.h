@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef ACE_UPIPE_ADDR_H
-#include "ace/pre.h"
 #define ACE_UPIPE_ADDR_H
+#include "ace/pre.h"
 
 #include "ace/SPIPE_Addr.h"
 

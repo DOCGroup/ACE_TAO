@@ -2,8 +2,8 @@
 // $Id$
 
 #ifndef ACE_CONFIG_CRAY_H
-#include "ace/pre.h"
 #define ACE_CONFIG_CRAY_H
+#include "ace/pre.h"
 
 /*
     The following predefined macros are used within ACE ifdefs.

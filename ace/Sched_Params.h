@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef ACE_SCHED_PARAMS_H
-#include "ace/pre.h"
 #define ACE_SCHED_PARAMS_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

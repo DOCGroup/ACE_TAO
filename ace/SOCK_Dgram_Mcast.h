@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef ACE_SOCK_DGRAM_MCAST_H
-#include "ace/pre.h"
 #define ACE_SOCK_DGRAM_MCAST_H
+#include "ace/pre.h"
 
 #include "ace/SOCK_Dgram.h"
 

@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef ACE_NAME_PROXY_H
-#include "ace/pre.h"
 #define ACE_NAME_PROXY_H
+#include "ace/pre.h"
 
 #include "ace/INET_Addr.h"
 

@@ -26,8 +26,8 @@
 // ============================================================================
 
 #ifndef ACE_ASYNCH_IO_IMPL_H
-#include "ace/pre.h"
 #define ACE_ASYNCH_IO_IMPL_H
+#include "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

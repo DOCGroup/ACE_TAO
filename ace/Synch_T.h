@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SYNCH_T_H
-#include "ace/pre.h"
 #define ACE_SYNCH_T_H
+#include "ace/pre.h"
 
 #include "ace/Event_Handler.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_PIPE_H
-#include "ace/pre.h"
 #define ACE_PIPE_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef ACE_SOCK_DGRAM_BCAST_H
-#include "ace/pre.h"
 #define ACE_SOCK_DGRAM_BCAST_H
+#include "ace/pre.h"
 
 #include "ace/INET_Addr.h"
 

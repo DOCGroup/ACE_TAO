@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_MEM_CONNECTOR_H
-#include "ace/pre.h"
 #define ACE_MEM_CONNECTOR_H
+#include "ace/pre.h"
 
 #include "ace/SOCK_Connector.h"
 

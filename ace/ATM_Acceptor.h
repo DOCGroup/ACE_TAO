@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_ATM_ACCEPTOR_H
-#include "ace/pre.h"
 #define ACE_ATM_ACCEPTOR_H
+#include "ace/pre.h"
 
 #include "ace/Time_Value.h"
 #include "ace/ATM_Stream.h"

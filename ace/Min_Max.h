@@ -2,8 +2,8 @@
 // $Id$
 
 #ifndef ACE_MIN_MAX_H
-#include "ace/pre.h"
 #define ACE_MIN_MAX_H
+#include "ace/pre.h"
 
 // ============================================================================
 //

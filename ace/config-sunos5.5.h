@@ -8,8 +8,8 @@
 //   * Green Hills 1.8.8 and later
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 // Compiler version-specific settings:
 #if defined (__SUNPRO_CC)

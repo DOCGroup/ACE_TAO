@@ -4,8 +4,8 @@
 // The following configuration file contains defines for Borland compilers.
 
 #ifndef ACE_WIN32_BORLAND_H
-#include "ace/pre.h"
 #define ACE_WIN32_BORLAND_H
+#include "ace/pre.h"
 
 #if defined (__BORLANDC__)
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_READ_BUFFER_H
-#include "ace/pre.h"
 #define ACE_READ_BUFFER_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 
