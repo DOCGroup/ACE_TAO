@@ -1,3 +1,12 @@
+Wed Dec 10 23:04:04 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Logger/clnt.cpp: 
+	* orbsvcs/tests/Logger/clnt.h: 
+	* orbsvcs/tests/Logger/svr.cpp: 
+	  These files were missed in the orbsvcs hierarchy
+	  reorganization.
+
 Wed Dec 10 22:38:08 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/DII_Cubit: Fixed the  hand-crafted code to

@@ -19,9 +19,9 @@
 // ============================================================================
 
 #include <iostream.h>
+#include "orbsvcs/CosNamingC.h"
 #include "loggerS.h"
 #include "logger_i.h"
-#include "CosNamingC.h"
 
 int
 main (int argc, char ** argv)

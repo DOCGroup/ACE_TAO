@@ -22,8 +22,8 @@
 #include <iostream.h>
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+#include "orbsvcs/CosNamingC.h"
 #include "loggerC.h"
-#include "CosNamingC.h"
 #include "clnt.h"
 
 // constructor
