@@ -44,6 +44,42 @@ Tue Jun 22 00:38:58 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
           activate, add, list, remove, shutdown, and update.  Please see
           HTML docs for more info.
 
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+        * orbsvcs/tests/ImplRepo/IR_Helper.h:
+          IR_Helper works with new IR interfaces.
+
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+          Doesn't sleep anymore in the loop.
+
+        * orbsvcs/tests/ImplRepo/airplane_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_i.h:
+          Removed shutdown flags.  Servers do not shutdown after every
+          call in IR mode anymore.
+
+        * orbsvcs/tests/ImplRepo/airplane_server.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server.cpp:
+          Says goodnight when finished.
+
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h:
+          Removed registration code, since tao_ir now handles that.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Redid structure of ir tests.  Now will start IR, then register
+          server, start server, run client, shutdown server, run client
+          (which should then have the IR restart the server).
+
+        * orbsvcs/tests/ImplRepo/ImplRepo.dsw:
+        * orbsvcs/tests/ImplRepo/airplane_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_client.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+          General Updates.
+
 Tue Jun 22 00:29:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (key_to_object): Changed to use ACE try macros.
