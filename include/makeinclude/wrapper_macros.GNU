@@ -130,11 +130,22 @@ ifdef purify
 PRELINK += purify -best-effort -cache-dir=/tmp/purifycache -chain-length=20 -inuse-at-exit -fds-inuse-at-exit=no
 endif # purify
 
-COMPILE.c	=$(CC) $(CFLAGS) $(CPPFLAGS) -c
-COMPILE.cc	=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+COMPILE.c	= $(CC) $(CFLAGS) $(CPPFLAGS) -c
+COMPILE.cc	= $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects
-COMPILEESO.cc   =$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
-LINK.c		=$(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) $(LIBS)
-LINK.cc		=$(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
-SOLINK.cc	=$(PRELINK) $(DLD) $(SOFLAGS)
+COMPILEESO.cc   = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+
+ifeq ($(LINK.c),override)
+  LINK.c	= $(LINK.c.override)
+else
+  LINK.c	= $(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) $(LIBS)
+endif # LINK.c.override
+
+ifeq ($(LINK.cc),override)
+  LINK.cc	= $(LINK.cc.override)
+else
+  LINK.cc	= $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+endif # LINK.cc.override
+
+SOLINK.cc	= $(PRELINK) $(DLD) $(SOFLAGS)
