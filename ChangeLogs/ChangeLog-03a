@@ -1,3 +1,10 @@
+Sun Apr 08 12:10:30 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp:
+	* examples/IPC_SAP/SOCK_SAP/Makefile: Updated obsolete
+	  shared-memory transport functions.
+
 Sun Apr  8 09:49:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* bin: Added a new shell script called "make-components" that enables
@@ -25,7 +32,7 @@ Sat Apr  7 16:00:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  should have been ssize_t, not int, to be consistent with its
  	  definition in the header file.  Thanks to Joel Sherrill
  	  <joel@OARcorp.com> for reporting this.
-  
+
 Sat Apr  7 21:16:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:

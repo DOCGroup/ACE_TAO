@@ -55,7 +55,7 @@ run_event_loop (u_short port)
       new_stream.send (buf, len);
     }
 
-  return new_stream.remove ();
+  return new_stream.fini (1);
 }
 
 int
