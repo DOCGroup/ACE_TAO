@@ -43,26 +43,29 @@ ACE_Streambuf_T<STREAM>::get_handle (void)
 template <class STREAM> ACE_INLINE int
 ACE_IOStream<STREAM>::eof (void) const
 {
-//   char c;
-//   return ACE_OS::recv (this->get_handle (),
-//                        &c,
-//                        sizeof c,
-//                        MSG_PEEK) <= 0;
-  // Get the timeout value of the streambuf
-  ACE_Time_Value * timeout = this->streambuf_->recv_timeout(0);
-
-  // Reset the timeout value of the streambuf
-  (void)this->streambuf_->recv_timeout(timeout);
-
+#if 0
   char c;
-  int rval = this->streambuf_->recv_n( &c, sizeof c, MSG_PEEK, timeout );
+  return ACE_OS::recv (this->get_handle (),
+                       &c,
+                       sizeof c,
+                       MSG_PEEK) <= 0;
+#endif /* 0 */
+  // Get the timeout value of the streambuf
+  ACE_Time_Value *timeout = this->streambuf_->recv_timeout (0);
 
-  // If recv_n() didn't fail or failed because of timeout we're
-  // not at EOF.
-  return rval != -1 && ! this->streambuf_->timeout();
+  // Reset the timeout value of the streambuf.
+  (void) this->streambuf_->recv_timeout (timeout);
+ 
+  char c;
+  int rval = this->streambuf_->recv_n (&c,
+                                       sizeof c,
+                                       MSG_PEEK,
+                                       timeout);
+ 
+  // If recv_n() didn't fail or failed because of timeout we're not at
+  // EOF.
+  return rval != -1 && ! this->streambuf_->timeout ();
 }
-
-
 
 template <class STREAM> ACE_INLINE
 ACE_SOCK_Dgram_SC<STREAM>::ACE_SOCK_Dgram_SC (void)

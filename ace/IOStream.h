@@ -182,11 +182,11 @@ public:
   // gotten); eback + get_avail = egptr
 
   u_int streambuf_size (void);
-  // Query the streambuf for the size of it's buffers.
+  // Query the streambuf for the size of its buffers.
 
   u_char timeout (void);
-  // Did we take an error because of an IO operation timeout?
-  // Note:  Invoking this resets the flag.
+  // Did we take an error because of an IO operation timeout?  Note:
+  // Invoking this resets the flag.
 
 protected:
   ACE_Streambuf (u_int streambuf_size,
@@ -232,7 +232,7 @@ protected:
   // set by the object constructor.
 
   u_char timeout_;
-  // Did we take an error because of an IO operatio timeout?
+  // Did we take an error because of an IO operation timeout?
 
   ACE_Time_Value recv_timeout_value_;
   ACE_Time_Value *recv_timeout_;

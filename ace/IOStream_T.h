@@ -121,10 +121,10 @@ public:
   int eof (void) const;
   // Returns 1 if we're at the end of the <STREAM>, i.e., if the
   // connection has closed down or an error has occurred, else 0.
-  // Under the covers, eof() calls the streambuf's timeout()
-  // function which will reset the timeout flag.  As a result, you
-  // should save the return of eof() and check it instead of calling
-  // eof() successively.
+  // Under the covers, eof() calls the streambuf's timeout() function
+  // which will reset the timeout flag.  As as result, you should save
+  // the return of eof() and check it instead of calling eof()
+  // successively.
 
 #if defined (ACE_HAS_STRING_CLASS)
   virtual ACE_IOStream<STREAM> &operator>> (ACE_IOStream_String &v);
