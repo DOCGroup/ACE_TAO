@@ -124,6 +124,18 @@
 #define TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT 10019
 #endif /* TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT */
 
+// The default UDP multicast port number for locating the TAO
+// Interface Repository Service.
+#if !defined (TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT)
+#define TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT 10020
+#endif /* TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT */
+
+// The default UDP port number for replying to a location request to
+// the TAO Interface Repository Service.
+#if !defined (TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT)
+#define TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT 10021
+#endif /* TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT */
+
 
 // The default timeout receiving the location request to the TAO
 // Naming, Trading and other servicesService.
@@ -337,6 +349,8 @@
         TAO_OBJID_NAMESERVICE, \
         TAO_OBJID_TRADINGSERVICE, \
         TAO_OBJID_IMPLREPOSERVICE, \
+        TAO_OBJID_INTERFACEREP, \
+        TAO_OBJID_TYPECODEFACTORY, \
         TAO_OBJID_ROOTPOA, \
         TAO_OBJID_POACURRENT, \
         TAO_OBJID_POLICYMANAGER, \
@@ -348,11 +362,12 @@ enum MCAST_SERVICEID
 {
   NAMESERVICE,
   TRADINGSERVICE,
-  IMPLREPOSERVICE
+  IMPLREPOSERVICE,
+  INTERFACEREPOSERVICE
 };
 
 // No. of services locatable through multicast.
-#define NO_OF_MCAST_SERVICES 3
+#define NO_OF_MCAST_SERVICES 4
 
 // TAO Naming Service.
 
