@@ -71,21 +71,21 @@ void Options::print_results (void)
 		"%8d = system calls\n"
 		"%8d = chars read/written\n",
 		rusage.pr_lwpid,
-		rusage.pr_count,
+		(int) rusage.pr_count,
 		rusage.pr_minf,
-		rusage.pr_majf,
-		rusage.pr_inblk,
-		rusage.pr_oublk,
-		rusage.pr_msnd,
-		rusage.pr_mrcv,
-		rusage.pr_sigs,
-		rusage.pr_wtime.tv_sec, rusage.pr_wtime.tv_nsec / 1000000,
-		rusage.pr_ltime.tv_sec, rusage.pr_ltime.tv_nsec / 1000000,
-		rusage.pr_slptime.tv_sec, rusage.pr_slptime.tv_nsec / 1000000,
-		rusage.pr_vctx,
-		rusage.pr_ictx,
-		rusage.pr_sysc,
-		rusage.pr_ioch);
+		(int) rusage.pr_majf,
+		(int) rusage.pr_inblk,
+		(int) rusage.pr_oublk,
+		(int) rusage.pr_msnd,
+		(int) rusage.pr_mrcv,
+		(int) rusage.pr_sigs,
+		(int) rusage.pr_wtime.tv_sec, (int) rusage.pr_wtime.tv_nsec / 1000000,
+		(int) rusage.pr_ltime.tv_sec, (int) rusage.pr_ltime.tv_nsec / 1000000,
+		(int) rusage.pr_slptime.tv_sec, (int) rusage.pr_slptime.tv_nsec / 1000000,
+		(int) rusage.pr_vctx,
+		(int) rusage.pr_ictx,
+		(int) rusage.pr_sysc,
+		(int) rusage.pr_ioch);
 #else
       /* Someone needs to write the corresponding dump for rusage... */
 #endif /* ACE_HAS_PRUSAGE_T */

@@ -51,7 +51,7 @@ main (int argc, char **argv)
         {
           ACE_OS::sprintf (key,
                            "K_%05d_%05d",
-                           ACE_OS::getpid (),
+                           (int) ACE_OS::getpid (),
                            l);
           ACE_OS::sprintf (val,
                            "Val%05d",
