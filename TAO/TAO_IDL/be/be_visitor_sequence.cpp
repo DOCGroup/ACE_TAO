@@ -1240,6 +1240,12 @@ be_visitor_sequence_base::visit_enum (be_enum *node)
 }
 
 int
+be_visitor_sequence_base::visit_exception (be_exception *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_base::visit_array (be_array *node)
 {
   return this->visit_node (node);
@@ -1346,6 +1352,12 @@ be_visitor_sequence_buffer_type::visit_union (be_union *node)
 
 int
 be_visitor_sequence_buffer_type::visit_enum (be_enum *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_buffer_type::visit_exception (be_exception *node)
 {
   return this->visit_node (node);
 }
@@ -1495,6 +1507,12 @@ be_visitor_sequence_elemtype::visit_union (be_union *node)
 
 int
 be_visitor_sequence_elemtype::visit_enum (be_enum *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_elemtype::visit_exception (be_exception *node)
 {
   return this->visit_node (node);
 }
