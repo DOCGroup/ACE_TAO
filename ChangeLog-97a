@@ -1,5 +1,9 @@
 Sat Feb 22 22:07:35 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tests/Priority_Task_Test.cpp (open): Now use
+	  ACE_Thread_Priority while setting the priority of the new
+	  thread.
+
 	* ace/Thread_Priority.cpp (convert_to_os_priority): Changed
 	  return type for this to 'int' from 'long' on Linux.  Thanks
 	  to James CE Johnson <jjohnson@lads.com> for pointing this
