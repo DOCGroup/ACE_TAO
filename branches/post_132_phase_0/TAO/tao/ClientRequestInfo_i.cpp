@@ -134,6 +134,14 @@ TAO_ClientRequestInfo_i::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
   IOP::TaggedProfile *ep =
     this->target_->_stubobj ()->profile_in_use ()->create_tagged_profile ();
 
+  if (ep == 0)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+                                          CORBA::COMPLETED_NO),
+                        0);
+    }
+
+  // @@BAD_PARAM exception
   tagged_profile->tag = ep->tag;
   tagged_profile->profile_data = ep->profile_data;  // Deep copy
 
