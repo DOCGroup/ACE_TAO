@@ -1,6 +1,6 @@
 Sun Nov 24 12:27:27 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
-        * TAO_IDL/be/be_visitor_ami_pre_prco.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
 
 	  Added check for null result of scoped name lookups in creation of 
 	  inheritance list for reply handlers. Also added a check for each 
