@@ -485,12 +485,13 @@ sub write_workspace {
     if ($addfile) {
       ## VC6 is the only tool that currently cannot work with duplicate names, but
       ## duplicates really don't make sense for anything but Makefile-style projects.
+      ## Note that these name are handled case-insensitive by VC6
       my(%names) = ();
       foreach my $project (@{$self->{'projects'}}) {
-        my($name) = $self->{'project_info'}->{$project}->[0];
+        my($name) = lc($self->{'project_info'}->{$project}->[0]);
         if (defined $names{$name}) {
           ++$duplicates;
-          print "WARNING: Duplicate project '$name'.\n";
+          print "WARNING: Duplicate case-insensitive project '$name'.\n";
         }
         else {
           $names{$name} = 1;
@@ -917,7 +918,7 @@ sub add_implicit_project_dependencies {
   my(@pflkeys) = keys %{$self->{'project_file_list'}};
   foreach my $key (@pflkeys) {
     foreach my $ikey (@pflkeys) {
-      if ($key ne $ikey && 
+      if ($key ne $ikey &&
           ($self->{'project_file_list'}->{$key}->[1] eq
            $self->{'project_file_list'}->{$ikey}->[1]) &&
           (!defined $bidir{$ikey} ||
