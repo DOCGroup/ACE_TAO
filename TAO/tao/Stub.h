@@ -329,11 +329,21 @@ public:
   // profile_in_use_ is set to the first profile in the base_profiles
   // list.
 
+  TAO_Profile *next_profile_i (void);
+  // NON-THREAD SAFE version of next_profile (void)
+
   void reset_profiles (void);
   // THREAD SAFE
   // this method will reset the base profile list to reference the first
   // profile and if there are anmy existing forward profiles they are
   // reset.
+
+  void reset_profiles_i (void);
+  // NON-THREAD SAFE version of reset_profiles (void);
+
+  CORBA::Boolean valid_forward_profile (void);
+  // Returns 1 if a forward profile has successfully been used.
+  // profile_success_ && forward_profiles_
 
   // Just forward profiles.
   void use_locate_requests (CORBA::Boolean use_it);
