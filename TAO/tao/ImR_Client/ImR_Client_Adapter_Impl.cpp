@@ -173,7 +173,11 @@ namespace TAO
 
       if (this->server_object_)
         {
-          TAO_Root_POA *root_poa = poa->object_adapter ().root_poa ();
+          PortableServer::POA_var poa =
+            this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+
+          TAO_Root_POA *root_poa = dynamic_cast <TAO_Root_POA*> (poa.in ());
 
           if (!root_poa)
             {
@@ -187,6 +191,8 @@ namespace TAO
 
           root_poa->deactivate_object_i (id.in() ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          server_object_ = 0;
         }
     }
 
