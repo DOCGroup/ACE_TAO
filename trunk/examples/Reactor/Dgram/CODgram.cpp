@@ -20,8 +20,8 @@ public:
 
   virtual int handle_input (ACE_HANDLE handle);
 
-  virtual int handle_timeout (const ACE_Time_Value & tv, 
-			      const void *arg = 0);
+  virtual int handle_timeout (const ACE_Time_Value & tv,
+                              const void *arg = 0);
 };
 
 AAL_CP::AAL_CP (const ACE_INET_Addr &remote_addr,
@@ -42,7 +42,7 @@ AAL_CP::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) activity occurred on handle %d!\n",
-	      ACE_SOCK_CODgram::get_handle ()));
+              ACE_SOCK_CODgram::get_handle ()));
 
   ssize_t n = ACE_SOCK_CODgram::recv (buf, sizeof buf);
 
@@ -50,7 +50,7 @@ AAL_CP::handle_input (ACE_HANDLE)
     ACE_ERROR ((LM_ERROR, "%p\n", "handle_input"));
   else
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) buf of size %d = %*s\n", n, n, buf));
-  
+
   return 0;
 }
 
@@ -62,7 +62,7 @@ AAL_CP::handle_timeout (const ACE_Time_Value &, const void *)
 }
 
 static int
-run_test (u_short localport, 
+run_test (u_short localport,
           const char *remotehost,
           u_short remoteport)
 {
@@ -73,7 +73,7 @@ run_test (u_short localport,
   AAL_CP aal (remote_addr, local_addr);
 
   // Read data from other side.
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (&aal, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::register_handler"),
@@ -83,7 +83,7 @@ run_test (u_short localport,
   ACE_OS::strcpy (buf, "Data to transmit");
   size_t len = ACE_OS::strlen (buf);
 
-  if (localport == port1)	
+  if (localport == port1)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) sending data\n"));
 
@@ -122,6 +122,8 @@ run_test (u_short localport,
                       -1);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) exiting\n"));
+
+  return 0;
 }
 
 int
@@ -139,7 +141,7 @@ main (int argc, char *argv[])
 
   switch (ACE_OS::fork (argv[0]))
     {
-    case -1: 
+    case -1:
       return -1;
 
     case 0:
