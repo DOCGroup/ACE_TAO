@@ -2,7 +2,7 @@
 
 // ===================================================================
 /**
- *  @file   Security_Current_Impl.h
+ *  @file SL3_SecurityCurrent_Impl.h
  *
  *  $Id$
  *
