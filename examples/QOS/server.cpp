@@ -155,6 +155,8 @@ main (int argc, char * argv[])
                        "Error in ValidOptions\n"),
                       -1);
  
+  // @@ Vishal, shouldn't this stuff be done automagically by ACE?!
+  // Can you please check with David Levine to see how to do it?
   // This internally calls WSAStartup ().
   ACE_OS_Object_Manager ace_object_manager;
 
