@@ -1,3 +1,11 @@
+Fri Sep 17 10:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.h:
+          Replaced include of PortableServerC.h with PS_ForwardC.h
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+          Added include of tao/SystemException.h
+
 Fri Sep 17 09:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
