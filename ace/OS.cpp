@@ -3819,9 +3819,34 @@ ACE_OS::pread (ACE_HANDLE handle,
                off_t offset)
 {
 #if defined (ACE_HAS_P_READ_WRITE)
-# if defined (ACE_WIN32)
-  // This will work irrespective of whether the <handle> is in
-  // OVERLAPPED mode or not.
+#  if defined (ACE_WIN32)
+
+  ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
+
+  // Remember the original file pointer position
+  DWORD original_position = ::SetFilePointer (handle, 
+                                              0,
+                                              NULL,
+                                              FILE_CURRENT);
+  
+  if (original_position == 0xFFFFFFFF)
+    return -1;
+
+  // Go to the correct position
+  DWORD altered_position = ::SetFilePointer (handle,
+                                             offset,
+                                             NULL,
+                                             FILE_BEGIN);
+  if (altered_position == 0xFFFFFFFF)
+    return -1;
+  
+  DWORD bytes_read; 
+  
+#    if defined (ACE_HAS_WINNT4)
+
   OVERLAPPED overlapped;
   overlapped.Internal = 0;
   overlapped.InternalHigh = 0;
@@ -3829,28 +3854,92 @@ ACE_OS::pread (ACE_HANDLE handle,
   overlapped.OffsetHigh = 0;
   overlapped.hEvent = 0;
 
-  DWORD bytes_written; // This is set to 0 byte WriteFile.
+  BOOL result = ::ReadFile (handle, 
+                            buf, 
+                            nbytes, 
+                            &bytes_read, 
+                            &overlapped);
 
-  if (::ReadFile (handle, buf, nbytes, &bytes_written, &overlapped))
-    return (ssize_t) bytes_written;
-  else if (::GetLastError () == ERROR_IO_PENDING)
-    if (::GetOverlappedResult (handle, &overlapped, &bytes_written, TRUE) == TRUE)
-      return (ssize_t) bytes_written;
+  if (result == FALSE)
+    {
+      if (::GetLastError () != ERROR_IO_PENDING)
+        return -1;
 
-  return -1;
-# else
+      else
+        {
+          result = ::GetOverlappedResult (handle, 
+                                          &overlapped, 
+                                          &bytes_written, 
+                                          TRUE);
+          if (result == FALSE)
+            return -1;
+        }
+    }
+
+#    else /* ACE_HAS_WINNT4 */
+
+  BOOL result = ::ReadFile (handle, 
+                            buf, 
+                            nbytes, 
+                            &bytes_read, 
+                            NULL);
+  if (result == FALSE)
+    return -1;
+
+#   endif /* ACE_HAS_WINNT4 */
+
+  // Reset the original file pointer position
+  if (::SetFilePointer (handle, 
+                        original_position,
+                        NULL,
+                        FILE_BEGIN) == 0xFFFFFFFF)
+    return -1;
+                                             
+  return (ssize_t) bytes_read;
+
+#  else /* ACE_WIN32 */
+
   return ::pread (handle, buf, nbytes, offset);
-# endif /* ACE_WIN32 */
-#else
+
+#  endif /* ACE_WIN32 */
+
+#else /* ACE_HAS_P_READ_WRITE */
+
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
 
-  if (ACE_OS::lseek (handle, offset, SEEK_SET) == -1)
+  // Remember the original file pointer position
+  off_t original_position = ACE_OS::lseek (handle, 
+                                           0, 
+                                           SEEK_SET);
+
+  if (original_position == -1)
     return -1;
-  else
-    return ACE_OS::read (handle, buf, nbytes);
+
+  // Go to the correct position
+  off_t altered_position = ACE_OS::lseek (handle, 
+                                          offset, 
+                                          SEEK_SET);
+  
+  if (altered_position == -1)
+    return -1;
+
+  ssize_t bytes_read = ACE_OS::read (handle, 
+                                     buf, 
+                                     nbytes);
+
+  if (bytes_read == -1)
+    return -1;
+  
+  if (ACE_OS::lseek (handle,
+                     original_position,
+                     SEEK_SET) == -1)
+    return -1;
+
+  return bytes_read;
+
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
@@ -3862,8 +3951,33 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 {
 #if defined (ACE_HAS_P_READ_WRITE)
 # if defined (ACE_WIN32)
-  // This will work irrespective of whether the <handle> is in
-  // OVERLAPPED mode or not.
+
+  ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
+
+  // Remember the original file pointer position
+  DWORD original_position = ::SetFilePointer (handle, 
+                                              0,
+                                              NULL,
+                                              FILE_CURRENT);
+  
+  if (original_position == 0xFFFFFFFF)
+    return -1;
+
+  // Go to the correct position
+  DWORD altered_position = ::SetFilePointer (handle,
+                                             offset,
+                                             NULL,
+                                             FILE_BEGIN);
+  if (altered_position == 0xFFFFFFFF)
+    return -1;
+
+  DWORD bytes_written; 
+
+#    if defined (ACE_HAS_WINNT4)
+
   OVERLAPPED overlapped;
   overlapped.Internal = 0;
   overlapped.InternalHigh = 0;
@@ -3871,28 +3985,92 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   overlapped.OffsetHigh = 0;
   overlapped.hEvent = 0;
 
-  DWORD bytes_written; // This is set to 0 byte WriteFile.
+  BOOL result = ::WriteFile (handle, 
+                             buf, 
+                             nbytes, 
+                             &bytes_written, 
+                             &overlapped);
 
-  if (::WriteFile (handle, buf, nbytes, &bytes_written, &overlapped))
-    return (ssize_t) bytes_written;
-  else if (::GetLastError () == ERROR_IO_PENDING)
-    if (::GetOverlappedResult (handle, &overlapped, &bytes_written, TRUE) == TRUE)
-      return (ssize_t) bytes_written;
+  if (result == FALSE)
+    {
+      if (::GetLastError () != ERROR_IO_PENDING)
+        return -1;
 
-  return -1;
-# else
+      else
+        {
+          result = ::GetOverlappedResult (handle, 
+                                          &overlapped, 
+                                          &bytes_written, 
+                                          TRUE);
+          if (result == FALSE)
+            return -1;
+        }
+    }
+
+#    else /* ACE_HAS_WINNT4 */
+
+  BOOL result = ::WriteFile (handle, 
+                             buf, 
+                             nbytes, 
+                             &bytes_written, 
+                             NULL);
+  if (result == FALSE)
+    return -1;
+
+#    endif /* ACE_HAS_WINNT4 */
+
+  // Reset the original file pointer position
+  if (::SetFilePointer (handle, 
+                        original_position,
+                        NULL,
+                        FILE_BEGIN) == 0xFFFFFFFF)
+    return -1;
+                                             
+  return (ssize_t) bytes_written;
+
+# else /* ACE_WIN32 */
+
   return ::pwrite (handle, buf, nbytes, offset);
+
 # endif /* ACE_WIN32 */
-#else
+
+#else /* ACE_HAS_P_READ_WRITE */
+
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, -1));
 
-  if (ACE_OS::lseek (handle, offset, SEEK_SET) == -1)
+  // Remember the original file pointer position
+  off_t original_position = ACE_OS::lseek (handle, 
+                                           0, 
+                                           SEEK_SET);
+
+  if (original_position == -1)
     return -1;
-  else
-    return ACE_OS::write (handle, buf, nbytes);
+
+  // Go to the correct position
+  off_t altered_position = ACE_OS::lseek (handle, 
+                                          offset, 
+                                          SEEK_SET);
+  
+  if (altered_position == -1)
+    return -1;
+
+  ssize_t bytes_written = ACE_OS::write (handle, 
+                                         buf, 
+                                         nbytes);
+
+  if (bytes_written == -1)
+    return -1;
+  
+  if (ACE_OS::lseek (handle,
+                     original_position,
+                     SEEK_SET) == -1)
+    return -1;
+
+  return bytes_written;
+
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
