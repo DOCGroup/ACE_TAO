@@ -35,6 +35,16 @@
 	  <BR>[STATUS] An advanced example that uses multiple mcast
 	  groups per process was developed; this example would be used
 	  to test the required features for general mcast support.
+	  <BR>[STATUS] The example is able to automatically join and
+	  leave multicast groups, as the consumer set on a local EC
+	  changes.
+	  The test has been constructed to minimize resources, it only
+	  uses one socket for outgoing multicast messages;
+	  currently it uses only one socket for each local group of
+	  multicast UDP addresses sharing the same port;
+	  eventually more sockets may be needed,
+	  as sockets have limits on the number of multicast groups
+	  they can join.
 	</P>
       </LI>
 
@@ -428,8 +438,10 @@ class Foo {
 	in the multicast implementation of the EC.
       <P></LI>
 
-      <LI>Remove the uneeded methods from CORBA::Object
-      <P></LI>
+      <LI><P>Remove the uneeded methods from CORBA::Object
+	  <BR>[STATUS] This task seems to be complete
+	</P>
+      </LI>
 
       <LI>The IDL compiler could generate a static method to access
 	the interface repository ID of a class.
@@ -442,12 +454,6 @@ class Foo {
 	<CODE>orb.idl</CODE> file should contain all the declarations,
 	except for the pseudo objects that are should be hardcoded
 	into the compiler.
-      <P></LI>
-
-      <LI>Cleanup memory managment in some of the servers, for
-	instance: Naming still believes that controlling the memory
-	for a stub will control the servants, this is not true
-	anymore.
       <P></LI>
 
       <LI>The current scheme for the orbsvcs leaves the user without
@@ -464,6 +470,10 @@ class Foo {
 
       <LI><B>EC:</B> Cleanup the IDL structures for subscriptions,
 	publications, etc. (in the EC).
+	<BR>[STATUS] Part of this was completed. The Header and
+	Payload of the events are clearly distinguished, now we need
+	to use only the Header in the Publication and Subscription
+	definitions.
       <P></LI>
 
       <LI>Resolve the Typecode::equal dilemma: is it structural or
@@ -586,34 +596,31 @@ class Foo {
 	  critical problem), but further, it could be interesting to
 	  support a "compatibility with broken ORBs" mode,
 	  and possibly strategize it.
+	  <BR>[STATUS] The ORB will not crash if it receives that
+	  message. It will attempt to parse the exception as a
+	  UserException, even if SYSTEM_EXCEPTION status is returned;
+	  currently there is no strategy to control this.
 	</P>
       </LI>
 
-      <LI><P>Many of the test programs in the
-	  <CODE>$TAO_ROOT/tests</CODE> hierarchy are actually sample
-	  programs or performance tests.
+      <LI><P><CODE>$TAO_ROOT/orbsvcs/tests</CODE> may require the same
+	  hierarchy changes that were done in
+	  <CODE>$TAO_ROOT/tests</CODE>.
 	</P>
-	<P>We need to re-organize this hierarchy, following the ACE
-	  scheme:
-	<UL>
-	  <LI><B>tests</B> for programs that do regression testing.
-	  </LI>
-	  <LI><B>examples</B> for programs that illustrate how to use
-	    TAO, a service or a component
-	  </LI>
-	  <LI><B>performace-tests</B> for programs that are used in
-	    performance measurements
-	  </LI>
-	</UL>
-	the same hierarchy may be needed in
-	<CODE>$TAO_ROOT/orbsvcs</CODE>.
-      </P>
       </LI>
-	  
+
       <LI><B>EC:</B> If a Supplier disconnects while it has consumers
 	registered for it's Supplier_ID, the consumers are not
 	connected again even if the supplier reconnects.
       <P></LI>
+
+      <LI>The <CODE>_duplicate()</CODE> and <CODE>_narrow()</CODE>
+	functions can throw exceptions, yet our mapping does not
+	contain an <CODE>CORBA::Environment</CODE> argument.
+	A similar problem ocurs with
+	<CODE>ORB::resolve_initial_references</CODE>, the ORB can
+	throw the <CODE>InvalidName</CODE> exception.
+      </LI>
 
 
   <!-- Things below this point are "big" tasks" that -->
@@ -757,6 +764,37 @@ class Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>Many of the test programs in the
+	  <CODE>$TAO_ROOT/tests</CODE> hierarchy are actually sample
+	  programs or performance tests.
+	</P>
+	<P>We need to re-organize this hierarchy, following the ACE
+	  scheme:
+	<UL>
+	  <LI><B>tests</B> for programs that do regression testing.
+	  </LI>
+	  <LI><B>examples</B> for programs that illustrate how to use
+	    TAO, a service or a component
+	  </LI>
+	  <LI><B>performace-tests</B> for programs that are used in
+	    performance measurements
+	  </LI>
+	</UL>
+	the same hierarchy may be needed in
+	<CODE>$TAO_ROOT/orbsvcs</CODE>.
+	<BR>[DONE] Doug did this changes already, minor revisions
+	many be necessary, and orbsvcs is still pending.
+      </P>
+      </LI>
+      
+      <LI>Cleanup memory managment in some of the servers, for
+	instance: Naming still believes that controlling the memory
+	for a stub will control the servants, this is not true
+	anymore.
+	<BR>[DONE] Marina fixed the Naming Service, the other services
+	are working OK also.
+      <P></LI>
+
       <LI><P>The mapping for the CORBA <CODE>boolean</CODE> type does
 	  not require the <CODE>CORBA::TRUE</CODE> constant,
 	  but it never mentions the <CODE>CORBA::B_TRUE</CODE> constant
