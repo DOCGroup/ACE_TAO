@@ -96,11 +96,6 @@ Mon Nov 23 10:47:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile (release): added call to bin/generate_man_pages.
 
-        * ace/OS.cpp: with ACE_LACKS_SYS_NERR, added ERRMAX definition
-          if it's not defined.  Thanks to Rainer Blome
-          <rainer_blome@de.ibm.com> and Ossama Othman
-          <othman@astrosun.tn.cornell.edu> for recommending this.
-
 Sun Nov 22 22:58:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/SPIPE_Addr.h: Replaced the use of an anonymous struct so
