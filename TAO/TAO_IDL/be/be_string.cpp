@@ -129,7 +129,7 @@ be_string::gen_typecode (void)
   cs->indent (); // start from the current indentation level
   // emit the enumeration
   *cs << "CORBA::tk_string, " << nl;
-  *cs << this->max_size () << ", // string length" << nl;
+  *cs << this->max_size () << ", // string length\n";
   return 0;
 }
 

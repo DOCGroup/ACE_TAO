@@ -53,7 +53,7 @@ be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
 }
 
 // helper to create_name
-const char *
+char *
 be_sequence::gen_name (void)
 {
   char namebuf [NAMEBUFSIZE];
@@ -97,7 +97,7 @@ be_sequence::gen_name (void)
       ACE_OS::sprintf (namebuf, "%s_%d", namebuf, this->max_size ()->ev
                        ()->u.ulval);
     }
-  return namebuf;
+  return ACE_OS::strdup (namebuf);
 }
 
 // create a name for ourselves
@@ -311,7 +311,7 @@ be_sequence::gen_client_header (void)
                              "state based codegen failed\n"),
                             -1);
         }
-      *ch << " &operator[] (CORBA::ULong index);" << nl;
+      *ch << "operator[] (CORBA::ULong index);" << nl;
       *ch << "const ";
       if (s->gen_code (bt, this) == -1)
         {
@@ -321,7 +321,7 @@ be_sequence::gen_client_header (void)
                              "state based codegen failed\n"),
                             -1);
         }
-      *ch << " &operator[] (CORBA::ULong index) const;" << nl;
+      *ch << "operator[] (CORBA::ULong index) const;" << nl;
       cg->pop (); // back to the previous state
 
       s = cg->make_state ();
@@ -346,6 +346,31 @@ be_sequence::gen_client_header (void)
                             -1);
         }
       *ch << " *);\n" ;
+
+      // the spec says that for managed sequence types, the freebuf method
+      // should individually free up the elements before deleting the
+      // buffer. However, freebuf does not have a parameter that indicates the
+      // total number of elements that are in the buffer. Hence we provide a
+      // helper method to freebuf
+      switch (this->managed_type ())
+        {
+        case be_sequence::MNG_OBJREF:
+        case be_sequence::MNG_STRING:
+          ch->indent ();
+          *ch << "static void freebuf (" << nl;
+          if (s->gen_code (bt, this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_sequence::"
+                                 "gen_client_header - "
+                                 "state based codegen failed\n"),
+                                -1);
+            }
+          *ch << " *, CORBA::ULong);\n" ;
+          break;
+        default:
+          break;
+        }
       ch->decr_indent ();
       *ch << "private:\n";
       ch->incr_indent ();
@@ -362,18 +387,6 @@ be_sequence::gen_client_header (void)
 
       *ch << " *buffer_;" << nl;
       *ch << "CORBA::Boolean release_;\n";
-      // any managed type ?
-      switch (this->managed_type ())
-        {
-        case be_sequence::MNG_OBJREF:
-          ch->indent ();
-          *ch << "TAO_ObjRefMngType *mgr_;\n";
-          break;
-        case be_sequence::MNG_STRING:
-          ch->indent ();
-          *ch << "TAO_StrMngType *mgr_;\n";
-          break;
-        }
       ch->decr_indent ();
       *ch << "};\n";
       ch->indent ();
@@ -510,27 +523,19 @@ be_sequence::gen_client_stubs (void)
         {
         case be_sequence::MNG_OBJREF:
           {
-            *cs << "this->mgr_ = new " << this->name () <<
-              "::TAO_ObjRefMngType [seq.maximum_];" << nl;
             *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
             *cs << "{" << nl;
             *cs << "\tthis->buffer_[i] = " << bt->name () << "::_duplicate ("
                 << "seq.buffer_[i]);" << nl;
-            *cs << "\tthis->mgr_[i].ptr_ = &this->buffer_[i];" << nl;
-            *cs << "\tthis->mgr_[i].release_ = this->release_;" << nl;
             *cs << "}\n";
           }
           break;
         case be_sequence::MNG_STRING:
           {
-            *cs << "this->mgr_ = new " << this->name () <<
-              "::TAO_StrMngType [seq.maximum_];" << nl;
             *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
             *cs << "{" << nl;
             *cs << "\tthis->buffer_[i] = CORBA::string_dup (" <<
               "seq.buffer_[i]);" << nl;
-            *cs << "\tthis->mgr_[i].ptr_ = &this->buffer_[i];" << nl;
-            *cs << "\tthis->mgr_[i].release_ = this->release_;" << nl;
             *cs << "}\n";
           }
           break;
@@ -553,35 +558,6 @@ be_sequence::gen_client_stubs (void)
           *cs << "\t  buffer_ (" << this->name () << "::allocbuf (max))," << nl;
           *cs << "\t  release_ (1) // owns" << nl;
           *cs << "{\n";
-          cs->incr_indent ();
-          // copy each element
-          switch (this->managed_type ())
-            {
-            case be_sequence::MNG_OBJREF:
-              {
-                *cs << "this->mgr_ = new " << this->name () <<
-                  "::TAO_ObjRefMngType [this->maximum_];" << nl;
-                *cs << "for (CORBA::ULong i=0; i < max; i++)" << nl;
-                *cs << "{" << nl;
-                *cs << "\tthis->mgr_[i].ptr_ = &this->buffer_[i];" << nl;
-                *cs << "\tthis->mgr_[i].release_ = this->release_;" << nl;
-                *cs << "}" << nl;
-              }
-              break;
-            case be_sequence::MNG_STRING:
-              {
-                *cs << "this->mgr_ = new " << this->name () <<
-                  "::TAO_StrMngType [this->maximum_];" << nl;
-                *cs << "for (CORBA::ULong i=0; i < max; i++)" << nl;
-                *cs << "{" << nl;
-                *cs << "\tthis->mgr_[i].ptr_ = &this->buffer_[i];" << nl;
-                *cs << "\tthis->mgr_[i].release_ = this->release_;" << nl;
-                *cs << "}" << nl;
-              }
-              break;
-            }
-          *cs << "\n";
-          cs->decr_indent ();
           *cs << "}\n\n";
         }
 
@@ -617,35 +593,6 @@ be_sequence::gen_client_stubs (void)
       *cs << "\t  buffer_ (value)," << nl;
       *cs << "\t  release_ (release) // ownership depends on release" << nl;
       *cs << "{\n";
-      cs->incr_indent ();
-      // copy each element
-      switch (this->managed_type ())
-        {
-        case be_sequence::MNG_OBJREF:
-          {
-            *cs << "this->mgr_ = new " << this->name () <<
-              "::TAO_ObjRefMngType [this->maximum_];" << nl;
-            *cs << "for (CORBA::ULong i=0; i < this->maximum_; i++)" << nl;
-            *cs << "{" << nl;
-            *cs << "\tthis->mgr_[i].ptr_ = &this->buffer_[i];" << nl;
-            *cs << "\tthis->mgr_[i].release_ = this->release_;" << nl;
-            *cs << "}" << nl;
-          }
-          break;
-        case be_sequence::MNG_STRING:
-          {
-            *cs << "this->mgr_ = new " << this->name () <<
-              "::TAO_StrMngType [this->maximum_];" << nl;
-            *cs << "for (CORBA::ULong i=0; i < this->maximum_; i++)" << nl;
-            *cs << "{" << nl;
-            *cs << "\tthis->mgr_[i].ptr_ = &this->buffer_[i];" << nl;
-            *cs << "\tthis->mgr_[i].release_ = this->release_;" << nl;
-            *cs << "}" << nl;
-          }
-          break;
-        }
-      *cs << "\n";
-      cs->decr_indent ();
       *cs << "}\n\n";
 
       // destructor
@@ -660,12 +607,15 @@ be_sequence::gen_client_stubs (void)
 
       // only for obj references and strings, we need to free each individual
       // element
+      // call the appropriate freebuf on the buffer
       if (this->managed_type () != be_sequence::MNG_NONE)
         {
-          *cs << "delete []this->mgr_; // ensures each element is freed" << nl;
+          *cs << this->name () << "::freebuf (this->buffer_, " <<
+            "this->maximum_);\n";
         }
-      // call freebuf on the buffer
-      *cs << this->name () << "::freebuf (this->buffer_);\n";
+      else
+        *cs << this->name () << "::freebuf (this->buffer_);\n";
+
       cs->decr_indent ();
       *cs << "}\n";
       cs->decr_indent ();
@@ -687,11 +637,15 @@ be_sequence::gen_client_stubs (void)
       cs->incr_indent ();
       // only for obj references and strings, we need to free each individual
       // element
+      // call the appropriate freebuf on the buffer
       if (this->managed_type () != be_sequence::MNG_NONE)
         {
-          *cs << "delete []this->mgr_; // ensures each element is freed" << nl;
+          *cs << this->name () << "::freebuf (this->buffer_, " <<
+            "this->maximum_);\n";
         }
-      *cs << this->name () << "::freebuf (this->buffer_);\n";
+      else
+        *cs << this->name () << "::freebuf (this->buffer_);\n";
+
       cs->decr_indent ();
       *cs << "}" << nl;
 
@@ -705,27 +659,19 @@ be_sequence::gen_client_stubs (void)
         {
         case be_sequence::MNG_OBJREF:
           {
-            *cs << "this->mgr_ = new " << this->name () <<
-              "::TAO_ObjRefMngType [seq.maximum_];" << nl;
             *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
             *cs << "{" << nl;
             *cs << "\tthis->buffer_[i] = " << bt->name () << "::_duplicate ("
                 << "seq.buffer_[i]);" << nl;
-            *cs << "\tthis->mgr_[i].ptr_ = &this->buffer_[i];" << nl;
-            *cs << "\tthis->mgr_[i].release_ = this->release_;" << nl;
             *cs << "}" << nl;
           }
           break;
         case be_sequence::MNG_STRING:
           {
-            *cs << "this->mgr_ = new " << this->name () <<
-              "::TAO_StrMngType [seq.maximum_];" << nl;
             *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
             *cs << "{" << nl;
             *cs << "\tthis->buffer_[i] = CORBA::string_dup (" <<
               "seq.buffer_[i]);" << nl;
-            *cs << "\tthis->mgr_[i].ptr_ = &this->buffer_[i];" << nl;
-            *cs << "\tthis->mgr_[i].release_ = this->release_;" << nl;
             *cs << "}" << nl;
           }
           break;
@@ -743,9 +689,8 @@ be_sequence::gen_client_stubs (void)
       *cs << this->name () << "::length (CORBA::ULong length)" << nl;
       *cs << "{\n";
       cs->incr_indent ();
-      if (this->max_size () != 0) // bounded sequence - we cannot increase
-                                  // length more than its max => no
-                                  // reallocation necessary
+      if (!this->unbounded_) // bounded sequence - we cannot increase length
+                             // more than its max => no reallocation necessary
         {
           // The sequence has a maximum length, check that the new
           // length is valid before changing anything.
@@ -753,7 +698,7 @@ be_sequence::gen_client_stubs (void)
           *cs << "{\n";
           cs->incr_indent ();
           *cs << "// @@ throw something?" << nl;
-          *cs << "return;" << nl;
+          *cs << "return;\n";
           cs->decr_indent ();
           *cs << "}" << nl;
           *cs << "this->length_ = length;\n";
@@ -783,34 +728,35 @@ be_sequence::gen_client_stubs (void)
             {
             case be_sequence::MNG_OBJREF:
               {
-                *cs << this->name () << "::TAO_ObjRefMngType *tmp_mgr" <<
-                  " = new " << this->name () <<
-                  "::TAO_ObjRefMngType [length];" << nl;
-                *cs << "for (CORBA::ULong i=0; i < length; i++)" << nl;
+                *cs << "CORBA::ULong i;" << nl;
+                *cs << "// copy old buffer" << nl;
+                *cs << "for (i=0; i < this->length_; i++)" << nl;
                 *cs << "{" << nl;
                 *cs << "\ttmp[i] = " << bt->name () << "::_duplicate ("
                     << "this->buffer_[i]);" << nl;
-                *cs << "\ttmp_mgr[i].ptr_ = &tmp[i];" << nl;
-                *cs << "\ttmp_mgr[i].release_ = 1; // always" << nl;
                 *cs << "}" << nl;
               }
               break;
             case be_sequence::MNG_STRING:
               {
-                *cs << this->name () << "::TAO_StrMngType *tmp_mgr_" <<
-                  " = new " << this->name () <<
-                  "::TAO_StrMngType [length];" << nl;
-                *cs << "for (CORBA::ULong i=0; i < length; i++)" << nl;
+                *cs << "CORBA::ULong i;" << nl;
+                *cs << "// copy old buffer" << nl;
+                *cs << "for (i=0; i < this->length_; i++)" << nl;
                 *cs << "{" << nl;
                 *cs << "\ttmp[i] = CORBA::string_dup (" <<
                   "this->buffer_[i]);" << nl;
-                *cs << "\ttmp_mgr[i]->ptr_ = &tmp[i];" << nl;
-                *cs << "\ttmp_mgr[i]->release_ = 1;" << nl;
                 *cs << "}" << nl;
               }
               break;
             default: // all other types are self managed, just assign them.
-              *cs << "\ttmp[i] = this->buffer_[i];" << nl;
+              {
+                *cs << "CORBA::ULong i;" << nl;
+                *cs << "// copy old buffer" << nl;
+                *cs << "for (i=0; i < this->length_; i++)" << nl;
+                *cs << "{" << nl;
+                *cs << "\ttmp[i] = this->buffer_[i];" << nl;
+                *cs << "}" << nl;
+              }
             }
           // if release is set, we must free the previous buffer
           *cs << "if (this->release_) // free old one if we own it" << nl;
@@ -818,22 +764,21 @@ be_sequence::gen_client_stubs (void)
           cs->incr_indent ();
           // only for obj references and strings, we need to free each individual
           // element. Others are self managed.
+          // call the appropriate freebuf on the buffer
           if (this->managed_type () != be_sequence::MNG_NONE)
             {
-              *cs << "delete []this->mgr_; // ensures each element is freed" <<
-                nl;
+              *cs << this->name () << "::freebuf (this->buffer_, " <<
+                "this->maximum_);\n";
             }
-          *cs << this->name () << "::freebuf (this->buffer_);\n";
+          else
+            *cs << this->name () << "::freebuf (this->buffer_);\n";
+
           cs->decr_indent ();
           *cs << "}" << nl;
 
           *cs << "//assign the newly reallocated buffer" << nl;
           *cs << "this->buffer_ = tmp;" << nl;
           *cs << "this->release_ = 1; //after reallocation, we own it" << nl;
-          if (this->managed_type () != be_sequence::MNG_NONE)
-            {
-              *cs << "this->mgr_ = tmp_mgr;" << nl;
-            }
           *cs << "this->maximum_ = length;\n";
           cs->decr_indent ();
           *cs << "}" << nl;;
@@ -896,6 +841,47 @@ be_sequence::gen_client_stubs (void)
 
       cs->decr_indent ();
       *cs << "}\n\n";
+
+      // extra freebuf method for managed types
+      if (this->managed_type () != MNG_NONE)
+        {
+          cs->indent ();
+          *cs << "void" << nl;
+          *cs << this->name () << "::freebuf (";
+          if (s->gen_code (bt, this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_sequence::"
+                                 "gen_client_inline - "
+                                 "state based codegen failed\n"),
+                                -1);
+            }
+
+          *cs << " *seq, CORBA::ULong nelems)" << nl;
+          *cs << "{\n";
+          cs->incr_indent ();
+          *cs << "if (!seq) return; // null sequence" << nl;
+          // the managed types must be individually freed. The others will have
+          // their destructors called.
+          switch (this->managed_type ())
+            {
+            case be_sequence::MNG_OBJREF:
+              {
+                *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
+                *cs << "\tCORBA::release (seq[i]);" << nl;
+              }
+              break;
+            case be_sequence::MNG_STRING:
+              {
+                *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
+                *cs << "\tCORBA::string_free (seq[i]);" << nl;
+              }
+              break;
+            }
+          *cs << this->name () << "::freebuf (seq);\n";
+          cs->decr_indent ();
+          *cs << "}\n\n";
+        }
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
@@ -981,6 +967,11 @@ be_sequence::gen_client_inline (void)
                             -1);
         }
 
+      *ci << "// *************************************************************"
+          << nl;
+      *ci << "// class " << this->name () << nl;
+      *ci << "// *************************************************************\n\n";
+
       // generate the ifdefined macro for type
       ci->gen_ifdef_macro (this->flatname ());
 
@@ -1024,10 +1015,6 @@ be_sequence::gen_client_inline (void)
           *ci << "\t  buffer_ (" << this->name () << "::allocbuf (" <<
             this->max_size () << "))," << nl;
           *ci << "\t  release_ (1) // owns" << nl;
-        }
-      if (this->managed_type () != be_sequence::MNG_NONE)
-        {
-          *ci << "\t, mgr_ (0)" << nl;
         }
       *ci << "{}\n\n";
 
@@ -1076,15 +1063,24 @@ be_sequence::gen_client_inline (void)
                             -1);
         }
 
-      *ci << " &" << nl;
+      *ci << nl;
       *ci << this->name () << "::operator[] (CORBA::ULong index) // read/write"
          << nl;
       *ci << "{\n";
       ci->incr_indent ();
-      if (this->managed_type () != be_sequence::MNG_NONE)
-        *ci << "return this->mgr_[index];\n";
-      else
-        *ci << "return this->buffer_[index];\n";
+      switch (this->managed_type ())
+        {
+        case be_sequence::MNG_OBJREF:
+          *ci << "return " << this->name () << "::TAO_ObjRefMngType (" <<
+            "&this->buffer_[index], this->release_);\n";
+          break;
+        case be_sequence::MNG_STRING:
+          *ci << "return " << this->name () << "::TAO_StrMngType (" <<
+            "&this->buffer_[index], this->release_);\n";
+          break;
+        default:
+          *ci << "return this->buffer_[index];\n";
+        }
       ci->decr_indent ();
       *ci << "}\n\n";
 
@@ -1099,15 +1095,24 @@ be_sequence::gen_client_inline (void)
                             -1);
         }
 
-      *ci << " &" << nl;
+      *ci << nl;
       *ci << this->name () << "::operator[] (CORBA::ULong index) const // read"
          << nl;
       *ci << "{\n";
       ci->incr_indent ();
-      if (this->managed_type () != be_sequence::MNG_NONE)
-        *ci << "return this->mgr_[index];\n";
-      else
-        *ci << "return this->buffer_[index];\n";
+      switch (this->managed_type ())
+        {
+        case be_sequence::MNG_OBJREF:
+          *ci << "return " << this->name () << "::TAO_ObjRefMngType (" <<
+            "&this->buffer_[index], this->release_);\n";
+          break;
+        case be_sequence::MNG_STRING:
+          *ci << "return " << this->name () << "::TAO_StrMngType (" <<
+            "&this->buffer_[index], this->release_);\n";
+          break;
+        default:
+          *ci << "return this->buffer_[index];\n";
+        }
       ci->decr_indent ();
       *ci << "}\n\n";
       cg->pop ();
@@ -1176,6 +1181,7 @@ be_sequence::gen_var_defn (void)
   char namebuf [NAMEBUFSIZE];  // names
   be_state *s;       // code gen state
   be_type *bt;  // base type
+  be_decl *scope; // our enclosing scope
 
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
@@ -1205,6 +1211,11 @@ be_sequence::gen_var_defn (void)
 
   // retrieve base type
   bt = be_type::narrow_from_decl (this->base_type ());
+
+  if (this->defined_in ())
+    scope = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+  else
+    scope = 0;
 
   // generate the var definition (always in the client header).
   // Depending upon the data type, there are some differences which we account
@@ -1248,10 +1259,26 @@ be_sequence::gen_var_defn (void)
   switch (this->managed_type ())
     {
     case be_sequence::MNG_STRING:
-      *ch << "ACE_NESTED_CLASS (" << this->name () << ", TAO_StrMngType)";
+      if (scope)
+        {
+          *ch << "ACE_NESTED_CLASS (" << scope->name () << "," <<
+            this->local_name () << "::TAO_StrMngType) ";
+        }
+      else
+        {
+          *ch << this->local_name () << "::TAO_StrMngType ";
+        }
       break;
     case be_sequence::MNG_OBJREF:
-      *ch << "ACE_NESTED_CLASS (" << this->name () << ", TAO_ObjRefMngType)";
+      if (scope)
+        {
+          *ch << "ACE_NESTED_CLASS (" << scope->name () << "," <<
+            this->local_name () << "::TAO_ObjRefMngType) ";
+        }
+      else
+        {
+          *ch << this->local_name () << "::TAO_ObjRefMngType ";
+        }
       break;
     default:
       // gen code for base return type
@@ -1263,9 +1290,10 @@ be_sequence::gen_var_defn (void)
                              "state based codegen failed\n"),
                             -1);
         }
+      *ch << " &";
     }
 
-  *ch << " &operator[] (CORBA::ULong index);" << nl;
+  *ch << "operator[] (CORBA::ULong index);" << nl;
 
   *ch << "// in, inout, out, _retn " << nl;
   // the return types of in, out, inout, and _retn are based on the parameter
@@ -1460,10 +1488,10 @@ be_sequence::gen_var_impl (void)
   switch (this->managed_type ())
     {
     case be_sequence::MNG_STRING:
-      *ci << this->name () << "::TAO_StrMngType";
+      *ci << this->name () << "::TAO_StrMngType ";
       break;
     case be_sequence::MNG_OBJREF:
-      *ci << this->name () << "::TAO_ObjRefMngType";
+      *ci << this->name () << "::TAO_ObjRefMngType ";
       break;
     default:
       // gen code for base return type
@@ -1475,9 +1503,10 @@ be_sequence::gen_var_impl (void)
                              "state based codegen failed\n"),
                             -1);
         }
+      *ci << " &";
     }
 
-  *ci << "&" << nl;
+  *ci << nl;
   *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1551,6 +1580,7 @@ be_sequence::gen_out_defn (void)
   char namebuf [NAMEBUFSIZE];  // to hold the _out name
   be_state *s;       // code gen state
   be_type *bt;  // base type
+  be_decl *scope; // our enclosing scope
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (namebuf, "%s_out", this->local_name ()->get_string ());
@@ -1570,6 +1600,11 @@ be_sequence::gen_out_defn (void)
 
   // retrieve base type
   bt = be_type::narrow_from_decl (this->base_type ());
+
+  if (this->defined_in ())
+    scope = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+  else
+    scope = 0;
 
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
@@ -1606,10 +1641,26 @@ be_sequence::gen_out_defn (void)
   switch (this->managed_type ())
     {
     case be_sequence::MNG_STRING:
-      *ch << "ACE_NESTED_CLASS (" << this->name () << ", TAO_StrMngType)";
+      if (scope)
+        {
+          *ch << "ACE_NESTED_CLASS (" << scope->name () << "," <<
+            this->local_name () << "::TAO_StrMngType) ";
+        }
+      else
+        {
+          *ch << this->local_name () << "::TAO_StrMngType ";
+        }
       break;
     case be_sequence::MNG_OBJREF:
-      *ch << "ACE_NESTED_CLASS (" << this->name () << ", TAO_ObjRefMngType)";
+      if (scope)
+        {
+          *ch << "ACE_NESTED_CLASS (" << scope->name () << "," <<
+            this->local_name () << "::TAO_ObjRefMngType) ";
+        }
+      else
+        {
+          *ch << this->local_name () << "::TAO_ObjRefMngType ";
+        }
       break;
     default:
       // gen code for base return type
@@ -1621,9 +1672,10 @@ be_sequence::gen_out_defn (void)
                              "state based codegen failed\n"),
                             -1);
         }
+      *ch << " &";
     }
 
-  *ch << " &operator[] (CORBA::ULong index);" << nl;
+  *ch << "operator[] (CORBA::ULong index);" << nl;
   *ch << "\n";
   ch->decr_indent ();
   *ch << "private:\n";
@@ -1778,10 +1830,10 @@ be_sequence::gen_out_impl (void)
   switch (this->managed_type ())
     {
     case be_sequence::MNG_STRING:
-      *ci << this->name () << "::TAO_StrMngType";
+      *ci << this->name () << "::TAO_StrMngType ";
       break;
     case be_sequence::MNG_OBJREF:
-      *ci << this->name () << "::TAO_ObjRefMngType";
+      *ci << this->name () << "::TAO_ObjRefMngType ";
       break;
     default:
       // gen code for base return type
@@ -1793,9 +1845,10 @@ be_sequence::gen_out_impl (void)
                              "state based codegen failed\n"),
                             -1);
         }
+      *ci << " &";
     }
 
-  *ci << "& " << nl;
+  *ci << nl;
   *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1865,16 +1918,25 @@ be_sequence::gen_managed_type_ch (void)
   ch->indent (); // start with whatever was our current indent level
   *ch << "class " << namebuf << nl;
   *ch << "{" << nl;
-  *ch << "protected:\n";
+  *ch << "public:\n";
   ch->incr_indent ();
   // generate the friend instruction
   *ch << "friend " << this->local_name () << ";" << nl;
   // default constr is protected as this managed type is not available
   // outside. Only this sequence can play with it.
-  *ch << namebuf << " (void); // default constructor\n";
-  ch->decr_indent ();
-  *ch << "public:\n";
-  ch->incr_indent ();
+  //*ch << namebuf << " (void); // default constructor" << nl;
+  // copy constructor
+  *ch << namebuf << "(const " << namebuf << " &); // copy ctor " << nl;
+  // the constructor that will be used
+  if (this->managed_type () == be_sequence::MNG_STRING)
+    {
+      *ch << namebuf << "(char **buffer, CORBA::Boolean release);" << nl;
+    }
+  else
+    {
+      *ch << namebuf << "(" << bt->nested_type_name (this, "_ptr*") <<
+        ", CORBA::Boolean release);" << nl;
+    }
   // destructor
   *ch << "~" << namebuf << " (void); // destructor" << nl;
   *ch << nl;
@@ -1924,9 +1986,7 @@ be_sequence::gen_managed_type_ch (void)
   // generate the private section
   *ch << "private:\n";
   ch->incr_indent ();
-  // copy constructor not allowed
-  *ch << namebuf << " (const " << namebuf << " &);" <<
-    "// copy constructor not allowed" << nl;
+  //  *ch << namebuf << "(const " << namebuf << " &); // copy ctor " << nl;
   *ch << typebuf << " *ptr_;" << nl;
   *ch << "CORBA::Boolean release_;\n";
   ch->decr_indent ();
@@ -2004,13 +2064,10 @@ be_sequence::gen_managed_type_ci (void)
   *ci << "// Inline operations for class " << fnamebuf << nl;
   *ci << "// *************************************************************\n\n";
 
-  // default constr
+  // destructor
   ci->indent ();
-  *ci << "ACE_INLINE" << nl;
-  *ci << fnamebuf << "::" << lnamebuf <<
-    " (void) // default constructor" << nl;
-  *ci << "\t: ptr_ (0)," << nl;
-  *ci << "\t  release_ (0)" << nl;
+  *ci << "ACE_INLINE " << nl;
+  *ci << fnamebuf << "::~" << lnamebuf << " (void) // destructor" << nl;
   *ci << "{}\n\n";
 
   // copy constructor not allowed
@@ -2018,6 +2075,15 @@ be_sequence::gen_managed_type_ci (void)
   // operators
   if (this->managed_type () == be_sequence::MNG_STRING)
     {
+      // constructor that will be used
+      ci->indent ();
+      *ci << "ACE_INLINE " << nl;
+      *ci << fnamebuf << "::" << lnamebuf <<
+        "(char **buffer, CORBA::Boolean release)" << nl;
+      *ci << "\t: ptr_ (buffer)," << nl;
+      *ci << "\t  release_ (release)" << nl;
+      *ci << "{}\n\n";
+
       // other extra methods - cast operator ()
       ci->indent ();
       *ci << "ACE_INLINE " << nl;
@@ -2061,6 +2127,15 @@ be_sequence::gen_managed_type_ci (void)
     }
   else if (this->managed_type () == be_sequence::MNG_OBJREF)
     {
+      // constructor that will be used
+      ci->indent ();
+      *ci << "ACE_INLINE " << nl;
+      *ci << fnamebuf << "::" << lnamebuf << "(" << bt->name () <<
+        "_ptr* buffer, CORBA::Boolean release)" << nl;
+      *ci << "\t: ptr_ (buffer)," << nl;
+      *ci << "\t  release_ (release)" << nl;
+      *ci << "{}\n\n";
+
       // other extra methods - cast operator ()
       ci->indent ();
       *ci << "ACE_INLINE " << nl;
@@ -2113,8 +2188,7 @@ be_sequence::gen_managed_type_ci (void)
   return 0;
 }
 
-// implementation of the _var class. All of these get generated in the inline
-// file
+// implementation of the managed types
 int
 be_sequence::gen_managed_type_cs (void)
 {
@@ -2178,13 +2252,31 @@ be_sequence::gen_managed_type_cs (void)
     {
     case be_sequence::MNG_OBJREF:
       {
-        // destructor
+        // copy ctro
         cs->indent ();
-        *cs << fnamebuf << "::~" << lnamebuf << " (void) // destructor" << nl;
+        *cs << fnamebuf << "::" << lnamebuf << "(const " << fnamebuf <<
+          " &_tao_mng_type)" << nl;
         *cs << "{\n";
         cs->incr_indent ();
-        *cs << "if (this->release_)" << nl;
-        *cs << "  CORBA::release (*this->ptr_);\n";
+        *cs << "*this->ptr_ = " << bt->name () <<
+          "::_duplicate (*_tao_mng_type.ptr_);" << nl;
+        *cs << "this->release_ = _tao_mng_type.release_;\n";
+        cs->decr_indent ();
+        *cs << "}\n\n";
+
+        // assignment operator
+        cs->indent ();
+        *cs << fnamebuf << "&" << nl;
+        *cs << fnamebuf << "::operator= (const " << fnamebuf <<
+          " &_tao_mng_type)" << nl;
+        *cs << "{\n";
+        cs->incr_indent ();
+        *cs << "if (this == &_tao_mng_type) return *this;" << nl;
+        *cs << "if (this->release_) // need to free old one" << nl;
+        *cs << "  CORBA::release (*this->ptr_);" << nl;
+        *cs << "*this->ptr_ = " << bt->name () <<
+          "::_duplicate (*_tao_mng_type.ptr_);" << nl;
+        *cs << "return *this;\n";
         cs->decr_indent ();
         *cs << "}\n\n";
 
@@ -2229,13 +2321,29 @@ be_sequence::gen_managed_type_cs (void)
       break;
     case be_sequence::MNG_STRING:
       {
-        // destructor
+        // copy constructor
         cs->indent ();
-        *cs << fnamebuf << "::~" << lnamebuf << " (void) // destructor" << nl;
+        *cs << fnamebuf << "::" << lnamebuf << "(const " << fnamebuf <<
+          " &_tao_mng_type)" << nl;
         *cs << "{\n";
         cs->incr_indent ();
-        *cs << "if (this->release_)" << nl;
-        *cs << "  CORBA::string_free (*this->ptr_);\n";
+        *cs << "*this->ptr_ = CORBA::string_dup (*_tao_mng_type.ptr_);" << nl;
+        *cs << "this->release_ = _tao_mng_type.release_;\n";
+        cs->decr_indent ();
+        *cs << "}\n\n";
+
+        // assignment operator (does not change the release flag)
+        cs->indent ();
+        *cs << fnamebuf << "&" << nl;
+        *cs << fnamebuf << "::operator= (const " << fnamebuf <<
+          " &_tao_mng_type)" << nl;
+        *cs << "{\n";
+        cs->incr_indent ();
+        *cs << "if (this == &_tao_mng_type) return *this;" << nl;
+        *cs << "if (this->release_) // need to free old one" << nl;
+        *cs << "  CORBA::string_free (*this->ptr_);" << nl;
+        *cs << "*this->ptr_ = CORBA::string_dup (*_tao_mng_type.ptr_);" << nl;
+        *cs << "return *this;\n";
         cs->decr_indent ();
         *cs << "}\n\n";
 
@@ -2315,7 +2423,7 @@ be_sequence::gen_typecode (void)
   cs->indent (); // start from whatever indentation level we were at
 
   *cs << "CORBA::tk_sequence, // typecode kind" << nl;
-  *cs << this->tc_size () << ", // encapsulation length\n";
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
   // now emit the encapsulation
   return this->gen_encapsulation ();
 }
@@ -2335,9 +2443,9 @@ be_sequence::gen_encapsulation (void)
   be_type *bt; // base type
 
   os = cg->client_stubs ();
-  os->indent (); // start from the current indentation level
+  os->incr_indent ();
 
-  *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
+  *os << "TAO_ENCAP_BYTE_ORDER, // byte order\n";
 
   // emit typecode of element type
   bt = be_type::narrow_from_decl (this->base_type ());
@@ -2348,7 +2456,7 @@ be_sequence::gen_encapsulation (void)
     }
 
   //  emit the length
-  os->indent ();
+  os->decr_indent ();
   *os << this->max_size () << ",\n";
   return 0;
 }

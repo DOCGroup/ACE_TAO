@@ -55,6 +55,9 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the operation
 
+  virtual int argument_count (void);
+  // return the count of members
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 
@@ -64,8 +67,15 @@ public:
   DEF_NARROW_FROM_SCOPE (be_operation);
 
 protected:
+  //=helper
   int compute_size_type (void);
   // compute the size type if it is unknown
+
+  int compute_argument_count (void);
+  // count the number of arguments
+
+  int argument_count_;
+  // number of argument
 };
 
 #endif

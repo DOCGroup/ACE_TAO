@@ -418,10 +418,12 @@ deep_free (CORBA::TypeCode_ptr tc,
 
     case CORBA::tk_string:
       CORBA::string_free (*(CORBA::String *) value);
+      *(CORBA::String *)value = 0;
       break;
 
     case CORBA::tk_wstring:
       CORBA::wstring_free (*(CORBA::WString *) value);
+      *(CORBA::WString *)value = 0;
       break;
 
     case CORBA::tk_any:

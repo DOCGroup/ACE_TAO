@@ -39,6 +39,9 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 
 <LI>
 <A HREF="#ace">ORB-related ACE Changes</A></LI>
+
+<LI>
+<a href="#vc">How to add IDL files into your Visual C++ projects</a>
 </UL>
 
 <!--#include virtual="/~schmidt/ACE_wrappers/TAO/docs/releasenotes/orbcore.html" -->
@@ -48,8 +51,19 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
     <H3><A NAME="idl"></A>IDL Compiler</H3>
     Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-    <P> Current status: (As of Dec 18th, 1997.)
+    <P> Current status: (As of Dec 31st, 1997.)
     <UL>
+      <LI> Param_Test example is able to test string sequences, fixed
+          structs, variable sized structs and nested structs </LI>
+
+      <LI> Param_Test test suite can now test fixed structs and string
+          sequences.This needed bug fixes to TAO ORB core. </LI>
+      <LI> A new test to test all the parameter passing modes for a
+          number of data types has been added. At this point in time,
+          it tests primitive types and strings. Other tests will be
+          added. Bugs discovered thru these tests have been
+          fixed. </LI>
+
       <LI> Very preliminary support for arrays. Not working yet. </LI>
 
       <LI> Many bugs associated with stub generation fixed. This
@@ -119,6 +133,9 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
   <UL>
 	<LI> Some of the known bugs/incomplete tasks are:
             <UL>
+              <LI> Generation of Managed types must somehow be moved
+                  to the ORB Core </LI>
+
               <LI>
                   We need support for ``TIEs'' (i.e., the object form
                   of the Adapter pattern). </LI>
@@ -431,6 +448,45 @@ Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and
       <em>None currently scheduled.</em>
       </blockquote>
 
+<H3>
+<A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
+Point of contact: <a href="mailto:nw1@cs.wustl.edu">Nanbor Wang</a>.
+    <p>Each IDL file generates .h, .i and .cpp files.  Here is an
+    example of adding an IDL file named foobar.idl into a VC project.
+    <ol>
+      <li>Create/open the workspace.  Create server project and client
+	  project if you haven't had them ready.  Add the IDL file
+	  &lt;foobar.idl&gt; and other non-IDL generated files into
+	  both client and server projects.
+      <li>Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i,
+	  and foobarS.cpp into the server project and foobarC.h,
+	  foobarC.i, and foobarC.cpp into the client project.
+      <li>Now open the project setting window (Project -&gt;
+	  Setting... or just press Alt-F7.)  Select the IDL files in
+	  both client and server projects.  Choose to set the setting
+	  for "All Configuration."  Make sure the "Exclude from build"
+	  under the "General" tab is unchecked.
+      <li>Click on the "Custom Build" tab.  Add this entry as the
+	  build command for IDL files:
+	  <pre>..\..\..\TAO_IDL\tao_idl $(InputName).idl</pre> Notice
+	  that your absolute path to TAO_IDL may vary.
+      <li>Now add the following entries as "Output file(s)." <pre>
+	  $(InputName)S.h
+	  $(InputName)S.i
+	  $(InputName)S.cpp
+	  $(InputName)C.h
+	  $(InputName)C.i
+	  $(InputName)C.cpp</pre>
+	  Add only one entry in each line.
+      <li>We are all set.  Click OK.
+      <li>Add foobarC.cpp to client project and foobarC.cpp and
+	  foobarS.cpp to server project.
+    </ol>
+    Notice that these procedures only setup the IDL compiler to
+    perform correctly.<p>
+    p.s. If anyone knows how to set a default setting in VC so we
+    don't need to perform these procedures every time a new project
+    gets set up, please let us know.  Thanks.
 </BODY>
 <hr><P>
 Back to the TAO <A HREF="../index.html">documentation index</A>.

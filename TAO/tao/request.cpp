@@ -99,10 +99,11 @@ CORBA_Request::~CORBA_Request (void)
 {
   assert (refcount_ == 0);
 
-  CORBA::release (target_);
-  CORBA::string_free ((CORBA::String) opname_);
-  CORBA::release (args_);
-  CORBA::release (result_);
+  CORBA::release (this->target_);
+  CORBA::string_free ((CORBA::String) this->opname_);
+  this->opname_ = 0;
+  CORBA::release (this->args_);
+  CORBA::release (this->result_);
 }
 
 // The public DII interfaces:  normal and oneway calls.

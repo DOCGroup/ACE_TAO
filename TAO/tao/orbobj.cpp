@@ -74,7 +74,7 @@ CORBA_ORB::open (void)
     return -1;
 
   ocp->orb_params ()->addr (ocp->addr ());
-  
+
   return 0;
 }
 
@@ -104,7 +104,7 @@ CORBA_ORB::Release (void)
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
 		 char *const *argv,
-		 char * /* orb_name */,
+		 const char * /* orb_name */,
 		 CORBA::Environment &env)
 {
   // Using ACE_Static_Object_Lock::instance() precludes ORB_init from being called
@@ -168,14 +168,21 @@ CORBA_ORB::create_list (CORBA::Long count,
 {
   assert (CORBA::ULong (count) <= UINT_MAX);
 
+  // create an empty list
   retval = new CORBA::NVList;
 
+  // if count is greater than 0, create a list of NamedValues
   if (count != 0)
     {
       retval->len_ = 0;
-      retval->max_ = (u_int) count;
+      retval->max_ = (CORBA::ULong) count;
       retval->values_ = (CORBA::NamedValue_ptr) ACE_OS::calloc ((u_int) count,
 								sizeof (CORBA::NamedValue));
+      for (CORBA::Long i=0; i < count; i++)
+        {
+          // initilaize the NamedValue
+          (void) new (&retval->values_[i]) CORBA::NamedValue;
+        }
     }
 }
 
@@ -342,35 +349,35 @@ CORBA_ORB::resolve_name_service (void)
       // Prepare connection for the reply.
       ACE_INET_Addr response_addr;
       ACE_SOCK_Dgram response;
-      
+
       // Choose any local port, we don't really care.
       if (response.open (ACE_Addr::sap_any) == -1)
         {
           ACE_ERROR ((LM_ERROR, "open failed.\n"));
           return CORBA_Object::_nil ();
         }
-      
+
       if (response.get_local_addr (response_addr) == -1)
         {
           ACE_ERROR ((LM_ERROR, "get_local_addr failed.\n"));
           return CORBA_Object::_nil ();
         }
 
-      // Figure out what port to listen on for server replies, 
+      // Figure out what port to listen on for server replies,
       // and convert to network byte order.
       CORBA::Short reply_port = htons (response_addr.get_port_number ());
 
       // Send multicast of one byte, enough to wake up server.
       ssize_t n_bytes = multicast.send ((char *) &reply_port,
                                         sizeof reply_port);
-      
+
       // check for errors
       if (n_bytes == -1)
 	return CORBA_Object::_nil ();
 
-      ACE_DEBUG ((LM_DEBUG, 
-		  "Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n", 
-		  response_addr.get_port_number (), 
+      ACE_DEBUG ((LM_DEBUG,
+		  "Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n",
+		  response_addr.get_port_number (),
 		  n_bytes));
 
       char buf[BUFSIZ];
@@ -394,8 +401,8 @@ CORBA_ORB::resolve_name_service (void)
       // null terminate message
       buf[n_bytes] = 0;
 
-      ACE_DEBUG ((LM_DEBUG, 
-                  "Naming service resolved to ior: '%s'\n", 
+      ACE_DEBUG ((LM_DEBUG,
+                  "Naming service resolved to ior: '%s'\n",
                   buf));
 
       // convert ior to an object reference

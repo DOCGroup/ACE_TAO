@@ -113,6 +113,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/cdr.o .shobj/cdr.so: cdr.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -259,6 +260,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -278,6 +280,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/client_factory.o .shobj/client_factory.so: client_factory.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -424,6 +427,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -443,6 +447,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/connect.o .shobj/connect.so: connect.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -589,6 +594,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -610,6 +616,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/debug.o .shobj/debug.so: debug.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -756,6 +763,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -775,6 +783,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/decode.o .shobj/decode.so: decode.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -921,6 +930,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -940,6 +950,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/deep_copy.o .shobj/deep_copy.so: deep_copy.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1086,6 +1097,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1105,6 +1117,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/deep_free.o .shobj/deep_free.so: deep_free.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1251,6 +1264,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1271,6 +1285,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1416,6 +1431,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1436,6 +1452,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1581,6 +1598,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1600,6 +1618,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/encode.o .shobj/encode.so: encode.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1746,6 +1765,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1765,6 +1785,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/giop.o .shobj/giop.so: giop.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1911,6 +1932,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1932,6 +1954,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/iiopobj.o .shobj/iiopobj.so: iiopobj.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2078,6 +2101,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2097,6 +2121,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/iioporb.o .shobj/iioporb.so: iioporb.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2243,6 +2268,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2262,6 +2288,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/interp.o .shobj/interp.so: interp.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2408,6 +2435,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2427,6 +2455,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/invoke.o .shobj/invoke.so: invoke.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2573,6 +2602,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2592,6 +2622,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/marshal.o .shobj/marshal.so: marshal.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2738,6 +2769,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2757,6 +2789,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/objtable.o .shobj/objtable.so: objtable.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2903,6 +2936,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2922,6 +2956,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/optable.o .shobj/optable.so: optable.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3068,6 +3103,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3087,6 +3123,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/orb_core.o .shobj/orb_core.so: orb_core.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3233,6 +3270,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3258,6 +3296,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/params.o .shobj/params.so: params.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3404,6 +3443,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3423,6 +3463,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/server_factory.o .shobj/server_factory.so: server_factory.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3569,6 +3610,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3589,6 +3631,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/tao_internals.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3735,6 +3778,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3758,6 +3802,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/tc_const.o .shobj/tc_const.so: tc_const.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3904,6 +3949,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3922,6 +3968,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/singletons.h
 .obj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3952,6 +3999,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/any.o .shobj/any.so: any.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4098,6 +4146,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4117,6 +4166,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/corbacom.o .shobj/corbacom.so: corbacom.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4263,6 +4313,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4282,6 +4333,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/except.o .shobj/except.so: except.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4428,6 +4480,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4447,6 +4500,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/nvlist.o .shobj/nvlist.so: nvlist.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4593,6 +4647,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4612,6 +4667,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/object.o .shobj/object.so: object.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4758,6 +4814,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4777,6 +4834,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/orbobj.o .shobj/orbobj.so: orbobj.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4923,6 +4981,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4953,6 +5012,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/poa.o .shobj/poa.so: poa.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5099,6 +5159,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -5118,6 +5179,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/principa.o .shobj/principa.so: principa.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5264,6 +5326,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -5283,6 +5346,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/request.o .shobj/request.so: request.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5429,6 +5493,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -5448,6 +5513,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/svrrqst.o .shobj/svrrqst.so: svrrqst.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5594,6 +5660,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -5613,6 +5680,7 @@ LDFLAGS += $(RLDFLAGS)
 .obj/typecode.o .shobj/typecode.so: typecode.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5759,6 +5827,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
