@@ -1,3 +1,10 @@
+Sun Apr 27 07:41:44 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Timer_Queue.cpp: added #includes for template specializations,
+	  and removed some unused specializations.
+
+	* ace/Timer_Wheel_T.cpp: added newline at end of file.
+
 Sat Apr 26 17:19:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Timer_Queue.cpp: The correct Timer_Queue.cpp file was not
