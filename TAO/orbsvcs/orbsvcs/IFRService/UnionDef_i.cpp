@@ -12,8 +12,8 @@ ACE_RCSID (IFRService,
 
 TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
-    TAO_IDLType_i (repo),
     TAO_Contained_i (repo),
+    TAO_IDLType_i (repo),
     TAO_TypedefDef_i (repo),
     TAO_Container_i (repo)
 {

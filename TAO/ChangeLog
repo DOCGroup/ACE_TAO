@@ -1,3 +1,11 @@
+Sat Jul 26 19:03:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+
+          More reordering of base class constructor calls, as per
+          gcc 3.3's requirements.
+
 Sat Jul 26 14:34:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentModuleDef_i.cpp:
