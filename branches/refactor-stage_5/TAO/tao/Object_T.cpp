@@ -2,8 +2,8 @@
 #ifndef TAO_OBJECT_T_C
 #define TAO_OBJECT_T_C
 
-#include "tao/Object_T.h"
-
+#include "Object_T.h"
+#include "Stub.h"
 ACE_RCSID (tao,
            Object_T,
            "$Id$")
@@ -21,16 +21,16 @@ namespace TAO
       {
         return T::_nil ();
       }
-  
+
     CORBA::Boolean is_it = obj->_is_a (repo_id
                                        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (T::_nil ());
-  
+
     if (is_it == 0)
       {
         return T::_nil ();
       }
-  
+
     return TAO::Narrow_Utils<T>::unchecked_narrow (obj, pbf);
   }
 
@@ -44,19 +44,19 @@ namespace TAO
       {
         return T::_nil ();
       }
-  
+
     CORBA::Boolean is_it =
       obj->_is_a (
           repo_id
           ACE_ENV_ARG_PARAMETER
         );
     ACE_CHECK_RETURN (T::_nil ());
-  
+
     if (is_it == 0)
       {
         return T::_nil ();
       }
-  
+
     return Narrow_Utils<T>::unchecked_narrow (obj);
   }
 
@@ -64,7 +64,7 @@ namespace TAO
   T *
   Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
                                      Proxy_Broker_Factory pbf)
-  {  
+  {
     T_ptr proxy = Narrow_Utils<T>::lazy_evaluation (obj);
 
     if (!CORBA::is_nil (proxy))
@@ -73,7 +73,7 @@ namespace TAO
       }
 
     TAO_Stub* stub = obj->_stubobj ();
-    
+
     if (stub != 0)
       {
         stub->_incr_refcnt ();
@@ -84,13 +84,13 @@ namespace TAO
       && stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ()
       && obj->_is_collocated ()
       && pbf != 0;
-    
+
     ACE_NEW_RETURN (proxy,
                     T (stub,
                        collocated ? 1 : 0,
                        obj->_servant ()),
                     T::_nil ());
-    
+
     return proxy;
   }
 
@@ -99,7 +99,7 @@ namespace TAO
   Narrow_Utils<T>::unchecked_narrow (CORBA::AbstractBase_ptr obj)
   {
     T_ptr proxy = T::_nil ();
-  
+
     if (obj->_is_objref ())
       {
         ACE_NEW_RETURN (proxy,
@@ -113,7 +113,7 @@ namespace TAO
         proxy = T::_downcast (obj);
         proxy->_add_ref ();
       }
-  
+
     return proxy;
   }
 
@@ -122,7 +122,7 @@ namespace TAO
   Narrow_Utils<T>::lazy_evaluation (CORBA::Object_ptr obj)
   {
     T_ptr default_proxy = T::_nil ();
-  
+
     // Code for lazily evaluated IORs.
     if (!obj->is_evaluated ())
       {
@@ -131,7 +131,7 @@ namespace TAO
                            obj->orb_core ()),
                         T::_nil ());
       }
-      
+
     return default_proxy;
   }
 }

@@ -24,13 +24,13 @@ namespace TAO
                                     bool response_expected)
     : details_ (details)
     , forwarded_to_ (0)
+    , response_expected_ (response_expected)
     , otarget_ (ot)
     , target_ (t)
 #if TAO_HAS_INTERCEPTORS == 1
     , adapter_ (t->_stubobj ()->orb_core ()->client_request_interceptors (),
                 this)
     , req_info_ (this)
-    , response_expected_ (response_expected)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
   {
     ACE_UNUSED_ARG (response_expected);
