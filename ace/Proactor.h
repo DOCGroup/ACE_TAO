@@ -63,10 +63,13 @@ class ACE_Export ACE_Proactor : public ACE_Event_Handler
 public:
   // = Initialization and termination methods.
 
-  ACE_Proactor (size_t number_of_threads = 0);
-  // Initialize a proactor and give it the number of threads to allow
-  // to run concurrently (note that we don't spawn the threads, the NT
-  // kernel does).
+  ACE_Proactor (size_t number_of_threads = 0, ACE_Timer_Queue *tq = 0);
+  // Initialize a proactor.  -number_of_threads- is passed to
+  // CreateIoCompletionPort.
+
+  ~ACE_Proactor (void);
+  // Destruction deletes timer_queue_ if one wasn't passed in on
+  // construction.
 
   int close (void);
   // Close completion port.
@@ -144,11 +147,13 @@ public:
 
 protected:
 
-  ACE_Timer_Queue timer_queue_;
-  // Maintains the list of pending timers.
+  ACE_Timer_Queue *timer_queue_;
+  // Maintains the list of pending timers. Defined as a pointer to
+  // allow overriding by derived classes...
 
-  ACE_Time_Value timer_skew_;
-  // Adjusts for timer skew in various clocks.
+  int delete_timer_queue_;
+  // Keeps track of whether we should delete the timer queue (if we
+  // didn't create it, then we don't delete it).
 
   virtual int initiate (ACE_Overlapped_IO *overlapped);
   // Helper to initiate.
@@ -166,7 +171,7 @@ protected:
   size_t number_of_threads_;
   // Max threads that will be allowed to run in a completion port.
 
-  ACE_HANDLE global_handle_;
+  ACE_Manual_Event shared_event_;
   // Win32 HANDLE associated with every operation that signals when
   // any operation completes (used to transparently integrate the
   // <ACE_Proactor> with the <ACE_Dispatcher>).
@@ -194,13 +199,13 @@ public:
   ACE_Overlapped_File (const ACE_Overlapped_File &file);
   // Copy <file>.
 
-  ACE_Overlapped_File (LPCTSTR file_name, int mode, int perms = 0);
+  ACE_Overlapped_File (const char *file_name, int mode, int perms = 0);
   // Construction of an ACE_Overlapped_File.  Calls open.
 
   ~ACE_Overlapped_File (void);
   // Destruction.  Calls close.
 
-  int open (LPCTSTR file_name,
+  int open (const char *file_name,
 	    int access = GENERIC_READ,
 	    int share = FILE_SHARE_READ,
 	    LPSECURITY_ATTRIBUTES security = 0,

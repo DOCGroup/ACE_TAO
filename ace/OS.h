@@ -1824,6 +1824,7 @@ typedef const wchar_t * ACE_WIDE_DL_TYPE;
 struct ACE_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
+  siginfo_t (ACE_HANDLE *handle);
 
   ACE_HANDLE si_handle_;
   // Win32 HANDLE that has become signaled.

@@ -155,25 +155,31 @@ ACE_Overlapped_IO::operator ACE_OVERLAPPED * (void)
   return (ACE_OVERLAPPED *) this;
 }
 
-ACE_Proactor::ACE_Proactor (size_t number_of_threads)
-  : timer_skew_ (0, ACE_TIMER_SKEW),
-    completion_port_ (0),
-    number_of_threads_ (number_of_threads)
+ACE_Proactor::ACE_Proactor (size_t number_of_threads, ACE_Timer_Queue *tq)
+  : completion_port_ (ACE_INVALID_HANDLE),
+    number_of_threads_ (number_of_threads),
+    timer_queue_ (tq)
 {
-#if defined (ACE_WIN32)
-  // Create an "auto-reset" event to indicate that one or more I/O
-  // overlapped events have completed.
-  this->global_handle_ = ::CreateEvent (NULL, TRUE, FALSE, NULL);
-#endif /* ACE_HAS_WIN32 */
+  if (this->timer_queue_ == 0)
+    {
+      ACE_NEW (this->timer_queue_, ACE_Timer_Queue);
+      this->delete_timer_queue_ = 1;
+    }
+}
+
+ACE_Proactor::~ACE_Proactor (void)
+{
+  if (this->delete_timer_queue_)
+    delete this->timer_queue_;
 }
 
 int
 ACE_Proactor::close (void)
 {
-  if (this->completion_port_ != 0)
+  if (this->completion_port_ != ACE_INVALID_HANDLE)
     ACE_OS::close (this->completion_port_);
 
-  ACE_OS::close (this->global_handle_);
+  // @@ Should we call shared_event_.remove ()?
   return 0;
 }
 
@@ -184,11 +190,9 @@ ACE_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
 
   ACE_Time_Value timeout (0, 0);
 
-#if defined (ACE_WIN32)
   // Reset the handle to a non-signaled state.
-  if (::ResetEvent (global_handle_) == FALSE)
+  if (shared_event_.reset () == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "ResetEvent failed.\n"), -1);
-#endif /* ACE_HAS_WIN32 */
 
   // Perform a non-blocking "poll" for all the I/O events that have
   // completed in the I/O completion queue.
@@ -212,17 +216,21 @@ ACE_Proactor::schedule_timer (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_Proactor::schedule_timer");
 
-  return this->timer_queue_.schedule 
+  return this->timer_queue_->schedule 
     (handler, arg, ACE_OS::gettimeofday () + delta_time, interval);
 }
+
+#define ACE_TIMEOUT_OCCURRED 258
 
 int
 ACE_Proactor::handle_events (ACE_Time_Value *how_long)
 {
-  // Stash the current time.
-  ACE_Time_Value prev_time = ACE_OS::gettimeofday ();
+  // Stash the current time -- the destructor of this object will
+  // automatically compute how much time elapsed since this method was
+  // called.
+  ACE_Countdown_Time countdown (how_long);
 
-  how_long = timer_queue_.calculate_timeout (how_long);
+  how_long = timer_queue_->calculate_timeout (how_long);
 
   ACE_Overlapped_IO *overlapped = 0;
   u_long bytes_transferred = 0;
@@ -230,27 +238,38 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
 #if defined (ACE_WIN32)
   int error = 0;
   ACE_HANDLE io_handle = ACE_INVALID_HANDLE;
+  int timeout = how_long == 0 ? INFINITE : how_long->msec ();
 
-  // When we port this to use Posix async I/O, this call will be
-  // replace will a generic ACE_OS call.
-  BOOL result;
+  // If completion_port_ is not set, then we can't wait in
+  // GetQueueCompletionStatus.  This approach is a total hack; there
+  // should be a better way.  The drawback to this sleep is that
+  // there's no way to wake up the sleep to register new events.
+  if (completion_port_ == ACE_INVALID_HANDLE)
+    {
+      ACE_OS::sleep (timeout);
+      error = ACE_TIMEOUT_OCCURRED;
+    }
+  else
+    {
+      // When we port this to use Posix async I/O, this call will be
+      // replace will a generic ACE_OS call.
+      BOOL result;
+ 
+      result = ::GetQueuedCompletionStatus (completion_port_,
+					    &bytes_transferred,
+					    (u_long *) &io_handle,
+					    (ACE_OVERLAPPED **) &overlapped,
+					    timeout);
 
-  result = ::GetQueuedCompletionStatus (this->completion_port_,
-					&bytes_transferred,
-					(u_long *) &io_handle,
-					(ACE_OVERLAPPED **) &overlapped,
-  					how_long == 0 ? INFINITE : how_long->msec ());
-
-  // Check for a failed dequeue.  Stash the error value.
-  if (result == FALSE && overlapped == 0)
-    error = ::GetLastError ();
+      // Check for a failed dequeue.  Stash the error value.
+      if (result == FALSE && overlapped == 0)
+	error = ::GetLastError ();
+    }
 
   // Check for any timers that can be handled before we dispatch the
   // dequeued event.  Note that this is done irrespective of whether
   // an error occurred.
-  if (!this->timer_queue_.is_empty ())
-    // Fudge factor accounts for problems with Solaris timers...
-    this->timer_queue_.expire (ACE_OS::gettimeofday () + this->timer_skew_);
+  this->timer_queue_->expire ();
 
   // @@ Need to make sure that if GetQueuedCompletionStatus fails due
   // to a time out that this information is propagated correctly to
@@ -259,26 +278,13 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   // GetQueued returned because of a error or timer.
   if (error != 0)
     { 
-      // Compute the time while the Proactor is processing.
-      ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - prev_time;
-
-      // Update -how_long- to reflect the amount of time since
-      // handle_events was called.
-      if (how_long != 0)
-	{
-	  if (*how_long > elapsed_time)
-	    *how_long = *how_long - elapsed_time;
-	  else
-	    *how_long = ACE_Time_Value::zero; // Used all of timeout.
-	}
-
       // @@  What's the WIN32 constant for 258?!?!?!
-      if (error == 258)
+      if (error == ACE_TIMEOUT_OCCURRED)
 	// Returning because of timeout.
 	return 0;
       // Returning because of error.
       ACE_ERROR_RETURN ((LM_ERROR, 
-			 "%p GetQueuedCompletionStatus failed errno = %d.\n"
+			 "%p GetQueuedCompletionStatus failed errno = %d.\n",
 			 "ACE_Proactor::handle_events", error), -1);
     }
 
@@ -290,19 +296,6 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   // Should we propogate this to the handler somehow?  Maybe an extra
   // failed/succeeded flag in the dispatch call?
   int dispatch_result = this->dispatch (overlapped, bytes_transferred);
-
-  // Compute the time while the Proactor is processing.
-  ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - prev_time;
-
-  // Update <how_long> to reflect the amount of time since
-  // <handle_events> was called.
-  if (how_long != 0)
-    {
-      if (*how_long > elapsed_time)
-	*how_long = *how_long - elapsed_time;
-      else
-	*how_long = ACE_Time_Value::zero; // Used all of timeout.
-    }
 
   // Return -1 (failure), or return 1.  Remember that 0 is reserved
   // for timeouts only, so we have to turn dispatch_results to 1.  So,
@@ -357,7 +350,7 @@ ACE_Proactor::initiate (ACE_Event_Handler *handler,
   
   ACE_NEW_RETURN (overlapped,
 		  ACE_Overlapped_IO (mask, handler, msg, 
-				     file, this->global_handle_),
+				     file, shared_event_.handle ()),
 		  -1);
 
   // Tell the handler that *this* <Proactor> is dispatching it.
@@ -443,7 +436,7 @@ ACE_Overlapped_File::ACE_Overlapped_File (void)
 {
 }
 
-ACE_Overlapped_File::ACE_Overlapped_File (LPCTSTR file_name, 
+ACE_Overlapped_File::ACE_Overlapped_File (const char *file_name, 
 					  int mode, 
 					  int perms)
   : delete_handle_ (1)
@@ -480,7 +473,7 @@ ACE_Overlapped_File::open (ACE_HANDLE handle)
 }
 
 int
-ACE_Overlapped_File::open (LPCTSTR file_name,
+ACE_Overlapped_File::open (const char *file_name,
 			   int access,
 			   int share,
 			   LPSECURITY_ATTRIBUTES security,

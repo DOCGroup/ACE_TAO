@@ -788,6 +788,8 @@ ACE_Service_Config::run_proactor_event_loop (void)
   return 0;
 }
 
+// Handle events for -tv- time.  handle_events updates -tv- to reflect
+// time elapsed, so do not return until -tv- == 0, or an error occurs.
 int
 ACE_Service_Config::run_proactor_event_loop (ACE_Time_Value &tv)
 {
@@ -799,7 +801,9 @@ ACE_Service_Config::run_proactor_event_loop (ACE_Time_Value &tv)
       int result = ACE_Service_Config::proactor ()->handle_events (tv);
       if (ACE_Service_Config::reconfig_occurred_)
 	ACE_Service_Config::reconfigure ();
-      else if (result <= 0)
+
+      // An error has occurred.
+      else if (result == -1)
 	return result;
     }
 
