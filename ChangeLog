@@ -7,6 +7,10 @@ Mon Aug 26 09:51:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
           same as in the base class. That way doxygen generates the same
           documentation for this overruled method as in the base.
 
+        * ace/TLI_Connector.i:
+        * ace/XTI_ATM_MCast.i:
+          Made argument names the same as in the header file.
+
 Mon Aug 26 08:29:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Connector.cpp:

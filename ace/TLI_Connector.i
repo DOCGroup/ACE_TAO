@@ -4,30 +4,30 @@
 // TLI_Connector.i
 
 ACE_INLINE
-ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream, 
-				      const ACE_Addr &remote_sap, 
-				      ACE_Time_Value *timeout,
-				      const ACE_Addr &local_sap, 
-				      int reuse_addr, 
-				      int flags,
-				      int perms,
-				      const char device[], 
-				      struct t_info *info,
-				      int rwf,
-				      netbuf *udata,
-				      netbuf *opt)
+ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
+                  const ACE_Addr &remote_sap,
+                  ACE_Time_Value *timeout,
+                  const ACE_Addr &local_sap,
+                  int reuse_addr,
+                  int flags,
+                  int perms,
+                  const char device[],
+                  struct t_info *info,
+                  int rw_flag,
+                  netbuf *udata,
+                  netbuf *opt)
 {
   ACE_TRACE ("ACE_TLI_Connector::ACE_TLI_Connector");
   if (this->connect (new_stream,
                      remote_sap,
                      timeout,
                      local_sap,
-                     reuse_addr, 
+                     reuse_addr,
                      flags,
                      perms,
-                     device, 
+                     device,
                      info,
-                     rwf,
+                     rw_flag,
                      udata,
                      opt) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
