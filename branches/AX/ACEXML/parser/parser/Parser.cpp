@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Parser.h"
-#include "Common/Transcode.h"
-#include "Common/AttributesImpl.h"
+#include "parser/parser/Parser.h"
+#include "common/Transcode.h"
+#include "common/AttributesImpl.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "Parser.i"
+# include "parser/parser/Parser.i"
 #endif /* __ACEXML_INLINE__ */
 
 /***

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Entity_Manager.h"
+#include "parser/parser/Entity_Manager.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "Entity_Manager.i"
+# include "parser/parser/Entity_Manager.i"
 #endif /* __ACEXML_INLINE__ */
 
 static const ACEXML_Char amp_name[] = {'a', 'm', 'p', 0 };

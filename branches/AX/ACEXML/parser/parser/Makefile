@@ -8,13 +8,13 @@ LIB     = libACEXML_Parser.a
 SHLIB   = libACEXML_Parser.$(SOEXT)
 
 FILES   = Entity_Manager \
-	  Basic_Parser
+	  Parser
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC    = $(addsuffix .cpp,$(FILES))
 
 LIBS   += $(ACELIB)
-CCFLAGS += -I ..
+CCFLAGS += -I ../..
 
 BUILD   = $(VLIB) $(VSHLIB)
 
