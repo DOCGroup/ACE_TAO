@@ -1,7 +1,7 @@
 Fri Aug 22 15:28:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ACE.mwc:
-          Added CVS keyword $Id$.
+          Added CVS Id keyword.
 
         * apps/JAWS/server/server.mpc:
         * netsvcs/clients/Naming/Client/Client.mpc:
