@@ -8,6 +8,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
+TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs
 IDL_SRC= NavWeapC.cpp
 PROG_SRCS = $(IDL_SRC) DOVEMIB.cpp Node.cpp PrintVisitor.cpp AnyAnalyser.cpp
 
@@ -39,10 +40,11 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) \
+            -I$(TAO_ROOT)/orbsvcs/orbsvcs $(TSS_ORB_FLAG)#-H
 
 $(IDL_SRC): NavWeap.idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl NavWeap.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 
 NavWeap.idl: ../NavWeap.idl
 	@cp -p $< .

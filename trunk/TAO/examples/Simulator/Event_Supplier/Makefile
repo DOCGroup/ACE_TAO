@@ -8,6 +8,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
+TAO_IDLFLAGS +=  -I$(TAO_ROOT)/orbsvcs/orbsvcs
 IDL_SRC = NavWeapC.cpp NavWeapS.cpp
 IDL_HDR = NavWeapC.h
 EVENT_TEST_SRCS = Event_Sup.cpp Event_Con.cpp DOVE_Supplier.cpp
@@ -39,10 +40,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #### TSS_ORB_FLAG = -DTAO_HAS_TSS_ORBCORE
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) \
+            -I$(TAO_ROOT)/orbsvcs/orbsvcs $(TSS_ORB_FLAG)#-H
 
 $(IDL_SRC): NavWeap.idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl NavWeap.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 
 .PRECIOUS:$(IDL_HDR) $(IDL_SRC)
 
