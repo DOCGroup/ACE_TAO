@@ -144,29 +144,29 @@ public:
   int getent (const ACE_TCHAR *fname, const ACE_TCHAR *name);
 
 protected:
-  // Parse an integer property
-  /// Parse a string property
+  /// Parse an integer property
   const ACE_TCHAR *parse (const ACE_TCHAR *buf, int &cap);
 
-  /// Fill the ACE_Capabilities with description in ent.
+  /// Parse a string property
   const ACE_TCHAR *parse (const ACE_TCHAR *buf, ACE_TString &cap);
 
-  /// Parse a cap entry
+  /// Fill the ACE_Capabilities with description in ent.
   int fillent(const ACE_TCHAR *ent);
 
-  /// Get a line from FILE input stream
+  /// Parse a cap entry
   int parseent (const ACE_TCHAR *name, ACE_TCHAR *line);
 
-  /// Is a valid entry
+  /// Get a line from FILE input stream
   int getline (FILE* fp,
                ACE_TString &line);
 
-  /// Reset the set of capabilities
+  /// Is a valid entry
   int is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
 
-  /// Atributes.
+  /// Reset the set of capabilities
   void resetcaps (void);
 
+  /// Attributes
 private:
   /// This is the set of ACE_CapEntry.
   ACE_Hash_Map_Manager<ACE_TString, ACE_CapEntry *, ACE_Null_Mutex> caps_;
