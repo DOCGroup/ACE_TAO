@@ -1,4 +1,7 @@
-Fri Aug 06 12:06:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Aug 06 12:10:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Added
+	  ACE_HAS_POSITION_INDEPENDENT_MALLOC.
 
 	* ace/OS.cpp (strptime_getnum): getnum should be strptim_getnum.
 
