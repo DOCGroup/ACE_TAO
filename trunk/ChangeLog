@@ -1,3 +1,7 @@
+Sun Mar 11 17:28:40 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/QoS/QoS_Session_Impl.cpp (rsvp_callback): <errflags> was unused.
+
 Sun Mar 11 08:31:05 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Makefile.bor (NAMES): Added Logging_Strategy_Test.

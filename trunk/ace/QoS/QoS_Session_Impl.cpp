@@ -45,6 +45,7 @@ rsvp_callback (rapi_sid_t sid,
   ACE_UNUSED_ARG (filter_spec_list);
   ACE_UNUSED_ARG (ad_spec_no);
   ACE_UNUSED_ARG (ad_spec_list);
+  ACE_UNUSED_ARG (errflags);
 
   if (args == 0)
     ACE_DEBUG ((LM_DEBUG,
