@@ -747,7 +747,6 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_objref (CORBA::TypeCode_ptr tc,
                                       CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
   // compare the repoID and name, of which the name is optional as per GIOP
   // spec. However, the repoID is mandatory.
   const char *my_id = this->id (ACE_TRY_ENV);
@@ -783,8 +782,6 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
                                       CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
-
   // for structs the repoID and names are optional. However, if provided, we
   // must compare them
   const char *my_id = this->id (ACE_TRY_ENV);
@@ -857,8 +854,6 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
                                      CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
-
   // For unions the repoID and names are optional. However, if
   // provided, we must compare them.
   const char *my_id = this->id (ACE_TRY_ENV);
@@ -954,8 +949,6 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
                                     CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
-
   // for enum the repoID and names are optional. However, if provided, we
   // must compare them
   const char *my_id = this->id (ACE_TRY_ENV);
@@ -1076,8 +1069,6 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_alias (CORBA::TypeCode_ptr tc,
                                      CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
-
   // for structs the repoID and names are optional. However, if provided, we
   // must compare them
   const char *my_id = this->id (ACE_TRY_ENV);
@@ -1117,7 +1108,6 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
                                       CORBA::Environment &ACE_TRY_ENV) const
 {
   // exactly similar to structs, except that the repository ID is mandatory
-  //  ACE_TRY_ENV.clear ();
 
   const char *my_id = this->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -1189,8 +1179,6 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
 const char *
 CORBA_TypeCode::private_id (CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
-
   switch (this->kind_)
     {
       // These are all complex typecodes, which have as their first
@@ -1229,8 +1217,6 @@ CORBA_TypeCode::private_id (CORBA::Environment &ACE_TRY_ENV) const
 const char *
 CORBA_TypeCode::private_name (CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
-
   switch (this->kind_)
     {
       // These are all complex typecodes, which have as their second
@@ -1284,8 +1270,6 @@ CORBA_TypeCode::private_name (CORBA::Environment &ACE_TRY_ENV) const
 CORBA::ULong
 CORBA_TypeCode::private_member_count (CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
-
   switch (kind_)
     {
     case CORBA::tk_alias:
@@ -1375,8 +1359,6 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
     case CORBA::tk_except:
     case CORBA::tk_struct:              // index from 0
       mcount = this->member_count (ACE_TRY_ENV);
-      // @@EXC@@ Why are we rethrowing a different exception here?
-      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (CORBA::TypeCode_ptr)0);
       ACE_CHECK_RETURN ((CORBA::TypeCode_ptr)0);
 
       {
@@ -1387,16 +1369,16 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
           if (slot < mcount)
             return  this->private_state_->tc_member_type_list_[slot];
           else
-            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), CORBA::TypeCode::_nil ());
+            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                              CORBA::TypeCode::_nil ());
 
         // the first time in. Precompute and store types of all members
 
         // Allocate a list to hold the member typecodes
-        // @@EXC@@ Need to check for allocation failure here.
-        this->private_state_->tc_member_type_list_ = new CORBA::TypeCode_ptr [mcount];
-
-        if (this->private_state_->tc_member_type_list_ == 0)
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (), (CORBA::TypeCode_ptr)0);
+        ACE_NEW_THROW_EX (this->private_state_->tc_member_type_list_,
+                          CORBA::TypeCode_ptr [mcount],
+                          CORBA::NO_MEMORY ());
+        ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
         // skip the id, name, and member_count part
         if (!stream.skip_string ()        // type ID, hidden
@@ -1444,9 +1426,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
       ACE_NOTREACHED (break;)
 
     case CORBA::tk_union:            // index from 0
-      mcount = this->member_count (ACE_TRY_ENV);                // clears ACE_TRY_ENV
-      // @@EXC@@ Why are we rethrowing a different exception here?
-      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (CORBA::TypeCode_ptr)0);
+      mcount = this->member_count (ACE_TRY_ENV);
       ACE_CHECK_RETURN ((CORBA::TypeCode_ptr)0);
 
       {
@@ -1459,11 +1439,11 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
           else
             ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), CORBA::TypeCode::_nil ());
 
-      // the first time in. Precompute and store types of all members
-      // @@EXC@@ Need to check allocation failure.
-        this->private_state_->tc_member_type_list_ = new CORBA::TypeCode_ptr [mcount];
-        if (this->private_state_->tc_member_type_list_ == 0)
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (), (CORBA::TypeCode_ptr)0);
+        // the first time in. Precompute and store types of all members
+        ACE_NEW_THROW_EX (this->private_state_->tc_member_type_list_,
+                          CORBA::TypeCode_ptr [mcount],
+                          CORBA::NO_MEMORY ());
+        ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       // skip the id, name, and discrimant type part
         if (!stream.skip_string ()        // type ID, hidden
@@ -1539,9 +1519,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
   switch (kind_)
     {
     case CORBA::tk_enum:
-      mcount = this->member_count (ACE_TRY_ENV);                // clears ACE_TRY_ENV
+      mcount = this->member_count (ACE_TRY_ENV);
       // out of bounds
-      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
       ACE_CHECK_RETURN ((char *)0);
 
       {
@@ -1586,9 +1565,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
 
     case CORBA::tk_except:
     case CORBA::tk_struct:              // index from 0
-      mcount = this->member_count (ACE_TRY_ENV);                // clears ACE_TRY_ENV
+      mcount = this->member_count (ACE_TRY_ENV);
       // out of bounds
-      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
       ACE_CHECK_RETURN ((char *)0);
 
       {
@@ -1632,9 +1610,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
       ACE_NOTREACHED (break;)
 
     case CORBA::tk_union:            // index from 0
-      mcount = this->member_count (ACE_TRY_ENV);                // clears ACE_TRY_ENV
+      mcount = this->member_count (ACE_TRY_ENV);
       // out of bounds
-      // if (ACE_TRY_ENV.exception ()) ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
       ACE_CHECK_RETURN ((char *)0);
 
       {
@@ -1799,7 +1776,6 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 0;
 
-      // @@EXC@@ Need to check memory allocation failure.
       ACE_NEW_THROW_EX (label_list[i],
                         CORBA::Any (tc, 0, out.begin ()),
                         CORBA::NO_MEMORY ());
@@ -2036,8 +2012,6 @@ CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &ACE_TRY_ENV)
 CORBA::ULong
 CORBA_TypeCode::param_count (CORBA::Environment &ACE_TRY_ENV) const
 {
-  //  ACE_TRY_ENV.clear ();
-
   switch (this->kind_)
     {
     default:
@@ -2126,8 +2100,6 @@ CORBA::TypeCode::private_size (CORBA::Environment &ACE_TRY_ENV)
   if (kind_ >= CORBA::TC_KIND_COUNT)
     ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
 
-  //  ACE_TRY_ENV.clear ();
-
   // Double checked locking...
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
                     this->private_state_->mutex_, 0);
@@ -2159,8 +2131,6 @@ CORBA::TypeCode::private_size (CORBA::Environment &ACE_TRY_ENV)
 size_t
 CORBA::TypeCode::private_alignment (CORBA::Environment &ACE_TRY_ENV)
 {
-  //  ACE_TRY_ENV.clear ();
-
   if (kind_ >= CORBA::TC_KIND_COUNT)
     ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
 

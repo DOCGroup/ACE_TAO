@@ -31,13 +31,11 @@ ACE_RCSID(tao, varout, "$Id$")
 
 template<class T> void
 TAO_Object_Field_T<T>::_downcast (CORBA_Object* base_ptr,
-				  CORBA_Environment &env)
+				  CORBA_Environment &ACE_TRY_ENV)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = 0;
-  this->ptr_ = T::_narrow (base_ptr, env);
-  if (env.exception () != 0) 
-    return;
+  this->ptr_ = T::_narrow (base_ptr, ACE_TRY_ENV);
 }
 
 template<class T> CORBA_Object*

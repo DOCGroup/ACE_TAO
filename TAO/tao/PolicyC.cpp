@@ -166,12 +166,12 @@ CORBA_InvalidPolicies::CORBA_InvalidPolicies(
 
 CORBA_Policy_ptr CORBA_Policy::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA_Policy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/Policy:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/Policy:1.0", ACE_TRY_ENV))
     return CORBA_Policy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -354,14 +354,14 @@ void CORBA_Policy::destroy (
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-CORBA::Boolean CORBA_Policy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA_Policy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env); // remote call
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
 const char* CORBA_Policy::_interface_repository_id (void) const
@@ -424,12 +424,12 @@ CORBA_PolicyTypeSeq::~CORBA_PolicyTypeSeq (void)
 
 CORBA::PolicyManager_ptr CORBA_PolicyManager::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA_PolicyManager::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/PolicyManager:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/PolicyManager:1.0", ACE_TRY_ENV))
     return CORBA_PolicyManager::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -487,14 +487,14 @@ void CORBA_PolicyManager::set_policy_overrides (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-CORBA::Boolean CORBA_PolicyManager::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA_PolicyManager::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PolicyManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env); // remote call
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
 const char* CORBA_PolicyManager::_interface_repository_id (void) const
@@ -507,12 +507,12 @@ const char* CORBA_PolicyManager::_interface_repository_id (void) const
 
 CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA_PolicyCurrent::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/PolicyCurrent:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/PolicyCurrent:1.0", ACE_TRY_ENV))
     return CORBA_PolicyCurrent::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -547,16 +547,16 @@ CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_unchecked_narrow (
     );
 }
 
-CORBA::Boolean CORBA_PolicyCurrent::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA_PolicyCurrent::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PolicyCurrent:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PolicyManager:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Current:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env); // remote call
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
 const char* CORBA_PolicyCurrent::_interface_repository_id (void) const
