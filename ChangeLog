@@ -31,9 +31,9 @@ Thu Feb 26 11:15:39 2004  Steve Huston  <shuston@riverace.com>
 
 Wed Feb 25 13:11:47 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_unistd.inl: Added support for ACE_OS::fsync(). 
+	* ace/OS_NS_unistd.inl: Added support for ACE_OS::fsync().
 	  Thanks to Michel Drapeau <michel.drapeau@asdfsadfh.com> for
-	  reporting this. 
+	  reporting this.
 
 Wed Feb 25 16:37:11 2004  Steve Huston  <shuston@riverace.com>
 
@@ -2669,4 +2669,3 @@ Thu Jan 15 08:14:08 2004  Chad Elliott  <elliott_c@ociweb.com>
           handled properly.
           Removed the use of the idlpreprocessor keyword in favor of the
           verbatim used to get the same effect.
-
