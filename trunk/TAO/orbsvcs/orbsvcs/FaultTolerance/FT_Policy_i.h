@@ -21,7 +21,7 @@
 #define TAO_FT_POLICY_I_H
 #include "ace/pre.h"
 
-#include "orbsvcs/FT_CORBAC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

@@ -3,106 +3,55 @@
 #ifndef _FT_IDL_
 #define _FT_IDL_
 
-#include "TimeBase.pidl" // 98-10.47.idl
+// The OMG file has been split in to two portions.
+
+// The next include is TAO specific.
+#include "orbsvcs/FT_CORBA_ORB.idl"
+
 #include "orbsvcs/CosNaming.idl" // 98-10-19.idl
-//#include "CosEventComm.idl" // 98-10-06.idl
 #include "orbsvcs/CosNotification.idl" // from telecom/98-11-03.idl
 #include "orbsvcs/CosNotifyFilter.idl"
-// Edited and included for TAO
-#include "tao/IOP.pidl" // from 98-03-01.idl
-#include "tao/GIOP.pidl" // from 98-03-01.idl
-//#include "tao/ORB.pidl" // from 98-03-01.idl
-//#include "tao/orb.idl"
-
-#include "tao/Policy.pidl"
 
 #pragma prefix "omg.org"
 
-
-// These have been moved to the file IOP.pidl
 module FT
 {
-  // Specification for Interoperable Object Group References
-  typedef string FTDomainId;
-  typedef unsigned long long ObjectGroupId;
-  typedef unsigned long ObjectGroupRefVersion;
+  /// Specification for the Common Types and Exceptions for
+  /// ReplicationManager
 
-  struct TagFTGroupTaggedComponent
-  { // tag = TAG_FT_GROUP;
-    GIOP::Version version;
-    FTDomainId ft_domain_id;
-    ObjectGroupId object_group_id;
-    ObjectGroupRefVersion object_group_ref_version;
-  };
-
-  struct TagFTPrimaryTaggedComponent
-  { // tag = TAG_FT_PRIMARY;
-    boolean primary;
-  };
-
-  // Specification for Most Recent Object Group Reference
-  struct FTGroupVersionServiceContext
-  { //context_id = FT_GROUP_VERSION;
-    ObjectGroupRefVersion object_group_ref_version;
-  };
-
-  // Specification for Transparent Reinvocation
-  const CORBA::PolicyType REQUEST_DURATION_POLICY = 47;
-  struct FTRequestServiceContext
-  { // context_id = FT_REQUEST;
-    string client_id;
-    long retention_id;
-    TimeBase::TimeT expiration_time;
-  };
-
-  local interface RequestDurationPolicy : CORBA::Policy
-    {
-      readonly attribute TimeBase::TimeT request_duration_value;
-    };
-
-  // Specification for Transport Heartbeats
-  const CORBA::PolicyType HEARTBEAT_POLICY = 48;
-  const CORBA::PolicyType HEARTBEAT_ENABLED_POLICY = 49;
-
-  struct TagFTHeartbeatEnabledTaggedComponent
-  { // tag = TAG_FT_HEARTBEAT_ENABLED;
-    boolean heartbeat_enabled;
-  };
-
-  struct HeartbeatPolicyValue {
-    boolean heartbeat;
-    TimeBase::TimeT heartbeat_interval;
-    TimeBase::TimeT heartbeat_timeout;
-  };
-
-  local interface HeartbeatPolicy : CORBA::Policy {
-    readonly attribute HeartbeatPolicyValue heartbeat_policy_value;
-  };
-
-  local interface HeartbeatEnabledPolicy : CORBA::Policy {
-    readonly attribute boolean heartbeat_enabled_policy_value;
-  };
-
-  // Specification of Common Types and Exceptions for ReplicationManager
+  /// Forward declarations
   interface GenericFactory;
   interface FaultNotifier;
 
+  /// Useful typedefs.
   typedef CORBA::RepositoryId TypeId;
   typedef Object ObjectGroup;
 
   typedef CosNaming::Name Name;
   typedef any Value;
 
+  /**
+   * @struct Property
+   *
+   * @brief A property name and a value association.
+   */
   struct Property {
     Name nam;
     Value val;
   };
 
+  /// Some mor euseful typedefs.
   typedef sequence<Property> Properties;
   typedef Name Location;
   typedef sequence<Location> Locations;
   typedef Properties Criteria;
 
+  /**
+   * @struct FactoryInfo
+   *
+   * @brief <@todo>
+   *
+   */
   struct FactoryInfo {
     GenericFactory _factory;
     Location the_location;
@@ -318,5 +267,6 @@ module FT
   };
 
 };
+
 
 #endif // for #ifndef _FT_IDL_

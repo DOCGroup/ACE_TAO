@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_FaultTolerance -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_IORManip -lTAO_DynamicAny -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_FTORB -lTAO_IORManip -lTAO_PortableServer -lTAO
 
 PROG_SRCS = IOGRTest.cpp
 
