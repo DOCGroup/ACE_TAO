@@ -43,6 +43,7 @@
 #  fl_reactor       Build the FlReactor.
 #  tk_reactor       Build the TkReactor.
 #  qt_reactor       Build the QtReactor.
+#  rapi             Build with RAPI
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -97,6 +98,9 @@
 #  PLATFORM_XT_CPPFLAGS   Platform CPP options for X11 (some require -I...)
 #  PLATFORM_XT_LDFLAGS    Platform LD options for X11 (some require -L...)
 #  PLATFORM_XT_LIBS       Platform libraries require with X11
+#  PLATFORM_RAPI_CPPFLAGS   Platform CPP options for RAPI
+#  PLATFORM_RAPI_LDFLAGS    Platform LD options for RAPI
+#  PLATFORM_RAPI_LIBS       Platform libraries required with RAPI
 #  PRELINK      Executable to precede linking, such as quantify
 #  PURELINK     If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
@@ -147,6 +151,9 @@ versioned_so = 0
 #### The system has X Windows and we want to include the XtReactor in
 #### the library
 xt_reactor = 0
+
+#### flag to Include/Preclude the RAPI support in ACE
+rapi = 0
 
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
@@ -334,6 +341,16 @@ ifneq ($(qt_reactor),)
   LIBS += $(PLATFORM_QT_LIBS)
   LDFLAGS += $(PLATFORM_QT_LDFLAGS)
 endif # qt_reactor
+
+ifeq ($(rapi),0)
+     override rapi =
+endif #rapi
+
+ifneq ($(rapi),)
+  CPPFLAGS += -DACE_HAS_RAPI $(PLATFORM_RAPI_CPPFLAGS)
+  LIBS += $(PLATFORM_RAPI_LIBS)
+  LDFLAGS += $(PLATFORM_RAPI_LDFLAGS)
+endif # rapi
 
 ifeq ($(ace_with_gl),0)
   override ace_with_gl =
