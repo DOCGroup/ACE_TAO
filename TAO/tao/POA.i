@@ -160,8 +160,8 @@ TAO_POA_Policies::server_protocol (void) const
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
-ACE_INLINE CORBA::PolicyList &
-TAO_POA_Policies::client_exposed_fixed_policies (void)
+const ACE_INLINE CORBA::PolicyList &
+TAO_POA_Policies::client_exposed_fixed_policies (void) const
 {
   return this->client_exposed_fixed_policies_;
 }

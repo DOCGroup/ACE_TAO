@@ -1,3 +1,12 @@
+Wed Aug 23 16:20:52 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/POA.h:
+	* tao/POA.cpp:
+	* tao/POA.i
+	  Fixed bug in the copy constructor of TAO_POA_Policies.
+	  Added const declaration to the method 
+	  TAO_POA_Policies::client_exposed_fixed_policies.
+
 Wed Aug 23 16:14:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/Makefile.EXE:
