@@ -1,18 +1,18 @@
-Thu Nov 20 17:55:15 2003 Charlie Frasch  <cfrasch@atdesk.com>
+Fri Nov 21 08:55:16 2003 Charlie Frasch  <cfrasch@atdesk.com>
   
-	* Makefile:
-	* README:
-	* mondrian.xpm:
-	* wxAddNameServerDlg.cpp:
-	* wxBindDialog.cpp:
-	* wxBindDialog.h:
-	* wxBindNewContext.cpp:
-	* wxNamingObject.cpp:
-	* wxNamingTree.cpp:
-	* wxNamingViewer.cpp:
-	* wxNamingViewerFrame.cpp:
-	* wxSelectNSDialog.cpp:
-	* wxViewIORDialog.cpp:
+	* utils/wxNamingViewer/Makefile:
+	* utils/wxNamingViewer/README:
+	* utils/wxNamingViewer/mondrian.xpm:
+	* utils/wxNamingViewer/wxAddNameServerDlg.cpp:
+	* utils/wxNamingViewer/wxBindDialog.cpp:
+	* utils/wxNamingViewer/wxBindDialog.h:
+	* utils/wxNamingViewer/wxBindNewContext.cpp:
+	* utils/wxNamingViewer/wxNamingObject.cpp:
+	* utils/wxNamingViewer/wxNamingTree.cpp:
+	* utils/wxNamingViewer/wxNamingViewer.cpp:
+	* utils/wxNamingViewer/wxNamingViewerFrame.cpp:
+	* utils/wxNamingViewer/wxSelectNSDialog.cpp:
+	* utils/wxNamingViewer/wxViewIORDialog.cpp:
 	  Updated for linux, gcc, latest ACE/TAO and wxWindows 2.4.2. For 
 	  linux, the wxNamingViewer.wxr file is no longer used, and the 
 	  dialog components are created  inline. A future change should 
