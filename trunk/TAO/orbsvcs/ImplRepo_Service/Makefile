@@ -61,9 +61,7 @@ BIN2 = ImplRepo_Service \
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # Naming
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -74,11 +72,13 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
-ifeq ($(minimum_corba),0)
-  BIN = $(BIN2)
-endif # minimum_corba
-endif # ImplRepo
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
+    ifeq ($(minimum_corba),0)
+      BIN = $(BIN2)
+    endif # minimum_corba
+  endif # ImplRepo
+endif # Naming
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
