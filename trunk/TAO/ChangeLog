@@ -1,3 +1,9 @@
+Mon Aug 16 12:13:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO-INSTALL.html (href): 
+
+	  Fixed some notes on .sln files generated for VC71.
+
 Sun Aug 15 18:16:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
