@@ -1,3 +1,8 @@
+Tue May  7 12:59:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Proactor_Test.cpp (handle_write_stream): Tried to fix
+	  warnings and errors in Borland builds.
+
 Tue May  7 10:31:24 2002  Alex Libman <AlexL@rumblegroup.com>
 
 	* tests/TP_Reactor_Test.cpp:
