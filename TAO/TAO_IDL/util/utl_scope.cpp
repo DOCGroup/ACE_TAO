@@ -111,7 +111,8 @@ static AST_Decl *
 iter_lookup_by_name_local (AST_Decl *d, 
                            UTL_ScopedName *e,
                            idl_bool treat_as_ref,
-                           long scope_offset)
+                           long scope_offset,
+                           UTL_Scope *caller)
 {
   Identifier *s;
   AST_Typedef *td;
@@ -127,7 +128,7 @@ iter_lookup_by_name_local (AST_Decl *d,
 
       // Update iterator before loop. This is needed for the check for
       // typedef, since we only want to look at the base type if there
-      //actually are more components of the name to resolve.
+      // actually are more components of the name to resolve.
       i->next ();
       scope_offset--;
 
@@ -188,7 +189,16 @@ iter_lookup_by_name_local (AST_Decl *d,
                                  treat_as_ref, 
                                  1, 
                                  1,
-                                 ++scope_offset);
+                                 scope_offset + 1);
+
+          // If we have a complete match, d can't be NULL
+          // and we're done, no sense in further iteration.
+          caller->matched = t->matched;
+
+          if (caller->matched == I_TRUE)
+            {
+              return d;
+            }
 
           AST_Decl *tmp = ScopeAsDecl (t);
 
@@ -197,6 +207,10 @@ iter_lookup_by_name_local (AST_Decl *d,
     }
 
   // OK, done with the loop
+  if (i->is_done () && d != NULL)
+    {
+      caller->matched = I_TRUE;
+    }
   delete i;
   return d;
 }
@@ -946,6 +960,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                            long scope_offset)
 {
   AST_Decl *d;
+  this->matched = I_FALSE;
   UTL_Scope *t = NULL;
 
   // Empty name? error
@@ -972,7 +987,10 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         {
           // Look up tail of name starting here
           d = lookup_by_name ((UTL_ScopedName *) e->tail (), 
-                              treat_as_ref);
+                              treat_as_ref,
+                              in_parent,
+                              start_index,
+                              scope_offset);
 
           // Now return whatever we have
           return d;
@@ -980,7 +998,10 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
       // OK, not global scope yet, so simply iterate with parent scope
       d = t->lookup_by_name (e, 
-                             treat_as_ref);
+                             treat_as_ref,
+                             in_parent,
+                             start_index,
+                             scope_offset + 1);
 
       // If treat_as_ref is true and d is not NULL, add d to
       // set of nodes referenced here
@@ -1041,7 +1062,16 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
                   if (d != NULL)
                     {
-                      break;
+                      this->matched = t->matched;
+
+                      if (this->matched == I_TRUE)
+                        {
+                          return d;
+                        }
+                      else
+                        {
+                          break;
+                        }
                     }
                 }
 
@@ -1101,11 +1131,15 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
 
       // OK, start of name is defined. Now loop doing local lookups
-      // of subsequent elements of the name
-      d = iter_lookup_by_name_local (d, 
-                                     e, 
-                                     treat_as_ref, 
-                                     scope_offset);
+      // of subsequent elements of the name.
+      if (this->matched == I_FALSE)
+        {
+          d = iter_lookup_by_name_local (d, 
+                                         e, 
+                                         treat_as_ref, 
+                                         scope_offset,
+                                         this);
+        }
 
       // If treat_as_ref is true and d is not NULL, add d to
       // set of nodes referenced here
