@@ -1,3 +1,8 @@
+Mon Sep 15 11:37:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* include/makeinclude/platform_hpux.GNU: 
+	  Added -D_REENTRANT to enable the _r functions.
+
 Mon Sep 15 09:40:57 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
 
 	* bin/auto_compile: 
