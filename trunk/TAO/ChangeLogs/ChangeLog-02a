@@ -35,6 +35,7 @@ Tue Feb 13 09:17:30 2001  Carlos O'Ryan  <coryan@uci.edu>
           void.  If there are errors an exception is raised.  Having both
           exceptions and error codes only results in confusing and broken
           code.
+	  This fixes bug #785
 
         * tao/PortableServer/ORB_Manager.cpp:
         * examples/Borland/ORBThread.cpp:
