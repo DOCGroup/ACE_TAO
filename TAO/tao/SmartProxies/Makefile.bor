@@ -7,7 +7,10 @@ NAME = TAO_SmartProxies
 OBJFILES = \
 	$(OBJDIR)\Smart_Proxies.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SMARTPROXIES_CFLAGS) \
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_SMARTPROXIES_CFLAGS) \
 	-DTAO_SMARTPROXIES_BUILD_DLL
 
 CPPDIR = .
@@ -16,7 +19,8 @@ INCDIR_NAME = tao/SmartProxies
 INCLUDES = \
 	*.h *.inl
 
-LIBFILES = $(TAO_SMARTPROXIES_LIB) $(TAO_LIB) $(ACE_LIB)
+LIBFILES = \
+	$(TAO_LIB) \
+	$(ACE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

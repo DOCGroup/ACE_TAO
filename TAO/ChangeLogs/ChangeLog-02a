@@ -1,3 +1,22 @@
+Sat Dec  2 18:19:37 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/SmartProxies/Makefile.bor:
+
+          Fixed link error.
+
+        * examples/Borland/build_idl.bat:
+        * examples/Borland/ChatClient.bpr:
+        * examples/Borland/ChatClient.cpp:
+        * examples/Borland/ChatClientWnd.cpp:
+        * examples/Borland/ChatClientWnd.dfm:
+        * examples/Borland/ChatClientWnd.h:
+        * examples/Borland/ORBThread.cpp:
+        * examples/Borland/ORBThread.h:
+        * examples/Borland/ReceiverImpl.cpp:
+
+          Fixed up build errors in Borland example, changed to
+          run ORB in a separate thread.
+
 Sat Dec  2 16:15:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAOACE.dsw:
