@@ -1,3 +1,13 @@
+Tue Oct 23 09:49:01 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* examples/Quoter/Client.bor: 
+	* examples/Quoter/Server.bor: 
+	* examples/Quoter/Generic_factory.bor: 
+	* examples/Quoter/Factory_finder.bor: 
+
+	  Changed CPPDIR from ".;.." to "." this should fix the build
+	  problem. Thanks to Jonny Willemsen for suggesting this fix.
+	
 Mon Oct 22 23:48:13 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/default_resource.cpp: 
