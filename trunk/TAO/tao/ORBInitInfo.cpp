@@ -272,16 +272,16 @@ void *
 TAO_ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS ( , TAO_ORBInitInfo)::_narrow))
+  if (type == ACE_reinterpret_cast (ptr_arith_t,
+                                    &TAO_ORBInitInfo::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
       &::PortableInterceptor::ORBInitInfo::_narrow))
-    retv = ACE_reinterpret_cast (void *,
-                                 ACE_static_cast (PortableInterceptor::ORBInitInfo_ptr,
-                                                  this));
+    retv = ACE_reinterpret_cast (
+             void *,
+             ACE_static_cast (PortableInterceptor::ORBInitInfo_ptr,
+                              this));
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
