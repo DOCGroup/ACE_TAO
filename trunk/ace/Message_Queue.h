@@ -86,7 +86,12 @@ public:
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  // = For all the following three routines if tv == 0, the caller will block until action is possible, else will wait until the absolute time specified in *tv elapses).  Calls will return, however, when queue is closed, deactivated, when a signal occurs, or if the time specified in tv elapses, (in which case errno = EWOULDBLOCK).
+  // = For all the following three routines if tv == 0, the caller
+  // will block until action is possible, else will wait until the
+  // absolute time specified in *tv elapses).  Calls will return,
+  // however, when queue is closed, deactivated, when a signal occurs,
+  // or if the time specified in tv elapses, (in which case errno =
+  // EWOULDBLOCK).
 
   int enqueue_prio (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
   // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
