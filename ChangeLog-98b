@@ -1,3 +1,17 @@
+Tue May 12 12:30:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/README:
+	* ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS): 
+	  Added this new macro to get around a bug which only happens in
+	  GNUC 2.7.xx.  It mistakenly refers to the template definition as
+	  the place where a function is used.
+
+	* ace/OS.h (ACE_INLINE_FOR_GNUC): Added the macro to fix the GNUC
+	  bug. 
+	
+	* ace/Thread_Manager.h: Added above macro to set_next and
+	  get_next. 
+
 Tue May 12 12:11:36 1998  Bob Laferriere  <laferrie@gsao.med.ge.com>
 
         * ace/Process.{h,cpp}: modifications to make the environment buffer
