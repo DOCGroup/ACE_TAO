@@ -2948,35 +2948,35 @@ static const CORBA::Long _oc_PortableServer_POAManager_State[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f414d61), 
-  ACE_NTOHL (0x6e616765), 
-  ACE_NTOHL (0x722f5374), 
-  ACE_NTOHL (0x6174653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f414d61),
+  ACE_NTOHL (0x6e616765),
+  ACE_NTOHL (0x722f5374),
+  ACE_NTOHL (0x6174653a),
   ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POAManager/State:2.3
   6,
-  ACE_NTOHL (0x53746174), 
+  ACE_NTOHL (0x53746174),
   ACE_NTOHL (0x65000000),  // name = State
   4, // member count
   8,
-  ACE_NTOHL (0x484f4c44), 
+  ACE_NTOHL (0x484f4c44),
   ACE_NTOHL (0x494e4700),  // name = HOLDING
   7,
-  ACE_NTOHL (0x41435449), 
+  ACE_NTOHL (0x41435449),
   ACE_NTOHL (0x56450000),  // name = ACTIVE
   11,
-  ACE_NTOHL (0x44495343), 
-  ACE_NTOHL (0x41524449), 
+  ACE_NTOHL (0x44495343),
+  ACE_NTOHL (0x41524449),
   ACE_NTOHL (0x4e470000),  // name = DISCARDING
   9,
-  ACE_NTOHL (0x494e4143), 
-  ACE_NTOHL (0x54495645), 
+  ACE_NTOHL (0x494e4143),
+  ACE_NTOHL (0x54495645),
   ACE_NTOHL (0x0),  // name = INACTIVE
   };
 
@@ -6667,7 +6667,7 @@ operator>>= (
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:50
 
 // Copying insertion.
@@ -6763,7 +6763,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::extract (
         _tao_any,
         PortableServer::POAManager::_tc_State,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -7318,6 +7318,7 @@ CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class TAO::Objref_Traits<PortableServer::POA>;
@@ -7371,8 +7372,8 @@ CORBA::Boolean operator>> (
           >
       >;
 
-#if !defined (_PORTABLESERVER_POALIST__EXPLICIT_CS_)
-#define _PORTABLESERVER_POALIST__EXPLICIT_CS_
+#if !defined (_PORTABLESERVER_POA__EXPLICIT_CS_)
+#define _PORTABLESERVER_POA__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Object_Sequence<
@@ -7406,8 +7407,8 @@ CORBA::Boolean operator>> (
         PortableServer::ObjectId
       >;
 
-#if !defined (_PORTABLESERVER_IDS__EXPLICIT_CS_)
-#define _PORTABLESERVER_IDS__EXPLICIT_CS_
+#if !defined (_CORBA_SEQUENCE__EXPLICIT_CS_)
+#define _CORBA_SEQUENCE__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -7575,6 +7576,11 @@ CORBA::Boolean operator>> (
         PortableServer::RequestProcessingPolicy
       >;
 
+  template class
+    TAO::Any_Basic_Impl_T<
+        PortableServer::POAManager::State
+      >;
+
   template class TAO::Objref_Traits<PortableServer::POAManager>;
 
   template class
@@ -7677,6 +7683,14 @@ CORBA::Boolean operator>> (
         PortableServer::Current
       >;
 
+  template class
+    TAO::Any_Dual_Impl_T<PortableServer::ForwardRequest>;
+  template class
+    TAO::Any_Dual_Impl_T<PortableServer::NotAGroupObject>;
+
+  template class
+    TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate TAO::Objref_Traits<PortableServer::POA>
@@ -7724,8 +7738,8 @@ CORBA::Boolean operator>> (
           > \
       >
 
-#if !defined (_PORTABLESERVER_POALIST__EXPLICIT_CS_)
-#define _PORTABLESERVER_POALIST__EXPLICIT_CS_
+#if !defined (_PORTABLESERVER_POA__EXPLICIT_CS_)
+#define _PORTABLESERVER_POA__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Object_Sequence< \
@@ -7759,8 +7773,8 @@ CORBA::Boolean operator>> (
         PortableServer::ObjectId \
       >
 
-#if !defined (_PORTABLESERVER_IDS__EXPLICIT_CS_)
-#define _PORTABLESERVER_IDS__EXPLICIT_CS_
+#if !defined (_CORBA_SEQUENCE__EXPLICIT_CS_)
+#define _CORBA_SEQUENCE__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \

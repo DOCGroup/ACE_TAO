@@ -4008,6 +4008,7 @@ CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
 
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_TMPLINST_CS_)
@@ -4020,10 +4021,11 @@ CORBA::Boolean operator>> (
         ImplementationRepository::ServerObject_ptr,
         ImplementationRepository::ServerObject_var,
         ImplementationRepository::ServerObject_out,
-        TAO::Objref_Traits<ImplementationRepository::ServerObject>
-      >;
+        TAO::Objref_Traits<ImplementationRepository::ServerObject> >;
 
 #endif /* end #if !defined */
+
+  template class TAO::Objref_Traits<ImplementationRepository::ServerObject>;
 
   template class
     TAO_Objref_Var_T<
@@ -4036,23 +4038,11 @@ CORBA::Boolean operator>> (
       >;
 
   template class
+    TAO::Narrow_Utils<ImplementationRepository::ServerObject>;
+
+  template class
     TAO::Any_Impl_T<
         ImplementationRepository::ServerObject
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::AlreadyRegistered
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::CannotActivate
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::NotFound
       >;
 
   template class
@@ -4095,8 +4085,8 @@ CORBA::Boolean operator>> (
         ImplementationRepository::EnvironmentVariable
       >;
 
-#if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_)
-#define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_
+#if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTVARIABLE__EXPLICIT_CS_)
+#define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTVARIABLE__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -4119,14 +4109,14 @@ CORBA::Boolean operator>> (
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_TMPLINST_CS_
 
   template class TAO::Arg_Traits<ImplementationRepository::StartupOptions>;
-#if 0
+
   template class
-    TAO::Var_Size_Arg_Traits<
+    TAO::Var_Size_Arg_Traits_T<
         ImplementationRepository::StartupOptions,
         ImplementationRepository::StartupOptions_var,
         ImplementationRepository::StartupOptions_out
       >;
-#endif
+
 #endif /* end #if !defined */
 
   template class
@@ -4155,14 +4145,13 @@ CORBA::Boolean operator>> (
 
   template class TAO::Arg_Traits<ImplementationRepository::ServerInformation>;
 
-#if 0
   template class
-    TAO::Var_Size_Arg_Traits<
+    TAO::Var_Size_Arg_Traits_T<
         ImplementationRepository::ServerInformation,
         ImplementationRepository::ServerInformation_var,
         ImplementationRepository::ServerInformation_out
       >;
-#endif /*if 0*/
+
 #endif /* end #if !defined */
 
   template class
@@ -4191,14 +4180,13 @@ CORBA::Boolean operator>> (
 
   template class TAO::Arg_Traits<ImplementationRepository::ServerInformationList>;
 
-#if 0
   template class
-    TAO::Var_Size_Arg_Traits<
+    TAO::Var_Size_Arg_Traits_T<
         ImplementationRepository::ServerInformationList,
         ImplementationRepository::ServerInformationList_var,
         ImplementationRepository::ServerInformationList_out
       >;
-#endif /*if 0*/
+
 #endif /* end #if !defined */
 
   template class
@@ -4220,8 +4208,8 @@ CORBA::Boolean operator>> (
         ImplementationRepository::ServerInformation
       >;
 
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__EXPLICIT_CS_)
+#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -4245,8 +4233,7 @@ CORBA::Boolean operator>> (
         ImplementationRepository::ServerInformationIterator_ptr,
         ImplementationRepository::ServerInformationIterator_var,
         ImplementationRepository::ServerInformationIterator_out,
-        TAO::Objref_Traits<ImplementationRepository::ServerObject>
-      >;
+        TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator> >;
 
 #endif /* end #if !defined */
 
@@ -4255,6 +4242,8 @@ CORBA::Boolean operator>> (
         ImplementationRepository::ServerInformationList,
         ImplementationRepository::ServerInformationList_out
       >;
+
+  template class TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>;
 
   template class
     TAO_Objref_Var_T<
@@ -4265,6 +4254,9 @@ CORBA::Boolean operator>> (
     TAO_Objref_Out_T<
         ImplementationRepository::ServerInformationIterator
       >;
+
+  template class
+    TAO::Narrow_Utils<ImplementationRepository::ServerInformationIterator>;
 
   template class
     TAO::Any_Impl_T<
@@ -4293,6 +4285,8 @@ CORBA::Boolean operator>> (
         ImplementationRepository::ServerInformationIterator_out
       >;
 
+  template class TAO::Objref_Traits<ImplementationRepository::Administration>;
+
   template class
     TAO_Objref_Var_T<
         ImplementationRepository::Administration
@@ -4304,9 +4298,21 @@ CORBA::Boolean operator>> (
       >;
 
   template class
+    TAO::Narrow_Utils<ImplementationRepository::Administration>;
+
+  template class
     TAO::Any_Impl_T<
         ImplementationRepository::Administration
       >;
+
+  template class
+    TAO::Any_Dual_Impl_T<ImplementationRepository::AlreadyRegistered>;
+
+  template class
+    TAO::Any_Dual_Impl_T<ImplementationRepository::CannotActivate>;
+
+  template class
+    TAO::Any_Dual_Impl_T<ImplementationRepository::NotFound>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -4319,41 +4325,29 @@ CORBA::Boolean operator>> (
     TAO::Object_Arg_Traits_T< \
         ImplementationRepository::ServerObject_ptr, \
         ImplementationRepository::ServerObject_var, \
-        ImplementationRepository::ServerObject_out \
-      >
+        ImplementationRepository::ServerObject_out, \
+        TAO::Objref_Traits<ImplementationRepository::ServerObject>  \>
 
 #endif /* end #if !defined */
 
+# pragma instantiate TAO::Objref_Traits<ImplementationRepository::ServerObject>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        ImplementationRepository::ServerObject, \
-        TAO::Objref_Traits<ImplementationRepository::ServerObject> \
+        ImplementationRepository::ServerObject
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        ImplementationRepository::ServerObject, \
-        TAO::Objref_Traits<ImplementationRepository::ServerObject> \
+        ImplementationRepository::ServerObject
       >
+
+# pragma instantiate \
+    TAO::Narrow_Utils<ImplementationRepository::ServerObject>
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
         ImplementationRepository::ServerObject \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::AlreadyRegistered \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::CannotActivate \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::NotFound \
       >
 
 # pragma instantiate \
@@ -4396,8 +4390,8 @@ CORBA::Boolean operator>> (
         ImplementationRepository::EnvironmentVariable \
       >
 
-#if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_)
-#define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_
+#if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTVARIABLE__EXPLICIT_CS_)
+#define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTVARIABLE__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -4422,7 +4416,7 @@ CORBA::Boolean operator>> (
 # pragma instantiate TAO::Arg_Traits<ImplementationRepository::StartupOptions>
 
 # pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
+    TAO::Var_Size_Arg_Traits_T< \
         ImplementationRepository::StartupOptions, \
         ImplementationRepository::StartupOptions_var, \
         ImplementationRepository::StartupOptions_out \
@@ -4457,7 +4451,7 @@ CORBA::Boolean operator>> (
 # pragma instantiate TAO::Arg_Traits<ImplementationRepository::ServerInformation>
 
 # pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
+    TAO::Var_Size_Arg_Traits_T< \
         ImplementationRepository::ServerInformation, \
         ImplementationRepository::ServerInformation_var, \
         ImplementationRepository::ServerInformation_out \
@@ -4492,7 +4486,7 @@ CORBA::Boolean operator>> (
 # pragma instantiate TAO::Arg_Traits<ImplementationRepository::ServerInformationList>
 
 # pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
+    TAO::Var_Size_Arg_Traits_T< \
         ImplementationRepository::ServerInformationList, \
         ImplementationRepository::ServerInformationList_var, \
         ImplementationRepository::ServerInformationList_out \
@@ -4519,8 +4513,8 @@ CORBA::Boolean operator>> (
         ImplementationRepository::ServerInformation \
       >
 
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_)
-#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__EXPLICIT_CS_)
+#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -4543,8 +4537,8 @@ CORBA::Boolean operator>> (
     TAO::Object_Arg_Traits_T< \
         ImplementationRepository::ServerInformationIterator_ptr, \
         ImplementationRepository::ServerInformationIterator_var, \
-        ImplementationRepository::ServerInformationIterator_out \
-      >
+        ImplementationRepository::ServerInformationIterator_out, \
+        TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>  \>
 
 #endif /* end #if !defined */
 
@@ -4554,17 +4548,20 @@ CORBA::Boolean operator>> (
         ImplementationRepository::ServerInformationList_out \
       >
 
+# pragma instantiate TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        ImplementationRepository::ServerInformationIterator, \
-        TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator> \
+        ImplementationRepository::ServerInformationIterator
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        ImplementationRepository::ServerInformationIterator, \
-        TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator> \
+        ImplementationRepository::ServerInformationIterator
       >
+
+# pragma instantiate \
+    TAO::Narrow_Utils<ImplementationRepository::ServerInformationIterator>
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
@@ -4593,17 +4590,20 @@ CORBA::Boolean operator>> (
         ImplementationRepository::ServerInformationIterator_out \
       >
 
+# pragma instantiate TAO::Objref_Traits<ImplementationRepository::Administration>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        ImplementationRepository::Administration, \
-        TAO::Objref_Traits<ImplementationRepository::Administration> \
+        ImplementationRepository::Administration
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        ImplementationRepository::Administration, \
-        TAO::Objref_Traits<ImplementationRepository::Administration> \
+        ImplementationRepository::Administration
       >
+
+# pragma instantiate \
+    TAO::Narrow_Utils<ImplementationRepository::Administration>
 
 # pragma instantiate \
     TAO::Any_Impl_T< \

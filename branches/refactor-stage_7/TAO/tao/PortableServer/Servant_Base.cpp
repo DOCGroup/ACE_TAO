@@ -79,7 +79,7 @@ TAO_ServantBase::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Boolean
 TAO_ServantBase::_is_a (const char *logical_type_id
-                        ACE_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL_NOT_USED)
 {
   const char *id = "IDL:omg.org/CORBA/Object:1.0";
   return ACE_OS::strcmp (logical_type_id, id) == 0;
