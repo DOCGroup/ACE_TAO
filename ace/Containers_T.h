@@ -580,14 +580,6 @@ protected:
   // Remember where we are.
 
   ACE_Double_Linked_List<T> &dllist_;
-
-private:
-   ACE_Double_Linked_List_Iterator (const ACE_Double_Linked_List_Iterator &);
-   ACE_Double_Linked_List_Iterator & 
-       operator= (const ACE_Double_Linked_List_Iterator & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 template <class T>
@@ -854,12 +846,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  // ACE_Unbounded_Set_Iterator (const ACE_Unbounded_Set_Iterator<T> &)
-   ACE_Unbounded_Set_Iterator<T> & 
-       operator= (const ACE_Unbounded_Set_Iterator<T> & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 
   ACE_Node<T> *current_;
   // Pointer to the current node in the iteration.
