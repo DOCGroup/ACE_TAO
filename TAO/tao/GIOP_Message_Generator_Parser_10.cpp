@@ -410,12 +410,12 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
 
 int
 TAO_GIOP_Message_Generator_Parser_10::parse_reply (
-    TAO_InputCDR &stream,
+    TAO_InputCDR &cdr,
     TAO_Pluggable_Reply_Params &params)
 
 {
   // Read the service context list first
-  if ((stream >> params.svc_ctx_) == 0)
+  if ((cdr >> params.svc_ctx_) == 0)
     {
       if (TAO_debug_level >     0)
         ACE_DEBUG ((LM_DEBUG,
@@ -425,12 +425,12 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
     }
 
   // Call the base class for further processing
-  if (TAO_GIOP_Message_Generator_Parser::parse_reply (stream,
+  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr,
                                                       params) == -1)
     return -1;
 
   // Steal rest of the contents in to the reply params
-  params.input_cdr_.steal_from (stream);
+  params.input_cdr_.steal_data (cdr);
 
   return 0;
 }
@@ -448,7 +448,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_reply (
     return -1;
 
   // Steal the contents in to the reply CDR
-  params.input_cdr_.steal_from (cdr);
+  params.input_cdr_.steal_data (cdr);
 
   return 0;
 }
