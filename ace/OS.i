@@ -2089,7 +2089,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
 
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (__Lynx__)
   if (timeout == 0)
     {
       ACE_OSCALL (::pthread_cond_wait (cv, external_mutex),
@@ -2099,7 +2099,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     {
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what the
-      // Draft 4 POSIX 1003.4a pthread_cond_timedwait expects).
+      // LynxOS Draft 4 POSIX 1003.4a pthread_cond_timedwait expects).
 
       timespec_t relative_time = *timeout - ACE_OS::gettimeofday ();
 
@@ -2107,6 +2107,12 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                                             &relative_time),
                   int, -1, result);
     }
+#  elif defined (ACE_HAS_DCE_DRAFT4_THREADS)
+  ACE_OSCALL ((timeout == 0
+               ? ::pthread_cond_wait (cv, external_mutex)
+               : ::pthread_cond_timedwait (cv, external_mutex,
+                                           (ACE_TIMESPEC_PTR) &ts)),
+              int, -1, result);
 #  else
   ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
                                 ? ::pthread_cond_wait (cv, external_mutex)
