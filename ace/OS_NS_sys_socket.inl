@@ -10,6 +10,11 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/netinet/os_in.h"
 
+#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+#include "ace/OS_NS_string.h"
+#endif
+
 #if defined (ACE_HAS_VOIDPTR_SOCKOPT)
 typedef void *ACE_SOCKOPT_TYPE1;
 #elif defined (ACE_HAS_CHARPTR_SOCKOPT)
