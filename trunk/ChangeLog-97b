@@ -1,3 +1,9 @@
+Wed Nov 05 14:16:27 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i (mutex_trylock): Fixed code for ACE_HAS_DCE_DRAFT4_THREADS
+	  (HP-UX) to process the returned status correctly.  Thanks to
+	  Robert Head <rhead@virtc.com> for reporting this.
+
 Wed Nov 05 13:01:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/ACE.cpp (daemonize): added ACE_UNUSED_ARG (close_all_handles)
