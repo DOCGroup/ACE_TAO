@@ -1,7 +1,14 @@
+Mon Dec 21 13:55:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers_T.{i,cpp} (ACE_Bounded_Set::is_full): On LynxOS
+          only, uninlined this function to avoid Internal Compiler Error
+          with native (3.0.0) compiler.  Thanks to Carlos for this fix,
+          it had us stumped for quite a while.
+
 Sat Dec 19 18:27:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Timer_Queue_Adapters.cpp (handle_signal): Cleaned up an
- 	  unused variable.  Thanks to David Levine for reporting this.
+        * ace/Timer_Queue_Adapters.cpp (handle_signal): Cleaned up an
+          unused variable.  Thanks to David Levine for reporting this.
 
 Fri Dec 18 09:30:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
