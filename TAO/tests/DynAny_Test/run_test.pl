@@ -15,7 +15,8 @@ sub run_test
 {
   my $type = shift(@_);
 
-  $BT = Process::Create ($EXEPREFIX."basic_test -t $type");
+  $BT = Process::Create ($EXEPREFIX."basic_test".$Process::EXE_EXT,
+			 " -t $type");
 
   $test = $BT->TimedWait (10);
   if ($test == -1) {
