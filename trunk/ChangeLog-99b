@@ -20,6 +20,10 @@ Thu Jul 15 09:28:32 1999  David L. Levine  <levine@cs.wustl.edu>
           on DU 4.0F.  Thanks to Doug Anderson <dla@home.com>
           for reporting this.
 
+        * ace/config-tru64.h: only #define _LIBC_POLLUTION_H_
+          with DU >= 5.0.  Thanks to Doug Anderson <dla@home.com>
+          for reporting that it's not necessary on DU 4.0F.
+
 Thu Jul 15 09:15:11 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Corrected template settings for IBM C/C++
