@@ -149,20 +149,21 @@ SRC   	= $(addsuffix .cpp,$(FILES))
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-ifndef CROSS-COMPILE
+
+ifeq ($(CROSS-COMPILE),)
   include $(ACE_ROOT)/include/makeinclude/macros.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 endif # ! CROSS-COMPILE
 
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
 
-ifdef CROSS-COMPILE
+ifneq ($(CROSS-COMPILE),)
   all default_embedded:
 	@echo The IDL compiler won\'t run or build on CROSS-COMPILE platforms.
 
