@@ -1,3 +1,12 @@
+Tue Sep 21 16:38:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Request.cpp:
+	  Duplicated the 'args' and 'result' parameters to the
+	  Request constructor before initializing. This allows
+	  the caller to put these values into _vars. Thanks to
+	  Philippe Merle <Philippe.Merle@lifl.fr> for pointing
+	  out this memory management bug and sending in a fix. 
+
 Mon Sep 21 16:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO/TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
