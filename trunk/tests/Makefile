@@ -87,6 +87,11 @@ ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
 endif # ! Other
 ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
   BIN += Tokens_Test
+else
+  #### Ensure that Tokens_Test gets cleaned up, even if the ace
+  #### directory was realcleaned first (and ACE_BUILD_COMPONENTS
+  #### is empty).
+  BIN2 += Tokens_Test
 endif # ! Token
 
 PSRC=$(addsuffix .cpp,$(BIN))
