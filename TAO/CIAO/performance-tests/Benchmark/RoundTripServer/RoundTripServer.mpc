@@ -1,0 +1,17 @@
+// $Id$ 
+project (RoundTripServer) : portableserver, strategies {
+  exename = server
+  idlflags += -Wb,stub_export_macro=ROUNDTRIP_STUB_Export -Wb,stub_export_include=RoundTrip_stub_export.h -Wb,skel_export_macro=ROUNDTRIP_SVNT_Export -Wb,skel_export_include=RoundTrip_svnt_export.h
+  libpaths += ..
+
+  IDL_Files {
+    Test.idl
+  }
+
+  Source_Files {
+    server.cpp, 
+    LatencyTest.cpp,
+    TestS.cpp,
+    TestC.cpp
+  }
+}
