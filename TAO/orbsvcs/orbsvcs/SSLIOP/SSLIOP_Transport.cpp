@@ -518,9 +518,8 @@ TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
     return;
 
   // Add this info in to the svc_list
-  opdetails.service_context ().set_context (IOP::BI_DIR_IIOP,
-                                            cdr);
-
+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
+                                                    cdr);
   return;
 }
 
