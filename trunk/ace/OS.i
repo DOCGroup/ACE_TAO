@@ -1160,26 +1160,38 @@ ACE_OS::strstr (char *s, const char *t)
 ACE_INLINE char *
 ACE_OS::strrchr (char *s, int c)
 {
-#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::strrchr");
+#if !defined (ACE_LACKS_STRRCHR)
   return ::strrchr (s, c);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (c);
-  ACE_NOTSUP_RETURN (0);
+  char *p = s + ::strlen (s);
+
+  while (*p != c)
+    if (p == s)
+      return 0;
+    else
+      p--;
+
+  return p;
 #endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE const char *
 ACE_OS::strrchr (const char *s, int c)
 {
-#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::strrchr");
+#if !defined (ACE_LACKS_STRRCHR)
   return (const char *) ::strrchr (s, c);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (c);
-  ACE_NOTSUP_RETURN (0);
+  char *p = s + ::strlen (s);
+
+  while (*p != c)
+    if (p == s)
+      return 0;
+    else
+      p--;
+
+  return p;
 #endif /* ACE_HAS_WINCE */
 }
 
