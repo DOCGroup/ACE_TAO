@@ -1,4 +1,4 @@
-//$Id$:
+//$Id$
 //============================================================
 /**
  * @file Sender_exec.h
@@ -18,6 +18,27 @@
 namespace MyImpl
 {
 
+
+  class message_impl :
+    public virtual Hello::CCM_message,
+    public virtual TAO_Local_RefCounted_Object
+  {
+  public:
+    message_impl () : message_ ("Default Message") {}
+
+    message_impl (const char* message_ptr)
+      : message_ (message_ptr) {}
+
+    virtual char *
+    get_message (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void set_message (const char * message);
+
+  private:
+    CORBA::String_var message_;
+  };
+
   /**
    * @class Sender_exec_i
    *
@@ -25,16 +46,31 @@ namespace MyImpl
    */
 
   class SENDER_EXEC_Export Sender_exec_i :
-    public virtual Hello::Sender_Exec,
-	  public virtual TAO_Local_RefCounted_Object
-  {
+      public virtual Hello::Sender_Exec,
+      public virtual TAO_Local_RefCounted_Object  {
 
   public:
     /// Default constructor.
-    Sender_exec_i ();
+    Sender_exec_i ()
+      : message_("Default Message"),
+      message_impl_i(new message_impl (message_.in() )) {}
+
+    /// Secondary construction.
+    Sender_exec_i (const char* local_message)
+      : message_ (local_message),
+      message_impl_i (new message_impl (message_.in() )) {}
 
     /// Default destructor.
-    ~Sender_exec_i ();
+    virtual ~Sender_exec_i ();
+
+    /// Operation to set the value of the attribute
+    virtual void local_message (const char * local_message
+				ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    /// Operation to get the value of the attribute
+    virtual char * local_message (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /* Operations for obtaining the interface reference. */
     /* This method will be used in the assembly face so the
@@ -47,16 +83,15 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operation which will be called upon the interface call(by the receptacle)
-    virtual char *
-    get_message (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    //    virtual char *
+    //get_message (ACE_ENV_SINGLE_ARG_DECL)
+    //  ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     // Operation inside of the trigger interface.
     virtual void
       start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
-
 
     // Operations from Components::SessionComponent
     virtual void set_session_context (Components::SessionContext_ptr ctx
@@ -79,8 +114,10 @@ namespace MyImpl
   protected:
     /// Copmponent specific context
     Hello::CCM_Sender_Context_var context_;
+
   private:
     CORBA::String_var message_;
+    message_impl * message_impl_i;
   };
 
   /**
