@@ -5,7 +5,7 @@
  *  @file    WFMO_Reactor.h
  *
  *  $Id$
- * 
+ *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author and Doug Schmidt <schmidt@cs.wustl.edu>
@@ -505,6 +505,15 @@ public:
   /// Returns a handle to the <ACE_Auto_Event>.
   virtual ACE_HANDLE get_handle (void) const;
 
+  /// Returns the ACE_HANDLE of the notify pipe on which the reactor
+  /// is listening for notifications so that other threads can unblock
+  /// the <Reactor_Impl>
+  virtual ACE_HANDLE notify_handle (void);
+
+  /// Handle one of the notify call on the <handle>. This could be
+  /// because of a thread trying to unblock the <Reactor_Impl>
+  virtual int dispatch_notify (ACE_HANDLE handle);
+
   /**
    * Set the maximum number of times that the
    * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
@@ -672,7 +681,7 @@ public:
   // = Event loop drivers.
 
   /**
-   * This method is not currently implemented.  We recommend that you 
+   * This method is not currently implemented.  We recommend that you
    * use handle_events (ACE_Time_Value::zero) to get basically the
    * same effect, i.e., it won't block the caller if there are no events.
    */
