@@ -1,3 +1,18 @@
+Fri Jan 25 10:21:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Big_Request/client.dsp:
+	* orbsvcs/tests/Security/Big_Request/server.dsp:
+	* orbsvcs/tests/Security/Callback/client.dsp:
+	* orbsvcs/tests/Security/Callback/server.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/client.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/server.dsp:
+
+	  Corrected the "Release" configuration output filenames.
+	  Binaries for "Release" builds belong in the `Release' directory,
+	  by convention.
+
 Fri Jan 25 10:06:44 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/OBV/Any/client.dsp:
