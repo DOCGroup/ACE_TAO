@@ -69,6 +69,8 @@ public:
 private:
   ACEXML_Char *filename_;
 
+  off_t size_;
+
   FILE *infile_;
 
 };

@@ -1,3 +1,15 @@
+Thu Apr 11 20:37:53 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/OS.i (ftell):
+        * ace/OS.h:
+
+          Added new wrappers for ftell, fgetpos & fsetpos.
+
+        * ACEXML/common/FileCharStream.cpp:
+        * ACEXML/common/FileCharStream.h:
+
+          Implemented the previously unavailable available() call.
+
 Thu Apr 11 20:06:41 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/display_logfile.cpp: Spacing/line length
@@ -19,7 +31,7 @@ Thu Apr 11 22:07:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 Thu Apr 11 20:04:22 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* ace/ARGV.h:  Rolled back the change and readded ACE.h. 
+	* ace/ARGV.h:  Rolled back the change and readded ACE.h.
 	  Too many error down the line to fix.
 
 	* ace/Sample_History.cpp:  Added include of OS.h.
