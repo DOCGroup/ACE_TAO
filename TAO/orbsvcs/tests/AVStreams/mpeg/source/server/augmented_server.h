@@ -79,7 +79,15 @@ public:
             CORBA::Boolean_out met_qos,
             char *&named_vdev,
             const AVStreams::flowSpec &the_spec,
-            CORBA::Environment &env);
+            CORBA::Environment &env)
+             ACE_THROW_SPEC ((
+               CORBA::SystemException,
+               AVStreams::streamOpFailed,
+               AVStreams::streamOpDenied,
+               AVStreams::notSupported,
+               AVStreams::QoSRequestFailed,
+               AVStreams::noSuchFlow
+            ));                            
   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 
 
@@ -101,7 +109,15 @@ public:
             CORBA::Boolean_out met_qos,
             char *&named_vdev,
             const AVStreams::flowSpec &the_spec,
-            CORBA::Environment &env);
+            CORBA::Environment &env)
+    ACE_THROW_SPEC ((
+       CORBA::SystemException,
+       AVStreams::streamOpFailed,
+       AVStreams::streamOpDenied,
+       AVStreams::notSupported,
+       AVStreams::QoSRequestFailed,
+       AVStreams::noSuchFlow
+     ));                              
   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 
 
@@ -129,8 +145,11 @@ public:
 
   //   virtual CORBA::Object_ptr video_mmdevice_reference_ (CORBA_Environment &_env = CORBA_Environment::default_environment ()); 
 
-  virtual CORBA::Object_ptr get_audio_mmdevice (CORBA_Environment &_env = CORBA_Environment::default_environment ());
-  virtual CORBA::Object_ptr get_video_mmdevice (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  virtual CORBA::Object_ptr get_audio_mmdevice (CORBA_Environment &_env = CORBA_Environment::default_environment ())
+        ACE_THROW_SPEC (( CORBA::SystemException )) ;
+
+  virtual CORBA::Object_ptr get_video_mmdevice (CORBA_Environment &_env = CORBA_Environment::default_environment ())
+        ACE_THROW_SPEC (( CORBA::SystemException )) ;
 
   virtual void export_properties (TAO_Property_Exporter& prop_exporter);
 
