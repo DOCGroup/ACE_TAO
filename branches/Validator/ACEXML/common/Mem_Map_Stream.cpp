@@ -194,44 +194,44 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
   // Copy the next chunk of bytes from the socket into the temporary
   // file.
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
-//   ssize_t bytes = 0;
-//   ssize_t n = 0;
-//   while (1)
-//     {
-//       n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
-//       if (n == -1)
-//         {
-//           if (errno != EWOULDBLOCK)
-//             {
-//               ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
-//               return -1;
-//             }
-//         }
-//       bytes += n;
-//       if (n == 0 && !bytes)
-//         return -1;
-//       else if (n == 0)
-//         break;
-//       else if (ACE::write_n (this->mem_map_.handle (), buf, n) != n)
-//         ACE_ERROR_RETURN ((LM_ERROR,
-//                            "%p\n",
-//                            "write_n"),
-//                           -1);
-//     }
-
-  ssize_t n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
-  if (n == -1)
+  ssize_t bytes = 0;
+  ssize_t n = 0;
+  while (1)
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
-      return -1;
-    }
-  else if (n == 0)
-    return -1;
-  else if (ACE::write_n (this->mem_map_.handle (), buf, n) != n)
+      n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
+      if (n == -1)
+        {
+          if (errno != EWOULDBLOCK)
+            {
+              ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
+              return -1;
+            }
+        }
+      bytes += n;
+      if (n == 0 && !bytes)
+        return -1;
+      else if (n == 0)
+        break;
+      else if (ACE::write_n (this->mem_map_.handle (), buf, n) != n)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "write_n"),
                           -1);
+    }
+
+//   ssize_t n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
+//   if (n == -1)
+//     {
+//       ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
+//       return -1;
+//     }
+//   else if (n == 0)
+//     return -1;
+//   else if (ACE::write_n (this->mem_map_.handle (), buf, n) != n)
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            "%p\n",
+//                            "write_n"),
+//                           -1);
 
   // Grow the memory-mapping to encompass the entire temporary file.
   if (this->mem_map_.map (-1,

@@ -34,7 +34,7 @@ ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Locator& locator)
 
 ACEXML_LocatorImpl::~ACEXML_LocatorImpl (void)
 {
-
+  this->reset();
 }
 
 void
