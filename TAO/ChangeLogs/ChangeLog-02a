@@ -1,3 +1,8 @@
+Fri Sep  1 11:24:12 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/IFR_Service/TCF_Loader.cpp (create_object): 
+	  Removed declaration of unused parameters (argc and argv).	  
+
 Fri Sep  1 13:07:23 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/Adapter.h:
