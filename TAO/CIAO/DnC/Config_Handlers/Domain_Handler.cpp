@@ -86,14 +86,6 @@ namespace CIAO
                                                     node_name, "infoProperty", domain.infoProperty,
                                                     &Property_Handler::process_Property,
                                                     this->id_map_));
-          /*
-          else if (node_name == XStr (ACE_TEXT ("infoProperty")))
-            {
-              this->process_property_element (node, this->doc_,
-                                              this->iter_,
-                                              domain);
-            }
-          */
           else
             {
               // ??? How did we get here ???
@@ -108,138 +100,7 @@ namespace CIAO
 
       return;
     }
-    /*
-    // handle the sr element
-    void Domain_Handler::process_sr_element (DOMNode* node,
-                                             DOMDocument* doc,
-                                             DOMNodeIterator* iter,
-                                             Deployment::Domain& domain)
-    {
-      if (node->hasAttributes ())
-        {
-          DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          int length = named_node_map->getLength ();
-          CORBA::ULong i (domain.sharedResource.length ());
-          domain.sharedResource.length (i + 1);
-          if (length == 1)
-            {
-              this->process_sr
-                (doc, iter, domain.sharedResource[i]);
-            }
-          else if (length > 1)
-            {
-              this->process_attributes_for_sr
-                (named_node_map, doc,
-                 iter, i, domain.sharedResource[i]);
-            }
-        }      
-    }
 
-    // handle the node element
-    void Domain_Handler::process_node_element (DOMNode* node,
-                                               DOMDocument* doc,
-                                               DOMNodeIterator* iter,
-                                               Deployment::Domain& domain)
-    {
-      if (node->hasAttributes ())
-        {
-          DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          int length = named_node_map->getLength ();
-          CORBA::ULong i (domain.node.length ());
-          domain.node.length (i + 1);
-          if (length == 1)
-            {
-              this->process_node (doc,
-                                  iter,
-                                  domain.node[i]);
-            }
-          else if (length > 1)
-            {
-              this->process_attributes_for_node
-                (named_node_map, doc,
-                 iter, i, domain.node[i]);
-            }
-        }
-    }
-
-    // handle the interconnect element
-    void Domain_Handler::process_ic_element (DOMNode* node,
-                                             DOMDocument* doc,
-                                             DOMNodeIterator* iter,
-                                             Deployment::Domain& domain)
-    {
-      if (node->hasAttributes ())
-        {
-          DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          int length = named_node_map->getLength ();
-          CORBA::ULong i (domain.interconnect.length ());
-          domain.interconnect.length (i + 1);
-          if (length == 1)
-            {
-              this->process_interconnect
-                 (doc, iter, domain.interconnect[i]);
-            }
-          else if (length > 1)
-            {
-              this->process_attributes_for_ic
-                (named_node_map, doc,
-                 iter, i, domain.interconnect[i]);
-            }
-        }
-    }
-
-    // handle the bridge element
-    void Domain_Handler::process_bridge_element (DOMNode* node,
-                                                 DOMDocument* doc,
-                                                 DOMNodeIterator* iter,
-                                                 Deployment::Domain& domain)
-    {
-      if (node->hasAttributes ())
-        {
-          DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          int length = named_node_map->getLength ();
-          CORBA::ULong i (domain.bridge.length ());
-          domain.bridge.length (i + 1);
-          if (length == 1)
-            {
-              this->process_bridge
-                 (doc, iter, domain.bridge[i]);
-            }
-          else if (length > 1)
-            {
-              this->process_attributes_for_bridge
-                (named_node_map, doc,
-                 iter, i, domain.bridge[i]);
-            }
-        }
-    }
-
-    // handle the sr element
-    void Domain_Handler::process_property_element (DOMNode* node,
-                                                   DOMDocument* doc,
-                                                   DOMNodeIterator* iter,
-                                                   Deployment::Domain& domain)
-    {
-      if (node->hasAttributes ())
-        {
-          DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          int length = named_node_map->getLength ();
-          CORBA::ULong i (domain.infoProperty.length ());
-          domain.infoProperty.length (i + 1);
-          if (length == 1)
-            {
-              Property_Handler::process_Property 
-                 (iter, domain.infoProperty[i]);
-            }
-          else if (length > 1)
-            {
-              this->process_attributes_for_property
-                (named_node_map, doc,
-                 iter, i, domain.infoProperty[i]);
-            }
-        }
-    }
-    */
     void Domain_Handler::process_node (DOMNodeIterator* iter,
                                        Deployment::Node& domain_node)
     {
@@ -248,66 +109,25 @@ namespace CIAO
            node = iter->nextNode ())
         {
           XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              node = iter->nextNode ();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_node_name (text->getNodeValue (), domain_node);
-            }
-          else if (node_name == XStr (ACE_TEXT ("label")))
-            {
-              node = iter->nextNode ();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_node_label (text->getNodeValue (), domain_node);
-            }
-          else if (node_name == XStr (ACE_TEXT ("resource")))
-            {
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  CORBA::ULong resource_length 
-                     (domain_node.resource.length ());
-                  domain_node.resource.length (resource_length + 1);
-                  if (length == 1)
-                    {
-                      this->process_resource 
-                        (node->getOwnerDocument(), iter, domain_node.resource[resource_length]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_resource 
-                        (named_node_map, node->getOwnerDocument(),
-                         iter, resource_length,
-                         domain_node.resource[resource_length]);
-                    }
-                }
-            }
-          else if (node_name == XStr (ACE_TEXT ("connection")))
-            {
-              CORBA::ULong connection_ref_length = 
-                domain_node.connectionRef.length ();
-              domain_node.connectionRef.length (connection_ref_length + 1);
-              domain_node.connectionRef[connection_ref_length] = 0;
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  this->process_refs (named_node_map);
-                }
-            }
-          else if (node_name == XStr (ACE_TEXT ("sharedResource")))
-            {
-              CORBA::ULong shared_resource_ref_length = 
-                domain_node.sharedResourceRef.length ();
-              domain_node.sharedResourceRef.length 
-                (shared_resource_ref_length + 1);
-              domain_node.sharedResourceRef[shared_resource_ref_length] = 0;
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  this->process_refs (named_node_map);
-                }
-            }
+
+          if (false);
+          else if
+            (process_string(iter, node_name, "name", domain_node.name));
+          else if
+            (process_string(iter, node_name, "label", domain_node.label));
+          else if
+            (process_sequence<Deployment::Resource>(node->getOwnerDocument(), iter, node,
+                                                    node_name, "resource", domain_node.resource,
+                                                    this, &Domain_Handler::process_resource,
+                                                    this->id_map_));
+          else if
+            (process_reference(node, node_name, "connection",
+                               domain_node.connectionRef,
+                               this->index_, this->idref_map_));
+          else if
+            (process_reference(node, node_name, "sharedResource",
+                               domain_node.sharedResourceRef,
+                               this->index_, this->idref_map_));
           else
             {
               iter->previousNode();
@@ -317,8 +137,7 @@ namespace CIAO
     }
 
     void Domain_Handler::process_resource 
-           (DOMDocument* doc,
-            DOMNodeIterator* iter, Deployment::Resource& domain_resource)
+           (DOMNodeIterator* iter, Deployment::Resource& domain_resource)
     {
       for (DOMNode* node = iter->nextNode();
            node != 0;
@@ -360,7 +179,7 @@ namespace CIAO
                   else if (length > 1)
                     {
                       this->process_attributes_for_satisfier_property 
-                        (named_node_map, doc,
+                        (named_node_map, node->getOwnerDocument(),
                          iter, sp_length,
                          domain_resource.property[sp_length]);
                     }
@@ -374,72 +193,6 @@ namespace CIAO
         }
     }
 
-    void Domain_Handler::process_attributes_for_resource 
-         (DOMNamedNodeMap* named_node_map,
-          DOMDocument* doc,
-          DOMNodeIterator* iter,
-          int value,
-          Deployment::Resource& domain_resource)
-    {
-      int length = named_node_map->getLength ();
-      for (int j = 0; j < length; j++)
-        {
-          DOMNode* attribute_node = named_node_map->item (j);
-          XStr strattrnodename
-             (attribute_node->getNodeName ());
-          ACE_TString aceattrnodevalue =  XMLString::transcode
-             (attribute_node->getNodeValue ());
-
-          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-            {
-              this->process_resource 
-                 (doc, iter, domain_resource);
-              id_map_.bind (aceattrnodevalue, value);
-            }
-          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-            {
-              XMLURL xml_url (aceattrnodevalue.c_str ());
-              XMLURL result (aceattrnodevalue.c_str ());
-              std::string url_string = aceattrnodevalue.c_str ();
-              ACE_TString doc_path =
-               XMLString::transcode ( doc->getDocumentURI ());
-              result.makeRelativeTo
-                 (XMLString::transcode (doc_path.c_str ()));
-              ACE_TString final_url =
-               XMLString::transcode (result.getURLText ());
-
-              DOMDocument* href_doc;
-
-              if (xml_url.isRelative ())
-                {
-                  href_doc = this->create_document 
-                       (final_url.c_str ());
-                }
-              else
-                {
-                  href_doc = this->create_document 
-                       (url_string.c_str ());
-                }
-
-              DOMDocumentTraversal* traverse (href_doc);
-              DOMNode* root = (href_doc->getDocumentElement ());
-              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-                                     DOMNodeFilter::SHOW_TEXT;
-              DOMNodeIterator* href_iter = traverse->createNodeIterator
-                                              (root,
-                                               filter,
-                                               0,
-                                               true);
-              href_iter->nextNode ();
-              this->process_resource(href_doc,
-                                     href_iter,
-                                     domain_resource);
-            }
-        }
-
-      return;
-    }
-
     void Domain_Handler::process_bridge 
            (DOMNodeIterator* iter, Deployment::Bridge& domain_bridge)
     {
@@ -448,54 +201,21 @@ namespace CIAO
            node = iter->nextNode ())
         {
           XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              node = iter->nextNode ();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_bridge_name 
-                 (text->getNodeValue (), domain_bridge);
-            }
-          else if (node_name == XStr (ACE_TEXT ("label")))
-            {
-              node = iter->nextNode ();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_bridge_label 
-                  (text->getNodeValue (), domain_bridge);
-            }
-          else if (node_name == XStr (ACE_TEXT ("resource")))
-            {
-              CORBA::ULong resource_length = domain_bridge.resource.length ();
-              domain_bridge.resource.length (resource_length + 1);
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  if (length == 1)
-                    {
-                      this->process_resource 
-                        (node->getOwnerDocument(), iter, domain_bridge.resource[resource_length]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_resource 
-                        (named_node_map, node->getOwnerDocument(),
-                         iter, resource_length,
-                         domain_bridge.resource[resource_length]);
-                    }
-                }
-            }
-          else if (node_name == XStr (ACE_TEXT ("connect")))
-            {
-              CORBA::ULong connect_ref_length = 
-                 domain_bridge.connectRef.length ();
-              domain_bridge.connectRef.length (connect_ref_length + 1);
-              domain_bridge.connectRef[connect_ref_length] = 0;
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  this->process_refs (named_node_map);
-                }
-            }
+          
+          if (false);
+          else if
+            (process_string(iter, node_name, "name", domain_bridge.name));
+          else if
+            (process_string(iter, node_name, "label", domain_bridge.label));
+          else if
+            (process_reference(node, node_name, "connect",
+                               domain_bridge.connectRef,
+                               this->index_, this->idref_map_));
+          else if
+            (process_sequence<Deployment::Resource>(node->getOwnerDocument(), iter, node,
+                                                    node_name, "resource", domain_bridge.resource,
+                                                    this, &Domain_Handler::process_resource,
+                                                    this->id_map_));
           else
             {
               iter->previousNode();
@@ -513,64 +233,25 @@ namespace CIAO
            node = iter->nextNode ())
         {
           XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              node = iter->nextNode ();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_ic_name (text->getNodeValue (), domain_ic);
-            }
-          else if (node_name == XStr (ACE_TEXT ("label")))
-            {
-              node = iter->nextNode ();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_ic_label (text->getNodeValue (), domain_ic);
-            }
-          else if (node_name == XStr (ACE_TEXT ("resource")))
-            {
-              CORBA::ULong resource_length = (domain_ic.resource.length ());
-              domain_ic.resource.length (resource_length + 1);
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  if (length == 1)
-                    {
-                      this->process_resource 
-                        (node->getOwnerDocument(), iter, domain_ic.resource[resource_length]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_resource 
-                        (named_node_map, node->getOwnerDocument(),
-                         iter, resource_length,
-                         domain_ic.resource[resource_length]);
-                    }
-                }
-            }
-          else if (node_name == XStr (ACE_TEXT ("connect")))
-            {
-              CORBA::ULong connect_ref_length = 
-                  (domain_ic.connectRef.length ());
-              domain_ic.connectRef.length (connect_ref_length + 1);
-              domain_ic.connectRef[connect_ref_length] = 0;
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  this->process_refs (named_node_map);
-                }
-            }
-          else if (node_name == XStr (ACE_TEXT ("connection")))
-            {
-              CORBA::ULong connection_ref_length = 
-                 (domain_ic.connectionRef.length ());
-              domain_ic.connectionRef.length (connection_ref_length + 1);
-              domain_ic.connectionRef[connection_ref_length] = 0;
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  this->process_refs (named_node_map);
-                }
-            }
+
+          if (false);
+          else if
+            (process_string(iter, node_name, "name", domain_ic.name));
+          else if
+            (process_string(iter, node_name, "label", domain_ic.label));
+          else if
+            (process_reference(node, node_name, "connect",
+                               domain_ic.connectRef,
+                               this->index_, this->idref_map_));
+          else if
+            (process_reference(node, node_name, "connection",
+                               domain_ic.connectionRef,
+                               this->index_, this->idref_map_));
+          else if
+            (process_sequence<Deployment::Resource>(node->getOwnerDocument(), iter, node,
+                                                    node_name, "resource", domain_ic.resource,
+                                                    this, &Domain_Handler::process_resource,
+                                                    this->id_map_));
           else
             {
               iter->previousNode();
@@ -645,70 +326,7 @@ namespace CIAO
         }
     }
 
-    void Domain_Handler::process_node_name (const XMLCh* name,
-                                            Deployment::Node& domain_node)
-    {
-      if (name)
-        {
-          domain_node.name = XMLString::transcode (name);
-        }
-    }
-
-    void Domain_Handler::process_sr_name (const XMLCh* name,
-                                          Deployment::SharedResource& domain_sr)
-    {
-      if (name)
-        {
-          domain_sr.name = XMLString::transcode (name);
-        }
-    }
-
-    void Domain_Handler::process_ic_name (const XMLCh* name,
-                                          Deployment::Interconnect& domain_ic)
-    {
-      if (name)
-        {
-          domain_ic.name = XMLString::transcode (name);
-        }
-    }
-
-    void Domain_Handler::process_bridge_name (const XMLCh* name,
-                                              Deployment::Bridge& domain_bridge)
-    {
-      if (name)
-        {
-          domain_bridge.name = XMLString::transcode (name);
-        }
-    }
-
-    void Domain_Handler::process_node_label (const XMLCh* label,
-                                             Deployment::Node& domain_node)
-    {
-      if (label)
-        {
-          domain_node.label = XMLString::transcode (label);
-        }
-    }
-
-    void Domain_Handler::process_bridge_label 
-          (const XMLCh* label,
-           Deployment::Bridge& domain_bridge)
-    {
-      if (label)
-        {
-          domain_bridge.label = XMLString::transcode (label);
-        }
-    }
-
-    void Domain_Handler::process_ic_label 
-          (const XMLCh* label,
-           Deployment::Interconnect& domain_ic)
-    {
-      if (label)
-        {
-          domain_ic.label = XMLString::transcode (label);
-        }
-    }
+    ////////////////////////////////
 
     void Domain_Handler::process_sr_resource_type 
          (const XMLCh* resource_type,
@@ -720,471 +338,6 @@ namespace CIAO
           domain_sr.resourceType.length (i + 1);
           domain_sr.resourceType[i] = XMLString::transcode (resource_type);
         }
-    }
-
-    DOMDocument* Domain_Handler::create_document (const char *url)
-    {
-
-      xercesc::XMLPlatformUtils::Initialize();
-      static const XMLCh gLS[] = { xercesc::chLatin_L,
-                                   xercesc::chLatin_S,
-                                   xercesc::chNull };
-
-      DOMImplementation* impl
-        = DOMImplementationRegistry::getDOMImplementation(gLS);
-
-      DOMBuilder* parser =
-        ((DOMImplementationLS*)impl)->createDOMBuilder
-              (DOMImplementationLS::MODE_SYNCHRONOUS, 0);
-
-      // Discard comment nodes in the document
-      parser->setFeature (XMLUni::fgDOMComments, false);
-
-      // Disable datatype normalization. The XML 1.0 attribute value
-      // normalization always occurs though.
-      parser->setFeature (XMLUni::fgDOMDatatypeNormalization, true);
-
-      // Do not create EntityReference nodes in the DOM tree. No
-      // EntityReference nodes will be created, only the nodes
-      // corresponding to their fully expanded sustitution text will be
-      // created.
-      parser->setFeature (XMLUni::fgDOMEntities, false);
-
-      // Perform Namespace processing.
-      parser->setFeature (XMLUni::fgDOMNamespaces, true);
-
-      // Perform Validation
-      parser->setFeature (XMLUni::fgDOMValidation, true);
-
-      // Do not include ignorable whitespace in the DOM tree.
-      parser->setFeature (XMLUni::fgDOMWhitespaceInElementContent, false);
-
-      // Enable the parser's schema support.
-      parser->setFeature (XMLUni::fgXercesSchema, true);
-
-      // Enable full schema constraint checking, including checking which
-      // may be time-consuming or memory intensive. Currently, particle
-      // unique attribution constraint checking and particle derivation
-      // restriction checking are controlled by this option.
-      parser->setFeature (XMLUni::fgXercesSchemaFullChecking, true);
-
-      // The parser will treat validation error as fatal and will exit.
-      parser->setFeature (XMLUni::fgXercesValidationErrorAsFatal, true);
-
-
-      DOMDocument* doc = parser->parseURI (url);
-      ACE_TString root_node_name;
-      root_node_name = XMLString::transcode 
-          (doc->getDocumentElement ()->getNodeName ());
-
-      return doc;
-    }
-
-    /*
-    void Domain_Handler::process_attributes_for_sr 
-         (DOMNamedNodeMap* named_node_map,
-          DOMDocument* doc,
-          DOMNodeIterator* iter,
-          int value,
-          Deployment::SharedResource& domain_sr)
-    {
-      int length = named_node_map->getLength ();
-
-      for (int j = 0; j < length; j++)
-        {
-          DOMNode* attribute_node = named_node_map->item (j);
-          XStr strattrnodename
-             (attribute_node->getNodeName ());
-          ACE_TString aceattrnodevalue =  XMLString::transcode
-             (attribute_node->getNodeValue ());
-
-          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-            {
-              this->process_sr (doc,
-                                iter,
-                                domain_sr);
-              id_map_.bind (aceattrnodevalue, value);
-            }
-          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-            {
-              XMLURL xml_url (aceattrnodevalue.c_str ());
-              XMLURL result (aceattrnodevalue.c_str ());
-              std::string url_string = aceattrnodevalue.c_str ();
-              ACE_TString doc_path =
-               XMLString::transcode ( doc->getDocumentURI ());
-              result.makeRelativeTo
-                 (XMLString::transcode (doc_path.c_str ()));
-              ACE_TString final_url =
-               XMLString::transcode (result.getURLText ());
-
-              DOMDocument* href_doc;
-
-              if (xml_url.isRelative ())
-                {
-                  href_doc = this->create_document 
-                       (final_url.c_str ());
-                }
-              else
-                {
-                  href_doc = this->create_document 
-                       (url_string.c_str ());
-                }
-
-              DOMDocumentTraversal* traverse (href_doc);
-              DOMNode* root = (href_doc->getDocumentElement ());
-              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-                                     DOMNodeFilter::SHOW_TEXT;
-              DOMNodeIterator* href_iter = traverse->createNodeIterator
-                                              (root,
-                                               filter,
-                                               0,
-                                               true);
-              href_iter->nextNode ();
-              this->process_sr (href_doc,
-                                       href_iter,
-                                       domain_sr);
-            }
-        }
-
-      return;
-    }
-
-    void Domain_Handler::process_attributes_for_node 
-         (DOMNamedNodeMap* named_node_map,
-          DOMDocument* doc,
-          DOMNodeIterator* iter,
-          int value,
-          Deployment::Node& domain_node)
-    {
-      int length = named_node_map->getLength ();
-
-      for (int j = 0; j < length; j++)
-        {
-          DOMNode* attribute_node = named_node_map->item (j);
-          XStr strattrnodename
-             (attribute_node->getNodeName ());
-          ACE_TString aceattrnodevalue =  XMLString::transcode
-             (attribute_node->getNodeValue ());
-
-          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-            {
-              this->process_node (doc,
-                                  iter,
-                                  domain_node);
-              id_map_.bind (aceattrnodevalue, value);
-            }
-          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-            {
-              XMLURL xml_url (aceattrnodevalue.c_str ());
-              XMLURL result (aceattrnodevalue.c_str ());
-              std::string url_string = aceattrnodevalue.c_str ();
-              ACE_TString doc_path =
-               XMLString::transcode ( doc->getDocumentURI ());
-              result.makeRelativeTo
-                 (XMLString::transcode (doc_path.c_str ()));
-              ACE_TString final_url =
-               XMLString::transcode (result.getURLText ());
-
-              DOMDocument* href_doc;
-
-              if (xml_url.isRelative ())
-                {
-                  href_doc = this->create_document 
-                       (final_url.c_str ());
-                }
-              else
-                {
-                  href_doc = this->create_document 
-                       (url_string.c_str ());
-                }
-
-              DOMDocumentTraversal* traverse (href_doc);
-              DOMNode* root = (href_doc->getDocumentElement ());
-              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-                                     DOMNodeFilter::SHOW_TEXT;
-              DOMNodeIterator* href_iter = traverse->createNodeIterator
-                                              (root,
-                                               filter,
-                                               0,
-                                               true);
-              href_iter->nextNode ();
-              this->process_node (href_doc,
-                                  href_iter,
-                                  domain_node);
-            }
-        }
-
-      return;
-    }
-
-    void Domain_Handler::process_attributes_for_ic 
-         (DOMNamedNodeMap* named_node_map,
-          DOMDocument* doc,
-          DOMNodeIterator* iter,
-          int value,
-          Deployment::Interconnect& domain_ic)
-    {
-      int length = named_node_map->getLength ();
-
-      for (int j = 0; j < length; j++)
-        {
-          DOMNode* attribute_node = named_node_map->item (j);
-          XStr strattrnodename
-             (attribute_node->getNodeName ());
-          ACE_TString aceattrnodevalue =  XMLString::transcode
-             (attribute_node->getNodeValue ());
-
-          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-            {
-              this->process_interconnect (doc,
-                                          iter,
-                                          domain_ic);
-              id_map_.bind (aceattrnodevalue, value);
-            }
-          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-            {
-              XMLURL xml_url (aceattrnodevalue.c_str ());
-              XMLURL result (aceattrnodevalue.c_str ());
-              std::string url_string = aceattrnodevalue.c_str ();
-              ACE_TString doc_path =
-               XMLString::transcode ( doc->getDocumentURI ());
-              result.makeRelativeTo
-                 (XMLString::transcode (doc_path.c_str ()));
-              ACE_TString final_url =
-               XMLString::transcode (result.getURLText ());
-
-              DOMDocument* href_doc;
-
-              if (xml_url.isRelative ())
-                {
-                  href_doc = this->create_document 
-                       (final_url.c_str ());
-                }
-              else
-                {
-                  href_doc = this->create_document 
-                       (url_string.c_str ());
-                }
-
-              DOMDocumentTraversal* traverse (href_doc);
-              DOMNode* root = (href_doc->getDocumentElement ());
-              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-                                     DOMNodeFilter::SHOW_TEXT;
-              DOMNodeIterator* href_iter = traverse->createNodeIterator
-                                              (root,
-                                               filter,
-                                               0,
-                                               true);
-              href_iter->nextNode ();
-              this->process_interconnect (href_doc,
-                                          href_iter,
-                                          domain_ic);
-            }
-        }
-
-      return;
-    }
-
-    void Domain_Handler::process_attributes_for_bridge 
-         (DOMNamedNodeMap* named_node_map,
-          DOMDocument* doc,
-          DOMNodeIterator* iter,
-          int value,
-          Deployment::Bridge& domain_bridge)
-    {
-      int length = named_node_map->getLength ();
-
-      for (int j = 0; j < length; j++)
-        {
-          DOMNode* attribute_node = named_node_map->item (j);
-          XStr strattrnodename
-             (attribute_node->getNodeName ());
-          ACE_TString aceattrnodevalue =  XMLString::transcode
-             (attribute_node->getNodeValue ());
-
-          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-            {
-              this->process_bridge (doc,
-                                    iter,
-                                    domain_bridge);
-              id_map_.bind (aceattrnodevalue, value);
-            }
-          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-            {
-              XMLURL xml_url (aceattrnodevalue.c_str ());
-              XMLURL result (aceattrnodevalue.c_str ());
-              std::string url_string = aceattrnodevalue.c_str ();
-              ACE_TString doc_path =
-               XMLString::transcode ( doc->getDocumentURI ());
-              result.makeRelativeTo
-                 (XMLString::transcode (doc_path.c_str ()));
-              ACE_TString final_url =
-               XMLString::transcode (result.getURLText ());
-
-              DOMDocument* href_doc;
-
-              if (xml_url.isRelative ())
-                {
-                  href_doc = this->create_document 
-                       (final_url.c_str ());
-                }
-              else
-                {
-                  href_doc = this->create_document 
-                       (url_string.c_str ());
-                }
-
-              DOMDocumentTraversal* traverse (href_doc);
-              DOMNode* root = (href_doc->getDocumentElement ());
-              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-                                     DOMNodeFilter::SHOW_TEXT;
-              DOMNodeIterator* href_iter = traverse->createNodeIterator
-                                              (root,
-                                               filter,
-                                               0,
-                                               true);
-              href_iter->nextNode ();
-              this->process_bridge (href_doc,
-                                           href_iter,
-                                           domain_bridge);
-            }
-        }
-
-      return;
-    }
-
-    void Domain_Handler::process_attributes_for_property 
-         (DOMNamedNodeMap* named_node_map,
-          DOMDocument* doc,
-          DOMNodeIterator* iter,
-          int value,
-          Deployment::Property& domain_property)
-    {
-      int length = named_node_map->getLength ();
-
-      for (int j = 0; j < length; j++)
-        {
-          DOMNode* attribute_node = named_node_map->item (j);
-          XStr strattrnodename
-             (attribute_node->getNodeName ());
-          ACE_TString aceattrnodevalue =  XMLString::transcode
-             (attribute_node->getNodeValue ());
-
-          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-            {
-              Property_Handler::process_Property (iter,
-                                                  domain_property);
-              id_map_.bind (aceattrnodevalue, value);
-            }
-          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-            {
-              XMLURL xml_url (aceattrnodevalue.c_str ());
-              XMLURL result (aceattrnodevalue.c_str ());
-              std::string url_string = aceattrnodevalue.c_str ();
-              ACE_TString doc_path =
-               XMLString::transcode ( doc->getDocumentURI ());
-              result.makeRelativeTo
-                 (XMLString::transcode (doc_path.c_str ()));
-              ACE_TString final_url =
-               XMLString::transcode (result.getURLText ());
-
-              DOMDocument* href_doc;
-
-              if (xml_url.isRelative ())
-                {
-                  href_doc = this->create_document 
-                       (final_url.c_str ());
-                }
-              else
-                {
-                  href_doc = this->create_document 
-                       (url_string.c_str ());
-                }
-
-              DOMDocumentTraversal* traverse (href_doc);
-              DOMNode* root = (href_doc->getDocumentElement ());
-              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-                                     DOMNodeFilter::SHOW_TEXT;
-              DOMNodeIterator* href_iter = traverse->createNodeIterator
-                                              (root,
-                                               filter,
-                                               0,
-                                               true);
-              href_iter->nextNode ();
-              Property_Handler::process_Property (href_iter,
-                                                  domain_property);
-            }
-        }
-
-      return;
-    }
-    */
-    void Domain_Handler::process_attributes_for_satisfier_property 
-         (DOMNamedNodeMap* named_node_map,
-          DOMDocument* doc,
-          DOMNodeIterator* iter,
-          int value,
-          Deployment::SatisfierProperty& domain_satisfier_property)
-    {
-      int length = named_node_map->getLength ();
-
-      for (int j = 0; j < length; j++)
-        {
-          DOMNode* attribute_node = named_node_map->item (j);
-          XStr strattrnodename
-             (attribute_node->getNodeName ());
-          ACE_TString aceattrnodevalue =  XMLString::transcode
-             (attribute_node->getNodeValue ());
-
-          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-            {
-              SP_Handler::process_SatisfierProperty
-                 (iter,
-                  domain_satisfier_property);
-              id_map_.bind (aceattrnodevalue, value);
-            }
-          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-            {
-              XMLURL xml_url (aceattrnodevalue.c_str ());
-              XMLURL result (aceattrnodevalue.c_str ());
-              std::string url_string = aceattrnodevalue.c_str ();
-              ACE_TString doc_path =
-               XMLString::transcode ( doc->getDocumentURI ());
-              result.makeRelativeTo
-                 (XMLString::transcode (doc_path.c_str ()));
-              ACE_TString final_url =
-               XMLString::transcode (result.getURLText ());
-
-              DOMDocument* href_doc;
-
-              if (xml_url.isRelative ())
-                {
-                  href_doc = this->create_document 
-                       (final_url.c_str ());
-                }
-              else
-                {
-                  href_doc = this->create_document 
-                       (url_string.c_str ());
-                }
-
-              DOMDocumentTraversal* traverse (href_doc);
-              DOMNode* root = (href_doc->getDocumentElement ());
-              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-                                     DOMNodeFilter::SHOW_TEXT;
-              DOMNodeIterator* href_iter = traverse->createNodeIterator
-                                              (root,
-                                               filter,
-                                               0,
-                                               true);
-              href_iter->nextNode ();
-              SP_Handler::process_SatisfierProperty
-                 (href_iter,
-                  domain_satisfier_property);
-            }
-        }
-
-      return;
     }
 
     void Domain_Handler::update_node_refs (Deployment::Domain& domain)
@@ -1307,24 +460,5 @@ namespace CIAO
             }
         }
     }
-
-    void Domain_Handler::process_refs (DOMNamedNodeMap* named_node_map)
-    {
-      int length = named_node_map->getLength ();
-
-      for (int j = 0; j < length; j++)
-        {
-          DOMNode* attribute_node = named_node_map->item (j);
-          XStr strattrnodename (attribute_node->getNodeName ());
-          ACE_TString aceattrnodevalue = XMLString::transcode
-             (attribute_node->getNodeValue ());
-          if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-            {
-              this->index_ = this->index_ + 1;
-              idref_map_.bind (this->index_, aceattrnodevalue);
-            }
-        }
-    }
-
   }
 }
