@@ -359,7 +359,16 @@ public:
 
     // Always must be last
     TAO_UNKNOWN
+  };
 
+  enum LOOKUP_STRATEGY
+  {
+    // various lookup strategies
+    TAO_LINEAR,
+    TAO_DYNAMIC_HASH,
+    TAO_PERFECT_HASH,
+    TAO_ACTIVE_DEMUX,
+    TAO_USER_DEFINED
   };
 
   TAO_CodeGen (void);
@@ -442,6 +451,12 @@ public:
   TAO_OutStream *server_template_inline (void);
   // get the server template inline stream
 
+  void gperf_input (TAO_OutStream *gperf_input);
+  // Set the gperf input file stream.
+
+  TAO_OutStream *gperf_input (void);
+  // Retrieve the gperf input stream being used.
+
   void outstream (TAO_OutStream *os);
   // set current out stream
 
@@ -459,6 +474,13 @@ public:
 
   const char *upcase (const char *str);
   // convert input string to all upcase
+
+  void lookup_strategy (LOOKUP_STRATEGY s);
+  // Set the lookup strategy.
+
+  LOOKUP_STRATEGY lookup_strategy (void) const;
+  // Return the enumerated value for the lookup strategy. Default is
+  // Dynamic Hashing.
 
 private:
   TAO_OutStream *client_header_;
@@ -486,7 +508,10 @@ private:
   // server side inline file
 
   TAO_OutStream *server_template_inline_;
-  // server side template inline file
+  // server side template inline file.
+
+  TAO_OutStream *gperf_input_;
+  // TAO_OutStream to collect the input for gperf program.
 
   TAO_OutStream *curr_os_;
   // currently used out stream
@@ -495,8 +520,10 @@ private:
   // save current node in this
 
   TAO_Visitor_Factory *visitor_factory_;
-  // visitor factory object
+  // visitor factory object.
 
+  LOOKUP_STRATEGY strategy_;
+  // The enumerated value indicating the lookup strategy.
 };
 
 typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;

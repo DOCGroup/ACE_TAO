@@ -155,12 +155,31 @@ public:
   // relative name for collocated class.
 
   int gen_optable_entries (be_interface *);
-  // generate the operation table entries
+  // generate the operation table entries.
 
   void compute_coll_name (void);
   // compute the fully qualified collocated class name.
 
 private:
+  void be_interface::gen_gperf_input_header (TAO_OutStream *ss);
+  // Output the header (type declaration and %%) to the gperf's input
+  // file.
+
+  int gen_perfect_hash_optable (void);
+  // Generate the perfect hash table code by running the gperf
+  // program. Returns 0 on sucess, -1 on error.
+
+  void gen_perfect_hash_class_definition (void);
+  // Outputs the class definition for the perfect hashing. This class
+  // will inherit from the TAO_Perfect_Hash_OpTable.
+
+  int gen_perfect_hash_methods (void);
+  // This calls the GPERF program and gets the perfect hashing methods
+  // from it.
+
+  void gen_perfect_hash_instance ();
+  // Create an instance of this perfect hash table.
+
   char *full_skel_name_;  // fully scoped skeleton name
 
   int skel_count_; // number of static skeletons in the operation table

@@ -71,18 +71,23 @@ TAO_OutStream::~TAO_OutStream (void)
 }
 
 int
-TAO_OutStream::open (const char *fname, TAO_OutStream::STREAM_TYPE st)
+TAO_OutStream::open (const char *fname,
+                     TAO_OutStream::STREAM_TYPE st)
 {
   if (fname)
     {
       // file name exists, open an I/O file handle
-      fp_ = ACE_OS::fopen (fname, "w");
+      fp_ = ACE_OS::fopen (fname, "w+");
       if (fp_)
         {
           this->st_ = st;
-          // put the copyright notice
-          ACE_OS::fprintf (fp_, "%s\n", copyright);
-	  ACE_OS::fflush (fp_);
+          // put the copyright notice.  Not for the gperf's temp input
+          // file.
+          if (st != TAO_OutStream::TAO_GPERF_INPUT)
+            {
+              ACE_OS::fprintf (fp_, "%s\n", copyright);
+              ACE_OS::fflush (fp_);
+            }
           return 0;
         }
       else
@@ -107,7 +112,14 @@ TAO_OutStream::stream_type (void)
   return this->st_;
 }
 
-// indentation
+// Return the underlying lowlevel file pointer.
+// indentation.
+FILE *
+TAO_OutStream::file (void)
+{
+  return this->fp_;
+}
+
 int
 TAO_OutStream::incr_indent (unsigned short flag)
 {

@@ -194,7 +194,7 @@ public:
     , PS_OpContextCommaSeen	// Seen ',' for CONTEXT
     , PS_DeclsCommaSeen		// Seen ',' in declarators list
     , PS_DeclsDeclSeen		// Seen complete decl in decls list
-      , PS_NativeSeen             // Seen a native declaration
+    , PS_NativeSeen             // Seen a native declaration
   };
 
   // Constructor
@@ -331,7 +331,6 @@ public:
   virtual void export_include (const char* s);
   // set the name of the include file that contains the export
   // macro definition.
-
 private:
   // Data
   UTL_ScopeStack		*pd_scopes;		// Store scopes stack
