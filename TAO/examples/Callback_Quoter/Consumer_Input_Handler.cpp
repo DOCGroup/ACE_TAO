@@ -94,10 +94,15 @@ Consumer_Input_Handler::register_consumer ()
 
       ssize_t strlen = ACE_OS::read (ACE_STDIN,
 				     stockname,
-				     sizeof stockname);
+				     sizeof stockname - 1);
 
-      if (stockname[strlen -1] == '\n')
-	stockname[strlen -1] = '\0';
+	  // Taking care of platforms where an carriage return is padded with newline.
+      if (stockname[strlen -2] == '\n' || stockname[strlen -2] == '\r')
+		stockname[strlen -2] = '\0';
+	  else
+	  if (stockname[strlen -1] == '\n' || stockname[strlen -1] == '\r')
+		stockname[strlen -1] = '\0';
+	  	  
 
       this->consumer_handler_->stock_name_ = stockname;
 
@@ -224,4 +229,14 @@ return 0;
 Consumer_Input_Handler::~Consumer_Input_Handler (void)
 {
   // No-op
+}
+
+int
+Consumer_Input_Handler::handle_close (ACE_HANDLE,
+									  ACE_Reactor_Mask close_mask)
+{
+	// the STDIN handler dies.
+	delete this;
+
+	return 0;
 }
