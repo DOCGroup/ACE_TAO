@@ -1,3 +1,10 @@
+Wed Apr 26 12:36:28 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          The ACE_TRY_ENV argument is not used in the _unchecked_narrow
+          operation, so there is no sense in generating it.  This removes
+          a bunch of 'unused argument' warnings.
+
 Wed Apr 26 10:57:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/LocalObject.i:
@@ -25,7 +32,7 @@ Wed Apr 26 08:26:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/LocalObject.h:
         * tao/LocalObject.cpp:
           Changed CORBA::InterfaceDef to IR::InterfaceDef and
-          ASYS_TEXT to ACE_TEXT.
+          ASYS_TEXT to ACE_TEXT.s
 
         * tao/Object.h:
           Cosmetic changes.
