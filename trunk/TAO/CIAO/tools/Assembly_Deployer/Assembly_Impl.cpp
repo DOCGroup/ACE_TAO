@@ -4,6 +4,7 @@
 #include "ciao/Cookies.h"
 #include "../XML_Helpers/Assembly_Spec.h"
 #include "../XML_Helpers/XML_Utils.h"
+#include "../Segment_Timer/Segment_Timer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Assembly_Impl.inl"
@@ -187,6 +188,8 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
 {
+  segment_timers[TOTAL_ASSEMBLY_TIMER].start_timer ();
+
   if (CIAO::debug_level () > 10)
     ACE_DEBUG ((LM_DEBUG,
                 "CIAO::Assembly_Impl::build %d\n",
@@ -225,15 +228,24 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
     {
       CIAO::Assembly_Connection::Connect_Info *connection;
       conn_iter.next (connection);
-
+   
+      segment_timers[CREATE_CONNECTION_TIMER].start_timer ();
       this->make_connection (connection
                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+      segment_timers[CREATE_CONNECTION_TIMER].stop_timer ();
 
       conn_iter.advance ();
     }
 
   this->state_ = ::Components::Deployment::INSERVICE;
+  segment_timers[TOTAL_ASSEMBLY_TIMER].stop_timer ();
+
+  if(Segment_Timer::get_dump_flag())
+  {
+   for (int i=0; i<MAX_TIMERS; ++i)
+     segment_timers[i].dump (i);
+  }
 }
 
 void

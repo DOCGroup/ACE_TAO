@@ -3,8 +3,8 @@
 #include "Static_Assembly.h"
 #include "Static_Assembly_Visitors.h"
 #include "../XML_Helpers/XML_Utils.h"
-#include "ace/Configuration_Import_Export.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Configuration_Import_Export.h"
 
 const char* comp_reg_type_to_str (
               CIAO::Assembly_Placement::componentinstantiation::IF_Register_Type type)
@@ -350,7 +350,7 @@ CIAO::Static_Assembly_Builder_Visitor::visit_homeplacement
 int
 CIAO::Static_Assembly_Builder_Visitor::visit_componentinstantiation
 (CIAO::Assembly_Placement::componentinstantiation *ci
- ACE_ENV_ARG_DECL)
+ ACE_ENV_ARG_DECL_NOT_USED)
 {
   // @@ instantiation and register component.
   ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n", ci->id ()));
@@ -853,7 +853,6 @@ if(is_realtime_)
   ACE_OS::fprintf(header_file, "\n};\n");
   ACE_OS::fprintf(header_file, "\n\n");
  }
-
   ACE_OS::fclose (header_file);
 }
 
@@ -875,16 +874,25 @@ generate_static_app_mpc (const char* app_mpc_file_name)
     ACE_ERROR_RETURN ((LM_ERROR, "error in installation open\n"), -1);
 
   ACE_OS::fprintf (mpc_file, "%s",
-  "project(Static_CCM_App) : ciao_server, ciao_client, rtcorba, iortable {\n"
+  "project(Static_CCM_App) : ciao_server, ciao_client, rtcorba, rtportableserver, iortable, acexml {\n"
   "includes += $(ACE_ROOT)/TAO/CIAO/tools/Assembly_Deployer\n"
   "includes += $(ACE_ROOT)/TAO/CIAO/tools/static_configurator\n");
 
   if(is_realtime_)
    ACE_OS::fprintf(mpc_file, "includes += $(ACE_ROOT)/TAO/CIAO/tools/RTComponentServer\n");
   
-  ACE_OS::fprintf(mpc_file, "%s\n\n",
-	  "libs += CIAO_XML_Helpers Static_Configurator\n"
-      "after += CIAO_XML_Helpers Static_Configurator\n");
+  if(is_realtime_)
+  {
+   ACE_OS::fprintf(mpc_file, "%s\n\n",
+         "libs += RTComponent_Server Static_Configurator CIAO_XML_Helpers Segment_Timer\n"
+	 "after += RTComponent_Server Static_Configurator CIAO_XML_Helpers Segment_Timer\n");
+  }
+  else
+  {
+   ACE_OS::fprintf(mpc_file, "%s\n\n",
+	  "libs += Static_Configurator CIAO_XML_Helpers Segment_Timer\n"
+          "after += Static_Configurator CIAO_XML_Helpers Segment_Timer\n");
+  }
 
   for (int i=0; i<=homes_table_last_index_; ++i)
     {
@@ -922,13 +930,6 @@ generate_static_app_mpc (const char* app_mpc_file_name)
   "   Source_Files {\n"
   "       Static_CCM_App.cpp\n");
 
-  if(is_realtime_)
-  {
-	ACE_OS::fprintf(mpc_file, "%s",
-         "$(ACE_ROOT)/TAO/CIAO/tools/RTComponentServer/RTServer_Impl.cpp\n"
-		 "$(ACE_ROOT)/TAO/CIAO/tools/RTComponentServer/RTConfig_Manager.cpp\n");
-  }
-
   ACE_OS::fprintf(mpc_file, "%s", 
   "    }\n\n"
   "    IDL_Files {\n"
@@ -960,6 +961,7 @@ generate_static_app_driver (const char* app_driver_file_name)
 "#include \"ace/SString.h\" \n"
 "#include \"ace/Get_Opt.h\"\n"
 "#include \"Static_Assembly_Config.h\"\n"
+"#include \"tao/RTPortableServer/RTPortableServer.h\"\n"
 "\n"
 "char *ior_file_name_ = 0; \n"
 "\n"
@@ -1210,8 +1212,10 @@ generate_rt_static_app_driver (const char* app_driver_file_name)
 "      CORBA::Object_var object =\n"
 "        orb->resolve_initial_references (\"RootPOA\"\n"
 "                                         ACE_ENV_ARG_PARAMETER);\n"
-"      ACE_TRY_CHECK;\n"
-
+"     ACE_TRY_CHECK;\n"
+"     PortableServer::POA_var root_poa =\n"
+"     PortableServer::POA::_narrow (object.in ()\n"
+"	  			    ACE_ENV_ARG_PARAMETER);\n"
 "     // Get reference to RTORB.\n"
 "      object =\n"
 "        orb->resolve_initial_references (\"RTORB\"\n"
@@ -1221,12 +1225,6 @@ generate_rt_static_app_driver (const char* app_driver_file_name)
 "      RTCORBA::RTORB_var rt_orb =\n"
 "        RTCORBA::RTORB::_narrow (object.in ()\n"
 "                                 ACE_ENV_ARG_PARAMETER);\n"
-"      ACE_TRY_CHECK;\n"
-"\n"
-"      PortableServer::POA_var root_poa =\n"
-"        PortableServer::POA::_narrow (object.in ()\n"
-"                                      ACE_ENV_ARG_PARAMETER);\n"
-"\n"                                      
 "      ACE_TRY_CHECK;\n"
 "\n"
 "      // Activate POA manager\n"
@@ -1254,16 +1252,10 @@ generate_rt_static_app_driver (const char* app_driver_file_name)
 "        sizeof (resolvers_table_)/sizeof(CIAO::Static_Config::ResolveInfoAttributes);\n"
 "      int thread_pool_table_size=\n"
 "        sizeof(thread_pool_table_)/sizeof(CIAO::Static_Config::ThreadPoolAttributes);\n"
-"      int lane_table_size=\n"
-"        sizeof(lane_table_)/sizeof(CIAO::Static_Config::LaneAttributes);\n"
 "      int thread_pool_lanes_table_size=\n"
 "        sizeof(thread_pool_lanes_table_)/sizeof(CIAO::Static_Config::ThreadPoolLanesAttributes);\n"
-"      int band_table_size=\n"
-"        sizeof(band_table_)/sizeof(CIAO::Static_Config::BandAttributes);\n"
 "      int priority_band_table_size=\n"
 "        sizeof(priority_band_table_)/sizeof(CIAO::Static_Config::PriorityBandsAttributes);\n"
-"      int policy_config_table_size=\n"
-"        sizeof(policy_config_table_)/sizeof(CIAO::Static_Config::PolicyConfigAttributes);\n"
 "      int policy_set_table_size=\n"
 "        sizeof(policy_set_table_)/sizeof(CIAO::Static_Config::PolicySetAttributes);\n"
 "\n"        
@@ -1299,15 +1291,12 @@ generate_rt_static_app_driver (const char* app_driver_file_name)
 "                                  thread_pool_table_, \n"
 "                                  thread_pool_table_size,\n"
 "                                  lane_table_,\n"
-"                                  lane_table_size,\n"
 "                                  thread_pool_lanes_table_,\n"
 "                                  thread_pool_lanes_table_size,\n"
 "                                  band_table_,\n"
-"                                  band_table_size,\n"
 "                                  priority_band_table_,\n"
 "                                  priority_band_table_size,\n"
 "                                  policy_config_table_,\n"
-"                                  policy_config_table_size,\n"
 "                                  policy_set_table_,\n"
 "                                  policy_set_table_size);\n"
 "\n"     
@@ -1391,11 +1380,12 @@ generate_rt_static_app_driver (const char* app_driver_file_name)
   ACE_OS::fclose (app_driver_file);
 }
 
+
 int CIAO::Static_Assembly_Builder_Visitor::
   build_rt_resource_info(CIAO::RTConfiguration::RTORB_Resource_Info &rt_resources)
 {
  unsigned int i, j;
- unsigned int begin_index, end_index;
+ int begin_index, end_index;
 
  for(i=0; i < rt_resources.tp_configs.length();i++)
  {
@@ -1501,7 +1491,7 @@ int CIAO::Static_Assembly_Builder_Visitor::
 int  CIAO::Static_Assembly_Builder_Visitor::build_rt_policy_set(CIAO::RTConfiguration::Policy_Sets &pset)
 {
  unsigned int i, j;
- unsigned int begin_index, end_index;
+ int begin_index, end_index;
  const char *name;
 
  for(i=0;i < pset.length();i++)
@@ -1513,7 +1503,7 @@ int  CIAO::Static_Assembly_Builder_Visitor::build_rt_policy_set(CIAO::RTConfigur
 
   for(j=0; j < pset[i].configs.length();j++)
   { 
-    ++policy_config_table_last_index_;
+        ++policy_config_table_last_index_;
 
 	policy_config_table_[policy_config_table_last_index_].type_ =
 	         pset[i].configs[j].type;
@@ -1531,7 +1521,7 @@ int  CIAO::Static_Assembly_Builder_Visitor::build_rt_policy_set(CIAO::RTConfigur
 	}
 	else if(pset[i].configs[j].type == RTCORBA::THREADPOOL_POLICY_TYPE ||
 		    pset[i].configs[j].type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE
-		   )
+	       )
 	{
           pset[i].configs[j].configuration >>= name;
   	  policy_config_table_[policy_config_table_last_index_].name_ = name;
@@ -1542,6 +1532,10 @@ int  CIAO::Static_Assembly_Builder_Visitor::build_rt_policy_set(CIAO::RTConfigur
   {
     begin_index++;
     end_index = policy_config_table_last_index_;
+  }
+  else
+  {
+    begin_index = end_index = -1;
   }
 
   policy_set_table_[policy_set_table_last_index_].config_begin_index_ = begin_index;

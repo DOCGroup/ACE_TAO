@@ -28,6 +28,8 @@ namespace CIAO
   class Static_Configurator
   {
   public:
+   Static_Configurator(){}
+  ~Static_Configurator(){}
   int configure(
                 CORBA::ORB_ptr orb,
                 Components::Deployment::ComponentServer_ptr component_server,
@@ -49,15 +51,12 @@ namespace CIAO
 		        CIAO::Static_Config::ThreadPoolAttributes *thread_pool_table,
 		        int thread_pool_table_size,
 			CIAO::Static_Config::LaneAttributes *lane_table,
-			int lane_table_size,
 			CIAO::Static_Config::ThreadPoolLanesAttributes *thread_pool_lanes_table,
 			int thread_pool_lanes_table_size,
 			CIAO::Static_Config::BandAttributes *band_table,
-			int band_table_size,
 			CIAO::Static_Config::PriorityBandsAttributes *priority_band_table,
 			int priority_band_table_size,
 			CIAO::Static_Config::PolicyConfigAttributes *policy_config_table,
-			int policy_config_table_size,
 			CIAO::Static_Config::PolicySetAttributes    *policy_set_table,
 			int policy_set_table_size);
 
@@ -116,3 +115,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_STATIC_CONFIGURATOR_H */
+
