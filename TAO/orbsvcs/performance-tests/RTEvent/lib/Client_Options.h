@@ -11,7 +11,7 @@
 #define TAO_RTEC_PERF_CLIENT_OPTIONS_H
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "rtec_perf_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +24,7 @@ class ACE_Arg_Shifter;
  * Note that some of the tests ignore some of the client_options, but it is
  * easier to have them all in a single class.
  */
-class Client_Options
+class TAO_RTEC_Perf_Export Client_Options
 {
 public:
   /// Constructor
