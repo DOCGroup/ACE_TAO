@@ -1,3 +1,10 @@
+Wed Apr 30 13:43:14 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+
+          Rename the workspace extension from .mak to .nmake to avoid
+          possibly overwritting a generated project.
+
 Wed Apr 30 10:42:04 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
