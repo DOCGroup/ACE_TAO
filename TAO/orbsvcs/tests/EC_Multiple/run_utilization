@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+MSG_INTERVAL=5000
+# The interval between the messages, in usecs
+UTL_COUNT=80000
+# Each iteration is (roughly) 20 usecs (On a Sparc Ultra 30).
+MSG_COUNTS="1 10 50 100 200 300 400 500 600 700 800 900 1000 1200 1400 1600 1800 2000"
+
+# Generate the baseline data, i.e. shortcircuit the EC.
+
+for i in $MSG_COUNTS; do
+  ./EC_Multiple -ORBport 20010 -l EC1 -d -s SS1 -a 1 -b 2 -c 2 \
+    -m $i -u $UTL_COUNT -i $MSG_INTERVAL -x > UTL.X.${i}.log 2>&1
+done
+
+# Generate the local data, i.e. what is the overhead of using the local EC. 
+for i in $MSG_COUNTS; do
+  ../../Naming_Service/Naming_Service -ORBport 20000 >/dev/null 2>&1 & sleep 1
+  ./EC_Multiple -ORBport 20010 -l EC1 -d -s SS1 -a 1 -b 2 -c 2 \
+    -m $i -u $UTL_COUNT -i $MSG_INTERVAL > UTL.LCL.${i}.log 2>&1
+  kill %1
+  wait
+done
+
+# Generate the remote data, this test is much slower since the latency
+# can be as high as 2 msec 
+for i in $MSG_COUNTS; do
+  ../../Naming_Service/Naming_Service -ORBport 20000 >/dev/null 2>&1 & sleep 1
+  ./EC_Multiple -ORBport 20010 -l EC1 -r EC2 -d -s SS1 -a 1 -b 2 -c 3 \
+    -m $i -u $UTL_COUNT -i $MSG_INTERVAL  > UTL.RMT1.${i}.log 2>&1 &
+  ./EC_Multiple -ORBport 20020 -l EC2 -r EC1 -d -s SS2 -a 1 -b 3 -c 2 \
+    -m $i -u $UTL_COUNT -i $MSG_INTERVAL  > UTL.RMT2.${i}.log 2>&1 &
+  wait
+  kill %1
+  wait
+done
+
+exit 0
+
+grep "Scavenger time" bar.*.log |
+  sed -e 's/^bar\.//' -e 's/\.log:Scavenger time://' |
+  sort -n > bar.scavenger.data
+grep "Push time" bar.*.log |
+  sed -e 's/^bar\.//' -e 's/\.log:Push time://' |
+  sort -n > bar.push.data
+
+grep Scavenger UTL.X.*.log | sed -e 's/UTL\.X\.//' -e 's/\.log:/ /' | sort -n
+
