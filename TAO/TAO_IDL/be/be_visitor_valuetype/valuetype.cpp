@@ -388,7 +388,7 @@ be_visitor_valuetype::visit_enum (be_enum *node)
 
 // visit an operation
 int
-be_visitor_valuetype::visit_operation (be_operation *node)
+be_visitor_valuetype::visit_operation (be_operation *)
 {
   // is overridden in derived visitors
   return 0;
@@ -396,7 +396,7 @@ be_visitor_valuetype::visit_operation (be_operation *node)
 
 // visit an exception (not used)
 int
-be_visitor_valuetype::visit_exception (be_exception *node)
+be_visitor_valuetype::visit_exception (be_exception *)
 {
   cerr << "! be_visitor_valuetype::visit_exception() --- not allowed\n";
  ACE_ASSERT (0);
@@ -647,7 +647,7 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_valuetype::visit_field (be_field *node)
+be_visitor_valuetype::visit_field (be_field *)
 {
   // is overridden in derived visitors
   return 0;

@@ -149,10 +149,10 @@ AST_Generator::create_interface_fwd(UTL_ScopedName *n, UTL_StrList *p)
  * Create a be_valuetype node
  */
 AST_Interface *
-AST_Generator::create_valuetype(UTL_ScopedName *n,
-                               AST_Interface **ih,
-                               long nih,
-                               UTL_StrList *p)
+AST_Generator::create_valuetype(UTL_ScopedName *,
+                               AST_Interface ** /* ih */,
+                               long /* nih */,
+                               UTL_StrList *)
 {
   // Valuetypes are represented as be_valuetype derived from be_interface,
   // which derives from AST_Interface. If you construct a backend which
@@ -170,7 +170,8 @@ AST_Generator::create_valuetype(UTL_ScopedName *n,
  * Create a be_valuetype_fwd node
  */
 AST_InterfaceFwd *
-AST_Generator::create_valuetype_fwd(UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_valuetype_fwd (UTL_ScopedName *, 
+                                     UTL_StrList *)
 {
   // see note in create_valuetype()
   // dummy placeholder must return true from is_valuetype()

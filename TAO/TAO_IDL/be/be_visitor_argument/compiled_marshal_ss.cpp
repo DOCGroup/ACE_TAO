@@ -140,7 +140,7 @@ int be_visitor_args_compiled_marshal_ss::visit_argument (be_argument *node)
   return 0;
 }
 
-int be_visitor_args_compiled_marshal_ss::visit_array (be_array *node)
+int be_visitor_args_compiled_marshal_ss::visit_array (be_array *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
