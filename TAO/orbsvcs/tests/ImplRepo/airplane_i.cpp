@@ -7,7 +7,7 @@ ACE_RCSID(ImplRepo, airplane_i, "$Id$")
 
 // Constructor
 
-Airplane_i::Airplane_i (int shutdown)
+  Airplane_i::Airplane_i (int /*shutdown*/)
 {
   // Seed the random number generator
   // Note: This server should not be run with thread-per-request since the seeding
