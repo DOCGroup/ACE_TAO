@@ -1,3 +1,9 @@
+Wed Feb  9 22:07:44 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+	  fixes for warnings and link errors with g++ on SunOS7
+
 Wed Feb  9 14:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
