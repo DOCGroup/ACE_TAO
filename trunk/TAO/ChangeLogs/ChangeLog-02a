@@ -6,7 +6,7 @@ Mon Sep 18 09:55:03 2000  Ossama Othman  <ossama@uci.edu>
 	  build.
 
 	* orbsvcs/LoadBalancer/Makefile:
-	* orbsvcs/orbsvcs/LoadBalancer/Makefile:
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
 
 	  Updated dependencies.
 
