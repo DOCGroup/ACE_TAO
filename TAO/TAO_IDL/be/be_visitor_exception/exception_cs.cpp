@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_exception.h"
 
@@ -56,7 +56,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception::"
                              "visit_exception -"
-                             "code for stub failed\n"), 
+                             "code for stub failed\n"),
                             -1);
         }
 
@@ -78,9 +78,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       // copy constructor
       os->indent ();
       *os << "// copy constructor" << be_nl;
-      *os << node->name () << "::" << node->local_name () << " (const ::" 
+      *os << node->name () << "::" << node->local_name () << " (const ::"
           << node->name () << " &_tao_excp)" << be_nl;
-      *os << "  : CORBA_UserException (" 
+      *os << "  : CORBA_UserException ("
           << "_tao_excp._type ())" << be_nl;
       *os << "{\n";
       os->incr_indent ();
@@ -105,10 +105,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "// assignment operator" << be_nl;
       *os << node->name () << "&" << be_nl;
       *os << node->name () << "::operator= (const ::"
-	        << node->name () << " &_tao_excp)" << be_nl
-	        << "{\n" << be_idt_nl
-	        << "this->CORBA_UserException::operator= "
-	        << "(_tao_excp);\n";
+                << node->name () << " &_tao_excp)" << be_nl
+                << "{\n" << be_idt_nl
+                << "this->CORBA_UserException::operator= "
+                << "(_tao_excp);\n";
       // assign each individual member
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
@@ -124,7 +124,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       delete visitor;
       os->indent ();
       *os << "return *this;" << be_uidt_nl
-	        << "}\n\n";
+                << "}\n\n";
 
       // narrow method
       os->indent ();
@@ -133,9 +133,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << node->name () << "::_narrow (CORBA::Exception *exc)" << be_nl;
       *os << "{\n";
       os->incr_indent ();
-      *os << "if (!ACE_OS::strcmp (\"" << node->repoID () 
+      *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()
           << "\", exc->_id ())) // same type" << be_nl;
-      *os << "  return ACE_dynamic_cast (" << node->local_name () 
+      *os << "  return ACE_dynamic_cast (" << node->local_name ()
           << "_ptr, exc);" << be_nl;
       *os << "else" << be_nl;
       *os << "  return 0;\n";
@@ -143,10 +143,34 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "}\n\n";
 
       *os << be_nl
-	        << "void " << node->name () << "::_raise ()" << be_nl
-	        << "{" << be_idt_nl
-	        << "TAO_RAISE(*this);" << be_uidt_nl
-	        << "}\n\n";
+          << "void " << node->name () << "::_raise ()" << be_nl
+          << "{" << be_idt_nl
+          << "TAO_RAISE(*this);" << be_uidt_nl
+          << "}\n\n";
+
+      *os << be_nl
+          << "void " << node->name ()
+          << "::_tao_encode (" << be_idt << be_idt_nl
+          << "TAO_OutputCDR &cdr," << be_nl
+          << "CORBA::Environment &ACE_TRY_ENV) const"
+          << be_uidt << be_uidt_nl
+          << "{" << be_idt_nl
+          << "if (cdr << *this)" << be_nl
+          << "  return;" << be_nl
+          << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+          << "}\n\n";
+
+      *os << be_nl
+          << "void " << node->name ()
+          << "::_tao_decode (" << be_idt << be_idt_nl
+          << "TAO_InputCDR &cdr," << be_nl
+          << "CORBA::Environment &ACE_TRY_ENV)"
+          << be_uidt << be_uidt_nl
+          << "{" << be_idt_nl
+          << "if (cdr >> *this)" << be_nl
+          << "  return;" << be_nl
+          << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+          << "}\n\n";
 
       // generate the _alloc method
       os->indent ();
@@ -155,7 +179,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "::_alloc (void)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "CORBA::Exception *retval = 0;" << be_nl
-          << "ACE_NEW_RETURN (retval, ::" << node->name () 
+          << "ACE_NEW_RETURN (retval, ::" << node->name ()
           << ", 0);" << be_nl
           << "return retval;" << be_uidt_nl;
       *os << "}\n\n";

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_exception.h"
 
@@ -56,17 +56,17 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << "class " << node->local_name () << ";" << be_nl;
       // generate the _ptr declaration
       *os << "typedef " << node->local_name () << " *"
-	        << node->local_name () << "_ptr;" << be_nl;
+                << node->local_name () << "_ptr;" << be_nl;
       os->gen_endif ();
 
       os->gen_ifdef_macro (node->flat_name ());
 
       os->indent ();
       *os << "class " << idl_global->stub_export_macro ()
-	        << " " << node->local_name ()
-	        << " : public CORBA::UserException" << be_nl;
+                << " " << node->local_name ()
+                << " : public CORBA::UserException" << be_nl;
       *os << "{" << be_nl
-	        << "public:\n\n";
+                << "public:\n\n";
 
       // generate the _ptr_type and _var_type typedefs
       // but we must protect against certain versions of g++
@@ -97,8 +97,15 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           << node->local_name () << " &);\n\n";
 
       *os << be_nl
-	  << "virtual void _raise (void);\n" << be_nl
-	  << "static " << node->local_name ()
+          << "virtual void _raise (void);\n" << be_nl
+          << "virtual void _tao_encode (" << be_idt << be_idt_nl
+          << "TAO_OutputCDR &," << be_nl
+          << "CORBA::Environment &) const;" << be_uidt << be_uidt_nl
+          << "virtual void _tao_decode (" << be_idt << be_idt_nl
+          << "TAO_InputCDR &," << be_nl
+          << "CORBA::Environment &);" << be_uidt << be_uidt << "\n"
+          << be_nl
+          << "static " << node->local_name ()
           << " *_narrow (CORBA::Exception *);\n\n";
 
       // generate constructor that takes each member as a parameter. We need a
@@ -121,10 +128,10 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
 
       *os << be_nl
-	  << "// = TAO extension" << be_nl
-	  << "static CORBA::Exception *_alloc (void);\n" << be_uidt_nl
-	  << "}; // exception " << node->name ()
-	  << "\n" << be_nl;
+          << "// = TAO extension" << be_nl
+          << "static CORBA::Exception *_alloc (void);\n" << be_uidt_nl
+          << "}; // exception " << node->name ()
+          << "\n" << be_nl;
 
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be

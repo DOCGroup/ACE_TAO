@@ -55,6 +55,22 @@ void CORBA_Bounds::_raise ()
   TAO_RAISE(*this);
 }
 
+void CORBA_Bounds::_tao_encode (TAO_OutputCDR &cdr,
+                                CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_Bounds::_tao_decode (TAO_InputCDR &cdr,
+                                CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_Bounds::_alloc (void)
 {

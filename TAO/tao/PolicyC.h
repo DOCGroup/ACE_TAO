@@ -32,6 +32,11 @@ public:
 
   virtual void _raise (void);
 
+  virtual void _tao_encode (TAO_OutputCDR &cdr,
+                            CORBA::Environment &) const;
+  virtual void _tao_decode (TAO_InputCDR &cdr,
+                            CORBA::Environment &);
+
   static CORBA_PolicyError *_narrow (CORBA::Exception *);
 
   CORBA_PolicyError(
@@ -74,6 +79,11 @@ public:
   CORBA_InvalidPolicies &operator= (const CORBA_InvalidPolicies &);
 
   virtual void _raise (void);
+
+  virtual void _tao_encode (TAO_OutputCDR &cdr,
+                            CORBA::Environment &) const;
+  virtual void _tao_decode (TAO_InputCDR &cdr,
+                            CORBA::Environment &);
 
   static CORBA_InvalidPolicies *_narrow (CORBA::Exception *);
 

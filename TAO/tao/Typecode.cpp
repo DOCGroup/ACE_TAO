@@ -32,10 +32,22 @@ CORBA_TypeCode::Bounds::Bounds (void)
 {
 }
 
-void
-CORBA_TypeCode::Bounds::_raise (void)
+void CORBA_TypeCode::Bounds::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr,
+                                          CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_TypeCode::Bounds::_tao_decode (TAO_InputCDR &,
+                                          CORBA::Environment &)
+{
 }
 
 CORBA_TypeCode::Bounds*
@@ -60,10 +72,22 @@ CORBA_TypeCode::BadKind::BadKind (void)
 {
 }
 
-void
-CORBA_TypeCode::BadKind::_raise (void)
+void CORBA_TypeCode::BadKind::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr,
+                                           CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_TypeCode::BadKind::_tao_decode (TAO_InputCDR &,
+                                           CORBA::Environment &)
+{
 }
 
 CORBA_TypeCode::BadKind*

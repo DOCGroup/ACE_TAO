@@ -311,6 +311,11 @@ public:
 
     virtual void _raise (void);
 
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
+
     static NoPossiblePollable *_narrow (CORBA::Exception *);
 
 
@@ -341,6 +346,11 @@ public:
 
 
     virtual void _raise (void);
+
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
 
     static UnknownPollable *_narrow (CORBA::Exception *);
 

@@ -49,6 +49,11 @@
 
     virtual void _raise (void);
 
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
+
     static CORBA_Bounds *_narrow (CORBA::Exception *);
 
 
