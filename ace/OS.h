@@ -226,7 +226,7 @@ typedef long            id_t;
 #     define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
 #   else
 #     define ACE_DEFAULT_RENDEZVOUS "localhost:10010"
-#   endif /* ACE_LACKS_FIFO */
+#   endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 
 # if !defined (ACE_DEFAULT_LOGGER_KEY)

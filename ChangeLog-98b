@@ -1,7 +1,15 @@
 Mon Sep 14 17:09:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/platform_mvs.GNU: Updated the MVS
-	  platform configuration as follows:
+	* ace/config-win32-common.h,OS.h,README: Removed all mention of
+ 	  ACE_LACKS_FIFO, which was no longer necessary.  Thanks to Ossama
+ 	  Othman <othman@astrosun.tn.cornell.edu> for suggesting this.
+
+	* ace/ACE.cpp (bind_port): Renamed sin to sock_addr to make the
+ 	  autoconf script happier.  Thanks to Ossama Othman
+ 	  <othman@astrosun.tn.cornell.edu> for suggesting this.
+
+	* include/makeinclude/platform_mvs.GNU: Updated the MVS platform
+ 	  configuration as follows:
 
 	  changed:
 	    debug = 1
