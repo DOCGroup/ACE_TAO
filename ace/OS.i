@@ -2666,6 +2666,19 @@ ACE_OS::inet_addr (const char *name)
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
+ACE_INLINE int 
+ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
+{
+  long ip_addr = ACE_OS::inet_addr (host_name);
+  if (ip_addr == (long) htonl ((ACE_UINT32) ~0)
+      // Broadcast addresses are weird...
+      && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
+    return 0;
+  else if (addr != 0)
+    ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
+  return 1;
+}
+
 ACE_INLINE char *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
@@ -4719,7 +4732,7 @@ ACE_OS::putpmsg (ACE_HANDLE handle, const struct strbuf *ctl,
   ACE_OSCALL_RETURN (::putpmsg (handle, ctl, data, band, flags), int, -1);
 #else
   ACE_UNUSED_ARG(flags);
-  ACE_UNUSED_ARG(bands);
+  ACE_UNUSED_ARG(band);
   return ACE_OS::putmsg (handle, ctl, data, flags);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
