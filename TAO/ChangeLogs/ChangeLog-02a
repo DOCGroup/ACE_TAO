@@ -1,4 +1,19 @@
-Sun Jan 16 07:05:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+Tue  Jan 16 07:55:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Single_Read: New stress test for the SingleRead that we do
+	  in TAO
+
+	* tests/Single_Read/client.cpp:
+	* tests/Single_Read/test_i.h:
+	* tests/Single_Read/test_i.cpp:
+	* tests/Single_Read/server.cpp:
+	* tests/Single_Read/README:
+	* tests/Single_Read/Single_Read.dsw:
+	* tests/Single_Read/client.dsp:
+	* tests/Single_Read/server.dsp: Files for the stress test. Please
+	  read the README file in the directory for details.
+
+Tue Jan 16 07:05:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Mesage_Base.cpp:
 	* tao/GIOP_Message_Handler.cpp:
