@@ -1,4 +1,19 @@
-Sat Jul 18 05:24:37 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+Sat Jul 18 08:19:24 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.cpp: Beefed up this test so
+ 	  that it illustrates how to bind(), resolve(), and unbind() an
+ 	  object reference to a remote Naming Context.  This is an
+ 	  important test to make sure that things are working properly.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils: Added an init() method to
+ 	  this class to begin to factor out common code for being a client
+ 	  of a Naming Service.
+
+	* TAO/orbsvcs/tests/Naming/ns_tree.cpp (main): Cleaned up the
+	  formatting for this test.
+
+	* orbsvcs/tests/Simple_Naming: Renamed clnt.* to client.* to
+	  be more consistent.
 
 	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Changed the default ORB
 	  concurrency model from reactive to thread-per-connection since

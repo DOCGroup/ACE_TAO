@@ -19,6 +19,14 @@
 
 #include "client.h"
 #include "ace/Get_Opt.h"
+#include "test_objectS.h"
+
+class My_Test_Object : public POA_Test_Object
+{
+public:
+  My_Test_Object (void) {};
+  ~My_Test_Object (void) {};
+};
 
 // constructor
 
@@ -66,29 +74,58 @@ CosNaming_Client::parse_args (void)
 int
 CosNaming_Client::run (void)
 {
-  // Dummy object instantiation.
-  Test_Object_var myObject_var =
-    myObject._this (TAO_TRY_ENV);
-  TAO_CHECK_ENV;
+  TAO_TRY
+    {
+      My_Test_Object myObject;
 
-  // Bind an object to the Naming Context.
-  CosNaming::Name test_name (1);
-  test_name.length (1);
-  test_name[0].id =
-    CORBA::string_dup ("Foo");
+      // Dummy object instantiation.
+      Test_Object_var myObject_var =
+        myObject._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  my_name_server->bind (test_name,
-                        myObject_var.in (),
-                        TAO_TRY_ENV);
+      // Bind an object to the Naming Context.
+      CosNaming::Name test_name (1);
+      test_name.length (1);
+      test_name[0].id =
+        CORBA::string_dup ("Foo");
 
-  TAO_CHECK_ENV;      
-  ACE_DEBUG ((LM_DEBUG,
-              "Bound name OK"));
+      this->naming_client_->bind (test_name,
+                                  myObject_var.in (),
+                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;      
 
-  // @@ TODO, add some more interesting tests here, for instance
-  // creating some nested naming contexts and registering a number of
-  // objreferences in there.  We could even use the Iterators and the
-  // TAO_Client_Naming abstraction to simply this.
+      ACE_DEBUG ((LM_DEBUG,
+                  "Bound name OK\n"));
+
+      CORBA::Object_var resolvedobj =
+        this->naming_client_->resolve (test_name,
+                                       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      Test_Object_var resultObject = 
+    	Test_Object::_narrow (resolvedobj.in (), 
+                              TAO_TRY_ENV);        
+      TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG,
+                  "Resolved name OK\n"));
+
+      this->naming_client_->unbind (test_name,
+                                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;      
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Unbound name OK\n"));
+      // @@ TODO, add some more interesting tests here, for instance
+      // creating some nested naming contexts and registering a number of
+      // objreferences in there.  We could even use the Iterators and the
+      // TAO_Client_Naming abstraction to simply this.
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("ns_tree");
+      return -1;
+    }
+  TAO_ENDTRY;
   return 0;
 }
 
@@ -111,11 +148,10 @@ CosNaming_Client::init (int argc, char **argv)
       // Initialize ORB.
       this->orbmgr_.init (argc,
                           argv,
-                          0,
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      return this->naming_client_.init (this->orbmgr_.orb ())
+      return this->naming_client_.init (this->orbmgr_.orb ());
     }
   TAO_CATCHANY
     {
