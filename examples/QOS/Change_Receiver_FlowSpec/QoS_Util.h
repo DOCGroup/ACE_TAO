@@ -22,21 +22,21 @@
 
 class QoS_Util
 {
-  // = TITLE 
-  //     This class provides the utility functions like parse_args () 
+  // = TITLE
+  //     This class provides the utility functions like parse_args ()
   //     required by a QoS enabled application.
 
 public:
 
   // constructor.
-  QoS_Util (int argc, char *argv[]);
+  QoS_Util (int argc, ACE_TCHAR *argv[]);
 
   // destructor.
   ~QoS_Util (void);
 
   // Parse command-line arguments.
   int parse_args (void);
-  
+
   // GET methods.
   ACE_INET_Addr *mult_session_addr (void) const;
 
@@ -52,7 +52,7 @@ private:
 
   // Command line arguments.
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
 
   // Multicast session address.
   ACE_INET_Addr *mult_session_addr_;
