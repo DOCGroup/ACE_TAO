@@ -51,11 +51,9 @@ compilation_log="log/compilations.log"
 LD_LIBRARY_PATH=$ACE_ROOT/ace:${LD_LIBRARY_PATH:-/usr/lib}
 export LD_LIBRARY_PATH
 
-if [ -x /bin/uname  -o  -x /usr/nto/x86/bin/uname ]; then
-  sysname=`uname -s`
-else
-  sysname='unknown'
-fi
+#### If uname isn't on the user's PATH, store any string
+#### in $sysname.
+sysname=`uname -s 2>&1`
 
 if [ $sysname = 'HP-UX' ]; then
   SHLIB_PATH=$ACE_ROOT/ace:${SHLIB_PATH:-/usr/lib}
