@@ -1,5 +1,8 @@
 Fri Jul 11 02:15:12 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
+	* server/HTTP_Response.cpp: Changes so that the HEADER is not
+	  rebuilt all the time.
+
 	* server/IO.cpp (JAWS_Synch_IO::transmit_file): Changed to use
 	  writev () instead of multiple send ()s.
 

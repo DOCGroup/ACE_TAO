@@ -23,8 +23,8 @@ HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
 
 HTTP_Response::~HTTP_Response (void)
 {
-  if (this->HTTP_HEADER != EMPTY_HEADER)
-    delete [] this->HTTP_HEADER;
+  //  if (this->HTTP_HEADER != EMPTY_HEADER)
+  //    delete [] this->HTTP_HEADER;
   // The [] is important.  Without it, there was a huge memory leak!
 }
 
@@ -321,16 +321,17 @@ HTTP_Response::build_headers (void)
   else
     {
       HTTP_HEADER = new char[BUFSIZ * 4];
+      // We assume that at this point everything is OK
 
-      HTTP_HEADER[0] = '\0';
-      HTTP_HEADER_LENGTH = 0;
+      if (! this->request_.cgi ())
+        HTTP_HEADER = "HTTP/1.0 200 OK\r\n"
+          "Content-type: text/html\r\n\r\n";
+      else
+        HTTP_HEADER = "HTTP/1.0 200 OK\r\n";
 
-      HTTP_HEADER_LENGTH +=
-        ACE_OS::sprintf(HTTP_HEADER, "%s %d %s\r\n",
-                        this->request_.version (),
-                        this->request_.status (),
-                        this->request_.status_string ());
+      HTTP_HEADER_LENGTH = ACE_OS::strlen (HTTP_HEADER);
 
+#if 0
       const char *date_ptr = HTTP_Helper::HTTP_date ();
 
       if (date_ptr != 0)
@@ -343,6 +344,7 @@ HTTP_Response::build_headers (void)
 	  ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
 			  "Content-type: %s\r\n\r\n",
 			  "text/html");
+#endif
     }
 
   HTTP_TRAILER = "";
