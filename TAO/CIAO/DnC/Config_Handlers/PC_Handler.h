@@ -59,7 +59,7 @@ BEGIN_DEPLOYMENT_NAMESPACE
  * element is returned.
  */
 
-class PC_Handler: public Basic_Handler
+class Config_Handler_Export PC_Handler: public Basic_Handler
 {
 public:
 
