@@ -4,6 +4,18 @@
 #include "tao/poa_macros.h"
 #include "tao/Environment.h"
 
+ACE_INLINE CORBA::Boolean
+TAO_POA::cleanup_in_progress (void)
+{
+  return this->cleanup_in_progress_;
+}
+
+ACE_INLINE ACE_Lock &
+TAO_POA::lock (void)
+{
+  return this->lock_;
+}
+
 ACE_INLINE
 TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
                               CORBA::Environment &ACE_TRY_ENV)
@@ -224,18 +236,6 @@ ACE_INLINE void
 TAO_Temporary_Creation_Time::creation_time (const void *creation_time)
 {
   this->time_stamp_ = (void *) creation_time;
-}
-
-ACE_INLINE CORBA::Boolean
-TAO_POA::cleanup_in_progress (void)
-{
-  return this->cleanup_in_progress_;
-}
-
-ACE_INLINE ACE_Lock &
-TAO_POA::lock (void)
-{
-  return this->lock_;
 }
 
 ACE_INLINE PortableServer::POA_ptr
