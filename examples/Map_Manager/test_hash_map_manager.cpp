@@ -77,12 +77,6 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if defined(ACE_HAS_THREADS)
-template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-#endif /* ACE_HAS_THREADS */
-
 template class ACE_Hash_Map_Entry<ACE_CString, ACE_CString>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Iterator<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX>;
