@@ -1,3 +1,14 @@
+Tue Dec  5 12:57:33 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Benchmark/server.cpp (main): 
+	* tests/Portable_Interceptors/Dynamic/server.cpp (main):
+	* tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp
+	  (main):
+
+	  Activate the POA before attempting to narrow an object
+	  reference.  This fixes a problem where a CORBA::TRANSIENT()
+	  exception was being thrown.
+
 Tue Dec  5 11:40:28 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/index.html:

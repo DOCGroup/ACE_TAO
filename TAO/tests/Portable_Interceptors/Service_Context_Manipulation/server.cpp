@@ -74,6 +74,9 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (parse_args (argc, argv) != 0)
         return 1;
 
@@ -112,9 +115,6 @@ main (int argc, char *argv[])
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
-
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
