@@ -47,7 +47,7 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
 
   ACE_NEW_RETURN (this->connector_,
-                  ACEXML_Mem_Map_Stream::Connector (0, ACE_NONBLOCK),
+                  Connector (0, ACE_NONBLOCK),
                   -1);
 
   if (this->stream_->open (this->connector_, *this->url_addr_) == -1)

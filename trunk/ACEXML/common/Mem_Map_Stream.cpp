@@ -133,7 +133,7 @@ ACEXML_Mem_Map_Stream::seek (off_t offset, int whence)
                                                  this->mem_map_.addr ());
 }
 
-ACEXML_Mem_Map_Stream::Svc_Handler *
+Svc_Handler *
 ACEXML_Mem_Map_Stream::svc_handler (void)
 {
   return this->svc_handler_;
@@ -247,7 +247,13 @@ ACEXML_Mem_Map_Stream::~ACEXML_Mem_Map_Stream (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Connector <Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Svc_Tuple<Svc_Handler>;
+template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Connector <Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Svc_Tuple<Svc_Handler>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,3 +1,13 @@
+Thu Jun  6 17:41:24 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/Mem_Map_Stream.h:
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * ACEXML/common/HttpCharStream.h:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/URL_Addr.cpp:
+
+          Fixed the explicit template instantiation problems on Solaris.
+
 Thu Jun  6 18:35:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Acceptor.h (ACE_Strategy_Acceptor): Made open() virtual

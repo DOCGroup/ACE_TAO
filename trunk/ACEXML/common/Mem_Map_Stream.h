@@ -25,7 +25,8 @@
 #include "ACEXML/common/ACEXML_Export.h"
 #include "ACEXML/common/XML_Types.h"
 
-
+typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
+typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> Connector;
 
 /**
  * @class ACEXML_Mem_Map_Stream Mem_Map_Stream.h "ACEXML/common/Mem_Map_Stream.h"
@@ -54,8 +55,6 @@
 class ACEXML_Export ACEXML_Mem_Map_Stream
 {
 public:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
-  typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> Connector;
   /// Default constructor
   ACEXML_Mem_Map_Stream (void);
 
@@ -184,5 +183,6 @@ private:
   ACEXML_Char *end_of_mapping_plus1_;
 
 };
+
 
 #endif /* _ACEXML_MEM_MAP_STREAM_H */
