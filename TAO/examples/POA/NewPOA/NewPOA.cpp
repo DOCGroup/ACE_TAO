@@ -34,12 +34,12 @@ main (int argc, char **argv)
   ACE_TRY
     {
       // The first step Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                            argv, 
-                                            0, 
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            0,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
+
       // Obtain the object reference to the RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -52,7 +52,7 @@ main (int argc, char **argv)
       // Policies for the new POAs
       CORBA::PolicyList policies (2);
       policies.length (2);
-      
+
       // Threading policy
       policies[0] =
         root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL, ACE_TRY_ENV);
@@ -93,7 +93,7 @@ main (int argc, char **argv)
 
       // Creation of the new POAs over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0;
-           i < policies.length () && ACE_TRY_ENV.exception () == 0;
+           i < policies.length ();
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
@@ -140,6 +140,6 @@ main (int argc, char **argv)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }

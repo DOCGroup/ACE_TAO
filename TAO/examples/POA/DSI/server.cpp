@@ -156,7 +156,7 @@ main (int argc, char **argv)
 
       ACE_OS::strcpy (str, "PortableServer::POA::create_POA");
       for (CORBA::ULong i = 0;
-           i < policies.length () && ACE_TRY_ENV.exception () == 0;
+           i < policies.length ();
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];

@@ -192,14 +192,13 @@ main (int argc, char **argv)
       // Destroy the policy objects as they have been passed to
       // create_POA and no longer needed.
       for (CORBA::ULong i = 0;
-           i < policies.length () && ACE_TRY_ENV.exception () == 0;
+           i < policies.length ();
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
           policy->destroy (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-
 
       MyFooServantActivator servant_activator_impl (orb.in ());
       PortableServer::ServantActivator_var servant_activator =
