@@ -1,3 +1,8 @@
+Mon Oct 12 18:32:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/README: 
+	  The file still made references to the -s option.
+
 Mon Oct 12 14:55:41 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext): Made
