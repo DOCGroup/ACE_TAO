@@ -56,7 +56,7 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
   if (!type) // not a recursive call
     type = bt;
   else // recursively called thru a typedef. "type" will have the most primitive
-       // base class of the typedef
+    // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
   // enclosing scope in which the typedef occurs
@@ -77,11 +77,11 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
             *os << bt->nested_type_name (scope, "_var");
-	    break;
+            break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
           default:
-	    *os << bt->name () << "_var";
+            *os << bt->name () << "_var";
           }
       }
       break;
@@ -99,11 +99,11 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
             *os << bt->nested_type_name (scope, "");
-	    break;
+            break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
           default:
-	    *os << bt->name ();
+            *os << bt->name ();
           }
       }
       break;
@@ -139,12 +139,12 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
             }
             break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
-	    *os << bt->nested_type_name (scope, "");
-	    break;
+            *os << bt->nested_type_name (scope, "");
+            break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
           default:
-	    *os << bt->name ();
+            *os << bt->name ();
           }
       }
       break;
