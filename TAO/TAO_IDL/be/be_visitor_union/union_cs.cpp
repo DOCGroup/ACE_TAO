@@ -110,8 +110,38 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "  : TAO_Base_Union ()" << be_nl
           << "{" << be_idt_nl
           << "ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));" << be_nl
-          << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl
+          << "this->disc_ = ";
+
+      // The default constructor must initialize the discriminator
+      // to the first case label value found in the union declaration
+      // so that, if the uninitialized union is inserted into an Any,
+      // the Any destructor's call to deep_free() will work properly.
+      UTL_ScopeActiveIterator *si;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (node,
+                                               UTL_Scope::IK_decls),
+                      -1);
+
+      // Just get the union's first member.
+      AST_Decl *d = si->item ();
+      delete si;
+
+      be_union_branch *ub = be_union_branch::narrow_from_decl (d);
+
+      // Get the first label in its list.
+      AST_UnionLabel *ul = ub->label (0);
+
+			if (ul->label_kind () == AST_UnionLabel::UL_label)
+				{
+          ub->gen_label_value (os);
+				}
+      else
+        {
+          ub->gen_default_label_value (os, node);
+        }
+
+      *os << ";" << be_uidt_nl << "}" << be_nl << be_nl;
 
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
