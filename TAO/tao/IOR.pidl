@@ -19,7 +19,7 @@
 
 module TAO_IOP {
 
-  interface TAO_IOR_Manipulation {
+  local interface TAO_IOR_Manipulation {
 
     exception EmptyProfileList {};
     exception NotFound {};

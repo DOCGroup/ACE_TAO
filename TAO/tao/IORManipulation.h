@@ -21,15 +21,24 @@
 #define TAO_IOR_MANIPULATION_H
 #include "ace/pre.h"
 
-#include "tao/Object.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IORS.h"
+#include "tao/IORC.h"
 
-class TAO_Export TAO_IOR_Manipulation_impl : public POA_TAO_IOP::TAO_IOR_Manipulation
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+class TAO_Export TAO_IOR_Manipulation_impl
+  : public TAO_IOP::TAO_IOR_Manipulation,
+    public CORBA::LocalObject
 {
 // = TITLE
   //     IOR Manipulation class
@@ -44,6 +53,12 @@ public:
 
   ~TAO_IOR_Manipulation_impl (void);
   // destructor
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
   virtual CORBA::Object_ptr merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors,
@@ -94,6 +109,10 @@ public:
         TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList
       ));
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include "ace/post.h"
 #endif /* TAO_IOR_MANIPULATION_H */
