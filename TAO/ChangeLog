@@ -1,9 +1,15 @@
+Mon Aug 30 14:24:20 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * interop-tests/wchar/interop_wchar_i.cpp:
+          Build correctly with exception emulation.
+
+
 Mon Aug 30 12:19:04 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
 
-	  Reordered base projects, putting amh last, to resolve generation
-	  problems on RH80_Static_Core.
+          Reordered base projects, putting amh last, to resolve generation
+          problems on RH80_Static_Core.
 
 Mon Aug 30 15:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -13,10 +19,10 @@ Mon Aug 30 15:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug 30 15:29:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB.h (CORBA):
+        * tao/ORB.h (CORBA):
 
-	  Added documentation for run () with a timeout parameter. Thanks
-	  to Jules Colding <jules at tdcadsl dot dk> for motivating this.
+          Added documentation for run () with a timeout parameter. Thanks
+          to Jules Colding <jules at tdcadsl dot dk> for motivating this.
 
 Mon Aug 30 08:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -48,30 +54,30 @@ Fri Aug 27 23:08:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO_IDL/fe/idl.ll:
 
-	  Fix for BUG 1683. Jeff prepared this lex file. I just generated
-	  the code, and applied the patches.
+          Fix for BUG 1683. Jeff prepared this lex file. I just generated
+          the code, and applied the patches.
 
-	* TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
 
-	  Regenerated code for the new lex file.
+          Regenerated code for the new lex file.
 
-	* TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
 
-	  Another useless diff that we maintain which we cannot use! The
-	  above change took only 4-5 hours! Anyway, we have tested on
-	  Linux and things seem to be working. Let us see how other
-	  platforms behave.
+          Another useless diff that we maintain which we cannot use! The
+          above change took only 4-5 hours! Anyway, we have tested on
+          Linux and things seem to be working. Let us see how other
+          platforms behave.
 
-	* TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
 
-	  Fixed unused variable warnings.
+          Fixed unused variable warnings.
 
 Fri Aug 27 13:34:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* utils/NamingViewer/NamingViewerDlg.cpp:
+        * utils/NamingViewer/NamingViewerDlg.cpp:
 
-	  Changed #include "Naming/Naming_Server.h" to #include
-	  "Naming/Naming_Client.h".
+          Changed #include "Naming/Naming_Server.h" to #include
+          "Naming/Naming_Client.h".
 
 Fri Aug 27 18:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -115,7 +121,7 @@ Fri Aug 27 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security.mpc:
           SecurityLevel3.idl uses valuetype, so add valuetype as base
-	  project.
+          project.
 
 Fri Aug 27 09:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -124,13 +130,13 @@ Fri Aug 27 09:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Aug 27 01:12:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB_Table.h:
+        * tao/ORB_Table.h:
 
-	  No need to include "tao/corbafwd.h".
+          No need to include "tao/corbafwd.h".
 
-	* tao/TC_Constants_Forward.h:
+        * tao/TC_Constants_Forward.h:
 
-	  Added missing "tao/TAO_Export.h" include.
+          Added missing "tao/TAO_Export.h" include.
 
 Fri Aug 27 08:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -138,7 +144,7 @@ Fri Aug 27 08:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         PortableServer library was dependent on IORInterceptor,
         ObjRefTemplate and Valuetype, this dependency has been
         removed. PortableServer doesn't use these libs anymore, but
-	IORInterceptor, ObjRefTemplate and Valuetype are now dependent on
+        IORInterceptor, ObjRefTemplate and Valuetype are now dependent on
         PortableServer. This will reduce the size of corba servers which
         don't use IORInterceptor, ObjRefTemplate and Valuetype.
 
@@ -579,216 +585,216 @@ Fri Aug 27 08:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Aug 27 00:25:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB_Constants.h:
+        * tao/ORB_Constants.h:
 
-	  No need to include "tao/TAO_Export.h".
+          No need to include "tao/TAO_Export.h".
 
-	  (CORBA::OMGVMCID):
+          (CORBA::OMGVMCID):
 
-	  Added documentation about how and when to use this constant.
+          Added documentation about how and when to use this constant.
 
-	  (TAO_DEFAULT_MINOR_CODE, TAO_MAX_MINOR_CODE):
+          (TAO_DEFAULT_MINOR_CODE, TAO_MAX_MINOR_CODE):
 
-	  Deprecated these constants.  They have been replaced with
-	  counterparts in the TAO namespace, as described below, but still
-	  exist in order to maintain backward compatibility for a
-	  reasonable amount of time.
+          Deprecated these constants.  They have been replaced with
+          counterparts in the TAO namespace, as described below, but still
+          exist in order to maintain backward compatibility for a
+          reasonable amount of time.
 
-	  Added documentation that details how TAO_DEFAULT_MINOR_CODE is
-	  often misused.
+          Added documentation that details how TAO_DEFAULT_MINOR_CODE is
+          often misused.
 
-	  (TAO::VMCID):
+          (TAO::VMCID):
 
-	  New constant in the TAO namespace that replaces
-	  global namespace constant TAO_DEFAULT_MINOR_CODE.  The latter
-	  constant name was not very descriptive about what the constant
-	  represents.  "TAO::VMCID" is improves on that, and is also more
-	  consistent with OMG naming conventions.
+          New constant in the TAO namespace that replaces
+          global namespace constant TAO_DEFAULT_MINOR_CODE.  The latter
+          constant name was not very descriptive about what the constant
+          represents.  "TAO::VMCID" is improves on that, and is also more
+          consistent with OMG naming conventions.
 
-	  (TAO::MAX_MINOR_CODE):
+          (TAO::MAX_MINOR_CODE):
 
-	  Moved the global namespace TAO_MAX_MINOR_CODE constant into the
-	  TAO namespace to be consistent with the above TAO::VMCID
-	  change.
+          Moved the global namespace TAO_MAX_MINOR_CODE constant into the
+          TAO namespace to be consistent with the above TAO::VMCID
+          change.
 
-	  Added documentation that makes it obvious how this constant is
-	  determined.  Previously, a "magic number" was assigned to this
-	  constant (actually TAO_MAX_MINOR_CODE).  This constant is now
-	  defined in terms of TAO::VMCID.
+          Added documentation that makes it obvious how this constant is
+          determined.  Previously, a "magic number" was assigned to this
+          constant (actually TAO_MAX_MINOR_CODE).  This constant is now
+          defined in terms of TAO::VMCID.
 
-	  (TAO::VPVID):
+          (TAO::VPVID):
 
-	  New TAO namespace constant that is TAO's OMG assigned Vendor
-	  PolicyType Valueset ID (VPVID).  This constant is the same as
-	  the VMCID, and is automatically assigned by the OMG in this
-	  manner when a VMCID is reserved for a given vendor (i.e TAO /
-	  DOC group in this case).  Please refer to the documentation for
-	  this constant when creating new TAO-specific CORBA::PolicyType
-	  values.
+          New TAO namespace constant that is TAO's OMG assigned Vendor
+          PolicyType Valueset ID (VPVID).  This constant is the same as
+          the VMCID, and is automatically assigned by the OMG in this
+          manner when a VMCID is reserved for a given vendor (i.e TAO /
+          DOC group in this case).  Please refer to the documentation for
+          this constant when creating new TAO-specific CORBA::PolicyType
+          values.
 
-	* tao/Exception.cpp:
+        * tao/Exception.cpp:
 
-	  Use new TAO::VMCID instead of the deprecated
-	  TAO_DEFAULT_MINOR_CODE constant.
+          Use new TAO::VMCID instead of the deprecated
+          TAO_DEFAULT_MINOR_CODE constant.
 
-	* tao/CORBA.pidl:
+        * tao/CORBA.pidl:
 
-	  Removed this file.  It has been deprecated for at least four
-	  years.
+          Removed this file.  It has been deprecated for at least four
+          years.
 
-	* tao/Invocation_Endpoint_Selectors.cpp:
-	* tao/Profile_Transport_Resolver.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
 
-	  Corrected grammar in a comment.
+          Corrected grammar in a comment.
 
-	* tao/Policy_Forward.pidl:
+        * tao/Policy_Forward.pidl:
 
-	  Added a "-*- IDL -*-" Emacs mode comment to this file so that we
-	  can automatically get some syntax highlighting and automatic
-	  indenting.
+          Added a "-*- IDL -*-" Emacs mode comment to this file so that we
+          can automatically get some syntax highlighting and automatic
+          indenting.
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
 
-	  Corrected minor codes passed to CORBA::SystemException
-	  constructors.  They were not logically OR-ed with the
-	  CORBA::OMGVMCID constant.
+          Corrected minor codes passed to CORBA::SystemException
+          constructors.  They were not logically OR-ed with the
+          CORBA::OMGVMCID constant.
 
 Fri Aug 27 00:03:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/AV/Makefile.am:
-	* orbsvcs/orbsvcs/Concurrency/Makefile.am:
-	* orbsvcs/orbsvcs/CosEvent/Makefile.am:
-	* orbsvcs/orbsvcs/Event/Makefile.am:
-	* orbsvcs/orbsvcs/Naming/Makefile.am:
-	* orbsvcs/orbsvcs/Property/Makefile.am:
-	* orbsvcs/orbsvcs/Sched/Makefile.am:
-	* orbsvcs/orbsvcs/Time/Makefile.am:
-	* orbsvcs/orbsvcs/Trader/Makefile.am:
+        * orbsvcs/orbsvcs/AV/Makefile.am:
+        * orbsvcs/orbsvcs/Concurrency/Makefile.am:
+        * orbsvcs/orbsvcs/CosEvent/Makefile.am:
+        * orbsvcs/orbsvcs/Event/Makefile.am:
+        * orbsvcs/orbsvcs/Naming/Makefile.am:
+        * orbsvcs/orbsvcs/Property/Makefile.am:
+        * orbsvcs/orbsvcs/Sched/Makefile.am:
+        * orbsvcs/orbsvcs/Time/Makefile.am:
+        * orbsvcs/orbsvcs/Trader/Makefile.am:
 
-	  Removed.
+          Removed.
 
-	* orbsvcs/tests/Concurrency/CC_naming_service.cpp:
-	* orbsvcs/tests/Concurrency/CC_test_utils.cpp:
-	* orbsvcs/tests/Concurrency/CC_tests.cpp:
-	* orbsvcs/tests/Time/client.cpp:
+        * orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+        * orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+        * orbsvcs/tests/Concurrency/CC_tests.cpp:
+        * orbsvcs/tests/Time/client.cpp:
 
-	  Changed to #include "ace/Log_Msg.h"
+          Changed to #include "ace/Log_Msg.h"
 
-	* examples/RTScheduling/Starter.h:
-	* examples/Simple/Simple_util.h:
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.h:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * examples/RTScheduling/Starter.h:
+        * examples/Simple/Simple_util.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.h:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
 
-	  Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
-	  "orbsvcs/Naming/Naming_Client.h" and
-	  "orbsvcs/Naming/Naming_Server.h".
+          Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
+          "orbsvcs/Naming/Naming_Client.h" and
+          "orbsvcs/Naming/Naming_Server.h".
 
-	* examples/Callback_Quoter/Notifier_Input_Handler.h:
-	* examples/Event_Comm/Notifier_Server.h:
-	* examples/Logging/Logging_Service_i.h:
-	* examples/Quoter/server.h:
-	* orbsvcs/Concurrency_Service/Concurrency_Service.h:
-	* orbsvcs/Naming_Service/Naming_Service.h:
-	* orbsvcs/Time_Service/Clerk_i.h:
-	* orbsvcs/Time_Service/Server_i.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.h:
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
-	* orbsvcs/tests/Redundant_Naming/client.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp:
-	* utils/NamingViewer/NamingViewerDlg.cpp:
-	* utils/wxNamingViewer/wxNamingViewerFrame.cpp:
+        * examples/Callback_Quoter/Notifier_Input_Handler.h:
+        * examples/Event_Comm/Notifier_Server.h:
+        * examples/Logging/Logging_Service_i.h:
+        * examples/Quoter/server.h:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Time_Service/Clerk_i.h:
+        * orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp:
+        * utils/NamingViewer/NamingViewerDlg.cpp:
+        * utils/wxNamingViewer/wxNamingViewerFrame.cpp:
 
-	  Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
-	  "orbsvcs/Naming/Naming_Server.h".
+          Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
+          "orbsvcs/Naming/Naming_Server.h".
 
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
-	* orbsvcs/examples/Callback_Quoter/Consumer_Handler.h:
-	* orbsvcs/examples/Callback_Quoter/Supplier_i.h:
-	* orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
-	* orbsvcs/examples/Event_Comm/Consumer_Handler.h:
-	* orbsvcs/examples/Event_Comm/Notifier_Handler.h:
-	* orbsvcs/tests/AVstreams/Asynch_Three_Stage/Connection_Manager.h:
-	* orbsvcs/tests/AVstreams/Bidirectional_Flows/receiver.h:
-	* orbsvcs/tests/AVstreams/Bidirectional_Flows/sender.h:
-	* orbsvcs/tests/AVstreams/Component_Switching/Connection_Manager.h:
-	* orbsvcs/tests/AVstreams/Full_Profile/server.h:
-	* orbsvcs/tests/AVstreams/Modify_QoS/receiver.h:
-	* orbsvcs/tests/AVstreams/Modify_QoS/sender.h:
-	* orbsvcs/tests/AVstreams/Multicast/ftp.h:
-	* orbsvcs/tests/AVstreams/Multicast/server.h:
-	* orbsvcs/tests/AVstreams/Multicast_Full_Profile/ftp.h:
-	* orbsvcs/tests/AVstreams/Multicast_Full_Profile/server.h:
-	* orbsvcs/tests/AVstreams/Multiple_Flows/receiver.h:
-	* orbsvcs/tests/AVstreams/Multiple_Flows/sender.h:
-	* orbsvcs/tests/AVstreams/Pluggable/ftp.h:
-	* orbsvcs/tests/AVstreams/Pluggable/server.h:
-	* orbsvcs/tests/AVstreams/Pluggable_Flow_Protocol/receiver.h:
-	* orbsvcs/tests/AVstreams/Pluggable_Flow_Protocol/sender.h:
-	* orbsvcs/tests/AVstreams/Simple_Three_Stage/distributer.h:
-	* orbsvcs/tests/AVstreams/Simple_Three_Stage/receiver.h:
-	* orbsvcs/tests/AVstreams/Simple_Three_Stage/sender.h:
-	* orbsvcs/tests/AVstreams/Simple_Two_Stage/receiver.h:
-	* orbsvcs/tests/AVstreams/Simple_Two_Stage/sender.h:
-	* orbsvcs/tests/AVstreams/Simple_Two_Stage_With_QoS/receiver.h:
-	* orbsvcs/tests/AVstreams/Simple_Two_Stage_With_QoS/sender.h:
-	* orbsvcs/tests/Concurrency/CC_naming_service.h:
-	* orbsvcs/tests/Property/client.h:
-	* orbsvcs/tests/Property/server.h:
-	* orbsvcs/tests/Simple_Naming/client.h:
-	* orbsvcs/tests/Time/Client_i.h:
-	* examples/Logging/Logging_Test_i.h:
-	* performance-tests/POA/Demux/demux_test_server.h:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+        * orbsvcs/examples/Callback_Quoter/Consumer_Handler.h:
+        * orbsvcs/examples/Callback_Quoter/Supplier_i.h:
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+        * orbsvcs/examples/Event_Comm/Consumer_Handler.h:
+        * orbsvcs/examples/Event_Comm/Notifier_Handler.h:
+        * orbsvcs/tests/AVstreams/Asynch_Three_Stage/Connection_Manager.h:
+        * orbsvcs/tests/AVstreams/Bidirectional_Flows/receiver.h:
+        * orbsvcs/tests/AVstreams/Bidirectional_Flows/sender.h:
+        * orbsvcs/tests/AVstreams/Component_Switching/Connection_Manager.h:
+        * orbsvcs/tests/AVstreams/Full_Profile/server.h:
+        * orbsvcs/tests/AVstreams/Modify_QoS/receiver.h:
+        * orbsvcs/tests/AVstreams/Modify_QoS/sender.h:
+        * orbsvcs/tests/AVstreams/Multicast/ftp.h:
+        * orbsvcs/tests/AVstreams/Multicast/server.h:
+        * orbsvcs/tests/AVstreams/Multicast_Full_Profile/ftp.h:
+        * orbsvcs/tests/AVstreams/Multicast_Full_Profile/server.h:
+        * orbsvcs/tests/AVstreams/Multiple_Flows/receiver.h:
+        * orbsvcs/tests/AVstreams/Multiple_Flows/sender.h:
+        * orbsvcs/tests/AVstreams/Pluggable/ftp.h:
+        * orbsvcs/tests/AVstreams/Pluggable/server.h:
+        * orbsvcs/tests/AVstreams/Pluggable_Flow_Protocol/receiver.h:
+        * orbsvcs/tests/AVstreams/Pluggable_Flow_Protocol/sender.h:
+        * orbsvcs/tests/AVstreams/Simple_Three_Stage/distributer.h:
+        * orbsvcs/tests/AVstreams/Simple_Three_Stage/receiver.h:
+        * orbsvcs/tests/AVstreams/Simple_Three_Stage/sender.h:
+        * orbsvcs/tests/AVstreams/Simple_Two_Stage/receiver.h:
+        * orbsvcs/tests/AVstreams/Simple_Two_Stage/sender.h:
+        * orbsvcs/tests/AVstreams/Simple_Two_Stage_With_QoS/receiver.h:
+        * orbsvcs/tests/AVstreams/Simple_Two_Stage_With_QoS/sender.h:
+        * orbsvcs/tests/Concurrency/CC_naming_service.h:
+        * orbsvcs/tests/Property/client.h:
+        * orbsvcs/tests/Property/server.h:
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/Time/Client_i.h:
+        * examples/Logging/Logging_Test_i.h:
+        * performance-tests/POA/Demux/demux_test_server.h:
 
-	  Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
-	  "orbsvcs/Naming/Naming_Client.h".
+          Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
+          "orbsvcs/Naming/Naming_Client.h".
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Updated.
+          Updated.
 
-	* orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
 
-	  Changed Naming_Utils.{cpp,h} to Naming_{Client,Server}.{cpp,h}.
+          Changed Naming_Utils.{cpp,h} to Naming_{Client,Server}.{cpp,h}.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
 
-	  Removed files.
+          Removed files.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Client.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Client.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Client.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Client.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
 
-	  New files, split out from Naming_Utils.cpp and Naming_Utils.h so
-	  that it is possible to have client and server side libraries.
+          New files, split out from Naming_Utils.cpp and Naming_Utils.h so
+          that it is possible to have client and server side libraries.
 
 Thu Aug 26 22:54:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Current.pidl:
+        * tao/Current.pidl:
 
-	  Added #ifndef guard, as was done with GIOP.idl in:
-	  Thu Aug 26 22:54:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+          Added #ifndef guard, as was done with GIOP.idl in:
+          Thu Aug 26 22:54:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Aug 26 22:48:26 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
-	* configure.ac:
+        * Makefile.am:
+        * configure.ac:
 
-	  Changed to enable building utils directory.
+          Changed to enable building utils directory.
 
-	* utils/Makefile.am:
-	* utils/catior/Makefile.am:
-	* utils/nslist/Makefile.am:
+        * utils/Makefile.am:
+        * utils/catior/Makefile.am:
+        * utils/nslist/Makefile.am:
 
-	  New files, built with a little help from MPC.
+          New files, built with a little help from MPC.
 
 Thu Aug 26 22:46:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Fixed tipo I introduced when adding Shutdown_Utilities.cpp.
+          Fixed tipo I introduced when adding Shutdown_Utilities.cpp.
 
 Thu Aug 26 22:54:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -804,10 +810,10 @@ Thu Aug 26 22:54:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Aug 26 20:19:19 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Added back includedir definition that got lost in a previous
-	  edit.
+          Added back includedir definition that got lost in a previous
+          edit.
 
 Thu Aug 26 22:07:30 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
