@@ -1,3 +1,16 @@
+Sun Dec  7 20:23:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/auto_run_tests.pl:
+
+	  Fixed a problem with this checkin "Fri Nov 21 07:24:07 UTC 2003
+	  Don Hinton  <dhinton@dresystems.com>". The config_list
+	  declaration should be within the loop, else the list will be
+	  permanent. This lead to our ACE tests being run thrice, TAO ORB
+	  tests twice and other tests once. That change was bogus. All
+	  that was required was to remove ":" in the optlist.  Finding
+	  this out only took 3 hours after getting mislead to serach
+	  through all the perl scripts for autobuild ;)
+
 Sat Dec  6 19:36:19 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/os_include/sys/os_stat.h: Added #include "ace/Time_Value.h"

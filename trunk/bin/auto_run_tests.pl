@@ -17,7 +17,6 @@ use Cwd;
 use Env qw(ACE_ROOT PATH);
 
 ################################################################################
-my $config_list = new PerlACE::ConfigList;
 
 if (!getopts ('ados:t') || $opt_h) {
     print "auto_run_tests.pl [-a] [-h] [-s sandbox] [-o] [-t]\n";
@@ -59,6 +58,7 @@ push (@file_list, "/bin/tao_other_tests.lst");
 
 foreach my$test_lst (@file_list) {
 
+my $config_list = new PerlACE::ConfigList;
 $config_list->load ($ACE_ROOT.$test_lst);
 
 # Insures that we search for stuff in the current directory.
