@@ -125,9 +125,12 @@ private:
   // objects.
 };
 
-
 class Server
 {
+  // = TITLE
+  //   @@ Naga, can you please fill in here?
+  // = DESCRIPTION
+  //   @@ Naga, can you please fill in here?
 public:
   // default constructor
   int initialize (int argc, char **argv);

@@ -9,7 +9,7 @@
 //    Globals.cpp
 //
 // = AUTHOR
-//    Nagarajan Surendran
+//    Nagarajan Surendran <naga@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -27,7 +27,9 @@ Globals::Globals (void)
     barrier_ (0)
 {
   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
-    ACE_OS::perror ("gethostname");
+    ACE_DEBUG ((LM_DEBUG,
+                "%p\n",
+                "gethostname"));
 }
 
 int
@@ -52,28 +54,26 @@ Globals::parse_args (int argc, char *argv[])
         thread_per_rate = 1;
         break;
       case 's':
-        //        ACE_DEBUG ((LM_DEBUG,"Not using naming service\n"));
         use_name_service = 0;
         break;
       case 'f':
-        //        ior_file = opts.optarg;
         ACE_NEW_RETURN (ior_file,
                         char[BUFSIZ],-1);
         ACE_OS::strcpy (ior_file,
                         opts.optarg);
-        //        ACE_DEBUG ((LM_DEBUG,"Using file %s",ior_file));
         break;
       case 'h':
         ACE_OS::strcpy (hostname, opts.optarg);
-        //        ACE_DEBUG ((LM_DEBUG, "h\n"));
         break;
       case 'p':
         base_port = ACE_OS::atoi (opts.optarg);
-        ACE_DEBUG ((LM_DEBUG, "base_port:%d\n",base_port));
+        // @@ Naga, do we need to keep this printout here or can we
+        // remove it?
+        ACE_DEBUG ((LM_DEBUG,
+                    "base_port:%d\n",base_port));
         break;
       case 't':
         num_of_objs = ACE_OS::atoi (opts.optarg);
-        //        ACE_DEBUG ((LM_DEBUG,"num_of_objs:%d\n",num_of_objs));
         break;
       case '?':
       default:
@@ -89,10 +89,11 @@ Globals::parse_args (int argc, char *argv[])
                           -1);
       }
     }
+
   if (thread_per_rate == 1)
     num_of_objs = 4;
 
-  // Indicates successful parsing of command line
+  // Indicates successful parsing of command line.
   return 0;
 }
 

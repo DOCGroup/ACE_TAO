@@ -11,11 +11,9 @@ Makefile is provided.  Use make to compile.
 You can either run the server in the background in the same window as
 the client or open a separate window for the client and server.
 
-
 OPTIONS
 -------
 Options are case sensitive, e.g., "-U" has a different meaning than "-u".
-
 
 (1) server:
 
@@ -74,8 +72,6 @@ Options are case sensitive, e.g., "-U" has a different meaning than "-u".
 
 The server will print the IOR of the servants, but it is not required
 by the client.
-
-
 
 (2) client:
 
@@ -179,7 +175,6 @@ by the client.
 [-m] Use multiple priorities for the low priority client
 
         Default Value: Disabled.  Will use one priority for all low priority clients.
-
 
 Running on VxWorks
 ------------------

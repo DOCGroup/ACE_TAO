@@ -25,13 +25,13 @@ Util_Thread::svc (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Utilization Thread created with priority %d, "
-              "waiting for threads to finish binding\n", prio));
+              "waiting for threads to finish binding\n",
+              prio));
 
-  // this barrier synchronizes the utilization thread with
-  // the client threads
-  // i.e., the Util_thread should wait until all the
-  // clients have finished binding, and only then
-  // start measuring the utilization.
+  // This barrier synchronizes the utilization thread with the client
+  // threads i.e., the Util_thread should wait until all the clients
+  // have finished binding, and only then start measuring the
+  // utilization.
   this->ts_->barrier_->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -57,9 +57,9 @@ Util_Thread::get_number_of_computations (void)
   return this->number_of_computations_;
 }
 
-// computation performed by the Utilization thread.  We need this in a
+// Computation performed by the Utilization thread.  We need this in a
 // separate function to get it's execution time.
-//inline
+
 void
 Util_Thread::computation (void)
 {
@@ -77,13 +77,14 @@ Util_Thread::computation (void)
 
 // Perform repeated prime factor computations on an arbitrary number.
 // And you thought your life was boring... :-)
+
 int
 Util_Thread::run_computations (void)
 {
   while (this->done_ == 0)
     {
-      // bound the number of computations, since we can potentially
-      // block the machine if this thread never leaves the loop. 
+      // Bound the number of computations, since we can potentially
+      // block the machine if this thread never leaves the loop.
       if (this->number_of_computations_ > (ts_->loop_count_ * 1000)) // magic number
 	{
 	  ACE_DEBUG ((LM_DEBUG,

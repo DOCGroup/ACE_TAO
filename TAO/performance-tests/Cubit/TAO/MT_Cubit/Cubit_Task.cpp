@@ -103,28 +103,22 @@ Cubit_Task::initialize_orb (void)
       int argc = args.argc ();
       char **argv = args.argv ();
 
-      // /*DONE*/@@ Naga, can you please try to use the TAO_Object_Manager for
-      // /*DONE*/all of this initialization, rather than doing it all by hand?
-
       if (this->orb_manager_.init_child_poa (argc,
                                              argv,
                                              "persistent_poa",
                                              TAO_TRY_ENV) == -1)
         return -1;
 
-
       this->orb_ = this->orb_manager_.orb ();
       // Do the argument parsing.
       if (this->task_id_ == 0)
         {
-          //          ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
           if (GLOBALS::instance ()->parse_args (argc,
-                                                argv) < 0)
+                                                argv) == -1)
             return -1;
           ACE_NEW_RETURN (GLOBALS::instance ()->barrier_,
                           ACE_Barrier (GLOBALS::instance ()->num_of_objs + 1),
                           -1);
-          //          ACE_DEBUG ((LM_DEBUG,"(%t)Arguments parsed successfully\n"));
           ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_ = 1;
           GLOBALS::instance ()->ready_cnd_.broadcast ();
@@ -137,6 +131,8 @@ Cubit_Task::initialize_orb (void)
 
       if (GLOBALS::instance ()->use_name_service == 0)
         return 0;
+      // @@ Naga, if this code is no longer needed can we please
+      // remove it?
       /*
 	CORBA::Object_var naming_obj =
 	this->orb_->resolve_initial_references ("NameService");
@@ -156,10 +152,10 @@ Cubit_Task::initialize_orb (void)
       return -1;
       */
 
-      // Initialize the naming services
-      // Init should be able to be passed the command line arguments,
-      // but it isn't possible here, so use dummy values
-      if (my_name_client_.init (orb_.in (), 0, 0) != 0)
+      // Initialize the naming services.  Init should be able to be
+      // passed the command line arguments, but it isn't possible
+      // here, so use dummy values.
+      if (my_name_client_.init (orb_.in ()) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),
