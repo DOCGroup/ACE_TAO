@@ -183,6 +183,17 @@ public:
   // flag to indicate we are to use the utilization test.  By default
   // we do not use it, because it can cause starvation with real-time
   // threads
+
+  u_int high_priority_loop_count_;
+  // Number of times the high priority looped.  We are going to loop
+  // as long as there is low priority clients running, so as to
+  // maintain high priority traffic as long as low priority traffic is
+  // going through.
+
+  ACE_Thread_Semaphore *semaphore_;
+  // semaphore in order for the high priority client to keep running
+  // as long as the low priority clients are running.  See explanation
+  // of "high_priority_loop_count_" member in this class.
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
