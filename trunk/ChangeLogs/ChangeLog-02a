@@ -1,3 +1,34 @@
+Tue Mar 27 05:35:38 2001  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * include/makeinclude/make_flags.bor:
+        Prevent PASCAL build by default with BCB5 since it is not required. 
+        Since both VCL and non-VCL applications share a common run-time
+        library you can simply link your VCL code with a non-PASCAL build
+        of the ACE+TAO libraries. This behaviour can be overridden by
+        defining the FORCE_PASCAL flag.
+
+        * include/makeinclude/build_core_exe.bor:
+        * include/makeinclude/build_core_library.bor:
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/clean.bor:
+        Build all executables into a directory below the source directory.
+        Core executables are then copied to the common bin directory. This
+        is to allow the test scripts to assume all executables can be
+        found relative to the source directory.
+
+        * include/makeinclude/recurse.bor:
+        Removed definition of OBJFILES since Borland make doesn't seem to
+        support recursive macro expansion.
+
+        * ace/config-win32-borland.h:
+        * include/makeinclude/ace_flags.bor:
+        Always explicitly define __ACE_INLINE__, with it defaulting to 1.
+        This change will allow the same compiler flags to be used in user
+        applications regardless of whether a debug or non-debug build of
+        ACE is being used.
+
 Tue Mar 27 09:48:33 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * include/makeinclude/ace_flags.bor

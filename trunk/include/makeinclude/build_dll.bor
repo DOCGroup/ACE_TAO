@@ -12,12 +12,18 @@
 # DEBUG	- if defined means building with debug information
 #
 
+!ifdef INSTALL_THIS_TARGET
+BINDIR = $(CORE_BINDIR)
+!endif
+
 !include <$(ACE_ROOT)\include\makeinclude\decorator.bor>
 !include <$(ACE_ROOT)\include\makeinclude\outputdir.bor>
 !include <$(ACE_ROOT)\include\makeinclude\compiler.bor>
 
 !ifdef NAME
+!ifndef TARGET
 TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).dll
+!endif
 !endif
 
 all: $(TARGET)

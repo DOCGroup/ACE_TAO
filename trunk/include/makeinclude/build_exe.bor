@@ -18,10 +18,19 @@
 !include <$(ACE_ROOT)\include\makeinclude\compiler.bor>
 
 !ifdef NAME
+!ifndef TARGET
 TARGET = $(BINDIR)\$(NAME).exe
 !endif
+!ifdef INSTALL_THIS_TARGET
+# We use a separate CORE_TARGET to copy the executable to the
+# core bin directory. This is so there will be a copy of the
+# exe file left in the local directory for the test scripts
+# to use.
+CORE_TARGET = $(CORE_BINDIR)\$(NAME).exe
+!endif
+!endif
 
-all: $(TARGET)
+all: $(TARGET) $(CORE_TARGET)
 	@echo Do nothing >NUL
 
 !ifdef TARGET
@@ -37,7 +46,15 @@ $(TARGET): $(OBJFILES) $(RESOURCE)
 !ifndef	DEBUG
 	@del $(TARGET:.exe=.tds)
 !endif
+!ifdef CORE_TARGET
+$(CORE_TARGET): $(TARGET)
+	@copy $(TARGET) $(CORE_TARGET) >NUL
+!ifdef DEBUG
+	@copy $(TARGET:.exe=.tds) $(CORE_TARGET:.exe=.tds) >NUL
 !endif
+!endif
+!endif
+
 
 !include <$(ACE_ROOT)\include\makeinclude\clean.bor>
 
