@@ -1,0 +1,24 @@
+
+project(TAO_RT_NotifyTests): orbsvcslib, notify {
+
+  depends    += TAO_NotifyTests RTPortableServer RTCORBA
+  sharedname = TAO_RT_NotifyTests
+  libs       += TAO_NotifyTests TAO_RTCORBA TAO_RTPortableServer
+  requires += rt_corba
+
+  libpaths += $(TAO_ROOT)/tao/RTCORBA
+  libpaths += $(TAO_ROOT)/tao/RTPortableServer
+  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
+  libpaths += $(TAO_ROOT)/tao/IORTable
+  libpaths += $(TAO_ROOT)/tao/DynamicAny
+  libpaths += $(TAO_ROOT)/tao/PortableServer
+
+  dllflags    = TAO_RT_NOTIFY_TEST_BUILD_DLL
+
+  Source_Files{
+   RT_Application_Command.cpp
+   RT_POA_Command.cpp
+   RT_Priority_Mapping.cpp
+   RT_Factories_Define.cpp
+  }
+}

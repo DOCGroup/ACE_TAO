@@ -1,0 +1,4 @@
+project(ORB Init): taoexe {
+  exename = ORB_init
+}
+

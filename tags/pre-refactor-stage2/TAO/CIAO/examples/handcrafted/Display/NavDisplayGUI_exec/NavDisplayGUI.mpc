@@ -1,0 +1,48 @@
+// $Id$
+project(NavDisplayGUI_exec) : ciao_server {
+  depends   += NavDisplay_exec
+  sharedname = NavDisplayGUI_exec
+  lit_libs  += qt-mt
+  libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
+  libpaths  += .. ../NavDisplay $(QTDIR)/lib
+  dllflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL QT_THREAD_SUPPORT
+  includes  += ../NavDisplay $(QTDIR)/include
+  idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
+
+  IDL_Files {
+    NavDisplayEI.idl
+  }
+
+  Source_Files {
+        NavDisplayEIC.cpp
+        AddNavUnitCmd.cpp
+        DetailView.cpp
+        MapView.cpp
+        moc_DetailView.cpp
+        moc_MapView.cpp
+        moc_NodeItem.cpp
+        moc_RootPanel.cpp
+        NavUnit.cpp
+        NodeItem.cpp
+        QuitCmd.cpp
+        RootPanel.cpp
+        UpdatePositionCmd.cpp
+        Worker.cpp
+        NavDisplayGUI_exec.cpp
+  }
+
+  verbatim(gnuace, local) {
+    moc_DetailView.cpp: DetailView.h
+     "	$(QTDIR)/bin/moc DetailView.h -o moc_DetailView.cpp"
+
+    moc_MapView.cpp: MapView.h
+     "	$(QTDIR)/bin/moc MapView.h -o moc_MapView.cpp"
+
+    moc_NodeItem.cpp: NodeItem.h
+     "	$(QTDIR)/bin/moc NodeItem.h -o moc_NodeItem.cpp"
+
+    moc_RootPanel.cpp: RootPanel.h
+     "	$(QTDIR)/bin/moc RootPanel.h -o moc_RootPanel.cpp"
+  }
+
+}

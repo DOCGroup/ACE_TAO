@@ -1,0 +1,7 @@
+project : taolib, core {
+  sharedname  = TAO_IORInterceptor
+  libs       += TAO
+  dllflags    = TAO_IORINTERCEPTOR_BUILD_DLL
+  libout      = ..
+  include_dir = tao/IORInterceptor
+}

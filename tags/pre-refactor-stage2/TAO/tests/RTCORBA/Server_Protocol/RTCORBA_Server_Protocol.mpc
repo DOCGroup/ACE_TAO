@@ -1,0 +1,13 @@
+project(RTCORBA Server Protocol Server): strategies, rt_server {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(RTCORBA Server Protocol Client): strategies, rt_client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

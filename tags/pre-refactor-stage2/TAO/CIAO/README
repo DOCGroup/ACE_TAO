@@ -1,0 +1,103 @@
+
+BUILDING CIAO
+========================
+
+* Compile ACE and TAO:
+
+  CIAO depends on many CORBA features to function properly so you need
+to compile them first.  Here is a non-exhaustive list:
+
+        ACEXML,
+
+        Security
+        PortableServer
+        IFR_Client
+
+and also the libraries they depends on.
+
+  - I have the following defined in my platform_macros.GNU:
+
+     exceptions=1
+     rt_corba=1
+     smart_proxies=1
+     interface_repo=1
+     interceptors=1
+     ssl=1
+
+    Apparently, not all of them are needed to compile CIAO, but that's
+    what I'm using.
+
+* Assuming CIAO_ROOT = ACE_wrappers/TAO/CIAO/
+
+  Compile the following directories:
+
+
+  $CIAO_ROOT/ciao/
+
+  $CIAO_ROOT/tools/XML_Helpers
+  $CIAO_ROOT/tools/ComponentServer
+  $CIAO_ROOT/tools/ServerActivator
+  $CIAO_ROOT/tools/Assembly_Deployer
+  $CIAO_ROOT/tools/Daemon
+
+  You need to creating the Makefile of your choice..
+  For example, for unix makefile:
+
+        $ cd $CIAO_ROOT/ciao/
+        $ $(ACE_ROOT)/bin/mwc.pl
+        $ make
+
+  To regenerate VC6 dsp files, do:
+
+        > cd $CIAO_ROOT/ciao/
+        > $(ACE_ROOT)/bin/mwc.pl -type vc6
+
+  Likewise, to regenerate VC7.1.NET project files, do:
+
+        > cd $CIAO_ROOT/ciao
+        > $(ACE_ROOT)/bin/mwc.pl -type vc71
+
+* Now you can play with the examples:
+
+  - $CIAO_ROOT/examples/handcrafted/Hello
+
+     This is a single component example.  Check out run_test.pl to see
+     how you can instantiate a single component using CIAO.
+
+  - $CIAO_ROOT/examples/handcrafted/Display
+
+     This is a multiple-component example.  RateGen component
+     subdirectory contains a run_test.pl that you can use to
+     instantiate a component instance, like you would do with the
+     Hello example.  The other components require collaboration with
+     other components and I don't have client programs to test them
+     out individually.
+
+     This example also lets you compose all the components into a
+     distributed application using the Assembly_Deployer.  Change
+     directory to
+
+        $CIAO_ROOT/examples/handcrafted/Display/descriptors
+
+     and take a look at the file: NOTE.txt.  This file describes the
+     steps to compose the application using various different
+     configurations and composition specs.
+
+* If you can not find the
+  Makefiles for unix platform you are using, you can use mwc to create
+  them.  For examples, to compile the multi-component example, use the
+  following:
+
+        $ cd $CIAO_ROOT/examples/handcrafted/Display
+        $ $(ACE_ROOT)/bin/mwc.pl
+        $ make
+
+  To regenerate VC6 dsp files, do:
+
+        > cd $CIAO_ROOT/examples/handcrafted/Display
+        > $(ACE_ROOT)/bin/mwc.pl -type vc6
+
+  Likewise, to regenerate VC7.NET project files, do:
+
+        > cd $CIAO_ROOT/examples/handcrafted/Display
+        > $(ACE_ROOT)/bin/mwc.pl -type vc7
