@@ -3,11 +3,11 @@ Wed Aug 13 10:34:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/ast/ast_exception.cpp (in_recursion):
         * TAO_IDL/ast/ast_structure.cpp (in_recursion):
         * TAO_IDL/ast/ast_union.cpp (in_recursion):
+        * TAO_IDL/be/be_valuetype.cpp (in_recursion):
 
           Fixed a possible bug when the above types have a member that is
           a typedef.
 
-        * TAO_IDL/be/be_valuetype.cpp:
         * TAO_IDL/be/be_visitor_structure_fwd/structure_fwd_ch.cpp:
         * TAO_IDL/driver/drv_preproc.cpp:
 
