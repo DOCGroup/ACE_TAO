@@ -13,7 +13,8 @@ doc:
 	javadoc -d ${JACE_WRAPPER}/doc $(files) $(packages)
 
 
-files =	 TimeValueTest.java
+files =	 TimeValueTest.java \
+	 TimerQueueTest.java
 
 packages = tests.Reactor
 
