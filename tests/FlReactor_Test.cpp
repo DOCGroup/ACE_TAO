@@ -29,7 +29,7 @@ ACE_RCSID(tests, FlReactor_Test, "$Id$")
 #if !defined (ACE_HAS_FL)
 
 int
-ACE_TMAIN (int, ACE_TCHAR*[])
+run_main (int, ACE_TCHAR*[])
 {
   ACE_START_TEST (ACE_TEXT ("FlReactor_Test"));
 
@@ -229,7 +229,7 @@ Acceptor::make_svc_handler (Connection_Handler *&sh)
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("FlReactor_Test"));
 

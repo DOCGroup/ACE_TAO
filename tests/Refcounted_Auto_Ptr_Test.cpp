@@ -310,7 +310,7 @@ template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
 
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_LIB_TEXT ("Refcounted_Auto_Ptr_Test"));
 

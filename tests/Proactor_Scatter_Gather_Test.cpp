@@ -1332,7 +1332,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_Scatter_Gather_Test"));
 
@@ -1446,7 +1446,7 @@ template class ACE_Asynch_Connector<Sender>;
 
 #else
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_Scatter_Gather_Test"));
 

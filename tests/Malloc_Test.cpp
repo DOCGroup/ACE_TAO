@@ -329,7 +329,7 @@ get_base_addrs (void)
 #endif /* defined (ACE_WIN32) && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)) */
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *[])
+run_main (int argc, ACE_TCHAR *[])
 {
 #if defined (ACE_WIN32) \
     && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
@@ -449,7 +449,7 @@ template class ACE_Based_Pointer<Long_Test>;
 
 #else
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Malloc_Test"));
   ACE_ERROR ((LM_INFO,

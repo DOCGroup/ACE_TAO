@@ -201,7 +201,7 @@ run_test (ACE_Token_Proxy *A,
 #endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Tokens_Test"));
 #if defined (ACE_HAS_THREADS)
@@ -212,16 +212,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                   ACE_Local_Mutex (ACE_TEXT ("L Mutex A"), 0, 0),
                   -1);
   ACE_NEW_RETURN (B,
-                  ACE_Local_Mutex (ACE_TEXT ("L Mutex B"), 0, 0), 
+                  ACE_Local_Mutex (ACE_TEXT ("L Mutex B"), 0, 0),
                   -1);
   ACE_NEW_RETURN (R,
-                  ACE_Local_RLock (ACE_TEXT ("L Reader Lock"), 0, 0), 
+                  ACE_Local_RLock (ACE_TEXT ("L Reader Lock"), 0, 0),
                   -1);
   ACE_NEW_RETURN (W,
-                  ACE_Local_WLock (ACE_TEXT ("L Writer Lock"), 0, 0), 
+                  ACE_Local_WLock (ACE_TEXT ("L Writer Lock"), 0, 0),
                   -1);
   ACE_NEW_RETURN (thread_start,
-                  ACE_Barrier (3), 
+                  ACE_Barrier (3),
                   -1);
 
   run_test (A, B, R, W);
@@ -269,16 +269,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       delete W;
 
       ACE_NEW_RETURN (A,
-                      ACE_Remote_Mutex (ACE_TEXT ("R Mutex A"), 0, 1), 
+                      ACE_Remote_Mutex (ACE_TEXT ("R Mutex A"), 0, 1),
                       -1);
       ACE_NEW_RETURN (B,
                       ACE_Remote_Mutex (ACE_TEXT ("R Mutex B"), 0, 1),
                       -1);
       ACE_NEW_RETURN (R,
-                      ACE_Remote_RLock (ACE_TEXT ("R Reader Lock"), 0, 1), 
+                      ACE_Remote_RLock (ACE_TEXT ("R Reader Lock"), 0, 1),
                       -1);
       ACE_NEW_RETURN (W,
-                      ACE_Remote_WLock (ACE_TEXT ("R Writer Lock"), 0, 1), 
+                      ACE_Remote_WLock (ACE_TEXT ("R Writer Lock"), 0, 1),
                       -1);
 
       run_test (A, B, R, W);
@@ -289,7 +289,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       // Kill the token server.
       if (new_process.terminate () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Kill failed.\n")), 
+                           ACE_TEXT ("Kill failed.\n")),
                           -1);
     }
 

@@ -23,7 +23,7 @@
 #include /**/ "ace/Multihomed_INET_Addr.h"
 #include /**/ "ace/Log_Msg.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

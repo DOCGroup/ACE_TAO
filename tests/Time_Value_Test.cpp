@@ -177,7 +177,7 @@ test_ace_u_longlong (void)
 
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   int ret = 0;
 

@@ -23,7 +23,7 @@
 #include "ace/Vector_T.h"
 #include "ace/Stats.h"
 #include "tests/test_config.h"
-
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Token_Strategy_Test, "$Id$")
 
@@ -209,7 +209,7 @@ int run_test (ACE_Token::QUEUEING_STRATEGY strategy, int threads = 5,
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Token_Strategy_Test"));
   int retval = 0;
@@ -258,7 +258,7 @@ template class ACE_Guard<ACE_Token>;
 
 #else /* ACE_HAS_THREADS */
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Token_Strategy_Test: your platform doesn't support threads\n")), 1);
 }

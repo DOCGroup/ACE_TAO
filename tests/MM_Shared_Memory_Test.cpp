@@ -27,6 +27,7 @@
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/Process_Semaphore.h"
 #include "ace/Thread_Manager.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
 
@@ -188,7 +189,7 @@ spawn (void)
 #endif /* !ACE_LACKS_MMAP */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MM_Shared_Memory_Test"));
 
