@@ -10,6 +10,8 @@ ACE_RCSID(Notify, TAO_NS_ProxyPushConsumer, "$id$")
 
 #include "tao/debug.h"
 #include "../AdminProperties.h"
+#include "../Method_Request_Lookup.h"
+#include "../Worker_Task.h"
 #include "AnyEvent.h"
 #include "PushSupplier.h"
 
@@ -60,7 +62,7 @@ TAO_NS_ProxyPushConsumer::push (TAO_NS_Event_var &/*event*/)
 }
 
 void
-TAO_NS_ProxyPushConsumer::push (const CORBA::Any& data ACE_ENV_ARG_DECL)
+TAO_NS_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventComm::Disconnected
@@ -76,11 +78,11 @@ TAO_NS_ProxyPushConsumer::push (const CORBA::Any& data ACE_ENV_ARG_DECL)
       ACE_THROW (CosEventComm::Disconnected ());
     }
 
-  // Convert
-  TAO_NS_Event_var event (new TAO_NS_AnyEvent (data));
+  TAO_NS_AnyEvent_No_Copy event (any);
 
-  // Continue processing.
-  this->TAO_NS_ProxyConsumer::push (event);
+  TAO_NS_Method_Request_Lookup_No_Copy request (&event, this);
+
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void

@@ -95,9 +95,9 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
 }
 
 void
-TAO_NS_ThreadPool_Task::exec (TAO_NS_Method_Request& method_request)
+TAO_NS_ThreadPool_Task::execute (TAO_NS_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request& request_copy = *method_request.copy ();
+  TAO_NS_Method_Request& request_copy = *method_request.copy (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   if (this->buffering_strategy_->enqueue (request_copy) == -1)
     {

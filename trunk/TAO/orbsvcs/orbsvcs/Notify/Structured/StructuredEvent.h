@@ -23,25 +23,28 @@
 #include "orbsvcs/CosNotificationC.h"
 
 /**
- * @class TAO_NS_StructuredEvent
+ * @class TAO_NS_StructuredEvent_No_Copy
  *
  * @brief StructuredEvent implementation.
  *
  */
 
-class TAO_Notify_Export TAO_NS_StructuredEvent : public TAO_NS_Event
+class TAO_Notify_Export TAO_NS_StructuredEvent_No_Copy : public TAO_NS_Event
 {
 public:
   /// Constuctor
-  TAO_NS_StructuredEvent (const CosNotification::StructuredEvent& notification);
+  TAO_NS_StructuredEvent_No_Copy (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
-  ~TAO_NS_StructuredEvent ();
+  ~TAO_NS_StructuredEvent_No_Copy ();
 
-  CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL);
+  /// Copy the event.
+  virtual TAO_NS_Event* copy (ACE_ENV_SINGLE_ARG_DECL) const;
+
+  CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL) const;
 
   /// Convert to CosNotification::Structured type
-  virtual void convert (CosNotification::StructuredEvent& notification);
+  virtual void convert (CosNotification::StructuredEvent& notification) const;
 
   /// Get the event type.
   virtual const TAO_NS_EventType& type (void) const;
@@ -50,23 +53,45 @@ public:
   virtual void push (TAO_NS_Consumer* consumer ACE_ENV_ARG_DECL) const;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL);
+  virtual void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL);
+  virtual void push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL);
+  virtual void push (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL);
+  virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
 
 protected:
   /// Structured Event
-  CosNotification::StructuredEvent notification_;
+  const CosNotification::StructuredEvent* notification_;
 
   /// Our type.
   const TAO_NS_EventType type_;
+};
+
+/*****************************************************************************************************/
+
+/**
+ * @class TAO_NS_StructuredEvent
+ *
+ * @brief StructuredEvent implementation.
+ *
+ */
+class TAO_Notify_Export TAO_NS_StructuredEvent : public TAO_NS_StructuredEvent_No_Copy
+{
+public:
+  /// Constuctor
+  TAO_NS_StructuredEvent (const CosNotification::StructuredEvent& notification);
+
+  /// Destructor
+  ~TAO_NS_StructuredEvent ();
+
+protected:
+  /// Copy of the Event.
+  CosNotification::StructuredEvent notification_copy;
 };
 
 #if defined (__ACE_INLINE__)

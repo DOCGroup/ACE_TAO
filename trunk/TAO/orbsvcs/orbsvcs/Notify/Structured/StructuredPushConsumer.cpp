@@ -35,6 +35,12 @@ TAO_NS_StructuredPushConsumer::release (void)
 }
 
 void
+TAO_NS_StructuredPushConsumer::push_i (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
+{
+  event->push (this ACE_ENV_ARG_PARAMETER);
+}
+
+void
 TAO_NS_StructuredPushConsumer::push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL)
 {
   event->push (this ACE_ENV_ARG_PARAMETER);

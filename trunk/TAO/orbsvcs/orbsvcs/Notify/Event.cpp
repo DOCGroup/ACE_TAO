@@ -15,14 +15,14 @@ TAO_NS_Event::TAO_NS_Event (void)
   :priority_ (CosNotification::Priority, CosNotification::DefaultPriority),
    timeout_ (CosNotification::Timeout)
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
+  //  if (TAO_debug_level > 0)
+  //  ACE_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
 }
 
 TAO_NS_Event::~TAO_NS_Event ()
 {
-  if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
+  // if (TAO_debug_level > 1)
+  //  ACE_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
 }
 
 void
@@ -40,7 +40,19 @@ TAO_NS_Event::translate (const CosNotification::StructuredEvent& notification, C
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_Auto_Basic_Ptr<TAO_NS_Event>;
+template class ACE_Refcounted_Auto_Ptr<const TAO_NS_Event, TAO_SYNCH_MUTEX>;
+template class ACE_Unbounded_Queue<TAO_NS_Event_var>;
+template class ACE_Node<TAO_NS_Event_var>;
+template class ACE_Unbounded_Queue_Iterator<TAO_NS_Event_var>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_NS_Event>
+#pragma instantiate ACE_Refcounted_Auto_Ptr<const TAO_NS_Event, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Unbounded_Queue<TAO_NS_Event_var>
+#pragma instantiate ACE_Node<TAO_NS_Event_var>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_NS_Event_var>
+
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

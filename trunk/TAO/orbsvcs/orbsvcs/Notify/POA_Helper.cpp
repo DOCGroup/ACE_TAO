@@ -19,6 +19,18 @@ TAO_NS_POA_Helper::~TAO_NS_POA_Helper ()
 
 }
 
+ACE_CString
+TAO_NS_POA_Helper::get_unique_id (void)
+{
+  /// Factory for generating unique ids for the POAs.
+  static TAO_NS_ID_Factory poa_id_factory;
+
+  char buf[32];
+  ACE_OS_String::itoa (poa_id_factory.id (), buf, 10);
+
+  return ACE_CString (buf);
+}
+
 void
 TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name ACE_ENV_ARG_DECL)
 {
@@ -33,10 +45,9 @@ TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_nam
 void
 TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
 {
-  char child_poa_name[32];
-  ACE_OS_String::itoa (ACE_OS::rand (), child_poa_name, 10);
+  ACE_CString child_poa_name = this->get_unique_id ();
 
-  this->init (parent_poa, child_poa_name ACE_ENV_ARG_PARAMETER);
+  this->init (parent_poa, child_poa_name.c_str () ACE_ENV_ARG_PARAMETER);
 }
 
 void
