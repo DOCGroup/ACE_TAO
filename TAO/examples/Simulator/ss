@@ -29,6 +29,7 @@ fi
 if [ ! "$TAO_ROOT" ]; then
   if [ "$ACE_ROOT" ]; then
     TAO_ROOT=$ACE_ROOT/TAO
+    export TAO_ROOT
   else
     echo $0: you must set ACE_ROOT or TAO_ROOT!
     exit 1
