@@ -162,7 +162,7 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
 		       Cubit::vector_out output,
 		       CORBA::Environment &)
 {
-  if (output == 0)
+  if (output.ptr () == 0)
     {
       output = new Cubit::vector (input.length ());
     }

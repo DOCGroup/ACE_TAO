@@ -62,6 +62,13 @@
     Recently Completed Work:
 
     <UL>
+      <li>Fixed problem in the IDL Cubit example which caused the
+      server to dump core when dealing with <code>_out</code> sequence
+      types <em>ONLY</em> when compiled with G++.  It seems that G++
+      decided to interpret the expression <code>output == 0</code>
+      (where <code>output</code> is of type <code>vector_out</code>)
+      differently from Sun's C++ compiler.</li>
+
       <li>Fixed a slight problem in <a href="#hostfix">other recent
       work</a> where a servant listening on <code>INADDR_ANY</code>
       reported an IOR with address <tt>0.0.0.0</tt>.  It now reports
