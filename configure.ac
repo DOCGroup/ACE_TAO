@@ -1097,30 +1097,64 @@ dnl AC_CHECK_TYPE([off64_t],[long long])
 
 dnl Specific typedef checks
 dnl TODO: Check whether these typedefs can be defined somewhere else.
-ACE_CHECK_TYPE([idtype_t],[signal.h],[AC_DEFINE([ACE_HAS_IDTYPE_T])],)
+AC_CHECK_TYPE([idtype_t],
+	      [AC_DEFINE([ACE_HAS_IDTYPE_T], 1,
+			 [Define to 1 if the system has the type `idtype_t'.])],
+	      [],
+	      [#include <signal.h>])
+
+AC_CHECK_TYPE([key_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_KEY_T], 1, 
+			 [Define to 1 if the system lacks the type `key_t'.])],
+	      [#include <sys/types.h>])
+
 ACE_CHECK_TYPE([sem_t],[semaphore.h],,)
-ACE_CHECK_TYPE([key_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_KEY_T])])
-ACE_CHECK_TYPE([ssize_t],[sys/types.h],[AC_DEFINE([ACE_HAS_SSIZE_T])],)
-ACE_CHECK_TYPE([u_longlong_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_U_LONGLONG_T])])
-ACE_CHECK_TYPE([pri_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_PRI_T])])
+
+AC_CHECK_TYPE([pri_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_PRI_T], 1,
+			 [Define to 1 if the system lacks the type 'pri_t'.])],
+	      [#include <sys/types.h>])
+
+AC_CHECK_TYPE([sig_atomic_t],
+	      [AC_DEFINE([ACE_HAS_SIG_ATOMIC_T], 1,
+			 [Define to 1 if the system has the type 'sig_atomic_t'.])],
+	      [],
+	      [#include <signal.h>])
+
+AC_CHECK_TYPE([ssize_t],
+	      [AC_DEFINE([ACE_HAS_SSIZE_T], 1,
+			 [Define to 1 if the system has the type `ssize_t'.])],
+	      [],
+	      [#include <sys/types.h>])
 
 dnl Some platforms define ucontext_t in <sys/ucontext.h>, but ACE
 dnl doesn't explicitly include that header.  However, it is very
 dnl likely that <signal.h> does, either directly or indirectly.
 AC_CHECK_TYPE([ucontext_t],
-	AC_DEFINE([ACE_HAS_UCONTEXT_T]),
-	,
-	[
-#include <signal.h>
+	      [AC_DEFINE([ACE_HAS_UCONTEXT_T], 1,
+			 [Define to 1 if the system has the type `ucontext_t'.])],
+	      [],
+[#include <signal.h>
 #ifndef ACE_LACKS_UCONTEXT_H
 # include <ucontext.h>
 #endif
 ])
 
-ACE_CHECK_TYPE([wchar_t],[wchar.h],,
-  [
-   ACE_CHECK_TYPE([wchar_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_WCHAR_T])])
-  ])
+AC_CHECK_TYPE([u_longlong_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_U_LONGLONG_T], 1,
+			 [Define to 1 if the system lacks the type `u_long_long'.])],
+	      [#include <sys/types.h>])
+
+AC_CHECK_TYPE([wchar_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_WCHAR_T], 1,
+			 [Define to 1 if the system lacks the type `wchar_t'.])],
+[#include <sys/types.h>
+#include <wchar.h>
+])
 
 ACE_CHECK_TYPE([socklen_t],[sys/socket.h],[AC_DEFINE([ACE_HAS_SOCKLEN_T])],
   [
@@ -1171,23 +1205,6 @@ ACE_CHECK_TYPE([socklen_t],[sys/socket.h],[AC_DEFINE([ACE_HAS_SOCKLEN_T])],
       ],[AC_DEFINE([ACE_HAS_SIZET_SOCKET_LEN])],)
     ])
   ])
-
-dnl Check for sig_atomic_t
-ACE_CACHE_CHECK([for sig_atomic_t],
-    [ace_cv_lib_posix_defines_sig_atomic_t],[
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <signal.h>
-         ]],[[
-          sig_atomic_t sat;
-         ]])],[
-          ace_cv_lib_posix_defines_sig_atomic_t=yes
-         ],[
-          ace_cv_lib_posix_defines_sig_atomic_t=no
-         ])
-],[AC_DEFINE([ACE_HAS_SIG_ATOMIC_T])],)
 
 
 
@@ -1697,51 +1714,56 @@ dnl If we get a size of zero, then the type is unknown to the compiler.
 dnl We don't need to check for sizeof(char) right now.  Also conflicts with
 dnl ACE definition in Basic_Types.h, so we leave the test out.
 if test "$cross_compiling" != yes; then
-  dnl AC_CHECK_SIZEOF([char],[1])
-  dnl if test "$ac_cv_sizeof_char" != "0"; then
-  dnl   AC_DEFINE([ACE_SIZEOF_CHAR],[SIZEOF_CHAR])
-  dnl fi
   AC_CHECK_SIZEOF([wchar_t])
   if test "$ac_cv_sizeof_wchar_t" != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_WCHAR],[$ac_cv_sizeof_wchar_t])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_WCHAR],[$ac_cv_sizeof_wchar_t],
+		       [Size of the native "wchar_t" type])
   fi
   AC_CHECK_SIZEOF([short])
   if test "$ac_cv_sizeof_short" != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_SHORT],[$ac_cv_sizeof_short])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_SHORT],[$ac_cv_sizeof_short],
+		       [Size of the native "short" type])
   fi
   AC_CHECK_SIZEOF([int])
   if test $ac_cv_sizeof_int != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_INT],[$ac_cv_sizeof_int])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_INT],[$ac_cv_sizeof_int],
+		       [Size of the native "int" type])
   fi
   AC_CHECK_SIZEOF([long])
   if test $ac_cv_sizeof_long != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG],[$ac_cv_sizeof_long])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG],[$ac_cv_sizeof_long],
+		       [Size of the native "long" type])
   fi
   AC_CHECK_SIZEOF([long long])
   if test $ac_cv_sizeof_long_long != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_LONG],[$ac_cv_sizeof_long_long])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_LONG],[$ac_cv_sizeof_long_long],
+		       [Size of the native "long long" type])
   else
     AC_DEFINE([ACE_LACKS_LONGLONG_T])
   fi
   AC_CHECK_SIZEOF([void *])
   if test $ac_cv_sizeof_void_p != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_VOID_P],[$ac_cv_sizeof_void_p])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_VOID_P],[$ac_cv_sizeof_void_p],
+		       [Size of the native "pointer to void" type])
   fi
   AC_CHECK_SIZEOF([float])
   if test $ac_cv_sizeof_float != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_FLOAT],[$ac_cv_sizeof_float])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_FLOAT],[$ac_cv_sizeof_float],
+		       [Size of the native "float" type])
   else
     AC_DEFINE([ACE_LACKS_FLOATING_POINT])
   fi
   AC_CHECK_SIZEOF([double])
   if test $ac_cv_sizeof_double != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_DOUBLE],[$ac_cv_sizeof_double])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_DOUBLE],[$ac_cv_sizeof_double],
+		       [Size of the native "double" type])
   else
     AC_DEFINE([ACE_LACKS_FLOATING_POINT])
   fi
   AC_CHECK_SIZEOF([long double])
   if test $ac_cv_sizeof_long_double != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_DOUBLE],[$ac_cv_sizeof_long_double])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_DOUBLE],[$ac_cv_sizeof_long_double],
+		       [Size of the native "long double" type])
   fi
 
   dnl Set the 64 bit typedefs
