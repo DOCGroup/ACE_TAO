@@ -98,6 +98,9 @@ protected:
   TAO_ORB_Manager manager_;
   // The ORB manager, handles ORB initialization etc.
 
+  TAO_Naming_Client my_name_client_;
+  // The Name Client, simplifies NameService interaction
+
   CosPropertyService::PropertySetDef_var propsetdef_;
   // To test propertySetDef interface.
 };
