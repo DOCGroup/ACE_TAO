@@ -1,3 +1,4 @@
+// $Id$
 // @ (#)typecode.cpp    1.4 95/09/19
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
