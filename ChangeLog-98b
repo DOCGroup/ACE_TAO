@@ -28,6 +28,10 @@ Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Pipe_Test.cpp,Process_Mutex_Test.cpp: don't try
           to run these tests if ACE_LACKS_FORK, either.
 
+        * tests/Mem_Map_Test.cpp (reverse_file): use a local, volatile
+          variable for the array index.  Without it, the test core dumps
+          on LynxOS 3.0.0/PowerPC with -O2.
+
         * tests/run_tests.sh: run Timer_Queue_Test and Upgradeable_RW_Test
           on LynxOS.
 
