@@ -1,3 +1,10 @@
+Fri Jun 25 17:40:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Max_Default_Port_Test.cpp (client): Specify AF_INET when
+	  giving both a port and hostname string. The listener was set up
+	  at IPv4, so make sure this one is as well. Fixes this test's failures
+	  when running on an IPv6-enabled system.
+
 Fri Jun 25 18:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.pl: 
