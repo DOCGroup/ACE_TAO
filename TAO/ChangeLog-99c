@@ -1,5 +1,9 @@
 Wed Jun  9 13:43:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* TAO_IDL/fe: Regenerated the y.tab.cpp file with the new BYACC so
+ 	  that we won't have any more annoying warnings about const
+ 	  correctness.
+
 	* utils/nslist: Added a new utility program that prints out a
  	  nicely organized list of Naming Contexts in a Naming Service.
   	  Thanks to Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
