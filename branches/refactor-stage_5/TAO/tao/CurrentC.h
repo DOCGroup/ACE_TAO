@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_ORIG_CURRENTC_H_
 #define _TAO_IDL_ORIG_CURRENTC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Object.h"
 
@@ -70,6 +70,8 @@
 namespace TAO
 {
   class Collocation_Proxy_Broker;
+
+  template<typename T> class Narrow_Utils;
 }
 
 // TAO_IDL - Generated from
@@ -194,5 +196,5 @@ namespace TAO
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

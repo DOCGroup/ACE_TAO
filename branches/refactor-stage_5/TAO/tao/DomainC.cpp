@@ -32,6 +32,7 @@
 #include "DomainC.h"
 #include "tao/Stub.h"
 #include "tao/Invocation_Adapter.h"
+#include "tao/Object_T.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"

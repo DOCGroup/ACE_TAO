@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -26,6 +32,7 @@
 #define _TAO_IDL_ORIG_POLICY_FORWARDC_H_
 
 #include /**/ "ace/pre.h"
+
 #include "tao/Sequence.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,7 +40,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CDR.h"
-#include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
@@ -63,64 +69,77 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  CORBA
+namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
-
+  
   typedef CORBA::ULong PolicyType;
   typedef CORBA::ULong_out PolicyType_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyType;
-
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:566
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:601
 
-#if !defined (_CORBA_POLICY__ODDS_N_ENDS_CH_)
-#define _CORBA_POLICY__ODDS_N_ENDS_CH_
-
+#if !defined (_CORBA_POLICY__VAR_OUT_CH_)
+#define _CORBA_POLICY__VAR_OUT_CH_
+  
   class Policy;
   typedef Policy *Policy_ptr;
-  typedef TAO_Objref_Var_T<Policy> Policy_var;
-  typedef TAO_Objref_Out_T<Policy> Policy_out;
+  
+  typedef
+    TAO_Objref_Var_T<
+        Policy
+      >
+    Policy_var;
+  
+  typedef
+    TAO_Objref_Out_T<
+        Policy
+      >
+    Policy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
+#if !defined (_CORBA_POLICYLIST_CH_)
+#define _CORBA_POLICYLIST_CH_
+  
   class PolicyList;
-
+  
   typedef
     TAO_MngSeq_Var_T<
         PolicyList,
         TAO_Object_Manager<
-            CORBA::Policy,
-            CORBA::Policy_var
+            Policy,
+            Policy_var
           >
       >
     PolicyList_var;
-
+  
   typedef
     TAO_MngSeq_Out_T<
         PolicyList,
         PolicyList_var,
         TAO_Object_Manager<
-            CORBA::Policy,
-            CORBA::Policy_var
+            Policy,
+            Policy_var
           >
       >
     PolicyList_out;
-
+  
   class TAO_Export PolicyList
     : public
         TAO_Unbounded_Object_Sequence<
-            CORBA::Policy,
-            CORBA::Policy_var
+            Policy,
+            Policy_var
           >
   {
   public:
@@ -129,46 +148,51 @@ TAO_NAMESPACE  CORBA
     PolicyList (
         CORBA::ULong max,
         CORBA::ULong length,
-        Policy_ptr* buffer,
+        Policy_ptr* buffer, 
         CORBA::Boolean release = 0
       );
     PolicyList (const PolicyList &);
     ~PolicyList (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef PolicyList_var _var_type;
   };
 
+#endif /* end #if !defined */
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyList;
-
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
+#if !defined (_CORBA_POLICYTYPESEQ_CH_)
+#define _CORBA_POLICYTYPESEQ_CH_
+  
   class PolicyTypeSeq;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         PolicyTypeSeq,
-        CORBA::PolicyType
+        PolicyType
       >
     PolicyTypeSeq_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         PolicyTypeSeq,
         PolicyTypeSeq_var,
-        CORBA::PolicyType
+        PolicyType
       >
     PolicyTypeSeq_out;
-
+  
   class TAO_Export PolicyTypeSeq
     : public
         TAO_Unbounded_Sequence<
-            CORBA::PolicyType
+            PolicyType
           >
   {
   public:
@@ -177,62 +201,73 @@ TAO_NAMESPACE  CORBA
     PolicyTypeSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::ULong* buffer,
+        CORBA::ULong* buffer, 
         CORBA::Boolean release = 0
       );
     PolicyTypeSeq (const PolicyTypeSeq &);
     ~PolicyTypeSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef PolicyTypeSeq_var _var_type;
   };
 
+#endif /* end #if !defined */
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyTypeSeq;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum SetOverrideType
   {
     SET_OVERRIDE,
     ADD_OVERRIDE
   };
-
+  
   typedef SetOverrideType &SetOverrideType_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SetOverrideType;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module CORBA
+} // module CORBA
 
-// =====================================================
-// Hand-crafted
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
 
+// Traits specializations.
 namespace TAO
 {
+
+#if !defined (_CORBA_POLICY__TRAITS_CH_)
+#define _CORBA_POLICY__TRAITS_CH_
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::Policy>
   {
-    static CORBA::Policy_ptr tao_duplicate (CORBA::Policy_ptr);
-    static void tao_release (CORBA::Policy_ptr);
+    static CORBA::Policy_ptr tao_duplicate (
+        CORBA::Policy_ptr
+      );
+    static void tao_release (
+        CORBA::Policy_ptr
+      );
     static CORBA::Policy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (CORBA::Policy_ptr,
-                                       TAO_OutputCDR &);
+    static CORBA::Boolean tao_marshal (
+        CORBA::Policy_ptr p,
+        TAO_OutputCDR & cdr
+      );
   };
-}
 
-
-// ==========================================================
+#endif /* end #if !defined */
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/any_op_ch.cpp:65
@@ -276,7 +311,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Policy_ptr &);
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_CORBA_PolicyList_H_
 #define _TAO_CDR_OP_CORBA_PolicyList_H_
@@ -293,7 +328,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_PolicyList_H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_CORBA_PolicyTypeSeq_H_
 #define _TAO_CDR_OP_CORBA_PolicyTypeSeq_H_
@@ -321,7 +356,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::SetOverrideType &);
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "Policy_ForwardC.i"
@@ -337,3 +372,4 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::SetOverrideType &);
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
+

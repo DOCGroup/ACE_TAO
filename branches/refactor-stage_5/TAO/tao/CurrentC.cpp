@@ -101,10 +101,15 @@ CORBA::Current::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return Current::_nil ();
+    }
+  
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+
+  return Current::_duplicate (proxy);
 }
 
 CORBA::Current_ptr

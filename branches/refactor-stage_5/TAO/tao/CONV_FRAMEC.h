@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_ORIG_CONV_FRAMEC_H_
 #define _TAO_IDL_ORIG_CONV_FRAMEC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/CDR.h"
 
@@ -292,6 +292,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetContext
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

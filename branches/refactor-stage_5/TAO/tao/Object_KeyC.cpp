@@ -26,38 +26,41 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:314
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
 
 
 #include "Object_KeyC.h"
 #include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
+#include "tao/Invocation_Adapter.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
-
-#include "ace/ACE.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Object_KeyC.i"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:56
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+
+// Arg traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+
+#if !defined (_TAO_OBJECTKEY_CS_)
+#define _TAO_OBJECTKEY_CS_
 
 TAO::ObjectKey::ObjectKey (void)
 {}
 
-TAO::ObjectKey::ObjectKey (CORBA::ULong max)
+TAO::ObjectKey::ObjectKey (
+    CORBA::ULong max
+  )
   : TAO_Unbounded_Sequence<
         CORBA::Octet
       >
@@ -67,7 +70,7 @@ TAO::ObjectKey::ObjectKey (CORBA::ULong max)
 TAO::ObjectKey::ObjectKey (
     CORBA::ULong max,
     CORBA::ULong length,
-    CORBA::Octet* buffer,
+    CORBA::Octet * buffer,
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
@@ -76,7 +79,9 @@ TAO::ObjectKey::ObjectKey (
     (max, length, buffer, release)
 {}
 
-TAO::ObjectKey::ObjectKey (const ObjectKey &seq)
+TAO::ObjectKey::ObjectKey (
+    const ObjectKey &seq
+  )
   : TAO_Unbounded_Sequence<
         CORBA::Octet
       >
@@ -86,11 +91,7 @@ TAO::ObjectKey::ObjectKey (const ObjectKey &seq)
 TAO::ObjectKey::~ObjectKey (void)
 {}
 
-void TAO::ObjectKey::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ObjectKey *tmp = ACE_static_cast (ObjectKey*, _tao_void_pointer);
-  delete tmp;
-}
+// Hand crafted.
 
 void
 TAO::ObjectKey::encode_sequence_to_string (char * &str,
@@ -118,18 +119,34 @@ TAO::ObjectKey::encode_sequence_to_string (char * &str,
       // here.
 #undef byte
       u_char byte = seq[i];
-      if (isprint (byte) && byte != '\\')
+      if (is_legal (byte))
         {
           *cp++ = (char) byte;
           continue;
         }
 
-      *cp++ = '\\';
+      *cp++ = '%';
       *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
       *cp++ = ACE::nibble2hex (byte & 0x0f);
     }
   // Zero terminate
   *cp = '\0';
+}
+
+int TAO::ObjectKey::is_legal (u_char & c)
+{
+  if (isalnum(c))
+  {
+    return 1;
+  }
+  else
+  {
+    return ( c == ';' || c == '/' ||c == ':' || c == '?' ||
+             c == '@' || c == '&' ||c == '=' || c == '+' ||
+             c == '$' || c == ',' ||c == '_' || c == '.' ||
+             c == '!' || c == '~' ||c == '*' || c == '\'' ||
+             c == '-' || c == '(' || c == ')' );
+  }
 }
 
 void
@@ -156,7 +173,7 @@ TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> 
        cp < eos && i < seq.length ();
        i++)
     {
-      if (*cp == '\\')
+      if (*cp == '%')
         {
           // This is an escaped non-printable,
           // so we decode the hex values into
@@ -174,155 +191,13 @@ TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> 
   seq.length (i);
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_FixedSeq_Var_T<
-      TAO::ObjectKey,
-      CORBA::Octet
-    >;
-
-template class TAO_Seq_Var_Base_T<TAO::ObjectKey,
-                                  CORBA::Octet>;
-
-template class
-  TAO_Seq_Out_T<
-      TAO::ObjectKey,
-      TAO::ObjectKey_var,
-      CORBA::Octet
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_FixedSeq_Var_T< \
-      TAO::ObjectKey, \
-      CORBA::Octet \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Out_T< \
-      TAO::ObjectKey, \
-      TAO::ObjectKey_var, \
-      CORBA::Octet \
-    >
-
-#pragma instantiate TAO_Seq_Var_Base_T<TAO::ObjectKey,
-                                       CORBA::Octet>;
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
 
-static const CORBA::Long _oc_TAO_ObjectKey[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  22,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x54414f2f),
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744b65),
-  ACE_NTOHL (0x793a312e),
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:TAO/ObjectKey:1.0
-    10,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744b65),
-  ACE_NTOHL (0x79000000),  // name = ObjectKey
-    CORBA::tk_sequence, // typecode kind
-  12, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_octet,
-
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_ObjectKey (
-    CORBA::tk_alias,
-    sizeof (_oc_TAO_ObjectKey),
-    (char *) &_oc_TAO_ObjectKey,
-    0,
-    sizeof (TAO::ObjectKey)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (TAO)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ObjectKey,
-    &_tc_TAO_tc_TAO_ObjectKey
-  )
-TAO_NAMESPACE_END
-
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const TAO::ObjectKey &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<TAO::ObjectKey>::insert_copy (
-      _tao_any,
-      TAO::ObjectKey::_tao_any_destructor,
-      TAO::_tc_ObjectKey,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    TAO::ObjectKey *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<TAO::ObjectKey>::insert (
-      _tao_any,
-      TAO::ObjectKey::_tao_any_destructor,
-      TAO::_tc_ObjectKey,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    TAO::ObjectKey *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const TAO::ObjectKey *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const TAO::ObjectKey *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<TAO::ObjectKey>::extract (
-        _tao_any,
-        TAO::ObjectKey::_tao_any_destructor,
-        TAO::_tc_ObjectKey,
-        _tao_elem
-      );
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<TAO::ObjectKey>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<TAO::ObjectKey>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:98
+#if !defined _TAO_CDR_OP_TAO_ObjectKey_CPP_
+#define _TAO_CDR_OP_TAO_ObjectKey_CPP_
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -330,27 +205,27 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-
+      
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       {
-        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
           ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (TAO::ObjectKey *)&_tao_sequence);
         if (oseq->mb ())
           return strm.write_octet_array_mb (oseq->mb ());
         else
           return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
       }
-
+      
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
       return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
+    
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     }
-
+  
   return 0;
 }
 
@@ -360,7 +235,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -370,18 +245,18 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
           return 1;
         }
-
+      
       // Retrieve all the elements.
-
+      
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       if (ACE_BIT_DISABLED (strm.start ()->flags (),
       ACE_Message_Block::DONT_DELETE))
@@ -391,7 +266,7 @@ CORBA::Boolean operator>> (
         strm.orb_core ()->resource_factory ()->
         input_cdr_allocator_type_locked () == 1)
         {
-          TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
+          TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
             ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
           oseq->replace (_tao_seq_len, strm.start ());
           oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
@@ -402,9 +277,60 @@ CORBA::Boolean operator>> (
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
+    
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+    
     }
-
+  
   return 0;
 }
+
+#endif /* _TAO_CDR_OP_TAO_ObjectKey_CPP_ */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO_FixedSeq_Var_T<
+        TAO::ObjectKey,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO_Seq_Var_Base_T<
+        TAO::ObjectKey,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO_Seq_Out_T<
+        TAO::ObjectKey,
+        TAO::ObjectKey_var,
+        CORBA::Octet
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO_FixedSeq_Var_T< \
+        TAO::ObjectKey, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Var_Base_T< \
+        TAO::ObjectKey, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Out_T< \
+        TAO::ObjectKey, \
+        TAO::ObjectKey_var, \
+        CORBA::Octet \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+

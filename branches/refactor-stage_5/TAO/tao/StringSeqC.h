@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -62,21 +68,24 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  CORBA
+namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
+#if !defined (_CORBA_STRINGSEQ_CH_)
+#define _CORBA_STRINGSEQ_CH_
+  
   class StringSeq;
-
+  
   typedef
     TAO_MngSeq_Var_T<
         StringSeq,
         TAO_SeqElem_String_Manager
       >
     StringSeq_var;
-
+  
   typedef
     TAO_MngSeq_Out_T<
         StringSeq,
@@ -84,7 +93,7 @@ TAO_NAMESPACE  CORBA
         TAO_SeqElem_String_Manager
       >
     StringSeq_out;
-
+  
   class TAO_Export StringSeq
     : public
         TAO_Unbounded_String_Sequence
@@ -95,34 +104,39 @@ TAO_NAMESPACE  CORBA
     StringSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        char ** buffer,
+        char ** buffer, 
         CORBA::Boolean release = 0
       );
     StringSeq (const StringSeq &);
     ~StringSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef StringSeq_var _var_type;
   };
 
+#endif /* end #if !defined */
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StringSeq;
-
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
+#if !defined (_CORBA_WSTRINGSEQ_CH_)
+#define _CORBA_WSTRINGSEQ_CH_
+  
   class WStringSeq;
-
+  
   typedef
     TAO_MngSeq_Var_T<
         WStringSeq,
         TAO_SeqElem_WString_Manager
       >
     WStringSeq_var;
-
+  
   typedef
     TAO_MngSeq_Out_T<
         WStringSeq,
@@ -130,7 +144,7 @@ TAO_NAMESPACE  CORBA
         TAO_SeqElem_WString_Manager
       >
     WStringSeq_out;
-
+  
   class TAO_Export WStringSeq
     : public
         TAO_Unbounded_WString_Sequence
@@ -141,27 +155,36 @@ TAO_NAMESPACE  CORBA
     WStringSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::WChar ** buffer,
+        CORBA::WChar ** buffer, 
         CORBA::Boolean release = 0
       );
     WStringSeq (const WStringSeq &);
     ~WStringSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef WStringSeq_var _var_type;
   };
 
+#endif /* end #if !defined */
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_WStringSeq;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module CORBA
+} // module CORBA
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
@@ -185,7 +208,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WStringS
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_CORBA_StringSeq_H_
 #define _TAO_CDR_OP_CORBA_StringSeq_H_
@@ -202,7 +225,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_StringSeq_H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_CORBA_WStringSeq_H_
 #define _TAO_CDR_OP_CORBA_WStringSeq_H_
@@ -224,7 +247,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "StringSeqC.i"
@@ -240,3 +263,4 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
+

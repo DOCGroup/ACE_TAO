@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -26,12 +32,14 @@
 #define _TAO_IDL_ORIG_TIMEBASEC_H_
 
 #include /**/ "ace/pre.h"
-#include "tao/Any_Dual_Impl_T.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CDR.h"
 #include "tao/VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -60,7 +68,7 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  TimeBase
+namespace TimeBase
 {
   
   // TAO_IDL - Generated from
@@ -97,7 +105,7 @@ TAO_NAMESPACE  TimeBase
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TdfT;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
   
   struct UtcT;
   
@@ -131,7 +139,7 @@ TAO_NAMESPACE  TimeBase
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UtcT;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
   
   struct IntervalT;
   
@@ -163,10 +171,17 @@ TAO_NAMESPACE  TimeBase
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IntervalT;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module TimeBase
+} // module TimeBase
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
@@ -190,13 +205,13 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TimeBase::Inter
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TimeBase::UtcT &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::UtcT &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TimeBase::IntervalT &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
@@ -207,7 +222,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "TimeBaseC.i"

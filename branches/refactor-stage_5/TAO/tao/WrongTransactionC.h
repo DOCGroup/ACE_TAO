@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -26,18 +32,17 @@
 #define _TAO_IDL_ORIG_WRONGTRANSACTIONC_H_
 
 #include /**/ "ace/pre.h"
+
 #include "tao/corbafwd.h"
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-
-#include "tao/Exception.h"
-#include "tao/CDR.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/Exception.h"
+#include "tao/CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -65,7 +70,7 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  CORBA
+namespace CORBA
 {
   
   // TAO_IDL - Generated from
@@ -95,12 +100,12 @@ TAO_NAMESPACE  CORBA
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        ACE_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL
       ) const;
     
     virtual void _tao_decode (
         TAO_InputCDR &
-        ACE_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL
       );
     
     // TAO_IDL - Generated from
@@ -117,10 +122,17 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module CORBA
+} // module CORBA
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
@@ -147,7 +159,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WrongTransaction &)
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "WrongTransactionC.i"

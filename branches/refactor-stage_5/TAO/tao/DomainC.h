@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_ORIG_DOMAINC_H_
 #define _TAO_IDL_ORIG_DOMAINC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -39,7 +39,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object_T.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
@@ -76,6 +75,8 @@
 namespace TAO
 {
   class Collocation_Proxy_Broker;
+
+  template<typename T> class Narrow_Utils;
 }
 
 // TAO_IDL - Generated from
@@ -429,6 +430,6 @@ TAO_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 
