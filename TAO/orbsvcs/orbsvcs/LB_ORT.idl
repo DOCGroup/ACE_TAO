@@ -14,18 +14,15 @@
 
 #include "tao/ObjectReferenceTemplate.pidl"
 
-#pragma prefix "tao.lb"
-
 
 module TAO_LB
 {
+  typeprefix TAO_LB "tao.lb";
 
   valuetype ObjectReferenceFactory
     : PortableInterceptor::ObjectReferenceFactory {};
 
 };
-
-#pragma prefix ""
 
 
 #endif  /* TAO_LB_ORT_IDL */
