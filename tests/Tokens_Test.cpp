@@ -205,6 +205,7 @@ main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Tokens_Test"));
 #if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_TOKENS_LIBRARY)
   ACE_Token_Proxy *A = 0, *B = 0, *R = 0, *W = 0;
 
   ACE_NEW_RETURN (A,
@@ -301,9 +302,10 @@ main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) main thread exiting.\n")));
-#elif defined (ACE_HAS_TOKENS_LIBRARY)
+#else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("ACE must be compiled with -DACE_HAS_TOKENS_LIBRARY to run this test\n")));
+#endif /* ACE_HAS_TOKENS_LIBRARY */
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads not supported on this platform\n")));
