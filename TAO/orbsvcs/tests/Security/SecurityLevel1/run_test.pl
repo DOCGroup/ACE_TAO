@@ -19,7 +19,7 @@ $iorfile = "server.ior";
 unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -ORBSvcConf server.conf "
-                       . " -o $iorfile -ORBDebugLevel 4");
+                       . " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -29,7 +29,7 @@ if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
                        " -ORBSvcConf client.conf "
-                       . " -k file://$iorfile -ORBDebugLevel 4");
+                       . " -k file://$iorfile");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

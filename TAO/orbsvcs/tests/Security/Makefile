@@ -9,7 +9,8 @@
 #----------------------------------------------------------------------------
 
 DIRS = \
-  Secure_Invocation
+  Secure_Invocation \
+  SecurityLevel1
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
