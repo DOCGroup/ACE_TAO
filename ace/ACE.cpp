@@ -1545,7 +1545,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 // put into own subroutine.  perform some ioctls to retrieve ifconf
 // list of ifreq structs.
 
-static int 
+int 
 ACE::count_interfaces (ACE_HANDLE handle, 
 		       size_t &how_many)
 {
@@ -1615,7 +1615,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
 // Routine to return a descriptor from which ioctl() requests can be
 // made.
 
-static ACE_HANDLE
+ACE_HANDLE
 ACE::get_handle (void)
 {
 // Solaris 2.x
@@ -1745,7 +1745,7 @@ get_reg_value (const TCHAR *key,
 // responsible for calling delete [] on parray
 
 int 
-ACE::get_ip_interfaces (ACE_UINT32 &count,
+ACE::get_ip_interfaces (size_t &count,
 			ACE_INET_Addr *&addrs)
 {
   // code for NT
@@ -1788,9 +1788,8 @@ ACE::get_ip_interfaces (ACE_UINT32 &count,
     return 0;
 
   ACE_NEW_RETURN (addrs, ACE_INET_Addr[n_interfaces], -2);
-  int i;
   
-  for (i = 0; i < n_interfaces; i++) 
+  for (int i = 0; i < n_interfaces; i++) 
     {
 
       // a. construct name to access IPAddress for this interface 
@@ -1826,7 +1825,7 @@ ACE::get_ip_interfaces (ACE_UINT32 &count,
   //  COMMON (SVR4 and BSD) UNIX CODE
 
   ACE_TRACE ("ACE::get_ip_interfaces");
-  ACE_UINT32 num_ifs;
+  size_t num_ifs;
 
   const int FUDGE = 2; /* offset into sa_data[] for ip address on sparc */
 
@@ -1865,14 +1864,14 @@ ACE::get_ip_interfaces (ACE_UINT32 &count,
 
   // ------------ now create and initialize output array -------------
   count = 0;
-  ACE_NEW_RETURN (addrs, ACE_INET_Addr[num_ifs]); // caller must free
+  ACE_NEW_RETURN (addrs, ACE_INET_Addr[num_ifs], -1); // caller must free
 
   struct ifreq *pcur = p_ifs.get ();
   // Get if address out of ifreq buffers have yet to see a non PF_INET
   // data type, but don't chance it which means allocation might be
   // larger than actually used
 
-  for (i = 0; i < num_ifs; pcur++, i++) 
+  for (int i = 0; i < num_ifs; pcur++, i++) 
     {
       ACE_UINT32 tmp_addr; 
 
@@ -1892,4 +1891,6 @@ ACE::get_ip_interfaces (ACE_UINT32 &count,
 #endif /* ACE_WIN32 */
 }
 
-
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class auto_ptr<struct ifreq>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
