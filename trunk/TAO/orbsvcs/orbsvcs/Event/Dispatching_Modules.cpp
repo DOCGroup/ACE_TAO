@@ -15,15 +15,15 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Dispatching_Modules_Timeprobe_Description[] = 
-{ 
+static const char *TAO_Dispatching_Modules_Timeprobe_Description[] =
+{
   "dispatch (dequeue) the event",
   "push_source_type: Correlation Module",
   "Priority_Dispatching::push - priority requested",
   "Priority_Dispatching::push - priority obtained"
 };
 
-enum 
+enum
 {
   TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT = 5000,
   TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE,
@@ -34,8 +34,8 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Dispatching_Modules_Timeprobe_Description, 
-                                  TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT);
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Dispatching_Modules_Timeprobe_Description,
+                                  TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT)
 
 // ************************************************************
 

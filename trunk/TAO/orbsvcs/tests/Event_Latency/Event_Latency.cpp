@@ -40,7 +40,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Event_Latency_Timeprobe_Description,
-                                  EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER);
+                                  EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER)
 
 static const char usage [] = "[-? |\n"
 "            [-c <consumers> [4]]\n"

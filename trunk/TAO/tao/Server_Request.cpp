@@ -29,7 +29,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
-                                  TAO_SERVER_REQUEST_START);
+                                  TAO_SERVER_REQUEST_START)
 
 // {77420086-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_IIOP_ServerRequest,
@@ -113,8 +113,8 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
   if (hdr_status)
     {
       this->object_key_.replace (key_length, key_length,
-				 (CORBA::Octet*)input.rd_ptr (),
-				 CORBA::B_FALSE);
+                                 (CORBA::Octet*)input.rd_ptr (),
+                                 CORBA::B_FALSE);
       input.skip_bytes (key_length);
     }
 #endif
@@ -234,12 +234,12 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
         { // not preallocated
           ACE_NEW (value, char [tc->size (env)]);
 
-	  if (env.exception () != 0)
-	    return;
+          if (env.exception () != 0)
+            return;
 
           any->replace (tc, value, CORBA::B_TRUE, env);
-	  if (env.exception () != 0)
-	    return;
+          if (env.exception () != 0)
+            return;
 
           // Decrement the refcount of "tc".
           //
@@ -258,15 +258,15 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // Then just unmarshal the value.
       (void) incoming_->decode (tc, value, 0, env);
       if (env.exception () != 0)
-	{
-	  const char* param_name = nv->name ();
-	  if (param_name == 0)
-	    param_name = "(no name given)";
-	  ACE_ERROR ((LM_ERROR,
-		      "IIOP_ServerRequest::arguments - problem while"
-		      " decoding parameter %d <%s>\n", i, param_name));
-	  return;
-	}
+        {
+          const char* param_name = nv->name ();
+          if (param_name == 0)
+            param_name = "(no name given)";
+          ACE_ERROR ((LM_ERROR,
+                      "IIOP_ServerRequest::arguments - problem while"
+                      " decoding parameter %d <%s>\n", i, param_name));
+          return;
+        }
     }
 
   // If any data is left over, it'd be context values ... else error.
@@ -276,8 +276,8 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
   if (incoming_->length () != 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  "IIOP_ServerRequest::arguments - "
-		  "%d bytes left in buffer\n", incoming_->length ()));
+                  "IIOP_ServerRequest::arguments - "
+                  "%d bytes left in buffer\n", incoming_->length ()));
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
     }
 }
@@ -316,27 +316,27 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
     // Try to narrow to ForwardRequest
     PortableServer::ForwardRequest_ptr forward_request =
         PortableServer::ForwardRequest::_narrow ((CORBA::Exception *) value.value ());
-      
+
     // If narrowing of exception succeeded
     if (forward_request != 0)
     {
-	    this->forward_location_ = forward_request->forward_reference;
-	  }
+            this->forward_location_ = forward_request->forward_reference;
+          }
 
     // Normal exception
     else
-	  {
-	    this->exception_ = new CORBA::Any;
-	    this->exception_->replace (value.type (), value.value (), 1, env);
-	  
-	    // @@ This cast is not safe, but we haven't implemented the >>=
-	    // and <<= operators for base exceptions (yet).
-	    CORBA_Exception* x = (CORBA_Exception*)value.value ();
-	    if (CORBA_UserException::_narrow (x) != 0)
+          {
+            this->exception_ = new CORBA::Any;
+            this->exception_->replace (value.type (), value.value (), 1, env);
+
+            // @@ This cast is not safe, but we haven't implemented the >>=
+            // and <<= operators for base exceptions (yet).
+            CORBA_Exception* x = (CORBA_Exception*)value.value ();
+            if (CORBA_UserException::_narrow (x) != 0)
         this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
       else
         this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
-	  }
+          }
   }
 }
 
@@ -472,16 +472,16 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
 
       CORBA::Object_ptr object_ptr = this->forward_location_.in ();
       (void) this->outgoing_->encode (CORBA::_tc_Object,
-				      &object_ptr, 
-				      0, 
-				      env);
+                                      &object_ptr,
+                                      0,
+                                      env);
 
       // If encoding went fine
       if (env.exception () != 0)
         {
           dexc (env, "ServerRequest::marshal - forwarding parameter encode failed");
           return;
-        }        
+        }
     }
 
   // Any exception at all.
@@ -552,10 +552,10 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
             {
               CORBA::NamedValue_ptr nv = this->params_->item (i, env);
               CORBA::Any_ptr any;
-              
+
               if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
                 continue;
-              
+
               any = nv->value ();
               tc = any->type ();
               value = any->value ();

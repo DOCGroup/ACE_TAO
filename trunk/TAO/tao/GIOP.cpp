@@ -51,8 +51,8 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_GIOP_Timeprobe_Description[] = 
-{ 
+static const char *TAO_GIOP_Timeprobe_Description[] =
+{
   "GIOP::send_request - start",
   "GIOP::send_request - end",
 
@@ -72,7 +72,7 @@ static const char *TAO_GIOP_Timeprobe_Description[] =
   "GIOP_Invocation::start - request_hdr",
 };
 
-enum 
+enum
 {
   TAO_GIOP_SEND_REQUEST_START = 100,
   TAO_GIOP_SEND_REQUEST_END,
@@ -96,8 +96,8 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description, 
-                                  TAO_GIOP_SEND_REQUEST_START);
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description,
+                                  TAO_GIOP_SEND_REQUEST_START)
 
 static const char digits [] = "0123456789ABCD";
 static const char *names [] =
@@ -138,7 +138,7 @@ operator<<(TAO_OutputCDR& cdr, const TAO_GIOP_ServiceContext& x)
   if (cdr.good_bit ())
     {
       cdr << x.context_id
-	  << x.context_data;
+          << x.context_data;
     }
   return cdr;
 }
@@ -149,7 +149,7 @@ operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContext& x)
   if (cdr.good_bit ())
     {
       cdr >> x.context_id
-	  >> x.context_data;
+          >> x.context_data;
     }
   return cdr;
 }
@@ -173,7 +173,7 @@ operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContextList& x)
     {
       x.length (length);
       for (CORBA::ULong i = 0; i < length && cdr.good_bit (); ++i)
-	cdr >> x[i];
+        cdr >> x[i];
     }
   return cdr;
 }
@@ -205,7 +205,7 @@ writev_n (ACE_HANDLE h, ACE_IO_Vector *iov, int iovcnt)
           if (n != 0)
             {
               char* base = ACE_reinterpret_cast (char*, iov[s].buffer ());
-              
+
               iov[s].buffer (base + n);
               iov[s].length (iov[s].length () - n);
             }
@@ -905,11 +905,11 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       // @@ Michael
-      /* 
+      /*
       {
 
-        // Keep this around in case forwarding is ever implemented 
-        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));     
+        // Keep this around in case forwarding is ever implemented
+        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 
         IIOP::Profile *old = data_->fwd_profile_i (0);
         delete old;
@@ -918,7 +918,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       this->handler_->close ();
       this->handler_ = 0;
       return TAO_GIOP_LOCATION_FORWARD;
-      
+
     case TAO_GIOP::Request:
     case TAO_GIOP::CancelRequest:
     case TAO_GIOP::LocateRequest:
@@ -1107,7 +1107,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
     // NOTREACHED
 
     case TAO_GIOP_LOCATION_FORWARD:
-      return (this->location_forward (env));   
+      return (this->location_forward (env));
     }
 
   // All standard exceptions from here on in the call path know for
@@ -1126,7 +1126,7 @@ TAO_GIOP_ReplyStatusType
 TAO_GIOP_Invocation::location_forward (CORBA::Environment &env)
 {
   // It can be assumed that the GIOP header and the reply header
-  // are already handled. Further it can be assumed that the 
+  // are already handled. Further it can be assumed that the
   // reply body contains and object reference to the new object.
   // This object pointer will be now extracted.
 
@@ -1135,7 +1135,7 @@ TAO_GIOP_Invocation::location_forward (CORBA::Environment &env)
   //CORBA::Object_ptr object_ptr = object_var.inout();
 
   if (this->inp_stream_.decode (CORBA::_tc_Object,
-                                &(object_ptr),   
+                                &(object_ptr),
                                 0,
                                 env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
   {
@@ -1182,7 +1182,7 @@ TAO_GIOP_Invocation::location_forward (CORBA::Environment &env)
 
 
   // We may not need to do this since TAO_GIOP_Invocations
-  // get created on a per-call basis. For now we'll play it safe.   
+  // get created on a per-call basis. For now we'll play it safe.
 
   return TAO_GIOP_LOCATION_FORWARD;
 }
@@ -1284,7 +1284,7 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
       // @@ Michael
       /*
       {
-         // Keep this around in case forwarding is ever implemented 
+         // Keep this around in case forwarding is ever implemented
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 
 
@@ -1589,17 +1589,17 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
   return CORBA::B_TRUE;
 }
 
-TAO_GIOP_ReplyStatusType 
+TAO_GIOP_ReplyStatusType
 TAO_GIOP::convert_CORBA_to_GIOP_exception (CORBA::ExceptionType corba_type)
 {
   switch (corba_type)
     {
     case CORBA::NO_EXCEPTION:
       return TAO_GIOP_NO_EXCEPTION;
-      
+
     case CORBA::SYSTEM_EXCEPTION:
       return TAO_GIOP_SYSTEM_EXCEPTION;
-      
+
     case CORBA::USER_EXCEPTION:
       return TAO_GIOP_USER_EXCEPTION;
 

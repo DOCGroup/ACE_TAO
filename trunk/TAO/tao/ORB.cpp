@@ -36,7 +36,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
-                                  TAO_CORBA_ORB_RUN_START);
+                                  TAO_CORBA_ORB_RUN_START)
 
 // Static initialization.
 int CORBA_ORB::orb_init_count_ = 0;
