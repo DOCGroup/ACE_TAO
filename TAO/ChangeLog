@@ -1,3 +1,31 @@
+Thu Sep  9 05:49:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Concurrency_Service/Makefile.am:
+	* orbsvcs/CosEvent_Service/Makefile.am:
+	* orbsvcs/Dump_Schedule/Makefile.am:
+	* orbsvcs/Event_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+	* orbsvcs/FT_ReplicationManager/Makefile.am:
+	* orbsvcs/Fault_Detector/Makefile.am:
+	* orbsvcs/Fault_Notifier/Makefile.am:
+	* orbsvcs/IFR_Service/Makefile.am:
+	* orbsvcs/LifeCycle_Service/Makefile.am:
+	* orbsvcs/LoadBalancer/Makefile.am:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+	* orbsvcs/Naming_Service/Makefile.am:
+	* orbsvcs/Notify_Service/Makefile.am:
+	* orbsvcs/Scheduling_Service/Makefile.am:
+	* orbsvcs/Time_Service/Makefile.am:
+	* orbsvcs/Trading_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated for orbsvcs library refactor.
+
 Thu Sep  9 05:08:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/CosEvent.mpc:
