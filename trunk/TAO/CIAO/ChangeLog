@@ -1,3 +1,13 @@
+Thu Jan  8 14:47:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        
+          Changed default suffix for generating #include of C++ header
+          file generated from executor mapping IDL file, similar to the
+          change in
+          
+          Thu Jan  8 12:00:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>.
+
 Thu Jan  8 13:49:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
