@@ -40,7 +40,7 @@ class HTTP_Config_Info
   // = TITLE
   //     This is where the information is really stored.
 {
-friend HTTP_Config;
+friend class HTTP_Config;
 public:
   HTTP_Config_Info (void);
   ~HTTP_Config_Info (void);
