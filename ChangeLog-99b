@@ -1,4 +1,8 @@
-Mon Jul 12 16:40:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jul 12 17:31:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/run_all_win32.pl: Fixed the missing execution output problem
+	  and simplified how the script gets invoked.  See comments for
+	  more details.
 
 	* ace/config-win32.h:
 	* ace/Object_Manager.h: Updated some unclear comments regarding
