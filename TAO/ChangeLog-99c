@@ -1,3 +1,13 @@
+Mon Nov 22 13:15:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Stub.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	  Added a 'const' to a variable that is cast from a
+	  declared constant in IDL, hopefully appeasing an
+	  older version of sunc++. Thanks to David for reporting
+	  this build error. 
+
 Mon Nov 22 12:10:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp: Fixed custom build rule for
