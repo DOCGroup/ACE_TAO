@@ -97,6 +97,7 @@ public:
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_MT_CORBA_HANDLER_LOCK,
       ACE_DUMP_LOCK,
+      ACE_TSS_CLEANUP_LOCK,
 #endif /* ACE_MT_SAFE */
 
       ACE_END_OF_PREALLOCATED_OBJECTS  // This enum value must be last!
