@@ -1,3 +1,12 @@
+Tue Sep 14 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	  Found a way to generate the CDR operators for array
+	  sequences without using casts. Gives correct results
+	  in Param Test, Purify shows no memory leaks, and
+	  it should be more portable to the compilers that
+	  don't handle casts very well.
+
 Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.h:
