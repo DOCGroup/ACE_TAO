@@ -1,3 +1,10 @@
+Thu Feb 11 10:34:41 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * Use of PHandle in MProfile.{h,cpp} create a name conflict.  
+	  Added TAO_ to fix this.
+	  
+	* Thanks to  John Morey <jmorey@tbi.com>
+          for reminding me of the ACE-Guidelines ;). 
+
 Thu Feb 11 02:51:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (ORB_init): Only initialize the ORB global variables
