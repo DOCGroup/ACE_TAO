@@ -129,19 +129,56 @@ be_generator::create_module (UTL_Scope *s,
     new UTL_ScopeActiveIterator (s,
                                  UTL_Scope::IK_decls);
   
-  // If there is already a module with the same name in this
-  // scope, then the module has been reopened, and we just
-  // return the original node.                                           
+  // We create this first so if we find a module with the
+  // same name from an included file, we can add its 
+  // members to the new module's scope.
+  AST_Module *retval =  (AST_Module *) new be_module (n, p);
+
+
+  // Check for another module of the same name in this scope.                               
   while (!iter->is_done ())
     {
       d = iter->item ();
 
-      if (!d->imported () && d->node_type () == AST_Decl::NT_module)
+      if (d->node_type () == AST_Decl::NT_module)
         {
+          // Does it have the same name as the one we're
+          // supposed to create.
           if (d->local_name ()->compare (n->last_component ()))
             {
-              delete iter;
-              return AST_Module::narrow_from_decl (d);
+              // If it's not from an included file, then return
+              // the one the iterator found.
+              if (!d->imported ())
+                {
+                  delete iter;
+                  delete retval;
+                  return AST_Module::narrow_from_decl (d);
+                }
+              else
+                {
+                  UTL_ScopeActiveIterator *i = 
+                    new UTL_ScopeActiveIterator (DeclAsScope (d),
+                                                 UTL_Scope::IK_decls);
+
+                  AST_Decl *dd = 0;
+
+                  while (!i->is_done ())
+                    {
+                      dd = i->item ();
+
+                      // Add all the included module's members (except
+                      // for the predefined types) to the scope of the
+                      // one we're creating.
+                      if (dd->node_type () != AST_Decl::NT_pre_defined)
+                        {
+                          retval->add_to_scope (dd);
+                        }
+
+                      i->next ();
+                    } 
+
+                  delete i;
+                }
             }
         }
 
@@ -149,8 +186,6 @@ be_generator::create_module (UTL_Scope *s,
     }
 
   delete iter;
-
-  AST_Module *retval =  (AST_Module *) new be_module (n, p);
 
   // If we are opening module CORBA, we must add the predefined
   // types TypeCode, TCKind and maybe ValueBase.

@@ -174,8 +174,14 @@ public:
 
   // How many entries are used?
   virtual unsigned long         nmembers();
-  // Scoped name completely matched
-  idl_bool                      matched;
+
+  // Add to decls. Node represents a local declaration
+  // The new decl e is inserted after ex if ex is not 0.
+  // This one is public because the case of a reopened
+  // module necessitates a call to this from
+  // be_generator::create_module().
+  void                          add_to_scope(AST_Decl *e,
+                                             AST_Decl *ex = 0);
 
 protected:
   // UTL_Scope protected addition protocol. This protocol is
@@ -184,14 +190,6 @@ protected:
   // Additionally, UTL_Scope also maintains a record of what nodes
   // defined elsewhere were referenced in this scope
 
-  // Add to decls. Node represents a local declaration
-  // The new decl e is inserted after ex if ex is not 0
-  void                          add_to_scope(AST_Decl *e,
-                                             AST_Decl *ex = 0);
-
-  // Add to local types. Node represents a local manifest type
-  void                          add_to_local_types(AST_Decl *e);
-
   // Add to referenced nodes set.
   // If ex is not 0 'e' will be inserted at the position
   // after ex, which is already in the list.
@@ -199,6 +197,9 @@ protected:
                                                   idl_bool recursive,
                                                   Identifier *id,
                                                   AST_Decl *ex = 0);
+
+  // Add to local types. Node represents a local manifest type
+  void                          add_to_local_types(AST_Decl *e);
 
   // Replace old_decl with new_decl
   void replace_scope (AST_Decl *old_decl,
