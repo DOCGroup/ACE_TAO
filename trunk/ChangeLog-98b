@@ -4,6 +4,12 @@ Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
           inside ACE_HAS_XT, because the #includes are all inside
           ACE_HAS_XT also.
 
+        * tests/Process_Mutex_Test.cpp (main): specify full path to
+          spawned children.  Removed Solaris/i386-specific code because
+          it should no longer be needed now that the test is fixed by
+          specifying the full path.  (acquire_release):  removed printout
+          at top.
+
 Fri Jun 12 17:04:14 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * ace/OS.h: Moved the #define's and typedef's (related to Proactor
