@@ -1,3 +1,12 @@
+Thu Oct  7 08:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Create the default policies using the new way
+
+        * tao/PortableServer/Lifespan_Strategy.{h,cpp}:
+        * tao/PortableServer/Servant_Retention_Strategy.{h,cpp}:
+          Made these compiling so that I can test
+
 Thu Oct  7 08:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*Policy.{h,cpp}:
