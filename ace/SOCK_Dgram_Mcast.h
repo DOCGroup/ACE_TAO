@@ -9,9 +9,10 @@
  *  @author Irfan Pyrali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Bill Fulton <bill_a_fulton@raytheon.com>
- *  @author and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
+
 
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
@@ -33,12 +34,12 @@
  *
  * ACE_SOCK_Dgram_Mcast_Ex implements a multicast datagram interface.
  * See ACE_SOCK_Dgram_Mcast_Ex for the generic class interface definition.
+ *
  */
 class ACE_Export ACE_SOCK_Dgram_Mcast : 
-    public ACE_SOCK_Dgram_Mcast_Ex <ACE_SDM_DEFOPT_LOCK>
+    public ACE_SOCK_Dgram_Mcast_Ex <ACE_SYNCH_MUTEX>
 {
-public:
-  ACE_SOCK_Dgram_Mcast (void) {}
+
 };
 
 #include "ace/post.h"
