@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

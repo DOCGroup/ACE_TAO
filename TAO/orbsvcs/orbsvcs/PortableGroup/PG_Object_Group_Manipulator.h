@@ -21,6 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "portablegroup_export.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 
 namespace TAO

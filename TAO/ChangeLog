@@ -1,3 +1,26 @@
+Fri Jan  2 14:14:03 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Null_Property_Validator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Utils.h:
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+
+          Added #include for portablegroup_export.h.  Since one of the
+          CosLoadBalancing idl files includes PortableGroup.idl, the
+          generated PortableGroupC.h and PortableGroupS.h may or may not
+          have #include "portablegroup_export.h" in them or not.  So, we
+          don't rely on that and explicitly include it in these header
+          files.
+
 Fri Jan  2 14:07:21 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV.dsp:
