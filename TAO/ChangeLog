@@ -1,3 +1,20 @@
+Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO/tao/Muxed_TMS.h:
+        * TAO/tao/ObjectKey_Table.h:
+        * TAO/tao/PolicyFactory_Registry.h:
+        * TAO/tao/Typecode.cpp:
+          #included Null_Mutex.h needed due to Synch changes in ACE.
+
+        * TAO/tao/Typecode.h:
+          #included Thread_Mutex.h needed due to Synch changes in ACE.
+
+        * TAO/tao/orbconf.h:
+          #included Synch_Traits.h needed due to Synch changes in ACE.
+        
+        * TAO/tao/Sequence.cpp:
+          #included OS.h needed due to Synch changes in ACE.
+
 Sun Aug  3 21:56:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/ImplRepo/airplane_client_i.cpp:

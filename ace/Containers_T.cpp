@@ -5,6 +5,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
+#include "ace/OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

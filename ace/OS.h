@@ -459,18 +459,6 @@ private:
 #   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool, ACE_Pagefile_Memory_Pool_Options
 # endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-# if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
-#   define ACE_TSS_TYPE(T) ACE_TSS< T >
-#   if defined (ACE_HAS_BROKEN_CONVERSIONS)
-#     define ACE_TSS_GET(I, T) (*(I))
-#   else
-#     define ACE_TSS_GET(I, T) ((I)->operator T * ())
-#   endif /* ACE_HAS_BROKEN_CONVERSIONS */
-# else
-#   define ACE_TSS_TYPE(T) T
-#   define ACE_TSS_GET(I, T) (I)
-# endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
-
 # if defined (ACE_HAS_PROC_FS)
 #   include /**/ <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */

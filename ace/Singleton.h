@@ -21,7 +21,9 @@
 #define ACE_SINGLETON_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/config-all.h"
+#include "ace/TSS_T.h"  
+#include "ace/OS.h"  // for ACE_Cleanup
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

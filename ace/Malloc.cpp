@@ -10,8 +10,6 @@
 #include "ace/Malloc.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_T.h"
-
 ACE_RCSID(ace, Malloc, "$Id$")
 
 // Process-wide ACE_Allocator.

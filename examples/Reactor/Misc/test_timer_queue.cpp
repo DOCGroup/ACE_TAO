@@ -4,6 +4,8 @@
 #include "ace/Timer_List.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Log_Msg.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 ACE_RCSID(Misc, test_timer_queue, "$Id$")
 

@@ -17,6 +17,7 @@ ACE_RCSID(Threads, barrier2, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Null_Barrier.h"
 #define BARRIER_TYPE ACE_Null_Barrier
 
 template <class BARRIER>

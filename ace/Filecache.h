@@ -22,9 +22,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/SString.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Synch_Traits.h"
+#include "ace/RW_Thread_Mutex.h"
 
 enum ACE_Filecache_Flag
 {

@@ -24,6 +24,7 @@
 #include "ace/Process_Mutex.h"
 #include "ace/PI_Malloc.h"
 #include "Malloc_Test.h"
+#include "ace/RW_Thread_Mutex.h"
 
 ACE_RCSID(tests, Malloc_Test, "Malloc_Test.cpp,v 4.22 1999/12/13 22:24:42 nanbor Exp")
 

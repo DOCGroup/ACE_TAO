@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
 #include "ace/SPIPE_Stream.h"
 
 #if defined (ACE_HAS_THREADS)

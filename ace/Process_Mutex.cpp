@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/Process_Mutex.h"
-#include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 

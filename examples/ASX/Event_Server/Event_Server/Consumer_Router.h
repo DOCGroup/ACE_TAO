@@ -12,6 +12,7 @@
 
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/Svc_Handler.h"
+#include "ace/RW_Thread_Mutex.h"
 #include "Peer_Router.h"
 
 class Consumer_Router : public Peer_Router

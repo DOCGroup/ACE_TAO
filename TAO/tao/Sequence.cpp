@@ -3,6 +3,7 @@
 #include "tao/Sequence.h"
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Sequence.i"

@@ -24,7 +24,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Malloc_T.h"
-#include "ace/Synch.h"
 
 /**
  * @class ACE_NS_String

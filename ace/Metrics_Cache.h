@@ -112,7 +112,6 @@ METRICS_PTR->report_##NAME##_stop(); \
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Metrics_Cache_T.h"
-#include "ace/Synch.h"
 #include "ace/Singleton.h"
 
 #if defined (_MSC_VER)

@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Mutex.h"
+
 /**
  * @class ACE_Active_Map_Manager
  *

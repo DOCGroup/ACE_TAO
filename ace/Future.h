@@ -18,7 +18,6 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Unbounded_Set.h"
-#include "ace/Synch.h"
 #include "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

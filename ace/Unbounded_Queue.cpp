@@ -4,8 +4,6 @@
 #define ACE_UNBOUNDED_QUEUE_C
 
 #include "ace/Unbounded_Queue.h"
-#include "ace/Malloc_Base.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -14,6 +12,10 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Unbounded_Queue.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Malloc_Base.h"
+#include "ace/Log_Msg.h"
+#include "ace/os_include/os_errno.h"
 
 ACE_RCSID(ace, Unbounded_Queue, "$Id$")
 

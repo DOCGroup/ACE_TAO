@@ -21,6 +21,10 @@
 
 #if defined (ACE_HAS_AIO_CALLS) && !defined(__sun) && !defined(__Lynx__)
 
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Semaphore.h"
+#include "ace/Null_Semaphore.h"
+
 #include "ace/POSIX_Proactor.h"
 
 /**

@@ -27,6 +27,7 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
+#include "ace/Condition_Recursive_Thread_Mutex.h"
 
 ACE_RCSID (tests,
            Recursive_Condition_Bug_Test,

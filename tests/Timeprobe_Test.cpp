@@ -23,6 +23,8 @@
 #include "tests/test_config.h"
 #include "ace/Timeprobe.h"
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(tests, Timeprobe_Test, "$Id$")
 

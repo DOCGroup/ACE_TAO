@@ -17,13 +17,26 @@
 #define ACE_TOKEN_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS)
+
+#include "ace/OS.h"
+#include "ace/Null_Mutex.h"
+
+#if defined (ACE_TOKEN_USES_SEMAPHORE)
+#  include "ace/Semaphore.h"
+#else
+#  include "ace/Condition_Thread_Mutex.h"
+#endif /* ACE_TOKEN_USES_SEMAPHORE */
+
+class ACE_Thread_Mutex;
+class ACE_Time_Value;
+//class ACE_Condition_Attributes;
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || defined (VXWORKS) || defined (ACE_PSOS)
 // If platforms support semaphores with timed wait, then we use semaphores instead of c.v.
@@ -298,10 +311,35 @@ private:
   int queueing_strategy_;
 };
 
+class ACE_Export ACE_Noop_Token : public ACE_Null_Mutex
+{
+public:
+  /// Queueing strategy
+  enum QUEUEING_STRATEGY
+  {
+    FIFO = -1,
+    LIFO = 0
+  };
+
+  /// Get queueing strategy.
+  int queueing_strategy (void);
+
+  /// Set queueing strategy.
+  void queueing_strategy (int queueing_strategy);
+
+  int renew (int = 0, ACE_Time_Value * =0);
+
+  /// Dump the state of an object.
+  void dump (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+};
+
 #if defined (__ACE_INLINE__)
-#include "ace/Synch_T.h"
 #include "ace/Token.i"
 #endif /* __ACE_INLINE__ */
+
 #else
 class ACE_Export ACE_Token
 {

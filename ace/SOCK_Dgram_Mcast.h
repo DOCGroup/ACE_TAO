@@ -29,7 +29,8 @@
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
 # include "ace/Containers_T.h"
-# include "ace/Synch_T.h"
+# include "ace/Synch_Traits.h"
+# include "ace/Thread_Mutex.h"
 # if !defined (ACE_SDM_LOCK)
 #  define ACE_SDM_LOCK ACE_SYNCH_MUTEX
 # endif /* ACE_SDM_LOCK */

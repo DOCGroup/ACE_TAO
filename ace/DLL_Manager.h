@@ -15,7 +15,7 @@
 #define ACE_DLL_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch_T.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +23,10 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SStringfwd.h"
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#  include "ace/Thread_Mutex.h"
+#endif /* ACE_MT_SAFE */
 
 #define ACE_DEFAULT_DLL_MANAGER_SIZE 1024
 

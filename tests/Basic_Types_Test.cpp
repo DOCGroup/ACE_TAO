@@ -35,6 +35,9 @@
 # include "test_config.h"
 #endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
+#include "ace/Basic_Types.h"
+#include "ace/OS.h"
+
 ACE_RCSID(tests, Basic_Types_Test, "$Id$")
 
 typedef void* (*a_function_pointer) (void*);

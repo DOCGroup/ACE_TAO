@@ -27,6 +27,7 @@
 ACE_RCSID(tests, Task_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+#include "ace/Barrier.h"
 
 class My_Thread_Hook : public ACE_Thread_Hook
 {

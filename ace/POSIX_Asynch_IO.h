@@ -38,6 +38,8 @@
 #include "ace/ACE.h"
 #endif
 
+#include "ace/Null_Mutex.h"
+
 // Forward declarations
 class ACE_POSIX_Proactor;
 class ACE_Proactor_Impl;

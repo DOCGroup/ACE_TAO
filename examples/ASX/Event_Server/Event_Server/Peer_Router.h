@@ -13,6 +13,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Map_Manager.h"
+#include "ace/RW_Thread_Mutex.h"
 
 // Type of search key for CONSUMER_MAP
 typedef ACE_HANDLE ROUTING_KEY;

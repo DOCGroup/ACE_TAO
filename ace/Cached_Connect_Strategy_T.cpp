@@ -11,7 +11,6 @@
 
 #include "ace/ACE.h"
 #include "ace/Service_Repository.h"
-#include "ace/Synch.h"
 #include "ace/Service_Types.h"
 #include "ace/Thread_Manager.h"
 #include "ace/WFMO_Reactor.h"

@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Synch_Traits.h"
+
 class TSS_Data
   // = TITLE
   //   Data that is stored in thread-specific storage.

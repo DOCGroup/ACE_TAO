@@ -10,6 +10,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/DLL_Manager.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 

@@ -21,9 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
-#include "ace/Synch.h"
-
 /**
  * @class ACE_Service_Type_Impl
  *

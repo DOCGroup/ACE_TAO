@@ -25,6 +25,8 @@
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_Wheel.h"
 #include "ace/Reactor.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 ACE_RCSID(tests, Timer_Queue_Reference_Counting_Test, "$Id$")
 

@@ -12,8 +12,6 @@
 #include "ace/SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/Synch.h"
-
 ACE_RCSID(ace, SOCK_Acceptor, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Acceptor)

@@ -22,12 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
+#include "ace/Condition_Thread_Mutex.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Containers.h"
 #include "ace/Free_List.h"
 #include "ace/Singleton.h"
 #include "ace/Log_Msg.h"
+#include "ace/Synch_Traits.h"
 
 // The following macros control how a Thread Manager manages a pool of
 // Thread_Descriptor.  Currently, the default behavior is not to
