@@ -21,6 +21,8 @@
 #ifndef TAO_SSLIOP_ACCEPTOR_H
 #define TAO_SSLIOP_ACCEPTOR_H
 
+#include "ace/pre.h"
+
 #include "tao/IIOP_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -91,5 +93,7 @@ private:
 #if defined(__ACE_INLINE__)
 #include "SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/post.h"
 
 #endif  /* TAO_SSLIOP_ACCEPTOR_H */

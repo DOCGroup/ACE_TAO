@@ -21,6 +21,8 @@
 #ifndef TAO_SSLIOP_PROFILE_H
 #define TAO_SSLIOP_PROFILE_H
 
+#include "ace/pre.h"
+
 #include "tao/IIOP_Profile.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -105,5 +107,7 @@ private:
 #if defined (__ACE_INLINE__)
 # include "SSLIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/post.h"
 
 #endif  /* TAO_SSLIOP_PROFILE_H */

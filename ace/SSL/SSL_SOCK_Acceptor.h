@@ -18,6 +18,8 @@
 #ifndef ACE_SSL_SOCK_ACCEPTOR_H
 #define ACE_SSL_SOCK_ACCEPTOR_H
 
+#include "ace/pre.h"
+
 #include "ace/SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -132,5 +134,8 @@ private:
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_HAS_SSL */
+
+#include "ace/post.h"
+
 #endif /* ACE_SSL_SOCK_ACCEPTOR_H */
 

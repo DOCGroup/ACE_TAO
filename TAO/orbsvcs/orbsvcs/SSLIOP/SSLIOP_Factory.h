@@ -17,6 +17,8 @@
 #ifndef TAO_SSLIOP_FACTORY_H
 #define TAO_SSLIOP_FACTORY_H
 
+#include "ace/pre.h"
+
 #include "tao/Protocol_Factory.h"
 
 #include "SSL_Context.h"
@@ -66,5 +68,7 @@ private:
 
 ACE_STATIC_SVC_DECLARE (TAO_SSLIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
+
+#include "ace/post.h"
 
 #endif /* TAO_SSLIOP_FACTORY_H */
