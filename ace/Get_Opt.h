@@ -6,8 +6,7 @@
  *  $Id$
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- *
- *  Long option support added by Don Hinton <dhinton@gmx.net>.
+ *  @author Don Hinton <dhinton@gmx.net> (added long option support)
  */
 //=============================================================================
 
@@ -46,7 +45,7 @@ public:
   /// Mutually exclusive ordering values.
   enum
   {
-    /// The options must come first, return <EOF> as soon as a
+    /// The options must come first, return @c EOF as soon as a
     /// non-option argument is encountered.
     REQUIRE_ORDER = 1,
 
@@ -67,81 +66,91 @@ public:
     NO_ARG = 0,
 
     /// Requires an argument, same as passing ":" after a short option
-    /// character in <optstring>.
+    /// character in @a optstring.
     ARG_REQUIRED = 1,
 
     /// Argument is optional, same as passing "::" after a short
-    /// option character in <optstring>.
+    /// option character in @a optstring.
     ARG_OPTIONAL = 2
   };
 
   /**
-   * Initialize the internal data when the first call is made.  Start
-   * processing options with <argv>-element 0 + <skip_argv0>; the
-   * sequence of previously skipped non-option <argv>-elements is
-   * empty.
+   * Constructor initializes the command line to be parsed. All information
+   * for parsing must be supplied to this constructor.
    *
-   * <optstring> is a string containing the legitimate short option
-   * characters.  A single colon ":" in <optstring> means that the
-   * previous character is an option that wants, requires, an argument,
-   * whereas a double colon "::" signifies the argument is optional.
-   * The argument is taken from the rest of the current <argv>-element,
-   * or from the following <argv>-element (only valid for required
-   * arguments, optional arguments must always reside in the same
-   * <argv>-element), and returned in by <opt_arg ()>.
+   * @param argc          The number of @a argv elements to parse.
+   * @param argv          Command line tokens, such as would be passed
+   *                      to @c main().
+   * @param optstring     Nul-terminated string containing the legitimate
+   *                      short option characters.  A single colon ":" in
+   *                      @a optstring means that the previous character is
+   *                      an option that requires an argument.  A double
+   *                      colon "::" signifies the argument is optional.
+   *                      The argument is taken from the rest of the current
+   *                      @a argv element, or from the following @a argv
+   *                      element (only valid for required arguments;
+   *                      optional arguments must always reside in the same
+   *                      @argv element). The argument value, if any is
+   *                      returned by the @c opt_arg() method.
+   *                      @a optstring can be extended by adding long options
+   *                      with corresponding short options via the
+   *                      @c long_option() method.  If the short option
+   *                      already appears in @a optstring, the argument
+   *                      characteristics must match, otherwise it is added.
+   *                      See @c long_option() for more information.
+   *                      If 'W', followed by a semi-colon ';' appears in
+   *                      @a optstring, then any time a 'W' appears on the
+   *                      command line, the following argument is treated as
+   *                      a long option.  For example, if the command line
+   *                      contains "program -W foo", "foo" is treated as a
+   *                      long option, that is, as if "program --foo" had
+   *                      been passed.
+   *
+   * @param skip_argv0    Optional (default 1). The specified number of
+   *                      initial elements in @a argv are skipped before
+   *                      parsing begins. Thus, the default prevents
+   *                      @a argv[0] (usually the command name) from being
+   *                      parsed. This value of @a argc includes all skipped
+   *                      elements of @a argv specified by this parameter.
+   * @param report_errors Optional, if non-zero then parsing errors cause
+   *                      an error message to be displayed from the
+   *                      @c operator() method before it returns. The
+   *                      error message is suppressed if this argument is 0.
+   * @param ordering      Optional (default is @c PERMUTE_ARGS); refers to
+   *                      how the @a argv elements are processed.
+   *                      @arg REQUIRE_ORDER means that processing stops and
+   *                      @c EOF is returned as soon as a non-option argument
+   *                      is found. @c opt_ind() will return the index of the
+   *                      next @a argv element so the program can continue
+   *                      processing the rest of the @ argv elements.
+   *                      @arg PERMUTE_ARGS (default) means the @a argv
+   *                      elements are reordered dynamically (permuted) so
+   *                      that all options appear first.  When the last
+   *                      option has been processed, @c EOF is returned and
+   *                      @c opt_ind() returns the index into the next
+   *                      non-option element.
+   *                      @arg RETURN_IN_ORDER means each @a argv element
+   *                      is processed in the order is it seen.  If the
+   *                      element is not recognized as an option, '1' is
+   *                      returned and @c opt_arg() refers to the @a argv
+   *                      element found.
+   * @param long_only     Optional. If non-zero, then all options are treated
+   *                      as long options.  If a long option is not
+   *                      recognized, the class tries to find a matching
+   *                      short option.
    *
    * Multiple short options can be combined as long as only the last
-   * one can takes an argument, e.g., if <optstring> is defined as
-   * "abc:" or "abc::" then the command line "program -abcxxx" short
-   * options a, b, and c are found with "xxx" as the argument for c.
-   * However, if the command line is specified as "program -acb" only
-   * options a and c are found with "b" as the argument for c.  Also,
-   * for options with optional arguments, e.g., those followed by "::"
-   * the argument must be in the same <argv>-element, so "program -abc
-   * xxx" will only find "xxx" as the argument for c if <optstring> is
-   * specified as "abc:" not "abc::".
-   *
-   * If a missing required option argument is detected, return the
-   * colon character ':' if the first character of <optstring> was a
-   * colon, or a '?' otherwise. (Note that the standards are unclear in
-   * this respect, so we scan the initial *characters* of <optstring>
-   * up unto the first short option character for '+', '-', and ':' in
-   * order to determine ordering and missing argument behavior.)
-   *
-   * If an short option character is seen that is not listed in
-   * <optstring>, return '?' after printing an error message.  If you
-   * set <report_errors> to zero, the error message is suppressed but
-   * we still return '?'.
-   *
-   * <optstring> can be extended by adding long options,
-   * <long_option()>, that have corresponding short options.  If the
-   * short option already appears in <optstring> they argument
-   * characteristics must match, otherwise it is added  -- see
-   * <long_option()> for more information.
-   *
-   * If 'W', followed by a semi-colon ';' appears in <optstring>, then
-   * any time a 'W' appears on the command line, the following argument
-   * is treated as a long option, e.g., if the command line contains
-   * "program -W foo" "foo" is treated as a long option, i.e., as if
-   * "program --foo" had been passed.
-   *
-   * <ordering> refers to how the <argv>-elements are processed.
-   * <REQUIRE_ORDER> means that we stop processing and return <EOF> as
-   * soon as a non-option argument is found, and <opt_ind ()>
-   * holds the index of the next <argv>-element so the program can
-   * continue processing the rest of the <argv>-elements.  If
-   * <PERMUTE_ARGS> (default) is passed, the <argv>-elements are
-   * reordered dynamically, permuted, so that all options appear first.
-   * When the last option has been process, <EOF> is returned and
-   * <opt_ind()> holds the index into the next non-option
-   * element.  If <RETURN_IN_ORDER> is passed, then each <argv>-element
-   * is processed in the order is it seen.  If the element is not
-   * recognized as an option, '1' is returned and <opt_arg()>
-   * contains the <argv>-element found.
-   *
-   * If <long_only> is non-zero, then all options are treated as long
-   * options.  If a long option is not recognized, we try to find a
-   * matching short option. */
+   * one can takes an argument. For example, if @a optstring is defined as
+   * @c "abc:" or @c "abc::" then the command line @e "program -abcxxx" short
+   * options @e a, @e b, and @e c are found with @e "xxx" as the argument for
+   * @e c.
+   * However, if the command line is specified as @e "program -acb" only
+   * options @e a and @e c are found with @e "b" as the argument for @e c.
+   * Also, for options with optional arguments, that is, those followed by
+   * "::", the argument must be in the same @a argv element, so "program -abc
+   * xxx" will only find "xxx" as the argument for @e c if @a optstring is
+   * specified as @c "abc:" not @c "abc::".
+   */
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
                const ACE_TCHAR *optstring,
@@ -154,107 +163,153 @@ public:
   ~ACE_Get_Opt (void);
 
   /**
-   * Scan elements of <argv> (whose length is <argc>) for short option
-   * characters given in <optstring> or long options (with no short
-   * option equivilents).
+   * Scan elements of @a argv (whose length is @a argc) for short option
+   * characters given in @a optstring or long options (with no short
+   * option equivalents).
    *
-   * If an element of <argv> starts with '-', and is not exactly "-"
+   * If an element of @a argv starts with '-', and is not exactly "-"
    * or "--", then it is a short option element.  The characters of this
    * element (aside from the initial '-') are option characters. If
    * it starts with "--" followed by other characters it is treated as
-   * a long option.  If <operator()> is called repeatedly, it returns
-   * successively each of the option characters from each of the option
-   * elements.
+   * a long option.  If @c operator() is called repeatedly, it returns
+   * each of the option characters from each of the option elements.
    *
-   * If <operator()> finds another option character, it returns that
-   * character, updating <optind> and <nextchar> so that the next call
-   * to <operator()> can resume the scan with the following option
-   * character or <argv>-element.
+   * @return The parsed option character.
+   * @retval 0   A long option was found
+   * @retval '?' An unknown option character was found and the first
+   *             character of @a optstring was not a colon.
+   * @retval ':' An unknown option character was found and the first
+   *             character of @a optstring was a colon.
+   * @retval '1' @c RETURN_IN_ORDER was specified and a non-option argument
+   *             was found.
+   * @retval EOF No more option characters were found.  @c opt_ind() will
+   *             return the index in @a argv of the first @a argv element
+   *             that is not an option.  If @c PERMUTE_ARGS was
+   *             specified, the @a argv elements have been permuted so that
+   *             those that are not options now come last.
    *
-   * If <operator()> returns 0, it found a long option, '?' indicates
-   * an unknown option character, and '1' means that <RETURN_IN_ORDER>
-   * was specified and we found an non-option argument.
-   *
-   * If there are no more option characters, <operator()> returns
-   * <EOF>.  Then <opt_ind()> is the index in <argv> of the first
-   * <argv>-element that is not an option.  (If <PERMUTE_ARGS> was
-   * specified, the <argv>-elements have been permuted so that those
-   * that are not options now come last.)
+   * @note The standards are unclear with respect to the conditions under
+   * which '?' and ':' are returned, so we scan the initial characters of
+   * @a optstring up unto the first short option character for '+', '-',
+   * and ':' in order to determine ordering and missing argument behavior.
    */
   int operator () (void);
 
   /**
-   * For communication from <operator()> to the caller.  When
-   * <operator()> finds an option that takes an argument, the argument
-   * value is returned here, otherwise it returns 0.
+   * For communication from @c operator() to the caller.  When
+   * @c operator() finds an option that takes an argument, the argument
+   * value is returned from this method, otherwise it returns 0.
    */
   ACE_TCHAR *opt_arg (void) const;
 
   /**
-   * Index in <argv> of the next element to be scanned.  This is used
+   * Index in @a argv of the next element to be scanned.  This is used
    * for communication to and from the caller and for communication
-   * between successive calls to <operator()>.  On entry to
-   * <operator()>, zero means this is the first call; initialize.
+   * between successive calls to @c operator().  On entry to
+   * @c operator(), zero means this is the first call; initialize.
    *
-   * When <operator()> returns <EOF>, this is the index of the first of
+   * When @c operator() returns @c EOF, this is the index of the first of
    * the non-option elements that the caller should itself scan.
    *
-   * Otherwise, <opt_ind()> communicates from one call to the next how
-   * much of <argv> has been scanned so far.
+   * Otherwise, @c opt_ind() communicates from one call to the next how
+   * much of @a argv has been scanned so far.
    */
   int &opt_ind (void);
 
-  // Adds a long option with no corresponding short option.
+  /// Adds a long option with no corresponding short option.
   int long_option (const ACE_TCHAR *name,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
-  /// Adds a long option with a corresponding short option.  If the
-  /// short option has already been supplied in the <optstring>,
-  /// has_arg match match or an error is returned, otherwise the new
-  /// short option it is added to the <optstring>.
-  /// Returns 0 on success and -1 if the long option can not be added.
+  /// Adds a long option with a corresponding short option.
+  /**
+   * @param name          The long option to add.
+   * @param short_option  A character, the short option that corresponds
+   *                      to @a name.
+   * @param has_arg       Defines the argument requirements for
+   *                      the new option.  If the short option has already
+   *                      been supplied in the @a optstring, @a has_arg
+   *                      must match or an error is returned; otherwise, the
+   *                      new short option it is added to the @a optstring.
+   *
+   * @retval 0  Success
+   * @retval -1 The long option can not be added.
+   */
   int long_option (const ACE_TCHAR *name,
                    int short_option,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
   /// Returns the name of the long option found on the last call to
-  /// <operator()> or 0 if none was found.
+  /// @c operator() or 0 if none was found.
   const ACE_TCHAR *long_option (void) const;
 
-  /// Accessor for the <argv_> pointer.
+  /// Accessor for the internal @c argv_ pointer.
   ACE_TCHAR **argv (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
 
-  /// Return the <optstring>.  This is handy to verify that calls to
+  /// Return the @a optstring.  This is handy to verify that calls to
   /// long_option added short options as expected.
   const ACE_TCHAR *optstring (void) const;
 
 public:
-  /**
+  /*
    * The following five data members should be private, but that
    * would break backwards compatibility.  However, we recommend not
    * writing code that uses these fields directly.
    */
 
-  /// Holds the <argc> count.
+  /// Holds the @a argc count.
+  /**
+   * @deprecated This is public for backwards compatibility only.
+   * It will be made private in a release of ACE past 5.3.  Do not
+   * write code that relies on this member being public.
+   */
   int argc_;
 
-  /// Holds the <argv> pointer.
+  /// Holds the @a argv pointer.
+  /**
+   * @deprecated This is public for backwards compatibility only.
+   * It will be made private in a release of ACE past 5.3.  Do not
+   * write code that relies on this member being public; use the
+   * @c argv() accessor method instead.
+   */
   ACE_TCHAR **argv_;
-  /// Index in argv_ of the next element to be scanned.
+
+  /// Index in @c argv_ of the next element to be scanned.
+  /**
+   * @deprecated This is public for backwards compatibility only.
+   * It will be made private in a release of ACE past 5.3.  Do not
+   * write code that relies on this member being public; use the
+   * @c opt_ind() accessor method instead.
+   */
   int optind;
 
   /// Callers store zero here to inhibit the error message for
   /// unrecognized options.
+  /**
+   * @deprecated This is public for backwards compatibility only.
+   * It will be made private in a release of ACE past 5.3.  Do not
+   * write code that relies on this member being public; use the
+   * @a report_errors argument to this class's constructor instead.
+   */
   int opterr;
 
   /// Points to the option argument when one is found on last call to
-  /// <operator()>.
+  /// @c operator().
+  /**
+   * @deprecated This is public for backwards compatibility only.
+   * It will be made private in a release of ACE past 5.3.  Do not
+   * write code that relies on this member being public; use the
+   * @c opt_arg() accessor method instead.
+   */
   ACE_TCHAR *optarg;
 
 private:
+  /**
+   * @class ACE_Get_Opt_Long_Option  This class is for internal use
+   * in the ACE_Get_Opt class, and is inaccessible to users.
+   */
   class ACE_Get_Opt_Long_Option
   {
   public:
