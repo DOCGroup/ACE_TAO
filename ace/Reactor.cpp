@@ -1361,6 +1361,7 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
 	  if (this->timer_queue_->calculate_timeout (max_wait_time,
 						     this_timeout) == 0) {
 	    this_timeout = 0 ;
+	  }
       
 	  width = (u_long) this->handler_rep_.max_handlep1 ();
 
