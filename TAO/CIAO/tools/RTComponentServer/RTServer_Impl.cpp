@@ -55,8 +55,8 @@ CIAO::RTServer::RTComponentServer_Impl::create_container
                                                       this->poa_.in (),
                                                       this->get_objref (),
                                                       this->policy_set_manager_,
-						      this->static_config_flag_,
-						      this->static_entrypts_maps_),
+                                                      this->static_config_flag_,
+                                                      this->static_entrypts_maps_),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
@@ -190,7 +190,7 @@ CIAO::RTServer::RTContainer_Impl::init (const Components::ConfigValues &options,
 
   ACE_NEW_THROW_EX (this->container_,
                     CIAO::Session_Container (this->orb_.in (),
-					     this->static_config_flag_,
+                                             this->static_config_flag_,
                                              this->static_entrypts_maps_),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (-1);

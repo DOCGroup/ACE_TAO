@@ -1,3 +1,17 @@
+Tue Jun 15 20:53:28 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* examples\PluggableUDP\tests\Basic\server.cpp: 
+
+	  Added missing header file.
+	
+	* examples\PluggableUDP\tests\Basic\run_test.pl: 
+
+	  Added -ORBdebuglevel option.
+
+	* performance-tests\RTCorba\Thread_Pool\client.cpp: 
+
+	   Fixed options help error.
+
 Tue Jun 15 20:28:30 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao/Strategies/SCIOP_Endpoint.cpp: 
