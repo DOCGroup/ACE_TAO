@@ -12,8 +12,7 @@
 //
 // = AUTHOR
 //    Sumedh Mungee <sumedh@cs.wustl.edu>
-//    
-// 
+//     
 // ============================================================================
 
 #if !defined (COSPROPERTYSERVICE_I_H)
