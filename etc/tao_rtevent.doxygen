@@ -57,7 +57,7 @@ INPUT                 = TAO/orbsvcs/orbsvcs/RtecEventComm.idl \
 	TAO/orbsvcs/orbsvcs/Event_Utilities.i \
 	TAO/orbsvcs/orbsvcs/Event_Utilities.cpp \
 	TAO/orbsvcs/orbsvcs/Event
-FILE_PATTERNS         = EC_*.cpp EC_*.h EC_*.i EC_*.inl EC_*.pidl *.idl
+FILE_PATTERNS         = EC_*.cpp EC_*.h EC_*.i EC_*.inl EC_*.pidl ECG_*.cpp ECG_*.h ECG_*.i  *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =
