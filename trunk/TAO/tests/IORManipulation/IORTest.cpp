@@ -64,7 +64,7 @@ main (int argc, char *argv[])
 
       // Create a few fictitious IORs
       CORBA::Object_var name1 =
-        orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz",
+        orb_->string_to_object ("iiop://macarena.cs.wustl.edu:6060/xyz",
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::Object_var name2 =
