@@ -154,7 +154,7 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
   // Several events could be sent at once
   for (CORBA::ULong i = 0; i < events.length (); ++i) {
 
-    if (events[i].type_ == ACE_ES_EVENT_SHUTDOWN) {
+    if (events[i].header.type == ACE_ES_EVENT_SHUTDOWN) {
 
       ACE_DEBUG ((LM_DEBUG, "MIB Consumer: received shutdown event\n"));
       this->shutdown ();
@@ -170,24 +170,24 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
         // print the time stamps 
         ACE_hrtime_t creation;
         ORBSVCS_Time::TimeT_to_hrtime (creation,
-                                       events[i].creation_time_);
+                                       events[i].header.creation_time);
 
         ACE_hrtime_t ec_recv;
         ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
-                                       events[i].ec_recv_time_);
+                                       events[i].header.ec_recv_time);
 
         ACE_hrtime_t ec_send;
         ORBSVCS_Time::TimeT_to_hrtime (ec_send,
-                                       events[i].ec_send_time_);
+                                       events[i].header.ec_send_time);
 
         anyAnalyser_.printTimeStamp (creation, ec_recv, ec_send);
 
-        if (events[i].data_.any_value.any_owns_data ())
+        if (events[i].data.any_value.any_owns_data ())
         { 
-          void * void_ptr = ACE_OS::malloc (events[i].data_.any_value.type()->size(TAO_TRY_ENV));
+          void * void_ptr = ACE_OS::malloc (events[i].data.any_value.type()->size(TAO_TRY_ENV));
 
-          TAO_InputCDR stream ((ACE_Message_Block *)events[i].data_.any_value.value ());
-          if (stream.decode (events[i].data_.any_value.type(), void_ptr, 0, TAO_TRY_ENV)
+          TAO_InputCDR stream ((ACE_Message_Block *)events[i].data.any_value.value ());
+          if (stream.decode (events[i].data.any_value.type(), void_ptr, 0, TAO_TRY_ENV)
               != CORBA::TypeCode::TRAVERSE_CONTINUE)
           {
             cout << "MIB_Consumer::push: "
@@ -200,13 +200,13 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
 	        TAO_CHECK_ENV;
 
           // invoke the AnyAnalyser
-          anyAnalyser_.printAny (events[i].data_.any_value.type(), void_ptr);               
+          anyAnalyser_.printAny (events[i].data.any_value.type(), void_ptr);               
           ACE_OS::free(void_ptr);
         }
         else
         {                          
           // invoke the AnyAnalyser
-          anyAnalyser_.printAny (events[i].data_.any_value.type(), events[i].data_.any_value.value());                         
+          anyAnalyser_.printAny (events[i].data.any_value.type(), events[i].data.any_value.value());                         
         }
           
       }
