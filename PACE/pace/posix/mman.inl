@@ -52,7 +52,7 @@ pace_mprotect (void * addr,
                size_t len,
                int prot)
 {
-  return mprotect (addr, len, prot);
+  return mprotect ((char*)addr, len, prot);
 }
 
 PACE_INLINE
@@ -61,7 +61,7 @@ pace_msync (void * addr,
             size_t len,
             int flags)
 {
-  return msync (addr, len, flags);
+  return msync ((char*)addr, len, flags);
 }
 
 PACE_INLINE
