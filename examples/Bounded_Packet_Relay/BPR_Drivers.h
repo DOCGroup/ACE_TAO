@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-
 // $Id$
 
 // ============================================================================
@@ -27,50 +26,55 @@
 #define _BPR_DRIVER_H_
 
 #include "ace/Task.h"
-// #include "ace/Timer_Heap_T.h"
-// #include "ace/Timer_Queue_Adapters.h"
 
 class Command_Base
+// @@ Chris, make sure that you ALWAYs put the opening '{' BEFORE the
+// =TITLE and =DESCRIPTION comments.  Otherwise, it's hard to format
+// correctly via emacs.  I've reformatted most of the comments in the
+// *.h files, but I left this one to show how you were doing it
+// incorrectly.
   // = TITLE
   //    Defines an abstract class that allows us to invoke commands
-  //    without knowing anything about the implementation.  
+  //    without knowing anything about the implementation.
   //
   // = DESCRIPTION
-  //    This class declares an interface to execute a command independent
-  //    of the effect of the command, or the objects used to implement it.
+  //    This class declares an interface to execute a command
+  //    independent of the effect of the command, or the objects used
+  //    to implement it.
 {
 public:
-
   virtual int execute (void *arg) = 0;
   // Invokes the method <action_> from the object <receiver_>.
-
 };
 
-
 class Input_Device_Wrapper_Base : public ACE_Task_Base
+{
   // = TITLE
-  //    Defines an abstract base class for an input device wrapper that hides
-  //    the details of the specific device and provides a consistent message
-  //    passing interface without knowing anything about the implementation
-  //    of the input device or the message receiver.
+  //    Defines an abstract base class for an input device wrapper
+  //    that hides the details of the specific device and provides a
+  //    consistent message passing interface without knowing anything
+  //    about the implementation of the input device or the message
+  //    receiver.
   //
-  //    The abstract base class ctor takes a command template object that is 
-  //    instantiated with the correct receiver and action types. This command
-  //    object is used to send newly created input messages to the receiver.
+  //    The abstract base class ctor takes a command template object
+  //    that is instantiated with the correct receiver and action
+  //    types. This command object is used to send newly created input
+  //    messages to the receiver.
   //
-  //    The abstract base class is designed to operate in an active "push" 
-  //    mode, sending input data to the receiver whenever the data is ready.
-  //    The underlying device may be active, notifying the wrapper when
-  //    data is ready, or may be passive in which case the wrapper must
-  //    rely on a reactive and/or polling mechanism.
+  //    The abstract base class is designed to operate in an active
+  //    "push" mode, sending input data to the receiver whenever the
+  //    data is ready.  The underlying device may be active, notifying
+  //    the wrapper when data is ready, or may be passive in which
+  //    case the wrapper must rely on a reactive and/or polling
+  //    mechanism.
   //
   // = DESCRIPTION
-  //    Derived classes are responsible for filling in concrete definitions 
-  //    for the abstract message creation method and the svc method.
-{
+  //    Derived classes are responsible for filling in concrete
+  //    definitions for the abstract message creation method and the
+  //    svc method.
 public:
-
-  Input_Device_Wrapper_Base (ACE_Thread_Manager * input_task_mgr);
+  // = Initialization and termination methods.
+  Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr);
   // ctor
 
   virtual ~Input_Device_Wrapper_Base ();
@@ -86,23 +90,22 @@ public:
   // sets count of messages to send
 
   int request_stop (void);
-  // request that the input device stop sending messages
-  // and terminate its thread.  Should return 1 if it will do so, 0
-  // if it has already done so, or -1 if there is a problem doing so.
+  // request that the input device stop sending messages and terminate
+  // its thread.  Should return 1 if it will do so, 0 if it has
+  // already done so, or -1 if there is a problem doing so.
 
   virtual int svc (void);
   // This method runs the input device loop in the new thread.
 
 protected:
-
-  virtual ACE_Message_Block *create_input_message () = 0;
-  // creates a new message block, carrying data
-  // read from the underlying input device  
+  virtual ACE_Message_Block *create_input_message (void) = 0;
+  // creates a new message block, carrying data read from the
+  // underlying input device
 
   virtual int send_input_message (ACE_Message_Block *);
-  // sends a newly created message block, carrying data
-  // read from the underlying input device, by passing a
-  // pointer to the message block to its command execution
+  // sends a newly created message block, carrying data read from the
+  // underlying input device, by passing a pointer to the message
+  // block to its command execution
 
   Command_Base *send_input_msg_cmd_;
   // send newly created input message.
@@ -114,51 +117,62 @@ protected:
   // reactor used to multiplex input streams, timeouts
 
   int is_active_;
-  // flag to indicate whether or not input object 
-  // is and should remain active
+  // flag to indicate whether or not input object is and should remain
+  // active
 
   long send_count_;
-  // count of messages to send before stopping
-  // (-1 indicates the device should not stop)
+  // count of messages to send before stopping (-1 indicates the
+  // device should not stop)
 };
 
-
 class Output_Device_Wrapper_Base
+{
   // = TITLE
-  //    Defines an abstract base class for an output device wrapper that hides
-  //    the details of the specific device and provides a consistent write
-  //    method interface without knowing anything about the implementation.
+  //    Defines an abstract base class for an output device wrapper
+  //    that hides the details of the specific device and provides a
+  //    consistent write method interface without knowing anything
+  //    about the implementation.
   //
   // = DESCRIPTION
-  //    The abstract methods write_output_message () and modify_device_settings () 
-  //    are defined in derived classes to write the contents of the passed message
-  //    out the underlying output device, and update device settings, respectively.
-{
+  //    The abstract methods write_output_message () and
+  //    modify_device_settings () are defined in derived classes to
+  //    write the contents of the passed message out the underlying
+  //    output device, and update device settings, respectively.
 public:
-
   virtual int write_output_message (void *) = 0;
-  // writes contents of the passed message block
-  // out to the underlying output device
+  // writes contents of the passed message block out to the underlying
+  // output device
 
   virtual int modify_device_settings (void *) = 0;
   // provides an abstract interface to allow modifying device settings
 };
 
-
 template <class SYNCH>
 class Bounded_Packet_Relay
 {
+  // = TITLE
+  //   @@ Chris, please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Chris, please fill in here.
 public:
-
   typedef int (Input_Task::*ACTION) (void *);
   // Command entry point type definition
 
-  enum Transmission_Status {UN_INITIALIZED, STARTED, COMPLETED, TIMED_OUT, CANCELLED, ERROR};
-  // enumerates possible status values at the end of a transmission
+  // = Enumerates possible status values at the end of a transmission.
+  enum Transmission_Status 
+  {
+    UN_INITIALIZED,
+    STARTED,
+    COMPLETED,
+    TIMED_OUT,
+    CANCELLED,
+    ERROR
+  };
 
-  Bounded_Packet_Relay (ACE_Thread_Manager * input_task_mgr,
-                        Input_Device_Wrapper_Base * input_wrapper,
-                        Output_Device_Wrapper_Base * output_wrapper);
+  Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
+                        Input_Device_Wrapper_Base *input_wrapper,
+                        Output_Device_Wrapper_Base *output_wrapper);
   // ctor
 
   virtual ~Bounded_Packet_Relay (void);
@@ -178,18 +192,13 @@ public:
   int report_statistics (void);
   // Requests a report of statistics from the last transmission.
 
-  /////////////////////////////////////
-  // Command Accessible Entry Points //
-  /////////////////////////////////////
+  // = Command Accessible Entry Points.
 
   int receive_input (void *);
   // public entry point to which to push input.
 
 private:
-
-  ////////////////////////////
-  // Concurrency Management //
-  ////////////////////////////
+  // = Concurrency Management.
 
   ACE_Thread_Manager * input_task_mgr_;
   // Thread manager for the input device task
@@ -206,9 +215,7 @@ private:
   // lock for safe thread synchronization 
   // of transmission startup and termination
 
-  /////////////////////////////
-  // Transmission Statistics //
-  /////////////////////////////
+  // = Transmission Statistics
 
   u_long transmission_number_;
   // number of transmissions sent
@@ -224,11 +231,11 @@ private:
 
   ACE_Time_Value transmission_end_;
   // ending time of the most recent transmission
-
 };
 
 template <class TQ>
 class Bounded_Packet_Relay_Driver
+{
   // = TITLE
   //    Defines a class that provides a simmple implementation for
   //      a test driver for timer queues.
@@ -240,26 +247,25 @@ class Bounded_Packet_Relay_Driver
   //    read_input () and get_next_request () methods.  Subclasses can
   //    override these methods if there is some logic that is specific
   //    to that implementation.
-{
 public:
-
   virtual int parse_commands (const char *buf);
-  // Breaks up the input string buffer into pieces and executes
-  // the appropriate method to handle that operation.
+  // Breaks up the input string buffer into pieces and executes the
+  // appropriate method to handle that operation.
 
   virtual int run (void);
-  // This is the main entry point for the driver.  The user
-  // of the class should normally invoke this method.
-  // Returns 0 when successful, or 0 otherwise.
+  // This is the main entry point for the driver.  The user of the
+  // class should normally invoke this method.  Returns 0 when
+  // successful, or 0 otherwise.
 
   virtual int get_next_request (void);
   // This internal method gets the next request from the user.
   // Returns -1 when user wants to exit.  Returns 0 otherwise.
 
   virtual ssize_t read_input (char *buf, size_t bufsiz);
-  // Reads input from the user into the buffer <buf> with a maximum
-  // of <bufsiz> bytes.  Returns the amount of bytes actually read
-  // Otherwise, a -1 is returned and errno is set to indicate the error.
+  // Reads input from the user into the buffer <buf> with a maximum of
+  // <bufsiz> bytes.  Returns the amount of bytes actually read
+  // Otherwise, a -1 is returned and errno is set to indicate the
+  // error.
 
   virtual int display_menu (void);
   // Prints the user interface for the driver to STDOUT.
@@ -268,7 +274,6 @@ public:
   // Initializes values and operations for the driver.
 
 protected:
-
   // = Major Driver Mechanisms
 
   TQ timer_queue_;
