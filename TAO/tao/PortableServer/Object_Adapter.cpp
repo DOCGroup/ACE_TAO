@@ -736,6 +736,21 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
   ACE_TRY
     {
+      CORBA::OctetSeq_var ocs;
+      sri_adapter.tao_ft_interception_point (&ri,
+                                             ocs.out ()
+                                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      /// If we have a cached result, just go ahead and send the reply
+      /// and let us  return
+      if (ocs.ptr () != 0)
+        {
+          // request.result_seq (
+          request.send_cached_reply (ocs.inout ());
+
+          return TAO_Adapter::DS_OK;
+        }
       // The receive_request_service_contexts() interception point
       // must be invoked before the operation is dispatched to the
       // servant.

@@ -1404,6 +1404,18 @@ TAO_NAMESPACE  PortableInterceptor
 
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    virtual void tao_ft_interception_point (
+        PortableInterceptor::ServerRequestInfo_ptr ,
+        CORBA::OctetSeq_out
+        ACE_ENV_ARG_DECL_NOT_USED
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
+        )) {};
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void receive_request_service_contexts (
         PortableInterceptor::ServerRequestInfo_ptr ri
