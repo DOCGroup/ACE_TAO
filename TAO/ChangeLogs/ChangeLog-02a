@@ -1,3 +1,17 @@
+Mon Jun 26 15:15:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/IORC.h:
+	* tao/IORC.i:
+	* tao/IORC.cpp:
+	* tao/diffs/IORC.h.diff:
+	* tao/diffs/IORC.cpp.diff:
+
+	  Regenerated files from IOR.pidl and added diff files.
+	  Reason for regeneration was that the Any >>= operator
+	  and the CDR >> operator changed for object
+	  references, and these files were not regenerated at that
+	  time.
+
 Mon Jun 26 15:06:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/LocalObject.h:
