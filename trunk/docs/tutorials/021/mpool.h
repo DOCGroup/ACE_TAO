@@ -24,7 +24,7 @@ public:
   Allocator (const char * _name = "MemoryPool");
   ~Allocator (void);
 
-  typedef ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_SV_Semaphore_Simple> pool_t;
+  typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SV_Semaphore_Simple> pool_t;
 
   // Provide an accessor to the pool.  This will also allocate the
   // pool when first invoked.

@@ -27,17 +27,17 @@ object.
 <font color=red>/* A connection handler will also be derived from ACE_Event_Handler so
   that we can register with a reactor.  */</font>
 
-<font color=blue>#include</font> "<font color=green>ace/Event_Handler.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Event_Handler.h">ace/Event_Handler.h</A>"
 
 <font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
-# pragma once
+<font color=blue># pragma</font> <font color=purple>once</font>
 <font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
-<font color=blue>#include</font> "<font color=green>ace/INET_Addr.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/INET_Addr.h">ace/INET_Addr.h</A>"
 
 <font color=red>/* Since we're doing TCP/IP, we'll need a SOCK_Stream for the
   connection.  */</font>
-<font color=blue>#include</font> "<font color=green>ace/SOCK_Stream.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Stream.h">ace/SOCK_Stream.h</A>"
 
 class Logging_Handler : public ACE_Event_Handler
 {
