@@ -46,7 +46,7 @@ void __fastcall TORBThread::Execute ()
     }
   catch (CORBA::Exception& e)
     {
-      ShowMessage (e._id ());
+      ShowMessage (e._rep_id ());
       Application->Terminate ();
     }
 }
