@@ -9,7 +9,11 @@ Wed May 19 23:50:18 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	* ace/tests/Makefile:
 	  The Tk Reactor test and the tcl script for the GUI. This is
 	  similar to the XtReactor_Test. 
-	
+
+	* ace/include/makeinclude/wrapper_macros.GNU:
+	* ace/include/makeinclude/platform_sunos5_sunc++.GNU
+	  Added changes to Makefile flags for XtReactor.
+		
 Wed May 19 21:56:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Queue.h: fixed typo in comment: interrupt.
