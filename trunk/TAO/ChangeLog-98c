@@ -1,3 +1,11 @@
+Wed Sep 10 11:48:34 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp
+	  orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
+	  orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp:
+          cleaned up remaining inconsistencies with new RtecEventComm::Event
+          interface.
+
 Thu Sep 10 09:49:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/IDL_Cubit/run_test.pl: set default
