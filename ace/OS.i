@@ -1961,6 +1961,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  // Free up underlying objects of the simulated semaphore.
   int r1 = ACE_OS::mutex_destroy (&s->lock_);
   int r2 = ACE_OS::event_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
@@ -2061,6 +2062,11 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
   int result = -1;
 
+  // Initialize internal object for semaphore simulation.
+  // Grab the lock as soon as possible when we initializing
+  // the semaphore count.  Notice that we initialize the
+  // event object as "manually reset" so we can amortize the
+  // cost for singling/reseting the event.
   if (ACE_OS::mutex_init (&s->lock_, type, name, arg, sa) == 0
       && ACE_OS::event_init (&s->count_nonzero_, 1, 1, type, name, arg, sa) == 0
       && ACE_OS::mutex_lock (&s->lock_) == 0)
@@ -2071,6 +2077,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
         result = 0;
     }
 
+  // Destroy the internal objects if we didn't initialize
+  // either of them successfully.  Don't bother to check
+  // for errors.
   if (result == -1)
     {
       ACE_OS::mutex_destroy (&s->lock_);
@@ -2144,10 +2153,13 @@ ACE_OS::sema_post (ACE_sema_t *s)
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
   int result = -1;
 
+  // Since we are simulating semaphores, we need to update semaphore
+  // count manually.  Grab the lock to prevent race condition first.
   if (ACE_OS::mutex_lock (&s->lock_) == 0)
     {
-      // Check the original state of event object.  We don't need to
-      // set it everytime.
+      // Check the original state of event object.  Single the event
+      // object in transition from semaphore not available to
+      // semaphore available.
       if (s->count_++ <= 0)
         result = ACE_OS::event_signal (&s->count_nonzero_);
       else
@@ -2180,6 +2192,12 @@ ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
                                           ace_result_), int, -1);
 #else
   // On POSIX platforms we need to emulate this ourselves.
+  // @@ We can optimize on this implementation.  However,
+  // the semaphore promitive on Win32 doesn't allow one
+  // to increase a semaphore to more than the count it was
+  // first initialized.  Posix and solaris don't seem to have
+  // this restriction.  Should we impose the restriction in
+  // our semaphore simulation?
   for (size_t i = 0; i < release_count; i++)
     if (ACE_OS::sema_post (s) == -1)
       return -1;
@@ -2232,16 +2250,23 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
       return -1;
     }
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  // Check the status of semaphore first.  Return immediately
+  // if the semaphore is not available and avoid grabing the
+  // lock.
   int result = ::WaitForSingleObject (s->count_nonzero_, 0);
 
-  if (result == WAIT_OBJECT_0)
+  if (result == WAIT_OBJECT_0)	// Proceed when it is available.
     {
       ACE_OS::mutex_lock (&s->lock_);
 
       // Need to double check if the semaphore is still available.
+      // The double checking scheme will slightly affect the
+      // efficiency if most of the time semaphores are not blocked.
       result = ::WaitForSingleObject (s->count_nonzero_, 0);
       if (result == WAIT_OBJECT_0)
         {
+	  // Adjust the semaphore count.  Only update the event
+	  // object status when the state changed.
           s->count_--;
           if (s->count_ <= 0)
             ACE_OS::event_reset (&s->count_nonzero_);
@@ -2251,6 +2276,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
       ACE_OS::mutex_unlock (&s->lock_);
     }
 
+  // Translate error message to errno used by ACE.
   errno = result == WAIT_TIMEOUT ? EBUSY : ::GetLastError ();
   // This is taken from the hack above. ;)
   return -1;
@@ -2337,16 +2363,23 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     }
   /* NOTREACHED */
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  // Timed wait.
   int result = -1;
   for (;;)
+    // Check if the semaphore is avialable or not and wait forever.
+    // Don't bother to grab the lock if it is not available (to avoid
+    // deadlock.)
     switch (::WaitForSingleObject (s->count_nonzero_, INFINITE))
       {
       case WAIT_OBJECT_0:
         ACE_OS::mutex_lock (&s->lock_);
 
         // Need to double check if the semaphore is still available.
+	// This time, we shouldn't wait at all.
         if (::WaitForSingleObject (s->count_nonzero_, 0) == WAIT_OBJECT_0)
           {
+	    // Decrease the internal counter.  Only update the event
+	    // object's status when the state changed.
             s->count_--;
             if (s->count_ <= 0)
               ACE_OS::event_reset (&s->count_nonzero_);
@@ -2354,10 +2387,15 @@ ACE_OS::sema_wait (ACE_sema_t *s)
           }
 
         ACE_OS::mutex_unlock (&s->lock_);
+	// if we didn't get a hold on the semaphore, the result won't
+	// be 0 and thus, we'll start from the beginning again.
         if (result == 0)
           return 0;
         break;
+
       default:
+	// Since we wait indefinitely, anything other than
+	// WAIT_OBJECT_O indicates an error.
         errno = ::GetLastError ();
         // This is taken from the hack above. ;)
         return -1;
@@ -2444,20 +2482,32 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     }
   /* NOTREACHED */
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  // Record the starting time for later reference.  This is necessary
+  // because we may get signaled but cannot grab the semaphore
+  // before timeout.  In that case, we'll need to restart the process
+  // with updated timeout value.
   ACE_Time_Value start_time = ACE_OS::gettimeofday ();
+
+  // Always wait <tv> time when we first start the wait.
   ACE_Time_Value relative_time = tv;
   int result = -1;
 
+  // While we are not timeout yet.
   while (relative_time > ACE_Time_Value::zero)
     {
+      // Wait for our turn to get the object.  
       switch (::WaitForSingleObject (s->count_nonzero_, relative_time.msec ()))
         {
         case WAIT_OBJECT_0:
           ACE_OS::mutex_lock (&s->lock_);
 
           // Need to double check if the semaphore is still available.
+	  // We can only do a "try lock" styled wait here to avoid
+	  // blocking threads that want to signal the semaphore.
           if (::WaitForSingleObject (s->count_nonzero_, 0) == WAIT_OBJECT_0)
             {
+	      // As before, only reset the object when the semaphore
+	      // is no longer available.
               s->count_--;
               if (s->count_ <= 0)
                 ACE_OS::event_reset (&s->count_nonzero_);
@@ -2465,20 +2515,30 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
             }
 
           ACE_OS::mutex_unlock (&s->lock_);
+
+	  // Only return when we successfully get the semaphore.
           if (result == 0)
             return 0;
           break;
+
+	  // We have timed out.
         case WAIT_TIMEOUT:
           errno = ETIME;
           return -1;
+
+	  // What?
         default:
           errno = ::GetLastError ();
           // This is taken from the hack above. ;)
           return -1;
         };
+
+      // Haven't been able to get the semaphore yet, update the
+      // timeout value to reflect the remaining time we want to wait.
       relative_time = tv - (ACE_OS::gettimeofday () - start_time);
     }
 
+  // We have timed out.
   errno = ETIME;
   return -1;
 #  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
@@ -2785,6 +2845,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+      // Can't use Win32 API on our simulated semaphores.
       result = ACE_OS::sema_wait (&cv->sema_,
                                   ACE_Time_Value (0, msec_timeout * 1000));
 #  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
@@ -2928,6 +2989,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 #else
+  // Can't use Win32 API on simulated semaphores.
   result = ACE_OS::sema_wait (&cv->sema_,
                               ACE_Time_Value (0, msec_timeout * 1000));
 #endif /* ACE_USES_WINCE_SEMA_SIMULATION */
@@ -2993,6 +3055,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
 #else
+  // Can't use Win32 API on simulated semaphores.
   result = ACE_OS::sema_wait (&cv->sema_);
 #endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
