@@ -21,10 +21,9 @@ is next.
 
 <P>
 <HR WIDTH="100%">
-<BR><FONT FACE="Arial,Helvetica"></FONT>&nbsp;<FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">// $Id: client_handler.h,v 1.1 1998/08/30
-16:04:12 jcej Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR>&nbsp;
+<BR><FONT FACE="Arial,Helvetica">// $Id: client_handler.h,v 1.1 1998/08/30
+23:47:14 schmidt Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">#ifndef CLIENT_HANDLER_H</FONT>
 <BR><FONT FACE="Arial,Helvetica">#define CLIENT_HANDLER_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
@@ -67,7 +66,9 @@ at concurrency options.</FONT>
 <BR><FONT FACE="Arial,Helvetica">class Client_Handler : public ACE_Svc_Handler
 &lt; ACE_SOCK_STREAM, ACE_NULL_SYNCH ></FONT>
 <BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">public:</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">public:</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; typedef ACE_Svc_Handler &lt; ACE_SOCK_STREAM,
+ACE_NULL_SYNCH > inherited;</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; // Constructor...</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Handler (void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
@@ -108,6 +109,16 @@ too closely to the ACE_Acceptor&lt;> set of objects.&nbsp; In our</FONT>
 open() you'll see how we get around that.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; int open (void *_acceptor);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When an ACE_Task&lt;>
+object falls out of the svc() method, the framework</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; will call the
+close() method.&nbsp; That's where we want to cleanup ourselves</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; if we're running
+in either thread-per-connection or thread-pool mode.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int close(u_long flags = 0);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When there is
@@ -264,7 +275,7 @@ one of the thread pool threads.&nbsp; More on this when we get to handle_input()
 creator_;</FONT>
 <BR><FONT FACE="Arial,Helvetica">};</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P><FONT FACE="Arial,Helvetica">#endif // CLIENT_HANDLER_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<P><FONT FACE="Arial,Helvetica">#endif // CLIENT_HANDLER_H</FONT>
 
 <P>
 <HR WIDTH="100%">
@@ -275,7 +286,8 @@ your application upside down just because you changed thread models.
 
 <P>
 <HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page06.html">Continue
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page06.html">Continue
 This Tutorial</A>]</CENTER>
 
 </BODY>

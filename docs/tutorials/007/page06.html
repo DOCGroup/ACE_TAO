@@ -16,15 +16,15 @@
 <P>
 <HR WIDTH="100%">
 
-<P><A HREF="client_handler.cpp">client_handler.cpp</A> shows some of the
-changes due to the thread-pool.&nbsp;&nbsp; Just a few though.
+<P><A HREF="client_handler.cpp">client_handler.cpp</A>
+shows some of the changes due to the thread-pool.&nbsp;&nbsp; Just a few
+though.
 
 <P>
 <HR WIDTH="100%">
-<BR><FONT FACE="Arial,Helvetica"></FONT>&nbsp;<FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">// $Id: client_handler.cpp,v 1.1 1998/08/30
-16:04:12 jcej Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR>&nbsp;
+<BR><FONT FACE="Arial,Helvetica">// $Id: client_handler.cpp,v 1.1 1998/08/30
+23:47:14 schmidt Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Since this is the third time
@@ -143,6 +143,32 @@ return this->activate();</FONT>
 with %s\n", addr.get_host_name ()));</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; As mentioned in the header,
+the typical way to close an object in a threaded</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; context is to invoke it's
+close() method.&nbsp; Since we already have a handle_close()</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; method built to cleanup after
+us, we'll just forward the request on to that</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; object.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">int Client_Handler::close(u_long flags)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+this->handle_close(ACE_INVALID_HANDLE,0);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+After we've taken care of ourselves, call the baseclass method</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to do any other necessary cleanup.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+return inherited::close();</FONT>
 <BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
@@ -268,7 +294,13 @@ _handle, ACE_Reactor_Mask _mask)</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
 <BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P><FONT FACE="Arial,Helvetica">int Client_Handler::svc(void)</FONT>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Remember that when we leave
+our svc() method, the framework will take care</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; of calling our close() method
+so that we can cleanup after ourselves.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">int Client_Handler::svc(void)</FONT>
 <BR><FONT FACE="Arial,Helvetica">{</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; char buf[128];</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; memset (buf, 0, sizeof (buf));</FONT><FONT FACE="Arial,Helvetica"></FONT>
@@ -314,18 +346,19 @@ _rdbuf_len))</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P>
 <HR WIDTH="100%">
 
-<P>Ok, now we've gone and changed handle_input()&nbsp;so that it knows
-when to do work and when to enqueue itself.&nbsp; Beyond that, we're still
-about the same.
+<P>Ok, now we've gone and changed handle_input() so that it knows when
+to do work and when to enqueue itself.&nbsp; Beyond that, we're still about
+the same.
 
 <P>
 <HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page07.html">Continue
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page07.html">Continue
 This Tutorial</A>]</CENTER>
 
 </BODY>
