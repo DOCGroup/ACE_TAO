@@ -97,19 +97,30 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
     }
   else
     {
-      io->transmit_file (handler,
-                         info->path (),
-                         "",
-                         0,
-                         "",
-                         0);
+      if (ACE_OS::strcmp (info->version (), "HTTP/0.9") == 0)
+        io->transmit_file (handler,
+                           info->path (),
+                           "",
+                           0,
+                           "",
+                           0);
+      else
+        io->transmit_file (handler,
+                           info->path (),
+                           "HTTP/1.0 200 Ok\r\n\r\n",
+                           19,
+                           "",
+                           0);
 
       switch (handler->status ())
         {
         case JAWS_IO_Handler::TRANSMIT_OK_A:
-          data->payload (0);
-          delete info;
-          return 1;
+          {
+            JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, OK_A");
+            data->payload (0);
+            delete info;
+            return 1;
+          }
 
         case JAWS_IO_Handler::TRANSMIT_OK:
           {
@@ -119,12 +130,18 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
             return 0;
           }
         case JAWS_IO_Handler::TRANSMIT_ERROR:
-        case JAWS_IO_Handler::TRANSMIT_ERROR_A:
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, ERROR");
             data->payload (0);
             delete info;
-            return -1;
+            return 0;
+          }
+        case JAWS_IO_Handler::TRANSMIT_ERROR_A:
+          {
+            JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, ERROR_A");
+            data->payload (0);
+            delete info;
+            return 1;
           }
         default:
           {

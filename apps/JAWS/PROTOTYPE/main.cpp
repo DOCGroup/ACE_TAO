@@ -21,6 +21,10 @@ handler (int)
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
 
+static JAWS_HTTP_10_Read_Task HTTP_Read;
+static JAWS_HTTP_10_Parse_Task HTTP_Parse;
+static JAWS_HTTP_10_Write_Task HTTP_Write;
+
 int
 main (int argc, char *argv[])
 {
@@ -31,9 +35,6 @@ main (int argc, char *argv[])
   ACE_OS::signal (SIGUSR2, (ACE_SignalHandler) handler);
 
   JAWS_Server server (argc, argv);
-  JAWS_HTTP_10_Read_Task HTTP_Read;
-  JAWS_HTTP_10_Parse_Task HTTP_Parse;
-  JAWS_HTTP_10_Write_Task HTTP_Write;
 
   HTTP_Read.next (&HTTP_Parse);
   HTTP_Parse.next (&HTTP_Write);
