@@ -325,7 +325,7 @@ run_event_loop (u_short port)
       ACE_Handle_Set temp = handle_set;
 
       int result = ACE_OS::select (int (oneway_acceptor.get_handle ()) + 1,
-                                   (fd_set *) &temp,
+                                   (fd_set *) temp,
                                    0,
                                    0,
                                    timeout);
