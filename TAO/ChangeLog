@@ -1,3 +1,13 @@
+Fri Dec 13 10:58:40 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
+ 	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+	  Made amends for "signed unsigned comparison" compile warning.
+
+	* orbsvcs/orbsvcs/Notify/CosNotify_Initializer.cpp:
+	  Removed reference to defunct .inl file. 
+	
 Fri Dec 13 10:04:59 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_tmplinst.cpp:
