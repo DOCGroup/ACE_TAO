@@ -31,6 +31,7 @@
 #include "tao/Alias_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
 #include "tao/String_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
