@@ -72,11 +72,6 @@ be_expression::be_expression (char c)
 {
 }
 
-be_expression::be_expression (ACE_CDR::WChar wc)
-  : AST_Expression (wc)
-{
-}
-
 be_expression::be_expression (double d)
   : AST_Expression (d)
 {
