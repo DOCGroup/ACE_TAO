@@ -7,7 +7,9 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Managed_Object.h"
-#include "ace/Synch.h"
+#if !defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+# include "ace/Synch.h"
+#endif /* !ACE_TEMPLATES_REQUIRE_SOURCE */
 
 template <class TYPE>
 ACE_Managed_Cleanup<TYPE>::ACE_Managed_Cleanup (void)
