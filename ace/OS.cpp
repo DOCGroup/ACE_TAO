@@ -1686,13 +1686,14 @@ ACE_Thread_Adapter::invoke (void)
       return status;
     }
   }
+#if defined (ACE_WIN32)
   ACE_SEH_EXCEPT (this->rethrow_w32_structural_exception ()) {
     // Here's where we might want to provide a hook to report this...
     // As it stands now, we just rethrow all Win32 structured exceptions
     // and report the situation.  It is up to application programmers to
     // determine what to do.
   }
-  return 0;			// For g++, not reached
+#endif /* ACE_WIN32 */
 }
 
 #if defined (ACE_WIN32)
