@@ -8676,7 +8676,7 @@ ACE_OS::getenv (const wchar_t *symbol)
 }
 
 ACE_INLINE int
-ACE_OS::rename (const char *old_name, const char *new_name)
+ACE_OS::rename (const wchar_t *old_name, const wchar_t *new_name)
 {
 #if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::rename");
