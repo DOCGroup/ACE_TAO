@@ -13,8 +13,6 @@
 #define CIAO_CONFIG_HANDLERS_MDD_Handler_H
 #include /**/ "ace/pre.h"
 
-#include "Base_Handler.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
