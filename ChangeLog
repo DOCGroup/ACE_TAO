@@ -6,6 +6,7 @@ Thu May 13 07:24:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Cached_Accept_Conn_Test.{h,cpp}:
         * tests/Cached_Conn_Test.cpp:
         * ace/README:
+        * examples/Web_Crawler/URL_Visitor.cpp:
           Removed ACE_HAS_BROKEN_EXTENDED_TEMPLATES. This was for a bug in pre
           GCC 2.8 compilers which we don't support anymore.
 
