@@ -1,10 +1,15 @@
+Wed Aug 13 10:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bench/wire:
+	* tests/Bench/Collocated: Removed these two tests from the main
+	  trunk. They were suposed to be in our branch for testing.
+
 Wed Aug 13 10:08:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORManipulation/IORC.h: 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
 
 	  Fixed fuzz errors.
-	
 	
 Wed Aug 13 14:03:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
