@@ -3,7 +3,8 @@ Tue Aug 11 12:35:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tests/test_config.h (~ACE_Test_Output): Changed !defined
 	  (ACE_HAS_WINCE) to !defined (ACE_WIN32).  When using non-static
 	  object manager, the singleton ACE_Log_Msg may no longer exist
-	  here and the reseting here just causes access violations.
+	  here and the reseting here just causes access violations.  Other
+	  platforms which use non-static might suffer the same sympton.
 	  
 Tue Aug 11 12:29:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
