@@ -61,7 +61,7 @@ TAO/tests/Exposed_Policies/run_test.pl
 TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl: !DISABLE_MINIMUM !INTERCEPTORS
+TAO/tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Object_Loader/run_test.pl: !STATIC
 
 TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM
