@@ -1,3 +1,11 @@
+Fri Mar 12 18:09:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: 
+	  Removed warnings in generated code.
+
+	* TAO_IDL/be/be_helper.cpp: 
+	  Cosmetic changes.
+
 Fri Mar 12 16:17:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/client.cpp:
