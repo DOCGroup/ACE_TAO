@@ -14,6 +14,12 @@ Tue Dec 16 22:09:42 1997  David L. Levine  <levine@cs.wustl.edu>
           warnings about narrowing.  As a side effect, the function-style
           casts were removed.
 
+        * ace/config-osf1*.h,README: added comment stating that
+          ACE_HAS_64BIT_LONGS is deprecated.
+
+        * ace/config-tandem.h: removed commented-out line that mentioned
+          ACE_HAS_64BIT_LONGS.
+
 Tue Dec 16 21:00:49 1997  Chris Gill  <cdgill@tango.cs.wustl.edu>
 
         Single Threaded port of ACE to pSOSim - first checkin
