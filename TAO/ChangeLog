@@ -1,3 +1,11 @@
+Mon Feb 23 16:05:12 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+          Fixed unused argument warning.
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+          Fixed ACE_AUTO_PTR_RESET problem.
+
 Mon Feb 23 15:43:01 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
