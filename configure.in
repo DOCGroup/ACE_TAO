@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.60 $)dnl
+AC_REVISION($Revision 0.61 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -627,6 +627,24 @@ dnl line, then "no_x" is set to "yes."
                   ;;
                 *)
                   AC_MSG_ERROR(bad value ${enableval} for --enable-xt-reactor)
+                  ;;
+               esac
+              ],)
+
+AC_ARG_ENABLE(fl-reactor,
+              [  --enable-fl-reactor     build support for the FlReactor [default=no]],
+              [
+               case "${enableval}" in
+                yes)
+                  AC_MSG_ERROR(--enable-fl-reactor currently unimplemented)
+                  ace_user_enable_fl_reactor=yes
+                  ;;
+                no)
+                  AC_MSG_ERROR(--enable-fl-reactor currently unimplemented)
+                  ace_user_enable_fl_reactor=no
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-fl-reactor)
                   ;;
                esac
               ],)
@@ -3266,6 +3284,9 @@ AC_CHECK_FUNC(strdup, dnl
 AC_CHECK_FUNC(strrchr, dnl
   ,
   AC_DEFINE(ACE_LACKS_STRRCHR))
+
+AC_CHECK_FUNC(memchr, dnl
+  AC_DEFINE(ACE_HAS_MEMCHR),)
 
 AC_CHECK_FUNC(syscall, dnl
   ,

@@ -410,6 +410,10 @@
    prototype. */
 #undef ACE_HAS_BROKEN_SETRLIMIT
 
+/* Compiler/platform has the wrong prototype for t_error(), i.e.,
+   t_error(char *) rather than t_error(const char *). */
+#undef ACE_HAS_BROKEN_T_ERROR
+
 /* platform define struct timespec members as ts_sec and ts_nsec instead of
    tv_sec and tv_nsec.  This is highly non-portable.  Currently only
    FreeBSD 2.1.x uses it. */
@@ -465,6 +469,9 @@
 
 /* Compiler supports C++ exception handling */
 #undef ACE_HAS_EXCEPTIONS
+
+/* Platform has Fast-Light (FL) toolkit installed */
+#undef ACE_HAS_FL
 
 /* Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be
    defined, except on Win32) */
@@ -531,6 +538,9 @@
 
 /* Enabled malloc statistics collection. */
 #undef ACE_HAS_MALLOC_STATS
+
+/* Use native implementation of memchr(). */
+#undef ACE_HAS_MEMCHR
 
 /* Avoid #including ace/streams.h in OS.h.  Users must include ace/streams.h,
    <iostream>, or <iostream.h> explicitly in their code.  Some platforms, such
