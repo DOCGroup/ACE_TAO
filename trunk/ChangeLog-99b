@@ -1,5 +1,10 @@
 Thu Jun 17 12:46:30 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.h: Added an automatic test to check if we're running on
+ 	  an EBCDIC character set, and if so, set
+ 	  ACE_STANDARD_CHARACTER_SET_SIZE to 256 rather than 128.  Thanks
+ 	  to Jim Rogers for this suggestion.
+
 	* performance-tests/TTCP/Makefile: Zapped the Orbix and ORBeline
  	  directories from the Makefile.  These are *way* out of date and
  	  have been superceeded by the versions in

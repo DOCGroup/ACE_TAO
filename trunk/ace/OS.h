@@ -27,6 +27,18 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Do not change these values wantonly since GPERF depends on them..
+#define ACE_ASCII_SIZE 128
+#define ACE_EBCDIC_SIZE 256
+
+#if 'a' < 'A'
+#define ACE_HAS_EBCDIC
+#define ACE_STANDARD_CHARACTER_SET_SIZE 256
+#else
+#define ACE_HAS_ASCII
+#define ACE_STANDARD_CHARACTER_SET_SIZE 128
+#endif /* 'a' < 'A' */
+
 // Get OS.h to compile on some of the platforms without DIR info yet.
 # if !defined (ACE_HAS_DIRENT)
     typedef int DIR;
