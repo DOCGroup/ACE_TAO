@@ -19,14 +19,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Priority_Reactor)
 const int npriorities =
   ACE_Event_Handler::HI_PRIORITY - ACE_Event_Handler::LO_PRIORITY + 1;
 
-ACE_INLINE void
+void
 ACE_Priority_Reactor::init_bucket (void)
 {
   // Allocate enough space for all the handles.
   // TODO: This can be wrong, maybe we should use other kind of
   // allocator here?
   ACE_NEW (this->tuple_allocator_,
-	   TUPLE_ALLOCATOR (ACE_Select_Reactor::DEFAULT_SIZE));
+           TUPLE_ALLOCATOR (ACE_Select_Reactor::DEFAULT_SIZE));
 
   // The event handlers are assigned to a new As the Event
   ACE_NEW (this->bucket_,
@@ -39,7 +39,7 @@ ACE_Priority_Reactor::init_bucket (void)
 }
 
 ACE_Priority_Reactor::ACE_Priority_Reactor (ACE_Sig_Handler *sh,
-					    ACE_Timer_Queue *tq)
+                                            ACE_Timer_Queue *tq)
   : ACE_Select_Reactor(sh, tq),
     bucket_ (0),
     tuple_allocator_ (0)
@@ -49,9 +49,9 @@ ACE_Priority_Reactor::ACE_Priority_Reactor (ACE_Sig_Handler *sh,
 }
 
 ACE_Priority_Reactor::ACE_Priority_Reactor (size_t size,
-					    int rs,
-					    ACE_Sig_Handler *sh,
-					    ACE_Timer_Queue *tq)
+                                            int rs,
+                                            ACE_Sig_Handler *sh,
+                                            ACE_Timer_Queue *tq)
   : ACE_Select_Reactor (size, rs, sh, tq),
     bucket_ (0),
     tuple_allocator_ (0)
@@ -73,11 +73,11 @@ ACE_Priority_Reactor::~ACE_Priority_Reactor (void)
 
 int
 ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
-				       int& number_dispatched,
-				       int mask,
-				       ACE_Handle_Set& dispatch_mask,
-				       ACE_Handle_Set& ready_mask,
-				       ACE_EH_PTMF callback)
+                                       int& number_dispatched,
+                                       int mask,
+                                       ACE_Handle_Set& dispatch_mask,
+                                       ACE_Handle_Set& ready_mask,
+                                       ACE_EH_PTMF callback)
 {
   ACE_TRACE ("ACE_Priority_Reactor::dispatch_io_set");
 
@@ -95,13 +95,13 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
        (handle = handle_iter ()) != ACE_INVALID_HANDLE;
        )
     {
-      ACE_Event_Tuple et (this->handler_rep_.find (handle), 
+      ACE_Event_Tuple et (this->handler_rep_.find (handle),
                           handle);
       int prio = et.event_handler_->priority ();
 
       // If the priority is out of range assign the minimum priority.
       if (prio < ACE_Event_Handler::LO_PRIORITY
-	  || prio > ACE_Event_Handler::HI_PRIORITY)
+          || prio > ACE_Event_Handler::HI_PRIORITY)
         prio = ACE_Event_Handler::LO_PRIORITY;
 
       bucket_[prio]->enqueue_tail (et);
@@ -117,11 +117,11 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
     {
       // Remove all the entries from the wrappers
       while (!bucket_[i]->is_empty ()
-	     && number_dispatched < number_of_active_handles
-	     && this->state_changed_ == 0)
-	{
-	  ACE_Event_Tuple et;
-	  bucket_[i]->dequeue_head (et);
+             && number_dispatched < number_of_active_handles
+             && this->state_changed_ == 0)
+        {
+          ACE_Event_Tuple et;
+          bucket_[i]->dequeue_head (et);
           this->notify_handle (et.handle_,
                                mask,
                                ready_mask,
