@@ -232,6 +232,19 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
   return;
 }
 
+CORBA::Boolean
+CORBA::is_nil (CORBA::Object_ptr obj)
+{
+  if (obj == 0)
+    return 1;
+
+  // To accomodate new definitions
+  if (obj->_stubobj ())
+    return obj->_stubobj ()->orb_core ()->object_is_nil (obj);
+
+  return 0;
+}
+
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
