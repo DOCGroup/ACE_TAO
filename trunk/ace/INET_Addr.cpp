@@ -382,10 +382,10 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
 #else
   if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
     {
-      if (ACE_OS::hostname (buf, MAXHOSTNAMELEN) == -1)
+      if (ACE_OS::hostname (name, MAXHOSTNAMELEN) == -1)
         return 0;
       else
-        return buf;
+        return name;
     }
   else
     {
