@@ -30,8 +30,8 @@
        2) In TAO, the TAO_Unbounded_Sequence vtbl can't be found.
        With CC 5.0, those problems may be fixed.  And, this is necessary
        to work around problems with automatic template instantiation. */
-#   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#   define ACE_TEMPLATES_REQUIRE_SOURCE
+//#   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+//#   define ACE_TEMPLATES_REQUIRE_SOURCE
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
@@ -41,7 +41,7 @@
 // ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
 #     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#     define ACE_USES_OLD_IOSTREAMS
+//#     define ACE_USES_OLD_IOSTREAMS
 #     define ACE_HAS_THR_C_DEST
 #   endif
 #  if !defined (ACE_HAS_EXCEPTIONS)
