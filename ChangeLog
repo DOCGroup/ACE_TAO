@@ -1,3 +1,10 @@
+Sun Jan 30 08:46:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Filecache.cpp:
+
+	  Added missing "template<>" to explicit class member
+	  specializations, as required by the C++ standard.
+
 Sun Jan 30 13:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IOStream/client/iostream_client.cpp:
