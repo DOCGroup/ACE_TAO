@@ -29,37 +29,6 @@ ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
 #endif /* ACE_WIN32 */
 }
 
-// This function returns the number of bytes in the file referenced by
-// FD.
-
-ACE_INLINE long
-ACE_OS::filesize (ACE_HANDLE handle)
-{
-  ACE_OS_TRACE ("ACE_OS::filesize");
-#if defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), long, -1);
-#else /* !ACE_WIN32 */
-  ACE_stat sb;
-  return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE long
-ACE_OS::filesize (const ACE_TCHAR *filename)
-{
-  ACE_OS_TRACE ("ACE_OS::filesize");
-
-  ACE_HANDLE h = ACE_OS::open (filename, O_RDONLY);
-  if (h != ACE_INVALID_HANDLE)
-    {
-      long size = ACE_OS::filesize (h);
-      ACE_OS::close (h);
-      return size;
-    }
-  else
-    return -1;
-}
-
 #if !defined (ACE_WIN32)
 
 ACE_INLINE int
@@ -133,12 +102,43 @@ ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
 
 #endif /* WIN32 */
 
+// This function returns the number of bytes in the file referenced by
+// FD.
+
+ACE_INLINE long
+ACE_OS::filesize (ACE_HANDLE handle)
+{
+  ACE_OS_TRACE ("ACE_OS::filesize");
+#if defined (ACE_WIN32)
+  ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), long, -1);
+#else /* !ACE_WIN32 */
+  ACE_stat sb;
+  return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE long
+ACE_OS::filesize (const ACE_TCHAR *filename)
+{
+  ACE_OS_TRACE ("ACE_OS::filesize");
+
+  ACE_HANDLE h = ACE_OS::open (filename, O_RDONLY);
+  if (h != ACE_INVALID_HANDLE)
+    {
+      long size = ACE_OS::filesize (h);
+      ACE_OS::close (h);
+      return size;
+    }
+  else
+    return -1;
+}
+
 ACE_INLINE int
 ACE_OS::lstat (const ACE_TCHAR *file, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::lstat");
 # if defined (ACE_LACKS_LSTAT)
-  return ACE_OS::stat (file, stp);       
+  return ACE_OS::stat (file, stp);
 # elif defined (ACE_HAS_X86_STAT_MACROS)
    // Solaris for intel uses an macro for lstat(), this macro is a
    // wrapper for _lxstat().
