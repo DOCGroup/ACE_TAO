@@ -1,3 +1,10 @@
+Sun Jul 22 09:27:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Oneway_Buffering/Test.idl: Changed the operation
+	  request_received () in Oneway_Buffering_Admin interface to a
+	  oneway. The reason for doing this has been well documented in
+	  bug #982. 
+
 Fri Jul 20 23:58:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp: Fixed a subtle bug. The problem was when
