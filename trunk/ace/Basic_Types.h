@@ -353,16 +353,25 @@ typedef ACE_UINT16 ACE_USHORT16;
 // 64-bit literals require special marking on some platforms.
 # if defined (ACE_WIN32)
 #   define ACE_UINT64_LITERAL(n) n ## ui64
+#   define ACE_INT64_LITERAL(n) n ## i64
 # elif defined (ACE_LACKS_LONGLONG_T)
     // Can only specify 32-bit arguments.
 #   define ACE_UINT64_LITERAL(n) (ACE_U_LongLong (n))
+      // This one won't really work, but it'll keep
+      // some compilers happy until we have better support
+#   define ACE_INT64_LITERAL(n) (ACE_U_LongLong (n))
 # else  /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
 #   define ACE_UINT64_LITERAL(n) n ## ull
+#   define ACE_INT64_LITERAL(n) n ## ll
 # endif /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
 
 #if !defined (ACE_UINT64_FORMAT_SPECIFIER)
 # define ACE_UINT64_FORMAT_SPECIFIER "%llu"
 #endif /* ACE_UINT64_FORMAT_SPECIFIER */
+
+#if !defined (ACE_INT64_FORMAT_SPECIFIER)
+# define ACE_INT64_FORMAT_SPECIFIER "%ll"
+#endif /* ACE_INT64_FORMAT_SPECIFIER */
 
 // Cast from UINT64 to a double requires an intermediate cast to INT64
 // on some platforms.
