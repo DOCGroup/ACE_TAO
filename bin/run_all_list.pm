@@ -1,7 +1,14 @@
 # -*- perl -*-
 # $Id$
-# This are the pairs "sub-directory , script" we run; the separator
-# *must* be a space followed by a comma and then another space.
+#
+# WARNING: This file is no longer used by the auto_compile script.  It
+# has been left here for backwards compatibility and because some
+# other scripts still use it.  If you want to add tests to the nightly
+# builds please use auto_run_tests.lst
+#
+# This are the pairs "sub-directory , script" we
+# run; the separator *must* be a space followed by a comma and then
+# another space.
 
 $ace_tests = 'tests , run_tests.pl';
 if ($^O eq "MSWin32") {
