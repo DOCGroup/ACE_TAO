@@ -1,3 +1,11 @@
+Mon Jun 28 21:41:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp
+          orbsvcs/orbsvcs/orbsvcs_static.dsp
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp, h},
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: Reconfig
+	  Scheduler compiles on NT.
+
 Tue Jun 29 04:12:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Trader/Constraint_Interpreter.cpp:

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Reconfig_Scheduler.h"
+#include "Reconfig_Scheduler.h"
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Reconfig_Scheduler.i"
@@ -29,7 +29,7 @@ TAO_Reconfig_Scheduler_Entry (RtecScheduler::RT_Info &rt_info)
     has_unresolved_remote_dependencies_ (0),
     has_unresolved_local_dependencies_ (0),
     effective_exec_multiplier_ (0),
-    effective_period_ (0);
+    effective_period_ (0)
 {
   // Store the RT_Info fields
   this->orig_rt_info_data_.entry_point =
@@ -54,7 +54,7 @@ TAO_Reconfig_Scheduler_Entry (RtecScheduler::RT_Info &rt_info)
     this->actual_rt_info_->threads;
   this->orig_rt_info_data_.priority =
     this->actual_rt_info_->priority;
-  this->orig_rt_info_data_.static_subpriority =
+  this->orig_rt_info_data_.preemption_subpriority =
     this->actual_rt_info_->preemption_subpriority;
   this->orig_rt_info_data_.preemption_priority =
     this->actual_rt_info_->preemption_priority;
@@ -63,45 +63,14 @@ TAO_Reconfig_Scheduler_Entry (RtecScheduler::RT_Info &rt_info)
 }
 
 
-// Static helper method to give an RT_Info some reasonable default values.
-
-void
-TAO_Reconfig_Scheduler_Entry::init_rt_info (RtecScheduler::RT_Info &rt_info)
-{
-  // Set some reasonable default values.
-  rt_info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-  rt_info.worst_case_execution_time = 0;
-  rt_info.typical_execution_time = 0;
-  rt_info.cached_execution_time = 0;
-  rt_info.period = 0;
-  rt_info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  rt_info.quantum = 0;
-  rt_info.threads = 0;
-  rt_info.info_type = RtecScheduler::OPERATION;
-  rt_info.priority = 0;
-  rt_info.preemption_subpriority = 0;
-  rt_info.preemption_priority = 0;
-  rt_info.volatile_token = 0;
-}
-
-
 // Accessor for original RT_Info data.
 
-ACE_Scheduler_Factory::POD_RT_Info &
+RtecScheduler::RT_Info &
 TAO_Reconfig_Scheduler_Entry::orig_rt_info_data ()
 {
   return orig_rt_info_data_;
 }
 
-
-// Mutator for original RT_Info data.
-
-void 
-TAO_Reconfig_Scheduler_Entry::
-orig_rt_info_data (const RtecScheduler::RT_Info &rt_info)
-{
-  this->orig_rt_info_data_ = rt_info;
-}
 
 // Accessor for actual RT_Info pointer.
 
@@ -312,7 +281,7 @@ has_unresolved_local_dependencies (int i)
 
 // Accessor for effective period of corresponding RT_Info.
 
-RtecScheduler::Period
+RtecScheduler::Period_t
 TAO_Reconfig_Scheduler_Entry::
 effective_period ()
 {
@@ -324,7 +293,7 @@ effective_period ()
 
 void
 TAO_Reconfig_Scheduler_Entry::
-effective_period (RtecScheduler::Period p)
+effective_period (RtecScheduler::Period_t p)
 {
   this->effective_period_ = p;
 }
@@ -344,7 +313,7 @@ effective_exec_multiplier ()
 
 void 
 TAO_Reconfig_Scheduler_Entry::
-effective_exec_multiplier_ (CORBA::Long l)
+effective_exec_multiplier (CORBA::Long l)
 {
   this->effective_exec_multiplier_ = l;
 }
@@ -360,10 +329,8 @@ effective_exec_multiplier_ (CORBA::Long l)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_Reconfig_Sched_Entry_Visitor
-    (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       DEPENDENCY_SET_MAP & dependency_map,
-     TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       RT_INFO_MAP & rt_info_map)
+    (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+     TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : dependency_map_ (dependency_map),
     rt_info_map_ (rt_info_map)
 {
@@ -556,10 +523,8 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 TAO_RSE_Reset_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Reset_Visitor
-  (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-     DEPENDENCY_SET_MAP & dependency_map,
-   TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-     RT_INFO_MAP & rt_info_map)
+  (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map)
 {
@@ -622,10 +587,8 @@ precondition (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_DFS_Visitor
-  (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-     DEPENDENCY_SET_MAP & dependency_map,
-   TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-     RT_INFO_MAP & rt_info_map)
+  (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0)
@@ -668,7 +631,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di);
+                    const RtecScheduler::Dependency_Info &di)
 {
   ACE_UNUSED_ARG (rse);
   ACE_UNUSED_ARG (di);
@@ -691,7 +654,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-postfix_action (TAO_Reconfig_Scheduler_Entry &rse);
+postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 {
   rse.fwd_dfs_status (TAO_Reconfig_Scheduler_Entry::FINISHED);
   rse.fwd_finished (this->DFS_time_++);
@@ -708,10 +671,8 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse);
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_SCC_Visitor
-  (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-     DEPENDENCY_SET_MAP & dependency_map,
-   TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-     RT_INFO_MAP & rt_info_map)
+  (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0),
@@ -856,12 +817,9 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 TAO_RSE_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Propagation_Visitor
-  (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-     DEPENDENCY_SET_MAP dependency_map,
-   TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-     RT_INFO_MAP rt_info_map)
-  : TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-      (dependency_map, rt_info_map),
+  (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  : TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> (dependency_map, rt_info_map),
     unresolved_locals_ (0),
     unresolved_remotes_ (0),
     thread_specification_errors_ (0)
@@ -957,8 +915,8 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
                 ACE_DEBUG ((LM_ERROR, 
                             "RT_Info \"%s\" has unresolved "
-                            "remote dependencies.\n"),
-                            rse.actual_rt_info ()->entry_point);
+                            "remote dependencies.\n",
+                            rse.actual_rt_info ()->entry_point));
               }
             else
               {
@@ -966,8 +924,8 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
                 ACE_DEBUG ((LM_ERROR, 
                             "RT_Info \"%s\" has unresolved "
-                            "local dependencies.\n"),
-                            rse.actual_rt_info ()->entry_point);
+                            "local dependencies.\n",
+                            rse.actual_rt_info ()->entry_point));
               }
           }
         else
@@ -1081,5 +1039,266 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
   // Do not recurse on the successor node, just continue to the next successor.
   return 1;
+}
+
+////////////////////////////////////
+// class TAO_RSE_Priority_Visitor //
+////////////////////////////////////
+
+// Constructor.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
+TAO_RSE_Priority_Visitor ()
+  : previous_entry_ (0),
+    first_subpriority_entry_ (0),
+    priority_ (0),
+    subpriority_ (0),
+    os_priority_ (ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                                  ACE_SCOPE_PROCESS))
+{
+}
+
+
+// Visit a Reconfig Scheduler Entry.  This method
+// assigns a priority and subpriority value to each
+// entry.  Priorities are assigned in increasing value
+// order, with lower numbers corresponding to higher
+// priorities.  
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
+visit (TAO_Reconfig_Scheduler_Entry &rse)
+{
+  if (previous_entry_ == 0)
+    {
+      // If we're on the first node, store it as the start of
+      // the priority level.
+      first_subpriority_entry_ = &rse;
+      rse.actual_rt_info ()->static_subpriority = subpriority_;
+    }
+  else
+    {
+      int result =
+        RECONFIG_SCHED_STRATEGY::compare_priority (*previous_entry_, rse);
+      if (result == 0)
+	{
+          // Subpriority is increased at each new node.
+          ++subpriority_;
+
+          // Store negative value of subpriority level: will be
+          // adjusted by adding back in the total number of
+          // subpriorities in the priority level, so the
+          // subpriorities are assigned in decreasing order.
+          rse.actual_rt_info ()->static_subpriority = - subpriority_;
+	}
+      else
+	{
+          // Iterate back through and adjust the subpriority levels.
+          for (int i = 0; i <= subpriority_; ++i, ++first_subpriority_entry_)
+	    {
+              first_subpriority_entry_->
+                actual_rt_info ()->
+                  static_subpriority += subpriority_;
+	    }
+
+          subpriority_ = 0;
+          rse.actual_rt_info ()->static_subpriority = subpriority_;
+
+          first_subpriority_entry_ = &rse;
+          ++priority_;
+          os_priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    os_priority_,
+                                                    ACE_SCOPE_PROCESS)
+	}
+    }
+
+  // Assign the entry's priority and subpriority values
+  rse.actual_rt_info ()->priority = os_priority_;
+  rse.actual_rt_info ()->preemption_priority = priority_;
+
+  // Remember the current entry for the next visit.
+  previous_entry_ = &rse;
+
+  return 0;
+}
+
+
+// Constructor.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
+TAO_RSE_Utilization_Visitor ()
+  : critical_utilization_ (0.0),
+    noncritical_utilization_ (0.0)
+{
+}
+
+// Visit a Reconfig Scheduler Entry.  This method
+// determines the utilization by the entry, and
+// adds it to the critical or non-critical utilization,
+// depending on whether or not the strategy says the
+// operation is critical.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
+TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
+visit (TAO_Reconfig_Scheduler_Entry &rse)
+{
+  double entry_period = rse.effective_period ();
+  double entry_time = rse.actual_rt_info ()->worst_case_execution_time;
+  double entry_mult = rse.effective_exec_multiplier ()
+
+  if (RECONFIG_SCHED_STRATEGY::is_critical (rse))
+    {
+      this->critical_utilization_ =
+        (entry_mult * entry_time) / entry_period;
+    }
+  else
+    {
+      this->noncritical_utilization_ =
+        (entry_mult * entry_time) / entry_period;
+    }
+}
+
+
+// Accessor for utilization by critical operations.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> double
+TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
+critical_utilization ()
+{
+  return this->critical_utilization_;
+}
+
+
+// Accessor for utilization by noncritical operations.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> double
+TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
+noncritical_utilization ()
+{
+  return this->noncritical_utilization_;
+}
+
+
+///////////////////////////////////////////
+// class TAO_MUF_Reconfig_Sched_Strategy //
+///////////////////////////////////////////
+
+// Ordering function used to qsort an array of TAO_Reconfig_Scheduler_Entry
+// pointers into a total <priority, subpriority> ordering.  Returns -1 if the
+// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+int
+TAO_MUF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
+{
+  // Convert the passed pointers.
+  TAO_Reconfig_Scheduler_Entry **first =
+    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **, s);
+  TAO_Reconfig_Scheduler_Entry **second = 
+    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **, t);
+
+  // Check the converted pointers.
+  if (first == 0 || *first == 0)
+    {
+      return (second == 0 || *second == 0) ? 0 : 1;
+    }
+  else if (second == 0 || *second == 0)
+    {
+      return -1;
+    }
+ 
+  int result = 
+    TAO_MUF_Reconfig_Sched_Strategy::priority_diff (*((*first)->actual_rt_info ()),
+                                                    *((*second)->actual_rt_info ()));
+
+  // Check whether they were distinguished by priority.
+  if (result == 0)
+    {
+      return TAO_MUF_Reconfig_Sched_Strategy::compare_subpriority (**first,
+                                                                   **second);
+    }
+  else
+    {
+      return result;
+    }
+}
+
+
+// Compares two entries by priority alone.  Returns -1 if the
+// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+int
+TAO_MUF_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &s,
+                                                   TAO_Reconfig_Scheduler_Entry &t)
+{
+  // Simply call the corresponding comparison based on the underlying rt_infos.
+  return TAO_MUF_Reconfig_Sched_Strategy::priority_diff (*s.actual_rt_info (),
+                                                         *t.actual_rt_info ());
+}
+
+
+// Compares two entries by subpriority alone.  Returns -1 if the
+// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+int
+TAO_MUF_Reconfig_Sched_Strategy::compare_subpriority (TAO_Reconfig_Scheduler_Entry &s,
+                                                      TAO_Reconfig_Scheduler_Entry &t)
+{
+  // In MUF, priority is per criticality level: compare criticalities.
+  if (s.actual_rt_info ()->importance > t.actual_rt_info ()->importance)
+    {
+      return -1;
+    }
+  else if (s.actual_rt_info ()->importance < t.actual_rt_info ()->importance)
+    {
+      return 1;
+    }
+  // Same importance, so look at dfs finish time as a tiebreaker.
+  else if (s.fwd_finished () > t.fwd_finished ())
+    {
+      return -1;
+    }
+  else if (s.fwd_finished () < t.fwd_finished ())
+    {
+      return 1;
+    }
+
+  // They're the same if we got here.
+  return 0;
+}
+
+
+// Compares two RT_Infos by priority alone.  Returns -1 if the
+// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+int
+TAO_MUF_Reconfig_Sched_Strategy::priority_diff (RtecScheduler::RT_Info &s,
+                                                RtecScheduler::RT_Info &t)
+{
+  // In MUF, priority is per criticality level: compare criticalities.
+  if (s.criticality > t.criticality)
+    {
+      return -1;
+    }
+  else if (s.criticality < t.criticality)
+    {
+      return 1;
+    }
+
+  // They're the same if we got here.
+  return 0;
+}
+
+
+// Determines whether or not an entry is critical, based on operation characteristics.
+// returns 1 if critical, 0 if not
+
+int
+TAO_MUF_Reconfig_Sched_Strategy::is_critical (TAO_Reconfig_Scheduler_Entry &rse)
+{
+  // Look at the underlying RT_Info's criticality field.
+  return (rse.actual_rt_info ()->criticality == RtecScheduler::HIGH_CRITICALITY ||
+          rse.actual_rt_info ()->criticality == RtecScheduler::VERY_HIGH_CRITICALITY)
+         ? 1 : 0;
 }
 

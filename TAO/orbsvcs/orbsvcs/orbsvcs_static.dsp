@@ -506,6 +506,14 @@ SOURCE=.\Event\ReactorTask.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sched\Reconfig_Sched_Utils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Reconfig_Scheduler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\RT_Task.cpp
 # End Source File
 # Begin Source File
@@ -1063,6 +1071,14 @@ SOURCE=.\PingS_T.h
 # Begin Source File
 
 SOURCE=.\Event\ReactorTask.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Reconfig_Sched_Utils.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Reconfig_Scheduler.h
 # End Source File
 # Begin Source File
 
