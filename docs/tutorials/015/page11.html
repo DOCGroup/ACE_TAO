@@ -42,6 +42,16 @@ concern in this file is to get everything in the correct order!
 typedef ACE_Module&lt;ACE_MT_SYNCH> Module;
 typedef ACE_Thru_Task&lt;ACE_MT_SYNCH> Thru_Task;
 
+<font color=red>/* An ACE_Stream is a collection of ACE_Modules.  You can think of it
+   as a doubly-linked list if you like.  Each Module contains two
+   ACE_Task derivatives.  One of these tasks is used when sending data 
+   "<font color=green>upstream</font>", the other is used for "<font color=green>downstream</font>" operation.  In some
+   cases, you'll only need to move data in one direction.  To provide
+   a placeholder for the other direction, ACE_Thru_Task can be used.
+   ACE_Thru_Task responds to the put() by simply invoking put_next()
+   to send the data to the next module.
+ */</font>
+
 <font color=red>/* Do-nothing constructor and destructor
  */</font>
   
@@ -68,14 +78,14 @@ int
   <font color=red>// Construct (and remember) the Recv object so that we can read from</font>
   <font color=red>// the peer().</font>
   ACE_NEW_RETURN (recv_,
-                  Recv (peer ()),
+                  Recv ( this->peer ()),
                   -1);
 
   <font color=red>// Add the transmit and receive tasks to the head of the stream.  As</font>
   <font color=red>// we add more modules these will get pushed downstream and end up</font>
   <font color=red>// nearest the tail by the time we're done.</font>
   if (stream ().push (new Module ("<font color=green>Xmit/Recv</font>",
-                                  new Xmit (peer ()),
+                                  new Xmit ( this->peer ()),
                                   recv_)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "<font color=green>%p\n</font>",

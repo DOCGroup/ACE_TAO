@@ -25,113 +25,40 @@ only need one or two additional to do any real work.
 <font color=blue>#include</font> "<font color=green>Protocol_Task.h</font>"
 
 <font color=red>// Construct the object and remember the thread count.</font>
-<font color=#008888>Protocol_Task::Protocol_Task</font>( int _thr_count )
-        : desired_thr_count_(_thr_count)
+<font color=#008888>Protocol_Task::Protocol_Task</font>(void)
 {
+    ;
 }
 
 <font color=#008888>Protocol_Task::~Protocol_Task</font>(void)
 {
+    ;
 }
 
-<font color=red>// Activate the object if necessary.</font>
 int <font color=#008888>Protocol_Task::open</font>(void *arg) 
 {
   ACE_UNUSED_ARG(arg);
 
-  if( desired_thr_count_ )
-  {
-      return this->activate(THR_NEW_LWP, desired_thr_count_);
-  }
-
   return(0);
 }
 
-<font color=red>/* When we're being closed by the ACE_Stream and we've got threads to
-   worry about then we drop a hangup message onto the message queue so 
-   that svc() will go away.  Except for the call to is_active(), this
-   is lifted directly from Tutorial 14.
-*/</font>
 int <font color=#008888>Protocol_Task::close</font>(u_long flags)
 {
-    if (flags == 1 && is_active() )
-    {
-        ACE_Message_Block *hangupBlock = new ACE_Message_Block();
-
-        hangupBlock->msg_type(<font color=#008888>ACE_Message_Block::MB_HANGUP</font>);
-    
-        if (this->putq(hangupBlock->duplicate()) == -1) {
-            ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green><font color=#008888>Task::close</font>() putq</font>"), -1);
-        }
-    
-        hangupBlock->release();
-
-        return this->wait();
-    }
-
     return 0;
 }
 
-<font color=red>/* The put() method has to make a decision.  If we've got threads then 
-   put the unit of work onto the message queue for svc() to deal
-   with.  If not then process() it directly.
+<font color=red>/* When a message is put() onto the task, it's time to process() some data.
 */</font>
 int <font color=#008888>Protocol_Task::put</font>(ACE_Message_Block *message,ACE_Time_Value *timeout)
 {
-    if( is_active() )
-    {
-        return this->putq(message,timeout);
-    }
-
     return this->process(message,timeout);
 }
 
-<font color=red>/* svc() is about what you would expect.  This is again lifted
-   directly from Tutorial 14 but with a call to process() for handling 
-   the logic instead of doing the work right here.
+<font color=red>/* Return an error since we don't want the task to ever be activated.
  */</font>
 int <font color=#008888>Protocol_Task::svc</font>(void)
 {
-    ACE_Message_Block * message;
-    
-    while (1)
-    {
-            <font color=red>// Get a message</font>
-        if ( this->getq(message, 0) == -1) {
-            ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green><font color=#008888>Protocol_Task::svc</font>() getq</font>"), -1);
-        }
-
-        ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) <font color=#008888>Protocol_Task::svc</font>() got message\n</font>"));
-
-            <font color=red>// Check for hangup</font>
-        if (message->msg_type() == <font color=#008888>ACE_Message_Block::MB_HANGUP</font>) {
- 
-            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) <font color=#008888>Protocol_Task::svc</font>() -- HANGUP block received\n</font>"));
-
-                <font color=red>// Hangup our thread-pool peers (if any)</font>
-            if (this->putq(message->duplicate()) == -1) {
-                ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green><font color=#008888>Protocol_Task::svc</font>() putq</font>"), -1);
-            }
-
-                <font color=red>// Leave svc()</font>
-            break;
-        }
-
-            <font color=red>// Do some work on the data.</font>
-        if( this->process(message->duplicate(),0) == -1 )
-        {
-            break;
-        }
-
-            <font color=red>// Give up the message block before we go get another.</font>
-        message->release();
-    }
-
-        <font color=red>// Give up the message block that caused us to exit the</font>
-        <font color=red>// while(1) loop.</font>
-    message->release();
-    
-    return(0);
+    return -1;
 }
 
 <font color=red>/* There's nothing really magic about process().  We just decide if

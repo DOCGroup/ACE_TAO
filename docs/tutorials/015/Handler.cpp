@@ -54,7 +54,7 @@ int Handler::open (void *)
         // will prevent communicating with the client.  This is
         // something you'll want to do in every event handler you create.
     if (this->peer ().get_remote_addr (addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't get remote addr\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Cannot get remote addr\n"), -1);
 
         // Announce the client
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) connected with %s\n", addr.get_host_name() ));
@@ -72,7 +72,7 @@ int Handler::open (void *)
         // stream's open() may fail.
     if( rval == -1 )
     {
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't open the protocol stream.\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Cannot open the protocol stream.\n"), -1);
     }
     
         // Now that we know the client is valid and that the stream is 
@@ -80,7 +80,7 @@ int Handler::open (void *)
         // instance.  Here again is an opportunity for improvement if
         // we expect to have mulitple Server object instances.
     if (ACE_Reactor::instance()->register_handler (this, ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Cannot register with reactor\n"), -1);
 
     return rval;
 }
@@ -125,7 +125,7 @@ int Handler::handle_input (ACE_HANDLE)
         // will then be pushed through the protocol stream.
     if( stream().get( ) == -1 )
     {
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't get data from protocol stream\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Cannot get data from protocol stream\n"), -1);
     }
     
     return 0;
@@ -138,10 +138,10 @@ int Handler::handle_input (ACE_HANDLE)
    several peers, however, you're probably just wasting a thread to
    activate it.  On the other hand, if your reactor is running in a
    single thread (as in this example) then you can easily implement
-   thread-per-connectin concurrency by giving the baseclass one thread.
+   thread-per-connection concurrency by giving the baseclass one thread.
 */
 Handler_Task::Handler_Task(void)
-        : inherited(0)
+        : inherited()
 {
     ;
 }

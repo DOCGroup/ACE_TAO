@@ -10,18 +10,16 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /* A typical ACE_Task<> derivative that adds a few things appropriate
-   to protocol stacks.
+   to protocol stacks.  To keep things a little simpler, we prevent
+   activation of the task and just borrow the thread of control from
+   the calling method in all cases.
 */
 class Protocol_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   typedef ACE_Task<ACE_MT_SYNCH> inherited;
 
-  // A choice of concurrency strategies is offered by the constructor.
-  // In most cases it makes sense to set this to zero and let things
-  // proceed serially.  You might have a need, however, for some of
-  // your tasks to have their own thread.
-  Protocol_Task (int thr_count);
+  Protocol_Task (void);
 
   ~Protocol_Task (void);
 
@@ -37,8 +35,8 @@ public:
   virtual int put (ACE_Message_Block *message,
                    ACE_Time_Value *timeout);
 
-  // If you choose to activate the task then this method will be doing
-  // all of the work.
+  // We're obligated to provide this signature even though we won't be 
+  // allowing this object to be activated.
   virtual int svc (void);
 
 protected:
@@ -46,12 +44,6 @@ protected:
   // Called by put() or svc() as necessary to process a block of data.
   int process (ACE_Message_Block *message,
                ACE_Time_Value *timeout);
-
-  // Just let us know if we're active or not.
-  int is_active (void)
-  {
-    return this->thr_count () != 0;
-  }
 
   // Tasks on the writer (downstream) side of the stream are called
   // upon to send() data that will ultimately go to the peer.
@@ -63,8 +55,6 @@ protected:
   virtual int recv (ACE_Message_Block *message,
                     ACE_Time_Value *timeout);
 
-private:
-  int desired_thr_count_;
 };
 
 #endif /* PROTOCOL_TASK_H */

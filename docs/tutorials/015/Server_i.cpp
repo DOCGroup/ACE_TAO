@@ -70,5 +70,6 @@ int Server::run(void)
 int Server::close(void)
 {
     finished_ = 1;
+    ACE_Reactor::instance()->notify();
     return(0);
 }
