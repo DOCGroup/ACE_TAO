@@ -104,6 +104,9 @@ void Crash_Injector::check_on_receive_request(const char* operation)
           exit(1);
         case CRASH_TIMEOUT:
           this->crash_timeout();
+          break;
+        default:
+          break;
       }
     }
 }
