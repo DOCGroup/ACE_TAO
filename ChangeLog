@@ -1,3 +1,25 @@
+Wed Mar 17 21:00:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Global_Macros.h:
+	* ace/config-aix-4.x.h:
+	* ace/config-g++-common.h:
+	* ace/config-win32-visualage.h:	
+	  
+	  Added a new #define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
+	  and enabled this feature only on the above platforms. With g++,
+	  it is supported with g++ 3.4. This #define is used by
+	  ACE_DES_FREE_TEMPLATE3 declarations in Global_Macros.h. Thanks
+	  to Oliver Kellog for providing the patches. 
+	
+	* ace/Task.h (activate):
+	* ace/Thread_Manager.h (spawn):
+	* ace/Timer_Queue_Adapters.h (activate):
+
+	  The last argument <inherit_priority> is now set to true as
+	  default. This wil get the behavior that C++ NPV1 and NPV2
+	  prescribes. Thanks to Dr. Schmidt Abhijit Sachdev for motivating
+	  this. 
+	  
 Wed Mar 17 17:55:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Proactor.cpp (ctor): Change the default proactor implementation

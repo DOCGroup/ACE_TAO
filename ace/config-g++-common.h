@@ -47,6 +47,9 @@
     // This is only needed with egcs 1.1 (egcs-2.91.57).  It can't be
     // used with older versions.
 #   define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+#   if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
+#     define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
+#   endif /* __GNUC__ >= 3.4 */
 # endif /* __GNUC__ >= 2.91 */
 
 #if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 97 )

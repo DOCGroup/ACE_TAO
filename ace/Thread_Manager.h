@@ -502,7 +502,7 @@ public:
              int grp_id = -1,
              void *stack = 0,
              size_t stack_size = 0,
-             bool inherit_priority = false);
+             bool inherit_priority = true);
 
   /**
    * Spawn N new threads, which execute <func> with argument <arg>.
@@ -548,7 +548,7 @@ public:
                ACE_hthread_t thread_handles[] = 0,
                void *stack[] = 0,
                size_t stack_size[] = 0,
-               bool inherit_priority = false);
+               bool inherit_priority = true);
 
   /**
    * Spawn N new threads, which execute <func> with argument <arg>.
@@ -595,7 +595,7 @@ public:
                size_t stack_size[] = 0,
                ACE_hthread_t thread_handles[] = 0,
                ACE_Task_Base *task = 0,
-               bool inherit_priority = false);
+               bool inherit_priority = true);
 
   /**
    * Called to clean up when a thread exits.
@@ -968,7 +968,7 @@ protected:
                        void *stack = 0,
                        size_t stack_size = 0,
                        ACE_Task_Base *task = 0,
-                       bool inherit_priority = false);
+                       bool inherit_priority = true);
 
   /// Run the registered hooks when the thread exits.
   void run_thread_exit_hooks (int i);
