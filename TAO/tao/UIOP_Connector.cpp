@@ -30,17 +30,24 @@ ACE_RCSID(tao, UIOP_Connector, "$Id$")
 // ****************************************************************
 
 TAO_UIOP_Connect_Creation_Strategy::
-  TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t)
-    :  ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler> (t)
+  TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
+                                      TAO_ORB_Core* orb_core)
+    :  ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler> (t),
+       orb_core_ (orb_core)
 {
 }
 
 int
-TAO_UIOP_Connect_Creation_Strategy::make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh)
+TAO_UIOP_Connect_Creation_Strategy::make_svc_handler (
+    TAO_UIOP_Client_Connection_Handler *&sh)
 {
   if (sh == 0)
     {
-      ACE_NEW_RETURN (sh, TAO_UIOP_Client_Connection_Handler, -1);
+      ACE_NEW_RETURN (sh,
+                      TAO_UIOP_Client_Connection_Handler (
+                          this->orb_core_->thr_mgr (),
+                          this->orb_core_),
+                      -1);
     }
   return 0;
 }
@@ -62,7 +69,10 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
         TAO_CACHED_CONNECT_STRATEGY;
 
   TAO_CACHED_CONNECT_STRATEGY* cached_connect_strategy =
-    new TAO_CACHED_CONNECT_STRATEGY (new TAO_UIOP_Connect_Creation_Strategy);
+    new TAO_CACHED_CONNECT_STRATEGY (
+        new TAO_UIOP_Connect_Creation_Strategy (
+            orb_core->thr_mgr (),
+            orb_core));
 
   return this->base_connector_.open (orb_core->reactor (),
                                      &this->null_creation_strategy_,
@@ -73,6 +83,16 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_UIOP_Connector::close (void)
 {
+#if 0
+  // @@ We should destroy the strategies that we created above...
+  if (this->cached_connect_strategy_ != 0)
+    {
+      // Zap the creation strategy that we created earlier
+      delete this->cached_connect_strategy_->creation_strategy ();
+      delete this->cached_connect_strategy_;
+    }
+#endif /* 0 */
+
   this->base_connector_.close ();
   return 0;
 }

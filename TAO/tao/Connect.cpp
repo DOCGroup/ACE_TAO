@@ -33,8 +33,8 @@ static const char *TAO_Connect_Timeprobe_Description[] =
 
     "Server_Connection_Handler::receive_request - end",
 
-    "Client_Connection_Handler::send_request - start",
-    "Client_Connection_Handler::send_request - end",
+    "IIOP_Client_Connection_Handler::send_request - start",
+    "IIOP_Client_Connection_Handler::send_request - end",
 
     "GIOP::Send_Request - return"
   };
@@ -53,8 +53,8 @@ enum
 
     TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END,
 
-    TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
-    TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
+    TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
+    TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
 
     GIOP_SEND_REQUEST_RETURN
   };
@@ -87,7 +87,8 @@ TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager
     orb_core_ (TAO_ORB_Core_instance ()),
     tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
-  iiop_transport_ = new TAO_IIOP_Server_Transport(this);
+  iiop_transport_ = new TAO_IIOP_Server_Transport(this,
+                                                  this->orb_core_);
 }
 
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core)
@@ -95,7 +96,8 @@ TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (TAO_ORB_Core *orb_
     orb_core_ (orb_core),
     tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
-  iiop_transport_ = new TAO_IIOP_Server_Transport(this);
+  iiop_transport_ = new TAO_IIOP_Server_Transport(this,
+                                                  this->orb_core_);
 }
 
 TAO_Server_Connection_Handler::~TAO_Server_Connection_Handler (void)
@@ -781,24 +783,23 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
 // @@ For pluggable protocols, added a reference to the corresponding
 //    transport obj.
-TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_IIOP_Handler_Base (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t)
+TAO_IIOP_Client_Connection_Handler::
+    TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
+                                   TAO_ORB_Core* orb_core)
+  : TAO_IIOP_Handler_Base (t)
 {
-  // @@ Alex: Allocate this on-demand and use the orb_core to create
-  //    the strategies.
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   iiop_transport_ = new TAO_IIOP_Client_Transport (this,
                                                    orb_core);
 }
 
-TAO_Client_Connection_Handler::~TAO_Client_Connection_Handler (void)
+TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
 {
   delete this->iiop_transport_;
   this->iiop_transport_ = 0;
 }
 
 TAO_Transport *
-TAO_Client_Connection_Handler::transport (void)
+TAO_IIOP_Client_Connection_Handler::transport (void)
 {
   return this->iiop_transport_;
 }
@@ -812,7 +813,7 @@ TAO_Client_Connection_Handler::transport (void)
 //    needed or not.
 
 int
-TAO_Client_Connection_Handler::open (void *)
+TAO_IIOP_Client_Connection_Handler::open (void *)
 {
   // @@ TODO: This flags should be set using the RT CORBA policies...
 
@@ -822,9 +823,9 @@ TAO_Client_Connection_Handler::open (void *)
   // @@ We should use this->orb_core_!!
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
   int sndbufsize =
-    TAO_ORB_Core_instance ()->orb_params ()->sock_sndbuf_size ();
+    this->transport ()->orb_core ()->orb_params ()->sock_sndbuf_size ();
   int rcvbufsize =
-    TAO_ORB_Core_instance ()->orb_params ()->sock_rcvbuf_size ();
+    this->transport ()->orb_core ()->orb_params ()->sock_rcvbuf_size ();
 
   if (this->peer ().set_option (SOL_SOCKET,
                                 SO_SNDBUF,
@@ -878,14 +879,14 @@ TAO_Client_Connection_Handler::open (void *)
 }
 
 int
-TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_IIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
   // Call the waiter to handle the input.
   return this->transport ()->wait_strategy ()->handle_input ();
 }
 
 int
-TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
+TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
   // @@ Alex: we need to figure out if the transport decides to close
@@ -897,7 +898,7 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_Client_Connection_Handler::"
+                 "(%P|%t) TAO_IIOP_Client_Connection_Handler::"
                  "handle_close (%d, %d)\n", handle, rm));
 
   if (this->recycler ())
@@ -924,7 +925,7 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 }
 
 int
-TAO_Client_Connection_Handler::close (u_long)
+TAO_IIOP_Client_Connection_Handler::close (u_long)
 {
   this->destroy ();
 

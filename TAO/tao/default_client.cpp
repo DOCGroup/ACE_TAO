@@ -16,14 +16,8 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 {
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
-  this->client_connection_handler_ = ST_CLIENT_CONNECTION_HANDLER;
-  // @@ Later, we will have a separate flag for the wait
-  //    strategies. (Alex).
   this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
 #else
-  this->client_connection_handler_ = MT_CLIENT_CONNECTION_HANDLER;
-  // @@ Later, we will have a separate flag for the wait
-  //    strategies. (Alex).
   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
 #endif /* TAO_USE_ST_CLIENT_CONNECTION_HANDLER */
 
@@ -84,17 +78,14 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
 
               if (ACE_OS::strcasecmp (name, "MT") == 0)
                 {
-                  this->client_connection_handler_ = MT_CLIENT_CONNECTION_HANDLER;
                   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
                 }
               else if (ACE_OS::strcasecmp (name, "ST") == 0)
                 {
-                  this->client_connection_handler_ = ST_CLIENT_CONNECTION_HANDLER;
                   this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
                 }
               else if (ACE_OS::strcasecmp (name, "RW") == 0)
                 {
-                  this->client_connection_handler_ = RW_CLIENT_CONNECTION_HANDLER;
                   this->wait_strategy_ = TAO_WAIT_ON_READ;
                 }
             }
@@ -131,37 +122,6 @@ TAO_Default_Client_Strategy_Factory::create_iiop_profile_lock (void)
                     0);
 
   return the_lock;
-}
-
-  // @@ This routine should not be here, otherwise the protocols are
-  //    not pluggable, but we need to integrate the changes from
-  //    asynchronous messaging to eliminate this method....
-ACE_Creation_Strategy<TAO_Client_Connection_Handler> *
-TAO_Default_Client_Strategy_Factory::create_client_creation_strategy (void)
-{
-  // Create the correct client connection creation strategy
-  ACE_Creation_Strategy<TAO_Client_Connection_Handler> *client_creation_strategy = 0;
-
-  if (this->client_connection_handler_ == ST_CLIENT_CONNECTION_HANDLER)
-    {
-      ACE_NEW_RETURN (client_creation_strategy,
-                      TAO_ST_Connect_Creation_Strategy,
-                      0);
-    }
-  else if (this->client_connection_handler_ == MT_CLIENT_CONNECTION_HANDLER)
-    {
-      ACE_NEW_RETURN (client_creation_strategy,
-                      TAO_MT_Connect_Creation_Strategy,
-                      0);
-    }
-  else if (this->client_connection_handler_ == RW_CLIENT_CONNECTION_HANDLER)
-    {
-      ACE_NEW_RETURN (client_creation_strategy,
-                      TAO_RW_Connect_Creation_Strategy,
-                      0);
-    }
-
-  return client_creation_strategy;
 }
 
 // @@ Alex: implement the WS and RMS methods here, similar to the
@@ -217,55 +177,6 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
     }
 
   return ws;
-}
-
-// ****************************************************************
-
-TAO_ST_Connect_Creation_Strategy::TAO_ST_Connect_Creation_Strategy (ACE_Thread_Manager *t)
-  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
-{
-}
-
-int
-TAO_ST_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_Client_Connection_Handler (this->thr_mgr_), -1);
-
-  return 0;
-}
-
-// ****************************************************************
-
-TAO_MT_Connect_Creation_Strategy::TAO_MT_Connect_Creation_Strategy (ACE_Thread_Manager *t)
-  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
-{
-}
-
-int
-TAO_MT_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_Client_Connection_Handler (this->thr_mgr_), -1);
-
-  return 0;
-}
-
-// ****************************************************************
-
-TAO_RW_Connect_Creation_Strategy::TAO_RW_Connect_Creation_Strategy (ACE_Thread_Manager *t)
-  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
-{
-}
-
-int
-TAO_RW_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
-{
-  // @@ Creating the common connection handler. (Alex).
-  if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_Client_Connection_Handler (this->thr_mgr_), -1);
-
-  return 0;
 }
 
 // ****************************************************************

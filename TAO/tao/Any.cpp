@@ -801,7 +801,7 @@ CORBA_Any::operator>>= (to_object obj) const
       TAO_InputCDR stream (this->cdr_,
                            ACE_CDR_BYTE_ORDER,
                            TAO_ORB_Core_instance ());
-      
+
       CORBA::Boolean flag = (stream.decode (CORBA::_tc_Object,
                                             &obj.ref_, 0, env)
                              == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1:0;

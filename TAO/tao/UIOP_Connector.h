@@ -45,14 +45,16 @@ class TAO_Export TAO_UIOP_Connect_Creation_Strategy : public ACE_Creation_Strate
   //   the interface required by the
   //   ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
   //
-  // @@ This class should be removed once we intergrate the changes
-  // from the asynch. messaging branch.
-  //
 public:
-  TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0);
+  TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
+                                      TAO_ORB_Core* orb_core = 0);
 
   virtual int make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh);
   // Makes TAO_UIOP_Client_Connection_Handlers
+
+private:
+  TAO_ORB_Core* orb_core_;
+  // The ORB
 };
 
 // ****************************************************************

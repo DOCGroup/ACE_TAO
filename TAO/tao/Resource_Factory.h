@@ -30,15 +30,15 @@
 #include "tao/corbafwd.h"
 #include "tao/orbconf.h"
 #include "ace/Containers_T.h"
-#include "tao/Acceptor_Registry.h"
-#include "tao/Connector_Registry.h"
 
 class TAO_POA;
 class TAO_Object_Adapter;
+class TAO_Acceptor_Registry;
+class TAO_Connector_Registry;
 
 // ****************************************************************
 
-class TAO_Cached_Connector_Lock : public ACE_Adaptive_Lock
+class TAO_Export TAO_Cached_Connector_Lock : public ACE_Adaptive_Lock
 {
   // TITLE
   //   This lock class determines the type underlying lock

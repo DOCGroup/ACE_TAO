@@ -57,14 +57,15 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 {
 }
 
-TAO_IIOP_Server_Transport::TAO_IIOP_Server_Transport (TAO_Server_Connection_Handler *handler)
-  : TAO_IIOP_Transport(handler,
-                       TAO_ORB_Core_instance ()),
+TAO_IIOP_Server_Transport::
+    TAO_IIOP_Server_Transport (TAO_Server_Connection_Handler *handler,
+                               TAO_ORB_Core* orb_core)
+  : TAO_IIOP_Transport (handler, orb_core),
     server_handler_ (handler)
 {
 }
 
-TAO_IIOP_Client_Transport::TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler,
+TAO_IIOP_Client_Transport::TAO_IIOP_Client_Transport (TAO_IIOP_Client_Connection_Handler *handler,
                                                       TAO_ORB_Core *orb_core)
   :  TAO_IIOP_Transport (handler,
                          orb_core),
@@ -81,7 +82,7 @@ TAO_IIOP_Client_Transport::~TAO_IIOP_Client_Transport (void)
 {
 }
 
-TAO_Client_Connection_Handler *
+TAO_IIOP_Client_Connection_Handler *
 TAO_IIOP_Client_Transport::client_handler (void)
 {
   return this->client_handler_;

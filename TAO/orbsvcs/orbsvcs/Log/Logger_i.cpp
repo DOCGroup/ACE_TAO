@@ -1,8 +1,9 @@
 // $Id$
 
-#include "ace/ACE.h"
 #include "orbsvcs/LoggerC.h"
 #include "orbsvcs/Log/Logger_i.h"
+#include "ace/ACE.h"
+#include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"
 
 ACE_RCSID(Log, Logger_i, "$Id$")
