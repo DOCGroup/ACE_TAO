@@ -60,7 +60,7 @@ Client_Handler::destroy (void)
    The Client_Acceptor instance pointer is cast to a void* and given
    to us here.  We'll use that to avoid some global data...  */
 int 
-Client_Handler::open (void *acceptor)
+Client_Handler::open (void *void_acceptor)
 {
   /* We need this to store the address of the client that we are now
      connected to.  We'll use it later to display a debug message.  */
@@ -87,7 +87,7 @@ Client_Handler::open (void *acceptor)
     without compiler warnings be very sure of what you're doing when
     you do this kind of thing.  That's where the new-style cast
     operators can save you.  */
-  Client_Acceptor *acceptor = (Client_Acceptor *) acceptor;
+  Client_Acceptor *acceptor = (Client_Acceptor *) void_acceptor;
 
   /* Our Client_Acceptor is constructed with a concurrency strategy.
     Here, we go back to it to find out what that strategy was.  If
