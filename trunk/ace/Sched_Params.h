@@ -13,7 +13,7 @@
 //    28 January 1997
 //
 // = AUTHOR
-//    David Levine
+//    David Levine and Carlos O'Ryan
 //
 // ============================================================================
 
@@ -153,17 +153,16 @@ private:
 
 class ACE_Export ACE_Sched_Priority_Iterator
   // = TITLE
-  //   An iterator over the OS defined priorities.
+  //   An iterator over the OS-defined scheduling priorities.
   //
   // = DESCRIPTION
   //   The order of priorities (numeric value vs. importance) is OS
   //   dependant, it can be the case that the priorities are not even
-  //   contigous.
-  //   This class permits iteration over priorities using the iterator
-  //   pattern.
+  //   contigous.  This class permits iteration over priorities using
+  //   the iterator pattern.
 {
 public:
-  ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy& policy,
+  ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
 			       int scope = ACE_SCOPE_THREAD);
   // Initialize the iterator, the arguments define the scheduling
   // policy and scope for the priorities (see ACE_Sched_Param).
@@ -178,13 +177,14 @@ public:
   // Move to the next priority.
   // The iteration is from lowest to highest importance.
 
-  const ACE_Sched_Params::Policy& policy (void) const;
+  const ACE_Sched_Params::Policy &policy (void) const;
   // Accessor for the scheduling policy over which we are iterating.
 
   int scope (void) const;
   // Accessor for the scheduling
 
 private:
+  // @@ Please comment me.
   ACE_Sched_Params::Policy policy_;
   int scope_;
   int priority_;
