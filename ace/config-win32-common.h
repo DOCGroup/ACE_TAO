@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // The following configuration file contains the defines
@@ -34,6 +34,7 @@
 #define ACE_HAS_EXCEPTIONS
 #endif /* ACE_HAS_WINCE */
 #define ACE_HAS_BROKEN_NAMESPACES
+#define ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_SIGACTION
