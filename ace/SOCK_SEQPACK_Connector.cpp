@@ -112,7 +112,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       // The total number of addresses is the number of secondary
       // addresses plus one.
       size_t num_addresses = local_sap.get_num_secondary_addresses() + 1;
-      
+
       // Create an array of sockaddr_in to hold the underlying
       // representations of the primary and secondary
       // addresses.
