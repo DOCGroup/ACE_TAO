@@ -14,33 +14,24 @@ CFG=ACE dynamic library - Win32 Alpha Unicode Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ace_dll.mak"\
- CFG="ACE dynamic library - Win32 Alpha Unicode Debug"
+!MESSAGE NMAKE /f "ace_dll.mak" CFG="ACE dynamic library - Win32 Alpha Unicode Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE dynamic library - Win32 Debug" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Release" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
@@ -60,8 +51,8 @@ CPP=cl.exe
 # ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -91,8 +82,8 @@ CPP=cl.exe
 # ADD CPP /nologo /G5 /MD /W3 /GX /O2 /Ob2 /I "..\\" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x407 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -122,8 +113,8 @@ CPP=cl.exe
 # ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -153,8 +144,8 @@ CPP=cl.exe
 # ADD CPP /nologo /G5 /MD /W3 /GX /O2 /Ob2 /I "..\\" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x407 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -180,13 +171,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /MTd /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MDd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MDd /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -213,13 +204,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\STL" /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /c
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\STL" /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -246,13 +237,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /MTd /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MDd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MDd /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -279,13 +270,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\STL" /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /c
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\STL" /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -687,61 +678,6 @@ DEP_CPP_ARGV_=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_ARGV_=\
-	".\config.h"\
-	".\stdcpp.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Array.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-DEP_CPP_ARRAY=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Array.h"\
-	".\Array.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\Trace.h"\
-	".\Version.h"\
-	".\ws2tcpip.h"\
-	
-NODEP_CPP_ARRAY=\
 	".\config.h"\
 	".\stdcpp.h"\
 	
@@ -1586,6 +1522,29 @@ NODEP_CPP_DEV_I=\
 	".\config.h"\
 	".\stdcpp.h"\
 	
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dirent.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
 
@@ -4925,9 +4884,7 @@ SOURCE=.\Object_Manager.cpp
 DEP_CPP_OBJEC=\
 	".\ACE.h"\
 	".\ACE.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -5006,6 +4963,8 @@ DEP_CPP_OBJEC=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_OBJEC=\
+	".\Array.cpp"\
+	".\Array.i"\
 	".\config.h"\
 	".\stdcpp.h"\
 	
@@ -5092,9 +5051,7 @@ DEP_CPP_OS_CP=\
 	".\ACE.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -5151,6 +5108,8 @@ DEP_CPP_OS_CP=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_OS_CP=\
+	".\Array.cpp"\
+	".\Array.i"\
 	".\config.h"\
 	".\stdcpp.h"\
 	
@@ -12348,10 +12307,6 @@ SOURCE=.\ARGV.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Array.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Asynch_Acceptor.h
 # End Source File
 # Begin Source File
@@ -12409,6 +12364,10 @@ SOURCE=.\DEV_Connector.h
 # Begin Source File
 
 SOURCE=.\DEV_IO.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dirent.h
 # End Source File
 # Begin Source File
 
@@ -13104,10 +13063,6 @@ SOURCE=.\ARGV.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Array.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Asynch_Acceptor.i
 # End Source File
 # Begin Source File
@@ -13161,6 +13116,10 @@ SOURCE=.\DEV_Connector.i
 # Begin Source File
 
 SOURCE=.\DEV_IO.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dirent.i
 # End Source File
 # Begin Source File
 
