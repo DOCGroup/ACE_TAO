@@ -29,6 +29,12 @@ Tue Mar 02 21:17:19 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i (thr_getspecific): added #else clause w/ACE_NOTSUP_RETURN
           to support ACE_HAS_MINIMAL_ACE_OS.
 
+        * ace/config-minimal.h: added #undef of
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER, to avoid #include of
+          Object_Manager.h.  And, added #define ACE_USE_THREAD_MANAGER_ADAPTER
+          so that ACE_Thread_Adapter::invoke () won't use any
+          ACE_Thread_Exit functions.
+
 Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
 
        * ace/Map_T.(h i): Qualified types inherited from template base
