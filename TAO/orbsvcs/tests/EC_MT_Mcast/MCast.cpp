@@ -20,7 +20,7 @@ ACE_RCSID (EC_MT_Mcast,
 const char *udp_mcast_address =
     ACE_DEFAULT_MULTICAST_ADDR ":10001";
 
-static CORBA::ORB_var orb = CORBA_ORB::_nil ();
+static CORBA::ORB_var orb = CORBA::ORB::_nil ();
 static bool terminate_threads = false;
 static const unsigned pool_size = 2;
 static const int data_items = 60000;

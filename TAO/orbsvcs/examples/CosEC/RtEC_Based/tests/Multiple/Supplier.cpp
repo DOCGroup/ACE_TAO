@@ -131,7 +131,7 @@ Supplier::run (void)
   ACE_TRY
     {
       // Create an Any type to pass to the Cos EC.
-      CORBA_Any cany;
+      CORBA::Any cany;
       cany <<= CORBA::Long (50);
       CORBA::Any any;
       cany >>= any;

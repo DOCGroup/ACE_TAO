@@ -80,7 +80,7 @@ catiiop (char* string
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA_DATA_CONVERSION (), 0);
+      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
   hostname = CORBA::string_alloc (1 + cp - string);
@@ -98,7 +98,7 @@ catiiop (char* string
   if (cp == 0)
     {
       CORBA::string_free (hostname);
-      ACE_THROW_RETURN (CORBA_DATA_CONVERSION (), 0);
+      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
   port_number = (short) ACE_OS::atoi ((char *) string);
@@ -240,7 +240,7 @@ catior (char* str
 
   // No profiles means a NIL objref.
   if (profiles == 0)
-    return CORBA_TypeCode::TRAVERSE_CONTINUE;
+    return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     while (profiles-- != 0)
       {

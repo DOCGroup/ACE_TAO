@@ -1,3 +1,36 @@
+Thu Feb 20 17:31:58 2003  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Load_Balancing/Load_Balancer_i.cpp:
+	* examples/Load_Balancing_persistent/Identity_Client.cpp:
+	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+	* examples/POA/DSI/Database_i.cpp:
+	* orbsvcs/ImplRepo_Service/Forwarder.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+	* orbsvcs/PSS/PSDL_Interface_Visitor.cpp:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+	* tests/DynAny_Test/test_dynany.cpp:
+	* tests/DynAny_Test/test_dynarray.cpp:
+	* tests/DynAny_Test/test_dynenum.cpp:
+	* tests/DynAny_Test/test_dynsequence.cpp:
+	* tests/DynAny_Test/test_dynstruct.cpp:
+	* tests/DynAny_Test/test_dynunion.cpp:
+	* tests/MProfile/client.cpp:
+	* tests/MProfile_Connection_Timeout/client.cpp:
+	* tests/MProfile_Forwarding/Manager.cpp:
+	* tests/OBV/Factory/FactoryC_impl.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.cpp:
+	* utils/catior/catior.cpp:
+
+
+	  "CORBA_" -> "CORBA::".
+
 Thu Feb 20 19:59:36 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ChangeLogs/ChangeLog-02c:
@@ -902,6 +935,3 @@ Thu Feb 20 09:07:56 2003  Ossama Othman  <ossama@uci.edu>
 	  "tao/ORBInitializer_Registry.h".
 
 	  "CORBA_" -> "CORBA::".
-
-
-

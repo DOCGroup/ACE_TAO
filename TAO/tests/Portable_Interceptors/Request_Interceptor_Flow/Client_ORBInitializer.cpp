@@ -1,16 +1,14 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "Client_ORBInitializer.h"
 
 ACE_RCSID (Request_Interceptor_Flow,
            Client_ORBInitializer,
            "$Id$")
 
+
 #include "tao/Exception.h"
 
 #include "Client_Request_Interceptor.h"
+
 
 void
 Client_ORBInitializer::pre_init (
@@ -33,7 +31,7 @@ Client_ORBInitializer::post_init (
   ACE_NEW_THROW_EX (ci,
                     Client_Request_Interceptor ("CLIENT A"),
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
@@ -49,7 +47,7 @@ Client_ORBInitializer::post_init (
   ACE_NEW_THROW_EX (ci,
                     Client_Request_Interceptor ("CLIENT B"),
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
@@ -64,7 +62,7 @@ Client_ORBInitializer::post_init (
   ACE_NEW_THROW_EX (ci,
                     Client_Request_Interceptor ("CLIENT C"),
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));

@@ -113,7 +113,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Forwarder exception");
       ACE_TRY_THROW (CORBA::TRANSIENT (
-          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
+          CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
           CORBA::COMPLETED_NO));
     }
   ACE_ENDTRY;

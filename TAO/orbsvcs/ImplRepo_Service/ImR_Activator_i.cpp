@@ -192,8 +192,8 @@ ImR_Activator_i::activate_server_with_startup (const char *server,
       // Make sure the activation allows us to start it up.
       if (activation == ImplementationRepository::MANUAL && check_startup)
         ACE_THROW_RETURN (CORBA::TRANSIENT (
-            CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE,
-                                                    0),
+            CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE,
+                                                     0),
             CORBA::COMPLETED_NO),
           0);
 
@@ -954,7 +954,7 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
                                      imr_obj.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (reg_act == 1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

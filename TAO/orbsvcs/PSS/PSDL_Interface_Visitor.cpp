@@ -1,14 +1,13 @@
-// -*- C++ -*-
-// $Id$
-
 #include "PSDL_Interface_Visitor.h"
 #include "PSDL_Stream.h"
 
-ACE_RCSID (PSS, PSDL_Interface_Visitor, "$Id$")
+ACE_RCSID (PSS,
+           PSDL_Interface_Visitor,
+           "$Id$")
 
-  TAO_PSDL_Interface_Visitor::TAO_PSDL_Interface_Visitor (void)
-    : forward_dcl_ (0),
-      interface_name_ ()
+TAO_PSDL_Interface_Visitor::TAO_PSDL_Interface_Visitor (void)
+  : forward_dcl_ (0),
+    interface_name_ ()
 {
   // constructor.
 }
@@ -182,7 +181,7 @@ TAO_PSDL_Interface_Visitor::print_for_forward_dcl (void)
          << this->interface_name_ << "_ptr &() const;";  ps_sh->nl ();
 
   *ps_sh << "operator "
-         << this->interface_name_ << "_ptr &();";  
+         << this->interface_name_ << "_ptr &();";
 
   ps_sh->nl ();
   ps_sh->nl ();
@@ -451,7 +450,7 @@ TAO_PSDL_Interface_Visitor::print_class_for_interface (void)
 
 
   *ps_sh << "class  " << this->interface_name_;
-  *ps_sh << ": public virtual CORBA_Object";  ps_sh->nl ();
+  *ps_sh << ": public virtual CORBA::Object";  ps_sh->nl ();
 
   *ps_sh << "{";
   ps_sh->nl ();
@@ -1885,7 +1884,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
 
   ps_si->incr_indent (0);
   ps_si->nl ();
-  *ps_si << "return this->CORBA_Object::_is_a (value ACE_ENV_ARG_PARAMETER);";
+  *ps_si << "return this->Object::_is_a (value ACE_ENV_ARG_PARAMETER);";
   ps_si->decr_indent (0);
   ps_si->decr_indent (0);
   ps_si->nl ();
