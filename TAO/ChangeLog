@@ -1,3 +1,9 @@
+Mon Nov 04 10:47:41 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+	  In <create_filter> method : Added check to include EXTENDED_TCL
+	  string as a valid constraint grammar. 
+	
 Sun Nov  3 19:13:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h
