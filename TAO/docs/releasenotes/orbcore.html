@@ -27,16 +27,28 @@
 
       Recently Completed Work:
 
-      <UL>
-	<li>Got rid of need to have compile in TSS ORB Core
-	(<code>-DTAO_HAS_TSS_ORBCORE</code>).  This is accomplished by
-	having a Resource Factory (<code>TAO_Resource_Factory</code>)
-	singleton which the ORB Core consults in order to get pointers
-	to resources.  The Resource Factory can be configured to
-	return pointers from thread-specific storage, or
-	process-global storage.  By doing this, the ORB Core is
-	shielded from ever having to know whether or not its resources
-	are global or not.</li>
+    <UL>
+      <li>Placed an optimization in IIOP::Profile that should speed up
+      invocations on the client side rather substantially.  This was
+      done by caching an instance of <code>ACE_INET_Addr</code> in the
+      private portion of <code>Profile</code> because the cost of
+      constructing one for every invocation (in
+      <code>TAO_GIOP_Invocation::start</code>) was simply
+      enormous--the construction was something like 100 cycles on
+      Solaris.  This is all because deep down this ends up calling
+      <code>gethostbyname()</code>, which can be very costly.  Of
+      course, this is platform-dependent, so the improvements may not
+      be as great on a different platform.</li>
+
+      <li>Got rid of need to have compile in TSS ORB Core
+      (<code>-DTAO_HAS_TSS_ORBCORE</code>).  This is accomplished by
+      having a Resource Factory (<code>TAO_Resource_Factory</code>)
+      singleton which the ORB Core consults in order to get pointers
+      to resources.  The Resource Factory can be configured to return
+      pointers from thread-specific storage, or process-global
+      storage.  By doing this, the ORB Core is shielded from ever
+      having to know whether or not its resources are global or
+      not.</li>
 
 	<li>Made all command-line like options look like the
 	standard-professed options, i.e., <b>-ORBxxx</b> or
@@ -195,6 +207,8 @@
 
       Future work:
       <UL>
+      <li>Make argument parsing with the orb consume the arguments it parses.</li>
+
 	<li>Remove <code>_FAR</code> from all code.</li>
 
         <li>Update ORB Patterns paper to reflect the latest TAO has to
