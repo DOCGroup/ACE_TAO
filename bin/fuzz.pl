@@ -515,7 +515,7 @@ sub check_for_dependency_file ()
                         print_error ("DEPENDENCY_FILE \"$depend\" not found");
                         print " Either add \"$depend\" to cvs ";
                         print "or remove DEPENDENCY_FILE variable\n";
-                        print " from $file\n";
+                        print " from $file\n\n";
                     }
                     close (DFILE);
                 }

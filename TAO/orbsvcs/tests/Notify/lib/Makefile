@@ -5339,6 +5339,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
   Name.h
 
 .obj/Name.o .obj/Name.so .shobj/Name.o .shobj/Name.so: Name.cpp Name.h \
