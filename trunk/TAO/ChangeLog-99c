@@ -1,3 +1,10 @@
+Sat May  8 16:10:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	  Added non-const accesor for array fields in valuetypes. Thanks
+	  to David Levine for pointing this out.
+
 Sat May  8 15:02:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP.h (TAO_GIOP): 
