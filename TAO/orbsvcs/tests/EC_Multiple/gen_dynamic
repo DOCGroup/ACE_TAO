@@ -3,16 +3,18 @@
 # $Id$
 #
 
-HP_SUPPLIERS="1 2 10"
-HP_CONSUMERS="1 5 10 20"
+HP_SUPPLIERS="1"
+LP_CONSUMERS="1 10 100 200 300 500 1000"
 
 for s in $HP_SUPPLIERS; do
   echo Supplier = $s
 
-  for c in $HP_CONSUMERS; do
+  for c in $LP_CONSUMERS; do
      x=`expr $c - 1`
      l=`printf %02.2d $x`
      echo Consumer = $c, LAST = $l
+
+    echo DYN.LCL.S${s}.C${c}.log
 
     ./histo.pl -k 'Latency\[LCL,HP00' DYN.LCL.S${s}.C${c}.log >DYN.LCL.S${s}.C${c}.FIRST.histo
     ./histo.pl -k "Latency\[LCL,HP${l}" DYN.LCL.S${s}.C${c}.log >DYN.LCL.S${s}.C${c}.LAST.histo
