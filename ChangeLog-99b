@@ -1,3 +1,13 @@
+Mon Jan 18 08:17:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SOCK_IO.cpp,
+	  ace/SOCK_Dgram.cpp: Added   
+
+	  ACE_UNUSED_ARG (timeout);
+	  
+	  to the #else part of the recv (iovec *) methods.  Thanks to Mike
+ 	  Goldman for reporting this.
+
 Mon Jan 18 01:13:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/CORBA_macros.h: ACE_TRY_NEW_ENV also needs to define a new

@@ -67,6 +67,7 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
     return 0;
 #else
   ACE_UNUSED_ARG (io_vec);
+  ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
 #endif /* FIONREAD */
 }
