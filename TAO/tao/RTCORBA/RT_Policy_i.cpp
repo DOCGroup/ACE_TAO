@@ -331,12 +331,14 @@ TAO_TCP_Properties::TAO_TCP_Properties (CORBA::Long send_buffer_size,
                                         CORBA::Long recv_buffer_size,
                                         CORBA::Boolean keep_alive,
                                         CORBA::Boolean dont_route,
-                                        CORBA::Boolean no_delay)
+                                        CORBA::Boolean no_delay,
+                                        CORBA::Boolean enable_network_priority)
   : send_buffer_size_ (send_buffer_size),
     recv_buffer_size_ (recv_buffer_size),
     keep_alive_ (keep_alive),
     dont_route_ (dont_route),
-    no_delay_ (no_delay)
+    no_delay_ (no_delay),
+    enable_network_priority_ (enable_network_priority)
 {
 }
 
@@ -416,6 +418,21 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->no_delay_ = no_delay;
+}
+
+CORBA::Boolean 
+TAO_TCP_Properties::enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->enable_network_priority_;
+}
+
+void
+TAO_TCP_Properties::enable_network_priority (CORBA::Boolean enable
+					     ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->enable_network_priority_ = enable;
 }
 
 ///////////////////////////////////////////////////////
@@ -654,6 +671,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                                 int &send_buffer_size,
                                 int &recv_buffer_size,
                                 int &no_delay,
+                                int &enable_network_priority,				
                                 const char *protocol_type)
 {
   RTCORBA::ProtocolProperties_var properties =
@@ -785,6 +803,9 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
           ACE_TRY_CHECK;
           no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
+	  enable_network_priority =
+	    tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
 
       if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
@@ -899,6 +920,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                                 int &send_buffer_size,
                                 int &recv_buffer_size,
                                 int &no_delay,
+				int &enable_network_priority,
                                 const char *protocol_type)
 {
   RTCORBA::ProtocolProperties_var properties =
@@ -1028,7 +1050,9 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
           ACE_TRY_CHECK;
           no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-        }
+	  enable_network_priority =
+	    tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+	}
 
       if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
         {
