@@ -183,10 +183,10 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
   ACE_NEW_THROW_RETURN (grid_ptr,
-			Grid_i (width, height, TAO_IN_ENV),
+			Grid_i (width, height, ACE_TRY_ENV),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			Grid::_nil ());
 
   // Register the Grid pointer.
-  return grid_ptr->_this (TAO_IN_ENV);
+  return grid_ptr->_this (ACE_TRY_ENV);
 }
