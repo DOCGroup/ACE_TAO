@@ -139,7 +139,7 @@ Sender::fill_qos (AVStreams::streamQoS &qos)
   qos [0].QoSParams [1].property_value <<= (CORBA::ULong) 9200 ;
   
   qos [0].QoSParams [2].property_name = CORBA::string_dup ("Token_Bucket_Size");
-  qos [0].QoSParams [2].property_value <<= (CORBA::ULong) 9200;
+  qos [0].QoSParams [2].property_value <<= (CORBA::ULong) 708;
   
   qos [0].QoSParams [3].property_name = CORBA::string_dup ("Peak_Bandwidth");
   qos [0].QoSParams [3].property_value <<= (CORBA::ULong) peak_bandwidth;
@@ -395,7 +395,7 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
                               -1);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent succesfully\n",
+                      " Sender::pace_data frame %d was sent succesfully\n",
                       ++this->frame_count_));
 
           // Reset the message block.

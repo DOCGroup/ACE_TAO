@@ -117,13 +117,13 @@ TAO_AV_UDP_QoS_Flow_Handler::translate (CosPropertyService::Properties &qos_para
         {
           CORBA::ULong ttl;
           qos_params [i].property_value >>= ttl;
-          ace_flow_spec->delay_variation (ttl);
+          ace_flow_spec->ttl (ttl);
         }
       else if (ACE_OS::strcmp (qos_params [i].property_name, "Priority") == 0)
         {
           CORBA::ULong priority;
           qos_params [i].property_value >>= priority;
-          ace_flow_spec->ttl (priority);
+          ace_flow_spec->priority (priority);
         }
     }
   
