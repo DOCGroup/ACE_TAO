@@ -16,7 +16,7 @@ Task_State::Task_State (int argc, char **argv)
     loop_count_ (1000),
     thread_count_ (2),
     datatype_ (CB_OCTET),
-    argc_ (argc),
+    argc_ (ACE_static_cast (u_int, argc)),
     argv_ (argv),
     thread_per_rate_ (0),
     global_jitter_array_ (0),
@@ -195,17 +195,17 @@ Task_State::parse_args (int argc,char **argv)
                     -1);
 
   ACE_NEW_RETURN (semaphore_,
-		  ACE_Thread_Semaphore (0),
+                  ACE_Thread_Semaphore (0),
                   -1);
   ACE_NEW_RETURN (latency_,
-		  double [thread_count_],
+                  double [thread_count_],
                   -1);
   ACE_NEW_RETURN (global_jitter_array_,
-		  double *[thread_count_],
-		  -1);
+                  double *[thread_count_],
+                  -1);
   ACE_NEW_RETURN (count_,
-		  u_int [thread_count_],
-		  -1);
+                  u_int [thread_count_],
+                  -1);
   return 0;
 }
 
@@ -220,7 +220,7 @@ Task_State::~Task_State (void)
   // Delete the strduped memory.
   for (i = 0; i < this->iors_count_; i++)
     ACE_OS::free (this->iors_ [i]);
-  
+
   // Delete the barrier
 
   delete this->barrier_;
@@ -476,10 +476,10 @@ Client::svc (void)
     {
       // Initialize the naming services
       if (my_name_client_.init (orb.in (), argc, argv) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
     }
   {
     //    ACE_DEBUG ((LM_DEBUG,"(%t) Not using Naming service\n"));
@@ -617,7 +617,7 @@ Client::svc (void)
           {
             char *my_ior =
               ts_->use_utilization_test_ == 1
-              ? ts_->one_ior_ 
+              ? ts_->one_ior_
               : ts_->iors_[this->id_];
 
             // If we are running the "1 to n" test make sure all low
@@ -711,7 +711,7 @@ Client::svc (void)
                                 ts_->datatype_,
                                 frequency);
 
-  if (ts_->thread_per_rate_ == 1 
+  if (ts_->thread_per_rate_ == 1
       && this->id_ == ts_->thread_count_ - 1)
     ts_->semaphore_->release (ts_->thread_count_ - 1);
   else
@@ -760,7 +760,7 @@ Client::run_tests (Cubit_ptr cb,
 
     // @@ Naga, can you please generalize this magic number?
     ACE_NEW_RETURN (my_jitter_array,
-                    double [(loop_count/ts_->granularity_) * 30], 
+                    double [(loop_count/ts_->granularity_) * 30],
                     -1);
   else
     ACE_NEW_RETURN (my_jitter_array,
@@ -846,10 +846,10 @@ Client::run_tests (Cubit_ptr cb,
                 //  start recording quantify data from here.
                 quantify_start_recording_data ();
 #endif /* NO_ACE_QUANTIFY */
-		if (ts_->remote_invocations_ == 1)
-		  ret_octet = cb->cube_octet (arg_octet, env);
-		else
-		  ret_octet = cb_impl.cube_octet (arg_octet, env);
+                if (ts_->remote_invocations_ == 1)
+                  ret_octet = cb->cube_octet (arg_octet, env);
+                else
+                  ret_octet = cb_impl.cube_octet (arg_octet, env);
 #if defined (NO_ACE_QUANTIFY)
                 quantify_stop_recording_data();
 #endif /* NO_ACE_QUANTIFY */
@@ -919,7 +919,7 @@ Client::run_tests (Cubit_ptr cb,
                   }
                 break;
               }
-	      // Cube a long.
+              // Cube a long.
 
             case CB_LONG:
               {
@@ -1048,7 +1048,7 @@ Client::run_tests (Cubit_ptr cb,
 #   else /* CHORUS */
           // Store the time in usecs.
           real_time = (delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
-		       delta_t.usec ()) / ts_->granularity_;
+                       delta_t.usec ()) / ts_->granularity_;
 #   endif /* !CHORUS */
           delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
           latency += real_time * ts_->granularity_;
@@ -1101,7 +1101,7 @@ Client::run_tests (Cubit_ptr cb,
       if ( ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1) )
         {
           if (ts_->semaphore_->tryacquire () != -1)
-	    break;
+            break;
         }
       else
         // if We are the high priority client.
@@ -1128,7 +1128,7 @@ Client::run_tests (Cubit_ptr cb,
       timer_.stop ();
       timer_.elapsed_time (delta_t);
       ts_->util_test_time_ = ((double) delta_t.sec () +
-			      (double) delta_t.usec () / (double) ACE_ONE_SECOND_IN_USECS);
+                              (double) delta_t.usec () / (double) ACE_ONE_SECOND_IN_USECS);
     }
 
   // Perform latency stats only if we are not running the utilization
