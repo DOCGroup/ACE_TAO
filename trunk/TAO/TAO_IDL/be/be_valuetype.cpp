@@ -495,9 +495,12 @@ int
 be_valuetype::traverse_supports_list_graphs (
     be_interface::tao_code_emitter gen,
     TAO_OutStream *os,
-    idl_bool abstract_paths_only
+    idl_bool use_abstract_paths,
+    idl_bool use_concrete_paths
   )
 {
+  idl_bool abstract_paths_only = use_abstract_paths && !use_concrete_paths;
+
   long n_supports = this->n_supports ();
 
   if (n_supports == 0)
@@ -513,7 +516,13 @@ be_valuetype::traverse_supports_list_graphs (
 
   for (long i = 0; i < n_supports; ++i)
     {
-      if (abstract_paths_only
+      if (! use_abstract_paths
+          && this->pd_supports[i]->is_abstract ())
+        {
+          continue;
+        }
+
+      if (! use_concrete_paths
           && ! this->pd_supports[i]->is_abstract ())
         {
           continue;

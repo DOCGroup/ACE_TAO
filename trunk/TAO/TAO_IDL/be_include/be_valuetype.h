@@ -92,7 +92,8 @@ public:
   int traverse_supports_list_graphs (
       tao_code_emitter gen,
       TAO_OutStream *os,
-      idl_bool abstract_paths_only = I_FALSE
+      idl_bool use_abstract_paths = I_TRUE,
+      idl_bool use_concrete_paths = I_TRUE
     );
 
   /// Load the insert queue with the concrete interface we support, and

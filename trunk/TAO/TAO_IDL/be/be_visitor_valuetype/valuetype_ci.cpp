@@ -66,7 +66,8 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
         node->traverse_supports_list_graphs (
             be_valuetype::gen_abstract_init_helper,
             os,
-            I_TRUE
+            I_TRUE,
+            I_FALSE
           );
 
       if (status == -1)
