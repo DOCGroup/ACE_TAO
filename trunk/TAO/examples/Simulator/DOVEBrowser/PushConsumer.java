@@ -141,10 +141,10 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 				      );
 	
 	
-	RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[1];  
-	//dependencies_[0] = new RtecEventChannelAdmin.Dependency (disjunction_designator_, rt_info_.value);
-	dependencies_[0] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
-	//dependencies_[2] = new RtecEventChannelAdmin.Dependency (shutdown_event_, rt_info_.value); 
+	RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[3];  
+	dependencies_[0] = new RtecEventChannelAdmin.Dependency (disjunction_designator_, rt_info_.value);
+	dependencies_[1] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
+	dependencies_[2] = new RtecEventChannelAdmin.Dependency (shutdown_event_, rt_info_.value); 
 	
 	
 	// @@ Carlos please help me to set the right boolean value
