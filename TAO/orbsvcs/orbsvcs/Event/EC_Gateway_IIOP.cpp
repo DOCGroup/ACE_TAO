@@ -429,11 +429,11 @@ TAO_EC_Gateway_IIOP::open_i (
       // Obtain the consumer....
       this->default_consumer_proxy_ =
         supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_DEBUG((LM_DEBUG, "ECG (%t) "));
-      printf("Gateway (supplier mode) (%p) ---> push_consumer (%p)\n",
-             this,
-             this->default_consumer_proxy_.in());
       ACE_CHECK;
+      ACE_DEBUG((LM_DEBUG, "ECG (%t) "));
+      ACE_DEBUG((LM_DEBUG,"Gateway (supplier mode) (%p) ---> push_consumer (%p)\n",
+                 this,
+                 this->default_consumer_proxy_.in()));
 
       pub.publications.length (c);
       ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway (supplier mode): connect push supplier\n"));
