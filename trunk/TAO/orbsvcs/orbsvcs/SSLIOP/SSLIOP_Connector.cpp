@@ -533,9 +533,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       ACE_CHECK_RETURN (0);
 
       svc_handler = safe_handler.release ();
-      ssl_endpoint->qop (qop);
-      ssl_endpoint->trust (trust);
-      ssl_endpoint->credentials (credentials.in ());
+      ssl_endpoint->set_sec_attrs (qop, trust, credentials.in());
     }
 
   // Check the Cache first for connections
