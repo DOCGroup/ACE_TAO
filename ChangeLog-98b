@@ -1,108 +1,119 @@
+Fri Aug 21 22:13:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (thr_cancel, thr_setcanceltype): added #else
+          case, with ACE_NOTSUP (-1), to the various threads
+          types.  It catches
+          ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL.  Thanks
+          to Naga for reporting this.
+
+        * ace/OS.i (thr_setcanceltype): don't support if
+          ACE_LACKS_PTHREAD_CANCEL.  Thanks to Naga for reporting this.
+
 Fri Aug 21 20:23:44 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
 
-	* examples/IPC_SAP/UPIPE_SAP/ex[123].cpp: Updated these programs
- 	  to use the ACE_Auto_Basic_Ptr instead of the bizarre
- 	  auto_builtin_ptr.h file, which has been removed...  Also
- 	  replaced the global thr_mgr with the ACE_Thread_Manager
- 	  Singleton and moved the <fstream.h> include file until AFTER the
- 	  ACE includes to avoid problems with HP/UX 11's C++ compiler.
-  	  Thanks to John Mulhern for motivating these fixes.
+        * examples/IPC_SAP/UPIPE_SAP/ex[123].cpp: Updated these programs
+          to use the ACE_Auto_Basic_Ptr instead of the bizarre
+          auto_builtin_ptr.h file, which has been removed...  Also
+          replaced the global thr_mgr with the ACE_Thread_Manager
+          Singleton and moved the <fstream.h> include file until AFTER the
+          ACE includes to avoid problems with HP/UX 11's C++ compiler.
+          Thanks to John Mulhern for motivating these fixes.
 
-	* ace/config-hpux-10.x.h: Added a check so that if threading is
- 	  disabled, then timespec_t does not get defined.  This seems to
- 	  work around a bug with HP/UX 10.x.  Thanks to Ganesh M. Pai
- 	  <gpai@voicetek.com> for reporting this.
+        * ace/config-hpux-10.x.h: Added a check so that if threading is
+          disabled, then timespec_t does not get defined.  This seems to
+          work around a bug with HP/UX 10.x.  Thanks to Ganesh M. Pai
+          <gpai@voicetek.com> for reporting this.
 
 Fri Aug 21 19:54:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: 
-	  The ACE_HAS_EXCEPTIONS macro definition goes into CPPFLAGS now,
-	  so make depend can use it too.
+        * include/makeinclude/wrapper_macros.GNU:
+          The ACE_HAS_EXCEPTIONS macro definition goes into CPPFLAGS now,
+          so make depend can use it too.
 
 Fri Aug 21 18:47:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.cpp (wait): Need to check if status is non-null
-	  before accessing the exit status on NT.   Thanks to Carlos for
-	  pointing this out.
+        * ace/Process.cpp (wait): Need to check if status is non-null
+          before accessing the exit status on NT.   Thanks to Carlos for
+          pointing this out.
 
 Fri Aug 21 16:40:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-sgic++.h:
-	* ace/OS.i:
-	  Some platforms (notable IRIX 6.x) do not update the timer in
-	  pthread_cond_timedwait(), this made the Semaphore test fail for
-	  those platforms.
-	  I modified the ACE_OS::sema_wait() function to obtain the
-	  desired behavior.
+        * ace/config-irix6.x-sgic++.h:
+        * ace/OS.i:
+          Some platforms (notable IRIX 6.x) do not update the timer in
+          pthread_cond_timedwait(), this made the Semaphore test fail for
+          those platforms.
+          I modified the ACE_OS::sema_wait() function to obtain the
+          desired behavior.
 
 Fri Aug 21 15:50:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* etc/ACE-porting.html: Updated some discussion on selecting
- 	  versions of STL that work with ACE and TAO.  Thanks to Bob
- 	  Laferriere <robert.laferriere@gemed.med.ge.com> for reporting
- 	  this.
+        * etc/ACE-porting.html: Updated some discussion on selecting
+          versions of STL that work with ACE and TAO.  Thanks to Bob
+          Laferriere <robert.laferriere@gemed.med.ge.com> for reporting
+          this.
 
 Fri Aug 21 14:49:31 1998  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux_gcc.GNU: Changed the default
-	  from build without threads to build with threads.  Thanks to Ganesh
-	  Pai <gpai@voicetek.com> for this change.
+        * include/makeinclude/platform_hpux_gcc.GNU: Changed the default
+          from build without threads to build with threads.  Thanks to Ganesh
+          Pai <gpai@voicetek.com> for this change.
 
 Fri Aug 21 09:25:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: Moved several #ifdefs from Profile_Timer.h into OS.h
- 	  to clean up the code.
+        * ace/OS.h: Moved several #ifdefs from Profile_Timer.h into OS.h
+          to clean up the code.
 
-	* ace/Profile_Timer.h: Cleaned up the class definition to make the
- 	  OSE tool happy.  Thanks to Doug Anderson <doug@clark.net> for
- 	  reporting this.
+        * ace/Profile_Timer.h: Cleaned up the class definition to make the
+          OSE tool happy.  Thanks to Doug Anderson <doug@clark.net> for
+          reporting this.
 
-	* etc: Moved the ACE-subsets.html file into $ACE_ROOT/etc.
+        * etc: Moved the ACE-subsets.html file into $ACE_ROOT/etc.
 
-	* ace/Synch_Options.h: Fixed a typo that was giving the OSE tool
- 	  fits!  Thanks to Doug Anderson <doug@clark.net> for reporting
- 	  this.
+        * ace/Synch_Options.h: Fixed a typo that was giving the OSE tool
+          fits!  Thanks to Doug Anderson <doug@clark.net> for reporting
+          this.
 
 Fri Aug 21 03:41:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OS/Process/process.cpp:
-	* examples/OS/Process/imore.cpp: Minor bug fixes.  Print out of
-	  child processes' exit status.
+        * examples/OS/Process/process.cpp:
+        * examples/OS/Process/imore.cpp: Minor bug fixes.  Print out of
+          child processes' exit status.
 
 Thu Aug 20 23:33:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.cpp (wait): Allow passing back the exit status of
- 	  the child process on NT.
+        * ace/Process.cpp (wait): Allow passing back the exit status of
+          the child process on NT.
 
 Thu Aug 20 19:52:21 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* ace/OS.i:
+        * ace/OS.i:
           ACE_INLINE int
-	  ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
-	  ...
-	  #else /* this is Draft 7 or STD */
-	  *data = pthread_getspecific (key);
+          ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
+          ...
+          #else /* this is Draft 7 or STD */
+          *data = pthread_getspecific (key);
 
-	  changed the ::pthread_getspecific to pthread_getspecific as it
-	  is a macro in Chorus. Thanks to David Levine for finding this.
+          changed the ::pthread_getspecific to pthread_getspecific as it
+          is a macro in Chorus. Thanks to David Levine for finding this.
 
 Thu Aug 20 17:05:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/Timer_Service.cpp: Added some
- 	  ACE_SVC_FACTORY_* macros for Timer_Service_1 so that it'll
- 	  compile and link properly.  Thanks to David Levine for reporting
- 	  this.
+        * examples/Service_Configurator/Misc/Timer_Service.cpp: Added some
+          ACE_SVC_FACTORY_* macros for Timer_Service_1 so that it'll
+          compile and link properly.  Thanks to David Levine for reporting
+          this.
 
 Thu Aug 20 14:39:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.{h,cpp} (ACE_Process::wait): Added a parameter of int* to
-	  get back the exit status of a child process.
+        * ace/Process.{h,cpp} (ACE_Process::wait): Added a parameter of int* to
+          get back the exit status of a child process.
 
 Thu Aug 20 14:33:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* etc/ACE-porting.html: Generalized the discussion to cover
- 	  porting TAO, as well as to explain what C++ features must/can be
- 	  supported to port ACE/TAO to a new platform.
+        * etc/ACE-porting.html: Generalized the discussion to cover
+          porting TAO, as well as to explain what C++ features must/can be
+          supported to port ACE/TAO to a new platform.
 
 Thu Aug 20 05:12:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -111,57 +122,57 @@ Thu Aug 20 05:12:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Thu Aug 20 03:10:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/UPIPE_SAP_Test.cpp (main): Reverted back to use
-	  ACE_Thread.  Although it's considered the "Right Thing" to spawn
-	  threads using ACE_Thread_Manager, I'll keep this file to use
-	  ACE_Thread to serve as an example that you can also use
-	  ACE_Thread to do any tricks you like, and, a sanity check.
+          ACE_Thread.  Although it's considered the "Right Thing" to spawn
+          threads using ACE_Thread_Manager, I'll keep this file to use
+          ACE_Thread to serve as an example that you can also use
+          ACE_Thread to do any tricks you like, and, a sanity check.
 
-	* ace/OS.cpp (ACE_Thread_Adapter::invoke): Don't create the
- 	  ACE_Thread_Exit object if we are not spawning the thread using
- 	  ACE_Thread_Manager.  Otherwise, when a non-thread manager
- 	  spawned thread exits, the TSS clean up routing gets into an
- 	  infinite loop calling ~ACE_Thread_Exit recursively and
-	  eventually the stack gets overflowed and the thread then
-	  "appears" to exit normally.  But in fact, TSS cleanup does not
-	  complete at all.
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): Don't create the
+          ACE_Thread_Exit object if we are not spawning the thread using
+          ACE_Thread_Manager.  Otherwise, when a non-thread manager
+          spawned thread exits, the TSS clean up routing gets into an
+          infinite loop calling ~ACE_Thread_Exit recursively and
+          eventually the stack gets overflowed and the thread then
+          "appears" to exit normally.  But in fact, TSS cleanup does not
+          complete at all.
 
-	* ace/Thread_Manager.i:
-	* ace/Thread_Manager.cpp (at_exit,thr_self): Moved all at_exit
-	  methods into the .i file.  All at_exit methods and thr_self
-	  don't really need to hold Thread_Manager's lock.
+        * ace/Thread_Manager.i:
+        * ace/Thread_Manager.cpp (at_exit,thr_self): Moved all at_exit
+          methods into the .i file.  All at_exit methods and thr_self
+          don't really need to hold Thread_Manager's lock.
 
-	  Notice that after the newly spawned thread enters the
-	  ACE_Thread_Adapter::invoke routine, we can safely manipulate its
-	  Thread_Deacriptor because it has been registered properly.  This
-	  change should further reduce the times a thread gets started.
+          Notice that after the newly spawned thread enters the
+          ACE_Thread_Adapter::invoke routine, we can safely manipulate its
+          Thread_Deacriptor because it has been registered properly.  This
+          change should further reduce the times a thread gets started.
 
 Wed Aug 19 20:34:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/README:
-	* ace/OS.h: Added a new macro directive
-	  "ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER".  By defining
-	  this macro, it implicitly forces ACE to use non-static object
-	  manager and _NOT_ instantiating ACE_Object_Manager for you and
-	  assumes you will take the responsibility of instantiating
-	  ACE_Object_Manager at the proper place in your programs.  This
-	  is usually used when using ACE with MFC/Windows programs.
-	  Because the main function is defined by MFC/Windows libraries,
-	  ACE has no way to instantiate object manager in these programs.
-	  For programs using MFC, a good place to instantiate Object
-	  Manger will be to define ACE_Object_Manager a member of
-	  CApplication derived classes so it gets instantiated/destructed
-	  properly.
+        * ace/README:
+        * ace/OS.h: Added a new macro directive
+          "ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER".  By defining
+          this macro, it implicitly forces ACE to use non-static object
+          manager and _NOT_ instantiating ACE_Object_Manager for you and
+          assumes you will take the responsibility of instantiating
+          ACE_Object_Manager at the proper place in your programs.  This
+          is usually used when using ACE with MFC/Windows programs.
+          Because the main function is defined by MFC/Windows libraries,
+          ACE has no way to instantiate object manager in these programs.
+          For programs using MFC, a good place to instantiate Object
+          Manger will be to define ACE_Object_Manager a member of
+          CApplication derived classes so it gets instantiated/destructed
+          properly.
 
-	* ace/config-win32.h: Revised the comment about
-	  ACE_HAS_NONSTATIC_OBJECT_MANAGER
+        * ace/config-win32.h: Revised the comment about
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
 Wed Aug 19 17:15:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Config.cpp: Moved the registration of the SIGHUP
- 	  signal from the constructor to the open() method since otherwise
- 	  it'll never get called in the typical usecase...  Thanks to
- 	  Susan Liebeskind <susan.liebeskind@gtri.gatech.edu> for
- 	  reporting this.
+        * ace/Service_Config.cpp: Moved the registration of the SIGHUP
+          signal from the constructor to the open() method since otherwise
+          it'll never get called in the typical usecase...  Thanks to
+          Susan Liebeskind <susan.liebeskind@gtri.gatech.edu> for
+          reporting this.
 
 Wed Aug 19 14:11:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
