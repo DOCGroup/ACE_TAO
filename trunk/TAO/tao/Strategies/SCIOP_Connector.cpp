@@ -179,8 +179,13 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   TAO_SCIOP_Connection_Handler *svc_handler = 0;
 
   // Connect.
+  ACE_Multihomed_INET_Addr multihomed;
+  if (multihomed.set(remote_address.get_port_number(),
+                     remote_address.get_ip_address()))
+    return 0;
+
   int result = this->base_connector_.connect (svc_handler,
-                                              remote_address,
+                                              multihomed,
                                               synch_options);
 
   // This call creates the service handler and bumps the #REFCOUNT# up

@@ -1,3 +1,23 @@
+Fri Oct 31 14:42:09 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
+
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Acceptor.h:
+        * tao/Strategies/SCIOP_Connector.cpp:
+
+          SCIOP URLs with comma-separated hostnames (e.g.,
+          "sciop://host-a,host-b") are implemented with distinct Acceptors
+          and produce separate Profiles in the SCIOR.  In contrast, SCIOP
+          URLs with plus-separated hostnames (e.g.,
+          "sciop://host-a+host-b") are implemented with a single Acceptor
+          and produce a shared Profile in the SCIOR.  Thanks to Yamuna
+          Krishnamurthy <yamuna@cs.wustl.edu> and Craig Rodrigues
+          <crodrigu@bbn.com> for identifying the previous, erroneous
+          behavior in which URLs with comma-separated hostnames were
+          implemented with distinct Acceptors, but produced a single,
+          shared Profile, which mistakenly implied the benefits of a
+          single Acceptor (i.e., SCTP failover and network path
+          multiplexing.)
+
 Fri Oct 31 10:14:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
