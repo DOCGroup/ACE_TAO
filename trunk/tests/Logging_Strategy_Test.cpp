@@ -350,7 +350,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int main (int argc, char *argv [])
 {
   ACE_START_TEST (ACE_TEXT ("Logging_Strategy_Test"));
 
@@ -427,6 +427,9 @@ int main (int argc, char *argv[])
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("DLLs not supported on this platform\n")));
+
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
 #endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
 
   ACE_END_TEST;
