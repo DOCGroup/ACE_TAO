@@ -207,7 +207,19 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   long upcalls = this->decr_pending_upcalls ();
 
-  ACE_ASSERT (upcalls >= 0);
+  // Just return incase the upcall count goes below 0.
+  if (upcalls < 0)
+    return 0;
+
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    {
+      // Just close the socket irrespective of what the upcall count
+      // is.
+      this->peer().close ();
+
+      // Set the handle to be INVALID_HANDLE
+      this->set_handle (ACE_INVALID_HANDLE);
+    }
 
   // If the upcall count is zero start the cleanup.
   if (upcalls == 0)
@@ -239,16 +251,13 @@ TAO_IIOP_Connection_Handler::handle_close_i (void)
     }
 
   // Close the handle..
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Remove the entry as it is invalid
-      this->transport ()->purge_entry ();
+  // Remove the entry as it is invalid
+  this->transport ()->purge_entry ();
 
-      // Signal the transport that we will no longer have
-      // a reference to it.  This will eventually call
-      // TAO_Transport::release ().
-      this->transport (0);
-    }
+  // Signal the transport that we will no longer have
+  // a reference to it.  This will eventually call
+  // TAO_Transport::release ().
+  this->transport (0);
 
   // Follow usual Reactor-style lifecycle semantics and commit
   // suicide.
@@ -353,12 +362,17 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
   // The upcall is done. Bump down the reference count
   upcalls = this->decr_pending_upcalls ();
 
-  ACE_ASSERT (upcalls >= 0);
-
   if (upcalls == 0)
     {
       this->handle_close_i ();
 
+      // As we have already performed the handle closing we dont want
+      // to return a  -1. Doing so would make the reactor call
+      // handle_close () which could be harmful.
+      retval = 0;
+    }
+  else if (upcalls < 0)
+    {
       // As we have already performed the handle closing we dont want
       // to return a  -1. Doing so would make the reactor call
       // handle_close () which could be harmful.
