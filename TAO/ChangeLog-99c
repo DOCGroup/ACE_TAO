@@ -1,3 +1,8 @@
+Mon Nov  1 12:29:17 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/Trading_Service/Trading_Service.dsp: Added 
+          Trading_Server.cpp to the MSVC project.
+
 Sun Oct 31 22:22:15 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Removed 3rd argument of fstream::open(...)
