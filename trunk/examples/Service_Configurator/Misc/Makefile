@@ -13,9 +13,8 @@ BIN   	= main
 
 FILES  	= Timer_Service
 
-LSRC	= $(addsuffix .cpp,$(FILES))
-LOBJ	= $(addsuffix .o,$(FILES))
-SHOBJ	= $(addsuffix .so,$(FILES))
+SRC	= $(addsuffix .cpp,$(FILES))
+OBJ	= $(addsuffix .o,$(FILES))
 
 BUILD 	= $(VBIN)
 

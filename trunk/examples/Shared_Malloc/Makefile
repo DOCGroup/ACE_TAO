@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for tests of the Shared_Malloc wrappers
 #----------------------------------------------------------------------------
@@ -15,8 +15,8 @@ BIN     = test_malloc \
 FILES   = Malloc \
 	  Options
 
-LSRC	= $(addsuffix .cpp,$(FILES))
-LOBJ	= $(addsuffix .o,$(FILES))
+SRC	= $(addsuffix .cpp,$(FILES))
+OBJ	= $(addsuffix .o,$(FILES))
 #SHOBJ	= $(addsuffix .so,$(FILES))
 
 #LDLIBS	= $(addprefix $(VSHDIR),$(SHOBJ))
