@@ -26,28 +26,28 @@
 // a chain of inclusions
 #include "reopen_include2.idl"
 
-module A 
+module AA
 {
-  module B 
+  module BB
   {
     interface x1 {};
   };
 };
 
-module A 
+module AA
 {
-  module B
+  module BB
   {
-    module C 
+    module CC
     {
       interface x2 
       {
         // 'A::B::' should be implicit
         void op1 (in x1 obj);
         // 'A::' should be implicit
-        void op2 (in B::x1 obj);
+        void op2 (in BB::x1 obj);
         // Just for reference
-        void op3 (in A::B::x1 obj);
+        void op3 (in AA::BB::x1 obj);
       };
     };
   };
@@ -197,6 +197,17 @@ module foo
   interface obj
   {
     void op (in bar inarg);
+  };
+};
+
+module A
+{
+  module B
+  {
+    interface X3 : X1, X2
+     {
+       string getX3();
+     };
   };
 };
 
