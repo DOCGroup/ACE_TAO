@@ -1,3 +1,13 @@
+Tue Mar 12 17:12:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Made changes to the logic of the #pragma prefix pushes and pops
+          to fix a bug in the example IDL files sent in by Frank Kuhlman
+          <kuhlmann@materna.de>.
+
 Tue Mar 12 16:19:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Sequence_T.cpp: Removed a \ at the end of a comment.
