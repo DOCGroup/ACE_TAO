@@ -46,6 +46,9 @@ public:
   /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
 
+  /// Retrieve the ior of this peer
+  virtual bool get_ior (ACE_CString & iorstr) const;
+
 protected:
   /// The Supplier
   CosEventComm::PushSupplier_var push_supplier_;

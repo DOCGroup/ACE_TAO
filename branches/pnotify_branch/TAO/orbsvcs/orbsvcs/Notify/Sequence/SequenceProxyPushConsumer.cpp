@@ -14,6 +14,7 @@ ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushConsumer, "$Id$")
 #include "../Method_Request_Lookup.h"
 #include "../Worker_Task.h"
 #include "../Structured/StructuredEvent.h"
+#include "../Properties.h"
 
 TAO_Notify_SequenceProxyPushConsumer::TAO_Notify_SequenceProxyPushConsumer (void)
 :pacing_interval_ (CosNotification::PacingInterval)
@@ -60,6 +61,8 @@ TAO_Notify_SequenceProxyPushConsumer::connect_sequence_push_supplier (CosNotifyC
   ACE_CHECK;
 
   this->connect (supplier ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -97,4 +100,43 @@ TAO_Notify_SequenceProxyPushConsumer::disconnect_sequence_push_consumer (ACE_ENV
                    ))
 {
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+const char *
+TAO_Notify_SequenceProxyPushConsumer::get_proxy_type_name (void) const
+{
+  return "sequence_proxy_push_consumer";
+}
+
+void
+TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_NOTIFY::NVPList& attrs)
+{
+  SuperClass::load_attrs(attrs);
+  ACE_CString ior;
+  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
+  {
+    CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
+    {
+      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CosNotifyComm::SequencePushSupplier_var ps =
+        CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      // minor hack: suppress generating subscription updates during reload.
+      bool save_updates = this->updates_off_;
+      this->updates_off_ = true;
+      this->connect_sequence_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      this->updates_off_ = save_updates;
+    }
+    ACE_CATCHANY
+    {
+      ACE_ASSERT(0);
+    }
+    ACE_ENDTRY;
+  }
 }
