@@ -58,9 +58,16 @@ Cubit_Task::Cubit_Task (const char *args,
 int
 Cubit_Task::svc (void)
 {
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
+  int prio;
+
+  // thr_getprio () on the current thread should never fail.
+  ACE_OS::thr_getprio (thr_handle, prio);
+
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Beginning Cubit task with args = '%s'\n",
-              orbargs_));
+              "(%P|%t) Beginning Cubit task with args = '%s' and priority %d\n",
+              orbargs_, prio));
 
   int rc = this->initialize_orb ();
   if (rc == -1)

@@ -14,9 +14,16 @@ Util_Thread::Util_Thread (Task_State *ts,
 int
 Util_Thread::svc (void)
 {
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
+  int prio;
+
+  // thr_getprio () on the current thread should never fail.
+  ACE_OS::thr_getprio (thr_handle, prio);
+
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Utilization Thread created, "
-              "waiting for threads to finish binding\n"));
+              "(%t) Utilization Thread created with priority %d, "
+              "waiting for threads to finish binding\n", prio));
 
   // this barrier synchronizes the utilization thread with
   // the client threads
