@@ -1,3 +1,14 @@
+Tue Apr 27 18:15:40 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_Thread.inl (rw_trywrlock_upgrade): If on a platform
+	  with ACE_HAS_PTHREADS_UNIX98_EXT, try the call. It'll probably fail,
+	  but the error is more accurate than ENOTSUP.
+
+	* tests/Reader_Writer_Test.cpp: Realign the diagnostics on write lock
+	  upgrade failure to match the #if/#else logic in
+	  ACE_OS::rw_trywrlock_upgrade(). Add some %p to the output to help
+	  more in failure conditions.
+
 Tue Apr 27 08:31:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadPools/TP_Reactor.cpp:
