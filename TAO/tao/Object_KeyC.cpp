@@ -114,19 +114,16 @@ TAO::ObjectKey::encode_sequence_to_string (char * &str,
        cp < (cp + len) && i < seq.length();
        ++i)
     {
-      // Some platforms define 'byte' as a macro, solve the problem
-      // here.
-#undef byte
-      u_char byte = seq[i];
-      if (is_legal (byte))
+      u_char bt = seq[i];
+      if (is_legal (bt))
         {
-          *cp++ = (char) byte;
+          *cp++ = (char) bt;
           continue;
         }
 
       *cp++ = '%';
-      *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
-      *cp++ = ACE::nibble2hex (byte & 0x0f);
+      *cp++ = ACE::nibble2hex ((bt >> 4) & 0x0f);
+      *cp++ = ACE::nibble2hex (bt & 0x0f);
     }
   // Zero terminate
   *cp = '\0';
@@ -190,6 +187,53 @@ TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> 
   seq.length (i);
 }
 
+/*static*/ CORBA::Boolean
+TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
+                               TAO_InputCDR &strm)
+{
+  CORBA::ULong _tao_seq_len;
+
+  if (strm >> _tao_seq_len)
+    {
+      // Add a check to the length of the sequence
+      // to make sure it does not exceed the length
+      // of the stream. (See bug 58.)
+      if (_tao_seq_len > strm.length ())
+        {
+          return 0;
+        }
+
+      // Set the length of the sequence.
+      key.length (_tao_seq_len);
+
+      // If length is 0 we return true.
+      if (0 >= _tao_seq_len)
+        {
+          return 1;
+        }
+
+      // Retrieve all the elements.
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      if (ACE_BIT_DISABLED (strm.start ()->flags (),
+      ACE_Message_Block::DONT_DELETE))
+      {
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
+          ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &key);
+        oseq->replace (_tao_seq_len, strm.start ());
+        oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
+        strm.skip_bytes (_tao_seq_len);
+        return 1;
+      }
+      return strm.read_octet_array (key.get_buffer (),
+                                    _tao_seq_len);
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+
+    }
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -240,7 +284,7 @@ CORBA::Boolean operator>> (
       // Add a check to the length of the sequence
       // to make sure it does not exceed the length
       // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
+     if (_tao_seq_len > strm.length ())
         {
           return 0;
         }

@@ -71,22 +71,22 @@
 
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_TAO_OBJECTKEY_CH_)
 #define _TAO_OBJECTKEY_CH_
-  
+
   class ObjectKey;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         ObjectKey,
         CORBA::Octet
       >
     ObjectKey_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ObjectKey,
@@ -94,7 +94,7 @@ namespace TAO
         CORBA::Octet
       >
     ObjectKey_out;
-  
+
   class TAO_Export ObjectKey
     : public
         TAO_Unbounded_Sequence<
@@ -107,12 +107,12 @@ namespace TAO
     ObjectKey (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Octet* buffer, 
+        CORBA::Octet* buffer,
         CORBA::Boolean release = 0
       );
     ObjectKey (const ObjectKey &);
     ~ObjectKey (void);
-    
+
     typedef ObjectKey_var _var_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -134,6 +134,13 @@ namespace TAO
         const char *str
       );
     static int is_legal (u_char & c);
+
+    /// A special method that gives no regard to how the ORB has
+    /// configured  the resource factory. This will be used only
+    /// during Profile decoding and should be safe. This is a solution
+    /// for the bug report [BUG 1616]
+    static CORBA::Boolean demarshal_key (ObjectKey &key,
+                                         TAO_InputCDR &cdr);
   };
 
 #endif /* end #if !defined */
@@ -195,4 +202,3 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
-

@@ -210,7 +210,8 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
   TAO::ObjectKey ok;
 
   // ... and object key.
-  if ((cdr >> ok) == 0)
+  if (TAO::ObjectKey::demarshal_key (ok,
+                                     cdr) == 0)
     {
       return -1;
     }
@@ -912,4 +913,3 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 
   return (CORBA::Boolean) cdr.good_bit ();
 }
-
