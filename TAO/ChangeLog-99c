@@ -1,3 +1,8 @@
+Sat Apr 10 14:26:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/POA.cpp: Removed #POA_NO_TIMESTAMP according to Irfan's
+	suggestion to get things to work on Soalris.
+
 Fri Apr  9 22:18:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
