@@ -1,3 +1,36 @@
+Tue Jul 24 16:41:57 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/Thread_Manager.cpp : 
+          Added "&& ! defined (ACE_HAS_PACE)" ifdefs to already existing
+          #if defined (VXWORKS) sections of code to get ACE_HAS_PACE to
+          compile on VxWorks.
+
+        * ace/OS.i : 
+        * ace/OS.cpp: 
+          Fixed formatting of some comments and added needed PACE
+          calls for ACE_HAS_PACE on VxWorks.
+
+        * ace/OS.h : 
+          Put #if !defined guards around the ACE_THR_PRI* macros
+          so that we can define them in the config*.h files if
+          they need to be corrected. For instance, ACE_THR_PRI_OTHER_MIN
+          has a different value on SunOS 5.8 than it does on SunOS 5.7,
+          i.e., -20 vs. 0 respectively.
+        
+          Also, added some needed typedefs and #define for ACE_HAS_PACE
+          on VxWorks and updated some comments concerning ACE_OS::thr_create
+          flags.
+
+        * ace/Sched_Params.cpp (priority_min, priority_max): 
+          Changed to return correct thread priority min/max for
+          Solaris threads. We now use the ACE_PRI_THR* macros
+          for these values while still calling ACE_OS::priority_control
+          for process and LWP priorities.
+
+        * ace/config-sunos5.8.h: 
+          Added setting of ACE_THR_PRI_OTHER_MIN to be correct
+          for SunOS 5.8.
+
 Tue Jul 24 13:47:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/SSL/SSL_Asynch_Stream.h (ACE_SSL_Asynch_Stream): 

@@ -1476,7 +1476,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 {
   // ACE_OS_TRACE ("ACE_OS::mutex_init");
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  pthread_mutexattr_t l_attributes;
+  pace_pthread_mutexattr_t l_attributes;
   if (attributes == 0)
     attributes = &l_attributes;
   int result = 0;
@@ -2368,7 +2368,7 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if !defined (ACE_LACKS_COND_T)
+#if !defined (ACE_LACKS_COND_T) || (defined (ACE_HAS_PACE) && ! defined (ACE_HAS_WIN32))
 // NOTE: The ACE_OS::cond_* functions for Unix platforms are defined
 // here because the ACE_OS::sema_* functions below need them.
 // However, ACE_WIN32 and VXWORKS define the ACE_OS::cond_* functions
@@ -2682,7 +2682,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                         ACE_Time_Value *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::cond_timedwait");
-#if (0)
+  //#if defined (ACE_HAS_PACE)
+#if 0
   int result;
   timespec_t ts;
 
@@ -2691,7 +2692,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
                                 ? (::pace_pthread_cond_wait (cv, external_mutex))
                                 : (::pace_pthread_cond_timedwait (cv, external_mutex, (ACE_TIMESPEC_PTR) &ts),
-                                   int, -1, result);
+                                   int, -1, result)));
 
   // We need to adjust this to make the POSIX and Solaris return
   // values consistent.  EAGAIN is from Pthreads DRAFT4 (HP-UX 10.20 and
@@ -7468,7 +7469,14 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 # elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_resume (target_thread), ace_result_), int, -1);
 # elif defined (VXWORKS)
+#  if defined (ACE_HAS_PACE)
+  // pthread_continue (like pthread_suspend) is not an official POSIX
+  //  function. We get this for free with ACE. So use the thread ID from
+  //  the pace_pthread_t structure.
+  ACE_OSCALL_RETURN (::taskResume (target_thread->tid), int, -1);
+#  else
   ACE_OSCALL_RETURN (::taskResume (target_thread), int, -1);
+#  endif /* ACE_HAS_PACE */
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
@@ -8333,9 +8341,17 @@ ACE_OS::thr_min_stack (void)
   ACE_hthread_t tid;
   ACE_OS::thr_self (tid);
 
+#  if defined (ACE_HAS_PACE)
+  // pthread_min_stack is not a POSIX function. So use the thread ID from
+  //  the pace_pthread_t structure.
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::taskInfoGet (tid->tid, &taskDesc),
+                                status),
+              STATUS, -1, status);
+#  else
   ACE_OSCALL (ACE_ADAPT_RETVAL (::taskInfoGet (tid, &taskDesc),
                                 status),
               STATUS, -1, status);
+#  endif /* ACE_HAS_PACE */
   return status == OK ? taskDesc.td_stackSize : 0;
 # else /* Should not happen... */
   ACE_NOTSUP_RETURN (0);
@@ -8474,7 +8490,14 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 # elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_suspend (target_thread), ace_result_), int, -1);
 # elif defined (VXWORKS)
+#  if defined (ACE_HAS_PACE)
+  // pthread_suspend (like pthread_continue) is not an official POSIX
+  //  function. We get this for free with ACE. So use the thread ID from
+  //  the pace_pthread_t structure.
+  ACE_OSCALL_RETURN (::taskSuspend (target_thread->tid), int, -1);
+#  else
   ACE_OSCALL_RETURN (::taskSuspend (target_thread), int, -1);
+#  endif /* ACE_HAS_PACE */
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
@@ -11626,13 +11649,13 @@ ACE_OS::wsncmp (const WChar *s, const WChar *t, size_t len)
   return len == 0 ? 0 : *scan1 - *scan2;
 }
 
-#if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS) && ! defined (ACE_HAS_PACE)
 ACE_INLINE long
 ACE_cond_t::waiters (void) const
 {
   return this->waiters_;
 }
-#endif /* ACE_LACKS_COND_T && ACE_HAS_THREADS */
+#endif /* ACE_LACKS_COND_T && ACE_HAS_THREADS && ! ACE_HAS_PACE */
 
 #if 0
 ACE_INLINE int
