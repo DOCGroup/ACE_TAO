@@ -22,7 +22,8 @@ Sun Oct 25 14:13:31 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
         * examples/Reactor/Misc/reactors.dsp:
         * examples/Reactor/Misc/signals_1.dsp:
         * examples/Reactor/Misc/signals_2.dsp:
-          Corrected the include and library paths.
+          Corrected the include and library paths.  Thanks to
+	  Zoran Ivanovic <zorani@pathcom.com> for reporting this.
 
         * ChangeLog: Removed all the trailing spaces and tab characters so
           CVS's commit-check will be happy.
