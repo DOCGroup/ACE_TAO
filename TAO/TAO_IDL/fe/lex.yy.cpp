@@ -374,7 +374,7 @@ static tao_yyconst int tao_yy_meta[57] =
         3,    5,    5,    5,    5,    6,    6,    6,    6,    6,
         6,    6,    3,    7,    7,    5,    5,    5,    7,    6,
         6,    6,    6,    6,    8,    6,    6,    6,    8,    6,
-        8,    6,    8,    6,    6,    6
+        8,    6,    8,    6,    8,    6
     } ;
 
 static tao_yyconst short int tao_yy_base[468] =
@@ -728,7 +728,7 @@ char *tao_yytext_ptr;
 #line 1 "fe/idl.ll"
 #define INITIAL 0
 #line 2 "fe/idl.ll"
-/*  $Id: idl.ll,v 1.52 2001/01/24 22:41:00 parsons Exp $
+/*  $Id: idl.ll,v 1.53 2001/05/24 02:50:39 parsons Exp $
 
 COPYRIGHT
 
