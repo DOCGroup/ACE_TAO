@@ -2070,9 +2070,8 @@ class TAO_PortableServer_Export ServantActivator: public virtual ServantManager
         PortableServer::POA_ptr adapter,
         PortableServer::Servant serv,
         CORBA::Boolean cleanup_in_progress,
-        CORBA::Boolean remaining_activations,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        CORBA::Boolean remaining_activations
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

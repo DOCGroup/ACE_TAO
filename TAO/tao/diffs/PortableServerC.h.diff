@@ -1,5 +1,5 @@
---- PortableServer/orig/PortableServerC.h	Wed Apr 25 00:19:16 2001
-+++ PortableServer/PortableServerC.h	Tue Apr 24 13:44:54 2001
+--- orig/PortableServerC.h	Wed Apr 25 00:19:16 2001
++++ PortableServerC.h	Wed Apr 25 22:35:38 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -169,7 +169,7 @@
  #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_)
  #define _PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_
  
-@@ -2003,14 +2051,19 @@
+@@ -2003,23 +2051,27 @@
  
      virtual PortableServer::Servant incarnate (
          const PortableServer::ObjectId & oid,
@@ -192,7 +192,18 @@
  
      virtual void etherealize (
          const PortableServer::ObjectId & oid,
-@@ -2124,6 +2177,9 @@
+         PortableServer::POA_ptr adapter,
+         PortableServer::Servant serv,
+         CORBA::Boolean cleanup_in_progress,
+-        CORBA::Boolean remaining_activations,
+-        CORBA::Environment &ACE_TRY_ENV = 
+-          TAO_default_environment ()
++        CORBA::Boolean remaining_activations
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+@@ -2124,6 +2176,9 @@
  class TAO_PortableServer_Export ServantLocator: public virtual ServantManager
    {
    public:
@@ -202,7 +213,7 @@
    #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
      typedef ServantLocator_ptr _ptr_type;
      typedef ServantLocator_var _var_type;
-@@ -2150,23 +2206,27 @@
+@@ -2150,23 +2205,27 @@
          const PortableServer::ObjectId & oid,
          PortableServer::POA_ptr adapter,
          const char * operation,
@@ -236,7 +247,7 @@
        )
        ACE_THROW_SPEC ((
          CORBA::SystemException
-@@ -2189,6 +2249,8 @@
+@@ -2189,6 +2248,8 @@
  #endif /* end #if !defined */
  
  
@@ -245,7 +256,7 @@
  #if !defined (_PORTABLESERVER_POA_CH_)
  #define _PORTABLESERVER_POA_CH_
  
-@@ -2345,6 +2407,8 @@
+@@ -2345,6 +2406,8 @@
  #endif /* end #if !defined */
  
  
@@ -254,7 +265,7 @@
  #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
  #define _PORTABLESERVER_POA_NOSERVANT_CH_
  
-@@ -2386,6 +2450,8 @@
+@@ -2386,6 +2449,8 @@
  #endif /* end #if !defined */
  
  
@@ -263,7 +274,7 @@
  #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_)
  #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_
  
-@@ -2665,6 +2731,8 @@
+@@ -2665,6 +2730,8 @@
          CORBA::SystemException
        )) = 0;
  
@@ -272,7 +283,7 @@
      virtual PortableServer::ThreadPolicy_ptr create_thread_policy (
          PortableServer::ThreadPolicyValue value,
          CORBA::Environment &ACE_TRY_ENV = 
-@@ -2674,6 +2742,8 @@
+@@ -2674,6 +2741,8 @@
          CORBA::SystemException
        )) = 0;
  
@@ -281,7 +292,7 @@
      virtual PortableServer::LifespanPolicy_ptr create_lifespan_policy (
          PortableServer::LifespanPolicyValue value,
          CORBA::Environment &ACE_TRY_ENV = 
-@@ -2701,6 +2771,8 @@
+@@ -2701,6 +2770,8 @@
          CORBA::SystemException
        )) = 0;
  
@@ -290,7 +301,7 @@
      virtual PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
          PortableServer::ImplicitActivationPolicyValue value,
          CORBA::Environment &ACE_TRY_ENV = 
-@@ -2728,6 +2800,8 @@
+@@ -2728,6 +2799,8 @@
          CORBA::SystemException
        )) = 0;
  
@@ -299,7 +310,7 @@
      virtual char * the_name (
          CORBA::Environment &ACE_TRY_ENV = 
            TAO_default_environment ()
-@@ -2760,6 +2834,8 @@
+@@ -2760,6 +2833,8 @@
          CORBA::SystemException
        )) = 0;
  
@@ -308,7 +319,7 @@
      virtual PortableServer::AdapterActivator_ptr the_activator (
          CORBA::Environment &ACE_TRY_ENV = 
            TAO_default_environment ()
-@@ -2816,6 +2892,8 @@
+@@ -2816,6 +2891,8 @@
          PortableServer::POA::WrongPolicy
        )) = 0;
  
@@ -317,7 +328,7 @@
      virtual PortableServer::ObjectId * activate_object (
          PortableServer::Servant p_servant,
          CORBA::Environment &ACE_TRY_ENV = 
-@@ -3136,6 +3214,11 @@
+@@ -3136,6 +3213,11 @@
  #endif /* end #if !defined */
  
  
@@ -329,7 +340,7 @@
  }
  TAO_NAMESPACE_CLOSE // module PortableServer
  
-@@ -3143,18 +3226,32 @@
+@@ -3143,18 +3225,32 @@
  TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ObjectId*); // noncopying version
  TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ObjectId *&); // deprecated
  TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::ObjectId *&);
@@ -362,7 +373,7 @@
  TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ImplicitActivationPolicyValue);
  TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ImplicitActivationPolicyValue &);
  TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantRetentionPolicyValue);
-@@ -3162,6 +3259,8 @@
+@@ -3162,6 +3258,8 @@
  TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::RequestProcessingPolicyValue);
  TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::RequestProcessingPolicyValue &);
  
@@ -371,7 +382,7 @@
  #ifndef __ACE_INLINE__
  
  
-@@ -3179,23 +3278,37 @@
+@@ -3179,23 +3277,37 @@
  
  #endif /* _TAO_CDR_OP_PortableServer_ObjectId_H_ */
  
