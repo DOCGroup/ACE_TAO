@@ -44,8 +44,6 @@ Sun Oct 19 13:49:17 1997  Carlos O'Ryan  <coryan@MILONGA>
 	* ace/Proactor.cpp: 
 	  The mutex vs lock name change strikes back, this time under NT.
 
-Sun Oct 19 13:19:11 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
-
 	* tests/Conn_Test.h: 
 	* tests/Conn_Test.cpp: 
 	  The Svc_Handler was cached, but it had the default
