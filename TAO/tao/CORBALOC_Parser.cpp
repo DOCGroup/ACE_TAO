@@ -23,9 +23,7 @@ static const char* protocol_prefixes[] = {
   "iiop",
   "miop",
   "rir",
-#if TAO_HAS_SCIOP == 1
   "sciop",
-#endif
   "shmiop",
   "uiop"
 };
