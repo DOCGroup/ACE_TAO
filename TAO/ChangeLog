@@ -1,3 +1,8 @@
+Sun Jan 23 19:04:31 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* .cvsignore (Module):
+	Removed unnecessary file.
+
 Sun Jan 23 18:04:02 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* examples/AMI/FL_Callback/Peer_i.cpp (Module):
