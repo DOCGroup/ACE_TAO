@@ -57,8 +57,7 @@ public:
     // seek to the offset in file from whence
 
     virtual void destroy (CORBA::Environment &env)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       File::IOError));
+      ACE_THROW_SPEC ((CORBA::SystemException));
     // closes the file corresponding to the requested ObjectID
 
   private:
