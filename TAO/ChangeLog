@@ -1,3 +1,8 @@
+Thu Jul 25 13:13:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/examples/PSS/Makefile (%C.cpp): 
+	  Updated to include the generation of psdl generated stubs.
+
 Thu Jul 25 14:35:36 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* performance-tests\RTCorba\Thread_Pool\server.cpp: 
