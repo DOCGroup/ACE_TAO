@@ -1,3 +1,9 @@
+Mon Jan 28 10:50:40 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+
+          Removed some lines of unreachable code.
+
 Mon Jan 28 10:39:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/Application_Test/ifr_dii_client.cpp:
