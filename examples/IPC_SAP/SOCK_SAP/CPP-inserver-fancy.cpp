@@ -314,10 +314,11 @@ Twoway_Handler::run (void)
 {
   // Read data from client (terminate on error).
 
+  char *request = 0;
+
   for (;;)
     {
       ACE_INT32 len = 0;
-      char *request = 0;
 
       if (parse_header_and_allocate_buffer (request,
                                             &len) == -1)
@@ -404,10 +405,11 @@ Oneway_Handler::run (void)
 {
   // Read data from client (terminate on error).
 
+  char *request = 0;
+      
   for (;;)
     {
       ACE_INT32 len = 0;
-      char *request = 0;
 
       if (parse_header_and_allocate_buffer (request,
                                             &len) == -1)
