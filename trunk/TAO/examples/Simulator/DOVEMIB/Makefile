@@ -16,14 +16,13 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDL_SRC1= any_testC.cpp any_testS.cpp 
-IDL_SRC2= NavWeapC.cpp
-PROG_SRCS = $(IDL_SRC1) $(IDL_SRC2) svr.cpp clnt.cpp Node.cpp PrintVisitor.cpp AnyAnalyser.cpp
+IDL_SRC= NavWeapC.cpp
+PROG_SRCS = $(IDL_SRC)  DOVEMIB.cpp Node.cpp PrintVisitor.cpp AnyAnalyser.cpp
 
 LSRC = $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = any_testC.o any_testS.o svr.o NavWeapC.o Node.o PrintVisitor.o AnyAnalyser.o any_test_i.o 
-CUBIT_CLT_OBJS = any_testC.o any_testS.o clnt.o NavWeapC.o 
+MIB_SVR_OBJS = DOVEMIB.o NavWeapC.o Node.o PrintVisitor.o AnyAnalyser.o 
+
 
 BIN = svr clnt
 BUILD = $(BIN)
@@ -48,10 +47,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 DCFLAGS = -g
 
-$(IDL_SRC1): any_test.idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl any_test.idl
-
-$(IDL_SRC2): NavWeap.idl
+$(IDL_SRC): NavWeap.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl NavWeap.idl
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))

@@ -42,13 +42,16 @@ Any_Test_i::try_an_any (const CORBA::Any &a,  CORBA::Environment &env)
         Weapons *weapons_ = 0; 
       if (a.type()->equal(_tc_Weapons,TAO_TRY_ENV)) {
       
-        weapons_ = (Weapons *)a.value();        
+        CORBA::Any b;
+        b = a;
+        weapons_ = (Weapons *)b.value();        
         cout << "ID: " << a.type()->id(TAO_TRY_ENV) << endl;
         cout << "CompTime: " << weapons_->computation_time << endl;
+        cout << "Adr number of weapons: " << &(weapons_->number_of_weapons) << endl;
         cout << "Adr CompTime: " << &(weapons_->computation_time) << endl;
       }
       
-      anyAnalyser_.printAny (a);      
+      anyAnalyser_.printAny (a.type(), a.value());      
     }
   TAO_CATCHANY    
     {

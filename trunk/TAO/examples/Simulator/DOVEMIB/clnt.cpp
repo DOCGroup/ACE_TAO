@@ -96,9 +96,17 @@ Any_Test_Client::run ()
       data.replace (_tc_Navigation, &navigation_, CORBA::B_FALSE, TAO_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,"Starting test with Any: Navigation\n")); 
-      any_test_ptr_->try_an_any (data, TAO_TRY_ENV);
+      //any_test_ptr_->try_an_any (data, TAO_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,"Ending test with Any: Navigation\n"));   
 
+
+/*      CORBA::Short x_ = 8;
+      data <<= x_;
+
+      ACE_DEBUG ((LM_DEBUG,"Starting test with Any: Navigation\n")); 
+      any_test_ptr_->try_an_any (data, TAO_TRY_ENV);
+      ACE_DEBUG ((LM_DEBUG,"Ending test with Any: Navigation\n"));   
+*/      
       
       weapons_.number_of_weapons = 5;
       weapons_.weapon1_identifier = CORBA::string_alloc (20);

@@ -38,13 +38,16 @@ public:
   AnyAnalyser (const char *filename);
   
   ~AnyAnalyser ();
- 
+
+  // cause the PrintViewer to be deleted to close the file
+  void close ();
+  
   // main starting point includes analysing and printing
-  void printAny (CORBA::Any any);
+  void printAny (CORBA::TypeCode_ptr any_type, const void *any_value);
   
 private:
   Node *analyse (CORBA::TypeCode_ptr tc_ptr, 
-		             unsigned char *&value_ptr,
+		             const unsigned char *&value_ptr,
                  RecurseInfo recurseInfo);
 
   PrintVisitor *printVisitor_ptr_;
