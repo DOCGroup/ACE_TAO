@@ -22,7 +22,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
-#define MY_DEFPORT (5001)
+#define MY_DEFPORT 5001
 #define DEFAULT_MULTICASTGROUP "234.5.6.7"
 
 ACE_RCSID(QOS_Event_Handler, QOS_Event_Handler, "$Id$")
