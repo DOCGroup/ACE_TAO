@@ -160,9 +160,9 @@ Options::Options (void)
 }
 
 int
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "p:r:v", 1);
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("p:r:v"), 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -566,7 +566,7 @@ Handler_Factory::handle_events (void)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   OPTIONS::instance ()->parse_args (argc, argv);
 
