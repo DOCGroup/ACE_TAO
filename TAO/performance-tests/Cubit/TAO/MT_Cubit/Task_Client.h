@@ -153,9 +153,6 @@ public:
   // This array stores the latency seen by each client for each
   // request, to be used later to compute jitter.
 
-  char *factory_ior_;
-  // Object reference string for the cubit factory.
-
   u_int shutdown_;
   // Flag that indicates if we are going to call the shutdown methos
   // for the servant.
@@ -222,7 +219,7 @@ public:
   double get_low_priority_latency (void);
   double get_high_priority_jitter (void);
   double get_low_priority_jitter (void);
-  u_int get_latency (u_int thread_id);
+  double get_latency (u_int thread_id);
   // Accessors to get the various measured quantities.
 
 private:

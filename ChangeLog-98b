@@ -1,3 +1,8 @@
+Sat Jun  6 19:10:54 1998  Sergio Flores  <sergio@cs.wustl.edu>
+
+	* ace/config-vxworks5.x.h: changes the default thread priority
+ 	from 6 to 101.
+
 Sat Jun  6 18:34:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Added two new files: Timeprobe_T.h and Timeprobe_T.cpp in

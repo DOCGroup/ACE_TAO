@@ -22,7 +22,7 @@ static char *ior_file = 0;
 static int base_port = ACE_DEFAULT_SERVER_PORT;
 static int num_of_objs = 2;
 static u_int use_name_service = 1;
-
+ 
 Cubit_Task::Cubit_Task (void)
 {
   // No-op.
@@ -342,184 +342,6 @@ Cubit_Task::create_servants ()
   return 0;
 }
 
-Cubit_Factory_Task::Cubit_Factory_Task (void)
-{
-  // No-op.
-}
-
-Cubit_Factory_Task::Cubit_Factory_Task (const char *args,
-                                        const char *orbname,
-                                        CORBA::String * cubits,
-                                        u_int num_of_objs)
-  : orbname_ ((char *) orbname),
-    orbargs_ ((char *) args),
-    cubits_ (cubits),
-    cubit_factory_ (0),
-    num_of_objs_ (num_of_objs)
-{
-}
-
-int
-Cubit_Factory_Task::create_factory (void)
-{
-  TAO_TRY
-    {
-      // Create implementation object with user specified key.
-      ACE_NEW_RETURN (this->cubit_factory_,
-                      Cubit_Factory_i (cubits_, num_of_objs_),
-                      -1);
-
-      PortableServer::ObjectId_var id =
-        PortableServer::string_to_ObjectId ("Cubit_Factory");
-
-      this->poa_->activate_object_with_id (id.in (),
-                                           this->cubit_factory_,
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-          // Stringify the objref we'll be implementing, and print it
-          // to stdout.  Someone will take that string and give it to
-          // some client.  Then release the object.
-
-      Cubit_Factory_var cubit_factory =
-        this->cubit_factory_->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CORBA::String_var str =
-        this->orb_->object_to_string (cubit_factory.in (),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  ">>> (%P|%t) Cubit Factory Object created with IOR <%s>\n",
-                  str.in ()));
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("print IOR");
-      return -1;
-    }
-  TAO_ENDTRY;
-  return 0;
-}
-
-int
-Cubit_Factory_Task::svc (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ">>> (%P|%t) Beginning Cubit Factory task with args = '%s'\n",
-              orbargs_));
-
-  // @@ This should be replaced with the TAO_ORB_Manager...
-  this->initialize_orb ();
-  this->create_factory ();
-
-  TAO_TRY
-    {
-      this->poa_manager_->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Handle requests for this object until we're killed, or one of
-      // the methods asks us to exit.
-      if (this->orb_->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "run"),
-                          -1);
-
-      // Shut down the OA.
-      this->poa_->destroy (CORBA::B_TRUE,
-                           CORBA::B_TRUE,
-                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("poa->destroy()");
-    }
-  TAO_ENDTRY;
-
-  return 0;
-}
-
-int
-Cubit_Factory_Task::initialize_orb (void)
-{
-  TAO_TRY
-    {
-      ACE_ARGV args (this->orbargs_);
-
-      int argc = args.argc ();
-      char **argv = args.argv ();
-
-      // Initialize the ORB.
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    this->orbname_,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Initialize the Object Adapter
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
-
-      this->root_poa_ =
-        PortableServer::POA::_narrow (poa_object.in(),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->poa_manager_ =
-        this->root_poa_->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CORBA::PolicyList policies (2);
-      policies.length (2);
-
-      // Id Assignment policy
-      policies[0] =
-        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
-                                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Lifespan policy
-      policies[1] =
-        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
-                                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // We use a different POA, otherwise the user would have to
-      // change the object key each time it invokes the server.
-      this->poa_ =
-        this->root_poa_->create_POA ("Persistent_POA",
-                                     this->poa_manager_.in (),
-                                     policies,
-                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Creation of the new POAs over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0;
-           i < policies.length () && TAO_TRY_ENV.exception () == 0;
-           ++i)
-        {
-          CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (TAO_TRY_ENV);
-        }
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("orb_init");
-      return -1;
-    }
-  TAO_ENDTRY;
-
-  return 0;
-}
-
 // Parses the command line arguments and returns an error status.
 // @@ This method should be integrated into one of the classes
 // (preferably into an Options singleton) rather than kept as a
@@ -647,7 +469,11 @@ start_servants (ACE_Barrier &start_barrier)
                   -1);
 
   ACE_OS::sprintf (args1,
-                   "rate20 -ORBport %d -ORBhost %s -ORBobjrefstyle URL ",
+                   "rate20 -ORBport %d " 
+		   "-ORBhost %s "
+		   "-ORBobjrefstyle URL "
+		   "-ORBsndsock 32768 "
+		   "-ORBrcvsock 32768 ",
                    base_port,
                    hostname);
 
@@ -662,7 +488,7 @@ start_servants (ACE_Barrier &start_barrier)
                   -1);
 
 #if defined (VXWORKS)
-  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
+  ACE_Sched_Priority priority = 101;
 #elif defined (ACE_WIN32)
   ACE_Sched_Priority priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                                                 ACE_SCOPE_THREAD);
@@ -691,40 +517,13 @@ start_servants (ACE_Barrier &start_barrier)
                   Cubit_Task *[num_of_objs],
                   -1);
 
-  ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
-                                                     ACE_SCOPE_THREAD);
-
-  u_int number_of_priorities = 0;
-  while (priority_iterator.more ())
-                {
-              number_of_priorities ++;
-                  priority_iterator.next ();
-  }
-
-  // 1 priority is exclusive for the high priority client.
-  number_of_priorities --;
-
-  u_int number_of_low_priority_client = num_of_objs - 1;
-
-  // Drop the priority, so that the priority of clients will increase
-  // with increasing client number.
-  for (i = 0; i < (int) (number_of_low_priority_client + 1); i++)
-    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+  // Drop the priority
+  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                     priority,
                                                     ACE_SCOPE_THREAD);
 
-  // granularity of the assignment of the priorities.  Some OSs have
-  // fewer levels of priorities than we have threads in our test, so
-  // with this mechanism we assign priorities to groups of threads when
-  // there are more threads than priorities.
-  u_int grain = number_of_low_priority_client / number_of_priorities;
-  u_int counter = 0;
-
-  if (grain <= 0)
-          grain = 1;
-
   ACE_DEBUG ((LM_DEBUG,
-              "Creating %d servants starting at priority %d\n",
+              "Creating %d servants with priority %d\n",
               num_of_objs - 1,
               priority));
 
@@ -739,7 +538,11 @@ start_servants (ACE_Barrier &start_barrier)
                       -1);
 
       ACE_OS::sprintf (args,
-                       "rate10 -ORBport %d -ORBhost %s -ORBobjrefstyle URL ",
+		       "rate10 -ORBport %d " 
+		       "-ORBhost %s "
+		       "-ORBobjrefstyle URL "
+		       "-ORBsndsock 32768 "
+		       "-ORBrcvsock 32768 ",
                        base_port + 1 + i,
                        hostname);
 
@@ -758,81 +561,40 @@ start_servants (ACE_Barrier &start_barrier)
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Created servant %d with priority %d\n",
-                  i,
-                  priority));
+		  "Created servant %d\n",
+		  i));
 
-      counter = (counter + 1) % grain;
-      if ( (counter == 0) &&
-           //Just so when we distribute the priorities among the threads, we make sure we don't go overboard.
-           ((number_of_priorities * grain) > (number_of_low_priority_client - (i - 1))) )
-        {
-          // Get the next higher priority.
-          priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                      priority,
-                                                      ACE_SCOPE_THREAD);
-        }
     }
-
-  char *args;
-
-  ACE_NEW_RETURN (args,
-                  char [BUFSIZ],
-                  -1);
-
-  ACE_OS::sprintf (args,
-                   "rate10 -ORBport %d -ORBhost %s -ORBobjrefstyle URL ",
-                   base_port + num_of_objs,
-                   hostname);
 
   start_barrier.wait ();
 
-  cubits[0] = high_priority_task->get_servant_ior (0);
 
-  for (i = 0; i < num_of_objs-1; ++i)
-    cubits[i + 1] = low_priority_task[i]->get_servant_ior (0);
+  // Write the ior's to a file so the client can read them.
+  {
+    cubits[0] = high_priority_task->get_servant_ior (0);
 
-  FILE *ior_f = 0;
+    for (i = 0; i < num_of_objs-1; ++i)
+      cubits[i + 1] = low_priority_task[i]->get_servant_ior (0);
 
-  if (ior_file != 0)
-    ior_f = ACE_OS::fopen (ior_file, "w+");
+    FILE *ior_f = 0;
 
-  for (i = 0; i < num_of_objs; ++i)
-    {
-      if (ior_f != 0)
-        {
-          ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
-        }
-      ACE_OS::printf ("cubits[%d] ior = %s\n",
-                      i,
-                      cubits[i]);
-    }
+    if (ior_file != 0)
+      ior_f = ACE_OS::fopen (ior_file, "w+");
 
-  if (ior_f != 0)
-    ACE_OS::fclose (ior_f);
+    for (i = 0; i < num_of_objs; ++i)
+      {
+	if (ior_f != 0)
+	  {
+	    ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
+	  }
+	ACE_OS::printf ("cubits[%d] ior = %s\n",
+			i,
+			cubits[i]);
+      }
 
-#if 0
-  Cubit_Factory_Task * factory_task;
-
-  ACE_NEW_RETURN (factory_task,
-                  Cubit_Factory_Task (args, "internet", cubits, num_of_objs),
-                  -1);
-
-  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                              priority,
-                                              ACE_SCOPE_THREAD);
-
-  //  Make the factory low priority task an active object.
-  if (factory_task->activate (THR_BOUND | ACE_SCHED_FIFO,
-                          1,
-                          0,
-                          priority) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
-                  "factory_task->activate"));
-    }
-#endif
-
+    if (ior_f != 0)
+      ACE_OS::fclose (ior_f);
+  }
   return 0;
 }
 
@@ -860,7 +622,7 @@ main (int argc, char *argv[])
 #if defined (__Lynx__)
           30,
 #else  /* ! __Lynx__ */
-          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+          ACE_THR_PRI_FIFO_DEF, //ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
 #endif /* ! __Lynx__ */
           ACE_SCOPE_PROCESS)) != 0)
     {

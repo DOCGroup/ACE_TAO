@@ -36,12 +36,3 @@ interface Cubit
   // shut down the application
 };
 
-interface Cubit_Factory
-{
-  // = TITLE
-  //    Creates Cubit objects.
-
-  string create_cubit (in unsigned short index);
-  // Factory method that creates an string containing the IOR of the
-  // designated Cubit object.
-};
