@@ -107,7 +107,19 @@ General Design Ideas/Decision
             to make one of the compilers IfR-integrated (import keyword?)
             then it will be a much easier task than it's now. This internal
             representation may also be usable in typecodes (@@ boris:
-            not clear to me).
+            not clear to me). 
+            
+            @@ jeff: A typecode is like a piece of the Syntax Tree with these
+            exceptions -
+
+                (1) There is no typecode for an IDL module.
+
+                (2) Typecodes for interfaces and valuetypes lack some of the
+                    information in the corresponding Syntax Tree nodes.
+
+            With these exceptions in mind, a typecode can be composed and
+            traversed in the same manner as a Syntax Tree, perhaps with
+            different classes than used to compose the ST itself.
 
 [IDEA]: We should be consistent with the way external compilers that we call
         report errors. For now those are CPP and IDLC.
@@ -117,7 +129,11 @@ Option Parser
 
 [IDEA]: Use Spirit parser framework to generate option parser.
 
-[IDEA]: Option Database is probably a singleton.
+[IDEA]: Option Database is probably a singleton. (@@ jeff: This is a good
+        idea, especially when passing some of the options to a preprocessor
+        or spawned IDL compier. But I think we will still need 'state'
+        classes for the front and back ends (to hold values set by command
+        line options and default values) so we can keep them decoupled). 
 
 [IDEA]: It seems we will have to execute at least two external programs
         as part of CIDLC execution: CPP and IDLC. Why wouldn't we follow
@@ -153,7 +169,9 @@ C Preprocessor Interfacing
 IDL Compiler Interfacing
 ------------------------
 
-[IDEA]: Same as for CPP: Can we use pipes?
+[IDEA]: Same as for CPP: Can we use pipes? (@@ jeff: check with Nanbor on
+        this. I think there may be CCM/CIAO use cases where we need the
+        intermediate IDL file).
 
 [IDEA]: Will need a mechanism to pass options to IDLC from CIDLC command
         line (would be nice to have this ability for CPP as well).
@@ -187,7 +205,9 @@ Parser
         functor's data member) on which Syntax Tree they are working.
         Bad side: semantic rules are defined during grammar construction.
         However we can use a modification of the factory method pattern.
-        Better ideas?
+        Better ideas? (@@ jeff: I think ST node creation with a factory
+        is a good idea - another ST implementation could be plugged in,
+        as long as it uses a factory with the same method names).
 
 
 
@@ -216,7 +236,7 @@ Syntax Tree
         from/supports.
 
 [IDEA]: We will probably want to use factories to instantiate Syntax Tree
-        Nodes (STN). This will allow a concrete codegenerators to alter (i.e.
+        Nodes (STN). This will allow a concrete code generators to alter (i.e.
         inherit off and extend) vanilla STNs (i.e. alternative to BE nodes
         in current IDLC design).
 
@@ -234,7 +254,11 @@ Common Syntax Tree traversal Design Ideas/Decision
 
        - Some traversal agents can change Syntax Tree so that it will be
          unusable by some later traversal agents. So maybe the more 
-         generic approach would be to produce new Syntax Tree?
+         generic approach would be to produce new Syntax Tree? (@@ jeff:
+         Yes, say for example that we were using a common ST representation
+         for the IDL compiler and the IFR. We would not want to send the
+         extra AMI nodes to the IFR so in that case simple modification
+         of the ST might not be best).
 
 [IDEA] Need a generic name for "Syntax Tree Traversal Agents". What about
        "Syntax Tree Traverser"?
@@ -275,9 +299,9 @@ Code Generation Stream
 Code Generators
 ---------------
 
-[IDEA] It makes sense to establish a general concept of codegenrators.
+[IDEA] It makes sense to establish a general concept of code generators.
        "Executor Mapping Generator", "Executor Implementation Generator"
-       and "Skeleton Thunk Generator" would be a concrete codegenrators.
+       and "Skeleton Thunk Generator" would be a concrete code generators.
 
 [IDEA] Expression evaluation: currently the result (not the expression)
        is generated, which may not always be necessary (@@ boris: I would
@@ -286,11 +310,14 @@ Code Generators
        array and sequence bounds) evaluation must be done internally 
        (@@ boris: note that evaluation is needed to only verify that things
        are correct. You don't have to (shouldn't?) substitute original (const)
-       expression with what's been evaluated).
+       expression with what's been evaluated). (@@ jeff: it may be necessary
+       in some cases to append 'f' or 'U' to a generated number to avoid a C++
+       compiler warning).
 
 [IDEA] I wonder if it's a good idea to use a separate pass over syntax tree
        for semantic checking (e.g. type coercion, positive values for 
-       sequence bounds).
+       sequence bounds). (@@ jeff: This may hurt performance a little - more
+       lookups - but it will improve error reporting).
 
 Executor Mapping Generator
 --------------------------
