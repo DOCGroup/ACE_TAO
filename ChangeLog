@@ -1,3 +1,8 @@
+Sat Jun 19 07:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+          Added missing include for non inlined builds
+
 Sat Jun 19 07:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_SOCK.{h,cpp,i}:
