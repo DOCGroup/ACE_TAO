@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../../bin';
 require Process;
-require ACEutils;
+use ACEutils;
 
 $T = Process::Create ($EXEPREFIX."RootPOA".$EXE_EXT);
 
