@@ -11,10 +11,6 @@ Sun Mar 21 17:42:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record): 
 	  Use ACE_NTOHL macro instead of system ntohl() to get around bug
  	  in egcs-2.91.6x.
-	
-	  Using the ACE_NTOHL macro is functionally equivalent to the
-	  standard ntohl() system call but it may be more inefficient on
-	  some platforms.
 
 Sun Mar 21 16:07:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
