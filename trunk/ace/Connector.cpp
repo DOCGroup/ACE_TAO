@@ -564,22 +564,27 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   ACE_Reactor_Mask mask = ACE_Event_Handler::CONNECT_MASK;
 
   // Bind ACE_Svc_Tuple with the ACE_HANDLE we're trying to connect.
-  if (this->handler_map_.bind (sh->get_handle (), ast) == -1)
+  if (this->handler_map_.bind (sh->get_handle (),
+                               ast) == -1)
     goto fail1;
-
-  else if (this->reactor ()->register_handler (sh->get_handle (), this, mask) == -1)
+  else if (this->reactor ()->register_handler (sh->get_handle (),
+                                               this,
+                                               mask) == -1)
     goto fail2;
   // If we're starting connection under timer control then we need to
   // schedule a timeout with the ACE_Reactor.
   else
     {
-      ACE_Time_Value *tv = (ACE_Time_Value *) synch_options.time_value ();
-
+      ACE_Time_Value *tv = 
+        ACE_const_cast (ACE_Time_Value *,
+                        synch_options.time_value ());
       if (tv != 0)
         {
           int cancellation_id =
             this->reactor ()->schedule_timer
-              (this, (const void *) ast, *tv);
+              (this,
+               (const void *) ast,
+               *tv);
           if (cancellation_id == -1)
             goto fail3;
 
@@ -593,8 +598,8 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   // Undo previous actions using the ol' "goto label and fallthru"
   // trick...
 fail3:
-  this->reactor ()->remove_handler (this,
-                                    mask | ACE_Event_Handler::DONT_CALL);
+  this->reactor ()->remove_handler 
+    (this, mask | ACE_Event_Handler::DONT_CALL);
   /* FALLTHRU */
 fail2:
   this->handler_map_.unbind (sh->get_handle ());
@@ -633,7 +638,7 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       // Timer_Queue).
       this->closing_ = 1;
 
-      while (1)
+      for (;;)
         {
           // Create an iterator.
           MAP_ITERATOR iterator = this->handler_map_.begin ();
