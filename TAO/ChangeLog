@@ -1,3 +1,9 @@
+Tue Jan  6 16:36:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Two_Objects/run_test.pl:
+
+	  Reduced the timeout and the number of iterations.
+
 Tue Jan  6 15:03:13 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* tao/CONV_FRAME.pidl:
