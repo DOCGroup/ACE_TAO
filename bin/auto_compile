@@ -66,7 +66,7 @@ while ($#ARGV >= 0) {
     shift;
   } elsif ($ARGV[0] eq "-smart_proxies") {
     $smart_proxies = 1;
-v    shift;
+    shift;
   } elsif ($ARGV[0] eq "-build_list") {
     shift;
     @BUILD_LIST = split (/,/, $ARGV[0]);
