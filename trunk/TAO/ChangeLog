@@ -1,3 +1,11 @@
+Thu Mar 24 10:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/RTEventLogNotification.cpp:
+          When TAO_LACKS_EVENT_CHANNEL_ANY is defined, don't fill the
+          any_value, it is not there. Thanks for Charles Frasch
+          <cfrasch at atdesk dot com> for reporting this. This fixes
+          bugzilla [1795]
+
 Thu Mar 24 09:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
