@@ -303,6 +303,9 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
 				 const ACE_Time_Value &delay,
 				 const ACE_Time_Value &interval)
 {
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (interval);
+
   // Block all signals.
   ACE_Sig_Guard sg;
   ACE_UNUSED_ARG (sg);
