@@ -151,10 +151,10 @@
 // out, error).  Here we raise the limit to 1024.  Adjust the definition
 // below if you need to raise or lower it.
 
-#if defined (FD_SETSIZE)
-#undef FD_SETSIZE
-#endif /* FD_SETSIZE */
+#if !defined (FD_SETSIZE)
 #define FD_SETSIZE 1024
+#endif /* FD_SETSIZE */
+
 
 // Windows doesn't like 65536 ;-) If 65536 is specified, it is
 // listenly ignored by the OS, i.e., setsockopt does not fail, and you
@@ -493,6 +493,15 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_HAS_MUTEX_TIMEOUTS
 #define ACE_LACKS_STRUCT_DIR
 #define ACE_LACKS_MKSTEMP
+
+// If we are using winsock2 then the SO_REUSEADDR feature is broken
+// SO_REUSEADDR=1 behaves like SO_REUSEPORT=1. (SO_REUSEPORT is an 
+// extension to sockets on some platforms)
+// We define SO_REUSEPORT here so that ACE_OS::setsockopt() can still 
+// allow the user to specify that a socketaddr can *always* be reused. 
+#if defined (ACE_HAS_WINSOCK2) && ACE_HAS_WINSOCK2 != 0 && ! defined(SO_REUSEPORT)
+#define SO_REUSEPORT 0x0400  // We just have to pick a value that won't conflict
+#endif 
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */
