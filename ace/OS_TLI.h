@@ -104,6 +104,11 @@ extern "C" {
 }
 #     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
 #   endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
+
+// Apparently this particular prototype is missing in so many
+// platforms that is just better to declare it ourselves.
+extern "C" int t_getname (int, struct netbuf *, int);
+
 # endif /* ACE_WIN32 */
 
 // If the xti.h file redefines the function names, do it now, else
