@@ -165,7 +165,7 @@ TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core *orb_core,
 
   if (TAO_GIOP::write_locate_request_header (request_id,
                                              key,
-                                             output) != 0)
+                                             output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
 
