@@ -1,3 +1,13 @@
+Mon Feb 28 17:34:00 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+          
+          Realized that the Unix and Win32 behavior wasn't the same.  Now
+          both will return -1 if there is any problem such as if the buffer
+          is not long enough.  The Win32 version used to return the size of
+          the buffer needed, so -1 wasn't returned on error.  
+
 Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.h:
