@@ -931,11 +931,24 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
           return ACE_OS::inet_ntop (AF_INET, &addr, dst, size);
         }
 
+#  if defined (ACE_WIN32)
+      if (0 == ::getnameinfo (ACE_reinterpret_cast (const sockaddr*,
+                                                    &this->inet_addr_.in6_),
+                              this->get_size (),
+                              dst,
+                              size,
+                              0, 0,    // Don't want service name
+                              NI_NUMERICHOST))
+        return dst;
+      ACE_OS::set_errno_to_wsa_last_error ();
+      return 0;
+#  else
       const char *ch = ACE_OS::inet_ntop (AF_INET6,
                                           &this->inet_addr_.in6_.sin6_addr,
                                           dst,
                                           size);
       return ch;
+#  endif /* ACE_WIN32 */
     }
 #endif /* ACE_HAS_IPV6 */
 
