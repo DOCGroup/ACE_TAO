@@ -247,11 +247,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "CORBA::Boolean " << full_skel_name
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* value" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "const char *base_id = CORBA::_tc_Object->id (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
+      << "const char *base_id = \"IDL:org.omg/CORBA/Object:1.0\";" << be_nl
       << "if (\n" << be_idt;
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {

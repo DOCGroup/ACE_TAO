@@ -1,24 +1,63 @@
+Thu Jan 17 16:02:50 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_interface/amh_sh.h:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Override visit_operation() and visit_attribute() to invoke the
+	  AMH-specific visitors.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	  Improve comments in generated code, instead of saying silly
+	  things like "//constructor" (like I didn't know what a
+	  constructor looks like).  Instead we generate a pointer to where
+	  the code is generated from.
+	  Fixed indentation in the generated code also.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Do not use CORBA::_tc_Object to get the CORBA::Object interface
+	  repository ID, the string can as easily get hard-coded, is not
+	  like the OMG changes that string every week.
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  The AMH-operations have their AMH_*ResponseHandler argument
+	  generated, however we still need to double check the arglist
+	  because some black magic is going on inside the AMH visitor for
+	  interfaces that seems to create a special operation node.
+
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Improved skeletons for AMH-operations.  The skeleton is
+	  starting to take shape, it creates the AMH_*ResponseHandler but
+	  no marshaling or demarshaling code is present.
+
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	  Factor out code to generate the TAO_ENV_ARG parameter to a
+	  separate function, that makes it easier to reuse the arglist
+	  visitors.
+
 Thu Jan 17 17:20:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO_Static.dsp:
-	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp: Added relevant files. 
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp: Added relevant files.
 
 Thu Jan 17 17:09:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO.dsp (SOURCE): 
+	* tao/TAO.dsp (SOURCE):
 	* tao/PortableServer/*.dsp: Modifies the files.
 
 Thu Jan 17 17:04:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Acceptor_Impl.h: Removed the out_of_sockets_handler ()
 	  method as this was not used. Thanks to Andrew
-	  <andrew@activesol.net> for pointing this out. 
-	  
+	  <andrew@activesol.net> for pointing this out.
+
 	* tao/ORB_Core.cpp:
 	* tao/ORB_Core.h: Removed the method parse_bidir_policy () method
-	  and added a new method load_policy_validators (). 
+	  and added a new method load_policy_validators ().
 
-	* tao/orbconf.h: Added a new cached policy for BiDir connections. 
+	* tao/orbconf.h: Added a new cached policy for BiDir connections.
 
 	* tao/Policy_Validators.h:
 	* tao/Policy_Validators.cpp: Moved this class from PortableServer
@@ -26,35 +65,35 @@ Thu Jan 17 17:04:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  other libraries needs to be added to the POA policy
 	  validator. We now use this as a basis of a new policy validator
 	  class in BiDir library. The BiDir library would add its policy
-	  validator to the POA policy validator. 
-	
+	  validator to the POA policy validator.
+
 	* tao/BiDir_Adapter.h: Added a method load_policy_validators () to
 	  add the policy validator.
-	
+
 	* tao/Makefile: Added the new files.
 
 	* tao/BiDir_GIOP/BiDirPolicy_Validator.h:
 	* tao/BiDir_GIOP/BiDirPolicy_Validator.cpp: The new policy
-	  validator for BiDir GIOP. 
-	
+	  validator for BiDir GIOP.
+
 	* tao/BiDir_GIOP/BiDirGIOP.cpp:
 	* tao/BiDir_GIOP/BiDirGIOP.h:
 	* tao/BiDir_GIOP/BiDir_Policy_i.cpp:
 	* tao/BiDir_GIOP/BiDir_Policy_i.h:
 	* tao/BiDir_GIOP/Makefile: Changes to create and use the validator
-	  properly. 
-	
+	  properly.
+
 	* tao/PortableServer/Default_Policy_Validator.cpp:
 	* tao/PortableServer/Default_Policy_Validator.h: Changes to use
-	  the Policy_Validator in TAO. 
-	
+	  the Policy_Validator in TAO.
+
 	* tao/PortableServer/Makefile: Removed the Policy_Validator.* and
-	  generated dependecies. 
+	  generated dependecies.
 
 	* tao/PortableServer/Policy_Validator.h:
 	* tao/PortableServer/Policy_Validator.cpp: Moved to
-	  $TAO_ROOT/tao. 
-	
+	  $TAO_ROOT/tao.
+
 	* tao/PortableServer/Object_Adapter.h
 	* tao/PortableServer/Object_Adapter.i
 	* tao/PortableServer/POA.h:
