@@ -60,6 +60,7 @@ NAMES = \
 	MT_Reactor_Timer_Test \
 	MT_Reactor_Upcall_Test \
 	MT_SOCK_Test \
+        Multicast_Test \
 	Naming_Test \
 	New_Fail_Test \
 	Notify_Performance_Test \
