@@ -1,3 +1,15 @@
+Sat May 24 17:21:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Service_Configurator/Misc/Makefile:
+          Only compile if shared_libs is defined.  Although the Service
+          Configurator will work with static only libraries, this example
+          will not.
+
+        * examples/Timer_Queue/Makefile.TQTD:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.Dump_Restore:
+          Added LIB and VLIB so that static_libs and static_libs_only will
+          build and clean the lib*.a libraries.
+
 Sat May 24 15:19:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
