@@ -1,3 +1,28 @@
+Fri Apr 21 14:16:15 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.i:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+
+	  Improved class naming conventions so that they are now prepended
+	  with a "TAO_LB_" to prevent namespace pollution.
+
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp
+	  (load_changed):
+
+	  Fixed potential division by zero producing operation.
+
 Sun Apr  2 01:34:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* utils/nslist/Makefile: 
