@@ -382,6 +382,14 @@ ACE_OutputCDR::adjust (size_t size, char*& buf)
   return this->adjust (size, size, buf);
 }
 
+ACE_INLINE int
+ACE_OutputCDR::set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor)
+{
+  this->major_version_ = major;
+  this->minor_version_ = minor;
+  return 0;
+}
+
 ACE_INLINE const ACE_Message_Block*
 ACE_OutputCDR::begin (void) const
 {
