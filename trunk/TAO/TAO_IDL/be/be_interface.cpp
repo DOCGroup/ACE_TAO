@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -17,10 +19,10 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 #include "be_visitor_interface.h"
-#include	"be.h"
+#include "be.h"
 
 /*
  * BE_Interface
@@ -111,26 +113,26 @@ be_interface::compute_coll_name (void)
       // We add the POA_ preffix only if the first component is not
       // the global scope...
       if (ACE_OS::strcmp (item, "") != 0)
-	{
-	  if (!i->is_done ())
-	    {
-	      // We only add the POA_ preffix if there are more than
-	      // two components in the name, in other words, if the
-	      // class is inside some scope.
-	      if (!poa_added)
-		{
-		  ACE_OS::strcat (this->full_coll_name_, poa);
-		  poa_added = 1;
-		}
-	      ACE_OS::strcat (this->full_coll_name_, item);
-	      ACE_OS::strcat (this->full_coll_name_, "::");
-	    }
-	  else
-	    {
-	      ACE_OS::strcat (this->full_coll_name_, collocated);
-	      ACE_OS::strcat (this->full_coll_name_, item);
-	    }
-	}
+        {
+          if (!i->is_done ())
+            {
+              // We only add the POA_ preffix if there are more than
+              // two components in the name, in other words, if the
+              // class is inside some scope.
+              if (!poa_added)
+                {
+                  ACE_OS::strcat (this->full_coll_name_, poa);
+                  poa_added = 1;
+                }
+              ACE_OS::strcat (this->full_coll_name_, item);
+              ACE_OS::strcat (this->full_coll_name_, "::");
+            }
+          else
+            {
+              ACE_OS::strcat (this->full_coll_name_, collocated);
+              ACE_OS::strcat (this->full_coll_name_, item);
+            }
+        }
     }
   delete i;
 
@@ -140,7 +142,7 @@ be_interface::compute_coll_name (void)
   ACE_NEW (this->local_coll_name_, char[localen]);
   ACE_OS::strcpy(this->local_coll_name_, collocated);
   ACE_OS::strcat(this->local_coll_name_,
-		 this->local_name ()->get_string ());
+                 this->local_name ()->get_string ());
 }
 
 const char*
@@ -170,9 +172,9 @@ be_interface::compute_fullskelname (void)
   else
     {
       long namelen;
-      UTL_IdListActiveIterator	*i;
-      long				first = I_TRUE;
-      long				second = I_FALSE;
+      UTL_IdListActiveIterator  *i;
+      long                              first = I_TRUE;
+      long                              second = I_FALSE;
 
       // in the first loop compute the total length
       namelen = 4;
@@ -271,7 +273,7 @@ be_interface::gen_client_header (void)
       *ch << "class " << this->local_name () << ";" << nl;
       // generate the _ptr declaration
       *ch << "typedef " << this->local_name () << " *" << this->local_name ()
-	  << "_ptr;" << nl;
+          << "_ptr;" << nl;
 
       ch->gen_endif ();
 
@@ -280,11 +282,11 @@ be_interface::gen_client_header (void)
 
       // generate the _var declaration
       if (this->gen_var_defn () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      "be_interface - error generating _var definition\n"));
-	  return -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_interface - error generating _var definition\n"));
+          return -1;
+        }
       ch->gen_endif ();
 
       // generate the ifdef macro for the _out class
@@ -292,11 +294,11 @@ be_interface::gen_client_header (void)
 
       // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
       if (this->gen_out_defn () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      "be_interface - error generating _var definition\n"));
-	  return -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_interface - error generating _var definition\n"));
+          return -1;
+        }
       // generate the endif macro
       ch->gen_endif ();
 
@@ -305,7 +307,7 @@ be_interface::gen_client_header (void)
       // now generate the class definition
       ch->indent ();
       *ch << "class " << idl_global->export_macro ()
-	  << " " << this->local_name ();
+          << " " << this->local_name ();
 
       if (n_inherits () > 0)  // this interface inherits from other interfaces
         {
@@ -347,47 +349,47 @@ be_interface::gen_client_header (void)
       // generate the static _duplicate, _narrow, and _nil operations
       *ch << "// the static operations" << nl;
       *ch << "static " << this->local_name () << "_ptr " << "_duplicate ("
-	  << this->local_name () << "_ptr obj);" << nl;
+          << this->local_name () << "_ptr obj);" << nl;
       *ch << "static " << this->local_name () << "_ptr " << "_narrow ("
-	  << "CORBA::Object_ptr obj, CORBA::Environment &env);" << nl;
+          << "CORBA::Object_ptr obj, CORBA::Environment &env);" << nl;
       *ch << "static " << this->local_name () << "_ptr "
-	  << "_nil (void);" << nl;
+          << "_nil (void);" << nl;
 
       // generate a TAO-specific _bind method similar to what Orbix and VisiBroker
       // have
       *ch << "static " << this->local_name () << "_ptr _bind (const char *host, "
-	  << "CORBA::UShort port, const char *key, CORBA::Environment &env);\n\n";
+          << "CORBA::UShort port, const char *key, CORBA::Environment &env);\n\n";
 
       // the _is_a method
       ch->indent ();
       *ch << "virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, "
-	  << "CORBA::Environment &env);\n" << be_nl
-	  << "// = user methods\n";
+          << "CORBA::Environment &env);\n" << be_nl
+          << "// = user methods\n";
 
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
       // that only legal syntactic elements appear in our scope.
       if (this->be_scope::gen_client_header () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "be_interface::gen_client_header\n"));
-	  ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
-	  return -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "be_interface::gen_client_header\n"));
+          ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
+          return -1;
+        }
 
       // generate the "protected" constructor so that users cannot instantiate
       // us
       *ch << be_uidt_nl
-	  << "protected:" << be_idt_nl
-	  << this->local_name () << " (" << be_idt << be_idt_nl
-	  << "STUB_Object *objref = 0," << be_nl
-	  << "TAO_ServantBase *servant = 0," << be_nl
-	  << "CORBA::Boolean collocated = CORBA::B_FALSE" << be_uidt_nl
-	  << ");\n" << be_uidt;
+          << "protected:" << be_idt_nl
+          << this->local_name () << " (" << be_idt << be_idt_nl
+          << "STUB_Object *objref = 0," << be_nl
+          << "TAO_ServantBase *servant = 0," << be_nl
+          << "CORBA::Boolean collocated = CORBA::B_FALSE" << be_uidt_nl
+          << ");\n" << be_uidt;
       ch->decr_indent ();
 
       // dtor is public...
       *ch << "public:" << be_idt_nl
-	  << "virtual ~" << this->local_name () << " (void);" << be_uidt_nl;
+          << "virtual ~" << this->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
@@ -403,21 +405,21 @@ be_interface::gen_client_header (void)
       // generate the typecode decl. If we are in the outermost scope, our typecode
       // decl is extern
       if (this->is_nested ())
-	{
-	  // we have a scoped name
-	  ch->indent ();
-	  *ch << "static CORBA::TypeCode_ptr " << this->tc_name
-	    ()->last_component () << ";\n\n";
-	}
+        {
+          // we have a scoped name
+          ch->indent ();
+          *ch << "static CORBA::TypeCode_ptr " << this->tc_name
+            ()->last_component () << ";\n\n";
+        }
       else
-	{
-	  // we are in the ROOT scope
-	  ch->indent ();
-	  *ch << "extern "
-	      << idl_global->export_macro ()
-	      << " CORBA::TypeCode_ptr "
-	      << this->tc_name ()->last_component () << ";\n\n";
-	}
+        {
+          // we are in the ROOT scope
+          ch->indent ();
+          *ch << "extern "
+              << idl_global->export_macro ()
+              << " CORBA::TypeCode_ptr "
+              << this->tc_name ()->last_component () << ";\n\n";
+        }
 
       cg->pop ();
       this->cli_hdr_gen_ = I_TRUE;
@@ -909,7 +911,7 @@ int be_interface::gen_server_skeletons (void)
     {
       return -1;
     }
-  
+
   *ss << "if (ACE_OS::strcmp (logical_type_id, "
       << "\"IDL:omg.org/CORBA/Object:1.0\") == 0)" << be_idt_nl
       << "return ACE_static_cast(PortableServer::Servant, this);"
@@ -1866,8 +1868,8 @@ be_interface::gen_optable_helper (be_interface *derived,
 
 int
 be_interface::is_a_helper (be_interface * /*derived*/,
-			   be_interface *bi,
-			   TAO_OutStream *os)
+                           be_interface *bi,
+                           TAO_OutStream *os)
 {
   // emit the comparison code
   os->indent ();
@@ -1879,8 +1881,8 @@ be_interface::is_a_helper (be_interface * /*derived*/,
 
 int
 be_interface::downcast_helper (be_interface * /* derived */,
-			       be_interface *base,
-			       TAO_OutStream *os)
+                               be_interface *base,
+                               TAO_OutStream *os)
 {
   *os << "if (ACE_OS::strcmp (logical_type_id, \""
       << base->repoID () << "\") == 0)" << be_idt_nl
@@ -2024,7 +2026,7 @@ const char*
 be_interface::relative_coll_name (const char *collname)
 {
   return be_interface::relative_name (this->full_coll_name (),
-				      collname);
+                                      collname);
 }
 
 // return the relative skeleton name (needed due to NT compiler insanity)
@@ -2032,12 +2034,12 @@ const char *
 be_interface::relative_skel_name (const char *skelname)
 {
   return be_interface::relative_name (this->full_skel_name (),
-				      skelname);
+                                      skelname);
 }
 
 const char*
 be_interface::relative_name (const char *localname,
-			     const char *othername)
+                             const char *othername)
 {
   // some compilers do not like generating a fully scoped name for a
   // type that was defined in the same enclosing scope in which it was
@@ -2053,7 +2055,7 @@ be_interface::relative_name (const char *localname,
   // thus we need some sort of relative name to be generated
 
   static char macro [NAMEBUFSIZE];
-  be_decl *def_scope = 0;  // our defining scope
+  // UNUSED: be_decl *def_scope = 0;  // our defining scope
   char // hold the fully scoped name
     def_name [NAMEBUFSIZE],
     use_name [NAMEBUFSIZE];
@@ -2128,7 +2130,7 @@ be_interface::accept (be_visitor *visitor)
 }
 
 int be_interface::write_as_return (TAO_OutStream *stream,
-				   be_type *type)
+                                   be_type *type)
 {
   *stream << type->name () << "_ptr";
   return 0;
