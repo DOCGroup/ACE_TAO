@@ -42,7 +42,7 @@ Fri Oct  8 11:25:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  pointer in place of a reply handler, and the handle_response()
 	  method in class CORBA_Request in place of the reply stub.
 
-	* Object.cpp:
+	* tao/Object.cpp:
 	  In order for get_response() to block, class CORBA_Request needs a
 	  pointer to its orb, which it never had before. The request
 	  creation methods in class CORBA_Object now grab and orb
