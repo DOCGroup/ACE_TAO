@@ -148,7 +148,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
     }
 
   // Get the right object implementation.
-  *os << intf->full_skel_name () << " *tao_impl" << be_nl;
+  *os << intf->full_skel_name () << " *tao_impl";
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -218,7 +218,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
       << "CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())"
       << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
-      << be_uidt_nl << be_nl;
+      << be_uidt_nl;
 
   *os << be_uidt_nl << "private:" << be_idt_nl;
 
@@ -390,9 +390,8 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                             -1);
         }
 
-      os->indent ();
-      *os << "  result);" << be_uidt << be_uidt << be_uidt_nl
-          << " // update the result " << be_nl;
+      *os << " result);" << be_nl
+          << "// update the result " << be_nl;
     }
 
   // Generate the result data member.
@@ -427,12 +426,10 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                             -1);
         }
 
-      os->indent ();
-      *os << "  _result;" << be_uidt << be_uidt << be_uidt_nl;
+      *os << " _result;";
     }
 
-  os->decr_indent ();
-  *os << "};\n\n";
+  *os << be_uidt_nl << "};" << be_nl << be_nl;
 
   return 0;
 }

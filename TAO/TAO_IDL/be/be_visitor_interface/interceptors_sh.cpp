@@ -77,7 +77,8 @@ int be_visitor_interface_interceptors_sh::visit_interface (be_interface *node)
                            "visit_interface - "
                            "codegen for scope failed\n"), -1);
         }
-  *os  << "#endif /* TAO_HAS_INTERCEPTORS */\n";
+
+  *os << "#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   return 0;
 

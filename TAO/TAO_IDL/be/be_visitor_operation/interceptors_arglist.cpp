@@ -307,7 +307,6 @@ be_visitor_operation_interceptors_arglist::post_process (be_decl *bd)
   if (arg->direction () != AST_Argument::dir_OUT)
     return 0;
 
-  os->indent ();
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
