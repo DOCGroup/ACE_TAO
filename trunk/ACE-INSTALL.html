@@ -70,9 +70,11 @@ an enhancement, then use our
   </tr>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
-    <td> Windows NT and Windows 2000 (Borland C++ Builder 4.0 and IBM VisualAge C++),
-         Windows CE, Tandem, SCO, SunOS 4.x, FreeBSD, NetBSD, Linux/PPC,
-         QNX Neutrino 2.0, and RTEMS.
+    <td> Windows NT and Windows 2000 with the following compilers:
+	  Borland C++ Builder 4.0, IBM VisualAge C++, and GNU g++ on
+	  Mingw.<BR>
+	  Windows CE, Tandem, SCO, SunOS 4.x, FreeBSD, NetBSD, Linux/PPC,
+	  QNX Neutrino 2.0, and RTEMS.
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -106,11 +108,12 @@ try to help you fix the problems.
       Please see the <A HREF="#Non-static Object Manager">Non-static
       ACE_Object_Manager</A> discussion below.<p>
 
-      We've also added some support for Borland C++ Builder 4.0 and
-      IBM's VisualAge C++ compiler.  Since we don't have these
-      compilers we rely on the ACE+TAO users community to maintain
-      these ports.  Therefore, please send email to the ACE mailing
-      list if you run into problems. <P>
+      We've also added some support for
+      <A HREF="#mingw">GNU g++ with Mingw</A>,
+      Borland C++ Builder 4.0 and IBM's VisualAge C++ compiler.
+      Since we don't have these compilers we rely on the ACE+TAO users
+      community to maintain these ports.  Therefore, please send email
+      to the ACE mailing list if you run into problems. <P>
 
   <li><b>Windows CE</b><p>
 
@@ -1100,6 +1103,8 @@ need to do:<P>
 <P><hr align=left width="50%"><P>
 <H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
 
+If you are looking for ACE on Mingw, go <A HREF="#mingw">here</A>. <P>
+
 First, if you are upgrading from an older release, clean up everything
 and rebuild from scratch to ensure that everything is rebuilt
 correctly.  You might have to manually go through the ACE directories
@@ -1257,6 +1262,7 @@ can run perl script <code>run_test.pl</code> or the the batch file <a
 href="tests/run_tests.bat"><code>run_tests.bat</code></a> in the
 <code>tests</code> directory to try all the tests.<p>
 
+<A NAME="win32nonic">
 <B> BUILDING ACE ON A WIN32 MACHINE THAT LACKS A NETWORK CARD </B><P>
 
 You may want to run ACE on a non-networked machine. To do so, you must
@@ -1324,6 +1330,222 @@ recreate the Alpha configurations:</P>
 x86, the Alpha configuration can get corrupted.  This seems to happen when additional
 include or library directories are specified using backslashes instead of forward
 slashes.  If this occurs, the easiest way to fix it is to recreate it.</P>
+
+
+<P><hr align=left width="50%"><P>
+<H4><A NAME="mingw">Building and Installing ACE on Win32 with Mingw</A></H4>
+
+<p>
+If you are building for a machine without a network card, you may want
+to check <A HREF="#win32nonic">here</A> first.
+
+<p>
+Building and installing ACE on <A HREF="http://www.mingw.org">Mingw</A>
+uses a mix of a <A HREF="#unix">UNIX</A> building process and
+<A HREF="#win32">Win32</A> configuration files.
+Also, as Mingw uses GNU g++, you may want to take
+a look at the <A HREF="#g++">Compiling ACE with GNU g++</A> section.
+
+<p>
+You will need the Mingw build tools and libraries, downloable from
+<A HREF="http://www.mingw.org"><TT>http://www.mingw.org</TT></A>.
+For our build we required the following packages:
+<A NAME="mingwpacks">
+<blockquote>
+<B><TT>gcc, binutils, ld, libbfd, mingw-runtime, w32api</TT></B>.
+</blockquote>
+
+<p>
+You will also need GNU make for Win32 and the set of UNIX tools that
+the ACE UNIX build system uses (this include but is not limited to
+<TT><B>sh, rm, cp</B></TT>).
+For this purpose you can grab the
+<A HREF="http://cygwin.com/setup.exe">cygwin</A>
+distribution from
+<A HREF="http://cygwin.com"><TT>http://cygwin.com</TT></A>.
+
+<p>
+Be careful, because cygwin includes it's own version of the compiler
+and build tools, you will need to have the Mingw build tools before
+the cygwin set on you PATH environment variable (more on this later).
+The steps we followed in the build are:
+
+<OL>
+
+  <LI> Install cygwin (this can be easy downloading and running
+       <A HREF="http://cygwin.com/setup.exe"><tt>setup.exe</tt></A>
+       from the cygwin site).
+       <BR><BR>
+
+  <LI> Install the Mingw tools. Download all the needed packages (see
+       <A HREF="#mingwpacks">above</A>) and
+       unpack them on the same base directory, say c:/mingw32.
+       If some of the packages are distributed on
+       <TT>.tar.gz</TT> format, you may need to use
+       the cygwin version of the <TT><B>tar</B></TT> utility.
+       <BR><BR>
+
+  <LI> Open a cygwin shell. Set your <TT>PATH</TT> environment variable so
+       your Mingw's <TT>bin</TT> directory is first:
+
+       <blockquote><code><pre>
+       % export PATH=//c/mingw32/bin:$PATH
+       </pre></code></blockquote>
+
+       <p>
+       Note cygwin uses ``<TT>/</TT>'' as directory separator,
+       and ``<TT>//X</TT>'' as a notation for Win32 drive <TT>X</TT>.
+       Note also that you <EM>can't</EM> use ``<TT>c:/mingw32/bin</TT>''
+       because, for cygwin,
+       ``<TT>:</TT>'' is path separator character, as in UNIX.
+       <BR><BR>
+
+  <LI> Add an <TT>ACE_ROOT</TT> environment variable pointing to the
+       root of your ACE wrappers source tree:
+
+       <blockquote><code><pre>
+       % export ACE_ROOT=c:/work/mingw/ACE_wrappers
+       </pre></code></blockquote>
+
+       <p>
+       Note here you <EM>can't</EM> use the ``<TT>//X</TT>'' cygwin
+       notation as this is seen by Mingw's compiler and it doesn't
+       support that (it <EM>does</EM> support ``<TT>/</TT>'' as directory
+       separator however).
+
+       <p>
+       From now on, we will refer to the root directory of the ACE
+       source tree as <TT>$ACE_ROOT</TT>.
+       <BR><BR>
+
+  <LI> Add a <TT>MINGW_BASE</TT> environment variable pointing to the
+       root of your Mingw instalation. Following the above example,
+       set:
+
+       <blockquote><code><pre>
+       % export MINGW_BASE=c:/mingw32
+       </pre></code></blockquote>
+
+       Again, use Mingw syntax and not cygwin syntax for the directory
+       specification.
+       <BR><BR>
+
+  <LI> Create a file called <TT>config.h</TT> in the
+       <TT>$ACE_ROOT/ace</TT> directory that contains:
+
+       <blockquote><code><pre>
+       #include "ace/config-win32.h"
+       </pre></code></blockquote>
+
+       If you are building for Windows 9X/Me (ie, <EM>not</EM> NT or
+       2000), you will need to add:
+
+       <blockquote><code><pre>
+       #define ACE_HAS_WINNT4 0
+       </pre></code></blockquote>
+
+       before the <CODE>#include</CODE> line.
+
+       Also, if you don't have Winsock 2 (check the <TT>SYSTEM</TT>
+       and/or <TT>SYSTEM32</TT> subdirectories of the windows
+       instalation directory for <TT><B>ws2_32.dll</B></TT>), you
+       will need
+
+       <blockquote><code><pre>
+       #define ACE_HAS_WINSOCK2 0
+       </pre></code></blockquote>
+
+       before the <TT>#include</TT> line. On NT 4, Windows 98 and
+       later versions, you surely have Winsock 2. In Windows 95,
+       including OSR2, you may don't have it if it wasn't specially
+       installed. You may download it from the <A
+       HREF="http://www.microsoft.com">microsoft</A> site. This is
+       recommended as much ACE functionality depends on Winsock 2, and
+       ACE without Winsock 2 support is tested very infrequently.
+       <BR><BR>
+
+  <LI> Create a file called <TT>platform_macros.GNU</TT> in the
+       <TT>$ACE_ROOT/include/makeinclude</TT> directory containing:
+
+       <blockquote><code><pre>
+       include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+       </pre></code></blockquote>
+
+       In the above text, don't replace <TT>$(ACE_ROOT)</TT> with the
+       actual directory, GNU make will take the value from the
+       environment variable you defined previously.
+
+       If you lack Winsock 2, add the line
+
+       <blockquote><code><pre>
+       winsock2 = 0
+       </pre></code></blockquote>
+
+       before the previous one.
+       <BR><BR>
+
+  <LI> On the cygwin shell, change to the $ACE_ROOT/ace directory and
+       run make:
+
+       <blockquote><code><pre>
+       % cd $ACE_ROOT/ace
+       % make
+       </pre></code></blockquote>
+
+       <p>
+       This should create <TT>libACE.dll</TT> (the Win32 shared library) and
+       <TT>libACE.dll.a</TT> (the Win32 import library for the DLL).
+       Note the name for the ACE DLL on Mingw follows the Mingw
+       convention, that resembles UNIX.
+       <BR><BR>
+
+       <p>
+       If you want static libs also, you may run:
+
+       <blockquote><code><pre>
+       % make static_libs=1
+       </pre></code></blockquote>
+
+       
+  <LI> <A NAME="mingwrunpath">
+       The same rules for Win32 search of DLLs apply for Mingw. If you
+       want to run some ACE programs from the cygwin shell, you may
+       need to add the directory for <TT>libACE.dll</TT> to your PATH:
+
+       <blockquote><code><pre>
+       # export PATH=//c/work/mingw/ACE_wrappers/ace:$PATH
+       </pre></code></blockquote>
+
+       
+</OL>
+
+<B>ACE TESTS</B><P>
+
+The tests are located in <TT>$ACE_ROOT/tests</TT>.
+After building the library, you can change to that directory and run
+make:
+
+       <blockquote><code><pre>
+       % cd $ACE_ROOT/tests
+       % make
+       </pre></code></blockquote>
+
+<p>
+Once you build all the tests, you can run 
+<code>run_tests.sh</code> in the
+<code>tests</code> directory to try all the tests:
+
+       <blockquote><code><pre>
+       % run_tests.sh
+       </pre></code></blockquote>
+
+<p>
+If you are using ACE as a DLL, you will need to modify your PATH
+variable as explained <A HREF="#mingwrunpath">above</A>.
+
+<p>
+You may want to check <tt>$ACE_ROOT/tests/README</tt> for the status
+of the various tests on Mingw and the different Windows flavors.
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
