@@ -1,4 +1,11 @@
-Thu Nov 18 12:31:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+Sat Nov 18 13:40:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Base_Connection_Property.inl:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connect.cpp: Fixed compiler errors and
+	  warnings in  in gcc.
+
+Sat Nov 18 12:31:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Descriptor_Interface.h:
 	* tao/Connection_Descriptor_Interface.cpp:
