@@ -260,7 +260,7 @@ Wed May  1 22:12:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         This checkin is to reduce the size of orbconf.h. I see all
         similarities between this and ace/OS.h. Looks like it is an OS.h
         in the making. Trying to learn and avert the crisis before.
-        
+
         * tao/orbconf.h: Removed a few definitions and moved it other
           files. Please see below for the names of the new files and the
           details of the contents removed from this file. The idea is to
@@ -298,7 +298,7 @@ Wed May  1 22:12:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
         * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Additional includes
           because of the above changes.
-        
+
 Wed May  1 18:49:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tests/Big_Oneways/Coordinator.h:
@@ -383,7 +383,7 @@ Tue Apr 30 17:39:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * docs/Ooptions.html: Removed documentation for the above two
           ORB options and added documentation for "-ORBConnectStrategy".
-        
+
 
 Tue Apr 30 17:03:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -461,21 +461,21 @@ Tue Apr 30 14:20:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
           Connection_Timeout_Policy.*  to the project file.
 
 Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
-        
+
         * tao/IIOP_Connector.cpp: Checked to see if the connection timeout
           policy is set by the application and if so, gets the value.
-        
+
         * tao/ORB_Core.cpp:
         * tao/ORB_Core.h: Added new hook methods connection_timeout_hook
           (), connection_timeout () and stubless_connection_timeout
           (). They are used for setting the connection timeout hook and
           querying the timeout values on the ORB and thread levels.
-        
+
         * tao/Stub.cpp:
         * tao/Stub.h: Added a new method connection_timeout () that
           queries the policy list at the object level for a
           connection timeout policy and returns the policy.
-        
+
         * tao/orbconf.h:
           Removed TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY since it has
           no meaning now. Added a new #define
@@ -490,20 +490,20 @@ Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Messaging/TAO_Messaging.dsp:
         * tao/Messaging/Makefile: Added the new file.
-        
+
         * tao/Messaging/Messaging.h: #included TAO_ExtC.h
-        
+
         * tao/Messaging/Messaging_ORBInitializer.cpp: Initialized the hook
           for the connection timeout.
-        
+
         * tao/Messaging/Messaging_PolicyFactory.cpp: Added a call to
           create the connection timeout policy.
-        
+
         * tao/Messaging/Messaging_Policy_i.cpp: Moved the inline inclusion
           to the global scope. The inline inclusion was within the #if
           defined of RELATIVE_RT_TIMEOUT_POLICY and it doesnt sound
           right.
-        
+
         * tao/Messaging/Messaging_Policy_i.h: Doxygenized the
           documentation of the classes.
 
