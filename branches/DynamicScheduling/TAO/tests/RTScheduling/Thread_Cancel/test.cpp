@@ -32,7 +32,13 @@ main (int argc, char* argv [])
       
       task.activate_task (orb.in ());
 
-      ACE_OS::sleep (50);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Threads Activated\n"));
+
+      ACE_OS::sleep (10);
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "Cancelling Threads.....\n"));
 
       DT_Hash_Map_Iterator iterator (*orb->orb_core ()->dt_hash ());
       DT_Hash_Map_Entry *entry;

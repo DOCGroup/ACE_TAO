@@ -279,11 +279,21 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
   if (CORBA::is_nil (this->dt_.in ())) // Check if it is a new Scheduling Segmnet
     {
       //Generate GUID
-      this->guid_ = ACE_OS::rand (); //Will be replaced by the ACE guid generator
+      //char buf [BUFSIZ];
+      //ACE_OS::itoa (ACE_OS::rand (), buf, 10);
+
+      int guid = ACE_OS::rand (); //Will be replaced by the ACE guid generator
+      
+      this->guid_.length (sizeof guid);
+	
+      ACE_OS::memcpy (this->guid_.get_buffer (),
+		      &guid,
+		      sizeof guid);
 
       ACE_DEBUG ((LM_DEBUG,
-				  "The Guid is %d\n",
-					(const int*) this->guid_.get_buffer ()));
+		  "The Guid is %d\n",
+		  (const int*) this->guid_.get_buffer ()));
+
       this->scheduler_->begin_new_scheduling_segment (this->guid_,
 						      name,
 						      sched_param,
@@ -300,19 +310,19 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 
       if (result != 0)
 	{
-	this->cancel_thread (ACE_ENV_ARG_PARAMETER);
-	ACE_CHECK;
+	  this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
 	}
-	else if (result == 1)
+      else if (result == 1)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-				  "Entry Exists\n"));
+		      "Entry Exists\n"));
 	}
       
       this->name_ = name;
       this->sched_param_ = sched_param;
       this->implicit_sched_param_ = implicit_sched_param;      
-
+      
     }
   else //Nested segment
     {
@@ -321,7 +331,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 	  this->cancel_thread (ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-
+      
       // Inform scheduler of start of nested
       // scheduling segment.
       this->scheduler_->begin_nested_scheduling_segment
@@ -331,7 +341,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 	 implicit_sched_param
 	 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-
+      
       TAO_TSS_Resources *tss =
 	TAO_TSS_RESOURCES::instance ();
       
@@ -353,8 +363,6 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 
       tss->rtscheduler_current_impl_ = new_current;
     }
-  
-  
 }
 
 
@@ -390,7 +398,7 @@ TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
 
 void 
 TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name
-						 ACE_ENV_ARG_DECL)
+						   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!CORBA::is_nil (this->dt_.in ()))
@@ -413,7 +421,10 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name
 	  
 	  // Cleanup DT.
 	  this->cleanup_DT ();
-	  
+
+	  // Cleanup current.
+	  this->cleanup_current ();
+
 	} else { // A Nested segment.
 	  
 	  // Inform scheduler of end of nested
@@ -496,7 +507,7 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_
 
 void
 TAO_RTScheduler_Current_i::cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::THREAD_CANCELLED))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "Distributable Thread - %d is cancelled\n",
@@ -508,8 +519,7 @@ TAO_RTScheduler_Current_i::cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
 			    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  // Remove DT from map.
-  this->orb_->dt_hash ()->unbind (this->guid_);
+  this->cleanup_DT ();
   
   // Remove all related nested currents.
   this->delete_all_currents ();
@@ -523,9 +533,6 @@ TAO_RTScheduler_Current_i::cleanup_DT (void)
 {
   // Remove DT from map.
   this->orb_->dt_hash ()->unbind (this->guid_);
-
-  // Cleanup current.
-  cleanup_current ();
 }
 
 void
