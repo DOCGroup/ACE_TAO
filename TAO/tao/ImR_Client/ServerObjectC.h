@@ -125,6 +125,8 @@ namespace ImplementationRepository
     // The static operations.
     static ServerObject_ptr _duplicate (ServerObject_ptr obj);
     
+    static void _tao_release (ServerObject_ptr obj);
+    
     static ServerObject_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -163,7 +165,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -211,7 +213,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerObject;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerObject;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -221,7 +223,7 @@ namespace ImplementationRepository
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:120
+// be\be_visitor_root/root.cpp:230
 
 extern TAO_IMR_Client_Export
 TAO::Collocation_Proxy_Broker *
@@ -239,7 +241,7 @@ namespace TAO
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__TRAITS_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IMR_Client_Export Objref_Traits< ::ImplementationRepository::ServerObject>
   {
     static ::ImplementationRepository::ServerObject_ptr duplicate (

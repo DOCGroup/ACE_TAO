@@ -51,7 +51,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -60,7 +60,7 @@ namespace TAO
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::ServerObject>
     : public
         Object_Arg_Traits_T<
@@ -75,12 +75,12 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:662
+  // be\be_visitor_arg_traits.cpp:731
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::StartupOptions>
     : public
         Var_Size_Arg_Traits_T<
@@ -94,12 +94,12 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:662
+  // be\be_visitor_arg_traits.cpp:731
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::ServerInformation>
     : public
         Var_Size_Arg_Traits_T<
@@ -113,12 +113,12 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:433
+  // be\be_visitor_arg_traits.cpp:480
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::ServerInformationList>
     : public
         Var_Size_Arg_Traits_T<
@@ -134,7 +134,7 @@ namespace TAO
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
         Object_Arg_Traits_T<
@@ -294,7 +294,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_AlreadyRegistered (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_AlreadyRegistered =
+  ::CORBA::TypeCode_ptr const _tc_AlreadyRegistered =
     &_tc_TAO_tc_ImplementationRepository_AlreadyRegistered;
 }
 
@@ -463,7 +463,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_CannotActivate (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_CannotActivate =
+  ::CORBA::TypeCode_ptr const _tc_CannotActivate =
     &_tc_TAO_tc_ImplementationRepository_CannotActivate;
 }
 
@@ -607,7 +607,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_NotFound (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_NotFound =
+  ::CORBA::TypeCode_ptr const _tc_NotFound =
     &_tc_TAO_tc_ImplementationRepository_NotFound;
 }
 
@@ -761,7 +761,6 @@ void ImplementationRepository::ServerInformationList::_tao_any_destructor (
 
 // Traits specializations for ImplementationRepository::ServerInformationIterator.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::ServerInformationIterator_ptr
 TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::duplicate (
     ImplementationRepository::ServerInformationIterator_ptr p
@@ -770,7 +769,6 @@ TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::duplica
   return ImplementationRepository::ServerInformationIterator::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::release (
     ImplementationRepository::ServerInformationIterator_ptr p
@@ -779,14 +777,12 @@ TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::release
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::ServerInformationIterator_ptr
 TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::nil (void)
 {
   return ImplementationRepository::ServerInformationIterator::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::marshal (
     ImplementationRepository::ServerInformationIterator_ptr p,
@@ -958,6 +954,12 @@ ImplementationRepository::ServerInformationIterator::_duplicate (ServerInformati
   return obj;
 }
 
+void
+ImplementationRepository::ServerInformationIterator::_tao_release (ServerInformationIterator_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 ImplementationRepository::ServerInformationIterator::_is_a (
     const char *value
@@ -1002,7 +1004,6 @@ ImplementationRepository::ServerInformationIterator::marshal (TAO_OutputCDR &cdr
 
 // Traits specializations for ImplementationRepository::Administration.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::Administration_ptr
 TAO::Objref_Traits<ImplementationRepository::Administration>::duplicate (
     ImplementationRepository::Administration_ptr p
@@ -1011,7 +1012,6 @@ TAO::Objref_Traits<ImplementationRepository::Administration>::duplicate (
   return ImplementationRepository::Administration::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<ImplementationRepository::Administration>::release (
     ImplementationRepository::Administration_ptr p
@@ -1020,14 +1020,12 @@ TAO::Objref_Traits<ImplementationRepository::Administration>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::Administration_ptr
 TAO::Objref_Traits<ImplementationRepository::Administration>::nil (void)
 {
   return ImplementationRepository::Administration::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<ImplementationRepository::Administration>::marshal (
     ImplementationRepository::Administration_ptr p,
@@ -1660,6 +1658,12 @@ ImplementationRepository::Administration::_duplicate (Administration_ptr obj)
   return obj;
 }
 
+void
+ImplementationRepository::Administration::_tao_release (Administration_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 ImplementationRepository::Administration::_is_a (
     const char *value
@@ -2090,7 +2094,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

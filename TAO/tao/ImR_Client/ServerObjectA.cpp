@@ -67,7 +67,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerObject (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_ServerObject =
+  ::CORBA::TypeCode_ptr const _tc_ServerObject =
     &_tc_TAO_tc_ImplementationRepository_ServerObject;
 }
 
