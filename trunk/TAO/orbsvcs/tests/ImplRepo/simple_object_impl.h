@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO/tests/Simple
-//
+// 
 // = FILENAME
 //    simple_object_impl.h
 //
@@ -14,11 +14,11 @@
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
+// 
 // ============================================================================
 
-#ifndef SIMPLE_OBJECT_IMPL_H
-#define SIMPLE_OBJECT_IMPL_H
+#if !defined (SIMPLE_OBJECT_IMPL_H)
+#define	SIMPLE_OBJECT_IMPL_H
 
 #include "Simple_ObjectS.h"
 
@@ -35,7 +35,7 @@ class Simple_i: public POA_simple_object
   //    Simple Object Implementation
   //
   // = DESCRIPTION
-  //    Implementation of a simple object that has two methods, one that
+  //    Implementation of a simple object that has two methods, one that 
   //    returns the cube of a long, another that shuts down the server.
 public:
   Simple_i (const char *obj_name = 0);
@@ -50,6 +50,10 @@ public:
 
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown routine.
+
+  int use_ir_;
+  // Should we shutdown after each call?  If using the Impl Repo, then yes.
+
 };
 
 

@@ -5,22 +5,23 @@
 //
 // = LIBRARY
 //    TAO/orbsvcs/tests/ImplRepo
-//
+// 
 // = FILENAME
 //    ir_implrepo_impl.h
 //
 // = DESCRIPTION
-//    This class implements the Simple Object object.
+//    This class implements the Implementation Repository.
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
+// 
 // ============================================================================
 
-#ifndef IR_IMPLREPO_IMPL_H
-#define IR_IMPLREPO_IMPL_H
+#if !defined (IR_IMPLREPO_IMPL_H)
+#define	IR_IMPLREPO_IMPL_H
 
 #include "Impl_RepoS.h"
+#include "Repository.h"
 #include "tao/TAO.h"
 
 // Forward declarations.
@@ -33,10 +34,30 @@ typedef IR_iRepo_i_ptr IR_iRepo_i_ref;
 typedef IR_Simple_i *IR_Simple_i_ptr;
 typedef IR_Simple_i_ptr IR_Simple_i_ref;
 
+class IR_Adapter_Activator : public POA_PortableServer::AdapterActivator
+{
+  // = TITLE
+  //    Implementation Repository Adapter Activator
+  //
+  // = DESCRIPTION
+  //    Part of the Default Servant/DSI combination that forwards 
+  //    arbitrary requests.  This allows for the setting up of child POAs
+  //    with default servants.
+public:
+  // Constructor
+  IR_Adapter_Activator (IR_Simple_i_ptr servant);
+
+  virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
+                                          const char *name,
+                                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
+private:
+  IR_Simple_i_ptr servant_;
+};
+
 class IR_iRepo_i : public POA_Implementation_Repository
 {
   // = TITLE
-  //    Implementation Repository
+  //    Implementation Repository 
   //
   // = DESCRIPTION
   //    This provides the interface to communicate directly with the
@@ -47,22 +68,22 @@ public:
   ~IR_iRepo_i (void);
 
   // = Interface methods
-//  virtual void register_server (const char *server,
-//                                const Implementation_Repository::Process_Options &options,
-//                                CORBA::Environment &_tao_environment);
+  virtual void register_server (const char *server,
+                                const Implementation_Repository::Process_Options &options,
+                                CORBA::Environment &env);
 
   virtual void server_is_running (const char *server,
                                   CORBA::Object_ptr &obj,
                                   const Implementation_Repository::INET_Addr &addr,
                                   CORBA::Environment &_tao_environment);
-
+  
   // = Other methods
 
   int init (int argc, char **argv, CORBA::Environment& env);
   // Initialize the Server state - parsing arguments and waiting
 
   int run (CORBA::Environment& env);
-  // Run the orb
+  // Run the orb 
 
   void start (const char *server);
   // Starts the program registered as <server>
@@ -70,11 +91,17 @@ public:
 private:
   IR_Simple_i *server_impl_;
 
+  IR_Adapter_Activator *activator_;
+  // Used for the forwarding of any type of POA.
+
+  Repository repository_;
+  // Repository containing information about each server.
+
   int parse_args (void);
   // Parses the commandline arguments.
 
   int read_ior (char *filename);
-  // Reads the IOR of the real server from the file
+  // Reads the IOR of the real server from the file.
 
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
@@ -95,34 +122,13 @@ private:
   // The command line arguments.
 };
 
-class IR_Adapter_Activator : public POA_PortableServer::AdapterActivator
-{
-  // = TITLE
-  //    Implementation Repository Adapter Activator
-  //
-  // = DESCRIPTION
-  //    Part of the Default Servant/DSI combination that forwards
-  //    arbitrary requests.  This allows for the setting up of child POAs
-  //    with default servants.
-public:
-  // Constructor
-  IR_Adapter_Activator (PortableServer::Servant servant);
-
-  virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                          const char *name,
-                                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
-private:
-  PortableServer::Servant &servant_;
-};
-
-
 class IR_Simple_i: public POA_simple_object
 {
   // = TITLE
   //    Simple Object Implementation
   //
   // = DESCRIPTION
-  //    Implementation of a simple object that has two methods, one that
+  //    Implementation of a simple object that has two methods, one that 
   //    returns the cube of a long, another that shuts down the server.
 public:
   //  = Constructor and Destructor
@@ -151,7 +157,7 @@ private:
 
   CORBA::ORB_var orb_var_;
   PortableServer::POA_var poa_var_;
-  CORBA::Object_var forward_to_var_;
+  CORBA::Object_ptr forward_to_ptr_;
 };
 
 

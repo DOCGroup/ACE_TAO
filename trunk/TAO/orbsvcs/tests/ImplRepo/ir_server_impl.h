@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#ifndef IR_SERVER_IMPL_H
+#if !defined (IR_SERVER_IMPL_H)
 #define IR_SERVER_IMPL_H
 
 #include "ir_simple_object_impl.h"
@@ -30,7 +30,7 @@ class IR_Server_i
   //   CORBA Server Implementation
   //
   // = DESCRIPTION
-  //
+  //   
 public:
   // = Initialization and termination methods.
   IR_Server_i (void);
@@ -43,7 +43,7 @@ public:
   // Initialize the Server state - parsing arguments and waiting
 
   int run (CORBA::Environment& env);
-  // Run the orb
+  // Run the orb 
 
 private:
   IR_Simple_i *server_impl_;

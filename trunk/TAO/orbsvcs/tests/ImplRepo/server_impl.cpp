@@ -8,14 +8,16 @@
 ACE_RCSID(ImplRepo, server_impl, "$Id$")
 
 Server_i::Server_i (void)
-  : ior_output_file_ (0)
+  : ior_output_file_ (0),
+    register_ (0),
+    use_ir_ (1)
 {
 }
 
 int
 Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:f:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:f:ri");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,6 +25,13 @@ Server_i::parse_args (void)
       {
       case 'd':  // debug flag.
         TAO_debug_level++;
+        break;
+      case 'r':
+        this->register_ = 1;
+        break;
+      case 'i':
+        this->use_ir_ = 0;
+        this->server_impl.use_ir_ = 0;
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
@@ -33,6 +42,7 @@ Server_i::parse_args (void)
         break;
       case '?':  // display help for use of the server.
       default:
+        // @@ Update me.
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
@@ -53,7 +63,7 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
     {
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
-      if (this->orb_manager_.init_child_poa (argc, argv, "child_poa", TAO_TRY_ENV) == -1)
+      if (this->orb_manager_.init_child_poa (argc, argv, "simpserv", TAO_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
 
       TAO_CHECK_ENV;
@@ -72,39 +82,55 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
                                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", str.in ()));
-
-      // Talk to the Implementation Repository
-      
-      this->read_ir_ior ();
-
-      CORBA::Object_var implrepo_object =
-        this->orb_manager_.orb ()->string_to_object (this->ir_server_key_, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      Implementation_Repository *ImplRepo = 
-        Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (CORBA::is_nil (implrepo_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid implrepo key <%s>\n",
-                           this->ir_server_key_),
-                          -1);
-
-      Implementation_Repository::INET_Addr addr;
-
-      CORBA::Object_var server_object =  
-        this->orb_manager_.orb ()->string_to_object (str, env);
-      
-      ImplRepo->server_is_running ("Simple_Server", server_object, addr, TAO_TRY_ENV);
-
-      if (this->ior_output_file_)
+      if (this->use_ir_)
         {
-          ACE_OS::fprintf (this->ior_output_file_, "%s", server_object.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          this->read_ir_ior ();
+
+          if (this->register_ == 1)
+            this->register_with_ir ();
+
+          CORBA::Object_var server_object =  
+            this->orb_manager_.orb ()->string_to_object (str, env);
+
+          // Talk to the Implementation Repository if we are already registered
+          CORBA::Object_var implrepo_object =
+            this->orb_manager_.orb ()->string_to_object (this->ir_server_key_, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          Implementation_Repository *ImplRepo = 
+            Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          if (CORBA::is_nil (implrepo_object.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "invalid implrepo key <%s>\n",
+                               this->ir_server_key_),
+                              -1);
+
+          Implementation_Repository::INET_Addr addr;
+
+          ImplRepo->server_is_running ("Simple_Server", server_object, addr, TAO_TRY_ENV);
+
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (server_object, env)));
+
+          if (this->ior_output_file_)
+            {
+              ACE_OS::fprintf (this->ior_output_file_, "%s", this->orb_manager_.orb ()->object_to_string (server_object, env));
+              ACE_OS::fclose (this->ior_output_file_);
+            }
         }
+      else
+      {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", str.in()));
+
+          if (this->ior_output_file_)
+            {
+              ACE_OS::fprintf (this->ior_output_file_, "%s", str.in());
+              ACE_OS::fclose (this->ior_output_file_);
+            }
+      }
 
     }
   TAO_CATCHANY
@@ -120,8 +146,45 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
 int
 Server_i::run (CORBA::Environment& env)
 {
-  if (this->orb_manager_.run (env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Server_i::run"), -1);
+  if (this->register_ != 1)
+    if (this->orb_manager_.run (env) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, "Server_i::run"), -1);
+  return 0;
+}
+
+int 
+Server_i::register_with_ir (void)
+{
+  TAO_TRY 
+  {
+    CORBA::Object_var implrepo_object =
+      this->orb_manager_.orb ()->string_to_object (this->ir_server_key_, TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+
+    Implementation_Repository *ImplRepo = 
+      Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+
+    if (CORBA::is_nil (implrepo_object.in ()))
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "invalid implrepo key <%s>\n",
+                         this->ir_server_key_),
+                        -1);
+
+    Implementation_Repository::Process_Options proc_opts;
+
+    proc_opts.command_line_ = CORBA::string_dup ("server -o svr.ior -ORBobjrefstyle url");
+    proc_opts.environment_ = CORBA::string_dup ("");
+    proc_opts.working_directory_ = CORBA::string_dup ("");
+
+    ImplRepo->register_server ("Simple_Server", proc_opts, TAO_TRY_ENV);
+  }
+  TAO_CATCHANY
+  {
+    TAO_TRY_ENV.print_exception ("Server_i::register_with_ir");
+    return -1;
+  }
+  TAO_ENDTRY;
   return 0;
 }
 
