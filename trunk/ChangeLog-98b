@@ -1,3 +1,17 @@
+Tue Oct  6 02:16:01 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.cpp: 
+
+	* ace/Asynch_IO.cpp (handle_input):
+
+	* ace/Proactor.cpp: Changed the behavior of the POSIX
+	implementation of Asynch_Accept further more to make it behave
+	exactly like the NT implementation. The Message Block now will
+	contain <Local Address, Remote Addess> in that order as it looks
+	in NT. THANKS a lot to Irfan for this change, so things will be
+	robust even if Asynch_Accpet is used directly not only through
+	Asynch_Acceptor. 
+
 Mon Oct 05 23:58:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.46 released.
