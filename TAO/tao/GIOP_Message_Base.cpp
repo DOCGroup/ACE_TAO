@@ -550,10 +550,11 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *,
-                                        qd->msg_block_->rd_ptr ()),
-                  qd->msg_block_->length ());
+  if (TAO_debug_level > 0)
+    this->dump_msg ("recv",
+                    ACE_reinterpret_cast (u_char *,
+                                          qd->msg_block_->rd_ptr ()),
+                    qd->msg_block_->length ());
 
 
   // Create a input CDR stream.
@@ -611,10 +612,11 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *,
-                                        qd->msg_block_->rd_ptr ()),
-                  qd->msg_block_->length ());
+  if (TAO_debug_level > 0)
+    this->dump_msg ("recv",
+                    ACE_reinterpret_cast (u_char *,
+                                          qd->msg_block_->rd_ptr ()),
+                    qd->msg_block_->length ());
 
 
   // Create a empty buffer on stack
