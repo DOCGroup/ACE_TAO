@@ -51,6 +51,9 @@ run Mem_Map_Test		# uses Mem_Map
 
 run SV_Shared_Memory_Test	# uses SV_Shared_Memory, fork
 run MM_Shared_Memory_Test
+
+run Sigset_Ops_Test             # uses sigset*() functions
+
 run Mutex_Test			# uses Process_Mutex
 
 run Timer_Queue_Test		# uses Event_Handler, Timer_Queue
