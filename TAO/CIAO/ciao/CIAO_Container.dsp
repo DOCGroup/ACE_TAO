@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib TAO_Security.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\CIAO_Container.dll" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client"
+# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib TAO_Security.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\CIAO_Container.dll" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "CIAO_Container - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib TAO_Securityd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\CIAO_Containerd.dll" /pdbtype:sept /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client"
+# ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib TAO_Securityd.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\CIAO_Containerd.dll" /pdbtype:sept /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\PortableServer"
 
 !ENDIF 
 
@@ -92,11 +92,23 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\CIAO_BaseS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_ComponentS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CIAO_Container_ExC.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\CIAO_ContainerC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_EventS.cpp
 # End Source File
 # Begin Source File
 
@@ -112,6 +124,14 @@ SOURCE=.\CosPersistentStateC.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\CIAO_BaseS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_ComponentS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CIAO_Container_ExC.h
 # End Source File
 # Begin Source File
@@ -121,6 +141,10 @@ SOURCE=.\CIAO_Container_Export.h
 # Begin Source File
 
 SOURCE=.\CIAO_ContainerC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_EventS.h
 # End Source File
 # Begin Source File
 
@@ -140,11 +164,23 @@ SOURCE=.\CosPersistentStateC.h
 # PROP Default_Filter "i,inl"
 # Begin Source File
 
+SOURCE=.\CIAO_BaseS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_ComponentS.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\CIAO_Container_ExC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\CIAO_ContainerC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_EventS.i
 # End Source File
 # Begin Source File
 
