@@ -32,8 +32,6 @@ CUBIT_SVR_OBJS = \
 	cubitS.o \
 	server.o \
 	cubit_i.o \
-	Task_Client.o \
-	Util_Thread.o \
 	Globals.o \
 	Cubit_Task.o \
 	tmplinst.o \
