@@ -186,8 +186,16 @@ TAO_Internal::open_services_i (int &argc,
 
   if (TAO_Internal::service_open_count_++ == 0)
     {
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Default_Resource_Factory);
+      // @@ We cannot insert the default resource factory into the
+      //    Service Configurator before the ORB is created since it
+      //    will be finalized before the ORB is finalized.  The ORB
+      //    requires that a resource factory exist in order to reclaim
+      //    the reactor during finalization.
+      //
+      //    This is only a problem when the ORB is dynamically
+      //    loaded/unloaded.
+      // ACE_Service_Config::static_svcs ()->
+      //   insert (&ace_svc_desc_TAO_Default_Resource_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Client_Strategy_Factory);
       ACE_Service_Config::static_svcs ()->
