@@ -97,9 +97,9 @@ class Test_Config {
   //   implementing this interface would be used to configure the EC in that case.
   //
 public:
-  Test_Config (void) {};
+  Test_Config (void) {}
 
-  virtual ~Test_Config (void) {};
+  virtual ~Test_Config (void);
 
   virtual int configure (TCFG_SET_WPTR configs) = 0;
   // Configures the back-end. Each test_config_t in the set specifies
