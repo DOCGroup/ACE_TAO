@@ -1,7 +1,8 @@
 Tue Jan 29 13:09:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Makefile.bor:
-          Added Blocking, Discarding, and MT_Dispatching directory
+          Added Blocking, Discarding, MT_Dispatching,
+          Sequence_Multi_ETCL_Filter and Sequence_Multi_Filter directory
 
         * orbsvcs/tests/Notify/Blocking/*.bor:
           Added new BCB makefiles to build this test
@@ -10,6 +11,12 @@ Tue Jan 29 13:09:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
           Added new BCB makefiles to build this test
 
         * orbsvcs/tests/Notify/MT_Dispatching/*.bor:
+          Added new BCB makefiles to build this test
+
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/*.bor:
+          Added new BCB makefiles to build this test
+
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/*.bor:
           Added new BCB makefiles to build this test
 
 Tue Jan 29 11:20:36 2002  Johnny Willemsen <jwillemsen@remedy.nl>
