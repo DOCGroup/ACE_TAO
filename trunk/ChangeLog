@@ -1,11 +1,31 @@
+Mon Dec 15 10:11:31 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/NonBlocking_Conn_Test.h:
+        * tests/NonBlocking_Conn_Test.cpp:
+
+          Moved the template class Svc_Handler into a header file so that
+          Visual Age C++ could implicitly instantiate the template.
+
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Reactor_Registration_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+        * tests/TP_Reactor_Test.h:
+
+          Added various #include's to get the tests to build on AIX with
+          Visual Age C++ 5.0.
+
 Mon Dec 15 10:06:17 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_stdio.cpp (gets): Reverted this change:
-	  Thu Dec 11 18:13:29 2003  Steve Huston  <shuston@riverace.com>
-	  It broke the Borland build and wasn't a very good fix for the
-	  AIX situation either. Since Riverace is dropping AIX 4.3 support
-	  at ACE 5.4, I'm not going to push this issue. It appears to be a
-	  compiler issue with Visual Age C++ version 5.
+        * ace/OS_NS_stdio.cpp (gets): Reverted this change:
+          Thu Dec 11 18:13:29 2003  Steve Huston  <shuston@riverace.com>
+          It broke the Borland build and wasn't a very good fix for the
+          AIX situation either. Since Riverace is dropping AIX 4.3 support
+          at ACE 5.4, I'm not going to push this issue. It appears to be a
+          compiler issue with Visual Age C++ version 5.
 
 Mon Dec 15 07:29:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -27,17 +47,17 @@ Mon Dec 15 11:35:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 14 15:26:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Thread_Semaphore.{h,cpp}: Added support for an ACE_Thread_Semaphore
-	  that takes a first param that's an ACE_TCHAR * so that things
- 	  will work properly if ACE_Thread_Semaphore is used with
- 	  ACE_Malloc<>.  Thanks to John Glynn <jglynn@bjc.org> for
- 	  motivating this.
-  
-	* ace/Process_Semaphore.{h,cpp}: Added support for an ACE_Process_Semaphore
-	  that takes a first param that's an ACE_TCHAR * so that things
- 	  will work properly if ACE_Process_Semaphore is used with
- 	  ACE_Malloc<>.  Thanks to John Glynn <jglynn@bjc.org> for
- 	  motivating this.
+        * ace/Thread_Semaphore.{h,cpp}: Added support for an ACE_Thread_Semaphore
+          that takes a first param that's an ACE_TCHAR * so that things
+          will work properly if ACE_Thread_Semaphore is used with
+          ACE_Malloc<>.  Thanks to John Glynn <jglynn@bjc.org> for
+          motivating this.
+
+        * ace/Process_Semaphore.{h,cpp}: Added support for an ACE_Process_Semaphore
+          that takes a first param that's an ACE_TCHAR * so that things
+          will work properly if ACE_Process_Semaphore is used with
+          ACE_Malloc<>.  Thanks to John Glynn <jglynn@bjc.org> for
+          motivating this.
 
 Sat Dec 13 23:29:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

@@ -21,6 +21,7 @@
 #include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(tests, Recursive_Mutex_Test, "$Id$")
 
