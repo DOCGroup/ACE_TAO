@@ -108,7 +108,14 @@ public:
    * @param orbManager our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int self_register (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL);
+  int self_register (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+  /**
+   * Revoke the publication of this objects IOR.
+   * @return zero for success; nonzero is process return code for failure.
+   */
+  int self_unregister (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 
   /**
    * Identify this fault detector factory.
@@ -220,6 +227,10 @@ private:
    * A name to be used to register the factory with the name service.
    */
   const char * nsName_;
+
+  CosNaming::NamingContext_var naming_context_;
+
+  CosNaming::Name this_name_;
 
   /**
    * Quit on idle flag.

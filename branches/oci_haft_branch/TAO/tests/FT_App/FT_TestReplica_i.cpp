@@ -1,4 +1,17 @@
 // $Id$
+/* -*- C++ -*- */
+//=============================================================================
+/**
+ *  @file    FT_TestReplica_i.cpp
+ *
+ *  $Id$
+ *
+ *  Implements CORBA interface TestReplica.
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+//
 
 #include "FT_TestReplica_i.h"
 
@@ -11,6 +24,11 @@ namespace
    * Endian neutral store of long into indexable object.
    * BUFFER can be sequence of Octet, unsigned char[], etc.
    *
+   * TODO: Find this a good home.
+   *
+   * @param state an object that supports char & operator[] (size_t index);
+   * @param offset is the position within state where the first character should be stored.
+   * @param value is the data to be inserted into state.
    */
   template<typename BUFFER>
   void storeLong(BUFFER & state, size_t offset, long value)
@@ -24,6 +42,12 @@ namespace
   /**
    * Endian neutral load of long from indexable object.
    * BUFFER can be sequence of Octet, unsigned char[], etc.
+   *
+   * TODO: Find this a good home.
+   *
+   * @param state an object that supports const char & operator[] (size_t index) const;
+   * @param offset is the position within state where the first character can be found
+   * @returns value is the data loaded from state.
    */
   template<typename BUFFER>
   long loadLong(const BUFFER & state, size_t offset)
@@ -39,12 +63,26 @@ namespace
 
 // A macro to simplify suicide.
 // exit code 0 tells test drivers "I meant to do that!"
-#define KEVORKIAN(value)                                  \
-  if (death_pending_ == (FT_TEST::TestReplica::value)){   \
-    std::cout << "FT Replica" << identity_ << ": Simulated fault " #value << std::endl;  \
-    exit(0);                                              \
+#define KEVORKIAN(value, method)                                  \
+  if (death_pending_ == (FT_TEST::TestReplica::value)){           \
+    std::cout << "FT Replica" << identity_                        \
+      << ": Simulated fault " #value " in method " #method        \
+      << std::endl;                                               \
+    exit(0);                                                      \
     } else ;
 
+#define KEVORKIAN_DURING(method)                                          \
+  if (death_pending_ == FT_TEST::TestReplica::BEFORE_STATE_CHANGE         \
+    || death_pending_ == FT_TEST::TestReplica::BEFORE_REPLICATION         \
+    || death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){            \
+    std::cout << "FT Replica" << identity_                                \
+      << ": Simulated fault in read-only method " #method                 \
+      << std::endl;                                                       \
+    exit(0);                                                              \
+    } else ;
+
+//////////////////////////////////////////////////
+// class FT_TestReplica_i construction/destruction
 FT_TestReplica_i::FT_TestReplica_i (CORBA::ORB_var & orb, int identity)
   : orb_(orb)
   , identity_(identity)
@@ -57,6 +95,8 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 {
 }
 
+/////////////////////////////////////////////////////
+// class FT_TestReplica_i public, non-CORBA interface
 int
 FT_TestReplica_i::parse_args (int argc, char *argv[])
 {
@@ -70,10 +110,12 @@ FT_TestReplica_i::usage_options()
   return "";
 }
 
+/////////////////////////////////////////////////////
+// class FT_TestReplica_i:  PullMonitorable interface
 CORBA::Boolean FT_TestReplica_i::is_alive ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN(DURING_IS_ALIVE)
+  KEVORKIAN(DURING_IS_ALIVE, is_alive)
   ACE_ERROR ((LM_ERROR,
     "FT Replica%d: is_alive: %d\n",
     identity_,
@@ -83,19 +125,17 @@ CORBA::Boolean FT_TestReplica_i::is_alive ()
   return death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE;
 }
 
+/////////////////////////////////////////////////////
+// class FT_TestReplica_i:  Updateable interface
 FT::State * FT_TestReplica_i::get_update ()
   ACE_THROW_SPEC ((CORBA::SystemException, FT::NoUpdateAvailable))
 {
-#if defined(FT_TEST_LACKS_UPDATE)
-  ACE_THROW( FT::NoUpdateAvailable () );
-#else // FT_TEST_LACKS_UPDATE
-  KEVORKIAN(DURING_GET_UPDATE)
+  KEVORKIAN(DURING_GET_UPDATE, get_update)
   long counter = load();
   ::FT::State_var vState = new ::FT::State;
   vState->length(sizeof(counter));
   storeLong(vState, 0, counter);
   return vState._retn();
-#endif // FT_TEST_LACKS_UPDATE
 }
 
 void FT_TestReplica_i::set_update (const FT::State & s)
@@ -104,20 +144,22 @@ void FT_TestReplica_i::set_update (const FT::State & s)
 #if defined(FT_TEST_LACKS_UPDATE)
   ACE_THROW ( FT::InvalidUpdate () );
 #else // FT_TEST_LACKS_UPDATE
-  KEVORKIAN(BEFORE_SET_UPDATE)
+  KEVORKIAN(BEFORE_SET_UPDATE, set_update)
   long counter = loadLong(s, 0);
   store(counter);
-  KEVORKIAN(AFTER_SET_UPDATE)
+  KEVORKIAN(AFTER_SET_UPDATE, set_update)
 #endif // FT_TEST_LACKS_UPDATE
 }
 
+/////////////////////////////////////////////////////
+// class FT_TestReplica_i:  Checkpointable interface
 ::FT::State * FT_TestReplica_i::get_state ()
   ACE_THROW_SPEC ((CORBA::SystemException, FT::NoStateAvailable))
 {
 #if defined(FT_TEST_LACKS_STATE)
   ACE_THROW( FT::NoStateAvailable () );
 #else // FT_TEST_LACKS_STATE
-  KEVORKIAN(DURING_GET_STATE)
+  KEVORKIAN(DURING_GET_STATE, get_state)
   long counter = load();
   ::FT::State_var vState = new ::FT::State;
   vState->length(sizeof(counter));
@@ -132,10 +174,10 @@ void FT_TestReplica_i::set_state (const FT::State & s)
 #if defined(FT_TEST_LACKS_STATE)
   ACE_THROW ( FT::InvalidState () );
 #else // FT_TEST_LACKS_STATE
-  KEVORKIAN(BEFORE_SET_STATE)
+  KEVORKIAN(BEFORE_SET_STATE, set_state)
   long counter = loadLong(s, 0);
   store(counter);
-  KEVORKIAN(AFTER_SET_STATE)
+  KEVORKIAN(AFTER_SET_STATE, set_state)
 #endif // FT_TEST_LACKS_STATE
 }
 
@@ -146,28 +188,28 @@ void FT_TestReplica_i::set (CORBA::Long value
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN(BEFORE_SET)
+  KEVORKIAN(BEFORE_STATE_CHANGE, set)
   long counter = value;
   store(counter);
-  KEVORKIAN(AFTER_SET)
+  KEVORKIAN(BEFORE_REPLY, set)
 }
 
 CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN(BEFORE_INCREMENT)
+  KEVORKIAN(BEFORE_STATE_CHANGE, increment)
   long counter = load ();
   counter += delta;
   store (counter);
-  KEVORKIAN(AFTER_INCREMENT)
+  KEVORKIAN(BEFORE_REPLY, increment)
   return counter;
 }
 
 CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN(DURING_GET)
+  KEVORKIAN_DURING(get)
   long counter = load ();
   return counter;
 }
@@ -175,7 +217,7 @@ CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 CORBA::Long FT_TestReplica_i::counter (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN(DURING_ATTRIBUTE_GET)
+  KEVORKIAN_DURING([get]counter)
   long counter = load ();
   return counter;
 }
@@ -184,9 +226,9 @@ void FT_TestReplica_i::counter (CORBA::Long counter
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN(BEFORE_ATTRIBUTE_SET)
+  KEVORKIAN(BEFORE_STATE_CHANGE, [set]counter)
   store (counter);
-  KEVORKIAN(AFTER_ATTRIBUTE_SET)
+  KEVORKIAN(BEFORE_REPLY, [set]counter)
 }
 
 void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
@@ -194,22 +236,32 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   death_pending_ = when;
-  KEVORKIAN(RIGHT_NOW)
+  KEVORKIAN(RIGHT_NOW, die)
 }
 
 void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 //  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  death_pending_ = FT_TEST::TestReplica::WHILE_IDLE;
+  death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
+//////////////////////////////////////////////
+// FT_TestReplica_i public non-CORBA interface
 int FT_TestReplica_i::idle (int & result)
 {
   int quit = 0;
   if (death_pending_ == FT_TEST::TestReplica::WHILE_IDLE)
   {
-    std::cout << "FT Replica" << identity_ << ": Simulated fault WHILE_IDLE" << std::endl;
+    ACE_ERROR ((LM_ERROR,
+      "FT Replica%d: Simulated fault WHILE_IDLE",
+      ACE_static_cast(int, identity_ )
+      ));
+    result = 0;
+    quit = 1;
+  }
+  else if (death_pending_ == FT_TEST::TestReplica::CLEAN_EXIT)
+  {
     result = 0;
     quit = 1;
   }
@@ -247,4 +299,25 @@ long FT_TestReplica_i::load ()
   }
   return counter;
 }
+
+///////////////////////////////////
+// Template instantiation for
+// competence-challenged compilers.
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template void storeLong(::FT::State_var & state, size_t offset, long value);
+  template long loadLong(const ::FT::State_var & state, size_t offset);
+
+  template void storeLong(unsigned char * & state, size_t offset, long value);
+  template long loadLong(const unsigned char * & state, size_t offset);
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate void storeLong(::FT::State_var & state, size_t offset, long value)
+# pragma long loadLong(const ::FT::State_var & state, size_t offset)
+
+# pragma instantiate void storeLong(unsigned char * & state, size_t offset, long value)
+# pragma long loadLong(const unsigned char * & state, size_t offset)
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 

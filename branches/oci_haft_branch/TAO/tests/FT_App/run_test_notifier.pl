@@ -66,29 +66,32 @@ use PerlACE::Run_Test;
 my($debug) = 1;
 my($simulated) = 1;
 
+#define temp files
 my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
 my($replica2_ior) = PerlACE::LocalFile ("replica2.ior");
 my($detector_ior) = PerlACE::LocalFile ("detector.ior");
 my($notifier_ior) = PerlACE::LocalFile ("notifier.ior");
 my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
+#discard junk from previous tests
 unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
 unlink $notifier_ior;
+unlink #client_data
 
 my($status) = 0;
 
 my($REP1) = new PerlACE::Process ("Release/ft_replica", "-o $replica1_ior -r 1");
 my($REP2) = new PerlACE::Process ("Release/ft_replica", "-o $replica2_ior -r 2");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector/Release/Fault_Detector", "-o $detector_ior -q");
-my($NOT) = new PerlACE::Process ("ft_notifier", "-o $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
+my($NOT) = new PerlACE::Process ("Release/ft_notifier", "-o $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
 my($CL);
 if (simulated) {
-  $CL = new PerlACE::Process ("ft_client", "-f $replica1_ior,$replica2_ior -c testscript");
+  $CL = new PerlACE::Process ("Release/ft_client", "-f $replica1_ior,$replica2_ior -c testscript");
 }else{
   #todo figure out how to get iogr
-  $CL = new PerlACE::Process ("ft_client", "-f $replica1_iogr -c testscript");
+  $CL = new PerlACE::Process ("Release/ft_client", "-f $replica1_iogr -c testscript");
 }
 
 print "TEST: starting replica1\n" if ($debug);

@@ -1,10 +1,10 @@
 v3 echo commands
 =0
 +5
-d6  FMI: d6 is die before increment; d7 is die after increment
+d3  FMI: d3 is before state change; d4 is before replication;d5 is before reply
 +5
 c10
 +5
 z5 sleep for a while
 +7 
-q1 quit and bring down primary replica
+q1 quit and bring down current primary replica
