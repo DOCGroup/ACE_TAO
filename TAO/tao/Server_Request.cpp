@@ -263,12 +263,6 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // This will be the start of a new message block.
       begin = this->incoming_->rd_ptr ();
 
-      // No need to duplicate - it gets done below.
-      ACE_Message_Block *cdr = ACE_const_cast (ACE_Message_Block*,
-                                               this->incoming_->start ());
-
-      cdr->rd_ptr (begin);
-
       // Skip over the next aregument.
       CORBA::TypeCode::traverse_status status = 
         this->incoming_->skip (tc.in (), env);
@@ -289,13 +283,24 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // This will be the end of the new message block.
       end = this->incoming_->rd_ptr ();
 
+      // Allocate the new message block and set its endpoints.
+      ACE_Message_Block *cdr;
+
+      ACE_NEW (cdr,
+               ACE_Message_Block (end - begin));
+
+      cdr->rd_ptr (begin);
+
       cdr->wr_ptr (end);
 
-      // Stick it into the Any. It gets duplicated here.
+      // Stick it into the Any. It gets duplicated there.
       any->_tao_replace (tc.in (),
                          cdr,
                          0,
-                         env);        
+                         env);  
+  
+      // Now we can release the original.                         
+      ACE_Message_Block::release (cdr);      
     }
 
   // If any data is left over, it'd be context values ... else error.
