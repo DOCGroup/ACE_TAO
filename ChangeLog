@@ -1,3 +1,8 @@
+Wed Nov 12 09:30:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dirent.h:
+          Added ACE_Export to opendir_emulation
+
 Wed Nov 12 09:26:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/rules.local.GNU:
@@ -51,7 +56,7 @@ Tue Nov 11 18:48:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Tue Nov 11 18:02:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TSS_T.cpp (ts_object): 
+	* ace/TSS_T.cpp (ts_object):
 
 	  Added the change "Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi
 	  <kobi@mivzak.com>"  back into the repo. The actual problem lay
