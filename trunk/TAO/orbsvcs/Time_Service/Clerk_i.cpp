@@ -384,7 +384,7 @@ Clerk_i::create_clerk (void)
       CORBA::String_var objref_clerk =
         this->orb_->object_to_string (this->time_service_clerk_.in (),
                                       TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+      TAO_CHECK_ENV;
 
       // Print the clerk IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
@@ -509,7 +509,7 @@ Clerk_i::init (int argc,
       this->orb_manager_.init (argc,
                                argv,
                                TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+      TAO_CHECK_ENV;
 
       if (this->orb_manager_.init_child_poa (argc,
                                              argv,
@@ -582,6 +582,7 @@ Clerk_i::run (CORBA::Environment &env)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run"),
                           -1);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
