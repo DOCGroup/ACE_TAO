@@ -17,6 +17,9 @@ Tue Sep 23 10:13:57 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Token_Manager.{h,cpp},Object_Manager.{h,cpp}:
 	  preallocate ACE_Token_Manager creation lock.
 
+	* ace/Object_Manager.cpp: use ACE_Cleanup_Adapter<TYPE[COUNT]>
+	  for preallocated arrays.
+
 Mon Sep 22 16:51:44 1997    <irfan@TWOSTEP>
 
 	* ace/OS.i (open): Changed code so that (_O_CREAT | _O_TRUNC)
