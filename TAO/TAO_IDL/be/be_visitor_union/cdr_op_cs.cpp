@@ -150,7 +150,7 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
 }
 
 int
-be_visitor_union_cdr_op_cs::post_process (be_decl *bd)
+be_visitor_union_cdr_op_cs::post_process (be_decl *)
 {
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)
     return 0;
