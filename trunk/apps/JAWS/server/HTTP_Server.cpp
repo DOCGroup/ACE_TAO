@@ -251,7 +251,7 @@ ACE_STATIC_SVC_DEFINE (HTTP_Server, "HTTP_Server", ACE_SVC_OBJ_T,
                        | ACE_Service_Type::DELETE_OBJ, 0)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class LOCK_SOCK_Acceptor<ACE_Thread_Mutex>;
+template class LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
 template class ACE_Task<ACE_NULL_SYNCH>;
 template class ACE_Thru_Task<ACE_NULL_SYNCH>;
 template class ACE_Message_Queue<ACE_NULL_SYNCH>;
