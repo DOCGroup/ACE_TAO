@@ -22,11 +22,11 @@ OS_FILES = \
   Sched_Params
 UTILS_FILES = \
   ACE \
-  ACE_Init \
-  ACE_Flag_Manip \
-  ACE_Handle_Ops \
-  ACE_Lib_Find \
-  ACE_Sock_Connect \
+  Init_ACE \
+  Flag_Manip \
+  Handle_Ops \
+  Lib_Find \
+  Sock_Connect \
   Malloc_Instantiations \
   Active_Map_Manager \
   Arg_Shifter \
@@ -893,16 +893,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Handle_Set.h \
  Handle_Set.i \
@@ -964,8 +964,8 @@ endif # GHS
  Message_Block_T.i \
  Message_Block_T.cpp
 
-.obj/ACE_Init.o .obj/ACE_Init.so .shobj/ACE_Init.o .shobj/ACE_Init.so: ACE_Init.cpp \
- ACE_Init.h \
+.obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp \
+ Init_ACE.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -994,14 +994,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Init.i \
+ Init_ACE.i \
  Object_Manager.h \
  Object_Manager.i \
  Managed_Object.h \
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/ACE_Flag_Manip.o .obj/ACE_Flag_Manip.so .shobj/ACE_Flag_Manip.o .shobj/ACE_Flag_Manip.so: ACE_Flag_Manip.cpp ACE_Flag_Manip.h \
+.obj/Flag_Manip.o .obj/Flag_Manip.so .shobj/Flag_Manip.o .shobj/Flag_Manip.so: Flag_Manip.cpp Flag_Manip.h \
  pre.h OS.h \
  config-all.h \
  config.h \
@@ -1030,10 +1030,10 @@ endif # GHS
  Trace.h \
  OS.h \
  OS.i \
- ACE_Flag_Manip.i
+ Flag_Manip.i
 
-.obj/ACE_Handle_Ops.o .obj/ACE_Handle_Ops.so .shobj/ACE_Handle_Ops.o .shobj/ACE_Handle_Ops.so: ACE_Handle_Ops.cpp \
- ACE_Handle_Ops.h \
+.obj/Handle_Ops.o .obj/Handle_Ops.so .shobj/Handle_Ops.o .shobj/Handle_Ops.so: Handle_Ops.cpp \
+ Handle_Ops.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -1062,10 +1062,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Handle_Ops.i
+ Handle_Ops.i
 
-.obj/ACE_Lib_Find.o .obj/ACE_Lib_Find.so .shobj/ACE_Lib_Find.o .shobj/ACE_Lib_Find.so: ACE_Lib_Find.cpp \
- ACE_Lib_Find.h \
+.obj/Lib_Find.o .obj/Lib_Find.so .shobj/Lib_Find.o .shobj/Lib_Find.so: Lib_Find.cpp \
+ Lib_Find.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -1094,7 +1094,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Lib_Find.i \
+ Lib_Find.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
@@ -1102,8 +1102,8 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/ACE_Sock_Connect.o .obj/ACE_Sock_Connect.so .shobj/ACE_Sock_Connect.o .shobj/ACE_Sock_Connect.so: ACE_Sock_Connect.cpp \
- ACE_Sock_Connect.h \
+.obj/Sock_Connect.o .obj/Sock_Connect.so .shobj/Sock_Connect.o .shobj/Sock_Connect.so: Sock_Connect.cpp \
+ Sock_Connect.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -1132,17 +1132,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Sock_Connect.i \
+ Sock_Connect.i \
  INET_Addr.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -1190,16 +1190,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
  Log_Record.h \
@@ -1282,16 +1282,16 @@ endif # GHS
  Map_Manager.h \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -1425,16 +1425,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Containers.h \
  Malloc_Base.h \
@@ -1516,16 +1516,16 @@ endif # GHS
  OS.i \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -1641,16 +1641,16 @@ endif # GHS
  Containers.i \
  Containers_T.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Containers_T.i \
  Containers_T.cpp \
@@ -1726,16 +1726,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.h \
  SString.i \
@@ -1884,16 +1884,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch_T.h \
  Synch.h \
@@ -1955,16 +1955,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Functor.i \
  Functor_T.i \
@@ -2000,16 +2000,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Get_Opt.i \
  Log_Msg.h \
@@ -2051,16 +2051,16 @@ endif # GHS
  OS.i \
  Functor.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Functor.i \
  Functor_T.h \
@@ -2168,16 +2168,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  High_Res_Timer.i \
  Stats.h \
@@ -2302,16 +2302,16 @@ endif # GHS
  Token_Manager.h \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -2437,16 +2437,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Time_Value.h \
  High_Res_Timer.h \
@@ -2514,16 +2514,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
  Log_Record.h \
@@ -2625,16 +2625,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Containers.h \
  Malloc_Base.h \
@@ -2716,16 +2716,16 @@ endif # GHS
  OS.i \
  Memory_Pool.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Event_Handler.h \
  Event_Handler.i \
@@ -2806,16 +2806,16 @@ endif # GHS
  OS.i \
  SString.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.i \
  Malloc_Base.h \
@@ -2891,16 +2891,16 @@ endif # GHS
  Synch_T.h \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -2994,16 +2994,16 @@ endif # GHS
  Synch_T.h \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -3091,16 +3091,16 @@ endif # GHS
  Synch_T.h \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -3186,16 +3186,16 @@ endif # GHS
  Containers.i \
  Containers_T.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Containers_T.i \
  Containers_T.cpp \
@@ -3283,16 +3283,16 @@ endif # GHS
  Synch_T.h \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -3378,16 +3378,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Mem_Map.i \
  Synch_T.h \
@@ -3501,16 +3501,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -3567,16 +3567,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Thread_Manager.h \
  Thread.h \
@@ -3720,16 +3720,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -3783,16 +3783,16 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i
 
 .obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
@@ -3826,16 +3826,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Get_Opt.i \
  Log_Msg.h \
@@ -3970,16 +3970,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -4125,16 +4125,16 @@ endif # GHS
  Process.h \
  SString.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.i \
  Malloc_Base.h \
@@ -4219,16 +4219,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -4328,16 +4328,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
@@ -4388,16 +4388,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch_Options.i
 
@@ -4433,16 +4433,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -4500,16 +4500,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SV_Semaphore_Simple.i \
  SV_Semaphore_Complex.i \
@@ -4641,16 +4641,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
@@ -4692,16 +4692,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -4804,16 +4804,16 @@ endif # GHS
  Thread_Manager.h \
  Thread.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Thread.i \
  Synch.h \
@@ -4902,16 +4902,16 @@ endif # GHS
  Thread_Control.inl \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -4970,16 +4970,16 @@ endif # GHS
  Thread_Manager.h \
  Thread.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
@@ -5066,16 +5066,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
@@ -5128,16 +5128,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Event_Handler.i \
  Message_Block.h \
@@ -5248,16 +5248,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -5357,16 +5357,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Handle_Set.i \
  Log_Msg.h \
@@ -5410,16 +5410,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -5599,16 +5599,16 @@ endif # GHS
  Containers.i \
  Containers_T.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Containers_T.i \
  Containers_T.cpp \
@@ -5718,16 +5718,16 @@ endif # GHS
  Message_Queue.h \
  Message_Block.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc.h \
  Log_Msg.h \
@@ -5875,16 +5875,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Handle_Set.i \
  Timer_Queue.h \
@@ -6049,16 +6049,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -6160,16 +6160,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -6323,16 +6323,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -6434,16 +6434,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -6567,16 +6567,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -6723,16 +6723,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -6859,16 +6859,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -7062,16 +7062,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Handle_Set.i \
  Timer_Queue.h \
@@ -7186,7 +7186,7 @@ endif # GHS
 
 .obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp IPC_SAP.h \
  pre.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -7214,7 +7214,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  Log_Msg.h \
  Log_Record.h \
@@ -7254,16 +7254,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7316,16 +7316,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7385,16 +7385,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7452,16 +7452,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7522,16 +7522,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7586,16 +7586,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7649,16 +7649,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7709,16 +7709,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7784,16 +7784,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7846,16 +7846,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7908,16 +7908,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -7981,16 +7981,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8043,16 +8043,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8096,16 +8096,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8152,16 +8152,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8242,16 +8242,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8297,16 +8297,16 @@ endif # GHS
  ATM_Stream.h \
  ATM_Addr.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8345,16 +8345,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Handle_Set.i \
  ATM_Connector.h \
@@ -8397,16 +8397,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i
 
 .obj/ATM_QoS.o .obj/ATM_QoS.so .shobj/ATM_QoS.o .shobj/ATM_QoS.so: ATM_QoS.cpp ATM_QoS.h \
@@ -8439,16 +8439,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i
 
 .obj/ATM_Stream.o .obj/ATM_Stream.so .shobj/ATM_Stream.o .shobj/ATM_Stream.so: ATM_Stream.cpp \
@@ -8483,16 +8483,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8506,7 +8506,7 @@ endif # GHS
  TLI_Stream.h \
  TLI.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -8534,20 +8534,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  Addr.h \
  Addr.i \
  INET_Addr.h \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  INET_Addr.i \
  Log_Msg.h \
@@ -8562,7 +8562,7 @@ endif # GHS
 .obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
  pre.h \
  IO_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -8590,20 +8590,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IO_SAP.i \
  DEV_Addr.h \
  Addr.h \
  Addr.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  DEV_Addr.i \
  SString.h \
@@ -8644,16 +8644,16 @@ endif # GHS
  OS.i \
  Addr.i \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  DEV_Addr.i \
  SString.h \
@@ -8672,7 +8672,7 @@ endif # GHS
  DEV_IO.h \
  DEV.h \
  IO_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -8700,20 +8700,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IO_SAP.i \
  DEV_Addr.h \
  Addr.h \
  Addr.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  DEV_Addr.i \
  SString.h \
@@ -8733,7 +8733,7 @@ endif # GHS
  pre.h \
  DEV.h \
  IO_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -8761,20 +8761,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IO_SAP.i \
  DEV_Addr.h \
  Addr.h \
  Addr.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  DEV_Addr.i \
  SString.h \
@@ -8792,7 +8792,7 @@ endif # GHS
 .obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
  pre.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -8820,17 +8820,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  FIFO.i \
  Log_Msg.h \
@@ -8845,7 +8845,7 @@ endif # GHS
  pre.h \
  FIFO.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -8873,17 +8873,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  FIFO.i \
  FIFO_Recv.i \
@@ -8900,7 +8900,7 @@ endif # GHS
  FIFO_Recv.h \
  FIFO.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -8928,17 +8928,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  FIFO.i \
  FIFO_Recv.i \
@@ -8955,7 +8955,7 @@ endif # GHS
  pre.h \
  FIFO.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -8983,17 +8983,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  FIFO.i \
  FIFO_Send.i \
@@ -9010,7 +9010,7 @@ endif # GHS
  FIFO_Send.h \
  FIFO.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9038,17 +9038,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  FIFO.i \
  FIFO_Send.i \
@@ -9092,19 +9092,19 @@ endif # GHS
  Trace.h \
  OS.i \
  Addr.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
  FILE_Addr.i \
  SString.h \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.i \
  Malloc_Base.h \
@@ -9118,7 +9118,7 @@ endif # GHS
 .obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
  pre.h \
  IO_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9146,7 +9146,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IO_SAP.i \
  FILE_Addr.h \
  Addr.h \
@@ -9154,14 +9154,14 @@ endif # GHS
  FILE_Addr.i \
  SString.h \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.i \
  Malloc_Base.h \
@@ -9173,7 +9173,7 @@ endif # GHS
  FILE_IO.h \
  FILE.h \
  IO_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9201,7 +9201,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IO_SAP.i \
  FILE_Addr.h \
  Addr.h \
@@ -9209,14 +9209,14 @@ endif # GHS
  FILE_Addr.i \
  SString.h \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.i \
  Malloc_Base.h \
@@ -9234,7 +9234,7 @@ endif # GHS
  pre.h \
  FILE.h \
  IO_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9262,7 +9262,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IO_SAP.i \
  FILE_Addr.h \
  Addr.h \
@@ -9270,14 +9270,14 @@ endif # GHS
  FILE_Addr.i \
  SString.h \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.i \
  Malloc_Base.h \
@@ -9321,16 +9321,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -9344,7 +9344,7 @@ endif # GHS
 
 .obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp IO_SAP.h \
  pre.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9372,7 +9372,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IO_SAP.i \
  Log_Msg.h \
  Log_Record.h \
@@ -9414,16 +9414,16 @@ endif # GHS
  IOStream_T.h \
  INET_Addr.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -9463,16 +9463,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Pipe.i \
  SOCK_Acceptor.h \
@@ -9531,16 +9531,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -9625,16 +9625,16 @@ endif # GHS
  OS.i \
  Addr.i \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SPIPE_Addr.i \
  SString.h \
@@ -9644,7 +9644,7 @@ endif # GHS
 .obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp SPIPE.h \
  pre.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9672,20 +9672,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
  Addr.h \
  Addr.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SPIPE_Addr.i \
  SString.h \
@@ -9699,7 +9699,7 @@ endif # GHS
  SPIPE_Stream.h \
  SPIPE.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9727,20 +9727,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
  Addr.h \
  Addr.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SPIPE_Addr.i \
  SString.h \
@@ -9761,7 +9761,7 @@ endif # GHS
  SPIPE_Stream.h \
  SPIPE.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9789,20 +9789,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
  Addr.h \
  Addr.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SPIPE_Addr.i \
  SString.h \
@@ -9823,7 +9823,7 @@ endif # GHS
  pre.h \
  SPIPE.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -9851,20 +9851,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
  Addr.h \
  Addr.i \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SPIPE_Addr.i \
  SString.h \
@@ -9904,16 +9904,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SV_Message.i
 
@@ -9948,16 +9948,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SV_Message.h \
  SV_Message.i \
@@ -10001,16 +10001,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SV_Semaphore_Simple.i \
  SV_Semaphore_Complex.i \
@@ -10052,16 +10052,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SV_Semaphore_Simple.i \
  Log_Msg.h \
@@ -10102,16 +10102,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SV_Shared_Memory.i \
  Log_Msg.h \
@@ -10124,7 +10124,7 @@ endif # GHS
 .obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
  pre.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -10152,7 +10152,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  Addr.h \
  Addr.i \
@@ -10168,7 +10168,7 @@ endif # GHS
  pre.h \
  TLI.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -10196,7 +10196,7 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  Addr.h \
  Addr.i \
@@ -10204,14 +10204,14 @@ endif # GHS
  TLI_Stream.h \
  INET_Addr.h \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  INET_Addr.i \
  Log_Msg.h \
@@ -10252,16 +10252,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Handle_Set.i \
  TLI_Connector.h \
@@ -10285,7 +10285,7 @@ endif # GHS
  pre.h \
  TLI.h \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
+ Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
@@ -10313,20 +10313,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.i \
+ Flag_Manip.i \
  IPC_SAP.i \
  Addr.h \
  Addr.i \
  INET_Addr.h \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  INET_Addr.i
 
@@ -10363,16 +10363,16 @@ endif # GHS
  Addr.h \
  Addr.i \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  DEV_Addr.i \
  SString.h \
@@ -10432,16 +10432,16 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  UNIX_Addr.i
 
@@ -10478,16 +10478,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  IO_Cntl_Msg.h \
  Message_Block.h \
@@ -10662,16 +10662,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  IO_Cntl_Msg.h \
  Message_Block.h \
@@ -10844,16 +10844,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  IO_Cntl_Msg.h \
  Message_Block.h \
@@ -11026,16 +11026,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -11157,16 +11157,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  INET_Addr.h \
  Addr.h \
@@ -11215,16 +11215,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -11346,16 +11346,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -11469,16 +11469,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc.h \
  Log_Msg.h \
@@ -11576,16 +11576,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -11703,16 +11703,16 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i
 
 .obj/Parse_Node.o .obj/Parse_Node.so .shobj/Parse_Node.o .shobj/Parse_Node.so: Parse_Node.cpp \
@@ -11748,16 +11748,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -11914,16 +11914,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
  Log_Record.h \
@@ -12065,16 +12065,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Get_Opt.i \
  Service_Repository.h \
@@ -12241,16 +12241,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -12310,16 +12310,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -12384,16 +12384,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -12553,16 +12553,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
  Log_Record.h \
@@ -12727,16 +12727,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Shared_Object.i
 
@@ -12773,16 +12773,16 @@ endif # GHS
  Obstack.h \
  Malloc.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
  Log_Record.h \
@@ -12887,16 +12887,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Containers.h \
  Malloc_Base.h \
@@ -13063,16 +13063,16 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc.h \
  Log_Msg.h \
@@ -13159,16 +13159,16 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc.h \
  Log_Msg.h \
@@ -13271,16 +13271,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc.h \
  Log_Msg.h \
@@ -13366,16 +13366,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc.h \
  Log_Msg.h \
@@ -13520,16 +13520,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -13683,16 +13683,16 @@ endif # GHS
  OS.i \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -13802,16 +13802,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
  Log_Record.h \
@@ -13895,16 +13895,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc.h \
  Log_Msg.h \
@@ -13999,16 +13999,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc_Base.h \
  Log_Msg.h \
@@ -14066,16 +14066,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Mem_Map.i \
  Log_Msg.h \
@@ -14116,16 +14116,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Event_Handler.h \
  Event_Handler.i \
@@ -14219,16 +14219,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
  Log_Record.h \
@@ -14308,16 +14308,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Malloc.h \
  Log_Msg.h \
@@ -14419,16 +14419,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i
 
 .obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.so .shobj/Shared_Memory_MM.o .shobj/Shared_Memory_MM.so: Shared_Memory_MM.cpp \
@@ -14463,16 +14463,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Mem_Map.h \
  Mem_Map.i \
@@ -14510,16 +14510,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SV_Shared_Memory.h \
  SV_Shared_Memory.i \
@@ -14556,16 +14556,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
@@ -14675,16 +14675,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -14820,16 +14820,16 @@ endif # GHS
  OS.i \
  Synch.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -14937,16 +14937,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -15059,16 +15059,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.h \
@@ -15184,16 +15184,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Synch.i \
  Synch_T.i \
@@ -15303,16 +15303,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -15422,16 +15422,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  CORBA_Ref.cpp \
  Log_Msg.h \
@@ -15471,16 +15471,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Local_Name_Space.h \
  SString.h \
@@ -15623,16 +15623,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -15753,16 +15753,16 @@ endif # GHS
  OS.i \
  SString.h \
  ACE.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.i \
  Malloc_Base.h \
@@ -15804,16 +15804,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.h \
  SString.i \
@@ -15934,16 +15934,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Get_Opt.i \
  Naming_Context.h \
@@ -16119,16 +16119,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  SString.h \
  SString.i \
@@ -16256,16 +16256,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -16357,16 +16357,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -16459,16 +16459,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -16555,19 +16555,19 @@ endif # GHS
  OS.i \
  Addr.i \
  IPC_SAP.h \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
  IPC_SAP.i \
  Containers_T.h \
  ACE.h \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Containers.h \
  Malloc_Base.h \
@@ -16648,16 +16648,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE_Flag_Manip.h \
- ACE_Flag_Manip.i \
- ACE_Handle_Ops.h \
- ACE_Handle_Ops.i \
- ACE_Lib_Find.h \
- ACE_Lib_Find.i \
- ACE_Init.h \
- ACE_Init.i \
- ACE_Sock_Connect.h \
- ACE_Sock_Connect.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
  ACE.i \
  Handle_Set.i \
  Timer_Queue.h \
