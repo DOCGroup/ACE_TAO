@@ -1,3 +1,14 @@
+Fri May 25 15:31:45 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/Leader_Followers/run_test.pl: Changed this to use
+ 	-ORBSvcConfDirective rather than specifying a configuration file.
+  	Also changed to use Advanced_Resource_Factory service name rather
+ 	than Resource_Factory, now that -ORBReactorType moved into the
+ 	Advanced_Resource_Factory.
+
+	* tests/Leader_Followers/multi_threaded_event_loop.conf: Removed
+	this file as it's no longer necessary or used...see above.
+
 Fri May 25 12:04:02 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/examples/Security/Send_File/client_nopasswd.conf: 
