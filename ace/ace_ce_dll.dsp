@@ -65,7 +65,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /machine:I386 /nodefaultlib:"msvcrt.lib" /windowsce:emulation
-# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /dll /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"ace.dll" /windowsce:emulation
+# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /dll /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"WCE\x86em\ace.dll" /windowsce:emulation
 EMPFILE=empfile.exe
 # ADD BASE EMPFILE -COPY
 # ADD EMPFILE -COPY
@@ -97,7 +97,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /nodefaultlib:"msvcrtd.lib" /windowsce:emulation
-# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /dll /debug /machine:I386 /nodefaultlib:"msvcrtd.lib" /out:"aced.dll" /windowsce:emulation
+# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /dll /debug /machine:I386 /nodefaultlib:"msvcrtd.lib" /out:"WCE\x86em\aced.dll" /windowsce:emulation
 EMPFILE=empfile.exe
 # ADD BASE EMPFILE -COPY
 # ADD EMPFILE -COPY
@@ -130,7 +130,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /dll /machine:MIPS /subsystem:windowsce,2.0 /windowsce:noconvert
 # SUBTRACT BASE LINK32 /pdb:none /nodefaultlib
-# ADD LINK32 commctrl.lib coredll.lib /nologo /dll /machine:MIPS /nodefaultlib:"wsock32.lib" /out:"ace.dll" /subsystem:windowsce,2.0
+# ADD LINK32 commctrl.lib coredll.lib /nologo /dll /machine:MIPS /nodefaultlib:"wsock32.lib" /out:"WCE\MIPS\ace.dll" /subsystem:windowsce,2.0
 # SUBTRACT LINK32 /pdb:none
 PFILE=pfile.exe
 # ADD BASE PFILE COPY
@@ -164,7 +164,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /dll /debug /machine:MIPS /subsystem:windowsce,2.0 /windowsce:noconvert
 # SUBTRACT BASE LINK32 /pdb:none /nodefaultlib
-# ADD LINK32 commctrl.lib coredll.lib /nologo /dll /debug /machine:MIPS /nodefaultlib:"wsock32.lib" /out:"aced.dll" /subsystem:windowsce,2.0
+# ADD LINK32 commctrl.lib coredll.lib /nologo /dll /debug /machine:MIPS /nodefaultlib:"wsock32.lib" /out:"WCE\MIPS\aced.dll" /subsystem:windowsce,2.0
 # SUBTRACT LINK32 /pdb:none
 PFILE=pfile.exe
 # ADD BASE PFILE COPY
@@ -347,7 +347,6 @@ DEP_CPP_ACE_C=\
 	".\ACE.i"\
 	".\Addr.h"\
 	".\Addr.i"\
-	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -358,14 +357,6 @@ DEP_CPP_ACE_C=\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.cpp"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Event_Handler.h"\
-	".\Event_Handler.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
 	".\inc_user_config.h"\
@@ -378,51 +369,20 @@ DEP_CPP_ACE_C=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\Process.h"\
 	".\Process.i"\
-	".\Reactor.h"\
-	".\Reactor.i"\
-	".\Reactor_Impl.h"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\SV_Semaphore_Complex.h"\
-	".\SV_Semaphore_Complex.i"\
-	".\SV_Semaphore_Simple.h"\
-	".\SV_Semaphore_Simple.i"\
-	".\Synch.h"\
-	".\Synch.i"\
-	".\Synch_T.cpp"\
-	".\Synch_T.h"\
-	".\Synch_T.i"\
 	".\sys_conf.h"\
-	".\Thread.h"\
-	".\Thread.i"\
-	".\Thread_Manager.h"\
-	".\Thread_Manager.i"\
-	".\Timer_Queue.h"\
-	".\Timer_Queue_T.cpp"\
-	".\Timer_Queue_T.h"\
-	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
@@ -3628,6 +3588,7 @@ DEP_CPP_DYNAM=\
 DEP_CPP_DYNAM=\
 	".\ACE.h"\
 	".\ACE.i"\
+	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -3640,6 +3601,8 @@ DEP_CPP_DYNAM=\
 	".\config.h"\
 	".\Dynamic.h"\
 	".\Dynamic.i"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
 	".\inc_user_config.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
@@ -3654,10 +3617,24 @@ DEP_CPP_DYNAM=\
 	".\Object_Manager.i"\
 	".\OS.h"\
 	".\OS.i"\
+	".\Singleton.cpp"\
+	".\Singleton.h"\
+	".\Singleton.i"\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
 	".\sys_conf.h"\
+	".\Thread.h"\
+	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -3919,6 +3896,8 @@ DEP_CPP_EVENT=\
 	".\Free_List.cpp"\
 	".\Free_List.h"\
 	".\Free_List.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
 	".\inc_user_config.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
@@ -3944,6 +3923,9 @@ DEP_CPP_EVENT=\
 	".\Object_Manager.i"\
 	".\OS.h"\
 	".\OS.i"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
 	".\Signal.h"\
 	".\Signal.i"\
 	".\SString.h"\
@@ -3961,6 +3943,12 @@ DEP_CPP_EVENT=\
 	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
+	".\Thread_Manager.h"\
+	".\Thread_Manager.i"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -8349,6 +8337,8 @@ DEP_CPP_MESSA=\
 	".\Free_List.cpp"\
 	".\Free_List.h"\
 	".\Free_List.i"\
+	".\High_Res_Timer.h"\
+	".\High_Res_Timer.i"\
 	".\inc_user_config.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
@@ -8376,6 +8366,9 @@ DEP_CPP_MESSA=\
 	".\OS.i"\
 	".\Signal.h"\
 	".\Signal.i"\
+	".\Singleton.cpp"\
+	".\Singleton.h"\
+	".\Singleton.i"\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
@@ -8391,6 +8384,10 @@ DEP_CPP_MESSA=\
 	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
+	".\Timeprobe.h"\
+	".\Timeprobe.i"\
+	".\Timeprobe_T.cpp"\
+	".\Timeprobe_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
