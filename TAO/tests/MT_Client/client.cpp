@@ -54,7 +54,7 @@ class Client : public ACE_Task_Base
 public:
   Client (Simple_Server_ptr server, int niterations);
   // ctor
-  
+
   virtual int svc (void);
   // The thread entry point.
 
@@ -95,8 +95,11 @@ main (int argc, char *argv[])
         }
 
       Client client (server.in (), niterations);
-      client.activate (THR_NEW_LWP | THR_JOINABLE,
-                       nthreads);
+      if (client.activate (THR_NEW_LWP | THR_JOINABLE,
+                           nthreads) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot activate client threads\n"),
+                          1);
 
       client.thr_mgr ()->wait ();
 
@@ -143,5 +146,3 @@ Client::svc (void)
   ACE_ENDTRY;
   return 0;
 }
-
-

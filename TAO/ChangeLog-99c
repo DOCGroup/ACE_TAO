@@ -1,3 +1,15 @@
+Sat Mar 20 20:27:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/MT_Client/README: 
+	* tests/MT_Client/run_test.pl: 
+	  Added canonical files to the example.
+
+	* tests/MT_Client/client.cpp: 
+	  Added an error message in case thread creation fails.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	  Added a debug message when orb->shutdown() is called.
+
 Sat Mar 20 19:10:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Connector.h:
