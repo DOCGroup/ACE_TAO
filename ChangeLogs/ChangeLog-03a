@@ -1,3 +1,10 @@
+Fri Nov  8 04:03:29 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Multicast_Test.cpp:  Cleaned up error messages and
+	  error handling and insure that errors are returned.  Added 
+	  2 second timeout to call to ACE_Thread_Manager::wait() so 
+	  that lost messages won't cause test to hang.
+
 Wed Nov  6 18:55:22 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.{h i} (recursive_mutex_cond_unlock,
