@@ -498,7 +498,7 @@ Admin_Client::enum_test (CORBA::Environment &ACE_TRY_ENV)
 
   for (i = 0; i < count; i++)
     {
-      str = td->type->member_name (i, ACE_TRY_ENV)
+      str = td->type->member_name (i, ACE_TRY_ENV);
       ACE_CHECK;
 
       if (this->debug_)
@@ -1221,7 +1221,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_ASSERT (length == 1);
 
-  char *tmp = "::your_struct";
+  const char *tmp = "::your_struct";
 
   for (i = 0; i < length; i++)
     {
@@ -1831,7 +1831,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   length = contents->length ();
-  char *tmp = "::your_exception";
+  const char *tmp = "::your_exception";
 
   for (i = 0; i < length; i++)
     {
@@ -1868,7 +1868,7 @@ Admin_Client::constant_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   CORBA::Any any;
-  char *s = "hello";
+  const char *s = "hello";
   any <<= s;
 
   IR::ConstantDef_var cvar = 
@@ -1908,7 +1908,7 @@ Admin_Client::constant_test (CORBA::Environment &ACE_TRY_ENV)
   out_any = cvar->value (ACE_TRY_ENV);
   ACE_CHECK;
 
-  char *out_s;
+  const char *out_s;
   out_any >>= out_s;
 
   if (this->debug_)
@@ -2796,7 +2796,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_ASSERT (length == 1);
 
-  char *base = "::the_union::u_struct";
+  const char *base = "::the_union::u_struct";
 
   for (i = 0; i < length; i++)
     {
