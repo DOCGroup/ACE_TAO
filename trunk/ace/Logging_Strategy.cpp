@@ -36,7 +36,11 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
                                            ACE_LIB_TEXT ("|"),
                                            &strtokp))
     {
-      if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("TRACE")) == 0)
+      if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("SHUTDOWN")) == 0)
+        ACE_SET_BITS (priority_mask, LM_SHUTDOWN);
+      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~SHUTDOWN")) == 0)
+        ACE_CLR_BITS (priority_mask, LM_SHUTDOWN);
+      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("TRACE")) == 0)
         ACE_SET_BITS (priority_mask, LM_TRACE);
       else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~TRACE")) == 0)
         ACE_CLR_BITS (priority_mask, LM_TRACE);
@@ -56,6 +60,10 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
         ACE_SET_BITS (priority_mask, LM_WARNING);
       else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~WARNING")) == 0)
         ACE_CLR_BITS (priority_mask, LM_WARNING);
+      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("STARTUP")) == 0)
+        ACE_SET_BITS (priority_mask, LM_STARTUP);
+      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~STARTUP")) == 0)
+        ACE_CLR_BITS (priority_mask, LM_STARTUP);
       else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("ERROR")) == 0)
         ACE_SET_BITS (priority_mask, LM_ERROR);
       else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~ERROR")) == 0)
