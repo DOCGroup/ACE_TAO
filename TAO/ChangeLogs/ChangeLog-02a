@@ -1,7 +1,16 @@
+Sat Mar 18 17:45:32 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp (grab_offerids):
+          changed _ptr's to *'s.
+
+        * orbsvcs/tests/Trading/Offer_Importer.cpp
+          (perform_queries_with_policies,display_results):
+          changed _ptr's to *'s.
+
 Sat Mar 18 12:56:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: Updated dependencies. Thanks to
-	  Dr.Levine for reporting this.
+        * orbsvcs/orbsvcs/Makefile: Updated dependencies. Thanks to
+          Dr.Levine for reporting this.
 
 Sat Mar 18 07:30:20 2000  David L. Levine  <levine@cs.wustl.edu>
 
