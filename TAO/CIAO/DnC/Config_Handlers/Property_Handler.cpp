@@ -9,8 +9,7 @@ using CIAO::Config_Handler::Utils;
 using CIAO::Config_Handler::Any_Handler;
 
 void
-CIAO::Config_Handler::Property_Handler::process_Property (xercesc::DOMDocument *,
-                                                          DOMNodeIterator * iter,
+CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter,
                                                           Deployment::Property &property)
 {
   int valid_name = 0, valid_value = 0;
