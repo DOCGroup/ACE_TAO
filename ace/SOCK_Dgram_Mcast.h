@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
 #include /**/ "ace/pre.h"
@@ -101,7 +100,7 @@ public:
    * comments in source file for environment-specific restrictions).  Default
    * values are always valid values for the compilation environment.
    */
-  enum  options
+  enum options
   {
   // Define whether a specific (multicast) address (in addition to the port#)
   // is bound to the socket.
