@@ -27,6 +27,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Client_Protocol Client"=.\Client_Protocol\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Client_Protocol Server"=.\Client_Protocol\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Server_Protocol Client"=.\Server_Protocol\client.dsp - Package Owner=<4>
 
 Package=<5>
