@@ -103,11 +103,12 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
       CORBA::Boolean byte_order;
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return -1;
-      cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+      cdr.reset_byte_order (ACE_static_cast (int, byte_order));
 
-      cdr >> this->ssl_endpoint_.ssl_component_;
-
-      ssl_component_found = 1;
+      if (cdr >> this->ssl_endpoint_.ssl_component_)
+        ssl_component_found = 1;
+      else
+        return -1;
     }
 
   // Since IIOP portion of the profile has already been decoded, we
