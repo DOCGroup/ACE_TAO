@@ -5182,9 +5182,8 @@ ACE_OS::open (const char *filename,
               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::open");
-#if defined (ACE_WIN32)
-  ACE_UNUSED_ARG (perms);
 
+#if defined (ACE_WIN32)
   DWORD access = GENERIC_READ;
   if (ACE_BIT_ENABLED (mode, O_WRONLY))
     access = GENERIC_WRITE;
@@ -5237,12 +5236,7 @@ ACE_OS::open (const char *filename,
         )
     }
 
-  DWORD shared_mode = FILE_SHARE_READ | FILE_SHARE_WRITE;
-#if !defined (ACE_HAS_WINCE)  // CE doesn't have FILE_SHARE_DELETE
-  if (ACE_OS::get_win32_versioninfo().dwPlatformId ==
-      VER_PLATFORM_WIN32_NT)
-    shared_mode |= FILE_SHARE_DELETE;
-#endif /* ACE_HAS_WINCE */
+  DWORD shared_mode = perms;
 
 #if defined (ACE_HAS_WINCE)
   ACE_HANDLE h = ::CreateFileW (ACE_Ascii_To_Wide (filename).wchar_rep (), access,
@@ -5330,7 +5324,6 @@ ACE_OS::open (const wchar_t *filename,
 #if defined (ACE_WIN32)
   // @@ (brunsch) Yuck, maybe there is a way to combine the code
   // here with the char version
-  ACE_UNUSED_ARG (perms);
 
   DWORD access = GENERIC_READ;
   if (ACE_BIT_ENABLED (mode, O_WRONLY))
@@ -5384,12 +5377,7 @@ ACE_OS::open (const wchar_t *filename,
         )
     }
 
-  DWORD shared_mode = FILE_SHARE_READ | FILE_SHARE_WRITE;
-#if !defined (ACE_HAS_WINCE)  // CE doesn't have FILE_SHARE_DELETE
-  if (ACE_OS::get_win32_versioninfo().dwPlatformId ==
-      VER_PLATFORM_WIN32_NT)
-    shared_mode |= FILE_SHARE_DELETE;
-#endif /* ACE_HAS_WINCE */
+  DWORD shared_mode = perms;
 
   ACE_HANDLE h = ::CreateFileW (filename,
                                 access,
