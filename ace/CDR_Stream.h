@@ -764,6 +764,9 @@ public:
   /// Returns the current position for the rd_ptr....
   char* rd_ptr (void);
 
+  /// Returns the current position for the wr_ptr....
+  char* wr_ptr (void);
+
   /// Return how many bytes are left in the stream.
   size_t length (void) const;
 
