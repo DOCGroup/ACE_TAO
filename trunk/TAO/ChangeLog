@@ -1,3 +1,9 @@
+Tue Dec  7 18:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BooleanSeqA.cpp:
+        * tao/BooleanSeqC.{h,cpp,i,inl}:
+          Regenerated and replace .i file with .inl variant
+
 Tue Dec  7 18:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInterceptor.pidl:
