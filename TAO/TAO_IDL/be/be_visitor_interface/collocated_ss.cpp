@@ -115,7 +115,8 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
-      << "*this->_stubobj ()->servant_orb ()->orb_core ()->object_adapter ()"
+      << "*this->_stubobj ()->"
+      << "servant_orb_var ()->orb_core ()->object_adapter ()"
       << be_uidt_nl
       << ");" << be_uidt_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
@@ -158,7 +159,8 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
-      << "*this->_stubobj ()->servant_orb ()->orb_core ()->object_adapter ()"
+      << "*this->_stubobj ()->"
+      << "servant_orb_var ()->orb_core ()->object_adapter ()"
       << be_uidt_nl
       << ");" << be_uidt_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
