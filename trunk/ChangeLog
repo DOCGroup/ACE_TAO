@@ -20,8 +20,8 @@ Mon Feb 14 20:37:56 2005  Olli Savia  <ops@iki.fi>
           Removed LynxOS 2.5 leftovers.
 	  Added definition of two new preprocessor macros
 	  ACE_LYNXOS_MAJOR and ACE_LYNXOS_MINOR. These macros make
-	  easier to maintain code that depend on LynxOS version. 
-	  
+	  easier to maintain code that depend on LynxOS version.
+
 Mon Feb 14 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/DSRT_Dispatch_Item_T.h:
