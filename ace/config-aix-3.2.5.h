@@ -28,9 +28,6 @@
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 
-// Sockets may be called in multi-threaded programs.
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 // Compiler/platform uses old malloc()/free() prototypes (ugh).
 #define ACE_HAS_OLD_MALLOC
 

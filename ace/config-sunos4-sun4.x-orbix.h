@@ -36,9 +36,6 @@
 // #define ACE_HAS_STRERROR
 #define ACE_HAS_SYS_ERRLIST
 
-// Sockets may be called in multi-threaded programs.
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 // Header files lack t_errno for ACE_TLI.
 // #define ACE_LACKS_T_ERRNO
 

@@ -80,9 +80,6 @@
 // Platform has union semun defined
 #define ACE_HAS_SEMUN
 
-// Sockets may be called in multi-threaded programs.
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 // Platform contains <poll.h>.
 #define ACE_HAS_POLL
 #define ACE_POLL_IS_BROKEN

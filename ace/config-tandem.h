@@ -186,8 +186,6 @@
 #define ACE_LACKS_PRI_T                 // Tandem lacks pri_t
 #define ACE_HAS_THR_KEYDELETE
 
-#define ACE_HAS_MT_SAFE_SOCKETS         // Sockets may be called in multi-threaded programs
-
 //ACE_HAS_REENTRANT_FUNCTIONS           Platform supports reentrant
 // functions (i.e., all the POSIX *_r functions).
 //ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS  Platform will recurse infinitely on

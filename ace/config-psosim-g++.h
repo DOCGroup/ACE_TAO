@@ -96,8 +96,6 @@
 
 #define ACE_DEFAULT_THREAD_KEYS 256
 
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 #define ACE_LACKS_COND_T
 
 
