@@ -41,9 +41,12 @@ DIRS = \
   #
   # On_Demand_Activation requires ServantLocators and AMI, neither of
   # which is available in the minimum CORBA configuration.
+  ifeq ($(corba_messaging),1)
+    DIRS += On_Demand_Activation
+  endif # corba_messaging
+
   ifeq ($(minimum_corba),0)
     DIRS += \
-      On_Demand_Activation \
       Event_Service \
       RT_Event_Service
   endif  # minimum_corba
