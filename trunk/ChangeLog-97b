@@ -8,6 +8,11 @@ Thu Sep 25 23:27:38 1997    <irfan@TWOSTEP>
 
 Thu Sep 25 20:33:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Message_Queue.h: Changed the *_i() methods to be virtual so
+ 	  that we can change the queueing mechanism by subclassing from
+ 	  ACE_Message_Queue.  Thanks to Eric Newton <ecn@smart.net> for
+ 	  this suggestion.
+
 	* ace/Timer_List_T.cpp (ACE_Timer_List_Iterator_T): Changed
  	  listParam to timer_list to keep programming style consistent...
 
