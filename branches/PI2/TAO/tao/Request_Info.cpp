@@ -29,7 +29,7 @@ TAO_ClientRequest_Info::TAO_ClientRequest_Info (const char * operation,
                                         CORBA::Environment &)
   : operation_ (operation), 
     service_context_list_ (service_context_list),
-    target_ (target)
+    target_ (CORBA_Object::_duplicate (target))
 {
 }
 
@@ -37,7 +37,7 @@ CORBA::Object_ptr
 TAO_ClientRequest_Info::target (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->target_._retn ();
+  return this->target_.in ();
 }
 
 CORBA::Object_ptr  TAO_ClientRequest_Info::effective_target (CORBA::Environment &)
