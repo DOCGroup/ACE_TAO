@@ -40,6 +40,9 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A HREF="#cservices">CORBA Concurrency Control Service</A></LI>
 
 <LI>
+<A HREF="#logging">CORBA Logging Service</A></LI>
+
+<LI>
 <A HREF="#implrepo">Implementation Repository</A></LI>
 
 <LI>
@@ -62,13 +65,11 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 
 <LI>
 <A HREF="#locate">Locate requests</A></LI>
-
 </UL>
+A complete list of all modifications to TAO is available in the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/ChangeLog">ChangeLog</A>.
 
-A complete list of all modifications to TAO is available in the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/ChangeLog">ChangeLog</a>.<P>
-
-<HR>
-<!--#include virtual="orbcore.html" -->
+<P>&nbsp;
+<HR><!--#include virtual="orbcore.html" -->
 <HR>
 <H3>
 <A NAME="idl"></A>IDL Compiler</H3>
@@ -76,48 +77,36 @@ Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
 <P>Current status: (As of July 31st, 1998.)
 <UL>
-
-  <LI>
-      Anonymous arrays inside structs are supported. However, they are
-      not yet supported inside unions.
-  </LI>
-
-  <LI>
-      Perfect Hashed Operation Lookup Strategy has been added to the IDL
-      Compiler.  -P flag to the <tao_idl> enables the perfect hased
-      lookup strategy.
-
-      This strategy uses
-      <A HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz"> GPERF</A>,
-      the GNU's Perfect Hash Function Generator written by Dr.Douglas
-      C. Schmidt.
-
-      Right now, GPERF works only on Solaris. Any work on porting GPERF
-      to other platforms will be highly appreciated.
-      </L1>
-
+<LI>
+Anonymous arrays inside structs are supported. However, they are not yet
+supported inside unions.</LI>
 
 <LI>
-Support for Arrays is refined in terms of the code generated for
-    parameters inside stubs and skeletons.
-</LI>
+Perfect Hashed Operation Lookup Strategy has been added to the IDL Compiler.
+-P flag to the&nbsp;<tao_idl>enables the perfect hased lookup strategy.
+This strategy uses <A HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">GPERF</A>,
+the GNU's Perfect Hash Function Generator written by Dr.Douglas C. Schmidt.
+Right now, GPERF works only on Solaris. Any work on porting GPERF to other
+platforms will be highly appreciated.&nbsp;</L1></LI>
+
+<LI>
+Support for Arrays is refined in terms of the code generated for parameters
+inside stubs and skeletons.</LI>
 
 <LI>
 Significantly improved the support for unions. The default case is yet
-to be handled.
-</LI>
+to be handled.</LI>
 
 <LI>
-Added support for Arrays. Right now, support for typedefed arrays is
-in. Still needs testing.
-</LI>
+Added support for Arrays. Right now, support for typedefed arrays is in.
+Still needs testing.</LI>
+
 <LI>
-Added support for TIE classes. If the interfaces are defined inside
-modules, then the TIE class and its code gets generated inside a
-conditional macro. For platforms that support namespaces, this macro
-will allow these TIE classes else they get commented out. The reason
-to do this is because nested templates have problems on most compilers.
-</LI>
+Added support for TIE classes. If the interfaces are defined inside modules,
+then the TIE class and its code gets generated inside a conditional macro.
+For platforms that support namespaces, this macro will allow these TIE
+classes else they get commented out. The reason to do this is because nested
+templates have problems on most compilers.</LI>
 
 <LI>
 The &lt;&lt;= and >>= operators for user-defined types are now generated.</LI>
@@ -226,14 +215,14 @@ name of an extra include file were the macro is defined; the options are
 <TT>-Wp,export_macro=MACRO_NAME</TT> <TT>-Wp,export_include=INCLUDE_NAME</TT>.</LI>
 
 <LI>
-The IDL compiler generates now source code for sequences. The user has now the option
-to use these generated sequence classes or to use, as up to now, the template
-instatiation. If TAO_LACKS_TEMPLATE_SPECIALIZATION is defined, then
-template instantiation will be used, else not. The reason for this was, that
-some C++ compilers did not support template instantiation properly and
-sequences were based on templates. The generated source code is mainly
-contained in the generated header file directly in the class declaration.</LI>
-
+The IDL compiler generates now source code for sequences. The user has
+now the option to use these generated sequence classes or to use, as up
+to now, the template instatiation. If TAO_LACKS_TEMPLATE_SPECIALIZATION
+is defined, then template instantiation will be used, else not. The reason
+for this was, that some C++ compilers did not support template instantiation
+properly and sequences were based on templates. The generated source code
+is mainly contained in the generated header file directly in the class
+declaration.</LI>
 </UL>
 Known bugs/unimplemented constructs:
 <UL>
@@ -299,17 +288,16 @@ of size/performance/determinism will be made.
 <LI>
 Tweak the IDL compiler to generate code that's more easily integrated back
 into the ORB Core, e.g., POA, etc. This will depend largely on our ability
-to generalize the changes necessary to generated code.</LI><P>
+to generalize the changes necessary to generated code.</LI>
 </UL>
 
 <LI>
 The generated sequence classes should not be generated per sequence, but
-per type and parent scope. Which means, that the overhead of having
-the source code generated serveral times should be reduced. To do this,
-an extra pass over the internal representation of the IDL file has to
-be done.
+per type and parent scope. Which means, that the overhead of having the
+source code generated serveral times should be reduced. To do this, an
+extra pass over the internal representation of the IDL file has to be done.&nbsp;
+<HR></LI>
 
-<HR>
 <H3>
 <A NAME="poa"></A>Portable Object Adapter</H3>
 Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyarali</A>
@@ -380,31 +368,43 @@ Naming Service Specification</A>.
 <A NAME="tservices"></A>CORBA Trading Service</H3>
 Point of contact: <A HREF="mailto:sbw1@cs.wustl.edu">Seth Widoff</A>
 
-<P>
-      The TAO Trading Service is a transient implementation of the COS
-      Trading Service speficiation that meets the Linked Trader
-      conformance criteria --- it implements the <tt>Lookup</tt>,
-      <tt>Register</tt>, <tt>Admin</tt>, and <tt>Link</tt> interfaces,
-      but not the <tt>Proxy</tt> interface. Notably, the TAO trader
-      supports the following features:
-<ul>
-      <li> Multithreaded operation;
-      <li> Trader federations and distributed queries;
-      <li> Dynamic properties;
-      <li> Modifiable properties;
-      <li> All policies described in the specification;
-      <li> Preference sorting;
-      <li> Service type inheritance hierarchies and subtype searching.
-</ul>
+<P>The TAO Trading Service is a transient implementation of the COS Trading
+Service speficiation that meets the Linked Trader conformance criteria
+--- it implements the <TT>Lookup</TT>, <TT>Register</TT>, <TT>Admin</TT>,
+and <TT>Link</TT> interfaces, but not the <TT>Proxy</TT> interface. Notably,
+the TAO trader supports the following features:
+<UL>
+<LI>
+Multithreaded operation;</LI>
 
-<a href="trader.html">Trading Service documentation</a> is also available.
+<LI>
+Trader federations and distributed queries;</LI>
+
+<LI>
+Dynamic properties;</LI>
+
+<LI>
+Modifiable properties;</LI>
+
+<LI>
+All policies described in the specification;</LI>
+
+<LI>
+Preference sorting;</LI>
+
+<LI>
+Service type inheritance hierarchies and subtype searching.</LI>
+</UL>
+<A HREF="trader.html">Trading Service documentation</A> is also available.
 
 <P>Future Work:
 <UL>
-<LI>The Proxy Interface.</LI>
-<LI>Persistent storage of service types and offers.</LI>
-</UL>
+<LI>
+The Proxy Interface.</LI>
 
+<LI>
+Persistent storage of service types and offers.</LI>
+</UL>
 For general documentation of the Trading Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#trader">The
 Trading Service Specification.</A>
 
@@ -426,48 +426,80 @@ Property Service Specification.</A>
 
 <P>
 <HR>
-<H3><A NAME="implrepo">Implementation Repository</A></H3>
+<H3>
+<A NAME="implrepo"></A>Implementation Repository</H3>
 Point of contact: <A HREF="mailto:brunsch@cs.wustl.edu">Darrell Brunsch</A>
 
-<P>Current status (as of July 23, 1998)</P>
+<P>Current status (as of July 23, 1998)
 
-<P>Here is a brief list of my goals (and the dates completed).  For more
+<P>Here is a brief list of my goals (and the dates completed). For more
 information, please see the <A HREF="../implrepo.html">Implementation Repository
-documentation</A>.</P>
-
+documentation</A>.
 <UL>
-  <LI>Create the base test client and server programs [7/17]
-  <LI>Add an IR that forwards server requests [7/23]
-  <LI>Have the server register its IOR with the IR
-  <LI>Have the server exit after every call, so it is restarted each time
-  <LI>Add the ping object to the server
-  <LI>Add in shutdown calls to test ping objects
-  <LI>Change IOR format
-  <LI>Add in support for server names
-  <LI>Make the IR forward any request
-  <LI>Add another server
+<LI>
+Create the base test client and server programs [7/17]</LI>
+
+<LI>
+Add an IR that forwards server requests [7/23]</LI>
+
+<LI>
+Have the server register its IOR with the IR</LI>
+
+<LI>
+Have the server exit after every call, so it is restarted each time</LI>
+
+<LI>
+Add the ping object to the server</LI>
+
+<LI>
+Add in shutdown calls to test ping objects</LI>
+
+<LI>
+Change IOR format</LI>
+
+<LI>
+Add in support for server names</LI>
+
+<LI>
+Make the IR forward any request</LI>
+
+<LI>
+Add another server</LI>
 </UL>
-
-<P>Other goals:</P>
-
+Other goals:
 <UL>
-  <LI>Implement the IDL Interface for the IR
-  <LI>Move this stuff into the POA
-  <LI>Multiple Profiles
-  <LI>POA extension
-  <LI>Persistence
+<LI>
+Implement the IDL Interface for the IR</LI>
+
+<LI>
+Move this stuff into the POA</LI>
+
+<LI>
+Multiple Profiles</LI>
+
+<LI>
+POA extension</LI>
+
+<LI>
+Persistence</LI>
 </UL>
-
-<P>Future Goals:</P>
-
+Future Goals:
 <UL>
-  <LI>TAO client-side optimization with restarted servers
-  <LI>Server security (checksums)
-  <LI>Helper Application
-  <LI>Federation of IRs
-  <LI>DLLs
-</UL>
+<LI>
+TAO client-side optimization with restarted servers</LI>
 
+<LI>
+Server security (checksums)</LI>
+
+<LI>
+Helper Application</LI>
+
+<LI>
+Federation of IRs</LI>
+
+<LI>
+DLLs</LI>
+</UL>
 
 <HR>
 <H3>
@@ -477,9 +509,8 @@ Point of contact: <A HREF="mailto:tworm@cs.wustl.edu">Torben Worm</A>
 <P>Current status (as of May 3rd):
 <UL>
 <LI>
-A simple version of the concurrency service has been implemented,
-i.e. a version without transactions. It is currently being
-tested.</LI>
+A simple version of the concurrency service has been implemented, i.e.
+a version without transactions. It is currently being tested.</LI>
 </UL>
 Future Work:
 <UL>
@@ -493,6 +524,23 @@ Control Service Specification.</A>
 <P>
 <HR>
 <H3>
+<A NAME="logging"></A>CORBA Logging Service</H3>
+Point of contact:&nbsp; <A HREF="mailto:mjb2@cs.wustl.edu">Matt Braun</A>
+
+<P>Current status (as of August 4'th):
+<UL>
+<LI>
+The basic logging service has been implemented. It can log basic messages
+from multiple clients. It is currently in the testing stage.</LI>
+</UL>
+Future work:
+<UL>
+<LI>
+&nbsp;Add increased functionality. Requests and suggestions are welcome.</LI>
+</UL>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<HR WIDTH="100%">
+<H3>
 <A NAME="av"></A>CORBA Audio/Video Control Service</H3>
 Point of contact: <A HREF="mailto:sumedh@cs.wustl.edu">Sumedh Mungee</A>
 and <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
@@ -501,9 +549,9 @@ and <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
 and Management of Audio/Video Streams</A>.
 
 <P>The audio/video streaming service has been implemented in the light
-profile. An MPEG-1 application which streams mpeg-1 video and mpeg-1
-audio separately has been developed using the service. This
-application currently works only for Unix platforms.
+profile. An MPEG-1 application which streams mpeg-1 video and mpeg-1 audio
+separately has been developed using the service. This application currently
+works only for Unix platforms.
 
 <P>Current Status:
 <UL>
@@ -520,20 +568,17 @@ Implemented the VDev and StreamEndPoint base class functionality.</LI>
 <LI>
 Implemented the MMDevice interface, which is a factory for StreamEndPoint
 and VDev objects.</LI>
+
 <LI>
-    Implemented a mpeg-1 streaming audio/video application using the
-    a/v service.
-</LI>
+Implemented a mpeg-1 streaming audio/video application using the a/v service.</LI>
 </UL>
 Work in progress:
 <UL>
 <LI>
 Implementing the SFP protocol</LI>
-<LI>
-    Integrating the mpeg-1 streaming application with the trading
-    service.
-</LI>
 
+<LI>
+Integrating the mpeg-1 streaming application with the trading service.</LI>
 </UL>
 
 <HR>
@@ -697,37 +742,35 @@ of type CORBA::Any and the DOVE MIB has no notion of what is conveyed in
 this field. So the DOVE MIB has to discover the content via the embedded
 type code information. Future work includes:
 <UL>
-<LI>Enhancing MIB functionality</LI>
-<LI>Monitoring the AV Streaming Service</LI>
+<LI>
+Enhancing MIB functionality</LI>
+
+<LI>
+Monitoring the AV Streaming Service</LI>
 </UL>
 
-<P>
 <HR>
 <H3>
 <A NAME="forwarding"></A>Location forwarding</H3>
 Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyarali</A>,
 <A HREF="mailto:mk1@mk1.wustl.edu">Michael Kircher</A>.
-<P>
-For more information see <A HREF="../forwarding.html">Location forwarding</A>
 
+<P>For more information see <A HREF="../forwarding.html">Location forwarding</A>&nbsp;
 <HR>
-<P>
 <H3>
 <A NAME="leader"></A>Global resources and leader-follower model</H3>
 Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyarali</A>,
 <A HREF="mailto:mk1@mk1.wustl.edu">Michael Kircher</A>.
-<P>
-For more information see <A HREF="../leader_follower.html">Leader-follower model</A>
-<HR>
 
-<P>
+<P>For more information see <A HREF="../leader_follower.html">Leader-follower
+model</A>&nbsp;
+<HR>
 <H3>
 <A NAME="locate"></A>Implementation of locate request</H3>
 Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyarali</A>,
 <A HREF="mailto:mk1@mk1.wustl.edu">Michael Kircher</A>.
-<P>
-For more information see <A HREF="../locate_request.html">Locate request</A>
 
+<P>For more information see <A HREF="../locate_request.html">Locate request</A>&nbsp;
 <HR>
 
 <P>Back to the TAO <A HREF="../index.html">documentation index</A>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
