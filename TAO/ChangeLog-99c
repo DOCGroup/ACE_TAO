@@ -1,3 +1,16 @@
+Thu May 06 14:34:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/tao_idl_static.dsp:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added the new files that support OBV.
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Added missing idl files CosTradingRepos.idl,
+	  CosTradingDynamic.idl and some new EC files too.
+
 Thu May  6 12:11:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Many thanks and kudos to Torsten Kuepper

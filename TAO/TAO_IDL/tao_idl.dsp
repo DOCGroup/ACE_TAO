@@ -18,14 +18,17 @@ CFG=TAO_IDL Compiler - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TAO_IDL Compiler - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "TAO_IDL Compiler - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "TAO_IDL Compiler - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "TAO_IDL Compiler - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "TAO_IDL Compiler - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "TAO_IDL Compiler - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "TAO_IDL Compiler - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Console Application")
+!MESSAGE "TAO_IDL Compiler - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -17823,6 +17826,36 @@ NODEP_CPP_BE_UNIO=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_valuetype.cpp
+
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_valuetype_fwd.cpp
+
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor.cpp
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
@@ -25998,6 +26031,36 @@ NODEP_CPP_BE_VISITOR_UN=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_valuetype.cpp
+
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_valuetype_fwd.cpp
+
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\driver\drv_args.cpp
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
@@ -32763,6 +32826,14 @@ SOURCE=.\be_include\be_union_label.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_valuetype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_valuetype_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor.h
 # End Source File
 # Begin Source File
@@ -32852,6 +32923,14 @@ SOURCE=.\be_include\be_visitor_union.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_valuetype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_valuetype_fwd.h
 # End Source File
 # Begin Source File
 
