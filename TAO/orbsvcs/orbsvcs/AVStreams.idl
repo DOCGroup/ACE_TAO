@@ -48,7 +48,7 @@ module AVStreams
   // List of protocols supported protocol names registered by OMG.
   // e.g., TCP, UDP, AAL5, IPX, RTP
 
-  typedef sequence<octet> encryption_key;
+  typedef sequence<octet> key;
   // Used as a key for public-key encryption
 
   struct SFPStatus
@@ -146,11 +146,11 @@ module AVStreams
 
       // = Empty flowSpec => apply operation to all flows
       void stop (in flowSpec the_spec) raises (noSuchFlow);
-      // Stop the transfer of data of the stream Empty the_spec means
+      // Stop the transfer of data of the stream.Empty the_spec means
       // apply operation to all flows.
       
       void start (in flowSpec the_spec) raises (noSuchFlow);
-      // Start the transfer of data in the stream.  Empty the_spec
+      // Start the transfer of data in the stream. Empty the_spec
       // means apply operation to all flows.
       
       void destroy (in flowSpec the_spec) raises (noSuchFlow);
@@ -355,7 +355,7 @@ module AVStreams
       // Used to "attach" a negotiator to the endpoint.
 
       void set_key (in string flow_name, 
-                    in encryption_key the_key);
+                    in key the_key);
       // Used for public key encryption.
     
       void set_source_id (in long source_id);
@@ -516,4 +516,233 @@ module AVStreams
                 noSuchFlow);
       // Not supported in the light profile, raises notsupported.
     };
+
+  // Define the exceptions.
+  exception protocolNotSupported{};
+  exception formatNotSupported{};
+  exception formatMismatch{};
+  exception FEPMismatch{};
+  exception alreadyConnected{};
+  exception invalidSettings{string settings;};
+  exception notConnected{};
+  exception deviceQosMismatch{};
+  exception failedToConnect{string reason;};
+  exception failedToListen{string reason;};
+
+  // Forward declarations of the interfaces.
+  interface FlowProducer;
+  interface FlowConsumer;
+  interface FlowEndPoint;
+  interface FDev;
+
+  interface FlowConnection : CosPropertyService::PropertySet{
+    void stop();
+    void start();
+    void destroy();
+
+    boolean modify_QoS(inout AVStreams::QoS new_qos)
+      raises (AVStreams::QoSRequestFailed);
+
+    boolean use_flow_protocol(in string fp_name,
+                              in any fp_settings)
+      raises (AVStreams::FPError, AVStreams::notSupported);
+
+    oneway void push_event(in AVStreams::streamEvent the_event);
+
+    boolean connect_devs(in FDev a_party, in FDev b_party,
+                         inout AVStreams::QoS the_qos)
+      raises (AVStreams::streamOpFailed, 
+              AVStreams::streamOpDenied, 
+              AVStreams::QoSRequestFailed);
+
+    boolean connect(in FlowProducer flow_producer,
+                    in FlowConsumer flow_consumer,
+                    inout AVStreams::QoS the_qos)
+      raises (formatMismatch, FEPMismatch, alreadyConnected);
+
+    boolean disconnect();
+
+    // The notSupported exception is raised where
+    // flow cannot have multiple producers
+    boolean add_producer(in FlowProducer flow_producer,
+                         inout AVStreams::QoS the_qos)
+      raises (alreadyConnected, AVStreams::notSupported);
+
+    boolean add_consumer(in FlowConsumer flow_consumer,
+                         inout AVStreams::QoS the_qos)
+      raises (alreadyConnected);
+
+    boolean drop(in FlowEndPoint target)
+      raises (notConnected);
+  };
+
+  interface FlowEndPoint : CosPropertyService::PropertySet
+    {
+      boolean lock();
+      void unlock();
+
+      void stop();
+      void start();
+      void destroy();
+
+      // Default is a nil object reference
+      attribute AVStreams::StreamEndPoint related_sep;
+      attribute FlowConnection related_flow_connection;
+
+      FlowEndPoint get_connected_fep()
+        raises (notConnected,AVStreams::notSupported);
+
+      // syntax of fp_name is <flowProtocol>
+      boolean use_flow_protocol(in string fp_name,
+                                in any fp_settings)
+        raises (AVStreams::FPError, AVStreams::notSupported);
+
+      // set_format() initializes ÅÎformatÅÌ 
+      // as current media format e.g. MPEG.
+      void set_format(in string format)
+        raises (AVStreams::notSupported);
+
+      void set_dev_params(in CosPropertyService::Properties new_settings)
+        raises (CosPropertyService::PropertyException, AVStreams::streamOpFailed);
+
+      void set_protocol_restriction(in AVStreams::protocolSpec the_spec)
+        raises (AVStreams::notSupported);
+
+      boolean is_fep_compatible(in FlowEndPoint fep) 
+        raises (formatMismatch, deviceQosMismatch);
+
+      boolean set_peer(in FlowConnection the_fc,
+                       in FlowEndPoint the_peer_fep,
+                       inout AVStreams::QoS the_qos)
+        raises (AVStreams::QoSRequestFailed,
+                AVStreams::streamOpFailed);
+
+      boolean set_Mcast_peer(in FlowConnection the_fc,
+                             in AVStreams::MCastConfigIf a_mcastconfigif,
+                             inout AVStreams::QoS the_qos)
+        raises (AVStreams::QoSRequestFailed);
+    };
+
+  interface FlowProducer : FlowEndPoint
+    {
+
+      boolean connect_to_peer(inout AVStreams::QoS the_qos,
+                              in string address,
+                              in string use_flow_protocol) // syntax <flowProtocol>
+        raises(failedToConnect,AVStreams::FPError, AVStreams::QoSRequestFailed);
+
+      string connect_mcast(inout AVStreams::QoS the_qos,
+                           out boolean is_met,
+                           in string address,
+                           in string use_flow_protocol)
+        raises (failedToConnect,
+		AVStreams::notSupported,
+		AVStreams::FPError,
+		AVStreams::QoSRequestFailed);
+
+      string get_rev_channel(in string pcol_name);
+
+      void set_key(in AVStreams::key the_key);
+      void set_source_id(in long source_id);
+    };
+
+  interface FlowConsumer : FlowEndPoint
+    {
+
+      // Needs to know its peer to choose its protocol correctly
+      // Also to ask for a reverse channel for credit-based flow
+      // control, if one is required
+      string go_to_listen(inout AVStreams::QoS the_qos,
+                          in boolean is_mcast,
+                          in FlowProducer peer,
+                          inout string flowProtocol)// syntax <flowProtocol>
+        raises(failedToListen, AVStreams::FPError, 
+               AVStreams::QoSRequestFailed);
+    };
+
+  interface FDev : CosPropertyService::PropertySet {
+    FlowProducer create_producer(in FlowConnection the_requester,
+                                 inout AVStreams::QoS the_qos,
+                                 out boolean met_qos,
+                                 inout string named_fdev)
+      raises(AVStreams::streamOpFailed,
+             AVStreams::streamOpDenied,
+             AVStreams::notSupported,
+             AVStreams::QoSRequestFailed);
+
+    FlowConsumer create_consumer(in FlowConnection the_requester,
+                                 inout AVStreams::QoS the_qos,
+                                 out boolean met_qos,
+                                 inout string named_fdev)
+      raises(AVStreams::streamOpFailed,
+             AVStreams::streamOpDenied,
+             AVStreams::notSupported,
+             AVStreams::QoSRequestFailed);
+
+    FlowConnection bind(in FDev peer_device,
+                        inout AVStreams::QoS the_qos,
+                        out boolean is_met)
+      raises (AVStreams::streamOpFailed,
+              AVStreams::QoSRequestFailed);
+
+    FlowConnection bind_mcast(in FDev first_peer,
+                              inout AVStreams::QoS the_qos,
+                              out boolean is_met)
+      raises (AVStreams::streamOpFailed,
+              AVStreams::QoSRequestFailed);
+
+    void destroy(in FlowEndPoint the_ep, in string fdev_name)
+      // ie FDev not found
+      raises (AVStreams::notSupported);
+  };
+
+  enum PositionOrigin {
+    AbsolutePosition, RelativePosition, ModuloPosition
+  };
+
+  enum PositionKey {
+    ByteCount, SampleCount, MediaTime
+  };
+
+  struct Position {
+    PositionOrigin origin;
+    PositionKey key;
+    long value;
+  };
+
+  exception PostionKeyNotSupported { PositionKey key;};
+  exception InvalidPosition { PositionKey key;};
+
+  // MediaControl interface is similar to
+  // ControlledStream interface in MSS.
+  // It can be inherited by flow endpoints or
+  // FlowConnection interfaces.
+  interface MediaControl{
+
+    exception PostionKeyNotSupported { PositionKey key;};
+
+    Position get_media_position(in PositionOrigin an_origin,
+                                in PositionKey a_key)
+      raises (PostionKeyNotSupported);
+
+    void set_media_position(in Position a_position)
+      raises (PostionKeyNotSupported, InvalidPosition);
+
+    void start(in Position a_position)
+      raises(InvalidPosition);
+    void pause(in Position a_position)
+      raises(InvalidPosition);
+    void resume(in Position a_position)
+      raises(InvalidPosition);
+    void stop(in Position a_position)
+      raises(InvalidPosition);
+  };
+
+// Additional sequences needed for the properties.
+
+typedef sequence<FlowConnection> FlowConnection_seq;
+typedef sequence<StreamEndPoint_A> StreamEndPoint_A_seq;
+typedef sequence<StreamEndPoint_B> StreamEndPoint_B_seq;
+typedef sequence<FlowEndPoint> FlowEndPoint_seq;
 };
+
