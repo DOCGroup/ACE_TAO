@@ -153,12 +153,14 @@ Receiver::open (ACE_HANDLE handle,
                                                   0,
                                                   ACE_INVALID_HANDLE);
       
+      size_t bytes_transferred = message_block.length ();
+      
       // <complete> for Accept would have already moved the <wr_ptr>
       // forward. Update it to the beginning position.
-      duplicate.wr_ptr (-message_block.length ());
+      duplicate.wr_ptr (-bytes_transferred);
       
       // This will call the callback.
-      fake_result.complete (message_block.length (), 1, 0);
+      fake_result.complete (bytes_transferred, 1, 0);
     }
   else 
     // Otherwise, make sure we proceed. Initiate reading the
