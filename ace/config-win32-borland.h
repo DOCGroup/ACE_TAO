@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
-// $Id config-win32-borland.h,v 4.14 1999/09/18 23:48:56 parsons Exp $
+// -*- C++ -*-
+// $Id$
 
 // The following configuration file contains the defines
 // common to all Borland compilers.  Do not include this file directly
@@ -159,6 +159,11 @@
 #     if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
 #       undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #     endif /* defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR) */
+
+      /* previously defined for MSVC */
+#     if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
+#       undef ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
+#     endif /* defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST) */
 
       /* previously defined for MSVC */
 #     if defined (ACE_AUTO_PTR_LACKS_RESET)
