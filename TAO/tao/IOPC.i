@@ -2922,6 +2922,33 @@ IOP::Codec::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -3096,6 +3123,33 @@ IOP::Encoding_var::ptr (void) const
 ACE_INLINE
 CORBA::Boolean
 IOP::CodecFactory::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }

@@ -3002,16 +3002,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Policy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<CORBA::Policy,CORBA::Policy_var>;
@@ -3066,30 +3056,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyManager>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyManager>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyManager>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<CORBA::PolicyManager,CORBA::PolicyManager_var>;
@@ -3142,30 +3108,6 @@ operator>>= (
         CORBA::_tc_PolicyCurrent,
         _tao_elem
       );
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyCurrent>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyCurrent>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyCurrent>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

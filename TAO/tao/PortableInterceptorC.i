@@ -33,6 +33,33 @@ PortableInterceptor::Interceptor::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Interceptor>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Interceptor>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -44,6 +71,33 @@ PortableInterceptor::Interceptor::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 PortableInterceptor::Current::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Current>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Current>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
@@ -63,6 +117,33 @@ PortableInterceptor::RequestInfo::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -74,6 +155,33 @@ PortableInterceptor::RequestInfo::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 PortableInterceptor::ClientRequestInfo::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
@@ -93,6 +201,33 @@ PortableInterceptor::ServerRequestInfo::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -104,6 +239,33 @@ PortableInterceptor::ServerRequestInfo::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 PortableInterceptor::ClientRequestInterceptor::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
@@ -123,6 +285,33 @@ PortableInterceptor::ServerRequestInterceptor::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -134,6 +323,33 @@ PortableInterceptor::ServerRequestInterceptor::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 PortableInterceptor::IORInfo::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInfo>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInfo>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
@@ -153,6 +369,33 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -164,6 +407,33 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 PortableInterceptor::PolicyFactory::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
@@ -183,6 +453,33 @@ PortableInterceptor::ORBInitInfo::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -194,6 +491,33 @@ PortableInterceptor::ORBInitInfo::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 PortableInterceptor::ORBInitializer::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }

@@ -37,6 +37,18 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_static_repository_id ()
   return "IDL:omg.org/PortableInterceptor/ObjectReferenceFactory:1.0";
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>::to_value (
+    CORBA::ValueBase *&_tao_elem
+  ) const
+{
+  CORBA::add_ref (this->value_);
+  _tao_elem = this->value_;
+  return 1;
+}
+
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
 

@@ -37,6 +37,7 @@
 #include "StringSeqC.h"
 #include "ValueBase.h"
 #include "Exception.h"
+#include "Any_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

@@ -25,7 +25,6 @@
 
 #include "CurrentC.h"
 #include "tao/Sequence_T.h"
-#include "tao/Any_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -455,30 +454,6 @@ operator>>= (
         CORBA::_tc_Current,
         _tao_elem
       );
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Current>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Current>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Current>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
