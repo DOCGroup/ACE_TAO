@@ -8,7 +8,7 @@ project(Bug_1627_Server): server, iortable {
   }
 }
 
-project(Bug_1627_Client): client {
+project(Bug_1627_Client): taoexe {
   Source_Files {
     TestC.cpp
     client.cpp
