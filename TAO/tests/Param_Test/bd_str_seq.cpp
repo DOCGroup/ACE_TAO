@@ -145,17 +145,10 @@ Test_Bounded_String_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Bounded_String_Sequence::check_validity (CORBA::Request_ptr req)
 {
-#if 0
   CORBA::Environment env;
 
-  Param_Test::Bounded_StrSeq *out, *ret;
-
-  *req->arguments ()->item (2, env)->value () >>= out;
-  *req->result ()->value () >>= ret;
-
-  this->out_ = out;
-  this->ret_ = ret;
-#endif
+  *req->arguments ()->item (2, env)->value () >>= this->out_.out ();
+  *req->result ()->value () >>= this->ret_.out ();
 
   return this->check_validity ();
 }

@@ -137,13 +137,8 @@ Test_Bounded_Short_Sequence::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
 
-  Param_Test::Bounded_Short_Seq *out, *ret;
-
-  *req->arguments ()->item (2, env)->value () >>= out;
-  *req->result ()->value () >>= ret;
-
-  this->out_ = out;
-  this->ret_ = ret;
+  *req->arguments ()->item (2, env)->value () >>= this->out_.out ();
+  *req->result ()->value () >>= this->ret_.out ();
 
   return this->check_validity ();
 }
