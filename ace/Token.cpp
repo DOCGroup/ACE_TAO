@@ -25,13 +25,13 @@ ACE_Token::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, "\nthread = %d", ACE_Thread::self ()));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthread = %d"), ACE_Thread::self ()));
   // @@ Is there a portable way to do this?
   // ACE_DEBUG ((LM_DEBUG, "\nowner_ = %l", (long) this->owner_));
-  ACE_DEBUG ((LM_DEBUG, "\nowner_ addr = %x", &this->owner_));
-  ACE_DEBUG ((LM_DEBUG, "\nwaiters_ = %d", this->waiters_));
-  ACE_DEBUG ((LM_DEBUG, "\nin_use_ = %d", this->in_use_));
-  ACE_DEBUG ((LM_DEBUG, "\nnesting level = %d", this->nesting_level_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nowner_ addr = %x"), &this->owner_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nwaiters_ = %d"), this->waiters_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nin_use_ = %d"), this->in_use_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nnesting level = %d"), this->nesting_level_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
