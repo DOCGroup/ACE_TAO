@@ -196,7 +196,9 @@ public:
 
   /// Return the number of members in the given object group.
   CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group
-                             ACE_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound));
 
   /// Set the POA to use when converting object group references to
   /// ObjectIds.

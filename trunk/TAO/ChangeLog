@@ -1,3 +1,16 @@
+Sun Nov  3 19:13:49 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h
+	  (member_count):
+
+	  Corrected exception specification so that it matches the method
+	  definition's exception specification.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (member_count):
+
+	  Removed extra line (cosmetic change).
+
 Sun Nov  3 16:02:55 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvsc/Makefile.PortableGroup:
