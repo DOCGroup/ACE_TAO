@@ -1,6 +1,6 @@
 // $Id$
 
-#include "common/StrCharStream.h"
+#include "ACEXML/common/StrCharStream.h"
 #include "ace/ACE.h"
 
 ACEXML_StrCharStream::ACEXML_StrCharStream (void)
@@ -77,7 +77,7 @@ ACEXML_StrCharStream::read (ACEXML_Char *str,
   if (this->start_ != 0 &&
       this->ptr_ != this->end_)
     {
-      if (len > this->end_ - this->ptr_)
+      if ((int) len > this->end_ - this->ptr_)
         len = this->end_ - this->ptr_;
 
       ACE_OS_String::strncpy (str, this->ptr_, len);

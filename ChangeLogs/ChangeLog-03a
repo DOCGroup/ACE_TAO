@@ -1,3 +1,9 @@
+Thu May  9 01:07:56 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/StrCharStream.h:
+	* ACEXML/common/StrCharStream.cpp: Fixed Linux compilation
+	  errors.
+
 Thu May 09 00:38:22 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (event_handling): Added a fix for bug
