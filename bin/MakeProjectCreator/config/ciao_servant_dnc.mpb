@@ -9,7 +9,7 @@ project : ciao_component_dnc {
     automatic         = 0
     dependent         = 1
     command           = $(CIAO_ROOT)/bin/cidlc
-    commandflags      = -I$(CIAO_ROOT)/DnC/Core -I$(TAO_ROOT) -I$(TAO_ROOT)/tao --
+    commandflags      = -I$(CIAO_ROOT)/DnC -I$(CIAO_ROOT)/DnC/ciao -I$(TAO_ROOT) -I$(TAO_ROOT)/tao --
     inputext          = .cidl
     source_outputext  = _svnt.cpp
     generic_outputext = E.idl
