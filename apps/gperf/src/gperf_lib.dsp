@@ -40,8 +40,8 @@ CFG=gperf_lib - Win32 Static Debug
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\lib"
-# PROP Intermediate_Dir ".\lib\Release"
+# PROP Output_Dir ".\LIB"
+# PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\lib\gperf.lib"
-# ADD LIB32 /nologo /out:".\lib\gperf.lib"
+# ADD LIB32 /nologo /out:".\gperf.lib"
 
 !ELSEIF  "$(CFG)" == "gperf_lib - Win32 Alpha Debug"
 
@@ -64,8 +64,8 @@ LIB32=link.exe -lib
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\lib"
-# PROP Intermediate_Dir ".\lib\Debug"
+# PROP Output_Dir ".\LIB"
+# PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Z7 /Od /I "..\..\..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /c
@@ -77,7 +77,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\lib\gperfd.lib"
-# ADD LIB32 /nologo /out:".\lib\gperfd.lib"
+# ADD LIB32 /nologo /out:".\gperfd.lib"
 
 !ELSEIF  "$(CFG)" == "gperf_lib - Win32 Release"
 
@@ -89,7 +89,7 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "\DLL\Release"
+# PROP Intermediate_Dir ".\DLL\Release"
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
@@ -103,7 +103,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:".\lib\gperf.lib"
+# ADD LIB32 /nologo /out:".\gperf.lib"
 
 !ELSEIF  "$(CFG)" == "gperf_lib - Win32 Debug"
 
@@ -115,7 +115,7 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "\DLL\Debug"
+# PROP Intermediate_Dir ".\DLL\Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
@@ -129,7 +129,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:".\lib\gperfd.lib"
+# ADD LIB32 /nologo /out:".\gperfd.lib"
 
 !ELSEIF  "$(CFG)" == "gperf_lib - Win32 Static Release"
 
@@ -141,7 +141,7 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "LIB\Release"
+# PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
@@ -156,7 +156,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\lib\gperf.lib"
-# ADD LIB32 /nologo /out:".\lib\gperfs.lib"
+# ADD LIB32 /nologo /out:".\gperfs.lib"
 
 !ELSEIF  "$(CFG)" == "gperf_lib - Win32 Static Debug"
 
@@ -168,7 +168,7 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "LIB\Debug"
+# PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /c
@@ -183,7 +183,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\lib\gperfd.lib"
-# ADD LIB32 /nologo /out:".\lib\gperfsd.lib"
+# ADD LIB32 /nologo /out:".\gperfsd.lib"
 
 !ENDIF 
 
