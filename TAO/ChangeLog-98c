@@ -1,3 +1,24 @@
+Mon Nov 16 17:54:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Fixed Subscription_Module::unsubscribe, the consumer was added
+	  to the type_subscriber list only when it subscribed with
+	  source==0, hence it should be removed from the list in the same
+	  circumstances.
+	  Also fixed the generation of the observers QoS info (in
+	  Consumer_Module::fill_qos), the source only susbscription case
+	  was not working properly.
+	  Thanks to Thomas Venturella <tventurell@mdc.com>
+	  for pointing this out.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	  We also had problems with source only subscriptions here.
+	  Thanks to Thomas Venturella <tventurell@mdc.com>
+	  for pointing this out.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	  Fixed debug message.
+
 Sun Nov 15 09:52:14 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/TypeCode.cpp:

@@ -519,6 +519,9 @@ ACE_EventChannel::~ACE_EventChannel (void)
   ACE_DEBUG ((LM_DEBUG,
               "EC (%t) ACE_EventChannel deleting all modules.\n"));
 
+  // @@ This should go away, it is too late to raise a CORBA
+  // exception, at this point we should only be cleaning up memory,
+  // not sending messages.
   TAO_TRY
     {
       this->destroy (TAO_TRY_ENV);
@@ -1368,7 +1371,9 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos)
           // that we turn conjunctions into disjunctions because
           // correlations could be satisfied by events coming from
           // several remote ECs.
-          if (0 <= type && type <= ACE_ES_EVENT_UNDEFINED)
+          // Notice that <0> is a *not* skipped, otherwise source only
+          // filtering does not work.
+          if (1 <= type && type <= ACE_ES_EVENT_UNDEFINED)
             continue;
 
           // If the dependency is already there we don't add it.
@@ -2701,8 +2706,6 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
   // specified type.  Add the <consumer> to that set.
   Supplier_Iterator iter (all_suppliers_);
 
-  int success = -1;
-
   for (ACE_Push_Supplier_Proxy **proxy = 0;
        iter.next (proxy) != 0;
        iter.advance ())
@@ -2750,8 +2753,6 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
               }
               /* FALLTHROUGH */
             case 1:
-              success = 0;
-
               // Already there.
               break;
             }
@@ -2759,15 +2760,9 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
         }
     }
 
-  // If we failed to find a source, insert this consumer in the
-  // global source subscriber list.
-  // @@ TODO This seems to require that the supplier IDs be unique.
-  if (success == -1)
-    return ACE_ES_Subscription_Info::insert_or_allocate (source_subscribers_,
-                                                         consumer,
-                                                         source);
-
-  return success;
+  return ACE_ES_Subscription_Info::insert_or_allocate (source_subscribers_,
+                                                       consumer,
+                                                       source);
 }
 
 // <consumer> contains information for one type of subscription.
@@ -2819,7 +2814,7 @@ ACE_ES_Subscription_Module::unsubscribe (ACE_ES_Consumer_Rep *consumer)
 
   RtecEventComm::Event &event = consumer->dependency ()->event;
 
-  if (event.header.type != ACE_ES_EVENT_ANY)
+  if (event.header.source == 0)
     {
       // Remove the consumer from the global type-based subscription list.
       ACE_ES_Subscription_Info::remove (type_subscribers_,
