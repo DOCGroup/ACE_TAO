@@ -1,9 +1,0 @@
-#
-# Makefile for building the TAO POA examples
-#
-
-DIRS = FindPOA \
-       NewPOA \
-       RootPOA
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
