@@ -1051,8 +1051,6 @@ Cubit_Client::cube_any (int i,
 
       *ret_any >>= ret_long;
 
-      delete ret_any;
-
       this->call_count_++;
 
       if (TAO_debug_level > 2)
@@ -1074,6 +1072,8 @@ Cubit_Client::cube_any (int i,
 
           this->error_count_++;
         }
+
+      delete ret_any;
     }
   ACE_CATCHANY
     {
@@ -1116,8 +1116,6 @@ Cubit_Client::cube_any_struct (int i,
 
       *ret_any >>= ret_struct;
 
-      delete ret_any;
-
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -1137,6 +1135,8 @@ Cubit_Client::cube_any_struct (int i,
 
           this->error_count_++;
         }
+
+      delete ret_any;
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,19 @@
+Thu Feb 15 13:19:47 2001  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+	  (cube_any, cube_any_struct):
+
+	  Fixed a problem where the result check would always fail since
+	  the Any that owned the result was delete()d too early.  delete()
+	  the Any after the result check.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp
+	  (send_request, receive_request_service_contexts):
+
+	  Sequence buffers to be released by the sequence should be
+	  allocated with the allocbuf() member, not the new() operator.
+	  Corrected the buffer allocations in these methods accordingly.
+
 Thu Feb 15 14:20:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/Makefile:
