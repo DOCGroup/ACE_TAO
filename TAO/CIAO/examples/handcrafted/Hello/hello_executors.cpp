@@ -16,11 +16,12 @@ HelloWorld_Impl::sayhello (const char *username
                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  static const char *fmt = "Hello World message for \n";
+  static const char *fmt = "Hello World message for ";
 
   CORBA::String_var str =
     CORBA::string_alloc (ACE_OS::strlen (fmt) +
-                         ACE_OS::strlen (username));
+                         ACE_OS::strlen (username) +
+                         1);
 
   ACE_OS::strcpy (str.inout (), fmt);
   ACE_OS::strcat (str.inout (), username);

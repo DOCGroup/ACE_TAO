@@ -99,7 +99,7 @@ main (int argc, char *argv[])
         // @@ check is_nil again?
 
         PortableServer::Servant servant =
-          new CIAO_HelloHome_Servant (hellohome);
+          new CIAO_HelloHome_Servant (hellohome, &container);
 
         home = container.install_servant (servant
                                           ACE_ENV_ARG_PARAMETER);

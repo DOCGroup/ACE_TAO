@@ -433,8 +433,10 @@ CIAO_HelloWorld_Servant::get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 ////////////////////////////////////////////////////////////////
 //////////////////// CIAO_HelloHome_Servant ////////////////////
 
-CIAO_HelloHome_Servant::CIAO_HelloHome_Servant (CCM_HelloHome_ptr exe)
-  : executor_ (CCM_HelloHome::_duplicate (exe))
+CIAO_HelloHome_Servant::CIAO_HelloHome_Servant (CCM_HelloHome_ptr exe,
+                                                CIAO::Session_Container *c)
+  : executor_ (CCM_HelloHome::_duplicate (exe)),
+    container_ (c)
 {
 }
 
@@ -463,8 +465,26 @@ CIAO_HelloHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   if (this->executor_.in () == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  // @@@ Must implement this one.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  Components::EnterpriseComponent_var com =
+    this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CCM_HelloWorld_var hw = CCM_HelloWorld::_narrow (com
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  PortableServer::Servant svt = new CIAO_HelloWorld_Servant (hw.in ());
+
+  CORBA::Object_var obj
+    = this->container_->install_servant (svt
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  HelloWorld_var ho = HelloWorld::_narrow (obj
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return ho._retn ();
 }
 
 // Operations for CCMHome interface
@@ -493,4 +513,6 @@ CIAO_HelloHome_Servant::remove_component (Components::CCMObject_ptr comp
   // Removing the object reference?  get the servant from the POA with
   // the objref, and call remove() on the component, deactivate the
   // component, and then remove-ref the servant?
+  this->container_->uninstall (comp
+                               ACE_ENV_ARG_PARAMETER);
 }
