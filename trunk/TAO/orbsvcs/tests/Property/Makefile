@@ -13,7 +13,7 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS)
+LDLIBS = -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Messaging -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 CosProperty_SERVER_OBJS = server.o
 CosProperty_CLIENT_OBJS = client.o
@@ -24,9 +24,6 @@ BIN2 = server client
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Property,$(findstring Property,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Property
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -35,6 +32,11 @@ endif # Property
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+ifeq ($(corba_messaging),1)
+  ifeq (Property,$(findstring Property,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Property
+endif # corba_messaging
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

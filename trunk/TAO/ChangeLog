@@ -1,3 +1,26 @@
+Wed Nov 19 20:09:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Concurrency_Service/Makefile:
+	* orbsvcs/Naming_Service/Makefile:
+	* orbsvcs/Time_Service/Makefile
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+	* orbsvcs/tests/Concurrency/Makefile:
+	* orbsvcs/tests/Property/Makefile:
+	* orbsvcs/tests/Sched_Conf/Makefile:
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* orbsvcs/tests/Time/Makefile:
+
+	  Added TAO_Messaging to the link line. Further made sure that we
+	  don't build these when messaging is disabled.
+
 Wed Nov 19 19:43:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DomainC.cpp:
