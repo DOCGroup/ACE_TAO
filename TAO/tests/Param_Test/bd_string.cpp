@@ -17,7 +17,6 @@
 // ============================================================================
 
 #include "helper.h"
-
 #include "bd_string.h"
 
 ACE_RCSID(Param_Test, bd_string, "$Id$")

@@ -19,9 +19,8 @@
 #if !defined (RESULTS_H)
 #define RESULTS_H
 
-#include "ace/Profile_Timer.h"
-#include "ace/Log_Msg.h"
 #include "tao/corba.h"
+#include "ace/Profile_Timer.h"
 
 class Results
 {

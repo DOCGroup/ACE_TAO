@@ -21,10 +21,6 @@
 #define DRIVER_H
 
 #include "options.h"
-#include "results.h"
-#include "client.h"
-#include "tests.h"
-#include "ace/Get_Opt.h"
 
 class Driver
 {

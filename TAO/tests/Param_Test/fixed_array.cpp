@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "fixed_array.h"
 
 ACE_RCSID(Param_Test, fixed_array, "$Id$")
