@@ -3,13 +3,6 @@
 // $Id$
 
 
-ACE_INLINE TAO_Transport *
-TAO_SSLIOP_Connection_Handler::transport (void)
-{
-  return &(this->transport_);
-}
-
-
 ACE_INLINE
 TAO_SSL_State_Guard::TAO_SSL_State_Guard (
   TAO_SSLIOP_Connection_Handler *handler,
