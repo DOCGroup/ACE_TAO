@@ -1,11 +1,20 @@
+Wed Oct 10 17:12:04 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp :
+	  Fixed backward compatibility for the multicast services when the
+	  ORBNameServicePort is used.
+
+	  Thanks to Jeffrey Wilder <jwilder@dsrnet.com> for pointing this
+	  out.
+
 Tue Oct  9 17:46:07 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.h: 
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp: 
-	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp: 
+	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.h:
+	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
 
 	  Added missing $Id$. This will fix the FUZZ build.
-	
+
 Tue Oct 09 14:00:46 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
