@@ -254,21 +254,6 @@ dnl line, then "no_x" is set to "yes."
   ])
 AM_CONDITIONAL(COMPILE_GPERF, test X$ace_user_with_gperf = Xyes)
 
- AC_ARG_WITH(orbix,
-  [  --with-orbix[=DIR]      compile ACE with Orbix          [default=no]],
-  [
-   case "${withval}" in
-    yes)
-      AC_MSG_WARN(Orbix configure support not implemented yet.)
-      ;;
-    no)
-      ;;
-    *)
-      AC_MSG_WARN(Orbix configure support not implemented yet.)
-      ;;
-   esac
-  ],)
-
 #AC_ARG_WITH(tao,
 #              [  --with-tao              build TAO (the ACE ORB)         [default=yes]],
 #              [

@@ -447,8 +447,6 @@ group TOKEN_INCLUDES =
   "Token_Request_Reply.h"
 
 group OTHER_FILES =
-  "CORBA_Handler.cpp",
-  "CORBA_Ref.cpp",
   "Local_Name_Space.cpp",
   "Name_Proxy.cpp",
   "Name_Request_Reply.cpp",
@@ -458,8 +456,6 @@ group OTHER_FILES =
   "Remote_Name_Space.cpp"
 
 group OTHER_INCLUDES =
-  "CORBA_Handler.h",
-  "CORBA_Ref.h",
   "Local_Name_Space.h",
   "Name_Proxy.h",
   "Name_Request_Reply.h",

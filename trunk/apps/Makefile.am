@@ -27,7 +27,6 @@ endif
 SUBDIRS = $(GPERF_DIR)
 ## SUBDIRS = Gateway \
 ##           JAWS \
-##           Orbix-Examples \
 ##           gperf
 
 ## EXTRA_DIST = README

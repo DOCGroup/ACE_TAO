@@ -41,8 +41,6 @@ OBJFILES = \
 	$(OBJDIR)\Configuration.obj \
 	$(OBJDIR)\Configuration_Import_Export.obj \
 	$(OBJDIR)\Containers.obj \
-	$(OBJDIR)\CORBA_Handler.obj \
-	$(OBJDIR)\CORBA_Ref.obj \
 	$(OBJDIR)\Date_Time.obj \
 	$(OBJDIR)\DEV.obj \
 	$(OBJDIR)\DEV_Addr.obj \
@@ -245,7 +243,6 @@ INCLUDES = \
 	Unbounded_Queue.cpp \
 	Auto_Ptr.cpp \
 	Connector.cpp \
-	CORBA_Ref.cpp \
 	Dynamic_Service.cpp \
 	Free_List.cpp \
 	Future.cpp \

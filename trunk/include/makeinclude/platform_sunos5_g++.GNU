@@ -1,6 +1,6 @@
 # $Id$
 
-# SunOS 5.x (Solaris 2.x) with g++ *not* using Orbix
+# SunOS 5.x (Solaris 2.x) with g++
 
 # NOTE: with g++ 2.8.0, you'll need to disable optimization in order to
 #       instantiate ACE_Map_Manager (ace/Map_Manager.cpp).  The easiest

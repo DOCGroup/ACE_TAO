@@ -7,8 +7,7 @@ and communication mechanisms.
           mechanisms.
 
         . TTCP -- Implements several variants of the TTCP benchmarking
-          test for TCP and UCP using C sockets, ACE C++ wrappers, and
-          several versions of CORBA (Orbix and ORBeline).
+          test for TCP and UCP using C sockets and ACE C++ wrappers.
 
         . UDP -- Contains UDP test, which measures UDP round-trip
           performance.

@@ -89,9 +89,7 @@ option
                                               'Connector.h',
                                               'Containers.h',
                                               'Containers_T.h',
-                                              'CORBA_Handler.h',
                                               'CORBA_macros.h',
-                                              'CORBA_Ref.h',
                                               'Date_Time.h',
                                               'DEV.h',
                                               'DEV_Addr.h',
@@ -330,8 +328,6 @@ option
                  source type(cpp) "CDR_Stream.cpp"
                  source type(cpp) "Configuration.cpp"
                  source type(cpp) "Containers.cpp"
-                 source type(cpp) "CORBA_Handler.cpp"
-                 source type(cpp) "CORBA_Ref.cpp"
                  source type(cpp) "Date_Time.cpp"
                  source type(cpp) "DEV.cpp"
                  source type(cpp) "DEV_Addr.cpp"

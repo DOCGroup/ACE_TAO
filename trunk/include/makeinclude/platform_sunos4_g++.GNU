@@ -1,6 +1,6 @@
 # $Id$
 
-# SunOS 4.x (Solaris 1.x) with g++ *not* using Orbix
+# SunOS 4.x (Solaris 1.x) with g++
 
 debug = 1
 optimize = 1

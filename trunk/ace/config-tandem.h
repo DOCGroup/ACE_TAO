@@ -310,10 +310,6 @@
 
 //ACE_HAS_OLD_MALLOC                    Compiler/platform uses old malloc()/
 // free() prototypes (ugh)
-#if !defined (ACE_HAS_ORBIX)
-        #define ACE_HAS_ORBIX 0
-#endif
-// ACE_HAS_ORBIX                        Platform has Orbix CORBA implementation
 //? ACE_HAS_POSIX_SEM                   Platform supports POSIX real-time
 //semaphores (e.g., VxWorks and Solaris)
 //Compiler/platform defines a union semun for SysV shared memory

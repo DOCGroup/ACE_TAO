@@ -1,3 +1,120 @@
+Wed Dec  5 12:37:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* Removed all code to support Orbix and any references to it in
+	  the documentation (at least all references that I found).
+	  We haven't tested this code in ages, so it was probably broken,
+	  furthermore, IONA does not sell Orbix-2.X nor Orbix-3.X (the
+	  versions our code was based on), and will probably stop
+	  supporting old versions of Orbix before ACE-5.3 (or 6.0) come
+	  out.
+
+	* ace/Makefile:
+	* ace/Makefile.am:
+	* ace/Makefile.bor:
+	* ace/ace-dll.icc:
+	* ace/ace-lib.icc:
+	* ace/ace.icc:
+	* ace/CORBA_Handler.h:
+	* ace/CORBA_Handler.i:
+	* ace/CORBA_Handler.cpp:
+	* ace/CORBA_Ref.h:
+	* ace/CORBA_Ref.cpp:
+	* ace/config-hpux-9.x-orbix.h:
+	* ace/config-sunos4-sun4.x-orbix.h:
+	* ace/config-sunos5.4-sunc++-4.x-orbix.h:
+	* ace/config-sunos5.x-sunc++-4.x-orbix.h:
+	* apps/Makefile:
+	* apps/Makefile.am:
+	* apps/Orbix-Examples/Makefile:
+	* apps/Orbix-Examples/Event_Comm/Makefile:
+	* apps/Orbix-Examples/Event_Comm/README:
+	* apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.cpp:
+	* apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.h:
+	* apps/Orbix-Examples/Event_Comm/Consumer/Makefile:
+	* apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp:
+	* apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.h:
+	* apps/Orbix-Examples/Event_Comm/Consumer/consumer.cpp:
+	* apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.cpp:
+	* apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.h:
+	* apps/Orbix-Examples/Event_Comm/Supplier/Makefile:
+	* apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.cpp:
+	* apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.h:
+	* apps/Orbix-Examples/Event_Comm/Supplier/supplier.cpp:
+	* apps/Orbix-Examples/Event_Comm/include/Event_Comm.hh:
+	* apps/Orbix-Examples/Event_Comm/include/Event_Comm_i.h:
+	* apps/Orbix-Examples/Event_Comm/include/Notification_Receiver_i.h:
+	* apps/Orbix-Examples/Event_Comm/include/Notifier_i.h:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm.hh:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm.idl:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Event_CommC.cpp:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Event_CommS.cpp:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm_i.h:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Makefile:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notification.idl:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver.idl:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.cpp:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.h:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notifier.idl:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.cpp:
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.h:
+	* apps/Orbix-Examples/Logger/Logger.cpp:
+	* apps/Orbix-Examples/Logger/Logger.h:
+	* apps/Orbix-Examples/Logger/Makefile:
+	* apps/Orbix-Examples/Logger/Orbix.hostgroups:
+	* apps/Orbix-Examples/Logger/Orbix.hosts:
+	* apps/Orbix-Examples/Logger/README:
+	* apps/Orbix-Examples/Logger/a1.tex:
+	* apps/Orbix-Examples/Logger/client.cpp:
+	* apps/Orbix-Examples/Logger/logger.hh:
+	* apps/Orbix-Examples/Logger/logger.idl:
+	* apps/Orbix-Examples/Logger/loggerS.cpp:
+	* apps/Orbix-Examples/Logger/logger_i.cpp:
+	* apps/Orbix-Examples/Logger/logger_i.h:
+	* apps/Orbix-Examples/Logger/server.cpp:
+	* examples/CORBA/Makefile:
+	* examples/CORBA/Test.idl:
+	* examples/CORBA/Test_i.cpp:
+	* examples/CORBA/Test_i.h:
+	* examples/CORBA/client.cpp:
+	* examples/CORBA/server.cpp:
+	* include/makeinclude/platform_hpux_orbix.GNU:
+	* include/makeinclude/platform_sunos4_sunc++4.x_orbix.GNU:
+	* include/makeinclude/platform_sunos5_centerline_orbix.GNU:
+	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU:
+	  Removed examples and classes to support orbix with ACE.
+
+	* ACE-INSTALL.html:
+	* FAQ:
+	* README:
+	* TODO:
+	* acconfig.h:
+	* ace/README:
+	* ace/config-win32-common.h:
+	* apps/README:
+	* ace/config-tandem.h:
+	* docs/ACE-configuration.txt:
+	* include/makeinclude/platform_aix4_cset++.GNU:
+	* include/makeinclude/platform_dgux4_epc.GNU:
+	* include/makeinclude/platform_m88k.GNU:
+	* include/makeinclude/platform_sunos4_g++.GNU:
+	* include/makeinclude/platform_sunos5_g++.GNU:
+	* include/makeinclude/platform_sunos5_kcc.GNU:
+	* include/makeinclude/platform_sunos5_sunc++.GNU:
+	* include/makeinclude/platform_unixware_g++.GNU:
+	* include/makeinclude/platform_unixware_udk.GNU:
+	* include/makeinclude/rules.local.GNU:
+	* include/makeinclude/wrapper_macros.GNU:
+	* m4/ace.m4:
+	* performance-tests/README:
+	* performance-tests/TTCP/C/README:
+	  Files that referenced Orbix support or documented how to use
+	  it.
+
+	* examples/Reactor/Multicast/Log_Wrapper.h:
+	* examples/Reactor/Multicast/Log_Wrapper.cpp:
+	  Fixed documentation, it was referencing Orbix but actually it
+	  uses UDP multicast, looks like a cut&paste error to me.
+
 Wed Dec  5 12:15:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/SString.cpp:

@@ -1,6 +1,6 @@
 # $Id$
 
-# SunOS 5.x (Solaris 2.x) with Sun C++ 4.2 and 5.x, *not* using Orbix.
+# SunOS 5.x (Solaris 2.x) with Sun C++ 4.2 and 5.x
 #
 # NOTE: Sun C++ 5.0 users might need to add this to their CCFLAGS:
 #   -compat=4 and/or remove -instances=explicit.  Please note that
@@ -147,24 +147,6 @@ ifeq (0,$(exceptions))
 endif # ! exceptions
 
 LD              = $(CXX)
-
-ifdef orbix
-  LDFLAGS       += $(PIC) -L$(ORBIX_ROOT)/corba2/lib \
-                   -R $(ACE_ROOT)/ace -R./ -R $(ORBIX_ROOT)/corba2/lib
-ifeq ($(mt_orbix),1)
-  LIBS          += -lITinimt -liiopmt -lorbixmt -lthread
-else
-  LIBS          += -lITini -liiop -lorbix
-endif
-
-  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
-  CPPFLAGS      += -I$(ORBIX_ROOT)/corba2/include
-else
-ifeq ($(distrib),0)
-  LDFLAGS       += -R $(ACE_ROOT)/ace -R./
-endif
-  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
-endif # orbix
 
 ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
         ifeq ($(compat4),1)
