@@ -880,7 +880,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
   return ACE_OS::cond_destroy (&this->cond_);
 }
 
-int
+void
 ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
@@ -890,8 +890,6 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
   // mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-
-  return 0;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
