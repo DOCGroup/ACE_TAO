@@ -1,3 +1,12 @@
+Sat May 31 07:01:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (open): To avoid handle leaks, we need to
+ 	  shutdown the message_queue before trying to reopen it.  Thanks
+ 	  to Per Andersson for this suggestion.
+
+	* include/makeinclude/platform_osf1_4.0.GNU: Added a new platform
+ 	  config file.  Thanks to James Johnson for this.
+
 Fri May 30 16:25:25 1997    <irfan@TWOSTEP>
 
 	* tests/UPIPE_SAP_Test.cpp (connector): Changed the eof marker in
