@@ -2,6 +2,8 @@
 #ifndef CID_HPP
 #define CID_HPP
 
+#include "vc6-4786.h"
+
 // Forward declarations.
 //
 namespace CIAO

@@ -2,6 +2,8 @@
 #ifndef BASIC_DEPLOYMENT_DATA_HPP
 #define BASIC_DEPLOYMENT_DATA_HPP
 
+#include "vc6-4786.h"
+
 // Forward declarations.
 //
 namespace CIAO
