@@ -9,6 +9,9 @@ Thu Mar 27 21:10:59 1997  David L. Levine  <levine@cs.wustl.edu>
 	  set ()'s up, moved arithmetic operators down) so that they are
 	  defined before use.
 
+	* ace/Task_T.cpp: removed ACE_TEMPLATES_REQUIRE_SOURCE around
+	  #include of "ace/Module.h" so that it will build with Sun C++ 4.1.
+
 	* apps/Gateway/Peer/Makefile: added -lGateway to LIBS to
 	  pick up its template instantiations during links.
 
