@@ -727,7 +727,7 @@ ACE_POSIX_Asynch_Result *
 ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
                                                int &return_status)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, 0));
 
   size_t ai;
   ACE_POSIX_Asynch_Result *asynch_result = 0;
@@ -810,7 +810,7 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio
 {
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::register_and_start_aio");
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
 
   int ret_val = (aiocb_list_cur_size_ >= aiocb_list_max_size_) ? -1 : 0;
 

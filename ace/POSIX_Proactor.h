@@ -309,8 +309,10 @@ protected:
   size_t aiocb_list_cur_size_;
   // To maintain the current size of the array (list).
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Thread_Mutex mutex_;
   // Mutex to protect work with lists.
+#endif /* ACE_MT_SAFE */
 };
 
 class ACE_Export ACE_POSIX_SIG_Proactor : public ACE_POSIX_Proactor
