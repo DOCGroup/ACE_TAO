@@ -1,3 +1,9 @@
+Wed Mar  2 12:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/DSI/client.cpp:
+          Added extra debug line to see if the client gets an exception on the
+          destroy_entry or on the shutdown method
+
 Wed Mar  2 11:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.cpp:

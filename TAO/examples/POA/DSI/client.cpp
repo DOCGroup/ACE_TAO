@@ -210,6 +210,8 @@ main (int argc, char **argv)
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      ACE_OS::strcpy (str, "Shutdown server");
+
       if (shutdown_server)
         {
           database_agent->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
