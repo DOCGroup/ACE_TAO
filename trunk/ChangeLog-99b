@@ -1,3 +1,10 @@
+Tue Apr 13 14:17:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp: replaced use of ACE_TSS<T> with ACE_WIN32 or
+          ACE_HAS_TSS_EMULATION with native use of ACE_OS TSS, to remove
+          dependency on ace/Synch.h.  Also, changed ACE_OS::NULL_key to
+          be -1 instead of 0 with ACE_HAS_TSS_EMULATION.
+
 Tue Apr 13 09:05:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Sched_Params.i (ACE_Sched_Priority_Iterator): removed
