@@ -4,6 +4,7 @@
 #include "Single_Lookup.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_Memory.h"
 
 Single_Lookup::Single_Lookup (const char *usr_name)
 {
