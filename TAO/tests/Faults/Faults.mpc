@@ -1,4 +1,4 @@
-project: server, minimum_corba {
+project(Faults Server): server, minimum_corba {
   IDL_Files {
     test.idl
   }
@@ -11,7 +11,7 @@ project: server, minimum_corba {
   }
 }
 
-project(middle): server, minimum_corba {
+project(Faults Middle): server, minimum_corba {
   exename = middle
 
   IDL_Files {
@@ -26,7 +26,7 @@ project(middle): server, minimum_corba {
   }
 }
 
-project(client): server, minimum_corba {
+project(Faults Client): server, minimum_corba {
   exename = client
 
   IDL_Files {
@@ -41,7 +41,7 @@ project(client): server, minimum_corba {
   }
 }
 
-project(ping): server, minimum_corba {
+project(Faults Ping): server, minimum_corba {
   exename = ping
 
   IDL_Files {
@@ -56,7 +56,7 @@ project(ping): server, minimum_corba {
   }
 }
 
-project(pong): server, minimum_corba {
+project(Faults Pong): server, minimum_corba {
   exename = pong
 
   IDL_Files {

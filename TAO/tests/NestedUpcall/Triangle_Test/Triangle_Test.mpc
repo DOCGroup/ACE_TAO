@@ -1,4 +1,4 @@
-project(server_A): server {
+project(Nested Upcall Triangle Test Server_A): server {
   exename = server_A
 
   Source_Files {
@@ -7,7 +7,7 @@ project(server_A): server {
   }
 }
 
-project(server_B): server {
+project(Nested Upcall Triangle Test Server_B): server {
   exename = server_B
 
   Source_Files {
@@ -16,7 +16,7 @@ project(server_B): server {
   }
 }
 
-project(initiator): server {
+project(Nested Upcall Triangle Test Initiator): server {
   exename = initiator
 
   Source_Files {

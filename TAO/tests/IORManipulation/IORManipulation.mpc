@@ -1,4 +1,4 @@
-project(IORManip_test) : taoexe {
+project(IORManipulation IORTest) : taoexe {
   depends += IORManipulation
   libs    += TAO_IORManip
   exename  = IORTest

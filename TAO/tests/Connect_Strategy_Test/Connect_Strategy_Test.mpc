@@ -1,11 +1,11 @@
-project: server {
+project(Connect Strategy Test Server): server {
   Source_Files {
     Hello.cpp
     server.cpp
   }
 }
 
-project: client {
+project(Connect Strategy Test Client): client {
   Source_Files {
     TestC.cpp
     client.cpp

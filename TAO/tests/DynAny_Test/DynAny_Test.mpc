@@ -1,4 +1,4 @@
-project(basic test): server {
+project(DynAny Basic Test): server {
   depends += DynamicAny
   libs    += TAO_DynamicAny
   exename  = basic_test

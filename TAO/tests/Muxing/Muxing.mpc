@@ -1,4 +1,4 @@
-project: server {
+project(Muxing Server): server {
   Source_Files {
     Receiver.cpp
     Server_Task.cpp
@@ -6,7 +6,7 @@ project: server {
   }
 }
 
-project(client): server {
+project(Muxing Client): server {
   exename = client
 
   Source_Files {

@@ -1,4 +1,4 @@
-project: server {
+project(Oneways Invoking Twoways Server): server {
   Source_Files {
     Server_Task.cpp
     Sender_i.cpp
@@ -6,7 +6,7 @@ project: server {
   }
 }
 
-project(client): server {
+project(Oneways Invoking Twoways Client): server {
   exename = client
 
   Source_Files {

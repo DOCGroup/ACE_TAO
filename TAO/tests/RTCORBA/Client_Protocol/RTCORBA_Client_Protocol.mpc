@@ -1,10 +1,10 @@
-project: strategies, rt_server {
+project(RTCORBA Client Protocol Server): strategies, rt_server {
   Source_Files {
     server.cpp
   }
 }
 
-project: strategies, rt_client {
+project(RTCORBA Client Protocol Client): strategies, rt_client {
   Source_Files {
     testC.cpp
     client.cpp

@@ -1,3 +1,120 @@
+Wed Apr 23 09:53:27 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/AMI/AMI.mpc:
+        * tests/AMI_Buffering/AMI_Buffering.mpc:
+        * tests/AMI_Timeouts/AMI_Timeouts.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDirectional_NestedUpcall.mpc:
+        * tests/Big_Oneways/Big_Oneways.mpc:
+        * tests/Big_Reply/Big_Reply.mpc:
+        * tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
+        * tests/Big_Twoways/Big_Twoways.mpc:
+        * tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
+        * tests/CDR/CDR.mpc:
+        * tests/Cache_Growth_Test/Cache_Growth_Test.mpc:
+        * tests/Client_Leaks/Client_Leaks.mpc:
+        * tests/Codec/Codec.mpc:
+        * tests/Collocation/Collocation.mpc:
+        * tests/Connect_Strategy_Test/Connect_Strategy_Test.mpc:
+        * tests/Connection_Purging/Connection_Purging.mpc:
+        * tests/Crash_On_Write/Crash_On_Write.mpc:
+        * tests/Crashed_Callback/Crashed_Callback.mpc:
+        * tests/DLL_ORB/DLL_ORB.mpc:
+        * tests/DSI_Gateway/DSI_Gateway.mpc:
+        * tests/DynAny_Test/DynAny_Test.mpc:
+        * tests/Explicit_Event_Loop/Explicit_Event_Loop.mpc:
+        * tests/Exposed_Policies/Exposed_Policies.mpc:
+        * tests/Faults/Faults.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/Forwarding/Forwarding.mpc:
+        * tests/Hello/Hello.mpc:
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IORManipulation/IORManipulation.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/Leader_Followers/Leader_Followers.mpc:
+        * tests/LongUpcalls/LongUpcalls.mpc:
+        * tests/MProfile/MProfile.mpc:
+        * tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/MT_Client/MT_Client.mpc:
+        * tests/MT_Server/MT_Server.mpc:
+        * tests/MT_Timeout/MT_Timeout.mpc:
+        * tests/Multiple/Multiple.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.mpc:
+        * tests/Muxing/Muxing.mpc:
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * tests/NestedUpcall/Simple/Simple.mpc:
+        * tests/NestedUpcall/Triangle_Test/Triangle_Test.mpc:
+        * tests/Nested_Event_Loop/Nested_Event_Loop.mpc:
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+        * tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/ORB_destroy/ORB_destroy.mpc:
+        * tests/ORB_init/ORB_init.mpc:
+        * tests/ORB_init/Portspan/ORB_Init_Portspan.mpc:
+        * tests/ORB_shutdown/Foo_Bar.mpc:
+        * tests/ORT/ORT.mpc:
+        * tests/Object_Loader/Object_Loader.mpc:
+        * tests/Objref_Sequence_Test/Objref_Sequence_Test.mpc:
+        * tests/OctetSeq/OctetSeq.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
+        * tests/POA/Current/Current.mpc:
+        * tests/POA/Default_Servant/Default_Servant.mpc:
+        * tests/POA/Etherealization/Etherealization.mpc:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * tests/POA/Identity/Identity.mpc:
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+        * tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.mpc:
+        * tests/POA/Object_Reactivation/Object_Reactivation.mpc:
+        * tests/POA/Policies/Policies.mpc:
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.mpc:
+        * tests/POA/wait_for_completion/wait_for_completion.mpc:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Policies/Policies.mpc:
+        * tests/Portable_Interceptors/Benchmark/Portable_Interceptors_Benchmark.mpc:
+        * tests/Portable_Interceptors/Dynamic/Portable_Interceptors_Dynamic.mpc:
+        * tests/Portable_Interceptors/ForwardRequest/Portable_Interceptors_ForwardRequest.mpc:
+        * tests/Portable_Interceptors/IORInterceptor/Portable_Interceptors_IORInterceptor.mpc:
+        * tests/Portable_Interceptors/PICurrent/Portable_Interceptors_PICurrent.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Portable_Interceptors_Request_Interceptor_Flow.mpc:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Portable_Interceptors_Service_Context_Manipulation.mpc:
+        * tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Connections.mpc:
+        * tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc:
+        * tests/RTCORBA/Client_Protocol/RTCORBA_Client_Protocol.mpc:
+        * tests/RTCORBA/Collocation/RTCORBA_Collocation.mpc:
+        * tests/RTCORBA/Destroy_Thread_Pool/RTCORBA_Destroy_Thread_Pool.mpc:
+        * tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+        * tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Protocol_Priority.mpc:
+        * tests/RTCORBA/ORB_init/RTCORBA_ORB_init.mpc:
+        * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * tests/RTCORBA/Policies/Policies.mpc:
+        * tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+        * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+        * tests/RTCORBA/RTMutex/RTCORBA_RTMutex.mpc:
+        * tests/RTCORBA/Server_Declared/RTCORBA_Server_Declared.mpc:
+        * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+        * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * tests/Reliable_Oneways/Reliable_Oneways.mpc:
+        * tests/Server_Leaks/Server_Leaks.mpc:
+        * tests/Single_Read/Single_Read.mpc:
+        * tests/Smart_Proxies/Smart_Proxies.mpc:
+        * tests/Strategies/Strategies.mpc:
+        * tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc:
+        * tests/Timeout/Timeout.mpc:
+        * tests/Two_Objects/Two_Objects.mpc:
+        * tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+
+          Changed the name of these projects to avoid duplicates when
+          generating a vc6 workspace.
+
 Wed Apr 23 12:59:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/OBV/Typed_Events/client.bor:
@@ -23,8 +140,8 @@ Wed Apr 23 12:59:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 23 07:40:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp: Use
-	  .out () instead of a .in (), which seems more meaningful.
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp: Use
+          .out () instead of a .in (), which seems more meaningful.
 
 Wed Apr 23 07:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -34,28 +151,28 @@ Wed Apr 23 07:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 22 21:49:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h:
-	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp: Fixed
-	  non-portable code.
-	* docs/tutorials/Quoter/On_Demand_Activation/Makefile: Updated
-	  dependencies. This should fix errors in a few builds.
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp: Fixed
+          non-portable code.
+        * docs/tutorials/Quoter/On_Demand_Activation/Makefile: Updated
+          dependencies. This should fix errors in a few builds.
 
 Tue Apr 22 21:43:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/AMH_Exceptions/Makefile:
-	* tests/Bug_1482_Regression/Makefile: Fixed dependencies.
+        * tests/AMH_Exceptions/Makefile:
+        * tests/Bug_1482_Regression/Makefile: Fixed dependencies.
 
 Tue Apr 22 21:39:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_interface.cpp: Fixed warnings in g++ builds.
+        * TAO_IDL/be/be_interface.cpp: Fixed warnings in g++ builds.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
-	  Added a .in () operator to the _var variable. Assigning a _var
-	  to a _out is a no-no.
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+          Added a .in () operator to the _var variable. Assigning a _var
+          to a _out is a no-no.
 
 Tue Apr 22 19:33:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RTKokyuEvent.dsp:
+        * orbsvcs/orbsvcs/RTKokyuEvent.dsp:
         * orbsvcs/orbsvcs/RTKokyuEvent.dsw:
         * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
         * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h:
@@ -103,42 +220,42 @@ Tue Apr 22 19:33:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Tue Apr 22 20:15:52 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\RTCorba\Thread_Pool\server.cpp:
+        * performance-tests\RTCorba\Thread_Pool\server.cpp:
 
-	  - Run the orb in a RT thread rather than in the main thread.
-	  Otherwise, the value returned from the_priority() can be
-	  potentially incorrect.
+          - Run the orb in a RT thread rather than in the main thread.
+          Otherwise, the value returned from the_priority() can be
+          potentially incorrect.
 
-	  - Call to fudge_priorities() no longer necessary.
+          - Call to fudge_priorities() no longer necessary.
 
-	  - Added call to check_supported_priorities().
+          - Added call to check_supported_priorities().
 
-	* $ACE_ROOT/bin/tao_orb_tests.lst:
+        * $ACE_ROOT/bin/tao_orb_tests.lst:
 
-	  tests/RTCORBA/Persistent_IOR creates multiple threads - don't
-	  run in single-threaded configurations.
+          tests/RTCORBA/Persistent_IOR creates multiple threads - don't
+          run in single-threaded configurations.
 
 Tue Apr 22 17:20:39 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/TAO.dsp: Fixed warnings that creeped up.
+        * tao/TAO.dsp: Fixed warnings that creeped up.
 
 Tue Apr 22 16:28:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Seq_Out_T.h: Fixed fuzz errors.
+        * tao/Seq_Out_T.h: Fixed fuzz errors.
 
 Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	Merging code from the branch refactor_stage_1. The highlight of
+        Merging code from the branch refactor_stage_1. The highlight of
         this change is the creation and usage of parametric classes for
-	_var's, _out's and the complete removal of generated code if
+        _var's, _out's and the complete removal of generated code if
         TAO_HAS_SEQUENCE_TEMPLATES is not defined. The generated code
         within the ORB ie. $TAO_ROOT/tao still has references to
         TAO_HAS_SEQUENCE_TEMPLATES which needs to be cleaned up in the
         next round.
 
-	For more gory details please see below
+        For more gory details please see below
 
-	Tue Apr 22 10:37:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Tue Apr 22 10:37:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
         * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
@@ -150,7 +267,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           a lower level, via the generated virtual marshal() method
           for interfaces. For the extraction operator, 0 is returned.
 
-	Tue Apr 22 09:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Tue Apr 22 09:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
 
@@ -160,53 +277,53 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         Tue Apr 22 09:10:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Seq_Var_T.cpp: Fixed a wroong inclusion of inlined file.
+        * tao/Seq_Var_T.cpp: Fixed a wroong inclusion of inlined file.
 
         Tue Apr 22 06:30:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* be/be_visitor_sequence/sequence_ch.cpp:
-	* be/be_visitor_sequence/sequence_cs.cpp: Use the new managed type
-	  out classes when the IDL compiler comes across managed types.
+        * be/be_visitor_sequence/sequence_ch.cpp:
+        * be/be_visitor_sequence/sequence_cs.cpp: Use the new managed type
+          out classes when the IDL compiler comes across managed types.
 
-	Tue Apr 22 06:22:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+        Tue Apr 22 06:22:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Seq_Out_T.cpp:
-	* tao/Seq_Out_T.h:
-	* tao/Seq_Out_T.inl:
-	* tao/Seq_Var_T.cpp:
-	* tao/Seq_Var_T.h:
-	* tao/Seq_Var_T.inl: The Var and Out classes for sequences have
-	  been split across two files. The motivation for this change came
-	  around when we had to have a seperate out class for managed
-	  types. This was needed since the operator[] for managed types
-	  had a return type a bit different from regular sequences. Even
-	  with this change, not all of orbsvcs compile.
+        * tao/Seq_Out_T.cpp:
+        * tao/Seq_Out_T.h:
+        * tao/Seq_Out_T.inl:
+        * tao/Seq_Var_T.cpp:
+        * tao/Seq_Var_T.h:
+        * tao/Seq_Var_T.inl: The Var and Out classes for sequences have
+          been split across two files. The motivation for this change came
+          around when we had to have a seperate out class for managed
+          types. This was needed since the operator[] for managed types
+          had a return type a bit different from regular sequences. Even
+          with this change, not all of orbsvcs compile.
 
-	* tao/Array_VarOut_T.h:
-	* tao/DomainC.h:
-	* tao/DynamicC.h:
-	* tao/IIOPC.h:
-	* tao/IOPC.h:
-	* tao/ObjectIdListC.h:
-	* tao/ObjectReferenceTemplateC.h:
-	* tao/Object_KeyC.h:
-	* tao/OctetSeqC.h:
-	* tao/Policy_ForwardC.h:
-	* tao/Sequence_T.h:
-	* tao/StringSeqC.h:
-	* tao/VarOut_T.h:
-	* tao/corba.h:
-	* tao/DynamicAny/DynamicAnyC.h:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IORManipulation/IORC.h:
-	* tao/PortableServer/PortableServerC.h: Replaced existing
-	  inclusions of tao/Seq_varOut_T.h with two inclusions,
-	  viz. tao/Seq_Out_T.h and tao/Seq_Var_T.h.
+        * tao/Array_VarOut_T.h:
+        * tao/DomainC.h:
+        * tao/DynamicC.h:
+        * tao/IIOPC.h:
+        * tao/IOPC.h:
+        * tao/ObjectIdListC.h:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/Object_KeyC.h:
+        * tao/OctetSeqC.h:
+        * tao/Policy_ForwardC.h:
+        * tao/Sequence_T.h:
+        * tao/StringSeqC.h:
+        * tao/VarOut_T.h:
+        * tao/corba.h:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IORManipulation/IORC.h:
+        * tao/PortableServer/PortableServerC.h: Replaced existing
+          inclusions of tao/Seq_varOut_T.h with two inclusions,
+          viz. tao/Seq_Out_T.h and tao/Seq_Var_T.h.
 
-	* tao/Seq_VarOut_T.h:
-	* tao/Seq_VarOut_T.cpp:
-	* tao/Seq_VarOut_T.inl: Removed from the repo.
+        * tao/Seq_VarOut_T.h:
+        * tao/Seq_VarOut_T.cpp:
+        * tao/Seq_VarOut_T.inl: Removed from the repo.
 
         Mon Apr 21 14:09:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -218,30 +335,30 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         Mon Apr 21 13:11:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/AMH_Exceptions/Makefile:
-	* tests/Bug_1482_Regression/Makefile: Updated dependencies.
+        * tests/AMH_Exceptions/Makefile:
+        * tests/Bug_1482_Regression/Makefile: Updated dependencies.
 
-	* tests/OBV/Forward/Test_impl.cpp: Fixed compilation errors with
-	  g++.
+        * tests/OBV/Forward/Test_impl.cpp: Fixed compilation errors with
+          g++.
 
         Mon Apr 21 13:07:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Dont use _slice*
-	  as template parameters for code generation of the _var and
-	  _out.
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Dont use _slice*
+          as template parameters for code generation of the _var and
+          _out.
 
-	* tao/Seq_VarOut_T.h:
-	* tao/Seq_VarOut_T.inl: Made the declarations of the operations to
-	  be compliant with the spec.
+        * tao/Seq_VarOut_T.h:
+        * tao/Seq_VarOut_T.inl: Made the declarations of the operations to
+          be compliant with the spec.
 
         Wed Apr 16 15:28:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Seq_VarOut_T.h:
-	* tao/Seq_VarOut_T.inl: Removed the const version of [] for
-	  Seq_var since the spec doesnt mandate them.
+        * tao/Seq_VarOut_T.h:
+        * tao/Seq_VarOut_T.inl: Removed the const version of [] for
+          Seq_var since the spec doesnt mandate them.
 
-	* tao/DomainC.i: Removed a bunch of code that shoudlnt have been
-	  there in the first place.
+        * tao/DomainC.i: Removed a bunch of code that shoudlnt have been
+          there in the first place.
 
         Wed Apr 16 000:14:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -253,18 +370,18 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Array_VarOut_T.inl:
         * tao/Seq_VarOut_T.inl:
 
-	  Changes to remove compile errors in Param_Test and IDL_Test.
+          Changes to remove compile errors in Param_Test and IDL_Test.
 
         * tests/Param_Test/recursive_union.cpp:
 
-	  Changed use of TAO-specific recursive member names to
-	  spec-defined and generated recursive member names.
+          Changed use of TAO-specific recursive member names to
+          spec-defined and generated recursive member names.
 
         Mon Apr 14 17:10:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO.dsp:
 
-	  Added IOP_IORC.* and IOP_CodecC.* to the project.
+          Added IOP_IORC.* and IOP_CodecC.* to the project.
 
         Mon Apr 14 16:10:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -276,10 +393,10 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
         * TAO_IDL/be_include/be_type.h:
 
-	  Fixed code generation for sequence of forward declared interface
-	  from a previous opening of the enclosing module, and for
-	  utility functions when nested scoped names repeat after skipping
-	  a level.
+          Fixed code generation for sequence of forward declared interface
+          from a previous opening of the enclosing module, and for
+          utility functions when nested scoped names repeat after skipping
+          a level.
 
         Mon Apr 14 14:33:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -290,19 +407,19 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
 
-	  Fixed code generation to work with deeply nested and/or
-	  anonymous sequence members.
+          Fixed code generation to work with deeply nested and/or
+          anonymous sequence members.
 
-	* tests/IDL_Test/sequence.idl:
+        * tests/IDL_Test/sequence.idl:
 
-	  Modified test to check above use cases more thoroughly.
+          Modified test to check above use cases more thoroughly.
 
         Mon Apr 14 09:16:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/PortableServerC.cpp:
         * tao/PortableServer/PortableServerC.h:
 
-	  Removed declaration and definition of Any operators for ObjectId.
+          Removed declaration and definition of Any operators for ObjectId.
 
         Mon Apr 14 09:06:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -325,8 +442,8 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be_include/be_type.h:
         * TAO_IDL/be_include/be_valuetype.h:
 
-	  Fixed errors in generated code for exception holders
-	  and reply/response handlers.
+          Fixed errors in generated code for exception holders
+          and reply/response handlers.
 
         * tests/AMH_Exceptions/client.dsp:
         * tests/AMH_Exceptions/server.dsp:
@@ -341,13 +458,13 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tests/OBV/Forward/client.dsp:
         * tests/OBV/Forward/server.dsp:
 
-	  Removed obsolete -Gv option from IDL compiler
-	  command lines for the above tests.
+          Removed obsolete -Gv option from IDL compiler
+          command lines for the above tests.
 
         * tests/OBV/Forward/client.cpp:
 
-	  Changed instances of <valuetype>_ptr to
-	  <valuetype> *.
+          Changed instances of <valuetype>_ptr to
+          <valuetype> *.
 
         Fri Apr 11 21:50:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -373,35 +490,35 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         Fri Apr 11 14:41:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Merged with the main trunk and compiled the core ORB and the IDL
-	  compiler on Linux GCC32. Moved the stuff to a new branch by name
-	  refactor_statge_1.  Added the following files from the branch
-	  into the new branch.
+        * Merged with the main trunk and compiled the core ORB and the IDL
+          compiler on Linux GCC32. Moved the stuff to a new branch by name
+          refactor_statge_1.  Added the following files from the branch
+          into the new branch.
 
-	* tao/Pseudo_Value_VarOut_T.cpp:
-	* tao/Pseudo_Value_VarOut_T.h:
-	* tao/Pseudo_Value_VarOut_T.inl:
-	* tao/Array_VarOut_T.cpp:
-	* tao/Array_VarOut_T.h:
-	* tao/Array_VarOut_T.inl:
-	* tao/Objref_VarOut_T.cpp:
-	* tao/Objref_VarOut_T.h:
-	* tao/Objref_VarOut_T.inl:
-	* tao/Pseudo_Value_Varout_T.cpp:
-	* tao/Pseudo_Value_Varout_T.h:
-	* tao/Pseudo_Value_Varout_T.inl:
-	* tao/Pseudo_VarOut_T.cpp:
-	* tao/Pseudo_VarOut_T.h:
-	* tao/Pseudo_VarOut_T.inl:
-	* tao/Seq_VarOut_T.cpp:
-	* tao/Seq_VarOut_T.h:
-	* tao/Seq_VarOut_T.inl:
-	* tao/Value_VarOut_T.cpp:
-	* tao/Value_VarOut_T.h:
-	* tao/Value_VarOut_T.inl:
-	* tao/VarOut_T.cpp:
-	* tao/VarOut_T.h:
-	* tao/VarOut_T.inl:
+        * tao/Pseudo_Value_VarOut_T.cpp:
+        * tao/Pseudo_Value_VarOut_T.h:
+        * tao/Pseudo_Value_VarOut_T.inl:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Objref_VarOut_T.inl:
+        * tao/Pseudo_Value_Varout_T.cpp:
+        * tao/Pseudo_Value_Varout_T.h:
+        * tao/Pseudo_Value_Varout_T.inl:
+        * tao/Pseudo_VarOut_T.cpp:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.inl:
+        * tao/Seq_VarOut_T.cpp:
+        * tao/Seq_VarOut_T.h:
+        * tao/Seq_VarOut_T.inl:
+        * tao/Value_VarOut_T.cpp:
+        * tao/Value_VarOut_T.h:
+        * tao/Value_VarOut_T.inl:
+        * tao/VarOut_T.cpp:
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
 
           New files in to this new branch.
 
@@ -415,24 +532,24 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
         * TAO_IDL/be_include/be_type.h:
 
-	  Moved managed type template class generation from the Any
-	  operator pass (which might be skipped if Any operator generation
-	  is suppressed, or generated needlessly if the type is not used
-	  in a sequence) to the sequence visitor.
+          Moved managed type template class generation from the Any
+          operator pass (which might be skipped if Any operator generation
+          is suppressed, or generated needlessly if the type is not used
+          in a sequence) to the sequence visitor.
 
         * tao/Sequence_T.cpp:
 
-	  Fixed code in TAO_Abstract_Manager that doesn't work with
-	  forward declared abstract interfaces.
+          Fixed code in TAO_Abstract_Manager that doesn't work with
+          forward declared abstract interfaces.
 
         * tao/DynamicAny/DynamicAny.pidl:
         * tao/DynamicAny/DynamicAnyC.cpp:
 
-	  Regenerated hand-crafted DynamicAny.pidl files and changed comment
-	  at the top of the .pidl file to show added options to the IDL
-	  compiler command line to suppress Any operator and Typecode
-	  generation. Although these types contain a Typecode, they do
-	  not need Typecodes or Any operators of their own.
+          Regenerated hand-crafted DynamicAny.pidl files and changed comment
+          at the top of the .pidl file to show added options to the IDL
+          compiler command line to suppress Any operator and Typecode
+          generation. Although these types contain a Typecode, they do
+          not need Typecodes or Any operators of their own.
 
         Mon Mar 31 22:31:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -668,25 +785,25 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/IIOPC.h:
         * tao/IIOPC.i:
 
- 	  Regenerated some hand-crafted files.
+          Regenerated some hand-crafted files.
 
         * tao/corbafwd.h:
 
-	  Removed some forward _var and _out declarations.
-	  Since these are now typedefs, they can't be forward
-	  declared.
+          Removed some forward _var and _out declarations.
+          Since these are now typedefs, they can't be forward
+          declared.
 
         * tao/Seq_VarOut_T.inl:
 
-	  Fixed a typo.
+          Fixed a typo.
 
         * tao/GIOP.pidl:
         * tao/IOP.pidl:
 
-	  Modified these to use CORBA::OctetSeq instead of
-	  regenerating each time.
+          Modified these to use CORBA::OctetSeq instead of
+          regenerating each time.
 
-	Fri Mar 28 17:09:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Fri Mar 28 17:09:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AbstractBase.cpp:
         * tao/Environment.cpp:
@@ -714,12 +831,12 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/DynamicInterface/Server_Request.cpp:
         * tao/DynamicInterface/Server_Request.h:
 
-	  Templatized _var and _out classes in
-	  DynamicInterface, added conditional explicit
-	  template instantiations, and updated project
-	  settings.
+          Templatized _var and _out classes in
+          DynamicInterface, added conditional explicit
+          template instantiations, and updated project
+          settings.
 
-	Fri Mar 28 000:58:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Fri Mar 28 000:58:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AbstractBase.h:
         * tao/AbstractBase.inl:
@@ -739,16 +856,16 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/ValueFactory.i:
         * tao/corbafwd.h:
 
-	  Converted the _var and _out classes of most of
-	  the CORBA pseudo objects to the new template
-	  format.
+          Converted the _var and _out classes of most of
+          the CORBA pseudo objects to the new template
+          format.
 
         * tao/Pseudo_Value_Varout_T.cpp:
         * tao/Pseudo_Value_Varout_T.h:
         * tao/Pseudo_Value_Varout_T.inl:
 
-	  New template classes to typedef _var and _out
-	  implementations for ValueBase and ValueFactoryBase.
+          New template classes to typedef _var and _out
+          implementations for ValueBase and ValueFactoryBase.
 
         Thu Mar 27 18:55:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -792,20 +909,20 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/corba.h:
         * tao/corbafwd.h:
 
-	  Finished templatizing of _var, _out and sequence
-	  classes, in TAO and in code generation.
+          Finished templatizing of _var, _out and sequence
+          classes, in TAO and in code generation.
 
         * tao/Pseudo_VarOut_T.cpp:
         * tao/Pseudo_VarOut_T.h:
         * tao/Pseudo_VarOut_T.inl:
 
-	  New files for the _var and _out classes for
-	  CORBA::Object and CORBA::TypeCode.
+          New files for the _var and _out classes for
+          CORBA::Object and CORBA::TypeCode.
 
         * tao/Objref_VarOut_T.inl:
         * tao/Value_VarOut_T.inl:
 
-	  New files, empty so far.
+          New files, empty so far.
 
         Wed Mar 26 18:23:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -860,23 +977,23 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
 
-  	  Added code generation for sequences of abstract
-	  interfaces.
+          Added code generation for sequences of abstract
+          interfaces.
 
         * tao/Sequence_T.cpp:
         * tao/Sequence_T.i:
 
-	  Uninlined a few methods that were too long.
+          Uninlined a few methods that were too long.
 
         * tao/Transport.cpp:
 
-	  Cut out an ELSE block to get this to work with
-	  changes Phil Mesnier <mesnier_p@ociweb.com> has
-	  made to ACE - his corresponding TAO changes are
-	  blocked by the branch. This file will get in
-	  sync again when the branch is merged.
+          Cut out an ELSE block to get this to work with
+          changes Phil Mesnier <mesnier_p@ociweb.com> has
+          made to ACE - his corresponding TAO changes are
+          blocked by the branch. This file will get in
+          sync again when the branch is merged.
 
-	Tue Mar 25 21:44:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Tue Mar 25 21:44:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Sequence_T.cpp:
         * tao/Sequence_T.i:
@@ -884,7 +1001,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Finished re-parametrizing the template sequence classes.
 
-	Mon Mar 24 20:27:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Mon Mar 24 20:27:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
 
@@ -892,7 +1009,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           list of abstract interfafce to use ACE_NESTED_CLASS,
           similarly to non-abstract interfaces.
 
-	Sun Mar 23 23:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Sun Mar 23 23:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Array_VarOut_T.cpp:
         * tao/Array_VarOut_T.h:
@@ -901,8 +1018,8 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/VarOut_T.h:
         * tao/VarOut_T.inl:
 
-	  New files adding to the support of template-based
-	  _var and _out classes.
+          New files adding to the support of template-based
+          _var and _out classes.
 
         * tao/Sequence_T.cpp:
         * tao/Sequence_T.h:
@@ -925,10 +1042,10 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDLbe_include/be_visitor_array/array_ci.h:
         * TAO_IDLinclude/ast_type.h:
 
-	  Other changes to support template _var and _out
-	  classes.
+          Other changes to support template _var and _out
+          classes.
 
-	Sat Mar 22 18:34:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Sat Mar 22 18:34:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ObjectReferenceTemplateC.cpp:
         * tao/ObjectReferenceTemplateC.h:
@@ -937,10 +1054,10 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Sequence_T.h:
         * tao/Sequence_T.i:
 
-	  Changes to switch to template instantiation for valuetypes
-	  and sequences of valuetypes.
+          Changes to switch to template instantiation for valuetypes
+          and sequences of valuetypes.
 
-	Fri Mar 21 02:33:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+        Fri Mar 21 02:33:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDL/be/be_valuetype.cpp:
@@ -959,14 +1076,14 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/TAO.dsp:
         * tao/corba.h:
 
-	  Modified code generation for sequences of object references,
-	  added conditional explicit template instantiation, template
-	  valuetype _var and _out class generation.
+          Modified code generation for sequences of object references,
+          added conditional explicit template instantiation, template
+          valuetype _var and _out class generation.
 
         * tao/Value_VarOut_T.cpp:
         * tao/Value_VarOut_T.h:
 
-	  New files for the valuetype _var and _out classes.
+          New files for the valuetype _var and _out classes.
 
         Wed Mar 19 18:40:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1017,9 +1134,9 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
         * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
 
-	  Changed code generation to use the generated struct helpers
-	  for interfaces, and removed much of the code generation for
-	  sequences, since they will eventually all be typedefs.
+          Changed code generation to use the generated struct helpers
+          for interfaces, and removed much of the code generation for
+          sequences, since they will eventually all be typedefs.
 
         Wed Mar 19 09:38:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1037,8 +1154,8 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be_include/be_interface.h:
         * TAO_IDL/be_include/be_type.h:
 
-	  Changes to code generation for sequences, _var and _out classes.
-	  This is just a start, lots more to come.
+          Changes to code generation for sequences, _var and _out classes.
+          This is just a start, lots more to come.
 
         Tue Mar 18 21:42:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1055,8 +1172,8 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Sequence_T.i:
         * tao/corba.h:
 
-	  Interim hacks to avoid build errors. All the
-	  hand-crafted files will eventually be regenerated.
+          Interim hacks to avoid build errors. All the
+          hand-crafted files will eventually be regenerated.
 
         * tao/Objref_VarOut_T.cpp:
         * tao/Objref_VarOut_T.h:
@@ -1064,31 +1181,31 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Seq_VarOut_T.h:
         * tao/Seq_VarOut_T.inl:
 
-	  New files, a start on templatizing all the
-	  _var and _out classes.
+          New files, a start on templatizing all the
+          _var and _out classes.
 
 Tue Apr 22 13:51:45 2003  Chad Elliott  <elliott_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
 
           Only #include <sys/loadavg.h> if ACE_HAS_SYS_LOADAVG_H is defined.
           It only exists with SunOS 5.7 and later.
 
 Tue Apr 22 14:26:31 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
 
-	  In pre_invoke_remote_request(),
-	  get_thread_CORBA_and_native_priority() was getting called
-	  unconditionally, even for single-threaded configurations.
-	  Unfortunately, ACE_OS::thr_getprio() is not supported for
-	  single-threaded configurations.  Therefore, I had to restructure
-	  the code so that get_thread_CORBA_and_native_priority() was only
-	  called when needed.
+          In pre_invoke_remote_request(),
+          get_thread_CORBA_and_native_priority() was getting called
+          unconditionally, even for single-threaded configurations.
+          Unfortunately, ACE_OS::thr_getprio() is not supported for
+          single-threaded configurations.  Therefore, I had to restructure
+          the code so that get_thread_CORBA_and_native_priority() was only
+          called when needed.
 
 Tue Apr 22 12:39:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
-	* tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_No_ImplC.h:
 
           Moved the #undef of TRANSPARENT after the #include's to ensure
           that it doesn't get defined again after it's already been
@@ -1096,39 +1213,39 @@ Tue Apr 22 12:39:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Apr 22 12:35:44 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* tests/Collocation_Tests/Collocation_Test.dsp:
-	  Fixed test run errors.
+        * tests/Collocation_Tests/Collocation_Test.dsp:
+          Fixed test run errors.
 
 Mon Apr 21 14:20:00 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
 
-	  Removed extra ACE_CHECK_RETURN.
+          Removed extra ACE_CHECK_RETURN.
 
-	* tests/RTCORBA/check_supported_priorities.cpp:
+        * tests/RTCORBA/check_supported_priorities.cpp:
 
-	  Initialized <name> in sched_policy_name().
+          Initialized <name> in sched_policy_name().
 
-	* tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp:
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp:
 
-	  - Removed unused <servant_activation_succeeded>.
+          - Removed unused <servant_activation_succeeded>.
 
-	  - Changed a couple of ACE_CHECKs to ACE_CHECK_RETURNs.
+          - Changed a couple of ACE_CHECKs to ACE_CHECK_RETURNs.
 
 Sun Apr 20 07:55:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.dsw:
-	* tests/Bug_1020_Basic_Regression/client.dsp:
-	* tests/Bug_1020_Basic_Regression/server.dsp: Removed them from
-	  the repo. They dont compile with VC6.0 and spoils our daily
-	  builds.
+        * tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.dsw:
+        * tests/Bug_1020_Basic_Regression/client.dsp:
+        * tests/Bug_1020_Basic_Regression/server.dsp: Removed them from
+          the repo. They dont compile with VC6.0 and spoils our daily
+          builds.
 
 Sun Apr 20 07:50:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw:
-	* tests/Bug_1020_Regression/client.dsp:
-	* tests/Bug_1020_Regression/server.dsp: Removed them from the
-	  repo. They dont compile with VC6.0 and spoils our daily builds.
+        * tests/Bug_1020_Regression/Bug_1020_Regression.dsw:
+        * tests/Bug_1020_Regression/client.dsp:
+        * tests/Bug_1020_Regression/server.dsp: Removed them from the
+          repo. They dont compile with VC6.0 and spoils our daily builds.
 
 Fri Apr 18 18:13:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1154,20 +1271,20 @@ Fri Apr 18 17:17:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Apr 18 18:04:44 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.dsw
-	* tests/Bug_1020_Basic_Regression/client.dsp
-	* tests/Bug_1020_Basic_Regression/server.dsp
-	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw
-	* tests/Bug_1020_Regression/client.dsp
-	* tests/Bug_1020_Regression/server.dsp
+        * tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.dsw
+        * tests/Bug_1020_Basic_Regression/client.dsp
+        * tests/Bug_1020_Basic_Regression/server.dsp
+        * tests/Bug_1020_Regression/Bug_1020_Regression.dsw
+        * tests/Bug_1020_Regression/client.dsp
+        * tests/Bug_1020_Regression/server.dsp
 
           Added VC project files for Bug_1020_Regression and
-	  Bug_1020_Basic_Regression tests.
+          Bug_1020_Basic_Regression tests.
 
-	* tests/TAO_Tests.dsw:
+        * tests/TAO_Tests.dsw:
 
-	  Updated to include project files for Bug_1020_Regression and
-	  Bug_1020_Basic_Regression tests.
+          Updated to include project files for Bug_1020_Regression and
+          Bug_1020_Basic_Regression tests.
 
 Fri Apr 18 12:18:46 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1181,309 +1298,309 @@ Fri Apr 18 12:18:46 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Apr 16 12:49:59 2003  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_helper.h:
 
-	  Include <stdio.h> to pull in "FILE" typedef.
+          Include <stdio.h> to pull in "FILE" typedef.
 
 Wed Apr 16 13:44:47 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/params:
+        * tao/params:
 
-	  - thread_creation_flags: Added a new function that OR's together
-	  the scheduling scope and scheduling policy thread creation
-	  flags.
+          - thread_creation_flags: Added a new function that OR's together
+          the scheduling scope and scheduling policy thread creation
+          flags.
 
-	  - ace_sched_policy: Added a new function to return the
-	  ACE_SCHED_* flag.  The sched_policy() returns the THR_SCHED_*
-	  thread creation flag, the scope_policy() returns the THR_SCOPE_*
-	  thread creation flag, and the ace_sched_policy() returns the
-	  ACE_SCHED_* flag.
+          - ace_sched_policy: Added a new function to return the
+          ACE_SCHED_* flag.  The sched_policy() returns the THR_SCHED_*
+          thread creation flag, the scope_policy() returns the THR_SCOPE_*
+          thread creation flag, and the ace_sched_policy() returns the
+          ACE_SCHED_* flag.
 
-	* tao/RTCORBA/RT_ORB.cpp (modify_thread_scheduling_policy): Added
-	  new static method that changes the scheduling policy of the
-	  calling thread to match the scheduling policy specified in the
-	  svc.conf file.  The priority of the calling thread will be set
-	  to the minimum priority supported by that scheduling policy.
+        * tao/RTCORBA/RT_ORB.cpp (modify_thread_scheduling_policy): Added
+          new static method that changes the scheduling policy of the
+          calling thread to match the scheduling policy specified in the
+          svc.conf file.  The priority of the calling thread will be set
+          to the minimum priority supported by that scheduling policy.
 
-	  This method make sense on those platform (e.g., Linux) where
-	  PTHREAD_SCOPE_SYSTEM is the only scheduling scope supported.  On
-	  other platforms, this method is a no-op since the only way to
-	  get the real-time threading behavior is to setup the
-	  PTHREAD_SCOPE_SYSTEM scheduling scope when a thread is being
-	  created.  On such platforms, one can set the correct scheduling
-	  scope and policy when creating the thread, thus not needing to
-	  use this method.
+          This method make sense on those platform (e.g., Linux) where
+          PTHREAD_SCOPE_SYSTEM is the only scheduling scope supported.  On
+          other platforms, this method is a no-op since the only way to
+          get the real-time threading behavior is to setup the
+          PTHREAD_SCOPE_SYSTEM scheduling scope when a thread is being
+          created.  On such platforms, one can set the correct scheduling
+          scope and policy when creating the thread, thus not needing to
+          use this method.
 
-	* tao/RTCORBA/RT_ORBInitializer.cpp (TAO_RT_ORBInitializer): Undid
-	  changes from:
+        * tao/RTCORBA/RT_ORBInitializer.cpp (TAO_RT_ORBInitializer): Undid
+          changes from:
 
-	  Wed Feb 12 00:19:58 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
+          Wed Feb 12 00:19:58 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 
-	  - Since there is a new variable <ace_sched_policy_>, no
-	  conversions between is required between THR_SCHED_* and
-	  ACE_SCHED_*.
+          - Since there is a new variable <ace_sched_policy_>, no
+          conversions between is required between THR_SCHED_* and
+          ACE_SCHED_*.
 
-	  - There is no longer a need to "automagically" change the
-	  scheduling policy of the thread calling
-	  TAO_RT_ORBInitializer::pre_init(), specially given the fact that
-	  the scheduling scope of a thread cannot be changed after it has
-	  been created, and without the scheduling scope being set
-	  appropriately, real-time threading behavior is not possible.
+          - There is no longer a need to "automagically" change the
+          scheduling policy of the thread calling
+          TAO_RT_ORBInitializer::pre_init(), specially given the fact that
+          the scheduling scope of a thread cannot be changed after it has
+          been created, and without the scheduling scope being set
+          appropriately, real-time threading behavior is not possible.
 
-	  To achieve the similar behavior as before on platforms like
-	  Linux that only support the PTHREAD_SCOPE_SYSTEM scheduling
-	  scope, please call the
-	  TAO_RT_ORB::modify_thread_scheduling_policy() static method.
+          To achieve the similar behavior as before on platforms like
+          Linux that only support the PTHREAD_SCOPE_SYSTEM scheduling
+          scope, please call the
+          TAO_RT_ORB::modify_thread_scheduling_policy() static method.
 
-	* tao/RTCORBA/Thread_Pool.cpp (create_dynamic_threads):
+        * tao/RTCORBA/Thread_Pool.cpp (create_dynamic_threads):
 
-	  Changed code to use the new canonical thread_creation_flags()
-	  routine.
+          Changed code to use the new canonical thread_creation_flags()
+          routine.
 
-	* tao/RTCORBA/Thread_Pool.cpp:
-	* tao/Exception.cpp:
-	* tao/corbafwd.h:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/Exception.cpp:
+        * tao/corbafwd.h:
 
-	  Added TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE so that failures
-	  in thread creation for RTCORBA thread pools can be easily
-	  identified.
-
-Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
-
-	* tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
-	* tests/RTCORBA/Explicit_Binding/client.cpp:
-	* tests/RTCORBA/Explicit_Binding/server.cpp:
-	* tests/RTCORBA/ORB_init/ORB_init.cpp:
-	* tests/RTCORBA/Persistent_IOR/client.cpp:
-	* tests/RTCORBA/Persistent_IOR/server.cpp:
-	* tests/RTCORBA/Private_Connection/client.cpp:
-	* tests/RTCORBA/Private_Connection/server.cpp:
-	* tests/RTCORBA/RTMutex/server.cpp:
-	* tests/RTCORBA/Server_Declared/client.cpp:
-	* tests/RTCORBA/Server_Declared/server.cpp:
-	* tests/RTCORBA/Server_Protocol/client.cpp:
-	* tests/RTCORBA/Server_Protocol/server.cpp:
-	* tests/RTCORBA/Thread_Pool/client.cpp:
-
- 	  Check for multiple priorities is not needed for this test since
-	  multiple priorities are not used in this test.
-
-	* tests/RTCORBA/Banded_Connections/client.cpp:
-	* tests/RTCORBA/Client_Protocol/client.cpp:
-	* tests/RTCORBA/Collocation/Collocation.cpp:
-	* tests/RTCORBA/Linear_Priority/client.cpp:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
-	* tests/RTCORBA/Policy_Combinations/client.cpp:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
-	* tests/RTCORBA/Thread_Pool/client.cpp:
-	* performance-tests/RTCorba/Thread_Pool/client.cpp:
-
-	  Make all real-time invocations and priority changes from a
-	  real-time thread rather than the main thread.  This will allow
-	  the test to work on platforms like Linux with root as the user
-	  (and the appropriate svc.conf settings).
-
-	* tests/RTCORBA/Client_Propagated/server.cpp:
-	* tests/RTCORBA/Linear_Priority/server.cpp:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
-	* tests/RTCORBA/Policy_Combinations/server.cpp:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
-	* tests/RTCORBA/Server_Declared/server.cpp:
-	* tests/RTCORBA/Thread_Pool/server.cpp:
-
-	  Handle all real-time upcall in a real-time thread rather than
-	  the main thread.  This will allow the test to work on platforms
-	  like Linux with root as the user (and the appropriate svc.conf
-	  settings).
-
-	* tests/RTCORBA/Banded_Connections/svc.conf:
-	* tests/RTCORBA/Client_Propagated/svc.conf:
-	* tests/RTCORBA/Client_Protocol/svc.conf:
-	* tests/RTCORBA/Explicit_Binding/svc.conf:
-	* tests/RTCORBA/Linear_Priority/svc.conf:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf:
-	* tests/RTCORBA/Policy_Combinations/svc.conf:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/svc.conf:
-	* tests/RTCORBA/Server_Declared/svc.conf:
-	* tests/RTCORBA/Server_Protocol/server_iiop.conf:
-	* tests/RTCORBA/Server_Protocol/server_reverse.conf:
-	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
-	* tests/RTCORBA/Server_Protocol/server_shmiop.conf:
-	* tests/RTCORBA/Server_Protocol/server_uiop.conf:
-	* tests/RTCORBA/Thread_Pool/svc.conf:
-
-	  Updated config file to remove SCHED_FIFO as the scheduling
-	  policy for normal, non-RT testing.
-
-	* tests/RTCORBA/Banded_Connections/svc.conf.xml:
-	* tests/RTCORBA/Client_Propagated/svc.conf.xml:
-	* tests/RTCORBA/Collocation/svc.conf.xml:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf.xml:
-	* tests/RTCORBA/Server_Declared/svc.conf.xml:
-	* tests/RTCORBA/Thread_Pool/svc.conf.xml:
-
-	  Added missing file.
-
-	* tests/RTCORBA/Banded_Connections/server.conf:
-	* tests/RTCORBA/Banded_Connections/server.conf.xml:
-	* tests/RTCORBA/Destroy_Thread_Pool/svc.conf:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf:
-	* tests/RTCORBA/ORB_init/svc.conf:
-	* tests/RTCORBA/Persistent_IOR/svc.conf:
-	* tests/RTCORBA/Policies/svc.conf:
-	* tests/RTCORBA/Private_Connection/svc.conf:
-	* tests/RTCORBA/RTMutex/svc.conf:
-	* tests/RTCORBA/Server_Declared/server.conf:
-	* tests/RTCORBA/Server_Declared/server.conf.xml:
-	* tests/RTCORBA/Server_Protocol/svc.conf:
-	* performance-tests/RTCorba/Thread_Pool/fudge_priorities.cpp:
-
-	  These files are no longer used.
-
-	* tests/RTCORBA/Banded_Connections/server.cpp:
-	* tests/RTCORBA/Client_Propagated/client.cpp:
-	* tests/RTCORBA/Client_Propagated/server.cpp:
-	* tests/RTCORBA/Client_Protocol/client.cpp:
-	* tests/RTCORBA/Client_Protocol/server.cpp:
-	* tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
-	* tests/RTCORBA/Diffserv/server.cpp:
-	* tests/RTCORBA/Diffserv/client.cpp:
-	* tests/RTCORBA/Explicit_Binding/client.cpp:
-	* tests/RTCORBA/Explicit_Binding/server.cpp:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
-	* tests/RTCORBA/Private_Connection/client.cpp:
-	* tests/RTCORBA/Private_Connection/server.cpp:
-	* tests/RTCORBA/RTMutex/server.cpp:
-	* tests/RTCORBA/Server_Declared/client.cpp:
-	* tests/RTCORBA/Server_Declared/server.cpp:
-	* tests/RTCORBA/Server_Protocol/client.cpp:
-	* tests/RTCORBA/Server_Protocol/server.cpp:
-	* tests/RTCORBA/Thread_Pool/client.cpp:
-	* tests/RTCORBA/Thread_Pool/server.cpp:
-
-	  Errors should be indicated with a return value -1 and not 1.
-
-	* tests/RTCORBA/Banded_Connections/run_test.pl:
-	* tests/RTCORBA/Client_Propagated/run_test.pl:
-	* tests/RTCORBA/Collocation/run_test.pl:
-	* tests/RTCORBA/Linear_Priority/run_test.pl:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
-	* tests/RTCORBA/Policy_Combinations/run_test.pl:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:
-	* tests/RTCORBA/Server_Declared/run_test.pl:
-	* tests/RTCORBA/Thread_Pool/run_test.pl:
-
-	  Removed incorrect error message.
-
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
-	* examples/RTCORBA/Activity/Activity.cpp:
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
-
-	  Use thread_creation_flags() to create invocation threads.
-
-	* tests/RTCORBA/Policy_Combinations/server.cpp:
-
-	  Fixed the use of calling sched_policy() to calling
-	  ace_sched_policy().
-
-	* tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
-
-	  No need for separate client.conf and server.conf files.  Options
-	  can be combined into one svc.conf file.
-
-	* tests/RTCORBA/Linear_Priority/client.cpp:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
-
-	  Gave the Worker_Threads a stack based instance of the
-	  Thread_Manager rather than using the singleton instance.
-
-	* tests/RTCORBA/Client_Propagated/client.cpp:
-
-	  Don't fix the scheduling policy value - use ace_sched_policy()
-	  to get the scheduling policy in use.
-
-	* tests/RTCORBA/check_supported_priorities.cpp:
-
-	  - check_supported_priorities(): No need for conversions - simply
-	  use the new ace_sched_policy().
-
-	  - sched_policy_name(): Added a helper routine to help convert
-	  scheduling policy constants into strings.
-
-	* tests/RTCORBA/Server_Declared/run_test.pl:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
-
-	  Fixed the priority values for Solaris since they were not in the
-	  SCHED_FIFO range for Solaris 5.7.
-
-	* performance-tests/RTCorba/Thread_Pool/client.cpp:
-
-	  - Removed the <continuous_workers_are_rt> options since all
-	  threads have to be of the same scope to get the mapping correct.
-
-	  - No need to call fudge_priorities() since the main thread no
-	  longer makes real-time invocations.
-
-	* examples/RTCORBA/Activity/Activity.cpp:
-
-	  - No need to store <scope_policy> since it is available from ORB
-	  params.
-
-	  - init_sched() is not needed and was removed.
-
-	  - Simplified call to activate().
-
-	* orbsvcs/orbsvcs/Notify/CosNotify_Service:
-	* orbsvcs/orbsvcs/Notify/Properties:
-
-	  - init_main_thread() was removed since it was not needed or
-	  used.
-
-	  - Removed <scope_policy> and <sched_policy> since these are
-	  available from ORB params.
-
-	* $ACE_ROOT/bin/tao_orb_tests.lst:
-
-	  - All RTCORBA tests should now run on Linux.  If there are
-	  insuffient number of priorities in the scheduling policy
-	  selected, the test should exit gracefully.
-
-	  - Fixed the !ST settings.  Server_Protocol, Private_Connection,
-	  ORB_init, Explicit_Binding, and Client_Protocol should work with
-	  the single threaded configuration.
+          Added TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE so that failures
+          in thread creation for RTCORBA thread pools can be easily
+          identified.
 
 Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/PortableServer/Object_Adapter (Non_Servant_Upcall):
+        * tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+        * tests/RTCORBA/Explicit_Binding/client.cpp:
+        * tests/RTCORBA/Explicit_Binding/server.cpp:
+        * tests/RTCORBA/ORB_init/ORB_init.cpp:
+        * tests/RTCORBA/Persistent_IOR/client.cpp:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Private_Connection/client.cpp:
+        * tests/RTCORBA/Private_Connection/server.cpp:
+        * tests/RTCORBA/RTMutex/server.cpp:
+        * tests/RTCORBA/Server_Declared/client.cpp:
+        * tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Protocol/client.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Thread_Pool/client.cpp:
 
-	  Nested non-servant upcalls were not being handling correctly.
-	  Added <non_servant_upcall_nesting_level_> that counts the current
-	  nesting level.  Also added a <previous_> pointer so that
-	  Non_Servant_Upcall instances can be chained.
+          Check for multiple priorities is not needed for this test since
+          multiple priorities are not used in this test.
 
-	  Thanks to Weston Markham <wmarkham@tissueinformatics.com> for
-	  pointing this out.  This fixes bug #1432.
+        * tests/RTCORBA/Banded_Connections/client.cpp:
+        * tests/RTCORBA/Client_Protocol/client.cpp:
+        * tests/RTCORBA/Collocation/Collocation.cpp:
+        * tests/RTCORBA/Linear_Priority/client.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * tests/RTCORBA/Policy_Combinations/client.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+        * tests/RTCORBA/Thread_Pool/client.cpp:
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
 
-	* tests/POA/Nested_Non_Servant_Upcalls:
+          Make all real-time invocations and priority changes from a
+          real-time thread rather than the main thread.  This will allow
+          the test to work on platforms like Linux with root as the user
+          (and the appropriate svc.conf settings).
 
-	  New test to ensure that nested non-servant upcalls are handled
-	  correctly.
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
+        * tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+
+          Handle all real-time upcall in a real-time thread rather than
+          the main thread.  This will allow the test to work on platforms
+          like Linux with root as the user (and the appropriate svc.conf
+          settings).
+
+        * tests/RTCORBA/Banded_Connections/svc.conf:
+        * tests/RTCORBA/Client_Propagated/svc.conf:
+        * tests/RTCORBA/Client_Protocol/svc.conf:
+        * tests/RTCORBA/Explicit_Binding/svc.conf:
+        * tests/RTCORBA/Linear_Priority/svc.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.conf:
+        * tests/RTCORBA/Policy_Combinations/svc.conf:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/svc.conf:
+        * tests/RTCORBA/Server_Declared/svc.conf:
+        * tests/RTCORBA/Server_Protocol/server_iiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_uiop.conf:
+        * tests/RTCORBA/Thread_Pool/svc.conf:
+
+          Updated config file to remove SCHED_FIFO as the scheduling
+          policy for normal, non-RT testing.
+
+        * tests/RTCORBA/Banded_Connections/svc.conf.xml:
+        * tests/RTCORBA/Client_Propagated/svc.conf.xml:
+        * tests/RTCORBA/Collocation/svc.conf.xml:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf.xml:
+        * tests/RTCORBA/Server_Declared/svc.conf.xml:
+        * tests/RTCORBA/Thread_Pool/svc.conf.xml:
+
+          Added missing file.
+
+        * tests/RTCORBA/Banded_Connections/server.conf:
+        * tests/RTCORBA/Banded_Connections/server.conf.xml:
+        * tests/RTCORBA/Destroy_Thread_Pool/svc.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.conf:
+        * tests/RTCORBA/ORB_init/svc.conf:
+        * tests/RTCORBA/Persistent_IOR/svc.conf:
+        * tests/RTCORBA/Policies/svc.conf:
+        * tests/RTCORBA/Private_Connection/svc.conf:
+        * tests/RTCORBA/RTMutex/svc.conf:
+        * tests/RTCORBA/Server_Declared/server.conf:
+        * tests/RTCORBA/Server_Declared/server.conf.xml:
+        * tests/RTCORBA/Server_Protocol/svc.conf:
+        * performance-tests/RTCorba/Thread_Pool/fudge_priorities.cpp:
+
+          These files are no longer used.
+
+        * tests/RTCORBA/Banded_Connections/server.cpp:
+        * tests/RTCORBA/Client_Propagated/client.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Client_Protocol/client.cpp:
+        * tests/RTCORBA/Client_Protocol/server.cpp:
+        * tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+        * tests/RTCORBA/Diffserv/server.cpp:
+        * tests/RTCORBA/Diffserv/client.cpp:
+        * tests/RTCORBA/Explicit_Binding/client.cpp:
+        * tests/RTCORBA/Explicit_Binding/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
+        * tests/RTCORBA/Private_Connection/client.cpp:
+        * tests/RTCORBA/Private_Connection/server.cpp:
+        * tests/RTCORBA/RTMutex/server.cpp:
+        * tests/RTCORBA/Server_Declared/client.cpp:
+        * tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Protocol/client.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Thread_Pool/client.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+
+          Errors should be indicated with a return value -1 and not 1.
+
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Client_Propagated/run_test.pl:
+        * tests/RTCORBA/Collocation/run_test.pl:
+        * tests/RTCORBA/Linear_Priority/run_test.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Policy_Combinations/run_test.pl:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Thread_Pool/run_test.pl:
+
+          Removed incorrect error message.
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+        * examples/RTCORBA/Activity/Activity.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+
+          Use thread_creation_flags() to create invocation threads.
+
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
+
+          Fixed the use of calling sched_policy() to calling
+          ace_sched_policy().
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+
+          No need for separate client.conf and server.conf files.  Options
+          can be combined into one svc.conf file.
+
+        * tests/RTCORBA/Linear_Priority/client.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+
+          Gave the Worker_Threads a stack based instance of the
+          Thread_Manager rather than using the singleton instance.
+
+        * tests/RTCORBA/Client_Propagated/client.cpp:
+
+          Don't fix the scheduling policy value - use ace_sched_policy()
+          to get the scheduling policy in use.
+
+        * tests/RTCORBA/check_supported_priorities.cpp:
+
+          - check_supported_priorities(): No need for conversions - simply
+          use the new ace_sched_policy().
+
+          - sched_policy_name(): Added a helper routine to help convert
+          scheduling policy constants into strings.
+
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+
+          Fixed the priority values for Solaris since they were not in the
+          SCHED_FIFO range for Solaris 5.7.
+
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+
+          - Removed the <continuous_workers_are_rt> options since all
+          threads have to be of the same scope to get the mapping correct.
+
+          - No need to call fudge_priorities() since the main thread no
+          longer makes real-time invocations.
+
+        * examples/RTCORBA/Activity/Activity.cpp:
+
+          - No need to store <scope_policy> since it is available from ORB
+          params.
+
+          - init_sched() is not needed and was removed.
+
+          - Simplified call to activate().
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service:
+        * orbsvcs/orbsvcs/Notify/Properties:
+
+          - init_main_thread() was removed since it was not needed or
+          used.
+
+          - Removed <scope_policy> and <sched_policy> since these are
+          available from ORB params.
+
+        * $ACE_ROOT/bin/tao_orb_tests.lst:
+
+          - All RTCORBA tests should now run on Linux.  If there are
+          insuffient number of priorities in the scheduling policy
+          selected, the test should exit gracefully.
+
+          - Fixed the !ST settings.  Server_Protocol, Private_Connection,
+          ORB_init, Explicit_Binding, and Client_Protocol should work with
+          the single threaded configuration.
+
+Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+        * tao/PortableServer/Object_Adapter (Non_Servant_Upcall):
+
+          Nested non-servant upcalls were not being handling correctly.
+          Added <non_servant_upcall_nesting_level_> that counts the current
+          nesting level.  Also added a <previous_> pointer so that
+          Non_Servant_Upcall instances can be chained.
+
+          Thanks to Weston Markham <wmarkham@tissueinformatics.com> for
+          pointing this out.  This fixes bug #1432.
+
+        * tests/POA/Nested_Non_Servant_Upcalls:
+
+          New test to ensure that nested non-servant upcalls are handled
+          correctly.
 
           The following files were added:
 
-	  - Makefile
-	  - Nested_Non_Servant_Upcalls.cpp
-	  - Nested_Non_Servant_Upcalls.dsp
- 	  - Nested_Non_Servant_Upcalls.dsw
-	  - Nested_Non_Servant_Upcalls.mpc
-	  - makefile.bor
-	  - run_test.pl
-	  - test.idl
+          - Makefile
+          - Nested_Non_Servant_Upcalls.cpp
+          - Nested_Non_Servant_Upcalls.dsp
+          - Nested_Non_Servant_Upcalls.dsw
+          - Nested_Non_Servant_Upcalls.mpc
+          - makefile.bor
+          - run_test.pl
+          - test.idl
 
           The following files were modified:
 
@@ -1496,21 +1613,21 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/PortableServer/POA.h (server_protocol):
+        * tao/PortableServer/POA.h (server_protocol):
 
-	  Made this method virtual so that the correct derived real-time
-	  method gets invoked.  Thanks to Craig Rodrigues
-	  <crodrigu@bbn.com> for pointing this out.  This fixes bug 1466.
+          Made this method virtual so that the correct derived real-time
+          method gets invoked.  Thanks to Craig Rodrigues
+          <crodrigu@bbn.com> for pointing this out.  This fixes bug 1466.
 
 Wed Apr 16 08:27:21 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/CORBA_String.cpp:
+        * tao/CORBA_String.cpp:
 
-	  Include "ace/streams.h" to pull in iostream class declarations.
+          Include "ace/streams.h" to pull in iostream class declarations.
 
-	* tao/Exception.h:
+        * tao/Exception.h:
 
-	  Include <stdio.h> to pull in "FILE" typedef.
+          Include <stdio.h> to pull in "FILE" typedef.
 
 Wed Apr 16 13:57:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1519,197 +1636,197 @@ Wed Apr 16 13:57:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 16 01:41:20 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/CosLoadBalancing.idl (register_load_monitor):
+        * orbsvcs/orbsvcs/CosLoadBalancing.idl (register_load_monitor):
 
-	  Improved documentation for this method.
+          Improved documentation for this method.
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
-	* orbsvcs/orbsvcs/Naming/Storable.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
 
-	  Include "ace/SString.h" to pull in complete ACE_CString type.
+          Include "ace/SString.h" to pull in complete ACE_CString type.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
 
-	  Include "ace/ACE.h" to pull in ACE::nibble2hex() function
-	  declaration.
+          Include "ace/ACE.h" to pull in ACE::nibble2hex() function
+          declaration.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
 
-	  Include "ace/ACE.h" to pull in ACE::hash_pjw() function
-	  declaration.
+          Include "ace/ACE.h" to pull in ACE::hash_pjw() function
+          declaration.
 
 Wed Apr 16 00:47:50 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Acceptor_Registry.h:
-	* tao/Protocol_Factory.h:
+        * tao/Acceptor_Registry.h:
+        * tao/Protocol_Factory.h:
 
-	  Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
-	  declarations of ACE_CString are enough.
+          Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
+          declarations of ACE_CString are enough.
 
 Wed Apr 16 00:18:08 2003  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_decl.cpp:
-	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
 
-	  Include "ace/SString.h".  Necessitated by header inclusion
-	  reductions in ACE.
+          Include "ace/SString.h".  Necessitated by header inclusion
+          reductions in ACE.
 
-	* tao/AbstractBase.inl (_is_a):
-	* tao/AbstractBase.cpp (_is_a):
+        * tao/AbstractBase.inl (_is_a):
+        * tao/AbstractBase.cpp (_is_a):
 
-	  Uninlined this method.  There wasn't much point in inlining it
-	  since it is a virtual method.
+          Uninlined this method.  There wasn't much point in inlining it
+          since it is a virtual method.
 
-	* tao/Any.cpp (create_empty):
+        * tao/Any.cpp (create_empty):
 
-	  Marked constant initializer variables as "const".
+          Marked constant initializer variables as "const".
 
-	* tao/Any_T.cpp:
+        * tao/Any_T.cpp:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* tao/CORBA_String.h:
+        * tao/CORBA_String.h:
 
-	  Include "ace/iosfwd.h" instead of "ace/streams.h" to reduce
-	  compile times.  Forward declarations are enough.
+          Include "ace/iosfwd.h" instead of "ace/streams.h" to reduce
+          compile times.  Forward declarations are enough.
 
-	* tao/CORBA_String.cpp:
-	* tao/Messaging_SyncScopeC.cpp:
-	* tao/corbafwd.cpp:
+        * tao/CORBA_String.cpp:
+        * tao/Messaging_SyncScopeC.cpp:
+        * tao/corbafwd.cpp:
 
-	  Include "ace/OS.h".  Necessitated by above change.
+          Include "ace/OS.h".  Necessitated by above change.
 
-	* tao/Exception.h:
+        * tao/Exception.h:
 
-	  Include "ace/SStringfwd.h" and "ace/iosfwd.h" instead of
-	  "ace/SString.h".  The latter is more expensive than the former
-	  two.
+          Include "ace/SStringfwd.h" and "ace/iosfwd.h" instead of
+          "ace/SString.h".  The latter is more expensive than the former
+          two.
 
-	  Forward declare "ACE_Allocator" class.  Necessitated by above
-	  change.
+          Forward declare "ACE_Allocator" class.  Necessitated by above
+          change.
 
-	  Uninlined another CORBA::SystemException constructor.  This
-	  should help reduce TAO's footprint.
+          Uninlined another CORBA::SystemException constructor.  This
+          should help reduce TAO's footprint.
 
-	* tao/GIOP_Message_Generator_Parser.h:
-	* tao/Utils/Auto_Functor.h:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/Utils/Auto_Functor.h:
 
-	  Include "ace/Global_Macros.h".  Necessitated by header inclusion
-	  reductions.
+          Include "ace/Global_Macros.h".  Necessitated by header inclusion
+          reductions.
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Object.h:
-	* tao/Parser_Registry.h:
-	* tao/Queued_Message.h:
-	* tao/corbafwd.i:
-	* tao/PortableServer/Object_Adapter.h:
-	* tao/PortableServer/POA.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Object.h:
+        * tao/Parser_Registry.h:
+        * tao/Queued_Message.h:
+        * tao/corbafwd.i:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/POA.h:
 
-	  Cosmetic improvements.
+          Cosmetic improvements.
 
-	* tao/NVList.h:
-	* tao/Object.cpp:
-	* tao/Profile.h:
+        * tao/NVList.h:
+        * tao/Object.cpp:
+        * tao/Profile.h:
 
-	  Include "ace/Synch.h".  Necessitated by header inclusion
-	  reductions.
+          Include "ace/Synch.h".  Necessitated by header inclusion
+          reductions.
 
-	* tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.cpp:
 
-	  Include "ace/ACE.h".  Necessitated by header inclusion
-	  reductions.
+          Include "ace/ACE.h".  Necessitated by header inclusion
+          reductions.
 
-	* tao/Transport_Connector.h:
-	* tao/Wait_Strategy.h:
+        * tao/Transport_Connector.h:
+        * tao/Wait_Strategy.h:
 
-	  Forward declare ACE_Time_Value class.  Necessitated by header
-	  inclusion reductions.
+          Forward declare ACE_Time_Value class.  Necessitated by header
+          inclusion reductions.
 
-	* tao/append.cpp (append):
+        * tao/append.cpp (append):
 
-	  Added missing line feed in debugging output.
+          Added missing line feed in debugging output.
 
-	* tao/RTCORBA/Private_Transport_Descriptor.h:
+        * tao/RTCORBA/Private_Transport_Descriptor.h:
 
-	  Don't bother using the ACE_UNIMPLEMENTED_FUNC macro when
-	  declaring private unimplemented copy constructors and assignment
-	  operators.  Reduces need to include other headers.  All
-	  compilers supported by TAO no longer need this macro.
+          Don't bother using the ACE_UNIMPLEMENTED_FUNC macro when
+          declaring private unimplemented copy constructors and assignment
+          operators.  Reduces need to include other headers.  All
+          compilers supported by TAO no longer need this macro.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp
-	  (validate_property):
+        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp
+          (validate_property):
 
-	  Do not use the deprecated Any extraction operator when checking
-	  the validity of the "Factories" property, i.e. use the operator
-	  that expects a pointer to a "const" object.
+          Do not use the deprecated Any extraction operator when checking
+          the validity of the "Factories" property, i.e. use the operator
+          that expects a pointer to a "const" object.
 
-	From Carlos O'Ryan <coryan@atdesk.com>
-	* tao/PortableServer/Object_Adapter.cpp (open):
+        From Carlos O'Ryan <coryan@atdesk.com>
+        * tao/PortableServer/Object_Adapter.cpp (open):
 
-	  Iterate over the registered IOR interceptors so that they may be
-	  given the opportunity to add tagged components to the profiles
-	  for servants managed by the Root POA.  [Bug 1414]
+          Iterate over the registered IOR interceptors so that they may be
+          given the opportunity to add tagged components to the profiles
+          for servants managed by the Root POA.  [Bug 1414]
 
-	* tao/PortableServer/POA.cpp (id_to_reference_i):
+        * tao/PortableServer/POA.cpp (id_to_reference_i):
 
-	  Use the POA's default ObjectReferenceTemplate to create object
-	  references.  [Bug 1414]
+          Use the POA's default ObjectReferenceTemplate to create object
+          references.  [Bug 1414]
 
-	  (establish_components):
+          (establish_components):
 
-	  Do not create a PortableInterceptor::IORInfo object if no IOR
-	  interceptors are registered.  Optimizes POA creation times for
-	  the common case, i.e. no registered IOR interceptors.
-	  [Bug 1414]
+          Do not create a PortableInterceptor::IORInfo object if no IOR
+          interceptors are registered.  Optimizes POA creation times for
+          the common case, i.e. no registered IOR interceptors.
+          [Bug 1414]
 
-	  Turned PortableInterceptor::establish_components() and
-	  PortableInterceptor::components_established() calls into
-	  non-servant upcalls.  Removes some locks that were held during
-	  IOR interceptor calls.  Fixes a deadlock.  [Bug 1414]
+          Turned PortableInterceptor::establish_components() and
+          PortableInterceptor::components_established() calls into
+          non-servant upcalls.  Removes some locks that were held during
+          IOR interceptor calls.  Fixes a deadlock.  [Bug 1414]
 
 Mon Apr 14 13:19:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h: Renamed the method
-	  decode_endpoints () to decode_tagged_endpoints (). The method
-	  decode_endpoints () is virtual in the TAO_Profile hierarchy and
-	  seems to have a specific semantics in all protocols. The SSL
-	  specifics have to be wrapped up in a seperate method which is
-	  private and not mixed with other protcols!
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h: Renamed the method
+          decode_endpoints () to decode_tagged_endpoints (). The method
+          decode_endpoints () is virtual in the TAO_Profile hierarchy and
+          seems to have a specific semantics in all protocols. The SSL
+          specifics have to be wrapped up in a seperate method which is
+          private and not mixed with other protcols!
 
 Mon Apr 14 14:16:35 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
-	  Defined virtual base class methods to stop Suncc/HPUX ACC339
-	  compiler warnings.Thanks to David Smith <dts@prismtechnologies.com>
-	  for bringing this to attention.
+        * orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
+          Defined virtual base class methods to stop Suncc/HPUX ACC339
+          compiler warnings.Thanks to David Smith <dts@prismtechnologies.com>
+          for bringing this to attention.
 
 Mon Apr 14 11:24:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Profile.cpp:
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Profile.cpp:
-	* tao/Strategies/UIOP_Profile.cpp: A blunder cause by moving the
-	  pointer 4 bytes ahead in parse_string_i () caused lots of tests
-	  to fail in TAO. The pointer shift is not required, since
-	  TAO_Profile::parse_string () itself moves the pointer ahead at
-	  the right place before calling parse_string_i () on the concrete
-	  profile implementations.
+        * tao/IIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.cpp: A blunder cause by moving the
+          pointer 4 bytes ahead in parse_string_i () caused lots of tests
+          to fail in TAO. The pointer shift is not required, since
+          TAO_Profile::parse_string () itself moves the pointer ahead at
+          the right place before calling parse_string_i () on the concrete
+          profile implementations.
 
 Mon Apr 14 15:02:25 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* tests/OBV/TC_Alignment/client.dsp:
-	* tests/OBV/TC_Alignment/client.dsp:
-	  Fixed custom build dependencies in release configuration.
+        * tests/OBV/TC_Alignment/client.dsp:
+        * tests/OBV/TC_Alignment/client.dsp:
+          Fixed custom build dependencies in release configuration.
 
 Mon Apr 14 14:07:18 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* orbsvcs/tests/Bug_1395_Regression/client.dsp:
-	* orbsvcs/tests/Bug_1395_Regression/server.dsp:
-	  Fixed mpc generated incorrect output file entry in release
-	  configuration.
+        * orbsvcs/tests/Bug_1395_Regression/client.dsp:
+        * orbsvcs/tests/Bug_1395_Regression/server.dsp:
+          Fixed mpc generated incorrect output file entry in release
+          configuration.
 
 Mon Apr 14 06:56:12 2003  Chad Elliott  <elliott_c@ociweb.com>
 

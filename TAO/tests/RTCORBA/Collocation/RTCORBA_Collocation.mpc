@@ -1,4 +1,4 @@
-project(Collocation): rt_server {
+project(RTCORBA Collocation Server): rt_server {
   exename = Collocation
 }
 

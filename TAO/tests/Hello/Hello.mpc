@@ -1,11 +1,11 @@
-project: server {
+project(Hello Server): server {
   Source_Files {
     Hello.cpp
     server.cpp
   }
 }
 
-project: client {
+project(Hello Client): client {
   Source_Files {
     TestC.cpp
     client.cpp

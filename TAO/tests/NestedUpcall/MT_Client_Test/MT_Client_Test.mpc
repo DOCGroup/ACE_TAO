@@ -1,11 +1,11 @@
-project: server {
+project(Nested Upcall MT Client Test Server): server {
   Source_Files {
     MT_Object_i.cpp
     server.cpp
   }
 }
 
-project(client): server {
+project(Nested Upcall MT Client Test Client): server {
   exename = client
 
   Source_Files {

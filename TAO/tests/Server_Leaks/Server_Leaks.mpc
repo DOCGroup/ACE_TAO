@@ -1,11 +1,11 @@
-project: server {
+project(Server Leaks Server): server {
   Source_Files {
     Ping_Service.cpp
     server.cpp
   }
 }
 
-project: client {
+project(Server Leaks Client): client {
   Source_Files {
     TestC.cpp
     client.cpp

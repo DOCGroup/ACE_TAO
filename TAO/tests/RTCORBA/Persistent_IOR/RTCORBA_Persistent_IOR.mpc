@@ -1,10 +1,10 @@
-project: rt_server {
+project(RTCORBA Persistent IOR Server): rt_server {
   Source_Files {
     server.cpp
   }
 }
 
-project: client {
+project(RTCORBA Persistent IOR Client): client {
   requires += rt_corba
   Source_Files {
     testC.cpp

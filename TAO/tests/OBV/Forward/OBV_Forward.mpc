@@ -1,4 +1,4 @@
-project: server {
+project(OBV Forward Server): server {
   idlflags += -Gv
 
   Source_Files {
@@ -7,7 +7,7 @@ project: server {
   }
 }
 
-project: client {
+project(OBV Forward Client): client {
   idlflags += -Gv
 
   Source_Files {
