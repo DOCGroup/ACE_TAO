@@ -20,7 +20,7 @@
  * @class ACE_Lib_Find
  *
  * This class includes all the static function calls needed to search
- * and open shared libraries. 
+ * and open shared libraries.
  */
 class ACE_Export ACE_Lib_Find
 {
@@ -31,11 +31,12 @@ class ACE_Export ACE_Lib_Find
   /**
    * Finds the file <filename> either using an absolute path or using
    * a relative path in conjunction with ACE_LD_SEARCH_PATH (e.g.,
-   * $LD_LIBRARY_PATH on UNIX or $PATH on Win32).  This function will
-   * add appropriate suffix (e.g., .dll on Win32 or .so on UNIX)
-   * according to the OS platform.  In addition, this function will
-   * apply the appropriate prefix (e.g., "lib" on UNIX and "" on
-   * Win32) if the <filename> doesn't match directly.
+   * $LD_LIBRARY_PATH on UNIX or the directories scaned by Win32 API
+   * SearchPath on Win32).  This function will add appropriate suffix
+   * (e.g., .dll on Win32 or .so on UNIX) according to the OS
+   * platform.  In addition, this function will apply the appropriate
+   * prefix (e.g., "lib" on UNIX and "" on Win32) if the <filename>
+   * doesn't match directly.
    */
   static int ldfind (const ACE_TCHAR *filename,
                      ACE_TCHAR *pathname,

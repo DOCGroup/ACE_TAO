@@ -1,3 +1,11 @@
+Wed Jan 23 16:48:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Lib_Find.h:
+	* ace/Lib_Find.cpp (ldfind): Change to use Win32 API SearchPath to
+	  search for the target DLL and updated the document for ldfind in
+	  header file.  Thanks to Eugene Alterman
+	  <Eugene.Alterman@bremer-inc.com> for submitting the patch.
+
 Wed Jan 23 14:01:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-lynxos.h (ACE_LACKS_INET_ATON):
@@ -22,7 +30,7 @@ Wed Jan 23 16:14:43 2002  Boris Kolpackov  <bosk@ipmce.ru>
 	  Added work around for famous Sun CC "pure virtual function called"
 	  bug. Unfortunately this involves introduction of yet another #define.
 	  See TAO/tao/ValueBase.h for more information.
-	
+
 Tue Jan 22 21:27:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ace_dll.vcp: Add Frameork_Component.* to the builds. Thanks
