@@ -1,19 +1,4 @@
-// $Id$
-
-//===================================================================
-//  = LIBRARY
-//      TAO/tests/POA/Default_Servant/server
-//
-//  = FILENAME
-//      server.cpp
-//
-//  = DESCRIPTION
-//      A server program for the File IDL module
-//
-//  = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
+// -*- C++ -*-
 
 #include "File_i.h"
 #include "tao/debug.h"
@@ -21,7 +6,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Default_Servant, server, "server.cpp,v 1.13 2001/03/26 21:16:52 coryan Exp")
+ACE_RCSID (File_IO,
+           server,
+           "$Id$")
 
 static const char *ior_output_file = "ior";
 static const int nthreads = 2;
@@ -80,15 +67,17 @@ parse_args (int argc, char **argv)
 
 
 int
-main (int argc, char **argv)
+main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_HANDLE handle=ACE_OS::open("big.txt",O_RDWR | O_CREAT,
-                                 S_IREAD | S_IWRITE);
-  ACE_OS::lseek(handle, 1024*1024*10,SEEK_SET);
-  ACE_OS::write(handle,"",1);
-  ACE_OS::close(handle);
+  ACE_HANDLE handle = ACE_OS::open ("big.txt",
+                                    O_RDWR | O_CREAT,
+                                    ACE_DEFAULT_FILE_PERMS);
 
+  ACE_OS::lseek (handle, 1024*1024*10, SEEK_SET);
+  ACE_OS::write (handle, "", 1);
+  ACE_OS::close (handle);
+
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB
@@ -106,10 +95,12 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Narrow the object reference to a POA reference
-      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager (ACE_TRY_ENV);
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (5);
@@ -141,10 +132,11 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       ACE_CString name = "firstPOA";
-      PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
-                                                                poa_manager.in (),
-                                                                policies,
-                                                                ACE_TRY_ENV);
+      PortableServer::POA_var first_poa =
+        root_poa->create_POA (name.c_str (),
+                              poa_manager.in (),
+                              policies,
+                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0;
@@ -188,7 +180,8 @@ main (int argc, char **argv)
       ACE_OS::fprintf (output_file, "%s", file_system_ior.in ());
       ACE_OS::fclose (output_file);
 
-      // set the state of the poa_manager to active i.e ready to process requests
+      // set the state of the poa_manager to active i.e ready to
+      // process requests
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -234,7 +227,11 @@ Worker::svc (void)
     }
   ACE_CATCHANY
     {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Worker::svc");
+      return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }

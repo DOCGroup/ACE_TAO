@@ -1,3 +1,15 @@
+Sun Sep 30 09:26:30 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/File_IO/server.cpp (main):
+
+	  Fixed compile-time problems found in VxWorks builds.  VxWorks
+	  does not define the POSIX file mode contants.
+
+	  (svc):
+
+	  Print the exception if one is caught and return -1.  An
+	  exception should be considered an error in this case.
+
 Sun Sep 30 09:08:59 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
