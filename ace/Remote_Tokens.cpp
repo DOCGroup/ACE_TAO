@@ -161,7 +161,7 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
 
       // Receive reply via blocking read.
 
-      if (peer->recv (&reply, sizeof reply) == -1)
+      if (peer->recv (&reply, sizeof reply) != sizeof reply)
 	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("recv failed")), -1);
 
       if (reply.decode () == -1)
