@@ -229,6 +229,7 @@ AC_ARG_ENABLE(lib-svcconf,
                   ;;
                 no)
                   ace_user_enable_lib_svcconf=no
+                  AC_DEFINE(ACE_LACKS_ACE_SVCCONF)
                   ;;
                 *)
                   AC_MSG_ERROR(bad value ${enableval} for --enable-lib-svcconf)
@@ -286,6 +287,7 @@ AC_ARG_ENABLE(lib-token,
                   ;;
                 no)
                   ace_user_enable_lib_token=no
+                  AC_DEFINE(ACE_LACKS_ACE_TOKEN)
                   ;;
                 *)
                   AC_MSG_ERROR(bad value ${enableval} for --enable-lib-token)
@@ -305,6 +307,7 @@ AC_ARG_ENABLE(lib-other,
                   ;;
                 no)
                   ace_user_enable_lib_other=no
+                  AC_DEFINE(ACE_LACKS_ACE_OTHER)
                   ;;
                 *)
                   AC_MSG_ERROR(bad value ${enableval} for --enable-lib-other)

@@ -225,7 +225,10 @@
 #undef ACE_UINT64_TYPEDEF
 #if defined(ACE_UINT64_TYPEDEF)
    typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF && !ACE_DISABLE_AUTOCONF_UINT64 */
+#endif /* ACE_UINT64_TYPEDEF */
+
+/* typedef for ACE_LOFF_T */
+#undef ACE_LOFF_T_TYPEDEF
 
 /* Enable ACE inlining */
 #undef __ACE_INLINE__
@@ -1038,6 +1041,16 @@
 /* Platform can not build ace/IOStream{,_T}.cpp.  This does not
    necessarily mean that the platform does not support iostreams. */
 #undef ACE_LACKS_ACE_IOSTREAM
+
+/* Do not compile support for the "other" ACE features, such as CORBA
+   handling, name services, and QOS. */
+#undef ACE_LACKS_ACE_OTHER
+
+/* Do not compile support for the ACE Service Configurator. */
+#undef ACE_LACKS_ACE_SVCCONF
+
+/* Do not compile support for the ACE Token feature. */
+#undef ACE_LACKS_ACE_TOKEN
 
 /* Platform lacks condition variables (e.g., Win32 and VxWorks) */
 #undef ACE_LACKS_COND_T

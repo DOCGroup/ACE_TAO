@@ -39,13 +39,21 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
  if test -n "$GXX"; then
 dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
 changequote(, )dnl
-   if $GXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
+   if $CXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
 changequote([, ])dnl
      :  # Do nothing
    else
      AC_DEFINE(ACE_HAS_GNUG_PRE_2_8)dnl
      AC_DEFINE(ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)dnl
    fi
+
+   case `$CXX --version` in
+     2.9* | 3*)
+       if test "$ace_user_enable_exceptions" != yes; then
+         ACE_CXXFLAGS="$ACE_CXXFLAGS -fcheck-new"
+       fi
+       ;;
+   esac
  fi
 
  dnl Compiler Flag Key
