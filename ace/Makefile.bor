@@ -49,6 +49,7 @@ OBJFILES = \
 	$(OBJDIR)\Dump.obj \
 	$(OBJDIR)\Dynamic.obj \
 	$(OBJDIR)\Dynamic_Service.obj \
+        $(OBJDIR)\Dynamic_Service_Base.obj \
 	$(OBJDIR)\Event_Handler.obj \
 	$(OBJDIR)\FIFO.obj \
 	$(OBJDIR)\FIFO_Recv.obj \
