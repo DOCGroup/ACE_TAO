@@ -14,6 +14,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name SLD
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SLDex
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -31,6 +34,18 @@ Package=<4>
 ###############################################################################
 
 Project: "SLD"=".\SLD.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SLDex"=".\SLDex\SLDex.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
