@@ -24,10 +24,10 @@ ACE_RCSID(ace, OS_main, "$Id$")
         ACE_Object_Manager ace_object_manager;
 #  endif /* ! ACE_MAIN_OBJECT_MANAGER */
 
-#  if !defined (ACE_WINCE)
+#  if !defined (ACE_WIN32)
 
 /* forward declaration */
-int ace_main_i (int, char *[]);
+extern int ace_main_i (int, char *[]);
 
 #    if defined (ACE_PSOSIM)
 // PSOSIM root lacks the standard argc, argv command line parameters,
@@ -66,7 +66,7 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
   ace_main_i (argc, argv);                /* call user main, ignore result */
 }
 
-#    else /* ACE_PSOSIM */
+#    endif /* ACE_PSOSIM */
 
 int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
 { 
@@ -74,18 +74,19 @@ int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
   return ace_main_i (argc, argv);           /* what the user calls "main" */ 
 }
 
-#      if defined (ACE_WIN32)
+#  elif !defined (ACE_WINCE)
+
+int xxx::run (int argc, ACE_TCHAR *argv[])  \
+{ \
+  return this->run_i (argc, argv); \
+} \
 
 int
-ACE_WMAIN (int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., main */ 
+ace_os_wmain_i (xxx &x, int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., main */ 
 {
   ACE_MAIN_OBJECT_MANAGER
-  return ace_os_main_i (argc, argv);           /* what the user calls "main" */
+  return x.run (argc, argv);           /* what the user calls "main" */
 } 
-
-#      endif /* ACE_WIN32 && UNICODE */
-
-#    endif /* ACE_PSOSIM */
 
 #  else /* ACE_WINCE */
 
