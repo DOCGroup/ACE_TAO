@@ -236,10 +236,6 @@ public:
   virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
   // Gets the proxy broker.
 
-  virtual void _use_locate_requests (CORBA::Boolean use_it);
-  // the the object to use a locate request for the first call to
-  // the object
-
 protected:
   CORBA_Object (int dummy);
   // Initializing a local object.

@@ -614,6 +614,7 @@ TAO_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & 
 
 #endif /* TAO_HAS_RT_CORBA */
 
+
 ACE_INLINE PortableServer::POA_ptr
 TAO_POA::the_parent (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))

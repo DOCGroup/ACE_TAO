@@ -21,6 +21,7 @@
 #define HELPER_H
 
 #include "param_testCli.h"
+#include "tao/DynamicInterface/Request.h"
 
 class Generator
 {

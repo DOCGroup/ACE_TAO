@@ -23,14 +23,14 @@ ACE_RCSID(tao, Exception, "$Id$")
 
 // Static initializers.
 
-CORBA::ExceptionList *TAO_Exceptions::system_exceptions;
+ACE_Unbounded_Queue<CORBA::TypeCode_ptr> *TAO_Exceptions::system_exceptions;
 ACE_Allocator *TAO_Exceptions::global_allocator_;
 
 // Flag that denotes that the TAO TypeCode constants have been
 // initialized.
 int TAO_Exceptions::initialized_ = 0;
 
-// TAO specific typecode
+// TAO specific typecode.
 extern CORBA::TypeCode_ptr TC_completion_status;
 
 // ****************************************************************
@@ -816,7 +816,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                     CORBA_INITIALIZE ());
   ACE_CHECK;
 
-  TAO_Exceptions::system_exceptions->add (tcp);
+  TAO_Exceptions::system_exceptions->enqueue_tail (tcp);
 
   ACE_ASSERT (tcp->length_ <= buflen);
   return;
@@ -904,7 +904,7 @@ TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
 
   // Initialize the list of system exceptions, used when unmarshaling.
   ACE_NEW (TAO_Exceptions::system_exceptions,
-           CORBA::ExceptionList);
+           ACE_Unbounded_Queue<CORBA::TypeCode_ptr>);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, \
@@ -941,7 +941,7 @@ TAO_Exceptions::fini (void)
 {
   if (TAO_Exceptions::system_exceptions != 0)
     {
-      TAO_Exceptions::system_exceptions->_destroy ();
+      delete TAO_Exceptions::system_exceptions;
       TAO_Exceptions::system_exceptions = 0;
     }
 
@@ -1189,90 +1189,6 @@ STANDARD_EXCEPTION_LIST
 
 #undef STANDARD_EXCEPTION_LIST
 
-CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
-                                          CORBA::TypeCode_ptr *tc_list)
-  : ref_count_ (1)
-{
-  for (CORBA::ULong i = 0;
-       i < len;
-       i++)
-    this->add (tc_list [i]);
-}
-
-CORBA_ExceptionList::~CORBA_ExceptionList (void)
-{
-  for (CORBA::ULong i = 0;
-       i < this->count ();
-       ++i)
-    {
-      CORBA::TypeCode_ptr *tc;
-
-      if (this->tc_list_.get (tc, i) == -1)
-        return;
-
-      CORBA::release (*tc);
-    }
-}
-
-void
-CORBA_ExceptionList::add (CORBA::TypeCode_ptr tc)
-{
-  this->tc_list_.enqueue_tail (CORBA::TypeCode::_duplicate (tc));
-}
-
-void
-CORBA_ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
-{
-  this->tc_list_.enqueue_tail (tc);
-}
-
-CORBA::TypeCode_ptr
-CORBA_ExceptionList::item (CORBA::ULong slot,
-                           CORBA::Environment &ACE_TRY_ENV)
-{
-  CORBA::TypeCode_ptr *tc;
-
-  if (this->tc_list_.get (tc,
-                          slot) == -1)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), CORBA::TypeCode::_nil ());
-  else
-    return CORBA::TypeCode::_duplicate (*tc);
-}
-
-void
-CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-
-CORBA_ExceptionList_ptr
-CORBA_ExceptionList::_duplicate (void)
-{
-  this->_incr_refcnt ();
-  return this;
-}
-
-void
-CORBA_ExceptionList::_destroy (void)
-{
-  this->_decr_refcnt ();
-}
-
-void
-CORBA_ExceptionList::_incr_refcnt (void)
-{
-  this->ref_count_++;
-}
-
-void
-CORBA_ExceptionList::_decr_refcnt (void)
-{
-  this->ref_count_--;
-  if (this->ref_count_ == 0)
-    delete this;
-
-}
-
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 {}
@@ -1283,13 +1199,11 @@ TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 template class ACE_Node<CORBA::TypeCode_ptr>;
 template class ACE_Unbounded_Queue<CORBA::TypeCode_ptr>;
 template class ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>;
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Node<CORBA::TypeCode_ptr>
 #pragma instantiate ACE_Unbounded_Queue<CORBA::TypeCode_ptr>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

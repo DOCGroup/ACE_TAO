@@ -634,6 +634,7 @@ public:
   // This method gives the policies that are exposed to the client.
   // These policies are shipped within the IOR.
 
+
   // Utility functions for the other
   static char* ObjectId_to_string (const PortableServer::ObjectId &id);
 

@@ -171,12 +171,16 @@ public:
                            CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
 
-  // The following are not implemented and just throw
-  // CORBA::NO_IMPLEMENT.
-
   void create_exception_list (CORBA::ExceptionList_ptr &exclist,
                               CORBA_Environment &ACE_TRY_ENV =
                                   TAO_default_environment ());
+
+  void create_environment (CORBA::Environment_ptr &new_env,
+                           CORBA_Environment &ACE_TRY_ENV =
+                           TAO_default_environment ());
+
+  // The following are not implemented and just throw
+  // CORBA::NO_IMPLEMENT.
 
   void create_context_list (CORBA::ContextList_ptr &ctxtlist,
                             CORBA_Environment &ACE_TRY_ENV =
@@ -186,20 +190,16 @@ public:
                             CORBA_Environment &ACE_TRY_ENV =
                             TAO_default_environment ());
 
-  void create_environment (CORBA::Environment_ptr &new_env,
-                           CORBA_Environment &ACE_TRY_ENV =
-                           TAO_default_environment ());
-
   CORBA::Boolean get_service_information (CORBA::ServiceType service_type,
                                           CORBA::ServiceInformation_out service_information,
                                           CORBA::Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
 
-  void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq req,
+  void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq &req ,
                                       CORBA_Environment &ACE_TRY_ENV =
                                       TAO_default_environment ());
 
-  void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq req,
+  void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq &req,
                                         CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
 

@@ -10,7 +10,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Timeprobe.h"
-#include "tao/Any.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
 
@@ -30,7 +29,7 @@ static const char *TAO_Server_Request_Timeprobe_Description[] =
 
 enum
   {
-    // Timeprobe description table start key
+    // Timeprobe description table start key.
     TAO_SERVER_REQUEST_START = 400,
     TAO_SERVER_REQUEST_END
   };
@@ -197,9 +196,11 @@ TAO_ServerRequest::send_no_exception_reply (void)
         {
           // No exception but some kind of error, yet a response
           // is required.
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
-                      ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")));
+          ACE_ERROR ((
+              LM_ERROR,
+              ACE_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
+              ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")
+            ));
         }
     }
 }
@@ -207,8 +208,8 @@ TAO_ServerRequest::send_no_exception_reply (void)
 void
 TAO_ServerRequest::tao_send_reply (void)
 {
-  int result = mesg_base_->send_message(transport_,
-                                        *outgoing_);
+  int result = mesg_base_->send_message (transport_,
+                                         *outgoing_);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -243,7 +244,8 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send exception reply\n"),
+                          ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot ")
+                          ACE_TEXT ("send exception reply\n"),
                           ACE_TEXT ("tao_send_reply_exception()")));
             }
         }

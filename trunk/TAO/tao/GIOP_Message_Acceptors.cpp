@@ -238,10 +238,13 @@ TAO_GIOP_Message_Acceptors::process_client_request (
 
       if (response_required)
         {
-          CORBA::UNKNOWN exception
-            (CORBA::SystemException::_tao_minor_code
-             (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
-             CORBA::COMPLETED_MAYBE);
+          CORBA::UNKNOWN exception (
+              CORBA::SystemException::_tao_minor_code (
+                  TAO_UNHANDLED_SERVER_CXX_EXCEPTION,
+                  0
+                ),
+              CORBA::COMPLETED_MAYBE
+            );
 
           result = this->send_reply_exception (transport,
                                                orb_core,

@@ -17,14 +17,14 @@
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
-#include "tao/NVList.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/TAO_Internal.h"
+#include "tao/NVList.h"
+#include "tao/Dynamic_Adapter.h"
 #include "tao/CDR.h"
-#include "tao/Request.h"
 #include "tao/MProfile.h"
 
 #include "tao/RT_ORB.h"
@@ -326,19 +326,15 @@ CORBA_ORB::create_list (CORBA::Long count,
     }
 }
 
-// The following functions are not implemented - they just throw
-// CORBA::NO_IMPLEMENT.
-
 void
 CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &list,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_NEW_THROW_EX (list, CORBA::ExceptionList (),
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
+  TAO_Dynamic_Adapter *dynamic_adapter =
+    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
+
+  dynamic_adapter->create_exception_list (list,
+                                          ACE_TRY_ENV);
 }
 
 void
@@ -353,19 +349,6 @@ CORBA_ORB::create_environment (CORBA::Environment_ptr &environment,
                       CORBA::COMPLETED_NO));
 }
 
-CORBA::Boolean
-CORBA_ORB::get_service_information (CORBA::ServiceType /* service_type */,
-                                    CORBA::ServiceInformation_out /* service_information */,
-                                    CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
-}
-
 void
 CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &nv,
                                CORBA_Environment &ACE_TRY_ENV)
@@ -377,6 +360,22 @@ CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &nv,
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
+}
+
+// The following functions are not implemented - they just throw
+// CORBA::NO_IMPLEMENT.
+
+CORBA::Boolean
+CORBA_ORB::get_service_information (CORBA::ServiceType /* service_type */,
+                                    CORBA::ServiceInformation_out /* service_information */,
+                                    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOTSUP),
+                      CORBA::COMPLETED_NO),
+                    0);
 }
 
 void
@@ -402,7 +401,7 @@ CORBA_ORB::get_default_context (CORBA::Context_ptr &,
 }
 
 void
-CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
+CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq &,
                                           CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
@@ -413,7 +412,7 @@ CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
 }
 
 void
-CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
+CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq &,
                                             CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
@@ -1216,9 +1215,6 @@ CORBA::ORB_init (int &argc,
   PortableInterceptor::register_orb_initializer (orb_initializer.in (),
                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-
-  /// Transfer ownership to the ORBInitializer registry.
-  (void) orb_initializer._retn ();
 #endif  /* TAO_HAS_RT_CORBA == 1 */
 
   #if TAO_HAS_CORBA_MESSAGING == 1
@@ -1236,10 +1232,7 @@ CORBA::ORB_init (int &argc,
   PortableInterceptor::register_orb_initializer (orb_initializer.in (),
                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-
-  /// Transfer ownership to the ORBInitializer registry.
-  (void) orb_initializer._retn ();
-  #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
   // -------------------------------------------------------------
 
   PortableInterceptor::ORBInitInfo_ptr orb_init_info_temp;

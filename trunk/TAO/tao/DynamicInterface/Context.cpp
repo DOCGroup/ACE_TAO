@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao/Context.h"
+#include "Context.h"
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+ACE_RCSID(DynamicInterface, Context, "$Id$")
 
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
@@ -10,7 +10,7 @@
 #include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Context.i"
+# include "Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
 CORBA_Context::CORBA_Context (void)
@@ -25,7 +25,11 @@ CORBA_Context::~CORBA_Context (void)
 CORBA::ULong
 CORBA_Context::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
+                    ace_mon, 
+                    this->refcount_lock_, 
+                    0);
+
   return refcount_++;
 }
 
@@ -33,10 +37,17 @@ CORBA::ULong
 CORBA_Context::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
+                      ace_mon, 
+                      this->refcount_lock_, 
+                      0);
+
     this->refcount_--;
+
     if (this->refcount_ != 0)
-      return this->refcount_;
+      {
+        return this->refcount_;
+      }
   }
 
   delete this;
@@ -109,7 +120,9 @@ CORBA_ContextList::CORBA_ContextList (CORBA::ULong len,
   : ref_count_ (1)
 {
   for (CORBA::ULong i=0; i < len; i++)
-    this->add (ctx_list [i]);
+    {
+      this->add (ctx_list [i]);
+    }
 }
 
 CORBA_ContextList::~CORBA_ContextList (void)
@@ -119,7 +132,9 @@ CORBA_ContextList::~CORBA_ContextList (void)
       char **ctx;
 
       if (this->ctx_list_.get (ctx, i) == -1)
-        return;
+        {
+          return;
+        }
 
       CORBA::string_free (*ctx);
     }
@@ -141,12 +156,17 @@ char *
 CORBA_ContextList::item (CORBA::ULong slot,
                          CORBA::Environment &ACE_TRY_ENV)
 {
-  char **ctx;
-  if (this->ctx_list_.get (ctx,
-                           slot) == -1)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+  char **ctx = 0;
+
+  if (this->ctx_list_.get (ctx, slot) == -1)
+    {
+      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+                        0);
+    }
   else
-    return CORBA::string_dup (*ctx);
+    {
+      return CORBA::string_dup (*ctx);
+    }
 }
 
 void
@@ -169,7 +189,9 @@ CORBA_ContextList::_destroy (void)
   CORBA::ULong current = --this->ref_count_;
 
   if (current == 0)
-    delete this;
+    {
+      delete this;
+    }
 }
 
 void
@@ -182,8 +204,10 @@ void
 CORBA_ContextList::_decr_refcnt (void)
 {
   this->ref_count_--;
-    if (this->ref_count_ != 0)
+
+  if (this->ref_count_ != 0)
+    {
       delete this;
+    }
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */

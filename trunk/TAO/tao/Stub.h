@@ -67,10 +67,10 @@ class TAO_PrivateConnectionPolicy;
 enum TAO_Param_Type
 {
   // = TITLE
-  //   TAO_Param_Type
+  //    TAO_Param_Type
   //
   // = DESCRIPTION
-  //   Parameter mode of a given parameter.
+  //    Parameter mode of a given parameter.
   PARAM_IN,
   PARAM_OUT,
   PARAM_INOUT,
@@ -87,77 +87,41 @@ typedef CORBA::Exception* (*TAO_Exception_Alloc) (void);
 struct TAO_Exception_Data
 {
   // = TITLE
-  //   TAO_Exception_Data
+  //    TAO_Exception_Data
   //
   // = DESCRIPTION
-  //   Description of a single exception
+  //    Description of a single exception.
   //
-  //   The interpreter needs a way to allocate memory to hold the exception
-  //   that was raised by the stub. This data structure provides the typecode
-  //   for the exception as well as a static function pointer that does the job
-  //   of memory allocation.
+  //    The interpreter needs a way to allocate memory to hold the exception
+  //    that was raised by the stub. This data structure provides the typecode
+  //    for the exception as well as a static function pointer that
+  //    does the job of memory allocation.
 
   CORBA::TypeCode_ptr tc;
-  // typecode describing the exception
+  // Typecode describing the exception.
 
   TAO_Exception_Alloc alloc;
-  // the allocator for this exception
+  // The allocator for this exception.
 };
 
 class TAO_Export TAO_Stub
 {
   // = TITLE
-  //   TAO_Stub
+  //    TAO_Stub
   //
   // = DESCRIPTION
-  //   Per-objref data includes the (protocol-specific) Profile, which
-  //   is handled by placing it into a subclass of this type along
-  //   with data that may be used in protocol-specific caching
-  //   schemes.
+  //    Per-objref data includes the (protocol-specific) Profile, which
+  //    is handled by placing it into a subclass of this type along
+  //    with data that may be used in protocol-specific caching
+  //    schemes.
   //
-  //   The type ID (the data specified by CORBA 2.0 that gets exposed
-  //   "on the wire", and in stringified objrefs) is held by this
-  //   module.
+  //    The type ID (the data specified by CORBA 2.0 that gets exposed
+  //    "on the wire", and in stringified objrefs) is held by this
+  //    module.
   //
-  //   The stub and DII interpreter APIs are member functions of this
-  //   type.
+  //    The stub APIs are member functions of this
+  //    type.
 public:
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-  void do_dynamic_call (const char *opname,
-                        CORBA::Boolean is_roundtrip,
-                        CORBA::NVList_ptr args,
-                        CORBA::NamedValue_ptr result,
-                        CORBA::Flags flags,
-                        CORBA::ExceptionList_ptr exceptions,
-                        int lazy_evaluation,
-                        CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
-  // Dynamic invocations use a more costly "varargs" calling
-  // convention; it's got the same input data as the (static)
-  // stub-oriented one, but the data is represented somewhat
-  // differently.
-  //
-  // Operation-specific data isn't collected in a stack frame and into
-  // a static/readonly "calldata" structure, but instead is collected
-  // into these parameters, the majority of which are heap-allocated:
-  //
-  //    - opname ... the name of the operation
-  //    - is_roundtrip ... true except for oneway operations, or ones where
-  //      the client doesn't care about responses
-  //    - args ... call parameters and their descriptions
-  //    - result ... result and its description
-  //    - flags ... only one DII flag is legal
-  //    - exceptions ... list of legal user-defined exceptions
-  //    - ACE_TRY_ENV ... used for exception reporting.
-
-  // Used with DII deferred synchronous requests.
-  void do_deferred_call (const CORBA::Request_ptr req,
-                         CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   CORBA::Policy_ptr get_policy (CORBA::PolicyType type,
@@ -301,7 +265,7 @@ public:
   TAO_MProfile& base_profiles (void);
   // Obtain a reference to the basic profile set.
 
-  // manage forward and base profiles.
+  // Manage forward and base profiles.
   TAO_Profile *next_profile (void);
   // THREAD SAFE.  If forward_profiles is null then this will
   // get the next profile in the base_profiles list.  If forward is not null
@@ -326,15 +290,11 @@ public:
   // Returns 1 if a forward profile has successfully been used.
   // profile_success_ && forward_profiles_
 
-  // Just forward profiles.
-  void use_locate_requests (CORBA::Boolean use_it);
-  // set the flags to use locate_requests.
-
   void set_valid_profile (void);
   // NON-THREAD-SAFE.  Will set profile_success_ to 0.
 
   CORBA::Boolean valid_profile (void);
-  // returns TRUE if a connection was successful with at least
+  // Returns TRUE if a connection was successful with at least
   // one profile.
 
   TAO_Profile *base_profiles (const TAO_MProfile& mprofiles);
@@ -343,16 +303,16 @@ public:
 
   void add_forward_profiles (const TAO_MProfile &mprofiles);
   // THREAD SAFE.
-  // set the forward_profiles.  This object will assume ownership of
+  // Set the forward_profiles.  This object will assume ownership of
   // this TAO_MProfile object!!
 
   CORBA::Boolean next_profile_retry (void);
   // THREAD SAFE
-  // used to get the next profile after the one being used has
+  // Used to get the next profile after the one being used has
   // failed during the initial connect or send of the message!
 
   TAO_ORB_Core* orb_core (void) const;
-  // Accessor
+  // Accessor.
 
   CORBA::ORB_ptr servant_orb_ptr (void);
   // This returns a duplicated ORB pointer.
@@ -367,50 +327,34 @@ public:
   // temporary.
 
   void addressing_mode (CORBA::Short addr_mode);
-  // Set the addressing mode
+  // Set the addressing mode.
 
   CORBA::Short addressing_mode (void);
-  // Return the Addressing mode
+  // Return the Addressing mode.
 
   CORBA::Boolean service_profile_selection (void);
   // Make a call on to services to see whether they have some
   // preferences on selecting the right profiles.
-
-protected:
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-  void put_params (TAO_GIOP_Invocation &call,
-                   CORBA::NVList_ptr args,
-                   CORBA_Environment &ACE_TRY_ENV =
-                         TAO_default_environment ());
-  // Helper method to factor out common code in dynamic oneway
-  // vs. twoway invocations.
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 private:
   TAO_Profile *set_profile_in_use_i (TAO_Profile *pfile);
   // Makes a copy of the profile and frees the existing profile_in_use.
   // NOT THREAD SAFE
 
-  void reset_first_locate_request (void);
-  // NON-THREAD-SAFE.
-  // reset the flag telling that the locate request should be used
-
   void reset_base ();
-  // NON-THREAD-SAFE.  utility method which resets or initializes
+  // NON-THREAD-SAFE.  Utility method which resets or initializes
   // the base_profile list and forward flags.
 
   void forward_back_one (void);
-  // NON-THREAD-SAFE.  utility method which unrolls (removes or pops)
+  // NON-THREAD-SAFE.  Utility method which unrolls (removes or pops)
   // the top most forwarding profile list.
 
   void reset_forward ();
-   // NOT THREAD-SAFE.  utility method which pops all forward profile
+   // NOT THREAD-SAFE.  Utility method which pops all forward profile
    // lists and resets the forward_profiles_ pointer.
 
   ~TAO_Stub (void);
-  // Destructor is to be called only through _decr_refcnt()
+  // Destructor is to be called only through _decr_refcnt().
 
   TAO_Profile *next_forward_profile (void);
   // NON-THREAD-SAFE.  utility method for next_profile.
@@ -447,35 +391,29 @@ private:
 private:
 
   TAO_MProfile base_profiles_;
-  // ordered list of profiles for this object.
+  // Ordered list of profiles for this object.
 
   TAO_MProfile *forward_profiles_;
   // The list of forwarding profiles.  This is actually implemented as a
   // linked list of TAO_MProfile objects.
 
   TAO_Profile *profile_in_use_;
-  // this is the profile that we are currently sending/receiving with
+  // This is the profile that we are currently sending/receiving with.
 
   ACE_Lock* profile_lock_ptr_;
-  // Mutex to protect access to the forwarding profile
+  // Mutex to protect access to the forwarding profile.
 
   size_t profile_success_;
   // Have we successfully talked to the forward profile yet?
 
   ACE_SYNCH_MUTEX refcount_lock_;
-  // Mutex to protect reference count
+  // Mutex to protect reference count.
 
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
 
-  CORBA::Boolean use_locate_request_;
-  // set if locate request should be used
-
-  CORBA::Boolean first_locate_request_;
-  // distinguishes the first from following calls
-
   TAO_ORB_Core* orb_core_;
-  // The ORB
+  // The ORB.
 
   CORBA::ORB_var orb_;
   // ORB required for reference counting.  This will help us keep the
@@ -497,9 +435,9 @@ private:
   #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   CORBA::Short addressing_mode_;
-  // The addressing mode
+  // The addressing mode.
 
-  // = Disallow copy constructor and assignment operator
+  // = Disallow copy constructor and assignment operator.
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub &operator = (const TAO_Stub &))
 
@@ -510,14 +448,14 @@ private:
 #endif /* __GNUG__ */
 };
 
-// Define a TAO_Stub auto_ptr class
+// Define a TAO_Stub auto_ptr class.
 class TAO_Export TAO_Stub_Auto_Ptr
 {
   // = TITLE
   //     Implements the draft C++ standard auto_ptr abstraction.
   //     This class allows one to work Stub Objects *Only*!
 public:
-  // = Initialization and termination methods
+  // = Initialization and termination methods.
   /* explicit */ TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
   TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
   TAO_Stub_Auto_Ptr &operator= (TAO_Stub_Auto_Ptr &rhs);

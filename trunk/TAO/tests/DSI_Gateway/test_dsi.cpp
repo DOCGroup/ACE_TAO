@@ -2,6 +2,7 @@
 
 #include "test_dsi.h"
 #include "tao/debug.h"
+#include "tao/DynamicInterface/Request.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_dsi.i"

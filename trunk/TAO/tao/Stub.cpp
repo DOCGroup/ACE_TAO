@@ -14,10 +14,8 @@
 #include "tao/Stub.h"
 #include "tao/Sequence.h"
 #include "tao/Object.h"
-#include "tao/NVList.h"
 #include "tao/Invocation.h"
 #include "tao/Asynch_Invocation.h"
-#include "tao/DII_Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Sync_Strategies.h"
@@ -40,7 +38,7 @@ ACE_RCSID(tao, TAO_Stub, "$Id$")
 
   TAO_Stub::TAO_Stub (char *repository_id,
                       const TAO_MProfile &profiles,
-                      TAO_ORB_Core* orb_core)
+                      TAO_ORB_Core *orb_core)
     : type_id (repository_id),
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -58,8 +56,6 @@ ACE_RCSID(tao, TAO_Stub, "$Id$")
       profile_success_ (0),
       refcount_lock_ (),
       refcount_ (1),
-      use_locate_request_ (0),
-      first_locate_request_ (0),
       orb_core_ (orb_core),
       orb_ (),
       servant_orb_ (),
@@ -134,6 +130,7 @@ TAO_Stub::~TAO_Stub (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   this->orb_core_->_decr_refcnt ();
+
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -325,249 +322,6 @@ public:
 private:
   int old_type_;
 };
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-// DII analogue of the above.
-
-void
-TAO_Stub::do_dynamic_call (const char *opname,
-                           CORBA::Boolean is_roundtrip,
-                           CORBA::NVList_ptr args,
-                           CORBA::NamedValue_ptr result,
-                           CORBA::Flags,
-                           CORBA::ExceptionList_ptr exceptions,
-                           int lazy_evaluation,
-                           CORBA::Environment &ACE_TRY_ENV)
-{
-  // @@ TOCCST: why do we keep using this function when ACE+TAO code
-  // is clearly not cancel safe anymore?  Furthermore, all the
-  // generated code using the Invocation classes is probably not
-  // cancel safe!
-  TAO_Synchronous_Cancellation_Required NOT_USED;
-
-  // Do a locate_request if necessary/wanted.
-  // Suspect that you will be forwarded, so be proactive!
-  // strategy for reducing overhead when you think a request will
-  // be forwarded.  No standard way now to know.
-  if (this->use_locate_request_ && this->first_locate_request_)
-    {
-      // @@ TOCCST: notice how the locate request is only sent for
-      // dynamic and deferred (!!) calls, nothing is done for static
-      // calls, the far more common case.  IMHO this should just go
-      // away, after all we have _validate_connection to do the same
-      // thing!
-      TAO_GIOP_Locate_Request_Invocation call (this,
-                                               this->orb_core_);
-
-      // Simply let these exceptions propagate up
-      // (if any of them occurs.)
-      call.start (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      call.invoke (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      this->first_locate_request_ = 0;
-    }
-
-  if (is_roundtrip)
-    {
-      TAO_GIOP_Twoway_Invocation call (this,
-                                       opname,
-                                       ACE_OS::strlen (opname),
-                                       this->orb_core_);
-
-      // Loop as needed for forwarding; see above.
-
-      for (;;)
-        {
-          call.start (ACE_TRY_ENV);
-          ACE_CHECK;
-
-          CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-
-          call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
-                               ACE_TRY_ENV);
-          ACE_CHECK;
-
-          this->put_params (call,
-                            args,
-                            ACE_TRY_ENV);
-          ACE_CHECK;
-
-          // Make the call ... blocking for the response.
-          int status =
-            call.invoke (exceptions, ACE_TRY_ENV);
-          ACE_CHECK;
-
-          if (status == TAO_INVOKE_RESTART)
-            continue;
-
-          if (status == TAO_INVOKE_EXCEPTION)
-            return; // Shouldn't happen
-
-          if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                       CORBA::COMPLETED_MAYBE));
-
-          // The only case left is status == TAO_INVOKE_OK, exit the
-          // loop.  We cannot retry because at this point we either
-          // got a reply or something with an status of
-          // COMPLETED_MAYBE, thus we cannot reissue the request if we
-          // are to satisfy the "at most once" semantics.
-          break;
-        }
-
-      // Now, get all the "return", "out", and "inout" parameters
-      // from the response message body ... return parameter is
-      // first, the rest are in the order defined in the IDL spec
-      // (which is also the order that DII users are required to
-      // use).
-
-      if (result != 0)
-        {
-          result->value ()->_tao_decode (call.inp_stream (),
-                                         ACE_TRY_ENV);
-          ACE_CHECK;
-        }
-
-      args->_tao_incoming_cdr (call.inp_stream (),
-                               CORBA::ARG_OUT | CORBA::ARG_INOUT,
-                               lazy_evaluation,
-                               ACE_TRY_ENV);
-    }
-  else
-    {
-      TAO_GIOP_Oneway_Invocation call (this,
-                                       opname,
-                                       ACE_OS::strlen (opname),
-                                       this->orb_core_);
-
-      for (;;)
-        {
-          call.start (ACE_TRY_ENV);
-          ACE_CHECK;
-
-          CORBA::Octet response_flag = ACE_static_cast (CORBA::Octet,
-                                                        call.sync_scope ());
-
-          call.prepare_header (response_flag,
-                               ACE_TRY_ENV);
-          ACE_CHECK;
-
-          this->put_params (call,
-                            args,
-                            ACE_TRY_ENV);
-          ACE_CHECK;
-
-          int status = call.invoke (ACE_TRY_ENV);
-          ACE_CHECK;
-
-          if (status == TAO_INVOKE_RESTART)
-            continue;
-
-          if (status == TAO_INVOKE_EXCEPTION)
-            return; // Shouldn't happen
-
-          if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                       CORBA::COMPLETED_MAYBE));
-
-          break;
-        }
-    }
-}
-
-void
-TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
-                            CORBA::Environment &ACE_TRY_ENV)
-{
-  // @@ TOCCST: why do we keep using this function when ACE+TAO code
-  // is clearly not cancel safe anymore?  Furthermore, all the
-  // generated code using the Invocation classes is probably not
-  // cancel safe!
-  TAO_Synchronous_Cancellation_Required NOT_USED;
-
-  // Do a locate_request if necessary/wanted.
-  // Suspect that you will be forwarded, so be proactive!
-  // strategy for reducing overhead when you think a request will
-  // be forwarded.  No standard way now to know.
-  if (this->use_locate_request_ && this->first_locate_request_)
-    {
-      // @@ TOCCST: notice how the locate request is only sent for
-      // dynamic and deferred (!!) calls, nothing is done for static
-      // calls, the far more common case.  IMHO this should just go
-      // away, after all we have _validate_connection to do the same
-      // thing!
-      TAO_GIOP_Locate_Request_Invocation call (this,
-                                               this->orb_core_);
-
-      // Simply let these exceptions propagate up
-      // (if any of them occurs.)
-      call.start (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      call.invoke (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      this->first_locate_request_ = 0;
-    }
-
-  TAO_GIOP_DII_Deferred_Invocation call (this,
-                                         this->orb_core_,
-                                         req);
-
-  // Loop as needed for forwarding; see above.
-
-  for (;;)
-    {
-      call.start (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-
-      call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
-                           ACE_TRY_ENV);
-      ACE_CHECK;
-
-      this->put_params (call,
-                        req->arguments (),
-                        ACE_TRY_ENV);
-      ACE_CHECK;
-
-      // Make the call without blocking.
-      CORBA::ULong status = call.invoke (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      if (status == TAO_INVOKE_RESTART)
-        continue;
-
-      if (status != TAO_INVOKE_OK)
-        ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                   CORBA::COMPLETED_MAYBE));
-
-      // The only case left is status == TAO_INVOKE_OK, exit the
-      // loop.  We cannot retry because at this point we either
-      // got a reply or something with an status of
-      // COMPLETED_MAYBE, thus we cannot reissue the request if we
-      // are to satisfy the "at most once" semantics.
-      break;
-    }
-}
-
-void
-TAO_Stub::put_params (TAO_GIOP_Invocation &call,
-                      CORBA::NVList_ptr args,
-                      CORBA::Environment &ACE_TRY_ENV)
-{
-  args->_tao_encode (call.out_stream (),
-                     this->orb_core_,
-                     CORBA::ARG_IN | CORBA::ARG_INOUT,
-                     ACE_TRY_ENV);
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // ****************************************************************
 
@@ -959,7 +713,6 @@ TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies,
 TAO_Sync_Strategy &
 TAO_Stub::sync_strategy (void)
 {
-
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   int has_synchronization;
@@ -1053,6 +806,7 @@ TAO_Stub::client_priority (void)
 }
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
 
 CORBA::Policy *
 TAO_Stub::sync_scope (void)

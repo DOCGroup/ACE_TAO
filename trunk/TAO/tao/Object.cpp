@@ -5,14 +5,15 @@
 //
 // ORB:         CORBA_Object operations
 
+#include "ace/Dynamic_Service.h"
 #include "tao/Object.h"
 #include "tao/Stub.h"
-#include "tao/Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/Connector_Registry.h"
 #include "tao/debug.h"
 #include "tao/Remote_Object_Proxy_Broker.h"
+#include "tao/Dynamic_Adapter.h"
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 #include "tao/InterfaceC.h"
@@ -228,16 +229,6 @@ CORBA::Object::_proxy_broker (void)
   return this->proxy_broker_;
 }
 
-// @@ This doesn't seemed to be used anyplace! It should go away!! FRED
-void
-CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
-{
-  if ( this->_stubobj () )
-    this->_stubobj ()->use_locate_requests (use_it);
-
-  return;
-}
-
 CORBA::Boolean
 CORBA::is_nil (CORBA::Object_ptr obj)
 {
@@ -285,26 +276,28 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   // Since we don't really support Context, anything but a null pointer
-  // is a no-no. - Jeff
-  // Neither can we create a request object from locality constraint
+  // is a no-no.
+  // Neither can we create a request object from locality constrained
   // object references.
-  if (ctx || this->protocol_proxy_ == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+  if (ctx != 0 || this->protocol_proxy_ == 0)
+    {
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+    }
 
-  ACE_NEW_THROW_EX (request,
-                    CORBA::Request (this,
-                                    this->protocol_proxy_->orb_core ()-> orb (),
-                                    operation,
-                                    arg_list,
-                                    result,
-                                    req_flags,
-                                    CORBA::ExceptionList::_nil (),
-                                    ACE_TRY_ENV),
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_MAYBE));
+  TAO_Dynamic_Adapter *dynamic_adapter =
+    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
+
+  dynamic_adapter->create_request (
+                       this,
+                       this->protocol_proxy_->orb_core ()-> orb (),
+                       operation,
+                       arg_list,
+                       result,
+                       0,
+                       request,
+                       req_flags,
+                       ACE_TRY_ENV
+                     );
 }
 
 void
@@ -320,51 +313,50 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
-  // Neither can we create a request object from locality constraint
+  // Neither can we create a request object from locality constrained
   // object references.
-  if (ctx || this->protocol_proxy_ == 0)
+  if (ctx != 0 || this->protocol_proxy_ == 0)
+    {
       ACE_THROW (CORBA::NO_IMPLEMENT ());
+    }
 
-  ACE_NEW_THROW_EX (request,
-                    CORBA::Request (this,
-                                    this->protocol_proxy_->orb_core ()->orb (),
-                                    operation,
-                                    arg_list,
-                                    result,
-                                    req_flags,
-                                    exceptions,
-                                    ACE_TRY_ENV),
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_MAYBE));
+  TAO_Dynamic_Adapter *dynamic_adapter =
+    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
+
+  dynamic_adapter->create_request (
+                       this,
+                       this->protocol_proxy_->orb_core ()-> orb (),
+                       operation,
+                       arg_list,
+                       result,
+                       exceptions,
+                       request,
+                       req_flags,
+                       ACE_TRY_ENV
+                     );
 }
 
 CORBA::Request_ptr
 CORBA_Object::_request (const char *operation,
                         CORBA::Environment &ACE_TRY_ENV)
 {
-  //  ACE_TRY_ENV.clear ();
   if (this->protocol_proxy_)
     {
-      CORBA::Request_ptr req = CORBA::Request::_nil ();
-      ACE_NEW_THROW_EX (req,
-                        CORBA::Request (this,
-                                        this->protocol_proxy_->orb_core ()->orb (),
-                                        operation,
-                                        ACE_TRY_ENV),
-                        CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          ENOMEM),
-                        CORBA::COMPLETED_MAYBE));
-      ACE_CHECK_RETURN (CORBA::Request::_nil ());
+      TAO_Dynamic_Adapter *dynamic_adapter =
+        ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
 
-      return req;
+      return dynamic_adapter->request (
+                                  this,
+                                  this->protocol_proxy_->orb_core ()->orb (),
+                                  operation,
+                                  ACE_TRY_ENV
+                                );
     }
   else
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Request::_nil ());
+    {
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 
+                        0);
+    }
 }
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
@@ -667,9 +659,11 @@ TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_functio
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Object_Manager<CORBA_Object,CORBA_Object_var>;
+template class ACE_Dynamic_Service<TAO_Request_Factory_Base>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Object_Manager<CORBA_Object,CORBA_Object_var>
+#pragma instantiate ACE_Dynamic_Service<TAO_Request_Factory_Base>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
