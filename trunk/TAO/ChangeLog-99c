@@ -1,3 +1,19 @@
+Wed Mar 31 23:32:13 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Purified the INS changes in the following files. Also minimised data
+	copying.
+	
+	* tao/IOR_LookupTable.cpp: 
+	* tao/IOR_LookupTable.h: Passed params by reference for the add () 
+	  and find ().
+	* tao/Connect.cpp: Removed data copying.
+	* tao/ORB_Core.cpp: Changed the add_to_ior_table () to fix some memory 
+	  leaks.
+	* tao/ORB.cpp: Fixed memory leaks in resolve_initial_references ()
+	  and iioploc_string_to_object (). Changed the add/find IOR APIs 
+	  to take params by reference for minimal copying.
+	* tao/ORB.h: Changed the signatures of the add/find IOR APIs.
+
 Wed Mar 31 14:09:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/Explicit_Activation/server.cpp: 
