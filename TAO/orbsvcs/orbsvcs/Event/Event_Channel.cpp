@@ -409,7 +409,6 @@ ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "EC (%t) Push to disconnected consumer\n"));
-      // ACE_ES_DEBUG_ST (::dump_sequence (events));
       return;
     }
 
@@ -1327,7 +1326,7 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 {
-  RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy = 
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   auto_ptr<ACE_Push_Consumer_Proxy> new_consumer (new ACE_Push_Consumer_Proxy (this));
@@ -3206,7 +3205,7 @@ ACE_ES_Supplier_Module::shutdown (void)
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 {
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   auto_ptr<ACE_Push_Supplier_Proxy> new_supplier (new ACE_Push_Supplier_Proxy (this));

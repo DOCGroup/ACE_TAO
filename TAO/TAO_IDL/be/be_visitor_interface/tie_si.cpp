@@ -208,4 +208,3 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
   delete visitor;
   return 0;
 }
-
