@@ -1,3 +1,7 @@
+Thu Feb  4 15:07:29 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+  * updated MT_Cubit/svc.conf to use THR_BOUND as the default.
+
 Thu Feb  4 14:34:43 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/mpeg_server/Globals.cpp: 
