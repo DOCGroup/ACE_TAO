@@ -1,3 +1,8 @@
+Fri May 12 17:52:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (ACE_Thread_Adapter::invoke): Reverted James'
+	  previous change for now.  It's causing problem with MSVC.
+
 Fri May 12 15:04:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* bin/run_all_list.pm:
@@ -36,25 +41,25 @@ Fri May 12 11:25:10 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Local_Name_Space_T.cpp:
         * ace/Remote_Name_Space.cpp:
         * netsvcs/lib/Name_Handler.cpp:
- 
+
           On Borland BCB 5, wchar_t is (correctly) a separate type than
           unsigned short, so all the implicit casting between the two in
-          the ACE Name Space.  So added a new macro, 
+          the ACE Name Space.  So added a new macro,
           ACE_WSTRING_HAS_USHORT_SUPPORT, that enables another constructor
           for ACE_WString.
 
           Chris Kohlhoff <chris@kohlhoff.com> also reported this problem
           and a solution, but unfortunately ACE_Name_Space requires that
           this type is 2 bytes so we couldn't just use ACE_WSTRING_TYPE
-          here.  Instead I added in both the new constructor and a 
+          here.  Instead I added in both the new constructor and a
           ushort_rep method on ACE_WString.  I changed the Name Space stuff
           to use this instead.  BTW, old code shouldn't need to be changed
           on MSVC, just if you use BCB. [Bug 561]
 
         * tests/SString_Test.cpp:
 
-          We were using ACE_USHORT16 as the single character type for 
-          ACE_WString. This has been changed to wchar_t.  Thanks to Chris 
+          We were using ACE_USHORT16 as the single character type for
+          ACE_WString. This has been changed to wchar_t.  Thanks to Chris
           for this one also. [Bug 561]
 
 Fri May 12 10:12:05 2000  James Hu  <jxh@entera.com>
@@ -72,8 +77,8 @@ Thu May 11 18:07:53 2000  Chris Cleeland  <cleeland_c@ociweb.com>
 	* ace/OS.i (realloc):
 	* ace/OS.i (calloc):
 	* ace/OS.i (free): Use the new macros (below) instead of directly
-	calling malloc-like functions, thereby allowing an installation to 
-	substitute an alternate mallocator for the global (see comment for 
+	calling malloc-like functions, thereby allowing an installation to
+	substitute an alternate mallocator for the global (see comment for
 	OS.h below).
 
 	* ace/OS.i (strdup): Changed the emulation of strdup() to use
@@ -95,7 +100,7 @@ Thu May 11 15:21:34 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS.i (dlsym):
 
           I was checking for ACE_HAS_WIN32 instead of ACE_WIN32,
-          so this wasn't doing what it was supposed to with 
+          so this wasn't doing what it was supposed to with
           ACE_USES_WCHAR turned on.
 
 Thu May 11 02:04:58 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
