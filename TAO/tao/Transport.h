@@ -19,15 +19,18 @@
 #include "ace/pre.h"
 
 #include "corbafwd.h"
+
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Exception.h"
 #include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "ace/Strategies.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "Incoming_Message_Queue.h"
 
 class TAO_ORB_Core;
 class TAO_Target_Specification;
@@ -564,7 +567,25 @@ protected:
   virtual void transition_handler_state_i (void) = 0;
 
   /// @@ Bala: Documentation
+  int parse_incoming_messages (ACE_Message_Block &message_block);
+
+  size_t missing_data (ACE_Message_Block &message_block);
+
+  int check_message_integrity (ACE_Message_Block &message_block);
+
+  int consolidate_message (ACE_Message_Block &incoming,
+                           size_t missing_data,
+                           ACE_HANDLE h,
+                           ACE_Time_Value *max_wait_time);
+
+  int consolidate_message_queue (ACE_Message_Block &incoming,
+                                 size_t missing_data,
+                                 ACE_HANDLE h,
+                                 ACE_Time_Value *max_wait_time);
+
+  /// @@ Bala: Documentation
   virtual int process_parsed_messages (ACE_Message_Block &message_block,
+                                       CORBA::Octet byte_order,
                                        ACE_HANDLE h = ACE_INVALID_HANDLE);
 
 public:
@@ -768,6 +789,9 @@ protected:
   /// Implement the outgoing data queue
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
+
+  /// @@Bala: Docu??
+  TAO_Incoming_Message_Queue incoming_message_queue_;
 
   /// The queue will start draining no later than <queing_deadline_>
   /// *if* the deadline is

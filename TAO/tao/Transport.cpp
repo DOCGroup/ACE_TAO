@@ -67,6 +67,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , bidirectional_flag_ (-1)
   , head_ (0)
   , tail_ (0)
+  , incoming_message_queue_ (orb_core)
   , current_deadline_ (ACE_Time_Value::zero)
   , flush_timer_id_ (-1)
   , transport_timer_ (this)
@@ -733,7 +734,37 @@ TAO_Transport::recv (char *buffer,
     return -1;
 
   // now call the template method
-  return this->recv_i (buffer, len, timeout);
+  ssize_t n =
+    this->recv_i (buffer, len, timeout);
+
+  // Most of the errors handling is common for
+  // Now the message has been read
+  if (n == -1 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                  ACE_TEXT ("TAO - read message failure \n")
+                  ACE_TEXT ("TAO - handle_input () \n")));
+    }
+
+  // Error handling
+  if (n == -1)
+    {
+      if (errno == EWOULDBLOCK)
+        return 0;
+
+      // Close the connection
+      this->tms_->connection_closed ();
+
+      return -1;
+    }
+  // @@ What are the other error handling here??
+  else if (n == 0)
+    {
+      return -1;
+    }
+
+  return n;
 }
 
 
@@ -795,9 +826,20 @@ TAO_Transport::handle_input_i (ACE_HANDLE h,
                          sizeof buf);
 #endif /* ACE_HAS_PURIFY */
 
+  // Create a data block
+  ACE_Data_Block db (sizeof (buf),
+                     ACE_Message_Block::MB_DATA,
+                     buf,
+                     this->orb_core_->message_block_buffer_allocator (),
+                     this->orb_core_->locking_strategy (),
+                     ACE_Message_Block::DONT_DELETE,
+                     this->orb_core_->message_block_dblock_allocator ());
+
   // Create a message block
-  ACE_Message_Block message_block (buf,
-                                   sizeof (buf));
+  ACE_Message_Block message_block (&db,
+                                   ACE_Message_Block::DONT_DELETE,
+                                   this->orb_core_->message_block_msgblock_allocator ());
+
 
   // Align the message block
   ACE_CDR::mb_align (&message_block);
@@ -809,37 +851,53 @@ TAO_Transport::handle_input_i (ACE_HANDLE h,
                 message_block.space (),
                 max_wait_time);
 
-  // Now the message has been read
-  if (n == -1 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
-                  ACE_TEXT ("TAO - read message failure \n")
-                  ACE_TEXT ("TAO - handle_input () \n")));
-    }
 
-  // Error handling
-  if (n == -1)
-    {
-      if (errno == EWOULDBLOCK)
-        return 0;
+  if (n <= 0)
+    return n;
 
-      // Close the connection
-      this->tms_->connection_closed ();
-
-      return -1;
-    }
-  // @@ What are the other error handling here??
-  else if (n == 0)
-    {
-      return -1;
-    }
 
   // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
-  //  Now that the message has been read, process the message. Call the
-  //  transport object to do the processing.
+  if (this->parse_incoming_messages (message_block) == -1)
+    return -1;
+
+  // Check whether we have a complete message for processing
+  size_t missing_data =
+    this->missing_data (message_block);
+
+  if (missing_data)
+    {
+      return this->consolidate_message (message_block,
+                                        missing_data,
+                                        h,
+                                        max_wait_time);
+    }
+
+
+  // @@Bala:
+  return this->process_parsed_messages (
+             message_block,
+             this->messaging_object ()->byte_order (),
+             h);
+}
+
+
+
+int
+TAO_Transport::parse_incoming_messages (ACE_Message_Block &message_block)
+{
+  // If we have a queue and if the last message is not complete a
+  // complete one, then this read will get us the remaining data. So
+  // do not try to parse the header if we have an incomplete message
+  // in the queue.
+  if (!this->incoming_message_queue_.is_complete_message ())
+    {
+      return 0;
+    }
+
+  //  Now that a new message has been read, process the message. Call
+  //  the messaging object to do the parsing
   if (this->messaging_object ()->parse_incoming_messages (message_block) == -1)
     {
       if (TAO_debug_level > 0)
@@ -851,27 +909,153 @@ TAO_Transport::handle_input_i (ACE_HANDLE h,
       return -1;
     }
 
-  // @@Bala:
-  return this->process_parsed_messages (message_block, h);
+  return 0;
+}
+
+
+size_t
+TAO_Transport::missing_data (ACE_Message_Block &incoming)
+{
+  // If we have message in the queue then find out how much of data
+  // is required to get a complete message
+  if (this->incoming_message_queue_.queue_length ())
+    {
+      return this->incoming_message_queue_.missing_data ();
+    }
+
+  return this->messaging_object ()->missing_data (incoming);
+}
+
+
+int
+TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
+                                    size_t missing_data,
+                                    ACE_HANDLE h,
+                                    ACE_Time_Value *max_wait_time)
+{
+  // The write pointer which will be used for reading data from the
+  // socket.
+  char *wr_ptr = 0;
+  if (!this->incoming_message_queue_.is_complete_message ())
+    {
+      return this->consolidate_message_queue (incoming,
+                                              missing_data,
+                                              h,
+                                              max_wait_time);
+    }
+
+  // Calculate the actual length of the load that we are supposed to
+  // read which is equal to the <missing_data> + length of the buffer
+  // that we have..
+  size_t payload = missing_data + incoming.length ();
+
+  // Grow the buffer to the size of the message
+  ACE_CDR::grow (&incoming,
+                 payload);
+
+  // .. do a read on the socket again.
+  ssize_t n = this->recv (incoming.wr_ptr (),
+                          missing_data,
+                          max_wait_time);
+
+  // If we got an EWOULDBLOCK or some other error..
+  if (n <= 0)
+    return n;
+
+  // Move the write pointer
+  incoming.wr_ptr (n);
+
+  // ..Decrement
+  missing_data -= n;
+
+  // Get the byte order information
+  CORBA::Octet byte_order =
+    this->messaging_object ()->byte_order ();
+
+  if (missing_data > 0)
+    {
+      // Duplicate the message block
+      ACE_Message_Block *mb =
+        incoming.duplicate ();
+
+      // Stick the message in queue with the byte order information
+      if (this->incoming_message_queue_.add_message (mb,
+                                                     missing_data,
+                                                     byte_order) == -1)
+        {
+          return -1;
+        }
+      return 0;
+    }
+
+  // Now we have a full message in our buffer. Just go ahead and
+  // process that
+  return this->process_parsed_messages (incoming,
+                                        byte_order,
+                                        h);
 }
 
 int
+TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
+                                          size_t missing_data,
+                                          ACE_HANDLE h,
+                                          ACE_Time_Value *max_wait_time)
+{
+  // If the queue did not have a complete message put this piece of
+  // message in the queue
+  this->incoming_message_queue_.copy_message (incoming);
+  missing_data = this->incoming_message_queue_.missing_data ();
+
+  if (missing_data > 0)
+    {
+      // Read the message into the last node of the message queue..
+      ssize_t n = this->recv (this->incoming_message_queue_.wr_ptr (),
+                              missing_data,
+                              max_wait_time);
+
+      // Error...
+      if (n <= 0)
+        return n;
+
+      // Move the write pointer
+      incoming.wr_ptr (n);
+
+      // Decrement the missing data
+      this->incoming_message_queue_.queued_data_->missing_data_ -= n;
+    }
+
+
+  if (!this->incoming_message_queue_.is_complete_message ())
+    {
+      return 0;
+    }
+
+  CORBA::Octet byte_order = 0;
+
+  // Get the message on the head of the queue..
+  ACE_Message_Block *msg_block =
+    this->incoming_message_queue_.dequeue_head (byte_order);
+
+  // Process the message...
+  if (this->process_parsed_messages (*msg_block,
+                                     byte_order,
+                                     h) == -1)
+    return -1;
+
+  // Delete the message block...
+  delete msg_block;
+
+  return 0;
+}
+int
 TAO_Transport::process_parsed_messages (ACE_Message_Block &message_block,
+                                        CORBA::Octet byte_order,
                                         ACE_HANDLE h)
 {
-  // Check whether we have a complete message for processing
-  int retval =
-    this->messaging_object ()->is_message_complete (message_block);
-
   // If we have a complete message, just resume the handler
   // Resume the handler.
   // @@Bala: Try to solve this issue of reactor resumptions..
   this->orb_core_->reactor ()->resume_handler (h);
-
-  // If we dont have a complete message then just return 1 to the
-  // reactor so that we can be called back for further reading
-  if (!retval)
-    return 1;
 
   // Get the <message_type> that we have received
   TAO_Pluggable_Message_Type t =
@@ -898,7 +1082,8 @@ TAO_Transport::process_parsed_messages (ACE_Message_Block &message_block,
       if (this->messaging_object ()->process_request_message (
             this,
             this->orb_core (),
-            message_block) == -1)
+            message_block,
+            byte_order) == -1)
         {
           // Close the TMS
           this->tms_->connection_closed ();
@@ -915,7 +1100,8 @@ TAO_Transport::process_parsed_messages (ACE_Message_Block &message_block,
       TAO_Pluggable_Reply_Params params (this->orb_core ());
 
       if (this->messaging_object ()->process_reply_message (params,
-                                                            message_block)  == -1)
+                                                            message_block,
+                                                            byte_order)  == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,

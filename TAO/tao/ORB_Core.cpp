@@ -2754,6 +2754,7 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
                                     lock_strategy);
 }
 
+
 ACE_Data_Block *
 TAO_ORB_Core::data_block_for_message_block (size_t size)
 {

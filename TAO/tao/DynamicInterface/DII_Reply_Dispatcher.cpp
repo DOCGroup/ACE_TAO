@@ -44,8 +44,9 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 {
   this->reply_status_ = params.reply_status_;
 
-  // Steal the buffer so that no copying is done.
-  this->reply_cdr_.steal_from (params.input_cdr_);
+  // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
+  ACE_Data_Block *db =
+      this->reply_cdr_.clone_from (params.input_cdr_);
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.

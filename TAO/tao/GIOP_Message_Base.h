@@ -24,7 +24,7 @@
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
-#include "tao/Incoming_Message_Queue.h"
+
 
 class TAO_Pluggable_Reply_Params;
 
@@ -107,17 +107,24 @@ public:
   /// @@Bala:Documentation please..
   virtual int is_message_complete (ACE_Message_Block &message_block);
 
+  /// @@Bala:Documentation please..
+  virtual size_t missing_data (ACE_Message_Block &message_block);
+
+  virtual CORBA::Octet byte_order (void);
+
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,
                                        TAO_ORB_Core *orb_core,
-                                       ACE_Message_Block &block);
+                                       ACE_Message_Block &block,
+                                       CORBA::Octet byte_order);
 
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
   virtual int process_reply_message (
       TAO_Pluggable_Reply_Params &reply_info,
-      ACE_Message_Block &block);
+      ACE_Message_Block &block,
+      CORBA::Octet byte_order);
 
 
   /// Generate a reply message with the exception <ex>.
@@ -199,9 +206,6 @@ private:
   /// Thr message handler object that does reading and parsing of the
   /// incoming messages
   TAO_GIOP_Message_State message_state_;
-
-  /// @@Bala:Docu
-  TAO_Incoming_Message_Queue message_queue_;
 
   /// Output CDR
   TAO_OutputCDR *output_;

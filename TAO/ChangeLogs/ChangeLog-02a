@@ -1,3 +1,76 @@
+Sat Jun 17 17:46:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This set of changes comes with complete revamping of the previous
+	design. The flaws with the previous design were as follows
+	(1) We were unnecessarily penalising large data blocks. We were
+	    trying to read a particular size of data till the data was
+	    completely removed from the socket. This was totally
+	    ridiculous because we were doing more reads than required.
+
+	(2) The message block that was constructed on the stack with a
+	    buffer from stack never did what we wanted. It was allocating
+	    a data block on the heap and was thus spoiling whatever
+	    optimization that we had tried putting in.
+
+	(3) The incoming message Queue is now managed by the TAO_Transport
+	    object instead of the GIOP classes.
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h: Removed the references to the incoming
+	  message queue. Implemention for two methods missing_data () and
+	  byte_order (). Added an extra argument to the methods
+	  process_request_message () and process_reply_message (). Used
+	  the incoming message block to create a input CDR with the
+	  DONT_DELETE flag so that the data block is not deleted after
+	  request processing.
+
+	* tao/GIOP_Message_State.cpp: Removed the inclusion of
+	  Transport.h.
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Added an argument to the
+	  add_message (). Further the implementation of add_message () has
+	  changed a bit. It now adds only a new message to the queue. It
+	  doesn't modify a half filled queue. The TAO_Transport object
+	  does that job. So declared the TAO_Transport as the friend class
+	  of the Incoming_Message_Queue.
+
+	  Changed the name of the methods complete_message () as
+	  is_complete_message (). Removed the methods current_message ()&
+	  current_byte_order ().
+
+	  Added a new method copy_message () which copies messages into
+	  the half empty nodes.
+
+	  Added a method wr_ptr () to access the write pointer of the tail
+	  node that has halfempty message.
+
+	* tao/Transport.cpp:
+	* tao/Transport.h: The Incoming Message Queue is now managed by
+	  this class. Added the following methods
+	  - missing_data ()
+	  - parse_incoming_messages ()
+	  - check_message_integrity ()
+	  - consolidate_message ()
+	  - conslodate_message_queue ()
+
+	* tao/Pluggable_Messaging.h: Added two new virtual functions
+	  missing_data () and byte_order ().
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i: Added an accessor for the locking_strategy used
+	  for the CDR blocks.
+
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Changed the
+	  exchange_data_block () to clone_from () which is a new method in
+	  ACE_InputCDR.
+
+	* tao/LIST_OF_TODO: Updated the list
+
 Sat Jun 16 15:49:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Any.cpp:
