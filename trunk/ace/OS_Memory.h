@@ -228,7 +228,7 @@ typedef void *ACE_MALLOC_T;
  * @param alignment the required alignment
  */
 #define ACE_align_binary(ptr, alignment) \
-    ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptrdiff_t)((alignment)-1))))
+    ((ptr + ((ptrdiff_t)((alignment)-1))) & (~((ptrdiff_t)((alignment)-1))))
 
 /// Return the next address aligned to a required boundary
 #define ACE_ptr_align_binary(ptr, alignment) \
