@@ -60,19 +60,30 @@ Priority_Task::open (void *arg)
   // To get FIFO scheduling with PTHREADS.  Instead of doing this,
   // OS.h should be fixed to defined THR_SCHED_FIFO on non-PTHREADS
   // platforms, such as Solaris with STHREADS and without PTHREADS.
-#if defined LINUX
-  // See comments below about setting policy/priority if not superuser.
-  if (ACE_OS::getuid () == 0)
-    {
-      flags |= THR_SCHED_FIFO;
-    }
-#else
   flags |= THR_SCHED_FIFO;
-#endif /* LINUX */
 #endif /* THR_SCHED_FIFO */
 
   // Become an active object.
-  ACE_ASSERT (this->activate (flags, 1, 0, this->priority_) != -1);
+  if (this->activate (flags, 1, 0, this->priority_) == -1)
+    {
+      // On Linux, only the superuser can set the policy to other
+      // than ACE_SCHED_OTHER.  But with ACE_SCHED_OTHER, there is
+      // only 1 thread priority value, 0.  So, let the superuser
+      // run an interesting test, but for other users use priority 0.
+
+      ACE_DEBUG ((LM_DEBUG, "(%t) task activation at priority %d with flags "
+                            "%ld failed; retry at priority 0 with with flags "
+                            "%ld\n",
+                  this->priority_, flags, THR_NEW_LWP));
+
+      flags = THR_NEW_LWP;
+      this->priority_ = 0;
+
+      if (this->activate (flags, 1, 1, this->priority_) == -1)
+        {
+          ACE_DEBUG ((LM_ERROR, "(%t) task activation at priority 0 failed, exiting!\n%a", -1));
+        }
+    }
 
   return 0;
 }
@@ -120,19 +131,6 @@ main (int, char *[])
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
-
-#if defined LINUX
-      // On Linux, only the superuser can set the policy to other
-      // than ACE_SCHED_OTHER.  But with ACE_SCHED_OTHER, there is
-      // only 1 thread priority value, 0.  So, let the superuser
-      // run an interesting test, but for other users override the
-      // priority with 0.
-      if (ACE_OS::getuid () != 0)
-        {
-          priority = 0;
-        }
-#endif /* LINUX */
-
       tasks[i].open ((void *) &priority);
       priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority,
