@@ -6,6 +6,18 @@ Tue Mar 10 13:22:20 1998  David L. Levine  <levine@cs.wustl.edu>
           from g++ CCFLAGS because prevented use of native long long
           (Linux/i386).
 
+        * orbsvcs/orbsvcs/RtecScheduler.idl: addressed RT_Info open issues,
+          and updated to match TAO paper.  The updates consisted of
+          changing the names of the Importance enum values so that we
+          don't have collisions when criticality is added, and comment
+          updates.
+
+        * orbsvcs/Event/Dispatching_Modules.cpp,ReactorTask.cpp,
+          orbsvcs/Sched/Config_Scheduler.cpp,
+          tests/EC_Multiple/EC_Multiple.cpp
+          tests/Event_Latency/Event_Latency.cpp: added _IMPORTANCE
+          to Importance enum values.
+
 Mon Mar 09 22:27:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/POA/Generic_Servant/client.cpp: Added code to time calls
