@@ -103,14 +103,14 @@ Handler::handle_output (ACE_HANDLE)
               "Handler::handle_output\n"));
 
 #if defined (__OpenBSD__) || \
-	defined (ACE_VXWORKS) || \
-  ( defined (__Lynx__) && _POSIX_VERSION <= 199506L ) // LynxOS 3.x
+    defined (ACE_VXWORKS) || \
+  ( defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4) ) // LynxOS 3.x
   // All that we need written has been written, so don't
   // call handle_output again.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
                               ACE_Event_Handler::WRITE_MASK,
                               ACE_Reactor::CLR_MASK);
-#endif /* __OpenBSD__ || __Lynx__ ... */
+#endif /* __OpenBSD__ || ACE_VXWORKS || ACE_LYNXOS_MAJOR ... */
 
   return 0;
 }
