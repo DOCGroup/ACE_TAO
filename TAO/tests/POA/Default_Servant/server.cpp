@@ -32,11 +32,16 @@ main (int argc, char **argv)
   // CORBA::PolicyList policies (5);
   PortableServer::PolicyList policies (5);
   policies.length (5);  
-  policies[0] = root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
-  policies[1] = root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
-  policies[2] = root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT, env);
-  policies[3] = root_poa->create_servant_retention_policy (PortableServer::RETAIN, env);
-  policies[4] = root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, env);
+  policies[0] =
+    root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
+  policies[1] =
+    root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
+  policies[2] =
+    root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT, env);
+  policies[3] =
+    root_poa->create_servant_retention_policy (PortableServer::RETAIN, env);
+  policies[4] =
+    root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, env);
 
   ACE_CString name = "firstPOA";
   PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
@@ -64,7 +69,9 @@ main (int argc, char **argv)
 
   FileImpl::System file_system_impl (first_poa.in ());
 
-  PortableServer::ObjectId_var file_system_oid = PortableServer::string_to_ObjectId ("FileSystem");
+  PortableServer::ObjectId_var file_system_oid =
+    PortableServer::string_to_ObjectId ("FileSystem");
+
   first_poa->activate_object_with_id (file_system_oid.in (), 
                                       &file_system_impl, 
                                       env);
@@ -74,14 +81,16 @@ main (int argc, char **argv)
       return -1;
     }
   
-  CORBA::Object_var file_system = first_poa->id_to_reference (file_system_oid, env);
+  CORBA::Object_var file_system =
+    first_poa->id_to_reference (file_system_oid, env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::id_to_reference");
       return -1;
     }
   
-  CORBA::String_var file_system_ior = orb->object_to_string (file_system.in (), env);
+  CORBA::String_var file_system_ior =
+    orb->object_to_string (file_system.in (), env);
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB::object_to_string");
