@@ -1,3 +1,10 @@
+Thu Nov  5 21:41:26 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+        * docs/tutorials/017
+          Began the ACE_Barrier tutorial.  So far, it's just code but I'll 
+          add the usual heavy comments & commentary in the next few days or
+          so.  I'll update the docs/tutorials/index.html after that.
+
 Thu Nov  5 14:42:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ACE-INSTALL.html: Cleaned up a typo in the ACE-INSTALL.html
