@@ -3,12 +3,15 @@
 ACE_Timer_Heap_Iterator::ACE_Timer_Heap_Iterator (ACE_Timer_Heap &heap)
   : timer_heap_ (heap)
 {
+  ACE_TRACE ("ACE_Timer_Heap_Iterator::ACE_Timer_Heap_Iterator");
 }
 
 int
 ACE_Timer_Heap_Iterator::next (ACE_Timer_Node *&node,
-			       const ACE_Time_Value &cur_time)
+                               const ACE_Time_Value &cur_time)
 {
+  ACE_TRACE ("ACE_Timer_Heap_Iterator::next");
+
   if (this->timer_heap_.cur_size_ == 0 
       || this->timer_heap_.heap_[0]->timer_value_ > cur_time)
     return 0;
@@ -24,15 +27,62 @@ ACE_Timer_Heap_Iterator::next (ACE_Timer_Node *&node,
 ACE_Timer_Heap::ACE_Timer_Heap (size_t size)
   : max_size_ (size),
     cur_size_ (0),
-    iterator_ (*this)
+    iterator_ (*this),
+    freelist_ (0)
 {
-  ACE_NEW (this->heap_,
-	   ACE_Timer_Node *[size]);
+  ACE_TRACE ("ACE_Timer_Heap::ACE_Timer_Heap");
+
+  // Create the heap array.
+  ACE_NEW (this->heap_, ACE_Timer_Node *[size]);
+
+  // Create the parallel 
+  ACE_NEW (this->timer_ids_, int[size]);
+
+  // Initialize the "freelist," which uses negative values to
+  // distinguish freelist elements from "pointers" into the <heap_>
+  // array.
+  for (int i = 0; i < size; i++)
+    this->timer_ids_[i] = -(i + 1);
 }
 
 ACE_Timer_Heap::~ACE_Timer_Heap (void)
 {
+  ACE_TRACE ("ACE_Timer_Heap::~ACE_Timer_Heap");
   delete [] this->heap_;
+  delete [] this->timer_ids_;
+}
+
+int
+ACE_Timer_Heap::pop_freelist (void)
+{
+  ACE_TRACE ("ACE_Timer_Heap::pop_freelist");
+
+  int new_id = this->freelist_;
+  // The freelist values in the <timer_ids_> are negative, so we need
+  // to negate them to get the next freelist "pointer."
+  this->freelist_ = -this->timer_ids_[this->freelist_];
+  ACE_ASSERT (this->freelist_ != this->max_size_);
+  return new_id;
+}
+
+void
+ACE_Timer_Heap::push_freelist (int old_id)
+{
+  ACE_TRACE ("ACE_Timer_Heap::push_freelist");
+
+  // The freelist values in the <timer_ids_> are negative, so we need
+  // to negate them to get the next freelist "pointer."
+  this->timer_ids_[old_id] = -this->freelist_;
+  this->freelist_ = old_id;
+}
+
+int
+ACE_Timer_Heap::timer_id (void)
+{
+  ACE_TRACE ("ACE_Timer_Heap::timer_id");
+
+  // Return the next item off the freelist and use it as the timer id.
+  return this->pop_freelist ();
 }
 
 // Checks if queue is empty. 
@@ -62,15 +112,37 @@ ACE_Timer_Heap::earliest_time (void) const
 void
 ACE_Timer_Heap::dump (void) const
 {
-  for (size_t index = 0; index < this->cur_size_; index++)
-    this->heap_[index]->dump ();
+  ACE_TRACE ("ACE_Timer_Heap::dump");
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, "\nmax_size_ = %d", this->max_size_));
+  ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d", this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG, "\nheap_ = \n"));
+
+  for (size_t i = 0; i < this->cur_size_; i++)
+    {
+      ACE_DEBUG ((LM_DEBUG, "%d\n", i));
+      this->heap_[i]->dump ();
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "\ntimer_ids_ = \n"));
+
+  for (size_t j = 0; j < this->cur_size_; j++)
+    ACE_DEBUG ((LM_DEBUG, "%d\t%d\n", j, this->timer_ids_[j]));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Timer_Node *
-ACE_Timer_Heap::remove (int index)
+ACE_Timer_Heap::remove (size_t index)
 {
   ACE_Timer_Node *result = this->heap_[index];
 
+  // Return this timer id to the freelist.
+  this->push_freelist (result->timer_id_);
+
+  // Decrement the size of the heap by one since we're removing the
+  // "index"th node.
   this->cur_size_--;
 
   // Only try to reheapify if we're not deleting the last entry.
@@ -80,22 +152,26 @@ ACE_Timer_Heap::remove (int index)
       // Move the end node to the location being removed.
       this->heap_[index] = this->heap_[this->cur_size_];
 
+      // Update the corresponding slot in the parallel <timer_ids>
+      // array.
+      this->timer_ids_[this->heap_[this->cur_size_]->timer_id_] = index;
+
       ACE_Timer_Node *moved_node = this->heap_[index];
 
       // If we're at the top there's no place to go but down!
       if (index == 0)
-	this->reheap_down (moved_node, 1);
+        this->reheap_down (moved_node, 1);
 
       // If the moved_node->time_value_ is smaller than its parent it
       // needs be moved up the heap.
       else if (moved_node->timer_value_ < this->heap_[(index - 1) / 2]->timer_value_)
-	this->reheap_up (moved_node);
+        this->reheap_up (moved_node);
 
       // Call <reheap_down>, which will reheapify if the
       // moved_node->time_value_ is larger than either of its children
       // (who start at location <index + index>).
       else
-	this->reheap_down (moved_node, index + index);
+        this->reheap_down (moved_node, index + index);
     }
 
   return result;
@@ -103,7 +179,7 @@ ACE_Timer_Heap::remove (int index)
 
 void
 ACE_Timer_Heap::reheap_down (ACE_Timer_Node *moved_node,
-			     int child_index)
+                             size_t child_index)
 {
   int parent = 0;
 
@@ -115,22 +191,32 @@ ACE_Timer_Heap::reheap_down (ACE_Timer_Node *moved_node,
     {
       // Choose the smaller of the two children.
       if (child + 1 < this->cur_size_
-	  && this->heap_[child + 1]->timer_value_ < this->heap_[child]->timer_value_)
-	child++;
+          && this->heap_[child + 1]->timer_value_ < this->heap_[child]->timer_value_)
+        child++;
 
       // Perform a swap if the child has a larger timeout value than
       // the front node.
       if (this->heap_[child]->timer_value_ < moved_node->timer_value_)
-	{
-	  this->heap_[parent] = this->heap_[child];
-	  parent = child;
-	}
+        {
+	  // Insert the child node into its new location in the heap.
+          this->heap_[parent] = this->heap_[child];
+
+	  // Update the corresponding slot in the parallel <timer_ids>
+	  // array.
+	  this->timer_ids_[this->heap_[child]->timer_id_] = parent;
+
+          parent = child;
+        }
       else 
-	break; 
+        break; 
     }
 
   // Insert moved_node into its final resting place.
   this->heap_[parent] = moved_node;   
+
+  // Update the corresponding slot in the parallel <timer_ids>
+  // array.
+  this->timer_ids_[moved_node->timer_id_] = parent;
 }
 
 void
@@ -152,16 +238,27 @@ ACE_Timer_Heap::reheap_up (ACE_Timer_Node *new_node)
     {
       parent = (child - 1) / 2;
 
+      // If the parent node is great than the new node we need to swap
+      // them.
       if (new_node->timer_value_ < this->heap_[parent]->timer_value_)
-	{
-	  this->heap_[child] = this->heap_[parent];
-	  child = parent;
-	}
+        {
+	  // Insert the parent node into its new location in the heap.
+          this->heap_[child] = this->heap_[parent];
+
+	  // Update the corresponding slot in the parallel <timer_ids>
+	  // array.
+	  this->timer_ids_[this->heap_[parent]->timer_id_] = child;
+          child = parent;
+        }
       else 
-	break;
+        break;
     }
 
+  // Insert the new node into its proper resting place in the heap.
   this->heap_[child] = new_node;
+
+  // Update the corresponding slot in the parallel <timer_ids> array.
+  this->timer_ids_[new_node->timer_id_] = child;
 }
 
 // Reschedule a periodic timer.  This function must be called with the
@@ -181,34 +278,33 @@ ACE_Timer_Heap::reschedule (ACE_Timer_Node *expired)
 
 int
 ACE_Timer_Heap::schedule (ACE_Event_Handler *handler,
-			   const void *arg,
-			   const ACE_Time_Value	&future_time, 
-			   const ACE_Time_Value	&interval)
+                          const void *arg,
+                          const ACE_Time_Value &future_time, 
+                          const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Heap::schedule");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  // Increment the sequence number (it will wrap around).
-  int timer_id = this->timer_id ();
+  int timer_id = -1;
 
   if (this->cur_size_ >= this->max_size_)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
+    errno = ENOMEM;
   else
     {
+      // Obtain the next unique sequence number.
+      timer_id = this->timer_id ();
+
       ACE_Timer_Node *temp;
 
       ACE_NEW_RETURN (temp,
-		      ACE_Timer_Node (handler, 
-				      arg, 
-				      future_time,
-				      interval, 
-				      0,
-				      timer_id),
-		      -1);
+                      ACE_Timer_Node (handler, 
+                                      arg, 
+                                      future_time,
+                                      interval, 
+                                      0,
+                                      timer_id),
+                      -1);
       
       this->insert (temp);
     }
@@ -221,28 +317,26 @@ ACE_Timer_Heap::schedule (ACE_Event_Handler *handler,
 
 int
 ACE_Timer_Heap::cancel (int timer_id, 
-			const void **arg)
+                        const void **arg)
 {
   ACE_TRACE ("ACE_Timer_Heap::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  int i;
+  // Locate the ACE_Timer_Node that corresponds to the timer_id.
 
-  // Try to locate the ACE_Timer_Node that matches the timer_id.
+  int timer_node_slot = this->timer_ids_[timer_id];
 
-  for (i = 0; 
-       i < this->cur_size_ && this->heap_[i]->timer_id_ != timer_id;
-       i++)
-    continue;
-
-  if (i == this->cur_size_)
-    return 0;
+  if (timer_id != this->heap_[timer_node_slot]->timer_id_)
+    {
+      ACE_ASSERT (timer_id == this->heap_[timer_node_slot]->timer_id_);
+      return 0;
+    }
   else
     {
-      ACE_Timer_Node *temp = this->remove (i);
+      ACE_Timer_Node *temp = this->remove (timer_node_slot);
 
       if (arg != 0)
-	*arg = temp->arg_;
+        *arg = temp->arg_;
 
       delete temp;
       return 1;
@@ -266,11 +360,11 @@ ACE_Timer_Heap::cancel (ACE_Event_Handler *handler)
        )
     {
       if (this->heap_[i]->handler_ == handler)
-	{
-	  ACE_Timer_Node *temp = this->remove (i);
-	  delete temp;
-	  number_of_cancellations++;
-	}
+        {
+          ACE_Timer_Node *temp = this->remove (i);
+          delete temp;
+          number_of_cancellations++;
+        }
       else
        i++;
     }

@@ -183,23 +183,12 @@ protected:
   virtual ACE_Timer_Queue_Iterator &iterator (void) = 0;
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
-  virtual int timer_id (void);
-  // Returns a timer id that uniquely identifies this timer.  This id
-  // can be used to cancel a timer via the <cancel (int)> method.  The
-  // timer id returned from this method will never == -1 to avoid
-  // conflicts with other failure return values.
-
 #if defined (ACE_MT_SAFE)
   ACE_Recursive_Thread_Mutex lock_; 
   // Synchronization variable for the MT_SAFE ACE_Reactor 
 #endif /* ACE_MT_SAFE */
 
 private:
-  int timer_id_;
-  // Keeps track of the timer id that uniquely identifies each timer.
-  // This id can be used to cancel a timer via the <cancel (int)>
-  // method.
-
   ACE_Time_Value timeout_;
   // Returned by <calculate_timeout>.
 
