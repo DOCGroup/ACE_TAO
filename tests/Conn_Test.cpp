@@ -10,14 +10,14 @@
 //
 // = DESCRIPTION
 //     This is a test of the <ACE_Acceptor> and <ACE_Connector>
-//     classes. The test forks two processes or spawns two threads
-//     (depending upon the platform) and then executes client and
-//     server allowing them to connect and exchange data.  The test
-//     also illustrates how the <ACE_Strategy_Connector> works by
-//     showing how you can cache connections on the client.
+//     classes. The test forks processes or spawns threads (depending
+//     upon the platform) and then executes client and server allowing
+//     them to connect and exchange data.  The test also illustrates
+//     how the <ACE_Strategy_Connector> works by showing how you can
+//     cache connections on the client.
 //
 // = AUTHOR
-//    Doug Schmidt, Chris Cleeland
+//    Doug Schmidt, Chris Cleeland, and Irfan Pyarali
 //
 // ============================================================================
 
@@ -373,7 +373,6 @@ client (void *arg)
   info.strat_connector_ = &strat_connector;
 
 #if defined (ACE_HAS_THREADS)
-
   int n_threads = ACE_MAX_THREADS;
   ACE_Barrier barrier (n_threads);
   info.barrier_ = &barrier;
@@ -414,6 +413,7 @@ server (void *arg)
   // Create a new <Svc_Handler> to consume the data.
 
   int result;
+
   while ((result = acceptor->accept (svc_handler,
                                      &cli_addr,
                                      options)) != -1)
