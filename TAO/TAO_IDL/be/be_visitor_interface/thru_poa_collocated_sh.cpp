@@ -79,17 +79,6 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
   os->incr_indent (0);
   os->incr_indent ();
 
-  // XXXASG - can we make this a method to return the right name ??
-  if (!node->is_nested ())
-    {
-      // The skeleton name is the outermost, we need to printout the
-      // POA_ prefix that goes with it.
-      *os << "POA_";
-    }
-
-  *os << node->local_name () << "_ptr "
-      << " servant," << be_nl;
-
   *os << "TAO_Stub *stub\n";
   os->decr_indent ();
   *os << ");\n";
@@ -102,16 +91,6 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
       << "const CORBA::Char *logical_type_id," << be_nl
       << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
-
-  if (!node->is_nested ())
-    {
-      // The skeleton name is the outermost, we need to printout the
-      // POA_ prefix that goes with it.
-      *os << "POA_";
-    }
-
-  *os << node->local_name ()
-      << "_ptr _get_servant (void) const;" << be_nl << be_nl;
 
   *os << "virtual CORBA::Boolean _non_existent" << be_idt
       << "(" << be_idt_nl
@@ -129,16 +108,6 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
 
   os->decr_indent ();
 
-  *os << be_nl << "private:\n";
-  os->incr_indent ();
-  if (!node->is_nested ())
-    {
-      // The skeleton name is the outermost, we need to printout the
-      // POA_ prefix that goes with it.
-      *os << "POA_";
-    }
-  *os << node->local_name () << "_ptr servant_;\n";
-  os->decr_indent ();
   *os << "};\n\n";
 
   os->gen_endif ();

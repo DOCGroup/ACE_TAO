@@ -51,6 +51,17 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  os->indent ();
+  // Generate the stub factory function pointer definition.
+  *os << node->name () << "_ptr (*";
+
+  *os << "_TAO_collocation_"
+      << node->flatname () << "_Stub_Factory_function_pointer) ("
+      << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj" << be_uidt_nl
+      << ") = 0;" << be_uidt_nl;
+
+
   // generate the Any <<= and >>= operator declarations
   // Any <<= and >>= operators
   os->indent ();

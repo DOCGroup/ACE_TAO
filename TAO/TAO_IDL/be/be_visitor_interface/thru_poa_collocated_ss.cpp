@@ -49,16 +49,9 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
   this->ctx_->node (node);
 
   *os << node->full_coll_name (be_interface::THRU_POA) << "::"
-      << node->local_coll_name (be_interface::THRU_POA) << " (\n";
-
-  os->incr_indent (0);
-  os->incr_indent ();
-  *os << node->full_skel_name () << "_ptr "
-      << " servant," << be_nl;
-
-  *os << "TAO_Stub *stub\n";
-  os->decr_indent ();
-  *os << ")\n";
+      << node->local_coll_name (be_interface::THRU_POA) << " (" << be_idt_nl
+      << "TAO_Stub *stub" << be_uidt_nl
+      << ")\n";
   os->decr_indent (0);
 
   os->incr_indent ();
@@ -92,10 +85,8 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
                         -1);
     }
 
-  *os << "  CORBA_Object (stub, servant, 1)," << be_nl
-      << "  servant_ (servant)";
+  *os << "  CORBA_Object (stub, 0, 1)\n";
 
-  *os << "\n";
   os->decr_indent ();
   *os << "{\n";
   *os << "}\n\n";
@@ -129,16 +120,6 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
       << ")" << be_uidt << be_uidt_nl
       << ")->_is_a (logical_type_id, ACE_TRY_ENV);" << be_uidt << be_uidt_nl
       << "}\n\n" << be_uidt_nl;
-
-  // Generate _get_servant implementation.
-  *os << node->full_skel_name () << "_ptr "
-      << node->full_coll_name (be_interface::THRU_POA) << "::"
-      << "_get_servant (void) const\n"
-      << "{\n";
-  os->incr_indent ();
-  *os << "return this->servant_;\n";
-  os->decr_indent ();
-  *os << "}\n\n";
 
   os->indent ();
 
@@ -196,11 +177,11 @@ be_visitor_interface_thru_poa_collocated_ss::collocated_ctor_helper (be_interfac
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
       *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ","
-          << base->local_coll_name (be_interface::THRU_POA) << ") (servant, stub)," << be_nl;
+          << base->local_coll_name (be_interface::THRU_POA) << ") (stub)," << be_nl;
     }
   else
     {
-      *os << "  " << base->full_coll_name (be_interface::THRU_POA) << " (servant, stub)," << be_nl;
+      *os << "  " << base->full_coll_name (be_interface::THRU_POA) << " (stub)," << be_nl;
     }
 
   return 0;

@@ -63,6 +63,57 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
+  // Collocation function pointer initializer.
+  *os << node->name () << "_ptr _TAO_collocation_POA_"
+      << node->flatname () << "_Stub_Factory (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj" << be_uidt_nl
+      << ")\n";
+
+  os->incr_indent (0);
+  *os << "{" << be_idt_nl
+      << "TAO_Stub *stub = obj->_stubobj ();" << be_nl << be_nl
+      << "switch (stub->servant_orb_var ()->orb_core"
+      << " ()->get_collocation_strategy ())" << be_idt_nl
+      << "{" << be_nl << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
+
+  if (idl_global->gen_thru_poa_collocation ())
+    *os << "return new " << node->full_coll_name (be_interface::THRU_POA)
+        << " (stub);" << be_uidt_nl;
+  else
+    *os << "break;" << be_uidt_nl;
+
+  *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
+
+  if (idl_global->gen_direct_collocation ())
+    *os << "{" << be_idt_nl
+        << "void *servant = ACE_reinterpret_cast (void*, obj->_servant ());" << be_nl
+        << "if (servant != 0)" << be_idt_nl
+        << "return new " << node->full_coll_name (be_interface::DIRECT)
+        << " (ACE_reinterpret_cast (" << node->full_skel_name () << "*, servant)"
+        << ", stub);" << be_uidt << be_uidt_nl << "}" << be_uidt_nl;
+
+  *os << "break;" << be_uidt_nl << "default:" << be_idt_nl << "break;" << be_uidt_nl
+        << "}" << be_uidt_nl << "return 0;" << be_uidt_nl << "}\n\n";
+
+  *os << "int _TAO_collocation_POA_" << node->flatname ()
+      << "_Stub_Factory_Initializer"
+      << " (void *dummy)" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_UNUSED_ARG (dummy);" << be_nl << be_nl
+      << "_TAO_collocation_" << node->flatname ()
+      << "_Stub_Factory_function_pointer = " << be_idt_nl
+      << "_TAO_collocation_POA_" << node->flatname ()
+      << "_Stub_Factory;" << be_uidt_nl << be_nl
+      << "return 0;" << be_uidt_nl << "}\n\n";
+
+  *os << "int _TAO_collocation_POA_" << node->flatname ()
+      << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
+      << "_TAO_collocation_POA_" << node->flatname ()
+      << "_Stub_Factory_Initializer (_TAO_collocation_POA_"
+      << node->flatname () << "_Stub_Factory_Initializer);" << be_uidt_nl;
+
+  os->incr_indent (0);
+
   // constructor
   *os << "// skeleton constructor" << be_nl;
   // find if we are at the top scope or inside some module
@@ -287,7 +338,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // Thru POA stub
   if (idl_global->gen_thru_poa_collocation ())
     *os << "return new "
-        << node->full_coll_name (be_interface::THRU_POA) << " (this, stub);" << be_uidt_nl;
+        << node->full_coll_name (be_interface::THRU_POA) << " (stub);" << be_uidt_nl;
   else
     *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
 
@@ -308,45 +359,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // not generate the type of collocated stub but the orb is asking
   // for it, simply return null so a remote stub will be used.
   os->indent ();
-
-  *os << "void*" << be_nl
-      << node->full_skel_name ()
-      << "::_create_collocated_objref (const char* repository_id, "
-      << "CORBA::ULong type, TAO_Stub *stub)" << be_nl
-      << "{" << be_idt_nl
-      << "ACE_UNUSED_ARG (type);" << be_nl
-      << "if (!ACE_OS::strcmp (\"" << node->repoID ()
-      << "\", repository_id))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())" << be_idt_nl
-      << "{" << be_nl
-      << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
-
-  // Thru POA stub
-  if (idl_global->gen_thru_poa_collocation ())
-    *os << "return ACE_static_cast (" << be_idt << be_idt_nl
-        << node->name () << "_ptr," << be_nl
-        << "new " << node->full_coll_name (be_interface::THRU_POA) << " (this, stub)" << be_uidt_nl
-        << ");" << be_uidt << be_uidt_nl;
-  else
-    *os << "return 0;" << be_uidt_nl;
-
-  // Direct stub
-  *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
-  if (idl_global->gen_direct_collocation ())
-    *os << "return ACE_static_cast (" << be_idt << be_idt_nl
-        << node->name () << "_ptr," << be_nl
-        << "new " << node->full_coll_name (be_interface::DIRECT) << " (this, stub)" << be_uidt_nl
-        << ");" << be_uidt << be_uidt_nl;
-  else
-    *os << "return 0;" << be_uidt_nl;
-
-  *os << "default:" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
 
   // generate the collocated class impl
   if (idl_global->gen_thru_poa_collocation ())
