@@ -3966,6 +3966,7 @@ orbkey:
                                                client_exposed_policies._retn (),
                                                servant,
                                                collocated,
+                                               this,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (obj);
 

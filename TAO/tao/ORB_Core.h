@@ -382,7 +382,7 @@ public:
   // Access the RTORB.
 
   TAO_RT_Current *rt_current (void);
-  // Access the RTORB.
+  // Access the RT Current.
 
   TAO_Priority_Mapping_Manager *priority_mapping_manager (void);
   // Access the priority mapping manager class.  This is a TAO extension but
@@ -464,6 +464,7 @@ public:
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
+                                TAO_POA *poa,
                                 CORBA::Environment &ACE_TRY_ENV);
   // Makes sure that the ORB is open and then creates a TAO_Stub
   // based on the endpoint.
@@ -524,6 +525,9 @@ protected:
   // Set up the ORB Core's acceptor to listen on the
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
+
+  int set_default_policies (void);
+  // Set ORB-level policy defaults for this ORB.
 
 private:
   // The ORB Core should not be copied

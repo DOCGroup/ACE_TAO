@@ -32,11 +32,15 @@
 class TAO_Export TAO_Protocol_Factory : public ACE_Service_Object
 {
 public:
-  TAO_Protocol_Factory (void);
+  TAO_Protocol_Factory (CORBA::ULong tag);
   virtual ~TAO_Protocol_Factory (void);
 
   virtual int init (int argc, char *argv[]);
   // Initialization hook.
+
+  CORBA::ULong tag (void) const;
+  // The protocol tag, each concrete class will have a specific tag
+  // value.
 
   virtual int match_prefix (const ACE_CString &prefix);
   // Verify prefix is a match
@@ -61,6 +65,10 @@ public:
   // (aka UNIX domain sockets) is unable to remove the rendesvouz
   // point if the server crashes.  For those protocols is better to
   // create the endpoint only if the user requests one.
+
+private:
+  CORBA::ULong tag_;
+  // IOP protocol tag.
 };
 
 #include "ace/post.h"

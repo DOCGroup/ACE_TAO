@@ -52,6 +52,16 @@ public:
   TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core);
 
   virtual TAO_Transport *transport (void) = 0;
+
+  struct UIOP_Properties
+  {
+    // = TITLE
+    //   Unix Domain Sockets protocol properties for a set of
+    //   connections.
+    //
+    int send_buffer_size;
+    int recv_buffer_size;
+  };
 };
 
 // ****************************************************************
@@ -119,8 +129,10 @@ class TAO_Export TAO_UIOP_Server_Connection_Handler : public TAO_UIOP_Handler_Ba
 public:
   TAO_UIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
   TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                      CORBA::Boolean flag = 0);
-  // Constructor.
+                                      CORBA::Boolean flag,
+                                      void *arg);
+  // Constructor. <arg> parameter is used by the Acceptor to pass the
+  // protocol configuration properties for this connection.
 
   ~TAO_UIOP_Server_Connection_Handler (void);
   // Destructor
@@ -185,6 +197,9 @@ protected:
 
    CORBA::Boolean lite_flag_;
   // Should we use GIOP or GIOPlite
+
+  UIOP_Properties *uiop_properties_;
+  // UIOP configuration properties for this connection.
 };
 
 #if defined (__ACE_INLINE__)

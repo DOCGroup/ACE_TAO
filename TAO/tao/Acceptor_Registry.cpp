@@ -8,6 +8,8 @@
 #include "tao/params.h"
 #include "tao/MProfile.h"
 #include "tao/debug.h"
+#include "tao/RT_Policy_i.h"
+#include "tao/POA.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -48,14 +50,52 @@ TAO_Acceptor_Registry::endpoint_count (void)
 
 int
 TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile &mprofile)
+                                      TAO_MProfile &mprofile,
+                                      TAO_POA *poa)
 {
+  // Allocate space for storing the profiles.  There can never be more
+  // profiles than there are endpoints.  In some cases, there can be
+  // less profiles than endpoints.
+  size_t pfile_count = this->endpoint_count ();
+  if (mprofile.set (pfile_count) != pfile_count)
+    return -1;
+
   TAO_AcceptorSetIterator end = this->end ();
+
+  // @@ We may want to strategize the code below, i.e., mprofile
+  // creation: have different strategies for deciding
+  // which profiles get included.  Currently, there are two
+  // cases: regular - all profiles are included, and rt -
+  // RTCORBA::ServerProtocolPolicy determines what's included.
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // RTCORBA 1.0, Section 4.15.1: ServerProtocolPolicy determines
+  // which protocols get included into IOR and in what order.
+  TAO_ServerProtocolPolicy *policy =
+    poa->policies ().server_protocol ();
+  RTCORBA::ProtocolList & protocols = policy->protocols_rep ();
+
+  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+    {
+      CORBA::ULong protocol_type = protocols[j].protocol_type;
+
+      for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
+        if ((*i)->tag () == protocol_type
+            && (*i)->create_mprofile (object_key,
+                                      mprofile) == -1)
+          return -1;
+    }
+  // @@ May want to optimize later rather than doing the double loop above.
+
+#else /* TAO_HAS_RT_CORBA == 1 */
 
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     if ((*i)->create_mprofile (object_key,
                                mprofile) == -1)
       return -1;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   return 0;
 }
@@ -436,7 +476,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
     astr = "";
 
   // Iterate over the addrs specified in the endpoint.
-   
+
   for ( ;
        astr != 0;
        astr = ACE_OS::strtok_r (0,

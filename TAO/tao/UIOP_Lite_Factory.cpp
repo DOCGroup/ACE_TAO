@@ -14,7 +14,8 @@ ACE_RCSID(tao, UIOP_Lite_Factory, "$Id$")
 static const char prefix_[] = "uiop";
 
 TAO_UIOP_Lite_Protocol_Factory::TAO_UIOP_Lite_Protocol_Factory (void)
-  :  major_ (TAO_DEF_GIOP_MAJOR),
+  :  TAO_Protocol_Factory (TAO_TAG_UIOP_PROFILE),
+     major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR)
 {
 }

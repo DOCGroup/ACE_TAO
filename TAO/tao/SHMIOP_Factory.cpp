@@ -12,8 +12,9 @@ ACE_RCSID(tao, SHMIOP_Factory, "$Id$")
 static const char prefix_[] = "shmiop";
 
 TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory (void)
-  :  major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR)
+  : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE),
+    major_ (TAO_DEF_GIOP_MAJOR),
+    minor_ (TAO_DEF_GIOP_MINOR)
 {
 }
 

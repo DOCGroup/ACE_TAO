@@ -100,6 +100,10 @@ private:
   virtual int parse_options (const char *options);
   // Parse protocol specific options.
 
+  int init_tcp_properties (void);
+  // Obtain tcp properties that must be used by this acceptor, i.e.,
+  // initialize <tcp_properties_>.
+
 protected:
   ACE_INET_Addr *addrs_;
 
@@ -132,6 +136,9 @@ private:
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
 
+  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
+  // TCP configuration properties to be used for all
+  // connections opened by this acceptor.
 };
 
 #if defined(__ACE_INLINE__)

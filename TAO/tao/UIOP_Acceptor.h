@@ -90,6 +90,10 @@ private:
   int parse_options (const char *options);
   // Parse protocol specific options.
 
+  int init_uiop_properties (void);
+  // Obtains uiop properties that must be used by this acceptor, i.e.,
+  // initializes <uiop_properties_>.
+
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.
@@ -112,6 +116,9 @@ private:
 
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
+
+  TAO_UIOP_Handler_Base::UIOP_Properties uiop_properties_;
+  // Properties for all connections accepted by this acceptor.
 };
 
 # endif /* TAO_HAS_UIOP == 1 */

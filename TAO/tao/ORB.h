@@ -60,6 +60,7 @@ typedef enum
 class TAO_MProfile;
 class TAO_POA_Manager;
 class TAO_POA_Policies;
+class TAO_POA;
 struct TAO_Dispatch_Context;
 class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
@@ -637,6 +638,7 @@ public:
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
+                                TAO_POA *poa,
                                 CORBA_Environment &ACE_TRY_ENV);
   // Delegates on the ORB_Core to create a TAO_Stub.
 
@@ -646,6 +648,7 @@ public:
                                   CORBA::PolicyList *policy_list,
                                   TAO_ServantBase *servant,
                                   CORBA::Boolean collocated,
+                                  TAO_POA *poa,
                                   CORBA_Environment &ACE_TRY_ENV);
 
   // Convert key into an object reference.  Return Object_ptr as out

@@ -32,8 +32,11 @@ class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
   //     Creates a Svc_Handler and set the ORB_Core pointer on it.
 public:
   TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
+                         void *arg = 0,
                          CORBA::Boolean flag = 0);
-  // Constructor.
+  // Constructor. <arg> parameter is used to pass any special
+  // state/info to the service handler upon creation.  Currently used
+  // by IIOP and UIOP to pass protocol configuration properties.
 
   int make_svc_handler (SVC_HANDLER *&sh);
   // Create a SVC_HANDLER  and set the ORB_Core pointer on it.
@@ -41,7 +44,10 @@ public:
 protected:
   TAO_ORB_Core *orb_core_;
   // Pointer to the ORB Core.
-  
+
+  void *arg_;
+  // Some info/state to be passed to the service handler we create.
+
   CORBA::Boolean lite_flag_;
   // Should we use the Lite version for any protocol?
 };

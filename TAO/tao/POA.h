@@ -609,6 +609,9 @@ public:
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+  TAO_POA_Policies &policies (void);
+  // Accessor for POA policies.
+
   CORBA::PolicyList *client_exposed_policies (CORBA::Short object_priority,
                                               CORBA_Environment &ACE_TRY_ENV);
   // This method gives the policies that are exposed to the client.
@@ -679,8 +682,6 @@ public:
   TAO_Object_Adapter &object_adapter (void);
 
   ACE_Lock &lock (void);
-
-  TAO_POA_Policies &policies (void);
 
 protected:
 

@@ -26,7 +26,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
-
+#include "tao/RT_Policy_i.h"
 
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 
@@ -168,6 +168,11 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          const char *address,
                          const char *options)
 {
+  this->orb_core_ = orb_core;
+
+  if (this->init_uiop_properties () != 0)
+    return -1;
+
   if (address == 0)
     return -1;
 
@@ -189,6 +194,11 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  int minor,
                                  const char *options)
 {
+  this->orb_core_ = orb_core;
+
+  if (this->init_uiop_properties () != 0)
+    return -1;
+
   if (major >=0 && minor >= 0)
     this->version_.set_version (ACE_static_cast (CORBA::Octet,
                                                  major),
@@ -213,10 +223,9 @@ int
 TAO_UIOP_Acceptor::open_i (TAO_ORB_Core *orb_core,
                            const char *rendezvous)
 {
-  this->orb_core_ = orb_core;
-
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_UIOP_CREATION_STRATEGY (this->orb_core_,
+                                              &(this->uiop_properties_),
                                               this->lite_flag_),
                   -1);
 
@@ -456,4 +465,83 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+int
+TAO_UIOP_Acceptor::init_uiop_properties (void)
+{
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // @@ Currently (in the code below), we obtain protocol properties from
+  // ORB-level ServerProtocol, even though the policy may
+  // have been overridden on POA level.  That's because currently all
+  // endpoints (acceptors) are global.  Once endpoints become per POA,
+  // the code below will have to be changed to look at the POA-level
+  // ServerProtocol policy first.
+
+  // ServerProtocolProperties policy controls protocols configuration.
+  // Look for protocol properties in the effective ServerProtocolPolicy.
+  TAO_ServerProtocolPolicy *server_protocols =
+    this->orb_core_->server_protocol ();
+  // Automatically release the policy.
+  CORBA::Object_var auto_release = server_protocols;
+  RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
+    RTCORBA::UnixDomainProtocolProperties::_nil ();
+  RTCORBA::ProtocolList & protocols = server_protocols->protocols_rep ();
+
+  // Find protocol properties for UIOP.
+  ACE_DECLARE_NEW_CORBA_ENV;
+  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+      if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
+        {
+          uiop_properties =
+            RTCORBA::UnixDomainProtocolProperties::_narrow
+            (protocols[j].transport_protocol_properties.in (),
+             ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+          break;
+        }
+
+  if (CORBA::is_nil (uiop_properties.in ()))
+    {
+      // TCP Properties were not specified in the effective policy.
+      // We must use orb defaults.
+
+      server_protocols = this->orb_core_->default_server_protocol ();
+      // Automatically release the policy.
+      auto_release = server_protocols;
+      // Find protocol properties for IIOP.
+      RTCORBA::ProtocolList & protocols = server_protocols->protocols_rep ();
+      for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+        if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
+          {
+            uiop_properties =
+              RTCORBA::UnixDomainProtocolProperties::_narrow
+              (protocols[j].transport_protocol_properties.in (),
+               ACE_TRY_ENV);
+            ACE_CHECK_RETURN (-1);
+            break;
+          }
+
+      // Orb defaults should never be null, since the ORB initializes
+      // them in ORB_init ...
+    }
+
+  // Extract and locally store properties of interest.
+  this->uiop_properties_.send_buffer_size =
+    uiop_properties->send_buffer_size ();
+  this->uiop_properties_.recv_buffer_size =
+    uiop_properties->recv_buffer_size ();
+
+#else /* TAO_HAS_RT_CORBA == 1 */
+
+  this->uiop_properties_.send_buffer_size =
+    this->orb_core_->orb_params ()->sock_sndbuf_size ();
+  this->uiop_properties_.recv_buffer_size =
+    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+  return 0;
+}
+
 #endif  /* TAO_HAS_UIOP == 1 */
