@@ -1,3 +1,8 @@
+Thu Oct 16 01:18:48 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/SV_Semaphore_Simple.cpp (name_2_key): Explicitly cast the
+	  return value to (key_t).  It was causing problem on Win32.
+
 Wed Oct 15 22:47:30 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/ACE.h: 
