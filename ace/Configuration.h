@@ -522,7 +522,7 @@ public:
                          const ACE_TCHAR* name,
                          VALUETYPE& type);
 
-  /// Removes the the value <name> from <key>.  returns non zero on error
+  /// Removes the the value @a name from @a key.  returns non zero on error
   virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name);
 
