@@ -340,7 +340,7 @@ CORBA::ComponentIR::EventDef::_unchecked_narrow (
           EventDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &EventDef::_tao_class_id
                 )
             )
@@ -410,19 +410,19 @@ CORBA::ComponentIR::EventDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::EventDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::EventDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, EventDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::ExtValueDef::_tao_class_id)
             )
     {
@@ -436,7 +436,7 @@ void *CORBA::ComponentIR::EventDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::ValueDef::_tao_class_id)
             )
     {
@@ -450,7 +450,7 @@ void *CORBA::ComponentIR::EventDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Container::_tao_class_id)
             )
     {
@@ -464,7 +464,7 @@ void *CORBA::ComponentIR::EventDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -478,7 +478,7 @@ void *CORBA::ComponentIR::EventDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IDLType::_tao_class_id)
             )
     {
@@ -492,7 +492,7 @@ void *CORBA::ComponentIR::EventDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -506,7 +506,7 @@ void *CORBA::ComponentIR::EventDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2025,7 +2025,7 @@ CORBA::ComponentIR::Container::_unchecked_narrow (
           Container_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Container::_tao_class_id
                 )
             )
@@ -2071,19 +2071,19 @@ CORBA::ComponentIR::Container::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::Container::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::Container::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, Container)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2576,7 +2576,7 @@ CORBA::ComponentIR::ModuleDef::_unchecked_narrow (
           ModuleDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ModuleDef::_tao_class_id
                 )
             )
@@ -2642,19 +2642,19 @@ CORBA::ComponentIR::ModuleDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::ModuleDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::ModuleDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, ModuleDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::ModuleDef::_tao_class_id)
             )
     {
@@ -2668,7 +2668,7 @@ void *CORBA::ComponentIR::ModuleDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, Container)::_tao_class_id)
             )
     {
@@ -2682,7 +2682,7 @@ void *CORBA::ComponentIR::ModuleDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Container::_tao_class_id)
             )
     {
@@ -2696,7 +2696,7 @@ void *CORBA::ComponentIR::ModuleDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -2710,7 +2710,7 @@ void *CORBA::ComponentIR::ModuleDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -2724,7 +2724,7 @@ void *CORBA::ComponentIR::ModuleDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -3089,7 +3089,7 @@ CORBA::ComponentIR::Repository::_unchecked_narrow (
           Repository_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Repository::_tao_class_id
                 )
             )
@@ -3151,19 +3151,19 @@ CORBA::ComponentIR::Repository::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::Repository::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::Repository::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, Repository)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Repository::_tao_class_id)
             )
     {
@@ -3177,7 +3177,7 @@ void *CORBA::ComponentIR::Repository::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, Container)::_tao_class_id)
             )
     {
@@ -3191,7 +3191,7 @@ void *CORBA::ComponentIR::Repository::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Container::_tao_class_id)
             )
     {
@@ -3205,7 +3205,7 @@ void *CORBA::ComponentIR::Repository::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -3219,7 +3219,7 @@ void *CORBA::ComponentIR::Repository::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -4158,7 +4158,7 @@ CORBA::ComponentIR::ProvidesDef::_unchecked_narrow (
           ProvidesDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ProvidesDef::_tao_class_id
                 )
             )
@@ -4212,19 +4212,19 @@ CORBA::ComponentIR::ProvidesDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::ProvidesDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::ProvidesDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, ProvidesDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -4238,7 +4238,7 @@ void *CORBA::ComponentIR::ProvidesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -4252,7 +4252,7 @@ void *CORBA::ComponentIR::ProvidesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -5993,7 +5993,7 @@ CORBA::ComponentIR::UsesDef::_unchecked_narrow (
           UsesDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &UsesDef::_tao_class_id
                 )
             )
@@ -6047,19 +6047,19 @@ CORBA::ComponentIR::UsesDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::UsesDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::UsesDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, UsesDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -6073,7 +6073,7 @@ void *CORBA::ComponentIR::UsesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -6087,7 +6087,7 @@ void *CORBA::ComponentIR::UsesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -7630,7 +7630,7 @@ CORBA::ComponentIR::EventPortDef::_unchecked_narrow (
           EventPortDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &EventPortDef::_tao_class_id
                 )
             )
@@ -7684,19 +7684,19 @@ CORBA::ComponentIR::EventPortDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::EventPortDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::EventPortDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, EventPortDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -7710,7 +7710,7 @@ void *CORBA::ComponentIR::EventPortDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -7724,7 +7724,7 @@ void *CORBA::ComponentIR::EventPortDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -8348,7 +8348,7 @@ CORBA::ComponentIR::EmitsDef::_unchecked_narrow (
           EmitsDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &EmitsDef::_tao_class_id
                 )
             )
@@ -8406,19 +8406,19 @@ CORBA::ComponentIR::EmitsDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::EmitsDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, EmitsDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, EventPortDef)::_tao_class_id)
             )
     {
@@ -8432,7 +8432,7 @@ void *CORBA::ComponentIR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -8446,7 +8446,7 @@ void *CORBA::ComponentIR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -8460,7 +8460,7 @@ void *CORBA::ComponentIR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -8824,7 +8824,7 @@ CORBA::ComponentIR::PublishesDef::_unchecked_narrow (
           PublishesDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &PublishesDef::_tao_class_id
                 )
             )
@@ -8882,19 +8882,19 @@ CORBA::ComponentIR::PublishesDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::PublishesDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, PublishesDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, EventPortDef)::_tao_class_id)
             )
     {
@@ -8908,7 +8908,7 @@ void *CORBA::ComponentIR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -8922,7 +8922,7 @@ void *CORBA::ComponentIR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -8936,7 +8936,7 @@ void *CORBA::ComponentIR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -9302,7 +9302,7 @@ CORBA::ComponentIR::ConsumesDef::_unchecked_narrow (
           ConsumesDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ConsumesDef::_tao_class_id
                 )
             )
@@ -9360,19 +9360,19 @@ CORBA::ComponentIR::ConsumesDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::ConsumesDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, ConsumesDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, EventPortDef)::_tao_class_id)
             )
     {
@@ -9386,7 +9386,7 @@ void *CORBA::ComponentIR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -9400,7 +9400,7 @@ void *CORBA::ComponentIR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -9414,7 +9414,7 @@ void *CORBA::ComponentIR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -12689,7 +12689,7 @@ CORBA::ComponentIR::ComponentDef::_unchecked_narrow (
           ComponentDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ComponentDef::_tao_class_id
                 )
             )
@@ -12763,19 +12763,19 @@ CORBA::ComponentIR::ComponentDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, ComponentDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::ExtInterfaceDef::_tao_class_id)
             )
     {
@@ -12789,7 +12789,7 @@ void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::InterfaceDef::_tao_class_id)
             )
     {
@@ -12803,7 +12803,7 @@ void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::InterfaceAttrExtension::_tao_class_id)
             )
     {
@@ -12817,7 +12817,7 @@ void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Container::_tao_class_id)
             )
     {
@@ -12831,7 +12831,7 @@ void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -12845,7 +12845,7 @@ void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IDLType::_tao_class_id)
             )
     {
@@ -12859,7 +12859,7 @@ void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -12873,7 +12873,7 @@ void *CORBA::ComponentIR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -14990,7 +14990,7 @@ CORBA::ComponentIR::FactoryDef::_unchecked_narrow (
           FactoryDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &FactoryDef::_tao_class_id
                 )
             )
@@ -15048,19 +15048,19 @@ CORBA::ComponentIR::FactoryDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::FactoryDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, FactoryDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::OperationDef::_tao_class_id)
             )
     {
@@ -15074,7 +15074,7 @@ void *CORBA::ComponentIR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -15088,7 +15088,7 @@ void *CORBA::ComponentIR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -15102,7 +15102,7 @@ void *CORBA::ComponentIR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -15467,7 +15467,7 @@ CORBA::ComponentIR::FinderDef::_unchecked_narrow (
           FinderDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &FinderDef::_tao_class_id
                 )
             )
@@ -15525,19 +15525,19 @@ CORBA::ComponentIR::FinderDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::FinderDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, FinderDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::OperationDef::_tao_class_id)
             )
     {
@@ -15551,7 +15551,7 @@ void *CORBA::ComponentIR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -15565,7 +15565,7 @@ void *CORBA::ComponentIR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -15579,7 +15579,7 @@ void *CORBA::ComponentIR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -18965,7 +18965,7 @@ CORBA::ComponentIR::HomeDef::_unchecked_narrow (
           HomeDef_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &HomeDef::_tao_class_id
                 )
             )
@@ -19039,19 +19039,19 @@ CORBA::ComponentIR::HomeDef::_is_a (
     }
 }
 
-void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA::ComponentIR, HomeDef)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::ExtInterfaceDef::_tao_class_id)
             )
     {
@@ -19065,7 +19065,7 @@ void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::InterfaceDef::_tao_class_id)
             )
     {
@@ -19079,7 +19079,7 @@ void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::InterfaceAttrExtension::_tao_class_id)
             )
     {
@@ -19093,7 +19093,7 @@ void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Container::_tao_class_id)
             )
     {
@@ -19107,7 +19107,7 @@ void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Contained::_tao_class_id)
             )
     {
@@ -19121,7 +19121,7 @@ void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IDLType::_tao_class_id)
             )
     {
@@ -19135,7 +19135,7 @@ void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::IRObject::_tao_class_id)
             )
     {
@@ -19149,7 +19149,7 @@ void *CORBA::ComponentIR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,14 +8,14 @@
  *
  *   This file defines way in which CORBA exceptions are reported.
  *
- *
  *  @author Copyright 1994-1995 by Sun Microsystems Inc.
- *  @author DOC Group at Wash U, UCI and Vanderbilt U.
+ *  @author DOC Group at Vanderbilt U., Wash U, and UCI
  */
 //=============================================================================
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
+
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -421,4 +421,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* TAO_EXCEPTION_H */

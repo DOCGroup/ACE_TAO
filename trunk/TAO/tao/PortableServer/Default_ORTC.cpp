@@ -143,7 +143,7 @@ TAO_Default_ORT::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
       return 0;
     }
 
-  return (ObjectReferenceTemplate *) v->_tao_obv_narrow ((ptr_arith_t) &_downcast);
+  return (ObjectReferenceTemplate *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
 }
 
 const char *
@@ -154,12 +154,12 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_repository_id (void) const
 
 void *
 #if defined (_MSC_VER)
-TAO_Default_ORT::ObjectReferenceTemplate::TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (ptr_arith_t type_id)
+TAO_Default_ORT::ObjectReferenceTemplate::TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (ptrdiff_t type_id)
 #else
-TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_id)
+TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
 #endif /* _MSC_VER */
 {
-  if (type_id == (ptr_arith_t) &_downcast)
+  if (type_id == (ptrdiff_t) &_downcast)
     {
       return this;
     }
@@ -180,7 +180,7 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_id)
 
 #if defined (_MSC_VER)
 void *
-TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_id)
+TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
 {
   return this->TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (type_id);
 }
@@ -356,7 +356,7 @@ operator<< (
             TAO_Default_ORT::ObjectReferenceTemplate *,
             _tao_valuetype
           ),
-        (ptr_arith_t) &TAO_Default_ORT::ObjectReferenceTemplate::_downcast
+        (ptrdiff_t) &TAO_Default_ORT::ObjectReferenceTemplate::_downcast
       );
 }
 

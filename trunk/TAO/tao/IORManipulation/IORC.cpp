@@ -887,7 +887,7 @@ TAO_IOP::TAO_IOR_Property::_unchecked_narrow (
           TAO_IOR_Property_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &TAO_IOR_Property::_tao_class_id
                 )
             )
@@ -905,19 +905,19 @@ TAO_IOP::TAO_IOR_Property::_duplicate (TAO_IOR_Property_ptr obj)
   return obj;
 }
 
-void *TAO_IOP::TAO_IOR_Property::_tao_QueryInterface (ptr_arith_t type)
+void *TAO_IOP::TAO_IOR_Property::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Property)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1110,7 +1110,7 @@ TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
           TAO_IOR_Manipulation_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &TAO_IOR_Manipulation::_tao_class_id
                 )
             )
@@ -1128,19 +1128,19 @@ TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
   return obj;
 }
 
-void *TAO_IOP::TAO_IOR_Manipulation::_tao_QueryInterface (ptr_arith_t type)
+void *TAO_IOP::TAO_IOR_Manipulation::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Manipulation)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

@@ -78,7 +78,7 @@ public:
       return (TAO_Network_Priority_Mapping_Manager_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   virtual const char* _interface_repository_id (void) const;
 

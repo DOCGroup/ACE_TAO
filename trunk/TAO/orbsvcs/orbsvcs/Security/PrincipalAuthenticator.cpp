@@ -433,7 +433,7 @@ TAO_PrincipalAuthenticator::_unchecked_narrow (
                 (
                   ACE_reinterpret_cast
                     (
-                      ptr_arith_t,
+                      ptrdiff_t,
                       &TAO_PrincipalAuthenticator::_tao_class_id
                     )
                 )
@@ -449,15 +449,15 @@ TAO_PrincipalAuthenticator::_duplicate (TAO_PrincipalAuthenticator_ptr obj)
 }
 
 void *
-TAO_PrincipalAuthenticator::_tao_QueryInterface (ptr_arith_t type)
+TAO_PrincipalAuthenticator::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
+    (ptrdiff_t,
       &TAO_PrincipalAuthenticator::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
+    (ptrdiff_t,
       &::SecurityLevel2::PrincipalAuthenticator::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
@@ -468,7 +468,7 @@ TAO_PrincipalAuthenticator::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
+  else if (type == ACE_reinterpret_cast (ptrdiff_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

@@ -305,7 +305,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               TAO_Private_Transport_Descriptor private_desc (
                 invocation->endpoint (),
                 ACE_static_cast (long,
-                                 ACE_reinterpret_cast (ptr_arith_t,
+                                 ACE_reinterpret_cast (ptrdiff_t,
                                                        invocation->stub ())));
 
               status =
