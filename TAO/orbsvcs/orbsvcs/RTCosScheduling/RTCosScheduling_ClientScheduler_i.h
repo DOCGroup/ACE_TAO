@@ -43,6 +43,7 @@
 #include <orbsvcs/RTCosSchedulingC.h>
 #include <orbsvcs/RTCosScheduling/RTCosScheduling_export.h>
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/PortableInterceptorC.h"
 #include "tao/RTCORBA/Linear_Priority_Mapping.h"
 
 

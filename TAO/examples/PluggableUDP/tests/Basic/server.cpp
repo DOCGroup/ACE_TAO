@@ -19,7 +19,6 @@
 
 #include "UDP_i.h"
 
-#include "tao/corba.h"
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"

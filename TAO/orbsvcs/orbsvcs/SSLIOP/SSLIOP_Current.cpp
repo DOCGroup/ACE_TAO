@@ -132,32 +132,10 @@ TAO_SSLIOP_Current::teardown (TAO_SSLIOP_Current_Impl *prev_impl,
 TAO_SSLIOP_Current_ptr
 TAO_SSLIOP_Current::_narrow (
   CORBA::Object_ptr obj
-  ACE_ENV_ARG_DECL)
-{
-  return TAO_SSLIOP_Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-TAO_SSLIOP_Current_ptr
-TAO_SSLIOP_Current::_unchecked_narrow (
-  CORBA::Object_ptr obj
   ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (obj))
-    return TAO_SSLIOP_Current::_nil ();
-
-  return
-    ACE_reinterpret_cast
-      (
-         TAO_SSLIOP_Current_ptr,
-         obj->_tao_QueryInterface
-           (
-             ACE_reinterpret_cast
-             (
-                ptrdiff_t,
-                &TAO_SSLIOP_Current::_tao_class_id
-             )
-           )
-       );
+  return  TAO_SSLIOP_Current::_duplicate (
+              dynamic_cast<TAO_SSLIOP_Current *> (obj));
 }
 
 TAO_SSLIOP_Current_ptr
@@ -167,49 +145,6 @@ TAO_SSLIOP_Current::_duplicate (TAO_SSLIOP_Current_ptr obj)
     obj->_add_ref ();
 
   return obj;
-}
-
-void *
-TAO_SSLIOP_Current::_tao_QueryInterface (ptrdiff_t type)
-{
-  void *retv = 0;
-  if (type == ACE_reinterpret_cast
-      (ptrdiff_t,
-       &TAO_SSLIOP_Current::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast
-           (ptrdiff_t,
-            &::SSLIOP::Current::_tao_class_id))
-    retv = ACE_reinterpret_cast
-      (
-       void *,
-       ACE_static_cast
-       (
-        SSLIOP::Current_ptr,
-        this
-        )
-       );
-  else if (type == ACE_reinterpret_cast
-           (ptrdiff_t,
-            &::CORBA::Current::_tao_class_id))
-    retv = ACE_reinterpret_cast
-      (
-       void *,
-       ACE_static_cast
-       (
-        CORBA::Current_ptr,
-        this
-        )
-       );
-  else if (type == ACE_reinterpret_cast (ptrdiff_t,
-                                         &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-                                 ACE_static_cast (CORBA::Object_ptr, this));
-
-  if (retv)
-    this->_add_ref ();
-
-  return retv;
 }
 
 const char *

@@ -2,8 +2,9 @@
 
 #include "Command.h"
 
+#include "tao/Exception.h"
+
 #include "ace/Log_Msg.h"
-#include "tao/corba.h"
 
 ACE_RCSID(lib, TAO_Command, "$Id$")
 

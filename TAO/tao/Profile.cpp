@@ -828,15 +828,8 @@ TAO_Unknown_Profile::_key (void) const
 CORBA::Boolean
 TAO_Unknown_Profile::do_is_equivalent (const TAO_Profile* other_profile)
 {
-<<<<<<< Profile.cpp
-  if (other_profile->tag () != this->tag ())
-    {
-      return 0;
-    }
-=======
   const TAO_Unknown_Profile * op =
     ACE_dynamic_cast (const TAO_Unknown_Profile *, other_profile);
->>>>>>> 1.58
 
   return (CORBA::Boolean) (op == 0 ? 0 : this->body_ == op->body_);
 }

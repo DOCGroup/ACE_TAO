@@ -1,13 +1,17 @@
 // $Id$
 
 #include "EventType.h"
+
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EventType.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_EventType, "$Id$")
+ACE_RCSID (Notify, 
+           TAO_Notify_EventType, 
+           "$Id$")
 
 TAO_Notify_EventType
 TAO_Notify_EventType::special (void)
@@ -34,12 +38,15 @@ TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
   this->recompute_hash ();
 }
 
-TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name, const char* type_name)
+TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name,
+                                            const char* type_name)
 {
   this->init_i (domain_name, type_name);
 }
 
-TAO_Notify_EventType::TAO_Notify_EventType (const CosNotification::EventType& event_type)
+TAO_Notify_EventType::TAO_Notify_EventType (
+    const CosNotification::EventType& event_type
+  )
 {
   this->init_i (event_type.domain_name.in (), event_type.type_name.in ());
 }
@@ -126,5 +133,8 @@ TAO_Notify_EventType::is_special (void) const
 void
 TAO_Notify_EventType::dump (void) const
 {
-  ACE_DEBUG ((LM_DEBUG, "(%s,%s)", this->event_type_.domain_name.in (), this->event_type_.type_name.in ()));
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%s,%s)", 
+              this->event_type_.domain_name.in (), 
+              this->event_type_.type_name.in ()));
 }

@@ -14,10 +14,11 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
 #include "Factory_Finder.h"
 
-ACE_RCSID(Quoter, Factory_Finder, "$Id$")
+ACE_RCSID (Quoter, 
+
+           Factory_Finder, "$Id$")
 
 Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server (void)
 :   debug_level_ (1)

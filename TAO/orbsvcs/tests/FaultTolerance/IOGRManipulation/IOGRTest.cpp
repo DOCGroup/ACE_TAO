@@ -17,13 +17,15 @@
 //
 //=========================================================================
 
-#include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 
-ACE_RCSID(IORManipluation, IORTest, "$Id$")
+ACE_RCSID(IOGRManipluation,
+          IOGRTest,
+          "$Id$")
+
 
 int
 main (int argc, char *argv[])

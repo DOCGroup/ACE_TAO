@@ -26,6 +26,7 @@
 
 #ifndef ACE_EVENT_CHANNEL_H
 #define ACE_EVENT_CHANNEL_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Unbounded_Set_Ex.h"
@@ -38,6 +39,7 @@
 #include "ace/Functor.h"
 
 #include "tao/Timeprobe.h"
+
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Event/Local_ESTypes.h"
 #include "orbsvcs/Event/Timer_Module.h"
@@ -1490,4 +1492,5 @@ private:
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_EVENT_CHANNEL_H */

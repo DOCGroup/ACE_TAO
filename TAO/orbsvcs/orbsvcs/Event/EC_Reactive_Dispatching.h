@@ -14,9 +14,11 @@
 
 #ifndef TAO_EC_REACTIVE_DISPATCHING_H
 #define TAO_EC_REACTIVE_DISPATCHING_H
+
 #include /**/ "ace/pre.h"
 
 #include "EC_Dispatching.h"
+
 #include /**/ "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -58,4 +60,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_REACTIVE_DISPATCHING_H */

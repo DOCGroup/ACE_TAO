@@ -18,7 +18,6 @@
 #if !defined (NESTEA_SERVER_I_H)
 #define NESTEA_SERVER_I_H
 
-#include "tao/corba.h"
 #include "nestea_i.h"
 
 /**

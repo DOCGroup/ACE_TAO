@@ -28,7 +28,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "LoggerC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"

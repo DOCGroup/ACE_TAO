@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Arg_Shifter.h"
-#include "tao/corba.h"
 #include "ace/CORBA_macros.h"
 
 /**

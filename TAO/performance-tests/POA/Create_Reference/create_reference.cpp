@@ -1,7 +1,8 @@
 // $Id$
 
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/corba.h"
+#include "tao/ORB_Constants.h"
+#include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"

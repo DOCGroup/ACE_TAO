@@ -13,9 +13,11 @@
 
 #ifndef IMR_LOCATOR_H
 #define IMR_LOCATOR_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/IORTable/IORTable.h"
+#include "tao/LocalObject.h"
 
 class ImR_Activator_i;
 
@@ -56,4 +58,5 @@ private:
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
+
 #endif /* IMR_LOCATOR_H */

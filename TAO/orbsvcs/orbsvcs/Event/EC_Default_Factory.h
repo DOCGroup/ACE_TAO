@@ -14,6 +14,7 @@
 
 #ifndef TAO_EC_DEFAULT_FACTORY_H
 #define TAO_EC_DEFAULT_FACTORY_H
+
 #include /**/ "ace/pre.h"
 
 #include "EC_Factory.h"
@@ -186,4 +187,5 @@ ACE_STATIC_SVC_DECLARE (TAO_EC_Default_Factory)
 ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_EC_Default_Factory)
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_DEFAULT_FACTORY_H */

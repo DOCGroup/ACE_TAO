@@ -2,7 +2,9 @@
 
 #include "Activation_Manager.h"
 
-ACE_RCSID(lib, TAO_Activation_Manager, "$Id$")
+ACE_RCSID (lib, 
+           TAO_Activation_Manager, 
+           "$Id$")
 
 #include "LookupManager.h"
 #include "Command_Builder.h"

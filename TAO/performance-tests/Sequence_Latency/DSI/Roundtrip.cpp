@@ -3,6 +3,8 @@
 //
 
 #include "TestC.h"
+#include "tao/TC_Constants_Forward.h"
+#include "tao/NVList.h"
 #include "Roundtrip.h"
 #include "tao/DynamicInterface/Server_Request.h"
 

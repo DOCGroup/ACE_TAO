@@ -2,11 +2,11 @@
 
 #include "LB_Random.h"
 
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Random,
            "$Id$")
-
 
 #ifdef ACE_HAS_PTHREADS_STD
 static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;

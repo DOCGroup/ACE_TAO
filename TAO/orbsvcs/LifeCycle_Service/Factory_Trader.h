@@ -17,7 +17,6 @@
 #ifndef FACTORY_TRADER_H
 #define FACTORY_TRADER_H
 
-#include "tao/corba.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 #include "orbsvcs/CosLifeCycleC.h"

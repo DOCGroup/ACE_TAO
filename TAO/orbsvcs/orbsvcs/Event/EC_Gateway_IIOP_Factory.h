@@ -10,12 +10,18 @@
 
 #ifndef TAO_EC_GATEWAY_IIOP_FACTORY_H
 #define TAO_EC_GATEWAY_IIOP_FACTORY_H
-#include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Time_Value.h"
 #include "ace/Service_Object.h"
+
+#include /**/ "event_export.h"
 
 class TAO_ECG_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP;
@@ -97,4 +103,5 @@ ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_EC_Gateway_IIOP_Factory)
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_GATEWAY_IIOP_FACTORY_H */

@@ -10,6 +10,7 @@
 
 #ifndef TAO_ECG_CDR_MESSAGE_RECEIVER_H
 #define TAO_ECG_CDR_MESSAGE_RECEIVER_H
+
 #include /**/ "ace/pre.h"
 
 #include "ECG_UDP_Out_Endpoint.h"
@@ -20,6 +21,7 @@
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"
+
 #include "ace/Hash_Map_Manager.h"
 #include "ace/INET_Addr.h"
 
@@ -307,4 +309,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_ECG_CDR_MESSAGE_RECEIVER_H */

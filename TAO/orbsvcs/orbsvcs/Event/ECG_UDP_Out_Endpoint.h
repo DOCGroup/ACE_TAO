@@ -10,14 +10,17 @@
 
 #ifndef TAO_ECG_UDP_OUT_ENDPOINT_H
 #define TAO_ECG_UDP_OUT_ENDPOINT_H
+
 #include /**/ "ace/pre.h"
 
 #include /**/ "event_export.h"
-#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
 
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/SOCK_Dgram.h"
@@ -88,4 +91,5 @@ typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex> TAO_ECG
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_ECG_UDP_OUT_ENDPOINT_H */

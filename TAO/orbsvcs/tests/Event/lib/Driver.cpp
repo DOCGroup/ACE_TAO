@@ -3,10 +3,14 @@
 #include "Driver.h"
 #include "Consumer.h"
 #include "Supplier.h"
+
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
+
+#include "tao/ORB_Constants.h"
+
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"

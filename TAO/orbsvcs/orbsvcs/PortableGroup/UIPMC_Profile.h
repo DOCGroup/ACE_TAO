@@ -14,9 +14,11 @@
 
 #ifndef TAO_UIPMC_PROFILE_H
 #define TAO_UIPMC_PROFILE_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Profile.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -25,6 +27,7 @@
 #include "tao/target_specification.h"
 
 #include "orbsvcs/PortableGroupC.h"
+
 #include "UIPMC_Endpoint.h"
 #include "portablegroup_export.h"
 
