@@ -3353,11 +3353,10 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result (ACE_Hand
     flags_ (flags),
     handle_ (handle)
 {
-  ACE_ASSERT(protocol_family == PF_INET);
+  ACE_UNUSED_ARG (protocol_family);
   this->aio_fildes = handle;	
   this->aio_nbytes = bytes_to_read;
-  ACE_NEW(this->remote_address_, ACE_INET_Addr);
-
+  ACE_NEW (this->remote_address_, ACE_INET_Addr);
 }
 
 void
