@@ -80,6 +80,8 @@ TAO_IORInfo::add_ior_component_to_profile (
   // Add the given tagged component to all profiles matching the given
   // ProfileId.
 
+  int found_profile = 0;
+
   CORBA::ULong profile_count = this->mp_.profile_count ();
   for (CORBA::ULong i = 0; i < profile_count; ++i)
     {
@@ -89,6 +91,20 @@ TAO_IORInfo::add_ior_component_to_profile (
 	{
 	  profile->add_tagged_component (component, ACE_TRY_ENV);
           ACE_CHECK;
+
+          found_profile = 1;
 	}
     }
+
+  // According to the Portable Interceptor specification, we're
+  // supposed to throw a CORBA::BAD_PARAM exception if no profile
+  // matched the given ProfileId.
+  // @todo: We need the proper minor code as soon as the spec is
+  //        updated.
+  if (found_profile == 0)
+    ACE_THROW (CORBA::BAD_PARAM (
+                 CORBA_SystemException::_tao_minor_code (
+                   TAO_DEFAULT_MINOR_CODE,
+                   EINVAL),
+                 CORBA::COMPLETED_NO));
 }
