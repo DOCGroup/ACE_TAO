@@ -28,13 +28,11 @@ ACE_RCSID (be_visitor_operation,
 
 be_visitor_operation_cs::be_visitor_operation_cs (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
-//    operation_name_ (0)
 {
 }
 
 be_visitor_operation_cs::~be_visitor_operation_cs (void)
 {
-//  delete[] operation_name_;
 }
 
 // Processing to be done after every element in the scope is processed.
@@ -62,7 +60,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
+                         "(%N:%l) be_visitor_operation_cs::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);

@@ -1,3 +1,35 @@
+Thu Aug 21 17:59:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bench/AMI/AMI_Test_Client.dsp:
+        * tests/Bench/AMI/AMI_Test_Server.dsp:
+        * tests/Bench/AMI/AMI_Test_Simple_Client.dsp:
+
+          Fixed some settings on these projects.
+
+        * tests/Bench/AMI/ami_test.idl:
+
+          Added file to repository.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDLbe/be_visitor_traits.cpp:
+        * TAO_IDLbe/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDLbe/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+
+          Changes to support refactoring of AMI operations.
+
+        * TAO_IDLbe/be_visitor_operation/operation.cpp:
+        * TAO_IDLbe_include/be_visitor_operation/operation.h:
+        * TAO_IDLbe_include/be_visitor_operation/operation_ss.h:
+        * TAO_IDLbe/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDLbe/be_visitor_operation/operation_ss.cpp:
+
+          Removed unused class members.
+
+        * TAO_IDLbe/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDLbe/be_visitor_ccm_pre_proc.cpp:
+
+          Cosmetic changes.
+
 Mon Aug 18 11:23:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation.cpp: Removed the check

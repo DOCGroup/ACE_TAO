@@ -35,6 +35,10 @@
 #include "be_extern.h"
 #include "utl_identifier.h"
 
+ACE_RCSID (be,
+           be_visitor_traits,
+           "$Id$")
+
 be_visitor_traits::be_visitor_traits (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
