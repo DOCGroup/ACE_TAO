@@ -35,8 +35,9 @@ sub generate {
   my($val)   = 0xfeca1bad;
 
   return sprintf("%08X-%04X-%04X-%04X-%04X%08X",
-                 $nhash, ($val >> 16) & 0xffff, ($val & 0xffff),
-                 ($ihash >> 16) & 0xffff, $ihash & 0xffff, $chash);
+                 $nhash & 0xffffffff, ($val >> 16) & 0xffff,
+                 ($val & 0xffff), ($ihash >> 16) & 0xffff,
+                 $ihash & 0xffff, $chash & 0xffffffff);
 }
 
 
