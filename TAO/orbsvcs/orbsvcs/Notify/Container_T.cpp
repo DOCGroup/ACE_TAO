@@ -36,25 +36,29 @@ TAO_NS_Container_T<TYPE, OBJECT, PARENT>::TAO_NS_Container_T (void)
 template<class TYPE, class OBJECT, class PARENT>
 TAO_NS_Container_T<TYPE, OBJECT, PARENT>::~TAO_NS_Container_T ()
 {
-  ///
-  delete collection_;
 }
 
-template <class TYPE, class OBJECT, class PARENT> void
+template <class TYPE, class OBJECT, class PARENT> int
 TAO_NS_Container_T<TYPE, OBJECT, PARENT>::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  // Destroy the leaves upwards..
+  // shutdown baseclass.
+  if (TAO_NS_Object_T<OBJECT, PARENT>::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+    return 1;
+
+  ACE_CHECK_RETURN (1);
+
   // First inform the children.
   TAO_ESF_Shutdown_Proxy<TYPE> shutdown_worker;
 
   this->collection_->for_each (&shutdown_worker ACE_ENV_ARG_PARAMETER);
-
-  // shutdown baseclass.
-  TAO_NS_Object_T<OBJECT, PARENT>::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
 
   /// shutdown Container
   this->cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  delete collection_;
+
+  return 0;
 }
 
 template<class TYPE, class OBJECT, class PARENT> void

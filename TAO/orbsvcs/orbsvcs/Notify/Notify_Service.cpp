@@ -24,6 +24,11 @@ TAO_NS_Notify_Service::~TAO_NS_Notify_Service ()
   delete builder_;
 }
 
+void
+TAO_NS_Notify_Service::_decr_refcnt (void)
+{
+}
+
 int
 TAO_NS_Notify_Service::init (int argc, char *argv[])
 {

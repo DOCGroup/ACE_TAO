@@ -10,10 +10,10 @@ ACE_RCSID(RT_Notify, TAO_NS_ThreadPool_Task, "$Id$")
 
 #include "tao/debug.h"
 #include "Properties.h"
-#include "AdminProperties.h"
+#include "Timer_Queue.h"
 
 TAO_NS_ThreadPool_Task::TAO_NS_ThreadPool_Task (void)
-  : buffering_strategy_ (0), shutdown_ (0)
+  : buffering_strategy_ (0), shutdown_ (0), timer_ (0)
 {
 }
 
@@ -28,24 +28,27 @@ TAO_NS_ThreadPool_Task::init (int argc, char **argv)
   return this->ACE_Task<ACE_NULL_SYNCH>::init (argc, argv);
 }
 
-void
-TAO_NS_ThreadPool_Task::init (TAO_NS_AdminProperties &p)
-{
-  // Call the base class implementation
-  TAO_NS_Worker_Task::init (p);
-}
+
 TAO_NS_Timer*
 TAO_NS_ThreadPool_Task::timer (void)
 {
-  return &this->timer_;
+  this->timer_->_incr_refcnt ();
+
+  return this->timer_;
 }
 
 void
 TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties_var& admin_properties  ACE_ENV_ARG_DECL)
 {
+  ACE_NEW_THROW_EX (this->timer_,
+                    TAO_NS_Timer_Queue (),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+
   ACE_NEW_THROW_EX (this->buffering_strategy_,
                     TAO_NS_Buffering_Strategy (*msg_queue (), admin_properties, 1),
                     CORBA::NO_MEMORY ());
+  ACE_CHECK;
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
 
@@ -99,9 +102,9 @@ TAO_NS_ThreadPool_Task::svc (void)
           ACE_Time_Value* dequeue_blocking_time = 0;
           ACE_Time_Value earliest_time;
 
-          if (!this->timer_.timer_queue_->is_empty ())
+          if (!this->timer_->impl().is_empty ())
             {
-              earliest_time = this->timer_.timer_queue_->earliest_time ();
+              earliest_time = this->timer_->impl().earliest_time ();
               dequeue_blocking_time = &earliest_time;
             }
 
@@ -117,7 +120,7 @@ TAO_NS_ThreadPool_Task::svc (void)
             }
           else if (errno == ETIME)
             {
-              this->timer_.timer_queue_->expire ();
+              this->timer_->impl ().expire ();
             }
           else if (result == -1)
             {
@@ -150,7 +153,11 @@ int
 TAO_NS_ThreadPool_Task::close (u_long /*flags*/)
 {
   if (this->thr_count () == 0)
+  {
+    this->timer_->_decr_refcnt ();
+
     delete this;
+  }
 
   return 0;
 }

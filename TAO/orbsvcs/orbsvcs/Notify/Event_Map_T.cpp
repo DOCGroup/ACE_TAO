@@ -146,7 +146,9 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_NS_EventTyp
               ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
               this->map_.unbind (event_type);
-              delete entry;
+
+              if (entry->_decr_refcnt () == 0)
+                delete entry;
 
               if (this->event_types_.remove (event_type) == -1)
                 return -1;

@@ -45,6 +45,8 @@ public:
   virtual int init (int argc, char *argv[]);
   virtual int fini (void);
 
+  void _decr_refcnt (void);
+
   /// Init
   virtual void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 

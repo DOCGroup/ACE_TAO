@@ -64,13 +64,17 @@ public:
   int remove (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Find the collection mapped to the <event_type>
-  ACE_TYPENAME ENTRY::COLLECTION* find (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
+  /// The usage_count on the entry returned is incremented.
+  ENTRY* find (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Find the default broadcast list.
   ACE_TYPENAME ENTRY::COLLECTION* broadcast_collection (void);
 
   /// Find the update list. This is all the PROXYS connected to this Map.
   ACE_TYPENAME ENTRY::COLLECTION* updates_collection (void);
+
+  /// Release the usage count on this entry.
+  void release (ENTRY* entry);
 
   /// Access all the event types available
   const TAO_NS_EventTypeSeq& event_types (void);
