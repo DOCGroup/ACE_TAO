@@ -187,19 +187,10 @@ private:
   typedef ACE_Future_Observer<T>
 	    OBSERVER;
 
-  typedef ACE_Hash_Addr<OBSERVER*>
-	    OBSERVER_HASH_ADDR;
+  typedef ACE_Unbounded_Set<OBSERVER *>
+        OBSERVER_COLLECTION;
 
-  typedef ACE_Hash_Map_Manager<OBSERVER_HASH_ADDR, OBSERVER *, ACE_Null_Mutex>
-        OBSERVER_HASH;
-
-  typedef ACE_Hash_Map_Iterator<OBSERVER_HASH_ADDR, OBSERVER *, ACE_Null_Mutex>
-	    OBSERVER_HASH_ITERATOR;
-
-  typedef ACE_Hash_Map_Entry<OBSERVER_HASH_ADDR, OBSERVER *>
-        OBSERVER_HASH_ENTRY;
-
-  OBSERVER_HASH observer_hash_;
+  OBSERVER_COLLECTION observer_collection_;
   // Keep a list of ACE_Future_Observers unread by client's reader thread.
 
   // = Condition variable and mutex that protect the <value_>.
@@ -332,4 +323,3 @@ private:
 
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_FUTURE_H */
-
