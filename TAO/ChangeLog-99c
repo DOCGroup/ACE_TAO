@@ -1,3 +1,11 @@
+Fri Oct 29 10:11:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU: disable IDL_EXT and IDL_EXT2 on WIN32 host,
+          whether or not VxWorks is the target.  This changes allows
+          the macros to be enabled on Solaris host, for example, for
+          VxWorks.  If this causes a problem on WIN32 host for other
+          than VxWorks targets, we'll have to modify it yet again.
+
 Fri Oct 29 07:08:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU: fixed typo:  COMSPEC instead of COMPSPEC.
