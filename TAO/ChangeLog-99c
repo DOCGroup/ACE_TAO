@@ -1,3 +1,39 @@
+Wed Dec  1 23:05:19 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Makefile
+	* performance-tests/RTCorba/Multiple_Endpoints/test.idl
+	* performance-tests/RTCorba/Multiple_Endpoints/test_i.cpp
+	* performance-tests/RTCorba/Multiple_Endpoints/test_i.h
+	* performance-tests/RTCorba/Multiple_Endpoints/test_i.i
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/README
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.conf
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/README
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.conf
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/README
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.conf
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
+	  Added the above-listed files and directories.  This is a set of
+	  benchmarks for comparing performance/priority inversions in
+	  three different client/server scenarios: 1) endpoint per
+	  priority (the recently added capability), 2) orb per
+	  priority (the old way to achieve the same goals as in item 1), and 3) a
+	  single orb and single endpoint (lack of
+	  prioritized treatment of requests in the server).
+
 Wed Dec 01 17:21:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Thruput/TAO/new_client_test,new_run_test,
