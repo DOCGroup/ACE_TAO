@@ -2771,7 +2771,7 @@ ACE_CACHE_CHECK([for template specialization],
        ])
   ],[AC_DEFINE([ACE_HAS_TEMPLATE_SPECIALIZATION])],)
 
-dnl Check if platform supports *standard *template specialization
+dnl Check if platform supports *standard* template specialization
 ACE_CACHE_CHECK([for standard template specialization],
   [ace_cv_feature_cxx_std_template_specialization],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -2813,15 +2813,15 @@ Vector<void *> vpv;
       ]])],[
        ace_cv_feature_cxx_std_template_specialization=yes
       ],[
-       ace_cv_feature_std_cxx_template_specialization=no
+       ace_cv_feature_cxx_std_template_specialization=no
       ])
   ],[AC_DEFINE([ACE_HAS_STD_TEMPLATE_SPECIALIZATION])],)
 
 if test "$ace_cv_feature_cxx_std_template_specialization" = yes; then
 
-dnl Check if platform needs *standard* template method specialization
-ACE_CACHE_CHECK([if platform needs standard template method specialization],
-  [ace_cv_feature_cxx_std_template_method_specialization],[
+dnl Check if platform supports *standard* template class member specialization
+ACE_CACHE_CHECK([for standard template class member specialization],
+  [ace_cv_feature_cxx_std_template_class_member_specialization],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 // Some compilers have a hard time with this test since the syntax is
 // too "new" for them.
@@ -2864,64 +2864,11 @@ Vector<void *>::operator[] (int i)
       ]],[[
        Vector <void *> vpv;
       ]])],[
-dnl   template method specialization is *not* needed
-       ace_cv_feature_cxx_std_template_method_specialization=no
+       ace_cv_feature_cxx_std_template_class_member_specialization=yes
       ],[
-       AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-         [[
-// Some compilers have a hard time with this test since the syntax is
-// too "new" for them.
-
-// general vector type
-template<class T>
-class Vector
-{
-public:
-  Vector (void);
-  Vector (int);
-
-  T& elem (int i) { return v[i]; }
-  T& operator[] (int i);
-private:
-  T* v;
-  int sz;
-};
-
-// void * specialization
-template<>
-class Vector<void *>
-{
-public:
-  Vector (void);
-  Vector (int);
-
-  void*& elem (int i) { return p[i]; }
-  void*& operator[] (int i);
-private:
-  void** p;
-  int sz;
-};
-
-template <>
-void *&
-Vector<void *>::operator[] (int i)
-{
- return p[i];
-}
-         ]],
-         [[
-          Vector<void *> vpv;
-         ]])],
-         [
-dnl   template method specialization is needed
-          ace_cv_feature_cxx_std_template_method_specialization=yes
-         ],
-         [
-dnl   template method specialization is *not* needed
-          ace_cv_feature_cxx_std_template_method_specialization=no
-         ])
+       ace_cv_feature_cxx_std_template_class_member_specialization=no
       ])
-  ],[AC_DEFINE([ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION])],)
+  ],[AC_DEFINE([ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION])],)
 fi  dnl test $ace_cv_feature_cxx_std_template_specialization = yes
 
 dnl Check if platform supports template typedefs
