@@ -77,6 +77,10 @@ public:
             INT_ID &,
             ACE_Allocator *alloc);
 
+  int find (const EXT_ID &,
+            ACE_Allocator *alloc);
+  // Returns 0 if the <ext_id> is in the mapping, otherwise -1. 
+
   int close (ACE_Allocator *alloc);
 };
 

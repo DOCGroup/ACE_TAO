@@ -53,3 +53,12 @@ ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::find (const EXT_ID &ext_id,
   this->allocator_ = alloc;
   return this->find_i (ext_id, int_id);
 }
+
+template <class EXT_ID, class INT_ID>  ACE_INLINE int
+ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::find (const EXT_ID &ext_id,
+                                                   ACE_Allocator *alloc)
+{
+  ACE_TRACE ("ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::find");
+  this->allocator_ = alloc;
+  return this->find_i (ext_id);
+}
