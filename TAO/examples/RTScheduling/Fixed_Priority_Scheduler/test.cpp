@@ -4,7 +4,6 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
-//#include "FP_DT_Creator.h"
 #include "../Thread_Task.h"
 #include "../Task_Stats.h"
 #include "../Synch_i.h"

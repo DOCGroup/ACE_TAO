@@ -966,7 +966,7 @@ TAO_RTScheduler_Current_ptr TAO_RTScheduler_Current::_unchecked_narrow (
               (
                 ACE_reinterpret_cast
                   (
-                    ptr_arith_t,
+                    ptrdiff_t,
                     &TAO_RTScheduler_Current::_narrow
                   )
               )
@@ -981,22 +981,22 @@ TAO_RTScheduler_Current::_duplicate (TAO_RTScheduler_Current_ptr obj)
   return obj;
 }
 
-void *TAO_RTScheduler_Current::_tao_QueryInterface (ptr_arith_t type)
+void *TAO_RTScheduler_Current::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   if (type == ACE_reinterpret_cast
-      (ptr_arith_t,
+      (ptrdiff_t,
        &TAO_RTScheduler_Current::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast (
-					 ptr_arith_t,
+					 ptrdiff_t,
 					 &ACE_NESTED_CLASS (::RTScheduling, Current)::_tao_class_id)
 	   )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::RTCORBA::Current::_tao_class_id)
             )
     {
@@ -1010,7 +1010,7 @@ void *TAO_RTScheduler_Current::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Current::_tao_class_id)
             )
     {
@@ -1024,7 +1024,7 @@ void *TAO_RTScheduler_Current::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1036,7 +1036,7 @@ void *TAO_RTScheduler_Current::_tao_QueryInterface (ptr_arith_t type)
     }
 
 //   else if (type == ACE_reinterpret_cast
-//     (ptr_arith_t,
+//     (ptrdiff_t,
 //       &::RTScheduling::Current::_narrow))
 //     retv = ACE_reinterpret_cast
 //       (
@@ -1047,7 +1047,7 @@ void *TAO_RTScheduler_Current::_tao_QueryInterface (ptr_arith_t type)
 //             this
 //           )
 //       );
-//   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+//   else if (type == ACE_reinterpret_cast (ptrdiff_t, &CORBA::Object::_narrow))
 //     retv = ACE_reinterpret_cast (void *,
 //       ACE_static_cast (CORBA::Object_ptr, this));
   

@@ -40,7 +40,9 @@ main (int argc, char* argv [])
   
       manager->rtscheduler (scheduler);
 
-      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
+								       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
       
       current = RTScheduling::Current::_narrow (current_obj
 						ACE_ENV_ARG_PARAMETER);
