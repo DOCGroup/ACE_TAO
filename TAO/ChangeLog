@@ -9,6 +9,15 @@ Thu Mar  6 11:35:10 2003  Ossama Othman  <ossama@uci.edu>
 	  tao/IFR_Client/IFR_Client_Adapter_Impl.cpp.  Fixes "multiple
 	  definition" errors in static builds.
 
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+
+	  Removed duplicate declarations and definitions of the
+	  CORBA::_tc_{Identifier,RepositoryId,ValueModifier} TypeCodes.
+	  They are already declared and defined in
+	  tao/IFR_Client/IFR_BaseC.*. Fixes "multiple definition" errors
+	  in static builds.
+
 Thu Mar 06 12:26:36 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
