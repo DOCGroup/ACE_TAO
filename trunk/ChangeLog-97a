@@ -1,14 +1,9 @@
-Sun May 18 15:13:14 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* netsvcs/lib/Server_Logging_Handler.cpp: removed second
-	  ACE_Svc_Handler specialization for non-threaded, has-TLI case.
-	  That's because it is the same as the first; the only difference
-	  was that one specialized with ACE_SYNCH and the other with
-	  ACE_NULL_SYNCH.  Without threads, those macros expand to the
-	  same thing.  Thanks Sandro Doro <doros@aureus.sublink.org> for
-	  reporting this.
-
 Sun May 18 09:20:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Released version 4.2.
+
+	* examples/Threads/TSS_Data.h: Added the second parameter for
+ 	  ACE_SYNCH_MUTEX since Rich and Chris updated ACE_TSS_Singleton.
 
 	* ace/Singleton.cpp: Added the updated version of
  	  ACE_TSS_Singleton that implements the Double-Checked Locking
@@ -19,6 +14,14 @@ Sun May 18 09:20:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  noticing this.
 
 Sun May 18 07:25:11 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: removed second
+	  ACE_Svc_Handler specialization for non-threaded, has-TLI case.
+	  That's because it is the same as the first; the only difference
+	  was that one specialized with ACE_SYNCH and the other with
+	  ACE_NULL_SYNCH.  Without threads, those macros expand to the
+	  same thing.  Thanks Sandro Doro <doros@aureus.sublink.org> for
+	  reporting this.
 
 	* examples/Threads/tss2.cpp: added ACE_TSS<TSS_Data> template
 	  specialization.
