@@ -1,3 +1,13 @@
+Wed Sep 20 12:55:16 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/High_Res_Timer.(h cpp i): Win32's scale factor (from
+          QueryPerformanceFrequency) is very often too small a number to
+          convert to ticks/usec - it ends up losing about 20% of the elapsed
+          time in elapsed calculations. So, on Win32 only, the
+          global_scale_factor is now in ticks/msec, not ticks/usec. Adjusted
+          all of the conversions to ACE_Time_Value, nanoseconds, etc. to
+          account for this.
+
 Wed Sep 20 08:24:34 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile.am (INLINE_FILES):
