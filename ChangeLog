@@ -1,3 +1,13 @@
+Wed Oct  6 14:50:53 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/Message_Queue_Test.cpp (iterator_test): Changed initial
+	  HWM specification for the QUEUE size to match the size of
+	  'buffer'.  It seems very strange to try to send each element of
+	  'buffer' into the queue, but to set QUEUE's HWM potentially
+	  lower than sizeof(buffer).  This makes the test run to
+	  completion on platforms like RH8 where it had been failing for a
+	  good long while.
+
 Wed Oct  6 11:20:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Message_Queue.cpp:
