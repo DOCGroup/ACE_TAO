@@ -386,14 +386,24 @@ TAO_Internal::close_services (void)
 
 template class ACE_Dynamic_Service<ACE_Service_Object>;
 
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Dynamic_Service<ACE_Service_Object>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Dynamic_Service<ACE_Service_Object>
-
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /*defined TAO_DEBUG && !defined (ACE_HAS_WINCE) */

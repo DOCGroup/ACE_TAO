@@ -624,6 +624,7 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if 0
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::SetOverrideType
@@ -679,6 +680,14 @@ CORBA::Boolean operator>> (
         Messaging::PolicyValue::_tao_seq_CORBA_Octet_
       >;
 
+#endif /*if 0*/
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        Messaging::PolicyValue
+      >;
+
+
   template class
     TAO_Var_Var_T<
         Messaging::PolicyValue
@@ -693,11 +702,6 @@ CORBA::Boolean operator>> (
     TAO_Out_T<
         Messaging::PolicyValue,
         Messaging::PolicyValue_var
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Messaging::PolicyValue
       >;
 
   template class
@@ -719,8 +723,8 @@ CORBA::Boolean operator>> (
         Messaging::PolicyValue
       >;
 
-#if !defined (_MESSAGING_POLICYVALUESEQ_CS_)
-#define _MESSAGING_POLICYVALUESEQ_CS_
+#if !defined (_MESSAGING_POLICYVALUESEQ_EXPLICIT_CS_)
+#define _MESSAGING_POLICYVALUESEQ_EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<

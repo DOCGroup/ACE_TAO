@@ -2,6 +2,14 @@
 
 #include "tao/Special_Basic_Arguments.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
+    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+// Inclusions only if explicit templates are enabled.
+#include "Basic_Types.h"
+#include "CDR.h"
+#endif /*ACE_HAS_TEMPLATE_INSTANTIATION ||
+         ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA*/
+
 ACE_RCSID (tao,
            Special_Basic_Arguments,
            "$Id$")
@@ -28,6 +36,19 @@ template class TAO::Special_Basic_Arg_Traits_T<CORBA::Octet,
 template class TAO::Special_Basic_Arg_Traits_T<CORBA::Boolean,
                                                ACE_InputCDR::to_boolean,
                                                ACE_OutputCDR::from_boolean>;
+
+template class TAO::In_Special_Basic_Argument_T<CORBA::Boolean,
+                                                ACE_InputCDR::to_boolean,
+                                                ACE_OutputCDR::from_boolean>;
+template class TAO::Inout_Special_Basic_Argument_T<CORBA::Boolean,
+                                                   ACE_InputCDR::to_boolean,
+                                                   ACE_OutputCDR::from_boolean>;
+template class TAO::Out_Special_Basic_Argument_T<CORBA::Boolean,
+                                                 ACE_InputCDR::to_boolean,
+                                                 ACE_OutputCDR::from_boolean>;
+template class TAO::Ret_Special_Basic_Argument_T<CORBA::Boolean,
+                                                 ACE_InputCDR::to_boolean,
+                                                 ACE_OutputCDR::from_boolean>;
 
 template class TAO::In_Special_Basic_Argument_T<CORBA::Char,
                                                 ACE_InputCDR::to_char,
@@ -67,19 +88,6 @@ template class TAO::Out_Special_Basic_Argument_T<CORBA::Octet,
 template class TAO::Ret_Special_Basic_Argument_T<CORBA::Octet,
                                                  ACE_InputCDR::to_octet,
                                                  ACE_OutputCDR::from_octet>;
-
-template class TAO::In_Special_Basic_Argument_T<CORBA::Boolean,
-                                                ACE_InputCDR::to_boolean,
-                                                ACE_OutputCDR::from_boolean>;
-template class TAO::Inout_Special_Basic_Argument_T<CORBA::Boolean,
-                                                   ACE_InputCDR::to_boolean,
-                                                   ACE_OutputCDR::from_boolean>;
-template class TAO::Out_Special_Basic_Argument_T<CORBA::Boolean,
-                                                 ACE_InputCDR::to_boolean,
-                                                 ACE_OutputCDR::from_boolean>;
-template class TAO::Ret_Special_Basic_Argument_T<CORBA::Boolean,
-                                                 ACE_InputCDR::to_boolean,
-                                                 ACE_OutputCDR::from_boolean>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

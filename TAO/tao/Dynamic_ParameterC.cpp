@@ -201,6 +201,7 @@ CORBA::Boolean operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if 0
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::SetOverrideType
@@ -220,6 +221,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<
         CORBA::ParameterMode
       >;
+#endif /*if 0*/
 
   template class
     TAO_Var_Var_T<

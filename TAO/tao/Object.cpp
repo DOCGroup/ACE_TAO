@@ -999,7 +999,8 @@ template class TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>;
 template class TAO::Arg_Traits<CORBA::Object>;
 template class TAO::Object_Arg_Traits_T<CORBA::Object_ptr,
                                         CORBA::Object_var,
-                                        CORBA::Object_out>;
+                                        CORBA::Object_out,
+				        TAO::Objref_Traits<CORBA::Object> >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

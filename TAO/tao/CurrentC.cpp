@@ -205,28 +205,24 @@ namespace CORBA
 
   template class
     TAO_Objref_Var_T<
-        CORBA::Current,
-        TAO::Objref_Traits<CORBA::Current>
+        CORBA::Current
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::Current,
-        TAO::Objref_Traits<CORBA::Current>
+        CORBA::Current
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        CORBA::Current, \
-        TAO::Objref_Traits<CORBA::Current> \
+        CORBA::Current \
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Current, \
-        TAO::Objref_Traits<CORBA::Current> \
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

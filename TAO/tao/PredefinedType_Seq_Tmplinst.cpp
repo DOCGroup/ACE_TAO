@@ -26,9 +26,10 @@ ACE_RCSID (tao,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
     || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# include "tao/Sequence_T.h"
-# include "tao/Any.h"
-# include "tao/Object.h"
+# include "Sequence_T.h"
+# include "Any.h"
+# include "Object.h"
+# include "Typecode.h"
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION 
           || ACE_HAS_TEMPLATE_INSTANTIATION_PRAGM */
 
@@ -45,11 +46,9 @@ template class TAO_Unbounded_Sequence<CORBA::ULongLong>;
 template class TAO_Unbounded_Sequence<CORBA::Float>;
 template class TAO_Unbounded_Sequence<CORBA::Double>;
 template class TAO_Unbounded_Sequence<CORBA::LongDouble>;
-template class TAO_Unbounded_Pseudo_Sequence<CORBA::Object, 
-                                             CORBA::Object_var>;
+template class TAO_Unbounded_Pseudo_Sequence<CORBA::Object>;
 template class TAO_Unbounded_Sequence<CORBA::Any>;
-template class TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode, 
-                                             CORBA::TypeCode_var>;
+template class TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

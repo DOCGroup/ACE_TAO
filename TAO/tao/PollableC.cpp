@@ -652,11 +652,13 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO::Object_Arg_Traits_T<
         CORBA::PollableSet_ptr,
         CORBA::PollableSet_var,
-        CORBA::PollableSet_out
+        CORBA::PollableSet_out,
+	TAO::Objref_Traits<CORBA::PollableSet>
       >;
 
 #endif /* end #if !defined */
 
+#if 0
   template class
     TAO::Ret_Object_Argument_T<
         CORBA::DIIPollable_ptr,
@@ -664,26 +666,26 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
       >;
 
   template class
-    TAO::In_Object_Argument_T<
-        CORBA::Pollable_ptr
-      >;
-
-  template class
     TAO::Ret_Object_Argument_T<
         CORBA::Pollable_ptr,
         CORBA::Pollable_var
       >;
+#endif /*if 0*/
+
+  template class
+    TAO::In_Object_Argument_T<
+        CORBA::Pollable_ptr
+      >;
+
 
   template class
     TAO_Objref_Var_T<
-        CORBA::PollableSet,
-        TAO::Objref_Traits<CORBA::PollableSet>
+        CORBA::PollableSet
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::PollableSet,
-        TAO::Objref_Traits<CORBA::PollableSet>
+        CORBA::PollableSet
       >;
 
 #if !defined (_CORBA_POLLABLE__ARG_TRAITS_TMPLINST_CS_)
@@ -695,27 +697,28 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO::Object_Arg_Traits_T<
         CORBA::Pollable_ptr,
         CORBA::Pollable_var,
-        CORBA::Pollable_out
+        CORBA::Pollable_out,
+	TAO::Objref_Traits<CORBA::Pollable>
       >;
 
 #endif /* end #if !defined */
 
+#if 0
   template class
     TAO::Ret_Object_Argument_T<
         CORBA::PollableSet_ptr,
         CORBA::PollableSet_var
       >;
+#endif /*if 0*/
 
   template class
     TAO_Objref_Var_T<
-        CORBA::Pollable,
-        TAO::Objref_Traits<CORBA::Pollable>
+        CORBA::Pollable
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::Pollable,
-        TAO::Objref_Traits<CORBA::Pollable>
+        CORBA::Pollable
       >;
 
 #if !defined (_CORBA_DIIPOLLABLE__ARG_TRAITS_TMPLINST_CS_)
@@ -727,21 +730,20 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO::Object_Arg_Traits_T<
         CORBA::DIIPollable_ptr,
         CORBA::DIIPollable_var,
-        CORBA::DIIPollable_out
+        CORBA::DIIPollable_out,
+	TAO::Objref_Traits<CORBA::DIIPollable>
       >;
 
 #endif /* end #if !defined */
 
   template class
     TAO_Objref_Var_T<
-        CORBA::DIIPollable,
-        TAO::Objref_Traits<CORBA::DIIPollable>
+        CORBA::DIIPollable
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::DIIPollable,
-        TAO::Objref_Traits<CORBA::DIIPollable>
+        CORBA::DIIPollable
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

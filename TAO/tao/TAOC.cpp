@@ -525,6 +525,7 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if 0
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::SetOverrideType
@@ -539,16 +540,19 @@ operator>>= (
     TAO::Any_Dual_Impl_T<
         CORBA::InvalidPolicies
       >;
+#endif /*if 0*/
 
 #if !defined (_TAO_BUFFERINGCONSTRAINT__ARG_TRAITS_TMPLINST_CS_)
 #define _TAO_BUFFERINGCONSTRAINT__ARG_TRAITS_TMPLINST_CS_
 
   template class TAO::Arg_Traits<TAO::BufferingConstraint>;
 
+#if 0
   template class
     TAO::Fixed_Size_Arg_Traits<
         TAO::BufferingConstraint
       >;
+#endif /*if 0*/
 
 #endif /* end #if !defined */
 
@@ -569,14 +573,12 @@ operator>>= (
 
   template class
     TAO_Objref_Var_T<
-        TAO::BufferingConstraintPolicy,
-        TAO::Objref_Traits<TAO::BufferingConstraintPolicy>
+        TAO::BufferingConstraintPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        TAO::BufferingConstraintPolicy,
-        TAO::Objref_Traits<TAO::BufferingConstraintPolicy>
+        TAO::BufferingConstraintPolicy
       >;
 
   template class
