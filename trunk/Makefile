@@ -86,6 +86,7 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 FAQ \
                 Makefile \
                 README \
+                STL \
                 VERSION \
                 ace \
                 apps \
@@ -107,6 +108,7 @@ ALL_RELEASE_FILES = $(RELEASE_FILES) \
                     ACE_wrappers/TAO
 
 RELEASE_LIB_FILES = \
+                ACE_wrappers/STL \
                 ACE_wrappers/VERSION \
                 ACE_wrappers/ace \
                 ACE_wrappers/include \
