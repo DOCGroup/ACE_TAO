@@ -29,9 +29,9 @@ Latency Test
   (2) Make yourself an Administrator in Windows NT
 
 on the server side:
-   ./server -s -f ior -t 2 &
+   ./server -f ior -t 2 &
 on the client side:
-   ./client -s -f ior -t 2 -n 4000 -x
+   ./client -f ior -t 2 -n 4000 -x
 
 NOTE: run_same is a script that automates the running of the latency
 tests.  This script output everything to a file.
