@@ -1,19 +1,27 @@
+Sun Jun 28 22:16:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Service_Configurator/Misc/main.cpp (main): removed
+          argc declaration because it was unused.
+
+        * examples/Threads/task_five.cpp (work): added
+          ACE_UNUSED_ARG (stack_size).
+
 Sat Jun 27 18:13:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Timeprobe_T.cpp (ACE_Timeprobe - copy constructor): Stupid
- 	  MSVC is forcing me to define this and make it public; it should
- 	  really be protected; please don't use it.
+        * ace/Timeprobe_T.cpp (ACE_Timeprobe - copy constructor): Stupid
+          MSVC is forcing me to define this and make it public; it should
+          really be protected; please don't use it.
 
-	* TAO/tests/POA/Explicit_Activation/server.cpp (main): 
+        * TAO/tests/POA/Explicit_Activation/server.cpp (main):
 
-	* ace/Timeprobe.h: Added ACE_SINGLETON_DECLARATION; otherwise all
- 	  compilation units would get a different instantiation of the
- 	  time probe class.  Also, changed ACE_TIMEPROBE_SINGLETON to a
- 	  #define instead of a typedef; otherwise the compiler bitched
- 	  when it was use in ACE_SINGLETON_DECLARATION.
+        * ace/Timeprobe.h: Added ACE_SINGLETON_DECLARATION; otherwise all
+          compilation units would get a different instantiation of the
+          time probe class.  Also, changed ACE_TIMEPROBE_SINGLETON to a
+          #define instead of a typedef; otherwise the compiler bitched
+          when it was use in ACE_SINGLETON_DECLARATION.
 
-	* SINGLETON_INSTANTIATION: Removed this flag from all files in
- 	  ACE. It is causing duplicate declaration errors.
+        * SINGLETON_INSTANTIATION: Removed this flag from all files in
+          ACE. It is causing duplicate declaration errors.
 
 Sat Jun 27 11:29:50 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -34,64 +42,64 @@ Sat Jun 27 07:07:43 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Jun 27 00:27:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Timeprobe: 
+        * ace/Timeprobe:
 
-	  - Added back ACE_COMPILE_TIMEPROBES.  David pointed out that
- 	    without this flag, size of ACE increases even when time probes
- 	    are not being used. Therefore, users must compile ACE with
- 	    this flag defined if they want to use time probes.  This can
- 	    be achieved by doing one of the following:
+          - Added back ACE_COMPILE_TIMEPROBES.  David pointed out that
+            without this flag, size of ACE increases even when time probes
+            are not being used. Therefore, users must compile ACE with
+            this flag defined if they want to use time probes.  This can
+            be achieved by doing one of the following:
 
-	    . Use make probe = 1, if you are using the make utility.
+            . Use make probe = 1, if you are using the make utility.
 
-	    . Define ACE_COMPILE_TIMEPROBES in config.h
+            . Define ACE_COMPILE_TIMEPROBES in config.h
 
-	    . Define ACE_COMPILE_TIMEPROBES in the VC project file.
+            . Define ACE_COMPILE_TIMEPROBES in the VC project file.
 
-	    . Other regular methods will also work.
+            . Other regular methods will also work.
 
-	    It is not necessary to define ACE_COMPILE_TIMEPROBES when
- 	    using time probes, you simply need ACE_ENABLE_TIMEPROBES.  You
- 	    can use the ACE_TIMEPROBE_* macros to program the time probes,
- 	    and use the ACE_ENABLE_TIMEPROBE to enable the time probes.
-  	    If you define ACE_ENABLE_TIMEPROBE in your code, but forget to
- 	    compile ACE with ACE_COMPILE_TIMEPROBES, you will end up with
- 	    linker errors.
+            It is not necessary to define ACE_COMPILE_TIMEPROBES when
+            using time probes, you simply need ACE_ENABLE_TIMEPROBES.  You
+            can use the ACE_TIMEPROBE_* macros to program the time probes,
+            and use the ACE_ENABLE_TIMEPROBE to enable the time probes.
+            If you define ACE_ENABLE_TIMEPROBE in your code, but forget to
+            compile ACE with ACE_COMPILE_TIMEPROBES, you will end up with
+            linker errors.
 
-	    Remember that ACE_COMPILE_TIMEPROBES means that the ACE
- 	    library will contain code for time probes.  This is only
- 	    useful when compiling ACE. ACE_ENABLE_TIMEPROBES means that
- 	    the ACE_TIMEPROBE_* macros should spring to life.
-	
-	  - Added inclusion of OS.h.  This way the ACE_COMPILE_TIMEPROBES
- 	    can be specified in the config file.
+            Remember that ACE_COMPILE_TIMEPROBES means that the ACE
+            library will contain code for time probes.  This is only
+            useful when compiling ACE. ACE_ENABLE_TIMEPROBES means that
+            the ACE_TIMEPROBE_* macros should spring to life.
 
-	* include/makeinclude/wrapper_macros.GNU: probe = 1 no longer
- 	  means ACE_ENABLE_TIMEPROBE.  It only means
- 	  ACE_COMPILE_TIMEPROBES.  This was changed because defining
- 	  ACE_ENABLE_TIMEPROBE here is too broad.  ACE_ENABLE_TIMEPROBE is
- 	  cleverly designed so that it allows only some time probes to be
- 	  enabled (where ACE_ENABLE_TIMEPROBE is defined), while others to
- 	  be disabled (where ACE_ENABLE_TIMEPROBE is not defined).
-	 
-	  Example: IDL_Cubit time probes can be enabled without enabling
- 	  TAO time probes. Or TAO time probes can be enabled without
- 	  enabling IDL_Cubit time probes. TAO time probes are controlled
-	  through TAO/tao/Timeprobes.h.
+          - Added inclusion of OS.h.  This way the ACE_COMPILE_TIMEPROBES
+            can be specified in the config file.
 
-	* tests/Timeprobe_Test.cpp: 
+        * include/makeinclude/wrapper_macros.GNU: probe = 1 no longer
+          means ACE_ENABLE_TIMEPROBE.  It only means
+          ACE_COMPILE_TIMEPROBES.  This was changed because defining
+          ACE_ENABLE_TIMEPROBE here is too broad.  ACE_ENABLE_TIMEPROBE is
+          cleverly designed so that it allows only some time probes to be
+          enabled (where ACE_ENABLE_TIMEPROBE is defined), while others to
+          be disabled (where ACE_ENABLE_TIMEPROBE is not defined).
 
-	  - Defining ACE_ENABLE_TIMEPROBES is not forced. Users can
- 	    uncomment this at the top of the file.  This relieves us from
- 	    trying to include the symbols of ACE_Timeprobes from ACE if
- 	    ACE was compiled without using ACE_COMPILE_TIMEPROBES (the
- 	    #include ace/Timeprobe.cpp trick did not work on all 8
- 	    different ways of compiling ACE on NT).
-	    
-	  - Made the registration of the description arrays similar to the
-	    real use cases (in TAO).
+          Example: IDL_Cubit time probes can be enabled without enabling
+          TAO time probes. Or TAO time probes can be enabled without
+          enabling IDL_Cubit time probes. TAO time probes are controlled
+          through TAO/tao/Timeprobes.h.
 
-	  - Introduced enums and took the magic numbers out.
+        * tests/Timeprobe_Test.cpp:
+
+          - Defining ACE_ENABLE_TIMEPROBES is not forced. Users can
+            uncomment this at the top of the file.  This relieves us from
+            trying to include the symbols of ACE_Timeprobes from ACE if
+            ACE was compiled without using ACE_COMPILE_TIMEPROBES (the
+            #include ace/Timeprobe.cpp trick did not work on all 8
+            different ways of compiling ACE on NT).
+
+          - Made the registration of the description arrays similar to the
+            real use cases (in TAO).
+
+          - Introduced enums and took the magic numbers out.
 
 Fri Jun 26 14:52:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
