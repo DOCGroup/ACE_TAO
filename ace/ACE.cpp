@@ -4124,7 +4124,7 @@ get_reg_value (const ACE_TCHAR *key,
                                    &hk);
   // 1. open key that defines the interfaces used for TCP/IP?
   if (rc != ERROR_SUCCESS)
-    // print_error_string(TEXT("RegOpenKeyEx"), rc);
+    // print_error_string(ACE_TEXT("RegOpenKeyEx"), rc);
     return -1;
 
   rc = ACE_TEXT_RegQueryValueEx (hk,
@@ -4135,7 +4135,7 @@ get_reg_value (const ACE_TCHAR *key,
                                  &buf_len);
   if (rc != ERROR_SUCCESS)
     {
-      // print_error_string(TEXT("RegEnumKeyEx"), rc);
+      // print_error_string(ACE_TEXT("RegEnumKeyEx"), rc);
       RegCloseKey (hk);
       return -2;
     }

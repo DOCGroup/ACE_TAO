@@ -17,6 +17,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 
+// FUZZ: disable check_for_math_include
 #include <math.h>
 
 

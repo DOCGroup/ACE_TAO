@@ -1,5 +1,9 @@
 // $Id$
 
+// Since this is only included in Handle_Gobbler.h, these should be 
+// inline, not ACE_INLINE.
+// FUZZ: disable check_for_inline
+
 inline void
 ACE_Handle_Gobbler::close_remaining_handles (void)
 {

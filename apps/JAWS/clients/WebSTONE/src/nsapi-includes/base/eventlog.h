@@ -21,6 +21,7 @@
 //
 
 // Functions in eventlog.c
+// Win32 specific stuff, so FUZZ: disable check_for_tchar
 
 VOID InitializeAdminLogging(PCHAR ServiceName, PCHAR MessageFile);
 VOID InitializeHttpdLogging(PCHAR ServiceName, PCHAR MessageFile);

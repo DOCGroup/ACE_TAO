@@ -6,6 +6,9 @@
 #include "WindozeCE.h"
 #include "WindozeCEDlg.h"
 
+// Since this is only for Windows CE, we can use the Win32 character macros
+// FUZZ: disable check_for_tchar
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
