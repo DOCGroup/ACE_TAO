@@ -41,7 +41,6 @@ Fri May  9 12:41:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/AMH/Sink_Server/client.bor:
           Fixed these BCB makefiles
 
->>>>>>> 1.1738
 Fri May 09 10:17:47 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * docs/tutorials/Quoter/AMI/client.dsp:
