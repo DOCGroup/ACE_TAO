@@ -24,8 +24,6 @@ ACE_RCSID (ace,
 #    define POLLREMOVE      0x1000
 #    include <linux/eventpoll.h>
 
-static const char ACE_POLL_DEVICE[] = "/dev/epoll";
-
 #  elif defined (ACE_HAS_DEV_POLL)
 
 #    if defined (sun)
@@ -34,11 +32,7 @@ static const char ACE_POLL_DEVICE[] = "/dev/epoll";
 #      include <linux/devpoll.h>
 #    endif  /* sun */
 
-static const char ACE_POLL_DEVICE[] = "/dev/poll";
-
 #  endif  /* ACE_HAS_DEV_POLL */
-
-#endif  /* ACE_HAS_EVENT_POLL */
 
 
 #if !defined (__ACE_INLINE__)
@@ -899,12 +893,12 @@ ACE_Dev_Poll_Reactor::open (size_t size,
         this->delete_notify_handler_ = 1;
     }
 
-  // Open the `/dev/poll' or `/dev/epoll' character device.
-  this->poll_fd_ = ACE_OS::open (ACE_POLL_DEVICE, O_RDWR);
+#if defined (ACE_HAS_EVENT_POLL)
+
+  // Open the `/dev/epoll' character device.
+  this->poll_fd_ = ACE_OS::open ("/dev/epoll", O_RDWR);
   if (this->poll_fd_ == ACE_INVALID_HANDLE)
     result = -1;
-
-#if defined (ACE_HAS_EVENT_POLL)
 
   // Set the maximum number of file descriptors to expect.
   if (result != -1
@@ -925,10 +919,15 @@ ACE_Dev_Poll_Reactor::open (size_t size,
     }
 #else
 
-  ACE_NEW (this->dp_fds_,
-           pollfd[size]);  // Don't return on error!
+  // Allocate the array before opening the device to avoid a potential
+  // resource leak if allocation fails.
+  ACE_NEW_RETURN (this->dp_fds_,
+                  pollfd[size],
+                  -1);
 
-  if (this->dp_fds_ == 0)
+  // Open the `/dev/poll' character device.
+  this->poll_fd_ = ACE_OS::open ("/dev/poll", O_RDWR);
+  if (this->poll_fd_ == ACE_INVALID_HANDLE)
     result = -1;
 
 #endif  /* ACE_HAS_EVENT_POLL */
@@ -2378,6 +2377,6 @@ template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif  /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
