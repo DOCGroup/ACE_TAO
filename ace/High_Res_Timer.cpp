@@ -248,9 +248,10 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
-  u_long nseconds = (u_long) ((this->end_ - this->start_) %
-                                global_scale_factor () * 1000u /
-                                global_scale_factor ());
+  u_long nseconds = ACE_static_cast (u_long,
+                                     (this->end_ - this->start_) %
+                                       global_scale_factor () * 1000u /
+                                       global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
   ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor ());
@@ -287,12 +288,20 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)
   // The cast avoids a MSVC 4.1 compiler warning about narrowing.
-  u_long nseconds = (u_long) ((this->end_ - this->start_) %
-                                global_scale_factor () * 1000u /
-                                global_scale_factor ());
+  u_long nseconds = ACE_static_cast (u_long,
+                                     (this->end_ - this->start_) %
+                                       global_scale_factor () * 1000u /
+                                       global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor ());
+#if defined (ACE_LACKS_LONGLONG_T)
+  ACE_UINT32 useconds = ACE_static_cast (ACE_UINT32,
+                                         (this->end_ - this->start_) /
+                                           global_scale_factor ());
+#else  /* ! ACE_LACKS_LONGLONG_T */
+  ACE_hrtime_t useconds = (this->end_ - this->start_) /
+    global_scale_factor ();
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
   // Total nanoseconds in a single 64-bit value.
   nanoseconds = useconds * 1000u + nseconds;
