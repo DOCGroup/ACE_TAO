@@ -1,3 +1,17 @@
+Wed Apr 21 15:35:44 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp: On Win32, with ACE_HAS_NONSTATIC_OBJECT_MANAGER, use
+          DllMain to do ACE::init() and ACE::fini().
+
+        * tests/ACE_Init_Test.dsp,
+        * tests/ACE_Init_Test.{cpp h},
+        * tests/ACE_Init_TestDlg.{cpp h},
+        * tests/ACE_Init_Test.(ico rc rc2 res},
+        * tests/ACE_Init_Test_(Resource StdAfx}.h: New test to be sure that
+          ACE DLL is initialized properly from an MFC app.
+
+        * tests/tests.dsw: Added ACE_Init_Test.dsp project.
+
 Wed Apr 21 14:59:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (ACE_OS_Object_Manager::fini): disabled
