@@ -1123,6 +1123,9 @@ AH_TEMPLATE([ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION],
    explicit C++ specializations for all used templates. This is also
    used for GNU G++ if you don't use the "repo" patches.])
 
+AH_TEMPLATE([ACE_HAS_ICMP_SUPPORT],
+[Defined to 1 if platform supports ICMP over raw sockets])
+
 AH_TEMPLATE([ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA],
 [Compiler's template instantiation mechanism supports the use of
    "#pragma instantiate".  Edison Design Group compilers, e.g., SGI
