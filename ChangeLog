@@ -1,3 +1,14 @@
+Tue Mar 15 19:08:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/ace.m4:
+	* m4/tls.m4:
+
+	  Changed the ACE_ENABLE_SSL macro to depend on ACE_CHECK_TLS
+	  instead of requiring the latter be called in configure.ac.
+	  Fixes a bug where ACE and TAO's configure scripts selected
+	  different SSL options.
+
 Tue Mar 15 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
