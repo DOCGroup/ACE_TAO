@@ -62,6 +62,11 @@ to Graham for providing the OSE tools!
 
         It should also return 0 on successful termination, and non-zero
         otherwise.<p>
+
+    <li>Avoid use of floating point types (float and double) and operations
+        unless absolutely necessary.  Not all ACE platforms support them.
+        Therefore, whereever they are used, ACE_LACKS_FLOATING_POINT
+        conditional code must be also be used.
   </ul>
 
   <li><strong>Code Documentation</strong><p>
@@ -487,7 +492,7 @@ to Graham for providing the OSE tools!
 
 <hr>
 <!-- hhmts start -->
-Last modified: Sun Apr 12 21:03:27 CDT 1998
+Last modified: Thu Apr 30 12:36:31 CDT 1998
 <!-- hhmts end -->
 
 </body>
