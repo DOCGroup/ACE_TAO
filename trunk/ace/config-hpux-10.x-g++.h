@@ -7,6 +7,8 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#include "ace/config-g++-common.h"
+
 // Compiling for HPUX.
 #if !defined (HPUX)
 #define HPUX
@@ -22,15 +24,6 @@
 
 // Platform defines struct timespec, but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
-
-// Compiler's template mechanism must see source code (i.e., .C files).
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-// Compiler doesn't support static data member templates.
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-// Must specialize templates due to G++'s lame parameterized type
-// support... I added this  Afara
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #define ACE_LACKS_SYSCALL
 #define ACE_HAS_POSIX_TIME

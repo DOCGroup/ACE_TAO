@@ -7,6 +7,8 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#include "ace/config-g++-common.h"
+
 // Platform supports the very odd IRIX 6.2 threads...
 #define ACE_HAS_IRIX62_THREADS
 #define ACE_HAS_PTHREAD_SIGMASK
@@ -42,12 +44,8 @@
 #define IRIX6
 #define ACE_HAS_SIGWAIT
 
-#define ACE_TEMPLATES_REQUIRE_SOURCE
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
@@ -80,9 +78,6 @@
 // Denotes that GNU has cstring.h as standard
 // which redefines memchr()
 #define ACE_HAS_GNU_CSTRING_H
-
-// Compiler doesn't support static data member templates.
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
