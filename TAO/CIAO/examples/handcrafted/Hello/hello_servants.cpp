@@ -5,7 +5,12 @@
 // @@: Denote stuff that need to be fixed later.
 // @@@: Denote stuff that need to be fixed now.
 
-CIAO_HelloWorld_Context::CIAO_HelloWorld_Context ()
+CIAO_HelloWorld_Context::CIAO_HelloWorld_Context (::Components::CCMHome_ptr h,
+                                                  ::CIAO::Session_Container *c,
+                                                  CIAO_HelloWorld_Servant *sv)
+  : home_ (::Components::CCMHome::_duplicate (h)),
+    container_ (c),
+    servant_ (sv)
 {
 
 }
@@ -86,7 +91,7 @@ CIAO_HelloWorld_Context::_interface_repository_id (void) const
 
 // Operations for ::Components::CCMContext
 ::Components::Principal_ptr
-CIAO_HelloWorld_Context::get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Context::get_caller_principal (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ We don't support Security in CIAO yet.
@@ -94,15 +99,14 @@ CIAO_HelloWorld_Context::get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFA
 }
 
 ::Components::CCMHome_ptr
-CIAO_HelloWorld_Context::get_CCM_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Context::get_CCM_home (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@@ Where to get a home reference?
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  return ::Components::CCMHome::_duplicate (this->home_.in ());
 }
 
 CORBA::Boolean
-CIAO_HelloWorld_Context::get_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Context::get_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
@@ -111,7 +115,7 @@ CIAO_HelloWorld_Context::get_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULT
 }
 
 ::Components::Transaction::UserTransaction_ptr
-CIAO_HelloWorld_Context::get_user_transaction (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Context::get_user_transaction (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
@@ -121,7 +125,7 @@ CIAO_HelloWorld_Context::get_user_transaction (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFA
 
 CORBA::Boolean
 CIAO_HelloWorld_Context::is_caller_in_role (const char * role
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (role);
@@ -131,7 +135,7 @@ CIAO_HelloWorld_Context::is_caller_in_role (const char * role
 }
 
 void
-CIAO_HelloWorld_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
@@ -142,21 +146,40 @@ CIAO_HelloWorld_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULT
 
 // Operations for ::Components::SessionContext interface
 CORBA::Object_ptr
-CIAO_HelloWorld_Context::get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Context::get_CCM_object (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
-  // @@@ Where do we get the CCM Object reference?  From the container?
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // @@ How do I check for IllegalState here?  When it's not in a
+  //    callback operation...
+  //    ACE_THROW_RETURN (::Components::IllegalState (), 0);
+
+  if (CORBA::is_nil (this->component_.in ()))
+    {
+      CORBA::Object_var obj =  this->container_->get_objref (this->servant_
+                                                             ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      this->component_ = HelloWorld::_narrow (obj.in ()
+                                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (CORBA::is_nil (this->component_.in ()))
+        ACE_THROW_RETURN (CORBA::INTERNAL (), 0); // This should not happen...
+    }
+  return HelloWorld::_duplicate (this->component_.in ());
 }
 
 ////////////////////////////////////////////////////////////////
 /////////////////// CIAO_HelloWorld_Servant ////////////////////
 
-CIAO_HelloWorld_Servant::CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr exe)
-  : executor_ (CCM_HelloWorld::_duplicate (exe))
+CIAO_HelloWorld_Servant::CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr exe,
+                                                  ::Components::CCMHome_ptr h,
+                                                  ::CIAO::Session_Container *c)
+  : executor_ (CCM_HelloWorld::_duplicate (exe)),
+    container_ (c)
 {
-  this->context_ = new CIAO_HelloWorld_Context ();
+  this->context_ = new CIAO_HelloWorld_Context (h, c, this);
 }
 
 CIAO_HelloWorld_Servant::~CIAO_HelloWorld_Servant (void)
@@ -167,7 +190,7 @@ CIAO_HelloWorld_Servant::~CIAO_HelloWorld_Servant (void)
 // Explicit opereations and attribute operations.
 char *
 CIAO_HelloWorld_Servant::sayhello (const char * username
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->executor_.in () == 0)
@@ -189,7 +212,7 @@ CIAO_HelloWorld_Servant::sayhello (const char * username
 // Operations for Navigation interface
 CORBA::Object_ptr
 CIAO_HelloWorld_Servant::provide_facet (const char * name
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException ,
                    Components::InvalidName))
 {
@@ -205,16 +228,31 @@ CIAO_HelloWorld_Servant::provide_facet (const char * name
 }
 
 ::Components::FacetDescriptions *
-CIAO_HelloWorld_Servant::get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_all_facets (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ::Components::FacetDescriptions_var collection
+      = new ::Components::FacetDescriptions (1);
+
+  ::Components::FacetDescription_var x
+    = new ::OBV_Components::FacetDescription;
+
+
+  x->Name ((const char *)"a_name");
+  x->type_id ("repo id");
+  x->facet_ref (CORBA::Object::_nil ());
+
+  CORBA::ULong i = 0;
+  collection[i] = x;
+
+  return collection._retn ();
   // No facet for this component.
-  return new ::Components::FacetDescriptions;
+  //  return new ::Components::FacetDescriptions;
 }
 
 ::Components::FacetDescriptions *
 CIAO_HelloWorld_Servant::get_named_facets (const Components::NameList & names
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException ,
                    Components::InvalidName))
 {
@@ -229,7 +267,7 @@ CIAO_HelloWorld_Servant::get_named_facets (const Components::NameList & names
 
 CORBA::Boolean
 CIAO_HelloWorld_Servant::same_component (CORBA::Object_ptr object_ref
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (object_ref);
@@ -244,7 +282,7 @@ CIAO_HelloWorld_Servant::same_component (CORBA::Object_ptr object_ref
 ::Components::Cookie *
 CIAO_HelloWorld_Servant::connect (const char * name,
                                   CORBA::Object_ptr connection
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
                    Components::InvalidConnection,
@@ -259,10 +297,10 @@ CIAO_HelloWorld_Servant::connect (const char * name,
   ACE_THROW_RETURN (::Components::InvalidName (), 0);
 }
 
-void
+CORBA::Object_ptr
 CIAO_HelloWorld_Servant::disconnect (const char * name,
                                      Components::Cookie * ck
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
                    Components::InvalidConnection,
@@ -272,12 +310,12 @@ CIAO_HelloWorld_Servant::disconnect (const char * name,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (ck);
 
-  ACE_THROW (::Components::InvalidName ());
+  ACE_THROW_RETURN (::Components::InvalidName (), 0);
 }
 
 ::Components::ConnectionDescriptions *
 CIAO_HelloWorld_Servant::get_connections (const char * name
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
@@ -287,7 +325,7 @@ CIAO_HelloWorld_Servant::get_connections (const char * name
 }
 
 ::Components::ReceptacleDescriptions *
-CIAO_HelloWorld_Servant::get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No receptacles.  Return an empty sequence.
@@ -296,7 +334,7 @@ CIAO_HelloWorld_Servant::get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAU
 
 ::Components::ReceptacleDescriptions *
 CIAO_HelloWorld_Servant::get_named_receptacles (const Components::NameList & names
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
@@ -312,7 +350,7 @@ CIAO_HelloWorld_Servant::get_named_receptacles (const Components::NameList & nam
 // Operations for Events interface
 ::Components::EventConsumerBase_ptr
 CIAO_HelloWorld_Servant::get_consumer (const char * sink_name
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
@@ -324,7 +362,7 @@ CIAO_HelloWorld_Servant::get_consumer (const char * sink_name
 ::Components::Cookie *
 CIAO_HelloWorld_Servant::subscribe (const char * publisher_name,
                                     Components::EventConsumerBase_ptr subscriber
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
                    Components::AlreadyConnected,
@@ -339,7 +377,7 @@ CIAO_HelloWorld_Servant::subscribe (const char * publisher_name,
 void
 CIAO_HelloWorld_Servant::unsubscribe (const char * publisher_name,
                                       Components::Cookie * ck
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
                    Components::InvalidConnection))
@@ -353,7 +391,7 @@ CIAO_HelloWorld_Servant::unsubscribe (const char * publisher_name,
 void
 CIAO_HelloWorld_Servant::connect_consumer (const char * emitter_name,
                                            Components::EventConsumerBase_ptr consumer
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
                    Components::AlreadyConnected,
@@ -367,7 +405,7 @@ CIAO_HelloWorld_Servant::connect_consumer (const char * emitter_name,
 
 ::Components::EventConsumerBase_ptr
 CIAO_HelloWorld_Servant::disconnect_consumer (const char * source_name
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
                    Components::NoConnection))
@@ -378,7 +416,7 @@ CIAO_HelloWorld_Servant::disconnect_consumer (const char * source_name
 }
 
 ::Components::ConsumerDescriptions *
-CIAO_HelloWorld_Servant::get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_all_consumers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new ::Components::ConsumerDescriptions;
@@ -386,7 +424,7 @@ CIAO_HelloWorld_Servant::get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULT
 
 ::Components::ConsumerDescriptions *
 CIAO_HelloWorld_Servant::get_named_consumers (const Components::NameList & names
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
@@ -400,7 +438,7 @@ CIAO_HelloWorld_Servant::get_named_consumers (const Components::NameList & names
 }
 
 ::Components::EmitterDescriptions *
-CIAO_HelloWorld_Servant::get_all_emitters (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_all_emitters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new ::Components::EmitterDescriptions;
@@ -408,7 +446,7 @@ CIAO_HelloWorld_Servant::get_all_emitters (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 
 ::Components::EmitterDescriptions *
 CIAO_HelloWorld_Servant::get_named_emitters (const Components::NameList & names
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
@@ -422,7 +460,7 @@ CIAO_HelloWorld_Servant::get_named_emitters (const Components::NameList & names
 }
 
 ::Components::PublisherDescriptions *
-CIAO_HelloWorld_Servant::get_all_publishers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_all_publishers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new ::Components::PublisherDescriptions;
@@ -430,7 +468,7 @@ CIAO_HelloWorld_Servant::get_all_publishers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAUL
 
 ::Components::PublisherDescriptions *
 CIAO_HelloWorld_Servant::get_named_publishers (const Components::NameList & names
-                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
@@ -445,22 +483,22 @@ CIAO_HelloWorld_Servant::get_named_publishers (const Components::NameList & name
 
 // Operations for CCMObject interface
 ::CORBA::IRObject_ptr
-CIAO_HelloWorld_Servant::get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_component_def (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 ::Components::CCMHome_ptr
-CIAO_HelloWorld_Servant::get_ccm_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_ccm_home (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@@ How?  Should we cache the home reference here?
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  return this->context_->get_CCM_home (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ::Components::PrimaryKeyBase *
-CIAO_HelloWorld_Servant::get_primary_key (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_primary_key (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::NoKeyAvailable))
 {
@@ -469,7 +507,7 @@ CIAO_HelloWorld_Servant::get_primary_key (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 }
 
 void
-CIAO_HelloWorld_Servant::configuration_complete (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::configuration_complete (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidConfiguration))
 {
@@ -478,7 +516,7 @@ CIAO_HelloWorld_Servant::configuration_complete (ACE_ENV_SINGLE_ARG_DECL_WITH_DE
 }
 
 void
-CIAO_HelloWorld_Servant::remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -488,13 +526,48 @@ CIAO_HelloWorld_Servant::remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 }
 
 ::Components::ComponentPortDescription *
-CIAO_HelloWorld_Servant::get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloWorld_Servant::get_all_ports (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No port, no nothing.
   return new OBV_Components::ComponentPortDescription;
 }
 
+
+CORBA::Object_ptr
+CIAO_HelloWorld_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ::Components::SessionContext_var sc =
+      ::Components::SessionContext::_narrow (this->context_);
+
+  if (! CORBA::is_nil(sc.in ()))
+    return sc->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  ::Components::EntityContext_var ec =
+      ::Components::EntityContext::_narrow (this->context_);
+
+  if (! CORBA::is_nil(ec.in ()))
+    return ec->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+}
+
+HelloWorld_ptr
+CIAO_HelloWorld_Servant::_ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CORBA::Object_var obj
+    = this->container_->install_servant (this
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  HelloWorld_var ho = HelloWorld::_narrow (obj
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return ho._retn ();
+
+}
 
 ////////////////////////////////////////////////////////////////
 //////////////////// CIAO_HelloHome_Servant ////////////////////
@@ -515,7 +588,7 @@ CIAO_HelloHome_Servant::~CIAO_HelloHome_Servant (void)
 
 // Operations for KeylessHome interface
 ::Components::CCMObject_ptr
-CIAO_HelloHome_Servant::create_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloHome_Servant::create_component (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
 {
@@ -524,7 +597,7 @@ CIAO_HelloHome_Servant::create_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 // Operations for Implicit Home interface
 ::HelloWorld_ptr
-CIAO_HelloHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
 {
@@ -539,23 +612,23 @@ CIAO_HelloHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  PortableServer::Servant svt = new CIAO_HelloWorld_Servant (hw.in ());
-
-  CORBA::Object_var obj
-    = this->container_->install_servant (svt
-                                         ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var hobj= this->container_->get_objref (this
+                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  HelloWorld_var ho = HelloWorld::_narrow (obj
-                                           ACE_ENV_ARG_PARAMETER);
+  ::Components::CCMHome_var home = ::Components::CCMHome::_narrow (hobj.in ()
+                                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return ho._retn ();
+  CIAO_HelloWorld_Servant *svt = new CIAO_HelloWorld_Servant (hw.in (),
+                                                              home.in (),
+                                                              this->container_);
+  return svt->_ciao_activate_component (ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations for CCMHome interface
 ::CORBA::IRObject_ptr
-CIAO_HelloHome_Servant::get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloHome_Servant::get_component_def (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Not implemented yet.
@@ -563,7 +636,7 @@ CIAO_HelloHome_Servant::get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 }
 
 ::CORBA::IRObject_ptr
-CIAO_HelloHome_Servant::get_home_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO_HelloHome_Servant::get_home_def (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Not implemented yet.
@@ -572,7 +645,7 @@ CIAO_HelloHome_Servant::get_home_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 void
 CIAO_HelloHome_Servant::remove_component (Components::CCMObject_ptr comp
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -588,7 +661,7 @@ CIAO_HelloHome_Servant::remove_component (Components::CCMObject_ptr comp
 extern "C" HELLO_SERVANT_Export ::PortableServer::Servant
 createHelloHome_Servant (::Components::HomeExecutorBase_ptr p,
                          CIAO::Session_Container *c
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL)
 {
   if (p == 0)
     return 0;

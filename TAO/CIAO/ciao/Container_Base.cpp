@@ -3,6 +3,10 @@
 #include "Container_Base.h"
 #include "ace/DLL.h"
 
+#if !defined (__ACE_INLINE__)
+# include "ciao/Container_Base.inl"
+#endif /* __ACE_INLINE__ */
+
 ////////////////////////////////////////////////////////////////
 
 CIAO::Container::Container (CORBA::ORB_ptr o)
@@ -37,7 +41,7 @@ CIAO::Session_Container::~Session_Container ()
 
 int
 CIAO::Session_Container::init (const char *name
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char buffer[MAXPATHLEN];
@@ -84,7 +88,7 @@ CIAO::Session_Container::init (const char *name
 
 CORBA::Object_ptr
 CIAO::Session_Container::install_servant (PortableServer::Servant p
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid
@@ -108,7 +112,7 @@ CIAO::Session_Container::_ciao_install_home (const char *exe_dll_name,
                                              const char *exe_entrypt,
                                              const char *sv_dll_name,
                                              const char *sv_entrypt
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::Deployment::UnknownImplId,
                    Components::Deployment::ImplEntryPointNotFound,
@@ -167,7 +171,7 @@ CIAO::Session_Container::_ciao_install_home (const char *exe_dll_name,
 
 void
 CIAO::Session_Container::uninstall (CORBA::Object_ptr objref
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid
@@ -181,7 +185,7 @@ CIAO::Session_Container::uninstall (CORBA::Object_ptr objref
 
 void
 CIAO::Session_Container::uninstall (PortableServer::Servant svt
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid
@@ -195,7 +199,7 @@ CIAO::Session_Container::uninstall (PortableServer::Servant svt
 
 void
 CIAO::Session_Container::debug_uninstall (CORBA::Object_ptr objref
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid

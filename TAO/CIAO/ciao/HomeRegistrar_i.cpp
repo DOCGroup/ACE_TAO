@@ -17,7 +17,7 @@ CIAO::HomeRegistrar_Impl::~HomeRegistrar_Impl ()
 
 ::Components::CCMHome_ptr
 CIAO::HomeRegistrar_Impl::find_home_impl (const char *name
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::HomeNotFound))
 {
@@ -54,7 +54,7 @@ CIAO::HomeRegistrar_Impl::register_home (const char * home_repo_id,
                                          const char * comp_repo_id,
                                          const char * home_name,
                                          CORBA::Object_ptr objref
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CIAO::AlreadyBound,
                    CIAO::InvalidName,

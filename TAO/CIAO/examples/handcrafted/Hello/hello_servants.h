@@ -25,13 +25,17 @@
 #include "helloEC.h"
 #include "ciao/Container_Base.h"
 
+class CIAO_HelloWorld_Servant;
+
 class HELLO_SERVANT_Export CIAO_HelloWorld_Context :
   public virtual CCM_HelloWorld_Context,
   public virtual ::Components::SessionContext
 {
 public:
   // Ctor.
-  CIAO_HelloWorld_Context ();
+  CIAO_HelloWorld_Context (::Components::CCMHome_ptr h,
+                           ::CIAO::Session_Container *c,
+                           CIAO_HelloWorld_Servant *sv);
 
   // Dtor.
   virtual ~CIAO_HelloWorld_Context ();
@@ -69,6 +73,15 @@ public:
   virtual CORBA::Object_ptr get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::IllegalState));
+
+protected:
+  ::Components::CCMHome_var home_;
+
+  ::CIAO::Session_Container *container_;
+
+  CIAO_HelloWorld_Servant *servant_;
+
+  HelloWorld_var component_;
 };
 
 class HELLO_SERVANT_Export CIAO_HelloWorld_Servant
@@ -80,7 +93,9 @@ class HELLO_SERVANT_Export CIAO_HelloWorld_Servant
 {
 public:
   // Ctor.
-  CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr executor_);
+  CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr executor,
+                           ::Components::CCMHome_ptr h,
+                           ::CIAO::Session_Container *c);
 
   // Dtor.
   ~CIAO_HelloWorld_Servant (void);
@@ -125,9 +140,9 @@ public:
                      Components::InvalidConnection,
                      Components::AlreadyConnected,
                      Components::ExceededConnectionLimit));
-  virtual void disconnect (const char * name,
-                           Components::Cookie * ck
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Object_ptr disconnect (const char * name,
+                                        Components::Cookie * ck
+                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName,
                      Components::InvalidConnection,
@@ -211,12 +226,26 @@ public:
   virtual ::Components::ComponentPortDescription * get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  // From Servant_Base
+
+  // get_component implementation.
+  virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+  // CIAO specific operations.
+
+  // Activate the object in the container_
+  HelloWorld_ptr _ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 protected:
   // My Executor.
   CCM_HelloWorld_var executor_;
 
   // My Run-time Context.
   CCM_HelloWorld_Context_var context_;
+
+  // Managing container.
+  ::CIAO::Session_Container *container_;
 };
 
 

@@ -44,6 +44,9 @@ namespace CIAO
     /// Destroy the @c Cookie
     ~Map_Key_Cookie (void);
 
+    /// Insert the @c ACE_Active_Map_Manager_Key
+    int insert (ACE_Active_Map_Manager_Key &key);
+
     /// Extract the @c ACE_Active_Map_Manager_Key
     int extract (ACE_Active_Map_Manager_Key &key);
 

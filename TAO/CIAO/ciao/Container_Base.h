@@ -98,6 +98,11 @@ namespace CIAO
                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // Get an object reference to a component or home from the servant.
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     // Uninstall a servant for component or home.
     virtual void uninstall (CORBA::Object_ptr objref
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -125,6 +130,10 @@ namespace CIAO
      ::CIAO::Session_Container *c
      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
+
+#if defined (__ACE_INLINE__)
+# include "ciao/Container_Base.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /* CIAO_CONTAINER_BASE_H */
