@@ -10,6 +10,13 @@ Wed Sep 23 10:02:20 1998  David L. Levine  <levine@cs.wustl.edu>
           cleaned up latency/jitter code, and added printouts with
           number of samples.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+          increment number_of_samples in iteration loops, instead of
+          relying on loop_count.  Without this change, the jitter
+          calculation is incorrect, and underestimates jitter.  It's
+          not clear why the actual number of messages and loop count
+          differ by so much, e.g, 150 instead of 1000.
+
         * utils/IOR-parser/ior-handler.cpp (findIfVisiIor,interpretIor):
           removed unused locals "nullOctet".
 
