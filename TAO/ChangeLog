@@ -1,3 +1,14 @@
+Tue Jan  6 12:04:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Strategies/SCIOP_Factory.cpp:
+	 
+	  SCIOP requires explicit endpoint specification. It shouldn't get
+	  loaded automatically as it is getting done now. 
+
+	* tao/Object.pidl:
+
+	  Another legacy file that is getting removed. 
+
 Tue Jan  6 11:14:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IFR_Client/Interface.pidl:
