@@ -30,7 +30,7 @@ template <ACE_SYNCH_DECL> ACE_INLINE void
 ACE_Module<ACE_SYNCH_USE>::name (const ACE_TCHAR *n)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::name");
-  ACE_OS::strsncpy (this->name_, n, MAXNAMLEN);
+  ACE_OS::strsncpy (this->name_, n, MAXPATHLEN);
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE ACE_Task<ACE_SYNCH_USE> *
