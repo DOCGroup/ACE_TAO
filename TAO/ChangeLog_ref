@@ -1,3 +1,10 @@
+Tue Aug 12 13:25:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TOA_IDL/be/be_sequence.cpp:
+
+          Fixed mistake in code generation for array sequence base
+          class.
+
 Tue Aug 12 13:12:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
