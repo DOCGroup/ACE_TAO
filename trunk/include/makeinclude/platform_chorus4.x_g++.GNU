@@ -24,9 +24,13 @@
 CHORUS = 1
 CROSS-COMPILE = 1
 
-debug       = 1
+ifeq (,$(debug))
+  debug     = 1
+endif
 exceptions  = 0
-optimize    = 1
+ifeq (,$(optimize))
+  optimize  = 1
+endif
 static_libs_only = 1
 
 #
@@ -44,6 +48,9 @@ endif
 ifndef CPU
   CPU=powerpc
 endif
+ifndef CLX_TYPE
+  CLX_TYPE=$(CPU)-elf
+endif
 ifndef CLX_CDSVERSION
   CLX_CDSVERSION = 5.00
 endif
@@ -55,7 +62,7 @@ ifndef OS_DIR
 endif
 
 XROOT   = $(CHTOOLS_DIR)/$(CPU)/$(CLX_CDSHOST)/$(CLX_CDSVERSION)
-XDIR    = $(XROOT)/$(CPU)-elf
+XDIR    = $(XROOT)/$(CLX_TYPE)
 TOOLDIR = $(XDIR)/bin
 
 
