@@ -1,4 +1,6 @@
 #include "Synch_Queued_Message.h"
+#include "debug.h"
+#include "ace/Malloc_T.h"
 #include "ace/Log_Msg.h"
 
 
@@ -18,6 +20,8 @@ TAO_Synch_Queued_Message::
 
 TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message (void)
 {
+  this->is_heap_created_ = 0;
+  this->allocator_ = 0;
 }
 
 const ACE_Message_Block *
@@ -94,7 +98,71 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
     this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 }
 
+TAO_Queued_Message *
+TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
+{
+  TAO_Synch_Queued_Message *qm = 0;
+
+  // Clone the message block.
+  // NOTE: We wantedly do the cloning from <current_block_> instead of
+  // starting from <contents_> since we dont want to clone blocks that
+  // have already been sent on the wire. Waste of memory and
+  // associated copying.
+  ACE_Message_Block *mb =
+    this->current_block_->clone ();
+
+  if (alloc)
+    {
+      ACE_NEW_MALLOC_RETURN (qm,
+                             ACE_static_cast (TAO_Synch_Queued_Message *,
+                                 alloc->malloc (sizeof (TAO_Synch_Queued_Message))),
+                             TAO_Synch_Queued_Message (mb,
+                                                       alloc),
+                             0);
+    }
+  else
+    {
+      // No allocator, so use the common heap!
+      if (TAO_debug_level == 4)
+        {
+          // This debug is for testing purposes!
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Synch_Queued_Message::clone\n",
+                      "Using global pool for allocation \n"));
+        }
+
+      ACE_NEW_RETURN (qm,
+                      TAO_Synch_Queued_Message (mb),
+                      0);
+    }
+
+  // Set the flag to indicate that <qm> is created on the heap.
+  if (qm)
+    qm->is_heap_created_ = 1;
+
+  return qm;
+}
+
 void
 TAO_Synch_Queued_Message::destroy (void)
 {
+  if (this->is_heap_created_)
+    {
+      ACE_Message_Block::release (this->contents_);
+      this->current_block_ = 0;
+
+      // If we have an allocator release the memory to the allocator
+      // pool.
+      if (this->allocator_)
+        {
+          ACE_DES_FREE (this,
+                        this->allocator_->free,
+                        TAO_Synch_Queued_Message);
+
+        }
+      else // global release..
+        {
+          delete this;
+        }
+    }
 }

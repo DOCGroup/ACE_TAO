@@ -23,7 +23,7 @@
 #include "LF_Event.h"
 
 class ACE_Message_Block;
-
+class ACE_Allocator;
 /**
  * @class TAO_Queued_Message
  *
@@ -66,7 +66,7 @@ class TAO_Export TAO_Queued_Message : public TAO_LF_Event
 {
 public:
   /// Constructor
-  TAO_Queued_Message (void);
+  TAO_Queued_Message (ACE_Allocator *alloc = 0);
 
   /// Destructor
   virtual ~TAO_Queued_Message (void);
@@ -143,7 +143,9 @@ public:
    *               method should update this counter
    * @param iov The io vector
    */
-  virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const = 0;
+  virtual void fill_iov (int iovcnt_max,
+                         int &iovcnt,
+                         iovec iov[]) const = 0;
 
   /// Update the internal state, data has been sent.
   /**
@@ -161,6 +163,18 @@ public:
    */
   virtual void bytes_transferred (size_t &byte_count) = 0;
 
+  /// Clone this element
+  /*
+   * Clone the element and return a pointer to the cloned element on
+   * the heap.
+   *
+   * @param allocator Use the allocator for creating the new element
+   *                  on the heap. Remember, that the allocator will
+   *                  not be used allocate the data contained in this
+   *                  element.
+   */
+  virtual TAO_Queued_Message *clone (ACE_Allocator *allocator) = 0;
+
   /// Reclaim resources
   /**
    * Reliable messages are allocated from the stack, thus they do not
@@ -170,6 +184,20 @@ public:
    */
   virtual void destroy (void) = 0;
   //@}
+
+protected:
+  /*
+   * Allocator that was used to create <this> object on the heap. If the
+   * allocator is null then <this> is on stack.
+   */
+  ACE_Allocator *allocator_;
+
+  /*
+   * A flag that acts as a boolean to indicate whether <this> is on
+   * stack or heap. A non-zero value indicates that <this> was created
+   * on  heap.
+   */
+  int is_heap_created_;
 
 private:
   /// Implement an intrusive double-linked list for the message queue

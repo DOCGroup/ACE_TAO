@@ -509,6 +509,8 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // the message block.
   TAO_Synch_Queued_Message synch_message (mb);
 
+  synch_message.push_back (this->head_, this->tail_);
+
   int n =
     this->send_synch_message_helper_i (synch_message,
                                        max_wait_time);
@@ -597,6 +599,9 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   // Dont clone now.. We could be sent in one shot!
   TAO_Synch_Queued_Message synch_message (mb);
 
+  synch_message.push_back (this->head_,
+                           this->tail_);
+
   int n =
     this->send_synch_message_helper_i (synch_message,
                                        max_wait_time);
@@ -608,22 +613,40 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   ACE_ASSERT (n == 0);
 
   // Till this point we shouldnt have any copying and that is the
-  // point anyway.
-  // Now, remove the node from the list
+  // point anyway. Now, remove the node from the list
+  synch_message.remove_from_list (this->head_,
+                                  this->tail_);
 
-  // Clone the node
+  ACE_Message_Block *tmp_mb =
+    ACE_const_cast (ACE_Message_Block *,
+                    mb);
 
+  // Reset the message block allocators to allocate memory from the
+  // global pool.
+  tmp_mb->reset_allocators (this->orb_core_->input_cdr_buffer_allocator (),
+                            this->orb_core_->input_cdr_dblock_allocator (),
+                            this->orb_core_->input_cdr_msgblock_allocator ());
 
+  // Clone the node that we have.
+  TAO_Queued_Message *msg =
+    synch_message.clone (this->orb_core_->transport_message_buffer_allocator ());
 
+  // Stick it in the queue
+  msg->push_back (this->head_,
+                  this->tail_);
 
+  TAO_Flushing_Strategy *flushing_strategy =
+    this->orb_core ()->flushing_strategy ();
+
+  (void) flushing_strategy->schedule_output (this);
+
+  return 1;
 }
 
 int
 TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_message,
                                             ACE_Time_Value * /*max_wait_time*/)
 {
-  synch_message.push_back (this->head_, this->tail_);
-
   // @@todo: Need to send timeouts for writing..
   int n = this->drain_queue_i ();
   if (n == -1)
