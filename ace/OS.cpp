@@ -1106,9 +1106,9 @@ private:
 
   enum
     {
-#if defined (ACE_HAS_64BIT_LONGS)
+#if ACE_SIZEOF_LONG == 8
       ACE_BITS_PER_WORD = 64,
-#elif ULONG_MAX == 4294967295UL
+#elif ACE_SIZEOF_LONG == 4
       ACE_BITS_PER_WORD = 32,
 #else
 #error ACE_TSS_Keys only supports 32 or 64 bit longs.
