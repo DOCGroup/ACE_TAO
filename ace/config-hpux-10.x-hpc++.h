@@ -28,9 +28,6 @@
 
 #  define ACE_HAS_BROKEN_HPUX_TEMPLATES
 
-// Compiler doesn't support the operator placement delete.
-#  define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-
 // Compiler can't handle calls like foo->operator T *()
 #  define ACE_HAS_BROKEN_CONVERSIONS
 
@@ -57,6 +54,9 @@
 #  if !defined (__HP_aCC)
 #    define __HP_aCC
 #  endif /* __HP_aCC */
+
+// Compiler doesn't support the operator placement delete.
+#  define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
 #  define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
