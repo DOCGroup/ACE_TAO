@@ -112,25 +112,27 @@ public:
                          const void *act,
                          const ACE_Time_Value &delay,
                          const ACE_Time_Value &interval = ACE_Time_Value::zero);
-  // Schedule <type> that will expire after <delay> amount of time.
-  // If it expires then <act> is passed in as the value to the
-  // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
-  // is used to reschedule the <type> automatically.  This method
-  // returns a <timer_id> that uniquely identifies the the <type>
-  // entry in an internal list.  This <timer_id> can be used to cancel
-  // the timer before it expires.  The cancellation ensures that
-  // <timer_ids> are unique up to values of greater than 2 billion
-  // timers.  As long as timers don't stay around longer than this
-  // there should be no problems with accidentally deleting the wrong
-  // timer.  Returns -1 on failure (which is guaranteed never to be a
-  // valid <timer_id>).
+  // Schedule <type> that will expire after <delay> amount of time,
+  // which is specified in absolute time.  If it expires then <act> is
+  // passed in as the value to the <functor>.  If <interval> is != to
+  // <ACE_Time_Value::zero> then it is used to reschedule the <type>
+  // automatically, using relative time to the current <gettimeofday>.
+  // This method returns a <timer_id> that uniquely identifies the the
+  // <type> entry in an internal list.  This <timer_id> can be used to
+  // cancel the timer before it expires.  The cancellation ensures
+  // that <timer_ids> are unique up to values of greater than 2
+  // billion timers.  As long as timers don't stay around longer than
+  // this there should be no problems with accidentally deleting the
+  // wrong timer.  Returns -1 on failure (which is guaranteed never to
+  // be a valid <timer_id>).
 
   virtual int reset_interval (const long timer_id, 
                               const ACE_Time_Value &interval);
-  // Resets the interval of the timer represented by <timer_id> to 
-  // <interval>.  If <interval> is equal to <ACE_Time_Value::zero>,
-  // the timer will become a non-rescheduling timer.  Returns 1 if
-  // successful, 0 if not.
+  // Resets the interval of the timer represented by <timer_id> to
+  // <interval>, which is specified in relative time to the current
+  // <gettimeofday>.  If <interval> is equal to
+  // <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+  // timer.  Returns 0 if successful, -1 if not.
 
   virtual int cancel (const TYPE &type,
                       int dont_call_handle_close = 1);

@@ -10,8 +10,8 @@
 //    Msg_WFMO_Reactor.h
 //
 // = AUTHOR
-//    Beskrovny Evgeny, Comverse Network Systems (evgeny_beskrovny@icomverse.com)
-//    Irfan Pyarali, Washington University (irfan@cs.wustl.edu)
+//    Beskrovny Evgeny <evgeny_beskrovny@icomverse.com> and
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -28,20 +28,16 @@
 
 class ACE_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
 {
-  //
   // = TITLE
-  //
   //     An object oriented event demultiplexor and event handler
   //     dispatcher for Win32 MsgWaitForMultipleObjects.
   //
   // = DESCRIPTION
-  //
   //     The ACE_Msg_WFMO_Reactor is an object-oriented event
   //     demultiplexor and event handler Reactor. It differs from
   //     WFMO_Reactor by its ability to react on Windows messages. It
   //     is needed when the task should serve also as a COM/DCOM
   //     server.
-  //
 public:
   // = Initialization and termination methods.
   ACE_Msg_WFMO_Reactor (ACE_Sig_Handler * = 0,

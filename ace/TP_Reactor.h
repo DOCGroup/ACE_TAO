@@ -69,12 +69,10 @@ public:
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
   // = TITLE
-  //
   //     Specialization of Select Reactor to support thread-pool based
   //     event dispatching.
   //
   // = DESCRIPTION
-  //
   //     One of the short comings of the Select_Reactor in ACE is that
   //     it did not support a thread pool based event dispatching
   //     model, similar to the one in WFMO_Reactor.  In

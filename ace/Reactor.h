@@ -333,25 +333,34 @@ public:
   virtual int resume_handlers (void);
   // Resume all <handles>.
 
-  // Timer management.
+  // = Timer management.
 
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delta,
                                const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule an <event_handler> that will expire after <delay> amount
-  // of time.  If it expires then <arg> is passed in as the value to
-  // the <event_handler>'s <handle_timeout> callback method.  If
-  // <interval> is != to <ACE_Time_Value::zero> then it is used to
-  // reschedule the <event_handler> automatically.  This method
-  // returns a <timer_id> that uniquely identifies the <event_handler>
-  // in an internal list.  This <timer_id> can be used to cancel an
-  // <event_handler> before it expires.  The cancellation ensures that
-  // <timer_ids> are unique up to values of greater than 2 billion
-  // timers.  As long as timers don't stay around longer than this
-  // there should be no problems with accidentally deleting the wrong
-  // timer.  Returns -1 on failure (which is guaranteed never to be a
-  // valid <timer_id>.
+  // of time, which is specified as relative time to the current
+  // <gettimeofday>.  If it expires then <arg> is passed in as the
+  // value to the <event_handler>'s <handle_timeout> callback method.
+  // If <interval> is != to <ACE_Time_Value::zero> then it is used to
+  // reschedule the <event_handler> automatically, also specified
+  // using relative time.  This method returns a <timer_id> that
+  // uniquely identifies the <event_handler> in an internal list.
+  // This <timer_id> can be used to cancel an <event_handler> before
+  // it expires.  The cancellation ensures that <timer_ids> are unique
+  // up to values of greater than 2 billion timers.  As long as timers
+  // don't stay around longer than this there should be no problems
+  // with accidentally deleting the wrong timer.  Returns -1 on
+  // failure (which is guaranteed never to be a valid <timer_id>.
+
+  virtual int reset_timer_interval (const long timer_id, 
+                                    const ACE_Time_Value &interval);
+  // Resets the interval of the timer represented by <timer_id> to
+  // <interval>, which is specified in relative time to the current
+  // <gettimeofday>.  If <interval> is equal to
+  // <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+  // timer.  Returns 0 if successful, -1 if not.
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1);

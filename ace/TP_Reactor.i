@@ -11,9 +11,12 @@ ACE_INLINE void
 ACE_TP_Reactor::wakeup_all_threads (void)
 {
   ACE_MT (this->token_.signal_all_threads (););
+
   // Send a notification, but don't block if there's no one to receive
   // it.
-  this->notify (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
+  this->notify (0,
+                ACE_Event_Handler::NULL_MASK,
+                (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
 ACE_INLINE void
