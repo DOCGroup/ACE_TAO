@@ -418,32 +418,42 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
     {
       // Check if the mcast_addr passed into this method is the
       // same as the QoS session address.
-      if (mcast_addr == qos_session->dest_addr ())
+      if (mcast_addr == qos_session->dest_addr ()) 
+      {
 
         // Subscribe to the QoS session.
         if (this->join_qos_session (qos_session) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to join QoS Session\n"),
                             -1);
-        else
+      } 
+      else
+      {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Dest Addr in the QoS Session does"
                              " not match the address passed into"
                              " subscribe\n"),
                             -1);
+      }
 
       sockaddr_in mult_addr;
 
-      mult_addr.sin_family = protocolinfo->iAddressFamily;
+      if (protocol_family == ACE_FROM_PROTOCOL_INFO)
+        mult_addr.sin_family = protocolinfo->iAddressFamily;
+      else
+        mult_addr.sin_family = protocol_family;
+
       mult_addr.sin_port = ACE_HTONS (mcast_addr.get_port_number ());
 
       mult_addr.sin_addr = this->mcast_request_if_.IMR_MULTIADDR;
 
+      // XX This is windows stuff only. fredk
       if (ACE_OS::join_leaf (this->get_handle (),
                              ACE_reinterpret_cast (const sockaddr *,
                                                    &mult_addr),
                              sizeof mult_addr,
-                             qos_params) == ACE_INVALID_HANDLE)
+                             qos_params) == ACE_INVALID_HANDLE
+          && errno != ENOTSUP)
         return -1;
       else
         qos_session->qos (*(qos_params.socket_qos ()));
