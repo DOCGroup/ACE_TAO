@@ -20,16 +20,8 @@
 #include "Constraint_Visitor.h"
 #include "Constraint_Tokens.h"
 
-#if defined (OS_NO_NAMESPACE)
-#define queue foobar
-#endif /* OS_NO_NAMESPACE */
-
 #include "orbsvcs/CosTradingC.h"
 #include "orbsvcs/SequencesC.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef queue
-#endif /* OS_NO_NAMESPACE */
 
 typedef unsigned short TAO_Expression_Type;
 

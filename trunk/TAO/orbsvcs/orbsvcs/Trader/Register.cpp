@@ -78,17 +78,25 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   // exists.
   if (type_struct->masked)
     TAO_THROW_RETURN (CosTrading::UnknownServiceType (type), 0);
-    
+
+  // TAO-specific way to determine if an object is derived from or is
+  // an interface type.
+  if (! reference->_is_a (type_struct->if_name, _env))
+    TAO_THROW_RETURN (CosTrading::Register::
+		      InterfaceTypeMismatch (type, reference), 0);
+  
+  // Validate that the properties defined for this offer are correct
+  // to their types and strength.
   this->validate_properties (type, type_struct,
 			     (CosTrading::PropertySeq) properties, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
   
   offer.reference = (reference->_duplicate (reference));
   offer.properties = properties;
-
+  
   // Inser the offer into the underlying type map.
   CosTrading::OfferId id = service_type_map.insert_offer (type, offer);
-
+  
   if (id == 0)
     {
       // Add type, if it's already been added in that split second
@@ -99,14 +107,14 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   
   return id;
 }
-  
+
 template <class TRADER> void 
 TAO_Register<TRADER>::withdraw (const char *id,
 				CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException, 
-		  CosTrading::IllegalOfferId, 
-		  CosTrading::UnknownOfferId, 
-		  CosTrading::Register::ProxyOfferId))
+		   CosTrading::IllegalOfferId, 
+		   CosTrading::UnknownOfferId, 
+		   CosTrading::Register::ProxyOfferId))
 {
   // Get service type map.
   TRADER::SERVICE_TYPE_MAP &service_type_map = 

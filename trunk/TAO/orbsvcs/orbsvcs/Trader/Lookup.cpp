@@ -18,19 +18,9 @@
 #if !defined (TAO_LOOKUP_C)
 #define TAO_LOOKUP_C
 
-#if defined (OS_NO_NAMESPACE)
-#define queue sillything
-#define map mommy
-#endif /* OS_NO_NAMESPACE */
-
 #include "Lookup.h"
 #include "ace/Auto_Ptr.h"
 #include <iostream.h>
-
-#if defined (OS_NO_NAMESPACE)
-#undef queue
-#undef map
-#endif /* OS_NO_NAMESPACE */
 
 #include "Query_Only_Offer_Iterator.h"
 #include "Register_Offer_Iterator.h"
