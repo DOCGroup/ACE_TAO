@@ -1,3 +1,16 @@
+Wed Mar 22 12:36:00 2000  James Hu  <jxh@cs.wustl.edu>
+
+        * stress_testing/connection.h:
+
+          Fixes to class declaration.  Method return types should never
+          be implicit.  Thanks to Craig Rodrigues (rodrigc@mediaone.net)
+          for the heads up.
+
+        * stress_testing/Makefile:
+
+          Fixed it so that the programs actually link.  Thanks to Craig
+          Rodrigues (rodrigc@mediaone.net) for the heads up.
+
 Tue Sep 21 11:47:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* server/HTTP_Server.cpp (init):
