@@ -105,8 +105,8 @@ private:
   int  delete_reactor (void);
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
-  ACE_Reactor * my_reactor_;
   ACE_Thread_Semaphore sem_;
+  ACE_Reactor *my_reactor_;
 };
 
 int
@@ -246,7 +246,7 @@ private:
   int  check_destroy (void);
 
   Acceptor * acceptor_;
-  int  index_;
+  size_t index_;
   int  flg_mask_;
 
   ACE_Recursive_Thread_Mutex mutex_;
@@ -258,7 +258,7 @@ class Acceptor : public ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
 {
  friend class Receiver;
 public:
- long get_number_sessions (void) { return sessions_; }
+ size_t get_number_sessions (void) { return sessions_; }
 
  Acceptor (void);
  virtual ~Acceptor (void);
@@ -272,7 +272,7 @@ public:
 private:
 
    ACE_Recursive_Thread_Mutex mutex_;
-   long sessions_;
+   size_t sessions_;
    Receiver *list_receivers_[MAX_RECEIVERS];
 
    void on_new_receiver (Receiver & rcvr);
@@ -287,7 +287,7 @@ Acceptor::Acceptor (void)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
-  for (int i = 0; i < MAX_RECEIVERS; ++i)
+  for (size_t i = 0; i < MAX_RECEIVERS; ++i)
      this->list_receivers_[i] =0;
 }
 
@@ -305,7 +305,7 @@ Acceptor::stop (void)
 
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
-  for (int i = 0; i < MAX_RECEIVERS; ++i)
+  for (size_t i = 0; i < MAX_RECEIVERS; ++i)
     {
       delete this->list_receivers_[i];
       this->list_receivers_[i] =0;
@@ -331,8 +331,8 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
   this->sessions_--;
   if (rcvr.index_ >= 0
      && rcvr.index_ < MAX_RECEIVERS
-     && this->list_receivers_[ rcvr.index_] == & rcvr)
-    this->list_receivers_[ rcvr.index_] = 0;
+     && this->list_receivers_[rcvr.index_] == &rcvr)
+    this->list_receivers_[rcvr.index_] = 0;
 
   ACE_DEBUG ((LM_DEBUG,
               "Receiver::~DTOR sessions_=%d\n",
@@ -361,7 +361,7 @@ Acceptor::make_svc_handler (Receiver *&sh)
   if (sessions_ >= MAX_RECEIVERS)
     return -1;
 
-  for (int i = 0; i < MAX_RECEIVERS; ++i)
+  for (size_t i = 0; i < MAX_RECEIVERS; ++i)
     if (this->list_receivers_ [i] == 0)
       {
         ACE_NEW_RETURN (sh,
@@ -414,7 +414,7 @@ Receiver::check_destroy (void)
 }
 
 int
-Receiver::open (void *pVoid)
+Receiver::open (void *)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
@@ -459,18 +459,15 @@ Receiver::terminate_io (ACE_Reactor_Mask mask)
 }
 
 int
-Receiver::handle_close (ACE_HANDLE h, ACE_Reactor_Mask mask)
+Receiver::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_Reactor * TPReactor = ACE_Reactor::instance ();
+  ACE_Reactor *TPReactor = ACE_Reactor::instance ();
 
   TPReactor->remove_handler (this,
                              ACE_Event_Handler::ALL_EVENTS_MASK |
                              ACE_Event_Handler::DONT_CALL);  // Don't call handle_close
-
   this->reactor (0);
-
   this->destroy ();
-
   return 0;
 }
 
@@ -668,17 +665,17 @@ private:
 
 // *************************************************************
 
-Connector::Connector ()
+Connector::Connector (void)
   : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> ((ACE_Reactor *) 0),
     sessions_ (0)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
-  for (int i = 0; i < MAX_SENDERS; ++i)
+  for (size_t i = 0; i < MAX_SENDERS; ++i)
      this->list_senders_[i] = 0;
 }
 
-Connector::~Connector ()
+Connector::~Connector (void)
 {
   this->reactor (0);
   stop ();
@@ -693,7 +690,7 @@ Connector::stop ()
 
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
-  for (int i = 0; i < MAX_SENDERS; ++i)
+  for (size_t i = 0; i < MAX_SENDERS; ++i)
     {
       delete this->list_senders_[i];
       this->list_senders_[i] =0;
@@ -705,7 +702,7 @@ Connector::on_new_sender (Sender & sndr)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
   this->sessions_++;
-  this->list_senders_[ sndr.index_] = &sndr;
+  this->list_senders_[sndr.index_] = &sndr;
   ACE_DEBUG ((LM_DEBUG,
               "Sender::CTOR sessions_=%d\n",
               this->sessions_));
@@ -719,8 +716,8 @@ Connector::on_delete_sender (Sender & sndr)
   this->sessions_--;
   if (sndr.index_ >= 0
      && sndr.index_ < MAX_SENDERS
-     && this->list_senders_[ sndr.index_] == &sndr)
-    this->list_senders_[ sndr.index_] = 0;
+     && this->list_senders_[sndr.index_] == &sndr)
+    this->list_senders_[sndr.index_] = 0;
 
   ACE_DEBUG ((LM_DEBUG,
               "Sender::~DTOR sessions_=%d\n",
@@ -766,7 +763,7 @@ Connector::make_svc_handler (Sender * & sh)
   if (sessions_ >= MAX_SENDERS)
     return -1;
 
-  for (int i = 0; i < MAX_SENDERS; ++i)
+  for (size_t i = 0; i < MAX_SENDERS; ++i)
     if (this->list_senders_ [i] == 0)
       {
         ACE_NEW_RETURN (sh,
@@ -821,7 +818,7 @@ Sender::check_destroy (void)
   return 0;
 }
 
-int Sender::open (void * pVoid)
+int Sender::open (void *)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
@@ -901,7 +898,7 @@ Sender::terminate_io (ACE_Reactor_Mask mask)
 }
 
 int
-Sender::handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask)
+Sender::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_Reactor * TPReactor = ACE_Reactor::instance ();
 
@@ -910,7 +907,6 @@ Sender::handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask)
                              ACE_Event_Handler::DONT_CALL);  // Don't call handle_close
   this->reactor (0);
   this->destroy ();
-
   return 0;
 }
 
@@ -945,7 +941,6 @@ Sender::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
     }
-
 
   ACE_Message_Block::release (mb);
 
