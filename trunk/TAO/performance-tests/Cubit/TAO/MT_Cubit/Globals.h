@@ -46,7 +46,7 @@ if (status != OK)\
 #define SCHED_PRIORITY 6
 #elif defined (ACE_WIN32)
 #define SCHED_PRIORITY \
-ACE_Sched_Params::priority_max(ACE_SCHED_INFO,ACE_SCOPE_THREAD)
+ACE_Sched_Params::priority_max(ACE_SCHED_FIFO,ACE_SCOPE_THREAD)
 #else
 #define SCHED_PRIORITY \
 ACE_THR_PRI_FIFO_DEF + 25
