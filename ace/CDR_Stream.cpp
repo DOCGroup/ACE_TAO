@@ -12,6 +12,8 @@ ACE_RCSID (ace,
 
 // ****************************************************************
 
+int ACE_OutputCDR::wchar_maxbytes_ = sizeof (ACE_CDR::WChar);
+
 ACE_OutputCDR::ACE_OutputCDR (size_t size,
                               int byte_order,
                               ACE_Allocator *buffer_allocator,
@@ -39,8 +41,7 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
      major_version_ (major_version),
      minor_version_ (minor_version),
      char_translator_ (0),
-     wchar_translator_ (0),
-     wchar_allowed_(1)
+     wchar_translator_ (0)
 
 {
   ACE_CDR::mb_align (&this->start_);
@@ -74,8 +75,7 @@ ACE_OutputCDR::ACE_OutputCDR (char *data, size_t size,
      major_version_ (major_version),
      minor_version_ (minor_version),
      char_translator_ (0),
-     wchar_translator_ (0),
-     wchar_allowed_ (1)
+     wchar_translator_ (0)
 {
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (&this->start_);
@@ -96,12 +96,17 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
      major_version_ (major_version),
      minor_version_ (minor_version),
      char_translator_ (0),
-     wchar_translator_ (0),
-     wchar_allowed_ (1)
+     wchar_translator_ (0)
 {
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
+}
+
+/*static*/ void
+ACE_OutputCDR::wchar_maxbytes (int maxbytes)
+{
+  ACE_OutputCDR::wchar_maxbytes_ = maxbytes;
 }
 
 int
@@ -169,31 +174,55 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
 ACE_CDR::Boolean
 ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
 {
-  if (!this->wchar_allowed_)
+  if (this->wchar_translator_ != 0)
+    return (this->good_bit_ = this->wchar_translator_->write_wchar (*this, x));
+  if (ACE_OutputCDR::wchar_maxbytes_ == 0)
     {
       errno = EACCES;
       return (this->good_bit_ = 0);
     }
-  if (this->wchar_translator_ != 0)
-    return (this->good_bit_ = this->wchar_translator_->write_wchar (*this, x));
   if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
           && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
     {
-      ACE_CDR::Octet len = ACE_static_cast (ACE_CDR::Octet, sizeof(x));
+      ACE_CDR::Octet len = ACE_static_cast (ACE_CDR::Octet, ACE_OutputCDR::wchar_maxbytes_);
       if (this->write_1 (&len))
-        return this->write_octet_array (ACE_reinterpret_cast
-                                         (const ACE_CDR::Octet*, &x),
-                                         ACE_static_cast (ACE_CDR::ULong, len));
+	{
+	  if (ACE_OutputCDR::wchar_maxbytes_ == sizeof(ACE_CDR::WChar))
+	    return this->write_octet_array (ACE_reinterpret_cast
+					    (const ACE_CDR::Octet*, &x),
+					    ACE_static_cast (ACE_CDR::ULong, len));
+	  else
+	    if (ACE_OutputCDR::wchar_maxbytes_ == 2)
+	      {
+		ACE_CDR::Short sx = ACE_static_cast(ACE_CDR::Short,x);
+		return this->write_octet_array(ACE_reinterpret_cast
+					       (const ACE_CDR::Octet*, &sx),
+					       ACE_static_cast (ACE_CDR::ULong, len));
+	      }
+	    else
+	      {
+		ACE_CDR::Octet ox = ACE_static_cast(ACE_CDR::Octet,x);
+		return this->write_octet_array(ACE_reinterpret_cast
+					       (const ACE_CDR::Octet*, &ox),
+					       ACE_static_cast (ACE_CDR::ULong, len));
+	      }
+	}
     }
   else if (ACE_static_cast (ACE_CDR::Short, minor_version_) == 0)
     { // wchar is not allowed with GIOP 1.0.
       errno = EINVAL;
       return (this->good_bit_ = 0);
     }
-  if (sizeof (ACE_CDR::WChar) == 2)
-    return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort *, &x));
-  else
+  if (ACE_OutputCDR::wchar_maxbytes_ == sizeof (ACE_CDR::WChar))
     return this->write_4 (ACE_reinterpret_cast (const ACE_CDR::ULong *, &x));
+  else if (ACE_OutputCDR::wchar_maxbytes_ == 2)
+    {
+      ACE_CDR::Short sx = ACE_static_cast(ACE_CDR::Short,x);
+      return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort *,
+						  &sx));
+    }
+  ACE_CDR::Octet ox = ACE_static_cast (ACE_CDR::Octet,x);
+  return this->write_1 (ACE_reinterpret_cast (const ACE_CDR::Octet *, &ox));
 }
 
 ACE_CDR::Boolean
@@ -241,24 +270,23 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
   // i.e. normally the translator will be 0, but OTOH the code is
   // smaller and should be better for the cache ;-) ;-)
   // What do we do for GIOP 1.2???
-  // Phil's answer->the translator writer's will have to deal.
-  if (!this->wchar_allowed_)
+  if (this->wchar_translator_ != 0)
+    return this->wchar_translator_->write_wstring (*this, len, x);
+  if (ACE_OutputCDR::wchar_maxbytes_ == 0)
     {
       errno = EACCES;
       return (this->good_bit_ = 0);
     }
-  if (this->wchar_translator_ != 0)
-    return this->wchar_translator_->write_wstring (*this, len, x);
 
   if (ACE_static_cast (ACE_CDR::Short, this->major_version_) == 1
-          && ACE_static_cast (ACE_CDR::Short, this->minor_version_) == 2)
+      && ACE_static_cast (ACE_CDR::Short, this->minor_version_) == 2)
     {
       if (x != 0)
         {
           //In GIOP 1.2 the length field contains the number of bytes
           //the wstring occupies rather than number of wchars
           //Taking sizeof might not be a good way! This is a temporary fix.
-          if (this->write_ulong (sizeof(ACE_CDR::WChar)*len))
+          if (this->write_ulong (ACE_OutputCDR::wchar_maxbytes_ * len))
             return this->write_wchar_array (x, len);
         }
       else
@@ -474,6 +502,46 @@ ACE_OutputCDR::write_16 (const ACE_CDR::LongDouble *x)
 }
 
 ACE_CDR::Boolean
+ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
+				    ACE_CDR::ULong length)
+{
+  if (length == 0)
+    return 1;
+  char* buf;
+  size_t align = (ACE_OutputCDR::wchar_maxbytes_ == 2) ?
+    ACE_CDR::SHORT_ALIGN :
+    ACE_CDR::OCTET_ALIGN;
+
+  if (this->adjust (ACE_OutputCDR::wchar_maxbytes_ * length, align, buf) == 0)
+    {
+      if (ACE_OutputCDR::wchar_maxbytes_ == 2)
+	{
+	  ACE_CDR::UShort *sb = ACE_reinterpret_cast(ACE_CDR::UShort *, buf);
+	  for (size_t i = 0; i < length; i++)
+#if !defined (ACE_ENABLE_SWAP_ON_WRITE)
+	    sb[i] = ACE_static_cast (ACE_CDR::UShort, x[i]);
+#else
+  	    if (!this->do_byte_swap_)
+	      sb[i] = ACE_static_cast (ACE_CDR::UShort, x[i]);;
+	    else
+	      {
+		ACE_CDR::UShort sx = ACE_static_cast (ACE_CDR::UShort, x[i]);
+		ACE_CDR::swap_2 (ACE_reinterpret_cast(char *,&sx),&buf[i*2]);
+	      }
+#endif /* ACE_DISABLE_SWAP_ON_READ */
+	}
+      else
+	{
+	  for (size_t i = 0; i < length; i++)
+	    buf[i] = ACE_static_cast (ACE_CDR::Octet, x[i]);
+	}
+      return this->good_bit_;
+    }
+  return 0;
+}
+
+
+ACE_CDR::Boolean
 ACE_OutputCDR::write_array (const void *x,
                             size_t size,
                             size_t align,
@@ -554,8 +622,7 @@ ACE_InputCDR::ACE_InputCDR (const char *buf,
     major_version_ (major_version),
     minor_version_ (minor_version),
     char_translator_ (0),
-    wchar_translator_ (0),
-    wchar_allowed_ (1)
+    wchar_translator_ (0)
 {
   this->start_.wr_ptr (bufsiz);
 }
@@ -570,8 +637,7 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
     major_version_ (major_version),
     minor_version_ (minor_version),
     char_translator_ (0),
-    wchar_translator_ (0),
-    wchar_allowed_ (1)
+    wchar_translator_ (0)
 {
 }
 
@@ -584,8 +650,8 @@ ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
     major_version_ (major_version),
     minor_version_ (minor_version),
     char_translator_ (0),
-    wchar_translator_ (0),
-    wchar_allowed_ (1)
+    wchar_translator_ (0)
+
 {
   this->reset (data, byte_order);
 }
@@ -601,8 +667,8 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
     major_version_ (major_version),
     minor_version_ (minor_version),
     char_translator_ (0),
-    wchar_translator_ (0),
-    wchar_allowed_ (1)
+    wchar_translator_ (0)
+
 {
 }
 
@@ -619,8 +685,8 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
     major_version_ (major_version),
     minor_version_ (minor_version),
     char_translator_ (0),
-    wchar_translator_ (0),
-    wchar_allowed_ (1)
+    wchar_translator_ (0)
+
 {
   // Set the read pointer
   this->start_.rd_ptr (rd_pos);
@@ -645,8 +711,8 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     major_version_ (rhs.major_version_),
     minor_version_ (rhs.minor_version_),
     char_translator_ (rhs.char_translator_),
-    wchar_translator_ (rhs.wchar_translator_),
-    wchar_allowed_ (rhs.wchar_allowed_)
+    wchar_translator_ (rhs.wchar_translator_)
+
 {
   // Align the base pointer assuming that the incoming stream is also
   // aligned the way we are aligned
@@ -675,8 +741,8 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     major_version_ (rhs.major_version_),
     minor_version_ (rhs.minor_version_),
     char_translator_ (rhs.char_translator_),
-    wchar_translator_ (rhs.wchar_translator_),
-    wchar_allowed_ (rhs.wchar_allowed_)
+    wchar_translator_ (rhs.wchar_translator_)
+
 {
   // Align the base pointer assuming that the incoming stream is also
   // aligned the way we are aligned
@@ -710,8 +776,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
     major_version_ (rhs.major_version_),
     minor_version_ (rhs.minor_version_),
     char_translator_ (rhs.char_translator_),
-    wchar_translator_ (rhs.wchar_translator_),
-    wchar_allowed_ (rhs.wchar_allowed_)
+    wchar_translator_ (rhs.wchar_translator_)
 {
   char *buf = ACE_ptr_align_binary (rhs.start_.base (),
                                     ACE_CDR::MAX_ALIGNMENT);
@@ -729,8 +794,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
     major_version_ (x.rhs_.major_version_),
     minor_version_ (x.rhs_.minor_version_),
     char_translator_ (x.rhs_.char_translator_),
-    wchar_translator_ (x.rhs_.wchar_translator_),
-    wchar_allowed_ (x.rhs_.wchar_allowed_)
+    wchar_translator_ (x.rhs_.wchar_translator_)
 {
 
   this->start_.rd_ptr (x.rhs_.start_.rd_ptr ());
@@ -751,7 +815,6 @@ ACE_InputCDR::operator= (const ACE_InputCDR& rhs)
       this->do_byte_swap_ = rhs.do_byte_swap_;
       this->good_bit_ = 1;
       this->char_translator_ = rhs.char_translator_;
-      this->wchar_allowed_ = rhs.wchar_allowed_;
       this->major_version_ = rhs.major_version_;
       this->minor_version_ = rhs.minor_version_;
     }
@@ -778,8 +841,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
     major_version_ (rhs.major_version_),
     minor_version_ (rhs.minor_version_),
     char_translator_ (rhs.char_translator_),
-    wchar_translator_ (rhs.wchar_translator_),
-    wchar_allowed_ (rhs.wchar_allowed_)
+    wchar_translator_ (rhs.wchar_translator_)
 {
   ACE_CDR::mb_align (&this->start_);
   for (const ACE_Message_Block *i = rhs.begin ();
@@ -813,35 +875,92 @@ ACE_InputCDR::skip_wchar (void)
 ACE_CDR::Boolean
 ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
 {
-  if (!this->wchar_allowed_)
-    {
-      errno = EACCES;
-      return (this->good_bit_ = 0);
-    }
   if (this->wchar_translator_ != 0)
     {
       this->good_bit_ = this->wchar_translator_->read_wchar (*this,x);
       return this->good_bit_;
     }
-  if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
+  if (ACE_OutputCDR::wchar_maxbytes_ == 0)
+    {
+      errno = EACCES;
+      return (this->good_bit_ = 0);
+    }
+
+  if (ACE_OutputCDR::wchar_maxbytes_ == sizeof (ACE_CDR::WChar))
+    {
+      if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
           && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
+	{
+	  ACE_CDR::Octet len;
+
+	  if (this->read_1 (&len))
+	    return this->read_octet_array
+	      (ACE_reinterpret_cast (ACE_CDR::Octet*, &x),
+	       ACE_static_cast (ACE_CDR::ULong, len));
+	  else
+	    return (this->good_bit_ = 0);
+	}
+
+      if (sizeof (ACE_CDR::WChar) == 2)
+	return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort *, &x));
+      else
+	return this->read_4 (ACE_reinterpret_cast (ACE_CDR::ULong *, &x));
+    }
+
+  if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
+      && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
     {
       ACE_CDR::Octet len;
 
       if (this->read_1 (&len))
-        return this->read_octet_array
-          (ACE_reinterpret_cast (ACE_CDR::Octet*, &x),
-           ACE_static_cast (ACE_CDR::ULong, len));
-      else
-        return (this->good_bit_ = 0);
+	{
+	  if (len == 2)
+	    {
+	      ACE_CDR::Short sx;
+	      if (this->read_octet_array
+		  (ACE_reinterpret_cast (ACE_CDR::Octet*, &sx),
+		   ACE_static_cast (ACE_CDR::ULong, len)))
+		{
+		  x = ACE_static_cast(ACE_CDR::WChar, sx);
+		  return 1;
+		}
+	    }
+	  else
+	    {
+	      ACE_CDR::Octet ox;
+	      if (this->read_octet_array
+		  (ACE_reinterpret_cast (ACE_CDR::Octet*, &ox),
+		   ACE_static_cast (ACE_CDR::ULong, len)))
+		{
+		  x = ACE_static_cast(ACE_CDR::WChar, ox);
+		  return 1;
+		}
+	    }
+	}
     }
-
-  if (sizeof (ACE_CDR::WChar) == 2)
-    return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort *,
-                                               &x));
   else
-    return this->read_4 (ACE_reinterpret_cast (ACE_CDR::ULong *,
-                                               &x));
+    {
+      if (ACE_OutputCDR::wchar_maxbytes_ == 2)
+	{
+	  ACE_CDR::Short sx;
+	  if (this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort *, &sx)))
+	    {
+	      x = ACE_static_cast(ACE_CDR::WChar, sx);
+	      return 1;
+	    }
+	}
+      else
+	{
+	  ACE_CDR::Octet ox;
+	  if (this->read_1 (&ox))
+	    {
+	      x = ACE_static_cast(ACE_CDR::WChar, ox);
+	      return 1;
+	    }
+
+	}
+    }
+  return (this->good_bit_ = 0);
 }
 
 ACE_CDR::Boolean
@@ -908,19 +1027,20 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
   // @@ This is a slight violation of "Optimize for the common case",
   // i.e. normally the translator will be 0, but OTOH the code is
   // smaller and should be better for the cache ;-) ;-)
-  if (!this->wchar_allowed_)
-    {
-      errno = EACCES;
-      return (this->good_bit_ = 0);
-    }
   if (this->wchar_translator_ != 0)
     {
       this->good_bit_ = this->wchar_translator_->read_wstring (*this, x);
       return this->good_bit_;
     }
+  if (ACE_OutputCDR::wchar_maxbytes_ == 0)
+    {
+      errno = EACCES;
+      return (this->good_bit_ = 0);
+    }
 
   ACE_CDR::ULong len;
-  this->read_ulong (len);
+  if (!this->read_ulong (len))
+    return 0;
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -931,7 +1051,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
       if (ACE_static_cast (ACE_CDR::Short, this->major_version_) == 1
           && ACE_static_cast (ACE_CDR::Short, this->minor_version_) == 2)
         {
-          len = len / sizeof (ACE_CDR::WChar);
+          len /= ACE_OutputCDR::wchar_maxbytes_;
 
           //allocating one extra for the null character needed by applications
           ACE_NEW_RETURN (x,
@@ -1024,6 +1144,47 @@ ACE_InputCDR::read_array (void* x,
 }
 
 ACE_CDR::Boolean
+ACE_InputCDR::read_wchar_array_i (ACE_CDR::WChar* x,
+				  ACE_CDR::ULong length)
+{
+  if (length == 0)
+    return 1;
+  char* buf;
+  size_t align = (ACE_OutputCDR::wchar_maxbytes_ == 2) ?
+    ACE_CDR::SHORT_ALIGN :
+    ACE_CDR::OCTET_ALIGN;
+
+  if (this->adjust (ACE_OutputCDR::wchar_maxbytes_ * length, align, buf) == 0)
+    {
+      if (ACE_OutputCDR::wchar_maxbytes_ == 2)
+	{
+	  ACE_CDR::UShort *sb = ACE_reinterpret_cast(ACE_CDR::UShort *, buf);
+	  for (size_t i = 0; i < length; i++)
+#if defined (ACE_DISABLE_SWAP_ON_READ)
+	    x[i] = ACE_static_cast (ACE_CDR::WChar, sb[i]);
+#else
+	    if (!this->do_byte_swap_)
+	      x[i] = ACE_static_cast (ACE_CDR::WChar, sb[i]);
+	    else
+	      {
+		ACE_CDR::UShort sx;
+		ACE_CDR::swap_2 (&buf[i*2], ACE_reinterpret_cast(char *,&sx));
+		x[i] = ACE_static_cast (ACE_CDR::WChar,sx);
+	      }
+#endif /* ACE_DISABLE_SWAP_ON_READ */
+	}
+      else
+	{
+	  for (size_t i = 0; i < length; i++)
+	    x[i] = ACE_static_cast (ACE_CDR::WChar, buf[i]);
+	}
+      return this->good_bit_;
+    }
+  return 0;
+}
+
+
+ACE_CDR::Boolean
 ACE_InputCDR::read_boolean_array (ACE_CDR::Boolean *x,
                                   ACE_CDR::ULong length)
 {
@@ -1076,6 +1237,7 @@ ACE_InputCDR::read_2 (ACE_CDR::UShort *x)
 #endif /* ACE_DISABLE_SWAP_ON_READ */
       return 1;
     }
+  this->good_bit_ = 0;
   return 0;
 }
 
@@ -1095,6 +1257,7 @@ ACE_InputCDR::read_4 (ACE_CDR::ULong *x)
 #endif /* ACE_DISABLE_SWAP_ON_READ */
       return 1;
     }
+  this->good_bit_ = 0;
   return 0;
 }
 
@@ -1145,6 +1308,7 @@ ACE_InputCDR::read_8 (ACE_CDR::ULongLong *x)
       return 1;
     }
 
+  this->good_bit_ = 0;
   return 0;
 }
 
@@ -1166,6 +1330,8 @@ ACE_InputCDR::read_16 (ACE_CDR::LongDouble *x)
 #endif /* ACE_DISABLE_SWAP_ON_READ */
       return 1;
     }
+
+  this->good_bit_ = 0;
   return 0;
 }
 
@@ -1182,7 +1348,6 @@ ACE_InputCDR::skip_string (void)
         }
       this->good_bit_ = 0;
     }
-
   return 0;
 }
 

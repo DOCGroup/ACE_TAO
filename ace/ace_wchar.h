@@ -49,6 +49,10 @@
 
 #endif /* ACE_LEGACY_MODE */
 
+#if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#  include /**/ <wchar.h>
+#endif /* ACE_HAS_XPG4_MULTIBYPTE_CHAR */
+
 #if defined (ACE_HAS_WCHAR)
 # if defined (VXWORKS)
 #   include /**/ <types/vxTypes.h>  /* For wchar_t */
@@ -64,9 +68,7 @@
 # elif !defined (__BORLANDC__)
 #   include /**/ <wchar.h>
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-#elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-# include /**/ <wchar.h>
-#endif
+#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)

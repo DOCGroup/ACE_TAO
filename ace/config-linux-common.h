@@ -198,6 +198,7 @@
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_TOWLOWER
 
 #if __GLIBC__ >= 2
 # define ACE_HAS_3_PARAM_WCSTOK
@@ -254,6 +255,10 @@
   // Platform lacks POSIX prototypes for certain System V functions
   // like shared memory and message queues.
 # define ACE_LACKS_SOME_POSIX_PROTOTYPES
+
+// glibc supports wchar, but lacks fgetwc and ungetwc
+#define ACE_LACKS_FGETWC
+
 #endif
 
 // glibc supports the mkstemp() function.
