@@ -46,12 +46,8 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   // Only open a new endpoint if we don't already have a valid handle.
 
   if (new_stream.get_handle () == ACE_INVALID_HANDLE)
-    {
-      if (ACE_TLI::open (device, flags, info) == -1)
-	return -1;
-    }
-  else // Borrow the handle from the NEW_STREAM. 
-    this->set_handle (new_stream.get_handle ());
+    if (new_stream.open (device, flags, info) == -1)
+      return -1;
 
   if (local_sap != ACE_Addr::sap_any)
     {
@@ -60,15 +56,15 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       struct t_bind *localaddr;
 
       localaddr = (struct t_bind *) 
-	::t_alloc (this->get_handle (), T_BIND, T_ADDR);
+	::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
 
       if (localaddr == 0)
 	result = -1;
       else
 	{
 	  int one = 1;
-	  if (reuse_addr && this->set_option (SOL_SOCKET, SO_REUSEADDR,
-					      &one, sizeof one) == -1)
+	  if (reuse_addr && new_stream.set_option (SOL_SOCKET, SO_REUSEADDR,
+                                                   &one, sizeof one) == -1)
 	    result = -1;
 	  else
 	    {
@@ -77,7 +73,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 	      localaddr->addr.len = local_sap.get_size ();
 	      localaddr->addr.buf = (char *) local_sap.get_addr ();
 
-	      if (ACE_OS::t_bind (this->get_handle (), localaddr, localaddr) == -1)
+	      if (ACE_OS::t_bind (new_stream.get_handle (), localaddr, localaddr) == -1)
 		result = -1;
 
 	      ACE_OS::t_free ((char *) localaddr, T_BIND);
@@ -86,22 +82,22 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
       if (result == -1)
 	{
-	  this->close ();
+	  new_stream.close ();
 	  return -1;
 	}
     }
   // Let TLI select the local endpoint addr.
-  else if (ACE_OS::t_bind (this->get_handle (), 0, 0) == -1)
+  else if (ACE_OS::t_bind (new_stream.get_handle (), 0, 0) == -1)
     return -1;
 
   struct t_call *callptr = 0;
 
   callptr = (struct t_call *) 
-    ACE_OS::t_alloc (this->get_handle (), T_CALL, T_ADDR);
+    ACE_OS::t_alloc (new_stream.get_handle (), T_CALL, T_ADDR);
 
   if (callptr == 0)
     {
-      this->close ();
+      new_stream.close ();
       return -1;
     }
   callptr->addr.maxlen = remote_sap.get_size ();
@@ -117,11 +113,11 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
   if (timeout != 0)   // Enable non-blocking, if required.
     {
-      if (this->enable (ACE_NONBLOCK) == -1)
+      if (new_stream.enable (ACE_NONBLOCK) == -1)
 	result = -1;
       
       // Do a non-blocking connect.
-      if (ACE_OS::t_connect (this->get_handle (), callptr, 0) == -1)
+      if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
 	{
 	  result = -1;
 	  
@@ -134,19 +130,16 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 	      else 
 		result = this->complete (new_stream, 0, timeout);
 	    }
-	  else if (t_errno == TLOOK && this->look () == T_DISCONNECT)
-	    this->rcvdis ();
+	  else if (t_errno == TLOOK && new_stream.look () == T_DISCONNECT)
+	    new_stream.rcvdis ();
 	}
     }
   // Do a blocking connect to the server.
-  else if (ACE_OS::t_connect (this->get_handle (), callptr, 0) == -1)
+  else if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
     result = -1;
 
   if (result != -1) 
     {
-      // If everything succeeded transfer ownership to <new_stream>.
-      new_stream.set_handle (this->get_handle ());
-      this->set_handle (ACE_INVALID_HANDLE);
       new_stream.set_rwflag (rwf);
 #if defined (I_PUSH)
       if (new_stream.get_rwflag ())
@@ -156,7 +149,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   else if (!(errno == EWOULDBLOCK || errno == ETIME))
     {
       // If things have gone wrong, close down and return an error.
-      this->close ();
+      new_stream.close ();
       new_stream.set_handle (ACE_INVALID_HANDLE);
     }
 
@@ -173,11 +166,11 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
 			     ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_TLI_Connector::complete");
-  ACE_HANDLE h = ACE::handle_timed_complete (this->get_handle (), tv, 1);
+  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (), tv, 1);
 
   if (h == ACE_INVALID_HANDLE)
     {
-      this->close ();
+      new_stream.close ();
       return -1;
     }
   else 	  // We've successfully connected!
@@ -190,21 +183,19 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
 	  name.maxlen = remote_sap->get_size ();
 	  name.buf    = (char *) remote_sap->get_addr ();
 
-	  if (ACE_OS::ioctl (this->get_handle (), TI_GETPEERNAME, &name) == -1) 
+	  if (ACE_OS::ioctl (new_stream.get_handle (), TI_GETPEERNAME, &name) == -1) 
 #else /* SunOS4 sucks... */
 	  if (0)
 #endif /* ACE_HAS_SVR4_TLI */  
 	    {
-	      this->close ();
+	      new_stream.close ();
 	      return -1;
 	    }
 	}
-      new_stream.set_handle (this->get_handle ());
 
       // Start out with non-blocking disabled on the <new_stream>.
       new_stream.disable (ACE_NONBLOCK);
 
-      this->set_handle (ACE_INVALID_HANDLE);
       return 0;
     }
 }

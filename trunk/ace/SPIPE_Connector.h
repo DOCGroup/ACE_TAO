@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_SPIPE_Connector : public ACE_SPIPE
+class ACE_Export ACE_SPIPE_Connector
 {
   // = TITLE
   //     Defines an active connection factory for the STREAM pipe
