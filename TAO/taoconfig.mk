@@ -9,5 +9,5 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDFLAGS := $(patsubst -L$(ACE_ROOT)/ace, -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace, $(LDFLAGS))
+LDFLAGS +=  -L$(TAO_ROOT)/tao
 INCLDIRS += -I$(TAO_ROOT)

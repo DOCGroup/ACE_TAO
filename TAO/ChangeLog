@@ -1,3 +1,10 @@
+Sun May 25 12:51:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * taoconfig.mk:
+          Just add -L$(TAO_ROOT)/tao to LDFLAGS instead of using patsubst
+          because patsubst evaluates variables which means you can't embed
+          things like $@.
+
 Sun May 25 09:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
