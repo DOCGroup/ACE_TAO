@@ -1,5 +1,10 @@
 Mon Dec  9 18:54:09 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Synch.{h,cpp}: Added a dump() method to the template 
+	  specialization of ACE_Condition<ACE_Recursive_Thread_Mutex>.
+  	  Thanks to Mathias Waack <mathias.waack@schlund.de> for reporting
+ 	  this.
+
 	* ace/Get_Opt.{h,i} Added a new argc() accessor.  Thanks to
 	  Volker Boerchers <vboerchers@tecon.de> for contributing this.
 
