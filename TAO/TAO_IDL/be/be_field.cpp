@@ -86,10 +86,19 @@ be_field::gen_server_skeletons (void)
 int
 be_field::gen_client_inline (void)
 {
-  // base type may need inline definitions
-  be_type *bt;
+  // The field type may need inline definitions, example:
+  // struct A {
+  //   sequence<long> x;
+  // };
+  be_type *bt = be_type::narrow_from_decl (this->field_type ());
 
-  bt = be_type::narrow_from_decl (this->field_type ());
+  // The type may be imported, then we cannot generate the inline
+  // info. Note: this does not fall in the general protection against
+  // multiple definition.
+  if (bt->imported ())
+    {
+      return 0;
+    }
   return bt->gen_client_inline ();
 }
 

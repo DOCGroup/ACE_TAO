@@ -77,26 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	<stdio.h>
 #include	<fcntl.h>
 
-#ifdef		SOLARIS2
-
-#include	<unistd.h>		// POSIX standard types
-#if defined (ACE_NETBSD) || defined (__FreeBSD__)
-#include        <sys/wait.h>
-#else
-#include	<wait.h>		// POSIX definition of wait()
-#endif /* ACE_NETBSD  || __FreeBSD__ */
-
-#endif		// SOLARIS2
-
-#ifdef		apollo
-#include	<sysent.h>
-#endif		// apollo
-
-#if defined(hpux) || defined(__hpux) || defined(SUNOS4)
-#include	<unistd.h>		// POSIX definitions
-#include	<sys/wait.h>		// POSIX definition of wait()
-#endif		// defined(hpux) || defined(__hpux) || defined(SUNOS4)
-
 #undef	MAX_ARGLIST
 #define	MAX_ARGLIST	128
 
@@ -274,7 +254,7 @@ DRV_pre_proc(char *myfile)
         );
     idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
   }
-#if !defined (CORYAN_USE_FORK)
+
   // We use ACE instead of the (low level) fork facilities, this also
   // work on NT.
   ACE_Process manager;
@@ -322,93 +302,6 @@ DRV_pre_proc(char *myfile)
   // version the current process would exit if the pre-processor
   // returned with error.
 
-#else
-#if defined(apollo) || defined(SUNOS4)
-  union wait wait_status;
-#else
-  int	wait_status;
-#endif	// defined(apollo) || defined(SUNOS4)
-  pid_t	child_pid;
-
-  switch (child_pid = fork()) {
-  case 0:	/* Child - call cpp */
-    DRV_cpp_putarg(tmp_ifile);
-    {
-      int fd = open(tmp_file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-      if (fd < 0) {
-        cerr << idl_global->prog_name()
-    	  << GTDEVEL(": cannot open temp file ")
- 	  << tmp_file << " for writing\n";
-        exit(99);
-      }
-      int result = dup2(fd, 1);
-      if (result < 0) {
-        cerr << idl_global->prog_name()
-    	  << GTDEVEL(": temp file ")
-  	  << tmp_file << " dup error\n";
-        exit(99);
-      }
-      close(fd);
-    }
-    execvp(arglist[0], arglist);
-    cerr << idl_global->prog_name()
-         << GTDEVEL(": execvp of ")
-	 << arglist[0]
-	 << GTDEVEL(" failed\n");
-    exit(99);
-  case -1:
-    cerr << idl_global->prog_name() << GTDEVEL(": fork failed\n");
-    exit(99);
-  default:	/* Parent - wait */
-#if defined(hpux) || defined(__hpux)
-    sleep(1);  // try to get around libc_r defect
-#endif
-    while (child_pid != wait(&wait_status));
-#if defined(WIFEXITED) && defined(WEXITSTATUS)
-    if (WIFEXITED(wait_status)) {
-      if (WEXITSTATUS(wait_status) != 0) {
-        cerr << idl_global->prog_name()
-	     << GTDEVEL(": Preprocessor returned non-zero status ")
-	     << (int) WEXITSTATUS(wait_status)
-	     << "\n";
-	unlink(tmp_ifile);
-	unlink(tmp_file);
-        exit(WEXITSTATUS(wait_status));
-      }
-    } else {
-      // child terminated abnormally - wait_status is meaningless
-      cerr << idl_global->prog_name()
-	   << GTDEVEL(": Preprocessor terminated abnormally")
-	   << "\n";
-      unlink(tmp_ifile);
-      unlink(tmp_file);
-      exit(1);
-    }
-#else
-#if defined(apollo) || defined(SUNOS4)
-    if (wait_status.w_status != 0) {
-#else
-    if (wait_status != 0) {
-#endif	// defined(apollo) || defined(SUNOS4)
-      cerr << idl_global->prog_name()
-	   << GTDEVEL(": Preprocessor returned non-zero status ")
-#if defined(apollo) || defined(SUNOS4)
-	   << wait_status.w_status
-#else
-	   << wait_status
-#endif	// defined(apollo) || defined(SUNOS4)
-	   << "\n";
-      unlink(tmp_ifile);
-      unlink(tmp_file);
-#if defined(apollo) || defined(SUNOS4)
-      exit(wait_status.w_status);
-#else
-      exit((int) wait_status);
-#endif	// defined(apollo) || defined(SUNOS4)
-    }
-#endif  // defined(WIFEXITED) && defined(WEXITSTATUS)
-  }
-#endif /* CORYAN_USE_FORK */
 
   FILE * yyin = fopen(tmp_file, "r");
   if (yyin == NULL) {
@@ -419,11 +312,13 @@ DRV_pre_proc(char *myfile)
     exit(99);
   }
   (*DRV_FE_set_yyin)((File *) yyin);
-  // TODO: This is not protable, cat(1) is a UNIX tool.
+
+  // @@ TODO: This is not protable, cat(1) is a UNIX tool.
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC) {
     sprintf(catbuf, "cat < %s", tmp_file);
     system(catbuf);
   }
+
   if (ACE_OS::unlink(tmp_ifile) == -1) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not remove cpp input file ")
@@ -431,9 +326,9 @@ DRV_pre_proc(char *myfile)
 	 << "\n";
     exit(99);
   }
-#if 0
+#if !defined (ACE_WIN32)
   // TODO: This unlink fails every time under NT, it seems that you
-  // cannot remove an open file under that OS?n
+  // cannot remove an open file under that OS?
   if (ACE_OS::unlink(tmp_file) == -1) {
     cerr << idl_global->prog_name()
 	 << GTDEVEL(": Could not remove cpp output file ")
@@ -441,7 +336,7 @@ DRV_pre_proc(char *myfile)
 	 << "\n";
     exit(99);
   }
-#endif /* 0 */
+#endif /* !ACE_WIN32 */
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     exit(0);
 }
