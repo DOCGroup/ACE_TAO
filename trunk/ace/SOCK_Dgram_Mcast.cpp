@@ -93,6 +93,8 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
       if (ACE::get_ip_interfaces(if_cnt, if_addrs) != 0)
 	return -1;
 
+      nr_subscribed = 0;
+
       if (if_cnt < 2)
 	{
 	  if (this->subscribe(mcast_addr,
@@ -103,7 +105,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 	    ++nr_subscribed;
 	}
       else
-	for (nr_subscribed = 0; if_cnt > 0; )
+	while (if_cnt > 0)
 	  {
 	    --if_cnt;    // Convert to 0-based for indexing, next loop check
 	    if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
