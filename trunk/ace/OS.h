@@ -416,41 +416,42 @@ public:
 #endif
 
   void set (long sec, long usec);
-  // Construct a Time_Value from two <long>s.
+  // Construct a <Time_Value> from two <long>s.
 
   void set (double d);
-  // Construct a Time_Value from a <double>.
+  // Construct a <Time_Value> from a <double>, which is assumed to be
+  // in second format, with any remainder treated as microseconds.
 
   void set (const timeval &t);
-  // Construct a Time_Value from a timeval.
+  // Construct a <Time_Value> from a <timeval>.
 
   void set (const timestruc_t &t);
-  //  Initializes the ACE_Time_Value object from a timestruc_t. 
+  // Initializes the <Time_Value> object from a <timestruc_t>.
 
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32)
   void set (const FILETIME &ft);
-  //  Initializes the ACE_Time_Value object from a timestruc_t. 
-#endif
+  //  Initializes the <Time_Value> object from a <timestruc_t>. 
+#endif /* ACE_WIN32 */
 
   long msec (void) const;
-  // Converts from Time_Value format into milli-seconds format.
+  // Converts from <Time_Value> format into milli-seconds format.
 
   void msec (long);
-  // Converts from milli-seconds format into Time_Value format.
+  // Converts from milli-seconds format into <Time_Value> format.
 
   operator timestruc_t () const;
-  // Returns the value of the object as a timestruc_t. 
+  // Returns the value of the object as a <timestruc_t>. 
 
   operator timeval () const;
-  // Returns the value of the object as a timeval.
+  // Returns the value of the object as a <timeval>.
 
   operator timeval *() const;
-  // Returns a pointer to the object as a timeval.
+  // Returns a pointer to the object as a <timeval>.
 
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32)
   operator FILETIME () const;
   // Returns the value of the object as a Win32 FILETIME.
-#endif
+#endif /* ACE_WIN32 */
 
   // = The following are accessor/mutator methods.
 

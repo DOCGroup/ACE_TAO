@@ -138,7 +138,7 @@ ACE_Time_Value::set (double d)
   // ACE_TRACE ("ACE_Time_Value::set");
   long l = (long) d;
   this->tv_.tv_sec = l;
-  this->tv_.tv_usec = ((long) (d - (double) l)) * 1000000;
+  this->tv_.tv_usec = (long) ((d - (double) l) * 1000000);
   this->normalize ();
 }
 

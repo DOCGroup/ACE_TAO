@@ -1,5 +1,20 @@
 Sun Jun  8 11:39:06 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
+	* ace/OS.i (set): There was a typo here where 
+
+	  ((long) (d - (double) l)) * 1000000
+
+	  should be 
+
+	  (long) ((d - (double) l) * 1000000)
+
+	  since otherwise the values are always 0.  Thanks to Jim Crossley
+ 	  <jim@lads.com> for reporting this.
+
+	* tests/Enum_Interfaces_Test.cpp (main): Changed ACE_UINT32 to
+ 	  size_t to be consistent with the class definition.  Thanks to
+ 	  Nanbor Wang for reporting this.
+
 	* ace/Token.h: Added some no-op method for ACE_Token so that it
  	  will still compile even if ACE_HAS_THREADS isn't defined.
 
