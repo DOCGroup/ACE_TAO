@@ -97,8 +97,8 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                 -type f | xargs ls -1t | head -1`; export CHANGELOG; \
               if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
-              UPTODATE=`cvs -nq update | egrep -v '^\? ((build$)|(man$)|(tests/log/)|(ACE.*\.tar\.gz$))'`; \
-              if [ "$$UPTODATE" ]; then echo ERROR: workspace must first be updated, or non-controlled files must be removed: $$UPTODATE; exit; fi; \
+              (cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES)`); \
+              if [ "$$UPTODATE" ]; then echo ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit; fi; \
               ACE_VERSION=`perl -pi -e \
                 'BEGIN { $$date=$$ENV{"DATE"} } \
                  s/(ACE version \d+\.\d+\.)(\d+)/sprintf("$$1%d",$$2+1)/e; \
