@@ -208,8 +208,11 @@ Quoter_Client::init_naming_service (void)
 {
   TAO_TRY
   {
+    CORBA::ORB_var orb_var = TAO_ORB_Core_instance()->orb();
+    TAO_CHECK_ENV;
+
     CORBA::Object_var naming_obj = 
-      this->orb_->resolve_initial_references ("NameService");
+      orb_var->resolve_initial_references ("NameService");
     if (CORBA::is_nil (naming_obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to resolve the Name Service.\n"),
@@ -292,14 +295,14 @@ Quoter_Client::init (int argc, char **argv)
                                "invalid factory key <%s>\n",
                                this->quoter_factory_key_),
                               -1);
-	}
+    }
 
       ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
       
       // Now retrieve the Quoter obj ref corresponding to the key.
       this->quoter_ =
-	this->factory_->create_quoter (this->quoter_key_,
-                                       TAO_TRY_ENV);
+	    this->factory_->create_quoter (this->quoter_key_,
+                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->quoter_))
@@ -409,7 +412,7 @@ main (int argc, char **argv)
   Quoter_Task client3 (argc, argv); //this->quoter_);
 
   client1.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
-  client2.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
+//  client2.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
 //client3.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
 
   return ACE_Thread_Manager::instance ()->wait ();
