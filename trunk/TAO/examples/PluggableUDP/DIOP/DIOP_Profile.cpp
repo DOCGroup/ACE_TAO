@@ -18,7 +18,7 @@ ACE_RCSID (DIOP,
 # include "DIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-static const char prefix_[] = "iiop";
+static const char prefix_[] = "diop";
 
 const char TAO_DIOP_Profile::object_key_delimiter_ = '/';
 
