@@ -27,14 +27,12 @@ ACE_RCSID (be_visitor_operation,
 // ************************************************************
 
 be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    operation_name_ (0)
+  : be_visitor_scope (ctx)
 {
 }
 
 be_visitor_operation::~be_visitor_operation (void)
 {
-  delete [] operation_name_;
 }
 
 // Is the operation return type void?
@@ -456,45 +454,14 @@ be_visitor_operation::gen_stub_operation_body (
   *os << ">::stub_ret_val _tao_retval;";
 
   // Declare the argument helper classes.
-
-  AST_Argument *arg = 0;
-
-  for (UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
-       ! arg_decl_iter.is_done ();
-       arg_decl_iter.next ())
-    {
-      arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
-
-      *os << be_nl
-          << "TAO::Arg_Traits<";
-
-      this->gen_arg_template_param_name (arg->field_type (),
-                                         os);
-
-      *os << ">::";
-
-      switch (arg->direction ())
-        {
-          case AST_Argument::dir_IN:
-            *os << "in";
-            break;
-          case AST_Argument::dir_INOUT:
-            *os << "inout";
-            break;
-          case AST_Argument::dir_OUT:
-            *os << "out";
-          default:
-            break;
-        }
-
-      *os << "_arg_val _tao_" << arg->local_name () << " ("
-          << arg->local_name () << ");";
-    }
+  this->gen_stub_body_arglist (node, os);
 
   *os << be_nl << be_nl
       << "TAO::Argument *_tao_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&_tao_retval";
+
+  AST_Argument *arg = 0;
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
@@ -546,6 +513,7 @@ be_visitor_operation::gen_stub_operation_body (
           *os << "_get_";
         }
     }
+
   *os << node->local_name () << "\"," << be_nl
       << tmp_len << "," << be_nl
       << "this->the" << intf->base_proxy_broker_name () << "_";
@@ -668,6 +636,51 @@ be_visitor_operation::gen_raise_interceptor_exception (
     }
 
   return 0;
+}
+
+void
+be_visitor_operation::gen_stub_body_arglist (be_operation *node,
+                                             TAO_OutStream *os,
+                                             idl_bool ami)
+{
+  AST_Argument *arg = 0;
+
+  for (UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
+       ! arg_decl_iter.is_done ();
+       arg_decl_iter.next ())
+    {
+      arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
+
+      if (ami && arg->direction () == AST_Argument::dir_OUT)
+        {
+          continue;
+        }
+
+      *os << be_nl
+          << "TAO::Arg_Traits<";
+
+      this->gen_arg_template_param_name (arg->field_type (),
+                                         os);
+
+      *os << ">::";
+
+      switch (arg->direction ())
+        {
+          case AST_Argument::dir_IN:
+            *os << "in";
+            break;
+          case AST_Argument::dir_INOUT:
+            *os << "inout";
+            break;
+          case AST_Argument::dir_OUT:
+            *os << "out";
+          default:
+            break;
+        }
+
+      *os << "_arg_val _tao_" << arg->local_name () << " ("
+          << arg->local_name () << ");";
+    }
 }
 
 void

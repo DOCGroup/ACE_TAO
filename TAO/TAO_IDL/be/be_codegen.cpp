@@ -1322,10 +1322,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       // Include Messaging skeleton file.
       this->gen_standard_include (this->client_header_,
                                   "tao/Messaging/Messaging.h");
-
-      // Turn on generation of files from the Valuetype library.
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.valuetype_seen_);
     }
 
   // Include the smart proxy base class if smart proxies are enabled.
@@ -1386,18 +1382,20 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
   this->gen_standard_include (this->client_stubs_, "tao/Invocation_Adapter.h");
-  // @@ This probably needs to go..
-  this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
 
   if (be_global->ami_call_back () == I_TRUE)
     {
-      // Including Asynch Invocation file.
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Messaging/Twoway_Asynch_Invocation.h");
-      *this->client_stubs_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Messaging/AMI_ClientRequestInfo_i.h");
-      *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
+
+      // If a valuetype has been seen, this will be in the header file.
+      if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                           idl_global->decls_seen_masks.valuetype_seen_))
+        {
+          // Include files from the Valuetype library.
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/ValueBase.h");
+        }
     }
 
   if (be_global->gen_amh_classes () == I_TRUE)

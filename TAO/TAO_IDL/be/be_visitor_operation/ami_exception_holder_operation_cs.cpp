@@ -150,7 +150,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
 
       int excep_count = 0;
 
-      AST_Decl *d = 0;
+      be_exception *ex = 0;
 
       // Initialize an iterator to iterate thru the exception list.
       // Continue until each element is visited.
@@ -158,12 +158,13 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();)
         {
-          d = ei.item ();
+          ex = be_exception::narrow_from_decl (ei.item ());
 
           *os << "{" << be_idt_nl
-              << "\"" << d->repoID () << "\"," << be_nl;
+              << "\"" << ex->repoID () << "\"," << be_nl;
           // Allocator method.
-          *os << d->name () << "::_alloc" << be_uidt_nl
+          *os << ex->name () << "::_alloc," << be_nl
+              << ex->tc_name () << be_uidt_nl
               << "}";
 
           ++excep_count;

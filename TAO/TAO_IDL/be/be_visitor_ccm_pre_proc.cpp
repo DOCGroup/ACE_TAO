@@ -31,6 +31,10 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+ACE_RCSID (be,
+           be_visitor_ccm_pre_proc,
+           "$Id$")
+
 const char *EXCEP_NAMES[] =
   {
     "AlreadyConnected",

@@ -27,14 +27,12 @@ ACE_RCSID (be_visitor_operation,
 // ************************************************************
 
 be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
-  : be_visitor_operation (ctx),
-    operation_name_ (0)
+  : be_visitor_operation (ctx)
 {
 }
 
 be_visitor_operation_ss::~be_visitor_operation_ss (void)
 {
-  delete [] this->operation_name_;
 }
 
 // Processing to be done after every element in the scope is processed.

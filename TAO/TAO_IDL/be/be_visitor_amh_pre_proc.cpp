@@ -26,6 +26,10 @@
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (be,
+           be_visitor_amh_pre_proc,
+           "$Id$")
+
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
