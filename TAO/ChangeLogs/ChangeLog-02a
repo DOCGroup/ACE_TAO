@@ -1,3 +1,9 @@
+Fri Feb 16 15:26:29 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Simulator/DOVEBrowser/NS_Resolve.java: 
+	  Cleaned up the code a bit.  Thanks to Kevin Regan
+ 	  <kregan@infoglide.com> for contributing this.
+
 Fri Feb 16 15:06:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Handler.cpp: Fixed a problem in the case when
