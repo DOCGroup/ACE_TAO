@@ -12,6 +12,7 @@
 #include "orbconf.h"
 
 #include "ace/Lock_Adapter_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_client.i"

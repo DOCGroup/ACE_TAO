@@ -34,10 +34,14 @@ namespace CORBA
   typedef InterfaceDef *InterfaceDef_ptr;
 
   class Any;
+
   class ORB;
   typedef ORB *ORB_ptr;
+
   class Object;
   typedef Object *Object_ptr;
+
+  class Environment;
 };
 
 /**

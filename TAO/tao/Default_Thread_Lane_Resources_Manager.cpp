@@ -1,12 +1,15 @@
 // $Id$
 
-#include "tao/Default_Thread_Lane_Resources_Manager.h"
+#include "Default_Thread_Lane_Resources_Manager.h"
+#include "Thread_Lane_Resources.h"
+#include "Exception.h"
+#include "Environment.h"
 
 ACE_RCSID (tao,
            Default_Thread_Lane_Resources_Manager,
            "$Id$")
 
-#include "tao/Thread_Lane_Resources.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Default_Thread_Lane_Resources_Manager.i"

@@ -28,6 +28,7 @@
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
 #include "tao/ORB_Constants.h"
+#include "tao/default_environment.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
@@ -51,6 +52,8 @@ namespace CORBA
 
   class Context;
   typedef Context *Context_ptr;
+
+  class Environment;
 
   TAO_NAMESPACE_INLINE_FUNCTION void release (ContextList_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ContextList_ptr);

@@ -1,3 +1,77 @@
+Mon Sep 22 18:32:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any_Basic_Impl_T.cpp:
+	* tao/Any_Dual_Impl_T.cpp:
+	* tao/Any_Impl_T.cpp:
+	* tao/Any_Special_Impl_T.cpp:
+	* tao/CORBA_String.cpp:
+	* tao/Collocation_Resolver.h:
+	* tao/Connector_Registry.h:
+	* tao/Default_Thread_Lane_Resources_Manager.cpp:
+	* tao/Endpoint_Selector_Factory.h:
+	* tao/Environment.h:
+	* tao/IFR_Client_Adapter.h:
+	* tao/Invocation_Adapter.h:
+	* tao/MProfile.h:
+	* tao/Marshal.h:
+	* tao/ORB_Core.cpp:
+	* tao/Object_Proxy_Broker.h:
+	* tao/Object_Proxy_Impl.h:
+	* tao/Object_Ref_Table.h:
+	* tao/PolicyC.cpp:
+	* tao/PolicyFactory_Registry.h:
+	* tao/Policy_Validator.h:
+	* tao/Protocols_Hooks.h:
+	* tao/Pseudo_VarOut_T.h:
+	* tao/RequestInfo_Util.h:
+	* tao/Sequence.h:
+	* tao/Service_Callbacks.cpp:
+	* tao/Service_Callbacks.h:
+	* tao/Stub_Factory.h:
+	* tao/TAO_Singleton_Manager.cpp:
+	* tao/TSS_Resources.h:
+	* tao/Thread_Lane_Resources.h:
+	* tao/Thread_Lane_Resources_Manager.h:
+	* tao/Transport_Connector.h:
+	* tao/corbafwd.h:
+	* tao/corbafwd.i:
+	* tao/default_client.cpp: 
+	* tao/RTCORBA/RT_Transport_Descriptor_Property.cpp:
+	* tao/RTScheduling/Distributable_Thread.cpp:
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/ExceptionList.h:
+	* tao/RTScheduling/RTScheduler.h:
+	* tao/RTScheduling/RTSchedulerC.cpp:
+	* tao/RTScheduling/RTSchedulerC.h:
+	* tao/RTScheduling/RTScheduler_Initializer.h:
+	* tao/RTScheduling/Request_Interceptor.cpp:
+	* tao/Strategies/UIOP_Endpoint.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
+	* tao/Valuetype/Value_VarOut_T.cpp: Fixed compile errors with g++
+	  from the last checkin.
+
+	* tao/Makefile.tao:
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORInterceptor/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/Messaging/Makefile:
+	* tao/ObjRefTemplate/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/RTScheduling/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	* tao/Utils/Makefile:
+	* tao/Valuetype/Makefile: Updated dependencies.
+
+
 Mon Sep 22 10:17:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Acceptor_Registry.cpp:

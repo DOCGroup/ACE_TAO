@@ -40,6 +40,11 @@ namespace TAO
 {
   class Profile_Transport_Resolver;
 }
+
+namespace CORBA
+{
+  class Environment;
+}
 /**
  * @class TAO_Connector
  *

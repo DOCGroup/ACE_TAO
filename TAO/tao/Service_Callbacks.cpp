@@ -1,6 +1,7 @@
-#include "tao/Service_Callbacks.h"
-#include "tao/ORB_Constants.h"
-#include "tao/Exception.h"
+#include "Service_Callbacks.h"
+#include "ORB_Constants.h"
+#include "Exception.h"
+#include "Environment.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Service_Callbacks.i"
@@ -67,7 +68,7 @@ TAO_Service_Callbacks::raise_comm_failure (
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-          errno),
+          -1),
       CORBA::COMPLETED_MAYBE),
       2);
 }
@@ -81,7 +82,7 @@ TAO_Service_Callbacks::raise_transient_failure (
   ACE_THROW_RETURN (CORBA::TRANSIENT (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-          errno),
+          -1),
       CORBA::COMPLETED_MAYBE),
       2);
 }

@@ -34,6 +34,8 @@ namespace  CORBA
 {
   class Object;
   typedef Object *Object_ptr;
+
+  class Environment;
 }
 
 namespace TAO

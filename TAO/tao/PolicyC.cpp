@@ -34,7 +34,7 @@
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Any_Impl_T.h"
-#include "Tao/Any_Dual_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
 #include "tao/Basic_Arguments.h"
 
 #if defined (__BORLANDC__)

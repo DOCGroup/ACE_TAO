@@ -28,7 +28,15 @@
 
 #include "tao/TAO_Export.h"
 
+namespace CORBA
+{
+  class Environment;
+
+  class Exception;
+}
+
 class TAO_Invocation_Endpoint_Selector;
+
 
 // ****************************************************************
 

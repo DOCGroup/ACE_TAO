@@ -36,6 +36,8 @@ typedef CORBA::ULong TAO_PHandle;
 namespace CORBA
 {
   class PolicyList;
+
+  class Environment;
 }
 
 /**

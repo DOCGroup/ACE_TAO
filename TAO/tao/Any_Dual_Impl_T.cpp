@@ -8,6 +8,7 @@
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/Environment.h"
+#include "tao/Exception.h"
 #include "tao/CDR.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
@@ -143,8 +144,8 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                         TAO_DEF_GIOP_MAJOR,
                         TAO_DEF_GIOP_MINOR);
 
-      impl->assign_translator (any_tc, 
-                               &cdr 
+      impl->assign_translator (any_tc,
+                               &cdr
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -34,6 +34,11 @@ class TAO_MProfile;
 class TAO_ORB_Core;
 class TAO_Stub;
 
+namespace CORBA
+{
+  class Environment;
+}
+
 /**
  * @class TAO_Stub_Factory
  *

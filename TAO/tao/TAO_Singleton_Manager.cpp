@@ -5,7 +5,9 @@
 #include "tao/Typecode_Constants.h"
 
 #include "ace/Guard_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Singleton_Manager.inl"
@@ -323,9 +325,9 @@ TAO_Singleton_Manager::at_exit_i (void *object,
                                   ACE_CLEANUP_FUNC cleanup_hook,
                                   void *param)
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, 
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                             ace_mon,
-                            *instance_->internal_lock_, 
+                            *instance_->internal_lock_,
                             -1));
 
   if (this->shutting_down_i ())

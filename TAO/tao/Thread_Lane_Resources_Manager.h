@@ -29,6 +29,11 @@ class TAO_Thread_Lane_Resources;
 class TAO_LF_Strategy;
 class TAO_MProfile;
 
+namespace CORBA
+{
+  class Environment;
+}
+
 /**
  * @class TAO_Thread_Lane_Resources_Manager
  *
@@ -95,7 +100,7 @@ public:
   virtual ~TAO_Thread_Lane_Resources_Manager_Factory (void);
 
   /// Factory method.
-  virtual 
+  virtual
   TAO_Thread_Lane_Resources_Manager *
   create_thread_lane_resources_manager (TAO_ORB_Core &core) = 0;
 

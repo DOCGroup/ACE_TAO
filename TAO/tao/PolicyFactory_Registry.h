@@ -25,9 +25,8 @@
 
 #include "TAO_Export.h"
 #include "Basic_Types.h"
-//#include "PortableInterceptorC.h"
-//#include "Policy_ForwardC.h"
 
+//-- Forward Declarations--
 namespace CORBA
 {
   typedef ULong PolicyType;
@@ -36,6 +35,8 @@ namespace CORBA
   typedef Policy *Policy_ptr;
 
   class Any;
+
+  class Environment;
 }
 
 namespace PortableInterceptor
