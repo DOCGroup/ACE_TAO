@@ -1,3 +1,16 @@
+Wed Aug 18 21:32:56 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/usage-bugzilla.html:
+
+	  Added a simple document explaining basic usage of our
+	  installation of bugzilla.
+
+	* ACE-INSTALL.html: 
+	* PROBLEM-REPORT-FORM:
+
+	  Updated with information about the bugzilla usage
+	  documentation.
+
 Wed Aug 18 20:28:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: check for just Stop, not [Ss]top,
