@@ -51,19 +51,8 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
-  os->indent ();
 
-  // Generate the proxy broker factory function pointer declaration the interface is
-  // not locality constraint.
-  *os << "extern " << be_global->stub_export_macro () << " "
-      << node->full_base_proxy_broker_name () << " * (*"
-      << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-      << "_Factory_function_pointer) ("
-      << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_uidt_nl
-      << ");" << be_uidt_nl;
-
-  // generate the Any <<= and >>= operator declarations
+  // Generate the Any <<= and >>= operator declarations.
   os->indent ();
   *os << "// Any operators for interface " << node->name () << be_nl;
   *os << be_global->stub_export_macro () << " void"
@@ -73,7 +62,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
       << " operator>>= (const CORBA::Any &, "
       << node->name () << " *&);\n";
 
-  // all we have to do is to visit the scope and generate code
+  // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
