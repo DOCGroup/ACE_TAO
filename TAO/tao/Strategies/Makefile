@@ -39,6 +39,14 @@ CPP_SRCS += \
   UIOP_Acceptor \
   UIOP_Connection_Handler \
   UIOP_Endpoint \
+  SCIOP_Factory \
+  SCIOP_Lite_Factory \
+  SCIOP_Profile \
+  SCIOP_Transport \
+  SCIOP_Connector \
+  SCIOP_Acceptor \
+  SCIOP_Connection_Handler \
+  SCIOP_Endpoint \
   SHMIOP_Factory \
   SHMIOP_Profile \
   SHMIOP_Transport \
@@ -47,6 +55,7 @@ CPP_SRCS += \
   SHMIOP_Connection_Handler \
   SHMIOP_Endpoint \
   uiop_endpoints \
+  sciop_endpoints \
   advanced_resource \
   LFU_Connection_Purging_Strategy \
   FIFO_Connection_Purging_Strategy \
