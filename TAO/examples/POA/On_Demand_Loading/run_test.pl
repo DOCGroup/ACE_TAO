@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib '../../../../bin';
-use ACEutils;
+use PerlACE::Run_Test;
 
 $iorfile = "ior";
 
@@ -15,93 +15,82 @@ $iterations = 100;
 
 $extra_args = "";
 
+$status = 0;
+
 # Parse the arguments
-for ($i = 0; $i <= $#ARGV; $i++)
-{
-  SWITCH:
-  {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
-    {
-      print "run_test [-h] [-i iterations] [-o] [-f ior file]\n";
-      print "\n";
-      print "-h                  -- prints this information\n";
-      print "-f                  -- ior file\n";
-      print "-i iterations       -- specifies iterations\n";
-      print "-o                  -- call issued are oneways\n";
-      exit;
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
+        print "run_test [-h] [-i iterations] [-o] [-f ior file]\n";
+        print "\n";
+        print "-h                  -- prints this information\n";
+        print "-f                  -- ior file\n";
+        print "-i iterations       -- specifies iterations\n";
+        print "-o                  -- call issued are oneways\n";
+        exit;
     }
-    if ($ARGV[$i] eq "-o")
-    {
+    elsif ($ARGV[$i] eq "-o") {
       $oneway = "-o";
-      last SWITCH;
     }
-    if ($ARGV[$i] eq "-i")
-    {
+    elsif ($ARGV[$i] eq "-i") {
       $iterations = $ARGV[$i + 1];
       $i++;
-      last SWITCH;
     }
-    if ($ARGV[$i] eq "-f")
-    {
+    elsif ($ARGV[$i] eq "-f") {
       $iorfile = $ARGV[$i + 1];
       $i++;
-      last SWITCH;
     }
-    $extra_args .= " " . $ARGV[$i];
-  }
+    else {
+        $extra_args .= " " . $ARGV[$i];
+    }
 }
 
-$iorfile_1 = $iorfile."_1";
-$iorfile_2 = $iorfile."_2";
+$iorfile1 = $iorfile."_1";
+$iorfile2 = $iorfile."_2";
 
-unlink $iorfile_1;
-unlink $iorfile_2;
+unlink $iorfile1, $iorfile2;
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-f $iorfile $extra_args");
+$SV  = new PerlACE::Process ("server", "-f $iorfile $extra_args");
+$CL1 = new PerlACE::Process ("../Generic_Servant/client", 
+                             "$extra_args $oneway -i $iterations -f $iorfile1");
+$CL2 = new PerlACE::Process ("../Generic_Servant/client",
+                             "$extra_args $oneway -i $iterations -f $iorfile2 -x"); 
 
-if (ACE::waitforfile_timed ($iorfile_1, 15) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile_1>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile1, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile1>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
-if (ACE::waitforfile_timed ($iorfile_2, 15) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile_2>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+if (PerlACE::waitforfile_timed ($iorfile2, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile2>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
+$client = $CL1->SpawnWaitKill (60);
 
-
-$CL_1  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
-			  " $extra_args $oneway -i $iterations -f $iorfile_1");
-
-$client_1 = $CL_1->TimedWait (60);
-if ($client_1 == -1) {
-  print STDERR "ERROR: client 1 timedout\n";
-  $CL_1->Kill (); $CL_1->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client 1 returned $client\n";
+    $status = 1;
 }
 
-$CL_2  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
-			  " $extra_args $oneway -i $iterations -f $iorfile_2 -x");
+$client = $CL2->SpawnWaitKill (60);
 
-$client_2 = $CL_2->TimedWait (60);
-if ($client_2 == -1) {
-  print STDERR "ERROR: client 2 timedout\n";
-  $CL_2->Kill (); $CL_2->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client 2 returned $client\n";
+    $status = 1;
 }
 
-$server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
+$server = $SV->WaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $SV->Kill (); 
+    $status = 1;
 }
 
-unlink $iorfile_1;
-unlink $iorfile_2;
+unlink $iorfile1, $iorfile2;
 
-if ($server != 0 || $client_1 != 0 || $client_2 != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $status;

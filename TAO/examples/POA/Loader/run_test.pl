@@ -6,22 +6,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib '../../../../bin';
-use ACEutils;
+use PerlACE::Run_Test;
 
-$iorfile = "ior";
+$iorfile = PerlACE::LocalFile ("ior");
 
+$status = 0;
 $oneway = "";
 $iterations = 100;
 
 $extra_args = "";
 
 # Parse the arguments
-for ($i = 0; $i <= $#ARGV; $i++)
-{
-  SWITCH:
-  {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
-    {
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
       print "run_test [-h] [-i iterations] [-o] [-f ior file]\n";
       print "\n";
       print "-h                  -- prints this information\n";
@@ -30,25 +27,20 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "-o                  -- call issued are oneways\n";
       exit;
     }
-    if ($ARGV[$i] eq "-o")
-    {
-      $oneway = "-o";
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-o") {
+        $oneway = "-o";
     }
-    if ($ARGV[$i] eq "-i")
-    {
-      $iterations = $ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-i") {
+        $iterations = $ARGV[$i + 1];
+        $i++;
     }
-    if ($ARGV[$i] eq "-f")
-    {
-      $iorfile = $ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-f") {
+        $iorfile = $ARGV[$i + 1];
+        $i++;
     }
-    $extra_args .= " " . $ARGV[$i];
-  }
+    else {
+        $extra_args .= " " . $ARGV[$i];
+    }
 }
 
 $iorfile_1 = $iorfile."_1";
@@ -57,50 +49,49 @@ $iorfile_2 = $iorfile."_2";
 unlink $iorfile_1;
 unlink $iorfile_2;
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-f $iorfile $extra_args");
+$SV = new PerlACE::Process ("server", "-f $iorfile $extra_args");
+$CL = new PerlACE::Process ("../Generic_Servant/client");
 
-if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile_1>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile_1, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile_1>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
-if (ACE::waitforfile_timed ($iorfile_2, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile_2>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+if (PerlACE::waitforfile_timed ($iorfile_2, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile_2>\n";
+    $SV->Kill (); 
+    exit 1;
 }
 
+$CL->Arguments ("$extra_args $oneway -i $iterations -f $iorfile_1");
 
-$CL_1  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
-			 " $extra_args $oneway -i $iterations -f $iorfile_1");
+$client = $CL->SpawnWaitKill (60);
 
-$client_1 = $CL_1->TimedWait (60);
-if ($client_1 == -1) {
-  print STDERR "ERROR: client 1 timedout\n";
-  $CL_1->Kill (); $CL_1->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client 1 returned $client\n";
+    $status = 1;
 }
 
-$CL_2  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
-			  " $extra_args $oneway -i $iterations -f $iorfile_2 -x");
+$CL->Arguments ("$extra_args $oneway -i $iterations -f $iorfile_2 -x");
 
-$client_2 = $CL_2->TimedWait (60);
-if ($client_2 == -1){
-  print STDERR "ERROR: client 2 timedout\n";
-  $CL_2->Kill (); $CL_2->TimedWait (1);
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client 2 returned $client\n";
+    $status = 1;
 }
 
-$server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
+$server = $SV->WaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
 unlink $iorfile_1;
 unlink $iorfile_2;
 
-if ($server !=0 || $client_1 != 0 || $client_2 != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $status;
