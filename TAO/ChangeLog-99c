@@ -1,3 +1,14 @@
+Wed Jun 16 18:17:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/DomainS.cpp
+	* tao/MessagingS.cpp
+	* tao/POAS.cpp
+	* tao/PolicyS.cpp
+	* tao/PollableS.cpp
+
+	  Fixed initialization of <skel_ptr_> in TAO_operation_db_entry by
+	  changing the nothing initialization to a zero initialization.
+
 Wed Jun 16 18:17:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/grid/Grid_i.h:

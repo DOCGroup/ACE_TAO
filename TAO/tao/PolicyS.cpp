@@ -67,14 +67,14 @@ TAO_CORBA_Policy_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"copy",  &POA_CORBA::Policy::copy_skel},
       {"_is_a",  &POA_CORBA::Policy::_is_a_skel},
-      {"",},
+      {"",0},
       {"destroy",       &POA_CORBA::Policy::destroy_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_non_existent",  &POA_CORBA::Policy::_non_existent_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_policy_type",      &POA_CORBA::Policy::_get_policy_type_skel},
     };
 
