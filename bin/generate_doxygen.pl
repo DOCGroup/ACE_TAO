@@ -115,6 +115,21 @@ sub generate_doxy_files {
       } elsif (/^QUIET / && $verbose) {
 	print DOXYOUTPUT "QUIET = NO\n";
 	next;
+      } elsif (/^INLINE_SOURCES/ && $is_release) {
+	print DOXYOUTPUT "INLINE_SOURCES = NO\n";
+	next;
+      } elsif (/^SOURCE_BROWSER/ && $is_release) {
+	print DOXYOUTPUT "SOURCE_BROWSER = NO\n";
+	next;
+      } elsif (/^VERBATIM_HEADERS/ && $is_release) {
+	print DOXYOUTPUT "VERBATIM_HEADERS = NO\n";
+	next;
+#      } elsif (/^INCLUDE_GRAPH/ && $is_release) {
+#	print DOXYOUTPUT "INCLUDE_GRAPH = NO\n";
+#	next;
+#      } elsif (/^INCLUDED_BY_GRAPH/ && $is_release) {
+#	print DOXYOUTPUT "INCLUDED_BY_GRAPH = NO\n";
+#	next;
       } elsif (/^GENERATE_MAN/ && /= YES/) {
         $generate_man = 1;
       } elsif (/^GENERATE_HTML/ && /= YES/) {
