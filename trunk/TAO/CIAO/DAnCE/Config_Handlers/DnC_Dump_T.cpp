@@ -39,7 +39,7 @@ namespace Deployment
     template <typename ROOT, typename SEQUENCE, typename DATA_TYPE,
               typename CLASS>
     void
-    dump_ref_seq (const char* caption, SEQUENCE& seq,
+    dump_ref_seq (const char* caption, SEQUENCE& seq, 
                   const char* root, DATA_TYPE CLASS::*data)
     {
       ACE_DEBUG ((LM_DEBUG,
