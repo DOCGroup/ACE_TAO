@@ -1,3 +1,11 @@
+Wed Mar 23 10:11:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Time_Value.h:
+
+	  Remove HPUX_10 conditional timespec_t typedef.  The typedef is
+	  also defined if ACE_LACKS_TIMESPEC_T, which is set in the HPUX
+	  config-*.h files.
+
 Wed Mar 23 06:28:00 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
