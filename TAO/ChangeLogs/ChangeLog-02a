@@ -1,3 +1,10 @@
+Wed Sep 20 11:25:31 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/examples/Makefile (DIRS):
+
+	  If the Security ORB service component was compiled, then add the
+	  Security examples to the list of directories to compile.
+
 Wed Sep 20 13:03:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl.cpp:
