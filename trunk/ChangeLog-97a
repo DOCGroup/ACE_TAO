@@ -1,8 +1,20 @@
 Mon Mar 17 06:58:18 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.cpp (sched_params): return -1 if not supported,
+	  instead of ENOTSUP.
+
+	* ace/OS.cpp (fork): added ACE_UNUSED_ARG (program_name) for WIN32
+	  and VxWorks.
+
+	* ace/Sched_Params.cpp (priority_min, priority_max, next_priority,
+	  previous_priority): not supported on MVS, via ACE_LACKS_SETSCHED.
+	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for figuring this
+	  out and providing the fix.
+
 	* tests/Timer_Queue_Test.cpp (test_performance): changed type of
 	  local variable "i" to (signed) int to avoid signed/unsigned
-	  comparison, and eventual seg fault.
+	  comparison, and eventual seg fault because a loop would never
+	  terminate.
 
 Thu Mar 13 18:21:15 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
