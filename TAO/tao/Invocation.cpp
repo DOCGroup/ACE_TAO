@@ -153,8 +153,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       TimeBase::TimeT t =
         timeout->relative_expiry (ACE_TRY_ENV);
       ACE_CHECK;
-      TimeBase::TimeT seconds = t / 10000000;
-      TimeBase::TimeT microseconds = t % 10000000;
+      TimeBase::TimeT seconds = t / 10000000u;
+      TimeBase::TimeT microseconds = t % 10000000u;
       this->max_wait_time_value_.set (ACE_U64_TO_U32(seconds),
                                       ACE_U64_TO_U32(microseconds));
       this->max_wait_time_ = &this->max_wait_time_value_;
