@@ -1,3 +1,10 @@
+Thu Jul 08 10:28:25 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time_Utilities.i (TimeT_to_Time_Value):
+          use ACE_U_ONE_SECOND_IN_NSECS instead of the signed constant,
+          to avoid overload ambiguity now that we have an ACE_U_LongLong
+          conversion to ptr_arith_t.
+
 Thu Jul 08 09:59:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/releasenotes/orbcore.html: updated description of
