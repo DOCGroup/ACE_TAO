@@ -1,6 +1,6 @@
 #
 # Makefile for building the Time example
-# 
+#
 
 NAME = Time_Server
 
@@ -11,7 +11,10 @@ OBJFILES = \
 	$(OBJDIR)\Simple_util.obj \
 	$(OBJDIR)\server.obj
 
-CPPDIR = .;.. 
+IDLFILES = \
+        $(IDLDIR)\Time.idl
+
+CPPDIR = .;..
 
 IDLDIR = .
 
