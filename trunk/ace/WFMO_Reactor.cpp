@@ -859,7 +859,8 @@ int
 ACE_WFMO_Reactor::open (size_t size,
 			int unused,
 			ACE_Sig_Handler *sh,
-			ACE_Timer_Queue *tq)
+			ACE_Timer_Queue *tq,
+                        int disable_notify_pipe)
 {
   ACE_UNUSED_ARG (unused);
   ACE_UNUSED_ARG (sh);
