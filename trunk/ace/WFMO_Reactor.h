@@ -886,14 +886,21 @@ protected:
 			  int alertable);
   // Check to see if it is ok to enter ::WaitForMultipleObjects().
 
-  virtual int wait_for_multiple_events (ACE_Time_Value *max_wait_time,
-					int alertable);
+  virtual int wait_for_multiple_events (int timeout,
+                                        int alertable);
   // Wait for timer and I/O events to occur.
+
+  virtual DWORD poll_remaining_handles (size_t index);
+  // Check for activity on remaining handles.
+
+  virtual int expire_timers (void);
+  // Expire timers. Only the owner thread does useful stuff in this
+  // function.
 
   virtual int dispatch (int wait_status);
   // Dispatches the timers and I/O handlers.
 
-  int safe_dispatch (int wait_status);
+  virtual int safe_dispatch (int wait_status);
   // Protect against structured exceptions caused by user code when
   // dispatching handles
 
@@ -902,7 +909,8 @@ protected:
   // handles_[active_handles_] using <WaitForMultipleObjects> to poll
   // through our handle set looking for active handles.
 
-  virtual int dispatch_handler (int index);
+  virtual int dispatch_handler (size_t index,
+                                size_t max_handlep1);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
@@ -915,6 +923,9 @@ protected:
 					ACE_HANDLE event_handle);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
+
+  virtual int dispatch_window_messages (void);
+  // Dispatches window messages. Noop for WFMO_Reactor.
 
   virtual ACE_Reactor_Mask upcall (ACE_Event_Handler *event_handler,
                                    ACE_HANDLE io_handle,

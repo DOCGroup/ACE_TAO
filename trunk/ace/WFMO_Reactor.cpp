@@ -1180,8 +1180,11 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
   // mut and event.
   countdown.update ();
 
+  // Calculate timeout
+  int timeout = this->calculate_timeout (max_wait_time);
+
   // Wait for event to happen
-  int wait_status = this->wait_for_multiple_events (max_wait_time,
+  int wait_status = this->wait_for_multiple_events (timeout,
 						    alertable);
 
   // Upcall
@@ -1226,11 +1229,9 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
 }
 
 int
-ACE_WFMO_Reactor::wait_for_multiple_events (ACE_Time_Value *max_wait_time,
-					    int alertable)
+ACE_WFMO_Reactor::wait_for_multiple_events (int timeout,
+                                            int alertable)
 {
-  int timeout = this->calculate_timeout (max_wait_time);
-
   // Wait for any of handles_ to be active, or until timeout expires.
   // If <alertable> is enabled allow asynchronous completion of
   // ReadFile and WriteFile operations.
@@ -1239,6 +1240,15 @@ ACE_WFMO_Reactor::wait_for_multiple_events (ACE_Time_Value *max_wait_time,
 				     FALSE,
 				     timeout,
 				     alertable);
+}
+
+DWORD
+ACE_WFMO_Reactor::poll_remaining_handles (size_t index)
+{
+  return ::WaitForMultipleObjects (this->handler_rep_.max_handlep1 () - index,
+                                   this->handler_rep_.handles () + index,
+                                   FALSE, 
+                                   0); 
 }
 
 int
@@ -1258,14 +1268,25 @@ ACE_WFMO_Reactor::calculate_timeout (ACE_Time_Value *max_wait_time)
 
 
 int
+ACE_WFMO_Reactor::expire_timers (void)
+{
+  // If "owner" thread
+  if (ACE_Thread::self () == this->owner_)
+    // expire all pending timers.
+    return this->timer_queue_->expire ();
+
+  else
+    // Nothing to expire
+    return 0;
+}
+
+int
 ACE_WFMO_Reactor::dispatch (int wait_status)
 {
   int handlers_dispatched = 0;
 
-  // If "owner" thread
-  if (ACE_Thread::self () == this->owner_)
-    // expire all pending timers.
-    handlers_dispatched += this->timer_queue_->expire ();
+  // Expire timers
+  handlers_dispatched += this->expire_timers ();
 
   switch (wait_status)
     {
@@ -1284,9 +1305,8 @@ ACE_WFMO_Reactor::dispatch (int wait_status)
 }
 
 // Dispatches any active handles from <handles_[index]> to
-// <handles_[max_handlep1_]> using <WaitForMultipleObjects> to poll
-// through our handle set looking for active handles.
-
+// <handles_[max_handlep1_]>, polling through our handle set looking
+// for active handles.
 int
 ACE_WFMO_Reactor::dispatch_handles (size_t index)
 {
@@ -1294,16 +1314,17 @@ ACE_WFMO_Reactor::dispatch_handles (size_t index)
        ;
        number_of_handlers_dispatched++)
     {
-      this->dispatch_handler (index++);
+      size_t max_handlep1 = this->handler_rep_.max_handlep1 ();
+
+      if (this->dispatch_handler (index++, max_handlep1) == -1)
+        return -1;
 
       // We're done.
-      if (index >= this->handler_rep_.max_handlep1 ())
+      if (index >= max_handlep1)
 	return number_of_handlers_dispatched;
-
-      DWORD wait_status =
-	::WaitForMultipleObjects (this->handler_rep_.max_handlep1 () - index,
-				  this->handler_rep_.handles () + index,
-				  FALSE, 0); // We're polling.
+      
+      // Check the remaining handles
+      DWORD wait_status = this->poll_remaining_handles (index);
       switch (wait_status)
 	{
 	case WAIT_FAILED: // Failure.
@@ -1315,7 +1336,7 @@ ACE_WFMO_Reactor::dispatch_handles (size_t index)
 	default: // Dispatch.
 	  // Check if a handle successfully became signaled.
 	  if (wait_status >= WAIT_OBJECT_0 &&
-	      wait_status < WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 () - index)
+	      wait_status <= (WAIT_OBJECT_0 + max_handlep1 - index))
 	    index += wait_status - WAIT_OBJECT_0;
 	  else
 	    // Otherwise, a handle was abandoned.
@@ -1324,28 +1345,35 @@ ACE_WFMO_Reactor::dispatch_handles (size_t index)
     }
 }
 
-// Dispatches a single handler.  Returns 0 on success, -1 if the
-// handler was removed.
-
 int
-ACE_WFMO_Reactor::dispatch_handler (int index)
+ACE_WFMO_Reactor::dispatch_handler (size_t index, 
+                                    size_t max_handlep1)
 {
-  // Dispatch the handler if it has not been scheduled for deletion.
-  // Note that this is a very week test if there are multiple threads
-  // dispatching this index as no locks are held here. Generally, you
-  // do not want to do something like deleting the this pointer in
-  // handle_close() if you have registered multiple times and there is
-  // more than one thread in WFMO_Reactor->handle_events().
-  if (!this->handler_rep_.scheduled_for_deletion (index))
-    {
-      ACE_HANDLE event_handle = *(this->handler_rep_.handles () + index);
+  // Check if there are window messages that need to be dispatched
+  if (index == max_handlep1)
+    return this->dispatch_window_messages ();
 
-      if (this->handler_rep_.current_info ()[index].io_entry_)
-	return this->complex_dispatch_handler (index, event_handle);
-      else
-	return this->simple_dispatch_handler (index, event_handle);
-    }
-  return 0;
+  else
+  {
+    // Dispatch the handler if it has not been scheduled for deletion.
+    // Note that this is a very week test if there are multiple threads
+    // dispatching this index as no locks are held here. Generally, you
+    // do not want to do something like deleting the this pointer in
+    // handle_close() if you have registered multiple times and there is
+    // more than one thread in WFMO_Reactor->handle_events().
+    if (!this->handler_rep_.scheduled_for_deletion (index))
+      {
+        ACE_HANDLE event_handle = *(this->handler_rep_.handles () + index);
+
+        if (this->handler_rep_.current_info ()[index].io_entry_)
+          return this->complex_dispatch_handler (index, event_handle);
+        else
+          return this->simple_dispatch_handler (index, event_handle);
+      }    
+    else
+      // The handle was scheduled for deletion, so we will skip it.
+      return 0;
+  }
 }
 
 int
@@ -1362,6 +1390,7 @@ ACE_WFMO_Reactor::simple_dispatch_handler (int index,
   // Upcall
   if (eh->handle_signal (0, &sig) == -1)
     this->handler_rep_.unbind (event_handle, ACE_Event_Handler::NULL_MASK);
+
   return 0;
 }
 
