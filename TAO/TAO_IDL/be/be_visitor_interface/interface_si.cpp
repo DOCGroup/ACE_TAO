@@ -45,7 +45,7 @@ be_visitor_interface_si::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
 
-  if (node->srv_inline_gen () || node->imported () || node->is_local_interface ())
+  if (node->srv_inline_gen () || node->imported () || node->is_local ())
     return 0;
 
   os = this->ctx_->stream ();

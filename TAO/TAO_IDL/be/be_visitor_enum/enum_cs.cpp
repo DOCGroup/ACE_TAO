@@ -45,7 +45,7 @@ be_visitor_enum_cs::~be_visitor_enum_cs (void)
 int
 be_visitor_enum_cs::visit_enum (be_enum *node)
 {
-  if (!node->cli_stub_gen () && !node->imported ())
+  if (!node->cli_stub_gen () && !node->imported () && !node->is_local ())
     {
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be

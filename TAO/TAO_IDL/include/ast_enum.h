@@ -83,8 +83,10 @@ public:
 
   // Constructor(s)
   AST_Enum ();
-  AST_Enum (UTL_ScopedName *n, 
-            UTL_StrList *p);
+  AST_Enum (UTL_ScopedName *n,
+            UTL_StrList *p,
+            idl_bool local,
+            idl_bool abstract);
 
   virtual ~AST_Enum (void);
 

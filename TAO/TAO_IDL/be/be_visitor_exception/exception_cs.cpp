@@ -63,8 +63,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       // default constructor
       *os << "// default constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
-      *os << "  : CORBA_UserException ("
-          << "::" << node->tc_name () << ")\n";
+      if (!node->is_local ())
+        *os << "  : CORBA_UserException ("
+            << "::" << node->tc_name () << ")\n";
       *os << "{" << be_nl;
       *os << "}\n\n";
 
@@ -210,9 +211,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
             }
           delete visitor;
 
-          *os << "  : CORBA_UserException "
-              << " (CORBA::TypeCode::_duplicate (" << node->tc_name ()
-              << "))" << be_nl;
+          if (!node->is_local ())
+            *os << "  : CORBA_UserException "
+                << " (CORBA::TypeCode::_duplicate (" << node->tc_name ()
+                << "))" << be_nl;
           *os << "{\n";
           os->incr_indent ();
           // assign each individual member. We need yet another state
@@ -234,20 +236,24 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           *os << "}\n\n";
         }
 
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
-      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (!node->is_local ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception_cs::"
-                             "visit_exception - "
-                             "TypeCode definition failed\n"
-                             ), -1);
+          // by using a visitor to declare and define the TypeCode, we
+          // have the added advantage to conditionally not generate
+          // any code. This will be based on the command line
+          // options. This is still TO-DO
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+          ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_exception_cs::"
+                                 "visit_exception - "
+                                 "TypeCode definition failed\n"
+                                 ), -1);
+            }
         }
 
       node->cli_stub_gen (I_TRUE);

@@ -88,6 +88,7 @@ CORBA::LocalObject::_key (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
+#if 0
 void *
 CORBA::LocalObject::_tao_QueryInterface (ptr_arith_t type)
 {
@@ -106,6 +107,7 @@ CORBA::LocalObject::_tao_QueryInterface (ptr_arith_t type)
 
   return retv;
 }
+#endif /* 0 */
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 

@@ -30,7 +30,7 @@
 #define TAO_INTERCEPTOR_H
 #include "ace/pre.h"
 
-#include "tao/InterceptorS.h"
+#include "tao/InterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

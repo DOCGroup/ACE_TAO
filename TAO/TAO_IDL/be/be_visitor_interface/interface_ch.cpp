@@ -182,7 +182,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "}" << be_uidt << "\n\n";
 
       // No Any operator for local interfaces.
-      if (! node->is_local_interface ())
+      if (! node->is_local ())
         {
           os->indent ();
           *os << "static void _tao_any_destructor (void*);\n\n";
@@ -202,7 +202,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // the _is_a method
       os->indent ();
 
-      if (! node->is_local_interface ())
+      if (! node->is_local ())
         *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
             << "const CORBA::Char *type_id, " << be_nl
             << "CORBA::Environment &env = " << be_idt_nl
@@ -224,7 +224,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << node->local_name () << " (void);" << be_nl;
 
       // Local interfaces don't support stub objects.
-      if (! node->is_local_interface ())
+      if (! node->is_local ())
         *os << node->local_name ()
             << " (TAO_Stub *objref, " << be_idt << be_idt_nl
             << "TAO_ServantBase *_tao_servant = 0, " << be_nl
@@ -247,7 +247,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       be_visitor *visitor = 0;
 
       // Don't support smart proxies for local interfaces.
-      if (! node->is_local_interface ())
+      if (! node->is_local ())
         {
           // Smart Proxy related classes.
           ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
@@ -267,7 +267,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       os->gen_endif ();
 
-      if (! node->is_local_interface ())
+      if (! node->is_local ())
         {
           // by using a visitor to declare and define the TypeCode, we
           // have the added advantage to conditionally not generate

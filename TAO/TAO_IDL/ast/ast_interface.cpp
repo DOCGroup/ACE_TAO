@@ -96,9 +96,12 @@ AST_Interface::AST_Interface(UTL_ScopedName *n,
                              long nih,
                              AST_Interface **ih_flat,
                              long nih_flat,
-                             UTL_StrList *p)
+                             UTL_StrList *p,
+                             idl_bool local,
+                             idl_bool abstract)
   : AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
+    COMMON_Base (local, abstract),
     pd_inherits (ih),
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
@@ -117,17 +120,6 @@ AST_Interface::~AST_Interface (void)
 /*
  * Public operations
  */
-
-idl_bool AST_Interface::is_abstract_interface (void)
-{
-  return 0;
-}
-
-
-idl_bool AST_Interface::is_local_interface (void)
-{
-  return 0;
-}
 
 
 idl_bool AST_Interface::is_valuetype (void)
@@ -855,8 +847,10 @@ AST_Interface::dump (ostream &o)
     }
   else
     {
-      if (this->is_abstract_interface ())
+      if (this->is_abstract ())
         o << "abstract ";
+      else if (this->is_local ())
+        o << "local ";
       o << "interface ";
     }
 
@@ -927,11 +921,11 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                 {
 
                   // only redefinition of the same kind
-                  if ((i->is_local_interface () != fd->is_local_interface ())
+                  if ((i->is_local () != fd->is_local ())
 #                 ifdef IDL_HAS_VALUETYPE
                       ||(i->is_valuetype () != fd->is_valuetype ())
                       || (i->is_abstract_valuetype () != fd->is_abstract_valuetype ())
-                      || (i->is_abstract_interface () != fd->is_abstract_interface ())
+                      || (i->is_abstract () != fd->is_abstract ())
 #                 endif /* IDL_HAS_VALUETYPE */
                       )
 

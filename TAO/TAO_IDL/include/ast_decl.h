@@ -97,9 +97,20 @@ class Identifier;
 
 class   COMMON_Base
 {
-  public:
+public:
+
+  COMMON_Base (idl_bool local = I_FALSE,
+               idl_bool abstract = I_FALSE);
+
+  virtual idl_bool is_local (void);
+  virtual idl_bool is_abstract (void);
+
         // Narrowing
     DEF_NARROW_METHODS0(COMMON_Base);
+
+protected:
+  idl_bool is_local_;
+  idl_bool is_abstract_;
 };
 
 class   AST_Decl : public virtual COMMON_Base
@@ -157,10 +168,10 @@ public:
 
   UTL_ScopedName *compute_name (const char *prefix, const char *suffix);
   // Variation of the <name>. Computes scoped name string, applying
-  // prefix and suffix to the local name component. 
+  // prefix and suffix to the local name component.
 
   void set_name(UTL_ScopedName *n);
-  
+
   Identifier *local_name ();
 
   Identifier *compute_local_name (const char *prefix, const char *sufix);
@@ -173,7 +184,7 @@ public:
   // operation remotely, we should be sending only the name with out
   // "_cxx_" prefix.
   //
-  
+
   Identifier *original_local_name (void);
   // Get.
 
@@ -207,7 +218,7 @@ private:
   UTL_String                    *pd_file_name;  // What file defined in
   UTL_ScopedName                *pd_name;       // As given
   Identifier                    *pd_local_name; // Name in scope
-  Identifier                    *pd_original_local_name; // _cxx_ removed if any. 
+  Identifier                    *pd_original_local_name; // _cxx_ removed if any.
   UTL_StrList                   *pd_pragmas;    // Pragmas
   idl_bool                      pd_added;       // already added
 

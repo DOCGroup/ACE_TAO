@@ -57,7 +57,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     " (void) // default constructor" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
-  if (! node->is_local_interface ())
+  if (! node->is_local ())
     {
       *os << "ACE_INLINE" << be_nl;
       *os << node->name () << "::" << node->local_name () <<

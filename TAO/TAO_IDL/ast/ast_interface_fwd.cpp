@@ -117,15 +117,9 @@ AST_InterfaceFwd::~AST_InterfaceFwd (void)
  * Private operations
  */
 
-idl_bool AST_InterfaceFwd::is_abstract_interface ()
+idl_bool AST_InterfaceFwd::is_local ()
 {
-  return this->full_definition()->is_abstract_interface();
-}
-
-
-idl_bool AST_InterfaceFwd::is_local_interface ()
-{
-  return this->full_definition()->is_local_interface();
+  return this->full_definition()->is_local ();
 }
 
 
@@ -170,8 +164,10 @@ AST_InterfaceFwd::dump(ostream &o)
     }
   else
     {
-      if (this->is_abstract_interface ())
+      if (this->is_abstract ())
         o << "abstract ";
+      else if (this->is_local ())
+        o << "local ";
       o << "interface ";
     }
   local_name()->dump(o);

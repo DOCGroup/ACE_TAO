@@ -76,7 +76,8 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           << " &); // copy ctor" << be_nl;
       *os << "~" << node->local_name () << " (void);" << be_nl;
 
-      *os << "static void _tao_any_destructor (void*);" << be_nl;
+      if (!node->is_local ())
+        *os << "static void _tao_any_destructor (void*);" << be_nl;
 
       // assignment operator
       *os << node->local_name () << " &operator= (const "
@@ -119,22 +120,25 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           << "}; // exception " << node->name ()
           << "\n" << be_nl;
 
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-      be_visitor *visitor;
-      be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (!node->is_local ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception_ch::"
-                             "visit_exception - "
-                             "TypeCode declaration failed\n"
-                             ), -1);
+          // by using a visitor to declare and define the TypeCode, we
+          // have the added advantage to conditionally not generate
+          // any code. This will be based on the command line
+          // options. This is still TO-DO
+          be_visitor *visitor;
+          be_visitor_context ctx (*this->ctx_);
+          ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_exception_ch::"
+                                 "visit_exception - "
+                                 "TypeCode declaration failed\n"
+                                 ), -1);
+            }
         }
-
 
       os->gen_endif ();
 

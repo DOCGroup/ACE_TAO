@@ -93,8 +93,7 @@ public:
   AST_Interface *full_definition();
   void set_full_definition(AST_Interface *nfd);
 
-  virtual idl_bool is_abstract_interface ();
-  virtual idl_bool is_local_interface ();
+  virtual idl_bool is_local ();
   virtual idl_bool is_valuetype ();
   virtual idl_bool is_abstract_valuetype ();
   virtual void set_abstract_valuetype ();

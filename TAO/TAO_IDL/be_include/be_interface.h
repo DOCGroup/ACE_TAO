@@ -64,7 +64,9 @@ public:
                 long nih,
                 AST_Interface **ih_flat,
                 long nih_flat,
-                UTL_StrList *p);
+                UTL_StrList *p,
+                idl_bool local,
+                idl_bool abstract);
   // Constructor that sets its scoped name <n>, a list of inherited interfaces
   // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
 
@@ -297,36 +299,6 @@ private:
   // Member for holding the strategy for generating names
 
   be_interface *original_interface_;
-};
-
-class be_local_interface : public virtual be_interface
-{
-public:
-  be_local_interface (UTL_ScopedName *n,
-                      AST_Interface **ih,
-                      long nih,
-                      AST_Interface **ih_flat,
-                      long nih_flat,
-                      UTL_StrList *p);
-  // Constructor that sets its scoped name <n>, a list of inherited interfaces
-  // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
-
-  virtual idl_bool is_local_interface ();
-};
-
-class be_abstract_interface : public virtual be_interface
-{
-public:
-  be_abstract_interface (UTL_ScopedName *n,
-                         AST_Interface **ih,
-                         long nih,
-                         AST_Interface **ih_flat,
-                         long nih_flat,
-                         UTL_StrList *p);
-  // Constructor that sets its scoped name <n>, a list of inherited interfaces
-  // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
-
-  virtual idl_bool is_abstract_interface ();
 };
 
 #endif  // if !defined
