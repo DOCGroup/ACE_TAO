@@ -112,6 +112,8 @@ main (int argc, char **argv)
       // Narrow the object reference to a File::System
       File::System_var file_system = File::System::_narrow (object.in (),
                                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
       // Creat the file filename i.e "test"
       File::Descriptor_var fd = file_system->open (filename,
                                                    O_CREAT | O_RDWR,
@@ -148,6 +150,7 @@ main (int argc, char **argv)
     }
   ACE_CATCHANY
     {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in main");
       return -1;
     }
   ACE_ENDTRY;
