@@ -1,3 +1,10 @@
+Thu Dec 27 12:56:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Stream.i (close): Reverted this change:
+          Fri Dec  7 10:22:25 2001  Ossama Othman  <ossama@uci.edu>
+          The reactor is not used, so no workaround for it is needed.
+          If the ACE_SSL_SOCK_Stream is closed, the handle is invalidated.
+
 Thu Dec 27 11:39:48 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp: Changed ACE_TEXT to
