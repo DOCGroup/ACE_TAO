@@ -19,9 +19,15 @@ CIAO::Container::~Container ()
 }
 
 PortableServer::POA_ptr
-CIAO::Container::the_POA (void)
+CIAO::Container::_ciao_the_POA (void)
 {
   return this->poa_.in ();
+}
+
+CORBA::ORB_ptr
+CIAO::Container::_ciao_the_ORB ()
+{
+  return this->orb_.in ();
 }
 
 ///////////////////////////////////////////////////////////////

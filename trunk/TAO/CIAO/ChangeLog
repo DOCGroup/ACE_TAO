@@ -1,3 +1,13 @@
+Wed Aug 13 10:49:14 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * ciao/Container_Base.h:
+        * ciao/Container_Base.cpp:
+        * ciao/Container_Base.inl:
+
+          Added _ciao_the_ORB () method to CIAO::Container to access the
+          container's underlying ORB.
+          Changed the_POA () method to _ciao_the_POA ().
+
 Wed Aug 13 10:42:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:

@@ -46,7 +46,10 @@ namespace CIAO
 
     /// Get the containing POA.  This operation does *NOT*
     /// increase the reference count of the POA.
-    virtual PortableServer::POA_ptr the_POA (void);
+    virtual PortableServer::POA_ptr _ciao_the_POA (void);
+
+    /// Get a reference to the underlying ORB.
+    virtual CORBA::ORB_ptr _ciao_the_ORB (void);
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0
