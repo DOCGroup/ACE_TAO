@@ -1686,6 +1686,8 @@ typedef u_int ACE_thread_key_t;
 # include /**/ <string.h>
 # include /**/ <errno.h>
 # include /**/ <stdlib.h>
+# include /**/ <fcntl.h>
+# include /**/ <float.h>
 
 // If the user wants minimum IOStream inclusion, we will just include
 // the forward declarations
@@ -1697,13 +1699,16 @@ typedef u_int ACE_thread_key_t;
 #include "ace/streams.h"
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
-#include /**/ <fcntl.h>
-
 // This must come after signal.h is #included.
 #if defined (SCO)
 #define SIGIO SIGPOLL
 #include /**/ <sys/regset.h>
 #endif /* SCO */
+
+#if defined ACE_HAS_BYTESEX_H
+# include <bytesex.h>
+#endif /* ACE_HAS_BYTESEX_H */
+#include "ace/Basic_Types.h"
 
 #if defined (ACE_HAS_SIG_MACROS)
 #undef sigemptyset
@@ -2644,60 +2649,7 @@ typedef short ACE_pri_t;
 #elif defined (ACE_HAS_LONGLONG_T)
   typedef unsigned long long ACE_hrtime_t;
 #else
-  class ACE_Export ACE_U_LongLong
-    // = TITLE
-    //     Unsigned long long for platforms that don't have one.
-    //
-    // = DESCRIPTION
-    //     Provide our own unsigned long long.  This is intended to be
-    //     use with ACE_High_Res_Timer, so the division operator assumes
-    //     that the quotient fits into a u_long.
-    //     Please note that the constructor takes (optionally) two values.
-    //     The high one contributes 0x100000000 times its value.  So,
-    //     for example, (0, 2) is _not_ 20000000000, but instead
-    //     0x200000000.  To emphasize this, the default values are expressed
-    //     in hex, and dump () outputs the value in hex.
-  {
-  public:
-    // = Initialization and termination methods.
-    ACE_U_LongLong (const u_long lo = 0x0, const u_long hi = 0x0);
-    ACE_U_LongLong (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator= (const ACE_U_LongLong &);
-    ~ACE_U_LongLong (void);
-
-    // = Overloaded relation operators.
-    int operator== (const ACE_U_LongLong &) const;
-    int operator!= (const ACE_U_LongLong &) const;
-    int operator< (const ACE_U_LongLong &) const;
-    int operator<= (const ACE_U_LongLong &) const;
-    int operator> (const ACE_U_LongLong &) const;
-    int operator>= (const ACE_U_LongLong &) const;
-
-    ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
-    ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
-    u_long operator/ (const u_long) const;
-
-    ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
-
-    // = Helper methods.
-    void output (FILE * = stdout) const;
-    // Outputs the value to the FILE, in hex.
-
-    u_long hi (void) const;
-    u_long lo (void) const;
-
-    void hi (const u_long hi);
-    void lo (const u_long lo);
-
-    ACE_ALLOC_HOOK_DECLARE;
-
-  private:
-    u_long hi_;
-    u_long lo_;
-  };
-
-  typedef ACE_U_LongLong ACE_hrtime_t;
+  typedef ACE_UINT64 ACE_hrtime_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
 
 #endif /* ACE_WIN32 */
@@ -2928,16 +2880,6 @@ struct sigaction
 
 #define LOCALNAME 0
 #define REMOTENAME 1
-
-#if defined (ACE_HAS_64BIT_LONGS)
-// Necessary to support the Alphas, which have 64 bit longs and 32 bit
-// ints...
-typedef u_int ACE_UINT32;
-typedef int ACE_INT32;
-#else
-typedef u_long ACE_UINT32;
-typedef long ACE_INT32;
-#endif /* ACE_HAS_64BIT_LONGS */
 
 #if !defined (ETIMEDOUT) && defined (ETIME)
 #define ETIMEDOUT ETIME
