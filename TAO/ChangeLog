@@ -1,3 +1,9 @@
+Thu Jan  6 12:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Priority_Mapping_Manager.h:
+          Removed not needed pragma push/pop for msvc
+
 Thu Jan  6 11:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Adapter.{h,cpp}:

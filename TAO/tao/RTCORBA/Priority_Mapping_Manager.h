@@ -23,13 +23,6 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 #include "Priority_Mapping.h"
 #include "tao/LocalObject.h"
 
@@ -148,10 +141,6 @@ private:
 #if defined (__ACE_INLINE__)
 #include "Priority_Mapping_Manager.i"
 #endif /* __ACE_INLINE__ */
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
