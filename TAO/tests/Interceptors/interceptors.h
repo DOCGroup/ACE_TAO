@@ -10,8 +10,8 @@
 #endif /* _MSC_VER */
 
 class Echo_Client_Request_Interceptor
-  :  public virtual PortableInterceptor::ClientRequestInterceptor,
-     public virtual CORBA::LocalObject
+  :  public PortableInterceptor::ClientRequestInterceptor,
+     public CORBA::LocalObject
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
@@ -66,8 +66,8 @@ private:
 };
 
 class Echo_Server_Request_Interceptor
-  : public virtual PortableInterceptor::ServerRequestInterceptor,
-    public virtual CORBA::LocalObject
+  : public PortableInterceptor::ServerRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:

@@ -530,7 +530,7 @@ SOURCE=.\util\utl_decllist.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\util\utl_error.cpp
+SOURCE=.\util\utl_err.cpp
 # End Source File
 # Begin Source File
 
@@ -1042,7 +1042,7 @@ SOURCE=.\include\utl_decllist.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\include\utl_error.h
+SOURCE=.\include\utl_err.h
 # End Source File
 # Begin Source File
 

@@ -71,7 +71,7 @@ FILES = tao_idl \
         util/utl_strlist \
         util/utl_list \
         util/utl_exprlist \
-        util/utl_error \
+        util/utl_err \
         util/utl_indenter \
         util/utl_identifier \
         util/utl_idlist \
@@ -358,7 +358,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/drv_private.h include/drv_link.h
@@ -453,7 +453,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/drv_private.h include/drv_link.h
@@ -548,7 +548,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/drv_private.h
@@ -643,7 +643,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/drv_private.h include/drv_link.h be_include/be.h \
@@ -759,7 +759,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/drv_private.h \
@@ -867,7 +867,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/drv_private.h include/drv_link.h
@@ -962,7 +962,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/drv_private.h include/drv_link.h \
@@ -1075,7 +1075,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/fe_private.h include/fe_interface_header.h \
@@ -1171,7 +1171,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/fe_private.h include/fe_interface_header.h \
@@ -1267,7 +1267,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/fe_private.h include/fe_interface_header.h \
@@ -1363,7 +1363,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/fe_private.h include/fe_interface_header.h \
@@ -1459,7 +1459,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/fe_private.h include/fe_interface_header.h \
@@ -1555,7 +1555,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/fe_private.h include/fe_interface_header.h \
@@ -1651,7 +1651,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/fe_private.h include/fe_interface_header.h \
@@ -1748,7 +1748,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/fe_private.h include/fe_interface_header.h \
@@ -1844,7 +1844,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -1938,7 +1938,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2032,7 +2032,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2126,7 +2126,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2220,7 +2220,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2314,7 +2314,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2408,7 +2408,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2502,7 +2502,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2596,7 +2596,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2690,7 +2690,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2784,7 +2784,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2878,7 +2878,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -2972,7 +2972,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3066,7 +3066,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3160,7 +3160,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3254,7 +3254,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3348,7 +3348,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3442,7 +3442,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3536,7 +3536,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3630,7 +3630,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3724,7 +3724,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3818,7 +3818,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -3912,7 +3912,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4006,7 +4006,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4100,7 +4100,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4194,7 +4194,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4288,7 +4288,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4382,7 +4382,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4476,7 +4476,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4570,7 +4570,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4664,7 +4664,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4758,7 +4758,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4852,7 +4852,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -4946,7 +4946,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5040,7 +5040,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5134,7 +5134,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5228,7 +5228,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5322,7 +5322,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5416,7 +5416,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5510,11 +5510,11 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
-.obj/utl_error.o .obj/utl_error.so .shobj/utl_error.o .shobj/utl_error.so: util/utl_error.cpp include/idl.h \
+.obj/utl_err.o .obj/utl_err.so .shobj/utl_err.o .shobj/utl_err.so: util/utl_err.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5604,7 +5604,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5698,7 +5698,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5792,7 +5792,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5886,7 +5886,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -5980,7 +5980,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -6074,7 +6074,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h
 
@@ -6168,7 +6168,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -6284,7 +6284,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -6400,7 +6400,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -6516,7 +6516,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -6632,7 +6632,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -6748,7 +6748,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -6864,7 +6864,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -6980,7 +6980,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -7096,7 +7096,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -7212,7 +7212,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be_visitor_interface.h be_include/be_visitor_scope.h \
@@ -7351,7 +7351,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -7467,7 +7467,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -7583,7 +7583,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -7699,7 +7699,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -7815,7 +7815,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -7931,7 +7931,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8047,7 +8047,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8163,7 +8163,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8279,7 +8279,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8395,7 +8395,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8511,7 +8511,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8638,7 +8638,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8754,7 +8754,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8870,7 +8870,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -8986,7 +8986,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -9102,7 +9102,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -9218,7 +9218,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -9334,7 +9334,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -9450,7 +9450,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -9566,7 +9566,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -9682,7 +9682,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -9798,7 +9798,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -9914,7 +9914,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -10030,7 +10030,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -10146,7 +10146,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -10262,7 +10262,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -10378,7 +10378,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -10494,7 +10494,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -10610,7 +10610,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -10934,7 +10934,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h be_include/be.h \
+ include/utl_err.h include/utl_indenter.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
@@ -11050,7 +11050,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -11165,7 +11165,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h be_include/be.h \
+ include/utl_err.h include/utl_indenter.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
@@ -11299,7 +11299,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -11428,7 +11428,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -11546,7 +11546,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -11666,7 +11666,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -11782,7 +11782,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -11898,7 +11898,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -12023,7 +12023,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -12167,7 +12167,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -12292,7 +12292,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -12454,7 +12454,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -12579,7 +12579,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -12771,7 +12771,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -12891,7 +12891,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -13016,7 +13016,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -13210,7 +13210,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -13342,7 +13342,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -13458,7 +13458,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -13614,7 +13614,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -13754,7 +13754,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -13874,7 +13874,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -14008,7 +14008,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
@@ -14144,7 +14144,7 @@ tags:
  include/ast_generator.h include/util.h include/utl_stack.h \
  include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h \
