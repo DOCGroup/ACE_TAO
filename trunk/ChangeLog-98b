@@ -1,47 +1,53 @@
+Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/XtReactor_Test.cpp: moved explicit template instantiations
+          inside ACE_HAS_XT, because the #includes are all inside
+          ACE_HAS_XT also.
+
 Fri Jun 12 17:04:14 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* ace/OS.h: Moved the #define's and typedef's (related to Proactor
-	stuff, things like TRANSMIT_BUFFERS etc) under '#if defined
-	(WIN32)' before OS.i. They were at the end of the file.
+        * ace/OS.h: Moved the #define's and typedef's (related to Proactor
+        stuff, things like TRANSMIT_BUFFERS etc) under '#if defined
+        (WIN32)' before OS.i. They were at the end of the file.
 
 Fri Jun 12 16:31:13 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* ace/OS.h: (ACE_NTOHL, ACE_HTONL): Added macros for conversion
-	between network and host byte order. Thanks to James Hu for
-	contributing these.
+        * ace/OS.h: (ACE_NTOHL, ACE_HTONL): Added macros for conversion
+        between network and host byte order. Thanks to James Hu for
+        contributing these.
 
 Fri Jun 12 14:29:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (sema_wait): Changed the code so that it always treats
- 	  the time value argument in absolute time, even for Win32.
-  	  Thanks to Chuck Gehr for reporting this.
+        * ace/OS.i (sema_wait): Changed the code so that it always treats
+          the time value argument in absolute time, even for Win32.
+          Thanks to Chuck Gehr for reporting this.
 
 Fri Jun 12 14:12:25 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
-	  The inclusion of the XtReactor is controlled on the
-	  platform_macros file (or the command line).
-	  Users simply type make xt_reactor=1 to enable this feature, or
-	  set xt_reactor to 1 in the platform_macros.GNU file.
-	  Some extra macros were added for platforms that require special
-	  CPP, LD or libraries when linking against X/Windows. The macros
-	  are described in this file.
-	  The platforms that already had XtReactor compiled by default
-	  still do.
+        * include/makeinclude/wrapper_macros.GNU:
+          The inclusion of the XtReactor is controlled on the
+          platform_macros file (or the command line).
+          Users simply type make xt_reactor=1 to enable this feature, or
+          set xt_reactor to 1 in the platform_macros.GNU file.
+          Some extra macros were added for platforms that require special
+          CPP, LD or libraries when linking against X/Windows. The macros
+          are described in this file.
+          The platforms that already had XtReactor compiled by default
+          still do.
 
-	* ace/config-irix6.x-sgic++-nothreads.h:
-	* include/makeinclude/platform_irix6.x-sgic++.GNU:
-	  Now the XtReactor configuration is controlled on the platform
-	  file.
+        * ace/config-irix6.x-sgic++-nothreads.h:
+        * include/makeinclude/platform_irix6.x-sgic++.GNU:
+          Now the XtReactor configuration is controlled on the platform
+          file.
 
-	* ACE-INSTALL.html:
-	  Updated documentation for make flags.
+        * ACE-INSTALL.html:
+          Updated documentation for make flags.
 
-	* tests/XtReactor_Test.cpp:
-	  Fixed a few typos.
+        * tests/XtReactor_Test.cpp:
+          Fixed a few typos.
 
-	* tests/Conn_Test.cpp:
-	  Fixed some template instantiation pragmas.
+        * tests/Conn_Test.cpp:
+          Fixed some template instantiation pragmas.
 
 Thu Jun 11 22:05:31 1998  David L. Levine  <levine@cs.wustl.edu>
 
