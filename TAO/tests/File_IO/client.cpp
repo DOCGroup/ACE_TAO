@@ -27,7 +27,6 @@ ACE_RCSID(Default_Servant, client, "client.cpp,v 1.8 2001/03/26 21:16:52 coryan 
 
 static const char *iorfile = "ior";
 static const char *filename = "big.txt";
-static const char *message = "POA rules!!";
 static const int NUM_THREADS = 10;
 static CORBA::ORB_var orb;
 static int loops=100;
@@ -35,7 +34,7 @@ static int loops=100;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:f:m:");
+  ACE_Get_Opt get_opts (argc, argv, "dk:f:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -49,9 +48,6 @@ parse_args (int argc, char **argv)
         break;
       case 'f':
         filename = get_opts.optarg;
-        break;
-      case 'm':
-        message = get_opts.optarg;
         break;
       case '?':
       default:
