@@ -53,6 +53,9 @@ BUILDING CIAO
         PortableServer
         IFR_Client
 
+        RTPortableServer
+        RTCORBA
+
 and also the libraries they depends on.
 
   - On Linux, try defining these in the platform_macros.GNU
