@@ -1546,16 +1546,16 @@ template class ACE_TSS<TAO_Resource_Factory::Pre_Allocated>;
 template class ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_Resource_Factory::App_Allocated>;
-template class ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_POA *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_POA *>;
-template class ACE_Hash<ACE_INET_Addr>;
-template class ACE_Equal_To<ACE_INET_Addr>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_POA *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Iterator<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_POA *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_POA *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Manager<ACE_Addr, TAO_POA *, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Manager_Ex<ACE_Addr, TAO_POA *, ACE_Hash<ACE_Addr>, ACE_Equal_To<ACE_Addr>, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Entry<ACE_Addr, TAO_POA *>;
+template class ACE_Hash<ACE_Addr>;
+template class ACE_Equal_To<ACE_Addr>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Addr, TAO_POA *, ACE_Hash<ACE_Addr>, ACE_Equal_To<ACE_Addr>, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Iterator<ACE_Addr, TAO_POA *, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_Addr, TAO_POA *, ACE_Hash<ACE_Addr>, ACE_Equal_To<ACE_Addr>, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_Addr, TAO_POA *, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Addr, TAO_POA *, ACE_Hash<ACE_Addr>, ACE_Equal_To<ACE_Addr>, TAO_Collocation_Table_Lock>;
 template class ACE_Guard<TAO_Collocation_Table_Lock>;
 template class ACE_Read_Guard<TAO_Collocation_Table_Lock>;
 template class ACE_Write_Guard<TAO_Collocation_Table_Lock>;
@@ -1605,16 +1605,16 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 #pragma instantiate ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_Resource_Factory::App_Allocated>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_POA *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_POA *>
-#pragma instantiate ACE_Hash<ACE_INET_Addr>
-#pragma instantiate ACE_Equal_To<ACE_INET_Addr>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_POA *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_POA *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_POA *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Addr, TAO_POA *, ACE_Hash<ACE_Addr>, ACE_Equal_To<ACE_Addr>, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_Addr, TAO_POA *>
+#pragma instantiate ACE_Hash<ACE_Addr>
+#pragma instantiate ACE_Equal_To<ACE_Addr>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Addr, TAO_POA *, ACE_Hash<ACE_Addr>, ACE_Equal_To<ACE_Addr>, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_Addr, TAO_POA *, ACE_Hash<ACE_Addr>, ACE_Equal_To<ACE_Addr>, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Addr, TAO_POA *, ACE_Hash<ACE_Addr>, ACE_Equal_To<ACE_Addr>, TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Guard<TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Read_Guard<TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Write_Guard<TAO_Collocation_Table_Lock>
