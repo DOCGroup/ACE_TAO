@@ -1,3 +1,23 @@
+Wed Jun 17 23:21:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
+          orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, h, i}
+          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp
+
+          Several bug fixes for consumers specifying a period
+	  of 0.  Incorrect handle was being used for the
+	  dependency, framing/reframing caused divide-by-zero
+ 	  errors, merging was not correctly picking up the
+	  priority information from the supplier.
+	
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+
+	  Added a -n <Scheduling Service Name> argument,
+	  and command-line argument processing code to the
+	  test so that multiple copies with differently
+	  named scheduling services can run simultaneously
+	  within the context of a single naming service.
+
 Wed Jun 17 17:07:12 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/README: added new options with
