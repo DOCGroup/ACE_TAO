@@ -675,7 +675,6 @@ ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handle
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_Asynch_Read_File_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     ACE_WIN32_Asynch_Read_Stream_Result (handler,
                                          handle,
                                          message_block,
