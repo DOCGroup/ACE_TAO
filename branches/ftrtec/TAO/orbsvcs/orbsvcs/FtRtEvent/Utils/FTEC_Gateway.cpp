@@ -447,5 +447,6 @@ void PushConsumerHandler::push ()
 void PushConsumerHandler::push_excep (FtRtecEventComm::AMI_PushConsumerExceptionHolder * excep_holder)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG(excep_holder);
 }
 }
