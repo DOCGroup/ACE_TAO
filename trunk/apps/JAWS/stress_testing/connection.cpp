@@ -13,7 +13,7 @@ int connection::connect(char *hostname_opt_port, int tcp_nodelay, int sockbufsiz
   // If not, append :80
   if(!ACE_OS::strchr(hostname_opt_port,':')) {
 	  hostname_with_port = new char[ACE_OS::strlen(hostname_opt_port) + 3];
-	  sprintf(hostname_with_port, "%s:%d", hostname_opt_port, 80);
+	  ACE_OS::sprintf(hostname_with_port, "%s:%d", hostname_opt_port, 80);
   }
   else {
     hostname_with_port = hostname_opt_port;

@@ -34,7 +34,7 @@ static void *client_thread(void *data) {
   ACE_Profile_Timer throughput_timer, latency_timer;
   throughput_timer.start();
   latency_timer.start();
-  sprintf(request,"GET /%s HTTP/1.0\r\n\r\n",u->get_filename());
+  ACE_OS::sprintf(request,"GET /%s HTTP/1.0\r\n\r\n",u->get_filename());
   webserver.write_n(request, strlen(request)) ;
   
   char buffer[BUFSIZ];
