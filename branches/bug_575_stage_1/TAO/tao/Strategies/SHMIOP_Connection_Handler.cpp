@@ -10,12 +10,11 @@
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "tao/Messaging_Policy_i.h"
-#include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "SHMIOP_Endpoint.h"
+#include "tao/Resume_Handle.h"
 
 #if !defined (__ACE_INLINE__)
 # include "SHMIOP_Connection_Handler.inl"
@@ -251,39 +250,23 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
 int
 TAO_SHMIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_i (h);
-}
-
-
-int
-TAO_SHMIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
-                                             ACE_Time_Value *max_wait_time)
-{
+  // Increase the reference count on the upcall that have passed us.
   this->pending_upcalls_++;
 
-  // Call the transport read the message
-  int result = this->transport ()->read_process_message (max_wait_time);
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    h);
 
-  // Now the message has been read
-  if (result == -1 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("SHMIOP_Connection_Handler::read_message \n")));
-
-    }
+  int retval = this->transport ()->handle_input_i (resume_handle);
 
   // The upcall is done. Bump down the reference count
   if (--this->pending_upcalls_ <= 0)
-    result = -1;
+    retval = -1;
 
-  if (result == 0 || result == -1)
-    {
-      return result;
-    }
-
-  return 0;
+  return retval;
 }
+
+
+
 
 
 

@@ -13,7 +13,8 @@ TAO_Resume_Handle::resume_handle (void)
 {
   // If we have a complete message, just resume the handler
   // Resume the handler.
-  if (this->orb_core_->reactor ()->resumable_handler () &&
+  if (this->orb_core_ &&
+      this->orb_core_->reactor ()->resumable_handler () &&
       this->flag_ == TAO_HANDLE_RESUMABLE &&
       this->handle_ != ACE_INVALID_HANDLE)
     this->orb_core_->reactor ()->resume_handler (this->handle_);

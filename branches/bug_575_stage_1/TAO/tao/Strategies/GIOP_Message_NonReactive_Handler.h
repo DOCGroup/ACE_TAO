@@ -77,8 +77,7 @@ private:
   /// Our Message base
   TAO_GIOP_Message_NonReactive_Base *mesg_base_;
 
-  /// The input cdr stream in which the incoming data is stored.
-  TAO_InputCDR input_cdr_;
+
 };
 
 #if defined (__ACE_INLINE__)

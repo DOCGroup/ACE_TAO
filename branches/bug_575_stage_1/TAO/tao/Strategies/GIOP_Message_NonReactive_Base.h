@@ -28,20 +28,22 @@ class TAO_Pluggable_Reply_Params;
 /**
  * @class TAO_GIOP_Message_NonReactive_Base
  *
- * @brief Uses the NonReactive handler class for reading messages.
+ * @brief Uses the NonReactive mechanism to read and process
+ *  messages.
  *
- * This class uses the TAO_GIOP_Message_NonReactive_Handler class to
- * read and parse messages. This class derives from
- * TAO_GIOP_Message_Base. It just redirects most of the functions to
- * the base class but just acts as a sort of place holder for the
- * NonReactive handler class.
+ *  Some protocols based on shared memory cannot make use of the
+ *  reactor as other protocols based on TCP/IP. This class is a relief
+ *  for such protocols. This effectively does the following
+ *    - reads the GIOP header out of the transport
+ *    - processes the header to determine the length of the message
+ *      and other details.
+ *    - reads the body of the message from the transport
+ *    - passes the data to the base class for making the upcall.
  */
 
 class TAO_Strategies_Export TAO_GIOP_Message_NonReactive_Base :public TAO_GIOP_Message_Base
 {
 public:
-
-  friend class TAO_GIOP_Message_NonReactive_Handler;
 
   /// Constructor
   TAO_GIOP_Message_NonReactive_Base (TAO_ORB_Core *orb_core,
@@ -82,9 +84,8 @@ public:
 
 private:
 
-  /// Thr message handler object that does reading and parsing of the
-  /// incoming messages
-  TAO_GIOP_Message_NonReactive_Handler message_handler_;
+  /// The input cdr stream in which the incoming data is stored.
+  TAO_InputCDR input_cdr_;
 };
 
 #if defined (__ACE_INLINE__)
