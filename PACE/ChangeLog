@@ -1,3 +1,11 @@
+Mon May 14 12:55:33 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* docs/www/pace-car.html:
+
+	  Deleted this file since it comflicts with PACE-car.html on
+          file systems that are not case-sensitive. (It also appears
+          to be a duplicate file.)
+
 Sun May 13 14:42:11 2001  Luther J Baker  <luther@cs.wustl.edu>
 
 	* docs/www/*:
