@@ -1,3 +1,11 @@
+Sat Mar 16 01:27:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IFR_Client/IFR_BaseC.h:
+
+	  Include appropriate headers to allow the IFR_Client library to
+	  compile in minimum CORBA builds.  Necessitated by the
+	  inter-header dependency reductions made about a week ago.
+
 Fri Mar 15 16:06:10 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator >>): 
