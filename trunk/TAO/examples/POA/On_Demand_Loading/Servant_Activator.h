@@ -21,7 +21,7 @@
 #include "ace/DLL.h"
 
 
-class Dir_Service_Activator : public POA_PortableServer::ServantActivator
+class MyFooServantActivator : public POA_PortableServer::ServantActivator
 {
   //= TITLE
   //   Servant Activator for the directory service servant.
@@ -32,18 +32,18 @@ class Dir_Service_Activator : public POA_PortableServer::ServantActivator
 
 public:
 
-  typedef PortableServer::Servant (*Servant_Creator_Prototype) (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  typedef PortableServer::Servant (*Servant_Creator_Prototype) (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa, CORBA::Long value);
   // This typedef is used to typecast the void* obtained on finding a 
   // symbol in the library.
 
-  Dir_Service_Activator (CORBA::ORB_ptr orb);
+  MyFooServantActivator (CORBA::ORB_ptr orb);
   // Initialization.
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr poa,
                                              CORBA::Environment &env);
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
-  // RETAIN policies, whenever it receives a request for a Dir_Service
+  // RETAIN policies, whenever it receives a request for a MyFooServant
   // object that is not currently active.
 
   virtual void etherealize (const PortableServer::ObjectId &oid,
@@ -55,10 +55,14 @@ public:
   // This method is invoked whenever a MyFooServant for a MyFoo object
   // is deactivated.
 
+  PortableServer::ObjectId_var create_objectId (const char *libname, const char *factory_method);
+  // Returns an ObjectId when given an library name and the factory method to be invoked in the library.
+
 private:
 
-   PortableServer::Servant activate_servant (const char *str,
-                                             PortableServer::POA_ptr poa);
+  PortableServer::Servant activate_servant (const char *str,
+                                            PortableServer::POA_ptr poa,
+                                            long value);
   // Gets the servant on activation by loading the appropriate library
   // and getting the servant object.
 
