@@ -1,3 +1,23 @@
+Thu Feb  6 16:47:02 2003  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tests/AMH_Oneway
+	* tests/AMH_Oneway/AMH_Oneway.dsw
+	* tests/AMH_Oneway/Makefile
+	* tests/AMH_Oneway/Makefile.bor
+	* tests/AMH_Oneway/Test.idl
+	* tests/AMH_Oneway/client.bor
+	* tests/AMH_Oneway/client.cpp
+	* tests/AMH_Oneway/client.dsp
+	* tests/AMH_Oneway/run_test.pl
+	* tests/AMH_Oneway/server.bor
+	* tests/AMH_Oneway/server.cpp
+	* tests/AMH_Oneway/server.dsp
+	* tao/PortableServer/AMH_Response_Handler.cpp:
+
+	  Test to test Oneways and AMH. Client make 10 calls. Servers
+	  counts the calls. Before thr fix, the server hung and this
+	  generated an error mesg when the perl script (run_test.pl) ran.
+	
 Thu Feb 06 18:35:05 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Proxy_T.h:
@@ -12,6 +32,7 @@ Thu Feb 06 18:35:05 2003  Pradeep Gore  <pradeep@oomworks.com>
 Wed Feb  5 12:10:08 2003  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.cpp:
+
 	  Added fix so that oneways work with AMH. Because of semantics of
 	  oneways, the client doesn't expect any reply. The RH doesn't
 	  know this and thinking that a RH is being destroyed before being
