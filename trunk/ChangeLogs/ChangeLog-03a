@@ -1,3 +1,51 @@
+Fri Oct 18 03:55:51 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
+	                      Bill Fulton <Bill_A_Fulton@raytheon.com>
+                           
+	* ace/SOCK_Dgram_Mcast.{h,i,cpp}:
+
+	  Enhanced support for join()'ing multiple multicast groups. Ctor
+	  now offers finer control over a bind()'ing to an address or
+	  interface.  Appropriate default behavior has been specified, 
+	  but note that due to issues on Linux, portable code should not
+	  join() more than one multicast group per instance.
+
+	  An open() method has been added/exposed.  If not explicitely
+	  called, it will be implicitely called by the first join(), and
+	  will bind() the address if the OPT_BINDADDR_YES options was
+	  specified in the ctor.
+
+	  Error handling has also been enhanced.  For instance, if 
+	  OPT_BINDADDR_YES has been specified (the default on Linux), 
+	  additional join()'s will fail since the socket gets bound on
+	  the first call to open() or join().  Previously, subsequent
+	  calls to join() would silently fail, i.e., the call succeeded
+	  but only datagrams sent to the first, bound address where 
+	  actually delivered.
+
+	  If ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined, a list of all 
+	  subscribed groups is maintained and can be dump()'ed, although
+	  access to this list is not public.
+
+	  Added new join()/leave() methods that remove unused, deprecated
+	  protocol_family and protocol arguments.  These values can be
+	  determined on the fly.  The old subscribe()/unsubscribe()
+	  methods have been deprecated and are now implemented in terms
+	  of join()/leave() respectively.
+
+	  The unsubscribe(void) method has also been deprecated.  It was 
+	  designed to allow the caller to unsubscribe/leave() all 
+	  groups at once, but since a list was never kept (and still
+	  isn't unless ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined) only
+	  the last group join()'ed was ever left.  A better way would
+	  be to either keep track of you own groups and call leave()
+	  for each, or let the dtor close() the socket which automatically
+	  unsubscribes from all groups.
+
+	  Some IPv6 support has been added either directly or by removing
+	  the need for the caller to handle it (see join()/leave() above),
+	  although the internal calls to setsockopt() are still hard wired
+	  for IPv4.
+
 Fri Oct 18 06:51:07 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/String_Base.{i,cpp}: Fixed the formatting in these files...
