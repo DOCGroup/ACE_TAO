@@ -79,71 +79,6 @@ protected:
   JAWS_IO_Acceptor *acceptor_;
 };
 
-class JAWS_IO_Handler
-  // = TITLE
-  //
-  //     This class defines the abstract interface for an I/O handler class in
-  //     the context of Web-likes servers
-  //
-  // = DESCRIPTION
-{
-public:
-  virtual void accept_complete (void) {};
-  // This method is called by the IO class when new passive connection has
-  // been established.
-
-  virtual void accept_error (void) {};
-  // This method is called by the IO class when new passive connection has
-  // been established.
-
-#if 0
-  virtual void connect_complete (ACE_Message_Block &) {};
-  // This method is called by the IO class when new active connection has
-  // been established.
-
-  virtual void connect_error (ACE_Message_Block &) {};
-  // This method is called by the IO class when new active connection has
-  // been established.
-#endif  
-
-  virtual void read_complete (ACE_Message_Block &data) = 0;
-  // This method is called by the IO class when new client data shows
-  // up.
-
-  virtual void read_error (void) = 0;
-  // This method is called by the IO class when there was an error in
-  // reading new data from the client.
-
-  virtual void transmit_file_complete (void) = 0;
-  // This method is called by the IO class when the requested file has
-  // been successfully transmitted to the client.
-
-  virtual void transmit_file_error (int result) = 0;
-  // This method is called by the IO class when there was an error in
-  // transmitting the requested file to the client.
-
-  virtual void receive_file_complete (void) = 0;
-  // This method is called by the IO class when the requested file has
-  // been successfully received from the client.
-
-  virtual void receive_file_error (int result) = 0;
-  // This method is called by the IO class when there was an error in
-  // receiving the requested file from the client.
-
-  virtual void write_error (void) = 0;
-  // This method is called by the IO class when there was an error in
-  // writing data to the client.
-
-  virtual void confirmation_message_complete (void) = 0;
-  // This method is called by the IO class when the confirmation
-  // message has been delivered to the client.
-
-  virtual void error_message_complete (void) = 0;
-  // This method is called by the IO class when the error message has
-  // been delivered to the client.
-
-};
-
 class JAWS_Synch_IO : public JAWS_IO
   // = TITLE
   //
@@ -181,6 +116,7 @@ protected:
   virtual void send_message (const char *buffer,
                              int length);
 };
+
 
 // This only works on Win32
 #if defined (ACE_WIN32)
