@@ -1,3 +1,10 @@
+Sun Oct 12 03:35:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/ACE.cpp (register_stdin_handler): Must register the reactor
+	  we are using to the event handler.
+	  (read_adapter): Must notify the reactor when we are done with
+ 	  handling stdin event.  
+
 Sun Oct 12 00:26:56 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Makefile: 
