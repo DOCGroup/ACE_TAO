@@ -323,8 +323,7 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
           if (any_value.any_owns_data ())
             {
               ACE_NEW_RETURN (seq, SEQ_TYPE, return_value);
-              TAO_InputCDR stream (ACE_static_cast (ACE_Message_Block*,
-                                                    any_value.value ()));
+              TAO_InputCDR stream ((ACE_Message_Block*) any_value.value ());
 
               CORBA::Boolean decode_succeded =
                 (stream.decode (this->typecode_, seq, 0, TAO_TRY_ENV) ==
@@ -345,7 +344,7 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
             }
           else 
             {
-              seq = ACE_static_cast (SEQ_TYPE*, any_value.value ());
+              seq = (SEQ_TYPE*) any_value.value ();
               return_value = CORBA::B_TRUE;
             }
         }

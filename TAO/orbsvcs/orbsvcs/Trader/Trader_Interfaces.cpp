@@ -91,7 +91,8 @@ query (const char *type,
     {
       CosTrading::PolicySeq policies_to_forward;
       policies.copy_to_forward (policies_to_forward, *trader_name);
-      this->forward_query (ACE_static_cast (const char*, (*trader_name)[0]),
+      const char* next_hop = (*trader_name)[0];
+      this->forward_query (next_hop,
 			   type,
 			   constraint,
 			   preferences,
@@ -111,7 +112,7 @@ query (const char *type,
     this->trader_.support_attributes ();
   CosTrading::TypeRepository_ptr type_repos =
     support_attrs.type_repos ();
-  CosTradingRepos::ServiceTypeRepository_ptr rep = 
+  CosTradingRepos::ServiceTypeRepository_var rep = 
     CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
   CosTradingRepos::ServiceTypeRepository::TypeStruct_var
@@ -716,7 +717,7 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
 
 template <class TRADER, class TRADER_LOCK_TYPE> void
 TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
-forward_query (const CosTrading::LinkName next_hop,
+forward_query (const char* next_hop,
                const char *type,
                const char *constr,
                const char *pref,
@@ -850,7 +851,7 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   CosTrading::Offer* offer = 0;
   TAO_Support_Attributes_Impl& support_attrs = this->trader_.support_attributes ();
   CosTrading::TypeRepository_ptr type_repos = support_attrs.type_repos ();
-  CosTradingRepos::ServiceTypeRepository_ptr rep = 
+  CosTradingRepos::ServiceTypeRepository_var rep = 
     CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
   
@@ -953,7 +954,7 @@ TAO_Register<TRADER>::modify (const char *id,
   TAO_Support_Attributes_Impl& support_attrs =
     this->trader_.support_attributes ();  
   CosTrading::TypeRepository_ptr type_repos = support_attrs.type_repos ();
-  CosTradingRepos::ServiceTypeRepository_ptr rep = 
+  CosTradingRepos::ServiceTypeRepository_var rep = 
     CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   Offer_Database &offer_database = this->trader_.offer_database ();
@@ -996,7 +997,7 @@ TAO_Register<TRADER>::withdraw_using_constraint (const char *type,
   TAO_Support_Attributes_Impl&
     support_attrs = this->trader_.support_attributes ();
   CosTrading::TypeRepository_ptr type_repos = support_attrs.type_repos ();
-  CosTradingRepos::ServiceTypeRepository_ptr rep = 
+  CosTradingRepos::ServiceTypeRepository_var rep = 
     CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
   Offer_Database &offer_database =  this->trader_.offer_database ();
   CORBA::Boolean dp_support = support_attrs.supports_dynamic_properties ();
@@ -1180,9 +1181,9 @@ TAO_Admin<TRADER,TRADER_LOCK_TYPE>::TAO_Admin (TRADER &trader)
   
   size_t time_value = ACE_OS::time ();
 # if defined (ACE_HAS_BROKEN_RANDR)
-  ACE_RANDR_TYPE seed = ACE_static_cast (ACE_RANDR_TYPE, time_value);
+  ACE_RANDR_TYPE seed = (ACE_RANDR_TYPE) time_value;
 # else
-  ACE_RANDR_TYPE seed = ACE_static_cast (ACE_RANDR_TYPE, &time_value);
+  ACE_RANDR_TYPE seed = (ACE_RANDR_TYPE) &time_value;
 # endif /* ACE_HAS_BROKEN_RANDR */ 
 
   CORBA::ULong length = RANDOM_PREFIX_LENGTH + sizeof (CORBA::ULong);

@@ -278,8 +278,8 @@ fully_describe_type (const char * name,
 		      (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
   
   // return appropriate information about the type.
-  CosTradingRepos::ServiceTypeRepository::TypeStruct* descr =
-    new CosTradingRepos::ServiceTypeRepository::TypeStruct;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct* descr = 0;
+  ACE_NEW_RETURN (descr, CosTradingRepos::ServiceTypeRepository::TypeStruct, 0);
   CosTradingRepos::ServiceTypeRepository::TypeStruct & s =
     type_entry->int_id_->type_struct_;
   
@@ -360,26 +360,70 @@ TAO_Service_Type_Repository::
 fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
 		       CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 		       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types)
-{   
-  // Insert our own properties first.
-  CORBA::ULong i = 0;
-  CORBA::ULong prop_index_begin = props.length ();
-  CORBA::ULong num_properties = type_struct.props.length ();
+{
+  Service_Type_Queue service_type_queue;
+  this->collect_inheritance_hierarchy (type_struct, service_type_queue);
 
-  props.length (prop_index_begin + num_properties);
-  for (i = 0; i < num_properties; i++)
-    props[prop_index_begin++] = type_struct.props[i];
+  // Count the total number of properties.
+  CORBA::ULong num_props = 0,
+    num_types = service_type_queue.size ();
+  Service_Type_Queue::ITERATOR iterator (service_type_queue);
+  for (; ! iterator.done (); iterator.advance ())
+    {
+      const char** next_type_name = 0;
+      Service_Type_Map::ENTRY* type_entry = 0;
 
-  // Insert the names of our own supertypes next
-  CORBA::ULong super_types_index_begin = super_types.length ();
-  CORBA::ULong num_super_types = type_struct.super_types.length ();
+      iterator.next (next_type_name);
+      TAO_String_Hash_Key hash_key (*next_type_name);
+      this->type_map_.find (*next_type_name, type_entry);
 
-  super_types.length (super_types_index_begin + num_super_types);
-  for (i = 0; i < num_super_types; i++)
-    super_types[super_types_index_begin++] = type_struct.super_types[i];
+      CosTradingRepos::ServiceTypeRepository::TypeStruct& tstruct =
+        type_entry->int_id_->type_struct_;
+      num_props += tstruct.props.length ();
+    }
 
+  num_props += type_struct.props.length ();
+  CosTradingRepos::ServiceTypeRepository::PropStruct* prop_buf =
+    CosTradingRepos::ServiceTypeRepository::PropStructSeq::allocbuf (num_props);
+  CosTrading::ServiceTypeName* type_buf =
+    CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq::allocbuf (num_types);
+  
+  // Copy in all properties.
+  int i = 0;
+  CORBA::ULong prop_index = 0;
+  CORBA::ULong type_index = 0;  
+  for (i = type_struct.props.length () - 1; i >= 0; i--)
+    prop_buf[prop_index++] = type_struct.props[i];
+
+  iterator.first ();
+  for (; ! iterator.done (); iterator.advance ())
+    {
+      const char** next_type_name = 0;
+      Service_Type_Map::ENTRY* type_entry = 0;
+
+      iterator.next (next_type_name);
+      TAO_String_Hash_Key hash_key (*next_type_name);
+      this->type_map_.find (*next_type_name, type_entry);
+
+      CosTradingRepos::ServiceTypeRepository::TypeStruct& tstruct =
+        type_entry->int_id_->type_struct_;
+      for (i = tstruct.props.length () - 1; i >= 0; i--)
+        prop_buf[prop_index++] = tstruct.props[i];
+
+      type_buf[type_index++] = CORBA::string_dup (*next_type_name);
+    }
+
+  props.replace (num_props, num_props, prop_buf, CORBA::B_TRUE);
+  super_types = CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq (num_types, num_types, type_buf, CORBA::B_TRUE);
+}
+
+void
+TAO_Service_Type_Repository::
+collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
+                               TAO_Service_Type_Repository::Service_Type_Queue& target)
+{
   // Recurse for each super_type
-  for (i = 0; i < num_super_types; i++)
+  for (int i = type_struct.super_types.length () - 1; i >= 0; i--)
     {
       Service_Type_Map::ENTRY* next_type_entry = 0;
       TAO_String_Hash_Key next_type_name (type_struct.super_types[i]);
@@ -387,8 +431,9 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
       
       CosTradingRepos::ServiceTypeRepository::TypeStruct&
 	next_type_struct = next_type_entry->int_id_->type_struct_;
+      target.enqueue_tail (type_struct.super_types[i]);
       
-      this->fully_describe_type_i (next_type_struct, props, super_types);
+      this->collect_inheritance_hierarchy (next_type_struct, target);
     }
 }
 
@@ -532,7 +577,9 @@ update_type_map (const char* name,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
+template class ACE_Unbounded_Queue<char*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
+#pragma instantiate ACE_Unbounded_Queue<char*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
