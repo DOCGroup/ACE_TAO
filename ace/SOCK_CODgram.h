@@ -34,13 +34,15 @@ public:
   ACE_SOCK_CODgram (const ACE_Addr &remote_sap, 
 		    const ACE_Addr &local_sap = ACE_Addr::sap_any, 
 		    int protocol_family = PF_INET, 
-		    int protocol = 0);
+		    int protocol = 0,
+		    int reuse_addr = 0);
   // Initiate a connected dgram.
 
   int open (const ACE_Addr &remote_sap, 
  	    const ACE_Addr &local_sap = ACE_Addr::sap_any, 
 	    int protocol_family = PF_INET, 
-	    int protocol = 0);
+	    int protocol = 0,
+	    int reuse_addr = 0);
   // Initiate a connected dgram.
 
   void dump (void) const;

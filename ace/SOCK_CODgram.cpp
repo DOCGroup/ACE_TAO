@@ -15,10 +15,12 @@ ACE_SOCK_CODgram::dump (void) const
 // Here's the general-purpose constructor.
 
 ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote, const ACE_Addr &local, 
-				    int protocol_family, int protocol)
+				    int protocol_family, int protocol, 
+				    int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_CODgram::ACE_SOCK_CODgram");
-  if (this->open (remote, local, protocol_family, protocol) == -1)
+  if (this->open (remote, local, 
+		  protocol_family, protocol, reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_CODgram"));
 }
 
@@ -45,10 +47,12 @@ ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote, const ACE_Addr &loca
 
 int
 ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
-		    int protocol_family, int protocol)
+			int protocol_family, int protocol,
+			int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_CODgram::open");
-  if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, protocol) == -1)
+  if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, 
+		      protocol, reuse_addr) == -1)
     return -1;
   else
     {
