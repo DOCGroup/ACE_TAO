@@ -1,3 +1,9 @@
+Wed May 12 00:25:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.h (ACE_Thread_Manager): Added clarification
+	  for the semantics differences among wait(), wait_grp() and
+	  wait_task().
+
 Tue May 11 18:11:51 1999  James C. Hu <jxh@entera.com>
 
         * ace/config-sunos5.7.h: SunOS 5.7 (aka Solaris 7) does not
