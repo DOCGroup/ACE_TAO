@@ -106,7 +106,8 @@ ACE_OS::readdir_r (ACE_DIR *dirp,
     return 1; // Oops, some type of error!
 #elif defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
 #  if (defined (sun) && (defined (_POSIX_PTHREAD_SEMANTICS) || \
-                        (_FILE_OFFSET_BITS == 64))) || \
+                        (_FILE_OFFSET_BITS == 64) || \
+                        (_POSIX_C_SOURCE - 0 >= 199506L))) || \
       (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
                          defined (__USE_POSIX) || \
