@@ -183,7 +183,12 @@ namespace CIAO
     {
       if (name)
         {
-          compintrdesc.supportedType = XMLString::transcode (name);
+	  // increase the length of the sequence
+	  CORBA::ULong i (compintrdesc.supportedType.length ());
+	  compintrdesc.supportedType.length (i + 1);
+
+	  // push back the last item
+          compintrdesc.supportedType[i] = XMLString::transcode (name);
         }
     }
 
