@@ -12,7 +12,7 @@ LIBNAME  = libTAO_IFR_Client
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO_Domain -lTAO -lACE
+ACE_SHLIBS = -lTAO -lACE
 
 
 CPP_SRCS += InterfaceC IFR_Client_Adapter_Impl
