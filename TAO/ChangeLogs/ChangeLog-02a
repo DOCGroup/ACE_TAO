@@ -1,3 +1,8 @@
+Thu Jul  5 23:42:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_State.i: Removed from the main trunk. Replaced
+	  that with GIOP_Message_State.inl.
+
 Thu Jul  5 23:30:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  The long awaited fix for bug 575 is finally in!! This has been
