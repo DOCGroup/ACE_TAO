@@ -1,18 +1,26 @@
+Thu May 17 11:51:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/rules.local.GNU:
+          Removed misuse of CC_OUTPUT_FLAG in the middle of an 'if' shell
+          statement.  Chances are that this was the result of a global
+          search and replace.  Thanks to Cristian Ferretti
+          <cristian_ferretti@yahoo.com> for pointing this out.
+
 Thu May 17 12:43:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Removed the beguine builds for
-	  some time till we get Redhat machine in place.
+        * bin/nightlybuilds/builds.lst: Removed the beguine builds for
+          some time till we get Redhat machine in place.
 
 Thu May 17 11:36:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Configuration.cpp: Fixed an inconsistency in the
-	  enumerate_sections() method so that
- 	  ACE_Configuration_Win32Registry and ACE_Configuration_Heap will
- 	  behave the same.  ACE_Configuration_Win32Registry was returning
- 	  -2 upon no more sections to enumerate, rather than 1.  This is
- 	  because it is not checking for a return of ERROR_NO_MORE_ITEMS
- 	  from ACE_TEXT_RegEnumKeyEx.  Thanks to Kevin Burge
- 	  <kcburge@systemware-inc.com> for reporting this.
+        * ace/Configuration.cpp: Fixed an inconsistency in the
+          enumerate_sections() method so that
+          ACE_Configuration_Win32Registry and ACE_Configuration_Heap will
+          behave the same.  ACE_Configuration_Win32Registry was returning
+          -2 upon no more sections to enumerate, rather than 1.  This is
+          because it is not checking for a return of ERROR_NO_MORE_ITEMS
+          from ACE_TEXT_RegEnumKeyEx.  Thanks to Kevin Burge
+          <kcburge@systemware-inc.com> for reporting this.
 
 Thu May 17 10:46:31 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -22,49 +30,49 @@ Thu May 17 10:46:31 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu May 17 10:16:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/POSIX_Asynch_IO.{h,cpp}: There are some weird inconsistencies
-	  between the declaration and definition of the recv() methods in
- 	  ACE_POSIX_SIG_Asynch_Read_Dgram and
- 	  ACE_POSIX_AIOCB_Asynch_Read_Dgram.  I've made a fix that
- 	  compiles, but we need feedback from Roger Tragin to really fix
- 	  this...
+        * ace/POSIX_Asynch_IO.{h,cpp}: There are some weird inconsistencies
+          between the declaration and definition of the recv() methods in
+          ACE_POSIX_SIG_Asynch_Read_Dgram and
+          ACE_POSIX_AIOCB_Asynch_Read_Dgram.  I've made a fix that
+          compiles, but we need feedback from Roger Tragin to really fix
+          this...
 
-Thu May 17 10:00:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu> 
+Thu May 17 10:00:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* ace/Proactor_Impl.h:
+        * ace/Proactor_Impl.h:
           Added interfaces for create_asynch_read_dgram_result and
           create_asynch_write_dgram_result.
 
-Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu> 
+Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Proactor_Impl.h: Added two missing factory methods to
- 	  ACE_Proactor_Impl.  Thanks to Bala for reporting this.
-  
-	* ace/WIN32_Proactor.h (ACE_WIN32_Proactor): The signal_number parameter was
-	  missing.  Thanks to Andy Gokhale for reporting this.
+        * ace/Proactor_Impl.h: Added two missing factory methods to
+          ACE_Proactor_Impl.  Thanks to Bala for reporting this.
 
-Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu> 
+        * ace/WIN32_Proactor.h (ACE_WIN32_Proactor): The signal_number parameter was
+          missing.  Thanks to Andy Gokhale for reporting this.
 
-	* ace/Asynch_IO.cpp
-	  ace/Asynch_IO.h
-	  ace/Asynch_IO_Impl.cpp
-	  ace/Asynch_IO_Impl.h
-	  ace/Asynch_IO_Impl.i
-	  ace/POSIX_Asynch_IO.cpp
-	  ace/POSIX_Asynch_IO.h
-	  ace/POSIX_Asynch_IO.i
-	  ace/POSIX_Proactor.cpp
-	  ace/POSIX_Proactor.h
-	  ace/POSIX_Proactor.i
-	  ace/Proactor.cpp
-	  ace/Proactor.h
-	  ace/WIN32_Asynch_IO.cpp
-	  ace/WIN32_Asynch_IO.h
-	  ace/WIN32_Proactor.cpp
-	  ace/WIN32_Proactor.h: Added Async IO support for UDP dgrams
-	  on NT so they can be used via the Proactor.  Thanks to
-	  Roger Tragin <rtragin@cuseeme.com> for contributing this.
-  
+Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+        * ace/Asynch_IO.cpp
+          ace/Asynch_IO.h
+          ace/Asynch_IO_Impl.cpp
+          ace/Asynch_IO_Impl.h
+          ace/Asynch_IO_Impl.i
+          ace/POSIX_Asynch_IO.cpp
+          ace/POSIX_Asynch_IO.h
+          ace/POSIX_Asynch_IO.i
+          ace/POSIX_Proactor.cpp
+          ace/POSIX_Proactor.h
+          ace/POSIX_Proactor.i
+          ace/Proactor.cpp
+          ace/Proactor.h
+          ace/WIN32_Asynch_IO.cpp
+          ace/WIN32_Asynch_IO.h
+          ace/WIN32_Proactor.cpp
+          ace/WIN32_Proactor.h: Added Async IO support for UDP dgrams
+          on NT so they can be used via the Proactor.  Thanks to
+          Roger Tragin <rtragin@cuseeme.com> for contributing this.
+
 Wed May 16 22:43:19 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Synch.i (ACE_Mutex::remove): Properly clean up the shared
@@ -81,10 +89,10 @@ Wed May 16 17:05:29 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp:
 
-	  In ACE_OutputCDR::write_wchar(), casting int to ACE_CDR::Octet and
- 	  passing the pointer to that to write_1() instead of casting the
-	  pointers - to avoid little Endian and big Endian issues. Thanks to
-	  Krishnakumar B  <kitty@cs.wustl.edu> in tracking this.
+          In ACE_OutputCDR::write_wchar(), casting int to ACE_CDR::Octet and
+          passing the pointer to that to write_1() instead of casting the
+          pointers - to avoid little Endian and big Endian issues. Thanks to
+          Krishnakumar B  <kitty@cs.wustl.edu> in tracking this.
 
         * tests/CDR_Test.cpp:
 
@@ -92,13 +100,13 @@ Wed May 16 17:05:29 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 Wed May 16 14:51:37 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/Config_Test.cpp: Updated this test to include Chris
-	  Hafey's improvements.
+        * tests/Config_Test.cpp: Updated this test to include Chris
+          Hafey's improvements.
 
-	* ace/Configuration.{h,cpp},
-  	* ace/Configuration_Import_Export.cpp: Added a number of fixes from
-	  Chris Hafey and Jonathan Reis that had been lost when Jerry
- 	  Odenwelder added his changes.
+        * ace/Configuration.{h,cpp},
+        * ace/Configuration_Import_Export.cpp: Added a number of fixes from
+          Chris Hafey and Jonathan Reis that had been lost when Jerry
+          Odenwelder added his changes.
 
 Wed May 16 09:49:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -113,7 +121,7 @@ Wed May 16 02:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
 
-	  Added the PPC 403 CPU to the list of supported CPUs.
+          Added the PPC 403 CPU to the list of supported CPUs.
 
 Tue May 15 20:37:31 2001  Steve Huston  <shuston@riverace.com>
 
@@ -151,9 +159,9 @@ Tue May 15 18:00:49 2001  Steve Huston  <shuston@riverace.com>
 
 Tue May 15 10:14:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS.i (mmap): Added an extra check for an empty
-	  string. Thanks to Edan Ayal <edana@bandwiz.com> for reporting
-	  this problem and suggesting an easy fix.
+        * ace/OS.i (mmap): Added an extra check for an empty
+          string. Thanks to Edan Ayal <edana@bandwiz.com> for reporting
+          this problem and suggesting an easy fix.
 
 Mon May 14 22:38:06 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -161,79 +169,79 @@ Mon May 14 22:38:06 2001  Balachandran  <bala@cs.wustl.edu>
 
 Mon May 14 14:45:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (ACE_InputCDR): Somehow the removed
-	  steal_data () got back into the header file. Removed the
-	  method. 
+        * ace/CDR_Stream.h (ACE_InputCDR): Somehow the removed
+          steal_data () got back into the header file. Removed the
+          method.
 
 Mon May 14 11:02:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Strategies_T.i: Removed the ACE_ERROR statement from the
-	  destructor of ACE_Accept_Strategy. This created problems when
-	  the destructor was called during shutdown if the object was
-	  statically allocated. Thanks to Jonathan Reis <reis@stentor.com>
-	  for reporting this problem. 
+        * ace/Strategies_T.i: Removed the ACE_ERROR statement from the
+          destructor of ACE_Accept_Strategy. This created problems when
+          the destructor was called during shutdown if the object was
+          statically allocated. Thanks to Jonathan Reis <reis@stentor.com>
+          for reporting this problem.
 
 Mon May 14 07:48:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Process_Mutex.{h,cpp,inl}: Reverted the change "Thu May 10
-	  18:37:41 2001  Steve Huston  <shuston@riverace.com>". The change
-	  was breaking SHMIOP in TAO.
+        * ace/Process_Mutex.{h,cpp,inl}: Reverted the change "Thu May 10
+          18:37:41 2001  Steve Huston  <shuston@riverace.com>". The change
+          was breaking SHMIOP in TAO.
 
 Fri May 11 10:25:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS_Dirent.h (ACE_OS_Dirent): Missed a conversion of "DIR" to
- 	  "ACE_DIR".
+        * ace/OS_Dirent.h (ACE_OS_Dirent): Missed a conversion of "DIR" to
+          "ACE_DIR".
 
-	* ace/Synch.cpp (get_nesting_level): Added better protection for the
-	  case where ACE_HAS_RECURSIVE_MUTEXES -- only return
- 	  RecursionCount if ACE_WIN32 is defined.  Thanks to Corey Trager
- 	  <corey.trager@tradingtechnologies.com> for reporting this.
+        * ace/Synch.cpp (get_nesting_level): Added better protection for the
+          case where ACE_HAS_RECURSIVE_MUTEXES -- only return
+          RecursionCount if ACE_WIN32 is defined.  Thanks to Corey Trager
+          <corey.trager@tradingtechnologies.com> for reporting this.
 
-	* ace/OS.cpp: Reformatted all the ACE_reinterpret_cast() macros so their
-	  arguments are on the same line to avoid tickling a bug with
- 	  SunC++'s preprocessor.  Thanks to Corey Trager
- 	  <corey.trager@tradingtechnologies.com> for reporting this.
+        * ace/OS.cpp: Reformatted all the ACE_reinterpret_cast() macros so their
+          arguments are on the same line to avoid tickling a bug with
+          SunC++'s preprocessor.  Thanks to Corey Trager
+          <corey.trager@tradingtechnologies.com> for reporting this.
 
 Fri May 11 07:14:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/CDR_Test.cpp: Reverted this change "Wed May  9 23:19:30
-	  2001  Sharath R. Cholleti " 
+        * tests/CDR_Test.cpp: Reverted this change "Wed May  9 23:19:30
+          2001  Sharath R. Cholleti "
 
 Fri May 11 06:47:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/ARGV_Test.cpp: One of those extra ")".
+        * tests/ARGV_Test.cpp: One of those extra ")".
 
 Fri May 11 06:14:58 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Dirent.h (ACE_Dirent),
-	* ace/OS.cpp (uname),
-	* ace/OS.h (ACE_OS),
-	* ace/OS.i (hostname),
-	* ace/OS_Dirent.cpp (readdir_emulation),
-	* ace/OS_Dirent.h (ACE_OS_Dirent),
-	* ace/OS_Dirent.inl (ACE_OS_Dirent),
-	* ace/config-win32-common.h (ACE_LACKS_STRUCT_DIR),
-	* apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp (Notification_Receiver_Handler),
-	* apps/Orbix-Examples/Logger/Logger.cpp (Logger),
-	* bin/envinfo.cpp (main),
-	* examples/Reactor/Multicast/Log_Wrapper.cpp (open),
-	* performance-tests/Misc/basic_perf.cpp (main),
-	* tests/Dirent_Test.cpp (main),
-	* tests/Enum_Interfaces_Test.cpp (main),
-	* tests/SOCK_Connector_Test.cpp (find_another_host):
-	  Updated all of ACE and its tests to use ACE_DIR rather than DIR
- 	  to avoid conflicts with other programs (like Perl) that also
- 	  define an enumation with DIR.  Thanks to Gonzo Diethelm
- 	  <Gonzalo.Diethelm@sonda.com> for contributing these fixes.
+        * ace/Dirent.h (ACE_Dirent),
+        * ace/OS.cpp (uname),
+        * ace/OS.h (ACE_OS),
+        * ace/OS.i (hostname),
+        * ace/OS_Dirent.cpp (readdir_emulation),
+        * ace/OS_Dirent.h (ACE_OS_Dirent),
+        * ace/OS_Dirent.inl (ACE_OS_Dirent),
+        * ace/config-win32-common.h (ACE_LACKS_STRUCT_DIR),
+        * apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp (Notification_Receiver_Handler),
+        * apps/Orbix-Examples/Logger/Logger.cpp (Logger),
+        * bin/envinfo.cpp (main),
+        * examples/Reactor/Multicast/Log_Wrapper.cpp (open),
+        * performance-tests/Misc/basic_perf.cpp (main),
+        * tests/Dirent_Test.cpp (main),
+        * tests/Enum_Interfaces_Test.cpp (main),
+        * tests/SOCK_Connector_Test.cpp (find_another_host):
+          Updated all of ACE and its tests to use ACE_DIR rather than DIR
+          to avoid conflicts with other programs (like Perl) that also
+          define an enumation with DIR.  Thanks to Gonzo Diethelm
+          <Gonzalo.Diethelm@sonda.com> for contributing these fixes.
 
         The following fixes are all thanks to Ingo Dahm <ingo.dahm@sun.com>
-  
-	* ace/config-sunos5.6.h: Added support for SunC++ 5.2.
-	* ace/IOStream.h: Added support for SunC++ 5.2.
-	* ace/config-sunos5.8.h: Added Solaris 8 support for native
-	  POSIX RW locks.  
-	* include/makeinclude/platform_sunos5_sunc++.GNU: Added support
-	  for Sun C++ 5.2.
+
+        * ace/config-sunos5.6.h: Added support for SunC++ 5.2.
+        * ace/IOStream.h: Added support for SunC++ 5.2.
+        * ace/config-sunos5.8.h: Added Solaris 8 support for native
+          POSIX RW locks.
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Added support
+          for Sun C++ 5.2.
 
 Thu May 10 19:33:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
