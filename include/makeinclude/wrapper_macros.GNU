@@ -38,7 +38,7 @@
 #                     specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
 #  threads          Build with thread support.
-#  xt_reactor	    Build the XtReactor.
+#  xt_reactor       Build the XtReactor.
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -86,13 +86,13 @@
 #  PLATFORM_XT_LDFLAGS    Platform LD options for X11 (some require -L...)
 #  PLATFORM_XT_LIBS       Platform libraries require with X11
 #  PRELINK      Executable to precede linking, such as quantify
-#  PURELINK	If set, contains purify executable as well as all options
+#  PURELINK     If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
-#		The base directory in which Pure products will produce instrumented
-#		libraries.
+#               The base directory in which Pure products will produce
+#               instrumented libraries.
 #  PURE_CACHE_DIR
-#		The full name of the directory in which Pure produces will produce
-#		instrumented libraries.
+#               The full name of the directory in which Pure produces will
+#               produce instrumented libraries.
 #  PTDIRS       Pathnames of directories containing template code
 #  RM           Name of program to use to remove files
 #  SOFLAGS      Flags used to build a shared library
@@ -218,17 +218,24 @@ endif # xt_reactor
 
 ifdef exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
-else
-  ifeq ($(CXX),g++)
-    #### Disable the default exception handling of g++ >= 2.8.0.
-    G++_HAS_EXCEPTIONS := \
-      $(shell if g++ --version | egrep -v '^2\.[0-7]' > /dev/null; then \
-                 echo 1; fi)
-    ifdef G++_HAS_EXCEPTIONS
-      CCFLAGS += -fno-exceptions
-    endif # G++_HAS_EXCEPTIONS
+else # ! exceptions
+  ifeq ($(findstring g++,$(CXX)),g++)
+    ifeq ($(CXX),g++)
+      #### Disable the default exception handling of g++ >= 2.8.0.
+      G++_HAS_EXCEPTIONS := \
+        $(shell \
+          if $(CXX) --version | egrep -v '^(cygnus-)?2\.[0-7]' > /dev/null; \
+          then echo 1; fi)
+      ifdef G++_HAS_EXCEPTIONS
+        CCFLAGS += -fno-exceptions
+      endif # G++_HAS_EXCEPTIONS
+    # else, CXX is something like g++386.  Assume that it doesn't
+    # support exception handling.  The shell command above won't
+    # work if CXX isn't on the users PATH.
+    endif # plain g++
+  else
   endif # g++
-endif # exceptions
+endif # ! exceptions
 
 ifeq ($(profile),0)
   override profile =
@@ -374,16 +381,16 @@ COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 COMPILEESO.cc   = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 
 ifeq ($(LINK.c),override)
-  LINK.c        = $(LINK.c.override)
+  LINK.c  = $(LINK.c.override)
 else
-  LINK.c        = $(PURELINK) $(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) \
-                  $(LIBS)
+  LINK.c  = $(PURELINK) $(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) \
+            $(LDLIBS) $(LIBS)
 endif # LINK.c.override
 
 ifeq ($(LINK.cc),override)
-  LINK.cc       = $(LINK.cc.override)
+  LINK.cc = $(LINK.cc.override)
 else
-  LINK.cc       = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+  LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
-SOLINK.cc       = $(PRELINK) $(DLD) $(SOFLAGS)
+SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
