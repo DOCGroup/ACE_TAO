@@ -258,14 +258,6 @@ SOURCE=.\Containers.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CORBA_Handler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CORBA_Ref.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Date_Time.cpp
 # End Source File
 # Begin Source File
@@ -1211,14 +1203,6 @@ SOURCE=.\Containers.h
 # Begin Source File
 
 SOURCE=.\Containers_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CORBA_Handler.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CORBA_Ref.h
 # End Source File
 # Begin Source File
 
@@ -2323,14 +2307,6 @@ SOURCE=.\Containers.i
 # Begin Source File
 
 SOURCE=.\Containers_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CORBA_Handler.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CORBA_Ref.i
 # End Source File
 # Begin Source File
 
