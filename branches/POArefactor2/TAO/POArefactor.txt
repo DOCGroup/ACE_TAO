@@ -1,3 +1,100 @@
+Mon Nov 29 09:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Full_Profile/server.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/Trading_Service/Trading_Service.h:
+        * performance-tests/POA/Demux/demux_test_server.h:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+        * examples/Callback_Quoter/Consumer_Handler.h:
+        * examples/Callback_Quoter/Notifier_i.h:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+          Removed include of ORB_Manager, was not used at all
+
+        * orbsvcs/Time_Service/Clerk_i.h:
+        * orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.h:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.h:
+        * orbsvcs/tests/Property/client.h:
+        * orbsvcs/tests/Property/server.h:
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/import_test.cpp:
+        * examples/Callback_Quoter/Notifier_Input_Handler.h:
+        * examples/Event_Comm/Notifier_Server.h:
+        * examples/Load_Balancing/Identity_Server.h:
+        * examples/Load_Balancing/Identity_Client.h:
+        * examples/Load_Balancing/Load_Balancing_Service.h:
+        * examples/Load_Balancing_persistent/Identity_Server.h:
+        * examples/Load_Balancing_persistent/Identity_Client.h:
+        * examples/Load_Balancing_persistent/Load_Balancing_Service.h:
+        * examples/Logging/Logging_Service_i.h:
+        * examples/Quoter/Generic_Factory.h:
+        * examples/Simple/chat/Client_i.h:
+        * examples/OBV/Simple_util.h:
+        * examples/Persistent_Grid/Simple_util.h:
+        * examples/Quoter/Factory_Finder.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.h:
+        * examples/Simple/Simple_util.h:
+        * examples/Simple/chat/Server_i.h:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h:
+        * examples/Simple/chat/Broadcaster_i.h:
+        * examples/Simple/bank/AccountManager_i.{h,cpp}:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_A.h:
+        * tests/NestedUpcall/Triangle_Test/server_B.h:
+        * tests/NestedUpcall/Triangle_Test/initiator.h:
+        * tests/NestedUpcall/MT_Client_Test/local_server.{h,cpp}:
+        * tests/NestedUpcall/MT_Client_Test/server.h:
+        * tests/InterOp-Naming/Server_i.h:
+        * performance-tests/Pluggable/PP_Test_Server.h:
+        * tests/Multiple_Inheritance/server.cpp:
+          Use TAO_ORB_Manager from tao/Utils now.
+
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/NestedUpcall/Triangle_Test/TT.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+        * orbsvcs/tests/Security/ssliop_corbaloc/corbaloc_ssliop.mpc:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+        * orbsvcs/tests/Property/Property.mpc:
+        * orbsvcs/tests/Simple_Naming/Simple_Naming.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:s
+        * examples/Load_Balancing/Load_Balancing.mpc:
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+        * examples/Load_Balancing_persistent/Load_Balancing.mpc:
+        * examples/Logging/Logging.mpc:
+        * examples/Quoter/Quoter.mpc:
+        * examples/Persistent_Grid/Persistent_Grid.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/Simple/chat/chat.mpc:
+        * examples/Simple/echo/echo.mpc:
+        * examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+        * examples/Simple/grid/grid.mpc:
+        * examples/Simple/time/time.mpc:
+          Add utils as base project because TAO_ORB_Manager is now there
+
+        * orbsvcs/tests/AVStreams/Multicast/ftp.h:
+          Removed TAO_ORB_Manager* members, they are not used at all
+
 Sun Nov 28 19:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.h:
