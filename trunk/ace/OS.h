@@ -290,9 +290,9 @@
 #endif /* ACE_UNIQUE_NAME_LEN */
 
 #if !defined (ACE_MAX_DGRAM_SIZE)
-// value of IP_MAXPACKET as defined in <netinet/ip.h>
-// which may not exist in some platforms.
-#define ACE_MAX_DGRAM_SIZE 65535
+// This is just a guess.  8k is the normal limit on
+// most machines because that's what NFS expects.
+#define ACE_MAX_DGRAM_SIZE 8192
 #endif /* ACE_MAX_DGRAM_SIZE */
 
 // Here are all ACE-specific global declarations needed throughout
