@@ -73,13 +73,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-  
+
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -89,43 +89,43 @@ namespace TAO
 
 namespace BiDirPolicy
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_typedef/typedef_ch.cpp:342
-  
+
   typedef CORBA::UShort BidirectionalPolicyValue;
   typedef CORBA::UShort_out BidirectionalPolicyValue_out;
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_constant/constant_ch.cpp:52
-  
+
   const BiDirPolicy::BidirectionalPolicyValue NORMAL = 0U;
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_constant/constant_ch.cpp:52
-  
+
   const BiDirPolicy::BidirectionalPolicyValue BOTH = 1U;
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType BIDIRECTIONAL_POLICY_TYPE = 37U;
-  
+
   // TAO_IDL - Generated from
   // be/be_interface.cpp:610
 
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY__VAR_OUT_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY__VAR_OUT_CH_
-  
+
   class BidirectionalPolicy;
   typedef BidirectionalPolicy *BidirectionalPolicy_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         BidirectionalPolicy
       >
     BidirectionalPolicy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         BidirectionalPolicy
@@ -133,66 +133,66 @@ namespace BiDirPolicy
     BidirectionalPolicy_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY_CH_
-  
+
   class TAO_BiDirGIOP_Export BidirectionalPolicy
     : public virtual CORBA::Policy
   {
   public:
     typedef BidirectionalPolicy_ptr _ptr_type;
     typedef BidirectionalPolicy_var _var_type;
-    
+
     // The static operations.
     static BidirectionalPolicy_ptr _duplicate (BidirectionalPolicy_ptr obj);
-    
+
     static BidirectionalPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static BidirectionalPolicy_ptr _nil (void)
     {
       return (BidirectionalPolicy_ptr)0;
     }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual BiDirPolicy::BidirectionalPolicyValue value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_ch.cpp:192
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     BidirectionalPolicy (void);
-    
+
     virtual ~BidirectionalPolicy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     BidirectionalPolicy (const BidirectionalPolicy &);
-    
+
     void operator= (const BidirectionalPolicy &);
   };
 
@@ -212,7 +212,7 @@ namespace TAO
 
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY__TRAITS_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_BiDirGIOP_Export Objref_Traits<BiDirPolicy::BidirectionalPolicy>
   {
@@ -230,7 +230,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48

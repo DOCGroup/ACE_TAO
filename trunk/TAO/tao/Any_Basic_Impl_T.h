@@ -31,7 +31,7 @@ namespace TAO
    *
    * Used for all basic IDL types except bounded (w)strings.
    */
-  template<typename T> 
+  template<typename T>
   class Any_Basic_Impl_T : public Any_Impl
   {
   public:
@@ -42,7 +42,7 @@ namespace TAO
     static void insert (CORBA::Any &,
                         CORBA::TypeCode_ptr,
                         const T &);
-    static CORBA::Boolean extract (const CORBA::Any &, 
+    static CORBA::Boolean extract (const CORBA::Any &,
                                    CORBA::TypeCode_ptr,
                                    T &);
 
@@ -57,7 +57,7 @@ namespace TAO
   private:
     T value_;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "tao/Any_Basic_Impl_T.inl"

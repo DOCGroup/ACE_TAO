@@ -46,14 +46,14 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for BiDirPolicy::BidirectionalPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 BiDirPolicy::BidirectionalPolicy_ptr
 TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_duplicate (
     BiDirPolicy::BidirectionalPolicy_ptr p
@@ -62,7 +62,7 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_duplicate (
   return BiDirPolicy::BidirectionalPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_release (
     BiDirPolicy::BidirectionalPolicy_ptr p
@@ -71,14 +71,14 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 BiDirPolicy::BidirectionalPolicy_ptr
 TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_nil (void)
 {
   return BiDirPolicy::BidirectionalPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_marshal (
     BiDirPolicy::BidirectionalPolicy_ptr p,
@@ -89,7 +89,7 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*BiDirPolicy__TAO_BidirectionalPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -110,10 +110,10 @@ BiDirPolicy::BidirectionalPolicy::_narrow (
     {
       return BidirectionalPolicy::_nil ();
     }
-  
+
   BidirectionalPolicy_ptr proxy =
     dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
-  
+
   return BidirectionalPolicy::_duplicate (proxy);
 }
 
@@ -124,7 +124,7 @@ BiDirPolicy::BidirectionalPolicy::_duplicate (BidirectionalPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -186,7 +186,7 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         BiDirPolicy::BidirectionalPolicy
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         BiDirPolicy::BidirectionalPolicy

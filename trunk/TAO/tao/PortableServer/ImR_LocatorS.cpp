@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // .\be\be_codegen.cpp:646
 
 #ifndef _TAO_IDL_IMR_LOCATORS_CPP_
@@ -76,7 +76,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerObject>
     : public
@@ -90,13 +90,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:474
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::StartupOptions>
     : public
@@ -109,13 +109,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:474
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformation>
     : public
@@ -128,13 +128,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:265
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformationList>
     : public
@@ -150,7 +150,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
@@ -167,7 +167,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::Administration>
     : public
@@ -181,13 +181,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:265
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::Locator::ServerNameList>
     : public
@@ -200,7 +200,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // .\be\be_interface.cpp:1463
@@ -361,45 +361,45 @@ public:
       const char * activator
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   virtual Dynamic::ParameterList * arguments (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual char * target_most_derived_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Boolean target_is_a (
       const char * id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
 private:
   TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activator (
       const TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activator &
     );
-  
+
   void operator= (
       const TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activator &
     );
-  
+
 private:
   POA_ImplementationRepository::Locator *_tao_impl;
-  
+
   const char * server_;
   const char * activator_;
 };
@@ -431,19 +431,19 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activa
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
   parameter_list->length (2);
   CORBA::ULong len = 0;
-  
+
   (*parameter_list)[len].argument <<= server_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   (*parameter_list)[len].argument <<= activator_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -457,15 +457,15 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activa
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
-    
-  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_activate_server_in_activator_exceptiondata[] = 
+
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_activate_server_in_activator_exceptiondata[] =
   {
     ImplementationRepository::_tc_NotFound,
     ImplementationRepository::_tc_CannotActivate
   };
-  
+
   exception_list->length (2);
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
@@ -477,7 +477,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activa
   return safe_exception_list._retn ();
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activator::result (
     ACE_ENV_SINGLE_ARG_DECL
   )
@@ -488,7 +488,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_activa
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -526,45 +526,45 @@ public:
       const char * activator
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   virtual Dynamic::ParameterList * arguments (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual char * target_most_derived_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Boolean target_is_a (
       const char * id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
 private:
   TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activator (
       const TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activator &
     );
-  
+
   void operator= (
       const TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activator &
     );
-  
+
 private:
   POA_ImplementationRepository::Locator *_tao_impl;
-  
+
   const char * server_;
   const char * activator_;
 };
@@ -596,19 +596,19 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activato
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
   parameter_list->length (2);
   CORBA::ULong len = 0;
-  
+
   (*parameter_list)[len].argument <<= server_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   (*parameter_list)[len].argument <<= activator_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -622,14 +622,14 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activato
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
-    
-  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_remove_server_in_activator_exceptiondata[] = 
+
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_remove_server_in_activator_exceptiondata[] =
   {
     ImplementationRepository::_tc_NotFound
   };
-  
+
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
@@ -641,7 +641,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activato
   return safe_exception_list._retn ();
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activator::result (
     ACE_ENV_SINGLE_ARG_DECL
   )
@@ -652,7 +652,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_activato
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -690,17 +690,17 @@ public:
       const char * activator
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   virtual Dynamic::ParameterList * arguments (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )

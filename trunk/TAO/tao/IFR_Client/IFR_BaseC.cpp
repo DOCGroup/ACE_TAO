@@ -57,13 +57,13 @@
 // Arg traits specializations.
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:436
 
 #if !defined (_CORBA_ANY__ARG_TRAITS_CS_)
 #define _CORBA_ANY__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::Any>
     : public
@@ -76,13 +76,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:391
 
 #if !defined (_CORBA_DEFINITIONKIND__ARG_TRAITS_CS_)
 #define _CORBA_DEFINITIONKIND__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::DefinitionKind>
     : public
@@ -96,7 +96,7 @@ namespace TAO
 
 #if !defined (_CORBA_CONTAINED__ARG_TRAITS_CS_)
 #define _CORBA_CONTAINED__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::Contained>
     : public
@@ -110,13 +110,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:472
 
 #if !defined (_CORBA_CONTAINED_DESCRIPTION__ARG_TRAITS_CS_)
 #define _CORBA_CONTAINED_DESCRIPTION__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::Contained::Description>
     : public
@@ -132,7 +132,7 @@ namespace TAO
 
 #if !defined (_CORBA_REPOSITORY__ARG_TRAITS_CS_)
 #define _CORBA_REPOSITORY__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::Repository>
     : public
@@ -149,7 +149,7 @@ namespace TAO
 
 #if !defined (_CORBA_CONTAINER__ARG_TRAITS_CS_)
 #define _CORBA_CONTAINER__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::Container>
     : public
@@ -163,13 +163,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_CONTAINER_DESCRIPTIONSEQ__ARG_TRAITS_CS_)
 #define _CORBA_CONTAINER_DESCRIPTIONSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::Container::DescriptionSeq>
     : public
@@ -185,7 +185,7 @@ namespace TAO
 
 #if !defined (_CORBA_MODULEDEF__ARG_TRAITS_CS_)
 #define _CORBA_MODULEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ModuleDef>
     : public
@@ -202,7 +202,7 @@ namespace TAO
 
 #if !defined (_CORBA_CONSTANTDEF__ARG_TRAITS_CS_)
 #define _CORBA_CONSTANTDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ConstantDef>
     : public
@@ -219,7 +219,7 @@ namespace TAO
 
 #if !defined (_CORBA_IDLTYPE__ARG_TRAITS_CS_)
 #define _CORBA_IDLTYPE__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::IDLType>
     : public
@@ -236,7 +236,7 @@ namespace TAO
 
 #if !defined (_CORBA_STRUCTDEF__ARG_TRAITS_CS_)
 #define _CORBA_STRUCTDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::StructDef>
     : public
@@ -253,7 +253,7 @@ namespace TAO
 
 #if !defined (_CORBA_UNIONDEF__ARG_TRAITS_CS_)
 #define _CORBA_UNIONDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::UnionDef>
     : public
@@ -270,7 +270,7 @@ namespace TAO
 
 #if !defined (_CORBA_ENUMDEF__ARG_TRAITS_CS_)
 #define _CORBA_ENUMDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::EnumDef>
     : public
@@ -287,7 +287,7 @@ namespace TAO
 
 #if !defined (_CORBA_ALIASDEF__ARG_TRAITS_CS_)
 #define _CORBA_ALIASDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::AliasDef>
     : public
@@ -304,7 +304,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -318,13 +318,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::InterfaceDefSeq>
     : public
@@ -340,7 +340,7 @@ namespace TAO
 
 #if !defined (_CORBA_EXCEPTIONDEF__ARG_TRAITS_CS_)
 #define _CORBA_EXCEPTIONDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ExceptionDef>
     : public
@@ -357,7 +357,7 @@ namespace TAO
 
 #if !defined (_CORBA_NATIVEDEF__ARG_TRAITS_CS_)
 #define _CORBA_NATIVEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::NativeDef>
     : public
@@ -374,7 +374,7 @@ namespace TAO
 
 #if !defined (_CORBA_VALUEDEF__ARG_TRAITS_CS_)
 #define _CORBA_VALUEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ValueDef>
     : public
@@ -388,13 +388,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ValueDefSeq>
     : public
@@ -410,7 +410,7 @@ namespace TAO
 
 #if !defined (_CORBA_VALUEBOXDEF__ARG_TRAITS_CS_)
 #define _CORBA_VALUEBOXDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ValueBoxDef>
     : public
@@ -427,7 +427,7 @@ namespace TAO
 
 #if !defined (_CORBA_ABSTRACTINTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_ABSTRACTINTERFACEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::AbstractInterfaceDef>
     : public
@@ -441,13 +441,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_ABSTRACTINTERFACEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_ABSTRACTINTERFACEDEFSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::AbstractInterfaceDefSeq>
     : public
@@ -463,7 +463,7 @@ namespace TAO
 
 #if !defined (_CORBA_LOCALINTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_LOCALINTERFACEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::LocalInterfaceDef>
     : public
@@ -480,7 +480,7 @@ namespace TAO
 
 #if !defined (_CORBA_EXTVALUEDEF__ARG_TRAITS_CS_)
 #define _CORBA_EXTVALUEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ExtValueDef>
     : public
@@ -494,13 +494,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_CONTAINEDSEQ__ARG_TRAITS_CS_)
 #define _CORBA_CONTAINEDSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ContainedSeq>
     : public
@@ -513,13 +513,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_STRUCTMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_STRUCTMEMBERSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::StructMemberSeq>
     : public
@@ -532,13 +532,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_INITIALIZERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_INITIALIZERSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::InitializerSeq>
     : public
@@ -551,13 +551,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ExtInitializerSeq>
     : public
@@ -570,13 +570,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_UNIONMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_UNIONMEMBERSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::UnionMemberSeq>
     : public
@@ -589,13 +589,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_ENUMMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_ENUMMEMBERSEQ__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_IFR_Client_Export Arg_Traits<CORBA::EnumMemberSeq>
     : public
@@ -608,7 +608,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -617,20 +617,20 @@ static const CORBA::Long _oc_CORBA_Identifier[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4964), 
-  ACE_NTOHL (0x656e7469), 
-  ACE_NTOHL (0x66696572), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4964),
+  ACE_NTOHL (0x656e7469),
+  ACE_NTOHL (0x66696572),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
     11,
-  ACE_NTOHL (0x4964656e), 
-  ACE_NTOHL (0x74696669), 
+  ACE_NTOHL (0x4964656e),
+  ACE_NTOHL (0x74696669),
   ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
   0U, // string length
 };
 
@@ -655,20 +655,20 @@ static const CORBA::Long _oc_CORBA_ScopedName[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5363), 
-  ACE_NTOHL (0x6f706564), 
-  ACE_NTOHL (0x4e616d65), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5363),
+  ACE_NTOHL (0x6f706564),
+  ACE_NTOHL (0x4e616d65),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/ScopedName:1.0
     11,
-  ACE_NTOHL (0x53636f70), 
-  ACE_NTOHL (0x65644e61), 
+  ACE_NTOHL (0x53636f70),
+  ACE_NTOHL (0x65644e61),
   ACE_NTOHL (0x6d650000),  // name = ScopedName
-    CORBA::tk_string, 
+    CORBA::tk_string,
   0U, // string length
 };
 
@@ -693,21 +693,21 @@ static const CORBA::Long _oc_CORBA_RepositoryId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x49643a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5265),
+  ACE_NTOHL (0x706f7369),
+  ACE_NTOHL (0x746f7279),
+  ACE_NTOHL (0x49643a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
     13,
-  ACE_NTOHL (0x5265706f), 
-  ACE_NTOHL (0x7369746f), 
-  ACE_NTOHL (0x72794964), 
+  ACE_NTOHL (0x5265706f),
+  ACE_NTOHL (0x7369746f),
+  ACE_NTOHL (0x72794964),
   ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
   0U, // string length
 };
 
@@ -732,174 +732,174 @@ static const CORBA::Long _oc_CORBA_DefinitionKind[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4465), 
-  ACE_NTOHL (0x66696e69), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x4b696e64), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4465),
+  ACE_NTOHL (0x66696e69),
+  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x4b696e64),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/DefinitionKind:1.0
   15,
-  ACE_NTOHL (0x44656669), 
-  ACE_NTOHL (0x6e697469), 
-  ACE_NTOHL (0x6f6e4b69), 
+  ACE_NTOHL (0x44656669),
+  ACE_NTOHL (0x6e697469),
+  ACE_NTOHL (0x6f6e4b69),
   ACE_NTOHL (0x6e640000),  // name = DefinitionKind
   36, // member count
   8,
-  ACE_NTOHL (0x646b5f6e), 
+  ACE_NTOHL (0x646b5f6e),
   ACE_NTOHL (0x6f6e6500),  // name = dk_none
   7,
-  ACE_NTOHL (0x646b5f61), 
+  ACE_NTOHL (0x646b5f61),
   ACE_NTOHL (0x6c6c0000),  // name = dk_all
   13,
-  ACE_NTOHL (0x646b5f41), 
-  ACE_NTOHL (0x74747269), 
-  ACE_NTOHL (0x62757465), 
+  ACE_NTOHL (0x646b5f41),
+  ACE_NTOHL (0x74747269),
+  ACE_NTOHL (0x62757465),
   ACE_NTOHL (0x0),  // name = dk_Attribute
   12,
-  ACE_NTOHL (0x646b5f43), 
-  ACE_NTOHL (0x6f6e7374), 
+  ACE_NTOHL (0x646b5f43),
+  ACE_NTOHL (0x6f6e7374),
   ACE_NTOHL (0x616e7400),  // name = dk_Constant
   13,
-  ACE_NTOHL (0x646b5f45), 
-  ACE_NTOHL (0x78636570), 
-  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x646b5f45),
+  ACE_NTOHL (0x78636570),
+  ACE_NTOHL (0x74696f6e),
   ACE_NTOHL (0x0),  // name = dk_Exception
   13,
-  ACE_NTOHL (0x646b5f49), 
-  ACE_NTOHL (0x6e746572), 
-  ACE_NTOHL (0x66616365), 
+  ACE_NTOHL (0x646b5f49),
+  ACE_NTOHL (0x6e746572),
+  ACE_NTOHL (0x66616365),
   ACE_NTOHL (0x0),  // name = dk_Interface
   10,
-  ACE_NTOHL (0x646b5f4d), 
-  ACE_NTOHL (0x6f64756c), 
+  ACE_NTOHL (0x646b5f4d),
+  ACE_NTOHL (0x6f64756c),
   ACE_NTOHL (0x65000000),  // name = dk_Module
   13,
-  ACE_NTOHL (0x646b5f4f), 
-  ACE_NTOHL (0x70657261), 
-  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x646b5f4f),
+  ACE_NTOHL (0x70657261),
+  ACE_NTOHL (0x74696f6e),
   ACE_NTOHL (0x0),  // name = dk_Operation
   11,
-  ACE_NTOHL (0x646b5f54), 
-  ACE_NTOHL (0x79706564), 
+  ACE_NTOHL (0x646b5f54),
+  ACE_NTOHL (0x79706564),
   ACE_NTOHL (0x65660000),  // name = dk_Typedef
   9,
-  ACE_NTOHL (0x646b5f41), 
-  ACE_NTOHL (0x6c696173), 
+  ACE_NTOHL (0x646b5f41),
+  ACE_NTOHL (0x6c696173),
   ACE_NTOHL (0x0),  // name = dk_Alias
   10,
-  ACE_NTOHL (0x646b5f53), 
-  ACE_NTOHL (0x74727563), 
+  ACE_NTOHL (0x646b5f53),
+  ACE_NTOHL (0x74727563),
   ACE_NTOHL (0x74000000),  // name = dk_Struct
   9,
-  ACE_NTOHL (0x646b5f55), 
-  ACE_NTOHL (0x6e696f6e), 
+  ACE_NTOHL (0x646b5f55),
+  ACE_NTOHL (0x6e696f6e),
   ACE_NTOHL (0x0),  // name = dk_Union
   8,
-  ACE_NTOHL (0x646b5f45), 
+  ACE_NTOHL (0x646b5f45),
   ACE_NTOHL (0x6e756d00),  // name = dk_Enum
   13,
-  ACE_NTOHL (0x646b5f50), 
-  ACE_NTOHL (0x72696d69), 
-  ACE_NTOHL (0x74697665), 
+  ACE_NTOHL (0x646b5f50),
+  ACE_NTOHL (0x72696d69),
+  ACE_NTOHL (0x74697665),
   ACE_NTOHL (0x0),  // name = dk_Primitive
   10,
-  ACE_NTOHL (0x646b5f53), 
-  ACE_NTOHL (0x7472696e), 
+  ACE_NTOHL (0x646b5f53),
+  ACE_NTOHL (0x7472696e),
   ACE_NTOHL (0x67000000),  // name = dk_String
   12,
-  ACE_NTOHL (0x646b5f53), 
-  ACE_NTOHL (0x65717565), 
+  ACE_NTOHL (0x646b5f53),
+  ACE_NTOHL (0x65717565),
   ACE_NTOHL (0x6e636500),  // name = dk_Sequence
   9,
-  ACE_NTOHL (0x646b5f41), 
-  ACE_NTOHL (0x72726179), 
+  ACE_NTOHL (0x646b5f41),
+  ACE_NTOHL (0x72726179),
   ACE_NTOHL (0x0),  // name = dk_Array
   14,
-  ACE_NTOHL (0x646b5f52), 
-  ACE_NTOHL (0x65706f73), 
-  ACE_NTOHL (0x69746f72), 
+  ACE_NTOHL (0x646b5f52),
+  ACE_NTOHL (0x65706f73),
+  ACE_NTOHL (0x69746f72),
   ACE_NTOHL (0x79000000),  // name = dk_Repository
   11,
-  ACE_NTOHL (0x646b5f57), 
-  ACE_NTOHL (0x73747269), 
+  ACE_NTOHL (0x646b5f57),
+  ACE_NTOHL (0x73747269),
   ACE_NTOHL (0x6e670000),  // name = dk_Wstring
   9,
-  ACE_NTOHL (0x646b5f46), 
-  ACE_NTOHL (0x69786564), 
+  ACE_NTOHL (0x646b5f46),
+  ACE_NTOHL (0x69786564),
   ACE_NTOHL (0x0),  // name = dk_Fixed
   9,
-  ACE_NTOHL (0x646b5f56), 
-  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x646b5f56),
+  ACE_NTOHL (0x616c7565),
   ACE_NTOHL (0x0),  // name = dk_Value
   12,
-  ACE_NTOHL (0x646b5f56), 
-  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x646b5f56),
+  ACE_NTOHL (0x616c7565),
   ACE_NTOHL (0x426f7800),  // name = dk_ValueBox
   15,
-  ACE_NTOHL (0x646b5f56), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x4d656d62), 
+  ACE_NTOHL (0x646b5f56),
+  ACE_NTOHL (0x616c7565),
+  ACE_NTOHL (0x4d656d62),
   ACE_NTOHL (0x65720000),  // name = dk_ValueMember
   10,
-  ACE_NTOHL (0x646b5f4e), 
-  ACE_NTOHL (0x61746976), 
+  ACE_NTOHL (0x646b5f4e),
+  ACE_NTOHL (0x61746976),
   ACE_NTOHL (0x65000000),  // name = dk_Native
   21,
-  ACE_NTOHL (0x646b5f41), 
-  ACE_NTOHL (0x62737472), 
-  ACE_NTOHL (0x61637449), 
-  ACE_NTOHL (0x6e746572), 
-  ACE_NTOHL (0x66616365), 
+  ACE_NTOHL (0x646b5f41),
+  ACE_NTOHL (0x62737472),
+  ACE_NTOHL (0x61637449),
+  ACE_NTOHL (0x6e746572),
+  ACE_NTOHL (0x66616365),
   ACE_NTOHL (0x0),  // name = dk_AbstractInterface
   18,
-  ACE_NTOHL (0x646b5f4c), 
-  ACE_NTOHL (0x6f63616c), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72666163), 
+  ACE_NTOHL (0x646b5f4c),
+  ACE_NTOHL (0x6f63616c),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72666163),
   ACE_NTOHL (0x65000000),  // name = dk_LocalInterface
   13,
-  ACE_NTOHL (0x646b5f43), 
-  ACE_NTOHL (0x6f6d706f), 
-  ACE_NTOHL (0x6e656e74), 
+  ACE_NTOHL (0x646b5f43),
+  ACE_NTOHL (0x6f6d706f),
+  ACE_NTOHL (0x6e656e74),
   ACE_NTOHL (0x0),  // name = dk_Component
   8,
-  ACE_NTOHL (0x646b5f48), 
+  ACE_NTOHL (0x646b5f48),
   ACE_NTOHL (0x6f6d6500),  // name = dk_Home
   11,
-  ACE_NTOHL (0x646b5f46), 
-  ACE_NTOHL (0x6163746f), 
+  ACE_NTOHL (0x646b5f46),
+  ACE_NTOHL (0x6163746f),
   ACE_NTOHL (0x72790000),  // name = dk_Factory
   10,
-  ACE_NTOHL (0x646b5f46), 
-  ACE_NTOHL (0x696e6465), 
+  ACE_NTOHL (0x646b5f46),
+  ACE_NTOHL (0x696e6465),
   ACE_NTOHL (0x72000000),  // name = dk_Finder
   9,
-  ACE_NTOHL (0x646b5f45), 
-  ACE_NTOHL (0x6d697473), 
+  ACE_NTOHL (0x646b5f45),
+  ACE_NTOHL (0x6d697473),
   ACE_NTOHL (0x0),  // name = dk_Emits
   13,
-  ACE_NTOHL (0x646b5f50), 
-  ACE_NTOHL (0x75626c69), 
-  ACE_NTOHL (0x73686573), 
+  ACE_NTOHL (0x646b5f50),
+  ACE_NTOHL (0x75626c69),
+  ACE_NTOHL (0x73686573),
   ACE_NTOHL (0x0),  // name = dk_Publishes
   12,
-  ACE_NTOHL (0x646b5f43), 
-  ACE_NTOHL (0x6f6e7375), 
+  ACE_NTOHL (0x646b5f43),
+  ACE_NTOHL (0x6f6e7375),
   ACE_NTOHL (0x6d657300),  // name = dk_Consumes
   12,
-  ACE_NTOHL (0x646b5f50), 
-  ACE_NTOHL (0x726f7669), 
+  ACE_NTOHL (0x646b5f50),
+  ACE_NTOHL (0x726f7669),
   ACE_NTOHL (0x64657300),  // name = dk_Provides
   8,
-  ACE_NTOHL (0x646b5f55), 
+  ACE_NTOHL (0x646b5f55),
   ACE_NTOHL (0x73657300),  // name = dk_Uses
   9,
-  ACE_NTOHL (0x646b5f45), 
-  ACE_NTOHL (0x76656e74), 
+  ACE_NTOHL (0x646b5f45),
+  ACE_NTOHL (0x76656e74),
   ACE_NTOHL (0x0),  // name = dk_Event
   };
 
@@ -954,7 +954,7 @@ TAO::Objref_Traits<CORBA::IRObject>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_IRObject_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -973,21 +973,21 @@ TAO::Collocation_Proxy_Broker *
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_IRObject_Proxy_Broker_ == 0)
     {
       CORBA_IRObject_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<CORBA::DefinitionKind>::ret_val _tao_retval;
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -996,10 +996,10 @@ TAO::Collocation_Proxy_Broker *
       13,
       this->the_TAO_IRObject_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (_tao_retval.excp ());
-  
+
   return _tao_retval.retn ();
 }
 
@@ -1017,21 +1017,21 @@ void CORBA::IRObject::destroy (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_IRObject_Proxy_Broker_ == 0)
     {
       CORBA_IRObject_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -1040,7 +1040,7 @@ void CORBA::IRObject::destroy (
       7,
       this->the_TAO_IRObject_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -1064,7 +1064,7 @@ CORBA::IRObject::CORBA_IRObject_setup_collocation (int collocated)
 CORBA::IRObject::~IRObject (void)
 {}
 
-void 
+void
 CORBA::IRObject::_tao_any_destructor (void *_tao_void_pointer)
 {
   IRObject *_tao_tmp_pointer =
@@ -1094,7 +1094,7 @@ CORBA::IRObject::_duplicate (IRObject_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

@@ -2207,7 +2207,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNANY__TRAITS_CH_)
 #define _DYNAMICANY_DYNANY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAny>
   {
@@ -2228,7 +2228,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNFIXED__TRAITS_CH_)
 #define _DYNAMICANY_DYNFIXED__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynFixed>
   {
@@ -2249,7 +2249,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNENUM__TRAITS_CH_)
 #define _DYNAMICANY_DYNENUM__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynEnum>
   {
@@ -2270,7 +2270,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNSTRUCT__TRAITS_CH_)
 #define _DYNAMICANY_DYNSTRUCT__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynStruct>
   {
@@ -2291,7 +2291,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNUNION__TRAITS_CH_)
 #define _DYNAMICANY_DYNUNION__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynUnion>
   {
@@ -2312,7 +2312,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNSEQUENCE__TRAITS_CH_)
 #define _DYNAMICANY_DYNSEQUENCE__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynSequence>
   {
@@ -2333,7 +2333,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNARRAY__TRAITS_CH_)
 #define _DYNAMICANY_DYNARRAY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynArray>
   {
@@ -2354,7 +2354,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNVALUE__TRAITS_CH_)
 #define _DYNAMICANY_DYNVALUE__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynValue>
   {
@@ -2375,7 +2375,7 @@ namespace TAO
 
 #if !defined (_DYNAMICANY_DYNANYFACTORY__TRAITS_CH_)
 #define _DYNAMICANY_DYNANYFACTORY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAnyFactory>
   {
@@ -2393,7 +2393,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48

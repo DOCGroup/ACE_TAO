@@ -235,7 +235,7 @@ namespace TAO
 
 #if !defined (_RTPORTABLESERVER_POA__TRAITS_CH_)
 #define _RTPORTABLESERVER_POA__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTPortableServer_Export Objref_Traits<RTPortableServer::POA>
   {
@@ -253,7 +253,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
