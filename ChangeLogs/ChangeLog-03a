@@ -1,3 +1,11 @@
+Mon Jun  5 14:54:46 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T):
+
+	  There is no need to deallocate resources from the previous call
+	  to open() since the open() method deallocates any resources
+	  prior to exiting if an error was encountered.
+
 Mon Jun  5 14:18:18 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T):
