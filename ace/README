@@ -287,7 +287,10 @@ ACE_HAS_EXCEPTIONS                      Compiler supports C++
 ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS    Compiler does not call
                                         unexpected exception handler
                                         if exception not listed in
-                                        exception specification is thrown.
+                                        exception specification is
+                                        thrown.  In particular, the
+                                        exception specification is not
+                                        respected.  
 ACE_HAS_EXPLICIT_KEYWORD                Compiler support explicit constructors.
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION Compiler's template
                                         instantiation mechanism
