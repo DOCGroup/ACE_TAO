@@ -6,6 +6,12 @@ Tue Apr 15 07:30:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Splitted makefile in 2 files, one to build the shared library,
           one to build the main.
 
+        * examples/Timer_Queue/Async_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.h:
+          Use ACE_Svc_Export to export the driver classes from the shared
+          library. This fixes the Kylix link errors.
+
 Tue Apr 15 06:12:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
