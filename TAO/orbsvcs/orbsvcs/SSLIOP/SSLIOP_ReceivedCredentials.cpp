@@ -17,7 +17,7 @@ TAO_SSLIOP_ReceivedCredentials::copy (TAO_ENV_SINGLE_ARG_DECL)
 {
   TAO_SSLIOP_ReceivedCredentials *c = 0;
   ACE_NEW_THROW_EX (c,
-                    TAO_SSLIOP_ReceivedCredentials (this->x509_),
+                    TAO_SSLIOP_ReceivedCredentials (this->x509_.in ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -83,3 +83,78 @@ TAO_SSLIOP_ReceivedCredentials::delegation_mode (
   // SSLIOP does not support delegation.
   return Security::SecDelModeNoDelegation;
 }
+
+// ---------------------------
+
+TAO_SSLIOP_ReceivedCredentials_ptr
+TAO_SSLIOP_ReceivedCredentials::_narrow (CORBA::Object_ptr obj
+                                         TAO_ENV_ARG_DECL)
+{
+  return
+    TAO_SSLIOP_ReceivedCredentials::_unchecked_narrow (obj
+                                                       TAO_ENV_ARG_PARAMETER);
+}
+  
+TAO_SSLIOP_ReceivedCredentials_ptr
+TAO_SSLIOP_ReceivedCredentials::_unchecked_narrow (CORBA::Object_ptr obj
+                                                   TAO_ENV_ARG_DECL_NOT_USED)
+{
+  if (CORBA::is_nil (obj))
+    return TAO_SSLIOP_ReceivedCredentials::_nil ();
+  return
+        ACE_reinterpret_cast
+          (
+            TAO_SSLIOP_ReceivedCredentials_ptr,
+              obj->_tao_QueryInterface
+                (
+                  ACE_reinterpret_cast
+                    (
+                      ptr_arith_t,
+                      &TAO_SSLIOP_ReceivedCredentials::_tao_class_id
+                    )
+                )
+          );
+}
+
+TAO_SSLIOP_ReceivedCredentials_ptr
+TAO_SSLIOP_ReceivedCredentials::_duplicate (
+  TAO_SSLIOP_ReceivedCredentials_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_add_ref ();
+
+  return obj;
+}
+
+void *
+TAO_SSLIOP_ReceivedCredentials::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &TAO_SSLIOP_ReceivedCredentials::_tao_class_id))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &::SecurityLevel2::Credentials::_tao_class_id))
+    retv = ACE_reinterpret_cast
+      (
+        void *,
+        ACE_static_cast
+          (
+            SecurityLevel2::Credentials_ptr,
+            this
+          )
+      );
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
+    retv = ACE_reinterpret_cast (void *,
+      ACE_static_cast (CORBA::Object_ptr, this));
+    
+  if (retv)
+    this->_add_ref ();
+  return retv;
+}
+
+// -----------------------------------------------------------
+
+int TAO_SSLIOP_ReceivedCredentials::_tao_class_id = 0;
