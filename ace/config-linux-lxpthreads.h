@@ -28,6 +28,10 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
+// AIO Stuff is present here. Eventhough I could nt get the
+// $ACE_ROOT/examples/Reactor/Proactor/<anything> to work.  
+#define ACE_HAS_AIO_CALLS
+
 #include "ace/config-linux-common.h"
 
 #define ACE_HAS_SVR4_DYNAMIC_LINKING

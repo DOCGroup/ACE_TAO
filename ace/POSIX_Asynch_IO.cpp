@@ -169,8 +169,18 @@ ACE_POSIX_Asynch_Operation::open (ACE_Handler &handler,
 int
 ACE_POSIX_Asynch_Operation::cancel (void)
 {
-  // @@ Not implemented.
-  ACE_NOTSUP_RETURN (0);
+  int result = ::aio_cancel (this->handle_, 0);
+  
+  if (result == -1)
+    return -1;
+  
+  // Check the return value and return 0/1/2 appropriately. 
+  if (result == AIO_CANCELED)
+    return 0;
+  else if (result == AIO_ALLDONE)
+    return 1;
+  else if (result == AIO_NOTCANCELED)
+    return 2;
 }
 
 ACE_Proactor *
@@ -1829,6 +1839,10 @@ ACE_POSIX_Asynch_Accept_Handler::register_accept_call_i (ACE_POSIX_Asynch_Accept
   
   return 0;
 }
+
+// @@ We could have a queue where the <result> objects are arranged
+//    according to the priority. This will help us to demux the accept
+//    completions based on the priority. (Alex).
 
 ACE_POSIX_Asynch_Accept_Result *
 ACE_POSIX_Asynch_Accept_Handler::deregister_accept_call (void)
