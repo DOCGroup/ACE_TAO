@@ -44,7 +44,7 @@ TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (CORBA::ULong maximum,
 template <class T> ACE_INLINE T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i)
 {
-  ACE_ASSERT (i < this->length_);
+  ACE_ASSERT (i < this->maximum_);
   T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
   return tmp[i];
 }
@@ -52,7 +52,7 @@ TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i)
 template <class T> ACE_INLINE const T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
 {
-  ACE_ASSERT (i < this->length_);
+  ACE_ASSERT (i < this->maximum_);
   T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
   return tmp[i];
 }
@@ -112,7 +112,7 @@ TAO_Bounded_Sequence<T,MAX>::operator= (const TAO_Bounded_Sequence<T,MAX> &rhs)
 template <class T, CORBA::ULong MAX> ACE_INLINE T &
 TAO_Bounded_Sequence<T,MAX>::operator[] (CORBA::ULong i)
 {
-  ACE_ASSERT (i < this->length_);
+  ACE_ASSERT (i < this->maximum_);
   T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
   return tmp[i];
 }
@@ -120,7 +120,7 @@ TAO_Bounded_Sequence<T,MAX>::operator[] (CORBA::ULong i)
 template <class T, CORBA::ULong MAX> ACE_INLINE const T &
 TAO_Bounded_Sequence<T,MAX>::operator[] (CORBA::ULong i) const
 {
-  ACE_ASSERT (i < this->length_);
+  ACE_ASSERT (i < this->maximum_);
   T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
   return tmp[i];
 }
@@ -206,8 +206,9 @@ TAO_Unbounded_Managed_Sequence<T,Manager>::TAO_Unbounded_Managed_Sequence
 template <class T, class Manager> ACE_INLINE Manager
 TAO_Unbounded_Managed_Sequence<T,Manager>::operator[] (CORBA::ULong index) const
 {
-  T* tmp = ACE_reinterpret_cast (T*, this->buffer_[index]);
-  return Manager (&tmp, this->release_);
+  ACE_ASSERT (index < this->maximum_);
+  T* tmp = ACE_reinterpret_cast (T*, this->buffer_);
+  return Manager (tmp + index, this->release_);
 }
 
 // *************************************************************
@@ -235,6 +236,7 @@ TAO_Bounded_Managed_Sequence<T,Manager,MAX>::TAO_Bounded_Managed_Sequence
 template <class T, class Manager, CORBA::ULong MAX> ACE_INLINE Manager
 TAO_Bounded_Managed_Sequence<T,Manager,MAX>::operator[] (CORBA::ULong index) const
 {
-  T* tmp = ACE_reinterpret_cast (T*, this->buffer_[index]);
-  return Manager(&tmp, this->release_);
+  ACE_ASSERT (index < this->maximum_);
+  T* tmp = ACE_reinterpret_cast (T*, this->buffer_);
+  return Manager(tmp + index, this->release_);
 }

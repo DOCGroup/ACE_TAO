@@ -82,7 +82,7 @@ CORBA_POA::create (CORBA::OctetSeq &key,
 
   data = new IIOP_Object (id,
                           IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                                         key));
+                                         ACE_static_cast(TAO_opaque&,key)));
   if (data != 0)
     env.clear ();
   else
