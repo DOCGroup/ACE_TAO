@@ -1,3 +1,10 @@
+Tue Jan 22 13:36:05 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo_i.h (~TAO_ClientRequestInfo_i):
+	* tao/ClientRequestInfo_i.cpp (~TAO_ClientRequestInfo_i):
+
+	  Added a virtual destructor to silence G++ warnings.
+
 Tue Jan 22 13:19:52 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):
