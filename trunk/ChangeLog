@@ -1,3 +1,10 @@
+Tue Nov  4 15:35:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Conn_Test.cpp:
+
+	  Include "ace/Signal.h".  Necessitated by inter-header dependency
+	  reductions.
+
 Tue Nov  4 14:36:59 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Array_Base.cpp:
