@@ -138,3 +138,11 @@ the  following 2 methods.
        This might be helpful if more than one person is running the
         Naming service in which case Multicast might cause confusion with some
         other Naming Service trying to answer your call.
+
+To build the client for VxWorks, for running the server and client
+on a single target:
+
+  % make BIN=client ACELIB= LDLIBS="$ACE_ROOT/ace/.obj/High_Res_Timer.o $ACE_ROOT/ace/.obj/gethrtime.o"
+
+The gethrtime.o component should only be included in LDLIBS if
+building with GreenHills for Pentium target.
