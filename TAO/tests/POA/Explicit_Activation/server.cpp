@@ -39,7 +39,8 @@ main (int argc, char **argv)
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
   // Get the POA_var object from Object_var.
-  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj, env);
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (obj, env);
 //       
   if (env.exception () != 0)
     {
@@ -48,8 +49,9 @@ main (int argc, char **argv)
     }
 
   // Get the POAManager of the RootPOA.
-  PortableServer::POAManager_var poa_manager = root_poa->the_POAManager (env);
-//       
+  PortableServer::POAManager_var poa_manager =
+    root_poa->the_POAManager (env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::the_POAManager");
@@ -67,10 +69,11 @@ main (int argc, char **argv)
 
   // Create the firstPOA under the RootPOA.
   ACE_CString name = "firstPOA";
-  PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
-                                                            poa_manager.in (),
-                                                            policies,
-                                                            env);
+  PortableServer::POA_var first_poa =
+    root_poa->create_POA (name.c_str (),
+                          poa_manager.in (),
+                          policies,
+                          env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_POA");
@@ -148,13 +151,14 @@ main (int argc, char **argv)
 
   // Get ObjectId for the string thirdPOA Create the object reference
   // for thirdPOA using that ObjectId.  Operation Used :
-  //   Object create_reference_with_id ( in ObjectId oid, in CORBA::RepositoryId intf );
+  //   Object create_reference_with_id (in ObjectId oid, in CORBA::RepositoryId intf );
   // This operation creates an object reference that encapsulates the
   // specified Object Id and interface repository Id values.
   PortableServer::ObjectId_var third_oid =
     PortableServer::string_to_ObjectId ("thirdFoo");
   CORBA::Object_var third_foo =
-    first_poa->create_reference_with_id (third_oid.in (), "IDL:Foo:1.0", env);
+    first_poa->create_reference_with_id (third_oid.in (),
+                                         "IDL:Foo:1.0", env);
 
   if (env.exception () != 0)
     {
@@ -163,7 +167,8 @@ main (int argc, char **argv)
     }
 
   // Stringyfy all the object references and print them out.
-  CORBA::String_var first_ior = orb->object_to_string (first_foo, env);
+  CORBA::String_var first_ior =
+    orb->object_to_string (first_foo, env);
 
   if (env.exception () != 0)
     {
@@ -171,7 +176,8 @@ main (int argc, char **argv)
       return -1;
     }
 
-  CORBA::String_var second_ior = orb->object_to_string (second_foo, env);
+  CORBA::String_var second_ior =
+    orb->object_to_string (second_foo, env);
 
   if (env.exception () != 0)
     {
@@ -179,7 +185,8 @@ main (int argc, char **argv)
       return -1;
     }
 
-  CORBA::String_var third_ior = orb->object_to_string (third_foo, env);
+  CORBA::String_var third_ior =
+    orb->object_to_string (third_foo, env);
 
   if (env.exception () != 0)
     {
