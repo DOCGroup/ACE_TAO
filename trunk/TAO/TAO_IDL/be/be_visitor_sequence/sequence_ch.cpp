@@ -336,7 +336,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 	}
     }
   // Now generate the extension...
-  if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet)
+  if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
+      && node->unbounded ())
     {
       *os << "\n"
 	  << "#if defined(TAO_NO_COPY_OCTET_SEQUENCES)" << be_nl
