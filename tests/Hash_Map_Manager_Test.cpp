@@ -217,6 +217,7 @@ run_test (void)
 
   size_t i;
 
+  // Check the <bind> operation.
   for (i = 0; string_table[i].key_ != 0; i++)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) == -1)
@@ -227,6 +228,7 @@ run_test (void)
 
   MAP_STRING entry;
 
+  // Check the <find> operation.
   for (i = 0; string_table[i].key_ != 0; i++)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
@@ -239,6 +241,20 @@ run_test (void)
                          ASYS_TEXT ("`%s' not found\n"),
                          string_table[i].key_),
                         -1);
+
+  // Check the <trybind> operation.
+  {
+    char *pc = string_table[1].value_;
+    if (hash.trybind (string_table[0].key_,
+                      pc) != 1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("::trybind missed existing entry.")),
+                        -1);
+    else if (pc != string_table[0].value_)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("::trybind doesn't return existing value.")),
+                        -1);
+  }
 
   // Let's test the iterator while we are at it.
   {
@@ -260,6 +276,7 @@ run_test (void)
 
   hash.unbind (string_table[2].key_, entry);
 
+  // Check the <find> operation again.
   for (i = 0; string_table[i].key_ != 0; i++)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
