@@ -199,6 +199,30 @@ TAO_IIOP_Connection_Handler::resume_handler (void)
 int
 TAO_IIOP_Connection_Handler::close_connection (void)
 {
+  // To maintain maximum compatibility, we only set this socket option
+  // if the user has provided a linger timeout.
+  int linger = this->orb_core()->orb_params()->linger ();
+  if (linger != -1)
+    {
+      struct linger lval;
+      lval.l_onoff = 1;
+      lval.l_linger = linger;
+
+      if (this->peer ().set_option(SOL_SOCKET,
+                                   SO_LINGER,
+                                   (void*) &lval,
+                                   sizeof (lval)) == -1)
+        {
+          if (TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_LIB_TEXT ("TAO (%P|%t) Unable to set ")
+                          ACE_LIB_TEXT ("SO_LINGER on %d\n"),
+                          this->peer ().get_handle ()));
+            }
+        }
+    }
+
   return this->close_connection_eh (this);
 }
 
