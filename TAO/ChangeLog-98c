@@ -17,11 +17,25 @@ Wed Nov 19 17:33:42 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* Task_Client.cpp: Fixed error_count.. Thanks to James Hu.
 
-Wed Nov 19 17:23:06 1997  James C Hu  <jxh@lindy.cs.wustl.edu>
+Wed Nov 19 17:20:45 1997  James C Hu  <jxh@cs.wustl.edu>
 
-	* Task_Client.cpp:
-	Removed a couple of unreachable return statements.  There are
-	still unreachable statements remaining.  Need help with them.
+	* TAO_IDL/be/be_operation.cpp: Removed an unreachable return
+	  statement.  There was already a return above it.
+
+	* TAO_IDL/ast/ast_expression.cpp: Added casts to comparisons of
+	  char variables to 0, since chars are unsigned by default in
+	  SGI.
+
+	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp: Removed a
+	  couple of unreachable return statements.  There are still
+	  unreachable statements remaining.  Need help with them.
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp:
+	  Meaningless type qualifier (const ...) removed.
+
+	  Some functions were returning `retval' before it was set.  I had
+	  these functions return a passed in paramenter instead.
 
 Wed Nov 19 13:50:36 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
