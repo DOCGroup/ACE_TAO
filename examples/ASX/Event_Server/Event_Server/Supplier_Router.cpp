@@ -38,6 +38,7 @@ Supplier_Router::svc (void)
 Supplier_Router::Supplier_Router (Peer_Router_Context *prc)
   : Peer_Router (prc)
 {
+  this->context ()->duplicate ();
 }
 
 // Initialize the Supplier Router. 
@@ -55,9 +56,12 @@ Supplier_Router::open (void *)
     }
 
   else // if (this->is_writer ()
-    // Make this an active object to handle the error cases in a
-    // separate thread.
-    return this->activate (Options::instance ()->t_flags ());
+    {
+      // Make this an active object to handle the error cases in a
+      // separate thread.
+      this->context ()->duplicate ();      
+      return this->activate (Options::instance ()->t_flags ());
+    }
 }
 
 // Close down the router. 
