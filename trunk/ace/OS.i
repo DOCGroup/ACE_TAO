@@ -6753,8 +6753,20 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
     // signal number is returned).
     *sig = ::sigwait (set, 0);
     return *sig;
-#   else /* ! __Lynx __ */
-#     if (defined (ACE_HAS_PTHREADS_DRAFT4) || (defined (ACE_HAS_PTHREADS_DRAFT6)) && !defined(ACE_HAS_FSU_PTHREADS)) || (_UNICOS == 9)
+#   elif defined (DIGITAL_UNIX)
+#     if defined (__DECCXX_VER)
+        // DEC cxx (but not g++) needs this direct call to its internal
+        // sigwait ().  This allows us to #undef sigwait, so that we can
+        // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait if
+        // sigwait is _not_ #undef'ed.
+        errno = ::_Psigwait (set, sig);
+        return errno == 0  ?  *sig  :  -1;
+#     else  /* g++, for example, on DIGITAL_UNIX */
+        *sig = ::__sigwaitd10 (set, sig);
+        return errno == 0  ?  *sig  :  -1;
+#     endif /* g++, for example, on DIGITAL_UNIX */
+#   else /* ! __Lynx __ && ! DIGITAL_UNIX */
+#     if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)) && !defined(ACE_HAS_FSU_PTHREADS)
         *sig = ::sigwait (set);
         return *sig;
 #     elif defined(ACE_HAS_FSU_PTHREADS)
@@ -6763,7 +6775,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
         errno = ::sigwait (set, sig);
         return errno == 0  ?  *sig  :  -1;
 #     endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
-#   endif /* ! __Lynx__ */
+#   endif /* ! __Lynx__ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 # elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (set);
     ACE_NOTSUP_RETURN (-1);
@@ -6829,7 +6841,7 @@ ACE_OS::thr_sigsetmask (int how,
   // Draft 4 and 6 implementations will sometimes have a sigprocmask () that
   // modifies the calling thread's mask only.  If this is not so for your
   // platform, define ACE_LACKS_PTHREAD_THR_SIGSETMASK.
-#   elif defined(ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6) || (_UNICOS == 9)
+#   elif defined(ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::sigprocmask (how, nsm, osm), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
