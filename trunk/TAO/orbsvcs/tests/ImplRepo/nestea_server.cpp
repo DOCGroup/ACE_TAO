@@ -1,7 +1,6 @@
 // $Id$
 
 #include "nestea_server_i.h"
-//#include "ace/file_connector.h"
 
 ACE_RCSID(ImplRepo, nestea_server, "$Id$")
 

@@ -44,9 +44,6 @@ public:
   // Initialize the client communication endpoint with server.
 
 private:
-  int read_ior (char *filename);
-  // Function to read the server ior from a file.
-
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
@@ -66,4 +63,4 @@ private:
   // Remember our orb.
 };
 
-#endif /* Nestea_CLIENT_I_H */
+#endif /* NESTEA_CLIENT_I_H */
