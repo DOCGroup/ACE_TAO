@@ -22,6 +22,11 @@
 #include "orbsvcs/LoadBalancingS.h"
 #include "ace/Containers.h"
 
+// @@ Ossama: my class names suck too, any idea on what would be a
+// good name for this strategy? It basically tries to keep all the
+// loads "close to the average",  if one server is much higher than
+// the load it is deemed too loaded and the advisory is sent.
+
 // Forward declarations
 class ReplicaProxy_Impl;
 

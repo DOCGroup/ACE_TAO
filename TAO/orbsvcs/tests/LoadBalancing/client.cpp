@@ -91,7 +91,7 @@ run_test (int iterations,
   ACE_Time_Value tv (0, timeout * 1000);
   ACE_Throughput_Stats stats;
   ACE_UINT64 test_start = ACE_OS::gethrtime ();
-  
+
   for (long i = 0; i != iterations; ++i)
     {
       ACE_UINT64 call_start = ACE_OS::gethrtime ();
@@ -99,7 +99,7 @@ run_test (int iterations,
       hasher->do_hash ("This is a silly test", ACE_TRY_ENV);
       ACE_CHECK;
       ACE_UINT64 end = ACE_OS::gethrtime ();
-      
+
       stats.sample (end - test_start, end - call_start);
       ACE_OS::sleep (tv);
     }

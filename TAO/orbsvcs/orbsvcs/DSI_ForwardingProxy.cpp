@@ -12,6 +12,8 @@ DSI_ForwardingProxy::DSI_ForwardingProxy (LoadBalancer_Impl *lb,
   : load_balancer_ (lb), // Hopefully these pointers won't be zero!
     interface_id_ (id)
 {
+  // @@ Ossama: why is this comment useful?
+
   // Nothing else
 }
 

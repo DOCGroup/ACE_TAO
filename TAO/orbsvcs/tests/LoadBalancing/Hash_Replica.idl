@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+// @@ Ossama: we should call this class just 'Hasher' it shouldn't be
+// so obvious that the service must be designed to be load balanced.
 interface Hash_Replica
 {
   // = DESCRIPTION

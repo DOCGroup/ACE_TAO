@@ -22,6 +22,8 @@ Load_Balancing_Strategy::load_changed (ReplicaProxy_Impl *,
 {
 }
 
+// @@ Ossama: i had to instantiate the template here because it is
+// used in two strategies, but it sound kind of silly...
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<ReplicaProxy_Impl*>;

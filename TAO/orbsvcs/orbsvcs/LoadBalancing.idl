@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    orbsvcs
+//   TAO_LoadBalancing
 //
 // = FILENAME
 //    LoadBalancing.idl
@@ -20,13 +20,19 @@
 module LoadBalancing
 {
   // = TITLE
-  //    This module provides TAO's Load Balancer interface.
+  //   This module defines the interfaces and data types used in TAO's
+  //   Load Balancing service.
 
   // = DESCRIPTION
   //     TAO's Load Balancer manages distribution of requests to
   //     replicas of a given Object in an effort to ensure that the
   //     applications/hosts pointed to by the Object reference are as
   //     equally loaded as possible, i.e. load balanced.
+  //     The definition of 'load' is application specific, for
+  //     example, some applications may choose to load balance access
+  //     to multiple dedicated lines, or separate network interfaces,
+  //     as well as more traditional load balancing metrics, such as
+  //     CPU or disk load.
 
   interface ReplicaControl
     {
@@ -96,10 +102,11 @@ module LoadBalancing
         };
 
       oneway void current_load (in float load);
-      // Send current load to the Load Balancer where the definition
-      // of "load" is load balancing algorithm specific.
+      // Send current load to the Load Balancer.
+      // The application must ensure that all replicas use the same
+      // notion of load.
 
-      void disconnect ();
+      void disconnect () raises (NotConnected);
       // Disconnect the ReplicaControl from the Load Balancer.  The
       // Object that the ReplicaControl controls will be no longer be
       // load balanced.
@@ -137,6 +144,17 @@ module LoadBalancing
       // object will cause the client to redirect its requests to a
       // Replica that fits a specific load balancing criteria.
     };
+
+  // @@ Ossama: we may want to add interfaces or operations to access
+  // the current list of loads, that would be useful for monitoring
+  // applications, and nice GUI-based demos.
+  // @@ Ossama: another idea: we have been using this stuff to make
+  // all the loads equal, but what if the objective is to keep the
+  // load below some value?  Maybe we should provide some callback
+  // mechanism to let the application know: the load is too high and
+  // there is nothing i can do about it, add more CPUS or reduce the
+  // load!
+  // Such feedback would be very useful for some applications.
 };
 
 #endif /* TAO_LOADBALANCER_IDL */

@@ -23,6 +23,18 @@
 #include "orbsvcs/LoadBalancing/DSI_ForwardingProxy.h"
 #include "orbsvcs/LoadBalancing/LoadBalancing_Strategy.h"
 
+// @@ Ossama: please always remember the #pragma once.
+
+// @@ Ossama: The name of this class should be TAO_XXX_LoadBalancer,
+// or something similar (i vote for XXX == LB)
+// @@ Ossama: the name of the file and the class are inconsistent.
+// @@ Ossama: now is when your idea of keeping the strategy separate
+// pays off: we could add strategies to detect misbehaving replicas,
+// for example, if they don't send any updates in X seconds then they
+// are removed, or maybe we poll them (using _non_existent) before
+// removing.  I'm sure there are other aspects of the system that
+// could be strategized.
+
 class TAO_LoadBalancing_Export LoadBalancer_Impl : public virtual POA_LoadBalancing::LoadBalancer
 {
 public:
@@ -35,27 +47,19 @@ public:
   ~LoadBalancer_Impl (void);
   // Destructor.
 
-  virtual LoadBalancing::ReplicaProxy_ptr connect (
-        LoadBalancing::ReplicaControl_ptr control,
-        CORBA::Object_ptr replica,
-        CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
-                     LoadBalancing::ReplicaProxy::NilReplica,
-                     CORBA::SystemException));
-  // Register ReplicaControl and Object being load balanced with
-  // ReplicaProxy and connect to Load Balancer.
-
-  virtual CORBA::Object_ptr group_identity (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return the reference to the object that represents the Replica
-  // group being load balanced.  This "group identity" object will
-  // cause the client to redirect its requests to a Replica that fits
-  // a specific load balancing criteria.
-
   // Local methods
 
+  // @@ Ossama: this method is something of my own invention, but i
+  // think we need to change the interface, to something like:
+  //    load_changed (float old_load, float new_load, proxy)
+  // that should let us keep the average load (and other similar
+  // things) pre-computed.
+  //
   void load_changed (ReplicaProxy_Impl *proxy,
                      CORBA::Environment &ACE_TRY_ENV);
+  // The load for <proxy> has changed, the LoadBalancer can use this
+  // opportunity to determine if the load on one of the services is
+  // too high.
 
   void disconnect (ReplicaProxy_Impl *proxy,
                    CORBA::Environment &ACE_TRY_ENV)
@@ -66,6 +70,17 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return a reference to the Replica to which client requests should
   // be redirected next.
+
+  // = See the descriptions in LoadBalancing.idl
+  virtual LoadBalancing::ReplicaProxy_ptr connect (
+        LoadBalancing::ReplicaControl_ptr control,
+        CORBA::Object_ptr replica,
+        CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
+                     LoadBalancing::ReplicaProxy::NilReplica,
+                     CORBA::SystemException));
+  virtual CORBA::Object_ptr group_identity (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   DSI_ForwardingProxy redirector_;
@@ -84,6 +99,7 @@ private:
 
 #if defined (__ACE_INLINE__)
 #include "LoadBalancer_i.i"
+// @@ Ossama: notice that i use relative paths!
 #endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_LOADBALANCER_I_H */
