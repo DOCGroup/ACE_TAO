@@ -1,3 +1,18 @@
+Fri Apr 26 14:05:49 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS.i:
+
+          Modify the ACE_OS::fflush() method to not call the system
+          implementation on VxWorks if the FILE* is 0.  This causes
+          problems for the OS.  Thanks to Michael Kirher
+          <Michael.Kircher@mchp.siemens.de> for reporting and providing
+          a fix for this.
+
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf_l.cpp:
+
+          Use ACE_OS::fflush() instead of fflush().
+
 Fri Apr 26 13:22:18 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Svc_Handler.{h,cpp}: Applied the Thread-safe Interface pattern

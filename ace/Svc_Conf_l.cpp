@@ -1801,7 +1801,7 @@ int main()
 int
 ace_yywrap (void)
 {
-  ::fflush (ace_yyin);
+  ACE_OS::fflush (ace_yyin);
   ace_yytext[0] = '#';
   ace_yyleng = 0;
 

@@ -93,7 +93,7 @@ inactive	      { return token (ACE_INACTIVE); }
 int
 yywrap (void)
 {
-  ::fflush (yyin);
+  ACE_OS::fflush (yyin);
   yytext[0] = '#';
   yyleng = 0;
 
