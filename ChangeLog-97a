@@ -1,3 +1,12 @@
+Wed May 21 16:15:48 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/{OS.cpp,Sched_Params.cp} (Solaris only): use 0 min priority
+	  again, with workaround in ACE_OS::thr_create to not use
+	  ::pthread_attr_setschedparam () if the priority is 0.  Instead,
+	  the priority of the newly created thread is set to 0 (if it
+	  wasn't created with 0) after the thread is created, with
+	  ::pthread_setschedparam ().
+
 Wed May 21 15:23:37 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/Strategies_T.* (ACE_Hash_Addr): Eliminated the ADDR_T
