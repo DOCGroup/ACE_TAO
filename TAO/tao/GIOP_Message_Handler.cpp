@@ -285,7 +285,6 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
           // only the first part of the fragment.
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
 
-
           if (TAO_debug_level >= 4)
             this->mesg_base_->dump_msg (
                 "Recv msg",
@@ -307,7 +306,6 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
           this->supp_buffer_.copy (this->current_buffer_.rd_ptr (),
                                    this->message_state_.message_size);
 
-
           if (TAO_debug_level >= 4)
             this->mesg_base_->dump_msg (
                 "Recv msg",
@@ -318,7 +316,6 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
           // We have one of the messages copied. Let us move the
           // rd_ptr in <current_buffer_> after that message
           this->current_buffer_.rd_ptr (this->message_state_.message_size);
-
 
           return this->message_state_.is_complete (this->supp_buffer_);
         }
@@ -346,11 +343,13 @@ TAO_GIOP_Message_Handler::more_messages (void)
           // wr_ptr.
           this->align_left_info ();
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
+
+          // No more meaningful messages
           return TAO_MESSAGE_BLOCK_INCOMPLETE;
         }
     }
 
-  // No more meaningful messages
+
   return TAO_MESSAGE_BLOCK_COMPLETE;
 }
 

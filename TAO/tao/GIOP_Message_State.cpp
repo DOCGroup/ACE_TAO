@@ -18,7 +18,6 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (TAO_ORB_Core* orb_core)
     message_type (TAO_GIOP_MESSAGERROR),
     message_size (0),
     request_id (0),
-
     // Problem similar to GIOP_Message_handler.cpp - Bala
     fragmented_messages (ACE_CDR::DEFAULT_BUFSIZE)
 {

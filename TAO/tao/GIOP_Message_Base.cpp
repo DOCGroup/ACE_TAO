@@ -199,27 +199,8 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
   this->set_state (state.giop_version.major,
                    state.giop_version.minor);
 
-  /*if (TAO_debug_level >= 4)
-    {
-      size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
-
-      // At this point we could have parsed the
-      char *buf = this->message_handler_.rd_ptr ();
-      buf -= len;
-      size_t msg_len =
-        state.message_size + len;
-      this->dump_msg ("recv",
-                      ACE_reinterpret_cast (u_char *,
-                                            buf),
-                        msg_len);
-                        }*/
-
   int retval =  this->message_handler_.is_message_ready ();
 
-  if (retval == 1)
-    {
-
-    }
   return retval;
 }
 
@@ -1188,23 +1169,6 @@ TAO_GIOP_Message_Base::more_messages (void)
 
   if (retval == 1)
     {
-      /*if (TAO_debug_level >= 4)
-        {
-          size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
-
-          char *buf = this->message_handler_.rd_ptr ();
-          buf -= len;
-          size_t msg_len =
-            state.message_size + len;
-
-          this->dump_msg ("recv",
-                          ACE_reinterpret_cast (u_char *,
-                                                buf),
-                          msg_len);
-                          }*/
-
-      // We have a message ready. This can be processed by the higher
-      // layers
       return TAO_MESSAGE_BLOCK_NEEDS_PROCESSING;
     }
 
