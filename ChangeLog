@@ -1,3 +1,18 @@
+Mon Apr 12 13:55:46 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/JAWS/clients/Caching/caching.mpc:
+        * apps/JAWS/server/server.mpc:
+
+          Made these project require ace_filecache.
+
+        * bin/MakeProjectCreator/config/ftclientorb.mpb:
+
+          Made this base project require ace_uuid.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Cleaned up and simplified the template somewhat.
+
 Mon Apr 12 12:54:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-win32-common.h:
