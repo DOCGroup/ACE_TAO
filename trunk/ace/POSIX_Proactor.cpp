@@ -759,16 +759,16 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set)
                 "sigemptyset failed"));
   
   //  Put the <signal_set>.
-  if (pthread_sigmask (SIG_SETMASK, &signal_set, 0) != 0)
+  if (ACE_OS::pthread_sigmask (SIG_SETMASK, &signal_set, 0) != 0)
     ACE_ERROR ((LM_ERROR,
                 "Error:(%P | %t):%p\n",
                 "pthread_sigmask failed"));
 
   // Get the <signal_set> back from the OS.
-  if (pthread_sigmask (SIG_SETMASK, 0, &this->RT_completion_signals_) != 0)
+  if (ACE_OS::pthread_sigmask (SIG_SETMASK, 0, &this->RT_completion_signals_) != 0)
     ACE_ERROR ((LM_ERROR,
                 "Error:(%P | %t):%p\n",
-                "pthread_sigmask failed"));
+                "ACE_OS::pthread_sigmask failed"));
 
 
   // Mask all the signals. 
@@ -988,7 +988,7 @@ ACE_POSIX_SIG_Proactor::mask_all (void) const
                       -1);
   
   // Mask them.
-  if (pthread_sigmask (SIG_SETMASK, &full_set, 0) != 0)
+  if (ACE_OS::pthread_sigmask (SIG_SETMASK, &full_set, 0) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p\n",
                        "pthread_sigmask failed"),
