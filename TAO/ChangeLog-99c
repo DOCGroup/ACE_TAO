@@ -1,3 +1,9 @@
+Wed Dec 08 13:57:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Added orbsvcs.rc.  Thanks to
+	  David Hauck <davidh@realtimeint.com> for reminding this.
+
 Tue Dec 07 21:32:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO.dsp:
