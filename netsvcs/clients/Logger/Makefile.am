@@ -8,11 +8,7 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-## The number in AUTOMAKE_OPTIONS is the minimum required version automake
-## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4
-
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 ## LDFLAGS = 
 ## Libtool will automatically link against the "proper" library.
@@ -20,9 +16,8 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 LDADD = $(top_builddir)/ace/libACE.la
 
 noinst_PROGRAMS = \
-         direct_logging \
-         indirect_logging
-
+ direct_logging \
+ indirect_logging
 
 direct_logging_SOURCES = direct_logging.cpp
 

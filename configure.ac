@@ -7376,6 +7376,21 @@ AC_CONFIG_FILES([
   apps/Makefile
   apps/gperf/Makefile
   apps/gperf/src/Makefile
+  netsvcs/Makefile
+  netsvcs/lib/Makefile
+  netsvcs/clients/Makefile
+  netsvcs/clients/Logger/Makefile
+  netsvcs/clients/Naming/Makefile
+  netsvcs/clients/Naming/Client/Makefile
+  netsvcs/clients/Naming/Dump_Restore/Makefile
+  netsvcs/clients/Tokens/Makefile
+  netsvcs/clients/Tokens/collection/Makefile
+  netsvcs/clients/Tokens/deadlock/Makefile
+  netsvcs/clients/Tokens/invariant/Makefile
+  netsvcs/clients/Tokens/manual/Makefile
+  netsvcs/clients/Tokens/mutex/Makefile
+  netsvcs/clients/Tokens/rw_lock/Makefile
+  netsvcs/servers/Makefile
   tests/Makefile
   tests/SSL/Makefile
 ])

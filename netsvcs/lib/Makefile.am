@@ -9,11 +9,7 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-## The number in AUTOMAKE_OPTIONS is the minimum required version automake
-## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4 
-
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 lib_LTLIBRARIES = libnetsvcs.la
 
@@ -29,7 +25,7 @@ libnetsvcs_la_SOURCES = \
          Token_Handler.cpp
 
 libnetsvcs_la_LDFLAGS = \
-         -version-info @ACE_CURRENT@:@ACE_REVISION@:@ACE_AGE@
+         -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 noinst_HEADERS = \
          Base_Optimizer.h  \
