@@ -1,3 +1,15 @@
+Tue Dec 05 02:02:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/IPC_SAP.cpp (disable): Reverted this change:
+
+	  Tue Nov 21 17:42:36 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	  The change seemed too low level where it might end up effecting
+	  more code than was intended.  However, as I discussed with Chris
+	  Uzdavinis <chris@atdesk.com>, the correct solution is to
+	  specialize the activation of the Svc_Handler rather than its
+	  accepting.
+	
 Mon Dec 04 23:54:10 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor.cpp: 
