@@ -51,7 +51,7 @@ static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = 0;
 
 int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_Config_Info cfgi[],
-                                                                                int ec,
+                                        int ec,
                                         POD_RT_Info rti[])
 {
   if (server_ != 0 || TAO_SF_entry_count != -1)
@@ -186,7 +186,7 @@ static char footer[] =
 "\n"
 "// This sets up Scheduler_Factory to use the runtime version\n"
 "int scheduler_factory_setup = \n"
-"  ACE_Scheduler_Factory::use_runtime (infos_size, infos);\n"
+"  ACE_Scheduler_Factory::use_runtime (configs_size, configs, infos_size, infos);\n"
 "\n"
 "// EOF\n";
 
@@ -221,11 +221,12 @@ int ACE_Scheduler_Factory::dump_schedule
     const char* config_info_format)
 {
   u_int i;
+  char entry_point [BUFSIZ];
 
   // default format for printing RT_Info output
   if (rt_info_format == 0)
   {
-    rt_info_format = "{ \"%20s\", %10d, %10d, %10d, "
+    rt_info_format = "{%20s, %10d, %10d, %10d, "
                      "%10d, %10d, "
                      "(RtecScheduler::Criticality) %d, "
                      "(RtecScheduler::Importance) %d, "
@@ -260,12 +261,17 @@ int ACE_Scheduler_Factory::dump_schedule
           // Finish previous line
           ACE_OS::fprintf(file, ",\n");
         }
+
       const RtecScheduler::RT_Info& info = infos[i];
+
+      // Put quotes around the entry point name, exactly as it is stored.
+	  ACE_OS::sprintf (entry_point, "\"%s\"", (const char*) info.entry_point);
+
       // @@ TODO Eventually the TimeT structure will be a 64-bit
       // unsigned int, we will have to change this dump method then.
       ACE_OS::fprintf (file,
                        rt_info_format,
-                       (const char*) info.entry_point,
+                       entry_point,
                        info.handle,
                        ACE_CU64_TO_CU32 (info.worst_case_execution_time),
                        ACE_CU64_TO_CU32 (info.typical_execution_time),

@@ -1,7 +1,7 @@
 // $Id$
 
-// This program simulates a scheduler configuration run,
-// and dumps the results of one scheduling in a C++ file.
+// This program performa a simple scheduler configuration run,
+// and dumps the results of one scheduling into a C++ header file.
 
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
@@ -15,12 +15,11 @@ ACE_RCSID(Sched_Conf, Sched_Conf, "$Id$")
 
 const char* service_name = "ScheduleService";
 
-const char* format_string = "{\"%s\", %d, {%d,%d}, {%d,%d}, "
-                            "{%d,%d}, %7d, "
+const char* format_string = "{%-12s, %d, %d, %d, %d, %8d, "
                             "(RtecScheduler::Criticality) %d, "
                             "(RtecScheduler::Importance) %d, "
-                            "{%d,%d}, %d, %2d, %d, %d, "
-                            "(RtecScheduler::Info_Type) %d }";
+                            "%d, %d, %3d, %d, %d, "
+                            "(RtecScheduler::Info_Type) %d}\n";
 
 int
 parse_args (int argc, char *argv [])
@@ -61,7 +60,7 @@ main (int argc, char *argv[])
   const int operation_count = 16;
   ACE_Scheduler_Factory::POD_RT_Info config_infos[operation_count] = {
                   // 20 Hz high criticality supplier
-                  { "hi_20_S",              // entry point
+                  { "high_20_S",              // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -77,7 +76,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 20 Hz low criticality supplier
-                  { "lo_20_S",         // entry point
+                  { "low_20_S",         // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -93,7 +92,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz high criticality supplier
-                  { "hi_10_S",        // entry point
+                  { "high_10_S",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -109,7 +108,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz low criticality supplier
-                  { "lo_10_S",         // entry point
+                  { "low_10_S",         // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -125,7 +124,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 5 Hz high criticality supplier
-                  { "hi_05_S",         // entry point
+                  { "high_05_S",         // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -141,7 +140,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 5 Hz low criticality supplier
-                  { "lo_05_S",         // entry point
+                  { "low_05_S",         // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -157,7 +156,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 1 Hz high criticality supplier
-                  { "hi_01_S",        // entry point
+                  { "high_01_S",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -173,7 +172,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 1 Hz low criticality supplier
-                  { "lo_01_S",         // entry point
+                  { "low_01_S",         // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -189,7 +188,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 20 Hz high criticality consumer
-                  { "hi_20_C",        // entry point
+                  { "high_20_C",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -205,7 +204,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 20 Hz low criticality consumer
-                  { "lo_20_C",        // entry point
+                  { "low_20_C",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -221,7 +220,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz high criticality consumer
-                  { "hi_10_C",        // entry point
+                  { "high_10_C",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -237,7 +236,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz low criticality consumer
-                  { "lo_10_C",        // entry point
+                  { "low_10_C",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -253,7 +252,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 5 Hz high criticality consumer
-                  { "hi_05_C",        // entry point
+                  { "high_05_C",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -269,7 +268,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 5 Hz low criticality consumer
-                  { "lo_05_C",        // entry point
+                  { "low_05_C",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -285,7 +284,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 1 Hz high criticality consumer
-                  { "hi_01_C",        // entry point
+                  { "high_01_C",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -301,7 +300,7 @@ main (int argc, char *argv[])
                         RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz low criticality consumer
-                  { "lo_01_C",        // entry point
+                  { "low_01_C",        // entry point
                         0,                  // handle
                         0,                  // worst case execution time
                         0,                  // typical execution time (unused)
@@ -427,7 +426,7 @@ main (int argc, char *argv[])
       TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
-                                                    configs.in (),
+                                            configs.in (),
                                             "Sched_Conf_Runtime.h",
                                             format_string);
     }

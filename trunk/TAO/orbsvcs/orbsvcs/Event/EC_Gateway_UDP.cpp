@@ -274,7 +274,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                   RtecScheduler::VERY_LOW_IMPORTANCE,
                   time,
                   1,
-                  RtecScheduler::OPERATION,
+                  RtecScheduler::REMOTE_DEPENDANT,
                   _env);
   if (_env.exception () != 0) return;
 }

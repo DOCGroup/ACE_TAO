@@ -39,7 +39,8 @@ module RtecScheduler
   {
     OPERATION,
     CONJUNCTION,
-    DISJUNCTION
+    DISJUNCTION,
+    REMOTE_DEPENDANT
   };
 
   enum Dependency_Type

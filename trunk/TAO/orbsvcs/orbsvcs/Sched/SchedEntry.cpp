@@ -165,6 +165,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       break;
 
     case RtecScheduler::OPERATION:
+    case RtecScheduler::REMOTE_DEPENDANT:
 
       // disjunctively merge the operation's two-way dispatches,
       // and conjunctively merge its one-way dispatches.

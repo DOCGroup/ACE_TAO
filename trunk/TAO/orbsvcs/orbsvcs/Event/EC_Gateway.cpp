@@ -86,7 +86,7 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                   RtecScheduler::VERY_LOW_IMPORTANCE,
                   time,
                   1,
-                  RtecScheduler::OPERATION,
+                  RtecScheduler::REMOTE_DEPENDANT,
                   _env);
   if (_env.exception () != 0) return;
 

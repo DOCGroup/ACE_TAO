@@ -135,7 +135,8 @@ Task_Entry::effective_execution_time () const
   ACE_UINT32 worst_case_execution_time =
     ACE_U64_TO_U32 (rt_info_->worst_case_execution_time);
 
-  return (rt_info_->info_type == RtecScheduler::OPERATION)
+  return ((rt_info_->info_type == RtecScheduler::OPERATION) ||
+          (rt_info_->info_type == RtecScheduler::REMOTE_DEPENDANT))
          ? worst_case_execution_time * dispatches_.size ()
          : 0;
 }
