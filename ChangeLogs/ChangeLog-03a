@@ -1,3 +1,9 @@
+Thu Jun  6 08:24:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/Malloc_T.h:
+
+          Removed extra comment closer */.
+
 Thu Jun  6 07:11:15 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* THANKS: Just added our 1,500th ACE+TAO contributor!!!!!
