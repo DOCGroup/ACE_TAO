@@ -4,6 +4,10 @@ Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
           so that it isn't used with egcs.  Thanks to Gonzo for
           testing this.
 
+        * tests/MT_Sock_Test.cpp (spawn): changed type of local variable i
+          to int to avoid signed/unsigned comparison.  Thanks to Gonzo for
+          reporting this.
+
 Sun Jan 11 23:02:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/SString_Test.cpp (main): Removed the "silly" strings from
