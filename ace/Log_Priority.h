@@ -70,7 +70,9 @@ enum ACE_Log_Priority
   
   // Do not use!!, this enum value ensures that the underlying
   // integral type for this enum is at least 32 bits.
+#if !defined (ACE_HAS_BROKEN_ENUMS)
   ENSURE_32_BITS = 0xFFFFFFFF
+#endif /* ACE_HAS_BROKEN_ENUMS */
 };
 
 #endif /* ACE_LOG_PRIORITY_H */
