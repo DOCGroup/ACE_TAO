@@ -1,3 +1,12 @@
+Mon Feb 11 18:02:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PortableServer/POAManager.h: 
+	* tests/Oneways_Invoking_Twoways/Receiver_i.h :
+	* tests/Oneways_Invoking_Twoways/Sender_i.h:
+	* orbsvcs/tests/FaultTolerance/IOGR/Client_i.h:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.h: More fuzz errors. 
+	
+
 Mon Feb 11 17:56:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Base_Transport_Property.h:
