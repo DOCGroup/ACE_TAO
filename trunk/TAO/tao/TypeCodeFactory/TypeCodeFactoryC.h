@@ -475,7 +475,7 @@ TAO_TypeCodeFactory_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA
 // be/be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
-#include "TypeCodeFactoryC.i"
+#include "TypeCodeFactoryC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
