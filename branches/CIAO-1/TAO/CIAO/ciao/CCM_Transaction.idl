@@ -13,6 +13,9 @@
 
 //#define CIAO_HAS_IMPORT_KEYWORD
 
+#if !defined (CIAO_TRANSACTION_PIDL)
+#define CIAO_TRANSACTION_PIDL
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -83,3 +86,4 @@ module Components
     };
   };
 };
+#endif /* CIAO_TRANSACTION_PIDL */

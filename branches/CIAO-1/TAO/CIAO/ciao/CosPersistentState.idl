@@ -9,6 +9,9 @@
  *     tao_idl -Gv CosPersistentState.idl
  */
 
+#if !defined (CIAO_COSPERSISTENTSTATE_PIDL)
+#define CIAO_COSPERSISTENTSTATE_PIDL
+
 module CosPersistentState {
         local interface CatalogBase
           {
@@ -17,3 +20,4 @@ module CosPersistentState {
         typedef sequence<octet> _TypeId;
         typedef string Pid;
 };
+#endif /* CIAO_COSPERSISTENTSTATE_PIDL */

@@ -11,6 +11,9 @@
  *          CIAO_Component.pidl
  */
 
+#if !defined (CIAO_COMPONENT_PIDL)
+#define CIAO_COMPONENT_PIDL
+
 #include "CIAO_Event.pidl"
 #include <tao/IFR_Client/IFR_Base.pidl>
 
@@ -111,3 +114,4 @@ module Components
     private CCMObjectSeq objects;
   };
 };
+#endif /* CIAO_COMPONENT_PIDL */

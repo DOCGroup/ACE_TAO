@@ -31,3 +31,20 @@ local interface CCM_HelloWorld_Context
   : ::Components::CCMContext
 {
 };
+
+local interface CCM_HelloHomeImplicit
+{
+  Components::EnterpriseComponent create ()
+    raises (Components::CreateFailure);
+};
+
+local interface CCM_HelloHomeExplicit
+  : Components::HomeExecutorBase
+{
+};
+
+local interface CCM_HelloHome
+  : CCM_HelloHomeExplicit,
+    CCM_HelloHomeImplicit
+{
+};
