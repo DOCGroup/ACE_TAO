@@ -1,3 +1,9 @@
+Sat Oct  9 19:03:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tests/Typedef_String_Array/testImpl.cpp:
+
+          Fixed a warning in our daily builds.
+
 Sat Oct  9 12:38:38 2004  Huang-Ming Huang <hh1@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp:
