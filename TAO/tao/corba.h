@@ -157,7 +157,7 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 #include "tao/Align.h"
 
 // CORBA class.
-#include "tao/CORBA.h"
+#include "tao/CORBA_Cls.h"
 
 #include "tao/Sequence.h"
 #include "tao/Sequence_T.h"
