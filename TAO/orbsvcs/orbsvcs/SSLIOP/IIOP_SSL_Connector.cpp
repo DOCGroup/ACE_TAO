@@ -78,7 +78,7 @@ TAO_IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
   // here. Ossama mentions that non-blocking may not work
   // properly. Keeping it as blocked till someone decides to fall in
   // line with protocols like IIOP.
-  ACE_NEW_RETURN (this->active_connection_strategy_,
+  ACE_NEW_RETURN (this->active_connect_strategy_,
                   TAO_Blocked_Connect_Strategy (orb_core),
                   -1);
 
@@ -192,7 +192,7 @@ TAO_IIOP_SSL_Connector::make_connection (
   this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
 
-  TAO_IIOP_Connection_Handler *svc_handler = 0;
+  TAO_IIOP_SSL_Connection_Handler *svc_handler = 0;
 
    // Active connect
    int result = this->base_connector_.connect (svc_handler,

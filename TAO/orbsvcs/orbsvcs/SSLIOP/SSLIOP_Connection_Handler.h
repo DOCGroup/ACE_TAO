@@ -139,7 +139,7 @@ protected:
 private:
 
   /// Perform appropriate closing..
-  void handle_close_i (ACE_HANDLE);
+  void handle_close_i (void);
 
 private:
 
