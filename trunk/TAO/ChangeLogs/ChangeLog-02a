@@ -1,3 +1,13 @@
+Wed Apr 26 08:26:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/LocalObject.h:
+	* tao/LocalObject.cpp:
+	  Changed CORBA::InterfaceDef to IR::InterfaceDef and
+	  ASYS_TEXT to ACE_TEXT.
+
+	* tao/Object.h:
+	  Cosmetic changes.
+
 Wed Apr 26 02:32:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/Makefile:
