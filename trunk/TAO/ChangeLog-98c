@@ -1,5 +1,7 @@
 Sat Feb 28 18:37:54 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp:
+	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
 	* orbsvcs/tests/CosPropertyService/main.cpp:
 	Added some more code to test the functions defined in CosPropertyService_i.cpp.
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
