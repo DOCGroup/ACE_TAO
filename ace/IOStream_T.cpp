@@ -11,8 +11,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//ACE_RCSID(ace, IOStream_T, "$Id: IOStream_T.cpp,v 1.3 1999/01/23 11:19:29
-chealey Exp $")
+//ACE_RCSID(ace, IOStream_T, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
