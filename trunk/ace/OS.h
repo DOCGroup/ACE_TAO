@@ -3393,7 +3393,13 @@ extern "C" {
 #         undef TCP_NODELAY
 #         undef TCP_MAXSEG
 #       endif /* ACE_HAS_BROKEN_XTI_MACROS */
-#       include /**/ <xti.h>
+#       if defined ACE_HAS_SYS_XTI_H
+#         define class ace_xti_class
+#         include /**/ <sys/xti.h>
+#         undef class
+#       else
+#         include /**/ <xti.h>
+#       endif /* ACE_HAS_SYS_XTI_H */
 #     endif /* ACE_HAS_TIUSER_H */
 #     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 }

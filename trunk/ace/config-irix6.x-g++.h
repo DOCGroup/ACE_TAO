@@ -149,6 +149,9 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
+// Platform has the xti header in <sys/xti.h>.
+#define ACE_HAS_SYS_XTI_H
+
 // Compiler/platform defines a union semun for SysV shared memory.
 #define ACE_HAS_SEMUN
 

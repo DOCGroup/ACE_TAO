@@ -1901,6 +1901,7 @@ ACE::set_handle_limit (int new_limit)
       return 0;
 #endif /* ACE_LACKS_RLIMIT */
     }
+  return 0;
 }
 
 // Flags are file status flags to turn on.

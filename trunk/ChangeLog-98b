@@ -1,3 +1,14 @@
+Fri Oct  2 23:43:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-irix6.x-g++.h: 
+	* ace/config-irix6.x-sgic++-nothreads.h: 
+	* ace/OS.h: 
+	  IRIX puts <xti.h> in <sys/xti.h> header of IRIX, it is only
+	  relevant for the autoconf project.
+
+	* ace/ACE.cpp: 
+	  Added an extra return to make IRIX compiler happy.
+
 Fri Oct  2 21:48:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Thread_Pool_Reactor_Test.cpp: Send the message length
