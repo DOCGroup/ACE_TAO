@@ -1,5 +1,9 @@
 Fri May  1 17:26:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* orbsvcs/Naming_Service/Naming_Service.cpp (init): Added support
+ 	  for the -NScontextname option.  Thanks to Ross J. Lillie
+ 	  <lillie@rsch.comm.mot.com> for this feature.
+
 	* orbsvcs/orbsvcs/Naming_Utils.h: Added "argv/argc" parameters to
  	  the TAO_Naming_Server::init() and constructor methods.  Thanks
  	  to Ross J. Lillie <lillie@rsch.comm.mot.com> for this feature.
