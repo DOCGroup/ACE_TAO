@@ -681,7 +681,7 @@ enum MCAST_SERVICEID
 // AMI support is disabled by default, irrespective of whether TAO is
 // configured for minimum CORBA.
 //To explicitly enable AMI support uncomment the following
-#define TAO_HAS_AMI 1
+// #define TAO_HAS_AMI 1
 // To explicitly disable AMI support uncomment the following
 // #define TAO_HAS_AMI 0
 
@@ -711,7 +711,7 @@ enum MCAST_SERVICEID
 // for AMI.  If TAO is configured for AMI, then AMI_CALLBACK will be
 // enabled by default.
 // To explicitly enable AMI_CALLBACK support uncomment the following
- #define TAO_HAS_AMI_CALLBACK 1
+// #define TAO_HAS_AMI_CALLBACK 1
 // To explicitly disable AMI_CALLBACK support uncomment the following
 // #define TAO_HAS_AMI_CALLBACK 0
 
