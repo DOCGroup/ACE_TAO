@@ -1,3 +1,11 @@
+Sat May  8 16:25:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* ace/Time_Value.h:
+	* ace/Time_Value.inl:
+
+	  Added an operatot=. Without this, the
+	  ACE_HAS_TIMED_MESSAGE_BLOCK has no chance of working.
+
 Sat May  8 00:10:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* apps/JAWS3/jaws3/Concurrency.h:
