@@ -173,7 +173,7 @@ declare_entry (CORBA::WChar, tk_wchar);
 declare_entry (CORBA::WString, tk_wstring);
 
 void
-CORBA_TypeCode::init_table (void)
+TAO_IIOP_Interpreter::init_table (void)
 {
   setup_entry (CORBA::Short, tk_short);
   setup_entry (CORBA::Long, tk_long);
@@ -211,34 +211,14 @@ CORBA_TypeCode::init_table (void)
 
 #undef  setup
 
-// Utility routines are used to manipulate CDR-encapsulated TypeCode
-// parameter lists, calculating the size and alignment of the data
-// type being described.  The TCKind value has always been removed
-// from the CDR stream when these calculator routines get called.
-
-typedef size_t attribute_calculator (CDR *stream,
-                                     size_t &alignment,
-                                     CORBA::Environment &env);
-
-static attribute_calculator calc_struct_attributes;
-static attribute_calculator calc_exception_attributes;
-static attribute_calculator calc_union_attributes;
-static attribute_calculator calc_alias_attributes;
-static attribute_calculator calc_array_attributes;
-
-// Other utility routines are used to skip the parameter lists when
-// they're not needed.
-
-typedef CORBA::Boolean param_skip_rtn (CDR *);
-
-static CORBA::Boolean
-skip_encapsulation (CDR *stream)
+CORBA::Boolean
+TAO_IIOP_Interpreter::skip_encapsulation (CDR *stream)
 {
   return stream->skip_string ();
 }
 
-static CORBA::Boolean
-skip_long (CDR *stream)
+CORBA::Boolean
+TAO_IIOP_Interpreter::skip_long (CDR *stream)
 {
   CORBA::ULong  scratch;
 
@@ -264,11 +244,11 @@ skip_long (CDR *stream)
 // but it would need more than that to make it as speedy as struct
 // traversal.
 
-static size_t
-calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
-                                CDR *original_stream,
-                                size_t &alignment,
-                                CORBA::Environment &env)
+size_t
+TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
+                                            CDR *original_stream,
+                                            size_t &alignment,
+                                            CORBA::Environment &env)
 {
   // Get the "kind" ... if this is an indirection, this is a guess
   // which will soon be updated.
@@ -343,9 +323,9 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
   // lists that affect the size and alignment of "top level" memory
   // needed to hold an instance of this type.
 
-  if (TAO_Interp::table_[kind].calc != 0)
+  if (TAO_IIOP_Interpreter::table_[kind].calc != 0)
     {
-      assert (TAO_Interp::table_[kind].size == 0);
+      assert (TAO_IIOP_Interpreter::table_[kind].size == 0);
 
       // Pull encapsulation length out of the stream.
       if (stream->get_ulong (temp) == CORBA::B_FALSE)
@@ -372,7 +352,7 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
       assert (temp <= UINT_MAX);
       sub_encapsulation.setup_encapsulation (stream->buffer(), temp);
-      size = TAO_Interp::table_[kind].calc (&sub_encapsulation, alignment, env);
+      size = TAO_IIOP_Interpreter::table_[kind].calc (&sub_encapsulation, alignment, env);
 
       // Check for garbage at end of parameter lists, or other cases
       // where parameters and the size allocated to them don't jive.
@@ -385,7 +365,7 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
         }
       return size;
     }
-  assert (TAO_Interp::table_[kind].size != 0);              // fixed size data type
+  assert (TAO_IIOP_Interpreter::table_[kind].size != 0);              // fixed size data type
 
   // Reinitialize the TypeCode if requested; this consumes any
   // TypeCode parameters in the stream.  They only exist for TCKind
@@ -401,7 +381,7 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       switch (kind)
         {
         default:
-          assert (TAO_Interp::table_[kind].skipper == 0);
+          assert (TAO_IIOP_Interpreter::table_[kind].skipper == 0);
           break;
 
         case CORBA::tk_string:
@@ -433,16 +413,16 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       // Otherwise, consume any parameters without stuffing them into
       // a temporary TypeCode.
     }
-  else if (TAO_Interp::table_[kind].skipper != 0
-           && TAO_Interp::table_[kind].skipper (stream) == CORBA::B_FALSE)
+  else if (TAO_IIOP_Interpreter::table_[kind].skipper != 0
+           && TAO_IIOP_Interpreter::table_[kind].skipper (stream) == CORBA::B_FALSE)
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 
   // Return statically known values.
-  alignment = TAO_Interp::table_[kind].alignment_;
-  return TAO_Interp::table_[kind].size;
+  alignment = TAO_IIOP_Interpreter::table_[kind].alignment_;
+  return TAO_IIOP_Interpreter::table_[kind].size;
 }
 
 // Given typecode bytes for a structure (or exception), figure out its
@@ -460,11 +440,11 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 // taught about compiler-specific representation of that additional
 // "RTTI" data.
 
-static size_t
-calc_struct_and_except_attributes (CDR *stream,
-                                   size_t &alignment,
-                                   CORBA::Boolean is_exception,
-                                   CORBA::Environment &env)
+size_t
+TAO_IIOP_Interpreter::calc_struct_and_except_attributes (CDR *stream,
+                                               size_t &alignment,
+                                               CORBA::Boolean is_exception,
+                                               CORBA::Environment &env)
 {
   CORBA::ULong  members;
   size_t size;
@@ -482,7 +462,7 @@ calc_struct_and_except_attributes (CDR *stream,
   if (is_exception)
     {
       size = sizeof (CORBA::Exception);
-      alignment = TAO_Interp::table_[CORBA::tk_TypeCode].alignment_;
+      alignment = TAO_IIOP_Interpreter::table_[CORBA::tk_TypeCode].alignment_;
     }
   else
     {
@@ -546,10 +526,10 @@ calc_struct_and_except_attributes (CDR *stream,
 
 // Calculate size and alignment for a structure.
 
-static size_t
-calc_struct_attributes (CDR *stream,
-                        size_t &alignment,
-                        CORBA::Environment &env)
+size_t
+TAO_IIOP_Interpreter::calc_struct_attributes (CDR *stream,
+                                    size_t &alignment,
+                                    CORBA::Environment &env)
 {
   return calc_struct_and_except_attributes (stream,
                                             alignment,
@@ -559,10 +539,10 @@ calc_struct_attributes (CDR *stream,
 
 // Calculate size and alignment for an exception.
 
-static size_t
-calc_exception_attributes (CDR *stream,
-                           size_t &alignment,
-                           CORBA::Environment &env)
+size_t
+TAO_IIOP_Interpreter::calc_exception_attributes (CDR *stream,
+                                       size_t &alignment,
+                                       CORBA::Environment &env)
 {
   return calc_struct_and_except_attributes (stream,
                                             alignment,
@@ -577,14 +557,11 @@ calc_exception_attributes (CDR *stream,
 // over the typecode: the inter-element padding changes depending on
 // the strictest alignment required by _any_ arm of the union.
 
-// @@ Andy, this function is static because it's used in typecode.cpp.
-// Is there anyway to alleviate this coupling?! 
-
 size_t
-calc_key_union_attributes (CDR *stream,
-                           size_t &overall_alignment,
-                           size_t &discrim_size_with_pad,
-                           CORBA::Environment &env)
+TAO_IIOP_Interpreter::calc_key_union_attributes (CDR *stream,
+                                                 size_t &overall_alignment,
+                                                 size_t &discrim_size_with_pad,
+                                                 CORBA::Environment &env)
 {
   CORBA::ULong members;
   CORBA::ULong temp;
@@ -740,10 +717,10 @@ calc_key_union_attributes (CDR *stream,
 // of the union have the same initial address (adequately aligned for
 // any of the members).
 
-static size_t
-calc_union_attributes (CDR *stream,
-                       size_t &alignment,
-                       CORBA::Environment &env)
+size_t
+TAO_IIOP_Interpreter::calc_union_attributes (CDR *stream,
+                                   size_t &alignment,
+                                   CORBA::Environment &env)
 {
   size_t scratch;
 
@@ -752,10 +729,10 @@ calc_union_attributes (CDR *stream,
 
 // Calculate size and alignment for a typedeffed type.
 
-static size_t
-calc_alias_attributes (CDR *stream,
-                       size_t &alignment,
-                       CORBA::Environment &env)
+size_t
+TAO_IIOP_Interpreter::calc_alias_attributes (CDR *stream,
+                                   size_t &alignment,
+                                   CORBA::Environment &env)
 {
   // Skip type ID and name in the parameter stream
 
@@ -775,10 +752,10 @@ calc_alias_attributes (CDR *stream,
 // specify a multidimensional array ... such arrays are treated as
 // nested single dimensional arrays.)
 
-static size_t
-calc_array_attributes (CDR *stream,
-                       size_t &alignment,
-                       CORBA::Environment &env)
+size_t
+TAO_IIOP_Interpreter::calc_array_attributes (CDR *stream,
+                                   size_t &alignment,
+                                   CORBA::Environment &env)
 {
   size_t member_size;
   CORBA::ULong member_count;
@@ -804,18 +781,18 @@ calc_array_attributes (CDR *stream,
 
 // Visit each of the elements of a structure.
 
-static CORBA::TypeCode::traverse_status
-struct_traverse (CDR *stream,
-                 const void *value1,
-                 const void *value2,
-                 CORBA::TypeCode::traverse_status (_FAR *visit)
-                 (CORBA::TypeCode_ptr tc,
-                  const void *value1,
-                  const void *value2,
-                  void *context,
-                  CORBA::Environment &env),
-                 void *context,
-                 CORBA::Environment &env)
+CORBA::TypeCode::traverse_status
+TAO_IIOP_Interpreter::struct_traverse (CDR *stream,
+                             const void *value1,
+                             const void *nvalue2,
+                             CORBA::TypeCode::traverse_status (_FAR *visit)
+                             (CORBA::TypeCode_ptr tc,
+                              const void *value1,
+                              const void *value2,
+                              void *context,
+                              CORBA::Environment &env),
+                             void *context,
+                             CORBA::Environment &env)
 {
   // Skip over the type ID and type name in the parameters, then get
   // the number of members.
@@ -890,13 +867,13 @@ struct_traverse (CDR *stream,
   return retval;
 }
 
-// cast the discriminant values to the right type and compare them.
+// Cast the discriminant values to the right type and compare them.
 
-static CORBA::Boolean
-match_value (CORBA::TCKind kind,
-             CDR *tc_stream,
-             const void *value,
-             CORBA::Environment &env)
+CORBA::Boolean
+TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
+                         CDR *tc_stream,
+                         const void *value,
+                         CORBA::Environment &env)
 {
   CORBA::Boolean retval = CORBA::B_FALSE;
 
@@ -980,18 +957,18 @@ match_value (CORBA::TCKind kind,
 // Visit the two elements of the union: the discrminant, and then any
 // specific value as indicated by the discriminant of value1.
 
-static CORBA::TypeCode::traverse_status
-union_traverse (CDR *stream,
-                const void *value1,
-                const void *value2,
-                CORBA::TypeCode::traverse_status (_FAR *visit)
-                (CORBA::TypeCode_ptr tc,
-                 const void *value1,
-                 const void *value2,
-                 void *context,
-                 CORBA::Environment &env),
-                void *context,
-                CORBA::Environment &env)
+CORBA::TypeCode::traverse_status
+TAO_IIOP_Interpreter::union_traverse (CDR *stream,
+                            const void *value1,
+                            const void *value2,
+                            CORBA::TypeCode::traverse_status (_FAR *visit)
+                            (CORBA::TypeCode_ptr tc,
+                             const void *value1,
+                             const void *value2,
+                             void *context,
+                             CORBA::Environment &env),
+                            void *context,
+                            CORBA::Environment &env)
 {
   size_t discrim_size_with_pad;
 
@@ -1151,250 +1128,3 @@ union_traverse (CDR *stream,
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
-// For each node in "data", visit it.  For singleton nodes that's all
-// but a NOP; for structs, unions, etc it's more interesting.  The
-// visit routine can descend, if it chooses.
-//
-// NOTE: this does no memory allocation or deallocation except through
-// use of the stack.  Or at least, it should do none -- if you find
-// that just traversing a data value allocates any memory, that's a
-// bug to fix!
-
-CORBA::TypeCode::traverse_status
-CORBA::TypeCode::traverse (const void *value1,
-                           const void *value2,
-                           CORBA::TypeCode::traverse_status (_FAR *visit)
-                           (CORBA::TypeCode_ptr tc,
-                            const void *value1,
-                            const void *value2,
-                            void *context,
-                            CORBA::Environment &env),
-                           void *context,
-                           CORBA::Environment &env)
-{
-  env.clear ();
-
-  // Quickly accomodate the bulk of cases, which are just (tail) calls
-  // to the visit() routine.  We take advantage of the fact that these
-  // are largely in a convenient numeric range to work around poor
-  // optimization of "switch" code in some compilers.  This
-  // improvement has in some cases been more than 5% faster
-  // (significant).
-  //
-  // NOTE: if for some reason the constants in the protocol spec
-  // (including Appendix A) change, this logic may need to be verified
-  // again.  Luckily, changing protocol constants is quite rare; they
-  // normally just get added to (at the end).
-  //
-  if (kind_ <= CORBA::tk_objref
-      || (CORBA::tk_longlong <= kind_ && kind_ <= CORBA::tk_wstring))
-    return visit (this, value1, value2, context, env);
-
-  // Handle the cases that aren't in convenient numeric ranges.
-
-  traverse_status retval;
-
-  switch (kind_)
-    {
-    case CORBA::tk_string:
-    case CORBA::tk_enum:
-      return visit (this, value1, value2, context, env);
-
-      // Typedefs just add a delay, while we skip the typedef ID
-      // and name ...
-
-    case CORBA::tk_alias:
-      {
-        CORBA::TypeCode_ptr tcp;
-        CORBA::Environment env2;
-
-        // XXX rework for efficiency, this doesn't need to allocate
-        // memory during the traversal!
-
-        tcp = typecode_param (2, env);
-        if (env.exception () != 0)
-          return TRAVERSE_STOP;
-
-        retval = tcp->traverse (value1, value2, visit, context, env);
-
-        tcp->Release ();
-      }
-    return retval;
-
-    // Exceptions in-memory are structures, except that there are data
-    // members "hidden" in front: vtable, typecode, refcount.  We skip
-    // them, and allow the traversal code to account for the internal
-    // padding before the other elements of the exception.
-    //
-    // NOTE: see header comment re treatment of these values as "real"
-    // C++ exceptions.  C++ RTTI data might need to be skipped.  Also,
-    // see the comments in unmarshaling code: hard to throw these
-    // values.
-    //
-    // Not enough of the exception runtime is public for binary
-    // standards to exist for C++ exceptions yet.  Compiler-specific
-    // code will need to handle examining, unmarshaling, and throwing
-    // of CORBA exceptions (in C++ environments) for some time.
-    case CORBA::tk_except:
-      value1 = sizeof (CORBA::Exception) + (char *) value1;
-      value2 = sizeof (CORBA::Exception) + (char *) value2;
-      // FALLTHROUGH
-
-    case CORBA::tk_struct:
-      // XXX for OLE Automation, we'll probably need BOTH exceptions
-      // and structs to inherit IUnknown, hence we'll need to be
-      // skipping the vtable pointer ...
-      {
-        // Create the sub-encapsulation stream that holds the
-        // parameters for the typecode.
-
-        CDR stream;
-
-        stream.setup_encapsulation (buffer_, (size_t) length_);
-
-        return struct_traverse (&stream, value1, value2,
-                                visit, context, env);
-      }
-
-    case CORBA::tk_union:
-      {
-        // visit the discriminant, then search the typecode for the
-        // relevant union member and then visit that member.
-        CDR stream;
-
-        stream.setup_encapsulation (buffer_, (size_t) length_);
-
-        return union_traverse (&stream, value1, value2,
-                               visit, context, env);
-      }
-
-      // Sequences are just arrays with bound determined at runtime,
-      // rather than compile time.  Multidimensional arrays are nested
-      // C-style: the leftmost dimension in the IDL definition is
-      // "outermost", etc.
-      {
-        CORBA::TypeCode_ptr tc2;
-        size_t size;
-        CORBA::ULong bounds;
-        CORBA::OctetSeq *seq;
-
-      case CORBA::tk_sequence:
-        // Find out how many elements there are, and adjust the data
-        // pointers to point to those elements rather than to the
-        // sequence itself.
-        seq = (CORBA::OctetSeq *)value1;
-
-        bounds = seq->length;
-        value1 = seq->buffer;
-
-        if (value2)
-          {
-            seq = (CORBA::OctetSeq *)value2;
-            value2 = seq->buffer;
-          }
-        goto shared_seq_array_code;
-
-      case CORBA::tk_array:
-        // Array bounds are in the typecode itself.
-        bounds = ulong_param (1, env);
-        if (env.exception () != 0)
-          return TRAVERSE_STOP;
-
-      shared_seq_array_code:
-        // Find element's type, and size ...
-        tc2 = typecode_param (0, env);
-        if (env.exception () != 0)
-          return TRAVERSE_STOP;
-
-        size = tc2->size (env);
-        if (env.exception () != 0)
-          return TRAVERSE_STOP;
-
-        // ... then visit the elements in order.
-        //
-        // NOTE: for last element, could turn visit() call into
-        // something subject to compiler's tail call optimization and
-        // thus save a stack frame
-        while (bounds--)
-          {
-            if (visit (tc2, value1, value2, context, env) == TRAVERSE_STOP)
-              return TRAVERSE_STOP;
-
-            value1 = size + (char *) value1;
-            value2 = size + (char *) value2;
-          }
-        CORBA::release (tc2);
-        env.clear ();
-      }
-      return TRAVERSE_CONTINUE;
-
-      // case ~0:                       // indirection, illegal at top level
-    default:                            // invalid/illegal
-      break;
-    } // end switch on typecode "kind"
-
-  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-  return TRAVERSE_STOP;
-}
-
-// Tell user the size of an instance of the data type described by
-// this typecode ... typically used to allocate memory.
-
-size_t
-CORBA::TypeCode::private_size (CORBA::Environment &env)
-{
-  if (kind_ >= CORBA::TC_KIND_COUNT)
-    {
-      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-      return 0;
-    }
-  env.clear ();
-
-  if (TAO_Interp::table_[kind_].calc == 0)
-    {
-      private_state_->tc_size_known_ = CORBA::B_TRUE;
-      private_state_->tc_size_ = TAO_Interp::table_[kind_].size;
-      return private_state_->tc_size_;
-    }
-
-  size_t alignment;
-  CDR stream;
-
-  stream.setup_encapsulation (buffer_, (size_t) length_);
-
-  private_state_->tc_size_known_ = CORBA::B_TRUE;
-  private_state_->tc_size_ = TAO_Interp::table_[kind_].calc (&stream, alignment, env);
-  return private_state_->tc_size_;
-}
-
-// Tell user the alignment restriction for the data type described by
-// an instance of this data type.  Rarely used; provided for
-// completeness.
-
-size_t
-CORBA::TypeCode::private_alignment (CORBA::Environment &env)
-{
-  if (kind_ >= CORBA::TC_KIND_COUNT)
-    {
-      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-      return 0;
-    }
-  env.clear ();
-
-  if (TAO_Interp::table_[kind_].calc == 0)
-    {
-        private_state_->tc_alignment_known_ = CORBA::B_TRUE;
-        private_state_->tc_alignment_ = TAO_Interp::table_[kind_].alignment;
-        return private_state_->tc_alignment_;
-    }
-
-  size_t alignment;
-  CDR stream;
-
-  stream.setup_encapsulation (buffer_, (size_t) length_);
-
-  (void) TAO_Interp::table_[kind_].calc (&stream, alignment, env);
-  private_state_->tc_alignment_known_ = CORBA::B_TRUE;
-  private_state_->tc_alignment_ = alignment;
-  return alignment;
-}
