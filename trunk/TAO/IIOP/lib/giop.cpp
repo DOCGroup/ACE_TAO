@@ -1351,3 +1351,10 @@ GIOP::incoming_message (
 
     // ... error if unconsumed data remains; is this the spot to test that?
 }
+
+#if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class autorelease<client_endpoint>;
+template class CORBA_SEQUENCE<GIOP::ServiceContext>;
+template class CORBA_SEQUENCE<CORBA_Octet>;
+template class CORBA_SEQUENCE<CORBA_TypeCode*>;
+#endif

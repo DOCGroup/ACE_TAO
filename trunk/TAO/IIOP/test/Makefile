@@ -43,7 +43,7 @@ include $(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
 # Local modifications to variables imported by includes above.
 LDFLAGS    += -L../proto/lib
-CPPFLAGS   += -I../proto/include
+CPPFLAGS   += -I../proto/include -DUSE_ACE_EVENT_HANDLING
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)

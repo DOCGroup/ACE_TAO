@@ -33,25 +33,15 @@
 #include	"cdr.hh"
 #include	"debug.hh"
 
-#include	"connmgr.hh"
+#include "connmgr.hh"
 #include	"tcpoa.hh"
 #include	"giop.hh"
 #include	"svrrqst.hh"
+#include "roa.hh"
 
 #include	<initguid.h>
 
-
-#ifdef	NO_HOSTNAMES
-#include	<netinet/in.h>
-#include	<arpa/inet.h>
-#endif	// NO_HOSTNAMES
-
-
-
 static TCP_OA		*the_oa;
-static short		tcp_port;
-static char		namebuf [65];
-
 
 #ifdef _POSIX_THREADS
 static pthread_key_t	request_key;
@@ -60,100 +50,182 @@ static pthread_mutex_t	tcpoa_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_attr_t	thread_attr;
 #endif	// _POSIX_THREADS
 
-
-TCP_OA::TCP_OA (
-    CORBA_ORB_ptr	owning_orb,
-    CORBA_UShort	_port,
-    CORBA_Environment	&env
+//
+// Dispatch routine that provides most of the IIOP glue ... constructs
+// a dynamic ServerRequest and any reply message that's needed.
+//
+static void
+tcp_oa_dispatcher (
+    GIOP::RequestHeader		&req,
+    CDR				&request_body,
+    CDR				*reply,
+    void			*context,
+    CORBA_Environment		&env
 )
 {
-    assert (the_oa == 0); 
+  IIOP_ServerRequest svr_req (&request_body,
+			      the_oa->orb (),
+			      the_oa);
 
-    port = _port;
-    do_exit = CORBA_B_FALSE;
-    _orb = owning_orb;
-    call_count = 0;
-    skeleton = 0;
+  //
+  // ServerRequest is what does the unmarshaling, driven by typecodes
+  // that the DSI user provides.  Create the ServerRequest, store away
+  // information that'll be needed by some methods, and call the dispatch
+  // routine that the user supplied.  Then release the reference so it
+  // can be safely destroyed sometime later.
+  //
+  svr_req._opname = req.operation;
 
-    if (ACE_OS::hostname (namebuf, sizeof namebuf) < 0) {
-	dsockerr ("gethostname");
-	return;
+#ifdef	_POSIX_THREADS
+  (void) pthread_setspecific (request_key, &req);
+#else
+  request_tsd = &req;
+#endif	// _POSIX_THREADS
+
+  TCP_OA::dispatch_context* helper;
+
+  helper = (TCP_OA::dispatch_context*) context;
+  helper->skeleton (req.object_key, svr_req, helper->context, env);
+
+  svr_req.release ();
+
+  //
+  // If reply is null, this was a oneway request ... return!
+  //
+  if (reply == 0)
+    return;
+
+  //
+  // Otherwise check for correct parameter handling, and reply as
+  // appropriate.
+  //
+  // NOTE:  if "env" is set, it takes precedence over exceptions
+  // reported using the mechanism of the ServerRequest.  Only system
+  // exceptions are reported that way ...
+  //
+  // XXX  Exception reporting is ambiguous; it can be cleaner than
+  // this.  With both language-mapped and dynamic/explicit reporting
+  // mechanisms, one of must be tested "first" ... so an exception
+  // reported using the other mechanism could be "lost".  Perhaps only
+  // the language mapped one should be used for system exceptions.
+  //
+  CORBA_TypeCode_ptr		tc;
+  const void			*value;
+
+  if (!svr_req._params && env.exception () == 0) {
+    dmsg ("DSI user error, didn't supply params");
+    env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
+  }
+
+  if (env.exception () != 0) {	// standard exceptions only
+    CORBA_Environment	env2;
+    CORBA_Exception		*x = env.exception ();
+    CORBA_TypeCode_ptr	except_tc = x->type ();
+
+    reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
+    (void) CDR::encoder (except_tc, x, 0, reply, env2);
+	
+  } else if (svr_req._exception) {	// any exception at all
+    CORBA_Exception		*x;
+    CORBA_TypeCode_ptr	except_tc;
+
+    x = (CORBA_Exception *) svr_req._exception->value ();
+    except_tc = svr_req._exception->type ();
+
+    //
+    // Finish the GIOP Reply header, then marshal the exception.
+    //
+    // XXX x->type() someday ...
+    //
+    if (svr_req._ex_type == SYSTEM_EXCEPTION)
+      reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
+    else
+      reply->put_ulong (GIOP::USER_EXCEPTION);
+
+    (void) CDR::encoder (except_tc, x, 0, reply, env);
+
+  } else {				// normal reply
+    //
+    // First finish the GIOP header ...
+    //
+    reply->put_ulong (GIOP::NO_EXCEPTION);
+
+    //
+    // ... then send any return value ...
+    //
+    if (svr_req._retval) {
+      tc = svr_req._retval->type ();
+      value = svr_req._retval->value ();
+      (void) CDR::encoder (tc, value, 0, reply, env);
     }
 
-#ifdef	NO_HOSTNAMES
     //
-    // In some highly static environments, or where even the most basic
-    // Internet services are unavailable, it's desirable to use IP addresses
-    // rather than host names in object references.  IP addresses are
-    // normally bad to use since they need to change.
+    // ... followed by "inout" and "out" parameters, left to right
     //
-    // In general, TCP OA initialization options are needed to control at
-    // least three kinds of host identifiers to embed in objrefs:
-    //
-    //	(a) unqualified host names, which is what gethostname() returns
-    //	    at most sites;
-    //
-    //	(b) qualified host names (including fully qualified ones, also
-    //	    ones with just subdomain qualification) which are hard to
-    //	    discover in a portable way;
-    //
-    //	(c) "Dot notation" IP addresses, which can get stale after a short
-    //	    while ... hosts move between networks, network numbers change,
-    //	    and so on.  These will also cause problems in the upcoming
-    //	    evolution of the Internet to IPv6.
-    //
-    // At this time, no general framework is available to control the choice
-    // of these kinds of identifiers.  A remotely administerable framework
-    // (e.g. Win32 registry) seems like it'd be most appropriate.
-    //
-    // NOTE:  gethostbyname() is MT-unsafe, call only in one thread!!
-    //
-    hostent	*hp;
-    char	*dot_notation;
+    unsigned			i;
 
-    hp = ACE_OS::gethostbyname (namebuf);
-    assert (hp != 0);
+    for (i = 0; i < svr_req._params->count (); i++) {
+      CORBA_NamedValue_ptr	nv = svr_req._params->item (i);
+      CORBA_Any_ptr		any;
 
-    dot_notation = ACE_OS::inet_ntoa (*(in_addr *)hp->h_addr);
-    assert (dot_notation != 0);
+      if (!(nv->flags () & (CORBA_ARG_INOUT|CORBA_ARG_OUT)))
+	continue;
 
-    (void) ACE_OS::strcpy (namebuf, dot_notation);
-#endif	// NO_HOSTNAMES
-
-    //
-    // Initialize the endpoint ... or try!
-    //
-    // NOTE that this sets "port" if it was originally zero.  An
-    // original value of zero indicates that the OS should select
-    // a port on which this OA will listen.
-    //
-    endpoint = server_endpoint::initialize (port, env);
-    tcp_port = port;
-
-    if (env.exception () != 0)  {
-	dmsg2 ("TCP OA:  '%s', port %u", namebuf, port);
-	the_oa = this;
+      any = nv->value ();
+      tc = any->type ();
+      value = any->value ();
+      (void) CDR::encoder (tc, value, 0, reply, env);
     }
+  }
+}
+
+TCP_OA::TCP_OA (CORBA_ORB_ptr owning_orb,
+		ACE_INET_Addr& rendesvous,
+		CORBA_Environment &env)
+  : do_exit(CORBA_B_FALSE), 
+    _orb(owning_orb), call_count(0), skeleton(0)
+{
+  assert (the_oa == 0); 
+
+  //
+  // Initialize the endpoint ... or try!
+  //
+  if (clientAcceptor_.open(rendesvous, ACE_ROA::reactor()) == -1)
+    {
+      // XXXCJC Need to return an error somehow!!
+    }
+
+  else if (ACE_ROA::reactor()->register_handler(&clientAcceptor_,
+					    ACE_Event_Handler::ACCEPT_MASK) == -1)
+    {
+      // XXXCJC Need to return an error somehow!!
+    }
+  
+  clientAcceptor_.acceptor().get_local_addr(addr);
+
+  // Set the callback for our implementation (cheesy!!!)
+  ACE_ROA::upcall((TOA::dsi_handler)tcp_oa_dispatcher);
+
+  if (env.exception () != 0)  {
+    dmsg2 ("TCP OA:  '%s', port %u", namebuf, port);
+    the_oa = this;
+  }
 }
 
 TCP_OA::~TCP_OA ()
 {
-    if (endpoint) {
-	endpoint->shutdown_connections (GIOP::close_connection, 0);
-	endpoint = 0;
-    }
 }
 
 
 //
 // Public initialisation routine for this OA.
+// XXX This should really be scoped as CORBA_TCP_OA_init()!!!!!  -cjc
+
 //
 TCP_OA_ptr
-TCP_OA::init (
-    CORBA_ORB_ptr	parent,
-    char		*oa_name,
-    CORBA_Environment	&env
-)
+TCP_OA::init (CORBA_ORB_ptr parent,
+	      ACE_INET_Addr& rendesvous,
+	      CORBA_Environment& env)
 {
     env.clear ();
 
@@ -186,29 +258,7 @@ TCP_OA::init (
 
 #endif	// _POSIX_THREADS
 
-
-    //
-    // The "OA Name" is either the service name (normally listed in the
-    // /etc/services file) or is the string form of the port number.
-    // These are both controlled by local administration, though in some
-    // cases the IETF will register port numbers.   If the OA name is
-    // unspecified (null pointer) or zero, the OS assigns some port
-    // which is currently unused.
-    //
-    // XXX getservent() is MT-unsafe; use getservent_r() where it exists
-    // on the target platform
-    //
-    unsigned short	port;
-    struct servent	*sp;
-
-    if (oa_name && (sp = ACE_OS::getservbyname (oa_name, "tcp")) != 0)
-	port = (unsigned short) sp->s_port;
-    else if (oa_name != 0 && ACE_OS::atoi (oa_name) != -1)
-	port = (unsigned short) ACE_OS::atoi (oa_name);
-    else
-	port = 0;
-
-    the_oa = new TCP_OA (parent, port, env);
+    the_oa = new TCP_OA (parent, rendesvous, env);
 
     return the_oa;
 }
@@ -243,8 +293,8 @@ TCP_OA::create (
 
     data->profile.iiop_version.major = IIOP::MY_MAJOR;
     data->profile.iiop_version.minor = IIOP::MY_MINOR;
-    data->profile.host = ACE_OS::strdup (namebuf);
-    data->profile.port = port;
+    data->profile.host = ACE_OS::strdup(addr.get_host_name());
+    data->profile.port = addr.get_port_number();
     data->profile.object_key.length =  key.length;
     data->profile.object_key.maximum = key.length;
     data->profile.object_key.buffer = new CORBA_Octet [(size_t) key.length];
@@ -341,8 +391,6 @@ _this ()
 
     data->profile.iiop_version.major = IIOP::MY_MAJOR;
     data->profile.iiop_version.minor = IIOP::MY_MINOR;
-    data->profile.host = ACE_OS::strdup (namebuf);
-    data->profile.port = tcp_port;
     data->profile.object_key.length =  key->length;
     data->profile.object_key.maximum = key->length;
     data->profile.object_key.buffer = new CORBA_Octet [(size_t) key->length];
@@ -399,139 +447,6 @@ TCP_OA::get_client_principal (
     return request_tsd->requesting_principal;
 }
 
-
-//
-// Dispatch routine that provides most of the IIOP glue ... constructs
-// a dynamic ServerRequest and any reply message that's needed.
-//
-static void
-tcp_oa_dispatcher (
-    GIOP::RequestHeader		&req,
-    CDR				&request_body,
-    CDR				*reply,
-    void			*context,
-    CORBA_Environment		&env
-)
-{
-    IIOP_ServerRequest		svr_req (
-				    &request_body,
-				    the_oa->orb (),
-				    the_oa
-				);
-
-    //
-    // ServerRequest is what does the unmarshaling, driven by typecodes
-    // that the DSI user provides.  Create the ServerRequest, store away
-    // information that'll be needed by some methods, and call the dispatch
-    // routine that the user supplied.  Then release the reference so it
-    // can be safely destroyed sometime later.
-    //
-    svr_req._opname = req.operation;
-
-#ifdef	_POSIX_THREADS
-    (void) pthread_setspecific (request_key, &req);
-#else
-    request_tsd = &req;
-#endif	// _POSIX_THREADS
-
-    TCP_OA::dispatch_context		*helper;
-
-    helper = (TCP_OA::dispatch_context *) context;
-    helper->skeleton (req.object_key, svr_req, helper->context, env);
-
-    svr_req.release ();
-
-    //
-    // If reply is null, this was a oneway request ... return!
-    //
-    if (reply == 0)
-	return;
-
-    //
-    // Otherwise check for correct parameter handling, and reply as
-    // appropriate.
-    //
-    // NOTE:  if "env" is set, it takes precedence over exceptions
-    // reported using the mechanism of the ServerRequest.  Only system
-    // exceptions are reported that way ...
-    //
-    // XXX  Exception reporting is ambiguous; it can be cleaner than
-    // this.  With both language-mapped and dynamic/explicit reporting
-    // mechanisms, one of must be tested "first" ... so an exception
-    // reported using the other mechanism could be "lost".  Perhaps only
-    // the language mapped one should be used for system exceptions.
-    //
-    CORBA_TypeCode_ptr		tc;
-    const void			*value;
-
-    if (!svr_req._params && env.exception () == 0) {
-	dmsg ("DSI user error, didn't supply params");
-	env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
-    }
-
-    if (env.exception () != 0) {	// standard exceptions only
-	CORBA_Environment	env2;
-	CORBA_Exception		*x = env.exception ();
-	CORBA_TypeCode_ptr	except_tc = x->type ();
-
-	reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
-	(void) CDR::encoder (except_tc, x, 0, reply, env2);
-	
-    } else if (svr_req._exception) {	// any exception at all
-	CORBA_Exception		*x;
-	CORBA_TypeCode_ptr	except_tc;
-
-	x = (CORBA_Exception *) svr_req._exception->value ();
-	except_tc = svr_req._exception->type ();
-
-	//
-	// Finish the GIOP Reply header, then marshal the exception.
-	//
-	// XXX x->type() someday ...
-	//
-	if (svr_req._ex_type == SYSTEM_EXCEPTION)
-	    reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
-	else
-	    reply->put_ulong (GIOP::USER_EXCEPTION);
-
-	(void) CDR::encoder (except_tc, x, 0, reply, env);
-
-    } else {				// normal reply
-	//
-	// First finish the GIOP header ...
-	//
-	reply->put_ulong (GIOP::NO_EXCEPTION);
-
-	//
-	// ... then send any return value ...
-	//
-	if (svr_req._retval) {
-	    tc = svr_req._retval->type ();
-	    value = svr_req._retval->value ();
-	    (void) CDR::encoder (tc, value, 0, reply, env);
-	}
-
-	//
-	// ... followed by "inout" and "out" parameters, left to right
-	//
-	unsigned			i;
-
-	for (i = 0; i < svr_req._params->count (); i++) {
-	    CORBA_NamedValue_ptr	nv = svr_req._params->item (i);
-	    CORBA_Any_ptr		any;
-
-	    if (!(nv->flags () & (CORBA_ARG_INOUT|CORBA_ARG_OUT)))
-		continue;
-
-	    any = nv->value ();
-	    tc = any->type ();
-	    value = any->value ();
-	    (void) CDR::encoder (tc, value, 0, reply, env);
-	}
-    }
-}
-
-
 //
 // Helper routine that provides IIOP glue for forwarding requests
 // to specific objects from one process to another.
@@ -563,20 +478,17 @@ tcp_oa_forwarder (
 // Generic routine to handle a message.
 //
 void
-TCP_OA::handle_message (
-    dispatch_context			&ctx,
-    CORBA_Environment			&env
-)
+TCP_OA::handle_message (dispatch_context& ctx, CORBA_Environment& env)
 {
-    GIOP::incoming_message (ctx.endpoint->fd,
-	    ctx.check_forward ? tcp_oa_forwarder : 0,
-	    tcp_oa_dispatcher, &ctx, env);
+  GIOP::incoming_message (ctx.endpoint,
+			  ctx.check_forward ? tcp_oa_forwarder : 0,
+			  tcp_oa_dispatcher, &ctx, env);
 
 #ifdef	_POSIX_THREADS
-    Critical		region (&tcpoa_mutex);
+  Critical region (&tcpoa_mutex);
 #endif	// _POSIX_THREADS
 
-    call_count--;
+  call_count--;
 }
 
 
@@ -611,7 +523,7 @@ TCP_OA::worker (void *arg)
 	    dexc (env, "TCP_OA, worker");
 	    env.clear ();
 	}
-    } while (context->aggressive && context->endpoint->fd != -1);
+    } while (context->aggressive && context->endpoint != -1);
 
     delete context;
     return 0;
@@ -752,7 +664,9 @@ TCP_OA::get_request (
 	// handle GIOP::CancelRequest messages.
 	//
 
+#if 0
 	fd = endpoint->block_for_connection (do_thr_create, timeout, env);
+#endif
 
 #ifdef	_POSIX_THREADS
 	region.enter ();
@@ -906,8 +820,10 @@ TCP_OA::clean_shutdown (
 	return;
     }
 
+#if 0
     endpoint->shutdown_connections (GIOP::close_connection, 0);
     endpoint = 0;
+#endif
 }
 
 

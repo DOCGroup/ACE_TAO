@@ -33,7 +33,7 @@
 // protocol modules!  This is an implementation shortcut only.
 
 #include	"iioporb.hh"
-#include	"connmgr.hh"
+#include "connmgr.hh"
 #include	"tcpoa.hh"
 
 #include	<initguid.h>
@@ -130,7 +130,8 @@ TOA::get_toa (
 	    //
 	    // TCP_OA initialization with null name means anonymous OA
 	    //
-	    tcp_oa = TCP_OA::init (orb, 0, env);
+	    ACE_INET_Addr anonymous((unsigned short)0, INADDR_ANY);
+	    tcp_oa = TCP_OA::init (orb, anonymous, env);
 	    if (env.exception () != 0)
 		return 0;
 	    else
