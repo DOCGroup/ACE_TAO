@@ -1635,63 +1635,67 @@ ACE::recv_i (ACE_HANDLE handle,
 
   while (message_block != 0)
     {
-      // Check if this block has any space for incoming data.
-      if (message_block->length () > 0)
+      // Our current message block chain.
+      const ACE_Message_Block *current_message_block = message_block;
+
+      while (current_message_block != 0)
         {
-          // Collect the data in the iovec.
-          iov[iovcnt].iov_base = message_block->rd_ptr ();
-          iov[iovcnt].iov_len  = message_block->length ();
-
-          // Increment iovec counter.
-          iovcnt++;
-
-          // Keep track of the number of bytes for this recv.
-          recv_size += message_block->length ();
-
-          // The buffer is full make a OS call.  @@ TODO find a way to
-          // find IOV_MAX for platforms that do not define it rather
-          // than simply setting IOV_MAX to some arbitrary value such
-          // as 16.
-          if (iovcnt == IOV_MAX)
+          // Check if this block has any space for incoming data.
+          if (current_message_block->length () > 0)
             {
-              if (loop)
-                n = ACE::recvv_n (handle,
-                                  iov,
-                                  iovcnt,
-                                  timeout);
-              else
-                n = ACE::recvv (handle,
-                                iov,
-                                iovcnt,
-                                timeout);
+              // Collect the data in the iovec.
+              iov[iovcnt].iov_base = current_message_block->rd_ptr ();
+              iov[iovcnt].iov_len  = current_message_block->length ();
 
-              // Errors.
-              if (n <= 0)
-                return n;
+              // Increment iovec counter.
+              iovcnt++;
 
-              // Success. Add to total bytes transferred.
-              nbytes += n;
+              // Keep track of the number of bytes for this recv.
+              recv_size += current_message_block->length ();
 
-              // Reset iovec counter.
-              iovcnt = 0;
+              // The buffer is full make a OS call.  @@ TODO find a way to
+              // find IOV_MAX for platforms that do not define it rather
+              // than simply setting IOV_MAX to some arbitrary value such
+              // as 16.
+              if (iovcnt == IOV_MAX)
+                {
+                  if (loop)
+                    n = ACE::recvv_n (handle,
+                                      iov,
+                                      iovcnt,
+                                      timeout);
+                  else
+                    n = ACE::recvv (handle,
+                                    iov,
+                                    iovcnt,
+                                    timeout);
 
-              // If we sent everything we had accumulated in the last
-              // call, then keep going.  If it was a partial recv, we
-              // won't continue.
-              if (recv_size == n)
-                recv_size = 0;
-              else
-                break;
+                  // Errors.
+                  if (n <= 0)
+                    return n;
+
+                  // Success. Add to total bytes transferred.
+                  nbytes += n;
+
+                  // Reset iovec counter.
+                  iovcnt = 0;
+
+                  // If we sent everything we had accumulated in the
+                  // last call, then keep going.  If it was a partial
+                  // recv, we won't continue.
+                  if (recv_size == n)
+                    recv_size = 0;
+                  else
+                    break;
+                }
             }
+
+          // Select the next message block in the chain.
+          current_message_block = current_message_block->cont ();
         }
 
-      // Selection of the next message block: first check the
-      // continuation chain; then look at the next message block in
-      // the queue.
-      if (message_block->cont ())
-        message_block = message_block->cont ();
-      else
-        message_block = message_block->next ();
+      // Selection of the next message block chain.
+      message_block = message_block->next ();
     }
 
   // Check for remaining buffers to be sent.  This will happen when
@@ -2286,63 +2290,67 @@ ACE::send_i (ACE_HANDLE handle,
 
   while (message_block != 0)
     {
-      // Check if this block has any data to be sent.
-      if (message_block->length () > 0)
+      // Our current message block chain.
+      const ACE_Message_Block *current_message_block = message_block;
+
+      while (current_message_block != 0)
         {
-          // Collect the data in the iovec.
-          iov[iovcnt].iov_base = message_block->rd_ptr ();
-          iov[iovcnt].iov_len  = message_block->length ();
-
-          // Increment iovec counter.
-          iovcnt++;
-
-          // Keep track of the number of bytes for this send.
-          send_size += message_block->length ();
-
-          // The buffer is full make a OS call.  @@ TODO find a way to
-          // find IOV_MAX for platforms that do not define it rather
-          // than simply setting IOV_MAX to some arbitrary value such
-          // as 16.
-          if (iovcnt == IOV_MAX)
+          // Check if this block has any data to be sent.
+          if (current_message_block->length () > 0)
             {
-              if (loop)
-                n = ACE::sendv_n (handle,
-                                  iov,
-                                  iovcnt,
-                                  timeout);
-              else
-                n = ACE::sendv (handle,
-                                iov,
-                                iovcnt,
-                                timeout);
+              // Collect the data in the iovec.
+              iov[iovcnt].iov_base = current_message_block->rd_ptr ();
+              iov[iovcnt].iov_len  = current_message_block->length ();
 
-              // Errors.
-              if (n <= 0)
-                return n;
+              // Increment iovec counter.
+              iovcnt++;
 
-              // Success. Add to total bytes transferred.
-              nbytes += n;
+              // Keep track of the number of bytes for this send.
+              send_size += current_message_block->length ();
 
-              // Reset iovec counter.
-              iovcnt = 0;
+              // The buffer is full make a OS call.  @@ TODO find a way to
+              // find IOV_MAX for platforms that do not define it rather
+              // than simply setting IOV_MAX to some arbitrary value such
+              // as 16.
+              if (iovcnt == IOV_MAX)
+                {
+                  if (loop)
+                    n = ACE::sendv_n (handle,
+                                      iov,
+                                      iovcnt,
+                                      timeout);
+                  else
+                    n = ACE::sendv (handle,
+                                    iov,
+                                    iovcnt,
+                                    timeout);
 
-              // If we sent everything we had accumulated in the last
-              // call, then keep going.  If it was a partial send, we
-              // won't continue.
-              if (send_size == n)
-                send_size = 0;
-              else
-                break;
+                  // Errors.
+                  if (n <= 0)
+                    return n;
+
+                  // Success. Add to total bytes transferred.
+                  nbytes += n;
+
+                  // Reset iovec counter.
+                  iovcnt = 0;
+
+                  // If we sent everything we had accumulated in the last
+                  // call, then keep going.  If it was a partial send, we
+                  // won't continue.
+                  if (send_size == n)
+                    send_size = 0;
+                  else
+                    break;
+                }
             }
+
+          // Select the next message block in the chain.
+          current_message_block = current_message_block->cont ();
         }
 
-      // Selection of the next message block: first check the
-      // continuation chain; then look at the next message block in
-      // the queue.
-      if (message_block->cont ())
-        message_block = message_block->cont ();
-      else
-        message_block = message_block->next ();
+      // Selection of the next message block chain.
+      message_block = message_block->next ();
     }
 
   // Check for remaining buffers to be sent.  This will happen when

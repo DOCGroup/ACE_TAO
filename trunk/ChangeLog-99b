@@ -1,3 +1,10 @@
+Sat Dec 18 01:16:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/ACE.cpp (recv_i and send_i): The selection of the next
+	  message block to send/recv was incorrect.  The correct way is to
+	  chase the continuation chain and then go to the next
+	  continuation chain.
+
 Fri Dec 17 22:25:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-cxx-common.h: added, to factor out common
