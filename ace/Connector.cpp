@@ -299,7 +299,7 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
   // Win32 has a timing problem - if you check to see if the
   // connection has completed too fast, it will fail - so wait 35
   // millisecond to let it catch up.
-  ACE_Time_Value tv (0, 35000);
+  ACE_Time_Value tv (0, ACE_OS::NON_BLOCKING_BUG_DELAY);
   ACE_OS::sleep (tv);
 #endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
 
