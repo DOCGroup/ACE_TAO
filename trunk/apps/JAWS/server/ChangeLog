@@ -1,3 +1,13 @@
+Thu Jul  3 23:33:47 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* HTTP_Response.cpp (~HTTP_Response): changed delete to delete [],
+	  removing a major memory leak from JAWS.  Still to find is a
+	  memory lead associated with thread per request.  Nanbor's fix is
+	  about what I did to EMPTY_HEADER too.
+
+	* JAWS_File.cpp: David points out I need to add specializations
+	  for the GNU C++ compiler.
+
 Thu Jul  3 22:38:04 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* HTTP_Response.cpp (build_headers): Added explicit cast for
