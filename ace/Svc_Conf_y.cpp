@@ -19,7 +19,6 @@
 #define	ACE_IDENT	269
 #define	ACE_STRING	270
 
-#line 1 "Svc_Conf.y"
 
 // $Id$
 
@@ -120,11 +119,11 @@ static const short ace_yyrhs[] = {    23,
 
 #if ACE_YYDEBUG != 0
 static const short ace_yyrline[] = { 0,
-    52,    60,    64,    68,    69,    70,    71,    72,    73,    77,
-    87,    94,   101,   108,   115,   119,   120,   126,   129,   135,
-   140,   144,   148,   156,   160,   186,   197,   204,   211,   234,
-   268,   272,   276,   283,   287,   291,   298,   302,   306,   313,
-   314,   318,   319,   320
+    49,    57,    61,    65,    66,    67,    68,    69,    70,    74,
+    84,    91,    98,   105,   112,   116,   117,   123,   126,   132,
+   137,   141,   145,   153,   157,   183,   194,   201,   208,   231,
+   265,   269,   273,   280,   284,   288,   295,   299,   303,   310,
+   311,   315,   316,   317
 };
 #endif
 
@@ -213,7 +212,7 @@ static const short ace_yycheck[] = {     8,
 #define ACE_YYPURE 1
 
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
-#line 3 "/usr/share/bison/bison.simple"
+
 /* This file comes from bison-1.28.  */
 
 /* Skeleton output parser for bison,
@@ -427,7 +426,7 @@ __ace_yy_memcpy (char *to, char *from, unsigned int count)
 #endif
 #endif
 
-#line 217 "/usr/share/bison/bison.simple"
+
 
 /* The user can define ACE_YYPARSE_PARAM as the name of an argument to be passed
    into ace_yyparse.  The argument should have type void *.
@@ -569,7 +568,7 @@ ace_yynewstate:
       /* Extend the stack our own way.  */
       if (ace_yystacksize >= ACE_YYMAXDEPTH)
 	{
-	  ace_yyerror(ACE_LIB_TEXT ("parser stack overflow"));
+	  ace_yyerror("parser stack overflow");
 	  if (ace_yyfree_stacks)
 	    {
 	      free (ace_yyss);
@@ -756,7 +755,6 @@ ace_yyreduce:
   switch (ace_yyn) {
 
 case 1:
-#line 53 "Svc_Conf.y"
 {
       if (ace_yyvsp[0].parse_node_ != 0)
       {
@@ -766,13 +764,11 @@ case 1:
     ;
     break;}
 case 2:
-#line 61 "Svc_Conf.y"
 {
       ACE_SVC_CONF_PARAM->obstack.release ();
     ;
     break;}
 case 10:
-#line 78 "Svc_Conf.y"
 {
       if (ace_yyvsp[-1].svc_record_ != 0)
         ace_yyval.parse_node_ = new ACE_Dynamic_Node (ace_yyvsp[-1].svc_record_, ace_yyvsp[0].ident_);
@@ -781,74 +777,61 @@ case 10:
     ;
     break;}
 case 11:
-#line 88 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Static_Node (ace_yyvsp[-1].ident_, ace_yyvsp[0].ident_);
     ;
     break;}
 case 12:
-#line 95 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Suspend_Node (ace_yyvsp[0].ident_);
     ;
     break;}
 case 13:
-#line 102 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Resume_Node (ace_yyvsp[0].ident_);
     ;
     break;}
 case 14:
-#line 109 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Remove_Node (ace_yyvsp[0].ident_);
     ;
     break;}
 case 15:
-#line 116 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Stream_Node (ace_yyvsp[-1].static_node_, ace_yyvsp[0].parse_node_);
     ;
     break;}
 case 16:
-#line 119 "Svc_Conf.y"
 { ace_yyval.static_node_ = new ACE_Static_Node (ace_yyvsp[0].ident_); ;
     break;}
 case 17:
-#line 120 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Dummy_Node (ace_yyvsp[-1].static_node_, ace_yyvsp[0].parse_node_);
     ;
     break;}
 case 18:
-#line 127 "Svc_Conf.y"
 {
     ;
     break;}
 case 19:
-#line 130 "Svc_Conf.y"
 {
     ;
     break;}
 case 20:
-#line 136 "Svc_Conf.y"
 {
       // Initialize left context...
       ace_yyval.static_node_ = ace_yyvsp[-1].static_node_;
     ;
     break;}
 case 21:
-#line 141 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = ace_yyvsp[-1].parse_node_;
     ;
     break;}
 case 22:
-#line 144 "Svc_Conf.y"
 { ace_yyval.parse_node_ = 0; ;
     break;}
 case 23:
-#line 149 "Svc_Conf.y"
 {
       if (ace_yyvsp[0].parse_node_ != 0)
         {
@@ -858,11 +841,9 @@ case 23:
     ;
     break;}
 case 24:
-#line 156 "Svc_Conf.y"
 { ace_yyval.parse_node_ = 0; ;
     break;}
 case 25:
-#line 161 "Svc_Conf.y"
 {
       ACE_Static_Node *svc_type = ace_yyvsp[0].static_node_;
 
@@ -890,7 +871,6 @@ case 25:
     ;
     break;}
 case 26:
-#line 187 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
 
@@ -903,7 +883,6 @@ case 26:
     ;
     break;}
 case 27:
-#line 198 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_,
                                             ace_yyvsp[0].static_node_->name ());
@@ -912,7 +891,6 @@ case 27:
     ;
     break;}
 case 28:
-#line 205 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = ace_get_module (ace_yyvsp[-2].static_node_,
                                             ace_yyvsp[0].static_node_->name ());
@@ -921,7 +899,6 @@ case 28:
     ;
     break;}
 case 29:
-#line 212 "Svc_Conf.y"
 {
       ACE_Static_Node *stream = ace_yyvsp[-2].static_node_;
       ACE_Static_Node *module = ace_yyvsp[0].static_node_;
@@ -943,7 +920,6 @@ case 29:
     ;
     break;}
 case 30:
-#line 235 "Svc_Conf.y"
 {
       u_int flags
         = ACE_Service_Type::DELETE_THIS
@@ -976,66 +952,56 @@ case 30:
     ;
     break;}
 case 31:
-#line 269 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     ;
     break;}
 case 32:
-#line 273 "Svc_Conf.y"
 {
       ace_yyval.type_ = 0;
     ;
     break;}
 case 33:
-#line 277 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     ;
     break;}
 case 34:
-#line 284 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Object_Node (ace_yyvsp[-2].ident_, ace_yyvsp[0].ident_);
     ;
     break;}
 case 35:
-#line 288 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Function_Node (ace_yyvsp[-4].ident_, ace_yyvsp[-2].ident_);
     ;
     break;}
 case 36:
-#line 292 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Static_Function_Node (ace_yyvsp[-2].ident_);
     ;
     break;}
 case 37:
-#line 299 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_MODULE_T;
     ;
     break;}
 case 38:
-#line 303 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_SVC_OBJ_T;
     ;
     break;}
 case 39:
-#line 307 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_STREAM_T;
     ;
     break;}
 case 41:
-#line 314 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; ;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
-#line 543 "/usr/share/bison/bison.simple"
+
 
   ace_yyvsp -= ace_yylen;
   ace_yyssp -= ace_yylen;
@@ -1101,7 +1067,7 @@ ace_yyerrlab:   /* here on detecting error */
       if (ace_yyn > ACE_YYFLAG && ace_yyn < ACE_YYLAST)
 	{
 	  int size = 0;
-	  ACE_TCHAR *msg;
+	  char *msg;
 	  int x, count;
 
 	  count = 0;
@@ -1109,11 +1075,11 @@ ace_yyerrlab:   /* here on detecting error */
 	  for (x = (ace_yyn < 0 ? -ace_yyn : 0);
 	       x < (sizeof(ace_yytname) / sizeof(char *)); x++)
 	    if (ace_yycheck[x + ace_yyn] == x)
-	      size += ACE_OS::strlen(ace_yytname[x]) + 15, count++;
-	  msg = new ACE_TCHAR[size + 15];
+	      size += strlen(ace_yytname[x]) + 15, count++;
+	  msg = (char *) malloc(size + 15);
 	  if (msg != 0)
 	    {
-	      ACE_OS::strcpy(msg, ACE_LIB_TEXT ("parse error"));
+	      strcpy(msg, "parse error");
 
 	      if (count < 5)
 		{
@@ -1122,21 +1088,21 @@ ace_yyerrlab:   /* here on detecting error */
 		       x < (sizeof(ace_yytname) / sizeof(char *)); x++)
 		    if (ace_yycheck[x + ace_yyn] == x)
 		      {
-                        ACE_OS::strcat (msg, count == 0 ? ACE_LIB_TEXT (", expecting `") : ACE_LIB_TEXT (" or `"));
-                        ACE_OS::strcat (msg, ACE_TEXT_CHAR_TO_TCHAR (ace_yytname[x]));
-                        ACE_OS::strcat (msg, ACE_LIB_TEXT ("'"));
+			strcat(msg, count == 0 ? ", expecting `" : " or `");
+			strcat(msg, ace_yytname[x]);
+			strcat(msg, "'");
 			count++;
 		      }
 		}
-	      ace_yyerror (msg);
-	      delete [] msg;
+	      ace_yyerror(msg);
+	      free(msg);
 	    }
 	  else
-	    ace_yyerror (ACE_LIB_TEXT ("parse error; also virtual memory exceeded"));
+	    ace_yyerror ("parse error; also virtual memory exceeded");
 	}
       else
 #endif /* ACE_YYERROR_VERBOSE */
-	ace_yyerror(ACE_LIB_TEXT ("parse error"));
+	ace_yyerror("parse error");
     }
 
   goto ace_yyerrlab1;
@@ -1255,7 +1221,6 @@ ace_yyerrhandle:
     }
   return 1;
 }
-#line 323 "Svc_Conf.y"
 
 // Prints the error string to standard output.  Cleans up the error
 // messages.
