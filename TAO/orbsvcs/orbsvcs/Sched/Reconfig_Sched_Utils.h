@@ -20,11 +20,6 @@
 
 #include "ace/config-all.h"
 
-// The templatized method parameters needed by this file are
-// hopelessly broken on pre-2.8 versions of g++
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
-
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
 #include "sched_export.h"
@@ -284,8 +279,6 @@ public:
 
 // Include the templates here.
 #include "Reconfig_Sched_Utils_T.h"
-
-#endif /* __GNUC__ */
 
 #include "ace/post.h"
 #endif /* TAO_RECONFIG_SCHED_UTILS_H */

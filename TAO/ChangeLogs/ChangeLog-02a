@@ -1,3 +1,12 @@
+Sun Mar 25 11:17:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp: Removed
+	  redundant guards for old g++. These files got missed in the last
+	  change. 
+
 Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++. 

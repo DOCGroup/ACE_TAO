@@ -18,11 +18,6 @@
 #ifndef TAO_RECONFIG_SCHED_UTILS_T_C
 #define TAO_RECONFIG_SCHED_UTILS_T_C
 
-// The templatized method parameters needed by this file are
-// hopelessly broken on pre-2.8 versions of g++
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
-
 #include "Reconfig_Sched_Utils_T.h"
 #include "ace/Sched_Params.h"
 
@@ -874,7 +869,5 @@ TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY>::noncritical_utilization ()
   return this->noncritical_utilization_;
 }
 
-
-#endif /* __GNUC__ */
 
 #endif /* TAO_RECONFIG_SCHED_UTILS_T_C */
