@@ -106,7 +106,7 @@ public:
   virtual int handle_exception (ACE_HANDLE fd = -1);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask);
-  virtual int handle_signal (ACE_HANDLE signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
   // = Get/set the operations handler.
   T *op_handler (void);

@@ -13,7 +13,8 @@
 
 ACE_RCSID(ace, Sock_Connect, "$Id$")
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && \
+(!defined (ACE_HAS_WINSOCK2) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0)))
 // Return value in buffer for a key/name pair from the Windows
 // Registry up to buf_len size.
 
@@ -51,7 +52,7 @@ get_reg_value (const ACE_TCHAR *key,
   ::RegCloseKey (hk);
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif //(ACE_WIN32) && !(ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0)
 
 // Bind socket to an unused port.
 

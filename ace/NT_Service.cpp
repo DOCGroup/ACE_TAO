@@ -54,18 +54,18 @@ ACE_NT_Service::open (void *args)
   report_status (SERVICE_START_PENDING, 0);
 
   int svc_return = this->svc ();
-  if (svc_return == 0) 
+  if (svc_return == 0)
     {
       this->svc_status_.dwWin32ExitCode = NO_ERROR;
       this->svc_status_.dwServiceSpecificExitCode = 0;
     }
-  else 
+  else
     {
-      if (errno == 0) 
+      if (errno == 0)
         {
           this->svc_status_.dwWin32ExitCode = GetLastError ();
         }
-      else 
+      else
         {
           this->svc_status_.dwWin32ExitCode = ERROR_SERVICE_SPECIFIC_ERROR;
           this->svc_status_.dwServiceSpecificExitCode = errno;
@@ -81,7 +81,7 @@ ACE_NT_Service::open (void *args)
 void
 ACE_NT_Service::handle_control (DWORD control_code)
 {
-  switch(control_code) 
+  switch(control_code)
     {
     case SERVICE_CONTROL_SHUTDOWN:
     case SERVICE_CONTROL_STOP:
@@ -179,13 +179,13 @@ ACE_NT_Service::insert (DWORD start_type,
 
   if (exe_path == 0)
     {
-      if (ACE_TEXT_GetModuleFileName (0, this_exe, sizeof this_exe) == 0) 
+      if (ACE_TEXT_GetModuleFileName (0, this_exe, sizeof this_exe) == 0)
         return -1;
       exe_path = this_exe;
     }
 
-  SC_HANDLE sc_mgr = ACE_TEXT_OpenSCManager (this->host (), 
-                                             0, 
+  SC_HANDLE sc_mgr = ACE_TEXT_OpenSCManager (this->host (),
+                                             0,
                                              SC_MANAGER_ALL_ACCESS);
   if (sc_mgr == 0)
     return -1;
@@ -201,7 +201,7 @@ ACE_NT_Service::insert (DWORD start_type,
                                          group_name,
                                          tag_id,
                                          dependencies,
-                                         account_name, 
+                                         account_name,
                                          password);
   CloseServiceHandle (sc_mgr);
   if (sh == 0)
@@ -219,7 +219,7 @@ ACE_NT_Service::remove (void)
   if (this->svc_sc_handle () == 0)
     return -1;
 
-  if (DeleteService (this->svc_sc_handle()) == 0 
+  if (DeleteService (this->svc_sc_handle()) == 0
       && GetLastError () != ERROR_SERVICE_MARKED_FOR_DELETE)
     return -1;
 
@@ -264,14 +264,19 @@ ACE_NT_Service::startup (void)
 
   SC_HANDLE svc = this->svc_sc_handle ();
   if (svc == 0)
-    return -1;
-
+  {
+    // To distinguish this error from the QueryServiceConfig failure
+    // below, return the DWORD equivalent of -2, rather than -1.
+    return MAXDWORD - 1;
+  }
   cfgsize = sizeof cfgbuff;
   cfg = (LPQUERY_SERVICE_CONFIG) cfgbuff;
   BOOL ok = QueryServiceConfig (svc, cfg, cfgsize, &needed_size);
   if (ok)
     return cfg->dwStartType;
-  return 0;
+  // Zero is a valid return value for QueryServiceConfig, so if
+  // QueryServiceConfig fails, return the DWORD equivalent of -1.
+  return MAXDWORD;
 
 }
 
@@ -438,7 +443,7 @@ ACE_NT_Service::report_status (DWORD new_status,
 
   if (new_status != 0)
     this->svc_status_.dwCurrentState = new_status;
-  switch (this->svc_status_.dwCurrentState) 
+  switch (this->svc_status_.dwCurrentState)
     {
   case SERVICE_START_PENDING:
     save_controls = this->svc_status_.dwControlsAccepted;

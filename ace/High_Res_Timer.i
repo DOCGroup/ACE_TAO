@@ -22,10 +22,15 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
 #if defined (ACE_WIN32)
   // Win32's scale factor is in ticks/msec, so multiply up to usec.
   ACE_hrtime_t subsec = hrt - tmp;         // Remainder of ticks < 1sec
-  long msec = (long) (subsec / global_scale_factor ());  // #msec
-  long usec = (long) (subsec - (msec * global_scale_factor ()));
-  //     (tick * usec/msec) / tick/msec     = usec  
-  usec = (usec * 1000)      / (long) global_scale_factor ();
+  ACE_UINT32 msec = (ACE_UINT32) (subsec / global_scale_factor ());  // #msec
+  ACE_hrtime_t usec64 = subsec - (msec * global_scale_factor ());
+#  if defined (ghs)
+  ACE_UINT32 usec = usec64.lo();
+#  else
+  ACE_UINT32 usec = (ACE_UINT32) usec64;
+#  endif
+  //     (tick * usec/msec) / tick/msec     = usec
+  usec = (usec * 1000)      / (ACE_UINT32) global_scale_factor ();
   tv.usec ((msec * 1000) + usec);
 #else
   tv.usec ((long) ((hrt - tmp) / global_scale_factor ()));
