@@ -1,3 +1,14 @@
+Sun May 23 10:06:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/lib/README:
+	* orbsvcs/tests/Event/Basic/README:
+	* orbsvcs/tests/Event/Basic/run_test.pl:
+	* orbsvcs/tests/Event/Performance/README:
+	* orbsvcs/tests/Event/Performance/run_test.pl:
+	  Added some README files explaining the purpose of each test and
+	  how to run it. Also added some simple run_test scripts to
+	  execute the tests.
+
 Sat May 22 22:16:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
