@@ -242,11 +242,13 @@ ACE_AIO_Accept_Handler::notify (ACE_Asynch_Accept::Result* result)
   // Send the result through the pipe. 
   if (ACE_OS::write (this->pipe_.write_handle (),
                      (void *) result,
-                     sizeof (*result)) < sizeof (*result))
+                     sizeof (*result)) < (signed) sizeof (*result))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P %t):%p\n",
                        "Error:Writing on to pipe failed"),
                       -1);
+  
+  return 0;
 }
 
 void
