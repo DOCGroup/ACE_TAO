@@ -276,10 +276,10 @@ namespace
   {
     AttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
+        scope_ (scope),
         write_type_name_emitter_ (c.os ()),
         read_type_name_emitter_ (c.os ()),
-        return_emitter_ (c.os ()),
-        scope_ (scope)
+        return_emitter_ (c.os ())
     {
       write_belongs_.node_traverser (write_type_name_emitter_);
       read_belongs_.node_traverser (read_type_name_emitter_);
