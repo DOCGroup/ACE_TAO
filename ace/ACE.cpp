@@ -8,6 +8,7 @@
 #include "ace/SString.h"
 #include "ace/Version.h"
 #include "ace/Message_Block.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/ACE.i"
