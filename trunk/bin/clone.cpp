@@ -1,6 +1,8 @@
-#include "ace/OS.h"
 // $Id$
 
+#include "ace/OS.h"
+
+ACE_RCSID(bin, clone, "$Id$")
 
 #if 0
 #if defined (USG)

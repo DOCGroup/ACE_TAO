@@ -253,4 +253,9 @@
 
 #define ACE_HAS_GPERF
 
+#define ACE_CC_NAME "SunPro C++"
+#define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)
+#define ACE_CC_MINOR_VERSION (__SUNPRO_CC & 0x00ff)
+#define ACE_CC_BETA_VERSION  (0)
+
 #endif /* ACE_CONFIG_H */

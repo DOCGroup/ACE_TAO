@@ -46,6 +46,19 @@ public:
   static u_int beta_version (void);
   // E.g., the "19" in ACE 4.3.19.  Returns 0 for "stable" (non-beta) releases.
 
+  // = C++ compiler version information.
+  static const char* const compiler_name (void);
+  // E.g., the "SunPro C++" in SunPro C++ 4.32.0
+
+  static u_int compiler_major_version (void);
+  // E.g., the "4" in SunPro C++ 4.32.0
+
+  static u_int compiler_minor_version (void);
+  // E.g., the "32" in SunPro C++ 4.32.0
+
+  static u_int compiler_beta_version (void);
+  // E.g., the "0" in SunPro C++ 4.32.0
+
   // = Recv operations that factor out differences between Win32 and UNIX.
   static ssize_t recv (ACE_HANDLE handle, 
                        void *buf, 
