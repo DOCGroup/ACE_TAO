@@ -1,3 +1,12 @@
+Fri Apr 21 10:36:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  Warnings for case-only differences in spellings (-Cw)
+	  were stopping code generation the same as an
+	  error would. Code generation now proceeds normally
+	  for warnings. Thanks to Moore Y. Cao <yilincao@lucent.com>
+	  for reporting this bug.
+
 Thu Apr 20 21:05:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
