@@ -34,7 +34,6 @@ ACEXML_InputSource::~ACEXML_InputSource (void)
 {
   delete[] this->publicId_;
   delete[] this->systemId_;
-  delete this->charStream_;
   delete[] this->encoding_;
 }
 

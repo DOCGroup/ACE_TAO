@@ -20,7 +20,7 @@ static const ACEXML_Char quot_value[] = {'"', 0};
 ACEXML_Entity_Manager::ACEXML_Entity_Manager (void)
   : entities_ ()
 {
-  // @@ No way to know if these bindings success or not.
+  // @@ No way to know if these bindings succeed or not.
 
   ACEXML_String ampname (amp_name, 0, 0);
   ACEXML_String ampvalue  (amp_value, 0, 0);

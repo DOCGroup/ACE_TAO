@@ -91,13 +91,13 @@ public:
    *  position and the EOF and both the <get> and <recv> positions are
    *  advanced by <len>. Returns 0 if the <recv> position is at the EOF.
    */
-  virtual const ACEXML_Char *recv (size_t &len);
+  virtual const char *recv (size_t &len);
 
   /**
    *  Returns a pointer to array of characters starting at the <recv>
    *  position.
    */
-  virtual const ACEXML_Char *recv (void) const;
+  virtual const char *recv (void) const;
 
   /**
    *  Returns the length in bytes between the <get> position and the <recv>
@@ -132,7 +132,7 @@ public:
    *  if necessary. Returns 0 if <offset> or <offset + size> is past the
    *  end of the stream.
    */
-  virtual const ACEXML_Char *peek_str (size_t offset, size_t size);
+  virtual const char *peek_str (size_t offset, size_t size);
 
   /**
    *  Sets the <get> and <recv> positions as follows:
@@ -172,16 +172,16 @@ private:
   ACE_Mem_Map mem_map_;
 
   /// Pointer to the address where the next <recv> method will start.
-  ACEXML_Char *recv_pos_;
+  char *recv_pos_;
 
   /**
    *  Pointer to the address where the next <get_char> method will
    *  start.
    */
-  ACEXML_Char *get_pos_;
+  char *get_pos_;
 
   /// Address at the end of the file mapping.
-  ACEXML_Char *end_of_mapping_plus1_;
+  char *end_of_mapping_plus1_;
 
 };
 

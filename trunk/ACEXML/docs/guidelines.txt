@@ -18,7 +18,7 @@
       <code>wchar_t</code>.  Notice that ACEXML assume
       <code>sizeof (wchar_t)</code> is of 2-byte long.  For platforms
       using 4-byte <code>wchar_t</code>, ACEXML will not work
-      correctly but it should be trivial to fix.<p>
+      correctly, but it should be trivial to fix.<p>
 
   <li>Currently, there's only an example showing how to use the parser
       under @c $(ACE_ROOT)/ACEXML/examples/SAXPrint/.
