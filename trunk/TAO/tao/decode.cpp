@@ -171,7 +171,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
         {
           end = temp.rd_ptr ();
 
-	  ACE_Message_Block* cdr;
+          ACE_Message_Block* cdr;
           ACE_NEW_RETURN (cdr, ACE_Message_Block (end - begin),
                           CORBA::TypeCode::TRAVERSE_STOP);
           TAO_OutputCDR out (cdr);
@@ -179,15 +179,15 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
           retval = out.append (elem_tc, stream, env);
           if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
             {
-	      ACE_Message_Block::release (any->cdr_);
-	      if (any->any_owns_data_ && any->value_ != 0)
-		DEEP_FREE (any->type_, any->value_, 0, env);
-	      if (env.exception () != 0)
-		return CORBA::TypeCode::TRAVERSE_STOP;
-	      any->cdr_ = cdr;
-	      any->value_ = 0;
-	      any->type_ = elem_tc;
-	      any->any_owns_data_ = CORBA::B_TRUE;
+              ACE_Message_Block::release (any->cdr_);
+              if (any->any_owns_data_ && any->value_ != 0)
+                DEEP_FREE (any->type_, any->value_, 0, env);
+              if (env.exception () != 0)
+                return CORBA::TypeCode::TRAVERSE_STOP;
+              any->cdr_ = cdr;
+              any->value_ = 0;
+              any->type_ = elem_tc;
+              any->any_owns_data_ = CORBA::B_TRUE;
             }
         }
     }
@@ -317,23 +317,23 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
 
                         // allocate a new TypeCode
 #if 1
-			// This may produce a memory leak, because
-			// callers are sloppy about removing this
-			// objects.
+                        // This may produce a memory leak, because
+                        // callers are sloppy about removing this
+                        // objects.
                         CORBA::Long _oc_bounded_string [] =
                         {TAO_ENCAP_BYTE_ORDER, 0};
                         // Bounded string. Save the bounds
                         _oc_bounded_string [1] = (CORBA::Long) bound;
-			*tcp = new CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
-						    8,
-						    ACE_reinterpret_cast(char*,_oc_bounded_string),
-						    CORBA::B_FALSE, 0);
+                        *tcp = new CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
+                                                    8,
+                                                    ACE_reinterpret_cast(char*,_oc_bounded_string),
+                                                    CORBA::B_FALSE, 0);
 #elif 0
-			// This one fails because we are passing the
-			// parent but the buffer (_oc_bounded_string) is
-			// not pointing to the parent CDR stream
-			// (hence no sharing) and the length is wrong
-			// (should be 8 not bounds).
+                        // This one fails because we are passing the
+                        // parent but the buffer (_oc_bounded_string) is
+                        // not pointing to the parent CDR stream
+                        // (hence no sharing) and the length is wrong
+                        // (should be 8 not bounds).
                         CORBA::Long _oc_bounded_string [] =
                         {TAO_ENCAP_BYTE_ORDER, 0};
                         // Bounded string. Save the bounds
@@ -342,12 +342,12 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                                                     bound, (char *) &_oc_bounded_string,
                                                     CORBA::B_FALSE, parent);
 #else
-			// This depends on the fact that <stream> is 
-			// actually pointing to the parent CDR stream,
-			// it is untested.
+                        // This depends on the fact that <stream> is
+                        // actually pointing to the parent CDR stream,
+                        // it is untested.
                         *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                                     8,
-						    stream->rd_ptr () - 8,
+                                                    stream->rd_ptr () - 8,
                                                     CORBA::B_FALSE, parent);
 #endif
                       }
@@ -813,14 +813,15 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                         break;
 
                       case CORBA::tk_objref:
-			{
-			  CORBA_Object_ptr object;
-			  retval = stream->decode (param, &object, 0, env);
-			  TAO_Object_Field* field = 
-			    ACE_static_cast(TAO_Object_Field*, data);
-			  field->_downcast (object, env);
-			}
-			break;
+                        {
+                          CORBA_Object_ptr object;
+                          retval = stream->decode (param, &object, 0, env);
+                          TAO_Object_Field* field =
+                            ACE_reinterpret_cast (TAO_Object_Field *,
+                              ACE_const_cast (void *, data));
+                          field->_downcast (object, env);
+                        }
+                        break;
 
                       default:
                         break;
@@ -913,7 +914,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                           if (env.exception () == 0)
                             {
                               // do the matching
-			      CORBA::TypeCode_var type = member_label->type ();
+                              CORBA::TypeCode_var type = member_label->type ();
                               switch (type->kind (env))
                                 {
                                 case CORBA::tk_short:
@@ -1137,7 +1138,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                     {
                       TAO_Unbounded_Sequence<CORBA::Octet>* seq2 =
                         ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, seq);
-		      seq2->replace (bounds, stream->start ());
+                      seq2->replace (bounds, stream->start ());
                       stream->skip_bytes (bounds);
                       return CORBA::TypeCode::TRAVERSE_CONTINUE;
                     }
@@ -1271,23 +1272,23 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       break;
 
                     case CORBA::tk_objref:
-		      {
-			size = sizeof (CORBA_Object_ptr);
-			while (bounds-- &&
-			       retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-			  {
-			    CORBA_Object_ptr ptr;
-			    retval = stream->decode (tc2, &ptr, 0,  env);
-			    if (env.exception () != 0) break;
-			    seq->_downcast (value, ptr, env);
-			    if (env.exception () != 0) break;
-			    CORBA::release (ptr);
-			    value += size;
-			  }
-			if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-			  return retval;
-		      }
-		      break;
+                      {
+                        size = sizeof (CORBA_Object_ptr);
+                        while (bounds-- &&
+                               retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                          {
+                            CORBA_Object_ptr ptr;
+                            retval = stream->decode (tc2, &ptr, 0,  env);
+                            if (env.exception () != 0) break;
+                            seq->_downcast (value, ptr, env);
+                            if (env.exception () != 0) break;
+                            CORBA::release (ptr);
+                            value += size;
+                          }
+                        if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                          return retval;
+                      }
+                      break;
 
                     default:
                       break;
