@@ -1,14 +1,17 @@
 Fri Feb 21 13:40:41 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IOPC.cpp:
+	* tao/PortableInterceptorC.cpp:
 	* tao/DynamicAny/DynamicAnyC.cpp:
 	* tao/IORManipulation/IORC.cpp:
 	* tao/IORTable/IORTableC.cpp:
 	* tao/Messaging/MessagingC.i:
 	* tao/Messaging/MessagingC.cpp:
-	* tao/PortableInterceptorC.cpp:
+	* tao/PortableServer/Collocated_Object.i:
+	* tao/PortableServer/Collocated_Object.cpp:
 	* tao/PortableServer/ImplRepoC.i:
 	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImR_LocatorC.i:
 	* tao/PortableServer/ImR_LocatorC.cpp:
 	* tao/PortableServer/PortableServerC.cpp:
 
