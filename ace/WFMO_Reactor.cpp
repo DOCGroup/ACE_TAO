@@ -63,22 +63,22 @@ ACE_WFMO_Reactor_Handler_Repository::remove_network_events_i (long &existing_mas
       ACE_CLR_BITS (existing_masks, FD_READ);
       ACE_CLR_BITS (existing_masks, FD_CLOSE);
     }
-      
+
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::WRITE_MASK))
     ACE_CLR_BITS (existing_masks, FD_WRITE);
-  
+
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::EXCEPT_MASK))
     ACE_CLR_BITS (existing_masks, FD_OOB);
-  
+
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::ACCEPT_MASK))
     ACE_CLR_BITS (existing_masks, FD_ACCEPT);
-  
+
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::CONNECT_MASK))
     ACE_CLR_BITS (existing_masks, FD_CONNECT);
-  
+
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::QOS_MASK))
     ACE_CLR_BITS (existing_masks, FD_QOS);
-  
+
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::GROUP_QOS_MASK))
     ACE_CLR_BITS (existing_masks, FD_GROUP_QOS);
 }
@@ -93,7 +93,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
   size_t original_handle_count = this->handles_to_be_deleted_;
-  
+
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
   // appear multiple times. All handles are checked.
@@ -105,7 +105,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   for (i = 0; i < this->max_handlep1_ && error == 0; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->current_handles_[i] == handle || 
+    if ((this->current_handles_[i] == handle ||
          this->current_info_[i].io_handle_ == handle) &&
         // Make sure that it is not already marked for deleted
         !this->current_info_[i].delete_entry_)
@@ -114,12 +114,12 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
         if (result == -1)
           error = 1;
       }
-  
+
   // Then check the suspended entries
   for (i = 0; i < this->suspended_handles_ && error == 0; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->current_suspended_info_[i].io_handle_ == handle || 
+    if ((this->current_suspended_info_[i].io_handle_ == handle ||
          this->current_suspended_info_[i].event_handle_ == handle) &&
         // Make sure that it is not already marked for deleted
         !this->current_suspended_info_[i].delete_entry_)
@@ -128,12 +128,12 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
         if (result == -1)
           error = 1;
       }
-  
+
   // Then check the to_be_added entries
   for (i = 0; i < this->handles_to_be_added_ && error == 0; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->to_be_added_info_[i].io_handle_ == handle || 
+    if ((this->to_be_added_info_[i].io_handle_ == handle ||
          this->to_be_added_info_[i].event_handle_ == handle) &&
         // Make sure that it is not already marked for deleted
         !this->to_be_added_info_[i].delete_entry_)
@@ -142,7 +142,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
         if (result == -1)
           error = 1;
       }
-  
+
   // Only if the number of handlers to be deleted changes do we need
   // to wakeup the other threads
   if (original_handle_count < this->handles_to_be_deleted_)
@@ -151,7 +151,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   return error ? -1 : 0;
 }
 
-int 
+int
 ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t index,
 						       ACE_Reactor_Mask to_be_removed_masks)
 {
@@ -162,7 +162,7 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t index,
       // interested in
       this->remove_network_events_i (this->current_info_[index].network_events_,
 				     to_be_removed_masks);
-      
+
       // Disassociate/Reassociate the event from/with the I/O handle.
       // This will depend on the value of remaining set of network
       // events that the <event_handler> is interested in. I don't
@@ -179,10 +179,10 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t index,
         // Preserve DONT_CALL
         to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
       else
-        // Make sure that the <to_be_removed_masks> is the NULL_MASK 
+        // Make sure that the <to_be_removed_masks> is the NULL_MASK
         to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
     }
-  
+
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
   // <Event_Handler> for removal
@@ -195,11 +195,11 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t index,
       // Increment the handle count
       this->handles_to_be_deleted_++;
     }
-      
+
   return 0;
 }
 
-int 
+int
 ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t index,
 								 ACE_Reactor_Mask to_be_removed_masks)
 {
@@ -210,7 +210,7 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t index,
       // interested in
       this->remove_network_events_i (this->current_suspended_info_[index].network_events_,
 				     to_be_removed_masks);
-      
+
       // Disassociate/Reassociate the event from/with the I/O handle.
       // This will depend on the value of remaining set of network
       // events that the <event_handler> is interested in. I don't
@@ -227,10 +227,10 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t index,
         // Preserve DONT_CALL
         to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
       else
-        // Make sure that the <to_be_removed_masks> is the NULL_MASK 
+        // Make sure that the <to_be_removed_masks> is the NULL_MASK
         to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
     }
-  
+
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
   // <Event_Handler> for removal
@@ -243,11 +243,11 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t index,
       // Increment the handle count
       this->handles_to_be_deleted_++;
     }
-      
+
   return 0;
 }
 
-int 
+int
 ACE_WFMO_Reactor_Handler_Repository::remove_to_be_added_handler_i (size_t index,
                                                                    ACE_Reactor_Mask to_be_removed_masks)
 {
@@ -258,7 +258,7 @@ ACE_WFMO_Reactor_Handler_Repository::remove_to_be_added_handler_i (size_t index,
       // interested in
       this->remove_network_events_i (this->to_be_added_info_[index].network_events_,
 				     to_be_removed_masks);
-      
+
       // Disassociate/Reassociate the event from/with the I/O handle.
       // This will depend on the value of remaining set of network
       // events that the <event_handler> is interested in. I don't
@@ -275,10 +275,10 @@ ACE_WFMO_Reactor_Handler_Repository::remove_to_be_added_handler_i (size_t index,
         // Preserve DONT_CALL
         to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
       else
-        // Make sure that the <to_be_removed_masks> is the NULL_MASK 
+        // Make sure that the <to_be_removed_masks> is the NULL_MASK
         to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
     }
-  
+
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
   // <Event_Handler> for removal
@@ -291,7 +291,7 @@ ACE_WFMO_Reactor_Handler_Repository::remove_to_be_added_handler_i (size_t index,
       // Increment the handle count
       this->handles_to_be_deleted_++;
     }
-      
+
   return 0;
 }
 
@@ -311,7 +311,7 @@ ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
   for (i = 0; i < this->max_handlep1_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->current_handles_[i] == handle || 
+    if ((this->current_handles_[i] == handle ||
          this->current_info_[i].io_handle_ == handle) &&
         // Make sure that it is not already marked for suspension
         !this->current_info_[i].suspend_entry_)
@@ -321,12 +321,12 @@ ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
         // Increment the handle count
         this->handles_to_be_suspended_++;
       }
-  
+
   // Then check the to_be_added entries
   for (i = 0; i < this->handles_to_be_added_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->to_be_added_info_[i].io_handle_ == handle || 
+    if ((this->to_be_added_info_[i].io_handle_ == handle ||
          this->to_be_added_info_[i].event_handle_ == handle) &&
         // Make sure that it is not already marked for suspension
         !this->to_be_added_info_[i].suspend_entry_)
@@ -336,12 +336,12 @@ ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
         // Increment the handle count
         this->handles_to_be_suspended_++;
       }
-  
+
   // Only if the number of handlers to be deleted changes do we need
   // to wakeup the other threads
   if (original_handle_count < this->handles_to_be_suspended_)
     changes_required = 1;
-  
+
   return 0;
 }
 
@@ -352,7 +352,7 @@ ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
   size_t original_handle_count = this->handles_to_be_resumed_;
-  
+
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
   // appear multiple times. All handles are checked.
@@ -362,7 +362,7 @@ ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
   for (i = 0; i < this->suspended_handles_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->current_suspended_info_[i].event_handle_ == handle || 
+    if ((this->current_suspended_info_[i].event_handle_ == handle ||
          this->current_suspended_info_[i].io_handle_ == handle) &&
         // Make sure that it is not already marked for resumption
         !this->current_suspended_info_[i].resume_entry_)
@@ -372,12 +372,12 @@ ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
         // Increment the handle count
         this->handles_to_be_resumed_++;
       }
-  
+
   // Then check the to_be_added entries
   for (i = 0; i < this->handles_to_be_added_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->to_be_added_info_[i].io_handle_ == handle || 
+    if ((this->to_be_added_info_[i].io_handle_ == handle ||
          this->to_be_added_info_[i].event_handle_ == handle) &&
         // Make sure that it is not already marked for resumption
         this->to_be_added_info_[i].suspend_entry_)
@@ -387,12 +387,12 @@ ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
         // Decrement the handle count
         this->handles_to_be_suspended_--;
       }
-  
+
   // Only if the number of handlers to be deleted changes do we need
   // to wakeup the other threads
   if (original_handle_count < this->handles_to_be_resumed_)
     changes_required = 1;
-  
+
   return 0;
 }
 
@@ -401,32 +401,32 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_all (void)
 {
   {
     ACE_GUARD (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_);
-    
+
     int dummy;
     size_t i;
 
-    // Remove all the current handlers 
+    // Remove all the current handlers
     for (i = 0; i < this->max_handlep1_; i++)
-      this->unbind_i (this->current_handles_[i], 
+      this->unbind_i (this->current_handles_[i],
                       ACE_Event_Handler::ALL_EVENTS_MASK,
                       dummy);
-    
-    // Remove all the suspended handlers 
+
+    // Remove all the suspended handlers
     for (i = 0; i < this->suspended_handles_; i++)
       this->unbind_i (this->current_suspended_info_[i].event_handle_,
                       ACE_Event_Handler::ALL_EVENTS_MASK,
                       dummy);
 
-    // Remove all the to_be_added handlers 
+    // Remove all the to_be_added handlers
     for (i = 0; i < this->handles_to_be_added_; i++)
       this->unbind_i (this->to_be_added_info_[i].event_handle_,
                       ACE_Event_Handler::ALL_EVENTS_MASK,
                       dummy);
-    
+
   }
 
   // The guard is released here
-  
+
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
   this->wfmo_reactor_.wakeup_all_threads ();
@@ -437,7 +437,7 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
 					     ACE_Event_Handler *event_handler,
 					     long network_events,
 					     ACE_HANDLE io_handle,
-					     ACE_HANDLE event_handle, 
+					     ACE_HANDLE event_handle,
 					     int delete_event)
 {
   // Make sure that the <handle> is valid
@@ -445,9 +445,9 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
     event_handle = event_handler->get_handle ();
   if (this->invalid_handle (event_handle))
     return -1;
-  
-  size_t current_size = this->max_handlep1_ + 
-    this->handles_to_be_added_ - 
+
+  size_t current_size = this->max_handlep1_ +
+    this->handles_to_be_added_ -
     this->handles_to_be_deleted_ +
     this->suspended_handles_;
 
@@ -457,12 +457,12 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
       // Cache this set into the <to_be_added_info_>, till we come
       // around to actually adding this to the <current_info_>
       this->to_be_added_info_[this->handles_to_be_added_].set (event_handle,
-							       io_entry, 
-							       event_handler, 
+							       io_entry,
+							       event_handler,
 							       io_handle,
 							       network_events,
 							       delete_event);
-      
+
       this->handles_to_be_added_++;
 
       // Wake up all threads in WaitForMultipleObjects so that they can
@@ -471,7 +471,7 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
     }
   else
     return -1;
-  
+
   return 0;
 }
 
@@ -522,11 +522,11 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
 	      // If <WFMO_Reactor> created the event, we need to clean it up
 	      if (this->current_info_[i].delete_event_)
 		ACE_OS::event_destroy (&this->current_handles_[i]);
-	      
+
 	      // Reduce count by one
-	      this->handles_to_be_deleted_--;	  
+	      this->handles_to_be_deleted_--;
 	    }
-	 
+
 	  // See if this entry is scheduled for suspension
 	  else if (this->current_info_[i].suspend_entry_)
 	    {
@@ -536,7 +536,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
 	      this->suspended_handles_++;
 
 	      // Reduce count by one
-	      this->handles_to_be_suspended_--;	  
+	      this->handles_to_be_suspended_--;
 	    }
 
 	  // See if this entry is scheduled for deletion or suspension
@@ -553,7 +553,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
 		}
 	      else
 		// Swap this handle with the last valid handle
-		{	
+		{
 		  // Struct copy
 		  this->current_info_[i] = this->current_info_[last_valid_index];
 		  this->current_handles_[i] = this->current_handles_[last_valid_index];
@@ -565,7 +565,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
 	      // <to_be_deleted_set_>
 	      last_valid_index--;
 	    }
-          
+
           // Now that all internal structures have been updated, make
           // the upcall.
           if (event_handler != 0)
@@ -619,13 +619,13 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
 		  // Upcall
 		  event_handler = this->current_suspended_info_[i].event_handler_;
 		}
-	  
+
 	      // If <WFMO_Reactor> created the event, we need to clean it up
 	      if (this->current_suspended_info_[i].delete_event_)
 		ACE_OS::event_destroy (&this->current_suspended_info_[i].event_handle_);
 
 	      // Reduce count by one
-	      this->handles_to_be_deleted_--;	  
+	      this->handles_to_be_deleted_--;
 	    }
 
 	  else if (this->current_suspended_info_[i].resume_entry_)
@@ -637,21 +637,21 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
 	      this->max_handlep1_++;
 
 	      // Reduce count by one
-	      this->handles_to_be_resumed_--;	  
+	      this->handles_to_be_resumed_--;
 	    }
 
-	  if (this->current_suspended_info_[i].resume_entry_ || 
+	  if (this->current_suspended_info_[i].resume_entry_ ||
 	      this->current_suspended_info_[i].delete_entry_)
-	    {		 
+	    {
 	      // Is this the last entry
 	      if (i == last_valid_index)
 		// Reset the <suspended> arrays entries
-		this->current_suspended_info_[i].reset ();      
+		this->current_suspended_info_[i].reset ();
 	      else
 		{
 		  // Struct copy
 		  this->current_suspended_info_[i] = this->current_suspended_info_[last_valid_index];
-		  this->current_suspended_info_[last_valid_index].reset ();      
+		  this->current_suspended_info_[last_valid_index].reset ();
 		}
 	      // Reduce the number of suspended handles
 	      last_valid_index--;
@@ -660,9 +660,9 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
           // Now that all internal structures have been updated, make
           // the upcall.
           if (event_handler != 0)
-            event_handler->handle_close (handle, masks);          
+            event_handler->handle_close (handle, masks);
 	}
-      
+
       // Reset <this->suspended_handles_>
       this->suspended_handles_ = last_valid_index + 1;
     }
@@ -705,16 +705,16 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
               else
                 handle = this->to_be_added_info_[i].event_handle_;
 
-              // Upcall 
+              // Upcall
               event_handler = this->to_be_added_info_[i].event_handler_;
             }
-	  
+
           // If <WFMO_Reactor> created the event, we need to clean it up
           if (this->to_be_added_info_[i].delete_event_)
             ACE_OS::event_destroy (&this->to_be_added_info_[i].event_handle_);
 
           // Reduce count by one
-          this->handles_to_be_deleted_--;	  
+          this->handles_to_be_deleted_--;
         }
 
       // See if this entry is scheduled for suspension
@@ -726,11 +726,11 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
           this->suspended_handles_++;
 
           // Reduce count by one
-          this->handles_to_be_suspended_--;	  
+          this->handles_to_be_suspended_--;
         }
 
       // If neither of the two flags are on, add to current
-      else 
+      else
         {
           // Add to the end of the current handles set
           this->current_handles_[this->max_handlep1_] = this->to_be_added_info_[i].event_handle_;
@@ -740,7 +740,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
         }
 
       // Reset the <to_be_added_info_>
-      this->to_be_added_info_[i].reset ();      
+      this->to_be_added_info_[i].reset ();
 
       // Now that all internal structures have been updated, make the
       // upcall.
@@ -767,7 +767,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
     delete_handler_rep_ (0),
     lock_adapter_ (lock_),
     // this event is initially signaled
-    ok_to_wait_ (1), 
+    ok_to_wait_ (1),
     // this event is initially unsignaled
     wakeup_all_threads_ (0),
     // this event is initially unsignaled
@@ -794,7 +794,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
     delete_handler_rep_ (0),
     lock_adapter_ (lock_),
     // this event is initially signaled
-    ok_to_wait_ (1), 
+    ok_to_wait_ (1),
     // this event is initially unsignaled
     wakeup_all_threads_ (0),
     // this event is initially unsignaled
@@ -827,40 +827,40 @@ ACE_WFMO_Reactor::open (size_t size,
   if (this->open_for_business_)
     return -1;
 
-  // Timer Queue 
+  // Timer Queue
   if (this->delete_timer_queue_)
     delete this->timer_queue_;
-  
+
   if (tq == 0)
     {
       ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Heap, -1);
       this->delete_timer_queue_ = 1;
     }
-  else 
+  else
     {
       this->timer_queue_ = tq;
       this->delete_timer_queue_ = 0;
     }
-  
-  // Signal Handler 
+
+  // Signal Handler
   if (this->delete_signal_handler_)
     delete this->signal_handler_;
-  
+
   if (sh == 0)
     {
       ACE_NEW_RETURN (this->signal_handler_, ACE_Sig_Handler, -1);
       this->delete_signal_handler_ = 1;
     }
-  else 
+  else
     {
       this->signal_handler_ = sh;
       this->delete_signal_handler_ = 0;
     }
-  
+
   // Setup the atomic wait array (used later in <handle_events>)
   this->atomic_wait_array_[0] = this->lock_.lock ().proc_mutex_;
   this->atomic_wait_array_[1] = this->ok_to_wait_.handle ();
-  
+
   // This is to guard against reopens of WFMO_Reactor
   if (this->delete_handler_rep_)
     this->handler_rep_.~ACE_WFMO_Reactor_Handler_Repository ();
@@ -868,8 +868,8 @@ ACE_WFMO_Reactor::open (size_t size,
   // Open the handle repository
   // Two additional handles for internal purposes
   if (this->handler_rep_.open (size + 2) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
-		       "opening handler repository"), 
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+		       "opening handler repository"),
 		      -1);
   else
     this->delete_handler_rep_ = 1;
@@ -879,20 +879,20 @@ ACE_WFMO_Reactor::open (size_t size,
 
   // Open the notification handler
   if (this->notify_handler_.open (*this, this->timer_queue_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
-		       "opening notify handler "), 
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+		       "opening notify handler "),
 		      -1);
 
   // Register for <wakeup_all_threads> event
-  if (this->register_handler (&this->wakeup_all_threads_handler_, 
+  if (this->register_handler (&this->wakeup_all_threads_handler_,
 			      this->wakeup_all_threads_.handle ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
-		       "registering thread wakeup handler"), 
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+		       "registering thread wakeup handler"),
 		      -1);
 
   // Since we have added two handles into the handler repository,
   // update the <handler_repository_>
-  if (this->handler_rep_.changes_required ())    
+  if (this->handler_rep_.changes_required ())
     {
       // Make necessary changes to the handler repository
       this->handler_rep_.make_changes ();
@@ -903,7 +903,7 @@ ACE_WFMO_Reactor::open (size_t size,
 
   // We are open for business
   this->open_for_business_ = 1;
-  
+
   return 0;
 }
 
@@ -950,7 +950,7 @@ ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
   // Assumption: No threads are left in the Reactor when this method
   // is called (i.e., active_threads_ == 0)
 
-  // Close down 
+  // Close down
   this->close ();
 
   // Make necessary changes to the handler repository that we caused
@@ -961,9 +961,9 @@ ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
     {
       delete this->timer_queue_;
       this->timer_queue_ = 0;
-      this->delete_timer_queue_ = 0;      
+      this->delete_timer_queue_ = 0;
     }
-  
+
   if (this->delete_signal_handler_)
     {
       delete this->signal_handler_;
@@ -972,7 +972,7 @@ ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
     }
 }
 
-int 
+int
 ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
 				      ACE_HANDLE io_handle,
 				      ACE_Event_Handler *event_handler,
@@ -983,7 +983,7 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
     io_handle = event_handler->get_handle ();
   if (this->handler_rep_.invalid_handle (io_handle))
     return -1;
-  
+
   long new_network_events = 0;
   int delete_event = 0;
 
@@ -991,12 +991,12 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
 
   // Look up the repository to see if the <Event_Handler> is already
   // there.
-  int found = this->handler_rep_.add_network_events_i (mask, 
-						       io_handle, 
+  int found = this->handler_rep_.add_network_events_i (mask,
+						       io_handle,
 						       new_network_events,
 						       event_handle,
 						       delete_event);
-  
+
   // Check to see if the user passed us a valid event; If not then we
   // need to create one
   if (event_handle == ACE_INVALID_HANDLE)
@@ -1004,10 +1004,10 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
       event = auto_ptr <ACE_Auto_Event> (new ACE_Auto_Event);
       event_handle = event->handle ();
       delete_event = 1;
-    }  
+    }
 
-  int result = ::WSAEventSelect ((SOCKET) io_handle, 
-				 event_handle, 
+  int result = ::WSAEventSelect ((SOCKET) io_handle,
+				 event_handle,
 				 new_network_events);
 
   // If we had found the <Event_Handler> there is nothing more to do
@@ -1019,11 +1019,11 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
       // The <Event_Handler was not found in the repository
       // Add to the repository
       if (result != SOCKET_ERROR &&
-	  this->handler_rep_.bind_i (1, 
+	  this->handler_rep_.bind_i (1,
 				     event_handler,
 				     new_network_events,
 				     io_handle,
-				     event_handle, 
+				     event_handle,
 				     delete_event) != -1)
 	{
 	  if (delete_event)
@@ -1035,29 +1035,29 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
     }
 }
 
-int 
+int
 ACE_WFMO_Reactor::schedule_wakeup_i (ACE_HANDLE io_handle,
 				     ACE_Reactor_Mask masks_to_be_added)
 {
   // Make sure that the <handle> is valid
   if (this->handler_rep_.invalid_handle (io_handle))
     return -1;
-  
+
   long new_network_events = 0;
   int delete_event = 0;
   ACE_HANDLE event_handle = ACE_INVALID_HANDLE;
 
   // Look up the repository to see if the <Event_Handler> is already
   // there.
-  int found = this->handler_rep_.add_network_events_i (masks_to_be_added, 
-						       io_handle, 
+  int found = this->handler_rep_.add_network_events_i (masks_to_be_added,
+						       io_handle,
 						       new_network_events,
 						       event_handle,
 						       delete_event);
-  
+
   if (found)
-    return ::WSAEventSelect ((SOCKET) io_handle, 
-			     event_handle, 
+    return ::WSAEventSelect ((SOCKET) io_handle,
+			     event_handle,
 			     new_network_events);
   else
     return -1;
@@ -1095,7 +1095,7 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
   // (except those that have been scheduled for deletion)
   for (i = 0; i < this->suspended_handles_ && !found; i++)
     if (io_handle == this->current_suspended_info_[i].io_handle_ &&
-        !this->current_suspended_info_[i].delete_entry_)      
+        !this->current_suspended_info_[i].delete_entry_)
       {
 	found = 1;
 	modified_masks = &this->current_suspended_info_[i].network_events_;
@@ -1109,7 +1109,7 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
   // handle (except those that have been scheduled for deletion)
   for (i = 0; i < this->handles_to_be_added_ && !found; i++)
     if (io_handle == this->to_be_added_info_[i].io_handle_ &&
-        !this->to_be_added_info_[i].delete_entry_)      
+        !this->to_be_added_info_[i].delete_entry_)
       {
 	found = 1;
 	modified_masks = &this->to_be_added_info_[i].network_events_;
@@ -1122,10 +1122,10 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
       ACE_SET_BITS (*modified_masks, FD_READ);
       ACE_SET_BITS (*modified_masks, FD_CLOSE);
     }
-  
+
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
     ACE_SET_BITS (*modified_masks, FD_WRITE);
-  
+
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
     ACE_SET_BITS (*modified_masks, FD_OOB);
 
@@ -1148,16 +1148,16 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
 
 // Waits for and dispatches all events.  Returns -1 on error, 0 if
 // max_wait_time expired, or the number of events that were dispatched.
-int 
+int
 ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
 				  int alertable)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::event_handling");
 
-  // Make sure we are not closed 
+  // Make sure we are not closed
   if (!this->open_for_business_)
     return -1;
-  
+
   // Stash the current time -- the destructor of this object will
   // automatically compute how much time elapsed since this method was
   // called.
@@ -1166,7 +1166,7 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
   // Check to see if it is ok to enter ::WaitForMultipleObjects
   // This will acquire <this->lock_> on success
   // On failure, the lock will not be acquired
-  int result = this->ok_to_wait (max_wait_time, alertable);  
+  int result = this->ok_to_wait (max_wait_time, alertable);
   if (result != 1)
     return result;
 
@@ -1194,7 +1194,7 @@ int
 ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
 			      int alertable)
 {
-  // Calculate the max time we should spend here 
+  // Calculate the max time we should spend here
   //
   // Note: There is really no need to involve the <timer_queue_> here
   // because even if a timeout in the <timer_queue_> does expire we
@@ -1207,20 +1207,20 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
 					   TRUE,
 					   timeout,
 					   alertable);
-  
+
   switch (result)
     {
-    case WAIT_TIMEOUT: 
+    case WAIT_TIMEOUT:
       errno = ETIME;
       return 0;
-    case WAIT_FAILED: 
+    case WAIT_FAILED:
     case WAIT_ABANDONED_0:
       errno = ::GetLastError ();
-      return -1;      
+      return -1;
     default:
       break;
-    }  
-  
+    }
+
   // It is ok to enter ::WaitForMultipleObjects
   return 1;
 }
@@ -1246,10 +1246,10 @@ ACE_WFMO_Reactor::calculate_timeout (ACE_Time_Value *max_wait_time)
 {
   ACE_Time_Value *time = 0;
   if (this->owner_ == ACE_Thread::self ())
-    time = this->timer_queue_->calculate_timeout (max_wait_time);	  
+    time = this->timer_queue_->calculate_timeout (max_wait_time);
   else
     time = max_wait_time;
-  
+
   if (time == 0)
     return INFINITE;
   else
@@ -1291,7 +1291,7 @@ int
 ACE_WFMO_Reactor::dispatch_handles (size_t index)
 {
   for (int number_of_handlers_dispatched = 1;
-       ; 
+       ;
        number_of_handlers_dispatched++)
     {
       this->dispatch_handler (index++);
@@ -1299,8 +1299,8 @@ ACE_WFMO_Reactor::dispatch_handles (size_t index)
       // We're done.
       if (index >= this->handler_rep_.max_handlep1 ())
 	return number_of_handlers_dispatched;
-      
-      DWORD wait_status = 
+
+      DWORD wait_status =
 	::WaitForMultipleObjects (this->handler_rep_.max_handlep1 () - index,
 				  this->handler_rep_.handles () + index,
 				  FALSE, 0); // We're polling.
@@ -1314,7 +1314,7 @@ ACE_WFMO_Reactor::dispatch_handles (size_t index)
 	  return number_of_handlers_dispatched;
 	default: // Dispatch.
 	  // Check if a handle successfully became signaled.
-	  if (wait_status >= WAIT_OBJECT_0 && 
+	  if (wait_status >= WAIT_OBJECT_0 &&
 	      wait_status < WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 () - index)
 	    index += wait_status - WAIT_OBJECT_0;
 	  else
@@ -1349,7 +1349,7 @@ ACE_WFMO_Reactor::dispatch_handler (int index)
 }
 
 int
-ACE_WFMO_Reactor::simple_dispatch_handler (int index, 
+ACE_WFMO_Reactor::simple_dispatch_handler (int index,
 					   ACE_HANDLE event_handle)
 {
   // This dispatch is used for non-I/O entires
@@ -1358,7 +1358,7 @@ ACE_WFMO_Reactor::simple_dispatch_handler (int index,
   siginfo_t sig (event_handle);
 
   ACE_Event_Handler *eh = this->handler_rep_.current_info ()[index].event_handler_;
-  
+
   // Upcall
   if (eh->handle_signal (0, &sig) == -1)
     this->handler_rep_.unbind (event_handle, ACE_Event_Handler::NULL_MASK);
@@ -1366,37 +1366,37 @@ ACE_WFMO_Reactor::simple_dispatch_handler (int index,
 }
 
 int
-ACE_WFMO_Reactor::complex_dispatch_handler (int index, 
+ACE_WFMO_Reactor::complex_dispatch_handler (int index,
 					    ACE_HANDLE event_handle)
 {
   // This dispatch is used for I/O entires
 
-  ACE_WFMO_Reactor_Handler_Repository::Current_Info &current_info = 
+  ACE_WFMO_Reactor_Handler_Repository::Current_Info &current_info =
     this->handler_rep_.current_info ()[index];
-  
+
   // Upcall
   ACE_Reactor_Mask problems = this->upcall (current_info.event_handler_,
-                                            current_info.io_handle_, 
+                                            current_info.io_handle_,
                                             event_handle,
                                             current_info.network_events_);
 
   if (problems != ACE_Event_Handler::NULL_MASK)
-    this->handler_rep_.unbind (event_handle, problems);  
+    this->handler_rep_.unbind (event_handle, problems);
 
   return 0;
 }
 
 ACE_Reactor_Mask
 ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
-			  ACE_HANDLE io_handle, 
-			  ACE_HANDLE event_handle, 
+			  ACE_HANDLE io_handle,
+			  ACE_HANDLE event_handle,
 			  long interested_events)
 {
   // This method figures out what exactly has happened to the socket
   // and then calls appropriate methods.
   ACE_Reactor_Mask problems = ACE_Event_Handler::NULL_MASK;
   WSANETWORKEVENTS events;
-  
+
   if (::WSAEnumNetworkEvents ((SOCKET) io_handle,
 			      event_handle,
 			      &events) == SOCKET_ERROR)
@@ -1425,7 +1425,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
       if ((interested_events & actual_events & FD_ACCEPT)
           && event_handler->handle_input (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
-      
+
       if (interested_events & actual_events & FD_CONNECT)
 	{
 	  if (events.iErrorCode[FD_CONNECT_BIT] == 0)
@@ -1439,11 +1439,11 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
 	  else if (event_handler->handle_input (io_handle) == -1)
             ACE_SET_BITS (problems, ACE_Event_Handler::CONNECT_MASK);
 	}
-      
+
       if ((interested_events & actual_events & FD_QOS)
           && event_handler->handle_qos (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::QOS_MASK);
-      
+
       if ((interested_events & actual_events & FD_GROUP_QOS)
           && event_handler->handle_group_qos (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::GROUP_QOS_MASK);
@@ -1452,7 +1452,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
   return problems;
 }
 
-int 
+int
 ACE_WFMO_Reactor::update_state (void)
 {
   // This GUARD is necessary since we are updating shared state.
@@ -1463,14 +1463,14 @@ ACE_WFMO_Reactor::update_state (void)
 
   // Check if the state of the handler repository has changed or new
   // owner has to be set
-  if (this->handler_rep_.changes_required () || this->new_owner ())    
+  if (this->handler_rep_.changes_required () || this->new_owner ())
     {
       if (this->change_state_thread_ == 0)
 	// Try to become the thread which will be responsible for the
 	// changes
 	{
 	  this->change_state_thread_ = ACE_Thread::self ();
-	  // Make sure no new threads are allowed to enter 
+	  // Make sure no new threads are allowed to enter
 	  this->ok_to_wait_.reset ();
 
 	  if (this->active_threads_ > 0)
@@ -1485,7 +1485,7 @@ ACE_WFMO_Reactor::update_state (void)
 	      // Re-acquire <lock_> again
 	      monitor.acquire ();
 	    }
-	  
+
 	  if (this->handler_rep_.changes_required ())
 	    // Make necessary changes to the handler repository
 	    this->handler_rep_.make_changes ();
@@ -1495,7 +1495,7 @@ ACE_WFMO_Reactor::update_state (void)
 	  // Turn off <wakeup_all_threads_>
 	  this->wakeup_all_threads_.reset ();
 	  // Let everyone know that it is ok to go ahead
-	  this->ok_to_wait_.signal ();	  
+	  this->ok_to_wait_.signal ();
 	  // Reset this flag
 	  this->change_state_thread_ = 0;
 	}
@@ -1522,7 +1522,7 @@ ACE_WFMO_Reactor_Notify::ACE_WFMO_Reactor_Notify (void)
 {
 }
 
-int 
+int
 ACE_WFMO_Reactor_Notify::open (ACE_WFMO_Reactor &wfmo_reactor,
 			       ACE_Timer_Queue *timer_queue)
 {
@@ -1539,8 +1539,8 @@ ACE_WFMO_Reactor_Notify::get_handle (void) const
 // Handle all pending notifications.
 
 int
-ACE_WFMO_Reactor_Notify::handle_signal (int signum, 
-					siginfo_t *siginfo, 
+ACE_WFMO_Reactor_Notify::handle_signal (int signum,
+					siginfo_t *siginfo,
 					ucontext_t *)
 {
   ACE_UNUSED_ARG (signum);
@@ -1556,8 +1556,8 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
   for (int i = 1; ; i++)
     {
       ACE_Message_Block *mb = 0;
-  
-      if (this->message_queue_.dequeue_head 
+
+      if (this->message_queue_.dequeue_head
 	  (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
 	{
 	  if (errno == EWOULDBLOCK)
@@ -1569,7 +1569,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 	}
       else
 	{
-	  ACE_Notification_Buffer *buffer = 
+	  ACE_Notification_Buffer *buffer =
 	    (ACE_Notification_Buffer *) mb->base ();
 
 	  // If eh == 0 then we've got major problems!  Otherwise, we
@@ -1596,7 +1596,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 		  break;
 		}
 	      if (result == -1)
-		buffer->eh_->handle_close (ACE_INVALID_HANDLE, 
+		buffer->eh_->handle_close (ACE_INVALID_HANDLE,
 					   ACE_Event_Handler::EXCEPT_MASK);
 	    }
 
@@ -1617,8 +1617,8 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 // <ACE_Event_Handler> for subsequent processing in the WFMO_Reactor
 // thread of control.
 
-int 
-ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *eh, 
+int
+ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *eh,
 				 ACE_Reactor_Mask mask,
 				 ACE_Time_Value *timeout)
 {
@@ -1627,7 +1627,7 @@ ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *eh,
       ACE_Message_Block *mb = 0;
       ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof (ACE_Notification_Buffer)), -1);
 
-      ACE_Notification_Buffer *buffer = 
+      ACE_Notification_Buffer *buffer =
 	(ACE_Notification_Buffer *) mb->base ();
       buffer->eh_ = eh;
       buffer->mask_ = mask;
@@ -1638,7 +1638,7 @@ ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *eh,
       if (timeout != 0)
 	*timeout += timer_queue_->gettimeofday ();
 
-      if (this->message_queue_.enqueue_tail 
+      if (this->message_queue_.enqueue_tail
 	  (mb, timeout) == -1)
 	{
 	  mb->release ();
@@ -1649,7 +1649,7 @@ ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *eh,
   return this->wakeup_one_thread_.signal ();
 }
 
-void 
+void
 ACE_WFMO_Reactor_Notify::max_notify_iterations (int iterations)
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::max_notify_iterations");
@@ -1660,14 +1660,14 @@ ACE_WFMO_Reactor_Notify::max_notify_iterations (int iterations)
   this->max_notify_iterations_ = iterations;
 }
 
-int 
+int
 ACE_WFMO_Reactor_Notify::max_notify_iterations (void)
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::max_notify_iterations");
   return this->max_notify_iterations_;
 }
 
-void 
+void
 ACE_WFMO_Reactor::max_notify_iterations (int iterations)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::max_notify_iterations");
@@ -1677,7 +1677,7 @@ ACE_WFMO_Reactor::max_notify_iterations (int iterations)
   this->notify_handler_.max_notify_iterations (iterations);
 }
 
-int 
+int
 ACE_WFMO_Reactor::max_notify_iterations (void)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::max_notify_iterations");
@@ -1688,7 +1688,7 @@ ACE_WFMO_Reactor::max_notify_iterations (void)
 
 // No-op WinSOCK2 methods to help WFMO_Reactor compile
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
-int 
+int
 WSAEventSelect (SOCKET s,
 		WSAEVENT hEventObject,
 		long lNetworkEvents)
@@ -1700,11 +1700,11 @@ WSAEventSelect (SOCKET s,
   return -1;
 }
 
-int 
+int
 WSAEnumNetworkEvents (SOCKET s,
 		      WSAEVENT hEventObject,
 		      LPWSANETWORKEVENTS lpNetworkEvents)
-{ 
+{
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (hEventObject);
   ACE_UNUSED_ARG (lpNetworkEvents);
@@ -1714,4 +1714,3 @@ WSAEnumNetworkEvents (SOCKET s,
 #endif /* !defined ACE_HAS_WINSOCK2 */
 
 #endif /* ACE_WIN32 */
-
