@@ -50,6 +50,8 @@ namespace TAO
 
     virtual int wait (ACE_Time_Value *max_wait_time,
                       TAO_Synch_Reply_Dispatcher &rd);
+
+    virtual bool can_process_upcalls (void) const;
   };
 }
 #include /**/ "ace/post.h"
