@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = FILENAME
-//    FactoryFinder_Impl.h
+//    FactoryFinder_i.h
 //
 // = DESCRIPTION
 //    Factory Finder Implementation for the Quoter example
@@ -18,15 +18,15 @@
 #if !defined (QUOTER_FACTORY_FINDER_IMPL_H)
 #define QUOTER_FACTORY_FINDER_IMPL_H
 
-class Quoter_Factory_Finder_Impl : public POA_Stock::Quoter_Factory_Finder 
+class Quoter_Factory_Finder_i : public POA_Stock::Quoter_Factory_Finder 
 {
   // = TILE
   //   A CosLifeCycle conforming Factory Finder for the Quoter
   //   example. It uses the Naming Service to find a fitting factory.
 
 public:
-  Quoter_Factory_Finder_Impl (void);
-  ~Quoter_Factory_Finder_Impl (void);
+  Quoter_Factory_Finder_i (void);
+  ~Quoter_Factory_Finder_i (void);
 
   virtual CosLifeCycle::Factories * find_factories (const CosLifeCycle::Key &factory_key,
                                                     CORBA::Environment &_tao_environment);

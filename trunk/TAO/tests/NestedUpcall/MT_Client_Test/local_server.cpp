@@ -158,7 +158,7 @@ MT_Server::init (int argc,
 
     CORBA::String_var str  =
       this->orb_manager_ptr_->activate_under_child_poa ("MT",
-                                                 &this->mT_Object_Impl_,
+                                                 &this->mT_Object_i_,
                                                  TAO_TRY_ENV);
     ACE_DEBUG ((LM_DEBUG,
                 "The IOR is: <%s>\n",
@@ -247,7 +247,7 @@ MT_Server::run_ORB_briefly (void)
     for (unsigned int i = 0; i < this->iterations_; i++)
     {
       this->mT_Object_var_->yadda (0,
-                                   this->mT_Object_Impl_._this (env),
+                                   this->mT_Object_i_._this (env),
                                    env);
 
       if (env.exception () != 0)

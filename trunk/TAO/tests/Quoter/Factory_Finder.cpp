@@ -68,13 +68,13 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
   this->parse_args ();
 
 
-  ACE_NEW_RETURN (this->quoter_Factory_Finder_Impl_ptr_,
-                  Quoter_Factory_Finder_Impl(),
+  ACE_NEW_RETURN (this->quoter_Factory_Finder_i_ptr_,
+                  Quoter_Factory_Finder_i(),
                   -1);
 
   // Activate the object.
   CORBA::String_var str  =
-    this->orb_manager_.activate (this->quoter_Factory_Finder_Impl_ptr_,
+    this->orb_manager_.activate (this->quoter_Factory_Finder_i_ptr_,
                                  env);
 
   // Failure while activating the Quoter Factory Finder object
@@ -133,7 +133,7 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
       quoter_Factory_Finder_Name_[0].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
       quoterNamingContext_var_->bind (quoter_Factory_Finder_Name_,
-                                      this->quoter_Factory_Finder_Impl_ptr_->_this(TAO_TRY_ENV),
+                                      this->quoter_Factory_Finder_i_ptr_->_this(TAO_TRY_ENV),
                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,

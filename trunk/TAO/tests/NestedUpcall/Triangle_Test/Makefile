@@ -16,19 +16,19 @@ LDLIBS = -lorbsvcs -lTAO
 
 IDL_SRC = Triangle_TestC.cpp Triangle_TestS.cpp
 PROG_SRCS = $(IDL_SRC) server_A.cpp server_B.cpp \
-	Object_A_Impl.cpp Object_B_Impl.cpp Initiator_Impl.cpp \
+	Object_A_i.cpp Object_B_i.cpp Initiator_i.cpp \
 	initiator.cpp 
 
 LSRC = $(PROG_SRCS)
 
 NESTEDUPCALLS_SVR_A_OBJS = Triangle_TestS.o Triangle_TestC.o server_A.o \
-	Object_A_Impl.o
+	Object_A_i.o
 
 NESTEDUPCALLS_SVR_B_OBJS = Triangle_TestS.o Triangle_TestC.o server_B.o \
-        Object_B_Impl.o 
+        Object_B_i.o 
 
 NESTEDUPCALLS_INITIATOR_OBJS = Triangle_TestS.o Triangle_TestC.o initiator.o \
-	Initiator_Impl.o
+	Initiator_i.o
 
 
 BIN = server_A server_B initiator
@@ -161,7 +161,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -390,7 +390,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -620,7 +620,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -759,7 +759,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Object_A_Impl.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
+ Object_A_i.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
 .obj/server_B.o .obj/server_B.so .shobj/server_B.o .shobj/server_B.so: server_B.cpp server_B.h \
@@ -851,7 +851,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -990,10 +990,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Object_B_Impl.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
+ Object_B_i.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
-.obj/Object_A_Impl.o .obj/Object_A_Impl.so .shobj/Object_A_Impl.o .shobj/Object_A_Impl.so: Object_A_Impl.cpp \
+.obj/Object_A_i.o .obj/Object_A_i.so .shobj/Object_A_i.o .shobj/Object_A_i.so: Object_A_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1081,7 +1081,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1220,10 +1220,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Object_A_Impl.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
+ Object_A_i.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
-.obj/Object_B_Impl.o .obj/Object_B_Impl.so .shobj/Object_B_Impl.o .shobj/Object_B_Impl.so: Object_B_Impl.cpp \
+.obj/Object_B_i.o .obj/Object_B_i.so .shobj/Object_B_i.o .shobj/Object_B_i.so: Object_B_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1311,7 +1311,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1450,10 +1450,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Object_B_Impl.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
+ Object_B_i.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
-.obj/Initiator_Impl.o .obj/Initiator_Impl.so .shobj/Initiator_Impl.o .shobj/Initiator_Impl.so: Initiator_Impl.cpp \
+.obj/Initiator_i.o .obj/Initiator_i.so .shobj/Initiator_i.o .shobj/Initiator_i.so: Initiator_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1541,7 +1541,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1680,7 +1680,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Initiator_Impl.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
+ Initiator_i.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
 .obj/initiator.o .obj/initiator.so .shobj/initiator.o .shobj/initiator.so: initiator.cpp \
@@ -1774,7 +1774,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1913,7 +1913,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Initiator_Impl.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
+ Initiator_i.h Triangle_TestS.h Triangle_TestC.h Triangle_TestC.i \
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
 

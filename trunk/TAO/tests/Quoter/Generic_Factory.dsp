@@ -95,7 +95,7 @@ SOURCE=.\Generic_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Generic_Factory_Impl.cpp
+SOURCE=.\Generic_Factory_i.cpp
 # End Source File
 # Begin Source File
 
@@ -115,7 +115,7 @@ SOURCE=.\Generic_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Generic_Factory_Impl.h
+SOURCE=.\Generic_Factory_i.h
 # End Source File
 # Begin Source File
 

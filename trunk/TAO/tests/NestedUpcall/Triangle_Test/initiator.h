@@ -24,7 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
-#include "Initiator_Impl.h"
+#include "Initiator_i.h"
 
 class Initiator_Server
 {
@@ -72,7 +72,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager
 
-  Initiator_Impl *initiator_Impl_ptr_;
+  Initiator_i *initiator_i_ptr_;
   // Implementation object of the Initiator
 
   int argc_;

@@ -6,7 +6,7 @@
 //    TAO/tests/Quoter
 // 
 // = FILENAME
-//    Quoter_Impl.h
+//    Quoter_i.h
 //
 // = AUTHOR
 //    Darrell Brunsch 
@@ -19,28 +19,28 @@
 #include "QuoterS.h"
 
 // Forward declaration.
-class Quoter_Impl;
+class Quoter_i;
 
 // Typedefs.
-typedef Quoter_Impl *Quoter_Impl_ptr;
-typedef Quoter_Impl_ptr Quoter_Impl_ref;
+typedef Quoter_i *Quoter_i_ptr;
+typedef Quoter_i_ptr Quoter_i_ref;
 
-class Quoter_Impl: public POA_Stock::Quoter
+class Quoter_i: public POA_Stock::Quoter
 {
   // = TITLE
-  //   Quoter_Impl
+  //   Quoter_i
   //
   // = DESCRIPTION
   //   Actual Quoter Implementation class.  Returns a quoter for a given stock
   //   and provides an example for the lifecycle functionality.
 public:
-  Quoter_Impl (const char *obj_name = "",  
+  Quoter_i (const char *obj_name = "",  
 	       const unsigned char use_LifeCycle_Service = 0,
 	       PortableServer::POA_ptr poa_ptr = 0);
   // Constructor (use_LifeCycle_Service is 1 if the LifeCycle_Service should be used 
   // instead of the Quoter Generic_Factory
 
-  ~Quoter_Impl (void);
+  ~Quoter_i (void);
   // Destructor
 
   virtual CORBA::Long get_quote (const char *stock_name,
@@ -72,22 +72,22 @@ private:
 };
 
 // Forward declaration.
-class Quoter_Factory_Impl;
+class Quoter_Factory_i;
 
-typedef Quoter_Factory_Impl *Quoter_Factory_Impl_ptr;
+typedef Quoter_Factory_i *Quoter_Factory_i_ptr;
 
-class Quoter_Factory_Impl: public POA_Stock::Quoter_Factory
+class Quoter_Factory_i: public POA_Stock::Quoter_Factory
 {
   // = TITLE
-  //   Quoter_Factory_Impl
+  //   Quoter_Factory_i
   //
   // = DESCRIPTION
   //   Factory object returning the quoter_impl objrefs.
 public:
-  Quoter_Factory_Impl (size_t num, PortableServer::POA_ptr poa_ptr);
+  Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr);
   // Constructor that takes in the number of quoters in the pool.
 
-  ~Quoter_Factory_Impl (void);
+  ~Quoter_Factory_i (void);
   // Destructor.
 
   virtual Stock::Quoter_ptr create_quoter (const char *name,  
@@ -95,7 +95,7 @@ public:
   // Return the quoter by the id <name>.
 
 private:
-  Quoter_Impl **my_quoters_;
+  Quoter_i **my_quoters_;
   // Array of quoters.
 
   size_t quoter_num_;

@@ -15,7 +15,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/TAO.h"
-#include "Life_Cycle_Service_Impl.h"
+#include "Life_Cycle_Service_i.h"
 
 #if !defined (LIFE_CYCLE_SERVICE_H)
 #define IFE_CYCLE_SERVICE_H
@@ -47,7 +47,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // instance of the ORB Manager
 
-  Life_Cycle_Service_Impl *life_Cycle_Service_Impl_ptr_;
+  Life_Cycle_Service_i *life_Cycle_Service_i_ptr_;
   // Instance of the creation service 
 
   CosNaming::NamingContext_var namingContext_var_;

@@ -29,13 +29,13 @@ CLIENT_SRCS = \
 	client.cpp
 
 SERVER_SRCS = \
-	server.cpp Quoter_Impl.cpp
+	server.cpp Quoter_i.cpp
 
 FACTORY_FINDER_SRCS = \
-	Factory_Finder.cpp Factory_Finder_Impl.cpp
+	Factory_Finder.cpp Factory_Finder_i.cpp
 
 GENERIC_FACTORY_SRCS = \
-	Generic_Factory.cpp Generic_Factory_Impl.cpp
+	Generic_Factory.cpp Generic_Factory_i.cpp
 
 
 LSRC= \
@@ -44,9 +44,9 @@ LSRC= \
 
 COMMON_OBJS = QuoterC.o QuoterS.o
 CLIENT_OBJS = $(COMMON_OBJS) client.o
-SERVER_OBJS = $(COMMON_OBJS) server.o Quoter_Impl.o
-FACTORY_FINDER_OBJS = $(COMMON_OBJS) Factory_Finder.o Factory_Finder_Impl.o
-GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_Impl.o
+SERVER_OBJS = $(COMMON_OBJS) server.o Quoter_i.o
+FACTORY_FINDER_OBJS = $(COMMON_OBJS) Factory_Finder.o Factory_Finder_i.o
+GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_i.o
 
 ifdef trader
 
@@ -192,7 +192,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -438,7 +438,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -682,7 +682,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -916,7 +916,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1071,7 +1071,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/tao/TAO.h \
- Quoter_Impl.h QuoterS.h \
+ Quoter_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
@@ -1080,7 +1080,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
-.obj/Quoter_Impl.o .obj/Quoter_Impl.so .shobj/Quoter_Impl.o .shobj/Quoter_Impl.so: Quoter_Impl.cpp \
+.obj/Quoter_i.o .obj/Quoter_i.so .shobj/Quoter_i.o .shobj/Quoter_i.so: Quoter_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1168,7 +1168,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1307,7 +1307,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Quoter_Impl.h QuoterS.h \
+ Quoter_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -1412,7 +1412,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1553,7 +1553,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/singletons.h \
  Factory_Finder.h \
  $(TAO_ROOT)/tao/TAO.h \
- Factory_Finder_Impl.h QuoterS.h \
+ Factory_Finder_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -1570,7 +1570,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
-.obj/Factory_Finder_Impl.o .obj/Factory_Finder_Impl.so .shobj/Factory_Finder_Impl.o .shobj/Factory_Finder_Impl.so: Factory_Finder_Impl.cpp \
+.obj/Factory_Finder_i.o .obj/Factory_Finder_i.so .shobj/Factory_Finder_i.o .shobj/Factory_Finder_i.so: Factory_Finder_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1658,7 +1658,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1797,7 +1797,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Factory_Finder_Impl.h QuoterS.h \
+ Factory_Finder_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -1902,7 +1902,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -2050,7 +2050,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.i \
  Generic_Factory.h \
  $(TAO_ROOT)/tao/TAO.h \
- Generic_Factory_Impl.h QuoterS.h \
+ Generic_Factory_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
@@ -2062,7 +2062,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
-.obj/Generic_Factory_Impl.o .obj/Generic_Factory_Impl.so .shobj/Generic_Factory_Impl.o .shobj/Generic_Factory_Impl.so: Generic_Factory_Impl.cpp \
+.obj/Generic_Factory_i.o .obj/Generic_Factory_i.so .shobj/Generic_Factory_i.o .shobj/Generic_Factory_i.so: Generic_Factory_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2150,7 +2150,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -2289,7 +2289,7 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Generic_Factory_Impl.h QuoterS.h \
+ Generic_Factory_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \

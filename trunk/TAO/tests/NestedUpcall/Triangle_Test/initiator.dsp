@@ -94,7 +94,7 @@ SOURCE=.\initiator.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Initiator_Impl.cpp
+SOURCE=.\Initiator_i.cpp
 # End Source File
 # Begin Source File
 
@@ -114,7 +114,7 @@ SOURCE=.\initiator.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Initiator_Impl.h
+SOURCE=.\Initiator_i.h
 # End Source File
 # Begin Source File
 

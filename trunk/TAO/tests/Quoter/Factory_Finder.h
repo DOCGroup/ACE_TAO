@@ -15,7 +15,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/TAO.h"
-#include "Factory_Finder_Impl.h"
+#include "Factory_Finder_i.h"
 
 #if !defined (QUOTER_FACTORY_FINDER_H)
 #define QUOTER_FACTORY_FINDER_H
@@ -45,7 +45,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // instance of the ORB Manager
 
-  Quoter_Factory_Finder_Impl *quoter_Factory_Finder_Impl_ptr_;
+  Quoter_Factory_Finder_i *quoter_Factory_Finder_i_ptr_;
   // instance of the Quoter Factory Finder
   
   CosNaming::NamingContext_var quoterNamingContext_var_;

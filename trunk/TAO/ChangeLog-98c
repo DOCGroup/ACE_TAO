@@ -1,7 +1,11 @@
 Sat Aug 22 13:17:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/NestedUpcall/{MT_Client_Test,Triangle_Test},
+	  tests/Quoter: Changed all *_Impl to *_i to be more consistent.
+
 	* tests/Simple/time: Added more comments and cleaned up the test
- 	  so that it minimizes the use of dynamic memory allocation.
+ 	  so that it minimizes the use of dynamic memory allocation.  Also,
+	  renamed some files to be more consistent.
 
 Sat Aug 22 11:01:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

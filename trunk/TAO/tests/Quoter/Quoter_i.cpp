@@ -6,7 +6,7 @@
 //    TAO/tests/Quoter
 //
 // = FILENAME
-//    Quoter_Impl.cpp
+//    Quoter_i.cpp
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -14,13 +14,13 @@
 // ============================================================================
 
 #include "tao/corba.h"
-#include "Quoter_Impl.h"
+#include "Quoter_i.h"
 
-ACE_RCSID(Quoter, Quoter_Impl, "$Id$")
+ACE_RCSID(Quoter, Quoter_i, "$Id$")
 
 // Constructor.  Create all the quoter factories.
 
-Quoter_Factory_Impl::Quoter_Factory_Impl (size_t num, PortableServer::POA_ptr poa_ptr)
+Quoter_Factory_i::Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr)
   : my_quoters_ (0),
     quoter_num_ (num),
     next_quoter_ (0)
@@ -28,11 +28,11 @@ Quoter_Factory_Impl::Quoter_Factory_Impl (size_t num, PortableServer::POA_ptr po
 {
   { 
     CORBA::Environment env;
-    ACE_NEW(this->my_quoters_, Quoter_Impl *[num]);
+    ACE_NEW(this->my_quoters_, Quoter_i *[num]);
   
     for (size_t i = 0; i < num; i++)
     {
-      ACE_NEW(this->my_quoters_[i], Quoter_Impl("x",  // name
+      ACE_NEW(this->my_quoters_[i], Quoter_i("x",  // name
                                                 0,    // don't use the LifeCycle_Service
                                                 poa_ptr)); // a reference to the poa */
 
@@ -59,7 +59,7 @@ Quoter_Factory_Impl::Quoter_Factory_Impl (size_t num, PortableServer::POA_ptr po
 
 // Destructor
 
-Quoter_Factory_Impl::~Quoter_Factory_Impl (void)
+Quoter_Factory_i::~Quoter_Factory_i (void)
 {
   for (size_t i = 0; i < this->quoter_num_; i++)
     delete this->my_quoters_[i];
@@ -70,7 +70,7 @@ Quoter_Factory_Impl::~Quoter_Factory_Impl (void)
 // Return the quoter by the id <name>.
 
 Stock::Quoter_ptr
-Quoter_Factory_Impl::create_quoter (const char *name,
+Quoter_Factory_i::create_quoter (const char *name,
                                     CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (name);
@@ -86,7 +86,7 @@ Quoter_Factory_Impl::create_quoter (const char *name,
 
 // Constructor
 
-Quoter_Impl::Quoter_Impl (const char *name, 
+Quoter_i::Quoter_i (const char *name, 
 			  const unsigned char use_LifeCycle_Service, 
 			  PortableServer::POA_ptr poa_ptr)
   : use_LifeCycle_Service_ (use_LifeCycle_Service),
@@ -98,7 +98,7 @@ Quoter_Impl::Quoter_Impl (const char *name,
 
 // Destructor
 
-Quoter_Impl::~Quoter_Impl (void)
+Quoter_i::~Quoter_i (void)
 {
 }
 
@@ -107,7 +107,7 @@ Quoter_Impl::~Quoter_Impl (void)
 // For now, just return 42.  It was a good day on Wall Street.
 
 CORBA::Long
-Quoter_Impl::get_quote (char const *stock_name,
+Quoter_i::get_quote (char const *stock_name,
                         class CORBA_Environment &env)
 {
   ACE_UNUSED_ARG (stock_name);
@@ -120,7 +120,7 @@ Quoter_Impl::get_quote (char const *stock_name,
 // Make a copy of this object
 
 CosLifeCycle::LifeCycleObject_ptr
-Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
+Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria &the_criteria,
                    CORBA::Environment &_env_there)
 {
@@ -243,11 +243,11 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
 // Move this object using <there> and <the_criteria>
 
 void
-Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
+Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria &the_criteria,
                    CORBA::Environment &_env_there)
 {
-  ACE_DEBUG ((LM_DEBUG,"Quoter_Impl::move: being called\n"));
+  ACE_DEBUG ((LM_DEBUG,"Quoter_i::move: being called\n"));
   
   TAO_TRY
     {
@@ -255,7 +255,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
       if (CORBA::is_nil (there))
 	{
 	  ACE_ERROR ((LM_ERROR,
-		      "Quoter_Impl::move: No Factory Finder, don't know how to go on.\n"));
+		      "Quoter_i::move: No Factory Finder, don't know how to go on.\n"));
 	  _env_there.exception (new CosLifeCycle::NoFactory ());
 	  return;	  
 	}
@@ -264,7 +264,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
       if (CORBA::is_nil (this->poa_var_.in()))
 	{
 	  ACE_ERROR ((LM_ERROR,
-		      "Quoter_Impl::move: No access to the POA. Cannot move.\n"));
+		      "Quoter_i::move: No access to the POA. Cannot move.\n"));
 	  _env_there.exception (new CosLifeCycle::NotMovable ());
 	  return;	  
 	}
@@ -276,7 +276,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
       if (_env_there.exception () != 0)
 	{
 	  ACE_ERROR ((LM_ERROR,
-		      "Quoter_Impl::move: Exception while creating new Quoter.\n"));
+		      "Quoter_i::move: Exception while creating new Quoter.\n"));
 	  // The exception is already contained in the right environment
 	  return;
 	}
@@ -284,7 +284,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
       if (CORBA::is_nil (lifeCycleObject_var.in ()))
 	{
 	  ACE_ERROR ((LM_ERROR,
-		      "Quoter_Impl::move: Created Quoter is not valid.\n"));
+		      "Quoter_i::move: Created Quoter is not valid.\n"));
 	  _env_there.exception (new CosLifeCycle::NoFactory ());
 	  return;
 	}
@@ -303,7 +303,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
 
 	  if (servant == 0)
 	    {
-	      ACE_ERROR ((LM_ERROR,"Quoter_Impl::move: Could not find servant.\n"));
+	      ACE_ERROR ((LM_ERROR,"Quoter_i::move: Could not find servant.\n"));
 	      _env_there.exception (new CosLifeCycle::NotMovable());
 	      return;
 	    }
@@ -319,7 +319,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
 	}
       else
 	{
-	  ACE_ERROR ((LM_ERROR,"Quoter_Impl::move: forward_to refenence is nil.\n"));
+	  ACE_ERROR ((LM_ERROR,"Quoter_i::move: forward_to refenence is nil.\n"));
 	  _env_there.exception (new CosLifeCycle::NotMovable());
 	  return;
 	}
@@ -337,7 +337,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
 // Removes the object.  Once we shut down the ORB we can call it a day.
 
 void
-Quoter_Impl::remove (CORBA::Environment &_tao_environment)
+Quoter_i::remove (CORBA::Environment &_tao_environment)
 {
   ACE_UNUSED_ARG (_tao_environment);
 

@@ -68,13 +68,13 @@ Life_Cycle_Service_Server::init (int argc,
   this->parse_args ();
 
 
-  ACE_NEW_RETURN (this->life_Cycle_Service_Impl_ptr_,
-                  Life_Cycle_Service_Impl(),
+  ACE_NEW_RETURN (this->life_Cycle_Service_i_ptr_,
+                  Life_Cycle_Service_i(),
                   -1);
 
   // Activate the object.
   CORBA::String_var str  =
-    this->orb_manager_.activate (this->life_Cycle_Service_Impl_ptr_,
+    this->orb_manager_.activate (this->life_Cycle_Service_i_ptr_,
                                  env);
 
   // Failure while activating the  Factory Finder object
@@ -124,7 +124,7 @@ Life_Cycle_Service_Server::init (int argc,
       life_Cycle_Service_Name[0].id = CORBA::string_dup ("Life_Cycle_Service");
 
       namingContext_var_->bind (life_Cycle_Service_Name,
-			       this->life_Cycle_Service_Impl_ptr_->_this(TAO_TRY_ENV),
+			       this->life_Cycle_Service_i_ptr_->_this(TAO_TRY_ENV),
 			       TAO_TRY_ENV);
       TAO_CHECK_ENV;
 

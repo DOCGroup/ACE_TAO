@@ -71,13 +71,13 @@ Quoter_Generic_Factory_Server::init (int argc,
   this->parse_args ();
 
 
-  ACE_NEW_RETURN (this->quoter_Generic_Factory_Impl_ptr_,
-                  Quoter_Generic_Factory_Impl(),
+  ACE_NEW_RETURN (this->quoter_Generic_Factory_i_ptr_,
+                  Quoter_Generic_Factory_i(),
                   -1);
 
   // Activate the object.
   CORBA::String_var str  =
-    this->orb_manager_.activate (this->quoter_Generic_Factory_Impl_ptr_,
+    this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_,
                                  env);
 
   // Failure while activating the Quoter Factory Finder object
@@ -145,7 +145,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoter_Generic_Factory_Name[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
 
       quoterNamingContext_var_->bind (quoter_Generic_Factory_Name,
-                                      this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV),
+                                      this->quoter_Generic_Factory_i_ptr_->_this(TAO_TRY_ENV),
                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
@@ -176,7 +176,7 @@ Quoter_Generic_Factory_Server::init (int argc,
 
         ACE_DEBUG ((LM_DEBUG, "Have a proper reference to Life Cycle Service.\n"));
 
-        CORBA::Object_var object_var = this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV);
+        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this(TAO_TRY_ENV);
 
         life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
 				  		                                    "Bryan 503",               // location

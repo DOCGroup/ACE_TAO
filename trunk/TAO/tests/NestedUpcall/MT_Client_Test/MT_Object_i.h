@@ -7,7 +7,7 @@
 //    TAO/tests/NestedUpCalls/MT_Client test
 //
 // = FILENAME
-//    MT_Object_A_Impl.h
+//    MT_Object_A_i.h
 //
 // = DESCRIPTION
 //    This class implements the Object A of the 
@@ -24,15 +24,15 @@
 #include "MT_Client_TestS.h"
 #include "MT_Client_TestC.h"
 
-class MT_Object_Impl : public POA_MT_Object
+class MT_Object_i : public POA_MT_Object
 {
   // = TITLE
   //     Implement the <MT_Object> IDL interface.
 public:
-  MT_Object_Impl (void);
+  MT_Object_i (void);
   // Constructor.
 
-  virtual ~MT_Object_Impl (void);
+  virtual ~MT_Object_i (void);
   // Destructor.
 
   virtual CORBA::Long yadda (CORBA::Long hop_count,
