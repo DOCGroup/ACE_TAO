@@ -24,43 +24,43 @@ There are 2 directories:
         application-level Gateway process, gatewayd.  The gatewayd
         routes event messages between Peers.  By default, the gatewayd
         plays the Connector role and initializes itself by reading the
-        proxy_config and consumer_config files:
-           
-        1. The proxy_config file establishes the "physical
+        connection_config and consumer_config files:
+
+        1. The connection_config file establishes the "physical
            configuration" of the Consumer and Supplier proxies.  This
            file tells the Gateway what connections to establish with
            particular hosts using particular ports.
-           
+
         2. The consumer_config file establishes the "logical
            configuration."  This file tells the Gateway how to forward
            data coming from Suppliers to the appropriate Consumers.
-           
+
         The application Gateway generally should be started after all
         the Peers described below, though the process should work
         correctly even if it starts first.
-                      
+
 2. Peer
 
         This directory contains the source code for the Peer process,
         peerd.  There are typically many Peers, which act as suppliers
         and consumers of event messages that are routed through the
         gatewayd.
-           
+
         To do anything interesting you'll need at least two Peers: one
         to supply events and one to consume events.  In the
         configuration files, these two types of Peers are designated
         as follows:
 
         1. Supplier Peers (designated by an 'S' in the Gateway's
-           proxy_config configuration file).  These Peers are
+           connection_config configuration file).  These Peers are
            "suppliers" of events to the Gateway.
 
         2. Consumer Peers (designated by an 'C' in the Gateway's
-           proxy_config file).  These Peers are "consumers" of events
-           forwarded by the Gateway.  Forwarding is based on the
-           settings in the consumer_config configuration file.
+           connection_config file).  These Peers are "consumers" of
+           events forwarded by the Gateway.  Forwarding is based on
+           the settings in the consumer_config configuration file.
 
-----------------------------------------           
+----------------------------------------
 
 HOW TO RUN THE TESTS
 
@@ -69,12 +69,12 @@ To run the tests do the following:
 1. Compile everything (i.e., first compile the ACE libraries, then
    compile the Gateway and Peer directories).
 
-2. Edit the consumer_config and proxy_config files as discussed
+2. Edit the consumer_config and connection_config files as discussed
    above to indicate the desired physical and logical mappings
    for Consumers and Suppliers.
-   
+
 3. Start up the Peers (peerd).  You can start up as many as you
-   like, as per the proxy_config file, but you'll need at least two
+   like, as per the connection_config file, but you'll need at least two
    (i.e., one Supplier and Consumer).  I typically start up each Peer
    in a different window on a different machine, but you can run them
    on the same machine as long as you pick different port numbers.
@@ -83,15 +83,15 @@ To run the tests do the following:
 
    If you want to set the port numbers of the Peers from
    the command-line do the following:
-   
+
    a. Change the svc.conf file in the ./Peer/ directory to
       another name (e.g., foo.conf).  This will keep the
       program from starting up with the svc.conf file
       (which dynamically links in the Peers and uses the -a option to
       set the port).
-      
+
    b. Then run the peers in different windows as
-   
+
       # Window 1 (Supplier)
       % peerd -a S:10003
 
@@ -128,8 +128,8 @@ To run the tests do the following:
    trying to reestablish the connection using the same exponential
    backoff algorithm it used for the initial connection establishment.
 
-7. When you want to terminate a Gateway, just type ^C or type any 
-   characters in the ./gatewayd window and the process will shut down 
+7. When you want to terminate a Gateway, just type ^C or type any
+   characters in the ./gatewayd window and the process will shut down
    gracefully.
 
 Please let me know if there are any problems, questions, or
