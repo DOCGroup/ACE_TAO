@@ -4,6 +4,7 @@
 #include "Supplier.h"
 #include "Service_Handler.h"
 
+#include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Time_Value.h"
 #include "ace/ACE.h" //for is_prime()
@@ -58,8 +59,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   //@BT INSTRUMENT with event ID: EVENT_WORK_START Measure time
   //when work triggered by event starts.
   //DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, guid, 0, NULL);
-  ACE_Time_Value tv = ACE_OS::gettimeofday();
-  ACE_DEBUG((LM_DEBUG,"Consumer in thread %t START_SERVICE at %u\n",tv.msec()));
+  ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) START_SERVICE at %u\n",ACE_OS::gettimeofday().msec()));
 
   Object_ID oid;
   oid.id = events[0].header.eid.id;
@@ -68,79 +68,78 @@ Consumer::push (const RtecEventComm::EventSet& events
   oid.queue_id = events[0].header.eid.queue_id;
   oid.type = events[0].header.type;
 
+  ACE_TIMEPROBE("START_SERVICE");
   DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
-  //TODO: do work on push()
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
 
-
   static CORBA::ULong prime_number = 9619899;
 
-  ACE_Time_Value compute_count_down_time (this->worktime_);
-  ACE_Countdown_Time compute_count_down (&compute_count_down_time);
+  ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) worktime is %isec %iusec\n",
+             this->worktime_.sec(),this->worktime_.usec()));
 
-  timer.start ();
+  //There seems to be something wrong with using ACE_Countdown_Time, so we don't use it.
+  //ACE_Time_Value compute_count_down_time (this->worktime_);
+  //ACE_Countdown_Time compute_count_down (&compute_count_down_time); //auto-starts
+
+  ACE_Time_Value start_time(ACE_OS::gettimeofday());
+  timer.start();
   int j=0;
-  while (compute_count_down_time > ACE_Time_Value::zero)
+  while (elapsed_time <= this->worktime_)
     {
+      //ACE_DEBUG((LM_DEBUG,"%isec %iusec elapsed\n",elapsed_time.sec(),elapsed_time.usec()));
+
       ACE::is_prime (prime_number,
                      2,
                      prime_number / 2);
 
       ++j;
-
-      compute_count_down.update ();
+      elapsed_time = ACE_OS::gettimeofday() - start_time;
     }
 
-  TimeBase::TimeT current;
-  ORBSVCS_Time::Time_Value_to_TimeT (current, ACE_OS::gettimeofday ());
-  CORBA::Long temp = (long) current;
-  //TODO: How do I know when the deadline was?
-  CORBA::Long deadline(0); //no deadline specified
-  if(temp > deadline )
-    {
-      this->deadline_missed_++;
-    }
+  //ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) elapsed %isec %iusec\n",elapsed_time.sec(),elapsed_time.usec()));
 
   timer.stop ();
-  timer.elapsed_time (elapsed_time);
+  timer.elapsed_time (elapsed_time); //total elapsed time
+
+  TimeBase::TimeT now;
+  ORBSVCS_Time::Time_Value_to_TimeT (now, ACE_OS::gettimeofday ());
+  if(now > events[0].header.deadline )
+    {
+      this->deadline_missed_++;
+
+      //@BT INSTRUMENT with event ID: EVENT_WORK_DEADLINE_MISSED Measure time when
+      //work triggered by event finishes and deadline missed.
+      //DSTRM_EVENT (TEST_ONE_FAM, DEADLINE_MISSED, guid, strlen(extra_info), extra_info);
+      ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MISSED) at %u\n",ACE_OS::gettimeofday().msec()));
+      DSTRM_EVENT (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(Object_ID), (char*)&oid);
+    }
+
+  //@BT INSTRUMENT with event ID: EVENT_WORK_END Measure time when
+  //work triggered by event finishes.
+  //DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
+  ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE at %u\n",ACE_OS::gettimeofday().msec()));
+  DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+
+  ACE_TIMEPROBE("STOP_SERVICE");
+
+  //now print timeprobe values
+  ACE_TIMEPROBE_PRINT;
+  ACE_TIMEPROBE_RESET;
 
   ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t) request processing for %d done, "
-              "elapsed time = %umsec, deadline_missed_=%d\n",
-              events[0].header.type,elapsed_time.msec(),this->deadline_missed_));
+              "elapsed time = %isec %iusec, deadline_missed_=%d\n",
+              events[0].header.type,elapsed_time.sec(),elapsed_time.usec(),
+              this->deadline_missed_));
+  ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) processing took %d iterations\n",j));
+  ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) event had deadline %i\n",
+             events[0].header.deadline));
 
 //   ACE_DEBUG ((LM_DEBUG,
 //               "Request processing in thread %t done, "
 //               "prio = %d, load = %d, elapsed time = %umsec, deadline_missed = %d\n",
 //               prio, exec_duration, elapsed_time.msec (),Deadline_missed ));
-
-/*DTTIME:
-  recording the finishing time on the server side. please also record the deadline_missed_ variable.
-*/
-/*
-  char* format = "Deadline missed: %d";
-  char* extra_info = (char*) ACE_Allocator::instance()->malloc(strlen(format) + sizeof(this->deadline_missed_) - 1);
-  if (extra_info != 0)
-    {
-      ACE_OS::sprintf(extra_info, "Deadline missed: %d", this->deadline_missed_);
-
-      //@BT INSTRUMENT with event ID: EVENT_WORK_DEADLINE_MISSED Measure time when
-      //work triggered by event finishes and deadline missed.
-      //DSTRM_EVENT (TEST_ONE_FAM, DEADLINE_MISSED, guid, strlen(extra_info), extra_info);
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MISSED) at %u\n",tv.msec()));
-      DSTRM_EVENT (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(Object_ID), (char*)&oid);
-
-    }
-  ACE_Allocator::instance()->free(extra_info);
-*/
-  //@BT INSTRUMENT with event ID: EVENT_WORK_END Measure time when
-  //work triggered by event finishes.
-  //DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
-  tv = ACE_OS::gettimeofday();
-  ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MADE) at %u\n",tv.msec()));
-  DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   //now, trigger the next subtask if any
   if (this->fwddest_ != 0)
