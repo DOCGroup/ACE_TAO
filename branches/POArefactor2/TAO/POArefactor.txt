@@ -1,3 +1,22 @@
+Tue Nov 23 11:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*FactoryImpl.cpp:
+          Corrected static service name
+
+        * tao/PortableServer/PortableServer.cpp:
+          Added process directives to fill service repository in a static
+          build
+
+Tue Nov 23 10:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,i}:
+          Added priority_model, to get the priority model of this POA
+
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          Use priority_model, cached policies are not retrievable anymore
+
 Tue Nov 23 08:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,i}:
