@@ -1,8 +1,8 @@
 /* -*- c++ -*- */
 // $Id$
 
-#ifndef ACE_CACHE_MANAGER_H
-#define ACE_CACHE_MANAGER_H
+#ifndef JAWS_CACHE_MANAGER_H
+#define JAWS_CACHE_MANAGER_H
 
 #include "ace/OS.h"
 #include "ace/ACE.h"
@@ -10,38 +10,38 @@
 
 #include "JAWS/Cache_Manager_T.h"
 
-class ACE_String_Hash_Functor
+class JAWS_String_Hash_Functor
 {
 public:
-  ACE_String_Hash_Functor (const char *s);
+  JAWS_String_Hash_Functor (const char *s);
   operator unsigned long (void) const;
 
 private:
   unsigned long i_;
 };
 
-class ACE_String_Equal_Functor
+class JAWS_String_Equal_Functor
 {
 public:
-  ACE_String_Equal_Functor (const char *s1, const char *s2);
+  JAWS_String_Equal_Functor (const char *s1, const char *s2);
   operator int (void) const;
 
 private:
   int i_;
 };
 
-class ACE_Strdup_String
+class JAWS_Strdup_String
 {
 public:
 
-  ACE_Strdup_String (void);
-  ACE_Strdup_String (const char *s);
-  ACE_Strdup_String (const ACE_Strdup_String &s);
-  ~ACE_Strdup_String (void);
+  JAWS_Strdup_String (void);
+  JAWS_Strdup_String (const char *s);
+  JAWS_Strdup_String (const JAWS_Strdup_String &s);
+  ~JAWS_Strdup_String (void);
 
   operator const char * (void) const;
   void operator = (const char *s);
-  void operator = (const ACE_Strdup_String &s);
+  void operator = (const JAWS_Strdup_String &s);
 
 private:
 
@@ -50,17 +50,17 @@ private:
 
 };
 
-typedef ACE_Cache_Manager<ACE_Strdup_String,
-                          ACE_Referenced_Cache_Object_Factory,
-                          ACE_String_Hash_Functor,
-                          ACE_String_Equal_Functor>
-        ACE_String_Referenced_Cache_Manager;
+typedef JAWS_Cache_Manager<JAWS_Strdup_String,
+                          JAWS_Referenced_Cache_Object_Factory,
+                          JAWS_String_Hash_Functor,
+                          JAWS_String_Equal_Functor>
+        JAWS_String_Referenced_Cache_Manager;
 
-typedef ACE_Cache_Manager<ACE_Strdup_String,
-                          ACE_Counted_Cache_Object_Factory,
-                          ACE_String_Hash_Functor,
-                          ACE_String_Equal_Functor>
-        ACE_String_Counted_Cache_Manager;
+typedef JAWS_Cache_Manager<JAWS_Strdup_String,
+                          JAWS_Counted_Cache_Object_Factory,
+                          JAWS_String_Hash_Functor,
+                          JAWS_String_Equal_Functor>
+        JAWS_String_Counted_Cache_Manager;
 
 
-#endif /* ACE_CACHE_MANAGER_H */
+#endif /* JAWS_CACHE_MANAGER_H */

@@ -12,6 +12,7 @@
 
 #include "JAWS/Export.h"
 #include "JAWS/Pipeline.h"
+#include "JAWS/Pipeline_Handler_T.h"
 #include "JAWS/Data_Block.h"
 
 class JAWS_Export JAWS_Pipeline_Handler

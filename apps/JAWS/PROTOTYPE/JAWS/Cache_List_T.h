@@ -1,22 +1,22 @@
 /* -*- c++ -*- */
 // $Id$
 
-#ifndef ACE_CACHE_LIST_T_H
-#define ACE_CACHE_LIST_T_H
+#ifndef JAWS_CACHE_LIST_T_H
+#define JAWS_CACHE_LIST_T_H
 
 #include "ace/Malloc.h"
 #include "JAWS/Cache_Object.h"
 
 // Forward declarations
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-class ACE_Cache_Manager;
+class JAWS_Cache_Manager;
 
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-class ACE_Cache_List_Item;
+class JAWS_Cache_List_Item;
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-class ACE_Cache_List
+class JAWS_Cache_List
 // Roll my own heap here.  Eventually, a heap should be its own
 // standalone data structure.
 //
@@ -25,14 +25,14 @@ class ACE_Cache_List
 {
 public:
 
-  typedef ACE_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
-  typedef ACE_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN> Cache_List_Item;
+  typedef JAWS_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
+  typedef JAWS_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN> Cache_List_Item;
 
-  ACE_Cache_List (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
+  JAWS_Cache_List (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
   // maxsize is the total number of objects the in memory cache is
   // willing to manage
 
-  ~ACE_Cache_List (void);
+  ~JAWS_Cache_List (void);
 
   int is_empty (void) const;
   int is_full (void) const;
@@ -44,10 +44,10 @@ public:
   // attempt to grow (or shrink) the heap.  Return 0 on success, -1 on
   // error.
 
-  int insert (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id);
+  int insert (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
   // attempt to insert int_id into heap.
 
-  int remove (EXT_ID &ext_id, ACE_Cache_Object *&int_id);
+  int remove (EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
   // attempt to remove the top element of heap.
 
   int remove (void *item);
@@ -83,29 +83,29 @@ private:
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-class ACE_Cache_List_Item
+class JAWS_Cache_List_Item
 {
 
-  friend class ACE_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
+  friend class JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
 
 public:
 
-  typedef ACE_Cache_List<EXT_ID, FACT, H_FN, E_FN> Cache_List;
+  typedef JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN> Cache_List;
 
-  ACE_Cache_List_Item (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id);
+  JAWS_Cache_List_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
   unsigned int priority (void);
 
 private:
 
   EXT_ID ext_id_;
-  ACE_Cache_Object *int_id_;
+  JAWS_Cache_Object *int_id_;
 
-  ACE_Cache_List_Item *next_;
-  ACE_Cache_List_Item *prev_;
+  JAWS_Cache_List_Item *next_;
+  JAWS_Cache_List_Item *prev_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_List_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#endif /* ACE_CACHE_LIST_T_H */
+#endif /* JAWS_CACHE_LIST_T_H */

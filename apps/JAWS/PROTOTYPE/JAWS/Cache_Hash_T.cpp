@@ -1,19 +1,19 @@
 // $Id$
 
-#ifndef ACE_CACHE_HASH_T_CPP
-#define ACE_CACHE_HASH_T_CPP
+#ifndef JAWS_CACHE_HASH_T_CPP
+#define JAWS_CACHE_HASH_T_CPP
 
 #include "JAWS/Cache_Hash_T.h"
 #include "JAWS/Hash_Bucket_T.h"
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> unsigned long
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::hash (const EXT_ID &ext_id) const
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::hash (const EXT_ID &ext_id) const
 {
   return HASH_FUNC (ext_id) % this->size_;
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (unsigned long number) const
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (unsigned long number) const
 {
   unsigned long d = 3;
 
@@ -31,7 +31,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (unsigned long number) const
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::new_cachebucket (size_t hash_idx)
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::new_cachebucket (size_t hash_idx)
 {
   if (this->hashtable_[hash_idx] == 0)
     {
@@ -46,7 +46,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::new_cachebucket (size_t hash_idx)
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC>
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::ACE_Cache_Hash (ACE_Allocator *alloc,
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::JAWS_Cache_Hash (ACE_Allocator *alloc,
                                                           size_t size)
   : allocator_ (alloc),
     hashtable_ (0)
@@ -77,7 +77,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::ACE_Cache_Hash (ACE_Allocator *alloc,
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC>
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~ACE_Cache_Hash (void)
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Hash (void)
 {
   if (this->hashtable_)
     {
@@ -98,7 +98,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~ACE_Cache_Hash (void)
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id) const
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id) const
 {
   unsigned long hash_idx = this->hash (ext_id);
 
@@ -109,8 +109,8 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id) const
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id,
-                                                ACE_Cache_Object *&int_id) const
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id,
+                                                JAWS_Cache_Object *&int_id) const
 {
   unsigned long hash_idx = this->hash (ext_id);
 
@@ -121,8 +121,8 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::bind (const EXT_ID &ext_id,
-                                                ACE_Cache_Object *const &int_id)
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::bind (const EXT_ID &ext_id,
+                                                JAWS_Cache_Object *const &int_id)
 {
   int result;
   unsigned long hash_idx = this->hash (ext_id);
@@ -143,8 +143,8 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::bind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::trybind (const EXT_ID &ext_id,
-                                                   ACE_Cache_Object *&int_id)
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::trybind (const EXT_ID &ext_id,
+                                                   JAWS_Cache_Object *&int_id)
 {
   int result;
   unsigned long hash_idx = this->hash (ext_id);
@@ -165,10 +165,10 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::trybind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
-                                                  ACE_Cache_Object *const &int_id,
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
+                                                  JAWS_Cache_Object *const &int_id,
                                                   EXT_ID &old_ext_id,
-                                                  ACE_Cache_Object *&old_int_id)
+                                                  JAWS_Cache_Object *&old_int_id)
 {
   int result;
   unsigned long hash_idx = this->hash (ext_id);
@@ -192,7 +192,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
 
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id)
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id)
 {
   unsigned long hash_idx = this->hash (ext_id);
 
@@ -203,8 +203,8 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id)
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id,
-                                                  ACE_Cache_Object *&int_id)
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id,
+                                                  JAWS_Cache_Object *&int_id)
 {
   unsigned long hash_idx = this->hash (ext_id);
 
@@ -216,7 +216,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id,
 
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> size_t
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size (void) const
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size (void) const
 {
   return this->size_;
 }
@@ -224,4 +224,4 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size (void) const
 
 
 
-#endif /* UTL_CACHEHASH_T_CPP */
+#endif /* JAWS_CACHEHASH_T_CPP */

@@ -36,6 +36,4 @@ public:
   virtual int close (u_long = 0);
 };
 
-#include "JAWS/Pipeline_Handler.h"
-
 #endif /* !defined (JAWS_PIPELINE_H) */

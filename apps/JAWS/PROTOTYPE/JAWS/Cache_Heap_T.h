@@ -1,35 +1,35 @@
 /* -*- c++ -*- */
 // $Id$
 
-#ifndef ACE_CACHE_HEAP_T_H
-#define ACE_CACHE_HEAP_T_H
+#ifndef JAWS_CACHE_HEAP_T_H
+#define JAWS_CACHE_HEAP_T_H
 
 #include "ace/Malloc.h"
 #include "JAWS/Cache_Object.h"
 
 // Forward declarations
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-class ACE_Cache_Manager;
+class JAWS_Cache_Manager;
 
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-class ACE_Cache_Heap_Item;
+class JAWS_Cache_Heap_Item;
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-class ACE_Cache_Heap
+class JAWS_Cache_Heap
 // Roll my own heap here.  Eventually, a heap should be its own
 // standalone data structure.
 {
 public:
 
-  typedef ACE_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
-  typedef ACE_Cache_Heap_Item<EXT_ID, FACT, H_FN, E_FN> Cache_Heap_Item;
+  typedef JAWS_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
+  typedef JAWS_Cache_Heap_Item<EXT_ID, FACT, H_FN, E_FN> Cache_Heap_Item;
 
-  ACE_Cache_Heap (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
+  JAWS_Cache_Heap (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
   // maxsize is the total number of objects the in memory cache is
   // willing to manage
 
-  ~ACE_Cache_Heap (void);
+  ~JAWS_Cache_Heap (void);
 
   int is_empty (void) const;
   int is_full (void) const;
@@ -41,10 +41,10 @@ public:
   // attempt to grow (or shrink) the heap.  Return 0 on success, -1 on
   // error.
 
-  int insert (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id);
+  int insert (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
   // attempt to insert int_id into heap.
 
-  int remove (EXT_ID &ext_id, ACE_Cache_Object *&int_id);
+  int remove (EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
   // attempt to remove the top element of heap.
 
   int remove (void *item);
@@ -77,20 +77,20 @@ private:
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-class ACE_Cache_Heap_Item
+class JAWS_Cache_Heap_Item
 {
 
-  friend class ACE_Cache_Heap<EXT_ID, FACT, H_FN, E_FN>;
+  friend class JAWS_Cache_Heap<EXT_ID, FACT, H_FN, E_FN>;
 
 public:
 
-  ACE_Cache_Heap_Item (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id);
+  JAWS_Cache_Heap_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
   unsigned int priority (void);
 
 private:
 
   EXT_ID ext_id_;
-  ACE_Cache_Object *int_id_;
+  JAWS_Cache_Object *int_id_;
 
   size_t heap_idx_;
 
@@ -100,4 +100,4 @@ private:
 #include "JAWS/Cache_Heap_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#endif /* ACE_CACHE_HEAP_T_H */
+#endif /* JAWS_CACHE_HEAP_T_H */

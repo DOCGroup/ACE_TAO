@@ -2,36 +2,36 @@
 // Hey Emacs!  This is a C++ file!
 // $Id$
 
-#ifndef ACE_CACHE_MANAGER_T_H
-#define ACE_CACHE_MANAGER_T_H
+#ifndef JAWS_CACHE_MANAGER_T_H
+#define JAWS_CACHE_MANAGER_T_H
 
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 
 #include "JAWS/Cache_Object.h"
 
-template <class KEY, class HASH_FUNC, class EQ_FUNC> class ACE_Cache_Hash;
+template <class KEY, class HASH_FUNC, class EQ_FUNC> class JAWS_Cache_Hash;
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-class ACE_Cache_Heap;
+class JAWS_Cache_Heap;
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-class ACE_Cache_List;
+class JAWS_Cache_List;
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-class ACE_Cache_Manager
+class JAWS_Cache_Manager
 {
 
-  friend class ACE_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC>;
-  friend class ACE_Cache_Heap<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
-  friend class ACE_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
+  friend class JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC>;
+  friend class JAWS_Cache_Heap<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
+  friend class JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
 
 public:
 
   typedef ACE_Singleton<FACTORY, ACE_SYNCH_MUTEX> Object_Factory;
-  typedef ACE_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC> Cache_Hash;
-  typedef ACE_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC> Cache_Heap;
+  typedef JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC> Cache_Hash;
+  typedef JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC> Cache_Heap;
 
-  ACE_Cache_Manager (ACE_Allocator *alloc = 0,
-                     ACE_Cache_Object_Factory *cof = 0,
+  JAWS_Cache_Manager (ACE_Allocator *alloc = 0,
+                     JAWS_Cache_Object_Factory *cof = 0,
 
                      size_t hashsize = 2048,   // number of hash buckets
                      size_t maxsize = 65535,   // max number of in memory
@@ -54,7 +54,7 @@ public:
                      );
 
   int open (ACE_Allocator *alloc = 0,
-            ACE_Cache_Object_Factory *cof = 0,
+            JAWS_Cache_Object_Factory *cof = 0,
 
             size_t hashsize = 1024,   // number of hash buckets
             size_t maxsize = 4096,    // max number of in memory
@@ -76,28 +76,28 @@ public:
                                       // counts
             );
 
-  ~ACE_Cache_Manager (void);
+  ~JAWS_Cache_Manager (void);
 
   int close (void);
 
   // Search Methods
 
-  int GET (const KEY &key, ACE_Cache_Object *&cobj);
+  int GET (const KEY &key, JAWS_Cache_Object *&cobj);
   // Retrieve the object associated with key from cache.  Return 0 on
   // success, -1 on failure.
 
   int PUT (const KEY &key, const void *data, size_t size,
-           ACE_Cache_Object *&obj);
+           JAWS_Cache_Object *&obj);
   // Inserts or replaces object associated with key into cache.
   // Return 0 on success, -1 on failure.
 
-  int MAKE (const void *data, size_t size, ACE_Cache_Object *&cobj);
+  int MAKE (const void *data, size_t size, JAWS_Cache_Object *&cobj);
   // Create a cached object, increment reference count.
 
-  int TAKE (ACE_Cache_Object *const &cobj);
+  int TAKE (JAWS_Cache_Object *const &cobj);
   // Increment reference count.
 
-  int DROP (ACE_Cache_Object *&cobj);
+  int DROP (JAWS_Cache_Object *&cobj);
   // Decrement reference count on cached object, perhaps delete.
   // Returns 0 if only decremented, 1 if deleted, -1 if error.
 
@@ -106,12 +106,12 @@ public:
 
 protected:
 
-  int GET_i (const KEY &key, ACE_Cache_Object *&object);
+  int GET_i (const KEY &key, JAWS_Cache_Object *&object);
   // Retrieve the object associated with key from cache.  Return 0 on
   // success, -1 on failure.
 
   int PUT_i (const KEY &key, const void *data, size_t size,
-             ACE_Cache_Object *&object);
+             JAWS_Cache_Object *&object);
   // Inserts or replaces object associated with key into cache.
   // Return 0 on success, -1 on failure.
 
@@ -121,13 +121,13 @@ protected:
   int FLUSH_i (const KEY &key);
   // Removes object associated with key from cache.
 
-  int DROP_i (ACE_Cache_Object *&cobj);
+  int DROP_i (JAWS_Cache_Object *&cobj);
   // Decrement reference count on cached object, perhaps delete.
 
 private:
 
   ACE_Allocator *allocator_;
-  ACE_Cache_Object_Factory *factory_;
+  JAWS_Cache_Object_Factory *factory_;
 
   size_t hashsize_;
   size_t maxsize_;
@@ -148,20 +148,20 @@ private:
 
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-class ACE_Cache_Proxy
+class JAWS_Cache_Proxy
 {
 public:
   typedef CACHE_MANAGER Cache_Manager;
   typedef ACE_Singleton<Cache_Manager, ACE_SYNCH_MUTEX>
           Cache_Manager_Singleton;
 
-  ACE_Cache_Proxy (const KEY &, Cache_Manager * = 0);
+  JAWS_Cache_Proxy (const KEY &, Cache_Manager * = 0);
   // Corresponds to a GET
 
-  ACE_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = 0);
+  JAWS_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = 0);
   // Corresponds to a U/PUT
 
-  virtual ~ACE_Cache_Proxy (void);
+  virtual ~JAWS_Cache_Proxy (void);
 
   DATA *data (void) const;
   operator DATA * (void) const;
@@ -170,7 +170,7 @@ public:
 
 private:
 
-  ACE_Cache_Object *object_;
+  JAWS_Cache_Object *object_;
   Cache_Manager *manager_;
 
 
@@ -182,4 +182,4 @@ private:
 #include "JAWS/Cache_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#endif /* ACE_CACHE_MANAGER_T_H */
+#endif /* JAWS_CACHE_MANAGER_T_H */
