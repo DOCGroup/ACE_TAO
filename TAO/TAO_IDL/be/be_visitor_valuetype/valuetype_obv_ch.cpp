@@ -75,7 +75,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       os->gen_ifdef_macro (node->flat_name (), "_OBV");
 
       *os << "// OBV_ class" << be_nl;
-      *os << "class ";
+      *os << "class " << be_global->stub_export_macro() << " ";;
 
       if (!node->is_nested())
         {
@@ -98,7 +98,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_obv_ch::"
                              "visit_valuetype - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
 
