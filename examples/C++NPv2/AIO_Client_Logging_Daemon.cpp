@@ -67,8 +67,6 @@ public:
   AIO_Input_Handler (AIO_CLD_Acceptor *acc = 0)
     : acceptor_ (acc), mblk_ (0) {}
 
-  // Cancel I/O and Close socket and release msg block
-  // Remove from the list of input handlers?
   virtual ~AIO_Input_Handler ();
 
   // Called by ACE_Asynch_Acceptor when a client connects.
@@ -244,8 +242,8 @@ void AIO_Output_Handler::handle_write_stream
        (const ACE_Asynch_Write_Stream::Result &result) {
   ACE_Message_Block &mblk = result.message_block ();
   if (result.success ()) {
-    can_write_ = 1;
     if (mblk.length () == 0) {
+      can_write_ = 1;
       mblk.release ();
       start_write ();
     }
@@ -278,7 +276,8 @@ void AIO_Input_Handler::open
 
 void AIO_Input_Handler::handle_read_stream
   (const ACE_Asynch_Read_Stream::Result &result) {
-  if (!result.success ()) {
+  if (!result.success () ||
+      result.bytes_transferred () == 0) {
     delete this;
     return;
   }
