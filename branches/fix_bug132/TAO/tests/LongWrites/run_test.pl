@@ -9,7 +9,7 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 use Cwd;
 
-my $iorfile = PerlACE::LocalFile ("server.ior");
+my $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 
 my $SV = new PerlACE::Process ("server", "-o $iorfile");

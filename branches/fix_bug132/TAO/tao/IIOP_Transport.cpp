@@ -90,10 +90,9 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
                           const ACE_Time_Value *max_wait_time,
                           size_t *bytes_transferred)
 {
-  return ACE::send_n (this->handle (),
-                      message_block,
-                      max_wait_time,
-                      bytes_transferred);
+  return ACE::send (this->handle (),
+                    message_block,
+                    bytes_transferred);
 }
 
 ssize_t
@@ -197,12 +196,8 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (this->messaging_object_->format_message (stream) != 0)
     return -1;
 
-  // Strictly speaking, should not need to loop here because the
-  // socket never gets set to a nonblocking mode ... some Linux
-  // versions seem to need it though.  Leaving it costs little.
-
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -215,17 +210,6 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
                     this->handle (),
                     ACE_TEXT ("send_message ()\n")));
 
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
       return -1;
     }
 

@@ -11,6 +11,9 @@
 #include "tao/Single_Reactor.h"
 #include "tao/Priority_Mapping.h"
 
+#include "tao/Reactive_Flushing_Strategy.h"
+#include "tao/Block_Flushing_Strategy.h"
+
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
@@ -33,6 +36,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     reactor_mask_signals_ (1),
     dynamically_allocated_reactor_ (0),
     cached_connection_lock_type_ (TAO_THREAD_LOCK)
+  , flushing_strategy_type_ (TAO_REACTIVE_FLUSHING)
 {
 }
 
@@ -193,6 +197,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             this->add_to_ior_parser_names (argv[curarg]);
           }
       }
+
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBConnectionLock") == 0)
       {
@@ -207,6 +212,23 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
               this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+          }
+      }
+
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBFlushingStrategy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "reactive") == 0)
+              this->flushing_strategy_type_ = TAO_REACTIVE_FLUSHING;
+            else if (ACE_OS::strcasecmp (name,
+                                         "blocking") == 0)
+              this->flushing_strategy_type_ = TAO_BLOCKING_FLUSHING;
           }
       }
 
@@ -609,7 +631,7 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
   ACE_NEW_RETURN (allocator,
                   LOCKED_ALLOCATOR,
                   0);
-  
+
   return allocator;
 }
 
@@ -656,6 +678,21 @@ TAO_Default_Resource_Factory::create_cached_connection_lock (void)
                     0);
 
   return the_lock;
+}
+
+TAO_Flushing_Strategy *
+TAO_Default_Resource_Factory::create_flushing_strategy (void)
+{
+  TAO_Flushing_Strategy *strategy = 0;
+  if (this->flushing_strategy_type_ == TAO_REACTIVE_FLUSHING)
+    ACE_NEW_RETURN (strategy,
+                    TAO_Reactive_Flushing_Strategy,
+                    0);
+  else
+    ACE_NEW_RETURN (strategy,
+                    TAO_Block_Flushing_Strategy,
+                    0);
+  return strategy;
 }
 
 TAO_Priority_Mapping *
