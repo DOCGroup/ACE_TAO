@@ -1,7 +1,15 @@
+Thu Apr  4 20:39:51 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* bin/g++dep:
+	  Remove bogus path(s) to find gcc, they were site-specific,
+	  host-specific and version-specific, and then outdated at
+	  that. The developer better has a decent version of gcc in her
+	  PATH already, or the 'make depend' commands simply won't work.
+
 Thu Apr  4 13:17:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added a new test to the list of tests
-	  that need to be run. 
+	  that need to be run.
 
 Thu Apr  4 11:52:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
@@ -24,7 +32,7 @@ Thu Apr  4 10:30:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/RMCast/Makefile:
 	* ace/SSL/Makefile:
 	* ace/Makefile: Updated dependency. Other directories need this
-	  too. Will get to them before the beta. 
+	  too. Will get to them before the beta.
 
 Thu Apr  4 11:05:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -35,8 +43,8 @@ Thu Apr  4 11:05:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 Thu Apr  4 08:32:26 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/CDR_Stream.cpp (ctor):
-	  Modified default ctor to always add ACE_CDR::MAX_ALIGNMENT to 
-	  the size parameter since it is always required since the 
+	  Modified default ctor to always add ACE_CDR::MAX_ALIGNMENT to
+	  the size parameter since it is always required since the
 	  subsequent call to ACE_CDR::mb_align() might advance the
 	  (rd|wr)_ptr's up to ACE_CDR::MAX_ALIGNMENT-1 bytes.
 
@@ -203,7 +211,7 @@ Mon Apr  1 11:56:55 2002  Steve Totten  <totten_s@ociweb.com>
 
           Applied change from Rich Seibel <seibel_r@ociweb.com> to add a
 	  reset for the command_line_calculated_ flag (three places) and
-	  rewrote the description of command_line_buf(). 
+	  rewrote the description of command_line_buf().
 
 Mon Apr  1 12:38:44 2002  Steve Huston  <shuston@riverace.com>
 
