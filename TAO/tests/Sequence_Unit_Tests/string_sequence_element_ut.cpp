@@ -82,7 +82,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(d.expect(0), d);
       BOOST_CHECK_MESSAGE(r.expect(0), r);
       x = helper<charT>::sample0();
-      
+
       BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
@@ -179,7 +179,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
-      
+
       BOOST_CHECK_MESSAGE(d.expect(0), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
@@ -281,7 +281,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
-      
+
       BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
@@ -314,7 +314,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
-      
+
       BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
@@ -376,7 +376,7 @@ private:
   }
 
   boost::weak_ptr<Tester> self_;
-}; 
+};
 
 test_suite *
 init_unit_test_suite(int, char*[])
@@ -395,8 +395,3 @@ init_unit_test_suite(int, char*[])
   return ts.release();
 }
 
-#if 0
-// This is just to convince MPC that I do not need a main() to have a
-// program.
-int main() {}
-#endif

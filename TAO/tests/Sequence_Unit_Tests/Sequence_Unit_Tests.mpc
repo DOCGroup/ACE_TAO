@@ -20,36 +20,42 @@ project(*Unbounded_String) : taoexe {
 }
 
 project(*String_Sequence_Element): taoexe, boost_unit_test {
+  exename = string_sequence_element_ut
   Source_Files {
     string_sequence_element_ut.cpp
   }
 }
 
 project(*Unbounded_String_Sequence): taoexe, boost_unit_test {
+  exename = unbounded_string_sequence_ut
   Source_Files {
     unbounded_string_sequence_ut.cpp
   }
 }
 
 //project(*String_Sequence_Element): taoexe, boost_unit_test {
+//  exename = string_sequence_element_ut
 //  Source_Files {
 //    string_sequence_element_ut.cpp
 //  }
 //}
 
 project(*Testing_Allocation_Traits): taoexe, boost_unit_test {
+  exename = testing_allocation_traits_ut
   Source_Files {
     testing_allocation_traits_ut.cpp
   }
 }
 
 project(*Unbounded_Value_Sequence): taoexe, boost_unit_test {
+  exename = bounded_value_sequence_ut
   Source_Files {
     unbounded_value_sequence_ut.cpp
   }
 }
 
 project(*Bounded_Value_Sequence): taoexe, boost_unit_test {
+  exename = bounded_value_sequence_ut
   Source_Files {
     bounded_value_sequence_ut.cpp
   }
