@@ -27,6 +27,9 @@
 
 class IOR_Multicast : public ACE_Event_Handler
 {
+// @@ Naga, can you please add the standard comments to this class and
+// make sure that all the comments for each method go underneath the
+// method name?
 public:
    // constructor
   IOR_Multicast (char * ior,
