@@ -1,3 +1,10 @@
+Sun Mar  6 15:01:00 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* include/makeinclude/wrapper_macros.GNU (Message):
+	* bin/MakeProjectCreator/config/global.features (Module):
+	* ACE-INSTALL.html (Module):
+	Simplied Makefile generation for GUI support in ACE and TAO.
+
 Sun Mar  6 01:58:04 2005  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* Kokyu/tests/DSRT_MIF/MIF.cpp

@@ -2530,47 +2530,68 @@ libraries.
             <code>$ mwc.pl -features x11=1,gl=1,fl=1,ace_flreactor=1 ace.mwc
             </code></li>
         </ol>
+        Currently to simplify MPC generation some of features are turn on by default in
+        <code>ACE_wrappers/bin/MakeProjectCreator/global.features</code>. For examples to generate
+        files related with Fl one has to provide only fl=1 feature. To obtain a more fine grained controll
+        over MPC generation process one may modify <code>ACE_wrappers/bin/MakeProjectCreator/*.features</code>
+        files.
       </li>
       <li> Required build files are generated now, it is enough then to invoke build tool.
       For example for under <code>MPC::gnuace</code> one has to call
-      <code>make x11=1 gl=1 fl=1 ace_flreactor=1</code>. For <code>MPC::vc7</code> target all features are
-      encoded in generated project files, thus it is enough to compile ACE using MSVC.</li>
+      <code>make fl=1</code>. For <code>MPC::vc7</code> target all features are
+      encoded in generated project files, thus it is enough to compile ACE using MSVC.
+      </li>
   </ol>
     The build procedure leads to a specific GUI Reactor library. For example, for
     <code>Qt</code> and <code>Linux </code> one gets <code>libQtReactor.so</code>, while for
     <code>Windows</code> the results are shared <code>QtReactor.dll</code> and import
     <code>QtReactor.lib</code> libraries or their variants depending on build options.
+    When compiling TAO also GUI related libraries are created like <code>libTAO_QtResource.so</code>.
   <h4> Using GUI Reactor Library </h4>
-    MPC-based application projects depending on specific [Gui]Reactor may inherit settings from
-    <code>ace_[gui]reactor.mpb</code> base projects. These base projects ensure that all necessary libraries
-    are linked to the aplpication, specifies feature necessary to build a project and moreover impose a
+    Here one has at least three use cases:
+    <h5> Applications with their own build system.</h5>
+    To use ACE support for GUI one has to include specific GUI headers and
+    link with specific <code>ACE_[GUI]Reactor</code> library. When using TAO support for GUI one has
+    also to link with specific <code>TAO_[GUI]Resource</code> library.
+    <h5> Applications with build system using MPC.</h5>
+    In general, it is better to create specific base projects for using ACE GUI support in such application.
+    Base projects provided by ACE <code>ACE_wrappers/bin/MakeProjectCreator/[ace,tao]_[gui][reactor,resource].mpb</code>
+    may be an examples of how to do this. Nevertheless, the application developer 
+    <h5> Internal ACE applications like tests or examples.</h5>
+    MPC project for internal ACE application using GUI support should be derived from
+    <code>ace_[gui]reactor.mpb</code> base projects. To employ TAO support for GUI one should derive
+    the project from <code>tao_[gui]resource.mpb</code> These base projects ensure that all necessary libraries
+    are linked to the application, specifies features necessary to build a project and moreover impose a
     build order consistant with ACE. For example, the application project using <code>XtReactor</code> should be
     derived from <code>ace_xtreactor.mpb</code>.
   <h4>Notes on specific GUI Reactors</h4>
     <ul>
       <li> <code>QtReactor</code></li>
-        The build is controlled by <code>ace_glreactor</code> feature.
-        To build this reactor one has to provide feature <code>qt</code> (Qt library). Moreover,
+        The build is controlled by <code>ace_qtreactor</code> [1 by default] feature.
+        To build this reactor one has to provide feature <code>qt</code> [0 by default] (Qt library). Moreover,
         it is assumed that <code>Qt</code> was installed in a standard way
         and <code>QTDIR</code> points to <code>Qt</code> installation folder. To build TAO
-        support for <code>Qt</code> one should use <code>tao_qtresource</code> feature.
+        support for <code>Qt</code> one should use <code>tao_qtresource</code> [1 by default] feature.
       <li> <code>XtReactor</code></li>
-        The build is controlled by <code>ace_xtreactor</code> feature.
-        To build this reactor one has to provide the following features: <code>x11</code> (X11 libraries) and
-        <code>xt</code> (X11 Toolkit). Moreover, some examples and tests related with <code>XtReactor</code>
-        needs additionall features namely either <code>motif</code> (Motif/Lesstif libraries) or
-        <code>athena</code> (Athena widgets). To build TAO
+        The build is controlled by <code>ace_xtreactor</code> [1 by default] feature.
+        To build this reactor one has to provide the following features: <code>x11</code> [1 by default]
+        (X11 libraries) and <code>xt</code> [1 by default] (X11 Toolkit).
+        Moreover, some examples and tests related with <code>XtReactor</code>
+        needs additionall features namely either <code>motif</code> [0 by default] (Motif/Lesstif libraries) or
+        <code>athena</code> [0 by default] (Athena widgets). To build TAO
         support for <code>xt</code> one should use <code>tao_xtresource
-        </code> feature.
+        </code> [1 by default] feature.
       <li> <code>TkReactor</code></li>
-        The is controlled by <code>ace_tkreactor</code> feature. To build this reactor one has to provide
-        <code>tk</code> (Tcl libraries) feature. To build TAO
-        support for <code>Tk</code> one should use <code>tao_tkresource</code> feature.
+        The is controlled by <code>ace_tkreactor</code> [1 by default] feature. To build this reactor one has to provide
+        <code>tk</code> [0 by default] (Tcl libraries) feature. To build TAO
+        support for <code>Tk</code> one should use <code>tao_tkresource</code> [1 by default] feature.
       <li> <code>FlReactor</code></li>
-        The  build is controlled by <code>ace_flreactor</code> feature.
-        To build this reactor one has to provide the following features: <code>x11</code> (X11 libraries),
-        <code>gl</code> (OpenGl) and <code>fl</code> (Fast Light Toolkit). To build TAO
-        support for <code>Fl</code> one should use <code>tao_flresource</code> feature.
+        The  build is controlled by <code>ace_flreactor</code> [1 by default] feature.
+        To build this reactor one has to provide the following features: <code>x11</code>
+        [1 by default] (X11 libraries),
+        <code>gl</code> [1 by default] (OpenGl) and <code>fl</code>
+        [0 by default] (Fast Light Toolkit). To build TAO
+        support for <code>Fl</code> one should use <code>tao_flresource</code> [1 by default] feature.
         <strong>MS Windows:</strong> The paths to <code>fltkdll</code> and
         <code>OpenGL32</code> libraries, as well as <code>fltk</code> header files
         should be setup manually for succesfull compilation. Obviosuly,
@@ -2942,10 +2963,10 @@ shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
                    specified by the Makefile, as in performance-tests/Misc.
 static_libs_only Only build static libraries.
 threads          Build with thread support.
-xt_reactor       Build the XtReactor.
-fl_reactor       Build the FlReactor.
-tk_reactor       Build the TkReactor.
-qt_reactor       Build the QtReactor.
+xt               Build with Xt (X11 Toolkit) support.
+fl               Build with FlTk (Fast Light Toolkit) support.
+tk               Build with Tk (Tcl/Tk) support.
+qt               Build with Qt (Trolltech Qt) support.
 ssl              Build with OpenSSL support.
 rapi             Build with RAPI
 split            Build the library by first splitting up the ACE source
@@ -3019,7 +3040,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Tue Feb  8 08:04:28 CST 2005
+Last modified: Sun Mar  6 14:25:44 CET 2005
 <!-- hhmts end -->
 
 
