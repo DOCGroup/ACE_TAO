@@ -1,3 +1,8 @@
+Wed Sep  9 13:22:11 1998  James Hu  <jxh@entera.com>
+
+	* ace/Containers.h:
+	* ace/Containers.cpp: Added a new container class ACE_DLList.
+
 Tue Sep  8 23:17:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Thread_Mutex_Test.cpp (test): 
