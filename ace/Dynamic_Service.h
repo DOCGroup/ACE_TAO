@@ -6,11 +6,10 @@
  *
  *  $Id$
  *
- *  @author Prashant Jain
- *  @author Doug Schmidt
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
