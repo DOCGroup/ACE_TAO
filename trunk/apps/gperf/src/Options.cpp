@@ -351,7 +351,7 @@ Options::operator() (int argc, char *argv[])
                              DEFAULT_JUMP_VALUE,
                              MAX_KEY_POS - 1);
             Options::usage ();
-            ACE_OS::exit (1);
+            ACE_OS::_exit (1);
           }
         case 'H':               // Sets the name for the hash function.
           {

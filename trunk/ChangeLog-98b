@@ -1,5 +1,8 @@
 Sat Jun  6 18:34:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* apps/gperf/src/Options.cpp (operator): Changed ACE_OS::exit()
+	  to ACE_OS::_exit() so we'll leave no trace...
+
 	* apps/gperf/src/Key_List.cpp (output_switch): Fixed another bug
 	  where strcmp() should be generated instead of strncmp().
 
