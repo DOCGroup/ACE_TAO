@@ -11,7 +11,14 @@ ACE_TTY_IO::control (Control_Mode cmd,
 		     Serial_Params *arg) const
 {
 #if defined (ACE_HAS_TERM_IOCTLS)
+#if defined(TCGETS)
   struct termios devpar;
+#elif defined(TCGETA)
+  struct termio devpar;
+#else
+  errno = ENOSYS;
+  return -1;
+#endif
   u_long c_iflag;
   u_long c_oflag;
   u_long c_cflag;
@@ -27,8 +34,14 @@ ACE_TTY_IO::control (Control_Mode cmd,
   c_line=0;
 
   // Get default device parameters.
- 
+
+#if defined(TCGETS)
     if (this->ACE_IO_SAP::control (TCGETS, (void *) &devpar) == -1)
+#elif defined(TCGETA)
+    if (this->ACE_IO_SAP::control (TCGETA, (void *) &devpar) == -1)
+#else
+    errno = ENOSYS;
+#endif
       return -1;
 
   switch (cmd)
@@ -118,8 +131,15 @@ ACE_TTY_IO::control (Control_Mode cmd,
       devpar.c_lflag = c_lflag;
       devpar.c_cc[4] = ivmin_cc4;
       devpar.c_cc[5] = ivtime_cc5;
-      
+     
+#if defined(TCSETS)
       return this->ACE_IO_SAP::control (TCSETS, (void *) &devpar);
+#elif defined(TCSETA)
+      return this->ACE_IO_SAP::control (TCSETA, (void *) &devpar);
+#else
+      errno = ENOSYS;
+      return -1;
+#endif
 
     case GETPARAMS:
       return -1; // Not yet implemented.
