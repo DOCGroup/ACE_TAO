@@ -22,6 +22,12 @@
 #ifndef BE_TYPEDEF_H
 #define BE_TYPEDEF_H
 
+#include "be_type.h"
+#include "ast_typedef.h"
+
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_Typedef
  */

@@ -22,6 +22,12 @@
 #ifndef BE_FIELD_H
 #define BE_FIELD_H
 
+#include "be_decl.h"
+#include "ast_field.h"
+
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_Field
  */
@@ -35,7 +41,7 @@ public:
   // default constructor
 
   be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
-                                    Visibility vis = vis_NA);
+            Visibility vis = vis_NA);
   // constructor
 
   // Visiting

@@ -22,6 +22,14 @@
 #ifndef BE_SEQUENCE_H
 #define BE_SEQUENCE_H
 
+#include "be_scope.h"
+#include "be_type.h"
+#include "ast_sequence.h"
+
+class AST_Expression;
+class AST_Type;
+class be_visitor;
+
 /*
  * BE_Sequence
  */

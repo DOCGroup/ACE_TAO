@@ -23,6 +23,13 @@
 #ifndef _BE_MODULE_H
 #define _BE_MODULE_H
 
+#include "be_scope.h"
+#include "be_decl.h"
+#include "ast_module.h"
+
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_Module
  */

@@ -22,7 +22,11 @@
 #ifndef TAO_BE_SCOPE_H
 #define TAO_BE_SCOPE_H
 
+#include "utl_scope.h"
+#include "ast_decl.h"
+
 class be_decl;
+class be_visitor;
 
 /*
  * BE_Scope

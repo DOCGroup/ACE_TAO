@@ -22,6 +22,8 @@
 #ifndef TAO_BE_DECL_H
 #define TAO_BE_DECL_H
 
+#include "ast_decl.h"
+
 class be_scope;
 class be_visitor;
 

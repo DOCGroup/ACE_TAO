@@ -22,7 +22,12 @@
 #ifndef BE_ARRAY_H
 #define BE_ARRAY_H
 
+#include "be_type.h"
+#include "ast_array.h"
+
+class UTL_ExprList;
 class TAO_OutStream;
+class be_visitor;
 
 /*
  * BE_Array
