@@ -4,7 +4,6 @@ common_defines     = WIN32 _CONSOLE
 pch_defines        = ACE_USING_PCH
 configuration_type = 1
 subsystem          = 1
-pdb                = 1
 ssl_libs           = libeay32 ssleay32
 
 Release {
@@ -21,6 +20,7 @@ Debug {
   intermediate_dir = Debug
   lib_modifier     = d
   runtime_library  = 3
+  pdb              = 1
 }
 
 Static Release {

@@ -1,6 +1,5 @@
 configurations     = Release Debug "Static Release" "Static Debug"
 common_defines     = WIN32 _WINDOWS
-pdb                = 1
 pch_defines        = ACE_USING_PCH
 ssl_libs           = libeay32 ssleay32
 
@@ -22,6 +21,7 @@ Debug {
   intermediate_dir = Debug
   lib_modifier     = d
   runtime_library  = 3
+  pdb              = 1
 }
 
 Static Release {
