@@ -132,7 +132,7 @@ private:
   virtual void reschedule (ACE_Timer_Node *);
   // Reschedule an "interval" <ACE_Timer_Node>.
 
-  virtual ACE_Timer_Queue_Iterator &iterator (void);
+  virtual ACE_Timer_Queue_Iterator &get_iterator (void);
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
   ACE_Timer_Node *head_; 

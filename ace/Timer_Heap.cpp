@@ -120,7 +120,7 @@ ACE_Timer_Heap::is_empty (void) const
 }
 
 ACE_Timer_Queue_Iterator &
-ACE_Timer_Heap::iterator (void)
+ACE_Timer_Heap::get_iterator (void)
 {
   return this->iterator_;
 }

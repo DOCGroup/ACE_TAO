@@ -27,7 +27,7 @@ ACE_Timer_List_Iterator::next (ACE_Timer_Node *&node,
 ACE_ALLOC_HOOK_DEFINE(ACE_Timer_List)
 
 ACE_Timer_Queue_Iterator &
-ACE_Timer_List::iterator (void)
+ACE_Timer_List::get_iterator (void)
 {
   return this->iterator_;
 }
