@@ -68,29 +68,24 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const sockaddr_un *un, int len)
   this->set (un, len);
 }
 
-void 
+void
 ACE_UNIX_Addr::set (const char rendezvous_point[])
 {
-  (void) ACE_OS::memset ((void *) &this->unix_addr_, 0, 
-		   sizeof this->unix_addr_);
+  (void) ACE_OS::memset ((void *) &this->unix_addr_, 
+			 0,
+			 sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
   size_t len = ACE_OS::strlen (rendezvous_point);
-
-  if (len >= sizeof this->unix_addr_.sun_path)
-    {
-      // At this point, things are screwed up, so let's make sure we
-      // don't crash.
-      (void) ACE_OS::strncpy (this->unix_addr_.sun_path, 
-			rendezvous_point, 
-			sizeof this->unix_addr_.sun_path);
-      len = sizeof this->unix_addr_.sun_path;
-      this->unix_addr_.sun_path[len - 1] = '\0';
-      // Don't count the NUL byte at the end of the string. 
-      len -= 2; 
-    }
-  else
-    (void) ACE_OS::strcpy (this->unix_addr_.sun_path, rendezvous_point);
-  this->ACE_Addr::base_set (AF_UNIX, len + sizeof this->unix_addr_.sun_family);
+  size_t maxlen = sizeof this->unix_addr_.sun_path;
+ 
+  (void) ACE_OS::memcpy (this->unix_addr_.sun_path, 
+			 rendezvous_point,
+                         len >= maxlen ? maxlen - 1 : len);
+ 
+  this->ACE_Addr::base_set (AF_UNIX, 
+			    sizeof this->unix_addr_ -
+			    sizeof (this->unix_addr_.sun_path) +
+			    ACE_OS::strlen (this->unix_addr_.sun_path) );
 }
 
 // Create a ACE_Addr from a UNIX pathname.

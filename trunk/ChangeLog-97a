@@ -1,3 +1,18 @@
+Wed Mar  5 14:33:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/UNIX_Addr.cpp: Enhanced the implementation of set() so
+	  that it works correctly on MVS, which has a different definition
+	  of struct sockaddr_un:
+	  
+	  struct sockaddr_un {                                               
+	        unsigned char  sun_len;                                         
+		unsigned char  sun_family;                                      
+		char  sun_path[108];                                   
+	  };
+
+	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+ 	  this.
+
 Wed Mar 05 14:47:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{h,cpp},Makefile; also, renamed Scheduling_Params.* to
