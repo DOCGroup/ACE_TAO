@@ -59,7 +59,7 @@ Trader_Client::init (int argc, char** argv)
       //ACE_DEBUG ((LM_DEBUG, "Bootstrapping to the trading service"));
       CORBA::ORB_var orb = this->orb_manager_.orb ();
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("TradingService");
+        orb->resolve_initial_references ("TradingService", ACE_TRY_ENV);
 
       // Narrow the lookup interface.
       //ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
@@ -285,41 +285,41 @@ Trader_Client::get_movie_info (const char* server_name)
       Property_Map* prop_map = server_entry->int_id_;
       if (prop_map->find ("Movie_Info", prop_entry) == 0)
         {
-	  ACE_DEBUG ((LM_DEBUG,"Movie_Info find successful\n"));
+          ACE_DEBUG ((LM_DEBUG,"Movie_Info find successful\n"));
           // Make a fake sequence out of the property for use in the
           // TAO_Property_Evaluator utility class.
           CosTrading::Property& property = prop_entry->int_id_;
-	  //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+          //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
           CosTrading::PropertySeq property_seq (1, 1, &property, 0);
-	  //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+          //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
           TAO_Property_Evaluator prop_eval (property_seq);
-	  //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+          //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
           TAO_TRY
             {
               // Extact the Movie_Info sequence.
               TAO_VR::Movie_Info* movie_info = 0;
-	      //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+              //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
               CORBA::Any* movie_prop = prop_eval.property_value (0, TAO_TRY_ENV);
-	      //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+              //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
               TAO_CHECK_ENV;
 
-	      if (movie_prop == 0)
-		ACE_ERROR_RETURN ((LM_ERROR,"Movie_property is null\n"),0);
-	      //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+              if (movie_prop == 0)
+                ACE_ERROR_RETURN ((LM_ERROR,"Movie_property is null\n"),0);
+              //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
               // Create the movie iterator.
               if (((*movie_prop) >>= movie_info) == 1)
-		{
-		  ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
-		  movie_iter = new Movie_Iterator (*movie_info);
-		}
+                {
+                  ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+                  movie_iter = new Movie_Iterator (*movie_info);
+                }
             }
           TAO_CATCHANY {
-	    ACE_ERROR_RETURN ((LM_ERROR,"property_value failed\n"),0);
-	  }
+            ACE_ERROR_RETURN ((LM_ERROR,"property_value failed\n"),0);
+          }
           TAO_ENDTRY;
         }
       else
-	ACE_DEBUG ((LM_DEBUG,"Movie_Info find unsuccessful\n"));
+        ACE_DEBUG ((LM_DEBUG,"Movie_Info find unsuccessful\n"));
     }
   else
     {

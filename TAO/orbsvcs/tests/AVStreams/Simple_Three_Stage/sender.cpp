@@ -58,8 +58,8 @@ Sender::Sender (void)
     filename_ ("input"),
     input_file_ (0),
     frame_rate_ (10),
+    mb_ (BUFSIZ),
     protocol_object_ (0),
-    mb_ (BUFSIZ)
 {
 }
 
