@@ -458,10 +458,9 @@ TAO_GOA::create_reference (const char *intf
 
 CORBA::Object_ptr
 TAO_GOA::create_reference_with_id (const PortableServer::ObjectId &oid,
-                                      const char *intf
-                                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
+                                   const char *intf
+                                   ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::create_reference_with_id (oid,

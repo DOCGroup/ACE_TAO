@@ -45,14 +45,14 @@ TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
                         TAO_Object_Adapter *object_adapter
                         ACE_ENV_ARG_DECL)
   : TAO_Regular_POA (name,
-             poa_manager,
-             policies,
-             parent,
-             lock,
-             thread_lock,
-             orb_core,
-             object_adapter
-             ACE_ENV_ARG_PARAMETER),
+                     poa_manager,
+                     policies,
+                     parent,
+                     lock,
+                     thread_lock,
+                     orb_core,
+                     object_adapter
+                     ACE_ENV_ARG_PARAMETER),
   thread_pool_ (0)
 {
   ACE_CHECK;
@@ -827,8 +827,7 @@ CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_id (const PortableServer::ObjectId &oid,
                                       const char *intf
                                       ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::create_reference_with_id (oid,

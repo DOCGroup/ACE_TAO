@@ -217,8 +217,7 @@ public:
   CORBA::Object_ptr create_reference_with_id (const PortableServer::ObjectId &oid,
                                               const char *intf
                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant
                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
