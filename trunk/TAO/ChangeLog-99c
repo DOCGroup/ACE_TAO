@@ -1,4 +1,6 @@
-Sat May 08 03:16:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sat May 08 03:45:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO/TAO_Static.dsp: Added missing source files.
 
 	* TAO_IDL/tao_idl_static.dsp:
 	* examples/Simple/time/client_static.dsp:
