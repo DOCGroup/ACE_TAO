@@ -636,8 +636,6 @@ CORBA_ORB::multicast_query (char *buf,
   ACE_SOCK_Acceptor acceptor;
   ACE_SOCK_Stream stream;
   
-  int result = 0;
-  
   // Bind listener to any port and then find out what the port was.
   if (acceptor.open (ACE_Addr::sap_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)

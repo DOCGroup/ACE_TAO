@@ -1,5 +1,8 @@
 Mon Mar 22 17:32:19 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
+	* tao/orbconf.h: Removed the #defs for IIOPNAME_PREFIX and 
+	  IIOPLOC_PREFIX. I am not using these anywhere.
+
 	* tao/ORB.cpp (multicast_query): Removed an unnecessary ACE_DEBUG. 
 	  Moved the dgram.close () up. 
 

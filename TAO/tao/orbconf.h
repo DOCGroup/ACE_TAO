@@ -252,11 +252,6 @@
 #define TAO_OBJID_POACURRENT       "POACurrent"
 #define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
 
-// The URL based IOR protocol prefixes accepted by the ORB.
-// ftp, http and other formats can be added later.
-#define TAO_IIOPNAME_PREFIX        "iiopname://"
-#define TAO_IIOPLOC_PREFIX         "iioploc://"
-
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
 
