@@ -114,10 +114,6 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connect.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Connector_Registry.cpp
 # End Source File
 # Begin Source File
@@ -227,6 +223,10 @@ SOURCE=.\GIOP_Server_Request.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Acceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Connect.cpp
 # End Source File
 # Begin Source File
 
@@ -486,10 +486,6 @@ SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\connect.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
@@ -571,6 +567,10 @@ SOURCE=.\GIOP_Server_Request.h
 # Begin Source File
 
 SOURCE=.\IIOP_Acceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Connect.h
 # End Source File
 # Begin Source File
 
@@ -818,10 +818,6 @@ SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\connect.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\corbafwd.i
 # End Source File
 # Begin Source File
@@ -867,6 +863,10 @@ SOURCE=.\giop.i
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Connect.i
 # End Source File
 # Begin Source File
 
