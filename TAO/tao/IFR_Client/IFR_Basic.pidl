@@ -18,7 +18,7 @@
 //
 //   The command used to generate code from this IDL file is:
 //
-//     tao_idl -Ge 1 -I.. \
+//     tao_idl -Ge 1 -Sc -GT -GA -I../.. \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
@@ -37,7 +37,7 @@
 //          -Wb,post_include="ace/post.h" \
 //          IFR_Basic.pidl
 //
-//   The only modification necessary to the skelton files is to 
+//   The only modification necessary to the skelton files is to
 //   change
 //
 //   #include "IFR_BasicC.h"
@@ -56,7 +56,7 @@
 
 #include "IFR_Base.pidl"
 
-module CORBA 
+module CORBA
 {
   typeprefix CORBA "omg.org";
 
@@ -67,33 +67,33 @@ module CORBA
   interface WstringDef;
   interface FixedDef;
 
-  enum PrimitiveKind 
+  enum PrimitiveKind
   {
-    pk_null, 
-    pk_void, 
-    pk_short, 
-    pk_long, 
-    pk_ushort, 
+    pk_null,
+    pk_void,
+    pk_short,
+    pk_long,
+    pk_ushort,
     pk_ulong,
-    pk_float, 
-    pk_double, 
-    pk_boolean, 
-    pk_char, 
+    pk_float,
+    pk_double,
+    pk_boolean,
+    pk_char,
     pk_octet,
-    pk_any, 
-    pk_TypeCode, 
-    pk_Principal, 
-    pk_string, 
+    pk_any,
+    pk_TypeCode,
+    pk_Principal,
+    pk_string,
     pk_objref,
-    pk_longlong, 
-    pk_ulonglong, 
+    pk_longlong,
+    pk_ulonglong,
     pk_longdouble,
-    pk_wchar, 
-    pk_wstring, 
+    pk_wchar,
+    pk_wstring,
     pk_value_base
   };
 
-  interface Repository : Container 
+  interface Repository : Container
   {
     // read interface
     Contained lookup_id (
@@ -126,11 +126,11 @@ module CORBA
       );
   };
 
-  interface ModuleDef : Container, Contained 
+  interface ModuleDef : Container, Contained
   {
   };
 
-  struct ModuleDescription 
+  struct ModuleDescription
   {
     Identifier name;
     RepositoryId id;
@@ -138,14 +138,14 @@ module CORBA
     VersionSpec version;
   };
 
-  interface ConstantDef : Contained 
+  interface ConstantDef : Contained
   {
     readonly attribute TypeCode type;
     attribute IDLType type_def;
     attribute any value;
   };
 
-  struct ConstantDescription 
+  struct ConstantDescription
   {
     Identifier name;
     RepositoryId id;
@@ -155,48 +155,48 @@ module CORBA
     any value;
   };
 
-  interface StructDef : TypedefDef, Container 
+  interface StructDef : TypedefDef, Container
   {
     attribute StructMemberSeq members;
   };
 
-  interface UnionDef : TypedefDef, Container 
+  interface UnionDef : TypedefDef, Container
   {
     readonly attribute TypeCode discriminator_type;
     attribute IDLType discriminator_type_def;
     attribute UnionMemberSeq members;
   };
 
-  interface EnumDef : TypedefDef 
+  interface EnumDef : TypedefDef
   {
     attribute EnumMemberSeq members;
   };
 
-  interface AliasDef : TypedefDef 
+  interface AliasDef : TypedefDef
   {
     attribute IDLType original_type_def;
   };
 
-  interface NativeDef : TypedefDef 
+  interface NativeDef : TypedefDef
   {
   };
 
-  interface PrimitiveDef: IDLType 
+  interface PrimitiveDef: IDLType
   {
     readonly attribute PrimitiveKind kind;
   };
 
-  interface StringDef : IDLType 
+  interface StringDef : IDLType
   {
     attribute unsigned long bound;
   };
 
-  interface WstringDef : IDLType 
+  interface WstringDef : IDLType
   {
     attribute unsigned long bound;
   };
 
-  interface SequenceDef : IDLType 
+  interface SequenceDef : IDLType
   {
     attribute unsigned long bound;
     readonly attribute TypeCode element_type;

@@ -18,7 +18,7 @@
 //
 //   The command used to generate code from this IDL file is:
 //
-//     tao_idl -Ge 1 -I.. \
+//     tao_idl -Ge 1 -Sc -GA -GT -I../.. \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
@@ -37,7 +37,7 @@
 //          -Wb,post_include="ace/post.h" \
 //          IFR_Components.pidl
 //
-//   The only modification necessary to the skelton files is to 
+//   The only modification necessary to the skelton files is to
 //   change
 //
 //   #include "IFR_ComponentsC.h"
@@ -65,7 +65,7 @@ module CORBA
     interface ComponentDef;
     interface HomeDef;
 
-    interface EventDef : ExtValueDef 
+    interface EventDef : ExtValueDef
     {
     };
 
@@ -103,22 +103,22 @@ module CORBA
 	);
     };
 
-    interface ModuleDef : CORBA::ModuleDef, 
+    interface ModuleDef : CORBA::ModuleDef,
 			  Container
     {
     };
 
-    interface Repository : CORBA::Repository, 
+    interface Repository : CORBA::Repository,
 			   Container
     {
     };
 
-    interface ProvidesDef : Contained 
+    interface ProvidesDef : Contained
     {
       attribute InterfaceDef interface_type;
     };
 
-    struct ProvidesDescription 
+    struct ProvidesDescription
     {
       Identifier name;
       RepositoryId id;
@@ -127,13 +127,13 @@ module CORBA
       RepositoryId interface_type;
     };
 
-    interface UsesDef : Contained 
+    interface UsesDef : Contained
     {
       attribute InterfaceDef interface_type;
       attribute boolean is_multiple;
     };
 
-    struct UsesDescription 
+    struct UsesDescription
     {
       Identifier name;
       RepositoryId id;
@@ -143,7 +143,7 @@ module CORBA
       boolean is_multiple;
     };
 
-    interface EventPortDef : Contained 
+    interface EventPortDef : Contained
     {
       // read/write interface
       attribute EventDef event;
@@ -151,7 +151,7 @@ module CORBA
       boolean is_a (in RepositoryId event_id);
     };
 
-    struct EventPortDescription 
+    struct EventPortDescription
     {
       Identifier name;
       RepositoryId id;
@@ -160,19 +160,19 @@ module CORBA
       RepositoryId event;
     };
 
-    interface EmitsDef : EventPortDef 
+    interface EmitsDef : EventPortDef
     {
     };
 
-    interface PublishesDef : EventPortDef 
+    interface PublishesDef : EventPortDef
     {
     };
 
-    interface ConsumesDef : EventPortDef 
+    interface ConsumesDef : EventPortDef
     {
     };
 
-    interface ComponentDef : ExtInterfaceDef 
+    interface ComponentDef : ExtInterfaceDef
     {
       // read/write interface
       attribute ComponentDef base_component;

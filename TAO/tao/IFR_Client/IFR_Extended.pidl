@@ -18,12 +18,12 @@
 //
 //   The command used to generate code from this IDL file is:
 //
-//     tao_idl -Ge 1 -I.. \
+//     tao_idl -Ge 1 -Sc -I../.. -GA -GT \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
-//          IFR_ExtendedC.pidl
+//          IFR_Extended.pidl
 //
 //   Only the stub files are used in the TAO_IFR_Client library. The
 //   skeleton files can be deleted from this directory.
@@ -37,7 +37,7 @@
 //          -Wb,post_include="ace/post.h" \
 //          IFR_ExtendedC.pidl
 //
-//   The only modification necessary to the skelton files is to 
+//   The only modification necessary to the skelton files is to
 //   change
 //
 //   #include "IFR_ExtendedC.h"
@@ -72,13 +72,13 @@ module CORBA
   const Visibility PRIVATE_MEMBER = 0;
   const Visibility PUBLIC_MEMBER = 1;
 */
-  interface FixedDef : IDLType 
+  interface FixedDef : IDLType
   {
     attribute unsigned short digits;
     attribute short scale;
   };
 
-  struct ValueMember 
+  struct ValueMember
   {
     Identifier name;
     RepositoryId id;
@@ -91,16 +91,16 @@ module CORBA
 
   typedef sequence <ValueMember> ValueMemberSeq;
 
-  interface ValueMemberDef : Contained 
+  interface ValueMemberDef : Contained
   {
     readonly attribute TypeCode type;
     attribute IDLType type_def;
     attribute Visibility access;
   };
 
-  interface ValueDef : Container, 
-		       Contained, 
-		       IDLType 
+  interface ValueDef : Container,
+		       Contained,
+		       IDLType
   {
     // read/write interface
     attribute InterfaceDefSeq supported_interfaces;
@@ -115,7 +115,7 @@ module CORBA
         in RepositoryId id
       );
 
-    struct FullValueDescription 
+    struct FullValueDescription
     {
       Identifier name;
       RepositoryId id;
@@ -135,7 +135,7 @@ module CORBA
     };
 
     FullValueDescription describe_value ();
-      
+
     ValueMemberDef create_value_member  (
         in RepositoryId id,
         in Identifier name,
@@ -162,7 +162,7 @@ module CORBA
       );
   };
 
-  struct ValueDescription 
+  struct ValueDescription
   {
     Identifier name;
     RepositoryId id;
@@ -176,13 +176,13 @@ module CORBA
     RepositoryId base_value;
   };
 
-  interface ExtValueDef : ValueDef 
+  interface ExtValueDef : ValueDef
   {
     // read/write interface
     attribute ExtInitializerSeq ext_initializers;
 
     // read interface
-    struct ExtFullValueDescription 
+    struct ExtFullValueDescription
     {
       Identifier name;
       RepositoryId id;
