@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+$SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:12345 -o $iorfile");
 $CL = new PerlACE::Process ("client", "-k file://$iorfile");
 
 $SV->Spawn ();
