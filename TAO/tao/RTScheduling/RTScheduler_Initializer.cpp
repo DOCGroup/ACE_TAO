@@ -7,11 +7,9 @@
 
 ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
-//#define TAO_RTSCHEDULER_SAFE_INCLUDE
-#include "tao/RTScheduling/RTSchedulerC.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "tao/RTScheduling/Current.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
-//#undef TAO_RTSCHEDULER_SAFE_INCLUDE
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
@@ -19,9 +17,6 @@ ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
-
-
-
 
 void
  TAO_RTScheduler_ORB_Initializer::pre_init (
