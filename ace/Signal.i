@@ -179,22 +179,22 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
     {
       ACE_Sig_Set smask (1);
 
-#if 0 /* defined (ACE_MT_SAFE) */
-      ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) smask, (sigset_t *)
-			      this->omask_);
-#else
+#if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
       ACE_OS::sigprocmask (SIG_BLOCK, (sigset_t *) smask, (sigset_t *)
 			   this->omask_); 
-#endif /* ACE_MT_SAFE */
+#else
+      ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) smask, (sigset_t *)
+			      this->omask_);
+#endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     }
   else
-#if 0 /* defined (ACE_MT_SAFE) */
-  ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
-			  this->omask_);
-#else
+#if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
     ACE_OS::sigprocmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
 			 this->omask_); 
-#endif /* ACE_MT_SAFE */
+#else
+  ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
+			  this->omask_);
+#endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
 }
 
 // Restore the signal mask.
@@ -203,11 +203,11 @@ ACE_INLINE
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
   //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
-#if 0 /* defined (ACE_MT_SAFE) */
-  ACE_OS::thr_sigsetmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
-#else
+#if (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
   ACE_OS::sigprocmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
-#endif /* ACE_MT_SAFE */
+#else
+  ACE_OS::thr_sigsetmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
+#endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
 }
 
 ACE_INLINE int
