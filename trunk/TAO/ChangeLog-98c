@@ -7,7 +7,7 @@ Sun Oct 25 15:24:14 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/tests/DynAny_Test/run_test.pl
           Perl script to run one or all of the tests. Thanks to
-          Darrell for example file to cut and paste from, as 
+          Darrell for example file to cut and paste from, as
           well as help getting Corrido set up correctly.
 
 Sun Oct 25 13:30:49 1998  Jeff Parsons <jp4@cs.wustl.edu>
@@ -24,16 +24,16 @@ Sun Oct 25 12:45:17 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Sat Oct 24 23:56:45 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/
-	  added files:
-	  Consumer_Handler.h
-	  Consumer_Handler.cpp
-	  Consumer_Signal_Handler.h
-	  Consumer_Signal_Handler.cpp
+        * examples/Callback_Quoter/
+          added files:
+          Consumer_Handler.h
+          Consumer_Handler.cpp
+          Consumer_Signal_Handler.h
+          Consumer_Signal_Handler.cpp
 
-	  Consumer_Handler creates the Consumer_Input_Handler and the
-	  Consumer_Signal_Handler objects which are derived from
-	  ACE_Event_Handler for managing events of input and signal type.
+          Consumer_Handler creates the Consumer_Input_Handler and the
+          Consumer_Signal_Handler objects which are derived from
+          ACE_Event_Handler for managing events of input and signal type.
 
 
 Sat Oct 24 14:51:29 1998  David L. Levine  <levine@cs.wustl.edu>
