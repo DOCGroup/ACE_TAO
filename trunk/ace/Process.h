@@ -36,6 +36,13 @@ class ACE_Export ACE_Process_Options
   //    there's no stdin, stdout and stderr,) specify process/thread
   //    options, set environment,...  So, basically, this class only
   //    set the command line and nothing else.
+  //
+  //    Notice that on UNIX platforms, if the <setenv> is used, the
+  //    <spawn> is using the <execve> system call. It means that the
+  //    <command_line> should include a full path to the program file
+  //    (<execve> does not search the PATH).  If <setenv> is not used
+  //    then, the <spawn> is using the <execvp> which searches for the
+  //    program file in the PATH variable.
 public:
   enum
   {
@@ -271,6 +278,13 @@ class ACE_Export ACE_Process
   //
   // = DESCRIPTION
   //     A Portable encapsulation for creating new processes.
+  //
+  //    Notice that on UNIX platforms, if the <setenv> is used, the
+  //    <spawn> is using the <execve> system call. It means that the
+  //    <command_line> should include a full path to the program file
+  //    (<execve> does not search the PATH).  If <setenv> is not used
+  //    then, the <spawn> is using the <execvp> which searches for the
+  //    program file in the PATH variable.
 public:
   ACE_Process (void);
   // Default construction.  Must use ACE_Process::start.
