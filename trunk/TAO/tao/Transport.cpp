@@ -552,7 +552,9 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
               TAO_Queued_Message *queued_message = 0;
               ACE_NEW_RETURN (queued_message,
                               TAO_Asynch_Queued_Message (
-                                  synch_message.current_block ()),
+                                  synch_message.current_block (),
+                                  0,
+                                  1),
                               -1);
               queued_message->push_front (this->head_, this->tail_);
             }
@@ -1225,7 +1227,9 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 
   TAO_Queued_Message *queued_message = 0;
   ACE_NEW_RETURN (queued_message,
-                  TAO_Asynch_Queued_Message (message_block),
+                  TAO_Asynch_Queued_Message (message_block,
+                                             0,
+                                             1),
                   -1);
   queued_message->push_back (this->head_, this->tail_);
 

@@ -13,7 +13,7 @@ TAO_Asynch_Queued_Message::
     TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
                                ACE_Allocator *alloc,
                                int is_heap_allocated)
-  : TAO_Queued_Message (alloc)
+  : TAO_Queued_Message (alloc, is_heap_allocated)
   , offset_ (0)
 {
   this->size_ = contents->total_length ();
