@@ -1,3 +1,9 @@
+Tue Nov 11 04:50:06 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* examples/Reactor/Multicast/server.cpp (handle_timeout): Fixed a
+	  typo.  Thanks to Sandro Doro <doros@aureus.sublink.org> for
+	  reporting this.
+
 Tue Nov 11 04:20:09 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.44, released Tue Nov 11 04:20:09 1997.
@@ -18,7 +24,7 @@ Tue Nov 11 01:44:39 1997    <irfan@TWOSTEP>
  	  address in already occupied by the first Name_Handler.
   	  Therefore, the Naming_Context was changed into a Singleton
  	  accessable by all Name_Handlers.
- 
+
 	* ace/WFMO_Reactor.cpp (handle_additions && handle_deletions):
  	  Changed code to make sure that we should not make the upcall
  	  until all the internal data structures have been updated.  This

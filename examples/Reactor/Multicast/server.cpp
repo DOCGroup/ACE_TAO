@@ -16,7 +16,7 @@ class Server_Events : public ACE_Event_Handler
 {
 public:
   Server_Events (u_short port,
-		 const char *mcast_addr, 
+		 const char *mcast_addr,
 		 long time_interval = 0);
   ~Server_Events (void);
 
@@ -38,13 +38,13 @@ private:
   int count_;
   int interval_;
   // time interval to log messages
-    
+
   ACE_Time_Value *how_long_;
   ACE_Reactor *reactor_;
   ACE_SOCK_Dgram_Mcast mcast_dgram_;
   ACE_INET_Addr remote_addr_;
   ACE_INET_Addr mcast_addr_;
-    
+
   // = statistics on messages received
   double total_bytes_received_;
   int total_messages_received_;
@@ -67,17 +67,17 @@ Server_Events::wait_time (void)
   return this->how_long_;
 }
 
-Server_Events::Server_Events (u_short port, 
+Server_Events::Server_Events (u_short port,
                               const char *mcast_addr,
                               long time_interval)
   : initialized_ (0),
-    count_ (1), 
+    count_ (1),
     interval_ (time_interval),
     mcast_addr_ (port, mcast_addr),
     total_bytes_received_ (0)
 {
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
-    
+
   if (ACE_OS::hostname (this->hostname_, MAXHOSTNAMELEN) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "hostname"));
 
@@ -88,7 +88,7 @@ Server_Events::Server_Events (u_short port,
     {
       // Point to NULL so that we block in the beginning.
       this->how_long_ = 0;
-    
+
       this->log_record_ = (Log_Wrapper::ACE_Log_Record *) &buf_;
       this->message_ = &buf_[sizeof (Log_Wrapper::ACE_Log_Record)];
     }
@@ -99,14 +99,14 @@ Server_Events::Server_Events (u_short port,
 Server_Events::~Server_Events (void)
 {
   this->mcast_dgram_.unsubscribe ();
-    
+
   ACE_DEBUG ((LM_DEBUG, "total bytes received = %d after %d second\n",
 	      this->total_bytes_received_, this->interval_));
-    
+
   ACE_DEBUG ((LM_DEBUG, "Mbits/sec = %.2f\n",
 	      (float) (total_bytes_received_ * 8 / (float) (1024*1024*interval_))));
-    
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
 	      "last sequence number = %d\ntotal messages received = %d\ndiff = %d\n",
 	      this->last_sequence_number_,
 	      this->total_messages_received_,
@@ -129,8 +129,8 @@ Server_Events::handle_timeout (const ACE_Time_Value &,
       reactor ()->cancel_timer (this);
       this->initialized_ = 0;
 
-      ACE_DEBUG ((LM_DEBUG, 
-		  "\t%cancelled timeout for %s to avoid busy waiting.\n",
+      ACE_DEBUG ((LM_DEBUG,
+		  "\tcancelled timeout for %s to avoid busy waiting.\n",
 		  (char *) arg));
     }
 
@@ -148,7 +148,7 @@ Server_Events::handle_input (ACE_HANDLE)
   iovp[1].iov_base = &buf_[sizeof (log_record_)];
   iovp[1].iov_len  = 4 * BUFSIZ - sizeof log_record_;
 
-  ssize_t retcode = 
+  ssize_t retcode =
     this->mcast_dgram_.recv (iovp, 2, this->remote_addr_);
 
   if (retcode != -1)
@@ -157,9 +157,9 @@ Server_Events::handle_input (ACE_HANDLE)
       total_bytes_received_ += retcode;
       last_sequence_number_ = ntohl (log_record_->sequence_number);
 
-      ACE_DEBUG ((LM_DEBUG, "sequence number = %d\n", 
+      ACE_DEBUG ((LM_DEBUG, "sequence number = %d\n",
 		  last_sequence_number_));
-      ACE_DEBUG ((LM_DEBUG, "message = '%s'\n", 
+      ACE_DEBUG ((LM_DEBUG, "message = '%s'\n",
 		  this->message_));
 
       if (this->initialized_ == 0)
@@ -180,7 +180,7 @@ Server_Events::handle_input (ACE_HANDLE)
     return -1;
 }
 
-int 
+int
 main (int, char *[])
 {
   // Instantiate a server which will receive messages for DURATION
@@ -189,24 +189,24 @@ main (int, char *[])
 
   // Instance of the ACE_Reactor.
   ACE_Reactor reactor;
-    
+
   if (reactor.register_handler (&server_events,
 				ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
-    
+
   ACE_DEBUG ((LM_DEBUG, "starting up server\n"));
 
   for (;;)
     reactor.handle_events (server_events.wait_time ());
-    
+
   /* NOTREACHED */
   return 0;
 }
 #else
-int 
+int
 main (int, char *argv[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
                      "error: %s must be run on a platform that support IP multicast\n",
                      argv[0]), -1);
 }
