@@ -210,7 +210,6 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
 
 void
 TAO_CORBALOC_Parser::parse_string_assign_helper (
-    CORBA::ULong &addr_list_length,
     ACE_CString &key_string,
     ACE_CString &cloc_name,
     CORBA::ORB_ptr orb,
@@ -228,12 +227,14 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (
                       ",",
                       &last_addr);
 
+  CORBA::ULong length;
   while (cloc_name_ptr != 0)
     {
+      length = ACE_OS::strlen (cloc_name_ptr);
       // Forms the endpoint and calls the mprofile_helper.
       this->assign_key_string (cloc_name_ptr,
                                key_string,
-                               addr_list_length,
+                               length,
                                orb,
                                mprofile
                                ACE_ENV_ARG_PARAMETER);
@@ -457,8 +458,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
       // Get each endpoint: For each endpoint, make a MProfile and add
       // it to the main MProfile whose reference is passed to the
       // application
-      this->parse_string_assign_helper (addr_list_length,
-                                        key_string,
+      this->parse_string_assign_helper (key_string,
                                         cloc_name,
                                         orb,
                                         mprofile
