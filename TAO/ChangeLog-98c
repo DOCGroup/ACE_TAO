@@ -1,8 +1,8 @@
 Wed Aug 19 21:03:38 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : 
-		Fixed memory leaks. Added a destructor to
-	Task_State.
+	  Fixed memory leaks. Added a destructor to
+	  Task_State.
 	* tests/Cubit/TAO/MT_Cubit/client.cpp:
 	  Added code to delete dynamically allocated 
 	  memory.
