@@ -1,0 +1,43 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI
+//
+// = FILENAME
+//    ami_test.idl
+//
+// = DESCRIPTION
+//    IDL description of the AMI Test interface
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
+
+
+module A 
+  {
+
+    struct X 
+      {
+
+        long a;
+
+      };
+
+    interface AMI_Test
+      {
+        long foo (out long out_l, 
+                  in long in_l,
+                  in string in_str);
+        // Get the number as the return value as well as the out value and
+        // also puts the value.  
+  
+         attribute long yadda;
+        //  oneway void shutdown ();
+      };
+
+  };

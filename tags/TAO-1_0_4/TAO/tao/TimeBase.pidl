@@ -1,0 +1,67 @@
+// $Id$
+
+#ifndef TIME_BASE_PIDL
+#define TIME_BASE_PIDL
+
+#pragma prefix "omg.org"
+
+module TimeBase
+{
+  // = TITLE
+  //   COS Time Service basic types.
+  //
+  // = DESCRIPTION
+  //   The standard CORBA Time Service defines a number of data
+  //   structures to manipulate and express time.
+
+  typedef unsigned long long TimeT;
+  // Time in TimeT is expressed in units of 100 nano seconds (in
+  // other words 10^-7 seconds), and are relative to October 15, 1582;
+  // please read the spec for further details.
+
+  typedef TimeT InaccuracyT;
+  // To express an error estimate for time.
+
+  typedef short TdfT;
+  // Minutes of displacement from the Greenwich time.
+
+  struct UtcT
+  {
+    // = TITLE
+    //   Structure of the time value.  The inaccuracy is packed into
+    //   inacclo & inacchi.  The tdf holds the time displacement
+    //   factor.
+    //
+    // = DESCRIPTION
+    //   There is a total of 16 octets in this struct.
+
+    TimeT time;
+    // 8 octets
+
+    unsigned long inacclo;
+    // 4 octets
+
+    unsigned short inacchi;
+    // 2 octets
+
+    TdfT tdf;
+    // 2 octets
+
+  };
+
+  struct IntervalT
+  {
+    // = TITLE
+    // This type holds a time interval represented as two TimeT values
+    // corresponding to the lower and upper bound of the interval.
+
+    TimeT lower_bound;
+    // Lower bound of the interval.
+
+    TimeT upper_bound;
+    // Upper bound of the interval.
+  };
+
+};
+
+#endif /* TIME_BASE_PIDL */
