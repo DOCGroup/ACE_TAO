@@ -15,6 +15,42 @@
 // ============================================================================
 
 ACE_INLINE int
+TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
+{
+  return this->parse_endpoints (preconnects, this->preconnects_list_);
+}
+
+ACE_INLINE const endpoint_set &
+TAO_ORB_Parameters::preconnects (void)
+{
+  return this->preconnects_list_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::add_preconnect (ACE_CString &preconnect)
+{
+  this->preconnects_list_.insert (preconnect);
+}
+
+ACE_INLINE int
+TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
+{
+  return this->parse_endpoints (endpoints, this->endpoints_list_);
+}
+
+ACE_INLINE const endpoint_set &
+TAO_ORB_Parameters::endpoints (void)
+{
+  return this->endpoints_list_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::add_endpoint (ACE_CString &endpoint)
+{
+  this->endpoints_list_.insert (endpoint);
+}
+
+ACE_INLINE int
 TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 {
   return sock_rcvbuf_size_;
@@ -74,37 +110,6 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
   this->use_dotted_decimal_addresses_ = x;
 }
 
-ACE_INLINE const ACE_CString &
-TAO_ORB_Parameters::endpoints (void)
-{
-  return this->endpoints_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
-{
-  this->endpoints_ = endpoints;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::add_endpoint (ACE_CString &endpoint)
-{
-  this->endpoints_ += ";";
-  this->endpoints_ += endpoint;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::addr (const ACE_INET_Addr &addr)
-{
-  this->addr_ = addr;
-}
-
-ACE_INLINE const ACE_INET_Addr &
-TAO_ORB_Parameters::addr (void) const
-{
-  return this->addr_;
-}
-
 ACE_INLINE void
 TAO_ORB_Parameters::init_ref (const ACE_CString &init_ref)
 {
@@ -127,18 +132,6 @@ ACE_INLINE const char *
 TAO_ORB_Parameters::name_service_ior (void) const
 {
   return this->name_service_ior_.c_str ();
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::host (const ACE_CString &h)
-{
-  this->host_ = h;
-}
-
-ACE_INLINE const char *
-TAO_ORB_Parameters::host (void) const
-{
-  return this->host_.c_str ();
 }
 
 ACE_INLINE void

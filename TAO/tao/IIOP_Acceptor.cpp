@@ -78,40 +78,14 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   ACE_INET_Addr addr (address.c_str ());
 
   if (this->base_acceptor_.open (
-                  // orb_core->orb_params ()->addr (),
-                  addr,
-                  orb_core->reactor(),
-                  orb_core->server_factory ()->creation_strategy (),
-                  orb_core->server_factory ()->accept_strategy (),
-                  orb_core->server_factory ()->concurrency_strategy (),
-                  orb_core->server_factory ()->scheduling_strategy ()) == -1)
-      return -1;
-    else {
-      // The following step is necessary since the user may have specified
-      // a 0 for a port number.  Once we open the acceptor, we can recheck
-      // the address and get the accurate port number.
-      ACE_INET_Addr new_address;
+       // orb_core->orb_params ()->addr (),
+       addr,
+       orb_core->reactor(),
+       orb_core->server_factory ()->creation_strategy (),
+       orb_core->server_factory ()->accept_strategy (),
+       orb_core->server_factory ()->concurrency_strategy (),
+       orb_core->server_factory ()->scheduling_strategy ()) == -1)
+    return -1; // Failure
 
-      if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
-        return -1;
-
-      // @@ Fred&Ossama: Does this call make any sense now? There is
-      //    no such thing as the ORB address anymore, right? And if
-      //    this is removed then this whole branch of the if()
-      //    statement is a noop.
-
-      // Reset the address
-      orb_core->orb_params ()->addr (new_address);
-
-      // iiop_acceptor->acceptor ().enable (ACE_CLOEXEC);
-      // this is done in the connection handlers open method.
-
-      // @@  This is broken.  The acceptor registry must be able to
-      // determine if a given profile refers to a collocated object.
-      // for now, this is done using a hash table and the INET_Addr
-      // as the key.  This poa is the value I believe fredk.
-      // this->orb_core->add_to_collocation_table ();
-
-      }
-  return 0;
+  return 0;  // Success
 }

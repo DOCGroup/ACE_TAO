@@ -224,6 +224,7 @@ TAO_Connector::make_mprofile (const char *string,
   for (CORBA::ULong i = 0; i < profile_count; ++i)
     {
       begin += end + 1;
+
       if (i < profile_count - 1)
         end = ior.find (endpoint_delimiter, begin);
       else

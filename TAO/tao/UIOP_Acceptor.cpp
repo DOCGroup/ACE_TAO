@@ -80,33 +80,10 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                   &UIOP_Creation_Strategy_,
                   &UIOP_Accept_Strategy_,
                   &UIOP_Concurrency_Strategy_,
-                  &UIOP_Scheduling_Strategy_) == -1)
-      return -1;
-    else
-      {
-        // The following step is necessary since the user may have specified
-        // a 0 for a port number.  Once we open the acceptor, we can recheck
-        // the address and get the accurate port number.
-        ACE_UNIX_Addr new_address;
+                  &UIOP_Scheduling_Strategy_) != 0)
+    return -1;  // Failure
 
-        if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
-          return -1;
-
-        // Reset the address
-        // orb_core->orb_params ()->addr (new_address);
-        // The above call is broken since orb_params still wants a
-        // an ACE_INET_Addr.  We need to give it an ACE_UNIX_Addr.
-
-        // uiop_acceptor->acceptor ().enable (ACE_CLOEXEC);
-        // this is done in the connection handlers open method.
-
-        // @@  This is broken.  The acceptor registry must be able to
-        // determine if a given profile refers to a collocated object.
-        // for now, this is done using a hash table and the UNIX_Addr
-        // as the key.  This poa is the value I believe fredk.
-        // this->orb_core->add_to_collocation_table ();
-      }
-  return 0;
+  return 0;  // Success
 }
 
 

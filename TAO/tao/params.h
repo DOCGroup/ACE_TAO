@@ -17,7 +17,6 @@
 #ifndef TAO_PARAMS_H
 #define TAO_PARAMS_H
 
-#include "ace/INET_Addr.h"
 #include "tao/corbafwd.h"
 
 // Forward decls.
@@ -34,6 +33,10 @@ class TAO_IOR_LookupTable;
 #else
 #define TAO_LOCAL_INLINE ACE_INLINE
 #endif /* ! __ACE_INLINE__ */
+
+typedef ACE_Unbounded_Set<ACE_CString> TAO_EndpointSet;
+
+typedef ACE_Unbounded_Set_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 class TAO_Export TAO_ORB_Parameters
   // = TITLE
@@ -54,20 +57,16 @@ public:
   ~TAO_ORB_Parameters (void);
   // Destructor.
 
-  const ACE_CString &endpoints (void);
-  void endpoints (ACE_CString &endpoints);
+  const endpoint_set &endpoints (void);
+  int preconnects (ACE_CString &preconnects);
+  void add_preconnect (ACE_CString &preconnect);
+  // Specifies the endpoints to pre-establish connections on.
+
+  const endpoint_set &endpoints (void);
+  int endpoints (ACE_CString &endpoints);
   void add_endpoint (ACE_CString &endpoint);
-  // specifies the endpoints on which this server is willing to
+  // Specifies the endpoints on which this server is willing to
   // listen for requests.
-
-  const ACE_INET_Addr &addr (void) const;
-  void addr (const ACE_INET_Addr &addr);
-  // Set/Get the address on which we're listening.
-  // @@ this is depricated!! fredk
-
-  const char *host (void) const;
-  void host (const ACE_CString &host);
-  // Set/Get the hostname.
 
   const char *init_ref (void) const;
   void init_ref (const ACE_CString &init_ref);
@@ -140,17 +139,25 @@ public:
   // Set/Get the Init Reference of an arbitrary ObjectID.
 
 private:
-  ACE_CString endpoints_;
-  // list of endpoints this server is willing to accept requests
+  //  Each "endpoint" is of the form:
+  //
+  //   protocol:V.v//addr1,addr2,...,addrN/
+  //
+  // or:
+  //
+  //   protocol://addr1,addr2,...,addrN/
+  //
+  // where "V.v" is an optional version.  All preconnect or endpoint
+  // strings should be of the above form(s).
+
+  int parse_endpoints (ACE_CString &endpoints, TAO_EndpointSet endpoints_list);
+
+  endpoint_set preconnections_list_;
+  // List of endpoints used to pre-establish connections.
+
+  endpoint_set endpoints_list_;
+  // List of endpoints this server is willing to accept requests
   // on.
-
-  ACE_INET_Addr addr_;
-  // host + port number we are listening on
-  // @@ depricated! fredk
-
-  ACE_CString host_;
-  // host name
-  // @@ depricated! fredk
 
   ACE_CString name_service_ior_;
   // The IOR of our configured Naming Service.

@@ -12,9 +12,8 @@
 #include "tao/debug.h"
 #include "tao/IOR_LookupTable.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
-#endif /* ! __ACE_INLINE__ */
+#include "tao/Connector_Registry.h"
+#include "tao/Acceptor_Registry.h"
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
@@ -54,18 +53,12 @@ TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
     // @@ This is not needed since the default server factory, fredk
     //    is staticaly added to the service configurator.
     opt_for_collocation_ (1),
-    use_global_collocation_ (1),
-    preconnections_ (0)
+    use_global_collocation_ (1)
 {
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
-  // This should probably be changed to use the allocator internal to
-  // here once that chunk is actually implemented.
-  if (preconnections_)
-    ACE_OS::free (preconnections_);
-
   // Allocated in init()
   delete this->orb_params_;
 
@@ -239,6 +232,27 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+      else if (ACE_OS::strcmp (current_arg, "-ORBendpoint") == 0)
+        {
+          //  Each "endpoint" is of the form:
+          //
+          //   protocol:V.v//addr1,addr2,...,addrN/
+          //
+          // or:
+          //
+          //   protocol://addr1,addr2,...,addrN/
+          //
+          // where "V.v" is an optional version.  All preconnect or endpoint
+          // strings should be of the above form(s).
+
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next())
+            {
+              this->orb_params ()->endpoints ((arg_shifter.get_current ()));
+              arg_shifter.consume_arg ();
+            }
+        }
       else if (ACE_OS::strcmp (current_arg, "-ORBhost") == 0)
         {
           // @@ Again, there may be multiple interfaces, multiple protocols
@@ -254,8 +268,14 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           //    fredk.
           // @@ Fred&Ossama: I think the option should just die or
           //    simply have the same effect as an extra -ORBendpoint
-          //    i.e. simply add another endpoin to the list in
+          //    i.e. simply add another endpoint to the list in
           //    orb_params().
+          // @@ Fred&Carlos: This option now has the same effect as specifying
+          //                 an extra -ORBendpoint.  Ideally, this option
+          //                 should be removed so that all INET specific
+          //                 stuff can be removed from the ORB core but I
+          //                 guess we need to leave it here for backward
+          //                 compatibility.  C'est la vie.
 
           // Specify the name of the host (i.e., interface) on which
           // the server should listen.
@@ -448,6 +468,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // connects to tango:10015 twice, and watusi:10016 once:
           //
           //    -ORBpreconnect tango:10015,tango:10015,watusi:10016
+
           if (arg_shifter.is_parameter_next ())
             {
               preconnections = arg_shifter.get_current ();
@@ -691,10 +712,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
 
 int
-TAO_ORB_Core::set_iiop_endpoint ( int dotted_decimal_addresses,
-                                  CORBA::UShort port,
-                                  ACE_CString &host,
-                                  ACE_CString &endpoint)
+TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
+                                 CORBA::UShort port,
+                                 ACE_CString &host,
+                                 ACE_CString &endpoint)
 {
   // No host specified; find it
   if (host.length () == 0)
@@ -731,12 +752,7 @@ TAO_ORB_Core::set_iiop_endpoint ( int dotted_decimal_addresses,
   endpoint += buffer;
   endpoint += ACE_CString("/");
 
-  // @@ more ugliness .... fredk
-  this->orb_params ()->addr (rendezvous);
-  this->orb_params ()->host (host);
-
   return 0;
-
 }
 
 int
@@ -1340,6 +1356,12 @@ TAO_ORB_Core_instance (void)
 {
   return CORBA::instance ()->orb_core_;
 }
+
+
+#if !defined (__ACE_INLINE__)
+# include "tao/ORB_Core.i"
+#endif /* ! __ACE_INLINE__ */
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

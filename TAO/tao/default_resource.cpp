@@ -581,8 +581,6 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
 
 // ****************************************************************
 
-// ****************************************************************
-
 TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (void)
 {
   this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_cached_connector_lock ();
