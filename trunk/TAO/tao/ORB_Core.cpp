@@ -554,7 +554,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (rcv_sock_size != 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size != 0)
-    this->orb_params ()->sock_rcvbuf_size (snd_sock_size);
+    this->orb_params ()->sock_sndbuf_size (snd_sock_size);
   if (cdr_tradeoff >= 0)
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
 
