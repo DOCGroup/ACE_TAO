@@ -452,7 +452,7 @@ Ian Wright <I.Wright@elsevier.co.uk>
 David Janello <David.Janello@abnamro.com>
 Rich Wellner <rw2@wellner.org>
 Fernando D. Mato Mira <matomira@acm.org>
-Jonathan Reis <reis@stentorsoft.com>
+Jonathan Reis <reis@stentor.com>
 Seung-Lee Hoon <tarjan@lgsoft.com>
 Russell L. Carter <rcarter@pinyon.org>
 Bill Hall <hts@gte.net>
@@ -784,7 +784,7 @@ Fabrizio Giannotti <fabrizio.giannotti@alephinfo.it>
 Harald Finster <finster@ave.ac.agit.de>
 Fritz Bosch <FBosch@alcatel.de>
 Charles Frasch <cfrasch@spawar.navy.mil>
-Chris Hafey <chris@stentorsoft.com>
+Chris Hafey <chafey@stentor.com>
 Rick Hess <rick.hess@lmco.com>
 David Dunn <dunn@tripos.com>
 Jaymes Galvin <galvinj@agcs.com>
@@ -1233,7 +1233,11 @@ Norman Wilson <Norman.Wilson@liffe.com>
 Itzhak Briskman <ibriskman@ndsisrael.com>
 James Kanyok <james.kanyok@lmco.com>
 Corey Trager <corey.trager@tradingtechnologies.com>
+Kirat Singh <kirat.singh@gs.com>
+Oleg Pavliv <oleg_pavliv@yahoo.com>
+Frederick Niemi <fniemi@cisco.com>
 Vsevolod Novikov <novikov@ci.nnov.ru> 
+Andrew Munro <Andrew.Munro@Australia.Boeing.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

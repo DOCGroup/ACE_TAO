@@ -1708,4 +1708,594 @@ ACE_WIN32_Asynch_Transmit_File::proactor (void) const
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
+u_long
+ACE_WIN32_Asynch_Read_Dgram_Result::bytes_to_read (void) const
+{
+  return this->bytes_to_read_;
+}
+
+ACE_Message_Block*
+ACE_WIN32_Asynch_Read_Dgram_Result::message_block (void) const
+{
+  return this->message_block_;
+}
+
+
+int
+ACE_WIN32_Asynch_Read_Dgram_Result::remote_address (ACE_Addr& addr) const
+{
+ int retVal = -1;  // failure
+
+  // make sure the addresses are of the same type
+  if (addr.get_type () == this->remote_address_->get_type ())
+  { // copy the remote_address_ into addr
+    addr.set_addr (this->remote_address_->get_addr (),
+                   this->remote_address_->get_size ());
+    retVal = 0; // success
+  }
+
+  return retVal;
+}
+
+sockaddr *
+ACE_WIN32_Asynch_Read_Dgram_Result::saddr () const
+{
+  return (sockaddr *) this->remote_address_->get_addr ();
+}
+
+
+int
+ACE_WIN32_Asynch_Read_Dgram_Result::flags (void) const
+{
+  return this->flags_;
+}
+
+ACE_HANDLE
+ACE_WIN32_Asynch_Read_Dgram_Result::handle (void) const
+{
+  return this->handle_;
+}
+
+u_long
+ACE_WIN32_Asynch_Read_Dgram_Result::bytes_transferred (void) const
+{
+  return ACE_WIN32_Asynch_Result::bytes_transferred ();
+}
+
+const void *
+ACE_WIN32_Asynch_Read_Dgram_Result::act (void) const
+{
+  return ACE_WIN32_Asynch_Result::act ();
+}
+
+int
+ACE_WIN32_Asynch_Read_Dgram_Result::success (void) const
+{
+  return ACE_WIN32_Asynch_Result::success ();
+}
+
+const void *
+ACE_WIN32_Asynch_Read_Dgram_Result::completion_key (void) const
+{
+  return ACE_WIN32_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_WIN32_Asynch_Read_Dgram_Result::error (void) const
+{
+  return ACE_WIN32_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_WIN32_Asynch_Read_Dgram_Result::event (void) const
+{
+  return ACE_WIN32_Asynch_Result::event ();
+}
+
+u_long
+ACE_WIN32_Asynch_Read_Dgram_Result::offset (void) const
+{
+  return ACE_WIN32_Asynch_Result::offset ();
+}
+
+u_long
+ACE_WIN32_Asynch_Read_Dgram_Result::offset_high (void) const
+{
+  return ACE_WIN32_Asynch_Result::offset_high ();
+}
+
+int
+ACE_WIN32_Asynch_Read_Dgram_Result::priority (void) const
+{
+  return ACE_WIN32_Asynch_Result::priority ();
+}
+
+int
+ACE_WIN32_Asynch_Read_Dgram_Result::signal_number (void) const
+{
+  return ACE_WIN32_Asynch_Result::signal_number ();
+}
+
+int
+ACE_WIN32_Asynch_Read_Dgram_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_WIN32_Asynch_Result::post_completion (proactor);
+}
+
+ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler &handler,
+                                                                        ACE_HANDLE handle,
+                                                                        ACE_Message_Block *message_block,
+                                                                        u_long bytes_to_read,
+                                                                        int flags,
+                                                                        int protocol_family,
+                                                                        const void* act,
+                                                                        ACE_HANDLE event,
+                                                                        int priority,
+                                                                        int signal_number)
+  : ACE_Asynch_Result_Impl (),
+    ACE_Asynch_Read_Dgram_Result_Impl(),
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    bytes_to_read_ (bytes_to_read),
+    message_block_ (message_block),
+    remote_address_ (0),
+    addr_len_ (0),
+    flags_ (flags),
+    handle_ (handle)
+{
+  ACE_ASSERT(protocol_family == PF_INET); // only supporting INET addresses
+
+  ACE_NEW(remote_address_, ACE_INET_Addr);
+  addr_len_ = remote_address_->get_size();
+}
+
+void
+ACE_WIN32_Asynch_Read_Dgram_Result::complete (u_long bytes_transferred,
+                                              int success,
+                                              const void *completion_key,
+                                              u_long error)
+{
+  // Copy the data which was returned by GetQueuedCompletionStatus
+  this->bytes_transferred_ = bytes_transferred;
+  this->success_ = success;
+  this->completion_key_ = completion_key;
+  this->error_ = error;
+
+  // Appropriately move the pointers in the message block.
+  for (ACE_Message_Block* mb = this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+  {
+    if (mb->size () >= bytes_transferred)
+    {
+      mb->wr_ptr (bytes_transferred);
+      bytes_transferred = 0;
+    }
+    else
+    {
+      mb->wr_ptr (mb->size ());
+      bytes_transferred -= mb->size ();
+    }
+  }
+
+  // Adjust the address length
+  this->remote_address_->set_size (this->addr_len_);
+
+  // Create the interface result class.
+  ACE_Asynch_Read_Dgram::Result result (this);
+
+  // Call the application handler.
+  this->handler_.handle_read_dgram (result);
+}
+
+ACE_WIN32_Asynch_Read_Dgram_Result::~ACE_WIN32_Asynch_Read_Dgram_Result (void)
+{
+  delete this->remote_address_;
+}
+
+//***************************************************************************
+
+ACE_WIN32_Asynch_Read_Dgram::~ACE_WIN32_Asynch_Read_Dgram (void)
+{
+}
+
+ssize_t
+ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
+                                   size_t &number_of_bytes_recvd,
+                                   int flags,
+                                   int protocol_family,
+                                   const void *act,
+                                   int priority,
+                                   int signal_number)
+{
+  number_of_bytes_recvd = 0;
+
+  // Create the Asynch_Result.
+  ACE_WIN32_Asynch_Read_Dgram_Result *result = 0;
+  ACE_NEW_RETURN (result,
+                  ACE_WIN32_Asynch_Read_Dgram_Result (*this->handler_,
+                                                      this->handle_,
+                                                      message_block,
+                                                      message_block->total_size(),
+                                                      flags,
+                                                      protocol_family,
+                                                      act,
+                                                      this->win32_proactor_->get_handle (),
+                                                      priority,
+                                                      signal_number),
+                  -1);
+
+  // do the scatter/gather recv
+  iovec iov[IOV_MAX];
+  int iovcnt = 0;
+  for (const ACE_Message_Block* msg = message_block; msg != 0; msg = msg->cont ())
+  {
+    iov[iovcnt].iov_base  = msg->wr_ptr ();
+    iov[iovcnt].iov_len   = msg->size ();
+    ++iovcnt;
+    if (iovcnt >= IOV_MAX)
+    {
+      delete result;
+      return -1;
+    }
+  }
+
+  size_t bytes_recvd = 0;
+  int initiate_result = ACE_OS::recvfrom (result->handle (),
+                                          iov,
+                                          iovcnt,
+                                          bytes_recvd,
+                                          result->flags_,
+                                          result->saddr (),
+                                          &(result->addr_len_),
+                                          result,
+                                          0);
+  if (initiate_result == SOCKET_ERROR)
+  {
+    // If initiate failed, check for a bad error.
+    ACE_OS::set_errno_to_last_error ();
+    switch (errno)
+    {
+      case ERROR_IO_PENDING:
+        // The IO will complete proactively: the OVERLAPPED will still
+        // get queued.
+        break;
+
+      default:
+        // Something else went wrong: the OVERLAPPED will not get
+        // queued.
+
+        if (ACE::debug ())
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("ReadFile")));
+        }
+
+        delete result;
+
+        break;
+    }
+
+  }
+  else
+  {
+    // Immediate success: the OVERLAPPED will still get queued.
+    // number_of_bytes_recvd contains the number of bytes recvd
+    // addr contains the peer address
+    // flags was updated
+    number_of_bytes_recvd = bytes_recvd;
+  }
+
+  return initiate_result;
+}
+
+int
+ACE_WIN32_Asynch_Read_Dgram::open (ACE_Handler &handler,
+                                   ACE_HANDLE handle,
+                                   const void *completion_key,
+                                   ACE_Proactor *proactor)
+{
+  return ACE_WIN32_Asynch_Operation::open (handler,
+                                           handle,
+                                           completion_key,
+                                           proactor);
+}
+
+int
+ACE_WIN32_Asynch_Read_Dgram::cancel (void)
+{
+  return ACE_WIN32_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_WIN32_Asynch_Read_Dgram::proactor (void) const
+{
+  return ACE_WIN32_Asynch_Operation::proactor ();
+}
+
+ACE_WIN32_Asynch_Read_Dgram::ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *win32_proactor)
+  : ACE_Asynch_Operation_Impl (),
+    ACE_Asynch_Read_Dgram_Impl (),
+    ACE_WIN32_Asynch_Operation (win32_proactor)
+{
+}
+
+//***********************************************
+
+u_long
+ACE_WIN32_Asynch_Write_Dgram_Result::bytes_to_write (void) const
+{
+  return this->bytes_to_write_;
+}
+
+ACE_Message_Block*
+ACE_WIN32_Asynch_Write_Dgram_Result::message_block () const
+{
+  return this->message_block_;
+}
+
+int
+ACE_WIN32_Asynch_Write_Dgram_Result::flags (void) const
+{
+  return this->flags_;
+}
+
+ACE_HANDLE
+ACE_WIN32_Asynch_Write_Dgram_Result::handle (void) const
+{
+  return this->handle_;
+}
+
+u_long
+ACE_WIN32_Asynch_Write_Dgram_Result::bytes_transferred (void) const
+{
+  return ACE_WIN32_Asynch_Result::bytes_transferred ();
+}
+
+const void *
+ACE_WIN32_Asynch_Write_Dgram_Result::act (void) const
+{
+  return ACE_WIN32_Asynch_Result::act ();
+}
+
+int
+ACE_WIN32_Asynch_Write_Dgram_Result::success (void) const
+{
+  return ACE_WIN32_Asynch_Result::success ();
+}
+
+const void *
+ACE_WIN32_Asynch_Write_Dgram_Result::completion_key (void) const
+{
+  return ACE_WIN32_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_WIN32_Asynch_Write_Dgram_Result::error (void) const
+{
+  return ACE_WIN32_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_WIN32_Asynch_Write_Dgram_Result::event (void) const
+{
+  return ACE_WIN32_Asynch_Result::event ();
+}
+
+u_long
+ACE_WIN32_Asynch_Write_Dgram_Result::offset (void) const
+{
+  return ACE_WIN32_Asynch_Result::offset ();
+}
+
+u_long
+ACE_WIN32_Asynch_Write_Dgram_Result::offset_high (void) const
+{
+  return ACE_WIN32_Asynch_Result::offset_high ();
+}
+
+int
+ACE_WIN32_Asynch_Write_Dgram_Result::priority (void) const
+{
+  return ACE_WIN32_Asynch_Result::priority ();
+}
+
+int
+ACE_WIN32_Asynch_Write_Dgram_Result::signal_number (void) const
+{
+  return ACE_WIN32_Asynch_Result::signal_number ();
+}
+
+int
+ACE_WIN32_Asynch_Write_Dgram_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_WIN32_Asynch_Result::post_completion (proactor);
+}
+
+ACE_WIN32_Asynch_Write_Dgram_Result::ACE_WIN32_Asynch_Write_Dgram_Result (ACE_Handler &handler,
+                                                                          ACE_HANDLE handle,
+                                                                          ACE_Message_Block *message_block,
+                                                                          size_t bytes_to_write,
+                                                                          int flags,
+                                                                          const void* act,
+                                                                          ACE_HANDLE event,
+                                                                          int priority,
+                                                                          int signal_number)
+  : ACE_Asynch_Result_Impl (),
+    ACE_Asynch_Write_Dgram_Result_Impl(),
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    bytes_to_write_ (bytes_to_write),
+    message_block_ (message_block),
+    flags_ (flags),
+    handle_ (handle)
+{
+}
+
+void
+ACE_WIN32_Asynch_Write_Dgram_Result::complete (u_long bytes_transferred,
+                                               int success,
+                                               const void *completion_key,
+                                               u_long error)
+{
+  // Copy the data which was returned by GetQueuedCompletionStatus
+  this->bytes_transferred_ = bytes_transferred;
+  this->success_ = success;
+  this->completion_key_ = completion_key;
+  this->error_ = error;
+
+  // Appropriately move the pointers in the message block.
+  for (ACE_Message_Block* mb = this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+  {
+    if (mb->length () >= bytes_transferred)
+    {
+      mb->rd_ptr (bytes_transferred);
+      bytes_transferred = 0;
+    }
+    else
+    {
+      size_t len = mb->length (); 
+      mb->rd_ptr (len);
+      bytes_transferred -= len;
+    }
+  }
+
+  // Create the interface result class.
+  ACE_Asynch_Write_Dgram::Result result (this);
+
+  // Call the application handler.
+  this->handler_.handle_write_dgram (result);
+}
+
+ACE_WIN32_Asynch_Write_Dgram_Result::~ACE_WIN32_Asynch_Write_Dgram_Result (void)
+{
+}
+
+
+//***********************************************
+
+ACE_WIN32_Asynch_Write_Dgram::~ACE_WIN32_Asynch_Write_Dgram (void)
+{
+}
+
+ssize_t
+ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
+                                    size_t &number_of_bytes_sent,
+                                    int flags,
+                                    const ACE_Addr &addr,
+                                    const void *act,
+                                    int priority,
+                                    int signal_number)
+{
+  number_of_bytes_sent = 0;
+
+  // Create the Asynch_Result.
+  ACE_WIN32_Asynch_Write_Dgram_Result *result = 0;
+  ACE_NEW_RETURN (result,
+                  ACE_WIN32_Asynch_Write_Dgram_Result (*this->handler_,
+                                                       this->handle_,
+                                                       message_block,
+                                                       message_block->total_length(),
+                                                       flags,
+                                                       act,
+                                                       this->win32_proactor_->get_handle (),
+                                                       priority,
+                                                       signal_number),
+                  -1);
+
+  // do the scatter/gather recv
+  iovec iov[IOV_MAX];
+  int iovcnt = 0;
+  for (const ACE_Message_Block* msg = message_block; msg != 0; msg = msg->cont ())
+  {
+    iov[iovcnt].iov_base  = msg->rd_ptr ();
+    iov[iovcnt].iov_len   = msg->length ();
+    ++iovcnt;
+    if (iovcnt >= IOV_MAX)
+    {
+      delete result;
+      return -1;
+    }
+  }
+
+  size_t bytes_sent = 0;
+  int initiate_result = ACE_OS::sendto (result->handle (),
+                                        iov,
+                                        iovcnt,
+                                        bytes_sent,
+                                        result->flags_,
+                                        (sockaddr *) addr.get_addr (),
+                                        addr.get_size(),
+                                        result,
+                                        0);
+
+
+  if (initiate_result == SOCKET_ERROR)
+  {
+    // If initiate failed, check for a bad error.
+    ACE_OS::set_errno_to_last_error ();
+    switch (errno)
+    {
+      case ERROR_IO_PENDING:
+        // The IO will complete proactively: the OVERLAPPED will still
+        // get queued.
+        break;
+
+      default:
+        // Something else went wrong: the OVERLAPPED will not get
+        // queued.
+
+        if (ACE::debug ())
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("ReadFile")));
+        }
+
+        delete result;
+
+        break;
+    }
+
+  }
+  else
+  {
+    // Immediate success: the OVERLAPPED will still get queued.
+    // number_of_bytes_recvd contains the number of bytes recvd
+    // addr contains the peer address
+    // flags was updated
+    number_of_bytes_sent = bytes_sent;
+  }
+
+  return initiate_result;
+}
+
+int
+ACE_WIN32_Asynch_Write_Dgram::open (ACE_Handler &handler,
+                                    ACE_HANDLE handle,
+                                    const void *completion_key,
+                                    ACE_Proactor *proactor)
+{
+  return ACE_WIN32_Asynch_Operation::open (handler,
+                                           handle,
+                                           completion_key,
+                                           proactor);
+}
+
+int
+ACE_WIN32_Asynch_Write_Dgram::cancel (void)
+{
+  return ACE_WIN32_Asynch_Operation::cancel ();
+}
+
+ACE_Proactor *
+ACE_WIN32_Asynch_Write_Dgram::proactor (void) const
+{
+  return ACE_WIN32_Asynch_Operation::proactor ();
+}
+
+ACE_WIN32_Asynch_Write_Dgram::ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *win32_proactor)
+  : ACE_Asynch_Operation_Impl (),
+    ACE_Asynch_Write_Dgram_Impl (),
+    ACE_WIN32_Asynch_Operation (win32_proactor)
+{
+}
+
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */

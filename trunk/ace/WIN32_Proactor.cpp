@@ -121,6 +121,26 @@ ACE_WIN32_Proactor::create_asynch_write_stream (void)
   return implementation;
 }
 
+ACE_Asynch_Read_Dgram_Impl *
+ACE_WIN32_Proactor::create_asynch_read_dgram (void)
+{
+  ACE_Asynch_Read_Dgram_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_WIN32_Asynch_Read_Dgram (this),
+                  0);
+  return implementation;
+}
+ 
+ACE_Asynch_Write_Dgram_Impl *
+ACE_WIN32_Proactor::create_asynch_write_dgram (void)
+{
+  ACE_Asynch_Write_Dgram_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_WIN32_Asynch_Write_Dgram (this),
+                  0);
+  return implementation;
+}
+
 ACE_Asynch_Read_File_Impl *
 ACE_WIN32_Proactor::create_asynch_read_file (void)
 {
@@ -262,6 +282,60 @@ ACE_WIN32_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                       priority,
                                                       signal_number),
                   0);
+  return implementation;
+}
+
+ACE_Asynch_Read_Dgram_Result_Impl *
+ACE_WIN32_Proactor::create_asynch_read_dgram_result (ACE_Handler &handler,
+                                                     ACE_HANDLE handle,
+                                                     ACE_Message_Block *message_block,
+                                                     size_t bytes_to_read,
+                                                     int flags,
+                                                     int protocol_family,
+                                                     const void* act,
+                                                     ACE_HANDLE event ,
+                                                     int priority ,
+                                                     int signal_number)
+{
+  ACE_Asynch_Read_Dgram_Result_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_WIN32_Asynch_Read_Dgram_Result (handler,
+                                                      handle,
+                                                      message_block,
+                                                      bytes_to_read,
+                                                      flags,
+                                                      protocol_family,
+                                                      act,
+                                                      event,
+                                                      priority,
+                                                      signal_number),
+                  0);
+  return implementation;
+}
+
+ACE_Asynch_Write_Dgram_Result_Impl *
+ACE_WIN32_Proactor::create_asynch_write_dgram_result (ACE_Handler &handler,
+                                                      ACE_HANDLE handle,
+                                                      ACE_Message_Block *message_block,
+                                                      size_t bytes_to_read,
+                                                      int flags,
+                                                      const void* act,
+                                                      ACE_HANDLE event ,
+                                                      int priority ,
+                                                      int signal_number)
+{
+  ACE_Asynch_Write_Dgram_Result_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_WIN32_Asynch_Write_Dgram_Result(handler,
+                                                      handle,
+                                                      message_block,
+                                                      bytes_to_read,
+                                                      flags,
+                                                      act,
+                                                      event,
+                                                      priority,
+                                                      signal_number),
+                 0);
   return implementation;
 }
 

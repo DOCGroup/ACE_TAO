@@ -66,4 +66,43 @@ ACE_Asynch_Transmit_File_Result_Impl::~ACE_Asynch_Transmit_File_Result_Impl (voi
 {
 }
 
+ACE_Asynch_Read_Dgram_Impl::~ACE_Asynch_Read_Dgram_Impl (void)
+{
+}
+
+ACE_Asynch_Read_Dgram_Impl::ACE_Asynch_Read_Dgram_Impl (void)
+{
+}
+
+ACE_Asynch_Write_Dgram_Impl::~ACE_Asynch_Write_Dgram_Impl (void)
+{
+}
+
+ACE_Asynch_Write_Dgram_Impl::ACE_Asynch_Write_Dgram_Impl (void)
+{
+}
+
+//***********************************************
+
+ACE_Asynch_Read_Dgram_Result_Impl::~ACE_Asynch_Read_Dgram_Result_Impl (void)
+{
+}
+
+ACE_Asynch_Read_Dgram_Result_Impl::ACE_Asynch_Read_Dgram_Result_Impl (void)
+{
+}
+
+//***********************************************
+
+ACE_Asynch_Write_Dgram_Result_Impl::~ACE_Asynch_Write_Dgram_Result_Impl (void)
+{
+}
+
+ACE_Asynch_Write_Dgram_Result_Impl::ACE_Asynch_Write_Dgram_Result_Impl (void)
+{
+}
+
+
+
+
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */

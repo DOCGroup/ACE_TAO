@@ -15,13 +15,12 @@
  *  supported if ACE_HAS_WINSOCK2 is defined or you are on WinNT 4.0
  *  or higher.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Roger Tragin <rtragin@cuseeme.com>
  */
 //=============================================================================
-
 
 #ifndef ACE_ASYNCH_IO_H
 #define ACE_ASYNCH_IO_H
@@ -1027,6 +1026,250 @@ public:
   };
 };
 
+
+// Forward declarations
+class ACE_Asynch_Read_Dgram_Result_Impl;
+class ACE_Asynch_Read_Dgram_Impl;
+class ACE_Addr;
+
+/**
+ * @class ACE_Asynch_Read_Dgram
+ *
+ * @brief This class is a factory for starting off asynchronous reads
+ * on a UDP socket. This class forwards all methods to its
+ * implementation class.
+ *
+ * Once <open> is called, multiple asynchronous <read>s can be
+ * started using this class.  An ACE_Asynch_Read_Dgram::Result
+ * will be passed back to the <handler> when the asynchronous
+ * reads completes through the <ACE_Handler::handle_read_dgram>
+ * callback.
+ */
+class ACE_Export ACE_Asynch_Read_Dgram : public ACE_Asynch_Operation
+{
+
+public:
+  /// A do nothing constructor.
+  ACE_Asynch_Read_Dgram (void);
+
+  /// Destructor
+  virtual ~ACE_Asynch_Read_Dgram (void);
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
+  int open (ACE_Handler &handler,
+            ACE_HANDLE handle = ACE_INVALID_HANDLE,
+            const void *completion_key = 0,
+            ACE_Proactor *proactor = 0);
+
+  /** This starts off an asynchronous read.  Upto
+   * <message_block->total_length()> will be read and stored in the
+   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
+   * the added bytes if the read operation is successful completed.
+   *
+   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * this is supported. Works like <nice> in Unix. Negative values are not
+   * allowed. 0 means priority of the operation same as the process
+   * priority. 1 means priority of the operation is one less than
+   * process. And so forth. On Win32, <priority> is a no-op.
+   * <signal_number> is the POSIX4 real-time signal number to be used
+   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
+   */
+  ssize_t recv (ACE_Message_Block *message_block,
+                size_t &number_of_bytes_recvd,
+                int flags,
+                int protocol_family = PF_INET,
+                const void *act = 0,
+                int priority = 0,
+                int signal_number = ACE_SIGRTMIN);
+
+  /// Return the underlying implementation class.
+  ACE_Asynch_Read_Dgram_Impl *implementation (void) const;
+
+protected:
+  /// Set the implementation class.
+  void implementation (ACE_Asynch_Read_Dgram_Impl *implementation);
+
+  /// Implementation class that all methods will be forwarded to.
+  ACE_Asynch_Read_Dgram_Impl *implementation_;
+
+public:
+/**
+ * @class Result
+ *
+ * @brief This is the class which will be passed back to the
+ * <handler> when the asynchronous read completes. This class
+ * forwards all the methods to the implementation classes.
+ *
+ * This class has all the information necessary for the
+ * <handler> to uniquiely identify the completion of the
+ * asynchronous read.
+ */
+  class ACE_Export Result : public ACE_Asynch_Result
+  {
+
+    /// The concrete implementation result classes only construct this
+    /// class.
+    friend class ACE_POSIX_Asynch_Read_Dgram_Result;
+    friend class ACE_WIN32_Asynch_Read_Dgram_Result;
+
+  public:
+
+    /// The number of bytes which were requested at the start of the
+    /// asynchronous read.
+    u_long bytes_to_read (void) const;
+
+    /// Message block which contains the read data
+    ACE_Message_Block *message_block (void) const;
+
+    /// The flags used in the read
+    int flags (void) const;
+
+    /// The address of where the packet came from
+    int remote_address (ACE_Addr& addr) const;
+
+    /// I/O handle used for reading.
+    ACE_HANDLE handle (void) const;
+
+    /// Get the implementation class.
+    ACE_Asynch_Read_Dgram_Result_Impl *implementation (void) const;
+
+  protected:
+    /// Constructor.
+    Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
+
+    /// Destructor.
+    virtual ~Result (void);
+
+    /// The implementation class.
+    ACE_Asynch_Read_Dgram_Result_Impl *implementation_;
+  };
+};
+
+// Forward declarations
+class ACE_Asynch_Write_Dgram_Impl;
+class ACE_Asynch_Write_Dgram_Result_Impl;
+
+/**
+ * @class ACE_Asynch_Write_Dgram
+ *
+ * @brief This class is a factory for starting off asynchronous writes
+ * on a UDP socket. This class forwards all methods to its
+ * implementation class.
+ *
+ * Once <open> is called, multiple asynchronous <writes>s can
+ * started using this class.  An ACE_Asynch_Write_Dgram::Result
+ * will be passed back to the <handler> when the asynchronous
+ * write completes through the
+ * <ACE_Handler::handle_write_dgram> callback.
+ */
+class ACE_Export ACE_Asynch_Write_Dgram : public ACE_Asynch_Operation
+{
+
+public:
+  /// A do nothing constructor.
+  ACE_Asynch_Write_Dgram (void);
+
+  /// Destructor.
+  virtual ~ACE_Asynch_Write_Dgram (void);
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
+  int open (ACE_Handler &handler,
+            ACE_HANDLE handle = ACE_INVALID_HANDLE,
+            const void *completion_key = 0,
+            ACE_Proactor *proactor = 0);
+
+  /** Send <buffer_count> worth of <buffers> to <addr> using overlapped
+   * I/O (uses <WSASentTo>).  Returns 0 on success.
+   *
+   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * this is supported. Works like <nice> in Unix. Negative values are not
+   * allowed. 0 means priority of the operation same as the process
+   * priority. 1 means priority of the operation is one less than
+   * process. And so forth. On Win32, this argument is a no-op.
+   * <signal_number> is the POSIX4 real-time signal number to be used
+   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
+   */
+  ssize_t send (ACE_Message_Block *message_block,
+                size_t &number_of_bytes_sent,
+                int flags,
+                const ACE_Addr& remote_addr,
+                const void *act = 0,
+                int priority = 0,
+                int signal_number = ACE_SIGRTMIN);
+
+  /// Return the underlying implementation class.
+  ACE_Asynch_Write_Dgram_Impl *implementation (void) const;
+
+protected:
+  /// Set the implementation class.
+  void implementation (ACE_Asynch_Write_Dgram_Impl *implementation);
+
+  /// Implementation class that all methods will be forwarded to.
+  ACE_Asynch_Write_Dgram_Impl *implementation_;
+
+public:
+/**
+ * @class
+ *
+ * @brief This is that class which will be passed back to the
+ * <handler> when the asynchronous write completes. This class
+ * forwards all the methods to the implementation class.
+ *
+ * This class has all the information necessary for the
+ * <handler> to uniquiely identify the completion of the
+ * asynchronous write.
+ */
+  class ACE_Export Result : public ACE_Asynch_Result
+  {
+
+    /// The concrete implementation result classes only construct this
+    /// class.
+    friend class ACE_POSIX_Asynch_Write_Dgram_Result;
+    friend class ACE_WIN32_Asynch_Write_Dgram_Result;
+
+  public:
+
+    /// The number of bytes which were requested at the start of the
+    /// asynchronous write.
+    u_long bytes_to_write (void) const;
+
+    /// Message block which contains the sent data
+    ACE_Message_Block *message_block (void) const;
+
+    /// The flags using in the write
+    int flags (void) const;
+
+    /// I/O handle used for writing.
+    ACE_HANDLE handle (void) const;
+
+    /// Get the implementation class.
+    ACE_Asynch_Write_Dgram_Result_Impl *implementation (void) const;
+
+  protected:
+    /// Constrcutor.
+    Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
+
+    /// Destructor.
+    virtual ~Result (void);
+
+    /// Implementation class.
+    ACE_Asynch_Write_Dgram_Result_Impl *implementation_;
+  };
+};
+
+
 /**
  * @class ACE_Handler
  *
@@ -1050,6 +1293,14 @@ public:
   /// This method will be called when an asynchronous read completes on
   /// a stream.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+
+  /// This method will be called when an asynchronous write completes
+  /// on a UDP socket.
+  virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
+
+  /// This method will be called when an asynchronous read completes on
+  /// a UDP socket.
+  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
 
   /// This method will be called when an asynchronous write completes
   /// on a stream.

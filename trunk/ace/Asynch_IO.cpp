@@ -935,6 +935,16 @@ ACE_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result & /* res
 }
 
 void
+ACE_Handler::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result & /* result */)
+{
+}
+
+void
+ACE_Handler::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result & /* result */)
+{
+}
+
+void
 ACE_Handler::handle_accept (const ACE_Asynch_Accept::Result & /* result */)
 {
 }
@@ -1024,6 +1034,242 @@ ACE_Service_Handler::act (const void *)
 void
 ACE_Service_Handler::open (ACE_HANDLE,
                            ACE_Message_Block &)
+{
+}
+
+
+// ************************************************************
+
+ACE_Asynch_Read_Dgram::ACE_Asynch_Read_Dgram (void)
+  : implementation_ (0)
+{
+}
+
+ACE_Asynch_Read_Dgram::~ACE_Asynch_Read_Dgram (void)
+{
+}
+
+int
+ACE_Asynch_Read_Dgram::open (ACE_Handler &handler,
+                             ACE_HANDLE handle,
+                             const void *completion_key,
+                             ACE_Proactor *proactor)
+{
+  // Get a proactor for/from the user.
+  proactor = this->get_proactor (proactor, handler);
+
+  // Delete the old implementation.
+  delete this->implementation_;
+  this->implementation_ = 0;
+
+  // Now let us get the implementation initialized.
+  ACE_Asynch_Read_Dgram_Impl *implementation = proactor->create_asynch_read_dgram ();
+  if (implementation == 0)
+    return -1;
+  
+  // Set the implementation class
+  this->implementation (implementation);
+
+  // Call the <open> method of the base class. 
+  return ACE_Asynch_Operation::open (handler,
+                                     handle,
+                                     completion_key,
+                                     proactor);
+}
+
+ssize_t
+ACE_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
+                             size_t &number_of_bytes_recvd,
+                             int flags,
+                             int protocol_family,
+                             const void *act,
+                             int priority,
+                             int signal_number)
+{
+  return this->implementation ()->recv (message_block,
+                                        number_of_bytes_recvd,
+                                        flags,
+                                        protocol_family,
+                                        act,
+                                        priority,
+                                        signal_number);
+}
+
+ACE_Asynch_Read_Dgram_Impl *
+ACE_Asynch_Read_Dgram::implementation (void) const
+{
+  return implementation_;
+}
+
+void
+ACE_Asynch_Read_Dgram::implementation (ACE_Asynch_Read_Dgram_Impl *implementation)
+{
+  this->implementation_ = implementation;
+
+  // Init the bas class' implementation also.
+  ACE_Asynch_Operation::implementation(this->implementation_);
+}
+
+// ************************************************************
+
+int
+ACE_Asynch_Read_Dgram::Result::remote_address (ACE_Addr& addr) const
+{
+  return this->implementation ()->remote_address (addr);
+}
+
+ACE_Message_Block*
+ACE_Asynch_Read_Dgram::Result::message_block (void) const
+{
+  return this->implementation ()->message_block ();
+}
+
+int
+ACE_Asynch_Read_Dgram::Result::flags (void) const
+{
+  return this->implementation ()->flags ();
+}
+
+u_long
+ACE_Asynch_Read_Dgram::Result::bytes_to_read (void) const
+{
+  return this->implementation ()->bytes_to_read ();
+}
+
+ACE_HANDLE
+ACE_Asynch_Read_Dgram::Result::handle (void) const
+{
+  return this->implementation ()->handle();
+}
+
+ACE_Asynch_Read_Dgram::Result::Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation)
+: ACE_Asynch_Result (implementation),
+  implementation_ (implementation)
+{
+}
+
+ACE_Asynch_Read_Dgram::Result::~Result (void)
+{
+}
+
+ACE_Asynch_Read_Dgram_Result_Impl *
+ACE_Asynch_Read_Dgram::Result::implementation (void) const
+{
+  return this->implementation_;
+}
+
+// ************************************************************
+
+
+ACE_Asynch_Write_Dgram::ACE_Asynch_Write_Dgram (void)
+  : implementation_ (0)
+{
+}
+
+ACE_Asynch_Write_Dgram::~ACE_Asynch_Write_Dgram (void)
+{
+}
+
+int
+ACE_Asynch_Write_Dgram::open (ACE_Handler &handler,
+                              ACE_HANDLE handle,
+                              const void *completion_key,
+                              ACE_Proactor *proactor)
+{
+  // Get a proactor for/from the user.
+  proactor = this->get_proactor (proactor, handler);
+
+  // Delete the old implementation.
+  delete this->implementation_;
+  this->implementation_ = 0;
+
+  // Now let us get the implementation initialized.
+  ACE_Asynch_Write_Dgram_Impl *implementation = proactor->create_asynch_write_dgram ();
+  if (implementation == 0)
+    return -1;
+  
+  // Set the implementation class
+  this->implementation (implementation);
+  
+  // Call the <open> method of the base class.
+  return ACE_Asynch_Operation::open (handler,
+                                     handle,
+                                     completion_key,
+                                     proactor);
+}
+
+ssize_t
+ACE_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
+                              size_t &number_of_bytes_sent,
+                              int flags,
+                              const ACE_Addr& remote_addr,
+                              const void *act,
+                              int priority,
+                              int signal_number)
+{
+  return this->implementation ()->send (message_block,
+                                        number_of_bytes_sent,
+                                        flags,
+                                        remote_addr,
+                                        act,
+                                        priority,
+                                        signal_number);
+}
+
+ACE_Asynch_Write_Dgram_Impl *
+ACE_Asynch_Write_Dgram::implementation (void) const
+{
+  return this->implementation_;
+}
+
+void
+ACE_Asynch_Write_Dgram::implementation (ACE_Asynch_Write_Dgram_Impl *implementation)
+{
+  this->implementation_ = implementation;
+
+  // Init the base class' implementation also.
+  ACE_Asynch_Operation::implementation (this->implementation_);
+}
+
+// ************************************************************
+
+u_long
+ACE_Asynch_Write_Dgram::Result::bytes_to_write (void) const
+{
+  return this->implementation ()->bytes_to_write ();
+}
+
+ACE_Message_Block*
+ACE_Asynch_Write_Dgram::Result::message_block () const
+{
+  return this->implementation ()->message_block ();
+}
+
+int
+ACE_Asynch_Write_Dgram::Result::flags (void) const
+{
+  return this->implementation ()->flags ();
+}
+
+ACE_HANDLE
+ACE_Asynch_Write_Dgram::Result::handle (void) const
+{
+  return this->implementation ()->handle ();
+}
+
+ACE_Asynch_Write_Dgram_Result_Impl *
+ACE_Asynch_Write_Dgram::Result::implementation (void) const
+{
+  return this->implementation_;
+}
+
+ACE_Asynch_Write_Dgram::Result::Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation)
+: ACE_Asynch_Result (implementation),
+  implementation_ (implementation)
+{
+}
+
+ACE_Asynch_Write_Dgram::Result::~Result (void)
 {
 }
 

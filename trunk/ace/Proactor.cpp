@@ -762,6 +762,18 @@ ACE_Proactor::create_asynch_write_stream (void)
   return this->implementation ()->create_asynch_write_stream ();
 }
 
+ACE_Asynch_Read_Dgram_Impl *
+ACE_Proactor::create_asynch_read_dgram (void)
+{
+  return this->implementation ()->create_asynch_read_dgram ();
+}
+ 
+ACE_Asynch_Write_Dgram_Impl *
+ACE_Proactor::create_asynch_write_dgram (void)
+{
+  return this->implementation ()->create_asynch_write_dgram ();
+}
+
 ACE_Asynch_Read_File_Impl *
 ACE_Proactor::create_asynch_read_file (void)
 {
@@ -882,6 +894,51 @@ ACE_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                                    signal_number);
 }
 
+ACE_Asynch_Read_Dgram_Result_Impl *
+ACE_Proactor::create_asynch_read_dgram_result (ACE_Handler &handler,
+                                               ACE_HANDLE handle,
+                                               ACE_Message_Block *message_block,
+                                               size_t bytes_to_read,
+                                               int flags,
+                                               int protocol_family,
+                                               const void* act,
+                                               ACE_HANDLE event,
+                                               int priority,
+                                               int signal_number)
+{
+  return this->implementation()->create_asynch_read_dgram_result (handler,
+                                                                  handle,
+                                                                  message_block,
+                                                                  bytes_to_read,
+                                                                  flags,
+                                                                  protocol_family,
+                                                                  act,
+                                                                  event,
+                                                                  priority,
+                                                                  signal_number);
+}
+
+ACE_Asynch_Write_Dgram_Result_Impl *
+ACE_Proactor::create_asynch_write_dgram_result (ACE_Handler &handler,
+                                                ACE_HANDLE handle,
+                                                ACE_Message_Block *message_block,
+                                                size_t bytes_to_write,
+                                                int flags,
+                                                const void* act,
+                                                ACE_HANDLE event,
+                                                int priority,
+                                                int signal_number) 
+{
+  return this->implementation()->create_asynch_write_dgram_result (handler,
+                                                                   handle,
+                                                                   message_block,
+                                                                   bytes_to_write,
+                                                                   flags,
+                                                                   act,
+                                                                   event,
+                                                                   priority,
+                                                                   signal_number);
+}
 
 ACE_Asynch_Accept_Result_Impl *
 ACE_Proactor::create_asynch_accept_result (ACE_Handler &handler,
