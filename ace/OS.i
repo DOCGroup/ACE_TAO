@@ -5953,13 +5953,11 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);
 #else
-
   int ace_result_;
   ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
   if (ace_result_ == -1 && errno == EAGAIN)
     errno = EWOULDBLOCK;
   return ace_result_;
-
 #endif /* defined (ACE_WIN32) */
 }
 
