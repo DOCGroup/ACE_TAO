@@ -49,7 +49,7 @@ public:
   /// Destructor
   ~TAO_Policy_Set (void);
 
-  /// Copy the state from <source>, it uses the copy() operator to
+  /// Copy the state from @a source, it uses the copy() operator to
   /// obtain independent copies of all the policies.
   void copy_from (TAO_Policy_Set* source
                   ACE_ENV_ARG_DECL);
