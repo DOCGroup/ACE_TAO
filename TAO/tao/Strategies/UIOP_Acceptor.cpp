@@ -9,6 +9,7 @@
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/CDR.h"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
