@@ -511,7 +511,7 @@ TAO_PSDL_Interface_Visitor::print_end_for_interface (void)
   *ps_sh << "ACE_ENV_ARG_DECL_WITH_DEFAULTS";  ps_sh->nl ();
   *ps_sh << ");";  ps_sh->nl ();
 
-  *ps_sh << "virtual void *_tao_QueryInterface (ptr_arith_t type);";  ps_sh->nl ();
+  *ps_sh << "virtual void *_tao_QueryInterface (ptrdiff_t type);";  ps_sh->nl ();
 
   *ps_sh << "virtual const char* _interface_repository_id (void) const;";  ps_sh->nl ();
 
@@ -1810,7 +1810,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   *ps_si << "(";
   ps_si->incr_indent (0);
   ps_si->nl ();
-  *ps_si << "ptr_arith_t,";   ps_si->nl ();
+  *ps_si << "ptrdiff_t,";   ps_si->nl ();
   *ps_si << "&" << this->interface_name_ << "::_tao_class_id";
   ps_si->nl ();
 
@@ -1894,7 +1894,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
 
   *ps_si << "void *" << this->interface_name_
-         << "::_tao_QueryInterface (ptr_arith_t type)";   ps_si->nl ();
+         << "::_tao_QueryInterface (ptrdiff_t type)";   ps_si->nl ();
   *ps_si << "{";
   ps_si->incr_indent (0);
   ps_si->nl ();
@@ -1902,14 +1902,14 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   *ps_si << "if (type == ACE_reinterpret_cast";
   ps_si->incr_indent (0);
   ps_si->nl ();
-  *ps_si << "(ptr_arith_t,";   ps_si->nl ();
+  *ps_si << "(ptrdiff_t,";   ps_si->nl ();
   *ps_si << "&" << this->interface_name_ << "::_tao_class_id))";   ps_si->nl ();
   *ps_si << "retv = ACE_reinterpret_cast (void*, this);";
   ps_si->decr_indent (0);
   ps_si->nl ();
 
   *ps_si << "else if (type == ACE_reinterpret_cast "
-         << "(ptr_arith_t, &CORBA::Object::_tao_class_id))";
+         << "(ptrdiff_t, &CORBA::Object::_tao_class_id))";
 
   ps_si->incr_indent (0);
   ps_si->nl ();

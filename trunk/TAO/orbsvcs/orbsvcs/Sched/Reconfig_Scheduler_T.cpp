@@ -429,7 +429,7 @@ set (RtecScheduler::handle_t handle,
   // Reference the associated scheduling entry: the double cast is
   // needed to ensure that the size of the pointer and the size of the
   // stored magic cookie are the same (see the definition of
-  // ptr_arith_t in ACE to grok how this works portably).
+  // ptrdiff_t in ACE to grok how this works portably).
   TAO_Reconfig_Scheduler_Entry *sched_entry_ptr =
     ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                          rt_info_ptr->volatile_token);
@@ -966,11 +966,11 @@ create_i (const char *entry_point,
   // Store a pointer to the scheduling entry in the scheduling entry
   // pointer array and in the RT_Info: the double cast is needed to
   // ensure that the size of the pointer and the size of the stored
-  // magic cookie are the same (see the definition of ptr_arith_t in
+  // magic cookie are the same (see the definition of ptrdiff_t in
   // ACE to grok how this works portably).
   new_rt_info->volatile_token =
     ACE_static_cast (CORBA::ULongLong,
-                     ACE_reinterpret_cast (ptr_arith_t,
+                     ACE_reinterpret_cast (ptrdiff_t,
                                            new_sched_entry));
 
   // Release the auto pointers, so their destruction does not

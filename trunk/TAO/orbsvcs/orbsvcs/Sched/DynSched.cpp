@@ -1338,7 +1338,7 @@ ACE_DynScheduler::setup_task_entries (void)
   //    representation of a null pointer is not always a string of
   //    zeroes.  The correct way to intialize this array is with a for
   //    loop.
-  // ACE_OS::memset (ordered_task_entries_, 0, 
+  // ACE_OS::memset (ordered_task_entries_, 0,
   //                 sizeof (Task_Entry *) * task_count);
   for (size_t j = 0; j != task_count; ++j)
     ordered_task_entries_[j] = 0;
@@ -1376,10 +1376,10 @@ ACE_DynScheduler::setup_task_entries (void)
     // Tie rt_info to corresponding task entry: the double cast is
     // needed to ensure that the size of the pointer and the size of the
     // stored magic cookie are the same (see the definition of
-    // ptr_arith_t in ACE to grok how this works portably).
+    // ptrdiff_t in ACE to grok how this works portably).
     task_entries_ [i].rt_info ()->volatile_token =
       ACE_static_cast (CORBA::ULongLong,
-                       ACE_reinterpret_cast (ptr_arith_t,
+                       ACE_reinterpret_cast (ptrdiff_t,
                                              &(task_entries_ [i])));
 
     // tie ordered task entry pointer to corresponding task entry
@@ -1453,7 +1453,7 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
       // Obtain a pointer to the Task_Entry from the dependency
       // RT_Info: the double cast is needed to ensure that the size of
       // the pointer and the size of the stored magic cookie are the
-      // same (see the definition of ptr_arith_t in ACE to grok how
+      // same (see the definition of ptrdiff_t in ACE to grok how
       // this works portably).
       Task_Entry *dependency_entry_ptr =
         ACE_LONGLONG_TO_PTR (Task_Entry *, dependency_info->volatile_token);
