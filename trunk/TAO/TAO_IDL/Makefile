@@ -14,7 +14,6 @@
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 
 ifdef VXWORKS
   all.nested: any
@@ -30,9 +29,10 @@ ifdef VXWORKS
   any:
 	@echo The IDL compiler won\'t run or build for VxWorks.
 else
-  include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-  include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
-  include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 endif # VXWORKS
 
 INFO	=
@@ -48,7 +48,11 @@ BUILD	= $(VBIN)
 #----------------------------------------------------------------------------
 
 all:
+ifdef VXWORKS
+	@echo The IDL compiler won\'t run or build for VxWorks.
+else
 	$(PRELINK) $(CXX) $(CFLAGS) -o $(BIN) $(TAOLIBS) $(LIBS)
+endif # VXWORKS
 
 tags:
 	rm -f TAGS
