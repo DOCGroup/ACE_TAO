@@ -1,3 +1,58 @@
+Mon Jun 28 05:17:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* be/be_visitor_interface/collocated_sh.cpp:
+	* be/be_visitor_interface/collocated_ss.cpp:
+	* be/be_visitor_operation/collocated_sh.cpp:
+	* be/be_visitor_operation/collocated_ss.cpp:
+	* be_include/be_visitor_interface/collocated_sh.h:
+	* be_include/be_visitor_interface/collocated_ss.h:
+	* be_include/be_visitor_operation/collocated_sh.h:
+	* be_include/be_visitor_operation/collocated_ss.h: Replaced the
+	  old, conglomerated collocated stub visitors with the following
+	  specialized collocated stub visitors.  After all, downsizing,
+	  i.e., breaking up large stuff and creating a bunch of small
+	  pieces, is the latest trend.
+
+	* be/be_visitor_interface/direct_collocated_sh.cpp:
+	* be/be_visitor_interface/direct_collocated_ss.cpp:
+	* be/be_visitor_interface/thru_poa_collocated_sh.cpp:
+	* be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+	* be/be_visitor_operation/direct_collocated_sh.cpp:
+	* be/be_visitor_operation/direct_collocated_ss.cpp:
+	* be/be_visitor_operation/thru_poa_collocated_sh.cpp:
+	* be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+	* be_include/be_visitor_interface/direct_collocated_sh.h:
+	* be_include/be_visitor_interface/direct_collocated_ss.h:
+	* be_include/be_visitor_interface/thru_poa_collocated_sh.h:
+	* be_include/be_visitor_interface/thru_poa_collocated_ss.h:
+	* be_include/be_visitor_operation/direct_collocated_sh.h:
+	* be_include/be_visitor_operation/direct_collocated_ss.h:
+	* be_include/be_visitor_operation/thru_poa_collocated_sh.h:
+	* be_include/be_visitor_operation/thru_poa_collocated_ss.h: Those
+	  specialized collocated stub visitors.
+
+	* be/be_interface.cpp:
+	* be/be_visitor_factory.cpp:
+	* be/be_visitor_interface.cpp:
+	* be/be_visitor_operation.cpp:
+	* be/be_visitor_attribute/attribute.cpp:
+	* be/be_visitor_interface/interface.cpp:
+	* be/be_visitor_interface/interface_cs.cpp:
+	* be/be_visitor_interface/interface_sh.cpp:
+	* be/be_visitor_interface/interface_ss.cpp:
+	* be_include/be_codegen.h:
+	* be_include/be_interface.h:
+	* be_include/be_visitor_interface.h:
+	* be_include/be_visitor_operation.h:
+	* driver/drv_args.cpp:
+	* include/idl_global.h:
+	* util/utl_global.cpp: TAO_IDL internal needs to know which
+	  visitor to use and when to use it.  TAO_IDL now support 4 more
+	  switches,  -Gp, -Gd, -Sp, -Sd which control what kind of
+	  collocated stubs the generated code uses.  Maybe these flags
+	  should somehow merge together.  Otherwise, we'll exhaust the
+	  available letter (for -G and -S) very soon.
+
 Sun Jun 27 20:29:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/POA_CORBA.h (POA_CORBA): Added a no-op constructor for
@@ -45,7 +100,7 @@ Sun Jun 27 21:33:00 1999  Chris Gill  <cdgill@tango.cs.wustl.edu>
           orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: Added use of
           dependency graph visitors for topological ordering, cycle checking,
           and graph reset during schedule computation.
-	
+
 Sun Jun 27 20:02:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/DynArray_i.cpp:
@@ -82,7 +137,7 @@ Sun Jun 27 20:02:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
           Fixed type mismatch, it wasn't obvious except on NT, thanks to
           Marina for reporting this one.
-  
+
 Sun Jun 27 18:30:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynArray_i.cpp:
