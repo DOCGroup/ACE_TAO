@@ -63,6 +63,10 @@ public:
   void gen_common_tmplinst (TAO_OutStream *os);
   // Generate explicit template instantiations for the above.
 
+  idl_bool seen_in_sequence (void) const;
+  void seen_in_sequence (idl_bool val);
+  // Accessors for the member.
+
   virtual AST_Decl::NodeType base_node_type (void) const;
   // Typedefs are tricky to handle, in many points their mapping
   // depend on base type they are aliasing.  Since typedefs can be
@@ -91,6 +95,9 @@ protected:
 
   idl_bool common_varout_gen_;
   // Have we generated our _var and _out class typedefs yet?
+
+  idl_bool seen_in_sequence_;
+  // Has this type been used as a sequence element?
 };
 
 #endif // end of if !defined

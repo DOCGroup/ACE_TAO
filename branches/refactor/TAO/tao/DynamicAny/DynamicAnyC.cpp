@@ -1467,7 +1467,25 @@ DynamicAny::DynAnySeq::DynAnySeq (const DynAnySeq &seq)
 DynamicAny::DynAnySeq::~DynAnySeq (void)
 {}
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class
+  TAO_Object_Manager<
+      DynamicAny::DynAny,
+      DynamicAny::DynAny_var,
+      DynamicAny::tao_DynAny_life
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO_Object_Manager< \
+        DynamicAny::DynAny, \
+        DynamicAny::DynAny_var, \
+        DynamicAny::tao_DynAny_life \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

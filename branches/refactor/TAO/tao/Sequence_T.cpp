@@ -636,23 +636,11 @@ TAO_Abstract_Manager<T,T_var,T_life>::operator= (
 
   if (this->release_)
     {
-      if (*this->ptr_ != 0)
-        {
-          (*this->ptr_)->_remove_ref ();
-        }
-
-      *this->ptr_ = *rhs.ptr_;
-
-      if (*this->ptr_ != 0)
-        {
-          (*this->ptr_)->_add_ref ();
-        }
-    }
-  else
-    {
-      *this->ptr_ = *rhs.ptr_;
+      T_life::tao_release (*this->ptr_);
+      T_life::tao_duplicate (*rhs->ptr_);
     }
 
+  *this->ptr_ = *rhs.ptr_;
   return *this;
 }
 
@@ -666,18 +654,10 @@ TAO_Abstract_Manager<T,T_var,T_life>::operator= (T * p)
       // that of a var variable.  Therefore we will not duplicate the
       // user provided pointer before assigning it to the internal
       // variable.
-      if (*this->ptr_ != 0)
-        {
-          (*this->ptr_)->_remove_ref ();
-        }
-
-      *this->ptr_ = p;
-    }
-  else
-    {
-      *this->ptr_ = p;
+      T_life::tao_release (*this->ptr_);
     }
 
+  *this->ptr_ = p;
   return *this;
 }
 
@@ -691,23 +671,11 @@ TAO_Abstract_Manager<T,T_var,T_life>::operator= (const T_var & p)
       // that of a var variable.  Therefore we duplicate p's
       // pointer before assigning it to the internal
       // variable.
-      if (*this->ptr_ != 0)
-        {
-          (*this->ptr_)->_remove_ref ();
-        }
-
-      *this->ptr_ = p.in ();
-
-      if (p != 0)
-        {
-          p->_add_ref ();
-        }
-    }
-  else
-    {
-      *this->ptr_ = p.in ();
+      T_life::tao_release (*this->ptr_);
+      T_life::tao_duplicate (p.in ());
     }
 
+  *this->ptr_ = p.in ();
   return *this;
 }
 

@@ -37,13 +37,20 @@ be_visitor_sequence_cs::~be_visitor_sequence_cs (void)
 
 int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 {
-  if (node->cli_stub_gen () || node->imported ())
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+
+  if (node->imported ())
+    {
+      bt->seen_in_sequence (I_TRUE);
+      return 0;
+    }
+
+  if (node->cli_stub_gen ())
     {
       return 0;
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// "__FILE__ << ":" << __LINE__;
@@ -168,10 +175,11 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     }
 
   // If Any operators are generated, that code will take care of this.
-  if (!be_global->any_support ())
+  if (!bt->seen_in_sequence ())
     {
       // This is a no-op unless our element is a managed type.
       this->gen_managed_type_tmplinst (node, bt);
+      bt->seen_in_sequence (I_TRUE);
     }
 
   if (this->ctx_->tdef () != 0)
