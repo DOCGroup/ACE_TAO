@@ -399,7 +399,7 @@ error_message [TAO_GIOP_HEADER_LEN] =
 };
 
 void
-TAO_GIOP::send_error (TAO_Client_Connection_Handler *&handler)
+TAO_GIOP::send_error (TAO_SVC_HANDLER *&handler)
 {
   TAO_GIOP::dump_msg ("send",
                       (const u_char *) error_message,
@@ -481,7 +481,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
     header_len = 5;
 
   if (CDR::grow (&msg.start_, header_len) == -1)
-    return TAO_GIOP::MessageError;
+    return TAO_GIOP::CommunicationError; // This should probably be an exception.
 
   char *header = msg.start_.rd_ptr ();
   ssize_t len = TAO_GIOP::read_buffer (connection,
@@ -519,7 +519,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
           /* NOTREACHED */
         }
 
-      return TAO_GIOP::MessageError;
+      return TAO_GIOP::CommunicationError;
     }
 
   // NOTE: if message headers, or whome messages, get encrypted in
@@ -533,7 +533,11 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 			      retval,
 			      message_size,
 			      orb_core) == -1)
-    return TAO_GIOP::MessageError;
+    {
+      TAO_GIOP::send_error (handler);
+      return TAO_GIOP::EndOfFile; // We didn't really receive 
+                                  // anything useful here.
+    }
 
   // Make sure we have the full length in memory, growing the buffer
   // if needed.
@@ -544,7 +548,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   assert (message_size <= UINT_MAX);
 
   if (CDR::grow (&msg.start_, header_len + message_size) == -1)
-    return TAO_GIOP::MessageError;
+    return TAO_GIOP::CommunicationError;
 
   // Growing the buffer may have reset the rd_ptr(), but we want to
   // leave it just after the GIOP header (that was parsed already);
@@ -590,7 +594,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       // clean up, and ...
       if (TAO_orbdebug)
         ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
-      return TAO_GIOP::MessageError;
+      return TAO_GIOP::CommunicationError;
     }
 
   TAO_GIOP::dump_msg ("recv",
@@ -623,7 +627,7 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
         && header [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
     {
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
-      return TAO_GIOP::MessageError;
+      return -1;
     }
 
   // Get the message type out and adjust the buffer's records to record
@@ -680,17 +684,6 @@ TAO_GIOP::parse_header (TAO_InputCDR &cdr,
 				       do_byte_swap,
 				       message_type,
 				       message_size);
-}
-
-
-void
-TAO_GIOP::make_error (TAO_OutputCDR &msg, ...)
-{
-  ACE_UNUSED_ARG (msg);  // just for now
-
-  // This [static] method will be somewhat like send_error() except
-  // that it won't actaully do any sending of data...it'll just stuff
-  // things into the <msg> instance.
 }
 
 CORBA::Boolean
