@@ -112,6 +112,15 @@ CORBA_ORB::~CORBA_ORB (void)
       delete this->shutdown_lock_;
       this->shutdown_lock_ = 0;
     }
+
+  if (!CORBA::is_nil (this->name_service_))
+    CORBA::release (this->name_service_);
+  if (!CORBA::is_nil (this->schedule_service_))
+    CORBA::release (this->schedule_service_);
+  if (!CORBA::is_nil (this->event_service_))
+    CORBA::release (this->event_service_);
+  if (!CORBA::is_nil (this->trading_service_))
+    CORBA::release (this->trading_service_);
 }
 
 // Set up listening endpoints.
@@ -363,8 +372,6 @@ CORBA_ORB::resolve_name_service (void)
       if (env.exception () != 0)
         this->name_service_ = CORBA_Object::_nil ();
 
-      // Return ior.
-      return_value = this->name_service_;
     }
   else
     {
@@ -383,10 +390,12 @@ CORBA_ORB::resolve_name_service (void)
             port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
         }
 
-      return_value =
+      this->name_service_ =
         this->multicast_to_service (TAO_SERVICEID_NAMESERVICE, port);
     }
 
+  // Return ior.
+  return_value = this->name_service_;
   return CORBA_Object::_duplicate (return_value);
 }
 
@@ -419,9 +428,6 @@ CORBA_ORB::resolve_trading_service (void)
           // check for errors
           if (env.exception () != 0)
             this->trading_service_ = CORBA_Object::_nil ();
-
-          // Return ior.
-          return_value = this->trading_service_;
         }
       else
         {
@@ -440,11 +446,12 @@ CORBA_ORB::resolve_trading_service (void)
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
 
-          return_value =
+          this->trading_service_ =
             this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE, port);
         }
     }
 
+  return_value = this->trading_service_;
   return CORBA_Object::_duplicate (return_value);
 }
 
