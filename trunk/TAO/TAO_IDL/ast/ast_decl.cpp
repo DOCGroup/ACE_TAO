@@ -110,7 +110,7 @@ AST_Decl::AST_Decl(NodeType nt, UTL_ScopedName *n, UTL_StrList *p)
 	  pd_in_main_file(idl_global->in_main_file()),
 	  pd_added(I_FALSE)
 {
-  compute_full_name(n);
+  compute_full_name (n);
 }
 
 /*
