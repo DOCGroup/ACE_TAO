@@ -1,3 +1,9 @@
+Wed Dec  2 01:48:54 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
+
+	* performance-tests/Thruput/TAO/utils.cpp: fixed the problem with
+	the displaying of wierd numbers to the screen.  utils.cpp now used
+	ACE_Profile_Timer instead of using struct rusage directly.
+
 Tue Dec 01 15:32:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: added
