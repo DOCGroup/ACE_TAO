@@ -1,3 +1,9 @@
+Fri Sep 21 22:23:11 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Profile.cpp (policies):
+
+	  Fixed "unused parameter" warning in the minimum CORBA builds.
+
 Fri Sep 21 21:39:22 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.h:
