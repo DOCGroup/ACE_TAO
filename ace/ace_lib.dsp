@@ -297,7 +297,7 @@ LIB32=link.exe -lib
 # Name "ACE LIB - Win32 PharLap ETS Release"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\ACE.cpp
@@ -2865,6 +2865,60 @@ SOURCE=.\Profile_Timer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\QoS_Session_Factory.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\QoS_Session_Impl.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Debug"
@@ -5053,7 +5107,7 @@ SOURCE=.\XtReactor.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Acceptor.h
@@ -5584,6 +5638,18 @@ SOURCE=.\Profile_Timer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\QoS_Session.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\QoS_Session_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\QoS_Session_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RB_Tree.h
 # End Source File
 # Begin Source File
@@ -5989,7 +6055,7 @@ SOURCE=.\XtReactor.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Acceptor.i
@@ -6412,6 +6478,10 @@ SOURCE=.\Profile_Timer.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\QoS_Session_Impl.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RB_Tree.i
 # End Source File
 # Begin Source File
@@ -6709,2060 +6779,212 @@ SOURCE=.\WIN32_Proactor.i
 # Begin Source File
 
 SOURCE=.\Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Active_Map_Manager_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Pointer_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
+SOURCE=.\Based_Pointer_T.cpp
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cache_Map_Manager_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cached_Connect_Strategy_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Caching_Strategies_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Caching_Utility_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cleanup_Strategies_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Connector.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Containers_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dump_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Free_List.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Functor_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Future.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Cache_Map_Manager_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Map_With_Allocator_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOStream_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Name_Space_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Malloc_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Managed_Object.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Map_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Message_Block_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Message_Queue_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Module.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Pair_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\RB_Tree.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Select_Reactor_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Singleton.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Strategies_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stream_Modules.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Synch_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Task_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Hash_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Heap_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_List_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Queue_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Wheel_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Documentation"
@@ -8779,7 +7001,7 @@ SOURCE=..\Version
 # End Group
 # Begin Group "Resource Files"
 
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\ace.rc

@@ -1,3 +1,9 @@
+Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO/orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Synced with orbsvcs.dsp.  Thanks to Mogens Hansen 
+          <mogens_h@dk-online.dk> for noticing this.
+
 Sat Feb 19 20:24:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp
