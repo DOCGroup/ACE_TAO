@@ -24,8 +24,9 @@ ACE_SOCK_IO::dump (void) const
 // returns the number of bytes read.
 
 ssize_t
-ACE_SOCK_IO::recv (iovec *io_vec)
+ACE_SOCK_IO::recvv (iovec *io_vec)
 {
+  ACE_TRACE ("ACE_SOCK_IO::recvv");
 #if defined (FIONREAD)
   u_long inlen;
 
@@ -39,7 +40,7 @@ ACE_SOCK_IO::recv (iovec *io_vec)
       return io_vec->iov_len;
     }
   else
-    return 0; 
+    return 0;
 #else
   ACE_UNUSED_ARG (io_vec);
   ACE_NOTSUP_RETURN (-1);
@@ -56,12 +57,12 @@ ACE_SOCK_IO::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
 
-  va_list argp;  
+  va_list argp;
   size_t total_tuples = n / 2;
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
-#else 
+#else
   ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
@@ -92,7 +93,7 @@ ACE_SOCK_IO::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
 
-  va_list argp;  
+  va_list argp;
   size_t total_tuples = n / 2;
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
@@ -116,4 +117,3 @@ ACE_SOCK_IO::recv (size_t n, ...) const
   va_end (argp);
   return result;
 }
-
