@@ -1,6 +1,11 @@
+Sat Nov 22 00:26:11 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (close): Activated automatic wait on
+	  close functionality.  I think I get it right this time.
+
 Fri Nov 21 19:59:37 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/IPC_SAP.cpp: 
+	* ace/IPC_SAP.cpp:
 	  Added a couple of ACE_NOTREACHED protections. Thanks to Brian
 	  Mendel <bmendel@mdc.com> for reporting this.
 
@@ -12,7 +17,7 @@ Fri Nov 21 17:12:48 1997    <nw1@CHA-CHA>
 	* ace/Thread_Manager.{h,cpp} (wait): Added codes to remove detached
  	  threads.  This function can be activated selectively.  I added
  	  this so we can ignore detached threads when closing down the
- 	  default thread manager.  
+ 	  default thread manager.
 
 	  (close): Activated the code to wait (join) all threads managed
  	  by the thread manager.  It will ask wait function to remove all
@@ -32,7 +37,7 @@ Fri Nov 21 12:18:28 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  the Reactor of the Svc_Handler to 0 if we're running the
  	  threading test.
 
-	* tests/Reactor_Notify_Test.cpp: Added back THR_BOUND to 
+	* tests/Reactor_Notify_Test.cpp: Added back THR_BOUND to
 	  make things work on Solaris.
 
 Fri Nov 21 02:23:47 1997    <irfan@TWOSTEP>
@@ -42,7 +47,7 @@ Fri Nov 21 02:23:47 1997    <irfan@TWOSTEP>
 
 	* tests/Reactor_Notify_Test.cpp (open): Changed THR_BOUND to
  	  THR_DETACHED since we don't wait for this thread.
-	
+
 	* tests/IOStream_Test.cpp (server): Make sure to close the socket
  	  in ACE_SOCK_Acceptor and ACE_SOCK_IOStream.
 
@@ -120,8 +125,8 @@ Thu Nov 20 18:22:24 1997  Steve Huston  <shuston@riverace.com>
 
 Thu Nov 20 14:19:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tests/Priority_Reactor_Test.h: 
-	* tests/Priority_Reactor_Test.cpp: 
+	* tests/Priority_Reactor_Test.h:
+	* tests/Priority_Reactor_Test.cpp:
 	  The test has a limited execution time now, and only reports a
  	  warning if runs out of time. This may be due to some failed
  	  connections, but it is hard to avoid that.  On the other hand
@@ -149,7 +154,7 @@ Thu Nov 20 10:45:08 1997    <irfan@TWOSTEP>
 
 	* ace/ACE.cpp (get_ip_interfaces): Changed rep() to fast_rep() to
  	  prevent memory leak.
-	
+
 	* ace/Reactor.cpp (ACE_Reactor): Fixed error of not creating any
  	  Reactors on UNIX.
 
