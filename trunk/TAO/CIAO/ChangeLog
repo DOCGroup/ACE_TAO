@@ -1,3 +1,20 @@
+Wed May 14 17:02:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/EC/EC.idl:
+	* examples/handcrafted/BasicSP/EC/EC.mpc:
+	* examples/handcrafted/BasicSP/EC/ECE.idl:
+	* examples/handcrafted/BasicSP/EC/ECEI.idl:
+	* examples/handcrafted/BasicSP/EC/EC_exec.cpp:
+	* examples/handcrafted/BasicSP/EC/EC_exec.h:
+	* examples/handcrafted/BasicSP/EC/EC_exec_export.h:
+	* examples/handcrafted/BasicSP/EC/EC_stub_export.h:
+	* examples/handcrafted/BasicSP/EC/EC_svnt.cpp:
+	* examples/handcrafted/BasicSP/EC/EC_svnt.h:
+	* examples/handcrafted/BasicSP/EC/EC_svnt_export.h:
+	* examples/handcrafted/BasicSP/EC/client.cpp:
+	* examples/handcrafted/BasicSP/EC/controller.cpp: Implementation
+	  for the EC component. 
+
 Wed May 14 15:50:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 
