@@ -25,6 +25,8 @@
 
 // Forward decl.
 class ACE_ReactorEx;
+class ACE_Handle_Set;
+class ACE_Sig_Handler;
  
 class ACE_Export ACE_Wakeup_All_Threads_Handler : public ACE_Event_Handler
   // = TITLE
@@ -464,6 +466,33 @@ public:
   // added to the <size> parameter which will store handles used for
   // internal management purposes.
 
+  static ACE_ReactorEx *instance (void);
+  // Get pointer to a process-wide <ACE_ReactorEx>.
+
+  static ACE_ReactorEx *instance (ACE_ReactorEx *);
+  // Set pointer to a process-wide <ACE_ReactorEx> and return existing
+  // pointer.
+
+  static void close_singleton (void);
+  // Delete the dynamically allocated Singleton
+
+  // = ReactorEx event loop management methods.
+  static int run_event_loop (void);
+  // Run the event loop until the <ACE_ReactorEx::handle_events>
+  // method returns -1 or the <end_event_loop> method
+  // is invoked.
+
+  static int run_event_loop (ACE_Time_Value &tv);
+  // Run the event loop until the <ACE_ReactorEx::handle_events>
+  // method returns -1, the <end_event_loop> method
+  // is invoked, or the <ACE_Time_Value> expires.
+
+  static int end_event_loop (void);
+  // Instruct the <ACE_ReactorEx::instance()> to terminate its event loop.
+
+  static sig_atomic_t event_loop_done (void);
+  // Report if the <ACE_ReactorEx::instance> event loop is finished.
+
   virtual int open (size_t size = DEFAULT_SIZE, 
 		    int restart = 0, 
 		    ACE_Sig_Handler * = 0,
@@ -825,13 +854,22 @@ protected:
   // This flag is used to keep track of whether we are already closed.
 
 private:
+  static ACE_ReactorEx *reactorEx_;
+  // Pointer to a process-wide <ACE_Reactor>.
+
+  static int delete_reactorEx_;
+  // Must delete the <reactor_> if non-0.
+
+  static sig_atomic_t end_event_loop_;
+  // Terminate the reactor-ex event loop.
+
   ACE_ReactorEx (const ACE_ReactorEx &);
   ACE_ReactorEx &operator = (const ACE_ReactorEx &);
   // Deny access since member-wise won't work...
 };
 
 // if we don't have WinSOCK2, we need these defined
-#if !defined (ACE_HAS_WINSOCK2)
+#if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 /*
  * WinSock 2 extension -- bit values and indices for FD_XXX network events
  */
@@ -877,11 +915,34 @@ public:
   int notify (ACE_Event_Handler * = 0,
 	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK)
   { return 0; }
+
+  static ACE_ReactorEx *instance (void);
+  // Get pointer to a process-wide <ACE_ReactorEx>.
+
+  static ACE_ReactorEx *instance (ACE_ReactorEx *);
+  // Set pointer to a process-wide <ACE_ReactorEx> and return existing
+  // pointer.
+
+  static void close_singleton (void);
+  // Delete the dynamically allocated Singleton
+
+  static int run_event_loop (void);
+  // Placeholder to enable compilation on non-Win32 platforms
+
+  static int run_event_loop (ACE_Time_Value &tv);
+  // Placeholder to enable compilation on non-Win32 platforms
+
+  static int end_event_loop (void);
+  // Placeholder to enable compilation on non-Win32 platforms
+
+  static sig_atomic_t event_loop_done (void);
+  // Placeholder to enable compilation on non-Win32 platforms
 };
 
 #endif /* ACE_WIN32 */
 
 #if defined (__ACE_INLINE__)
+#include "ace/Handle_Set.h"
 #include "ace/ReactorEx.i"
 #endif /* __ACE_INLINE__ */
 #endif /* ACE_REACTOREX_H */

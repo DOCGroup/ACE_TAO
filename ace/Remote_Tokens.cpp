@@ -9,7 +9,7 @@
 #include "ace/Remote_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 typedef ACE_Thread_Mutex ACE_TSS_CONNECTION_MUTEX;
 #else
 typedef ACE_Null_Mutex ACE_TSS_CONNECTION_MUTEX;

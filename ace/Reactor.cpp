@@ -7,6 +7,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Timer_List.h"
 #include "ace/Reactor.h"
+#include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Reactor.i"
@@ -21,6 +22,21 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 #define ACE_REACTOR_HANDLE(H) (H)
 #define ACE_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)])
 #endif /* ACE_WIN32 */
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// Lock the creation of the Singleton.
+static ACE_Thread_Mutex ace_reactor_lock_;
+#endif /* ACE_MT_SAFE */
+
+// Process-wide ACE_Reactor.
+ACE_Reactor *ACE_Reactor::reactor_ = 0;
+
+// Controls whether the Reactor is deleted when we shut down (we can
+// only delete it safely if we created it!)
+int ACE_Reactor::delete_reactor_ = 0;
+
+// Terminate the eventloop.
+sig_atomic_t ACE_Reactor::end_event_loop_ = 0;
 
 // Performs sanity checking on the ACE_HANDLE.
 
@@ -540,7 +556,7 @@ ACE_Reactor::max_notify_iterations (void)
   return this->max_notify_iterations_;
 }
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Enqueue ourselves into the list of waiting threads.
 void 
 ACE_Reactor::renew (void)
@@ -747,7 +763,7 @@ ACE_Reactor::notify (ACE_Event_Handler *eh,
 
   ssize_t n = 0;
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // Pass over both the Event_Handler *and* the mask to allow the
   // caller to dictate which Event_Handler method the receiver
   // invokes.  Note that this call can timeout.
@@ -890,6 +906,121 @@ ACE_Reactor::ready_ops (ACE_HANDLE handle,
                         ops);
 }
 
+ACE_Reactor *
+ACE_Reactor::instance (size_t size /* = ACE_Reactor::DEFAULT_SIZE */)
+{
+  ACE_TRACE ("ACE_Reactor::instance");
+  
+  if (ACE_Reactor::reactor_ == 0)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_reactor_lock_, 0));
+      
+      if (ACE_Reactor::reactor_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor (size), NULL);	  
+	  ACE_Reactor::delete_reactor_ = 1;
+	}
+    }
+  return ACE_Reactor::reactor_;
+}
+
+ACE_Reactor *
+ACE_Reactor::instance (ACE_Reactor *r)
+{
+  ACE_TRACE ("ACE_Reactor::instance");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_reactor_lock_, 0));
+  ACE_Reactor *t = ACE_Reactor::reactor_;
+  // We can't safely delete it since we don't know who created it!
+  ACE_Reactor::delete_reactor_ = 0;
+
+  ACE_Reactor::reactor_ = r;
+  return t;
+}
+
+void
+ACE_Reactor::close_singleton (void)
+{
+  ACE_TRACE ("ACE_Reactor::close_singleton");
+
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_reactor_lock_));
+
+  if (ACE_Reactor::delete_reactor_)
+    {
+      delete ACE_Reactor::reactor_;
+      ACE_Reactor::reactor_ = 0;
+      ACE_Reactor::delete_reactor_ = 0;
+    }
+}
+
+// Run the event loop until the <ACE_Reactor::handle_events>
+// method returns -1 or the <end_event_loop> method
+// is invoked.
+
+int
+ACE_Reactor::run_event_loop (void)
+{
+  ACE_TRACE ("ACE_Reactor::run_event_loop");
+
+  while (ACE_Reactor::end_event_loop_ == 0)
+    {
+      int result = ACE_Reactor::instance ()->handle_events ();
+
+      if (ACE_Service_Config::reconfig_occurred ())
+	ACE_Service_Config::reconfigure ();
+
+      else if (result == -1)
+	return -1;
+    }
+  /* NOTREACHED */
+  return 0;
+}
+
+// Run the event loop until the <ACE_Reactor::handle_events>
+// method returns -1, the <end_event_loop> method
+// is invoked, or the <ACE_Time_Value> expires.
+
+int
+ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
+{
+  ACE_TRACE ("ACE_Reactor::run_event_loop");
+
+  while (ACE_Reactor::end_event_loop_ == 0)
+    {
+      int result = ACE_Reactor::instance ()->handle_events (tv);
+
+      if (ACE_Service_Config::reconfig_occurred ())
+	ACE_Service_Config::reconfigure ();
+      else if (result <= 0)
+	return result;
+    }
+
+  /* NOTREACHED */
+  return 0;
+}
+
+/* static */
+int
+ACE_Reactor::end_event_loop (void)
+{
+  ACE_TRACE ("ACE_Reactor::end_event_loop");
+  ACE_Reactor::end_event_loop_ = 1;
+
+  // Send a notification, but don't block if there's no one to receive
+  // it.
+  return ACE_Reactor::instance ()->notify 
+    (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
+}
+
+/* static */
+sig_atomic_t
+ACE_Reactor::event_loop_done (void)
+{
+  ACE_TRACE ("ACE_Reactor::event_loop_done");
+  return ACE_Reactor::end_event_loop_;
+}
+
 // Initialize the ACE_Reactor
 
 int
@@ -935,7 +1066,7 @@ ACE_Reactor::open (size_t size,
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
     result = -1;
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   else if (this->notify_handler_.open (this) == -1)
     result = -1;
 #endif /* ACE_MT_SAFE */
@@ -960,7 +1091,7 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
     max_notify_iterations_ (-1),
     initialized_ (0),
     state_changed_ (0)
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     , token_ (*this)
 #endif /* ACE_MT_SAFE */
 {
@@ -984,7 +1115,7 @@ ACE_Reactor::ACE_Reactor (size_t size,
     max_notify_iterations_ (-1),
     initialized_ (0),
     state_changed_ (0)
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     , token_ (*this)
 #endif /* ACE_MT_SAFE */
 {
@@ -1014,7 +1145,7 @@ ACE_Reactor::close (void)
     delete this->timer_queue_;
   this->timer_queue_ = 0;
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_.close ();
 #endif /* ACE_MT_SAFE */
   this->initialized_ = 0;
@@ -1412,7 +1543,7 @@ int
 ACE_Reactor::dispatch_notification_handlers (int &number_of_active_handles,
 					     ACE_Reactor_Handle_Set &dispatch_set)
 {
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       // Check to see if the ACE_HANDLE associated with the Reactor's
       // notify hook is enabled.  If so, it means that one or more
       // other threads are trying to update the ACE_Reactor's internal
@@ -1616,7 +1747,7 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // called.
   ACE_Countdown_Time countdown (max_wait_time);
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1);
 
   if (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_) == 0)
@@ -1741,7 +1872,7 @@ ACE_Reactor::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\ninitialized_ = %d\n", this->initialized_));
   ACE_DEBUG ((LM_DEBUG, "\nowner_ = %d\n", this->owner_));
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_.dump ();
   this->token_.dump ();
 #endif /* ACE_MT_SAFE */

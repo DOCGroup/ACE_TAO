@@ -174,7 +174,9 @@
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 
 // Compile using multi-thread libraries.
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 
 #define ACE_NEEDS_DEV_IO_CONVERSION
 

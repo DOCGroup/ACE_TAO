@@ -15,7 +15,7 @@
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
 
-#if defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) 
 // Lock the creation of the Singleton.
 template <PR_ST_1, ACE_SYNCH_1>
 ACE_Thread_Mutex ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ace_svc_handler_lock_;
@@ -26,7 +26,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::instance (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::allocated");
 
-#if defined (ACE_MT_SAFE) && defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) 
   // Lock the creation of the Singleton.  This should be inside of
   // ACE_Svc_Handler, but GNU G++ is too lame to handle this...
   static ACE_Thread_Mutex ace_svc_handler_lock_;

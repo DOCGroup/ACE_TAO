@@ -26,7 +26,7 @@ ACE_Task<ACE_SYNCH_2>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nnext_ = %x", this->next_));
   ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
   ACE_DEBUG ((LM_DEBUG, "\nthr_count_ = %d", this->thr_count_));
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->lock_.dump ();
 #endif /* ACE_MT_SAFE */
 

@@ -22,7 +22,7 @@
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 
 // ************* HERE IS THE ORBIX STUFF - Dave 4/2/96
-#define ACE_HAS_ORBIX
+#define ACE_HAS_ORBIX 1
 
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_STRRECVFD

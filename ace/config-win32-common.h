@@ -141,9 +141,13 @@
 #endif
 
 // MFC itself defines STRICT.
-#if defined ACE_HAS_MFC
+#if defined( ACE_HAS_MFC ) && (ACE_HAS_MFC != 0) 
 	#if !defined(ACE_HAS_STRICT)
-		#define ACE_HAS_STRICT
+		#define ACE_HAS_STRICT 1
+	#endif
+	#if (ACE_HAS_STRICT != 1)
+		#undef ACE_HAS_STRICT
+		#define ACE_HAS_STRICT 1
 	#endif
 #endif
 
@@ -155,7 +159,7 @@
 	#define ACE_HAS_PENTIUM
 #endif
 
-#if defined(ACE_MT_SAFE)
+#if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 	// Platform supports threads.
 	#define ACE_HAS_THREADS
 
@@ -172,14 +176,14 @@
 	#endif
 
 	// use DLLs instead of static libs
-	#if !defined(_DLL)
-		#define _DLL
-	#endif
+//	#if !defined(_DLL)
+//		#define _DLL
+//	#endif
 #endif
 
 // We are using STL's min and max (in algobase.h).  Therefore the
 // macros in window.h are extra
-#if !defined NOMINMAX
+#if !defined (NOMINMAX)
 	#define NOMINMAX
 #endif /* NOMINMAX */
 
@@ -211,7 +215,7 @@
 #endif
 
 // We are build ACE and want to use MFC (multithreaded)
-#if defined(ACE_HAS_DLL) && defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC) && defined (_MT)
+#if (ACE_HAS_DLL != 0) && defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC) && (ACE_HAS_MFC != 0) && defined (_MT)
         #if !defined (_AFXDLL)
 	        // force multithreaded MFC DLL
 	        #define _AFXDLL
@@ -235,7 +239,7 @@
 // This is necessary since MFC users apparently can't #include
 // <windows.h> directly.
 #if defined (_AFXDLL) || defined (_WINDLL) || \
-    ( defined(ACE_HAS_DLL) && defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC))
+    ( (ACE_HAS_DLL != 0) && defined(ACE_BUILD_DLL) && (ACE_HAS_MFC != 0))
 	#include /**/ <afxwin.h>   /* He is doing MFC */
 		// Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
 		// #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
@@ -243,7 +247,7 @@
 
 #if !defined (_INC_WINDOWS)	/* Already include windows.h ? */
 	// Must define strict before including windows.h !
-	#if defined (ACE_HAS_STRICT)
+	#if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
 		#define STRICT 1
 	#endif /* ACE_HAS_STRICT */
 
@@ -267,11 +271,13 @@
 #endif /* !defined (_INC_INWDOWS) */
 
 // Always use WS2 when available
-#if (_WIN32_WINNT >= 0x0400)
-	#define ACE_HAS_WINSOCK2
+#if (ACE_HAS_WINNT4 != 0)
+	#if !defined(ACE_HAS_WINSOCK2)
+		#define ACE_HAS_WINSOCK2 1
+	#endif
 #endif
 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 	#if !defined (_WINSOCK2API_)
 
 		#include /**/ <winsock2.h>		/* will also include windows.h, if not present */
@@ -300,7 +306,7 @@
 	#pragma warning(default: 4201)  /* winnt.h uses nameless structs */
 #endif /* _MSC_VER */
 
-#if(_WIN32_WINNT >= 0x0400)
+#if (_WIN32_WINNT >= 0x0400)
 	#define ACE_HAS_WIN32_TRYLOCK
 	#define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 

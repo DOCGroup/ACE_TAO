@@ -219,7 +219,7 @@ protected:
   static sig_atomic_t sig_pending_;
   // Keeps track of whether a signal is pending. 
   
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static ACE_Recursive_Thread_Mutex ace_sig_handler_lock_;
 #endif /* ACE_MT_SAFE */
 

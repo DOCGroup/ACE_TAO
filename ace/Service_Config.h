@@ -18,7 +18,7 @@
 #define ACE_SERVICE_CONFIG_H
 
 #include "ace/Service_Object.h"
-#include "ace/Thread_Manager.h"
+//#include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 #include "ace/Containers.h"
 
@@ -29,6 +29,7 @@ class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Proactor;
 class ACE_ReactorEx;
+class ACE_Thread_Manager;
 
 extern "C"
 {
@@ -115,59 +116,86 @@ public:
   static int run_reactor_event_loop (void);
   // Run the event loop until the <ACE_Reactor::handle_events> method
   // returns -1 or the <end_reactor_event_loop> method is invoked.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Reactor::run_event_loop() instead.
 
   static int run_reactor_event_loop (ACE_Time_Value &tv);
   // Run the event loop until the <ACE_Reactor::handle_events> method
   // returns -1, the <end_reactor_event_loop> method is invoked, or the
   // <ACE_Time_Value> expires.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Reactor::run_event_loop() instead.
 
   static int end_reactor_event_loop (void);
   // Instruct the <ACE_Service_Config> to terminate its event loop and
-  // notifies the <ACE_Service_Config::reactor> so that it can wake up
+  // notifies the <ACE_Reactor::instance> so that it can wake up
   // and close down gracefully.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Reactor::end_event_loop() instead.
 
   static sig_atomic_t reactor_event_loop_done (void);
   // Report if the Reactor's event loop is finished.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Reactor::event_loop_done() instead.
 
   // = Proactor event loop management methods.
   static int run_proactor_event_loop (void);
   // Run the event loop until the <ACE_Proactor::handle_events>
   // method returns -1 or the <end_proactor_event_loop> method
   // is invoked.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Proactor::run_event_loop() instead.
 
   static int run_proactor_event_loop (ACE_Time_Value &tv);
   // Run the event loop until the <ACE_Proactor::handle_events>
   // method returns -1, the <end_proactor_event_loop> method
   // is invoked, or the <ACE_Time_Value> expires.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Proactor::run_event_loop() instead.
 
   static int end_proactor_event_loop (void);
   // Instruct the <ACE_Service_Config> to terminate its event loop.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Proactor::end_event_loop() instead.
 
   static sig_atomic_t proactor_event_loop_done (void);
   // Report if the proactor event loop is finished.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Proactor::event_loop_done() instead.
 
   // = ReactorEx event loop management methods.
   static int run_reactorEx_event_loop (void);
   // Run the event loop until the <ACE_ReactorEx::handle_events>
   // method returns -1 or the <end_reactorEx_event_loop> method
   // is invoked.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_ReactorEx::run_event_loop() instead.
 
   static int run_reactorEx_event_loop (ACE_Time_Value &tv);
   // Run the event loop until the <ACE_ReactorEx::handle_events>
   // method returns -1, the <end_reactorEx_event_loop> method
   // is invoked, or the <ACE_Time_Value> expires.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_ReactorEx::run_event_loop() instead.
 
   static int end_reactorEx_event_loop (void);
   // Instruct the <ACE_Service_Config> to terminate its event loop.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_ReactorEx::end_event_loop() instead.
 
   static sig_atomic_t reactorEx_event_loop_done (void);
   // Report if the ReactorEx event loop is finished.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_ReactorEx::event_loop_done() instead.
 
   static sig_atomic_t reconfig_occurred (void);
   // True if reconfiguration occurred.
 
   static void reconfig_occurred (sig_atomic_t);
   // Indicate that reconfiguration occurred.
+
+  static void reconfigure (void);
+  // Perform the reconfiguration process.
 
   // = The following methods are static in order to enforce Singleton
   // semantics for the Reactor, Service_Repository, Thread_Manager,
@@ -182,47 +210,71 @@ public:
 
   static ACE_Reactor *reactor (void);
   // Get pointer to a process-wide <ACE_Reactor>.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Reactor::instance() instead.
 
   static ACE_Reactor *reactor (ACE_Reactor *);
   // Set pointer to a process-wide <ACE_Reactor> and return existing
   // pointer.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Reactor::instance() instead.
 
   static ACE_Proactor *proactor (size_t threads = 0);
   // Get pointer to a process-wide <ACE_Proactor>.  <threads> should
   // be part of another method.  It's only here because I'm just a
   // grad student and not in charge.  No, I'm not bitter about this.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Proactor::instance() instead.
 
   static ACE_Proactor *proactor (ACE_Proactor *);
   // Set pointer to a process-wide <ACE_Proactor> and return existing
   // pointer.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Proactor::instance() instead.
 
   static ACE_ReactorEx *reactorEx (void);
   // Get pointer to a process-wide <ACE_ReactorEx>.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_ReactorEx::instance() instead.
 
   static ACE_ReactorEx *reactorEx (ACE_ReactorEx *);
   // Set pointer to a process-wide <ACE_ReactorEx> and return existing
   // pointer.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_ReactorEx::instance() instead.
 
   static ACE_Service_Repository *svc_rep (void);
   // Get pointer to a process-wide <ACE_Service_Repository>.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Service_Repository::instance() instead.
 
   static ACE_Service_Repository *svc_rep (ACE_Service_Repository *);
   // Set pointer to a process-wide <ACE_Service_Repository> and return
   // existing pointer.  
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Service_Repository::instance() instead.
 
   static ACE_Thread_Manager *thr_mgr (void);
   // Get pointer to a process-wide <ACE_Thread_Manager>.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Thread_Manager::instance() instead.
 
   static ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *);
   // Set pointer to a process-wide <ACE_Thread_Manager> and return
   // existing pointer.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Thread_Manager::instance() instead.
 
   static ACE_Allocator *alloc (void);
   // Get pointer to a default <ACE_Allocator>.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Allocator::instance() instead.
 
   static ACE_Allocator *alloc (ACE_Allocator *);
   // Set pointer to a process-wide <ACE_Allocator> and return existing
   // pointer.
+  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
+  // Use ACE_Allocator::instance() instead.
 
   // = Member functions used by various other parts
   //   of the Service Configurator class category.
@@ -263,9 +315,6 @@ protected:
   static void parse_args (int, char *[]);
   // Handle the command-line options intended for the <ACE_Service_Config>.
 
-  static void reconfigure (void);
-  // Perform the reconfiguration process.
-
   static int start_daemon (void);
   // Become a daemon. 
 
@@ -276,42 +325,6 @@ protected:
   // Handles signals to trigger reconfigurations.
 
 private:
-  static ACE_Service_Repository *svc_rep_;
-  // Pointer to a process-wide <ACE_Service_Repository>.
-
-  static int delete_svc_rep_;
-  // Must delete the <svc_rep_> if non-0.
-
-  static ACE_Thread_Manager *thr_mgr_;
-  // Pointer to a process-wide <ACE_Thread_Manager>.
-
-  static int delete_thr_mgr_;
-  // Must delete the <thr_mgr_> if non-0.
-
-  static ACE_Allocator *allocator_;
-  // Pointer to a process-wide <ACE_Allocator> instance.
-
-  static int delete_allocator_;
-  // Must delete the <allocator_> if non-0.
-
-  static ACE_Proactor *proactor_;
-  // Pointer to a process-wide <ACE_Reactor>.
-
-  static int delete_proactor_;
-  // Must delete the <proactor_> if non-0.
-
-  static ACE_ReactorEx *reactorEx_;
-  // Pointer to a process-wide <ACE_Reactor>.
-
-  static int delete_reactorEx_;
-  // Must delete the <proactor_> if non-0.
-
-  static ACE_Reactor *reactor_;
-  // Pointer to a process-wide <ACE_Reactor>.
-
-  static int delete_reactor_;
-  // Must delete the <reactor_> if non-0.
-
   static const char *service_config_file_;
   // Name of service configuration file.
 
@@ -320,15 +333,6 @@ private:
 
   //static ACE_Static_Svc_Descriptor service_list_[];
   // List of statically linked services.
-
-  static sig_atomic_t end_reactor_event_loop_;
-  // Terminate the event loop.
-
-  static sig_atomic_t end_proactor_event_loop_;
-  // Terminate the proactor event loop.
-
-  static sig_atomic_t end_reactorEx_event_loop_;
-  // Terminate the proactor event loop.
 
   static sig_atomic_t reconfig_occurred_;
   // True if reconfiguration occurred.
@@ -350,6 +354,8 @@ private:
 #endif /* __ACE_INLINE__ */
 
 // These must go here to avoid circular includes...
+// (only left here for to not break applications 
+//  which rely on this - no real need any longer)
 #include "ace/Reactor.h"
 #include "ace/Proactor.h"
 #include "ace/ReactorEx.h"

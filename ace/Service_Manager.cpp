@@ -35,14 +35,14 @@ int
 ACE_Service_Manager::suspend (void)
 {
   ACE_TRACE ("ACE_Service_Manager::suspend");
-  return ACE_Service_Config::reactor ()->suspend_handler (this);
+  return ACE_Reactor::instance ()->suspend_handler (this);
 }
      
 int
 ACE_Service_Manager::resume (void)
 {
   ACE_TRACE ("ACE_Service_Manager::resume");
-  return ACE_Service_Config::reactor ()->resume_handler (this);
+  return ACE_Reactor::instance ()->resume_handler (this);
 }
 
 int
@@ -100,7 +100,7 @@ ACE_Service_Manager::init (int argc, char *argv[])
   
   if (this->open (local_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  else if (ACE_Service_Config::reactor ()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler 
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
   return 0;
@@ -119,7 +119,7 @@ ACE_Service_Manager::fini (void)
   ACE_TRACE ("ACE_Service_Manager::fini");
 
   if (this->get_handle () != ACE_INVALID_HANDLE)
-    return ACE_Service_Config::reactor ()->remove_handler 
+    return ACE_Reactor::instance ()->remove_handler 
       (this, ACE_Event_Handler::ACCEPT_MASK);
   return 0;
 }
@@ -147,7 +147,7 @@ int
 ACE_Service_Manager::list_services (void)
 {
   ACE_TRACE ("ACE_Service_Manager::list_services");
-  ACE_Service_Repository_Iterator sri (*ACE_Service_Config::svc_rep ());
+  ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance ());
 
   for (const ACE_Service_Record *sr; 
        sri.next (sr) != 0; 
@@ -191,7 +191,7 @@ ACE_Service_Manager::reconfigure_services (void)
 #endif /* 0 */
 
   // Flag the main event loop that a reconfiguration should occur.
-  // The next trip through the ACE_Service_Config::run_reactor_event_loop()
+  // The next trip through the ACE_Reactor::run_event_loop()
   // should pick this up and cause a reconfiguration!
   ACE_Service_Config::reconfig_occurred ((sig_atomic_t) 1);
   return this->client_stream_.send_n ("done\n", sizeof ("done\n"));
@@ -247,19 +247,18 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 	*p = '\0';
 
 	ACE_Event_Handler *old_signal_handler = 0;
-	ACE_Service_Config::reactor ()->register_handler (SIGPIPE, this, 0,
-							  &old_signal_handler);
-
+	ACE_Reactor::instance ()->register_handler (SIGPIPE, this, 0,
+						    &old_signal_handler);
+	
 	if (ACE_OS::strcmp (request, "help") == 0)
 	  this->list_services ();
 	else if (ACE_OS::strcmp (request, "reconfigure") == 0)
 	  this->reconfigure_services ();
-
+	
 	// Additional management services may be handled here... 
 
 	// Restore existing SIGPIPE handler
-	ACE_Service_Config::reactor ()->register_handler 
-	  (SIGPIPE, old_signal_handler);
+	ACE_Reactor::instance ()->register_handler (SIGPIPE, old_signal_handler);
       }
     }
   if (this->client_stream_.close () == -1 && this->debug_)

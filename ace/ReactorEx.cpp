@@ -5,14 +5,31 @@
 #include "ace/ReactorEx.h"
 #include "ace/Timer_List.h"
 #include "ace/Thread.h"
+#include "ace/Service_Config.h"
 
 #if defined (ACE_WIN32)
 
 #if !defined (__ACE_INLINE__)
+#include "ace/Handle_Set.h"
 #include "ace/ReactorEx.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// Lock the creation of the Singleton.
+static ACE_Thread_Mutex ace_reactorex_lock_;
+#endif /* ACE_MT_SAFE */
+
+// Process-wide ACE_ReactorEx.
+ACE_ReactorEx *ACE_ReactorEx::reactorEx_ = 0;
+
+// Controls whether the ReactorEx is deleted when we shut down (we can
+// only delete it safely if we created it!)
+int ACE_ReactorEx::delete_reactorEx_ = 0;
+
+// Terminate the eventloop.
+sig_atomic_t ACE_ReactorEx::end_event_loop_ = 0;
 
 /************************************************************/
 
@@ -578,6 +595,109 @@ ACE_ReactorEx::ACE_ReactorEx (size_t size,
 {
   if (this->open (size, 0, sh, tq) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ReactorEx"));
+}
+
+ACE_ReactorEx *
+ACE_ReactorEx::instance (void)
+{
+  ACE_TRACE ("ACE_ReactorEx::instance");
+
+  if (ACE_ReactorEx::reactorEx_ == 0)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_reactorex_lock_, 0));
+
+      if (ACE_ReactorEx::reactorEx_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_ReactorEx::reactorEx_, ACE_ReactorEx, 0);
+	  ACE_ReactorEx::delete_reactorEx_ = 1;
+	}
+    }
+
+  return ACE_ReactorEx::reactorEx_;
+}
+
+ACE_ReactorEx *
+ACE_ReactorEx::instance (ACE_ReactorEx *r)
+{
+  ACE_TRACE ("ACE_ReactorEx::instance");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_reactorex_lock_, 0));
+  ACE_ReactorEx *t = ACE_ReactorEx::reactorEx_;
+  // We can't safely delete it since we don't know who created it!
+  ACE_ReactorEx::delete_reactorEx_ = 0;
+
+  ACE_ReactorEx::reactorEx_ = r;
+  return t;
+}
+
+void
+ACE_ReactorEx::close_singleton (void)
+{
+  ACE_TRACE ("ACE_ReactorEx::close_singleton");
+
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_reactorex_lock_));
+
+  if (ACE_ReactorEx::delete_reactorEx_)
+    {
+      delete ACE_ReactorEx::reactorEx_;
+      ACE_ReactorEx::reactorEx_ = 0;
+      ACE_ReactorEx::delete_reactorEx_ = 0;
+    }
+}
+
+int
+ACE_ReactorEx::run_event_loop (void)
+{
+  ACE_TRACE ("ACE_ReactorEx::run_event_loop");
+
+  while (ACE_ReactorEx::end_event_loop_ == 0)
+    {
+      int result = ACE_ReactorEx::instance ()->handle_events ();
+
+      if (ACE_Service_Config::reconfig_occurred ())
+	ACE_Service_Config::reconfigure ();
+      
+      else if (result == -1)
+	return -1;
+    }
+  /* NOTREACHED */
+  return 0;
+}
+
+
+int
+ACE_ReactorEx::run_event_loop (ACE_Time_Value &tv)
+{
+  ACE_TRACE ("ACE_ReactorEx::run_event_loop");
+
+  while (ACE_ReactorEx::end_event_loop_ == 0 && tv != ACE_Time_Value::zero)
+    {
+      int result = ACE_ReactorEx::instance ()->handle_events (tv);
+      if (ACE_Service_Config::reconfig_occurred ())
+	ACE_Service_Config::reconfigure ();
+      else if (result == -1)
+	return result;
+    }
+  
+  /* NOTREACHED */
+  return 0;
+}
+
+int
+ACE_ReactorEx::end_event_loop (void)
+{
+  ACE_TRACE ("ACE_ReactorEx::end_event_loop");
+  ACE_ReactorEx::end_event_loop_ = 1;
+  return ACE_ReactorEx::instance ()->notify ();
+}
+
+/* static */
+sig_atomic_t
+ACE_ReactorEx::event_loop_done (void)
+{
+  ACE_TRACE ("ACE_ReactorEx::end_event_loop");
+  return ACE_ReactorEx::end_event_loop_;
 }
 
 int
@@ -1328,7 +1448,7 @@ ACE_ReactorEx::max_notify_iterations (void)
 }
 
 // No-op WinSOCK2 methods to help ReactorEx compile
-#if !defined (ACE_HAS_WINSOCK2)
+#if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 int 
 WSAEventSelect (SOCKET s,
 		WSAEVENT hEventObject,
@@ -1353,6 +1473,52 @@ WSAEnumNetworkEvents (SOCKET s,
   return -1;
 }
 #endif /* !defined ACE_HAS_WINSOCK2 */
+
+#else /* ACE_WIN32 */
+
+ACE_ReactorEx *
+ACE_ReactorEx::instance (void)
+{
+  return NULL;
+}
+
+ACE_ReactorEx *
+ACE_ReactorEx::reactorEx (ACE_ReactorEx *r)
+{
+  return NULL;
+}
+
+void
+ACE_ReactorEx::close_singleton (void)
+{
+}
+
+int 
+ACE_Proactor::run_event_loop (void)
+{
+  // not implemented
+  return -1;
+}
+
+int 
+ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
+{
+  // not implemented
+  return -1;
+}
+
+int 
+ACE_Proactor::end_event_loop (void)
+{
+  // not implemented
+  return -1;
+}
+
+sig_atomic_t 
+ACE_Proactor::event_loop_done (void)
+{
+  return sig_atomic_t(1);
+}
 
 #endif /* ACE_WIN32 */
 
