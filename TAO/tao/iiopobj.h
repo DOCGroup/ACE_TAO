@@ -25,11 +25,11 @@
 #  define TAO_IIOPOBJ_H
 
 class TAO_Export IIOP
+{
   // = TITLE
   //   This class provides a namespace.
-{
 public:
-  // IIOP Protocol version is distinct from GIOP version.
+  // = IIOP Protocol version is distinct from GIOP version.
   enum
   {
     MY_MAJOR = 1,
@@ -126,6 +126,7 @@ public:
 };
 
 class TAO_Export IIOP_Object : public STUB_Object
+{
   // = TITLE
   //   Representation of an IIOP objref: the profile body, and any
   //   forwarded pointer.  Implementations of basic invocation code;
@@ -134,7 +135,6 @@ class TAO_Export IIOP_Object : public STUB_Object
   // = DESCRIPTION
   //   NOTE that this uses (single) implementation inheritance to share
   //   most of the basic code for an object reference.
-{
 public:
   void do_call (CORBA::Environment &env,
                 const TAO_Call_Data *info,
@@ -154,6 +154,8 @@ public:
 
   CORBA::ULong hash (CORBA::ULong maximum,
                      CORBA::Environment &env);
+  // Compute a hash value for the object.
+
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
                                 CORBA::Environment &env);
   // XXX All objref representations should know how to marshal
@@ -206,11 +208,11 @@ public:
                const char *objkey /*= "0"*/); // @@ (IRFAN) We may need to remove this def arg
   // Constructor used typically by the server side.
 
-  // = COM stuff
-  ULONG  AddRef (void);
-  ULONG  Release (void);
-  TAO_HRESULT  QueryInterface (REFIID type_id,
-                               void **ppv);
+  // = Memory management.
+  ULONG AddRef (void);
+  ULONG Release (void);
+  TAO_HRESULT QueryInterface (REFIID type_id,
+                              void **ppv);
 
   virtual TAO_ObjectKey *key (CORBA::Environment &env);
   // Return the object key as an out parameter.  Caller should release

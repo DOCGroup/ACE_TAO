@@ -1,4 +1,3 @@
-//
 // $Id$
 //
 // @(#)iioporb.cpp	1.8 95/09/19
@@ -15,7 +14,7 @@
 static const char ior_prefix [] = "IOR:";
 static const char iiop_prefix [] = "iiop:";
 
-// Objref stringification
+// Objref stringification.
 
 CORBA::String
 IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
@@ -40,7 +39,8 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       CDR cdr (buf, sizeof buf, TAO_ENCAP_BYTE_ORDER);
 
       bytes = buf;
-      (void) ACE_OS::memset (bytes, 0, BUFSIZ);	// support limited oref ACE_OS::strcmp
+      // support limited oref ACE_OS::strcmp.
+      (void) ACE_OS::memset (bytes, 0, BUFSIZ);	
 
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.put_char (TAO_ENCAP_BYTE_ORDER);
@@ -60,6 +60,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       ACE_OS::strcpy ((char *) string, ior_prefix);
 
       bytes = cdr.buffer ();
+
       for (cp = (CORBA::String) ACE_OS::strchr ((char *) string, ':') + 1;
            len--;
            bytes++)

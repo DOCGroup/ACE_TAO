@@ -1,5 +1,5 @@
-// $Id$
-//
+// $ID: interp.cpp,v 1.21 1998/03/17 19:55:03 levine Exp $
+
 // @(#)interp.cpp       1.4 95/11/04
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -134,51 +134,48 @@ struct table_element
 
 static table_element table [CORBA::TC_KIND_COUNT] =
 {
-  { 0, 1, 0 },                          // CORBA::tk_null
-  { 0, 1, 0 },                          // CORBA::tk_void
+  { 0, 1, 0 },                            // CORBA::tk_null
+  { 0, 1, 0 },                            // CORBA::tk_void
+ 
+  { 0, 1, 0, 0 },                         // CORBA::tk_short
+  { 0, 1, 0, 0 },                         // CORBA::tk_long
+  { 0, 1, 0, 0 },                         // CORBA::tk_ushort
+  { 0, 1, 0, 0 },                         // CORBA::tk_ulong
 
-  { 0, 1, 0, 0 },                               // CORBA::tk_short
-  { 0, 1, 0, 0 },                               // CORBA::tk_long
-  { 0, 1, 0, 0 },                               // CORBA::tk_ushort
-  { 0, 1, 0, 0 },                               // CORBA::tk_ulong
+  { 0, 1, 0, 0 },                         // CORBA::tk_float
+  { 0, 1, 0, 0 },                         // CORBA::tk_double
 
-  { 0, 1, 0, 0 },                               // CORBA::tk_float
-  { 0, 1, 0, 0 },                               // CORBA::tk_double
+  { 0, 1, 0, 0 },                         // CORBA::tk_boolean
+  { 0, 1, 0, 0 },                         // CORBA::tk_char
+  { 0, 1, 0, 0 },                         // CORBA::tk_octet
+  { 0, 1, 0, 0 },                         // CORBA::tk_any
 
-  { 0, 1, 0, 0 },                               // CORBA::tk_boolean
-  { 0, 1, 0, 0 },                               // CORBA::tk_char
-  { 0, 1, 0, 0 },                               // CORBA::tk_octet
-  { 0, 1, 0, 0 },                               // CORBA::tk_any
+  { 0, 1, 0, 0 },                         // CORBA::tk_TypeCode
+  { 0, 1, 0, 0 },                         // CORBA::tk_Principal
+  { 0, 1, 0, skip_encapsulation },        // CORBA::tk_objref
 
-  { 0, 1, 0, 0 },                               // CORBA::tk_TypeCode
-  { 0, 1, 0, 0 },                               // CORBA::tk_Principal
-  { 0, 1, 0, skip_encapsulation },              // CORBA::tk_objref
+  { 0, 1, calc_struct_attributes, 0 },    // CORBA::tk_struct
+  { 0, 1, calc_union_attributes, 0 },     // CORBA::tk_union
 
-  { 0, 1, calc_struct_attributes, 0 },  // CORBA::tk_struct
-  { 0, 1, calc_union_attributes, 0 },           // CORBA::tk_union
+  { 0, 1, 0, skip_encapsulation },        // CORBA::tk_enum
+  { 0, 1, 0, skip_long },                 // CORBA::tk_string
+  { 0, 1, 0, skip_encapsulation },        // CORBA::tk_sequence
+  { 0, 1, calc_array_attributes, 0 },     // CORBA::tk_array
 
-  { 0, 1, 0, skip_encapsulation },              // CORBA::tk_enum
-  { 0, 1, 0, skip_long },                       // CORBA::tk_string
-  { 0, 1, 0, skip_encapsulation },              // CORBA::tk_sequence
-  { 0, 1, calc_array_attributes, 0 },           // CORBA::tk_array
+  // = Two TCKind values added in 94-11-7
+  { 0, 1, calc_alias_attributes, 0 },     // CORBA::tk_alias
+  { 0, 1, calc_exception_attributes, 0 }, // CORBA::tk_except
 
-  //
-  // Two TCKind values added in 94-11-7
-  //
-  { 0, 1, calc_alias_attributes, 0 },           // CORBA::tk_alias
-  { 0, 1, calc_exception_attributes, 0 },       // CORBA::tk_except
-
-  //
-  // Five extended IDL data types, defined in Appendix A of 94-9-32
+  // = Five extended IDL data types, defined in Appendix A of 94-9-32
   // but here with different numeric TCKind codes.  These types
   // represent extensions to CORBA (specifically, to IDL) which are
   // not yet standardized.
-  //
-  { 0, 1, 0, 0 },                               // CORBA::tk_longlong
-  { 0, 1, 0, 0 },                               // CORBA::tk_ulonglong
-  { 0, 1, 0, 0 },                               // CORBA::tk_longdouble
-  { 0, 1, 0, 0 },                               // CORBA::tk_wchar
-  { 0, 1, 0, skip_long }                        // CORBA::tk_wstring
+
+  { 0, 1, 0, 0 },                         // CORBA::tk_longlong
+  { 0, 1, 0, 0 },                         // CORBA::tk_ulonglong
+  { 0, 1, 0, 0 },                         // CORBA::tk_longdouble
+  { 0, 1, 0, 0 },                         // CORBA::tk_wchar
+  { 0, 1, 0, skip_long }                  // CORBA::tk_wstring
 };
 
 // Runtime initialization of the table above; note that this compiles

@@ -8,7 +8,8 @@ IIOP_ORB::IIOP_ORB(void)
 
 ACE_INLINE
 IIOP_ORB::~IIOP_ORB(void)
-{}
+{
+}
 
 
 ACE_INLINE void

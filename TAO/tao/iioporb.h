@@ -18,18 +18,16 @@
 
 #include "tao/corba.h"
 
-typedef class IIOP_ORB *IIOP_ORB_ptr;
-
 // ORB pseudo-objref
 
 class TAO_Export IIOP_ORB : public CORBA_ORB
-// = TITLE
-//    Bridge implementation of IIOP_ORB
-//
-// = DESCRIPTION
-//    This is one of the two main hooks into IIOP in this Win32
-//    C/C++/COM based implementation; the other being IIOP_Object.
 {
+  // = TITLE
+  //    Bridge implementation of <IIOP_ORB>.
+  //
+  // = DESCRIPTION
+  //    This is one of the two main hooks into IIOP in this C/C++
+  //    based implementation; the other being <IIOP_Object>.
 public:
   IIOP_ORB (void);
   // constructor
@@ -39,15 +37,16 @@ public:
 
   CORBA::Object_ptr string_to_object (CORBA::String str,
                                       CORBA::Environment &env);
-  // Get an object reference from the IOR string
+  // Get an object reference from the IOR string.
 
   CORBA::String object_to_string (CORBA::Object_ptr obj,
                                   CORBA::Environment &env);
-  // Convert an object reference to an IOR stringified form
+  // Convert an object reference to an IOR stringified form.
 
   TAO_HRESULT QueryInterface (REFIID riid, 
                               void **ppv);
-  // COM stuff - get the underlying IUnknown object based on the riid
+  // COM stuff - get the underlying IUnknown object based on the riid.
+  // @@ (IRFAN) Can we remove this COM stuff?!
 
   // = ACCESSORS
   void use_omg_ior_format (CORBA::Boolean ior);
@@ -57,9 +56,9 @@ public:
   
 private:
   CORBA::Boolean use_omg_ior_format_;
-  // decides whether to use the URL notation or to use IOR notation
+  // Decides whether to use the URL notation or to use IOR notation.
 
-  // These are not provided.
+  // = These are not provided.
   IIOP_ORB (const IIOP_ORB &);
   IIOP_ORB &operator = (const IIOP_ORB &);
 };
