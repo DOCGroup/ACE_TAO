@@ -857,10 +857,10 @@ ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
                      len - bytes_written);
       if (n == -1)
         {
-          if (errno != EWOULDBLOCK)
-            return -1;
-          else
+          if (errno == EWOULDBLOCK)
             n = 0; // Keep trying to send.
+          else
+            return -1;
         }
     }
 
@@ -887,10 +887,10 @@ ACE::send_n (ACE_HANDLE handle,
                         flags);
       if (n == -1)
         {
-          if (errno != EWOULDBLOCK)
-            return -1;
-          else
+          if (errno == EWOULDBLOCK)
             n = 0; // Keep trying to send.
+          else
+            return -1;
         }
     }
 
@@ -916,10 +916,10 @@ ACE::write_n (ACE_HANDLE handle,
                          len - bytes_written);
       if (n == -1)
         {
-          if (errno != EWOULDBLOCK)
-            return -1;
-          else
+          if (errno == EWOULDBLOCK)
             n = 0; // Keep trying to send.
+          else
+            return -1;
         }
     }
 
@@ -939,10 +939,10 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len)
 
       if (n == -1)
         {
-          if (errno != EWOULDBLOCK)
-            return -1;
-          else
+          if (errno == EWOULDBLOCK)
             n = 0; // Keep trying to read.
+          else
+            return -1;
         }
       else if (n == 0)
         break;
@@ -966,10 +966,10 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len, int flags)
 
       if (n == -1)
         {
-          if (errno != EWOULDBLOCK)
-            return -1;
-          else
+          if (errno == EWOULDBLOCK)
             n = 0; // Keep trying to read.
+          else
+            return -1;
         }
       else if (n == 0)
         break;
@@ -997,10 +997,10 @@ ACE::read_n (ACE_HANDLE handle,
 
       if (n == -1)
         {
-          if (errno != EWOULDBLOCK)
-            return -1;
-          else
+          if (errno == EWOULDBLOCK)
             n = 0; // Keep trying to read.
+          else
+            return -1;
         }
       else if (n == 0)
         break;
@@ -1889,7 +1889,10 @@ ACE::send_n (ACE_HANDLE handle,
       i = ACE::send (handle, (char *) buf + bytes_written,
                      n - bytes_written, flags, timeout);
       if (i == -1)
-        break;
+        if (errno == EWOULDBLOCK)
+          n = 0; // Keep trying to send.
+        else
+          return -1;
     }
 
   return bytes_written;
@@ -2480,7 +2483,7 @@ ACE::get_ip_interfaces (size_t &count,
           ifdevkey += TCP_PARAM_SUBKEY;
 
           // b. extract value
-	  buf_len = sizeof(buffer);   // Gets overwritten on each call
+          buf_len = sizeof(buffer);   // Gets overwritten on each call
           if (get_reg_value (ifdevkey.fast_rep (), IPADDR_NAME_ID, buffer, buf_len))
             return -4;
 
