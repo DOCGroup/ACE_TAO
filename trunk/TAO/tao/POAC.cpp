@@ -168,7 +168,7 @@ PortableServer::ForwardRequest::ForwardRequest(
 }
 
 // narrow
-PortableServer::ForwardRequest_ptr 
+PortableServer::ForwardRequest_ptr
 PortableServer::ForwardRequest::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:PortableServer/ForwardRequest:1.0", exc->_id ())) // same type
@@ -306,7 +306,8 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
   static const TAO_Call_Data _get_PortableServer_ThreadPolicy_value_calldata =
   {"_get_value", 1, 1, _get_PortableServer_ThreadPolicy_value_paramdata, 0, 0};
 
-  PortableServer::ThreadPolicyValue retval;
+  PortableServer::ThreadPolicyValue retval =
+    ACE_static_cast (PortableServer::ThreadPolicyValue, -1);
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
@@ -410,7 +411,8 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
   static const TAO_Call_Data _get_PortableServer_LifespanPolicy_value_calldata =
   {"_get_value", 1, 1, _get_PortableServer_LifespanPolicy_value_paramdata, 0, 0};
 
-  PortableServer::LifespanPolicyValue retval;
+  PortableServer::LifespanPolicyValue retval =
+    ACE_static_cast (PortableServer::LifespanPolicyValue, -1);
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
@@ -514,7 +516,8 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
   static const TAO_Call_Data _get_PortableServer_IdUniquenessPolicy_value_calldata =
   {"_get_value", 1, 1, _get_PortableServer_IdUniquenessPolicy_value_paramdata, 0, 0};
 
-  PortableServer::IdUniquenessPolicyValue retval;
+  PortableServer::IdUniquenessPolicyValue retval =
+    ACE_static_cast (PortableServer::IdUniquenessPolicyValue, -1);
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
@@ -618,7 +621,8 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
   static const TAO_Call_Data _get_PortableServer_IdAssignmentPolicy_value_calldata =
   {"_get_value", 1, 1, _get_PortableServer_IdAssignmentPolicy_value_paramdata, 0, 0};
 
-  PortableServer::IdAssignmentPolicyValue retval;
+  PortableServer::IdAssignmentPolicyValue retval =
+    ACE_static_cast (PortableServer::IdAssignmentPolicyValue, -1);
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
@@ -722,7 +726,8 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
   static const TAO_Call_Data _get_PortableServer_ImplicitActivationPolicy_value_calldata =
   {"_get_value", 1, 1, _get_PortableServer_ImplicitActivationPolicy_value_paramdata, 0, 0};
 
-  PortableServer::ImplicitActivationPolicyValue retval;
+  PortableServer::ImplicitActivationPolicyValue retval =
+    ACE_static_cast (PortableServer::ImplicitActivationPolicyValue, -1);
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
@@ -826,7 +831,8 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
   static const TAO_Call_Data _get_PortableServer_ServantRetentionPolicy_value_calldata =
   {"_get_value", 1, 1, _get_PortableServer_ServantRetentionPolicy_value_paramdata, 0, 0};
 
-  PortableServer::ServantRetentionPolicyValue retval;
+  PortableServer::ServantRetentionPolicyValue retval =
+    ACE_static_cast (PortableServer::ServantRetentionPolicyValue, -1);
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
@@ -932,7 +938,8 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
   static const TAO_Call_Data _get_PortableServer_RequestProcessingPolicy_value_calldata =
   {"_get_value", 1, 1, _get_PortableServer_RequestProcessingPolicy_value_paramdata, 0, 0};
 
-  PortableServer::RequestProcessingPolicyValue retval;
+  PortableServer::RequestProcessingPolicyValue retval =
+    ACE_static_cast (PortableServer::RequestProcessingPolicyValue, -1);
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
