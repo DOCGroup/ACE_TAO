@@ -6174,7 +6174,7 @@ ACE_OS::getpid (void)
 {
   // ACE_TRACE ("ACE_OS::getpid");
 #if defined (ACE_WIN32)
-  return ::GetCurrentProcessId();
+  return ::GetCurrentProcessId ();
 #elif defined (VXWORKS) || defined (CHORUS)
   // getpid() is not supported:  just one process anyways
   return 0;
@@ -6187,10 +6187,10 @@ ACE_INLINE pid_t
 ACE_OS::getpgid (pid_t pid)
 {
   // ACE_TRACE ("ACE_OS::getpid");
-#if defined (ACE_WIN32) || defined (CHORUS)
+#if defined (ACE_LACKS_GETPGID)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS) 
-  // getpid() is not supported:  just one process anyways
+  // getpid() is not supported, only one process anyway.
   return 0;
 #else
   ACE_OSCALL_RETURN (::getpgid (pid), pid_t, -1);

@@ -1,3 +1,11 @@
+Wed Apr 30 08:42:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace: Added a new macro ACE_LACKS_GETPGID to clean up the code
+	  in ACE_OS::getpgid().
+
+	* ace: Added new config*.h files and platform*.GNU files for
+ 	  FreeBSD.  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for these.
+
 Wed Apr 30 07:44:36 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-osf1-4.0*.h: removed ACE_HAS_SIGWAIT.
