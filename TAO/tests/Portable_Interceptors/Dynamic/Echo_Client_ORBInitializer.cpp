@@ -42,8 +42,6 @@ Echo_Client_ORBInitializer::post_init (
                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Transfer ownership to the ORB.
-  (void) client_interceptor._retn ();
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
