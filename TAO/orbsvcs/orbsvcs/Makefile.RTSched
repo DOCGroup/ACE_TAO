@@ -34,6 +34,8 @@ override TAO_IDLFLAGS += \
 
 
 IDL_FILES += RtecScheduler
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
 CPP_SRCS += \
         Scheduler_Factory \
         Runtime_Scheduler \
@@ -46,6 +48,7 @@ CPP_SRCS += \
         Sched/Scheduler \
         Sched/Scheduler_Generic \
         Sched/Strategy_Scheduler
+endif # ACE_HAS_GNUG_PRE_2_8
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \

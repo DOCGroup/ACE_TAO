@@ -1,3 +1,14 @@
+Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++. 
+	
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
+	  guards  in the files. This should fix a small compilation
+	  problem in LYNX-I386 builds.
+
 Sun Mar 25 07:42:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp :
