@@ -1,3 +1,6 @@
+// $Id$
+
+#define ACE_BUILD_DLL
 #include "ace/config.h"
 #if defined (ACE_HAS_TERM_IOCTLS) /* to avoid conflict with sys/termios.h ECHO */
 #undef ACE_HAS_TERM_IOCTLS
@@ -141,7 +144,9 @@ extern "C" {
 		} \
 	while ( 0 )
 
+#if 0
 #define unput(c) ace_yyunput( c, ace_yytext_ptr )
+#endif /* 0 */
 
 
 struct ace_yy_buffer_state
@@ -216,7 +221,9 @@ static int ace_yy_start = 0;	/* start state number */
  */
 static int ace_yy_did_buffer_switch_on_eof;
 
+#if 0
 static void ace_yyunput YY_PROTO(( int c, char *buf_ptr ));
+#endif /* 0 */
 void ace_yyrestart YY_PROTO(( FILE *input_file ));
 void ace_yy_switch_to_buffer YY_PROTO(( YY_BUFFER_STATE new_buffer ));
 void ace_yy_load_buffer_state YY_PROTO(( void ));
@@ -224,12 +231,14 @@ YY_BUFFER_STATE ace_yy_create_buffer YY_PROTO(( FILE *file, int size ));
 void ace_yy_delete_buffer YY_PROTO(( YY_BUFFER_STATE b ));
 void ace_yy_init_buffer YY_PROTO(( YY_BUFFER_STATE b, FILE *file ));
 
+#if 0
 static int ace_yy_start_stack_ptr = 0;
 static int ace_yy_start_stack_depth = 0;
 static int *ace_yy_start_stack = 0;
 static void ace_yy_push_state YY_PROTO(( int new_state ));
 static void ace_yy_pop_state YY_PROTO(( void ));
 static int ace_yy_top_state YY_PROTO(( void ));
+#endif /* 0 */
 
 static void *ace_yy_flex_alloc YY_PROTO(( unsigned int ));
 static void *ace_yy_flex_realloc YY_PROTO(( void *, unsigned int ));
@@ -661,87 +670,87 @@ case 2:
 YY_USER_ACTION
 # line 35 "Svc_Conf.l"
 { return token (ACE_DYNAMIC); }
-	YY_BREAK
+	/* YY_BREAK */
 case 3:
 YY_USER_ACTION
 # line 36 "Svc_Conf.l"
 { return token (ACE_STATIC); }
-	YY_BREAK
+	/* YY_BREAK */
 case 4:
 YY_USER_ACTION
 # line 37 "Svc_Conf.l"
 { return token (ACE_SUSPEND); }
-	YY_BREAK
+	/* YY_BREAK */
 case 5:
 YY_USER_ACTION
 # line 38 "Svc_Conf.l"
 { return token (ACE_RESUME); }
-	YY_BREAK
+	/* YY_BREAK */
 case 6:
 YY_USER_ACTION
 # line 39 "Svc_Conf.l"
 { return token (ACE_REMOVE); }
-	YY_BREAK
+	/* YY_BREAK */
 case 7:
 YY_USER_ACTION
 # line 40 "Svc_Conf.l"
 { return token (ACE_USTREAM); }
-	YY_BREAK
+	/* YY_BREAK */
 case 8:
 YY_USER_ACTION
 # line 41 "Svc_Conf.l"
 { return token (ACE_MODULE_T); }
-	YY_BREAK
+	/* YY_BREAK */
 case 9:
 YY_USER_ACTION
 # line 42 "Svc_Conf.l"
 { return token (ACE_SVC_OBJ_T); }
-	YY_BREAK
+	/* YY_BREAK */
 case 10:
 YY_USER_ACTION
 # line 43 "Svc_Conf.l"
 { return token (ACE_STREAM_T); }
-	YY_BREAK
+	/* YY_BREAK */
 case 11:
 YY_USER_ACTION
 # line 44 "Svc_Conf.l"
 { return token (ACE_ACTIVE); }
-	YY_BREAK
+	/* YY_BREAK */
 case 12:
 YY_USER_ACTION
 # line 45 "Svc_Conf.l"
 { return token (ACE_INACTIVE); }
-	YY_BREAK
+	/* YY_BREAK */
 case 13:
 YY_USER_ACTION
 # line 46 "Svc_Conf.l"
 { return token (ACE_COLON); }
-	YY_BREAK
+	/* YY_BREAK */
 case 14:
 YY_USER_ACTION
 # line 47 "Svc_Conf.l"
 { return token (ACE_STAR); }
-	YY_BREAK
+	/* YY_BREAK */
 case 15:
 YY_USER_ACTION
 # line 48 "Svc_Conf.l"
 { return token (ACE_LPAREN); }
-	YY_BREAK
+	/* YY_BREAK */
 case 16:
 YY_USER_ACTION
 # line 49 "Svc_Conf.l"
 { return token (ACE_RPAREN); }
-	YY_BREAK
+	/* YY_BREAK */
 case 17:
 YY_USER_ACTION
 # line 50 "Svc_Conf.l"
 { return token (ACE_LBRACE); }
-	YY_BREAK
+	/* YY_BREAK */
 case 18:
 YY_USER_ACTION
 # line 51 "Svc_Conf.l"
 { return token (ACE_RBRACE); }
-	YY_BREAK
+	/* YY_BREAK */
 case 19:
 YY_USER_ACTION
 # line 52 "Svc_Conf.l"
@@ -750,7 +759,7 @@ YY_USER_ACTION
 			ace_yyleng -= 1;
                         ace_yylval.ident_ = ace_obstack->copy (ace_yytext + 1, ace_yyleng); 
 			return token (ACE_STRING); }
-	YY_BREAK
+	/* YY_BREAK */
 case 20:
 YY_USER_ACTION
 # line 57 "Svc_Conf.l"
@@ -758,7 +767,7 @@ YY_USER_ACTION
 		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng); 
 			return token (ACE_IDENT); 
 		      }
-	YY_BREAK
+	/* YY_BREAK */
 case 21:
 YY_USER_ACTION
 # line 61 "Svc_Conf.l"
@@ -766,7 +775,7 @@ YY_USER_ACTION
 		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng); 
 			return token (ACE_PATHNAME); 
 		      }
-	YY_BREAK
+	/* YY_BREAK */
 case 22:
 YY_USER_ACTION
 # line 65 "Svc_Conf.l"
@@ -787,7 +796,7 @@ case YY_STATE_EOF(PARAMETERS):
 case YY_STATE_EOF(NORMAL):
 # line 68 "Svc_Conf.l"
 { YY_NEW_FILE; ace_yyterminate(); }
-	YY_BREAK
+	/* YY_BREAK */
 case 25:
 YY_USER_ACTION
 # line 69 "Svc_Conf.l"
@@ -1120,6 +1129,7 @@ ace_yy_state_type ace_yy_current_state;
 	}
 
 
+#if 0
 #ifdef YY_USE_PROTOS
 static void ace_yyunput( int c, register char *ace_yy_bp )
 #else
@@ -1164,7 +1174,7 @@ register char *ace_yy_bp;
 	 */
 	YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
 	}
-
+#endif /* 0 */
 
 #ifdef __cplusplus
 static int ace_yyinput()
@@ -1372,6 +1382,7 @@ FILE *file;
 	}
 
 
+#if 0
 #ifdef YY_USE_PROTOS
 static void ace_yy_push_state( int new_state )
 #else
@@ -1417,7 +1428,7 @@ static int ace_yy_top_state()
 	{
 	return ace_yy_start_stack[ace_yy_start_stack_ptr - 1];
 	}
-
+#endif /* 0 */
 
 #ifdef YY_USE_PROTOS
 static void ace_yy_fatal_error( const char msg[] )
