@@ -5,7 +5,7 @@
 
 ACE_INLINE void
 TAO_LB_LoadBalancer::disconnect (TAO_LB_ReplicaProxy *proxy,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Ossama, what is the we cannot raise that exception here!
