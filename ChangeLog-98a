@@ -1,3 +1,9 @@
+Thu Mar 12 15:37:14 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Read_Buffer.* (read): null terminate the result buffer.
+          Also, changed "inline" to "ACE_INLINE" and updated #includes
+          so that ACE inlining works.
+
 Thu Mar 12 02:19:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (upcall): In the Select_Reactor, when it
