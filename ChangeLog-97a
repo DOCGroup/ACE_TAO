@@ -1,3 +1,9 @@
+Thu Mar 20 05:23:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Moved the ACE_LACKS_SIGACTION block so that it will
+ 	  work on Win32.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for pointing this out.
+
 Thu Mar 20 01:13:19 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/High_Res_Timer.{cpp,i}: By default, High_Res_Timer is
