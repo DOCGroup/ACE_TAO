@@ -74,12 +74,7 @@ Sat Mar 30 13:38:10 2002  Ossama Othman  <ossama@uci.edu>
 	  Include "tao/Endpoint.h" to pull in declaration of TAO_Endpoint
 	  class.
 
-	* tao/Cache_Entries.h:
-
-	  No need to include "Transport_Descriptor_Interface.h".  Forward
-	  declaring TAO_Transport_Descriptor_Interface is enough.
-
-	  (TAO_Cache_IntId, TAO_Cache_ExtId):
+	* tao/Cache_Entries.h (TAO_Cache_IntId, TAO_Cache_ExtId):
 
 	  No need to export these classes.  They are only used internally
 	  by TAO.
