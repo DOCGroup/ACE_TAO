@@ -2721,7 +2721,7 @@ public:
   //@{ @name A set of wrappers for memory mapped files.
   static int madvise (caddr_t addr,
                       size_t len,
-                      int advice);
+                      int map_advice);
   static void *mmap (void *addr,
                      size_t len,
                      int prot,
