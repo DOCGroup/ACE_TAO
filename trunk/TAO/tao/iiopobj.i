@@ -5,12 +5,12 @@ IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
 {}
 
 ACE_INLINE
-IIOP::ProfileBody::ProfileBody (void)
+IIOP::Profile::Profile (void)
   : host (0)
 {}
 
 ACE_INLINE
-IIOP::ProfileBody::~ProfileBody (void)
+IIOP::Profile::~Profile (void)
 {
   ACE_OS::free (host);
   //  ACE_OS::free (object_key.buffer);
@@ -34,7 +34,7 @@ IIOP_Object::IIOP_Object (char *repository_id)
 
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id,
-			  const IIOP::ProfileBody &a_profile)
+			  const IIOP::Profile &a_profile)
   : STUB_Object (repository_id),
     profile (a_profile),
     base (this),
@@ -43,23 +43,23 @@ IIOP_Object::IIOP_Object (char *repository_id,
 {}
 
 ACE_INLINE
-IIOP::ProfileBody *
+IIOP::Profile *
 IIOP_Object::fwd_profile_i (void)
 {
   return this->fwd_profile_;
 }
 
 ACE_INLINE
-IIOP::ProfileBody *
-IIOP_Object::fwd_profile_i (IIOP::ProfileBody *new_profile)
+IIOP::Profile *
+IIOP_Object::fwd_profile_i (IIOP::Profile *new_profile)
 {
-  IIOP::ProfileBody *old = this->fwd_profile_;
+  IIOP::Profile *old = this->fwd_profile_;
   this->fwd_profile_ = new_profile;
   return old;
 }
 
 ACE_INLINE
-IIOP::ProfileBody *
+IIOP::Profile *
 IIOP_Object::fwd_profile (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->fwd_profile_lock_, 0));
@@ -67,8 +67,8 @@ IIOP_Object::fwd_profile (void)
 }
 
 ACE_INLINE
-IIOP::ProfileBody *
-IIOP_Object::fwd_profile (IIOP::ProfileBody *new_profile)
+IIOP::Profile *
+IIOP_Object::fwd_profile (IIOP::Profile *new_profile)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->fwd_profile_lock_, 0));
   return this->fwd_profile_i (new_profile);

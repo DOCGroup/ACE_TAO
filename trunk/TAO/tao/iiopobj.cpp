@@ -24,7 +24,7 @@
 #  include "iiopobj.i"
 #endif /* __ACE_INLINE__ */
 
-IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
+IIOP::Profile::Profile (const IIOP::Profile &src)
   : iiop_version (src.iiop_version),
     port (src.port)
 {
@@ -33,32 +33,34 @@ IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
 
   host = ACE_OS::strdup (src.host);
 
-  object_key.length = object_key.maximum = src.object_key.length;
+  object_key.length = src.object_key.length;
+  object_key.maximum = src.object_key.length;
 
   //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
   object_key.buffer = new CORBA::Octet [object_key.maximum];
 
  (void) ACE_OS::memcpy (object_key.buffer,
-                         src.object_key.buffer,
-                         object_key.length);
+                        src.object_key.buffer,
+                        object_key.length);
 }
 
-IIOP::ProfileBody::ProfileBody (const IIOP::Version &v,
-                                const CORBA::String &h,
-                                const CORBA::UShort &p,
-                                const TAO_opaque &key)
+IIOP::Profile::Profile (const IIOP::Version &v,
+                        const CORBA::String h,
+                        const CORBA::UShort p,
+                        const TAO_opaque &key)
   : iiop_version (v),
     port (p)
 {
   host = ACE_OS::strdup (h);
-  
-  object_key.length = object_key.maximum = key.length;
+  object_key.length = key.length;
+  object_key.maximum = key.length;
 
   //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
   object_key.buffer = new CORBA::Octet [object_key.maximum];
 
- (void) ACE_OS::memcpy (object_key.buffer, key.buffer,
-                         object_key.length);
+ (void) ACE_OS::memcpy (object_key.buffer,
+                        key.buffer,
+                        object_key.length);
 }
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into sets
@@ -69,7 +71,7 @@ CORBA::ULong
 IIOP_Object::hash (CORBA::ULong max,
                    CORBA::Environment &env)
 {
-  CORBA::ULong   hashval;
+  CORBA::ULong hashval;
 
   env.clear ();
 
@@ -100,7 +102,7 @@ CORBA::Boolean
 IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
                             CORBA::Environment &env)
 {
-  IIOP::ProfileBody *body, *body2;
+  IIOP::Profile *body, *body2;
   IIOP_Object *other_iiop_obj;
 
   env.clear ();

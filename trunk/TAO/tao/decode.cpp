@@ -599,7 +599,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 
           objdata = new IIOP_Object (type_hint);
 
-          IIOP::ProfileBody     *profile = &objdata->profile;
+          IIOP::Profile     *profile = &objdata->profile;
 
           // Read and verify major, minor versions, ignoring IIOP
           // profiles whose versions we don't understand.

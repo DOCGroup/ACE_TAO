@@ -96,11 +96,11 @@ CORBA_POA::create (CORBA::OctetSeq &key,
     id = 0;
 
   IIOP::Version ver (IIOP::MY_MAJOR, IIOP::MY_MINOR);
-  // Cast below de-warns on Sun's C++
-  const ACE_INET_Addr& addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
-  CORBA::String h = (char*)addr.get_host_name ();
+  const ACE_INET_Addr &addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
+  // Cast below de-warns on Sun's C++.
+  CORBA::String h = (char *) addr.get_host_name ();
 
-  data = new IIOP_Object (id, IIOP::ProfileBody (ver,
+  data = new IIOP_Object (id, IIOP::Profile (ver,
 						 h,
 						 addr.get_port_number (),
 						 key));
@@ -116,7 +116,7 @@ CORBA_POA::create (CORBA::OctetSeq &key,
   CORBA::Object_ptr new_obj;
 
   if (data->QueryInterface (IID_CORBA_Object,
-			    (void**)&new_obj) != NOERROR)
+			    (void **) &new_obj) != NOERROR)
     env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
   data->Release ();

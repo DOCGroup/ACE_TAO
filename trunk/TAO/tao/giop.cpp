@@ -848,7 +848,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 #endif
 
-        IIOP::ProfileBody *old = data_->fwd_profile_i (0);
+        IIOP::Profile *old = data_->fwd_profile_i (0);
 	delete old;
 
         this->handler_->close ();
@@ -1088,7 +1088,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION);
 #endif
 
-        IIOP::ProfileBody *old = data_->fwd_profile_i (new IIOP::ProfileBody (obj2->profile));
+        IIOP::Profile *old = data_->fwd_profile_i (new IIOP::Profile (obj2->profile));
         delete old;
 
 	obj2->Release ();
