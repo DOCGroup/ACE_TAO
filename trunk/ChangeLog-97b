@@ -1,3 +1,9 @@
+Mon Nov  3 17:15:17 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.h: Removed "class ace_dewarn_gplusplus;" from the
+	  ACE_CLASS_IS_NAMESPACE macro.  Produces warnings on AIX and
+	  shouldn't be needed.
+	
 Mon Nov  3 14:16:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/SV_Semaphore_Complex.cpp (close): Changed to return 0
