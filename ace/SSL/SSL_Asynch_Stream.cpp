@@ -61,23 +61,23 @@ protected:
 
 ACE_SSL_Asynch_Write_Stream_Result::ACE_SSL_Asynch_Write_Stream_Result
   (ACE_Handler &       handler,
-    ACE_HANDLE          handle,
-    ACE_Message_Block & message_block,
-    size_t              bytes_to_write,
-    const void *        act,
-    ACE_HANDLE          event,
-    int                 priority,
-    int                 signal_number
+   ACE_HANDLE          handle,
+   ACE_Message_Block & message_block,
+   size_t              bytes_to_write,
+   const void *        act,
+   ACE_HANDLE          event,
+   int                 priority,
+   int                 signal_number
  )
-  : AWS_RESULT (handler,
-                 handle,
-                 message_block,
-                 bytes_to_write,
-                 act,
-                 event,
-                 priority,
-                 signal_number
-              )
+  : AWS_RESULT (handler.proxy (),
+                handle,
+                message_block,
+                bytes_to_write,
+                act,
+                event,
+                priority,
+                signal_number
+                )
 {
 }
 
@@ -106,23 +106,23 @@ protected:
 
 ACE_SSL_Asynch_Read_Stream_Result::ACE_SSL_Asynch_Read_Stream_Result
   (ACE_Handler &        handler,
-    ACE_HANDLE           handle,
-    ACE_Message_Block &  message_block,
-    size_t               bytes_to_read,
-    const void *         act,
-    ACE_HANDLE           event,
-    int                  priority,
-    int                  signal_number
+   ACE_HANDLE           handle,
+   ACE_Message_Block &  message_block,
+   size_t               bytes_to_read,
+   const void *         act,
+   ACE_HANDLE           event,
+   int                  priority,
+   int                  signal_number
  )
-  : ARS_RESULT (handler,
-                 handle,
-                 message_block,
-                 bytes_to_read,
-                 act,
-                 event,
-                 priority,
-                 signal_number
-              )
+  : ARS_RESULT (handler.proxy (),
+                handle,
+                message_block,
+                bytes_to_read,
+                act,
+                event,
+                priority,
+                signal_number
+                )
 {
 }
 
@@ -143,7 +143,7 @@ public:
 
 ACE_SSL_Asynch_Result::ACE_SSL_Asynch_Result
   (ACE_Handler & handler)
-  : A_RESULT (handler,
+  : A_RESULT (handler.proxy (),
               0,          // act,
               ACE_INVALID_HANDLE,
               0,           // Offset
@@ -160,7 +160,7 @@ ACE_SSL_Asynch_Result::complete (size_t /* bytes_transferred */,
                                  const  void * /* completion_key */,
                                  u_long /* error */)
 {
-  this->handler_.handle_wakeup ();
+  this->handler_proxy_->handler ()->handle_wakeup ();
 }
 
 // ************************************************************
