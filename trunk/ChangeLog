@@ -1,3 +1,17 @@
+Tue Mar  8 15:26:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Acceptor.cpp (handle_accept): Don't restart an accept
+	  as a result of a canceled accept.
+
+	* ace/Asynch_IO_Impl.h (ACE_Asynch_Operation_Impl):
+	* ace/Proactor_Impl.h (ACE_Proactor_Impl):
+	* ace/WIN32_Asynch_IO.{h cpp}:
+	* ace/WIN32_Proactor.{h cpp}:
+	* ace/POSIX_Asynch_IO.{h cpp}:
+	* ace/POSIX_Proactor.{h cpp}: Added 'const' to all methods that accept
+	  a ACE_Handler::Proxy_Ptr. Makes sure that the proper management of
+	  reference count on the handler proxy is done.
+
 Tue Mar  8 11:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:
