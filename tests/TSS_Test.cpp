@@ -33,24 +33,22 @@
 // value.  So that the test doesn't run out of keys quickly in the
 // first thread, set the number of ITERATIONS to be small as well.
 static const int ITERATIONS = ((ACE_DEFAULT_THREAD_KEYS/8) < 2 ? 1 : ACE_DEFAULT_THREAD_KEYS/8);
+#elif defined (__Lynx__)
+static const int ITERATIONS = 1;
 #else
 static const int ITERATIONS = 100;
 #endif /* ACE_DEFAULT_THREAD_KEYS */
 
 // Static variables.
 int Errno::flags_;
-#if defined (ACE_HAS_THREADS)
 ACE_Thread_Mutex *Errno::lock_ = 0;
-#endif /* ACE_HAS_THREADS */
 
 // This is our thread-specific error handler...
 // See comment below about why it's dynamically allocated.
 static ACE_TSS<Errno> *tss_error;
 
-#if defined (ACE_HAS_THREADS)
-  // Serializes output via cout.
-  static ACE_Thread_Mutex cout_lock;
-#endif /* ACE_HAS_THREADS */
+// Serializes output.
+static ACE_Thread_Mutex output_lock;
 
 extern "C" void
 cleanup (void *ptr)
@@ -100,7 +98,9 @@ worker (void *c)
 
       ACE_NEW_RETURN (ip, int, 0);
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) in worker 1, key = %d, ip = %x\n", key, ip));
+      ACE_DEBUG ((LM_DEBUG, "(%t) in worker at location 1, "
+                            "key = %d, ip = %x\n",
+                  key, ip));
 
       if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
         ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
@@ -129,10 +129,11 @@ worker (void *c)
 
       {
         // Use the guard to serialize access
-        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, cout_lock, 0));
+        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, 0));
         ACE_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
+#if !defined (__Lynx__) && !defined (ACE_HAS_TSS_EMULATION)
       key = ACE_OS::NULL_key;
 
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
@@ -144,7 +145,9 @@ worker (void *c)
 
       ACE_NEW_RETURN (ip, int, 0);
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) in worker 2, key = %d, ip = %x\n", key, ip));
+      ACE_DEBUG ((LM_DEBUG, "(%t) in worker at location 2, "
+                            "key = %d, ip = %x\n",
+                  key, ip));
 
       if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
         ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
@@ -159,6 +162,7 @@ worker (void *c)
 
       if (ACE_OS::thr_keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
+#endif /* ! __Lynx__) && ! ACE_HAS_TSS_EMULATION */
     }
 
   return 0;
@@ -188,7 +192,11 @@ main (int, char *[])
 #if defined (ACE_HAS_THREADS)
   Errno::allocate_lock ();
 
+#if defined (__Lynx__)
+  const u_int threads = 2;
+#else  /* ! __Lynx__ */
   const u_int threads = ACE_MAX_THREADS;
+#endif /* ! __Lynx__ */
 
   // Dynamically allocate TSS_Error so that we can control when it
   // gets deleted.  Specifically, we need to delete it before the
