@@ -64,8 +64,10 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
         }
 
       os->indent ();
+      // The following ensures that the underlying enum type
+      // is 32 bits
       *os << node->local_name () 
-          << "_TAO_ENUM_32BIT_ENFORCER = 0xFFFFFFFF\n";
+          << "_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF\n";
       os->decr_indent ();
       *os << "};" << be_nl;
       // As per the ORBOS spec, we need the following typedef
