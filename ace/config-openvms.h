@@ -21,108 +21,18 @@
 //#define MAXHOSTNAMELEN 255
 //#define MAXNAMLEN FILENAME_MAX
 //#define __unix__
+
+// OpenVMS does not support symlinks and does not define this.
+// Defining this as 0 effectively cancels out the one bit of code using this in
+// OS_NS_stdlib.cpp.
+#define MAXSYMLINKS 0
+
 #define ACE_OPENVMS
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT("")
 
 #define ACE_HAS_DUMP    1
 
-/*
-** These defines take care of the upper/lower casing problem that occurs
-** if you are using pthreads and are compiling /NAMES=AS_IS (which is necessary for ACE/TAO)
-**
-** Note that it does NOT take care of any argument differences between
-** the various implementations of pthreads.
-*/
-
-#define pthread_attr_create PTHREAD_ATTR_CREATE
-#define pthread_attr_delete PTHREAD_ATTR_DELETE
-#define pthread_attr_destroy PTHREAD_ATTR_DESTROY
-#define pthread_attr_getdetach_np PTHREAD_ATTR_GETDETACH_NP
-#define pthread_attr_getguardsize_np PTHREAD_ATTR_GETGUARDSIZE_NP
-#define pthread_attr_getinheritsched PTHREAD_ATTR_GETINHERITSCHED
-#define pthread_attr_getprio PTHREAD_ATTR_GETPRIO
-#define pthread_attr_getsched PTHREAD_ATTR_GETSCHED
-#define pthread_attr_getschedparam PTHREAD_ATTR_GETSCHEDPARAM
-#define pthread_attr_getstacksize PTHREAD_ATTR_GETSTACKSIZE
-#define pthread_attr_init PTHREAD_ATTR_INIT
-#define pthread_attr_setdetach_np PTHREAD_ATTR_SETDETACH_NP
-#define pthread_attr_setdetachstate PTHREAD_ATTR_SETDETACHSTATE
-#define pthread_attr_setguardsize_np PTHREAD_ATTR_SETGUARDSIZE_NP
-#define pthread_attr_setinheritsched PTHREAD_ATTR_SETINHERITSCHED
-#define pthread_attr_setprio PTHREAD_ATTR_SETPRIO
-#define pthread_attr_setsched PTHREAD_ATTR_SETSCHED
-#define pthread_attr_setschedparam PTHREAD_ATTR_SETSCHEDPARAM
-#define pthread_attr_setschedpolicy PTHREAD_ATTR_SETSCHEDPOLICY
-#define pthread_attr_setstacksize PTHREAD_ATTR_SETSTACKSIZE
-#define pthread_cancel PTHREAD_CANCEL
-#define pthread_cancel_e PTHREAD_CANCEL_E
-#define pthread_cond_broadcast PTHREAD_COND_BROADCAST
-#define pthread_cond_destroy PTHREAD_COND_DESTROY
-#define pthread_cond_init PTHREAD_COND_INIT
-#define pthread_cond_sig_preempt_int_np PTHREAD_COND_SIG_PREEMPT_INT_NP
-#define pthread_cond_signal PTHREAD_COND_SIGNAL
-#define pthread_cond_signal_int_np PTHREAD_COND_SIGNAL_INT_NP
-#define pthread_cond_timedwait PTHREAD_COND_TIMEDWAIT
-#define pthread_cond_wait PTHREAD_COND_WAIT
-#define pthread_condattr_create PTHREAD_CONDATTR_CREATE
-#define pthread_condattr_delete PTHREAD_CONDATTR_DELETE
-#define pthread_condattr_init PTHREAD_CONDATTR_INIT
-#define pthread_create PTHREAD_CREATE
-#define pthread_delay_np PTHREAD_DELAY_NP
-#define pthread_detach PTHREAD_DETACH
-#define pthread_equal PTHREAD_EQUAL
-#define pthread_exc_fetch_fp_np PTHREAD_EXC_FETCH_FP_NP
-#define pthread_exc_handler_np PTHREAD_EXC_HANDLER_NP
-#define pthread_exc_pop_ctx_np PTHREAD_EXC_POP_CTX_NP
-#define pthread_exc_push_ctx_np PTHREAD_EXC_PUSH_CTX_NP
-#define pthread_exc_savecontext_np PTHREAD_EXC_SAVECONTEXT_NP
-#define pthread_exit PTHREAD_EXIT
-#define pthread_get_expiration_np PTHREAD_GET_EXPIRATION_NP
-#define pthread_getprio PTHREAD_GETPRIO
-#define pthread_getschedparam PTHREAD_GETSCHEDPARAM
-#define pthread_getscheduler PTHREAD_GETSCHEDULER
-#define pthread_getspecific PTHREAD_GETSPECIFIC
-#define pthread_getunique_np PTHREAD_GETUNIQUE_NP
-#define pthread_join PTHREAD_JOIN
-#define pthread_join32 PTHREAD_JOIN32
-#define pthread_keycreate PTHREAD_KEYCREATE
-#define pthread_key_create PTHREAD_KEY_CREATE
-#define pthread_kill PTHREAD_KILL
-#define pthread_lock_global_np PTHREAD_LOCK_GLOBAL_NP
-#define pthread_mutex_destroy PTHREAD_MUTEX_DESTROY
-#define pthread_mutex_init PTHREAD_MUTEX_INIT
-#define pthread_mutex_lock PTHREAD_MUTEX_LOCK
-#define pthread_mutex_trylock PTHREAD_MUTEX_TRYLOCK
-#define pthread_mutex_unlock PTHREAD_MUTEX_UNLOCK
-#define pthread_mutexattr_create PTHREAD_MUTEXATTR_CREATE
-#define pthread_mutexattr_delete PTHREAD_MUTEXATTR_DELETE
-#define pthread_mutexattr_destroy PTHREAD_MUTEXATTR_DESTROY
-#define pthread_mutexattr_getkind_np PTHREAD_MUTEXATTR_GETKIND_NP
-#define pthread_mutexattr_init PTHREAD_MUTEXATTR_INIT
-#define pthread_mutexattr_setkind_np PTHREAD_MUTEXATTR_SETKIND_NP
-#define pthread_mutexattr_settype_np PTHREAD_MUTEXATTR_SETTYPE_NP
-#define pthread_once PTHREAD_ONCE
-#define pthread_resume_np PTHREAD_RESUME_NP
-#define pthread_self PTHREAD_SELF
-#define pthread_setasynccancel PTHREAD_SETASYNCCANCEL
-#define pthread_setcancel PTHREAD_SETCANCEL
-#define pthread_setcancelstate PTHREAD_SETCANCELSTATE
-#define pthread_setprio PTHREAD_SETPRIO
-#define pthread_setschedparam PTHREAD_SETSCHEDPARAM
-#define pthread_setscheduler PTHREAD_SETSCHEDULER
-#define pthread_setspecific PTHREAD_SETSPECIFIC
-#define pthread_suspend_np PTHREAD_SUSPEND_NP
-#define pthread_testcancel PTHREAD_TESTCANCEL
-#define pthread_unlock_global_np PTHREAD_UNLOCK_GLOBAL_NP
-#define pthread_yield PTHREAD_YIELD
-#define pthread_yield_np PTHREAD_YIELD_NP
-
-/* new for OpenVMS 7.3.2 ECO 1 */
-#define pthread_attr_setscope       PTHREAD_ATTR_SETSCOPE
-#define pthread_attr_setstackaddr   PTHREAD_ATTR_SETSTACKADDR
-#define pthread_condattr_destroy    PTHREAD_CONDATTR_DESTROY
-#define pthread_key_delete          PTHREAD_KEY_DELETE
-#define pthread_setcanceltype       PTHREAD_SETCANCELTYPE
+//#define ACE_NEEDS_PTHREAD_UPPERCASE 1
 
 /*
 #define XtAppAddInput XTAPPADDINPUT
@@ -161,6 +71,8 @@
 #define ACE_LACKS_GETPGID 1
 #define ACE_LACKS_SETSID 1
 #define ACE_LACKS_FCNTL 1
+
+#define ACE_LACKS_REALPATH 1
 
 #define ACE_LACKS_TIMESPEC_T    1
 #define ACE_LACKS_CONST_TIMESPEC_PTR 1
@@ -345,10 +257,6 @@
                                         /*The pthread_create() routine
                                         *must* take extern C
                                         functions.*/
-#define ACE_HAS_TIMEZONE_GETTIMEOFDAY
-                                        /*Platform/compiler supports
-                                        timezone * as second parameter
-                                        to gettimeofday()*/
 #define ACE_HAS_UALARM 1
                                         /*Platform supports ualarm()*/
 #define ACE_HAS_USING_KEYWORD 1
@@ -443,4 +351,107 @@
 
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE (64U*1024)
                                         /*Required by platforms with small default stacks.*/
+
+#ifdef ACE_NEEDS_PTHREAD_UPPERCASE
+
+/*
+** These defines take care of the upper/lower casing problem that occurs
+** if you are using pthreads and are compiling /NAMES=AS_IS (which is necessary for ACE/TAO)
+**
+** Note that it does NOT take care of any argument differences between
+** the various implementations of pthreads.
+*/
+
+#define pthread_attr_create PTHREAD_ATTR_CREATE
+#define pthread_attr_delete PTHREAD_ATTR_DELETE
+#define pthread_attr_destroy PTHREAD_ATTR_DESTROY
+#define pthread_attr_getdetach_np PTHREAD_ATTR_GETDETACH_NP
+#define pthread_attr_getguardsize_np PTHREAD_ATTR_GETGUARDSIZE_NP
+#define pthread_attr_getinheritsched PTHREAD_ATTR_GETINHERITSCHED
+#define pthread_attr_getprio PTHREAD_ATTR_GETPRIO
+#define pthread_attr_getsched PTHREAD_ATTR_GETSCHED
+#define pthread_attr_getschedparam PTHREAD_ATTR_GETSCHEDPARAM
+#define pthread_attr_getstacksize PTHREAD_ATTR_GETSTACKSIZE
+#define pthread_attr_init PTHREAD_ATTR_INIT
+#define pthread_attr_setdetach_np PTHREAD_ATTR_SETDETACH_NP
+#define pthread_attr_setdetachstate PTHREAD_ATTR_SETDETACHSTATE
+#define pthread_attr_setguardsize_np PTHREAD_ATTR_SETGUARDSIZE_NP
+#define pthread_attr_setinheritsched PTHREAD_ATTR_SETINHERITSCHED
+#define pthread_attr_setprio PTHREAD_ATTR_SETPRIO
+#define pthread_attr_setsched PTHREAD_ATTR_SETSCHED
+#define pthread_attr_setschedparam PTHREAD_ATTR_SETSCHEDPARAM
+#define pthread_attr_setschedpolicy PTHREAD_ATTR_SETSCHEDPOLICY
+#define pthread_attr_setstacksize PTHREAD_ATTR_SETSTACKSIZE
+#define pthread_cancel PTHREAD_CANCEL
+#define pthread_cancel_e PTHREAD_CANCEL_E
+#define pthread_cond_broadcast PTHREAD_COND_BROADCAST
+#define pthread_cond_destroy PTHREAD_COND_DESTROY
+#define pthread_cond_init PTHREAD_COND_INIT
+#define pthread_cond_sig_preempt_int_np PTHREAD_COND_SIG_PREEMPT_INT_NP
+#define pthread_cond_signal PTHREAD_COND_SIGNAL
+#define pthread_cond_signal_int_np PTHREAD_COND_SIGNAL_INT_NP
+#define pthread_cond_timedwait PTHREAD_COND_TIMEDWAIT
+#define pthread_cond_wait PTHREAD_COND_WAIT
+#define pthread_condattr_create PTHREAD_CONDATTR_CREATE
+#define pthread_condattr_delete PTHREAD_CONDATTR_DELETE
+#define pthread_condattr_init PTHREAD_CONDATTR_INIT
+#define pthread_create PTHREAD_CREATE
+#define pthread_delay_np PTHREAD_DELAY_NP
+#define pthread_detach PTHREAD_DETACH
+#define pthread_equal PTHREAD_EQUAL
+#define pthread_exc_fetch_fp_np PTHREAD_EXC_FETCH_FP_NP
+#define pthread_exc_handler_np PTHREAD_EXC_HANDLER_NP
+#define pthread_exc_pop_ctx_np PTHREAD_EXC_POP_CTX_NP
+#define pthread_exc_push_ctx_np PTHREAD_EXC_PUSH_CTX_NP
+#define pthread_exc_savecontext_np PTHREAD_EXC_SAVECONTEXT_NP
+#define pthread_exit PTHREAD_EXIT
+#define pthread_get_expiration_np PTHREAD_GET_EXPIRATION_NP
+#define pthread_getprio PTHREAD_GETPRIO
+#define pthread_getschedparam PTHREAD_GETSCHEDPARAM
+#define pthread_getscheduler PTHREAD_GETSCHEDULER
+#define pthread_getspecific PTHREAD_GETSPECIFIC
+#define pthread_getunique_np PTHREAD_GETUNIQUE_NP
+#define pthread_join PTHREAD_JOIN
+#define pthread_join32 PTHREAD_JOIN32
+#define pthread_keycreate PTHREAD_KEYCREATE
+#define pthread_key_create PTHREAD_KEY_CREATE
+#define pthread_kill PTHREAD_KILL
+#define pthread_lock_global_np PTHREAD_LOCK_GLOBAL_NP
+#define pthread_mutex_destroy PTHREAD_MUTEX_DESTROY
+#define pthread_mutex_init PTHREAD_MUTEX_INIT
+#define pthread_mutex_lock PTHREAD_MUTEX_LOCK
+#define pthread_mutex_trylock PTHREAD_MUTEX_TRYLOCK
+#define pthread_mutex_unlock PTHREAD_MUTEX_UNLOCK
+#define pthread_mutexattr_create PTHREAD_MUTEXATTR_CREATE
+#define pthread_mutexattr_delete PTHREAD_MUTEXATTR_DELETE
+#define pthread_mutexattr_destroy PTHREAD_MUTEXATTR_DESTROY
+#define pthread_mutexattr_getkind_np PTHREAD_MUTEXATTR_GETKIND_NP
+#define pthread_mutexattr_init PTHREAD_MUTEXATTR_INIT
+#define pthread_mutexattr_setkind_np PTHREAD_MUTEXATTR_SETKIND_NP
+#define pthread_mutexattr_settype_np PTHREAD_MUTEXATTR_SETTYPE_NP
+#define pthread_once PTHREAD_ONCE
+#define pthread_resume_np PTHREAD_RESUME_NP
+#define pthread_self PTHREAD_SELF
+#define pthread_setasynccancel PTHREAD_SETASYNCCANCEL
+#define pthread_setcancel PTHREAD_SETCANCEL
+#define pthread_setcancelstate PTHREAD_SETCANCELSTATE
+#define pthread_setprio PTHREAD_SETPRIO
+#define pthread_setschedparam PTHREAD_SETSCHEDPARAM
+#define pthread_setscheduler PTHREAD_SETSCHEDULER
+#define pthread_setspecific PTHREAD_SETSPECIFIC
+#define pthread_suspend_np PTHREAD_SUSPEND_NP
+#define pthread_testcancel PTHREAD_TESTCANCEL
+#define pthread_unlock_global_np PTHREAD_UNLOCK_GLOBAL_NP
+#define pthread_yield PTHREAD_YIELD
+#define pthread_yield_np PTHREAD_YIELD_NP
+
+/* new for OpenVMS 7.3.2 ECO 1 */
+#define pthread_attr_setscope       PTHREAD_ATTR_SETSCOPE
+#define pthread_attr_setstackaddr   PTHREAD_ATTR_SETSTACKADDR
+#define pthread_condattr_destroy    PTHREAD_CONDATTR_DESTROY
+#define pthread_key_delete          PTHREAD_KEY_DELETE
+#define pthread_setcanceltype       PTHREAD_SETCANCELTYPE
+
+#endif // if ACE_NEEDS_PTHREAD_UPPERCASE
+
 #endif

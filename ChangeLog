@@ -1,3 +1,10 @@
+Fri Aug  6 10:18:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-openvms.h:
+          Added ACE_LACKS_REALPATH.
+          Added '#define MAXSYMLINKS 0'.
+          Removed uppercase macros for pthread symbols.
+
 Fri Aug  6 10:08:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_sys_socket.h:
