@@ -390,7 +390,7 @@ ACE_RTU_Manager::should_preempt (void)
       // find out what it is supposed to do.
       ACE_ERROR ((LM_WARNING,
 		  "EC (%t) RTU_Manager::should_preempt - obsolete\n"));
-		 
+
       int should_preempt = should_preempt_;
       should_preempt_ = 0;
       return should_preempt;
@@ -751,4 +751,3 @@ ACE_EventChannel::scheduler (void)
 }
 
 // ************************************************************
-

@@ -57,7 +57,7 @@ class TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelAdmin::ProxyPushSupp
   //   reference.
   //
   // = LOCKING
-  //   Locking is strategized, the event channel acts as a factory for 
+  //   Locking is strategized, the event channel acts as a factory for
   //   the locking strategies.
   //
   // = TODO

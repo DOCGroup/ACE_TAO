@@ -45,6 +45,7 @@ class TAO_EC_SupplierAdmin;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_Timer_Module;
+class TAO_EC_ObserverStrategy;
 
 class TAO_EC_Factory
 {
@@ -105,6 +106,12 @@ public:
   virtual void
       destroy_timer_module (TAO_EC_Timer_Module*) = 0;
   // Create and destroy the timer module.
+
+  virtual TAO_EC_ObserverStrategy*
+      create_observer_strategy (TAO_EC_Event_Channel*) = 0;
+  virtual void
+      destroy_observer_strategy (TAO_EC_ObserverStrategy*) = 0;
+  // Create and destroy the observer strategy.
 
   virtual PortableServer::POA_ptr
        consumer_poa (CORBA::Environment& env) = 0;

@@ -184,7 +184,7 @@ public:
   // enumerations defined below.
   // By default we activate the threads on construction, but it is
   // possible to create the EC first and activate the threads later.
-  // A factory for the modules can be provided, by default it uses 
+  // A factory for the modules can be provided, by default it uses
   // TAO_EC_Default_Module_Factory
   // If an scheduler is not provided it uses the singleton in
   // ACE_Scheduler_Factory.

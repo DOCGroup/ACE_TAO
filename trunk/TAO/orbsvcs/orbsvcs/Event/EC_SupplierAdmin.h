@@ -90,6 +90,13 @@ public:
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
       obtain_push_consumer (CORBA::Environment &);
 
+  typedef ACE_Unbounded_Set<TAO_EC_ProxyPushConsumer*> ConsumerSet;
+  typedef ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushConsumer*> ConsumerSetIterator;
+
+  ConsumerSetIterator begin (void);
+  ConsumerSetIterator end (void);
+  // Iterators over the set of ProxyPushConsumers
+
 private:
   TAO_EC_Event_Channel *event_channel_;
   // The Event Channel we belong to
@@ -97,8 +104,6 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
-  typedef ACE_Unbounded_Set<TAO_EC_ProxyPushConsumer*> ConsumerSet;
-  typedef ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushConsumer*> ConsumerSetIterator;
   ConsumerSet all_consumers_;
 };
 

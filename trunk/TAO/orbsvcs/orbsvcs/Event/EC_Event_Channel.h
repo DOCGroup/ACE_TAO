@@ -99,7 +99,7 @@ public:
   void destroy_supplier_lock (ACE_Lock*);
   // Locking strategies for the ProxyPushConsumer and
   // ProxyPushSupplier objects
-  
+
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,
@@ -128,12 +128,18 @@ public:
   virtual void destroy (CORBA::Environment &env);
   // Commit suicide.
 
-  RtecEventChannelAdmin::Observer_Handle
+  virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-		       CORBA::Environment &env);
-  void remove_observer (RtecEventChannelAdmin::Observer_Handle,
-                        CORBA::Environment &env);
-  // @@ Do we need to strategize this also????? How???
+		       CORBA::Environment &env)
+      TAO_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                       RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER));
+  virtual void
+      remove_observer (RtecEventChannelAdmin::Observer_Handle,
+                       CORBA::Environment &env)
+      TAO_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                       RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER));
 
 private:
   TAO_EC_Factory *factory_;
@@ -155,6 +161,9 @@ private:
 
   TAO_EC_Timer_Module *timer_module_;
   // The timer module
+
+  TAO_EC_ObserverStrategy *observer_strategy_;
+  // The observer strategy
 };
 
 #if defined (__ACE_INLINE__)
