@@ -569,7 +569,7 @@ Cubit_Client::run (void)
       this->cube_octet (i);
       this->cube_long (i);
       this->cube_struct (i);
-      // this->cube_sequence (i);
+      this->cube_sequence (i);
     }
 
   // stop the timer.
@@ -642,7 +642,7 @@ Cubit_Client::run (void)
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
     {
-      // this->cube_sequence (this->loop_count_);
+      this->cube_sequence (this->loop_count_);
     }
 
   timer.stop ();
