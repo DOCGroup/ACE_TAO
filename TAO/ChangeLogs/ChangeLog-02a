@@ -1,3 +1,13 @@
+Thu Dec 14 18:22:54 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+
+        * tao/DynamicInterface/Context.inl:
+        * tao/DynamicInterface/ExceptionList.inl:
+        * tao/DynamicInterface/Request.inl:
+
+          Added the line containing '-*- C++ -*-' or moved it
+          to the first line, if it was already there. Thanks to
+          Paul Rubel <prubel@bbn.com> for reporting this bug.
+
 Thu Dec 14 12:52:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/Event/Performance/Latency.cpp:
