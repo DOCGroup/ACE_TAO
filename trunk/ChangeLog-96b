@@ -1,3 +1,11 @@
+Sun Dec  8 14:39:53 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Timer_Queue.i: Added a timer_skew_ data member and accessor
+	  methods to ACE_Timer_Queue.  Also added an expire method that
+ 	  calls gettimeofday and adds the timer_skew_ for you.  These
+ 	  changes will help simplify Reactor, Proactor, and ReactorEx
+ 	  code.
+
 Sun Dec  8 10:27:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Reactor.cpp (handle_events): Added the new version of the
