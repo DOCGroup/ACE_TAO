@@ -40,7 +40,7 @@ class TAO_Notify_Export TAO_Notify_AdminProperties
   //
 public:
   TAO_Notify_AdminProperties (void);
-  ~TAO_Notify_AdminProperties ();
+  virtual ~TAO_Notify_AdminProperties ();
 
   virtual CosNotification::AdminProperties * get_admin (
     CORBA::Environment &ACE_TRY_ENV

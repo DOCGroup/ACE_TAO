@@ -46,7 +46,7 @@ class TAO_Notify_Export TAO_Notify_Worker_Task
 public:
   // = Initialization and termination code
   TAO_Notify_Worker_Task (void);
-  ~TAO_Notify_Worker_Task ();
+  virtual ~TAO_Notify_Worker_Task ();
   // Constructor.
 
   virtual int init_task (TAO_Notify_AdminProperties* const admin_properties);
