@@ -1,3 +1,13 @@
+Mon Dec  8 16:14:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Added a noncvs file check. I found yesterday some ncb and opt files
+          in the TAO part of the repo, and they shouldn't be in the repo. This
+          are msvc6 generated files. So added a noncvs file check which checks
+          whether these files exists, and if they exist, give an error. If
+          people know of more extensions that shouldn't get into the repo,
+          feel free to add them.
+
 Mon Dec  8 16:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Added the ability to better determine whether apps/drwho must be build.
