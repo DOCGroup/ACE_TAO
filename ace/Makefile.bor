@@ -14,7 +14,7 @@ OBJFILES = \
 	$(OBJDIR)\Flag_Manip.obj \
 	$(OBJDIR)\Handle_Ops.obj \
 	$(OBJDIR)\Lib_Find.obj \
-	$(OBJDIR)\ACE_Sock_Connect.obj \
+	$(OBJDIR)\Sock_Connect.obj \
 	$(OBJDIR)\Malloc_Instantiations.obj \
 	$(OBJDIR)\Activation_Queue.obj \
 	$(OBJDIR)\Active_Map_Manager.obj \
