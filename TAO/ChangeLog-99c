@@ -1,3 +1,26 @@
+Sun Jul  4 13:00:38 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* tao/Asynch_Invocation.cpp
+	* tao/Asynch_Invocation.h
+	* tao/Asynch_Invocation.i
+	* tao/Client_Strategy_Factory.cpp
+	* tao/Client_Strategy_Factory.h
+	* tao/Invocation.cpp
+	* tao/Invocation.h
+	* tao/Invocation.i
+	* tao/Pluggable.cpp
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+	* tao/Transport_Mux_Strategy.cpp
+	* tao/Transport_Mux_Strategy.h
+	* tao/default_client.cpp
+	* tao/default_client.h
+
+	  Moved the message state from <Invocation> classes to the
+	  Transport Mux Strategy. This makes it  to have the behavior of
+	  Transport object acccesing the messaging state uniform, across
+	  Muxed and Exclusive TMS. I have not done Muxed TMS yet. 
+  
 Sat Jul  3 10:54:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
 	* TAO_IDL/be/be_visitor_factory.cpp
