@@ -1,3 +1,13 @@
+Tue Aug 27 10:09:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtcorba.doxygen :
+          Added TAO_NAMESPACE to the list of defines to expand.
+
 Mon Aug 26 17:33:54 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/msvc_auto_compile.pl (Build_Core):
@@ -13,12 +23,12 @@ Mon Aug 26 17:14:20 2002  Ossama Othman  <ossama@uci.edu>
 	  Fixed a number of warnings.
 
 Mon Aug 26 18:21:34 UTC 2002  Justin Michel  <michel_j@ociweb.com>
-        
+
         * ace/Timer_Wheel_T.cpp:
         * ace/Timer_Wheel_T.h:
         * tests/Timer_Queue_Test.cpp:
 
-          New and improved timer wheel implementation. 
+          New and improved timer wheel implementation.
 
 Mon Aug 26 09:51:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
