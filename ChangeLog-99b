@@ -1,3 +1,8 @@
+Fri Sep  3 13:52:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile:
+	  Fixed the implementation of the -dont_run option.
+
 Fri Sep  3 09:05:20 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Containers_T.cpp (delete_nodes): Removed the redundant check
