@@ -1,13 +1,26 @@
+Thu Apr 16 16:00:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/decode.cpp: In TypeCode::decode, for the case of bounded
+	strings, we were passing a null pointer to the typecode
+	constructor.
+
+	* tao/encode.cpp: In TypeCode::In encode, for strings, we were
+	encoding the typecode's buffer length rather than the bounds of
+	the string.
+
+	* tests/Param_Test: Added code to test TypeCodes. Most of the
+	files in this suite are modified.
+
 Thu Apr 16 13:28:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/decode.cpp: 
+	* tao/decode.cpp:
 	  An exception was raised if a nil object reference was decoded.
 
-	* tao/POA.cpp: 
+	* tao/POA.cpp:
 	  For debugging purposes we print a message when an exception is
 	  raised on the server side.
 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp:
 	  Use ACE_NESTED_CLASS macro for collocated classes, this makes
 	  the generated code portable between NT and other platforms.
 

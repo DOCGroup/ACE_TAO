@@ -254,10 +254,13 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                       }
                     else
                       {
+                        CORBA::Long _oc_bounded_string [2] =
+                        {TAO_ENCAP_BYTE_ORDER, 0};
+                        _oc_bounded_string [1] = (CORBA::Long) bound;
                         // Bounded string. Save the bounds
                         *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
-                                                    bound, 0, CORBA::B_FALSE,
-                                                    parent);
+                                                    bound, (char *) &_oc_bounded_string,
+                                                    CORBA::B_FALSE, parent);
                       }
                   }
               }

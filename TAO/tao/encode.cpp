@@ -171,7 +171,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
           // A few have "simple" parameter lists
         case CORBA::tk_string:
         case CORBA::tk_wstring:
-          continue_encoding = stream->write_ulong (tc2->length_);
+          continue_encoding = stream->write_ulong (tc2->length (env));
           break;
 
           // Indirected typecodes can't occur at "top level" like
@@ -193,6 +193,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
         case CORBA::tk_alias:
         case CORBA::tk_except:
           {
+            // simply encode the encapsulation
             continue_encoding = stream->write_ulong (tc2->length_);
 	    continue_encoding = continue_encoding
 	      && stream->write_octet_array ((CORBA::Octet*)tc2->buffer_, tc2->length_);

@@ -37,6 +37,7 @@ public:
     TEST_NESTED_STRUCT,
     TEST_STRUCT_SEQUENCE,
     TEST_OBJREF,
+    TEST_TYPECODE,
     TEST_ANY
   };
 
