@@ -769,11 +769,12 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
     children_ (),
     lock_ (lock),
-    closing_down_ (0),
     persistent_ (policies.lifespan () == PortableServer::PERSISTENT),
     system_id_ (policies.id_assignment () == PortableServer::SYSTEM_ID),
     creation_time_ (ACE_OS::gettimeofday ()),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    cleanup_in_progress_ (0),
+    etherealize_objects_ (1)
 {
   // Set the folded name of this POA.
   this->set_folded_name ();
@@ -1070,7 +1071,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                     CORBA::Boolean wait_for_completion,
                     CORBA::Environment &ACE_TRY_ENV)
 {
-  this->closing_down_ = 1;
+  this->cleanup_in_progress_ = 1;
 
   // This operation destroys the POA and all descendant POAs. The POA
   // so destroyed (that is, the POA with its name) may be re-created
@@ -1106,78 +1107,14 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // the POA will attempt to cause recreation of the POA by invoking
   // one or more adapter activators as described in Section 3.3.3.
 
-  // If the etherealize_objects parameter is TRUE, the POA has the
-  // RETAIN policy, and a servant manager is registered with the POA,
-  // the etherealize operation on the servant manager will be called
-  // for each active object in the Active Object Map. The apparent
-  // destruction of the POA occurs before any calls to etherealize are
-  // made.  Thus, for example, an etherealize method that attempts to
-  // invoke operations on the POA will receive the OBJECT_NOT_EXIST
-  // exception.
-
-  // Remove the registered objects
-  if (etherealize_objects)
-    {
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-      if (this->policies ().servant_retention () == PortableServer::RETAIN &&
-          this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER &&
-          !CORBA::is_nil (this->servant_activator_.in ()))
-        {
-          PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
-          ACE_CHECK;
-
-          while (1)
-            {
-              PortableServer::ObjectId object_id;
-              PortableServer::Servant servant = 0;
-              CORBA::Boolean remaining_activations = 0;
-
-              // Remove an entry from the active object map, returning
-              // the object id, the servant pointer, and remaining
-              // activations of the servant.
-              //
-              // int result = this->active_object_map ().unbind (object_id,
-              //                                                servant,
-              //                                                remaining_activations);
-
-              int result = 1;
-
-              // Nothing to unbind.
-              if (result == 1)
-                {
-                  break;
-                }
-              // Errors.
-              else if (result != 0)
-                {
-                  ACE_THROW (CORBA::OBJ_ADAPTER ());
-                }
-              // Successful unbind.
-              else
-                {
-                  // Etherealize servant.
-                  this->servant_activator_->etherealize (object_id,
-                                                         self.in (),
-                                                         servant,
-                                                         1,
-                                                         remaining_activations,
-                                                         ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
-            }
-        }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-    }
-
   // If the wait_for_completion parameter is TRUE, the destroy
   // operation will return only after all requests in process have
   // completed and all invocations of etherealize have
   // completed. Otherwise, the destroy operation returns after
   // destroying the POAs.
+
+  this->deactivate_all_objects_i (etherealize_objects,
+                                  ACE_TRY_ENV);
 
   ACE_UNUSED_ARG (wait_for_completion);
 
@@ -1192,7 +1129,7 @@ TAO_POA::delete_child (const TAO_POA::String &child)
 
   // If we are not closing down, we must remove this child from our
   // collection.
-  if (!this->closing_down_)
+  if (!this->cleanup_in_progress_)
     {
       result = this->children_.unbind (child);
     }
@@ -1442,6 +1379,56 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
 }
 
 void
+TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
+                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  this->etherealize_objects_ = etherealize_objects;
+
+  // This operation is a no-op for the non-RETAIN policy.
+  if (this->policies ().servant_retention () != PortableServer::RETAIN)
+    {
+      return;
+    }
+
+  // If the etherealize_objects parameter is TRUE, the POA has the
+  // RETAIN policy, and a servant manager is registered with the POA,
+  // the etherealize operation on the servant manager will be called
+  // for each active object in the Active Object Map. The apparent
+  // destruction of the POA occurs before any calls to etherealize are
+  // made.  Thus, for example, an etherealize method that attempts to
+  // invoke operations on the POA will receive the OBJECT_NOT_EXIST
+  // exception.
+
+  // We must copy the user ids into a separate place since we cannot
+  // remove entries while iterating through the map.
+  ACE_Array<PortableServer::ObjectId> ids (this->active_object_map ().current_size ());
+
+  size_t counter = 0;
+  TAO_Active_Object_Map::user_id_map::iterator end
+    = this->active_object_map ().user_id_map_->end ();
+
+  for (TAO_Active_Object_Map::user_id_map::iterator iter
+         = this->active_object_map ().user_id_map_->begin ();
+       iter != end;
+       ++iter, ++counter)
+    {
+      TAO_Active_Object_Map::user_id_map::value_type map_pair = *iter;
+      TAO_Active_Object_Map::Map_Entry *active_object_map_entry = map_pair.second ();
+
+      ids[counter] = active_object_map_entry->user_id_;
+    }
+
+  for (size_t i = 0;
+       i < counter;
+       ++i)
+    {
+      this->deactivate_object_i (ids[i],
+                                 ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
+void
 TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
                               CORBA::Environment &ACE_TRY_ENV)
 {
@@ -1452,10 +1439,9 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
-  // This operation causes the association of the Object Id specified
-  // by the oid parameter and its servant to be removed from the
-  // Active Object Map.
-  int result = this->active_object_map ().unbind_using_user_id (id);
+  TAO_Active_Object_Map::Map_Entry *active_object_map_entry = 0;
+  int result = this->active_object_map ().find_servant_and_system_id_using_user_id (id,
+                                                                                    active_object_map_entry);
 
   // If there is no active object associated with the specified Object
   // Id, the operation raises an ObjectNotActive exception.
@@ -1464,8 +1450,23 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
       ACE_THROW (PortableServer::POA::ObjectNotActive ());
     }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+  // Decrement the reference count.
+  CORBA::UShort new_count = --active_object_map_entry->reference_count_;
 
+  if (new_count == 0)
+    {
+      this->cleanup_servant (active_object_map_entry,
+                             ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  // @@ Else mark entry as closed...
+}
+
+void
+TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
+                          CORBA::Environment &ACE_TRY_ENV)
+{
   // If a servant manager is associated with the POA,
   // ServantLocator::etherealize will be invoked with the oid and the
   // servant. (The deactivate_object operation does not wait for the
@@ -1478,30 +1479,55 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
   // deactivated. It is the responsibility of the object
   // implementation to refrain from destroying the servant while it is
   // active with any Id.
-  if (!CORBA::is_nil (this->servant_activator_.in ()))
+
+  // If the POA has no ServantActivator associated with it, the POA
+  // implementation calls _remove_ref when all operation invocations
+  // have completed. If there is a ServantActivator, the Servant is
+  // consumed by the call to ServantActivator::etherealize instead.
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  if (this->etherealize_objects_ &&
+      this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER &&
+      !CORBA::is_nil (this->servant_activator_.in ()))
     {
       PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
       ACE_CHECK;
 
-      // Place holders....
-      PortableServer::Servant servant = 0;
-      CORBA::Boolean remaining_activations = 0;
-      int disabled = 1;
+      CORBA::Boolean remaining_activations =
+        this->active_object_map ().remaining_activations (active_object_map_entry->servant_);
 
-      if (disabled)
-        {
-          this->servant_activator_->etherealize (id,
-                                                 self.in (),
-                                                 servant,
-                                                 0,
-                                                 remaining_activations,
-                                                 ACE_TRY_ENV);
-          ACE_CHECK;
-        }
+      // If the cleanup_in_progress parameter is TRUE, the reason for the
+      // etherealize operation is that either the deactivate or destroy
+      // operation was called with an etherealize_objects parameter of
+      // TRUE. If the parameter is FALSE, the etherealize operation is
+      // called for other reasons.
+      this->servant_activator_->etherealize (active_object_map_entry->user_id_,
+                                             self.in (),
+                                             active_object_map_entry->servant_,
+                                             this->cleanup_in_progress_,
+                                             remaining_activations,
+                                             ACE_TRY_ENV);
+      ACE_CHECK;
     }
+  else
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+    {
+      active_object_map_entry->servant_->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  // This operation causes the association of the Object Id specified
+  // by the oid parameter and its servant to be removed from the
+  // Active Object Map.
+  int result = this->active_object_map ().unbind_using_user_id (active_object_map_entry->user_id_);
+
+  if (result != 0)
+    {
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
+    }
 }
 
 CORBA::Object_ptr
@@ -1790,15 +1816,26 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
+      // Find user id from system id.
+      PortableServer::ObjectId user_id;
+      if (this->active_object_map ().find_user_id_using_system_id (system_id,
+                                                                   user_id) == -1)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
+        }
+
       // This operation returns the active servant associated with the
       // specified system Object Id value.  If the Object Id value is
       // not active in the POA, an ObjectNotActive exception is
       // raised.
-      PortableServer::ObjectId user_id;
       PortableServer::Servant servant = 0;
-      if (this->active_object_map ().find_servant_and_user_id_using_system_id (system_id,
+      TAO_Active_Object_Map::Map_Entry *entry = 0;
+
+      if (this->active_object_map ().find_servant_using_system_id_and_user_id (system_id,
+                                                                               user_id,
                                                                                servant,
-                                                                               user_id) != -1)
+                                                                               entry) != -1)
         {
           // The POA invokes _add_ref once on the Servant before
           // returning it. If the application uses reference counting,
@@ -2041,13 +2078,28 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
   // Object Map to find if there is a servant associated with the
   // Object Id value from the request. If such a servant exists,
   // return TAO_POA::FOUND.
-  PortableServer::ObjectId user_id;
-  if (this->policies ().servant_retention () == PortableServer::RETAIN &&
-      this->active_object_map ().find_servant_and_user_id_using_system_id (system_id,
-                                                                           servant,
-                                                                           user_id) != -1)
-    // Success
-    return TAO_POA::FOUND;
+  if (this->policies ().servant_retention () == PortableServer::RETAIN)
+    {
+      // Find user id from system id.
+      PortableServer::ObjectId user_id;
+      if (this->active_object_map ().find_user_id_using_system_id (system_id,
+                                                                   user_id) == -1)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            TAO_POA::NOT_FOUND);
+        }
+
+      TAO_Active_Object_Map::Map_Entry *entry = 0;
+      int result = this->active_object_map ().find_servant_using_system_id_and_user_id (system_id,
+                                                                                        user_id,
+                                                                                        servant,
+                                                                                        entry);
+      if (result == 0)
+        {
+          // Success
+          return TAO_POA::FOUND;
+        }
+    }
 
   // If the POA has the NON_RETAIN policy or has the RETAIN policy but
   // didn't find a servant in the Active Object Map, the POA takes the
@@ -2056,7 +2108,9 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
   // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
   // the OBJECT_NOT_EXIST system exception.
   if (this->policies ().request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
-    return TAO_POA::NOT_FOUND;
+    {
+      return TAO_POA::NOT_FOUND;
+    }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -2067,10 +2121,14 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
   if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
     {
       if (this->default_servant_.in () == 0)
-        return TAO_POA::NOT_FOUND;
+        {
+          return TAO_POA::NOT_FOUND;
+        }
       else
-        // Success
-        return TAO_POA::DEFAULT_SERVANT;
+        {
+          // Success
+          return TAO_POA::DEFAULT_SERVANT;
+        }
     }
 
   // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
@@ -2081,10 +2139,14 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
     {
       if (CORBA::is_nil (this->servant_activator_.in ()) &&
           CORBA::is_nil (this->servant_locator_.in ()))
-        return TAO_POA::NOT_FOUND;
+        {
+          return TAO_POA::NOT_FOUND;
+        }
       else
-        // Success
-        return TAO_POA::SERVANT_MANAGER;
+        {
+          // Success
+          return TAO_POA::SERVANT_MANAGER;
+        }
     }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -2099,6 +2161,13 @@ TAO_POA::locate_servant_i (const char *operation,
                            TAO_POA_Current *poa_current,
                            CORBA::Environment &ACE_TRY_ENV)
 {
+  if (this->active_object_map ().find_user_id_using_system_id (system_id,
+                                                               poa_current->object_id_) == -1)
+    {
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        0);
+    }
+
   // If the POA has the RETAIN policy, the POA looks in the Active
   // Object Map to find if there is a servant associated with the
   // Object Id value from the request. If such a servant exists, the
@@ -2106,12 +2175,19 @@ TAO_POA::locate_servant_i (const char *operation,
   if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
       PortableServer::Servant servant = 0;
+      int result = this->active_object_map ().find_servant_using_system_id_and_user_id (system_id,
+                                                                                        poa_current->object_id_,
+                                                                                        servant,
+                                                                                        poa_current->active_object_map_entry_);
 
-      if (this->active_object_map ().find_servant_and_user_id_using_system_id (system_id,
-                                                                               servant,
-                                                                               poa_current->object_id_) != -1)
-        // Success
-        return servant;
+      if (result == 0)
+        {
+          // Increment the reference count.
+          ++poa_current->active_object_map_entry_->reference_count_;
+
+          // Success
+          return servant;
+        }
     }
 
   // If the POA has the NON_RETAIN policy or has the RETAIN policy but
@@ -2178,21 +2254,13 @@ TAO_POA::locate_servant_i (const char *operation,
       PortableServer::POA_var poa = this->_this (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      PortableServer::ObjectId_var user_id;
-      if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                                   user_id.out ()) == -1)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
-
       if (this->policies ().servant_retention () == PortableServer::RETAIN)
         {
           // @@
           // Invocations of incarnate on the servant manager are serialized.
           // Invocations of etherealize on the servant manager are serialized.
           // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-          PortableServer::Servant servant = this->servant_activator_->incarnate (user_id.in (),
+          PortableServer::Servant servant = this->servant_activator_->incarnate (poa_current->object_id_,
                                                                                  poa.in (),
                                                                                  ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
@@ -2217,16 +2285,23 @@ TAO_POA::locate_servant_i (const char *operation,
           // Object Map so that subsequent requests with the same
           // ObjectId value will be delivered directly to that servant
           // without invoking the servant manager.
-          if (this->active_object_map ().rebind_using_user_id_and_system_id (servant,
-                                                                             user_id.in (),
-                                                                             system_id) == -1)
+          int result = this->active_object_map ().rebind_using_user_id_and_system_id (servant,
+                                                                                      poa_current->object_id_,
+                                                                                      system_id,
+                                                                                      poa_current->active_object_map_entry_);
+          if (result != 0)
             {
               ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                                 0);
             }
+          else
+            {
+              // Increment the reference count.
+              ++poa_current->active_object_map_entry_->reference_count_;
 
-          // Success
-          return servant;
+              // Success
+              return servant;
+            }
         }
       else
         //
@@ -2242,7 +2317,7 @@ TAO_POA::locate_servant_i (const char *operation,
           // process the request, and postinvoke the object.
           //
           PortableServer::ServantLocator::Cookie cookie;
-          PortableServer::Servant servant = this->servant_locator_->preinvoke (user_id.in (),
+          PortableServer::Servant servant = this->servant_locator_->preinvoke (poa_current->object_id_,
                                                                                poa.in (),
                                                                                operation,
                                                                                cookie,
@@ -3049,7 +3124,8 @@ TAO_POA_Current::TAO_POA_Current (TAO_POA *impl,
     servant_ (servant),
     operation_ (operation),
     orb_core_ (&orb_core),
-    previous_current_ (0)
+    previous_current_ (0),
+    active_object_map_entry_ (0)
 {
   // Set the current context and remember the old one.
   this->previous_current_ = this->orb_core_->poa_current (this);
@@ -3062,7 +3138,6 @@ TAO_POA_Current::~TAO_POA_Current (void)
   if (this->cookie_ != 0)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
-
       ACE_TRY
         {
           PortableServer::POA_var poa = this->get_POA (ACE_TRY_ENV);
@@ -3084,6 +3159,30 @@ TAO_POA_Current::~TAO_POA_Current (void)
     }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // Cleanup servant related stuff.
+  if (this->active_object_map_entry_ != 0)
+    {
+      // Decrement the reference count.
+      CORBA::UShort new_count = --this->active_object_map_entry_->reference_count_;
+
+      if (new_count == 0)
+        {
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              this->poa_impl_->cleanup_servant (this->active_object_map_entry_,
+                                                ACE_TRY_ENV);
+
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              // Ignore errors from servant cleanup ....
+            }
+          ACE_ENDTRY;
+        }
+    }
 
   // Reset the old context.
   this->orb_core_->poa_current (this->previous_current_);
@@ -3119,6 +3218,9 @@ TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Array<PortableServer::ObjectId>;
+template class ACE_Array_Base<PortableServer::ObjectId>;
+
 template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>;
@@ -3178,7 +3280,12 @@ template class auto_ptr<TAO_POA>;
 template class auto_ptr<TAO_Active_Object_Map>;
 template class auto_ptr<TAO_POA_Manager>;
 template class ACE_Node<TAO_POA *>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Array<PortableServer::ObjectId>
+#pragma instantiate ACE_Array_Base<PortableServer::ObjectId>
+
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>

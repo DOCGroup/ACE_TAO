@@ -1,3 +1,37 @@
+Wed Apr 21 22:15:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA: Phase three of the POA rearchitecturing is now
+	  complete.  This phase includes:
+
+	  - Addition of reference counting to servants.  This includes:
+
+	  (a) obeying reference counting protocol between the POA and the
+              servant
+	  (b) addition of the ServantBase_var class to TAO
+	  (c) addition of the RefCountServantBase class to TAO
+	  (d) addition of reference counting hooks to the ServantBase
+	      class
+	  (e) addition of reference counting to active object map entries
+	      to help in counting the number of outstanding requests on
+	      the servant
+
+	  - Etherealization of servants has now been fixed.
+	    <remaining_activations> and <cleanup_in_progress> should both
+	    have correct values.
+
+	  - New methods were added that help in deactivating and cleaning
+	    up servants.  These methods are used by both the POA and the
+	    POA Manager.
+
+          - New example was added. Reference_Counted_Servant shows how to
+	    use reference counted servants to automatically manage dynamic
+	    memory for servants.
+
+	  - Setting up of POA Current object id was only done with the
+	    RETAIN policy.  This has now been fixed such that it works
+	    properly for all policies.  Thanks to Steve Totten
+	    <totten_s@ociweb.com> for pointing this out.
+
 Wed Apr 21 21:56:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Quoter/client.cpp (main): adding missing ,

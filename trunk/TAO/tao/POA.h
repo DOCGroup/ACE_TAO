@@ -354,6 +354,7 @@ public:
 
   friend class TAO_Object_Adapter;
   friend class TAO_POA_Current;
+  friend class TAO_POA_Manager;
 
   typedef ACE_CString String;
 
@@ -551,8 +552,14 @@ protected:
                                   PortableServer::Servant p_servant,
                                   CORBA_Environment &ACE_TRY_ENV);
 
+  void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
+                                 CORBA::Environment &ACE_TRY_ENV);
+
   void deactivate_object_i (const PortableServer::ObjectId &oid,
                             CORBA_Environment &ACE_TRY_ENV);
+
+  void cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
+                        CORBA::Environment &ACE_TRY_ENV);
 
   CORBA::Object_ptr create_reference_i (const char *intf,
                                         CORBA_Environment &ACE_TRY_ENV);
@@ -692,8 +699,6 @@ protected:
 
   ACE_Lock &lock_;
 
-  int closing_down_;
-
   int persistent_;
 
   int system_id_;
@@ -701,6 +706,10 @@ protected:
   TAO_Creation_Time creation_time_;
 
   TAO_ORB_Core &orb_core_;
+
+  CORBA::Boolean cleanup_in_progress_;
+
+  CORBA::Boolean etherealize_objects_;
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -842,6 +851,10 @@ protected:
 
   TAO_POA_Current *previous_current_;
   // Current previous from <this>.
+
+  TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
+  // Pointer to the entry in the TAO_Active_Object_Map corresponding
+  // to the servant for this request.
 
   // = Hidden because we don't allow these
   TAO_POA_Current (const TAO_POA_Current &);

@@ -42,6 +42,26 @@ class TAO_Active_Object_Map
   //     Implementation to be used by the POA.
 public:
 
+  struct Map_Entry
+  {
+    // = TITLE
+    //     Value field of the active object map.
+    //
+    // = DESCRIPTION
+    //
+    //     We need a mapping from and to all of the following fields:
+    //     <user_id>, <system_id>, and <servant>.  Therefore, we keep
+    //     all the fields together in the map.
+
+    Map_Entry (void);
+    // Default constructor.
+
+    PortableServer::ObjectId user_id_;
+    PortableServer::ObjectId system_id_;
+    PortableServer::Servant servant_;
+    CORBA::UShort reference_count_;
+  };
+
   TAO_Active_Object_Map (int user_id_policy,
                          int unique_id_policy,
                          int persistent_id_policy,
@@ -79,7 +99,8 @@ public:
 
   int rebind_using_user_id_and_system_id (PortableServer::Servant servant,
                                           const PortableServer::ObjectId &user_id,
-                                          const PortableServer::ObjectId &system_id);
+                                          const PortableServer::ObjectId &system_id,
+                                          TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.
 
   int unbind_using_user_id (const PortableServer::ObjectId &user_id);
@@ -101,9 +122,10 @@ public:
   // Can be used with any policy. With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
-  int find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+  int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
+                                                const PortableServer::ObjectId &user_id,
                                                 PortableServer::Servant &servant,
-                                                PortableServer::ObjectId &user_id);
+                                                TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.
 
   int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
@@ -112,32 +134,33 @@ public:
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is identical to <system_id>.
 
+  int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
+                                                TAO_Active_Object_Map::Map_Entry *&entry);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is identical to <system_id>.
+
   int find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
                                     PortableServer::ObjectId_out user_id);
   // Can be used with any policy.  When the SYSTEM_ID policy is used,
   // the <system_id> is identical to <user_id>.
+
+  int find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+                                    PortableServer::ObjectId &user_id);
+  // Can be used with any policy.  When the SYSTEM_ID policy is used,
+  // the <system_id> is identical to <user_id>.
+
+  CORBA::Boolean remaining_activations (PortableServer::Servant servant);
+  // Are there any remaining activations of <servant> in the active
+  // object map?  Can be used with any policy.
+
+  size_t current_size (void);
+  // Size of the map.
 
   static size_t system_id_size (void);
   // Can be used with any policy.
 
   static void set_system_id_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
   // Set the system id size.
-
-  struct Map_Entry
-  {
-    // = TITLE
-    //     Value field of the active object map.
-    //
-    // = DESCRIPTION
-    //
-    //     We need a mapping from and to all of the following fields:
-    //     <user_id>, <system_id>, and <servant>.  Therefore, we keep
-    //     all the fields together in the map.
-
-    PortableServer::ObjectId user_id_;
-    PortableServer::ObjectId system_id_;
-    PortableServer::Servant servant_;
-  };
 
   typedef ACE_Map<
   PortableServer::ObjectId,
@@ -243,6 +266,10 @@ public:
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
+  virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant) = 0;
+  // Are there any remaining activations of <servant> in the active
+  // object map?  Can be used with any policy.
+
   void set_active_object_map (TAO_Active_Object_Map *active_object_map);
   // Set the active map.
 
@@ -285,6 +312,10 @@ public:
                                   TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
+
+  virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant);
+  // Are there any remaining activations of <servant> in the active
+  // object map?  Can be used with any policy.
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -320,6 +351,10 @@ public:
                                   TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
+
+  virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant);
+  // Are there any remaining activations of <servant> in the active
+  // object map?  Can be used with any policy.
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -337,9 +372,10 @@ public:
   virtual ~TAO_Lifespan_Strategy (void);
   // Virtual destructor.
 
-  virtual int find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+  virtual int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
+                                                        const PortableServer::ObjectId &user_id,
                                                         PortableServer::Servant &servant,
-                                                        PortableServer::ObjectId &user_id) = 0;
+                                                        TAO_Active_Object_Map::Map_Entry *&entry) = 0;
   // Can be used with any policy.
 
   void set_active_object_map (TAO_Active_Object_Map *active_object_map);
@@ -362,9 +398,10 @@ class TAO_Transient_Strategy : public TAO_Lifespan_Strategy
   //     Strategy for the TRANSIENT policy.
 public:
 
-  virtual int find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+  virtual int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
+                                                        const PortableServer::ObjectId &user_id,
                                                         PortableServer::Servant &servant,
-                                                        PortableServer::ObjectId &user_id);
+                                                        TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.
 };
 
@@ -379,9 +416,10 @@ class TAO_Persistent_Strategy : public TAO_Lifespan_Strategy
   //     Strategy for the PERSISTENT policy.
 public:
 
-  virtual int find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+  virtual int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
+                                                        const PortableServer::ObjectId &user_id,
                                                         PortableServer::Servant &servant,
-                                                        PortableServer::ObjectId &user_id);
+                                                        TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.
 
 };
