@@ -1,3 +1,11 @@
+Fri Jul 07 14:41:51 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/types.h:
+
+	  Fixed some non-native type problems. Also, made some temporary
+	  types (pthread_*) until we actually get to win32/pthread.h at
+	  which point, we will correctly define these.
+
 Fri Jul  7 02:18:02 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/posix/dirent.*:
