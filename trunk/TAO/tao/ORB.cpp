@@ -1777,7 +1777,7 @@ CORBA_ORB::string_to_object (const char *str
 // ****************************************************************
 
 char *
-CORBA_ORB::id (TAO_ENV_ARG_DECL_NOT_USED)
+CORBA_ORB::id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup (this->orb_core_->orbid ());
 }
