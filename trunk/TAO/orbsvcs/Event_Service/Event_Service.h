@@ -1,13 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   The TAO event service implementation.
-//
-// ============================================================================
 
+// ============================================================================
+/**
+ * @file Event_Service.h
+ *
+ * $Id$
+ *
+ * The TAO event service implementation.
+ */
 #ifndef EC_EVENT_SERVICE_H
 #define EC_EVENT_SERVICE_H
 #include /**/ "ace/pre.h"
@@ -22,25 +22,24 @@
 
 class TAO_Module_Factory;
 
+/**
+ * @class Event_Service
+ *
+ * This class decorates an Event Channel implementation, but in a very simple
+ * way: destroy() also shutdowns the ORB.
+ *
+ * The Event_Channel implementations should not shutdown the ORB by default,
+ * but in this case, where the Event_Channel is (almost) the only service on
+ * the host, it makes more sense to do so.
+ */
 class Event_Service : public POA_RtecEventChannelAdmin::EventChannel
 {
-  //
-  // = TITLE
-  //   This class decorates an Event Channel implementation, but in a
-  //   very simple way: destroy() also shutdowns the ORB.
-  //
-  // = DESCRIPTION
-  //   The Event_Channel implementations should not shutdown the ORB
-  //   by default, but in this case, where the Event_Channel is
-  //   (almost) the only service on the host, it makes more sense to
-  //   do so.
-  //
 public:
   Event_Service (void);
   virtual ~Event_Service (void);
 
+  /// Run the event service.
   int run (int argc, ACE_TCHAR* argv[]);
-  // Run the event service.
 
   // = The RtecEventChannelAdmin::Event_Channel methods
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
@@ -66,47 +65,50 @@ public:
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
 
 private:
+  /// Parse the command line args
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  // parse the command line args
 
   enum {
-    ES_NEW, // Use the Service Configurator to find factory
-    ES_OLD_REACTIVE,   // Reactive dispatching, old EC.
-    ES_OLD_MT          // Prioritized dispatching, old EC.
+    /// Use the Service Configurator to find factory
+    ES_NEW,
+    /// Reactive dispatching, old EC.
+    ES_OLD_REACTIVE,
+    /// Prioritized dispatching, old EC.
+    ES_OLD_MT
   };
 
   enum Sched_type_t {SCHED_NONE, SCHED_GLOBAL, SCHED_LOCAL};
-  
+
 private:
+  /// The module factory for the EC.
   TAO_Module_Factory *module_factory_;
-  // The module factory for the EC.
 
+  /// The Scheduler implementation.
   POA_RtecScheduler::Scheduler *sched_impl_;
-  // The Scheduler implementation.
 
+  /// The Event Channel implementation.
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
-  // The Event Channel implementation.
 
+  /// The name we use to bind with the NameService
   ACE_CString service_name_;
-  // The name we use to bind with the NameService
 
+  /// The name of the file were we output the Event_Service IOR.
   ACE_CString ior_file_name_;
-  // The name of the file were we output the Event_Service IOR.
 
+  /// The name of a file where the process stores its pid
   ACE_CString pid_file_name_;
-  // The name of a file where the process stores its pid
 
+  /// The name of the servant we use when we use persistent IORs
+  ACE_CString servant_name_;
+
+  /// Should we use a global scheduler or a local one or none?
   Sched_type_t scheduler_type_;
-  // Should we use a global scheduler or a local one or none?
 
+  /// The type of event service we will use
   int event_service_type_;
-  // The type of event service we will use
 
-  int global_scheduler_;
-  // Should we use a global scheduler or a local one?
-
+  /// A reference to the ORB, to shut it down properly.
   CORBA::ORB_var orb_;
-  // A reference to the ORB, to shut it down properly.
 };
 
 #include /**/ "ace/post.h"
