@@ -180,7 +180,7 @@ randomize (int array[], size_t size)
   size_t i;
 
   for (i = 0; i < size; i++)
-    array [i] = i;
+    array [i] = static_cast<int> (i);
 
   ACE_OS::srand (ACE_OS::time (0L));
 
@@ -188,7 +188,8 @@ randomize (int array[], size_t size)
 
   for (i = 0; i < size; i++)
     {
-      int index = ACE_OS::rand() % size--;
+      int index = ACE_OS::rand() % static_cast<int> (size);
+      --size;
       int temp = array [index];
       array [index] = array [size];
       array [size] = temp;
