@@ -2,11 +2,15 @@
 // $Id$
 
 // The following configuration file is designed to work for Windows 95,
-// Windows NT 3.51 and Windows NT 4.0 platforms using the Microsoft Visual C++ 
+// Windows NT 3.51 and Windows NT 4.0 platforms using the Microsoft Visual C++
 // compilers 2.0, 4.0, 4.1, 4.2 and 5.0
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
+
+#if defined (ACE_HAS_WINCE) || defined (UNDER_CE)
+# include "ace/config-WinCE.h"
+#endif /* ACE_HAS_WINCE */
 
 // ----------------------- user configuration defines --------------------
 
@@ -27,10 +31,10 @@
 #endif
 
 // Define ACE_HAS_MFC to 1, if you want ACE to use CWinThread. This should
-// be defined, if your application uses MFC. 
+// be defined, if your application uses MFC.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: MFC DLLs must be installed
-//  Additonal notes		: If both ACE_HAS_MFC and ACE_MT_SAFE are 
+//  Additonal notes		: If both ACE_HAS_MFC and ACE_MT_SAFE are
 //                        defined, the MFC DLL (not the static lib)
 //                        will be used from ACE.
 #if !defined (ACE_HAS_MFC)
@@ -52,7 +56,7 @@
 	#define ACE_HAS_STANDARD_CPP_LIBRARY 0
 #endif
 
-// The STL that comes with ACE uses the std namespace. Note however, it is not 
+// The STL that comes with ACE uses the std namespace. Note however, it is not
 // part of the standard C++ library
 #if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
         #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB	1
@@ -65,7 +69,7 @@
 // Define ACE_HAS_STRICT to 1 in your config.h file if you want to use
 // STRICT type checking.  It is disabled by default because it will
 // break existing application code.
-//  Setting applies to  : building ACE, linking with ACE 
+//  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: -
 //  Additonal notes		: ACE_HAS_MFC implies ACE_HAS_STRICT
 #if !defined (ACE_HAS_STRICT)
