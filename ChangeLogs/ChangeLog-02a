@@ -963,8 +963,9 @@ Mon Jun  4 05:53:57 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/File_Lock: Added an "unlink_in_destructor" flag to
           ACE_File_Lock to control whether or not the underlying file is
-          unlinked in the destructor.  Thanks to Yuval Yosef
-          <yuvi@isdn.net.il> for suggesting this.
+ 	  unlinked in the destructor.  Thanks to Yuval Yosef
+ 	  <yuvi@isdn.net.il> and Crawford Lodge
+ 	  <crawford.lodge@xmlglobal.com> for suggesting this.
 
 Sun Jun  3 18:08:39 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
