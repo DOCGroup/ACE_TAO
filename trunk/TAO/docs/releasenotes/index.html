@@ -494,10 +494,10 @@ and <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
 <P>This is an implementation of the OMG spec addressing the <A HREF="http://www.cs.wustl.edu/~sumedh/research/corbaav.pdf">Control
 and Management of Audio/Video Streams</A>.
 
-<P>We are currently implementing the various interfaces defined in the
-above spec. We are also working on building a audio/video streaming demo
-that will use the above service as the control mechanism and JAWS as an
-efficient transport and protocol processing framework.
+<P>The audio/video streaming service has been implemented in the light
+profile. An MPEG-1 application which streams mpeg-1 video and mpeg-1
+audio separately has been developed using the service. This
+application currently works only for Unix platforms.
 
 <P>Current Status:
 <UL>
@@ -514,18 +514,20 @@ Implemented the VDev and StreamEndPoint base class functionality.</LI>
 <LI>
 Implemented the MMDevice interface, which is a factory for StreamEndPoint
 and VDev objects.</LI>
+<LI>
+    Implemented a mpeg-1 streaming audio/video application using the
+    a/v service.
+</LI>
 </UL>
 Work in progress:
 <UL>
 <LI>
 Implementing the SFP protocol</LI>
-
 <LI>
-Porting the distributed audio/video player developed at <A HREF="http://www.cse.ogi.edu/~scen/Player">OGI</A>
-to ACE (and in the future to JAWS)</LI>
+    Integrating the mpeg-1 streaming application with the trading
+    service.
+</LI>
 
-<LI>
-Implementing the CORBA Stream controller for the above audio/video player</LI>
 </UL>
 
 <HR>
