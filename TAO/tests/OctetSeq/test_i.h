@@ -31,6 +31,8 @@ public:
   // = The Simple_Server methods.
   void set (Test::Index i,
             const Test::OctetSeq& seq,
+            CORBA::Double verification_token,
+            CORBA::Double_out returned_token,
             CORBA::Environment&)
     ACE_THROW_SPEC ((Test::OutOfRange));
 
