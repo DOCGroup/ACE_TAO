@@ -142,6 +142,11 @@ Grid_Factory_i::Grid_Factory_i (void)
   // no-op
 }
 
+// Copy Constructor
+Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &)
+{
+  // no-op
+}
 // Destructor
 Grid_Factory_i::~Grid_Factory_i (void)
 {

@@ -1,20 +1,23 @@
-// -*- C++ -*-
 // $Id$
-#include "Server_i.h"
+#include "../Simple_util.h"
+#include "Grid_i.h"
 
-// This is the main driver program for the grid server.
+// This is the main driver program for the time and date server.
 
 int
 main (int argc, char *argv[])
 {
-  Server_i server;
+  Server<Grid_Factory_i> server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Grid server\n"));
+              "\n\tGrid server\n\n"));
 
   TAO_TRY
     {
-      if (server.init (argc, argv, TAO_TRY_ENV) == -1)
+      if (server.init ("Grid",
+                       argc,
+                       argv,
+                       TAO_TRY_ENV) == -1)
         return 1;
       else
         {
@@ -38,3 +41,14 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class Server<Grid_Factory_i>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate Server<Grid_Factory_i>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
