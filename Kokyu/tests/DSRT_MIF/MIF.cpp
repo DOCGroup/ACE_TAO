@@ -56,7 +56,7 @@ int main (int,char**)
 {
   Kokyu::DSRT_ConfigInfo config_info;
 
-  config_info.scheduler_type_ = Kokyu::SCHED_MIF;
+  //  config_info.scheduler_type_ = Kokyu::SCHED_MIF;
 
   ACE_Barrier barrier (3);
 

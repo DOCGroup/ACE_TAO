@@ -71,6 +71,8 @@ DSRT_Dispatcher_Impl::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
+  ACE_DEBUG ((LM_DEBUG, "svc::init called\n"));
+
   while (arg_shifter.is_anything_left ())
     {
       const ACE_TCHAR* arg = arg_shifter.get_current ();
@@ -203,6 +205,7 @@ _make_DSRT_Dispatcher_Impl (ACE_Service_Object_Exterminator *gobbler)
 {
   if (gobbler != 0)
     *gobbler = (ACE_Service_Object_Exterminator) _gobble_DSRT_Dispatcher_Impl;
+  ACE_DEBUG ((LM_DEBUG, "about to create DSRT_Dispatcher_Impl\n" ));
   return new Kokyu::DSRT_Dispatcher_Impl;
 }
 

@@ -1,3 +1,11 @@
+Tue Apr 15 09:47:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu.cpp:
+	* Kokyu/DSRT_Dispatcher_Impl.cpp:
+	* Kokyu/tests/DSRT_MIF/MIF.cpp:
+
+	  Service config related changes to Kokyu DSRT framework.
+
 Tue Apr 15 11:24:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
