@@ -1,3 +1,13 @@
+Thu Jul 03 16:04:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCM_Core.mpc: Fixed compilation errors by
+
+	  . Including $(TAO_ROOT)/orbsvcs/orbsvcs to IDL and C++ include
+	  paths.  It's necessary to do this because security idl files
+	  includes other stuff in that subdir.
+
+	  . Adding dependency to ifr_client to CIAO_Container library.
+
 Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * CIAO.mwc
@@ -45,7 +55,7 @@ Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
     * tools/XML_Helpers/XMLHelpers.mpc:
 
       Added and updated mpc files to use the latest
-        features and make use of base projects. 
+        features and make use of base projects.
 
 
 Tue Jun 24 15:42:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
