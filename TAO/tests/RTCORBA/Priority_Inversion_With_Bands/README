@@ -1,3 +1,4 @@
+
 $Id$
 
 Description:
@@ -6,7 +7,7 @@ This test check for priority inversion when using different RTCORBA
 configurations.  The following four configurations are tested:
 
 (a) Thread lanes without bands
-(b) Thread lanes without bands
+(b) Thread lanes with bands
 (c) Thread pool without bands
 (d) Thread pool with bands
 

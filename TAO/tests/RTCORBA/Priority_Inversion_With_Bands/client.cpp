@@ -150,7 +150,7 @@ Task::svc (void)
         }
 
       rt_current->the_priority (low_priority
-                                ACE_ENV_SINGLE_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test->initialize (iterations * 2
@@ -169,7 +169,7 @@ Task::svc (void)
         }
 
       rt_current->the_priority (high_priority
-                                ACE_ENV_SINGLE_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (i = 0; i != iterations; ++i)
