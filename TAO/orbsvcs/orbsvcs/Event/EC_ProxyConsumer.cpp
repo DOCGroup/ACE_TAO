@@ -11,6 +11,13 @@
 #include "EC_ProxyConsumer.i"
 #endif /* __ACE_INLINE__ */
 
+#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#include "ec_dsui_config.h"
+#include "ec_dsui_families.h"
+#include "EC_Event_Counter.h"
+#include <dsui.h>
+#endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
+
 ACE_RCSID (Event,
            EC_ProxyConsumer,
            "$Id$")
@@ -24,7 +31,6 @@ TAO_EC_ProxyPushConsumer::
     connected_ (0),
     filter_ (0)
 {
-  ACE_DEBUG ((LM_DEBUG, "\nECPPC (%t) - Constructor\n\n"));
   this->lock_ =
     this->event_channel_->create_consumer_lock ();
 

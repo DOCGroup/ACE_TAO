@@ -11,6 +11,13 @@
 #include "EC_Default_ProxyConsumer.i"
 #endif /* __ACE_INLINE__ */
 
+#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#include "ec_dsui_config.h"
+#include "ec_dsui_families.h"
+#include "EC_Event_Counter.h"
+#include <dsui.h>
+#endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
+
 ACE_RCSID(Event, EC_Default_ProxyConsumer, "$Dd$")
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
@@ -101,6 +108,14 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
                                           this);
   if (!ace_mon.locked ())
     return;
+
+  RtecEventComm::EventSet &tmp_event = (RtecEventComm::EventSet&)event;
+  EC_Event_Counter::event_id eid = EC_EVENT_COUNTER->increment();
+  tmp_event[0].header.eid.id = eid.id;
+  tmp_event[0].header.eid.tid = eid.tid;
+
+  DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+
 
   ace_mon.filter->push (event, this
                         ACE_ENV_ARG_PARAMETER);

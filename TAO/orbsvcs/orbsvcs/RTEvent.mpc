@@ -101,6 +101,9 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
       Event/EC_Trivial_Supplier_Filter.cpp
       Event/EC_Type_Filter.cpp
       Event/EC_UDP_Admin.cpp
+      Event/EC_Event_Limit.cpp
+      Event/EC_Event_Counter.cpp
+      Event/ec_dsui_vars.cpp
     }
   }
 }

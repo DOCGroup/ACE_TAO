@@ -48,7 +48,6 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
     // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer -  checking if connected: %d\n",this->is_connected_i()));
     /* If there is a consumer (non-nil) do this otherwise
      * skip
      */
@@ -64,14 +63,6 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
         this->consumer_ =
           RtecEventComm::PushConsumer::_duplicate (push_consumer);
         this->qos_ = qos;
-
-        ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer - CONNECTED printing qos dependencies\n"));
-        for (unsigned int i = 0; i < this->qos_.dependencies.length(); ++i) {
-          ACE_DEBUG((LM_DEBUG, "ECDPS::connect_push_consumer - qos dependency #%d type (%d)\n",
-                     i,
-                     this->qos_.dependencies[i].event.header.type));
-        }
-        ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer - done\n"));
 
         this->child_ =
           this->event_channel_->filter_builder ()->build (this,
@@ -131,13 +122,6 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
                 "Building filters for consumer <%x>.\n",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
-    ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer - NOT CONNECTED printing qos dependencies\n"));
-        for (unsigned int i = 0; i < this->qos_.dependencies.length(); ++i) {
-          ACE_DEBUG((LM_DEBUG, "ECDPS::connect_push_consumer - qos dependency #%d type (%d)\n",
-                     i,
-                     this->qos_.dependencies[i].event.header.type));
-        }
-        ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer - done\n"));
 
     this->child_ =
       this->event_channel_->filter_builder ()->build (this,

@@ -17,6 +17,13 @@
 #include "EC_ProxySupplier.i"
 #endif /* __ACE_INLINE__ */
 
+#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#include "ec_dsui_config.h"
+#include "ec_dsui_families.h"
+#include "EC_Event_Counter.h"
+#include <dsui.h>
+#endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
+
 ACE_RCSID (Event,
            EC_ProxySupplier,
            "$Id$")
@@ -30,7 +37,6 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* e
     child_ (0),
     consumer_validate_connection_(validate_connection)
 {
-  ACE_DEBUG((LM_DEBUG, "\nECPPS (%t) - Constructor\n\n"));
   this->lock_ =
     this->event_channel_->create_supplier_lock ();
 
@@ -252,17 +258,13 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                                 TAO_EC_QOS_Info& qos_info
                                 ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push => type (%d)\n", event[0].header.type));
-
   // The mutex is already held by the caller (usually the filter()
   // method)
   if (this->is_connected_i () == 0) {
-    ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push => Error - Not connected.\n"));
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
   }
 
   if (this->suspended_ != 0) {
-    ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push => Error - Suspended.\n"));
     return;
   }
 
@@ -292,7 +294,11 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    ACE_DEBUG((LM_DEBUG, "ECPPS (%t) - pushing event to event channel\n"));
+    EC_Event_Counter::event_id eid;
+    eid.id = event[0].header.eid.id;
+    eid.tid = event[0].header.eid.tid;
+    DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(EC_Event_Counter::event_id), (char*)&eid);
+
     this->event_channel_->dispatching ()->push (this,
                                                 consumer.in (),
                                                 event,
@@ -316,17 +322,13 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                                        TAO_EC_QOS_Info& qos_info
                                        ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push_no_copy => type (%d)\n", event[0].header.type));
-
   // The mutex is already held by the caller (usually the filter()
   // method)
   if (this->is_connected_i () == 0) {
-    ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push => Error - Not connected.\n"));
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
   }
 
   if (this->suspended_ != 0) {
-    ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push => Error - Suspended.\n"));
     return;
   }
 
@@ -354,6 +356,11 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
+    EC_Event_Counter::event_id eid;
+    eid.id = event[0].header.eid.id;
+    eid.tid = event[0].header.eid.tid;
+    DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(EC_Event_Counter::event_id), (char*)&eid);
+
     this->event_channel_->dispatching ()->push_nocopy (this,
                                                        consumer.in (),
                                                        event,
@@ -372,7 +379,6 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
     const RtecEventComm::EventSet& event
     ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push_to_consumer => type (%d)\n", event[0].header.type));
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -380,19 +386,21 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
     ACE_CHECK;
 
     if (this->is_connected_i () == 0) {
-      ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push_to_consumer => Error - Not connected.\n"));
       return; // ACE_THROW (RtecEventComm::Disconnected ());????
     }
 
     if (this->suspended_ != 0) {
-      ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push_to_consumer => Error - Not suspended.\n"));
       return;
     }
   }
 
   ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - push_to_consumer => Push event to consumer\n"));
+      EC_Event_Counter::event_id eid;
+      eid.id = event[0].header.eid.id;
+      eid.tid = event[0].header.eid.tid;
+      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(EC_Event_Counter::event_id), (char*)&eid);
+
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -447,10 +455,13 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
     const RtecEventComm::EventSet& event
     ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - reactive_push_to_consumer => type (%d)\n", event[0].header.type));
   ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG, "ECPPS (%t) - reactive_push_to_consumer => Push event to consumer\n"));
+      EC_Event_Counter::event_id eid;
+      eid.id = event[0].header.eid.id;
+      eid.tid = event[0].header.eid.tid;
+      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(EC_Event_Counter::event_id), (char*)&eid);
+
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
