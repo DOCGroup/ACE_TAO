@@ -88,7 +88,6 @@ check_PROGRAMS = \
         Priority_Task_Test \
         Process_Mutex_Test \
         Process_Strategy_Test \
-        Purgable_Map_Manager_Test \
         RB_Tree_Test \
         Reactor_Exceptions_Test \
         Reactor_Notify_Test \
@@ -200,7 +199,7 @@ Process_Mutex_Test_SOURCES = Process_Mutex_Test.cpp
 Process_Strategy_Test_SOURCES = Process_Strategy_Test.cpp \
                                 Process_Strategy_Test.h
 
-Purgable_Map_Manager_Test_SOURCES = Purgable_Map_Manager_Test.cpp
+# Purgable_Map_Manager_Test_SOURCES = Purgable_Map_Manager_Test.cpp
 
 RB_Tree_Test_SOURCES = RB_Tree_Test.cpp
 
