@@ -16,6 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/SOCK.h"
+#include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
