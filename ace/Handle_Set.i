@@ -84,7 +84,8 @@ ACE_INLINE void
 ACE_Handle_Set::set_bit (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Handle_Set::set_bit");
-  if (!this->is_set (handle))
+  if ((handle != ACE_INVALID_HANDLE)
+      && (!this->is_set (handle)))
     {
 #if defined (ACE_WIN32)
       FD_SET ((SOCKET) handle,
@@ -116,7 +117,8 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Handle_Set::clr_bit");
 
-  if (this->is_set (handle))
+  if ((handle != ACE_INVALID_HANDLE) &&
+      (this->is_set (handle)))
     {
       FD_CLR ((ACE_SOCKET) handle,
               &this->mask_);
