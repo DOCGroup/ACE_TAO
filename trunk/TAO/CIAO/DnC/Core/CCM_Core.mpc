@@ -84,7 +84,7 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
 project(Deployment_stub) : taolib_with_idl {
   requires     += dnc
   after        += CIAO_Server
-  libs         += TAO_Valuetype
+  libs         += TAO_Valuetype CIAO_Server
   sharedname   =  Deployment_stub
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export -Wb,stub_export_include=Deployment_stub_export.h -Wb,skel_export_macro=Deployment_svnt_Export -Wb,skel_export_include=Deployment_svnt_export.h
   dynamicflags =  DEPLOYMENT_STUB_BUILD_DLL
