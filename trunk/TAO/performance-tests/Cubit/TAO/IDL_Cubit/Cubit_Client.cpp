@@ -1146,22 +1146,6 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
 
   TAO_TRY
     {
-#if defined (ACE_WIN32) && (ACE_HAS_DLL == 0)
-      static char* rfactory[] =  { "-ORBresources", "tss",
-                                   "-ORBreactorlock", "null" };
-
-      static char* cli_args[] = { "-ORBiiopprofilelock", "null",
-                                  "-ORBclientconnectionhandler", "ST" };
-      static char* svr_args[] = { "-ORBconcurrency", "thread-per-connection",
-                                  "-ORBpoalock", "null",
-                                  "-ORBconnectorlock", "null" };
-
-  TAO_Internal::open_services
-    (sizeof rfactory / sizeof rfactory[0], rfactory,
-     sizeof cli_args / sizeof cli_args[0], cli_args,
-     sizeof svr_args / sizeof svr_args[0], svr_args);
-#endif /* ACE_WIN32 && ACE_HAS_DLL == 0 */
-
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,

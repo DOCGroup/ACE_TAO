@@ -49,22 +49,6 @@ Cubit_Server::init (int argc,
                     char** argv,
                     CORBA::Environment& env)
 {
-#if defined (ACE_WIN32) && (ACE_HAS_DLL == 0)
-  static char* rfactory[] =  { "-ORBresources", "tss", 
-                               "-ORBreactorlock", "null" };
-
-  static char* cli_args[] = { "-ORBiiopprofilelock", "null",
-                              "-ORBclientconnectionhandler", "ST" };
-  static char* svr_args[] = { "-ORBconcurrency", "thread-per-connection", 
-                              "-ORBpoalock", "null",
-                              "-ORBconnectorlock", "null" };
-
-  TAO_Internal::open_services
-    (sizeof rfactory / sizeof rfactory[0], rfactory,
-     sizeof cli_args / sizeof cli_args[0], cli_args,
-     sizeof svr_args / sizeof svr_args[0], svr_args);
-#endif /* ACE_WIN32 && ACE_HAS_DLL == 0 */
-
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,

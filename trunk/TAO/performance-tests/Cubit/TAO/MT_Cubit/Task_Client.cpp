@@ -580,21 +580,6 @@ Client::init_orb (void)
   int argc = tmp_args2.argc ();
   char **argv = tmp_args2.argv ();
 
-#if defined (ACE_WIN32) && (ACE_HAS_DLL == 0)
-  static char* rfactory[] =  { "-ORBresources", "tss",
-                               "-ORBreactorlock", "null" };
-
-  static char* cli_args[] = { 0 };
-  static char* svr_args[] = { "-ORBconcurrency", "thread-per-connection",
-                              "-ORBdemuxstrategy", "dynamic",
-                              "-ORBtablesize", "128" };
-
-  TAO_Internal::open_services
-    (sizeof rfactory / sizeof rfactory[0], rfactory,
-     sizeof cli_args / sizeof cli_args[0], cli_args,
-     sizeof svr_args / sizeof svr_args[0], svr_args);
-#endif /* ACE_WIN32 && ACE_HAS_DLL == 0 */
-
   this->orb_ = CORBA::ORB_init (argc,
                          argv,
                          "internet",
