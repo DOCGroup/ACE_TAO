@@ -20,7 +20,7 @@
 
 #ifndef CIAO_GLUE_SESSION_RECEIVER_SVNT_H
 #define CIAO_GLUE_SESSION_RECEIVER_SVNT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ReceiverS.h"
 #include "ReceiverEC.h"
@@ -543,6 +543,6 @@ namespace CIAO_GLUE_Hello
   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_RECEIVER_SVNT_H */
 
