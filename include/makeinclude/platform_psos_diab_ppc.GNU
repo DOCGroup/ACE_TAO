@@ -109,6 +109,9 @@ CFLAGS += -D__DIAB -D__DIAB_42a -Xkill-opt=0x400 -Xno-old-style -Xlint $(PSOSINC
 #    -Xinit-locals[=<mask>] initializes memory pattern for local variables
 #    -Xno-optimized-debug turns off optimizations for debugging
 DCFLAGS         += -w -Ws 
+
+# These cause internal compiler errors for some ACE tests, because of the
+# debug information embedded by the -g and -g1 switches (see above).
 #DCFLAGS         += -g1 -w -Ws 
 #DCFLAGS         += -g -w -Ws 
 #DCFLAGS         += -g -w -Ws -P -o precomp.out
@@ -145,11 +148,11 @@ DCCFLAGS         +=  $(DCFLAGS)
 
 # Dynamic Linker
 # DLD             = dld
-DLD             = dplus -tPPC860ES:psos -Wm$(PSS_BSP)/ram.lnk
+DLD             = dplus -tPPC860ES:psos -Wm $(PSS_BSP)/ram.dld $(PSS_BSP)/anchor.dld
 
 # Static Linker
 # LD              = dld
-LD              = dplus -tPPC860ES:psos -Wm$(PSS_BSP)/ram.lnk
+LD              = dplus -tPPC860ES:psos -Wm $(PSS_BSP)/ram.dld $(PSS_BSP)/anchor.dld
 
 # Static Linker Flags
 # -L<path> adds a directory path to the linker search path

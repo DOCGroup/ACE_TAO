@@ -1,3 +1,16 @@
+Tue Apr 27 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Containers_T.{cpp, h}
+          tests/OrdMultiSet_Test.cpp: added a workaround for a problem with
+          implicit template instantiation and a do-nothing destructor
+          definition.  Thanks to Sarmeesha Reddy <sreddy@tr.comm.mot.com> and
+          Steven Tine <stevent@tr.comm.mot.com> for reporting this.
+
+        * include/makeinclude/platform_psos_diab_ppc.GNU: changes to use
+          the board support package linker file. Thanks to Sarmeesha
+          Reddy <sreddy@tr.comm.mot.com> and Steven Tine
+          <stevent@tr.comm.mot.com> for contributing this change.
+
 Tue Apr 27 12:57:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in: 
