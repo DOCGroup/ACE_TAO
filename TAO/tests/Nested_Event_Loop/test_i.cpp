@@ -131,7 +131,7 @@ void
 client_i::loop (CORBA::ULong event_loop_depth,
                 CORBA::ULong event_loop_iterations,
                 CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "client_i::loop: event_loop_depth = %2.2d; event_loop_iterations = %2.2d\n",
@@ -164,7 +164,7 @@ void
 client_i::oneway_no_op (const act &act_for_iterations,
                         const act &act_for_flag,
                         CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -190,7 +190,7 @@ client_i::oneway_no_op (const act &act_for_iterations,
 
 void
 client_i::twoway_no_op (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "client_i::twoway_no_op\n"));

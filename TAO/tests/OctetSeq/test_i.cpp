@@ -74,7 +74,7 @@ Database_i::get_crc (Test::Index i,
 
 void
 Database_i::shutdown (CORBA::Environment&)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }

@@ -27,10 +27,10 @@ public:
   // = The test interface methods.
   CORBA::ULong method (CORBA::ULong work,
                        CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

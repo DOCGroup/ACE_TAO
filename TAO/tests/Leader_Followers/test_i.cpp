@@ -11,7 +11,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 
 void
 test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0,
                         ACE_TRY_ENV);
@@ -20,7 +20,7 @@ test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
 CORBA::ULong
 test_i::method (CORBA::ULong work,
                 CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Server: Working for %d milli seconds @ %T\n",
