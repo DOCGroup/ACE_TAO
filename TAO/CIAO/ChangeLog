@@ -2,7 +2,9 @@ Sat Jan 15 15:16:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/examples/BasicSP/README.html
 
-          Update this README file. 
+          Updated this README file for instructions on running the BasicSP
+          example by using DAnCE. Thanks Sam <sam_abbe@raytheon.com>
+          for pointing errors on this document page.
 
 Mon Jan 10 09:45:14 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
