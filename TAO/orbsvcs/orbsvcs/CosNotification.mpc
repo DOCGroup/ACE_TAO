@@ -5,7 +5,7 @@ project(CosNotification) : orbsvcslib, core, event {
   sharedname   = TAO_CosNotification
   dynamicflags = TAO_NOTIFY_BUILD_DLL
 
-  idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=orbsvcs/Notify/notify_export.h
+  idlflags    += -Wb,export_macro=TAO_Notify_Export -Wb,export_include=orbsvcs/Notify/notify_export.h
 
   IDL_Files {
     CosNotification.idl
