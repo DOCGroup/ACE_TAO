@@ -1,3 +1,8 @@
+Thu Apr  5 15:36:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PolicyC.h: Added a missing Environment.h. This should fix
+	  problems in  TRU64_XX builds and SunCC builds.
+
 Thu Apr  5 13:09:33 2001  Mayur Deshpande <mayur@ics.uci.edu>
         
         * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
