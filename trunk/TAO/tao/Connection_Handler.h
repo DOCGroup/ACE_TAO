@@ -44,7 +44,7 @@ class ACE_Event_Handler;
  * connections handler in every protocol can derive from this
  * class as well as the ACE_Svc_Handler specialised for the
  * right protocol. This way, most of the common code for the
- * different protocls would be in this implementation. Further,
+ * different protocols would be in this implementation. Further,
  * this class wold be of immense use in storing the handlers in
  * the Cache for TAO. This would help in purging entries which
  * is generally accompanied by closing the open handles and

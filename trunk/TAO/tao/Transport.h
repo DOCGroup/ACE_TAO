@@ -382,7 +382,7 @@ protected:
   /// needs to be sent.
   virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
 
-  /// Write the complete Message_Block chain to the connection.
+  /// Write the complete iovec chain to the connection.
   /**
    * Often the implementation simply forwards the arguments to the
    * underlying ACE_Svc_Handler class. Using the code factored out
@@ -392,15 +392,10 @@ protected:
    * transformations of the data, such as SSLIOP or protocols that
    * compress the stream.
    *
-   * @param mblk contains the data that must be sent.  For each
-   * message block in the cont() chain all the data between rd_ptr()
-   * and wr_ptr() should be delivered to the remote peer.
+   * @param iov contains the data that must be sent.
    *
-   * @param timeout is the maximum time that the application is
-   * willing to wait for the data to be sent, useful in platforms that
-   * implement timed writes.
-   * The timeout value is obtained from the policies set by the
-   * application.
+   * @param iovcnt is the number of iovec structures in the list
+   * where iov points.
    *
    * @param bytes_transferred should return the total number of bytes
    * successfully transferred before the connection blocked.  This is
@@ -411,6 +406,12 @@ protected:
    * In this case the ORB expects the function to return -1, errno to
    * be appropriately set and this argument to return the number of
    * bytes already on the OS I/O subsystem.
+   *
+   * @param timeout is the maximum time that the application is
+   * willing to wait for the data to be sent, useful in platforms that
+   * implement timed writes.
+   * The timeout value is obtained from the policies set by the
+   * application.
    *
    */
   virtual ssize_t send_i (iovec *iov, int iovcnt,
