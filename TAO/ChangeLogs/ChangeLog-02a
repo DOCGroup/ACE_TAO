@@ -1,8 +1,18 @@
+Tue May 15 16:18:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+          Removed the unused TAO_Exceptions::system_exceptions field.
+
+        * tao/DynamicInterface/ExceptionList.cpp:
+          Moved the instantiation of ACE_Unbounded<CORBA::TypeCode_ptr> to
+          the DynamicInterface library, it is no longer required in TAO.
+
 Tue May 15 17:43:29 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/RT_Stub.cpp:
-	  Added TAO_HAS_RT_CORBA guards around the contents of this file.
-	  Thanks to Michael Kircher for catching it.
+        * tao/RT_Stub.cpp:
+          Added TAO_HAS_RT_CORBA guards around the contents of this file.
+          Thanks to Michael Kircher for catching it.
 
 Tue Apr 15 17:31:16 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
