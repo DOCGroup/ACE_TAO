@@ -49,7 +49,7 @@ private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int thru_naming_service (CORBA::Environment &env);
+  int init_naming_service (CORBA::Environment &env);
   // Initialises the name server and registers the Echo server object
   // name with the name server.
 
@@ -75,7 +75,7 @@ private:
   // An instance of the name server, wherein the naming context
   // containg the factory of objects will be registered.
 
-  int using_naming_srv_;
+  int using_naming_service_;
   // This specifies whether the naming service is to be used.
 };
 
