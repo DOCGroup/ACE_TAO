@@ -1061,6 +1061,8 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(TAO_ROOT)/tao/Acceptor_Registry.i \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \

@@ -44,8 +44,8 @@ include $(TAO_ROOT)/taoconfig.mk
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Collocation_Tester.o .obj/Collocation_Tester.so .shobj/Collocation_Tester.o .shobj/Collocation_Tester.so: Collocation_Tester.cpp Collocation_Tester.h Diamond_i.h DiamondS.h \
-  DiamondC.h \
+.obj/Collocation_Tester.o .obj/Collocation_Tester.so .shobj/Collocation_Tester.o .shobj/Collocation_Tester.so: Collocation_Tester.cpp Collocation_Tester.h \
+  Diamond_i.h DiamondS.h DiamondC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
