@@ -3101,7 +3101,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
       delete s->name_;
       return result;
     }
-#else
+#   else
   if (s->name_)
     {
       ACE_OSCALL (::sem_unlink (s->name_), int, -1, result);
@@ -3112,7 +3112,10 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   else
     {
       ACE_OSCALL (::sem_destroy (s->sema_), int, -1, result);
-      delete s->sema_;
+#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+      if (s->new_sema_ != 0)
+#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
+        delete s->sema_;
       s->sema_ = 0;
       return result;
     }
@@ -3419,6 +3422,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   s->name_ = 0;
 
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+  s->new_sema_ = 0;
   if (type == USYNC_PROCESS)
     {
       // Let's see if it already exists.
@@ -3491,6 +3495,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
       ACE_NEW_RETURN (s->sema_,
                       sem_t,
                       -1);
+#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+      s->new_sema_ = 1;
+#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
       ACE_OSCALL_RETURN (::sem_init (s->sema_,
                                      type != USYNC_THREAD,
                                      count), int, -1);
