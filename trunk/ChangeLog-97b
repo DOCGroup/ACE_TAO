@@ -1,3 +1,10 @@
+Thu Sep 11 15:22:51 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf.y: Removed the warning about Service name being
+ 	  different from Module name.  I'm not sure why this was
+ 	  complaining in the first place.  Thanks to Eric Newton for
+ 	  pointing this out.
+
 Thu Sep 11 10:59:12 1997    <nw1@CHA-CHA>
 
 	* ace/Connector.cpp (handle_output): Increased the idle time

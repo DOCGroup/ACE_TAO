@@ -140,11 +140,6 @@ module
       ACE_ARGV args ($<static_node_>1->parameters ());
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1);
 
-      if (::strcmp ($<static_node_>1->name (), 
-		    ((MT_Module *) mt->object ())->name ()) != 0)
-	ACE_ERROR ((LM_ERROR, "warning, service name %s is different from Module name %s\n",
-		   $<static_node_>1->name (), ((MT_Module *) mt->object ())->name ()));
-
       if (mt->init (args.argc (), args.argv ()) == -1
 	  || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	{
@@ -156,10 +151,7 @@ module
   | static  
     { 
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
-      if (::strcmp ($<static_node_>1->name (), 
-		    ((MT_Module *) mt->object ())->name ()) != 0)
-	ACE_ERROR ((LM_ERROR, "warning, service name %s is different from Module name %s\n",
-		   $<static_node_>1->name (), ((MT_Module *) mt->object ())->name ()));
+
       if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	yyerrno++;
     }
