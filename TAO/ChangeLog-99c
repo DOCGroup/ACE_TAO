@@ -1,3 +1,18 @@
+Fri Mar 12 12:23:07 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Retrieved 
+	the timezone information and set the time displacement factor for the
+	clerk's time.
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h : Added the GET/SET
+	methods for the time displacement factor. 
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp : Added implementation
+	for the above methods. Passed the time zone information to the UTO 
+	created in universal_time ().
+
+	The timer_helper uses the newly added timezone wrappers of OS.h. These
+	wrappers are yet to be tested on NT. Thanks to 
+	Brian Dance <Brian_Dance@UECCS.co.uk> for reporting this.
+	
 Fri Mar 12 10:38:18 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/CDR_Interpreter.cpp:
