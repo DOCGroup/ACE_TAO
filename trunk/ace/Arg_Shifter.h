@@ -17,7 +17,7 @@
 #if !defined (ACE_ARG_SHIFTER_H)
 #define ACE_ARG_SHIFTER_H
 
-class ACE_Arg_Shifter
+class ACE_Export ACE_Arg_Shifter
 {
   // = TITLE
   //    This ADT shifts known args to the back of the argv vector, so
