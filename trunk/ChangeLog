@@ -1,3 +1,16 @@
+Fri Sep 17 08:42:50 2004  Steve Totten  <totten_s@ociweb.com>
+
+        * bin/PerlACE/Process_Win32.pm (Executable):
+          Fixed an error in which Executable() returns a UNIX-style
+          path instead of a Windows-style path if the IGNOREEXESUBDIR
+          member is set.  Now, test scripts can use
+          PerlACE::Process::IgnoreExeSubDir() to make sure an
+          executable is found in the path specified without the
+          addition of the setting of -ExeSubDir.  This change was
+          required for Windows Release and Static builds after the
+          installation directory for various common utilities was
+          changed to %ACE_ROOT%\bin.
+
 Fri Sep 17 09:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
