@@ -167,13 +167,26 @@
 #define ACE_LACKS_SIGINFO_H 
 #define ACE_HAS_UCONTEXT_T 
 #define ACE_HAS_GETIFADDRS 
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES 
+
+// dlcompat package (not part of base Darwin) is needed for dlopen().
+// Fink installer puts libraries in /sw/lib and headers in /sw/include
+// In order to install dlcompat do the following:
+//   - download fink from http://fink.sf.net
+//   - type:
+//        fink install dlcompat
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
+#define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("DYLD_LIBRARY_PATH")
+#define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dylib")
 
 // gperf seems to need this
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
-// Remove the following when Apple fixes static template member problem in their
-// compiler
+// gcc 3.1 is broken, gcc 3.3 is a bit better
+#if defined(__GNUC__) && (__GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 3))
+#  define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES 
+   // Remove the following when Apple fixes static template member problem
+   // in their compiler
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 0
+#endif
 
 #endif /* ACE_CONFIG_MACOSX_H */

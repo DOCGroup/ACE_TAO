@@ -378,7 +378,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
 {
   ACE_TRACE ("ACE_Lib_Find::ldname");
 
-#if defined (__BORLANDC__)
+#if defined (__BORLANDC__) || defined(__APPLE__)
   size_t size =
     1 // leading '_'
     + ACE_OS::strlen (entry_point)
@@ -393,7 +393,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
   ACE_OS::strcat (new_name, entry_point);
 
   return new_name;
-#else /* __BORLANDC__ */
+#else /* __BORLANDC__ || __APPLE__ */
   size_t size =
     ACE_OS::strlen (entry_point)
     + 1;
@@ -406,7 +406,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
   ACE_OS::strcpy (new_name, entry_point);
 
   return new_name;
-#endif /* __BORLANDC__ */
+#endif /* __BORLANDC__ || __APPLE__ */
 }
 
 int

@@ -1,3 +1,17 @@
+Wed Nov 13 16:52:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * ace/Lib_Find.cpp (ldname): MacOS X prepends and underscore to
+	  symbols in shared libaries.  
+	
+        * ace/config-macosx.h:
+        * include/makeinclude/platform_macosx.GNU:
+        
+	- add support for dlcompat, a third party package which provides
+            dlopen(), dlsym(), dlcose() functions
+
+          - Define ACE_LD_SEARCH_PATH to DYLD_LIBRARY_PATH and
+            ACE_LD_SUFFIX to .dylib
+
 Tue Nov 12 14:12:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	This is a hackish fix for BUG 1361. Please see
