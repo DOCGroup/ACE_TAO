@@ -23,6 +23,7 @@
 #include "CORBA_methods.h"
 #include "Objref_VarOut_T.h"
 #include "Environment.h"
+#include "default_environment.h"
 
 namespace PortableInterceptor
 {

@@ -17,6 +17,7 @@
 #include "tao/PortableServer/portableserver_export.h"
 #include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
+#include "tao/Environment.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
