@@ -90,9 +90,6 @@ TAO::Any_Special_Basic_Impl_T<T, from_T, to_T>::extract (
           return 1;
         }
 
-      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
       TAO::Any_Special_Basic_Impl_T<T, from_T, to_T> *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       UNSIGNED_CHAR_ANY_IMPL (any_tc,
@@ -109,8 +106,11 @@ TAO::Any_Special_Basic_Impl_T<T, from_T, to_T>::extract (
 						            TAO_DEF_GIOP_MAJOR,
 						            TAO_DEF_GIOP_MINOR);
 
-      impl->assign_translator (kind,
-                               &cdr);
+      impl->assign_translator (any_tc,
+                               &cdr
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)
@@ -118,7 +118,7 @@ TAO::Any_Special_Basic_Impl_T<T, from_T, to_T>::extract (
           _tao_elem = replacement->value_;
           ACE_const_cast (CORBA::Any &, any).replace (replacement);
           replacement_safety.release ();
-          return result;
+          return 1;
         }
 
       // Duplicated by Any_Impl base class constructor.

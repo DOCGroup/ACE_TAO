@@ -145,6 +145,8 @@ IDL_COMPILER_FILES = \
 
 ORB_CORE_FILES = \
   Any \
+  Any_Impl |
+  Any_Unknown_IDL_Type \
   Any_SystemException \
   CORBA_String \
   CurrentC \

@@ -4,6 +4,7 @@
 #define TAO_ANY_DUAL_IMPL_T_C
 
 #include "tao/Any_Dual_Impl_T.h"
+#include "tao/Any.h"
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/Environment.h"
@@ -142,10 +143,11 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                         TAO_DEF_GIOP_MAJOR,
                         TAO_DEF_GIOP_MINOR);
 
-      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      impl->assign_translator (any_tc, 
+                               &cdr 
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-      impl->assign_translator (kind, &cdr);
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)

@@ -7,11 +7,12 @@
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"
 
+#include "ace/Log_Msg.h"
+#include "ace/Guard_T.h"
 
 ACE_RCSID (tao,
            MProfile,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.i"

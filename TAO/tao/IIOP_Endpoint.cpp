@@ -2,11 +2,12 @@
 #include "IOPC.h"
 #include "debug.h"
 
+#include "ace/Log_Msg.h"
+#include "ace/Guard_T.h"
 
 ACE_RCSID (tao,
            IIOP_Endpoint,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Endpoint.i"

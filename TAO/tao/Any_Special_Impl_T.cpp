@@ -137,9 +137,6 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           return 1;
         }
 
-      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       BOUNDED_TSTRING_ANY_IMPL (destructor,
@@ -160,7 +157,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 						            TAO_DEF_GIOP_MAJOR,
 						            TAO_DEF_GIOP_MINOR);
 
-      impl->assign_translator (kind, &cdr);
+      impl->assign_translator (tc, 
+                               &cdr 
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)

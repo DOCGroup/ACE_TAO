@@ -5,11 +5,15 @@
 #include "tao/Service_Context.h"
 #include "tao/CDR.h"
 
+#include "ace/OS.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Service_Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Service_Context, "$Id$")
+ACE_RCSID (tao,
+           Service_Context, 
+           "$Id$")
 
 void
 TAO_Service_Context::set_context_i (IOP::ServiceId id,
