@@ -197,6 +197,8 @@
 // MSVC already defined __TEXT
 #define ACE_HAS_TEXT_MACRO_CONFLICT
 
+#define ACE_HAS_EXPLICIT_KEYWORD
+
 #define ACE_HAS_GPERF
 
 // ----------------------- platform specific defines --------------------
