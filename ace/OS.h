@@ -27,6 +27,7 @@
 
 // Include the split up ACE_OS classes
 #include "ace/OS_Dirent.h"
+#include "ace/OS_String.h"
 
 # if !defined (ACE_MALLOC_ALIGN)
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
@@ -5200,7 +5201,7 @@ private:
   // (ACT).
 };
 
-class ACE_Export ACE_OS : public ACE_OS_Dirent
+class ACE_Export ACE_OS : public ACE_OS_Dirent, public ACE_OS_String
 {
   // = TITLE
   //     This class defines an OS independent programming API that
@@ -6151,117 +6152,6 @@ public:
   static int step (const char *str,
                    char *expbuf);
 
-  // = A set of wrappers for string operations.
-
-  static int to_lower (int c);
-#if defined (ACE_HAS_WCHAR)
-  static wint_t to_lower (wint_t c);
-#endif /* ACE_HAS_WCHAR */
-
-  static char *strcat (char *s, const char *t);
-  static char *strncat (char *s, const char *t, size_t len);
-#if defined (ACE_HAS_WCHAR)
-  static wchar_t *strcat (wchar_t *s, const wchar_t *t);
-  static wchar_t *strncat (wchar_t *s, const wchar_t *t, size_t len);
-#endif /* ACE_HAS_WCHAR */
-
-  static char *strchr (char *s, int c);
-  static const char *strchr (const char *s, int c);
-  static char *strrchr (char *s, int c);
-  static const char *strrchr (const char *s, int c);
-  static char *strnchr (char *s, int c, size_t len);
-  static const char *strnchr (const char *s, int c, size_t len);
-#if defined (ACE_HAS_WCHAR)
-  static wchar_t *strchr (wchar_t *s, wint_t c);
-  static const wchar_t *strchr (const wchar_t *s, wint_t c);
-  static wchar_t *strrchr (wchar_t *s, wint_t c);
-  static const wchar_t *strrchr (const wchar_t *s, wint_t c);
-  static wchar_t *strnchr (wchar_t *s, wint_t c, size_t len);
-  static const wchar_t *strnchr (const wchar_t *s, wint_t c, size_t len);
-#endif /* ACE_HAS_WCHAR */
-
-  static int strcmp (const char *s, const char *t);
-  static int strncmp (const char *s, const char *t, size_t len);
-  static int strcasecmp (const char *s, const char *t);
-  static int strncasecmp (const char *s, const char *t, size_t len);
-#if defined (ACE_HAS_WCHAR)
-  static int strcmp (const wchar_t *s, const wchar_t *t);
-  static int strncmp (const wchar_t *s, const wchar_t *t, size_t len);
-  static int strcasecmp (const wchar_t *s, const wchar_t *t);
-  static int strncasecmp (const wchar_t *s, const wchar_t *t, size_t len);
-#endif /* ACE_HAS_WCHAR */
-
-  static char *strcpy (char *s, const char *t);
-  static char *strecpy (char *des, const char *src);
-  // Copies <src> to <des>, returning a pointer to the end of the
-  // copied region, rather than the beginning, as <strcpy> does.
-  static char *strncpy (char *s, const char *t, size_t len);
-#if defined (ACE_HAS_WCHAR)
-  static wchar_t *strcpy (wchar_t *s, const wchar_t *t);
-  static wchar_t *strecpy (wchar_t *s, const wchar_t *t);
-  static wchar_t *strncpy (wchar_t *s, const wchar_t *t, size_t len);
-#endif /* ACE_HAS_WCHAR */
-
-  static char *strpbrk (char *s1, const char *s2);
-  static const char *strpbrk (const char *s1, const char *s2);
-#if defined (ACE_HAS_WCHAR)
-  static wchar_t *strpbrk (wchar_t *s1, const wchar_t *s2);
-  static const wchar_t *strpbrk (const wchar_t *s1, const wchar_t *s2);
-#endif /* ACE_HAS_WCHAR */
-
-
-  static size_t strcspn (const char *s, const char *reject);
-
-  static size_t strspn (const char *s1, const char *s2);
-#if defined (ACE_HAS_WCHAR)
-  static size_t strspn (const wchar_t *s1, const wchar_t *s2);
-#endif /* ACE_HAS_WCHAR */
-
-#if defined (ACE_HAS_STRPTIME)
-  static char *strptime (char *buf,
-                         const char *format,
-                         struct tm *tm);
-#endif /* ACE_HAS_STRPTIME */
-
-  static char *strstr (char *s, const char *t);
-  static const char *strstr (const char *s, const char *t);
-  static char *strnstr (char *s, const char *t, size_t len);
-  static const char *strnstr (const char *s, const char *t, size_t len);
-#if defined (ACE_HAS_WCHAR)
-  static wchar_t *strstr (wchar_t *s, const wchar_t *t);
-  static const wchar_t *strstr (const wchar_t *s, const wchar_t *t);
-  static wchar_t *strnstr (wchar_t *s, const wchar_t *t, size_t len);
-  static const wchar_t *strnstr (const wchar_t *s, const wchar_t *t, size_t len);
-#endif /* ACE_HAS_WCHAR */
-
-  static char *strdup (const char *s); // Uses malloc
-#if defined (ACE_HAS_WCHAR)
-  static wchar_t *strdup (const wchar_t *s);
-#endif /* ACE_HAS_WCHAR */
-
-  static size_t strlen (const char *s);
-#if defined (ACE_HAS_WCHAR)
-  static size_t strlen (const wchar_t *s);
-#endif /* ACE_HAS_WCHAR */
-
-  static char *strtok (char *s, const char *tokens);
-  static char *strtok_r (char *s, const char *tokens, char **lasts);
-#if defined (ACE_HAS_WCHAR)
-  static wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
-#endif /* ACE_HAS_WCHAR */
-
-  static long strtol (const char *s, char **ptr, int base);
-  static u_long strtoul (const char *s, char **ptr, int base);
-  static double strtod (const char *s, char **endptr);
-#if defined (ACE_HAS_WCHAR)
-  static long strtol (const wchar_t *s, wchar_t **ptr, int base);
-  static u_long strtoul (const wchar_t *s, wchar_t **ptr, int base);
-  static double strtod (const wchar_t *s, wchar_t **endptr);
-#endif /* ACE_HAS_WCHAR */
-
-  static int ace_isspace (const ACE_TCHAR s);
-  static int ace_isprint (const ACE_TCHAR s);
-
   // @@ UNICODE: (brunsch) Can this be handled better?
   // The following WChar typedef and functions are used by TAO.  TAO
   // does not use wchar_t because the size of wchar_t is
@@ -6543,15 +6433,6 @@ private:
 
   friend class ACE_OS_Object_Manager;
   // Allow the ACE_OS_Object_Manager to call set_exit_hook.
-
-#if defined (ACE_HAS_STRPTIME)  &&  defined (ACE_LACKS_NATIVE_STRPTIME)
-  static int strptime_getnum (char *buf,
-                              int *num,
-                              int *bi,
-                              int *fi,
-                              int min,
-                              int max);
-#endif /* ACE_HAS_STRPTIME  &&  ACE_LACKS_NATIVE_STRPTIME */
 
 # if defined (ACE_WIN32)
 #   if defined (ACE_HAS_WINCE)

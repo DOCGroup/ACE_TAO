@@ -1,34 +1,68 @@
+Wed May 24 18:56:16 2000  Darrell Brunsch <brunsch@uci.edu>:
+
+        * ace/OS_Export.h: (added)
+
+          In preparation for an eventual splitting up of the ACE DLLs,
+          I'm starting to split up the Export macros also.  OS_Export will
+          be used for the lowest level OS library.
+
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/ace-dll.icc:
+        * ace/ace-lib.icc:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS_String.cpp: (added)
+        * ace/OS_String.h: (added)
+        * ace/OS_String.inl: (added)
+
+          Moved the string methods of ACE_OS to ACE_OS_String.
+
+        * ace/OS_Dirent.cpp:
+        * ace/OS_Dirent.h:
+        * ace/OS_Dirent.inl:
+
+          Separated the Win32 versions of some of the methods into the
+          cpp file.  The Win32 versions were a bit too complicated to make
+          sense having inlined.
+
+          Also changed to use ACE_OS_Export.
+
 Wed May 24 10:22:18 2000  Ossama Othman  <ossama@uci.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Håkon Innerdal <hakoni@funcom.com> to the list of
-	  contributors.
+          Added Håkon Innerdal <hakoni@funcom.com> to the list of
+          contributors.
 
-	* ace/config-linux-common.h (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+        * ace/config-linux-common.h (ACE_DEFAULT_SELECT_REACTOR_SIZE):
 
-	  Commented out the definition of this macro.  Its setting
-	  unnecessarily limited the default size of the Select_Reactor to
-	  256 file descriptors.  `ace/OS.h' correctly sets the default
-	  size to FD_SETSIZE.  Thanks to Håkon Innerdal
-	  <hakoni@funcom.com> for pointing this out.
+          Commented out the definition of this macro.  Its setting
+          unnecessarily limited the default size of the Select_Reactor to
+          256 file descriptors.  `ace/OS.h' correctly sets the default
+          size to FD_SETSIZE.  Thanks to Håkon Innerdal
+          <hakoni@funcom.com> for pointing this out.
 
-	* ace/Select_Reactor_Base.cpp (open):
+        * ace/Select_Reactor_Base.cpp (open):
 
-	  Do not check if the desired size of the repository, i.e. the
-	  maximum number of file descriptors, is greater than FD_SETSIZE.
-	  The same check is effectively done in the call to
-	  ACE::set_handle_limits().  The redundant check also prevented
-	  the Reactor from supporting file descriptors numbering more than
-	  FD_SETSIZE on platforms that support them (e.g. via
-	  setrlimit(RLIMIT_NOFILE, ...)).  Thanks to Håkon Innerdal
-	  <hakoni@funcom.com> for reporting the problem, and for providing
-	  a fix.
+          Do not check if the desired size of the repository, i.e. the
+          maximum number of file descriptors, is greater than FD_SETSIZE.
+          The same check is effectively done in the call to
+          ACE::set_handle_limits().  The redundant check also prevented
+          the Reactor from supporting file descriptors numbering more than
+          FD_SETSIZE on platforms that support them (e.g. via
+          setrlimit(RLIMIT_NOFILE, ...)).  Thanks to Håkon Innerdal
+          <hakoni@funcom.com> for reporting the problem, and for providing
+          a fix.
 
-	* m4/platform.m4 (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+        * m4/platform.m4 (ACE_DEFAULT_SELECT_REACTOR_SIZE):
 
-	  No longer set the default size to 256 file descriptors.
-	  `ace/OS.h' correctly set it to FD_SETSIZE.
+          No longer set the default size to 256 file descriptors.
+          `ace/OS.h' correctly set it to FD_SETSIZE.
 
 Wed May 24 10:08:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -61,16 +95,16 @@ Wed May 24 08:10:21 2000  Steve Huston  <shuston@riverace.com>
 
 Tue May 23 20:13:52 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.h: Moved the definition of WSANETWORKEVENTS to
-	  before its use.  Thanks to Craig Perras <cperras@watchguard.com>
-	  for reporting this.
+        * ace/WFMO_Reactor.h: Moved the definition of WSANETWORKEVENTS to
+          before its use.  Thanks to Craig Perras <cperras@watchguard.com>
+          for reporting this.
 
 Tue May 23 17:59:06 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* ACE_wrappers/pace/pace:
-	  Source files added.
-	  Changes to pace subdirectory will be noted in
-	  ACE_wrappers/pace/ChangeLog.
+        * ACE_wrappers/pace/pace:
+          Source files added.
+          Changes to pace subdirectory will be noted in
+          ACE_wrappers/pace/ChangeLog.
 
 Tue May 23 17:55:17 2000  Steve Huston  <shuston@riverace.com>
 
@@ -86,13 +120,13 @@ Tue May 23 17:21:37 2000  Steve Huston  <shuston@riverace.com>
 
 Tue May 23 16:37:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* ACE_wrappers/pace directories added to ACE_wrappers:
+        * ACE_wrappers/pace directories added to ACE_wrappers:
 
-	      ACE_wrappers/pace/docs
-	      ACE_wrappers/pace/examples
-	      ACE_wrappers/pace/pace
-	      ACE_wrappers/pace/pace++
-	      ACE_wrappers/pace/tests
+              ACE_wrappers/pace/docs
+              ACE_wrappers/pace/examples
+              ACE_wrappers/pace/pace
+              ACE_wrappers/pace/pace++
+              ACE_wrappers/pace/tests
 
 Mon May 22 15:26:42 2000  Steve Huston  <shuston@riverace.com>
 
@@ -116,20 +150,20 @@ Wed May 10 16:47:31 2000  Steve Huston  <shuston@riverace.com>
 
 Mon May 22 15:25:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.{h,cpp} (ACE_Thread_Exit):
-	* ace/Thread_Manager.cpp (~ACE_Thread_Exit): Moved the reset of
-	  ACE_Thread_Exit::is_constructed_ from the Thread_Exit's
-	  destructor to ACE_OS_Object_Manager::fini ().  Otherwise, the
-	  singleton ACE_Thread_Exit may get created multiple times.
-	  Thanks to Eric Yee <eyee@authentica.com> for reporting the
-	  problem.
+        * ace/OS.{h,cpp} (ACE_Thread_Exit):
+        * ace/Thread_Manager.cpp (~ACE_Thread_Exit): Moved the reset of
+          ACE_Thread_Exit::is_constructed_ from the Thread_Exit's
+          destructor to ACE_OS_Object_Manager::fini ().  Otherwise, the
+          singleton ACE_Thread_Exit may get created multiple times.
+          Thanks to Eric Yee <eyee@authentica.com> for reporting the
+          problem.
 
-	  Notice that ACE 5.1.1, 5.1.2 and 5.1.3 all have the same problem
-	  of creating TSS keys unnecessarily without cleaning them up.
-	  This will most likely cause a long running server process
-	  creating a lot of threads to crash eventually (at least on NT.)
-	  Therefore, you should not use these versions in a production
-	  environment.
+          Notice that ACE 5.1.1, 5.1.2 and 5.1.3 all have the same problem
+          of creating TSS keys unnecessarily without cleaning them up.
+          This will most likely cause a long running server process
+          creating a lot of threads to crash eventually (at least on NT.)
+          Therefore, you should not use these versions in a production
+          environment.
 
 Mon May 22 11:23:19 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
@@ -149,17 +183,17 @@ Sun May 21 12:29:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Sun May 21 11:39:11 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Signal_Test.cpp (worker_parent): My earlier fix on May 18th, 2000
-	  was incorrect.  The right fix is to make the format specifier be
+        * tests/Signal_Test.cpp (worker_parent): My earlier fix on May 18th, 2000
+          was incorrect.  The right fix is to make the format specifier be
           %ld, rather than cast the pid_t to (int).
 
 Sat May 20 18:34:05 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in (ACE_HAS_BROKEN_T_ERROR):
+        * configure.in (ACE_HAS_BROKEN_T_ERROR):
 
-	  Fixed the test that checks if t_error() correctly accepts a
-	  "const char *" parameter.  This should fix a problem that was
-	  occuring on Solaris.
+          Fixed the test that checks if t_error() correctly accepts a
+          "const char *" parameter.  This should fix a problem that was
+          occuring on Solaris.
 
 Sat May 20 19:47:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 

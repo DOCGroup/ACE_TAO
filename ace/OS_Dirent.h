@@ -21,6 +21,7 @@
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "ace/OS_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -73,10 +74,10 @@ typedef XDIR DIR;
 # undef rewinddir
 #endif /* rewinddir */
 
-class ACE_Export ACE_OS_Dirent
+class ACE_OS_Export ACE_OS_Dirent
   // = TITLE
   //     This class is a wrapper for the dirent.h operations
-  // 
+  //
   // = DESCRIPTION
 {
 public:

@@ -12,6 +12,7 @@ OS_FILES = \
   Basic_Types \
   OS \
   OS_Dirent \
+  OS_String \
   Sched_Params
 UTILS_FILES = \
   ACE \
