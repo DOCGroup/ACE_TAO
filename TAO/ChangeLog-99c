@@ -1,4 +1,10 @@
-Sat Jun 26 11:55:08 1999  Ossama Othman  <othman@cs.wustl.edu>
+Sat Jun 26 11:58:01 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/{IIOP,UIOP}_Connect.cpp:
+
+	  Fixed incorrect enumeration used in ACE timeprobe macro.
+
+Sat Jun 26 11:55:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Transport.cpp:
 
