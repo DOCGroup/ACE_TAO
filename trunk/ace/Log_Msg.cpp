@@ -480,7 +480,7 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
         {
           ACE_LOG_MSG_IPC_CONNECTOR con;
           status = con.connect (*ACE_Log_Msg_message_queue,
-                                ACE_LOG_MSG_IPC_ADDR (ACE_MULTIBYTE_STRING (logger_key)));
+                                ACE_LOG_MSG_IPC_ADDR (ASYS_MULTIBYTE_STRING (logger_key)));
         }
 
       if (status == -1)
