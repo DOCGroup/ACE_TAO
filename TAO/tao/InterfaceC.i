@@ -20267,19 +20267,21 @@ CORBA_TypeCodeFactory_out::operator-> (void)
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::DefinitionKind &_tao_enumval)
 {
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::DefinitionKind &_tao_enumval)
 {
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (IR::DefinitionKind, _tao_temp);
+    }
+  
+  return _tao_result;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -21172,19 +21174,21 @@ operator>> (
   );
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::PrimitiveKind &_tao_enumval)
 {
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::PrimitiveKind &_tao_enumval)
 {
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (IR::PrimitiveKind, _tao_temp);
+    }
+  
+  return _tao_result;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -22172,19 +22176,21 @@ CORBA::Boolean TAO_Export operator>> (
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::AttributeMode &_tao_enumval)
 {
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::AttributeMode &_tao_enumval)
 {
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (IR::AttributeMode, _tao_temp);
+    }
+  
+  return _tao_result;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -22274,36 +22280,40 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_AttributeDescriptio
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::OperationMode &_tao_enumval)
 {
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::OperationMode &_tao_enumval)
 {
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (IR::OperationMode, _tao_temp);
+    }
+  
+  return _tao_result;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::ParameterMode &_tao_enumval)
 {
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::ParameterMode &_tao_enumval)
 {
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (IR::ParameterMode, _tao_temp);
+    }
+  
+  return _tao_result;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ParameterDescription &_tao_aggregate)
