@@ -71,6 +71,16 @@ int main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>recv</font>"), -1);
   }
 
+  <font color=red>/*
+    Note: The fourth parameter to recv() is for flags.  These flags
+    are passed directly to the underlying recv() or recvfrom() system
+    call.  For Linux, resonable values are:
+      MSG_OOB      process out-of-band data
+      MSG_PEEK     peek at incoming message (but leave it in the OS buffers)
+      MSG_WAITALL  wait for full request or error
+    See your system documentation for the gory details.
+   */</font>
+
   ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) The server said (%s)\n</font>", buf));
 
   return (0);

@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-24 15:53 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-01-26 20:13 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/011'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,12 +13,12 @@
 # ------ ---------- ------------------------------------------
 #    442 -rw-rw-r-- hdr
 #     48 -rw-rw-r-- bodies
-#    439 -rw-rw-r-- page01.pre
+#    869 -rw-rw-r-- page01.pre
 #    164 -rw-rw-r-- page02.pre
 #    174 -rw-rw-r-- page03.pre
 #    127 -rw-rw-r-- page04.pre
 #   2691 -rw-rw-r-- page05.pre
-#    706 -rw-rw-r-- page06.pre
+#    707 -rw-rw-r-- page06.pre
 #    351 -rw-rw-r-- page02.pst
 #    208 -rw-rw-r-- page03.pst
 #    129 -rw-rw-r-- page04.pst
@@ -68,7 +68,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh24921; then
+if mkdir _sh31079; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -151,20 +151,30 @@ cases you'll need to move complex data structures between your threads.
 In this tutorial I'll expand the previous by moving not only a text string
 but also a more complex object.  In the next tutorial I'll change things
 again so that we move the complex object a bit more efficiently.
+<P>
+A simple abstract for a simple tutorial:
+<UL>
+In this tutorial, we put some data into the blocks of the message queue.
+We copy the data from a Data object into the block and put it on the
+queue. The block is then dequeued by the thread which picks it up and
+processes it. This tutorial is very similar to the previous
+one with the extra touch being population of the blocks with data.
+</UL>
+(Abstract by Kirthika, as always.)
 SHAR_EOF
-  $shar_touch -am 0124154699 'page01.pre' &&
+  $shar_touch -am 0126201399 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-b6861097131264d54a36a9a204a4da82  page01.pre
+58768929bbe513a9fa2302b1fe3170be  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 439 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '439,' 'current size' "$shar_count!"
+    test 869 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '869,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -380,12 +390,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page06.pre:' 'MD5 check failed'
-9b6fcd60df274cb70fc8334580f3ccbc  page06.pre
+17d64bbe275773a80d7d767e04e0474c  page06.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page06.pre'`"
-    test 706 -eq "$shar_count" ||
-    $echo 'page06.pre:' 'original size' '706,' 'current size' "$shar_count!"
+    test 707 -eq "$shar_count" ||
+    $echo 'page06.pre:' 'original size' '707,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pst ==============
@@ -472,5 +482,5 @@ SHAR_EOF
     $echo 'page04.pst:' 'original size' '129,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh24921
+rm -fr _sh31079
 exit 0
