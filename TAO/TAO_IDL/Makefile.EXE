@@ -35,7 +35,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
@@ -44,8 +44,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS += -Iinclude -Ibe_include -Ife
 
-  realclean:
-	$(RM) tao_idl TAGS
+ifeq ($(TAO_IDL_PREPROCESSOR),)
+	CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
+else
+	CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(TAO_IDL_PREPROCESSOR)\"
+endif # !def TAO_IDL_PREPROCESSOR
+
+clean.local realclean.local:
 
 #----------------------------------------------------------------------------
 #       Dependencies

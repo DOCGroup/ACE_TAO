@@ -17,8 +17,12 @@ MAKEFILE = Makefile
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 ifeq ($(CROSS-COMPILE),)
+  include $(ACE_ROOT)/include/makeinclude/macros.GNU
   include $(TAO_ROOT)/rules.tao.GNU
-  include $(TAO_ROOT)/taoconfig.mk
+  include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 endif # ! CROSS-COMPILE
 
 #----------------------------------------------------------------------------
@@ -32,12 +36,6 @@ ifneq ($(CROSS-COMPILE),)
   clean realclean:
 	@echo Nothing to clean in TAO_IDL on CROSS-COMPILE platforms.
 else  # ! CROSS-COMPILE
-
-ifeq ($(TAO_IDL_PREPROCESSOR),)
-	CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
-else
-	CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(TAO_IDL_PREPROCESSOR)\"
-endif # !def TAO_IDL_PREPROCESSOR
 
 MKLIST = \
 	Makefile.FE \
