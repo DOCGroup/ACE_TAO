@@ -5844,9 +5844,11 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
   ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
 #endif /* DIGITAL_UNIX */
 #else
-  ACE_UNUSED_ARG (res);
-	
-  ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
+  struct tm * result ;
+  ACE_OSCALL (::gmtime (t), struct tm *, 0, result) ;
+  if (result != 0)
+    ACE_OS::memcpy (res, result, sizeof (res)) ;
+  return result ;
 #endif
 }
 
