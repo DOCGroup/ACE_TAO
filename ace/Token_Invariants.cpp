@@ -4,10 +4,6 @@
 #include "ace/Token_Invariants.h"
 #include "ace/Object_Manager.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Token_Invariants.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(ace, Token_Invariants, "$Id$")
 
 ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;
