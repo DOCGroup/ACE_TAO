@@ -66,6 +66,11 @@ private:
 			  CORBA::Environment &env);
   // Open a new account with the given name and initial balance.
 
+
+  void close (Bank::Account_ptr account,
+	      CORBA::Environment &env);
+  // Close a given Account.
+
   CORBA::Float balance (CORBA::Environment &env);
   // Returns the current balance in the account.
 

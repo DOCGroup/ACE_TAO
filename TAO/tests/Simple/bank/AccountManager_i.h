@@ -22,6 +22,7 @@
 
 #include "ace/ACE.h"
 #include "ace/OS.h"
+#include "tao/TAO.h"
 #include "BankS.h"
 #include "Account_i.h"
 
@@ -34,7 +35,6 @@ class AccountManager_i : public POA_Bank::AccountManager
   //    Implementation of a simple object that has two methods, one
   //    that returns an Account Interface and the other that shuts
   //    down the server.
-
 public:
   // = Initialization and termination methods.
   AccountManager_i (void);
@@ -59,9 +59,24 @@ public:
   void orb (CORBA::ORB_ptr o);
   // Set the ORB pointer.
 
+  void poa (PortableServer::POA_ptr poa);
+  // Set the POA pointer.
+
+  void set_orb_manager (TAO_ORB_Manager *orb_manager);
+  // Set the ORB Manager.
+
+  TAO_ORB_Manager *orb_manager_;
+  // The ORB manager.
+
 private:
   CORBA::ORB_var orb_;
   // ORB pointer.
+
+  PortableServer::POA_ptr poa_;
+  // POA pointer.
+
+  //TAO_ORB_Manager orb_manager_;
+  // The ORB manager.
 
   ACE_Hash_Map_Manager<ACE_CString,
                        Account_i *,

@@ -23,11 +23,7 @@ Account_i::Account_i (const char *name,
 
 Account_i::~Account_i (void)
 {
-  // @@ Make sure that you do a CORBA::string_free() on name_ when
-  // this exits.
-
-  // @@ Make sure that you run Purify on your program when you've got
-  // it working.
+  CORBA::string_free (name_);
 }
 
 // Set the ORB pointer.
@@ -50,16 +46,15 @@ void
 Account_i::deposit (CORBA::Float deposit,
 		    CORBA::Environment &env)
 {
-  balance_ = balance_ + deposit ;
+  balance_ += deposit;
 }
 
 void
 Account_i::withdraw (CORBA::Float withdrawl,
 		     CORBA::Environment &env)
 {
-  // @@ Here's where you'd handle the exception...
   if (balance_ >= withdrawl)
-    balance_ = balance_ - withdrawl;
+    balance_ -= withdrawl;
   else
     env.exception (new Bank::Account::Overdraft("Exception from server::Overdraft"));
 }
