@@ -9,7 +9,7 @@
 
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
-
+#define ACE_HAS_STRING_CLASS
 #define IRIX5
 #define ACE_HAS_SIGWAIT
 

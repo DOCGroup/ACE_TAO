@@ -17,6 +17,12 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Entry)
 
 template <class EXT_ID, class INT_ID> void
+ACE_Map_Entry<EXT_ID, INT_ID>::~ACE_Map_Entry (void)
+{
+  // No-op just to keep some compilers happy...
+}
+
+template <class EXT_ID, class INT_ID> void
 ACE_Map_Entry<EXT_ID, INT_ID>::dump (void) const
 {
   ACE_TRACE ("ACE_Map_Entry<EXT_ID, INT_ID>::dump");

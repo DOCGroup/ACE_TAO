@@ -12,7 +12,7 @@
 
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
-
+#define ACE_HAS_STRING_CLASS
 #define ACE_NEEDS_SYSTIME_H
 #define ACE_HAS_CHARPTR_SPRINTF
 #define ACE_HAS_UNION_WAIT
