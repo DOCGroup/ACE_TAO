@@ -629,13 +629,22 @@ TAO_SYSTEM_EXCEPTION_LIST
 #endif /* End of Minimum CORBA */
   enum
   {
-    // = Define flags for NVList add methods
+    // = Flags for NVList add methods
+    ARG_IN                  = 0x01,
+    ARG_OUT                 = 0x02,
+    ARG_INOUT               = 0x04,
+    IN_COPY_VALUE           = 0x08,
+    OUT_LIST_MEMORY         = 0x10,
+    DEPENDENT_LIST          = 0x20,
 
-    ARG_IN = 0x01,
-    ARG_OUT = 0x02,
-    ARG_INOUT = 0x04,
-    IN_COPY_VALUE = 0x08,
-    OUT_LIST_MEMORY = 0x10
+    // = Flags for Context methods
+    CTX_RESTRICT_SCOPE      = 0x40,
+    CTX_DELETE_DESCENDENTS  = 0x80,
+
+    // = Flags for deferred synchronous methods
+    INV_NO_RESPONSE         = 0x100,
+    INV_TERM_ON_ERR         = 0x200,
+    RESP_NO_WAIT            = 0x400
   };
 
   typedef char *ORBid;
