@@ -87,7 +87,7 @@ ACE_Filecache_Handle::handle (void) const
 {
   if (this->handle_ == ACE_INVALID_HANDLE && this->file_ != 0)
     {
-      ACE_Filecache_Handle *mutable_this = 
+      ACE_Filecache_Handle *mutable_this =
         (ACE_Filecache_Handle *) this;
       mutable_this->handle_ = ACE_OS::dup (this->file_->handle ());
     }
@@ -97,7 +97,7 @@ ACE_Filecache_Handle::handle (void) const
 int
 ACE_Filecache_Handle::error (void) const
 {
-  if (this->file_ == 0) 
+  if (this->file_ == 0)
     return -1;
   else
     return this->file_->error ();
@@ -152,33 +152,6 @@ int
 ACE_Filecache_Hash::equal (const char *const &id1, const char *const &id2)
 {
   return ACE_OS::strcmp (id1, id2) == 0;
-}
-
-int 
-ACE_Filecache_Hash::shared_find (const char *const &ext_id,
-                                 ACE_Filecache_Hash_Entry *&entry,
-                                 ACE_Filecache_Hash_Entry *&prev,
-                                 u_long &loc)
-{
-  loc = this->hash (ext_id) % this->total_size_;
-
-  ACE_Filecache_Hash_Entry *temp;
-
-  for (temp = this->table_[loc];
-       temp != this->sentinel_ && this->equal (temp->ext_id_, ext_id) == 0;
-       temp = temp->next_)
-    prev = temp;
-
-  if (temp != this->sentinel_)
-    {
-      entry = temp;
-      return 0;
-    }
-  else
-    {
-      errno = ENOENT;
-      return -1;
-    }
 }
 
 #undef ACE_Filecache_Hash
@@ -357,7 +330,7 @@ ACE_Filecache::fetch (const char *filename)
           if (handle)
             filelock.acquire_read ();
         }
-      ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: found %s\n", filename)); 
+      ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: found %s\n", filename));
     }
 
   return handle;
@@ -515,7 +488,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
   this->size_ = size;
   ACE_OS::strcpy (this->filename_, filename);
   this->action_ = ACE_Filecache_Object::WRITING;
-  
+
   // Can we access the file?
   if (ACE_OS::access (this->filename_, R_OK|W_OK) == -1
       // Does it exist?
