@@ -31,3 +31,19 @@ ACE_Stream_Iterator<ACE_SYNCH_2>::next (const ACE_Module<ACE_SYNCH_2> *&mod)
   mod = this->next_;
   return this->next_ != 0;
 }
+
+template <ACE_SYNCH_1> ACE_INLINE int
+ACE_Stream_Iterator<ACE_SYNCH_2>::done (void) const
+{
+  ACE_TRACE ("ACE_Stream_Iterator<ACE_SYNCH_2>::done");
+  return this->next_ == 0;
+}
+
+template <ACE_SYNCH_1> int
+ACE_Stream_Iterator<ACE_SYNCH_2>::advance (void)
+{
+  ACE_TRACE ("ACE_Stream_Iterator<ACE_SYNCH_2>::advance");
+  this->next_ = this->next_->next ();
+  return this->next_ != 0;
+}
+

@@ -365,6 +365,12 @@ ACE_Reactor_Handler_Repository_Iterator::next (ACE_Event_Handler *&next_item)
   return result;
 }
 
+int 
+ACE_Reactor_Handler_Repository_Iterator::done (void) const
+{
+  return this->current_ >= this->rep_->max_handlep1_;
+}
+
 // Move forward by one element in the set.
 
 int 
@@ -379,7 +385,7 @@ ACE_Reactor_Handler_Repository_Iterator::advance (void)
     else
      this->current_++;
 
-  return 0;    
+  return this->current_ < this->rep_->max_handlep1_;    
 }
 
 // Dump the state of an object.

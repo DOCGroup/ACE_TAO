@@ -257,8 +257,12 @@ public:
   // Pass back the <entry> that hasn't been seen in the queue.
   // Returns 0 when all items have been seen, else 1.
 
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
   int advance (void);
-  // Move forward by one element in the queue
+  // Move forward by one element in the queue.  Returns 0 when all the
+  // items in the set have been seen, else 1.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -288,8 +292,12 @@ public:
   // Pass back the <entry> that hasn't been seen in the queue.
   // Returns 0 when all items have been seen, else 1.
 
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
   int advance (void);
-  // Move forward by one element in the queue
+  // Move forward by one element in the queue.  Returns 0 when all the
+  // items in the set have been seen, else 1.
 
   void dump (void) const;
   // Dump the state of an object.
