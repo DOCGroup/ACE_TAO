@@ -165,10 +165,10 @@
 # elif (ACE_SIZEOF_SHORT) == 4 && defined(_CRAYMPP)
   // mpp cray - uses Alpha processors
   //   Use the real 32-bit quantity for ACE_INT32's, and use a "long"
-  //   for shorts.  This gets around conflicts with size_t in some ACE
+  //   for ACE_INT16's.  This gets around conflicts with size_t in some ACE
   //   method signatures, among other things.
-  typedef short ACE_INT16;
-  typedef unsigned short ACE_UINT16;
+  typedef long ACE_INT16;
+  typedef unsigned long ACE_UINT16;
   typedef short ACE_INT32;
   typedef unsigned short ACE_UINT32;
 # elif (ACE_SIZEOF_SHORT) == 8 && defined(_UNICOS)
@@ -196,7 +196,7 @@ typedef ACE_UINT16 ACE_USHORT16;
       typedef int ACE_INT32;
       typedef unsigned int ACE_UINT32;
 #   endif
-  typedef unsigned long ACE_UINT64;
+  typedef unsigned long long ACE_UINT64;
 # else
 #   error Have to add to the ACE_UINT32 type setting
 # endif

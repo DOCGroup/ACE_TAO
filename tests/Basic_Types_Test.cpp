@@ -118,18 +118,10 @@ main (int, ASYS_TCHAR *[])
   errors += check (ASYS_TEXT ("sizeof (ACE_UINT16) is %u%s"),
                    sizeof (ACE_INT16), 2);
 #else /* ! _UNICOS */
-  // MPP Crays have 32 bit shorts, so we use those for 16 bit quantities
-# if defined(_CRAYMPP)
-  errors += check (ASYS_TEXT ("sizeof (ACE_INT16) is %u%s"),
-                   sizeof (ACE_INT16), 4);
-  errors += check (ASYS_TEXT ("sizeof (ACE_UINT16) is %u%s"),
-                   sizeof (ACE_INT16), 4);
-# else
   errors += check (ASYS_TEXT ("sizeof (ACE_INT16) is %u%s"),
                    sizeof (ACE_INT16), 8);
   errors += check (ASYS_TEXT ("sizeof (ACE_UINT16) is %u%s"),
                    sizeof (ACE_INT16), 8);
-# endif
 #endif /* ! _UNICOS */
 
 // MPP Crays do have 32-bit quantities (short), though vector Crays don't

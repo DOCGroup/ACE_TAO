@@ -2851,7 +2851,6 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         {
           ACE_UINT64 haddr;  // a place to put the address
           char * haddrp = (char *) &haddr;  // convert to char pointer
-          haddr += 4;   // adjust within the word
           ACE_OS::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
           ip_addr.sin_addr.s_addr = haddr;
         }
