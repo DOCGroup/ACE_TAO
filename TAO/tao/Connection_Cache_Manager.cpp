@@ -135,7 +135,7 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
               // We have a succesful entry
               value = entry->int_id_;
 
-              if (TAO_debug_level > 0)
+              if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P |%t) index in find <%d> \n"),
