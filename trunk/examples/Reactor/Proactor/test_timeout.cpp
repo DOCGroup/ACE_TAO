@@ -96,3 +96,9 @@ main (int, char *[])
   ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
