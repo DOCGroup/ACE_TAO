@@ -23,7 +23,9 @@ public:
 
   ~be_visitor_amh_rh_interface_sh (void);
 
-  int visit_interface (be_interface *node);
+  virtual int visit_interface (be_interface *node);
+
+  virtual int visit_operation (be_operation *node);
 };
 
 #endif /* AMH_RH_SH_H_ */

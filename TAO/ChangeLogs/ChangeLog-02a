@@ -1,3 +1,17 @@
+Thu Jan 17 17:40:55 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+	* be_include/be_visitor_interface/amh_rh_sh.h:
+	* be_include/be_visitor_interface/amh_rh_ss.h:
+	* be_include/be_visitor_operation/amh_rh_sh.h:
+	* be_include/be_visitor_operation/amh_rh_ss.h:
+	* be/be_visitor_interface/amh_rh_sh.cpp:
+	* be/be_visitor_interface/amh_rh_ss.cpp:
+	* be/be_visitor_operation/amh_rh_sh.cpp:
+	* be/be_visitor_operation/amh_rh_ss.cpp:
+	  Most of the 'bugs' have been fixed with the AMH-RH generated
+	  code now.  The only known remaining 'to-do' is the generation
+	  of the marshalling code for the RH-parametes in the skeleton
+	  source file.
+	
 Thu Jan 17 17:39:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:

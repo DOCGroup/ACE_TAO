@@ -19,6 +19,9 @@
 * @brief This is a concrete visitor to generate the server header for
 *        AMH operations
 */
+
+#include "be_visitor_operation.h"
+
 class be_visitor_amh_rh_operation_sh : public be_visitor_operation
 {
  public:
@@ -26,8 +29,8 @@ class be_visitor_amh_rh_operation_sh : public be_visitor_operation
 
     ~be_visitor_amh_rh_operation_sh (void);
 
-    virtual int visit_operation (be_operation *node);
+    int visit_operation (be_operation *node);
 
 };
 
-#endif /* AMH_OPERATION_SS_H */
+#endif /* AMH_RH_OPERATION_SH_H */
