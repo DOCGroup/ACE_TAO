@@ -369,6 +369,7 @@ public:
 
   int run (ACE_Time_Value *tv,
            int break_on_timeouts,
+           int perform_work,
            CORBA::Environment &ACE_TRY_ENV);
   // Run the event loop
 
