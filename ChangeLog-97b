@@ -95,7 +95,8 @@ Tue Nov 18 05:40:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (gethostby{addr,name}): on VxWorks only, don't htonl
           the input address because it already should be in network byte
-          order.  Store the output address in network byte order.
+          order.  Store the output address in network byte order.  Thanks
+          to Wei for noticing this error.
 
         * include/makeinclude/wrapper_macros.GNU: add -DACE_PURIFY to
           CFLAGS if purify make flag is set, and -DACE_QUANTIFY if
