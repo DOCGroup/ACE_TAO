@@ -1,3 +1,7 @@
+Thu Mar 09 17:47:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Added ACE_HAS_SIGTIMEDWAIT.
+
 Thu Mar 09 17:35:31 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (log): Related to Tue Mar 7 and Wed Mar 8; change the
