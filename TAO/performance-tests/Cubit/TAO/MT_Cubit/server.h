@@ -101,8 +101,14 @@ private:
   // Barrier for the multiple servants to synchronize after
   // binding to the orb.
 
+#if defined (linux)
+public:
+#endif /* linux */
   CORBA::String *servants_iors_;
   // ior strings of the servants
+#if defined (linux)
+private:
+#endif /* linux */
 
   CosNaming::NamingContext_var naming_context_;
   // Object reference to the naming service
