@@ -14,6 +14,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_Errno.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Strategies_T.i"
@@ -383,7 +384,10 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
   switch (ACE::fork (ACE_LIB_TEXT ("child"), this->flags_))
     {
     case -1:
-      svc_handler->destroy ();
+      {
+        ACE_Errno_Guard error (errno);
+        svc_handler->destroy ();
+      }
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%p\n"),
                          ACE_LIB_TEXT ("fork")),
