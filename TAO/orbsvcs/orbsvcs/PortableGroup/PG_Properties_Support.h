@@ -169,7 +169,7 @@ namespace TAO
      * @param type_id identifies the set of properties to be found.
      * @returns a pointer to a Property_Set owned by this Properties_Support object.
      */
-    TAO::PG_Property_Set *  TAO::PG_Properties_Support::find_typeid_properties (
+    TAO::PG_Property_Set *  find_typeid_properties (
         const char *type_id
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
