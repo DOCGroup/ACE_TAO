@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #ifndef LONGUPCALLS_AMI_MANAGER_H
 #define LONGUPCALLS_AMI_MANAGER_H
@@ -16,8 +14,8 @@
 #endif /* _MSC_VER */
 
 class AMI_Manager
-  :  public virtual POA_Test::Manager
-  ,  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Test::Manager,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
   AMI_Manager (CORBA::ORB_ptr orb);

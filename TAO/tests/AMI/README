@@ -36,7 +36,6 @@ replies will arrive in order.
 
 But in the Exclusive Transport, the synchronous request might now
 collect all the AMI replies. It might return as soon as its reply
-arrives. 
-
+arrives.
 
 
