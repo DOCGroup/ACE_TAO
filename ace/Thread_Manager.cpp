@@ -508,7 +508,12 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_hthread_t thr_handle;
 
 #if defined (VXWORKS)
-  // On VxWorks, ACE_thread_t is char *.
+  // On VxWorks, ACE_thread_t is char *.  If t_id is 0, allocate space
+  // for ACE_OS::thr_create () to store the task name.  If t_id is not
+  // 0, and it doesn't point to a 0 char *, then the non-zero char *
+  // will be used for the task name in ACE_OS::thr_create ().  If t_id
+  // is not 0, but does point to a 0 char *, the t_id will be set to
+  // point to the task name in the TCB in ACE_OS::thr_create ().
   if (t_id == 0)
     {
       char *thr_id;
@@ -531,6 +536,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                   stack,
                                   stack_size,
                                   thread_args);
+
   if (result != 0)
     // _Don't_ clobber errno here!  result is either 0 or -1, and
     // ACE_OS::thr_create () already set errno!  D. Levine 28 Mar 1997
