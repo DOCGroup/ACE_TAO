@@ -1,3 +1,21 @@
+Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: added ACE_MAP_{PRIVATE,SHARED,FIXED}, and
+          ACE_OS::shm_{open,unlink}.
+
+        * ace/OS.i: added ACE_OS::shm_{open,unlink}, and mmap support on
+          LynxOS.
+
+        * ace/Mem_Map.*: default share value to ACE_MAP_PRIVATE instead
+          of MAP_PRIVATE, to allow easy overriding in config files.
+
+        * ace/config-lynxos.h: added ACE_HAS_SHM_OPEN, and map
+          ACE_MAP_PRIVATE to ACE_MAP_SHARED because MAP_PRIVATE is
+          not supported on LynxOS 2.5.0.
+
+        * tests/Mem_Map_Test.cpp: replace file_size with line_length because
+          that's more accurate.
+
 Thu Feb 19 10:41:05 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK.cpp (open): It appears that we don't need to do
