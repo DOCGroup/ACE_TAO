@@ -9952,7 +9952,8 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
 }
 
 ACE_INLINE int
-ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
+ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
+                       int unlink_file)
 {
   ACE_TRACE ("ACE_OS::flock_destroy");
   if (lock->handle_ != ACE_INVALID_HANDLE)
@@ -9969,7 +9970,8 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
           ACE_OS::mutex_destroy (lock->process_lock_);
           ACE_OS::munmap (lock->process_lock_,
                           sizeof (ACE_mutex_t));
-          ACE_OS::shm_unlink (lock->lockname_);
+          if (unlink_file)
+            ACE_OS::shm_unlink (lock->lockname_);
           ACE_OS::free (ACE_static_cast (void *,
                                          ACE_const_cast (LPTSTR,
                                                          lock->lockname_)));
@@ -9977,11 +9979,12 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
       else if (lock->process_lock_)
         // Just unmap the memory.
         ACE_OS::munmap (lock->process_lock_,
-                     sizeof (ACE_mutex_t));
+                        sizeof (ACE_mutex_t));
 #else
       if (lock->lockname_ != 0)
         {
-          ACE_OS::unlink (lock->lockname_);
+          if (unlink_file)
+            ACE_OS::unlink (lock->lockname_);
           ACE_OS::free (ACE_static_cast (void *,
                                          ACE_const_cast (LPTSTR,
                                                          lock->lockname_)));
