@@ -16,7 +16,8 @@ TAO_IOR_Multicast::get_handle (void) const
 
 TAO_IOR_Multicast::TAO_IOR_Multicast (void)
   : service_id_ ((TAO_Service_ID) 0),
-    ior_ (0)
+    ior_ (0),
+    mcast_nic_ (0)
 {
 }
 
@@ -24,6 +25,7 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                                       u_short port,
                                       const char *mcast_addr,
                                       TAO_Service_ID service_id)
+  : mcast_nic_ (0)
 {
   if (this->init (ior,
                   port,
