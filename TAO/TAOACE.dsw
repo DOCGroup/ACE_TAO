@@ -23,6 +23,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -35,6 +38,12 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
