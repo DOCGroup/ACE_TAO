@@ -168,7 +168,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
     }
 #else /* TAO_HAS_RT_CORBA == 1 */
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
   invocation->endpoint_selector_ =
     invocation->orb_core_->default_endpoint_selector ();
@@ -245,7 +245,7 @@ check_client_priority_policy (TAO_GIOP_Invocation *invocation,
 #else
 
       ACE_UNUSED_ARG (invocation);
-      ACE_UNUSED_ARG (ACE_TRY_ENV);
+      ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 }

@@ -510,7 +510,7 @@ CORBA_ORB::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
 #if (TAO_HAS_RT_CORBA == 1)
   return this->orb_core_->rt_orb (ACE_TRY_ENV);
 #else
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
   return CORBA_Object::_nil ();
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

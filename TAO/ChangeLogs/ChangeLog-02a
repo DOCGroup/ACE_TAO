@@ -1,3 +1,13 @@
+Wed Mar 28 12:20:08 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB.cpp:
+        * tao/Object.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Invocation.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp:
+          More Fuzz warnings fixed.
+
 Wed Mar 28 11:57:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
@@ -14,14 +24,14 @@ Wed Mar 28 11:49:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 Wed Mar 28 13:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/DynAny_Test/test_dynsequence.cpp:
-	* tests/DynAny_Test/test_dynstruct.cpp:
-	* tests/DynAny_Test/test_dynunion.cpp:
-	* tests/Param_Test/bd_long_seq.cpp:
-	* tests/Param_Test/param_test_i.cpp:
-	* tests/Param_Test/typecode.cpp:
-	* tao/DynamicAny/DynAny_i.cpp:
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicInterface/Request.cpp:
+        * tests/DynAny_Test/test_dynstruct.cpp:
+        * tests/DynAny_Test/test_dynunion.cpp:
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/typecode.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicInterface/Request.cpp:
         * orbsvcs/IFR_Service/IFR_Server.cpp:
 
           Added missing ACE_CHECK/ACE_TRY_CHECK
