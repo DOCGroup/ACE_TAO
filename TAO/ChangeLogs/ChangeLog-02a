@@ -1,3 +1,13 @@
+Thu Apr 18 08:09:06 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Timed_Buffered_Oneways/client.cpp
+	  (setup_buffering_constraints):
+
+	  Corrected namespace to which the SYNC_EAGER_BUFFERING and
+	  SYNC_DELAYED_BUFFERING SyncScopes belong to.  They are
+	  TAO-specific, meaning that they belong to and are infact in the
+	  "TAO" namespace.
+
 Thu Apr 18 08:02:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Fixed a compile
