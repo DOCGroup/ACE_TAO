@@ -106,24 +106,21 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
 {
   CORBA::ULong encap_len = cdr.length ();
 
-  // Read and verify major, minor versions, ignoring IIOP
-  // profiles whose versions we don't understand.
-  //
-  CORBA::Octet major, minor;
+  // Read and verify major, minor versions, ignoring IIOP profiles
+  // whose versions we don't understand.
+  CORBA::Octet major = 0, minor = 0;
 
   if (!(cdr.read_octet (major)
-        && (major == TAO_DEF_GIOP_MAJOR)
+        && major == TAO_DEF_GIOP_MAJOR
         && cdr.read_octet (minor)))
-  {
-    if (TAO_debug_level > 0)
-      {
+    {
+      if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
                     major,
                     minor));
-      }
-    return -1;
-  }
+      return -1;
+    }
 
   this->version_.major = major;
 
@@ -135,11 +132,9 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       || cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - ")
-                      ACE_TEXT ("error while decoding host/port")));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - ")
+                    ACE_TEXT ("error while decoding host/port")));
       return -1;
     }
 
@@ -156,14 +151,12 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
 
   if (cdr.length () != 0 && TAO_debug_level)
-    {
-      // If there is extra data in the profile we are supposed to
-      // ignore it, but print a warning just in case...
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%d bytes out of %d left after IIOP profile data\n"),
-                  cdr.length (),
-                  encap_len));
-    }
+    // If there is extra data in the profile we are supposed to
+    // ignore it, but print a warning just in case...
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("%d bytes out of %d left after IIOP profile data\n"),
+                cdr.length (),
+                encap_len));
 
 #if (TAO_HAS_RT_CORBA == 1)
   // This protection is here not for correctness but for efficiency.

@@ -1,5 +1,9 @@
 Fri Feb  2 08:01:48 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tao/IIOP_Profile.cpp (decode): Make sure to initialize the major
+	  and minor codes so they don't have garbage values.  Thanks to
+ 	  Detlef Becker for reporting htis.
+
 	* tao/RT_ORB.{h,cpp}
   	* tao/RT_Mutex.{h,cpp}: Made some minor cosmetic changes.
 

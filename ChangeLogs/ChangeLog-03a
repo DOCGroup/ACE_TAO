@@ -1,3 +1,9 @@
+Fri Feb  2 08:38:37 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (handler): Set the existing_masks variable to 0
+	  to avoid warnings from static analysis tools.  Thanks to Ivan
+ 	  Murphy for reporting this.
+
 Thu Feb 01 22:00:17 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 	* tests/Message_Queue_Test_Ex.cpp
@@ -34,12 +40,6 @@ Thu Feb 01 18:23:17 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
         * tests/tests.dsw:
 
           Added the above two projects to the workspace.
-
-Thu Feb  1 18:13:52 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-	* ace/OS.{h,i}: Added a new function to return the number of processors
-	  configured on the system.  If we can't tell then we return 1.
-  	  Thanks to Johnny Tucker for contributing this.
 
 Thu Feb  1 18:01:26 2001  Luther J Baker  <luther@cs.wustl.edu>
 
