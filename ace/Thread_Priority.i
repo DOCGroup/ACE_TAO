@@ -19,12 +19,13 @@
 
 ACE_INLINE
 ACE_Thread_Priority::ACE_Thread_Priority (Priority_Class priority_class,
-					  Thread_Priority default_thread_priority) 
+                                          Thread_Priority default_thread_priority)
   : priority_class_ (priority_class),
     default_thread_priority_ (default_thread_priority)
 {
-  // normalize () sets os_priority_class_ and os_default_thread_priority_
-  (void) normalize ();
+  // convert_to_os_priority () sets os_priority_class_ and
+  // os_default_thread_priority_
+  (void) convert_to_os_priority ();
 }
 
 ACE_INLINE
@@ -36,13 +37,13 @@ ACE_INLINE long
 ACE_Thread_Priority::priority_class (const Priority_Class priority_class)
 {
   this->priority_class_ = priority_class;
-  return this->normalize ();
+  return this->convert_to_os_priority ();
 }
 
 ACE_INLINE long ACE_Thread_Priority::default_thread_priority (const Thread_Priority default_thread_priority)
 {
   this->default_thread_priority_ = default_thread_priority;
-  return this->normalize ();
+  return this->convert_to_os_priority ();
 }
 
 ACE_INLINE ACE_Thread_Priority::Priority_Class
