@@ -24,6 +24,13 @@ pace_clearerr (FILE * stream)
 }
 
 PACE_INLINE
+char *
+pace_ctermid (char * s)
+{
+  return ctermid (s);
+}
+
+PACE_INLINE
 int
 pace_fclose (FILE * stream)
 {

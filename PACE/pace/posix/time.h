@@ -18,6 +18,9 @@
 
 #include <time.h>
 #include "pace/signal.h"
+#if PACE_LINUX
+# include "pace/emulation/time.h"
+#endif /* PACE_LINUX */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -31,7 +34,11 @@ extern "C" {
 
 #ifndef PACE_CLOCKID_T
 #define PACE_CLOCKID_T
+# if PACE_LINUX
+  typedef pace_emu_clockid_t pace_clockid_t;
+# else
   typedef clockid_t pace_clockid_t;
+# endif /* PACE_LINUX */
 #endif /* PACE_CLOCKID_T */
 
 #ifndef PACE_CLOCK_T
@@ -46,7 +53,11 @@ extern "C" {
 
 #ifndef PACE_TIMER_T
 #define PACE_TIMER_T
+# if PACE_LINUX
+  typedef pace_emu_timer_t pace_timer_t;
+# else
   typedef timer_t pace_timer_t;
+# endif /* PACE_LINUX */
 #endif /* PACE_TIMER_T */
 
 #ifndef PACE_TIME_T
