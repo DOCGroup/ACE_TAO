@@ -44,6 +44,11 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void destroy (
+      TAO_ObjectReferenceTemplate_Adapter * adapter
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   // Used to force the initialization of the code.
   static int Initializer (void);
 };

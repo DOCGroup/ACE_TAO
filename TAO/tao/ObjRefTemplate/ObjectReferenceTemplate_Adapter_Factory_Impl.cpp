@@ -14,17 +14,26 @@ TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::~TAO_ObjectReferenceTemplate_A
 
 TAO_ObjectReferenceTemplate_Adapter *
 TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::create (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-  )
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ObjectReferenceTemplate_Adapter_Impl * new_objectreferencetemplate_adapter;
-  ACE_NEW_RETURN (new_objectreferencetemplate_adapter,
-                  TAO_ObjectReferenceTemplate_Adapter_Impl,
-                  0);
+  ACE_NEW_THROW_EX (new_objectreferencetemplate_adapter,
+                    TAO_ObjectReferenceTemplate_Adapter_Impl,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
   return new_objectreferencetemplate_adapter;
 }
 
+void
+TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::destroy (
+    TAO_ObjectReferenceTemplate_Adapter * adapter
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  delete adapter;
+}
 
 // *********************************************************************
 

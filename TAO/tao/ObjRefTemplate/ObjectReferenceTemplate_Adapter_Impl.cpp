@@ -4,7 +4,7 @@
 
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Constants.h"
-
+#include "tao/CORBA_methods.h"
 
 ACE_RCSID (ORT,
            ObjectReferenceTemplate_Adapater_Impl,
@@ -17,16 +17,6 @@ ACE_RCSID (ORT,
 
 
 TAO_ObjectReferenceTemplate_Adapter_Impl::TAO_ObjectReferenceTemplate_Adapter_Impl()
-{}
-
-TAO_ObjectReferenceTemplate_Adapter_Impl::TAO_ObjectReferenceTemplate_Adapter_Impl (
-  const char *server_id,
-  const char *orb_id,
-  PortableInterceptor::AdapterName *adapter_name,
-  TAO_POA * poa)
-  : server_id_ (server_id),
-    orb_id_ (orb_id),
-    poa_ (poa)
 {
 }
 
@@ -35,91 +25,92 @@ TAO_ObjectReferenceTemplate_Adapter_Impl::~TAO_ObjectReferenceTemplate_Adapter_I
 }
 
 char *
-TAO_ObjectReferenceTemplate_Adapter_Impl::server_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ObjectReferenceTemplate_Adapter_Impl::server_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup (this->server_id_);
+  return this->ort_template_->server_id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 char *
-TAO_ObjectReferenceTemplate_Adapter_Impl::orb_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ObjectReferenceTemplate_Adapter_Impl::orb_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup (this->orb_id_);
+  return this->ort_template_->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableInterceptor::AdapterName *
 TAO_ObjectReferenceTemplate_Adapter_Impl::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableInterceptor::AdapterName *adapter_name;
-  ACE_NEW_THROW_EX (adapter_name,
-                    PortableInterceptor::AdapterName (
-                      *(this->adapter_name_)),
-                    CORBA::NO_MEMORY (
-                       CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          ENOMEM),
-                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
-
-  return adapter_name;
+  return this->ort_template_->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
 TAO_ObjectReferenceTemplate_Adapter_Impl::make_object (
-    const char *,
-    const PortableInterceptor::ObjectId &
+    const char *repository_id,
+    const PortableInterceptor::ObjectId &id
   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  if (this->poa_ == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
-
-  return this->poa_->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-int
-TAO_ObjectReferenceTemplate_Adapter_Impl::destroy (void)
-{
-//  delete this;
-  return 0;
+  return this->ort_factory_->make_object (repository_id,
+                                          id
+                                          ACE_ENV_ARG_PARAMETER);
 }
 
 PortableInterceptor::ObjectReferenceTemplate *
 TAO_ObjectReferenceTemplate_Adapter_Impl::get_adapter_template (void)
 {
-  this->_add_ref();
-  return this;
+  CORBA::add_ref (ort_template_);
+
+  return ort_template_;
 }
 
 PortableInterceptor::ObjectReferenceFactory *
 TAO_ObjectReferenceTemplate_Adapter_Impl::get_obj_ref_factory (void)
 {
-  this->_add_ref();
-  return this;
+  CORBA::add_ref (ort_factory_);
+
+  return ort_factory_;
 }
 
 int
-TAO_ObjectReferenceTemplate_Adapter_Impl::activate (PortableInterceptor::ObjectReferenceFactory *current_factory,
-                        TAO_POA *poa)
+TAO_ObjectReferenceTemplate_Adapter_Impl::set_obj_ref_factory (
+  PortableInterceptor::ObjectReferenceFactory *current_factory
+  ACE_ENV_ARG_DECL)
 {
-  poa_ = poa;
+  ort_factory_ = current_factory;
+
+  CORBA::add_ref (ort_factory_);
+
   return 0;
 }
 
 int
-TAO_ObjectReferenceTemplate_Adapter_Impl::activate (const char *server_id,
-                        const char *orb_id,
-                        PortableInterceptor::AdapterName *adapter_name,
-                        TAO_POA *poa)
+TAO_ObjectReferenceTemplate_Adapter_Impl::activate (
+  const char *server_id,
+  const char *orb_id,
+  PortableInterceptor::AdapterName *adapter_name,
+  TAO_POA *poa
+  ACE_ENV_ARG_DECL)
 {
-  server_id_ = server_id;
-  orb_id_ = orb_id;
-  adapter_name_ = adapter_name;
-  poa_ = poa;
+  // Create an ObjectReferenceTemplate for this POA.
+  ACE_NEW_THROW_EX (this->tao_ort_template,
+                    TAO_ObjectReferenceTemplate (
+                      server_id,
+                      orb_id,
+                      adapter_name,
+                      poa),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (-1);
+
+  this->ort_template_ = this->tao_ort_template;
+
+  // Must increase ref count since this->obj_ref_factory_ will
+  // descrease it upon destruction.
+  CORBA::add_ref (this->ort_template_.in ());
+  this->ort_factory_ = this->ort_template_;
 
   return 0;
 }
@@ -127,5 +118,5 @@ TAO_ObjectReferenceTemplate_Adapter_Impl::activate (const char *server_id,
 void
 TAO_ObjectReferenceTemplate_Adapter_Impl::poa (TAO_POA * poa)
 {
-  poa_ = poa;
+  this->tao_ort_template->poa (poa);
 }
