@@ -67,8 +67,13 @@ public:
   // Can consumers or suppliers invoke connect_push_* multiple times?
 
   int consumer_admin_busy_hwm;
-  int max_write_delay;
+  int consumer_admin_max_write_delay;
   // Flags for the Consumer Admin
+
+  RtecScheduler::Scheduler_ptr scheduler;
+  // The scheduling service that we will use with this event channel.
+  // Notice that this is optional and will only take effect if the EC
+  // is configured with the right filtering strategies.
 
 private:
   friend class TAO_EC_Event_Channel;
@@ -132,6 +137,9 @@ public:
   TAO_EC_Timeout_Generator* timeout_generator (void) const;
   // Access the timer module...
 
+  TAO_EC_Scheduling_Strategy* scheduling_strategy (void) const;
+  // Access the scheduling strategy
+
   // = The factory methods, they delegate on the EC_Factory.
   TAO_EC_ProxyPushSupplier* create_proxy_push_supplier (void);
   void destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*);
@@ -185,6 +193,9 @@ public:
 
   int supplier_reconnect (void) const;
   // Can the suppliers reconnect to the EC?
+
+  RtecScheduler::Scheduler_ptr scheduler (void);
+  // Obtain the scheduler, the user must release
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
@@ -247,6 +258,12 @@ private:
 
   TAO_EC_ObserverStrategy *observer_strategy_;
   // The observer strategy
+
+  RtecScheduler::Scheduler_var scheduler_;
+  // The scheduler (may be nil)
+
+  TAO_EC_Scheduling_Strategy *scheduling_strategy_;
+  // The scheduling strategy
 
   int consumer_reconnect_;
   int supplier_reconnect_;

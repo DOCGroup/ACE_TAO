@@ -26,6 +26,7 @@
 #define TAO_EC_DISPATCHING_TASK_H
 
 #include "ace/Task.h"
+#include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,6 +50,17 @@ public:
 
   virtual int svc (void);
   // Process the events in the queue.
+
+  virtual void push (TAO_EC_ProxyPushSupplier *proxy,
+                     RtecEventComm::EventSet& event,
+                     CORBA::Environment &env);
+
+private:
+  ACE_Allocator *allocator_;
+  // An per-task allocator
+
+  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
+  // Helper data structure to minimize memory allocations...
 };
 
 // ****************************************************************
@@ -56,10 +68,11 @@ public:
 class TAO_ORBSVCS_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
 {
 public:
-  TAO_EC_Dispatch_Command (void);
+  TAO_EC_Dispatch_Command (ACE_Allocator *mb_allocator = 0);
   // Constructor, it will allocate its own data block
 
-  TAO_EC_Dispatch_Command (ACE_Data_Block*);
+  TAO_EC_Dispatch_Command (ACE_Data_Block*,
+                           ACE_Allocator *mb_allocator = 0);
   // Constructor, it assumes ownership of the data block
 
   virtual ~TAO_EC_Dispatch_Command (void);
@@ -74,7 +87,7 @@ public:
 class TAO_ORBSVCS_Export TAO_EC_Shutdown_Command : public TAO_EC_Dispatch_Command
 {
 public:
-  TAO_EC_Shutdown_Command (void);
+  TAO_EC_Shutdown_Command (ACE_Allocator *mb_allocator = 0);
   // Constructor
 
   virtual int execute (CORBA::Environment&);
@@ -88,7 +101,8 @@ class TAO_ORBSVCS_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
 public:
   TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
                        RtecEventComm::EventSet& event,
-                       ACE_Data_Block* data_block);
+                       ACE_Data_Block* data_block,
+                       ACE_Allocator *mb_allocator);
   // Constructor
 
   virtual int execute (CORBA::Environment&);

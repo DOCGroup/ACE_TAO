@@ -122,3 +122,12 @@ TAO_EC_Timeout_Filter::can_match (
 {
   return 0;
 }
+
+int
+TAO_EC_Timeout_Filter::add_dependencies (
+      const RtecEventComm::EventHeader&,
+      const TAO_EC_QOS_Info &,
+      CORBA::Environment &)
+{
+  return 0;
+}

@@ -7,7 +7,7 @@
 //   ORBSVCS Real-time Event Channel
 //
 // = FILENAME
-//   EC_Basic_Filter_Builder
+//   EC_Sched_Filter_Builder
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
@@ -22,8 +22,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_EC_BASIC_FILTER_BUILDER_H
-#define TAO_EC_BASIC_FILTER_BUILDER_H
+#ifndef TAO_EC_SCHED_FILTER_BUILDER_H
+#define TAO_EC_SCHED_FILTER_BUILDER_H
 
 #include "EC_Filter_Builder.h"
 
@@ -34,21 +34,21 @@
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel;
 
-class TAO_ORBSVCS_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_ORBSVCS_Export TAO_EC_Sched_Filter_Builder : public TAO_EC_Filter_Builder
 {
   // = TITLE
   //   Implement a builder for the fundamental filters.
   //
   // = DESCRIPTION
-  //   The basic filtering mechanisms in the Event channel
+  //   The sched filtering mechanisms in the Event channel
   //   (source/type based filtering + disjunctions and conjunctions)
   //   are constructed using this class.
   //
 public:
-  TAO_EC_Basic_Filter_Builder (TAO_EC_Event_Channel* ec);
+  TAO_EC_Sched_Filter_Builder (TAO_EC_Event_Channel* ec);
   // constructor.
 
-  virtual ~TAO_EC_Basic_Filter_Builder (void);
+  virtual ~TAO_EC_Sched_Filter_Builder (void);
   // destructor...
 
   // = The TAO_EC_Filter_Builder methods...
@@ -59,7 +59,10 @@ public:
 private:
   TAO_EC_Filter* recursive_build (TAO_EC_ProxyPushSupplier *supplier,
                                   RtecEventChannelAdmin::ConsumerQOS& qos,
-                                  CORBA::ULong& pos) const;
+                                  CORBA::ULong& pos,
+                                  RtecScheduler::Scheduler_ptr scheduler,
+                                  const char* base_name,
+                                  CORBA::Environment& env) const;
   // Recursively build the filter tree.
 
   CORBA::ULong count_children (RtecEventChannelAdmin::ConsumerQOS& qos,
@@ -73,7 +76,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_Basic_Filter_Builder.i"
+#include "EC_Sched_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_EC_BASIC_FILTER_BUILDER_H */
+#endif /* TAO_EC_SCHED_FILTER_BUILDER_H */

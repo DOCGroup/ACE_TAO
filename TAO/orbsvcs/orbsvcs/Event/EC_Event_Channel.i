@@ -6,6 +6,9 @@ TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
                                  PortableServer::POA_ptr c_poa)
   :  consumer_reconnect (0),
      supplier_reconnect (0),
+     consumer_admin_busy_hwm (0),
+     consumer_admin_max_write_delay (0),
+     scheduler (RtecScheduler::Scheduler::_nil ()),
      supplier_poa (s_poa),
      consumer_poa (c_poa)
 {
@@ -45,6 +48,12 @@ ACE_INLINE TAO_EC_Timeout_Generator*
 TAO_EC_Event_Channel::timeout_generator (void) const
 {
   return this->timeout_generator_;
+}
+
+ACE_INLINE TAO_EC_Scheduling_Strategy*
+TAO_EC_Event_Channel::scheduling_strategy (void) const
+{
+  return this->scheduling_strategy_;
 }
 
 ACE_INLINE TAO_EC_ProxyPushSupplier*
@@ -153,4 +162,10 @@ ACE_INLINE int
 TAO_EC_Event_Channel::supplier_reconnect (void) const
 {
   return this->supplier_reconnect_;
+}
+
+ACE_INLINE RtecScheduler::Scheduler_ptr
+TAO_EC_Event_Channel::scheduler (void)
+{
+  return RtecScheduler::Scheduler::_duplicate (this->scheduler_.in ());
 }

@@ -48,12 +48,14 @@
       <LI><P><B>EC:</B> Complete the implementation of the new EC,
 	  specially generate the strategies and changes required to
 	  support hard real-time behavior.
-          <BR>[ASSIGNED TO:] Carlos
 	</P>
 	<P>The new EC does not update the dependencies in
 	  the scheduling service. We should be able to strategize this 
 	  by the appropiate use of a <CODE>Filter_Builder</CODE> and
 	  decorators for the regular filters.
+          <BR>[ASSIGNED TO:] Carlos
+	  <BR>[STATUS] All the pieces are in place, but I have to
+	  continue debugging it.
         </P>
       </LI>
 
@@ -255,6 +257,15 @@
     <OL>
       <LI><P><B>EC:</B>The <CODE>Priority_Dispatching</CODE> strategy
 	  is incomplete.
+	  <BR>[STATUS] The latest round of changes completed the
+	  implementation, but more testing is required before dropping 
+	  this task
+        </P>
+      </LI>
+      <LI><P><B>EC:</B>Implement a dispatching strategy that uses the
+	  current thread priority or ID to dispatch the event.  This
+	  will let us use multiple queues at different priorities but
+	  without any scheduling service.
         </P>
       </LI>
       <LI><P><B>EC:</B>Implement a null filter for consumers that

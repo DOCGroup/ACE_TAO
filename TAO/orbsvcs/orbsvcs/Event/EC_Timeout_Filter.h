@@ -84,6 +84,9 @@ public:
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
+  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
+                                const TAO_EC_QOS_Info &qos_info,
+                                CORBA::Environment &ACE_TRY_ENV);
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Timeout_Filter

@@ -10,6 +10,7 @@
 #include "EC_ProxySupplier.h"
 #include "EC_SupplierFiltering.h"
 #include "EC_ObserverStrategy.h"
+#include "EC_Null_Scheduling.h"
 #include "EC_ProxyPushSupplier_Set_T.h"
 #include "EC_Reactive_Timeout_Generator.h"
 
@@ -139,6 +140,18 @@ TAO_EC_ProxyPushSupplier_Set*
 TAO_EC_Basic_Factory::create_proxy_push_supplier_set (TAO_EC_Event_Channel *)
 {
   return new TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH> ();
+}
+
+TAO_EC_Scheduling_Strategy*
+TAO_EC_Basic_Factory::create_scheduling_strategy (TAO_EC_Event_Channel*)
+{
+  return new TAO_EC_Null_Scheduling;
+}
+
+void
+TAO_EC_Basic_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x)
+{
+  delete x;
 }
 
 void

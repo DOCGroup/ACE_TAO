@@ -54,20 +54,21 @@ TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
   TAO_EC_ConsumerAdmin* consumer_admin =
     this->event_channel_->consumer_admin ();
 
-  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, consumer_admin->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
-
-  TAO_EC_ConsumerAdmin::SupplierSetIterator end =
-    consumer_admin->end ();
-
   for (CORBA::ULong j = 0; j < event.length (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =
         ACE_const_cast(RtecEventComm::Event*, &e);
       RtecEventComm::EventSet single_event (1, 1, buffer, 0);
+
+      ACE_GUARD_THROW_EX (
+          TAO_EC_ConsumerAdmin::Busy_Lock,
+          ace_mon, consumer_admin->busy_lock (),
+          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+      ACE_CHECK;
+
+      TAO_EC_ConsumerAdmin::SupplierSetIterator end =
+        consumer_admin->end ();
 
       for (TAO_EC_ConsumerAdmin::SupplierSetIterator i =
              consumer_admin->begin ();
