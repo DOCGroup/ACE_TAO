@@ -67,15 +67,21 @@ private:
   // What we need to do.
 };
 
+
 class TAO_IMR_Op
 {
+  // = TITLE
+  //     IMR Operation Base Class
+  //
+  // = DESCRIPTION
+  //     Provides a base class with virtual methods for each operation strategy.
 public:
   static TAO_IMR_Op *make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Administration_ptr ir);
   // Factory.
-  
+
   TAO_IMR_Op (ImplementationRepository::Administration_ptr implrepo);
   // Constructor.
-  
+
   virtual ~TAO_IMR_Op (void);
   // Virtual Destructor.
 
@@ -95,8 +101,14 @@ protected:
   // Prints out the information contained in a ServerInformation structure.
 };
 
+
 class TAO_IMR_Op_Activate : public TAO_IMR_Op
 {
+  // = TITLE
+  //     Activation Operation
+  //
+  // = DESCRIPTION
+  //     Activation is used to start servers via the Implementation Repository
 public:
   TAO_IMR_Op_Activate (ImplementationRepository::Administration_ptr implrepo);
   ~TAO_IMR_Op_Activate (void);
@@ -112,8 +124,14 @@ protected:
   // POA server name.
 };
 
+
 class TAO_IMR_Op_Add : public TAO_IMR_Op
 {
+  // = TITLE
+  //     Add Operation
+  //
+  // = DESCRIPTION
+  //     Add is used to register information about a server with the IMR.
 public:
   TAO_IMR_Op_Add (ImplementationRepository::Administration_ptr implrepo);
   ~TAO_IMR_Op_Add (void);
@@ -138,8 +156,15 @@ protected:
   // Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT, 3 = AUTO_START)
 };
 
+
 class TAO_IMR_Op_Autostart : public TAO_IMR_Op
 {
+  // = TITLE
+  //     Autostart Operation
+  //
+  // = DESCRIPTION
+  //     Autostart is used to activate all servers with the AUTO_START activation
+  //     mode.
 public:
   TAO_IMR_Op_Autostart (ImplementationRepository::Administration_ptr implrepo);
   ~TAO_IMR_Op_Autostart (void);
@@ -152,9 +177,42 @@ protected:
   // Prints a message about the usage
 };
 
-class TAO_IMR_Op_List : public TAO_IMR_Op
-// Used to list the entries in the IMR
+
+class TAO_IMR_Op_IOR : public TAO_IMR_Op
 {
+  // = TITLE
+  //     IOR Operation
+  //
+  // = DESCRIPTION
+  //     IOR is used to create a simple IOR for a server that uses the
+  //     IMR and the Interoperable Naming Service.
+public:
+  TAO_IMR_Op_IOR (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IMR_Op_IOR (void);
+
+  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int run (void);
+
+protected:
+  void print_usage (void);
+  // Prints a message about the usage
+
+  ACE_TString server_name_;
+  // POA server name.
+
+  ACE_TString filename_;
+  // Filename to output to.
+};
+
+
+class TAO_IMR_Op_List : public TAO_IMR_Op
+{
+  // = TITLE
+  //     List Operation
+  //
+  // = DESCRIPTION
+  //     List is used to either list all the servers registered in the IMR or just
+  //     look at one of them.
 public:
   TAO_IMR_Op_List (ImplementationRepository::Administration_ptr implrepo);
   ~TAO_IMR_Op_List (void);
@@ -178,10 +236,13 @@ protected:
 };
 
 
-
 class TAO_IMR_Op_Remove : public TAO_IMR_Op
-// Used to remove entries in the IMR
 {
+  // = TITLE
+  //     Remove Operation
+  //
+  // = DESCRIPTION
+  //     Remove is used to unregister a server in the IMR.
 public:
   TAO_IMR_Op_Remove (ImplementationRepository::Administration_ptr implrepo);
   ~TAO_IMR_Op_Remove (void);
@@ -197,8 +258,14 @@ protected:
   // POA server name.
 };
 
+
 class TAO_IMR_Op_Shutdown : public TAO_IMR_Op
 {
+  // = TITLE
+  //     Shutdown Operation
+  //
+  // = DESCRIPTION
+  //     Shutdown is used to shutdown a server through the IMR.
 public:
   TAO_IMR_Op_Shutdown (ImplementationRepository::Administration_ptr implrepo);
   ~TAO_IMR_Op_Shutdown (void);
@@ -214,8 +281,15 @@ protected:
   // POA server name.
 };
 
+
 class TAO_IMR_Op_Update : public TAO_IMR_Op
 {
+  // = TITLE
+  //     Update Operation
+  //
+  // = DESCRIPTION
+  //     Update is used to update the information for a server registered
+  //     with the IMR.
 public:
   TAO_IMR_Op_Update (ImplementationRepository::Administration_ptr implrepo);
   ~TAO_IMR_Op_Update (void);
@@ -232,7 +306,7 @@ protected:
 
   int set_command_line_;
   // True if the command_line_ needs to be updated.
-  
+
   ACE_TString command_line_;
   // Startup command.
 

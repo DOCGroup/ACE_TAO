@@ -96,10 +96,7 @@ sub nestea_ir_test
 
   system ($tao_imr." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea_server -c \"$nestea_server -ORBUseIMR 1 $refstyle -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
-  $SV = Process::Create ($nestea_server,
-                         "-o $nestea_ior -ORBUseIMR 1 $refstyle -ORBInitRef ImplRepoService=file://$implrepo_ior");
-
-  ACE::waitforfile ($nestea_ior);
+  system ($tao_imr." -ORBInitRef ImplRepoService=file://$implrepo_ior ior nestea_server -f $nestea_ior");
 
   system ($nestea_client." -k file://$nestea_ior");
 
