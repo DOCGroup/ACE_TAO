@@ -28,8 +28,6 @@ Sender_i::send_ready_message (Test::Receiver_ptr receiver,
                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULong call_count = 0;
-
   ACE_DEBUG ((LM_DEBUG,
               "Received a call ...\n"));
 
@@ -40,16 +38,10 @@ Sender_i::send_ready_message (Test::Receiver_ptr receiver,
        i < this->number_;
        ++i)
     {
-      call_count = receiver->receive_call (ACE_TRY_ENV);
+      receiver->receive_call (ACE_TRY_ENV);
       ACE_CHECK;
     }
 
-  /*if (call_count >= 8000)
-  {
-      // Shutdown the remote object
-      // receiver->shutdown (ACE_TRY_ENV);
-      // ACE_CHECK;
-      }*/
 }
 
 void
