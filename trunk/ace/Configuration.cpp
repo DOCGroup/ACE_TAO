@@ -223,15 +223,24 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name, int allow_path)
 
   // Check if it is an invalid character.
   if (name[pos] != ACE_LIB_TEXT ('\0'))
-    return -1;
+    {
+      errno = EINVAL;
+      return -1;
+    }
 
   // The first character can never be a path separator.
   if (name[0] == ACE_LIB_TEXT ('\\'))
-    return -1;
+    {
+      errno = EINVAL;
+      return -1;
+    }
 
   // Validate length.
   if (pos == 0 || pos > 255)
-    return -2;
+    {
+      errno = ENAMETOOLONG;
+      return -1;
+    }
 
   return 0;
 }
@@ -531,7 +540,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                              &result_key) != ERROR_SUCCESS)
     {
       if (!create)
-        return -2;
+        return -1;
 
       if (ACE_TEXT_RegCreateKeyEx (base_key,
                                    sub_section,
@@ -547,12 +556,12 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                    0
 #endif /* __MINGW32__ */
                                    ) != ERROR_SUCCESS)
-        return -3;
+        return -1;
     }
 
   ACE_Section_Key_Win32 *temp;
 
-  ACE_NEW_RETURN (temp, ACE_Section_Key_Win32 (result_key), -4);
+  ACE_NEW_RETURN (temp, ACE_Section_Key_Win32 (result_key), -1);
   result = ACE_Configuration_Section_Key (temp);
   return 0;
 }
@@ -573,11 +582,11 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
     {
       ACE_Configuration_Section_Key section;
       if (open_section (key, sub_section, 0, section))
-        return -2;
+        return -1;
 
       HKEY sub_key;
       if (load_key (section, sub_key))
-        return -3;
+        return -1;
 
       ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
       DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
@@ -601,17 +610,17 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
 
 #if (ACE_HAS_WINNT4 != 0)
   if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
-    return -2;
+    return -1;
 #else
   if (!recursive)
     {
       ACE_Configuration_Section_Key section;
       if (open_section (key, sub_section, 0, section))
-        return -2;
+        return -1;
  
       HKEY sub_key;
       if (load_key (section, sub_key))
-        return -3;
+        return -1;
  
       ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
       DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
@@ -624,10 +633,10 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                                  0,
                                  0,
                                  0) == ERROR_SUCCESS)
-        return -2;
+        return -1;
     }
   else if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
-    return -2;
+    return -1;
 #endif
 
   return 0;
@@ -658,7 +667,7 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
   if (rc == ERROR_NO_MORE_ITEMS)
     return 1;
   else if (rc != ERROR_SUCCESS)
-    return -2;
+    return -1;
 
   name = name_buffer;
 
@@ -702,7 +711,7 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
   if (rc == ERROR_NO_MORE_ITEMS)
     return 1;
   else if (rc != ERROR_MORE_DATA && rc != ERROR_SUCCESS)
-    return -2;
+    return -1;
 
   name = name_buffer;
 
@@ -725,9 +734,10 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
                               name,
                               0,
                               REG_SZ,
- (BYTE *) value.fast_rep (),
- (value.length () + 1) * sizeof (ACE_TCHAR)) != ERROR_SUCCESS)
-    return -2;
+                              (BYTE *) value.fast_rep (),
+                              (value.length () + 1) * sizeof (ACE_TCHAR))
+      != ERROR_SUCCESS)
+    return -1;
 
   return 0;
 }
@@ -748,9 +758,9 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
                               name,
                               0,
                               REG_DWORD,
- (BYTE *) &value,
+                              (BYTE *) &value,
                               sizeof (value)) != ERROR_SUCCESS)
-    return -2;
+    return -1;
 
   return 0;
 }
@@ -772,9 +782,9 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
                               name,
                               0,
                               REG_BINARY,
- (BYTE *) data,
+                              (BYTE *) data,
                               length) != ERROR_SUCCESS)
-    return -2;
+    return -1;
 
   return 0;
 }
@@ -798,17 +808,20 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 &type,
- (BYTE *) 0,
+                                (BYTE *) 0,
                                 &buffer_length) != ERROR_SUCCESS)
-    return -2;
+    return -1;
 
   if (type != REG_SZ)
-    return -3;
+    {
+      errno = 0; ACE_OS::last_error (ERROR_INVALID_DATATYPE);
+      return -1;
+    }
 
   ACE_TCHAR *temp = 0;
   ACE_NEW_RETURN (temp,
                   ACE_TCHAR[buffer_length],
-                  0);
+                  -1);
 
   ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (temp);
 
@@ -816,10 +829,10 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 &type,
- (BYTE *) buffer.get (),
+                                (BYTE *) buffer.get (),
                                 &buffer_length) != ERROR_SUCCESS)
   {
-    return -5;
+    return -1;
   }
 
   value = buffer.get ();
@@ -844,12 +857,15 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
                                 name,
                                 0,
                                 &type,
- (BYTE *) &value,
+                                (BYTE *) &value,
                                 &length) != ERROR_SUCCESS)
-    return -2;
+    return -1;
 
   if (type != REG_DWORD)
-    return -3;
+    {
+      errno = 0; ACE_OS::last_error (ERROR_INVALID_DATATYPE);
+      return -1;
+    }
 
   return 0;
 }
@@ -874,27 +890,30 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 &type,
- (BYTE *) 0,
+                                (BYTE *) 0,
                                 &buffer_length) != ERROR_SUCCESS)
-    return -2;
+    return -1;
 
   if (type != REG_BINARY)
-    return -3;
+    {
+      errno = 0; ACE_OS::last_error (ERROR_INVALID_DATATYPE);
+      return -1;
+    }
 
   length = buffer_length;
 
-  ACE_NEW_RETURN (data, BYTE[length], -4);
+  ACE_NEW_RETURN (data, BYTE[length], -1);
 
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
                                 0,
                                 &type,
- (BYTE *) data,
+                                (BYTE *) data,
                                 &buffer_length) != ERROR_SUCCESS)
     {
       delete [] (BYTE *) data;
       data = 0;
-      return -5;
+      return -1;
     }
 
   return 0;
@@ -953,7 +972,7 @@ ACE_Configuration_Win32Registry::remove_value (const ACE_Configuration_Section_K
     return -1;
 
   if (ACE_TEXT_RegDeleteValue (base_key, name) != ERROR_SUCCESS)
-    return -2;
+    return -1;
 
   return 0;
 }
@@ -1374,15 +1393,18 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
-    return -2;
+    return -1;
 
   // See if this section already exists
   ACE_Configuration_ExtId SubSectionExtId (sub_section);
   int ignored = 0;
 
   if (!IntId.section_hash_map_->find (SubSectionExtId, ignored, allocator_))
-    // already exists!
-    return -3;
+    {
+      // already exists!
+      errno = EEXIST;
+      return -1;
+    }
 
   // Create the new section name
   // only prepend a separater if were not at the root
@@ -1398,7 +1420,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   if (IntId.section_hash_map_->bind (SSExtId, ignored, allocator_))
     {
       allocator_->free (pers_name);
-      return -4;
+      return -1;
     }
   return (new_section (section, result));
 }
@@ -1435,7 +1457,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
       if (value_open_helper (default_map_size_, value_hash_map ) == -1)
         {
           this->allocator_->free (value_hash_map );
-          return -2;
+          return -1;
         }
 
       // create the section map
@@ -1452,7 +1474,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
         {
           this->allocator_->free (value_hash_map );
           this->allocator_->free (section_hash_map);
-          return -2;
+          return -1;
         }
 
       ACE_Configuration_ExtId name (ptr);
@@ -1484,7 +1506,9 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
   // set the result
   ACE_Configuration_Section_Key_Heap *temp;
-  ACE_NEW_RETURN (temp, ACE_Configuration_Section_Key_Heap (section.fast_rep ()), -2);
+  ACE_NEW_RETURN (temp,
+                  ACE_Configuration_Section_Key_Heap (section.fast_rep ()),
+                  -1);
   result = ACE_Configuration_Section_Key (temp);
   return return_value;
 }
@@ -1556,14 +1580,18 @@ ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key
   if (index_->find (ExtId, IntId, allocator_))
     {
       if (!create)
-        return -2;
-
+        {
+          errno = ENOENT;
+          return -1;
+        }
       return add_section (base, sub_section, result);
     }
 
   ACE_Configuration_Section_Key_Heap *temp;
 
-  ACE_NEW_RETURN (temp, ACE_Configuration_Section_Key_Heap (section.fast_rep ()), -3);
+  ACE_NEW_RETURN (temp,
+                  ACE_Configuration_Section_Key_Heap (section.fast_rep ()),
+                  -1);
   result = ACE_Configuration_Section_Key (temp);
 
   return 0;
@@ -1586,7 +1614,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   ACE_Configuration_ExtId ParentExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId ParentIntId;
   if (index_->find (ParentExtId, ParentIntId, allocator_))
-    return -2;// no parent key
+    return -1;// no parent key
 
   // Find this subkey
   if (section.length ())
@@ -1597,20 +1625,20 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   SECTION_ENTRY* section_entry;
   SECTION_HASH* hashmap = index_;
   if (hashmap->find (SectionExtId, section_entry))
-    return -2;
+    return -1;
 
   if (recursive)
     {
       ACE_Configuration_Section_Key section;
       if (open_section (key, sub_section, 0, section))
-        return -3;
+        return -1;
 
       int index = 0;
       ACE_TString name;
       while (!enumerate_sections (section, index, name))
         {
           if (remove_section (section, name.fast_rep (), 1))
-            return -4;
+            return -1;
 
           index++;
         }
@@ -1618,17 +1646,20 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   // Now make sure we dont have any subkeys
   if (section_entry->int_id_.section_hash_map_->current_size ())
-    return -3;
+    {
+      errno = ENOTEMPTY;
+      return -1;
+    }
 
   // Now remove subkey from parent key
   ACE_Configuration_ExtId SubSExtId (sub_section);
   SUBSECTION_ENTRY* subsection_entry;
   if (((SUBSECTION_HASH*)ParentIntId.section_hash_map_)->
       find (SubSExtId, subsection_entry))
-    return -4;
+    return -1;
 
   if (ParentIntId.section_hash_map_->unbind (SubSExtId, allocator_))
-    return -5;
+    return -1;
 
   subsection_entry->ext_id_.free (allocator_);
 
@@ -1653,7 +1684,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   // remove it
   if (index_->unbind (SectionExtId, allocator_))
-    return -5;
+    return -1;
 
   // Free the memory
   ExtIdToFree.free (allocator_);
@@ -1681,7 +1712,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
   ACE_Configuration_ExtId ExtId (pKey->path_);
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
-    return -2;
+    return -1;
 
   // Handle iterator resets
   if (index == 0)
@@ -1695,7 +1726,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
 
       ACE_NEW_RETURN (pKey->value_iter_,
                       VALUE_HASH::ITERATOR (hash_map->begin ()),
-                      -3);
+                      -1);
     }
 
   // Get the next entry
@@ -1729,7 +1760,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
   ACE_Configuration_ExtId ExtId (pKey->path_);
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
-    return -2; // unknown section
+    return -1; // unknown section
 
   // Handle iterator resets
   if (index == 0)
@@ -1739,7 +1770,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
 
       ACE_NEW_RETURN (pKey->section_iter_,
                       SUBSECTION_HASH::ITERATOR (IntId.section_hash_map_->begin ()),
-                      -3);
+                      -1);
     }
 
   // Get the next entry
@@ -1770,7 +1801,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
   ACE_Configuration_ExtId section_ext (section.fast_rep ());
   ACE_Configuration_Section_IntId section_int;
   if (index_->find (section_ext, section_int, allocator_))
-    return -2;
+    return -1;
 
   // Get the entry for this item (if it exists)
   VALUE_ENTRY* entry;
@@ -1802,7 +1833,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
         {
           allocator_->free (pers_value);
           allocator_->free (pers_name);
-          return -3;
+          return -1;
         }
       return 0;
     }
@@ -1828,7 +1859,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
   ACE_Configuration_ExtId section_ext (section.fast_rep ());
   ACE_Configuration_Section_IntId section_int;
   if (index_->find (section_ext, section_int, allocator_))
-    return -2;  // section does not exist
+    return -1;  // section does not exist
 
   // Get the entry for this item (if it exists)
   VALUE_ENTRY* entry;
@@ -1850,7 +1881,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
       if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
         {
           allocator_->free (pers_name);
-          return -3;
+          return -1;
         }
       return 0;
     }
@@ -1877,7 +1908,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   ACE_Configuration_ExtId section_ext (section.fast_rep ());
   ACE_Configuration_Section_IntId section_int;
   if (index_->find (section_ext, section_int, allocator_))
-    return -2;    // section does not exist
+    return -1;    // section does not exist
 
   // Get the entry for this item (if it exists)
   VALUE_ENTRY* entry;
@@ -1907,7 +1938,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
         {
           allocator_->free (pers_value);
           allocator_->free (pers_name);
-          return -3;
+          return -1;
         }
       return 0;
     }
@@ -1917,7 +1948,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
-    return -2;    // section does not exist
+    return -1;    // section does not exist
 
   // See if the value exists first
   ACE_Configuration_ExtId VExtIdFind (name);
@@ -1937,7 +1968,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
         {
           allocator_->free (pers_value);
           allocator_->free (pers_name);
-          return -3;
+          return -1;
         }
       return 0;
     }
@@ -1972,17 +2003,20 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
-    return -2;    // section does not exist
+    return -1;    // section does not exist
 
   // See if it exists first
   ACE_Configuration_ExtId VExtId (name);
   ACE_Configuration_Value_IntId VIntId;
   if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_))
-    return -3;    // unknown value
+    return -1;    // unknown value
 
   // Check type
   if (VIntId.type_ != ACE_Configuration::STRING)
-    return -4;
+    {
+      errno = ENOENT;
+      return -1;
+    }
 
   // everythings ok, return the data
   value = ACE_static_cast (ACE_TCHAR*, VIntId.data_.ptr_);
@@ -2007,18 +2041,21 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
-    return -2;    // section does not exist
+    return -1;    // section does not exist
 
 
   // See if it exists first
   ACE_Configuration_ExtId VExtId (name);
   ACE_Configuration_Value_IntId VIntId;
   if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_))
-    return -3;    // unknown value
+    return -1;    // unknown value
 
   // Check type
   if (VIntId.type_ != ACE_Configuration::INTEGER)
-    return -4;
+    {
+      errno = ENOENT;
+      return -1;
+    }
 
   // Everythings ok, return the data
   value = VIntId.data_.int_;
@@ -2044,20 +2081,23 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
-    return -2;    // section does not exist
+    return -1;    // section does not exist
 
   ACE_Configuration_ExtId VExtId (name);
   ACE_Configuration_Value_IntId VIntId;
   // See if it exists first
   if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_))
-    return -3;    // unknown value
+    return -1;    // unknown value
 
   // Check type
   if (VIntId.type_ != ACE_Configuration::BINARY)
-    return -4;
+    {
+      errno = ENOENT;
+      return -1;
+    }
 
   // Make a copy
-  ACE_NEW_RETURN (data, char[VIntId.length_], -5);
+  ACE_NEW_RETURN (data, char[VIntId.length_], -1);
   ACE_OS::memcpy (data, VIntId.data_.ptr_, VIntId.length_);
   length = VIntId.length_;
   return 0;
@@ -2110,13 +2150,13 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
-    return -2;    // section does not exist
+    return -1;    // section does not exist
 
   // Find it
   ACE_Configuration_ExtId ValueExtId (name);
   VALUE_ENTRY* value_entry;
   if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
-    return -4;
+    return -1;
 
   // free it
   value_entry->ext_id_.free (allocator_);
@@ -2124,7 +2164,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
 
   // Unbind it
   if (IntId.value_hash_map_->unbind (ValueExtId, allocator_))
-    return -3;
+    return -1;
 
   return 0;
 }

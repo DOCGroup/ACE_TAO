@@ -899,11 +899,11 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
       }
 # else
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
-#   if defined (__BORLANDC__)
-      int fd = _open_osfhandle (long (handle), hmode);
-#   else
+#   if defined (ACE_WIN64)
       int fd = _open_osfhandle (intptr_t (handle), hmode);
-#   endif /* __BORLANDC__ */
+#   else
+      int fd = _open_osfhandle (long (handle), hmode);
+#   endif /* ACE_WIN64 */
       if (fd != -1)
         {
 #   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
@@ -4514,7 +4514,6 @@ spaef (FUNCPTR entry, ...)
 # endif /* VXWORKS */
 
 # if !defined (ACE_HAS_SIGINFO_T)
-#    if !defined (ACE_WIN32)
 siginfo_t::siginfo_t (ACE_HANDLE handle)
   : si_handle_ (handle),
     si_handles_ (&handle)
@@ -4526,7 +4525,6 @@ siginfo_t::siginfo_t (ACE_HANDLE *handles)
     si_handles_ (handles)
 {
 }
-#    endif /* ! ACE_WIN32 */
 # endif /* ACE_HAS_SIGINFO_T */
 
 pid_t
