@@ -262,8 +262,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
           if (!node->is_local ())
             *os << "  : CORBA_UserException "
-                << " (CORBA::string_dup (\"" << node->repoID ()
-                << "\"))" << be_nl;
+                << "(\"" << node->repoID () << "\")" << be_nl;
           *os << "{\n";
           os->incr_indent ();
           // assign each individual member. We need yet another state
