@@ -1,3 +1,8 @@
+Sat Mar 05 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1495_Regression/test.idl:
+          Made the shutdown method a oneway
+
 Fri Mar 04 09:26:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Collocated_Invocation.cpp (invoke):
