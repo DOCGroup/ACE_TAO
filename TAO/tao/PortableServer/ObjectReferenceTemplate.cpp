@@ -94,5 +94,5 @@ TAO_ObjectReferenceTemplate::make_object (
   if (this->poa_ == 0)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
 
-  return this->poa_->invoke_key_to_object (ACE_ENV_ARG_PARAMETER);
+  return this->poa_->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
