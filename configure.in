@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.53 $)dnl
+AC_REVISION($Revision 0.54 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -925,12 +925,22 @@ AC_CHECK_FUNC(t_accept, , dnl
       AC_CHECK_LIB(tli, t_accept, ,
         AC_CHECK_LIB(nsl, t_accept, ,ace_has_tli_funcs=no)))))
 
+dnl Check for all of the things we need to compile and link threads
+dnl properly.
+if test "$ace_user_enable_threads" = yes; then
+  ACE_CHECK_THREADS
+fi dnl test "$ace_user_enable_threads" = yes
+
 dnl Asynchronous IO library check
 dnl Some platforms, such as Solaris puts aio_read in -lposix4, for example.
+dnl In some cases, the thread library must be linked to in addition to the
+dnl real-time support library.  As such, make sure these checks are done
+dnl after the thread library checks.
 ace_has_aio_funcs=yes
 AC_CHECK_FUNC(aio_read, , dnl
   AC_CHECK_LIB(aio, aio_read, ,
-    AC_CHECK_LIB(posix4, aio_read, , ace_has_aio_funcs=no)))
+    AC_CHECK_LIB(posix4, aio_read, , 
+      AC_CHECK_LIB(rt, aio_read, , ace_has_aio_funcs=no)))
 
 dnl Check for all of the things we need to compile and link threads
 dnl properly.
