@@ -38,12 +38,6 @@ Sun Feb 02 21:24:02 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: changed hrtime_t to ACE_hrtime_t.
 
-	* ace/OS.i (gethrtime): added Pentium support, with ACE_HAS_PENTIUM.
-	  Thanks to Tim Harrison and Wayne Vucenic <wvucenic@netgate.net>
-	  for the assembly-language routine to read the clock; see
-	  http://www.sandpile.org/80x86/rdtsc.shtml for a description of
-	  the RDTSC instruction.
-
 	* ace/{config-win*.h,README}: added #define ACE_HAS_PENTIUM to
 	  enable gethrtime () support.
 
