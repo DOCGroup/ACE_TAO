@@ -1,3 +1,11 @@
+Fri Oct 10 19:52:44 1997    <nw1@CHA-CHA>
+
+	* ace/OS.H:
+	* ace/Connector.cpp:
+	* ace/SOCK_Connector.cpp: Added constant
+	  ACE_OS::NON_BLOCKING_BUG_DELAY and replace their uses from some
+	  magic numbers to this constant. 
+
 Fri Oct 10 19:27:28 1997  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/rules.bin.GNU
