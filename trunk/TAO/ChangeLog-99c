@@ -1,3 +1,12 @@
+Tue Jul 20 20:51:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+	  Added default case to switch statements generating cases for
+	  CDR operators. If discriminant is an enum, some compilers
+	  complain if all the enum values are not used and there
+	  is not a default case in the switch, which is the case
+	  when we have an implicit default case.
+
 Tue Jul 20 19:32:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
