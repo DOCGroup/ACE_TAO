@@ -2,11 +2,16 @@
 
 # SunOS 5.x (Solaris 2.x) with Sun C++ 4.2 and 5.x, *not* using Orbix.
 #
+# NOTE: Sun C++ 5.0 users might need to add this to their CCFLAGS:
+#   -compat=4 and/or remove -instances=explicit.  Please note that
+#   inlining is disabled by default with Sun C++ 5.0.  If you'd like
+#   to try enabling it, comment out the "inline = 0" line below.
+#
 # With slight modification, this file could be used with Sun C++ 4.1.
 # However, it's likely that you won't be able to build all of ACE
 # with Sun C++ 4.1.
 #
-# Note: some ACE files might generate this warning:
+# NOTE: some ACE files might generate this warning:
 #   "Warning: Could not find source for " one of the following:
 #    default constructor, copy constructor, destructor, or assignment
 #    operator.  It appears that with +w, Sun C++ 4.x issues this warning
