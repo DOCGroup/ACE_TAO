@@ -1,11 +1,18 @@
+Mon Mar 08 22:23:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: added FOR_TAO short-cut to ACE_COMPONENTS.
+          If the ACE_COMPONENTS variable is set to FOR_TAO, then
+          only the components necessary to support TAO will be
+          built into libACE.
+
 Mon Mar  8 17:35:04 1999  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* ace/NT_Service.cpp: 
-	* ace/NT_Service.h: 
-	  Now the handle_control method calls separate protected virtual
-	  methods to do its work. That way, it is easier to override what
-	  must be done on each case, just by overriding one of the new
-	  methods.
+        * ace/NT_Service.cpp:
+        * ace/NT_Service.h:
+          Now the handle_control method calls separate protected virtual
+          methods to do its work. That way, it is easier to override what
+          must be done on each case, just by overriding one of the new
+          methods.
 
 Mon Mar 08 15:41:08 1999  Steve Huston  <shuston@riverace.com>
 

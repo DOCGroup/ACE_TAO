@@ -1,103 +1,110 @@
+Mon Mar 08 22:20:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS_SRCS): if the Trader
+          is built without the Naming Service in TAO_ORBSVCS, add
+          IOR_Multicast because the Trader needs it.  Thanks to
+          Seth for reporting this.
+
 Mon Mar  8 20:49:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/params.h: 
-	* tao/ORB_Core.cpp: 
-	* docs/Options.html: 
-	* docs/configurations.html: 
-	* docs/releasenotes/orbcore.html: 
-	  Change the iioplite option to gioplite.
+        * tao/params.h:
+        * tao/ORB_Core.cpp:
+        * docs/Options.html:
+        * docs/configurations.html:
+        * docs/releasenotes/orbcore.html:
+          Change the iioplite option to gioplite.
 
-	* tao/IIOP_ORB.h: 
-	* tao/IIOP_ORB.cpp: 
-	  Added support for file://-style IORs; we simply use the
-	  ACE_Read_Buffer class to read the IOR from the file and then
-	  call string_to_object again.
+        * tao/IIOP_ORB.h:
+        * tao/IIOP_ORB.cpp:
+          Added support for file://-style IORs; we simply use the
+          ACE_Read_Buffer class to read the IOR from the file and then
+          call string_to_object again.
 
-	* tao/GIOP.cpp: 
-	  Fixed debug message.
+        * tao/GIOP.cpp:
+          Fixed debug message.
 
-	* tao/Server_Request.cpp: 
-	  Minor cosmetic fixes.
+        * tao/Server_Request.cpp:
+          Minor cosmetic fixes.
 
 Mon Mar  8 20:09:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/docs/releasenotes/index.html:
-	  Added an entry about the Pluggable test.
+        * TAO/docs/releasenotes/index.html:
+          Added an entry about the Pluggable test.
 
 Mon Mar  8 19:02:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	  Added the new typedefs for _ptr_type and _var_type
-	  (see Advanced CORBA Programming with C++, section 7.6.1).
-	  I couldn't find anywhere that the IDL compiler
-	  generates code for template member functions - everything
-	  like that in orbsvcs seems to be handwritten. If anyone
-	  sees that I overlooked something. let me know.
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+          Added the new typedefs for _ptr_type and _var_type
+          (see Advanced CORBA Programming with C++, section 7.6.1).
+          I couldn't find anywhere that the IDL compiler
+          generates code for template member functions - everything
+          like that in orbsvcs seems to be handwritten. If anyone
+          sees that I overlooked something. let me know.
 
 Mon Mar  8 16:20:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.i: Moved CORBA::string_dup() into the *.i file and made
- 	  it an inline method.  Thanks to Jon Biggar for suggesting this.
+        * tao/ORB.i: Moved CORBA::string_dup() into the *.i file and made
+          it an inline method.  Thanks to Jon Biggar for suggesting this.
 
 Mon Mar  8 16:46:36 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* orbsvcs/tests/Logger/README:
- 	  Changed description of correct test output to reflect change
-	  from get_host_by_name () to get_host_by_addr ().
+        * orbsvcs/tests/Logger/README:
+          Changed description of correct test output to reflect change
+          from get_host_by_name () to get_host_by_addr ().
 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp: 
-	  Altered the return values in verbosity_conversion to correspond
- 	  to the changed values in ace/Log_Msg.h. Also modified logv to
- 	  use get_host_by_addr () rather than get_host_by_name (). This
- 	  speeds things up somewhat. Thanks to Ulf Jährig for pointing
- 	  this out.
-	
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp:
+          Altered the return values in verbosity_conversion to correspond
+          to the changed values in ace/Log_Msg.h. Also modified logv to
+          use get_host_by_addr () rather than get_host_by_name (). This
+          speeds things up somewhat. Thanks to Ulf Jährig for pointing
+          this out.
+
 Mon Mar  8 14:27:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	* tao/IIOP_Transport.cpp:
-	* tao/Connect.cpp:
-	* tao/ORB.cpp:
-	* tao/skip.cpp:
-	  The first four files have the new ACE timeprobes for the
-	  pluggable protocols test. The last has a change in
-	  TAO_Marshal_Union::skip() from using 
-	  (ACE_Message_Block *) Any::value() to
-	  Any::_tao_get_cdr ().
+        * tao/Invocation.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Connect.cpp:
+        * tao/ORB.cpp:
+        * tao/skip.cpp:
+          The first four files have the new ACE timeprobes for the
+          pluggable protocols test. The last has a change in
+          TAO_Marshal_Union::skip() from using
+          (ACE_Message_Block *) Any::value() to
+          Any::_tao_get_cdr ().
 
 Mon Mar  8 13:44:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.cpp: Added a superfast implementation of
- 	  CORBA::string_copy().  Thanks to Terry Rosenbaum
- 	  <Terry.Rosenbaum@Radiology.MSU.edu> for suggesting this and to
- 	  Jon Biggar <jon@biggar.org> for optimizing it still further ;-).
+        * tao/ORB.cpp: Added a superfast implementation of
+          CORBA::string_copy().  Thanks to Terry Rosenbaum
+          <Terry.Rosenbaum@Radiology.MSU.edu> for suggesting this and to
+          Jon Biggar <jon@biggar.org> for optimizing it still further ;-).
 
 Mon Mar  8 11:08:02 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/include/utl_scope.h:
-	  TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/include/utl_scope.h:
+          TAO_IDL/util/utl_scope.cpp:
 
           Incorporated the right scoping lookup rules based on the latest
- 	  CORBA 2.3 revisions. Thanks to Torsten Kuepper
- 	  <kuepper2@uni-wuppertal.de> for providing the patches.
+          CORBA 2.3 revisions. Thanks to Torsten Kuepper
+          <kuepper2@uni-wuppertal.de> for providing the patches.
 
 Sun Mar  7 19:29:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/Options.html (bgcolor): 
-	Updated the documentation for the ORB configuration
+        * docs/Options.html (bgcolor):
+        Updated the documentation for the ORB configuration
 
 Sun Mar 07 17:39:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp (send): Remember to reset <iovcnt> after
-	  we send out a batch of data.
+        * tao/IIOP_Transport.cpp (send): Remember to reset <iovcnt> after
+          we send out a batch of data.
 
 Sun Mar  7 17:27:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/performance-tests/Pluggable/client.cpp:
-	  Removed ACE_OS::thr_exit(). this was borrowed from
-	  IDL_Cubit/client.cpp. It has been decided that this
-	  usage is a "Bad Thing"[TM], and that line has been removed
-	  from the IDL Cubit client as well.
+        * TAO/performance-tests/Pluggable/client.cpp:
+          Removed ACE_OS::thr_exit(). this was borrowed from
+          IDL_Cubit/client.cpp. It has been decided that this
+          usage is a "Bad Thing"[TM], and that line has been removed
+          from the IDL Cubit client as well.
 
 Sun Mar 07 16:39:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
