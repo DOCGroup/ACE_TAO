@@ -54,6 +54,4 @@ MAK_LIST = Atomic_Op_Test \
 	TSS_Test \
 	UPIPE_SAP_Test
 
-CHECKDIR = DLL
-
 !INCLUDE <$(ACE_ROOT)\include\makeinclude\VC50_DIR.MAK>
