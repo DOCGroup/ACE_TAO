@@ -13,7 +13,6 @@ INFO  = README
 DIRS  = Misc \
 	UDP \
 	TCP \
-	SCTP \
 	Server_Concurrency
 
 # @@ This directory is currently under restructuring.  It should be
