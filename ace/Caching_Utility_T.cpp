@@ -47,9 +47,9 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
   // Get the number of entries in the container.
   size_t current_map_size = container.current_size ();
 
-  // Also whether the number of entries in the cache is just one!
+  // Also whether the number of entries in the cache!
   // Oops! then there is no way out but exiting. So return an error.
-  if (current_map_size <= 1)
+  if (current_map_size == 0)
     return 0;
 
   // Calculate the no of entries to remove from the cache depending
@@ -146,7 +146,8 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 
   // Also whether the number of entries in the cache is just one!
   // Oops! then there is no way out but exiting. So return an error.
-  if (current_map_size <= 1)
+  //  if (current_map_size <= 1) 
+  if (current_map_size == 0)
     return 0;
 
   // Calculate the no of entries to remove from the cache depending
@@ -383,7 +384,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
 
   // Also whether the number of entries in the cache is just one!
   // Oops! then there is no way out but exiting. So return an error.
-  if (current_map_size <= 1)
+  if (current_map_size == 0)
     return 0;
 
   // Calculate the no of entries to remove from the cache depending
