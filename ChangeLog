@@ -1,3 +1,14 @@
+Tue Sep 16 10:28:02 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Escape the file name that's used as a regular expression.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Add implicit project dependencies when using the -hierarchy
+          option.
+
 Mon Sep 15 13:22:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
