@@ -10,7 +10,8 @@ SHLIB    = libACE.$(SOEXT)
 
 OS_FILES = \
   Basic_Types \
-  OS
+  OS \
+  Sched_Params
 UTILS_FILES = \
   ACE \
   Active_Map_Manager \
@@ -47,7 +48,6 @@ THREADS_FILES = \
   Activation_Queue \
   Process \
   Process_Manager \
-  Sched_Params \
   Synch \
   Synch_Options \
   Thread \
@@ -170,21 +170,6 @@ OTHER_FILES = \
   TP_Reactor \
   XtReactor
 
-FILES = \
-  $(OS_FILES) \
-  $(UTILS_FILES) \
-  $(LOGGING_FILES) \
-  $(THREADS_FILES) \
-  $(DEMUX_FILES) \
-  $(CONNECTION_FILES) \
-  $(SOCKETS_FILES) \
-  $(IPC_FILES) \
-  $(SVCCONF_FILES) \
-  $(STREAMS_FILES) \
-  $(MEMORY_FILES) \
-  $(TOKEN_FILES) \
-  $(OTHER_FILES)
-
 TEMPLATE_FILES = \
            Acceptor \
            Active_Map_Manager_T \
@@ -234,24 +219,78 @@ TEMPLATE_FILES = \
 ####
 #### Build customization.
 ####
-#ifndef ACE_COMPONENTS
-#  #### CURRENTLY UNUSED!
-#  #### XXXX [Please see docs/ACE-subsets.html for documentation.] XXXX
-#  ACE_COMPONENTS = \
-#    OS \
-#    Utils \
-#    Logging \
-#    Threads \
-#    Demux \
-#    Connection \
-#    Sockets \
-#    IPC \
-#    Svcconf \
-#    Streams \
-#    Memory \
-#    Token \
-#    Other
-#endif # ACE_COMPONENTS
+ifndef ACE_COMPONENTS
+  #### Please see docs/ACE-subsets.html for documentation.
+  ACE_COMPONENTS = \
+    OS \
+    Utils \
+    Logging \
+    Threads \
+    Demux \
+    Connection \
+    Sockets \
+    IPC \
+    Svcconf \
+    Streams \
+    Memory \
+    Token \
+    Other
+endif # ACE_COMPONENTS
+
+####
+#### ACE_COMPONENTS support.
+####
+ifneq (,$(findstring OS,$(ACE_COMPONENTS)))
+  FILES += $(OS_FILES)
+endif # OS
+
+ifneq (,$(findstring Utils,$(ACE_COMPONENTS)))
+  FILES += $(UTILS_FILES)
+endif # Utils
+
+ifneq (,$(findstring Logging,$(ACE_COMPONENTS)))
+  FILES += $(LOGGING_FILES)
+endif # Logging
+
+ifneq (,$(findstring Threads,$(ACE_COMPONENTS)))
+  FILES += $(THREADS_FILES)
+endif # Threads
+
+ifneq (,$(findstring Demux,$(ACE_COMPONENTS)))
+  FILES += $(DEMUX_FILES)
+endif # Demux
+
+ifneq (,$(findstring Connection,$(ACE_COMPONENTS)))
+  FILES += $(CONNECTION_FILES)
+endif # Connection
+
+ifneq (,$(findstring Sockets,$(ACE_COMPONENTS)))
+  FILES += $(SOCKETS_FILES)
+endif # Sockets
+
+ifneq (,$(findstring IPC,$(ACE_COMPONENTS)))
+  FILES += $(IPC_FILES)
+endif # IPC
+
+ifneq (,$(findstring Svcconf,$(ACE_COMPONENTS)))
+  FILES += $(SVCCONF_FILES)
+endif # Svcconf
+
+ifneq (,$(findstring Streams,$(ACE_COMPONENTS)))
+  FILES += $(STREAMS_FILES)
+endif # Streams
+
+ifneq (,$(findstring Memory,$(ACE_COMPONENTS)))
+  FILES += $(MEMORY_FILES)
+endif # Memory
+
+ifneq (,$(findstring Token,$(ACE_COMPONENTS)))
+  FILES += $(TOKEN_FILES)
+endif # Token
+
+ifneq (,$(findstring Other,$(ACE_COMPONENTS)))
+  FILES += $(OTHER_FILES)
+endif # Other
 
 ifeq ($(AIX_TEMPLATE_HACK),1)
   FILES = 0_ACE_All_Src
