@@ -119,9 +119,6 @@ private:
 
   /// Cached tss resources of the ORB that activated this object.
   TAO_ORB_Core_TSS_Resources *tss_resources_;
-
-  /// Are we registered with the reactor?
-  // CORBA::Boolean is_registered_;
 };
 
 #if defined (__ACE_INLINE__)
