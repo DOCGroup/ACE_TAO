@@ -247,7 +247,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 void
 Echo_Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
