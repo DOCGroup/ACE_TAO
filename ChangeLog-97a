@@ -1,3 +1,14 @@
+Sat Feb 22 22:07:35 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/Thread_Priority.cpp (convert_to_os_priority): Changed
+	  return type for this to 'int' from 'long' on Linux.  Thanks
+	  to James CE Johnson <jjohnson@lads.com> for pointing this
+	  out!
+
+	* ace/OS.i (thr_cancel): Corrected erroneous macro argument.
+	  Thanks to James CE Johnson <jjohnson@lads.com> for pointing
+	  this out!
+
 Sat Feb 22 17:00:59 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/OS.i (gethrtime): Added support for intel's RDTSC
