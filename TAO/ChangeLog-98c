@@ -1,3 +1,12 @@
+Thu Jan 29 10:29:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Makefile: 
+	  Compile <tests> before <orbsvcs>, if the first one fails the
+	  second will sure fail also.
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile: 
+	  Updated comments and reformated some unreadable things.
+
 Thu Jan 29 10:05:53 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_operation.cpp: Some bug fixes made in the pre-POA

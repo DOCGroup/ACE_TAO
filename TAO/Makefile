@@ -13,8 +13,8 @@ INFO	= README \
 
 DIRS	= tao \
 	  TAO_IDL \
+	  tests \
 	  orbsvcs \
-	  tests
 
 
 CLONE	= Makefile \
