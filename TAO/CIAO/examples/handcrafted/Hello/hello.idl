@@ -2,7 +2,7 @@
 
 // A plain vanilla component definition.
 
-#include "ciao/CIAO_Component.pidl"
+#include "ciao/CCM_Component.idl"
 
 interface Hello
 {

@@ -3,7 +3,7 @@
 // Executor interface definitions of hello.cidl.
 //   tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Sc helloE.idl
 
-#include "ciao/CIAO_Container.pidl"
+#include "ciao/CCM_Container.idl"
 #include "Hello.idl"
 
 local interface CCM_Hello : Hello
