@@ -31,6 +31,12 @@ ifdef purify
   PURELINK += -ignore-signals=SIGHUP,SIGINT,SIGTERM
 endif # purify
 
+ifneq ($(ssl),)
+  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+  LDLIBS += $(PLATFORM_SSL_LIBS)
+  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
+endif # ssl
+
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # To build multiple executables in the same directory on AIX, it works
@@ -39,12 +45,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 ifdef TEMPINCDIR
 COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
 endif
-
-ifneq ($(ssl),)
-  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-  LIBS += $(PLATFORM_SSL_LIBS)
-  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
-endif # ssl
 
 #----------------------------------------------------------------------------
 #       Local targets
