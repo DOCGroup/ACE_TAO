@@ -1,3 +1,10 @@
+Fri Apr 20 16:00:40 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp: 
+	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp: 
+	  Added missing explicit template instatiation to fix the
+	  problem on compiler that use explicit template instantiation.
+	
 Fri Apr 20 08:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
@@ -121,6 +128,7 @@ Wed Apr 18 12:10:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           Natarajan  <bala@cs.wustl.edu>". Going over the fix from
           scratch as the fix is wrong.
 
+>>>>>>> 1.3301
 Wed Apr 18 10:56:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/BiDirectional_NestedUpcall/run_test.pl: Fixed the
