@@ -18,10 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_structure.h"
 
 ACE_RCSID(be_visitor_structure, structure_ch, "$Id$")
@@ -63,11 +62,8 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       *os << "typedef " << node->local_name () << "_var _var_type;\n"
           << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_nl;
 
-      if (!node->is_local ())
-        {
-          *os << "static void _tao_any_destructor (void*);"
-              << be_nl << be_nl;
-        }
+      *os << "static void _tao_any_destructor (void*);"
+          << be_nl << be_nl;
 
       // Generate code for field members.
       if (this->visit_scope (node) == -1)
@@ -111,22 +107,19 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
               << node->local_name () << "_out;" << be_nl << be_nl;
         }
 
-      if (!node->is_local ())
-        {
-          be_visitor *visitor;
-          be_visitor_context ctx (*this->ctx_);
-          ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-          visitor = tao_cg->make_visitor (&ctx);
+      be_visitor *visitor;
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+      visitor = tao_cg->make_visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_structure_ch::"
-                                 "visit_structure - "
-                                 "TypeCode declaration failed\n"
-                                 ),
-                                -1);
-            }
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_structure_ch::"
+                             "visit_structure - "
+                             "TypeCode declaration failed\n"
+                             ),
+                            -1);
         }
 
       node->cli_hdr_gen (I_TRUE);
