@@ -16,6 +16,7 @@
 
 
 #include "ace/OS.h"
+#include "ace/Auto_Ptr.h"
 #include "Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Acceptor.h"
@@ -24,6 +25,17 @@
 extern "C" {
 #include <netinet/sctp.h>
 };
+
+
+typedef ACE_Unbounded_Set <ACE_CString> Interface_Seq;
+typedef ACE_Unbounded_Set_Iterator <ACE_CString> Interface_Seq_Itor;
+
+//typedef auto_ptr <Interface_Seq> Interface_Seq_Ptr;
+typedef ACE_Hash_Map_Manager <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map;
+typedef ACE_Hash_Map_Entry <ACE_CString,Interface_Seq> Secondary_Addr_Map_Entry;
+typedef ACE_Hash_Map_Iterator <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map_Iterator;
+
+//Secondary_Addr_Map sec_addr_map_;
 
 /**
  * @class TAO_AV_SCTP_SEQ_Factory
@@ -192,7 +204,7 @@ public:
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler *&handler,
                          const ACE_INET_Addr &remote_addr,
-			 const ACE_INET_Addr *local_addr);
+			 const ACE_INET_Addr &local_addr);
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *& handler);
 protected:
   TAO_AV_SCTP_SEQ_Connector *connector_;
