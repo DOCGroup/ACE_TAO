@@ -51,7 +51,7 @@ public:
 
   /**
    * @c open starts one or more asynchronous accept requests on a
-   * @arg address. Each accept operation may optionally read an
+   * @a address. Each accept operation may optionally read an
    * initial buffer from the new connection when accepted.
    *
    * @param address The address to listen/accept connections on.
@@ -91,13 +91,13 @@ public:
    *                connection is subsequently refused.
    * @param number_of_initial_accepts Optional, the number of asynchronous
    *                accepts that are started immediately. If -1 (the
-   *                default), the value of @arg backlog is used.
+   *                default), the value of @a backlog is used.
    *
    * @note On Windows, the peer address is only available at the time
    *       the connection is accepted.  Therefore, if you require the peer
    *       address on Windows, do not rely on the
    *       @c ACE_SOCK::get_remote_addr() method - it won't work. You must
-   *       supply a non-zero value for @arg pass_addresses and obtain the
+   *       supply a non-zero value for @a pass_addresses and obtain the
    *       peer address in the @c ACE_Service_Handler::addresses() method.
    *
    * @see ACE_INET_Addr
@@ -126,7 +126,7 @@ public:
 
   /// This initiates a new asynchronous accept operation.
   /**
-   * You need only call this method if the @arg reissue_accept argument
+   * You need only call this method if the @a reissue_accept argument
    * passed to @c open() was 0.
    */
   virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
@@ -159,7 +159,7 @@ public:
    * value, another accept is initiated.
    *
    * The default implemenation always returns the value passed as the
-   * @c open() method's @arg reissue_accept argument. That value can also
+   * @c open() method's @a reissue_accept argument. That value can also
    * be changed using the @c reissue_accept() method.
    */
   virtual int should_reissue_accept (void);
