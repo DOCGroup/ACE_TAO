@@ -1,3 +1,23 @@
+Mon Jun  2 16:35:18 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* HTTP_Handler.cpp: Added a "\r\n" to the confirmation message in
+	  receive_file_complete () method.
+
+	* HTTP_Request.cpp: In parse_request_line (), created conditional
+	  expressions in the debugging print statement so that a null
+	  string will not cause the server to crash.
+
+	* HTTP_Response.cpp:
+	  (1) cgi_resposnse () no longer has to wait for the process to
+	  die.  The fix to ACE_Process of closing down child handles was
+	  enough to get the connection to die on its own.
+	  (2) Mike (mrm@cisco.com) pointed out that the output for CGI
+	  responses was not create.  The fix was to output a small header
+	  before execing the CGI program.
+
+	* test.cgi: a sample cgi program to use when testing the JAWS
+	  server.
+
 Sat May 31 13:34:14 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* *.h, *.cpp: Changed include lines from "apps/JAWS/server/..." to
