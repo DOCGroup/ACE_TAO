@@ -27,8 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "dynamicinterface_export.h"
 
 class TAO_DynamicInterface_Export CORBA_Context
@@ -303,6 +301,5 @@ private:
 # include "Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_CONTEXT_H */

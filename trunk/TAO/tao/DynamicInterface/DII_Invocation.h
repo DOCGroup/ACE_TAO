@@ -27,8 +27,6 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "tao/Asynch_Invocation.h"
 #include "DII_Reply_Dispatcher.h"
 #include "Request.h"
@@ -98,6 +96,5 @@ private:
 #  include "DII_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_ASYNCH_INVOCATION_H */

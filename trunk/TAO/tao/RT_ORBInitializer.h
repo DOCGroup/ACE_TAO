@@ -38,6 +38,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if TAO_HAS_RT_CORBA == 1
+
 /// RTCORBA ORB initializer.
 class TAO_Export TAO_RT_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
@@ -56,11 +58,14 @@ public:
 private:
 
   void register_policy_factories (
-         PortableInterceptor::ORBInitInfo_ptr info
-         TAO_ENV_ARG_DECL);
+           PortableInterceptor::ORBInitInfo_ptr info
+           TAO_ENV_ARG_DECL
+         );
   ///< Register RTCORBA policy factories.
 
 };
+
+#endif  /* TAO_HAS_RT_CORBA == 1 */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

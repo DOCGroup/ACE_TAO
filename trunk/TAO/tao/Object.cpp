@@ -243,30 +243,6 @@ CORBA::is_nil (CORBA::Object_ptr obj)
   return 0;
 }
 
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-// NON_EXISTENT ... send a simple call to the object, which will
-// either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
-// the latter case, return FALSE.
-
-CORBA::Boolean
-CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
-{
-  CORBA::Boolean _tao_retval = 0;
-
-  // Get the right Proxy.
-  TAO_Object_Proxy_Impl &the_proxy =
-    this->proxy_broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  // Perform the Call.
-  _tao_retval = the_proxy._non_existent (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  return _tao_retval;
-}
-
 void
 CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                const char *operation,
@@ -364,6 +340,29 @@ CORBA_Object::_request (const char *operation,
       ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                         0);
     }
+}
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
+// NON_EXISTENT ... send a simple call to the object, which will
+// either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
+// the latter case, return FALSE.
+
+CORBA::Boolean
+CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::Boolean _tao_retval = 0;
+
+  // Get the right Proxy.
+  TAO_Object_Proxy_Impl &the_proxy =
+    this->proxy_broker_->select_proxy (this, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Perform the Call.
+  _tao_retval = the_proxy._non_existent (this, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  return _tao_retval;
 }
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)

@@ -25,8 +25,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "dynamicinterface_export.h"
 #include "tao/Asynch_Reply_Dispatcher.h"
 
@@ -59,6 +57,5 @@ private:
   // Where the reply needs to go.
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_REPLY_DISPATCHER_H */

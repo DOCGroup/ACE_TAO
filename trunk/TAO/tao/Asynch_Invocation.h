@@ -26,15 +26,11 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
 #include "tao/Asynch_Reply_Dispatcher.h"
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 #include "tao/MessagingC.h"
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class TAO_Export TAO_GIOP_Asynch_Invocation
   : public TAO_GIOP_Invocation
@@ -112,8 +108,6 @@ protected:
 };
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #if defined (__ACE_INLINE__)
 #  include "tao/Asynch_Invocation.i"
