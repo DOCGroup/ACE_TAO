@@ -36,7 +36,7 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <iorfile>"
+                           "-k <iorfile>"
                            "-n <threads>"
                            "-t <microseconds>"
                            "\n",
