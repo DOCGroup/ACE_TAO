@@ -1,3 +1,10 @@
+Sun Dec 31 10:28:43 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU (LIBS):
+          wrapped /usr/lib/cmplrs/cxx/libcxxstd.a with
+          $(wildcard), so that is ignored on systems on which
+          it doesn't exist, such as Tru64 5.1
+
 Sun Dec 31 09:23:09 2000  David L. Levine <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_tru64_cxx.GNU: added

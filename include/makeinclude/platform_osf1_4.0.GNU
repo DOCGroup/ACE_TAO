@@ -56,7 +56,8 @@ SOFLAGS         = -shared -use_ld_input $(ACELIB)
 #### symbols between the shared library and libcxxstd.a.  It's the
 #### workaround recommended in PTR 43-4-204.  It must appear at (or
 #### very near) the end of the link line.
-LIBS            := $(LIBS) -hidden /usr/lib/cmplrs/cxx/libcxxstd.a -non_hidden
+LIBS            := $(LIBS) \
+                -hidden $(wildcard /usr/lib/cmplrs/cxx/libcxxstd.a) -non_hidden
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
