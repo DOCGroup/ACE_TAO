@@ -9,10 +9,8 @@
 #----------------------------------------------------------------------------
 
 BIN   	= tao_idl
-LDLIBS = -lACE # -ldrv -lfe -last -ltao_idl_util -lnarrow -lbe -lACE
+LDLIBS = -lACE
 BUILD 	= $(BIN)
-
-#DIRS	= driver fe ast util narrow be
 
 VPATH=.:driver:fe:ast:util:narrow:be
 

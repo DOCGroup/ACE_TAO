@@ -1,3 +1,6 @@
+//
+// $Id$
+//
 // @(#)except.cpp	1.11 95/11/04
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -170,7 +173,7 @@ CORBA::ExceptionList __system_exceptions;
 static void
 make_standard_typecode (CORBA::TypeCode_ptr tcp,
 			const char *name,
-			unsigned char *buffer,
+			char *buffer,
 			size_t buflen,
 			CORBA::Environment &env)
 {
@@ -189,17 +192,15 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
   static CORBA::TypeCode
     tc_completion_status (CORBA::tk_enum,
 			  sizeof oc_completion_status,
- (unsigned char *) &oc_completion_status,
+			  (char *) &oc_completion_status,
 			  CORBA::B_FALSE);
 
   static const CORBA::TypeCode_ptr completion_status = &tc_completion_status;
 
   // Create a CDR stream ... juggle the alignment here a bit, we
-  // know it's good enough for tye typecode.
+  // know it's good enough for the typecode.
 
-  CDR stream (0, buflen);
-
-  stream.next = stream.buffer = buffer;
+  CDR stream (buffer, buflen);
 
   // into CDR stream, stuff (in order):
   //	- byte order flag [4 bytes]
@@ -242,10 +243,11 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // a TypeCode, saving it away in the list of ones that the ORB will
   // always accept as part of any operation response!
 
-  sys_exceptions [__system_exceptions.length++]
-    = new (tcp) CORBA::TypeCode (CORBA::tk_except,
-				stream.next - stream.buffer,
-				stream.buffer, CORBA::B_FALSE);
+  sys_exceptions [__system_exceptions.length++] =
+    new (tcp) CORBA::TypeCode (CORBA::tk_except,
+			       stream.length (),
+			       stream.buffer (),
+			       CORBA::B_FALSE);
 
   assert (tcp->length_ <= TC_BUFLEN);
   return;
@@ -312,9 +314,9 @@ __TC_init_standard_exceptions (CORBA::Environment &env)
   // Initialize the typecodes.
 #define	TAO_SYSTEM_EXCEPTION(name) \
   if (env.exception () == 0) \
-			       make_standard_typecode (&tc_std_ ## name, #name, \
- (unsigned char *) tc_buf_ ## name, \
-						       sizeof tc_buf_ ## name, env);
+	make_standard_typecode (&tc_std_ ## name, #name, \
+	(char *) tc_buf_ ## name, \
+	sizeof tc_buf_ ## name, env);
 
   STANDARD_EXCEPTION_LIST
 #undef	TAO_SYSTEM_EXCEPTION
@@ -346,7 +348,7 @@ STANDARD_EXCEPTION_LIST
 // Static initialization of the two user-defined exceptions that
 // are part of the ORB.
 
-static CORBA::Octet tc_buf_Bounds [] =
+static char tc_buf_Bounds [] =
 {
   0, 0, 0, 0,		// big endian, padded
   0, 0, 0, 38,	// strlen (id) + 1
@@ -364,13 +366,13 @@ static CORBA::Octet tc_buf_Bounds [] =
 };
 
 static CORBA::TypeCode tc_std_Bounds (CORBA::tk_except,
-				     sizeof tc_buf_Bounds,
-				     tc_buf_Bounds,
-				     CORBA::B_FALSE);
+				      sizeof tc_buf_Bounds,
+				      tc_buf_Bounds,
+				      CORBA::B_FALSE);
 
 CORBA::TypeCode_ptr CORBA::_tc_Bounds = &tc_std_Bounds;
 
-static CORBA::Octet tc_buf_BadKind [] =
+static char tc_buf_BadKind [] =
 {
   0, 0, 0, 0,		// big endian, padded
   0, 0, 0, 39,	// strlen (id) + 1
@@ -388,9 +390,9 @@ static CORBA::Octet tc_buf_BadKind [] =
 };
 
 static CORBA::TypeCode tc_std_BadKind (CORBA::tk_except,
-				      sizeof tc_buf_BadKind,
-				      tc_buf_BadKind,
-				      CORBA::B_FALSE);
+				       sizeof tc_buf_BadKind,
+				       tc_buf_BadKind,
+				       CORBA::B_FALSE);
 CORBA::TypeCode_ptr CORBA::_tc_BadKind = &tc_std_BadKind;
 
 // Convenience -- say if the exception is a system exception or not.

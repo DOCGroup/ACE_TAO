@@ -23,7 +23,7 @@ static const CORBA::Long _oc_PortableServer_Identifier[] =
   CORBA::tk_string,
   0, // string length
 };
-static CORBA::TypeCode _tc__tc_PortableServer_Identifier (CORBA::tk_alias, sizeof (_oc_PortableServer_Identifier), (unsigned char *) &_oc_PortableServer_Identifier, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_Identifier (CORBA::tk_alias, sizeof (_oc_PortableServer_Identifier), (char *) &_oc_PortableServer_Identifier, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_Identifier = &_tc__tc_PortableServer_Identifier;
 
 static const CORBA::Long _oc_PortableServer_RepositoryId[] =
@@ -34,7 +34,7 @@ static const CORBA::Long _oc_PortableServer_RepositoryId[] =
   CORBA::tk_string,
   0, // string length
 };
-static CORBA::TypeCode _tc__tc_PortableServer_RepositoryId (CORBA::tk_alias, sizeof (_oc_PortableServer_RepositoryId), (unsigned char *) &_oc_PortableServer_RepositoryId, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_RepositoryId (CORBA::tk_alias, sizeof (_oc_PortableServer_RepositoryId), (char *) &_oc_PortableServer_RepositoryId, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_RepositoryId = &_tc__tc_PortableServer_RepositoryId;
 
 PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_duplicate (PortableServer::CurrentBase_ptr obj)
@@ -102,7 +102,7 @@ static const CORBA::Long _oc_PortableServer_CurrentBase[] =
   35, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f43, 0x75727265, 0x6e744261, 0x73653a31, 0x2e300000,  // repository ID = IDL:PortableServer/CurrentBase:1.0
   12, 0x43757272, 0x656e7442, 0x61736500,  // name = CurrentBase,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_CurrentBase (CORBA::tk_objref, sizeof (_oc_PortableServer_CurrentBase), (unsigned char *) &_oc_PortableServer_CurrentBase, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_CurrentBase (CORBA::tk_objref, sizeof (_oc_PortableServer_CurrentBase), (char *) &_oc_PortableServer_CurrentBase, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_CurrentBase = &_tc__tc_PortableServer_CurrentBase;
 
 PortableServer::Policy_ptr PortableServer::Policy::_duplicate (PortableServer::Policy_ptr obj)
@@ -215,7 +215,7 @@ static const CORBA::Long _oc_PortableServer_Policy[] =
   30, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/Policy:1.0
   7, 0x506f6c69, 0x63790000,  // name = Policy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_Policy (CORBA::tk_objref, sizeof (_oc_PortableServer_Policy), (unsigned char *) &_oc_PortableServer_Policy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_Policy (CORBA::tk_objref, sizeof (_oc_PortableServer_Policy), (char *) &_oc_PortableServer_Policy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_Policy = &_tc__tc_PortableServer_Policy;
 
 
@@ -232,7 +232,7 @@ static const CORBA::Long _oc_PortableServer__tao_seq_Policy[] =
     7, 0x506f6c69, 0x63790000,  // name = Policy,
   0,
 };
-static CORBA::TypeCode _tc__tc_PortableServer__tao_seq_Policy (CORBA::tk_sequence, sizeof (_oc_PortableServer__tao_seq_Policy), (unsigned char *) &_oc_PortableServer__tao_seq_Policy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer__tao_seq_Policy (CORBA::tk_sequence, sizeof (_oc_PortableServer__tao_seq_Policy), (char *) &_oc_PortableServer__tao_seq_Policy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc__tao_seq_Policy = &_tc__tc_PortableServer__tao_seq_Policy;
 
 
@@ -253,7 +253,7 @@ static const CORBA::Long _oc_PortableServer_PolicyList[] =
     7, 0x506f6c69, 0x63790000,  // name = Policy,
   0,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_PolicyList (CORBA::tk_alias, sizeof (_oc_PortableServer_PolicyList), (unsigned char *) &_oc_PortableServer_PolicyList, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_PolicyList (CORBA::tk_alias, sizeof (_oc_PortableServer_PolicyList), (char *) &_oc_PortableServer_PolicyList, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_PolicyList = &_tc__tc_PortableServer_PolicyList;
 
 
@@ -267,7 +267,7 @@ static const CORBA::Long _oc_PortableServer__tao_seq_Octet[] =
 
   0,
 };
-static CORBA::TypeCode _tc__tc_PortableServer__tao_seq_Octet (CORBA::tk_sequence, sizeof (_oc_PortableServer__tao_seq_Octet), (unsigned char *) &_oc_PortableServer__tao_seq_Octet, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer__tao_seq_Octet (CORBA::tk_sequence, sizeof (_oc_PortableServer__tao_seq_Octet), (char *) &_oc_PortableServer__tao_seq_Octet, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc__tao_seq_Octet = &_tc__tc_PortableServer__tao_seq_Octet;
 
 
@@ -285,7 +285,7 @@ static const CORBA::Long _oc_PortableServer_ObjectId[] =
 
   0,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ObjectId (CORBA::tk_alias, sizeof (_oc_PortableServer_ObjectId), (unsigned char *) &_oc_PortableServer_ObjectId, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ObjectId (CORBA::tk_alias, sizeof (_oc_PortableServer_ObjectId), (char *) &_oc_PortableServer_ObjectId, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ObjectId = &_tc__tc_PortableServer_ObjectId;
 
 // copy constructor
@@ -329,7 +329,7 @@ static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
   1, // member count
     18, 0x666f7277, 0x6172645f, 0x72656665, 0x72656e63, 0x65000000,  // name = forward_reference
     };
-static CORBA::TypeCode _tc__tc_PortableServer_ForwardRequest (CORBA::tk_struct, sizeof (_oc_PortableServer_ForwardRequest), (unsigned char *) &_oc_PortableServer_ForwardRequest, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ForwardRequest (CORBA::tk_struct, sizeof (_oc_PortableServer_ForwardRequest), (char *) &_oc_PortableServer_ForwardRequest, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ForwardRequest = &_tc__tc_PortableServer_ForwardRequest;
 
 
@@ -342,7 +342,7 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
     15, 0x4f52425f, 0x4354524c, 0x5f4d4f44, 0x454c0000,  // name = ORB_CTRL_MODEL
     20, 0x53494e47, 0x4c455f54, 0x48524541, 0x445f4d4f, 0x44454c00,  // name = SINGLE_THREAD_MODEL
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ThreadPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ThreadPolicyValue), (unsigned char *) &_oc_PortableServer_ThreadPolicyValue, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ThreadPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ThreadPolicyValue), (char *) &_oc_PortableServer_ThreadPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicyValue = &_tc__tc_PortableServer_ThreadPolicyValue;
 
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_duplicate (PortableServer::ThreadPolicy_ptr obj)
@@ -433,7 +433,7 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
   36, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f54, 0x68726561, 0x64506f6c, 0x6963793a, 0x312e3000,  // repository ID = IDL:PortableServer/ThreadPolicy:1.0
   13, 0x54687265, 0x6164506f, 0x6c696379, 0x0,  // name = ThreadPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ThreadPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ThreadPolicy), (unsigned char *) &_oc_PortableServer_ThreadPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ThreadPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ThreadPolicy), (char *) &_oc_PortableServer_ThreadPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicy = &_tc__tc_PortableServer_ThreadPolicy;
 
 
@@ -446,7 +446,7 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
     10, 0x5452414e, 0x5349454e, 0x54000000,  // name = TRANSIENT
     11, 0x50455253, 0x49535445, 0x4e540000,  // name = PERSISTENT
 };
-static CORBA::TypeCode _tc__tc_PortableServer_LifespanPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_LifespanPolicyValue), (unsigned char *) &_oc_PortableServer_LifespanPolicyValue, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_LifespanPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_LifespanPolicyValue), (char *) &_oc_PortableServer_LifespanPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicyValue = &_tc__tc_PortableServer_LifespanPolicyValue;
 
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_duplicate (PortableServer::LifespanPolicy_ptr obj)
@@ -537,7 +537,7 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicy[] =
   38, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f4c, 0x69666573, 0x70616e50, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/LifespanPolicy:1.0
   15, 0x4c696665, 0x7370616e, 0x506f6c69, 0x63790000,  // name = LifespanPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_LifespanPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_LifespanPolicy), (unsigned char *) &_oc_PortableServer_LifespanPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_LifespanPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_LifespanPolicy), (char *) &_oc_PortableServer_LifespanPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicy = &_tc__tc_PortableServer_LifespanPolicy;
 
 
@@ -550,7 +550,7 @@ static const CORBA::Long _oc_PortableServer_IdUniquenessPolicyValue[] =
     10, 0x554e4951, 0x55455f49, 0x44000000,  // name = UNIQUE_ID
     12, 0x4d554c54, 0x49504c45, 0x5f494400,  // name = MULTIPLE_ID
 };
-static CORBA::TypeCode _tc__tc_PortableServer_IdUniquenessPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_IdUniquenessPolicyValue), (unsigned char *) &_oc_PortableServer_IdUniquenessPolicyValue, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_IdUniquenessPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_IdUniquenessPolicyValue), (char *) &_oc_PortableServer_IdUniquenessPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicyValue = &_tc__tc_PortableServer_IdUniquenessPolicyValue;
 
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_duplicate (PortableServer::IdUniquenessPolicy_ptr obj)
@@ -641,7 +641,7 @@ static const CORBA::Long _oc_PortableServer_IdUniquenessPolicy[] =
   42, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x64556e69, 0x7175656e, 0x65737350, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/IdUniquenessPolicy:1.0
   19, 0x4964556e, 0x69717565, 0x6e657373, 0x506f6c69, 0x63790000,  // name = IdUniquenessPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_IdUniquenessPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_IdUniquenessPolicy), (unsigned char *) &_oc_PortableServer_IdUniquenessPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_IdUniquenessPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_IdUniquenessPolicy), (char *) &_oc_PortableServer_IdUniquenessPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicy = &_tc__tc_PortableServer_IdUniquenessPolicy;
 
 
@@ -654,7 +654,7 @@ static const CORBA::Long _oc_PortableServer_IdAssignmentPolicyValue[] =
     8, 0x55534552, 0x5f494400,  // name = USER_ID
     10, 0x53595354, 0x454d5f49, 0x44000000,  // name = SYSTEM_ID
 };
-static CORBA::TypeCode _tc__tc_PortableServer_IdAssignmentPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_IdAssignmentPolicyValue), (unsigned char *) &_oc_PortableServer_IdAssignmentPolicyValue, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_IdAssignmentPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_IdAssignmentPolicyValue), (char *) &_oc_PortableServer_IdAssignmentPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicyValue = &_tc__tc_PortableServer_IdAssignmentPolicyValue;
 
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_duplicate (PortableServer::IdAssignmentPolicy_ptr obj)
@@ -745,7 +745,7 @@ static const CORBA::Long _oc_PortableServer_IdAssignmentPolicy[] =
   42, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x64417373, 0x69676e6d, 0x656e7450, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/IdAssignmentPolicy:1.0
   19, 0x49644173, 0x7369676e, 0x6d656e74, 0x506f6c69, 0x63790000,  // name = IdAssignmentPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_IdAssignmentPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_IdAssignmentPolicy), (unsigned char *) &_oc_PortableServer_IdAssignmentPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_IdAssignmentPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_IdAssignmentPolicy), (char *) &_oc_PortableServer_IdAssignmentPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicy = &_tc__tc_PortableServer_IdAssignmentPolicy;
 
 
@@ -758,7 +758,7 @@ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
     20, 0x494d504c, 0x49434954, 0x5f414354, 0x49564154, 0x494f4e00,  // name = IMPLICIT_ACTIVATION
     23, 0x4e4f5f49, 0x4d504c49, 0x4349545f, 0x41435449, 0x56415449, 0x4f4e0000,  // name = NO_IMPLICIT_ACTIVATION
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ImplicitActivationPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ImplicitActivationPolicyValue), (unsigned char *) &_oc_PortableServer_ImplicitActivationPolicyValue, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ImplicitActivationPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ImplicitActivationPolicyValue), (char *) &_oc_PortableServer_ImplicitActivationPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicyValue = &_tc__tc_PortableServer_ImplicitActivationPolicyValue;
 
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_duplicate (PortableServer::ImplicitActivationPolicy_ptr obj)
@@ -849,7 +849,7 @@ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicy[] =
   48, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x6d706c69, 0x63697441, 0x63746976, 0x6174696f, 0x6e506f6c, 0x6963793a, 0x312e3000,  // repository ID = IDL:PortableServer/ImplicitActivationPolicy:1.0
   25, 0x496d706c, 0x69636974, 0x41637469, 0x76617469, 0x6f6e506f, 0x6c696379, 0x0,  // name = ImplicitActivationPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ImplicitActivationPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ImplicitActivationPolicy), (unsigned char *) &_oc_PortableServer_ImplicitActivationPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ImplicitActivationPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ImplicitActivationPolicy), (char *) &_oc_PortableServer_ImplicitActivationPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicy = &_tc__tc_PortableServer_ImplicitActivationPolicy;
 
 
@@ -862,7 +862,7 @@ static const CORBA::Long _oc_PortableServer_ServantRetentionPolicyValue[] =
     7, 0x52455441, 0x494e0000,  // name = RETAIN
     11, 0x4e4f4e5f, 0x52455441, 0x494e0000,  // name = NON_RETAIN
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantRetentionPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ServantRetentionPolicyValue), (unsigned char *) &_oc_PortableServer_ServantRetentionPolicyValue, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ServantRetentionPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ServantRetentionPolicyValue), (char *) &_oc_PortableServer_ServantRetentionPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicyValue = &_tc__tc_PortableServer_ServantRetentionPolicyValue;
 
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_duplicate (PortableServer::ServantRetentionPolicy_ptr obj)
@@ -953,7 +953,7 @@ static const CORBA::Long _oc_PortableServer_ServantRetentionPolicy[] =
   46, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e745265, 0x74656e74, 0x696f6e50, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/ServantRetentionPolicy:1.0
   23, 0x53657276, 0x616e7452, 0x6574656e, 0x74696f6e, 0x506f6c69, 0x63790000,  // name = ServantRetentionPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantRetentionPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantRetentionPolicy), (unsigned char *) &_oc_PortableServer_ServantRetentionPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ServantRetentionPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantRetentionPolicy), (char *) &_oc_PortableServer_ServantRetentionPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicy = &_tc__tc_PortableServer_ServantRetentionPolicy;
 
 
@@ -967,7 +967,7 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicyValue[] =
     20, 0x5553455f, 0x44454641, 0x554c545f, 0x53455256, 0x414e5400,  // name = USE_DEFAULT_SERVANT
     20, 0x5553455f, 0x53455256, 0x414e545f, 0x4d414e41, 0x47455200,  // name = USE_SERVANT_MANAGER
 };
-static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_RequestProcessingPolicyValue), (unsigned char *) &_oc_PortableServer_RequestProcessingPolicyValue, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_RequestProcessingPolicyValue), (char *) &_oc_PortableServer_RequestProcessingPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicyValue = &_tc__tc_PortableServer_RequestProcessingPolicyValue;
 
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_duplicate (PortableServer::RequestProcessingPolicy_ptr obj)
@@ -1059,7 +1059,7 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicy[] =
   47, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f52, 0x65717565, 0x73745072, 0x6f636573, 0x73696e67, 0x506f6c69, 0x63793a31, 0x2e300000,  // repository ID = IDL:PortableServer/RequestProcessingPolicy:1.0
   24, 0x52657175, 0x65737450, 0x726f6365, 0x7373696e, 0x67506f6c, 0x69637900,  // name = RequestProcessingPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_RequestProcessingPolicy), (unsigned char *) &_oc_PortableServer_RequestProcessingPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_RequestProcessingPolicy), (char *) &_oc_PortableServer_RequestProcessingPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicy = &_tc__tc_PortableServer_RequestProcessingPolicy;
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableServer::POAManager_ptr obj)
@@ -1142,7 +1142,7 @@ static const CORBA::Long _oc_PortableServer_POAManager_AdapterInactive[] =
   16, 0x41646170, 0x74657249, 0x6e616374, 0x69766500,  // name = AdapterInactive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POAManager_AdapterInactive (CORBA::tk_struct, sizeof (_oc_PortableServer_POAManager_AdapterInactive), (unsigned char *) &_oc_PortableServer_POAManager_AdapterInactive, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POAManager_AdapterInactive (CORBA::tk_struct, sizeof (_oc_PortableServer_POAManager_AdapterInactive), (char *) &_oc_PortableServer_POAManager_AdapterInactive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive = &_tc__tc_PortableServer_POAManager_AdapterInactive;
 
 CORBA::Boolean PortableServer::POAManager::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1161,7 +1161,7 @@ static const CORBA::Long _oc_PortableServer_POAManager[] =
   34, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f414d61, 0x6e616765, 0x723a312e, 0x30000000,  // repository ID = IDL:PortableServer/POAManager:1.0
   11, 0x504f414d, 0x616e6167, 0x65720000,  // name = POAManager,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POAManager (CORBA::tk_objref, sizeof (_oc_PortableServer_POAManager), (unsigned char *) &_oc_PortableServer_POAManager, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POAManager (CORBA::tk_objref, sizeof (_oc_PortableServer_POAManager), (char *) &_oc_PortableServer_POAManager, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_POAManager = &_tc__tc_PortableServer_POAManager;
 
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_duplicate (PortableServer::AdapterActivator_ptr obj)
@@ -1229,7 +1229,7 @@ static const CORBA::Long _oc_PortableServer_AdapterActivator[] =
   40, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f41, 0x64617074, 0x65724163, 0x74697661, 0x746f723a, 0x312e3000,  // repository ID = IDL:PortableServer/AdapterActivator:1.0
   17, 0x41646170, 0x74657241, 0x63746976, 0x61746f72, 0x0,  // name = AdapterActivator,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_AdapterActivator (CORBA::tk_objref, sizeof (_oc_PortableServer_AdapterActivator), (unsigned char *) &_oc_PortableServer_AdapterActivator, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_AdapterActivator (CORBA::tk_objref, sizeof (_oc_PortableServer_AdapterActivator), (char *) &_oc_PortableServer_AdapterActivator, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_AdapterActivator = &_tc__tc_PortableServer_AdapterActivator;
 
 PortableServer::ServantManager_ptr PortableServer::ServantManager::_duplicate (PortableServer::ServantManager_ptr obj)
@@ -1297,7 +1297,7 @@ static const CORBA::Long _oc_PortableServer_ServantManager[] =
   38, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e744d61, 0x6e616765, 0x723a312e, 0x30000000,  // repository ID = IDL:PortableServer/ServantManager:1.0
   15, 0x53657276, 0x616e744d, 0x616e6167, 0x65720000,  // name = ServantManager,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantManager (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantManager), (unsigned char *) &_oc_PortableServer_ServantManager, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ServantManager (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantManager), (char *) &_oc_PortableServer_ServantManager, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantManager = &_tc__tc_PortableServer_ServantManager;
 
 PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_duplicate (PortableServer::ServantActivator_ptr obj)
@@ -1366,7 +1366,7 @@ static const CORBA::Long _oc_PortableServer_ServantActivator[] =
   40, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e744163, 0x74697661, 0x746f723a, 0x312e3000,  // repository ID = IDL:PortableServer/ServantActivator:1.0
   17, 0x53657276, 0x616e7441, 0x63746976, 0x61746f72, 0x0,  // name = ServantActivator,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantActivator (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantActivator), (unsigned char *) &_oc_PortableServer_ServantActivator, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ServantActivator (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantActivator), (char *) &_oc_PortableServer_ServantActivator, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantActivator = &_tc__tc_PortableServer_ServantActivator;
 
 PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_duplicate (PortableServer::ServantLocator_ptr obj)
@@ -1435,7 +1435,7 @@ static const CORBA::Long _oc_PortableServer_ServantLocator[] =
   38, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e744c6f, 0x6361746f, 0x723a312e, 0x30000000,  // repository ID = IDL:PortableServer/ServantLocator:1.0
   15, 0x53657276, 0x616e744c, 0x6f636174, 0x6f720000,  // name = ServantLocator,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantLocator (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantLocator), (unsigned char *) &_oc_PortableServer_ServantLocator, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_ServantLocator (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantLocator), (char *) &_oc_PortableServer_ServantLocator, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantLocator = &_tc__tc_PortableServer_ServantLocator;
 
 PortableServer::POA_ptr PortableServer::POA::_duplicate (PortableServer::POA_ptr obj)
@@ -1518,7 +1518,7 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterAlreadyExists[] =
   21, 0x41646170, 0x74657241, 0x6c726561, 0x64794578, 0x69737473, 0x0,  // name = AdapterAlreadyExists
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterAlreadyExists (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_AdapterAlreadyExists), (unsigned char *) &_oc_PortableServer_POA_AdapterAlreadyExists, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterAlreadyExists (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_AdapterAlreadyExists), (char *) &_oc_PortableServer_POA_AdapterAlreadyExists, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists = &_tc__tc_PortableServer_POA_AdapterAlreadyExists;
 
 // copy constructor
@@ -1552,7 +1552,7 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterInactive[] =
   16, 0x41646170, 0x74657249, 0x6e616374, 0x69766500,  // name = AdapterInactive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterInactive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_AdapterInactive), (unsigned char *) &_oc_PortableServer_POA_AdapterInactive, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterInactive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_AdapterInactive), (char *) &_oc_PortableServer_POA_AdapterInactive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterInactive = &_tc__tc_PortableServer_POA_AdapterInactive;
 
 // copy constructor
@@ -1586,7 +1586,7 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterNonExistent[] =
   19, 0x41646170, 0x7465724e, 0x6f6e4578, 0x69737465, 0x6e740000,  // name = AdapterNonExistent
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterNonExistent (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_AdapterNonExistent), (unsigned char *) &_oc_PortableServer_POA_AdapterNonExistent, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterNonExistent (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_AdapterNonExistent), (char *) &_oc_PortableServer_POA_AdapterNonExistent, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterNonExistent = &_tc__tc_PortableServer_POA_AdapterNonExistent;
 
 // copy constructor
@@ -1632,7 +1632,7 @@ static const CORBA::Long _oc_PortableServer_POA_InvalidPolicy[] =
     CORBA::tk_ushort,
 
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_InvalidPolicy (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_InvalidPolicy), (unsigned char *) &_oc_PortableServer_POA_InvalidPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_InvalidPolicy (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_InvalidPolicy), (char *) &_oc_PortableServer_POA_InvalidPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy = &_tc__tc_PortableServer_POA_InvalidPolicy;
 
 // copy constructor
@@ -1666,7 +1666,7 @@ static const CORBA::Long _oc_PortableServer_POA_NoServant[] =
   10, 0x4e6f5365, 0x7276616e, 0x74000000,  // name = NoServant
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_NoServant (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_NoServant), (unsigned char *) &_oc_PortableServer_POA_NoServant, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_NoServant (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_NoServant), (char *) &_oc_PortableServer_POA_NoServant, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant = &_tc__tc_PortableServer_POA_NoServant;
 
 // copy constructor
@@ -1700,7 +1700,7 @@ static const CORBA::Long _oc_PortableServer_POA_ObjectAlreadyActive[] =
   20, 0x4f626a65, 0x6374416c, 0x72656164, 0x79416374, 0x69766500,  // name = ObjectAlreadyActive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_ObjectAlreadyActive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_ObjectAlreadyActive), (unsigned char *) &_oc_PortableServer_POA_ObjectAlreadyActive, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_ObjectAlreadyActive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_ObjectAlreadyActive), (char *) &_oc_PortableServer_POA_ObjectAlreadyActive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectAlreadyActive = &_tc__tc_PortableServer_POA_ObjectAlreadyActive;
 
 // copy constructor
@@ -1734,7 +1734,7 @@ static const CORBA::Long _oc_PortableServer_POA_ObjectNotActive[] =
   16, 0x4f626a65, 0x63744e6f, 0x74416374, 0x69766500,  // name = ObjectNotActive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_ObjectNotActive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_ObjectNotActive), (unsigned char *) &_oc_PortableServer_POA_ObjectNotActive, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_ObjectNotActive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_ObjectNotActive), (char *) &_oc_PortableServer_POA_ObjectNotActive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectNotActive = &_tc__tc_PortableServer_POA_ObjectNotActive;
 
 // copy constructor
@@ -1768,7 +1768,7 @@ static const CORBA::Long _oc_PortableServer_POA_ServantAlreadyActive[] =
   21, 0x53657276, 0x616e7441, 0x6c726561, 0x64794163, 0x74697665, 0x0,  // name = ServantAlreadyActive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_ServantAlreadyActive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_ServantAlreadyActive), (unsigned char *) &_oc_PortableServer_POA_ServantAlreadyActive, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_ServantAlreadyActive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_ServantAlreadyActive), (char *) &_oc_PortableServer_POA_ServantAlreadyActive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive = &_tc__tc_PortableServer_POA_ServantAlreadyActive;
 
 // copy constructor
@@ -1802,7 +1802,7 @@ static const CORBA::Long _oc_PortableServer_POA_ServantNotActive[] =
   17, 0x53657276, 0x616e744e, 0x6f744163, 0x74697665, 0x0,  // name = ServantNotActive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_ServantNotActive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_ServantNotActive), (unsigned char *) &_oc_PortableServer_POA_ServantNotActive, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_ServantNotActive (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_ServantNotActive), (char *) &_oc_PortableServer_POA_ServantNotActive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantNotActive = &_tc__tc_PortableServer_POA_ServantNotActive;
 
 // copy constructor
@@ -1836,7 +1836,7 @@ static const CORBA::Long _oc_PortableServer_POA_WrongAdapter[] =
   13, 0x57726f6e, 0x67416461, 0x70746572, 0x0,  // name = WrongAdapter
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongAdapter (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_WrongAdapter), (unsigned char *) &_oc_PortableServer_POA_WrongAdapter, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongAdapter (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_WrongAdapter), (char *) &_oc_PortableServer_POA_WrongAdapter, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongAdapter = &_tc__tc_PortableServer_POA_WrongAdapter;
 
 // copy constructor
@@ -1870,7 +1870,7 @@ static const CORBA::Long _oc_PortableServer_POA_WrongPolicy[] =
   12, 0x57726f6e, 0x67506f6c, 0x69637900,  // name = WrongPolicy
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongPolicy (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_WrongPolicy), (unsigned char *) &_oc_PortableServer_POA_WrongPolicy, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongPolicy (CORBA::tk_struct, sizeof (_oc_PortableServer_POA_WrongPolicy), (char *) &_oc_PortableServer_POA_WrongPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongPolicy = &_tc__tc_PortableServer_POA_WrongPolicy;
 
 CORBA::Boolean PortableServer::POA::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1889,7 +1889,7 @@ static const CORBA::Long _oc_PortableServer_POA[] =
   27, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f413a31, 0x2e300000,  // repository ID = IDL:PortableServer/POA:1.0
   4, 0x504f4100,  // name = POA,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA (CORBA::tk_objref, sizeof (_oc_PortableServer_POA), (unsigned char *) &_oc_PortableServer_POA, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_POA (CORBA::tk_objref, sizeof (_oc_PortableServer_POA), (char *) &_oc_PortableServer_POA, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_POA = &_tc__tc_PortableServer_POA;
 
 PortableServer::Current_ptr PortableServer::Current::_duplicate (PortableServer::Current_ptr obj)
@@ -1972,7 +1972,7 @@ static const CORBA::Long _oc_PortableServer_Current_NoContext[] =
   10, 0x4e6f436f, 0x6e746578, 0x74000000,  // name = NoContext
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_Current_NoContext (CORBA::tk_struct, sizeof (_oc_PortableServer_Current_NoContext), (unsigned char *) &_oc_PortableServer_Current_NoContext, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_Current_NoContext (CORBA::tk_struct, sizeof (_oc_PortableServer_Current_NoContext), (char *) &_oc_PortableServer_Current_NoContext, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext = &_tc__tc_PortableServer_Current_NoContext;
 
 PortableServer::POA_ptr  PortableServer::Current::get_POA (CORBA::Environment &env)
@@ -2022,7 +2022,7 @@ static const CORBA::Long _oc_PortableServer_Current[] =
   31, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f43, 0x75727265, 0x6e743a31, 0x2e300000,  // repository ID = IDL:PortableServer/Current:1.0
   8, 0x43757272, 0x656e7400,  // name = Current,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_Current (CORBA::tk_objref, sizeof (_oc_PortableServer_Current), (unsigned char *) &_oc_PortableServer_Current, CORBA::B_FALSE);
+static CORBA::TypeCode _tc__tc_PortableServer_Current (CORBA::tk_objref, sizeof (_oc_PortableServer_Current), (char *) &_oc_PortableServer_Current, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_Current = &_tc__tc_PortableServer_Current;
 
 char *

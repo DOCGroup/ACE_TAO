@@ -387,8 +387,6 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
   if (kind == ~0)
     {
-      CORBA::Long offset;
-
       // Get indirection, sanity check it, set up new stream pointing
       // there.
       //
@@ -396,6 +394,7 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       // to check for errors before indirect and to limit the new
       // stream's length.  ULONG_MAX is too much!
 
+      CORBA::Long offset;
       if (!original_stream->get_long (offset)
           || offset >= -8
           || ((-offset) & 0x03) != 0)
@@ -403,18 +402,14 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
-      //      offset -= 4;              // correct for get_long update
+      // offset -= 4;              // correct for get_long update
 
-      indirected_stream.next = original_stream->next + (ptr_arith_t) offset;
-      indirected_stream.remaining = (size_t) ULONG_MAX;
+      // TODO Provide a method to get an encapsulation from a CDR
+      // stream.
+      indirected_stream.setup_indirection (*original_stream, offset);
       stream = &indirected_stream;
 
       // Fetch indirected-to TCKind, deducing byte order.
-
-      if (*indirected_stream.next == 0)         // big-endian?
-        indirected_stream.do_byteswap = (TAO_ENCAP_BYTE_ORDER != 0);
-      else
-        indirected_stream.do_byteswap = (TAO_ENCAP_BYTE_ORDER == 0);
 
       if (!indirected_stream.get_ulong (temp))
         {
@@ -422,7 +417,6 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
           return 0;
         }
       kind = (CORBA::TCKind) temp;
-
     }
   else
     stream = original_stream;
@@ -459,7 +453,7 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       if (tc)
         {
           tc->kind_ = kind;
-          tc->buffer_ = stream->next;
+          tc->buffer_ = stream->buffer ();
           tc->length_ = temp;
         }
 
@@ -472,14 +466,14 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       size_t size;
 
       assert (temp <= UINT_MAX);
-      sub_encapsulation.setup_encapsulation (stream->next, (size_t) temp);
+      sub_encapsulation.setup_encapsulation (stream->buffer(), temp);
       size = table [kind].calc (&sub_encapsulation, alignment, env);
 
       // Check for garbage at end of parameter lists, or other cases
       // where parameters and the size allocated to them don't jive.
 
-      stream->skip_bytes ((unsigned) temp);
-      if (stream->next != sub_encapsulation.next)
+      stream->rd_ptr (temp);
+      if (stream->buffer () != sub_encapsulation.buffer ())
         {
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
@@ -526,8 +520,8 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
           tc->length_ = len;
 
           assert (len < UINT_MAX);
-          tc->buffer_ = stream->next;
-          stream->skip_bytes ((unsigned) len);
+          tc->buffer_ = stream->buffer ();
+          stream->rd_ptr (len);
           break;
         }
 
@@ -1098,13 +1092,9 @@ union_traverse (CDR *stream,
   // at all branches of the union ... forcing union traversal to be a
   // two-pass algorithm, unless/until some data gets squirreled away.
   {
-    CDR temp_cdr;
+    // TODO provide a method to "copy" the CDR stream...
+    CDR temp_cdr (*stream);
     size_t scratch;
-
-    temp_cdr.next = stream->next;
-    temp_cdr.remaining = stream->remaining;
-    temp_cdr.do_byteswap = stream->do_byteswap;
-    temp_cdr.do_free = 0;
 
     (void) calc_key_union_attributes (&temp_cdr,
                                       scratch,
@@ -1182,7 +1172,7 @@ union_traverse (CDR *stream,
   // we can't find a match for the discriminant value, that arm will
   // be used later.
 
-  u_char *default_tc_ptr = 0;
+  char *default_tc_ptr = 0;
   size_t default_tc_len = 0;
 
   while (member_count-- != 0)
@@ -1213,8 +1203,8 @@ union_traverse (CDR *stream,
 
       if (default_used >= 0 && default_used-- == 0)
         {
-          default_tc_ptr = stream->next;
-          default_tc_len = stream->remaining;
+          default_tc_ptr = stream->buffer ();
+          default_tc_len = stream->length ();
         }
 
       // Get the TypeCode for this member.
@@ -1240,17 +1230,16 @@ union_traverse (CDR *stream,
   if (default_tc_ptr)
     {
       CDR temp_str;
-      size_t scratch;
-      CORBA::TypeCode tc (CORBA::tk_null);
-
-      temp_str.next = default_tc_ptr;
-      temp_str.remaining = default_tc_len;
-      temp_str.do_byteswap = stream->do_byteswap;
+      temp_str.setup_encapsulation (default_tc_ptr,
+				    default_tc_len);
 
       // Get and use the TypeCode.
       //
       // XXX we really don't care about size and alignment this time,
       // only that we initialize the TypeCode.
+
+      size_t scratch;
+      CORBA::TypeCode tc (CORBA::tk_null);
 
       (void) calc_nested_size_and_alignment (&tc, &temp_str, scratch, env);
       return visit (&tc, value1, value2, context, env);

@@ -1,3 +1,6 @@
+//
+// $Id$
+//
 // @(#)iioporb.cpp	1.8 95/09/19
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -31,9 +34,9 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // XXX there should be a simple way to reuse this code in other
       // ORB implementations ...
 
-      u_char *bytes;
+      char *bytes;
       // @@ Is BUFSIZ the right size here?
-      u_char buf [BUFSIZ];
+      char buf [BUFSIZ];
       CDR cdr (buf, sizeof buf, TAO_ENCAP_BYTE_ORDER);
 
       bytes = buf;
@@ -50,13 +53,14 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // return that string.
 
       CORBA::String cp;
-      size_t len = cdr.length - cdr.remaining;
+      size_t len = cdr.length ();
 
       CORBA::String string = CORBA::string_alloc (sizeof ior_prefix + 2 * len);
 
       ACE_OS::strcpy ((char *) string, ior_prefix);
 
-      for (cp = (CORBA::String) ACE_OS::strchr ((char *) string, ':') + 1, bytes = cdr.buffer;
+      bytes = cdr.buffer ();
+      for (cp = (CORBA::String) ACE_OS::strchr ((char *) string, ':') + 1;
            len--;
            bytes++)
         {
@@ -132,9 +136,9 @@ ior_string_to_object (CORBA::String str,
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
 
-  u_char *buffer;
+  char *buffer;
   ACE_NEW_RETURN (buffer,
-                  u_char [1 + ACE_OS::strlen ((char *) str) / 2],
+                  char [1 + ACE_OS::strlen ((char *) str) / 2],
                   CORBA_Object::_nil ());
 
   char *tmp = (char *) str;
