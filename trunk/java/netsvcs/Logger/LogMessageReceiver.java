@@ -11,9 +11,7 @@
  *************************************************/
 package netsvcs.Logger;
 
-import java.lang.*;
 import java.io.*;
-import netsvcs.Logger.LogRecord;
 
 /**
  *
