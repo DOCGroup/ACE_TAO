@@ -500,7 +500,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
     {
       // Can we map the file?
       if (this->mmap_.map (this->handle_, -1,
-                           PROT_READ, MAP_PRIVATE, 0, 0, this->sa_) != 0)
+                           PROT_READ, ACE_MAP_PRIVATE, 0, 0, this->sa_) != 0)
         {
           this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
                          "ACE_Filecache_Object::ctor: map");
@@ -632,7 +632,7 @@ ACE_Filecache_Object::release (void)
         }
       else if (this->mmap_.map (this->handle_, -1,
                                 PROT_READ,
-                                MAP_PRIVATE,
+                                ACE_MAP_PRIVATE,
                                 0,
                                 0,
                                 this->sa_) != 0)
