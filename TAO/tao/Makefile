@@ -223,6 +223,7 @@ ORB_CORE_FILES = \
   Bind_Dispatcher_Guard \
   Fault_Tolerance_Service \
   Interceptor_List \
+  IFR_Client_Adapter \
   ORBInitInfo \
   ORBInitializer_Registry \
   PolicyFactory_Registry \
@@ -283,7 +284,6 @@ ifeq ($(minimum_corba),0)
 ORB_CORE_FILES += \
   Services \
   NVList \
-  IFR_Client_Adapter \
   IFR_TypeCodes \
   Dynamic_Adapter
 

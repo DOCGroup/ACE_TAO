@@ -9,7 +9,7 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Single_Threaded_Latency, client, "$Id$")
+ACE_RCSID(DSI_Latency, client, "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 100;

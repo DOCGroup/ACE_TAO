@@ -14,9 +14,9 @@ endif # ! TAO_ROOT
 
 IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
-BIN = client server
+BIN_UNCHECKED = client server
 
-SRC = $(addsuffix .cpp, $(BIN) Roundtrip) $(IDL_SRC)
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Roundtrip) $(IDL_SRC)
 
 CLIENT_OBJS = client.o TestC.o
 SERVER_OBJS = server.o Roundtrip.o $(IDL_SRC:.cpp=.o)
@@ -29,6 +29,11 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN = $(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
