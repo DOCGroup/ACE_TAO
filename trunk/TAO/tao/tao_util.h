@@ -26,6 +26,7 @@ class TAO_ORB_Manager
   //     Helper class for simple ORB/POA initialization and 
   //     registering servants with the POA.
 public:
+  // Constructor
   TAO_ORB_Manager (CORBA::ORB_ptr orb = 0,
                    PortableServer::POA_ptr root_poa = 0,
                    PortableServer::POAManager_ptr poa_manager = 0); 
