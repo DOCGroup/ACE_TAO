@@ -1358,6 +1358,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
 
   Object_ID oid;
   oid.tid = ACE_OS::thr_self();
+  oid.pid = ACE_OS::getpid();
   oid.queue_id = queue_id_;
 
   DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
@@ -1653,6 +1654,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
 
   Object_ID oid;
   oid.tid = ACE_OS::thr_self();
+  oid.pid = ACE_OS::getpid();
   oid.queue_id = queue_id_;
 
   DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);

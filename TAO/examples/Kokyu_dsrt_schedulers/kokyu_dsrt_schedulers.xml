@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE NAMESPACE SYSTEM
+"file:///usr/local/share/doc/kurt_filters/namespace.dtd">
+<NAMESPACE>
+  <FAMILY name="EDF_SCHED" id="11">
+    <EVENT name="CONSTRUCTOR" id="0"/>
+    <EVENT name="DISPATCHER_SHUTDOWN" id="1"/>
+    <EVENT name="CREATE_SCHED_PARAM_START" id="2"/>
+    <EVENT name="CREATE_SCHED_PARAM_END" id="3"/>
+    <EVENT name="START_NEW_SCHED_SEGMENT" id="4"/>
+    <EVENT name="END_NEW_SCHED_SEGMENT" id="5"/>
+    <EVENT name="START_NESTED_SCHED_SEGMENT" id="6"/>
+    <EVENT name="END_NESTED_SCHED_SEGMENT" id="7"/>
+    <EVENT name="START_UPDATE_SCHED_SEGMENT" id="8"/>
+    <EVENT name="END_UPDATE_SCHED_SEGMENT" id="9"/>
+    <EVENT name="START_END_SCHED_SEGMENT" id="10"/>
+    <EVENT name="FINISH_END_SCHED_SEGMENT" id="11"/>
+    <EVENT name="START_CLIENT_SCHED_TIME" id="12"/>
+    <EVENT name="ENTER_KOKYU_DISPATCH_UPDATE_SCHEDULE" id="13"/>
+    <EVENT name="LEAVE_KOKYU_DISPATCH_UPDATE_SCHEDULE" id="14"/>
+    <EVENT name="LEAVE_CLIENT_SCHED_TIME" id="15"/>
+    <EVENT name="ENTER_SERVER_SCHED_TIME" id="16"/>
+    <EVENT name="LEAVE_SERVER_SCHED_TIME" id="17"/>
+    <EVENT name="ENTER_SERVER_DISPATCH_SCHED" id="18"/>
+    <EVENT name="LEAVE_SERVER_DISPATCH_SCHED" id="19"/>
+    <EVENT name="INSIDE_SEND_POLL" id="20"/>
+    <EVENT name="ENTER_SEND_REPLY" id="21"/>
+    <EVENT name="EXIT_SEND_REPLY" id="22"/>
+    <EVENT name="SEND_EXCEPTION" id="23"/>
+    <EVENT name="SEND_OTHER" id="24"/>
+    <EVENT name="ENTER_RECEIVE_REPLY" id="25"/>
+    <EVENT name="EXIT_RECEIVE_REPLY" id="26"/>
+    <EVENT name="RECEIVE_EXCEPTION" id="27"/>
+    <EVENT name="RECEIVE_OTHER" id="28"/>
+  </FAMILY>
+</NAMESPACE>

@@ -9,9 +9,12 @@
 //#include "DSRT_CV_Dispatcher_Impl_T.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_HAS_DSUI)
+#include <ace/Counter.h>
 #include "kokyu_config.h"
 #include "kokyu_dsui_families.h"
 #include <dsui.h>
+#endif // ACE_HAS_DSUI
 
 ACE_RCSID(Kokyu, DSRT_CV_Dispatcher_Impl_T, "$Id$")
 
@@ -74,7 +77,9 @@ schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
                   guid.get_buffer (),
                   guid.length ());
 
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, SCHEDULE_ENTER, int_guid, 0, NULL);
+  Object_ID tmp;
+  tmp.guid = int_guid;
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, SCHEDULE_ENTER, 0, sizeof(Object_ID), (char*)&tmp);
   DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -194,7 +199,7 @@ schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):schedule_i exit\n"));
 #endif
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, SCHEDULE_EXIT, int_guid, 0, NULL);
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, SCHEDULE_EXIT, 0, sizeof(Object_ID), (char*)&tmp);
   return 0;
 }
 
@@ -207,7 +212,9 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
                   guid.get_buffer (),
                   guid.length ());
 
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RELEASE_GUARD_START, int_guid, 0, NULL);
+  Object_ID tmp;
+  tmp.guid = int_guid;
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RELEASE_GUARD_START, 0, sizeof(Object_ID), (char*)&tmp);
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG((LM_DEBUG,"(%t|%T):release guard enter and current task id is %d and period is %d.\n",qos.task_id_,qos.period_));
 #endif
@@ -239,7 +246,7 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
-             DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_RELEASED, int_guid, 0, NULL);
+             DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
              this->schedule_i (guid, qos);
            }
         else
@@ -262,7 +269,7 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 #ifdef MY_KOKYU_DSRT_LOGGING
            ACE_DEBUG((LM_DEBUG,"GOING TO SLEEP FOR %d, %d\n", time_tv.tv_sec, time_tv.tv_usec));
 #endif
-           DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED, int_guid, 0, NULL);
+           DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
            usleep(left_time.sec()*1000000+left_time.usec());
 //           if (this->release_cond_.wait (&left_time) == -1)
 //             select(0, NULL, NULL, NULL, &time_tv);
@@ -282,7 +289,8 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
-             DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED_FIRE, qos.task_id_, 0, NULL);
+             tmp.task_id = qos.task_id_;
+             DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED_FIRE, 0, sizeof(Object_ID), (char*)&tmp);
 
              this->schedule_i (guid, qos);
            }
@@ -298,12 +306,12 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
-             DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, NONRG_EVENT_RELEASED, int_guid, 0, NULL);
+             DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, NONRG_EVENT_RELEASED, 0, sizeof(Object_ID), (char*)&tmp);
 
              this->schedule_i (guid, qos);
       }
 
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RELEASE_GUARD_END, int_guid, 0, NULL);
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RELEASE_GUARD_END, 0, sizeof(Object_ID), (char*)&tmp);
   return 0;
 }
 
@@ -316,7 +324,9 @@ update_schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
                   guid.get_buffer (),
                   guid.length ());
 
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, UPDATE_SCHEDULE_START, int_guid, 0, NULL);
+  Object_ID tmp;
+  tmp.guid = int_guid;
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, UPDATE_SCHEDULE_START, 0, sizeof(Object_ID), (char*)&tmp);
   return this->schedule_i (guid, qos);
 }
 
@@ -329,7 +339,9 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
                   guid.get_buffer (),
                   guid.length ());
 
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, UPDATE_SCHEDULE_START, int_guid, 0, NULL);
+  Object_ID tmp;
+  tmp.guid = int_guid;
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, UPDATE_SCHEDULE_START, 0, sizeof(Object_ID), (char*)&tmp);
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -379,7 +391,7 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block done\n"));
 #endif
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, UPDATE_SCHEDULE_END, int_guid, 0, NULL);
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, UPDATE_SCHEDULE_END, 0, sizeof(Object_ID), (char*)&tmp);
   return -1;
 }
 
@@ -392,7 +404,9 @@ cancel_schedule_i (Guid_t guid)
                   guid.get_buffer (),
                   guid.length ());
 
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, CANCEL_SCHEDULE_START, int_guid, 0, NULL);
+  Object_ID tmp;
+  tmp.guid = int_guid;
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, CANCEL_SCHEDULE_START, 0, sizeof(Object_ID), (char*)&tmp);
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
   ACE_hthread_t thr_handle;
@@ -417,7 +431,7 @@ cancel_schedule_i (Guid_t guid)
   ACE_GUARD_RETURN (cond_lock_t,
                     mon, this->run_cond_lock_, 0);
   this->run_cond_.broadcast ();
-  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, CANCEL_SCHEDULE_END, int_guid, 0, NULL);
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, CANCEL_SCHEDULE_END, 0, sizeof(Object_ID), (char*)&tmp);
   return 0;
 }
 

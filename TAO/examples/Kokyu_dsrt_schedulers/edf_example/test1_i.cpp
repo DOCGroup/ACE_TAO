@@ -9,9 +9,12 @@
 #include "EDF_Scheduler.h"
 #include "Task_Stats.h"
 
+#if defined (ACE_HAS_DSUI)
+#include <ace/Counter.h>
 #include "dt_oneway_config.h"
 #include "dt_oneway_dsui_families.h"
 #include <dsui.h>
+#endif // ACE_HAS_DSUI
 
 #if !defined(__ACE_INLINE__)
 #include "test1_i.i"
@@ -26,7 +29,9 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration, CORBA::Long id, CORBA:
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, id, 0, NULL);
+  Object_ID tmp;
+  tmp.task_id = id;
+  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&tmp);
 
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -142,7 +147,7 @@ CPULoad::run(tv);
 /*DTTIME:
   recording the finishing time on the server side. please also record the deadline_missed variable.
 */
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, id,0,NULL);
+  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&tmp);
 }
 
 void

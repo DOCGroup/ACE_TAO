@@ -6,6 +6,7 @@ ACE_RCSID(Event, Object_Counter, "Object_Counter,v 1.0 2004/02/19 10:24:13 storr
 Object_ID::Object_ID ()
   : id (0),
     tid (0),
+    pid (0),
     queue_id (0),
     type (0),
     task_id (0),

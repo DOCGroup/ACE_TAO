@@ -51,6 +51,7 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
   event[0].header.eid.id = oid.id;
   event[0].header.eid.tid = oid.tid;
+  event[0].header.eid.pid = oid.pid; 
   event[0].header.eid.queue_id = oid.queue_id;
 
   //@BT INSTRUMENT with event ID: EVENT_PUSH Measure time

@@ -7,17 +7,12 @@ project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
 
   Source_Files {
-        FP_Scheduler.cpp
-        MUF_Scheduler.cpp
         EDF_Scheduler.cpp
-        MIF_Scheduler.cpp
         Task_Stats.cpp
         utils.cpp
         Kokyu_qosC.cpp
-        FP_SchedulingC.cpp
-        MUF_SchedulingC.cpp
 	EDF_SchedulingC.cpp
-        MIF_SchedulingC.cpp
+	kokyu_dsrt_dsui_vars.cpp
   }
   
   Header_Files {

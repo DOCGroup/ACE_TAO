@@ -3,8 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Timer_Queue.h" 
-#include "ace/Reactor.h" 
+#include "ace/Timer_Queue.h"
+#include "ace/Reactor.h"
 #include <unistd.h>
 
 #include "tao/RTScheduling/RTScheduler_Manager.h"
@@ -21,7 +21,7 @@
 
 ACE_RCSID(MT_Server, client, "client.cpp,v 1.2 2003/10/08 13:26:32 venkita Exp")
 
-const char *ior = "file://test1.ior";
+  const char *ior = "file://test1.ior";
 int do_shutdown = 1;
 int enable_dynamic_scheduling = 1;
 int enable_yield = 1;
@@ -38,20 +38,20 @@ int count = 0;
 int ID_BEGIN = 0;
 
 /*
-class Time_Handler : public ACE_Event_Handler 
-{ 
-public: 
- //Method which is called back by the Reactor when timeout occurs. 
- virtual int handle_timeout (const ACE_Time_Value &tv, 
- const void *arg){ 
-  ACE_DEBUG ((LM_DEBUG, "Timer #%d timed out at %d!\n", 
-     count++, tv.sec()));
+  class Time_Handler : public ACE_Event_Handler
+  {
+  public:
+  //Method which is called back by the Reactor when timeout occurs.
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+  const void *arg){
+  ACE_DEBUG ((LM_DEBUG, "Timer #%d timed out at %d!\n",
+  count++, tv.sec()));
 
-  //Keep yourself registered with the Reactor. 
-  return 0; 
-  } 
-};
-*/ 
+  //Keep yourself registered with the Reactor.
+  return 0;
+  }
+  };
+*/
 
 class Worker : public ACE_Task_Base
 {
@@ -101,13 +101,13 @@ class Worker_c : public ACE_Task_Base
   //
 public:
   Worker_c (CORBA::ORB_ptr orb,
-          RTScheduling::Current_ptr current,
-          EDF_Scheduler* scheduler,
-          long importance,
-          CORBA::Long server_load,
-          CORBA::Long period,
-          CORBA::Long niteration,
-          int worker_id);
+            RTScheduling::Current_ptr current,
+            EDF_Scheduler* scheduler,
+            long importance,
+            CORBA::Long server_load,
+            CORBA::Long period,
+            CORBA::Long niteration,
+            int worker_id);
   // ctor
 
   virtual int svc (void);
@@ -155,7 +155,7 @@ parse_args (int argc, char *argv[])
       case 'W':
         workload1 = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-  
+
       case 'P':
         period1 = ACE_OS::atoi (get_opts.opt_arg ());
         break;
@@ -167,7 +167,7 @@ parse_args (int argc, char *argv[])
       case 'p':
         period2 = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-  
+
       case 'r':
         enable_rand = 1;
         break;
@@ -192,13 +192,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ds_control ds_cntrl ("DT_Oneway_Client", "dt_oneway_enable.dsui");
+  ds_control ds_cntrl ("DT_Oneway_Client", "dt_enable.dsui");
   ACE_High_Res_Timer non_dsui_timer;
   non_dsui_timer.calibrate ();
   non_dsui_timer.start();
 
   /* MEASURE: Program start time */
-  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
+  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,0,0,NULL);
 
   EDF_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
@@ -210,14 +210,10 @@ main (int argc, char *argv[])
 
   if (sched_policy == ACE_SCHED_RR) {
     /* MEASURE (DP): Schedule policy */
-    char* policy = "ACE_SCHED_RR";
-    DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULE_SETUP, 1, strlen (policy), policy);
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
   }
   else {
     /* MEASURE (DP): Schedule policy */
-    char* policy = "ACE_SCHED_FIFO";
-    DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULE_SETUP, 1, strlen (policy), policy);
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
   }
 
@@ -305,13 +301,13 @@ main (int argc, char *argv[])
                                          sched_scope), -1);
 
 	  /* MEASURE: Scheduler start time */
-	  DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_STARTED, 1, 0, NULL);
+	  DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_STARTED, 0, 0, NULL);
 
           manager->rtscheduler (scheduler);
 
           CORBA::Object_var object =
             orb->resolve_initial_references ("RTScheduler_Current"
-                                              ACE_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           current  =
@@ -321,61 +317,61 @@ main (int argc, char *argv[])
         }
 
 
-/*
- Time_Handler *th=new Time_Handler;
- int i;
+      /*
+        Time_Handler *th=new Time_Handler;
+        int i;
 
- 
- for (i = 1; i <= niteration1; i++)
-  orb->orb_core()->reactor()->schedule_timer (th,
-   (const void *) (orb.in()), // argument sent to handle_timeout()
-   ACE_Time_Value (i*period1 )); //set timer to go off with delay
 
-  orb->orb_core()->reactor()->handle_events ();
+        for (i = 1; i <= niteration1; i++)
+        orb->orb_core()->reactor()->schedule_timer (th,
+        (const void *) (orb.in()), // argument sent to handle_timeout()
+        ACE_Time_Value (i*period1 )); //set timer to go off with delay
 
-  i=1;
-  ACE_Time_Value check_timer = ACE_Time_Value(period1);
-  while(i<niteration1) {
-  orb->orb_core()->reactor()->handle_events ();
-  i++;
-  }
-*/
+        orb->orb_core()->reactor()->handle_events ();
 
-/*
-  ACE_Reactor react_;
-  react_.open(0);
-  ACE_Time_Value tv;
-  tv = ACE_Time_Value(period1);
-  Time_Handler *th=new Time_Handler;
-  long timer_id = react_.schedule_timer(th,
-                                              0, //NULL arg
-                                              tv, tv);
-  if (timer_id < 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
+        i=1;
+        ACE_Time_Value check_timer = ACE_Time_Value(period1);
+        while(i<niteration1) {
+        orb->orb_core()->reactor()->handle_events ();
+        i++;
+        }
+      */
+
+      /*
+        ACE_Reactor react_;
+        react_.open(0);
+        ACE_Time_Value tv;
+        tv = ACE_Time_Value(period1);
+        Time_Handler *th=new Time_Handler;
+        long timer_id = react_.schedule_timer(th,
+        0, //NULL arg
+        tv, tv);
+        if (timer_id < 0)
+        {
+        ACE_ERROR_RETURN ((LM_ERROR,
         ACE_TEXT ("(%T|%t) cannot schedule reactor timer.")
         ACE_TEXT ("ACE_Reactor.schedule_timer() returned -1\n")),
-             -1);
-    }
-*/
+        -1);
+        }
+      */
       int importance=0;
 
-/* For CV version worker1 should start before worker2, but for Direct version vice versa*/
-/*      Worker_c worker1 (orb.in (),
-                      current.in (),
-                      scheduler,
-                      importance,
-                      workload1,
-                      period1,
-                      niteration1,
-                      1);
+      /* For CV version worker1 should start before worker2, but for Direct version vice versa*/
+      /*      Worker_c worker1 (orb.in (),
+              current.in (),
+              scheduler,
+              importance,
+              workload1,
+              period1,
+              niteration1,
+              1);
 
-      if (worker1.activate (flags, 1, 0, max_prio) != 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%t|%T) cannot activate worker thread.\n"));
-        }
-*/
+              if (worker1.activate (flags, 1, 0, max_prio) != 0)
+              {
+              ACE_ERROR ((LM_ERROR,
+              "(%t|%T) cannot activate worker thread.\n"));
+              }
+      */
       Worker worker2 (orb.in (),
                       server.in (),
                       current.in (),
@@ -392,15 +388,15 @@ main (int argc, char *argv[])
                       "(%t|%T) cannot activate worker thread.\n"));
         }
 
-/*
-      int j=0;
-      while(j<20) {
-	react_.handle_events();	
+      /*
+        int j=0;
+        while(j<20) {
+	react_.handle_events();
         ACE_DEBUG((LM_DEBUG,"RETURN From handle_events~~~~~\n"));
-        j++; 
-      }
-*/
-//      worker1.wait ();
+        j++;
+        }
+      */
+      //      worker1.wait ();
       worker2.wait ();
 
       /* MEASURE: Wait for worker thread done in main thread */
@@ -431,22 +427,22 @@ main (int argc, char *argv[])
               ACE_TRY_CHECK;
             }
 
-            ACE_DEBUG ((LM_DEBUG, "(%t): about to call server shutdown\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%t): about to call server shutdown\n"));
 
-	    /* MEASURE: Call to shutdown server */
-	    // char* msg = "(%t): wait for worker threads done in main thread\n";
-	    // Get thread id
-	    DSUI_EVENT_LOG (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
+          /* MEASURE: Call to shutdown server */
+          // char* msg = "(%t): wait for worker threads done in main thread\n";
+          // Get thread id
+          DSUI_EVENT_LOG (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
 
-            server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-	    /* MEASURE: After call to server shutdown */
-	    DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
-            ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
+          /* MEASURE: After call to server shutdown */
+          DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
+          ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
 
 
-            if (enable_dynamic_scheduling)
+          if (enable_dynamic_scheduling)
             {
               current->end_scheduling_segment (0 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -456,7 +452,7 @@ main (int argc, char *argv[])
       scheduler->shutdown ();
 
       /* MEASURE: Scheduler stop time */
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
     }
   ACE_CATCHANY
@@ -468,7 +464,7 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   /* MEASURE: Program stop time */
-  DSUI_EVENT_LOG(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+  DSUI_EVENT_LOG(MAIN_GROUP_FAM, STOP, 0, 0, NULL);
 
   non_dsui_timer.stop();
   ACE_hrtime_t dsui_ovhd_time;
@@ -498,7 +494,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
      period_(period),
      niteration_(niteration),
      m_id (worker_id)
-     //     sleep_time_ (sleep_time)
+  //     sleep_time_ (sleep_time)
 {
 }
 
@@ -506,14 +502,16 @@ int
 Worker::svc (void)
 {
   /* MEASURE: Worker start time */
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, m_id, 0, NULL);
+  Object_ID tmp;
+  tmp.task_id = m_id;
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, 0, sizeof(Object_ID), (char*)&tmp);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   const char * name = 0;
   /*
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to sleep for %d sec\n", sleep_time_));
-  ACE_OS::sleep (sleep_time_);
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T):woke up from sleep for %d sec\n", sleep_time_));
+    ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to sleep for %d sec\n", sleep_time_));
+    ACE_OS::sleep (sleep_time_);
+    ACE_DEBUG ((LM_DEBUG, "(%t|%T):woke up from sleep for %d sec\n", sleep_time_));
   */
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -535,11 +533,11 @@ Worker::svc (void)
         }
     }
 
-//  ACE_DEBUG ((LM_DEBUG, "(%t|%T) worker activated with prio %d AND iteration is %d\n", prio,niteration_));
+  //  ACE_DEBUG ((LM_DEBUG, "(%t|%T) worker activated with prio %d AND iteration is %d\n", prio,niteration_));
 
-     EDF_Scheduling::SchedulingParameter sched_param;
-     CORBA::Policy_var sched_param_policy;
-      CORBA::Policy_var implicit_sched_param;
+  EDF_Scheduling::SchedulingParameter sched_param;
+  CORBA::Policy_var sched_param_policy;
+  CORBA::Policy_var implicit_sched_param;
   double rand2=0.0;
 
   if (enable_dynamic_scheduling)
@@ -557,8 +555,8 @@ Worker::svc (void)
       implicit_sched_param = sched_param_policy;
 
       /* MEASURE: Start of scheduling segment */
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, m_id, 0, NULL);
-//      ACE_DEBUG ((LM_DEBUG, "(%t|%T):before begin_sched_segment\n"));
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
+      //      ACE_DEBUG ((LM_DEBUG, "(%t|%T):before begin_sched_segment\n"));
 
       scheduler_current_->begin_scheduling_segment (name,
                                                     sched_param_policy.in (),
@@ -567,94 +565,97 @@ Worker::svc (void)
       ACE_CHECK_RETURN (-1);
 
       /* MEASURE: End of scheduling segment */
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, m_id, 0, NULL);
-//      ACE_DEBUG ((LM_DEBUG, "(%t|%T):after begin_sched_segment\n"));
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
+      //      ACE_DEBUG ((LM_DEBUG, "(%t|%T):after begin_sched_segment\n"));
     }
 
-ACE_Time_Value start_t, repair_t;
-   repair_t=ACE_Time_Value(0,0);
+  ACE_Time_Value start_t, repair_t;
+  repair_t=ACE_Time_Value(0,0);
 
-for(int i=0;i<niteration_;i++)
-{
-  if(i>0 && enable_dynamic_scheduling) 
-  {
-      sched_param.deadline = sched_param.deadline+period_*10000000-left_work*10000000;
-      sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
-
-      //If we do not define implicit_sched_param, the new spawned DT will have the default lowest prio.
-      implicit_sched_param = sched_param_policy;
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_BEGIN, m_id, 0, NULL);
-      scheduler_current_->update_scheduling_segment(name,
-                                                    sched_param_policy.in (),
-                                                    implicit_sched_param.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
-     ACE_CHECK_RETURN (-1);
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, m_id, 0, NULL);
-   }
-
-  //  TAO_debug_level = 1;
-   if (i==0)
-	start_t =  ACE_OS::gettimeofday ();
-   else {
-    repair_t = start_t+ACE_Time_Value(period_*i,0)-ACE_OS::gettimeofday ();
-    }
-
-  timeval tv;
-
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, RUNNING_SUBTASK, sched_param.task_id, 0, NULL);
-
-tv.tv_sec = server_load_-1;
-tv.tv_usec = 800000;
-
-#ifdef KOKYU_DSRT_LOGGING
-ACE_DEBUG((LM_DEBUG,"(%t|%T)before running the client workload\n"));
-#endif
-
-CPULoad::run(tv);
-
-#ifdef KOKYU_DSRT_LOGGING
-ACE_DEBUG((LM_DEBUG,"(%t|%T)after running the client workload\n"));
-#endif
-
-  sched_param.deadline = sched_param.deadline + left_work*10000000;
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, sched_param.task_id, 0, NULL);
-  server_->test_method (left_work, sched_param.task_id, i, sched_param.deadline ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK_RETURN (-1);
-
-  /*DTTIME:
-    oneway call done on the client side.
-  */
-  /* MEASURE: One way call done */
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, sched_param.task_id, 0, NULL);
-
-  scheduler_->kokyu_dispatcher_->update_schedule (*(scheduler_current_->id ()),
-                                      Kokyu::BLOCK);
-  rand2 = 0.1*rand()/RAND_MAX;
-  if(enable_rand)
-  {
-    int sleep_t = period_*1000000-period_*rand2*1000000+repair_t.sec()*1000000+repair_t.usec();
-    if(sleep_t > 0) 
-    { 
-    ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d.\n", 
-		(int)(period_*1000000-period_*rand2*1000000)));
-    usleep(sleep_t);
-    }
-    else
+  for(int i=0;i<niteration_;i++)
     {
-    ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d\n", 0));
-    }
-  }
-  else
-  {
-    ACE_Time_Value current = ACE_OS::gettimeofday ();
-    int sleep_t = sched_param.deadline/10-current.sec()*1000000-current.usec();
+      if(i>0 && enable_dynamic_scheduling)
+        {
+          sched_param.deadline = sched_param.deadline+period_*10000000-left_work*10000000;
+          sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
+
+          //If we do not define implicit_sched_param, the new spawned DT will have the default lowest prio.
+          implicit_sched_param = sched_param_policy;
+          DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_BEGIN, 0, sizeof(Object_ID), (char*)&tmp);
+          scheduler_current_->update_scheduling_segment(name,
+                                                        sched_param_policy.in (),
+                                                        implicit_sched_param.in ()
+                                                        ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+          DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, 0, sizeof(Object_ID), (char*)&tmp);
+        }
+
+      //  TAO_debug_level = 1;
+      if (i==0)
+	start_t =  ACE_OS::gettimeofday ();
+      else {
+        repair_t = start_t+ACE_Time_Value(period_*i,0)-ACE_OS::gettimeofday ();
+      }
+
+      timeval tv;
+
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, RUNNING_SUBTASK, 0, sizeof(Object_ID), (char*)&tmp);
+
+      tv.tv_sec = server_load_-1;
+      tv.tv_usec = 800000;
+
 #ifdef KOKYU_DSRT_LOGGING
-    ACE_DEBUG((LM_DEBUG,"(%t|%T)NOW I AM GOING TO SLEEP FOR %d\n", sleep_t));
-#endif    
-    usleep(sleep_t);
-  }
-}
+      ACE_DEBUG((LM_DEBUG,"(%t|%T)before running the client workload\n"));
+#endif
+
+      CPULoad::run(tv);
+
+#ifdef KOKYU_DSRT_LOGGING
+      ACE_DEBUG((LM_DEBUG,"(%t|%T)after running the client workload\n"));
+#endif
+
+      sched_param.deadline = sched_param.deadline + left_work*10000000;
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&tmp);
+      server_->test_method (left_work, sched_param.task_id, i, sched_param.deadline ACE_ENV_ARG_PARAMETER);
+
+      ACE_CHECK_RETURN (-1);
+
+      /*DTTIME:
+        oneway call done on the client side.
+      */
+      /* MEASURE: One way call done */
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&tmp);
+
+      scheduler_->kokyu_dispatcher_->update_schedule (*(scheduler_current_->id ()),
+                                                      Kokyu::BLOCK);
+      rand2 = 0.1*rand()/RAND_MAX;
+      if(enable_rand)
+        {
+          int sleep_t = period_ * 1000000 -
+            (int)(period_ * rand2 * 1000000) +
+            repair_t.sec()*1000000 + repair_t.usec();
+
+          if(sleep_t > 0)
+            {
+              ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d.\n",
+                         (int)(period_*1000000-period_*rand2*1000000)));
+              usleep(sleep_t);
+            }
+          else
+            {
+              ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d\n", 0));
+            }
+        }
+      else
+        {
+          ACE_Time_Value current = ACE_OS::gettimeofday ();
+          int sleep_t = sched_param.deadline/10-current.sec()*1000000-current.usec();
+#ifdef KOKYU_DSRT_LOGGING
+          ACE_DEBUG((LM_DEBUG,"(%t|%T)NOW I AM GOING TO SLEEP FOR %d\n", sleep_t));
+#endif
+          usleep(sleep_t);
+        }
+    }
   if (enable_dynamic_scheduling)
     {
       scheduler_current_->end_scheduling_segment (name);
@@ -668,13 +669,13 @@ ACE_DEBUG((LM_DEBUG,"(%t|%T)after running the client workload\n"));
 
 //--------------------------------------------------------------
 Worker_c::Worker_c (CORBA::ORB_ptr orb,
-                RTScheduling::Current_ptr current,
-                EDF_Scheduler* scheduler,
-                long importance,
-                CORBA::Long server_load,
-                CORBA::Long period,
-                CORBA::Long niteration,
-                int worker_id)
+                    RTScheduling::Current_ptr current,
+                    EDF_Scheduler* scheduler,
+                    long importance,
+                    CORBA::Long server_load,
+                    CORBA::Long period,
+                    CORBA::Long niteration,
+                    int worker_id)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      scheduler_current_ (RTScheduling::Current::_duplicate (current)),
      scheduler_ (scheduler),
@@ -683,7 +684,7 @@ Worker_c::Worker_c (CORBA::ORB_ptr orb,
      period_(period),
      niteration_(niteration),
      m_id (worker_id)
-     //     sleep_time_ (sleep_time)
+  //     sleep_time_ (sleep_time)
 {
 }
 
@@ -691,14 +692,16 @@ int
 Worker_c::svc (void)
 {
   /* MEASURE: Worker start time */
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, m_id, 0, NULL);
+  Object_ID tmp;
+  tmp.task_id = m_id;
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, 0, sizeof(Object_ID), (char*)&tmp);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   const char * name = 0;
   /*
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to sleep for %d sec\n", sleep_time_));
-  ACE_OS::sleep (sleep_time_);
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T):woke up from sleep for %d sec\n", sleep_time_));
+    ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to sleep for %d sec\n", sleep_time_));
+    ACE_OS::sleep (sleep_time_);
+    ACE_DEBUG ((LM_DEBUG, "(%t|%T):woke up from sleep for %d sec\n", sleep_time_));
   */
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -720,11 +723,11 @@ Worker_c::svc (void)
         }
     }
 
-//  ACE_DEBUG ((LM_DEBUG, "(%t|%T) worker activated with prio %d AND iteration is %d\n", prio,niteration_));
+  //  ACE_DEBUG ((LM_DEBUG, "(%t|%T) worker activated with prio %d AND iteration is %d\n", prio,niteration_));
 
-     EDF_Scheduling::SchedulingParameter sched_param;
-     CORBA::Policy_var sched_param_policy;
-      CORBA::Policy_var implicit_sched_param;
+  EDF_Scheduling::SchedulingParameter sched_param;
+  CORBA::Policy_var sched_param_policy;
+  CORBA::Policy_var implicit_sched_param;
   double rand2=0.0;
 
   if (enable_dynamic_scheduling)
@@ -741,7 +744,7 @@ Worker_c::svc (void)
       implicit_sched_param = sched_param_policy;
 
       /* MEASURE: Start of scheduling segment */
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, m_id, 0, NULL);
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
 
       scheduler_current_->begin_scheduling_segment (name,
                                                     sched_param_policy.in (),
@@ -750,74 +753,74 @@ Worker_c::svc (void)
       ACE_CHECK_RETURN (-1);
 
       /* MEASURE: End of scheduling segment */
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, m_id, 0, NULL);
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
     }
 
-   ACE_Time_Value start_t, repair_t;
-   repair_t=ACE_Time_Value(0,0);
+  ACE_Time_Value start_t, repair_t;
+  repair_t=ACE_Time_Value(0,0);
 
-for(int i=0;i<niteration_;i++)
-{
-  if(i>0 && enable_dynamic_scheduling)
-  {
-      sched_param.deadline = sched_param.deadline+period_*10000000;
-      sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
+  for(int i=0;i<niteration_;i++)
+    {
+      if(i>0 && enable_dynamic_scheduling)
+        {
+          sched_param.deadline = sched_param.deadline+period_*10000000;
+          sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
 
-      //If we do not define implicit_sched_param, the new spawned DT will have the default lowest prio.
-      implicit_sched_param = sched_param_policy;
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_BEGIN, m_id, 0, NULL);
-      scheduler_current_->update_scheduling_segment(name,
-                                                    sched_param_policy.in (),
-                                                    implicit_sched_param.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
-     ACE_CHECK_RETURN (-1);
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, m_id, 0, NULL);
-  }
+          //If we do not define implicit_sched_param, the new spawned DT will have the default lowest prio.
+          implicit_sched_param = sched_param_policy;
+          DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_BEGIN, 0, sizeof(Object_ID), (char*)&tmp);
+          scheduler_current_->update_scheduling_segment(name,
+                                                        sched_param_policy.in (),
+                                                        implicit_sched_param.in ()
+                                                        ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+          DSUI_EVENT_LOG (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, 0, sizeof(Object_ID), (char*)&tmp);
+        }
 
-   if (i==0)
+      if (i==0)
         start_t =  ACE_OS::gettimeofday ();
-   else {
-    repair_t = start_t+ACE_Time_Value(period_*i,0)-ACE_OS::gettimeofday ();
-    }
+      else {
+        repair_t = start_t+ACE_Time_Value(period_*i,0)-ACE_OS::gettimeofday ();
+      }
 
-  timeval tv;
+      timeval tv;
 
-tv.tv_sec = server_load_;
-tv.tv_usec = 0;
+      tv.tv_sec = server_load_;
+      tv.tv_usec = 0;
 
-DSUI_EVENT_LOG (WORKER_GROUP_FAM, RUNNING_SUBTASK, sched_param.task_id, 0, NULL);
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, RUNNING_SUBTASK, 0, sizeof(Object_ID), (char*)&tmp);
 
-CPULoad::run(tv);
+      CPULoad::run(tv);
 
-DSUI_EVENT_LOG (WORKER_GROUP_FAM, FINISHING_SUBTASK, sched_param.task_id, 0, NULL);
+      DSUI_EVENT_LOG (WORKER_GROUP_FAM, FINISHING_SUBTASK, 0, sizeof(Object_ID), (char*)&tmp);
 
-  scheduler_->kokyu_dispatcher_->update_schedule (*(scheduler_current_->id ()),
-                                      Kokyu::BLOCK);
-  rand2 = 0.1*rand()/RAND_MAX;
-  if(enable_rand)
-  {
-    int sleep_t = period_*1000000-period_*rand2*1000000+repair_t.sec()*1000000+repair_t.usec();
-    if(sleep_t > 0)
-    {
-    ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d.\n",
-                (int)(period_*1000000-period_*rand2*1000000)));
-    usleep(sleep_t);
-    }
-    else
-    {
-    ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d\n", 0));
-    }
-  }
-  else
-  {
-    ACE_Time_Value current = ACE_OS::gettimeofday ();
-    int sleep_t = sched_param.deadline/10-current.sec()*1000000-current.usec();
+      scheduler_->kokyu_dispatcher_->update_schedule (*(scheduler_current_->id ()),
+                                                      Kokyu::BLOCK);
+      rand2 = 0.1*rand()/RAND_MAX;
+      if(enable_rand)
+        {
+          int sleep_t = period_*1000000-((int)(period_*rand2*1000000))+repair_t.sec()*1000000+repair_t.usec();
+          if(sleep_t > 0)
+            {
+              ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d.\n",
+                         (int)(period_*1000000-period_*rand2*1000000)));
+              usleep(sleep_t);
+            }
+          else
+            {
+              ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d\n", 0));
+            }
+        }
+      else
+        {
+          ACE_Time_Value current = ACE_OS::gettimeofday ();
+          int sleep_t = sched_param.deadline/10-current.sec()*1000000-current.usec();
 #ifdef KOKYU_DSRT_LOGGING
-    ACE_DEBUG((LM_DEBUG,"(%t|%T)NOW I AM GOING TO SLEEP FOR %d\n", sleep_t));
+          ACE_DEBUG((LM_DEBUG,"(%t|%T)NOW I AM GOING TO SLEEP FOR %d\n", sleep_t));
 #endif
-    usleep(sleep_t);
-  }
-}
+          usleep(sleep_t);
+        }
+    }
   if (enable_dynamic_scheduling)
     {
       scheduler_current_->end_scheduling_segment (name);

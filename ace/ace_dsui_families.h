@@ -1,9 +1,9 @@
-// $Id$
+/* $Id$*/
 // Automatically generated header file "ace_dsui_families.h"  by dsui-parse.py 
 #ifndef _ace_DSUI_FAMILIES_H
 #define _ace_DSUI_FAMILIES_H
 
-#define NUM_FAMILIES 1
+#define ace_NUM_FAMILIES 1
 
 /* DSUI Family: MSG_QUEUE
  * "Message Queue events"
