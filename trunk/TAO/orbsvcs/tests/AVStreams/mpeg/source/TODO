@@ -10,7 +10,8 @@ Things to do
 
 - Clear the semaphores on the client and the server!
 
-- ORBport 0
+- Semaphore on the client side is exclusive ?! Sometimes one
+  client blocks forever when the server exits
 
 - rttag is enabled with -r
   does it work ?
