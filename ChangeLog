@@ -1,3 +1,10 @@
+Thu Feb 17 09:48:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* protocols/ace/RMCast/RMCast.mpc:
+	* protocols/ace/TMCast/TMCast.mpc:
+
+	  Added Pkgconfig_Files sections.
+
 Thu Feb 17 08:32:08 2005  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
