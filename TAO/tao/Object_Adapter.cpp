@@ -849,18 +849,22 @@ TAO_Object_Adapter::Single_Threaded_POA_Lock::Single_Threaded_POA_Lock (TAO_POA 
   : poa_ (poa),
     servant_ (servant)
 {
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->poa_.policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
       this->servant_->_single_threaded_poa_lock ().acquire ();
     }
+#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 TAO_Object_Adapter::Single_Threaded_POA_Lock::~Single_Threaded_POA_Lock (void)
 {
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->poa_.policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
       this->servant_->_single_threaded_poa_lock ().release ();
     }
+#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 ////////////////////////////////////////////////////////////////////////////////

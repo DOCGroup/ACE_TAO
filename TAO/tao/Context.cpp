@@ -1,6 +1,10 @@
 // $Id$
 
+
 #include "tao/Context.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
@@ -167,3 +171,5 @@ CORBA_ContextList::_destroy (void)
   if (current == 0)
     delete this;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

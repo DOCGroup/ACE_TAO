@@ -70,7 +70,6 @@ ORB_CORE_FILES = \
   Any \
   CurrentC \
   CurrentS \
-  Context \
   Exception \
   Environment \
   Object \
@@ -117,6 +116,7 @@ POA_FILES += \
   Forwarding_Servant
 
 ORB_CORE_FILES += \
+  Context \
   Request \
   NVList
 
