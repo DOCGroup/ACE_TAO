@@ -61,7 +61,7 @@ private:
   RTCORBA::RTORB_var rt_orb_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
-  PortableServer::POA_var child_poa_;
+  RTPortableServer::POA_var child_poa_;
   RT_Properties *rt_object_properties_;
   RT_Properties *rt_poa_properties_;
 };

@@ -23,18 +23,21 @@
 //          -Wb,post_include="ace/post.h" \
 //          PortableServer.pidl
 //
-//   After the file is generated a patch must be applied.  The patch:
+//   After the file is generated a patch from the diffs directory must
+//   be applied.  The patch:
 //
 //   - Disables parts of the code under certain configurations.
-//   - Eliminates cycles in the include dependencies.
-//   - Removes the extra environment option for (a) incarnate (b)
-//   etherealize (c) preinvoke and (d) postinvoke
-//   - Adds non-idl components of PortableServer to the namespace.
-//   This includes (a) Servant (b) ServantBase (c) RefCountServantBase
-//   (d) Cookie (e) ObjectId_to_string (f) string_to_ObjectId (g)
-//   ObjectId_to_wstring (h) wstring_to_ObjectId (i) ServantBase_var
-//   (j) DynamicImplementation (k) LocalServantBase
 //
+//   - Eliminates cycles in the include dependencies.
+//
+//   - Removes the extra environment option for (a) incarnate (b)
+//     etherealize (c) preinvoke and (d) postinvoke
+//
+//   - Adds non-idl components of PortableServer to the namespace.
+//     This includes (a) Servant (b) ServantBase (c) RefCountServantBase
+//     (d) Cookie (e) ObjectId_to_string (f) string_to_ObjectId (g)
+//     ObjectId_to_wstring (h) wstring_to_ObjectId (i) ServantBase_var
+//     (j) DynamicImplementation (k) LocalServantBase
 //
 // ================================================================
 

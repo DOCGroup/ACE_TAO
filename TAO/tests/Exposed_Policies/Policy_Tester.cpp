@@ -180,10 +180,14 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
       PortableServer::POAManager_var poa_mgr =
         PortableServer::POAManager::_nil ();
 
-      this->child_poa_ =
+      object =
         this->poa_->create_POA ("Child_POA",
                                 poa_mgr ,
                                 poa_policy_list);
+
+      this->child_poa_ =
+        RTPortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Create a Corba Object reference, using the policies
       // set at the POA level.
@@ -229,12 +233,8 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
       // Create a Corba Object reference, using the policies
       // set at the POA level.
 
-      // @@ Shortcut - The following code is not definitive, and
-      //               the cast is only used to access a RTPortableServer::POA
-      //               method that isn't currently accessible otherwise.
-
       object =
-        ((TAO_POA*)this->child_poa_.ptr ())->create_reference_with_priority
+        this->child_poa_->create_reference_with_priority
         ("IDL:Counter:1.0",
          this->rt_object_properties_->priority (),
          ACE_TRY_ENV);
