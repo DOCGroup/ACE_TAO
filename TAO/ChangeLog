@@ -72,7 +72,7 @@ Wed Aug  6 22:10:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  FTORB would try to make simple calls, like trying to contact a
 	  naming service. The application can't do much if TAG_FT_GROUP
 	  isn't available. Thanks to Huang-Min Huang for reporting the
-	  problem. 
+	  problem.
 
 Wed Aug  6 19:09:00 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -88,7 +88,7 @@ Wed Aug  6 19:09:00 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
         * performance-tests/Latency/Collocation/README:
         * performance-tests/Latency/Collocation/Makefile:
         * performance-tests/Latency/Collocation/svc.conf:
-          Simple test to measure round-trip latency when client and server 
+          Simple test to measure round-trip latency when client and server
           are collocated. Both client and server are single-threaded.
           Collocation strategy used for testing is the "Thru_POA".
 
