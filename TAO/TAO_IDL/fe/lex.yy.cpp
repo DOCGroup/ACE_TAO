@@ -605,7 +605,7 @@ char *tao_yytext_ptr;
 #line 1 "fe/idl.ll"
 #define INITIAL 0
 #line 3 "fe/idl.ll"
-/*  $Id: idl.ll,v 1.28 1999/05/06 18:24:25 coryan Exp $
+/*  $Id: idl.ll,v 1.29 1999/05/17 02:15:08 nanbor Exp $
 
 COPYRIGHT
 
@@ -1185,7 +1185,7 @@ case 47:
 TAO_YY_RULE_SETUP
 #line 168 "fe/idl.ll"
 {
-		  tao_yylval.strval = "::";
+		  tao_yylval.strval = (char *) "::";
 		  return IDL_SCOPE_DELIMITOR;
 		}
 	TAO_YY_BREAK
@@ -2339,7 +2339,7 @@ idl_parse_line_and_file(char *buf)
     continue;
   *r = 0;
   if (*h == '\0')
-    idl_global->set_filename(new String("standard input"));
+    idl_global->set_filename((const char *) new String("standard input"));
   else
     {
       long i;
@@ -2354,7 +2354,7 @@ idl_parse_line_and_file(char *buf)
 	  h[i] = h[j];
         }
       h[i] = '\0';
-      idl_global->set_filename(new String(h));
+      idl_global->set_filename((const char *) new String(h));
     }
   int in_main_file = I_FALSE;
   if (idl_global->filename()->compare(idl_global->real_filename())

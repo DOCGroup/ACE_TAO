@@ -78,8 +78,8 @@ extern void             DRV_usage ();
 extern void             DRV_pre_proc (char *myfile);
 
 extern void             DRV_cpp_init ();
-extern void             DRV_cpp_putarg (char *str);
-extern void             DRV_cpp_new_location (char *new_loc);
+extern void             DRV_cpp_putarg (const char *str);
+extern void             DRV_cpp_new_location (const char *new_loc);
 
 extern void             DRV_fork();
 extern int              DRV_check_gperf ();

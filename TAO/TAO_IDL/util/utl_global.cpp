@@ -264,7 +264,7 @@ IDL_GlobalData::filename (void)
   return this->pd_filename;
 }
 void
-IDL_GlobalData::set_filename (String *f)
+IDL_GlobalData::set_filename (const char *f)
 {
   this->pd_filename = f;
 }
@@ -276,7 +276,7 @@ IDL_GlobalData::main_filename (void)
   return this->pd_main_filename;
 }
 void
-IDL_GlobalData::set_main_filename (String *n)
+IDL_GlobalData::set_main_filename (const char *n)
 {
   this->pd_main_filename = n;
 }
@@ -288,7 +288,7 @@ IDL_GlobalData::real_filename (void)
   return this->pd_real_filename;
 }
 void
-IDL_GlobalData::set_real_filename (String *n)
+IDL_GlobalData::set_real_filename (const char *n)
 {
   this->pd_real_filename = n;
 }
@@ -329,31 +329,31 @@ IDL_GlobalData::stripped_filename (void)
   return this->pd_stripped_filename;
 }
 void
-IDL_GlobalData::set_stripped_filename (String *nm)
+IDL_GlobalData::set_stripped_filename (const char *nm)
 {
   this->pd_stripped_filename = nm;
 }
 
 // Get or set cache value for argv[0]
-char *
+const char *
 IDL_GlobalData::prog_name (void)
 {
   return this->pd_prog_name;
 }
 void
-IDL_GlobalData::set_prog_name (char *pn)
+IDL_GlobalData::set_prog_name (const char *pn)
 {
   this->pd_prog_name = pn;
 }
 
 // Get or set location to find C preprocessor
-char *
+const char *
 IDL_GlobalData::cpp_location (void)
 {
   return this->pd_cpp_location;
 }
 void
-IDL_GlobalData::set_cpp_location (char *l)
+IDL_GlobalData::set_cpp_location (const char *l)
 {
   this->pd_cpp_location = l;
 }
@@ -371,13 +371,13 @@ IDL_GlobalData::set_compile_flags (long cf)
 }
 
 // Get or set BE to be used
-char *
+const char *
 IDL_GlobalData::be (void)
 {
   return this->pd_be;
 }
 void
-IDL_GlobalData::set_be (char *nbe)
+IDL_GlobalData::set_be (const char *nbe)
 {
   this->pd_be = nbe;
 }
@@ -390,7 +390,7 @@ IDL_GlobalData::local_escapes (void)
   return this->pd_local_escapes;
 }
 void
-IDL_GlobalData::set_local_escapes (char *e)
+IDL_GlobalData::set_local_escapes (const char *e)
 {
   this->pd_local_escapes = e;
 }
