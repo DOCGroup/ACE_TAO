@@ -46,7 +46,7 @@ public:
 
 	TAO_RTScheduler_Manager (void);
   /// Constructor.
-  TAO_RTScheduler_Manager (PortableInterceptor::ORBInitInfo_ptr);
+  TAO_RTScheduler_Manager (TAO_ORB_Core*);
 
   ///
   void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler);
@@ -89,7 +89,7 @@ private:
 
   TAO_RTScheduler_Manager (const TAO_RTScheduler_Manager &);
   void operator= (const TAO_RTScheduler_Manager &);
-  PortableInterceptor::ORBInitInfo_var info_;
+  TAO_ORB_Core* orb_;
 
 private:
   RTScheduling::Scheduler_var rtscheduler_;

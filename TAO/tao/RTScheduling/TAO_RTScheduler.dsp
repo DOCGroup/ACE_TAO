@@ -176,7 +176,15 @@ SOURCE=.\RTScheduler_Loader.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RTScheduler_Manager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTSchedulerC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Scheduler.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -208,15 +216,15 @@ SOURCE=.\RTScheduler_Loader.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\RTSchedulerC.h
+SOURCE=.\RTScheduler_Manager.h
 # End Source File
-# End Group
-# Begin Group "Inline Files"
-
-# PROP Default_Filter ".i"
 # Begin Source File
 
-SOURCE=.\RTSchedulerC.i
+SOURCE=.\RTSchedulerC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Scheduler.h
 # End Source File
 # End Group
 # Begin Group "Template Files"
@@ -231,5 +239,9 @@ SOURCE=.\RTSchedulerC.i
 SOURCE=.\TAO_RTScheduler.rc
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\RTScheduler_Manager.i
+# End Source File
 # End Target
 # End Project

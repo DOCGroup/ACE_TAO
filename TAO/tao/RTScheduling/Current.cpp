@@ -1,11 +1,13 @@
 //$Id$
 #include "Current.h"
-#include "ORB_Core.h"
+#include "tao/ORB_Core.h"
 #include "Distributable_Thread.h"
 
-TAO_Scheduler_Current::TAO_Scheduler_Current (TAO_ORB_Core* orb)
+
+
+TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
 {
-  this->orb_ = orb;
+	this->orb_ = orb;
 }
 
 void
@@ -66,12 +68,17 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name
 {
 
   ACE_DEBUG ((LM_DEBUG,
-	      "TAO_RTScheduler_Current::end_scheduling_segment\n"));
+		      "TAO_RTScheduler_Current::end_scheduling_segment\n"));
 
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
   if (impl == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Probably No Matching begin_scheduling_segment/n"));
+		  
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+    }
   
   impl->end_scheduling_segment (name
 				ACE_ENV_ARG_PARAMETER);
@@ -217,12 +224,15 @@ TAO_RTScheduler_Current::implementation (void)
 }
 
 TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb)
+  :orb_ (orb),
+   dt_ (RTScheduling::DistributableThread::_nil ()),
+   previous_current_ (0)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
-  this->orb_ = orb;
+
   CORBA::Object_ptr scheduler_obj = this->orb_->object_ref_table ().resolve_initial_references ("RTScheduler"
 												ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -230,6 +240,31 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb)
   this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj
 						       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+}
+
+TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
+			   RTScheduling::Current::IdType guid,
+			   const char * name,
+			   CORBA::Policy_ptr sched_param,
+			   CORBA::Policy_ptr implicit_sched_param,
+			   RTScheduling::DistributableThread_ptr dt,
+			   TAO_RTScheduler_Current_i* prev_current)
+  : orb_ (orb),
+    guid_ (guid),
+    name_ (name),
+    sched_param_ (sched_param),
+    implicit_sched_param_ (implicit_sched_param),
+    dt_ (RTScheduling::DistributableThread::_duplicate (dt)),
+    previous_current_ (prev_current)
+{
+  CORBA::Object_ptr scheduler_obj = this->orb_->object_ref_table ().resolve_initial_references ("RTScheduler"
+												ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj
+						       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
 }
 
 void
@@ -240,38 +275,99 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
-  
-  RTScheduling::Current::IdType guid = 0;
-  
-  //DT pointer
-  RTScheduling::DistributableThread_ptr dt;
-  
-  if (CORBA::is_nil (this->dt_.in ()))
+    
+  if (CORBA::is_nil (this->dt_.in ())) // Check if it is a new Scheduling Segmnet
     {
       //Generate GUID
-      guid = ACE_OS::rand (); //Will be replaced by the ACE guid generator
+      this->guid_ = ACE_OS::rand (); //Will be replaced by the ACE guid generator
       
-      this->scheduler_->begin_new_scheduling_segment (guid,
+      this->scheduler_->begin_new_scheduling_segment (this->guid_,
 						      name,
 						      sched_param,
-						      implicit_sched_param);
+						      implicit_sched_param
+						      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       //Create new DT.
       this->dt_ = TAO_DistributableThread_Factory::create_DT ();
       
+      //Add new DT to map
+      int result = this->orb_->dt_hash ()->bind (this->guid_,
+						 this->dt_);
+
+      if (result != 0)
+	this->cancel_thread ();
+      
+      this->name_ = name;
+      this->sched_param_ = sched_param;
+      this->implicit_sched_param_ = implicit_sched_param;      
+
     }
+  else //Nested segment
+    {
+      if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
+	this->cancel_thread ();
+
+      // Inform scheduler of start of nested
+      // scheduling segment.
+      this->scheduler_->begin_nested_scheduling_segment
+	(this->guid_,
+	 name,
+	 sched_param,
+	 implicit_sched_param
+	 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      TAO_TSS_Resources *tss =
+	TAO_TSS_RESOURCES::instance ();
+      
+      TAO_RTScheduler_Current_i* new_current;
+	ACE_NEW_THROW_EX (new_current,
+			  TAO_RTScheduler_Current_i (this->orb_,
+						     this->guid_,
+						     name,
+						     sched_param,
+						     implicit_sched_param,
+						     this->dt_,
+						     this),
+			  CORBA::NO_MEMORY (
+					    CORBA::SystemException::_tao_minor_code (
+					  TAO_DEFAULT_MINOR_CODE,
+					  ENOMEM),
+					  CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      tss->rtscheduler_current_impl_ = new_current;
+    }
+  
   
 }
 
-   
+
 void 
 TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
-						    CORBA::Policy_ptr sched_param,
-						    CORBA::Policy_ptr implicit_sched_param
-						    ACE_ENV_SINGLE_ARG_DECL)
+						      CORBA::Policy_ptr sched_param,
+						      CORBA::Policy_ptr implicit_sched_param
+						      ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
+  // Check if DT has been cancelled
+  if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
+    this->cancel_thread ();
+    
+  // Let scheduler know of the updates.
+  this->scheduler_->update_scheduling_segment (this->guid_,
+					       name,
+					       sched_param,
+					       implicit_sched_param
+					       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  // Remember the new values.
+  this->sched_param_ = sched_param;
+  this->implicit_sched_param_ = implicit_sched_param;
+  this->name_ = name;
 }
 
 void 
@@ -279,6 +375,40 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name
 						 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (!CORBA::is_nil (this->dt_.in ()))
+    {
+      // Check if DT has been cancelled
+      if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
+	this->cancel_thread ();
+
+      if (this->previous_current_ == 0)
+	{
+	  // Let the scheduler know that the DT is
+	  // terminating.
+	  this->scheduler_->end_scheduling_segment(this->guid_,
+						   name
+						   ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	  
+	  // Cleanup DT.
+	  this->cleanup_DT ();
+	  
+	} else { // A Nested segment.
+	  
+	  // Inform scheduler of end of nested
+	  // scheduling segment.
+	  this->scheduler_->end_nested_scheduling_segment (this->guid_,
+							   name,
+							   this->previous_current_->sched_param_
+							   ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	  
+	  // Cleanup current.
+	  this->cleanup_current ();
+	}
+    }
+  else ACE_DEBUG ((LM_DEBUG,
+		   "No matching begin_scheduling_segment\n"));
 }
 
 RTScheduling::DistributableThread_ptr 
@@ -330,4 +460,31 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 		return 0;
+}
+
+void
+TAO_RTScheduler_Current_i::cancel_thread (void)
+{
+}
+
+void
+TAO_RTScheduler_Current_i::cleanup_DT (void)
+{
+  // Remove DT from map.
+  this->orb_->dt_hash ()->unbind (this->guid_);
+
+  // Cleanup current.
+  cleanup_current ();
+}
+
+void
+TAO_RTScheduler_Current_i::cleanup_current (void)
+{
+  TAO_TSS_Resources *tss =
+    TAO_TSS_RESOURCES::instance ();
+  
+  tss->rtscheduler_current_impl_ = this->previous_current_;  
+
+  // Delete this current.
+  delete this;
 }

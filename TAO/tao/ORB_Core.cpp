@@ -36,6 +36,8 @@
 
 #include "Protocols_Hooks.h"
 
+#include "Sequence_T.h"
+
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 # include "Buffering_Constraint_Policy.h"
@@ -120,6 +122,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     orb_params_ (),
     init_ref_map_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE),
     object_ref_table_ (),
+    dt_hash_(),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
 #if 0
@@ -2818,6 +2821,21 @@ TAO_ORB_Core::init_ref_map ()
 {
   return &this->init_ref_map_;
 }
+
+
+TAO_ORB_Core::DT_Hash_Map*
+TAO_ORB_Core::dt_hash (void)
+{
+  return &this->dt_hash_;
+}
+
+u_long
+TAO_DTId_Hash::operator () (const IdType &id) const
+{
+  return ACE::hash_pjw ((const char *) id.get_buffer (),
+                        id.length ());
+}
+
 
 // ****************************************************************
 

@@ -169,6 +169,30 @@ public:
 
 };
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @class TAO_DTId_Hash
+ *
+ * @brief Hashing class for Distributable Thread Ids.
+ *
+ * Define the hash() method for Object Ids.
+ */
+
+typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
+class TAO_Export TAO_DTId_Hash
+{
+public:
+
+  /// Returns hash value.
+  u_long operator () (const IdType &id) const;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+
 // ****************************************************************
 
 /**
@@ -929,6 +953,11 @@ public:
   /// Return a pointer to the -ORBInitRef map.
   InitRefMap * init_ref_map (void);
 
+  typedef ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Null_Mutex> DT_Hash_Map;
+
+  ///Return a pointer to the Distributable Thread Hash Map.
+  DT_Hash_Map * dt_hash (void);
+
 protected:
 
   /// Destructor is protected since the ORB Core is a reference
@@ -1080,6 +1109,8 @@ protected:
   /// reference.  It is needed for supporting local objects in the
   /// resolve_initial_references() mechanism.
   TAO_Object_Ref_Table object_ref_table_;
+
+  DT_Hash_Map dt_hash_;
 
   /// The ORBid for this ORB.
   char *orbid_;
