@@ -825,7 +825,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       // Close down the handle if no one wants to use it.
       if (thr_handle == &handle)
-	::CloseHandle (thr_handle);
+	::CloseHandle (handle);
 
       if (*thr_handle != 0)
 	return 0;
