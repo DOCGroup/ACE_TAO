@@ -46,10 +46,10 @@ class Mem_Pool_Node
 // more memory if we keep them in a separate data structure.
 {
 public:
-  TYPE *addr () { return &this->obj_; }
+  TYPE *addr (void) { return &this->obj_; }
   // return the address of free memory
 
-  Mem_Pool_Node<TYPE> *get_next () { return this->next_; }
+  Mem_Pool_Node<TYPE> *get_next (void) { return this->next_; }
   // get the next Mem_Pool_Node
 
   void  set_next (Mem_Pool_Node<TYPE> * ptr) { this->next_ = ptr; }
@@ -71,7 +71,7 @@ public:
   // Create a cached memory poll with <n_chunks> chunks 
   // each with sizeof (TYPE) size.  
 
-  ~Cached_Memory_Pool_Allocator ();
+  ~Cached_Memory_Pool_Allocator (void);
   // clear things up
 
   void* malloc (size_t);
@@ -93,14 +93,14 @@ Cached_Memory_Pool_Allocator<TYPE, LOCK>::Cached_Memory_Pool_Allocator (size_t n
   ACE_NEW (this->pool_, TYPE [n_chunks]);
   // ERRNO could be lost because this is within ctor
   
-  for (size_t c = 0 ; c < n_chunks ; c ++)
+  for (size_t c = 0 ; c < n_chunks ; c++)
     this->free_list_.add (new (&this->pool_ [c]) Mem_Pool_Node<TYPE> ());
   // put into free list using placement contructor, no real memory
   // allocation in the above new
 }
 
 template <class TYPE, class LOCK>
-Cached_Memory_Pool_Allocator<TYPE, LOCK>::~Cached_Memory_Pool_Allocator ()
+Cached_Memory_Pool_Allocator<TYPE, LOCK>::~Cached_Memory_Pool_Allocator (void)
 {
   delete [] this->pool_;
 }
@@ -331,7 +331,7 @@ main (int, char *[])
   Cached_Memory_Pool_Allocator<memory_chunk, ACE_Thread_Mutex> mem_allocator (48);
   ACE_Profile_Timer ptime;
   ACE_Profile_Timer::ACE_Elapsed_Time et[ACE_ALLOC_STRATEGY_NO];
-  ACE_Allocator *alloc_strategy [] = { NULL, &mem_allocator };
+  ACE_Allocator *alloc_strategy[] = { NULL, &mem_allocator };
   char *alloc_name[] = { "Default", "Cached Memory" };
 
   for (int i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
@@ -346,7 +346,7 @@ main (int, char *[])
 
       ptime.start ();
       // Generate messages and pass them through the pipeline.
-      produce (worker_task[0], alloc_strategy [i]);
+      produce (worker_task[0], alloc_strategy[i]);
 
       // Wait for all the threads to reach their exit point.
     
@@ -360,7 +360,7 @@ main (int, char *[])
     }
 
   for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
-    ACE_DEBUG ((LM_DEBUG, "Elapsed time using %s allocation strategy: %f sec\n", alloc_name [i], et[i].real_time));
+    ACE_DEBUG ((LM_DEBUG, "Elapsed time using %s allocation strategy: %f sec\n", alloc_name[i], et[i].real_time));
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Exiting...\n"));
 #else
