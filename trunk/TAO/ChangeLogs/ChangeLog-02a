@@ -1,3 +1,9 @@
+Sat Feb 19 20:24:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp
+	  (parse_collection_arg): Initialized <aux> to 0 to avoid MSVC
+	  warning.
+
 Sat Feb 19 18:47:22 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/decode.cpp:
