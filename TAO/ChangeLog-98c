@@ -1,3 +1,13 @@
+Wed Jul  1 1:55:23 1998 Jeff Parsons <jp4@cs.wustl.edu>
+
+	* TAO/tests/Cubit/TAO/DII_Cubit/Makefile: It works, at least with
+	SunCC. It builds the DII client and also the IDL server if
+	necessary (since we run it before running client.exe) -thanks
+	to David Levine for that.
+	* TAO/tests/Cubit/TAO/DII_Cubit/client.h, cpp: Now builds and
+	executes on Unix and NT. Also added some macros for the
+	environment checking inside the operations.
+
 Wed Jul  1 10:28:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_interface.h (be_type): Fixed the warnings
