@@ -32,11 +32,11 @@
 
 static char *server_host = ACE_DEFAULT_SERVER_HOST;
 static int server_port = ACE_DEFAULT_SERVER_PORT;
-static int threads = 2;
+// unused:  static int threads = 2;
 static int iterations = 50;
 static int debug = 0;
 static int remote = 0;
-static int tokens = 5;
+// unused:  static int tokens = 5;
 
 static void *
 run_thread (void *vp)
@@ -198,7 +198,7 @@ main (int argc, char* argv[])
   // Wait for all threads to exit.
   mgr->wait ();
 
-  return 42;
+  return 0;
 }
 
 #else
