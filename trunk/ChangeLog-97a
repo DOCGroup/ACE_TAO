@@ -1,3 +1,23 @@
+Tue Apr 01 09:55:07 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: protected definition of struct flock on VxWorks,
+	  because it defines that type in sys/fcntlcom.h.  (It doesn't
+	  appear to support flock (), though.)  Thanks to Dave
+	  Mayerhoefer <m210229@svappl36.mdc.com> for reporting this.
+
+	* ace/OS.h: define ACE_hrtime_t as u_longlong_t gcc, because
+	  its long long types are only 4 bytes long.  Its longlong_t
+	  types are 8 bytes.  Also made ACE_hrtime_t unsigned for
+	  other than gcc on Unix platforms.
+
+	* ace/OS.* (gethrtime), config-vxworks-ghs-1.8.h: added support
+	  for PowerPC with Green Hills compiler.  Thanks to Dave
+	  Mayerhoefer <m210229@svappl36.mdc.com> for providing the
+	  readPPCTimeBase assembler routine.
+
+	* ace/config-vxworks*.h: removed #include of vxWorks.h because
+	  its no longer necessary with the TimeValue.h merged into OS.h.
+
 Mon Mar 31 22:36:55 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config.cpp (process_directives): Return -1 if
