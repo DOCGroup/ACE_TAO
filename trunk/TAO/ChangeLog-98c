@@ -1,5 +1,8 @@
 Tue Oct 27 08:39:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+          wrapped some final return 0 statements with ACE_NOTREACHED.
+
         * TAO_IDL/driver/drv_preproc.cpp: reverted to version 1.29
           because 1.30 doesn't work.
 
