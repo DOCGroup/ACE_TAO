@@ -1,3 +1,13 @@
+Fri Jul  9 16:41:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Persistent_Grid/Grid_i.cpp:
+	* examples/Persistent_Grid/Grid_i.h:
+	* examples/Persistent_Grid/Makefile:
+	* examples/Persistent_Grid/Simple_util.cpp:
+	* examples/Persistent_Grid/server.cpp: Implemented Dr.Schmidt's
+	  suggestions. Did a bit a code clean up. Tested on SunCC 5.0 and
+	  g++ on SunOS5.5.1
+
 Fri Jul 09 16:12:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
