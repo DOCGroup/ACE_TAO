@@ -90,6 +90,17 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
         }
 
       break;
+    case be_sequence::MNG_VALUE:
+      if (node->unbounded ())
+        {
+          *os << "TAO_Unbounded_Valuetype_Sequence<";
+        }
+      else
+        {
+          *os << "TAO_Bounded_Valuetype_Sequence<";
+        }
+
+      break;
     case be_sequence::MNG_STRING:
       if (node->unbounded ())
         {
@@ -144,7 +155,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
                   be_visitor_context (*this->ctx_),
                   0);
 
-  be_visitor_sequence_base_template_args visitor (ctx, 
+  be_visitor_sequence_base_template_args visitor (ctx,
                                                   node);
 
   ctx->state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
@@ -158,7 +169,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
                         -1);
     }
 
-  // Find out if the sequence is of a managed type and if 
+  // Find out if the sequence is of a managed type and if
   // it is bounded or not.
   if (node->managed_type () == be_sequence::MNG_STRING
       || node->managed_type () == be_sequence::MNG_WSTRING)
@@ -225,6 +236,7 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
     {
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
+    case be_sequence::MNG_VALUE:
       if (node->unbounded ())
         {
           this->gen_unbounded_obj_sequence (node);
@@ -251,41 +263,41 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
       break;
     default: // Not a managed type.
       if (node->unbounded ())
-	      {
-	        // TAO provides extensions for octet sequences, first find out
-	        // if the base type is an octet (or an alias for octet)
-	        be_predefined_type *predef = 0;
+              {
+                // TAO provides extensions for octet sequences, first find out
+                // if the base type is an octet (or an alias for octet)
+                be_predefined_type *predef = 0;
 
-	        if (bt->base_node_type () == AST_Type::NT_pre_defined)
-	          {
-	            be_typedef* alias =
-		            be_typedef::narrow_from_decl (bt);
+                if (bt->base_node_type () == AST_Type::NT_pre_defined)
+                  {
+                    be_typedef* alias =
+                            be_typedef::narrow_from_decl (bt);
 
-	            if (alias == 0)
-		            {
-		              predef =
-		                be_predefined_type::narrow_from_decl (bt);
-		            }
-	            else
-		            {
-		              predef =
+                    if (alias == 0)
+                            {
+                              predef =
+                                be_predefined_type::narrow_from_decl (bt);
+                            }
+                    else
+                            {
+                              predef =
                     be_predefined_type::narrow_from_decl (
                         alias->primitive_base_type ()
                       );
-		            }
-	          }
-	        if (predef != 0)
-	          {
-	            if (predef->pt() != AST_PredefinedType::PT_octet)
+                            }
+                  }
+                if (predef != 0)
+                  {
+                    if (predef->pt() != AST_PredefinedType::PT_octet)
                 {
-		              this->gen_unbounded_sequence (node);
+                              this->gen_unbounded_sequence (node);
                 }
-	          }
-	        else
+                  }
+                else
             {
-	            this->gen_unbounded_sequence (node);
+                    this->gen_unbounded_sequence (node);
             }
-	      }
+              }
       else
         {
           this->gen_bounded_sequence (node);
@@ -375,7 +387,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "codegen for base sequence class\n"), 
+                         "codegen for base sequence class\n"),
                         -1);
     }
 
@@ -410,7 +422,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "Bad visitor\n"), 
+                         "Bad visitor\n"),
                         -1);
     }
 
@@ -437,7 +449,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   // but we must protect against certain versions of g++.
   if (this->ctx_->tdef () != 0)
     {
-      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)" 
+      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
           << be_nl;
       *os << "typedef " << node->local_name () << "_var _var_type;\n"
           << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl;
@@ -450,19 +462,19 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (bt->base_node_type () == AST_Type::NT_pre_defined)
     {
       be_typedef* alias =
-	    be_typedef::narrow_from_decl (bt);
+            be_typedef::narrow_from_decl (bt);
 
       if (alias == 0)
-	      {
-	        predef = be_predefined_type::narrow_from_decl (bt);
-	      }
+              {
+                predef = be_predefined_type::narrow_from_decl (bt);
+              }
       else
-	      {
-	        predef =
+              {
+                predef =
             be_predefined_type::narrow_from_decl (
                 alias->primitive_base_type ()
               );
-	      }
+              }
     }
 
   // Now generate the extension...
@@ -470,13 +482,13 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       && node->unbounded ())
     {
       *os << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
-	        << node->local_name () << " (" << be_idt << be_idt_nl
-	        << "CORBA::ULong length," << be_nl
-	        << "const ACE_Message_Block* mb" << be_uidt_nl
-	        << ")" << be_uidt_nl
-	        << "  : " << node->instance_name ()
-	        << " (length, mb) {}" << "\n"
-	        << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */" << be_nl;
+                << node->local_name () << " (" << be_idt << be_idt_nl
+                << "CORBA::ULong length," << be_nl
+                << "const ACE_Message_Block* mb" << be_uidt_nl
+                << ")" << be_uidt_nl
+                << "  : " << node->instance_name ()
+                << " (length, mb) {}" << "\n"
+                << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */" << be_nl;
     }
 
   *os << be_uidt_nl << "};" << be_nl;
@@ -585,7 +597,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   *os << be_nl;
 
   // Assignment operator from a pointer.
-  *os << namebuf << " &operator= (" 
+  *os << namebuf << " &operator= ("
       << node->local_name () << " *);" << be_nl;
 
   // Assignment from _var.
@@ -601,7 +613,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
 
   // Arrow operator.
   *os << node->local_name () << " *operator-> (void);" << be_nl;
-  *os << "const " << node->local_name () 
+  *os << "const " << node->local_name ()
       << " *operator-> (void) const;" << be_nl;
   *os << be_nl;
 
@@ -666,7 +678,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
       pdt = p->pt ();
     }
 
-  // @@ (JP) Problems with constant instantiations of TAO_Object_Manager, 
+  // @@ (JP) Problems with constant instantiations of TAO_Object_Manager,
   // TAO_Pseudo_Object_Manager, TAO_SeqElem_WString_Manager and
   // TAO_SeqElem_String_Manager make these impossible right now [BUGID:676].
   if (nt != AST_Decl::NT_string
@@ -703,7 +715,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   *os << node->local_name () << " *&out (void);" << be_nl;
   *os << node->local_name () << " *_retn (void);" << be_nl;
 
-  // Generate an additional member function that 
+  // Generate an additional member function that
   // returns the underlying pointer.
   *os << node->local_name () << " *ptr (void) const;" << be_uidt_nl << be_nl;
 
@@ -724,11 +736,11 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
   char namebuf [NAMEBUFSIZE];
   be_type *bt = 0;
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, 
-                   "%s_out", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_out",
                    node->local_name ()->get_string ());
 
   // Retrieve base type.
@@ -808,7 +820,7 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
 
   *os << node->local_name () << " *&ptr_;" << be_nl;
   *os << "// Assignment from T_var not allowed." << be_nl;
-  *os << "void operator= (const " << node->local_name () 
+  *os << "void operator= (const " << node->local_name ()
       << "_var &);" << be_uidt_nl;
 
   *os << "};" << be_nl << be_nl;

@@ -51,6 +51,8 @@ public:
   virtual int visit_predefined_type (be_predefined_type *node);
   virtual int visit_interface (be_interface *node);
   virtual int visit_interface_fwd (be_interface_fwd *node);
+  virtual int visit_valuetype (be_valuetype *node);
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_enum (be_enum *node);
   virtual int visit_exception (be_exception *node);
@@ -71,7 +73,7 @@ class be_visitor_sequence_base_template_args: public be_visitor_sequence_base
   //
   // =TITLE
   // be_visitor_sequnce_base_template_args
-  // 
+  //
   // =Description
   // This is a derived class just used to override the method
   // visit_interface that generates the arguments for the
@@ -81,7 +83,7 @@ class be_visitor_sequence_base_template_args: public be_visitor_sequence_base
 public:
   be_visitor_sequence_base_template_args (be_visitor_context *ctx,
                                           be_sequence *node );
-  
+
   ~be_visitor_sequence_base_template_args (void);
   //Dtor
 
@@ -89,6 +91,10 @@ public:
   virtual int visit_interface (be_interface *node);
 
   virtual int visit_interface_fwd (be_interface_fwd *node);
+
+  virtual int visit_valuetype (be_valuetype *node);
+
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
 
   virtual int visit_predefined_type (be_predefined_type *node);
 private:
