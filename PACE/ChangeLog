@@ -1,3 +1,18 @@
+Mon Jul 17 18:29:27 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/semaphore.h:
+	* pace/win32/semaphore.inl:
+
+	  Eliminated support for these functions. Started emulation.
+
+	* pace/win32/types.h:
+
+	  Changed PACE_HANDLE to represent HANDLE (not void *).
+
+	* docs/PACE_POSIX_support.txt:
+
+	  Updated.
+
 Mon Jul 17 16:37:16 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/sched.h:

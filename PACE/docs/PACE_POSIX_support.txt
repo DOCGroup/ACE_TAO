@@ -115,3 +115,13 @@ FILE                    linux   lynxos  sunos   win32
  sched_getscheduler                             X
  sched_yield()                                  X
 .............................................................
+<semaphore.h>
+ sem_close()                                    X
+ sem_destroy()                                  X
+ sem_getvalue()                                 X
+ sem_init()                                     X
+ sem_post()                                     X
+ sem_trywait()                                  X
+ sem_unlink()                                   X
+ sem_wait()                                     X
+.............................................................
