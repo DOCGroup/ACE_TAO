@@ -1,3 +1,14 @@
+Tue Jan 14 15:10:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+
+	  Added a check and graceful exit for the case where the -H command
+	  line option is not followed by a selection (i.e., is followed by
+	  another dash-prefixed command line option or by nothing). The case
+	  where the selection exists but is invalid was already handled.
+	  Thanks to Chip Jones <jones_c@ociweb.com> for reporting the bug.
+	  This fix closes [BUGID:1422].
+
 Tue Jan 14 16:13:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/IFR_Service/Makefile.IFR_Service: Added a check for
