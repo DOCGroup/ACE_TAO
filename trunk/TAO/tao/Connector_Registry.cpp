@@ -235,6 +235,33 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
   return connector->create_profile (str);
 }
 
+char
+TAO_Connector_Registry::object_key_delimiter (const char *ior)
+{
+  if (!ior)
+    return 0; // Failure: Null IOR string pointer
+
+  TAO_ConnectorSetItor first_connector =
+    this->connectors_.begin ();
+  TAO_ConnectorSetItor last_connector =
+    this->connectors_.end ();
+
+  for (TAO_ConnectorSetItor connector = first_connector;
+       connector != last_connector;
+       ++connector)
+    {
+      if (*connector)
+        {
+          if ((*connector)->check_prefix (ior) == 0)
+            return (*connector)->object_key_delimiter ();
+        }
+    }
+
+  // Failure: None of the connectors were able to match their protocol
+  // against the provided string.
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<TAO_Connector*>;

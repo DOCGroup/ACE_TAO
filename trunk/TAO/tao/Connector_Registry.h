@@ -91,6 +91,10 @@ public:
   TAO_Profile* create_profile (TAO_InputCDR& cdr);
   // Create a profile based on the contents of <cdr>
 
+  char object_key_delimiter (const char *ior);
+  // Obtain the object key delimiter used by the protocol specified in
+  // the provided URL style IOR.
+
 private:
   TAO_ConnectorSet connectors_;
   // list of connectors currently open.
