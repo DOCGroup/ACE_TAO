@@ -1,3 +1,16 @@
+Fri Feb 11 08:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/outputdir.bor:
+          Don't use separate output directories for the output, this is
+          not used anymore after the switch to MPC.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          No need to set STATIC_DIR, DEBUG_DIR and UNICODE_DIR anymore
+
+        * include/makeinclude/recurse.bor:
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+          Removed usage of MAKE_FLAGS, was not set at all
+
 Fri Feb 11 08:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

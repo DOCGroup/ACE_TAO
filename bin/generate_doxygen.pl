@@ -14,6 +14,7 @@ require File::Path;
 $is_release = 0;
 $exclude_ace = 0;
 $exclude_tao = 0;
+$exclude_ciao = 0;
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
 $dot_path = '/usr/local/bin';
@@ -46,14 +47,13 @@ $dot_path = '/usr/local/bin';
              ,'tao_costrader'
              ,'tao_portablegroup'
              ,'tao_pss'
-             ,'tao_ifr'
-             ,'ciao_assembly_deployer'
+             ,'tao_ifr');
+@CIAO_DOCS = ('ciao_assembly_deployer'
              ,'ciao_componentserver'
-	     ,'ciao_daemon'
-	     ,'ciao_serveractivator'
-	     ,'ciao_xml_helpers'
-	     ,'ciao'
-	     );
+	       ,'ciao_daemon'
+	       ,'ciao_serveractivator'
+  	       ,'ciao_xml_helpers'
+	       ,'ciao');
 
 # Modify defaults using the command line arguments
 &parse_args ();
@@ -63,8 +63,9 @@ open(CONFIG_H, ">ace/config.h")
 print CONFIG_H "#include \"ace/config-doxygen.h\"\n";
 close (CONFIG_H);
 
-&generate_doxy_files ('ACE',     'VERSION', @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO', 'TAO/VERSION', @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('ACE',          'VERSION', @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',      'TAO/VERSION', @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('CIAO','TAO/CIAO/VERSION', @CIAO_DOCS) if (!$exclude_ciao);
 
 unlink "ace/config.h";
 
@@ -81,6 +82,8 @@ sub parse_args {
       $exclude_ace = 1;
     } elsif ($ARGV[0] eq "-exclude_tao") {
       $exclude_tao = 1;
+    } elsif ($ARGV[0] eq "-exclude_ciao") {
+      $exclude_ciao = 1;
     } elsif ($ARGV[0] eq "-verbose") {
       $verbose = 1;
     } elsif ($ARGV[0] eq "-perl_path" && $#ARGV >= 1) {
