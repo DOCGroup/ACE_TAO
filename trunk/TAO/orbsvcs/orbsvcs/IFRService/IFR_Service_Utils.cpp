@@ -29,16 +29,19 @@ TAO_IFR_Server::~TAO_IFR_Server (void)
   // Get reactor instance from TAO.
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
 
-  // Remove event handler for the ior multicast.
-  if (reactor->remove_handler (this->ior_multicast_,
-                               ACE_Event_Handler::READ_MASK)
-       == -1)
-    {
-      ACE_DEBUG ((
-          LM_DEBUG,
-          ACE_TEXT ("Interface Repository: cannot remove handler\n")
-        ));
-    }
+  if ( this->ior_multicast_ )
+  {
+    // Remove event handler for the ior multicast.
+    if (reactor->remove_handler (this->ior_multicast_,
+                                 ACE_Event_Handler::READ_MASK)
+         == -1)
+      {
+        ACE_DEBUG ((
+            LM_DEBUG,
+            ACE_TEXT ("Interface Repository: cannot remove handler\n")
+          ));
+      }
+  }
 
   CORBA::release (this->repository_);
   delete this->config_;
@@ -48,7 +51,8 @@ TAO_IFR_Server::~TAO_IFR_Server (void)
 int
 TAO_IFR_Server::init_with_orb (int argc,
                             ACE_TCHAR *argv [],
-                            CORBA::ORB_ptr orb)
+                            CORBA::ORB_ptr orb,
+                            int use_multicast_server)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -102,12 +106,14 @@ TAO_IFR_Server::init_with_orb (int argc,
       if (retval != 0)
         return retval;
 
-      retval = this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (use_multicast_server)
+      {
+        retval = this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-      if (retval != 0)
-        return retval;
-
+        if (retval != 0)
+          return retval;
+      }
       ACE_DEBUG ((LM_DEBUG,
                   "The IFR IOR is: <%s>\n",
                   this->ifr_ior_.in ()));
