@@ -16,8 +16,7 @@ namespace TAO
     }
 
     ::PortableServer::ThreadPolicyValue
-    ThreadPolicyValueSingle::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-          ACE_THROW_SPEC ((CORBA::SystemException))
+    ThreadPolicyValueSingle::policy_type ()
     {
       return ::PortableServer::SINGLE_THREAD_MODEL;
     }

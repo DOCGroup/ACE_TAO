@@ -14,8 +14,7 @@ namespace TAO
     }
 
     ::PortableServer::IdAssignmentPolicyValue
-    IdAssignmentPolicyValueUser::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-          ACE_THROW_SPEC ((CORBA::SystemException))
+    IdAssignmentPolicyValueUser::policy_type (void)
     {
       return ::PortableServer::USER_ID;
     }

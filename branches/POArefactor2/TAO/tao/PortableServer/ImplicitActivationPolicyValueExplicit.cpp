@@ -17,8 +17,7 @@ namespace TAO
     }
 
     ::PortableServer::ImplicitActivationPolicyValue
-    ImplicitActivationPolicyValueExplicit::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    ImplicitActivationPolicyValueExplicit::policy_type (void)
     {
       return ::PortableServer::NO_IMPLICIT_ACTIVATION;
     }

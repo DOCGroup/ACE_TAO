@@ -33,8 +33,7 @@ namespace TAO
       public:
         virtual ~RequestProcessingPolicyValueAOMOnly  (void);
 
-        virtual ::PortableServer::RequestProcessingPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+        virtual ::PortableServer::RequestProcessingPolicyValue policy_type (void);
     };
 
     ACE_STATIC_SVC_DECLARE (RequestProcessingPolicyValueAOMOnly)

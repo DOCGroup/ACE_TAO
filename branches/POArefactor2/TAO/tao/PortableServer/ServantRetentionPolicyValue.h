@@ -34,8 +34,7 @@ namespace TAO
       public:
         virtual ~ServantRetentionPolicyValue (void);
 
-        virtual ::PortableServer::ServantRetentionPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-          ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+        virtual ::PortableServer::ServantRetentionPolicyValue policy_type (void) = 0;
     };
   }
 }

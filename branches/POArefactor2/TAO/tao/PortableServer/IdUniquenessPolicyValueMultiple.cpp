@@ -14,8 +14,7 @@ namespace TAO
     }
 
     ::PortableServer::IdUniquenessPolicyValue
-    IdUniquenessPolicyValueMultiple::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    IdUniquenessPolicyValueMultiple::policy_type (void)
     {
       return ::PortableServer::MULTIPLE_ID;
     }

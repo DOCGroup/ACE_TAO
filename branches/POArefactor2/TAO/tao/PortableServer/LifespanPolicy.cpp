@@ -96,10 +96,10 @@ namespace TAO
     }
 
     ::PortableServer::LifespanPolicyValue
-    POA_LifespanPolicy::value (ACE_ENV_SINGLE_ARG_DECL)
+    POA_LifespanPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      return value_->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      return value_->policy_type ();
     }
 
     CORBA::PolicyType

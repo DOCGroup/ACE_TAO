@@ -16,8 +16,7 @@ namespace TAO
     }
 
     ::PortableServer::RequestProcessingPolicyValue
-    RequestProcessingPolicyValueDefaultServant::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-          ACE_THROW_SPEC ((CORBA::SystemException))
+    RequestProcessingPolicyValueDefaultServant::policy_type (void)
     {
       return ::PortableServer::USE_DEFAULT_SERVANT;
     }

@@ -1,3 +1,10 @@
+Wed Dec  8 12:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*Policy.{h,cpp}:
+          Removed environment argument and exception specification from the
+          policy_type method, it doesn't throw an exception, just returns a
+          value, so no need to throw an exception.
+
 Wed Dec  8 10:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer_Functions.{h,cpp}:

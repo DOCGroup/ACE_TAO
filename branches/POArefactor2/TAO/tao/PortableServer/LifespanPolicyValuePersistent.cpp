@@ -14,8 +14,7 @@ namespace TAO
     }
 
     ::PortableServer::LifespanPolicyValue
-    LifespanPolicyValuePersistent::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    LifespanPolicyValuePersistent::policy_type (void)
     {
       return ::PortableServer::PERSISTENT;
     }

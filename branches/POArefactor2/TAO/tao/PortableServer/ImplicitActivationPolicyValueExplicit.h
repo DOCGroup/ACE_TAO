@@ -35,8 +35,7 @@ namespace TAO
       public:
         virtual ~ImplicitActivationPolicyValueExplicit  (void);
 
-        virtual ::PortableServer::ImplicitActivationPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+        virtual ::PortableServer::ImplicitActivationPolicyValue policy_type (void);
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ImplicitActivationPolicyValueExplicit)

@@ -16,8 +16,7 @@ namespace TAO
     }
 
     ::PortableServer::RequestProcessingPolicyValue
-    RequestProcessingPolicyValueAOMOnly::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    RequestProcessingPolicyValueAOMOnly::policy_type (void)
     {
       return ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY;
     }
