@@ -1,3 +1,9 @@
+Wed Aug 18 18:00:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	  Use the new ACE_HAS_BROKEN_DGRAM_SENDV macro to workaround IRIX
+	  (and possibly other platform) problems.
+
 Wed Aug 18 17:04:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
