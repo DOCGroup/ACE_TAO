@@ -1,3 +1,9 @@
+Wed Oct 29 16:39:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Removed extra generated close brace.
+
 Wed Oct 29 15:56:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/IDL2/Traversal/Interface.hpp:
