@@ -42,6 +42,7 @@ namespace CCF
           LOCAL      ("local"),
           MODULE     ("module"),
           OUT        ("out"),
+          SEQUENCE   ("sequence"),
           SINCLUDE   ("sinclude"),
           SUPPORTS   ("supports"),
           TYPEDEF    ("typedef"),
@@ -54,6 +55,8 @@ namespace CCF
           RBRACE ("}"),
           LPAREN ("("),
           RPAREN (")"),
+          LT     ("<"),
+          GT     (">"),
           SEMI   (";"),
 
 
@@ -129,6 +132,9 @@ namespace CCF
           //
           act_typedef_begin (
             f.typedef_ (), &SemanticAction::Typedef::begin),
+
+          act_typedef_begin_seq (
+            f.typedef_ (), &SemanticAction::Typedef::begin_seq),
 
           act_typedef_declarator (
             f.typedef_ (), &SemanticAction::Typedef::declarator),
@@ -431,13 +437,14 @@ namespace CCF
 
       typedef_ =
            TYPEDEF
-        >> identifier[act_typedef_begin]
+        >> typedef_type_spec
         >> typedef_declarator_list
         >> SEMI[act_typedef_end]
         ;
 
       typedef_type_spec =
-           identifier[act_typedef_begin]
+          identifier[act_typedef_begin]
+        | SEQUENCE >> LT >> identifier[act_typedef_begin_seq] >> GT
         ;
 
       typedef_declarator_list =

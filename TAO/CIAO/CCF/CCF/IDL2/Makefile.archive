@@ -19,6 +19,7 @@ translated_units := SyntaxTree/BuiltIn.o      \
                     SyntaxTree/Interface.o    \
                     SyntaxTree/Module.o       \
                     SyntaxTree/Operation.o    \
+                    SyntaxTree/Sequence.o     \
                     SyntaxTree/Translation.o  \
                     SyntaxTree/TypeId.o       \
                     SyntaxTree/Typedef.o      \
@@ -29,6 +30,7 @@ translated_units += Traversal/BuiltIn.o       \
                     Traversal/Interface.o     \
                     Traversal/Module.o        \
                     Traversal/Operation.o     \
+                    Traversal/Sequence.o      \
                     Traversal/Translation.o
 
 translated_units += SemanticAction/Operation.o

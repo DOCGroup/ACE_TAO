@@ -30,6 +30,7 @@ namespace CCF
       keyword_table_.insert ("local"     );
       keyword_table_.insert ("module"    );
       keyword_table_.insert ("out"       );
+      keyword_table_.insert ("sequence"  );
       keyword_table_.insert ("sinclude"  );
       keyword_table_.insert ("supports"  );
       keyword_table_.insert ("typedef"   );
@@ -84,6 +85,8 @@ namespace CCF
       punctuation_table_.insert ("}");
       punctuation_table_.insert ("(");
       punctuation_table_.insert (")");
+      punctuation_table_.insert ("<");
+      punctuation_table_.insert (">");
       punctuation_table_.insert (";");
     }
 
