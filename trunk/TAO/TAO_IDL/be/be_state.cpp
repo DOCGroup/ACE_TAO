@@ -2051,18 +2051,18 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<be_state_struct_ch, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_union_disctypedefn_ch, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_union_disctypedefn_ci, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_union_public_ch, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_union_public_ci, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_union_private_ch, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_operation, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_argument, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_typedef, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_array, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_sequence, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<be_state_attribute, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<TAO_CodeGen, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<TAO_OutStream_Factory,ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<be_state_struct_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_union_disctypedefn_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_union_disctypedefn_ci, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_union_public_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_union_public_ci, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_union_private_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_operation, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_argument, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_typedef, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_array, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_sequence, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<be_state_attribute, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<TAO_OutStream_Factory, ACE_SYNCH_RECURSIVE_MUTEX>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
