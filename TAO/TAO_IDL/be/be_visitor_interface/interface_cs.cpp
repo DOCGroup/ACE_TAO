@@ -326,6 +326,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  // The _tao_release method
+  *os << "void" << be_nl
+      << node->full_name () << "::_tao_release ("
+      << bt->local_name ()
+      << "_ptr obj)" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (obj);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
   // Empty implementations so the application can override or not.
   if (node->session_component_child () == 1)
     {
