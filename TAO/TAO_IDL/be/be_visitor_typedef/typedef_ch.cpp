@@ -210,36 +210,50 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       // we can have only one call to it from any instantiation per stream
       // output statement.
 
-      char *static_decl = "";
+      const char *static_decl = "";
       AST_Module *scope = AST_Module::narrow_from_scope (tdef->defined_in ());
       
+      // If the typedef is not declared globally or in a module, the 
+      // associated array memory management function must be static.
       if (scope == 0)
         {
           static_decl = "static ";
         }
 
       // _alloc
-      *os << "ACE_INLINE " << static_decl
-          << tdef->nested_type_name (scope, "_slice") << " *";
+      *os << be_nl
+          << "ACE_INLINE " << static_decl << be_nl
+          << tdef->nested_type_name (scope, "_slice") << " *" << be_nl;
       *os << tdef->nested_type_name (scope, "_alloc") << " (void);"
           << be_nl;
       // _dup
-      *os << "ACE_INLINE " << static_decl
-          << tdef->nested_type_name (scope, "_slice") << " *";
-      *os << tdef->nested_type_name (scope, "_dup") << " (const ";
-      *os << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);"
-          << be_nl;
-      // _copy
-      *os << "ACE_INLINE " << static_decl << "void "
-          << tdef->nested_type_name (scope, "_copy") << " (";
+      *os << be_nl
+          << "ACE_INLINE " << static_decl << be_nl
+          << tdef->nested_type_name (scope, "_slice") << " *" << be_nl;
+      *os << tdef->nested_type_name (scope, "_dup")
+          << " (" << be_idt << be_idt_nl
+          << "const ";
       *os << tdef->nested_type_name (scope, "_slice")
-          << " *_tao_to, const ";
-      *os << tdef->nested_type_name (scope, "_slice") << " *_tao_from);"
-          << be_nl;
+          << " *_tao_slice" << be_uidt_nl
+          << ");" << be_uidt_nl;
+      // _copy
+      *os << be_nl
+          << "ACE_INLINE " << static_decl << be_nl
+          << "void " << tdef->nested_type_name (scope, "_copy") 
+          << " (" << be_idt << be_idt_nl;
+      *os << tdef->nested_type_name (scope, "_slice")
+          << " *_tao_to," << be_nl << "const ";
+      *os << tdef->nested_type_name (scope, "_slice")
+          << " *_tao_from" << be_uidt_nl
+          << ");" << be_uidt_nl;
       // _free
-      *os << "ACE_INLINE " << static_decl << "void "
-          << tdef->nested_type_name (scope, "_free") << " (";
-      *os << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);";
+      *os << be_nl
+          << "ACE_INLINE " << static_decl << be_nl
+          << "void " << tdef->nested_type_name (scope, "_free")
+          << " (" << be_idt << be_idt_nl;
+      *os << tdef->nested_type_name (scope, "_slice")
+          << " *_tao_slice" << be_uidt_nl
+          << ");" << be_uidt;
     }
 
   return 0;
