@@ -1760,7 +1760,7 @@ ACE_POSIX_SIG_Proactor::create_asynch_timer (ACE_Handler &handler,
   return implementation;
 }
 
-static void 
+static void
 sig_handler (int sig_num, siginfo_t *, ucontext_t *)
 {
   // Should never be called
@@ -1795,6 +1795,8 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
                        "Error:%p\n",
                        "Proactor couldnt do sigaction for the RT SIGNAL"),
                       -1);
+#else
+  ACE_UNUSED_ARG(signal_number);
 #endif
   return 0;
 }
