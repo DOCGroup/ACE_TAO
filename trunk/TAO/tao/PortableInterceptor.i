@@ -26,18 +26,20 @@ TAO_ClientRequestInterceptor_Adapter::
                       CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->valid ())
-    this->interceptor_->send_request (ri,
-                                      ACE_TRY_ENV);
+    this->interceptor_->send_request (ri
+                                      TAO_ENV_ARG_PARAMETER);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 ACE_INLINE void
-TAO_ClientRequestInterceptor_Adapter:: 
-receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,  
+TAO_ClientRequestInterceptor_Adapter::
+receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
                CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->valid ())
-    this->interceptor_->receive_reply (ri, 
-                                       ACE_TRY_ENV);
+    this->interceptor_->receive_reply (ri
+                                       TAO_ENV_ARG_PARAMETER);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 ACE_INLINE void
@@ -46,8 +48,9 @@ receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
                    CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->valid ())
-    this->interceptor_->receive_exception (ri, 
-                                            ACE_TRY_ENV);
+    this->interceptor_->receive_exception (ri
+                                           TAO_ENV_ARG_PARAMETER);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 ACE_INLINE
@@ -75,8 +78,9 @@ receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                  CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->valid ())
-    this->interceptor_->receive_request (ri,
-                                         ACE_TRY_ENV);
+    this->interceptor_->receive_request (ri
+                                         TAO_ENV_ARG_PARAMETER);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 ACE_INLINE void
@@ -85,8 +89,9 @@ send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
             CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->valid ())
-    this->interceptor_->send_reply (ri,
-                                    ACE_TRY_ENV);
+    this->interceptor_->send_reply (ri
+                                    TAO_ENV_ARG_PARAMETER);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 ACE_INLINE void
@@ -95,7 +100,8 @@ send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                 CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->valid ())
-    this->interceptor_->send_exception (ri,
-                                        ACE_TRY_ENV);
+    this->interceptor_->send_exception (ri
+                                        TAO_ENV_ARG_PARAMETER);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 #endif /* TAO_HAS_INTERCEPTORS */
