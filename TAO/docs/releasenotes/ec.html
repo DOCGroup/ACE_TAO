@@ -133,6 +133,30 @@
 	</P>
       </DD>
 
+      <DT><EM>There is no <CODE>CosEventChannel</CODE>
+	  interface</EM></DT>
+      <DD><P>This is more of a warning than an issue.
+	  TAO's Real-time Event Channel is <B>not</B> an
+	  implementation of the CORBAservices Event Channel;
+	  it provides a similar set of features,
+	  and the interfaces are also similar,
+	  but real-time applications require more control over
+	  their middleware than what the CORBA Event Channel
+	  provides.
+	</P>
+	<P>
+	  It should also be noted that the Event Channel only provides
+	  the <B>Push</B> model,
+	  since it is more predictable and it can be reuse the
+	  scheduling algorithms uses for normal function calls.
+	</P>
+	<P>It would be fairly simple to implement a standard CORBA
+	  Event Service on top of TAO's Real-time Event Channel,
+	  but this is a low priority task,
+	  since our sponsors have no need for such a beast.
+	</P>
+      </DD>
+
       <DT><EM>Further details:</EM></DT>
       <DD>
 	<P>Many lower level issues and tasks can be found in the
