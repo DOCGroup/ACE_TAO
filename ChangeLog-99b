@@ -1,5 +1,9 @@
 Sat Jan 16 13:40:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Proactor.cpp (schedule_timer): Had to add an
+ 	  ACE_SYNCH_RECURSIVE_THREAD_MUTEX in place of
+ 	  ACE_Recursive_Thread_Mutex to avoid problems when threads=0.
+
 	* ace/OS.cpp (lwp_getparams): For some reason we had to
 	  add
 
