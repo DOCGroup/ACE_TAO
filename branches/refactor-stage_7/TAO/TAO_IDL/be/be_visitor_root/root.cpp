@@ -1736,7 +1736,12 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
       // one for '#pragma instantiate ...' for the client side.
 
       *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+          << "// " << __FILE__ << ":" << __LINE__
+          << be_nl << be_nl;
+
+      *os << "#if 0 " << be_nl
+          << "/* Useful at a later date." << be_nl
+          << "At present will be commented out */" << be_nl;
 
       os->gen_ifdef_AHETI ();
 
@@ -1765,6 +1770,8 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
         }
 
       os->gen_endif_AHETI ();
+
+      *os << be_nl << "#endif /*if 0*/ " << be_nl;
     }
 
   return 0;
