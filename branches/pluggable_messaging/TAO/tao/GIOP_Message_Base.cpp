@@ -129,10 +129,10 @@ TAO_GIOP_Message_Base::send_message (TAO_Transport *transport,
                                      int two_way)
 {
   // Get the header length
-  const size_t header_len = this->header_len ();
+  const size_t header_len = TAO_GIOP_MESSAGE_HEADER_LEN ;
 
   // Get the message size offset
-  const size_t offset = this->message_size_offset ();
+  const size_t offset = TAO_GIOP_MESSAGE_SIZE_OFFSET;
 
   // Ptr to first buffer.
   char *buf = (char *) stream.buffer ();
@@ -165,11 +165,13 @@ TAO_GIOP_Message_Base::send_message (TAO_Transport *transport,
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
   // versions seem to need it though.  Leaving it costs little.
-  this->dump_msg ("send",
-                  ACE_reinterpret_cast (u_char *,
-                                        buf),
-                  stream.length ());
-  
+  if (TAO_debug_level > 2)
+    {
+      this->dump_msg ("send",
+                      ACE_reinterpret_cast (u_char *,
+                                            buf),
+                      stream.length ());
+    }
   return this->transport_message (transport,
                                   stream,
                                   two_way,
@@ -193,7 +195,7 @@ TAO_GIOP_Message_Base::
       int retval = 
         TAO_GIOP_Utils::read_bytes_input (transport,
                                           state->cdr,
-                                          this->header_len (),
+                                          TAO_GIOP_MESSAGE_HEADER_LEN ,
                                           max_wait_time);
       if (retval == -1 && TAO_debug_level > 0)
         {
@@ -224,7 +226,7 @@ TAO_GIOP_Message_Base::
           return -1;
         }
       
-      if (state->cdr.grow (this->header_len () +
+      if (state->cdr.grow (TAO_GIOP_MESSAGE_HEADER_LEN  +
                            state->message_size) == -1)
         {
           if (TAO_debug_level > 0)
@@ -237,7 +239,7 @@ TAO_GIOP_Message_Base::
       // Growing the buffer may have reset the rd_ptr(), but we want
       // to leave it just after the GIOP header (that was parsed
       // already);
-      state->cdr.skip_bytes (this->header_len ());
+      state->cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN );
     }
 
   size_t missing_data =
@@ -274,7 +276,7 @@ TAO_GIOP_Message_Base::
     {
       if (TAO_debug_level >= 4)
         {
-          size_t header_len = this->header_len ();
+          size_t header_len = TAO_GIOP_MESSAGE_HEADER_LEN ;
 
           // Need to include GIOPlite too.
           char *buf = state->cdr.rd_ptr ();
@@ -312,23 +314,23 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     {
       // Message name.
       const char *message_name = "UNKNOWN MESSAGE";
-      u_long slot = ptr[this->message_type_offset ()];
+      u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
       if (slot < sizeof (names)/sizeof(names[0]))
         message_name = names [slot];
       
       // Byte order.
-      int byte_order = ptr[this->flags_offset ()] & 0x01;
+      int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
 
       // request/reply id.
       CORBA::ULong tmp = 0;
       CORBA::ULong *id = &tmp;
       
-      if (ptr[this->message_type_offset ()] == TAO_GIOP_REQUEST ||
-          ptr[this->message_type_offset ()] == TAO_GIOP_REPLY)
+      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REQUEST ||
+          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY)
         {
           // @@ Only works if ServiceContextList is empty....
           id = ACE_reinterpret_cast (CORBA::ULong *,
-                                     (char * ) (ptr + this->header_len () + 4));
+                                     (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN  + 4));
         }
 
       // Print.
@@ -336,9 +338,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                   ASYS_TEXT ("(%P | %t):%s GIOP v%c.%c msg, ")
                   ASYS_TEXT ("%d data bytes, %s endian, %s = %d\n"),
                   label,
-                  digits[ptr[this->major_version_offset ()]],
-                  digits[ptr[this->minor_version_offset ()]],
-                  len - this->header_len (),
+                  digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
+                  digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
+                  len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
                   message_name,
                   *id));
@@ -356,7 +358,7 @@ int
 TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
 {
   const char
-    error_message [TAO_GIOP_HEADER_LEN] =
+    error_message [TAO_GIOP_MESSAGE_HEADER_LEN] =
   {
     // The following works on non-ASCII platforms, such as MVS (which
     // uses EBCDIC).
@@ -376,12 +378,12 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
 
   this->dump_msg ("send_error",
                   (const u_char *) error_message,
-                  this->header_len ());
+                  TAO_GIOP_MESSAGE_HEADER_LEN );
   
   ACE_HANDLE which = transport->handle ();
 
   int result = transport->send ((const u_char *)error_message,
-                                this->header_len ());
+                                TAO_GIOP_MESSAGE_HEADER_LEN );
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -418,7 +420,7 @@ TAO_GIOP_Message_Base::
   // static CORBA::Octet
   // I hate  this in every method. Till the time I figure out a way
   // around  I will have them here hanging around. 
-  const char close_message [TAO_GIOP_HEADER_LEN] =
+  const char close_message [TAO_GIOP_MESSAGE_HEADER_LEN] =
   {
     // The following works on non-ASCII platforms, such as MVS (which
     // uses EBCDIC).
@@ -441,7 +443,7 @@ TAO_GIOP_Message_Base::
 
   this->dump_msg ("send_close_connection",
                   (const u_char *) close_message,
-                  TAO_GIOP_HEADER_LEN);
+                  TAO_GIOP_MESSAGE_HEADER_LEN);
   
   ACE_HANDLE which = transport->handle ();
   if (which == ACE_INVALID_HANDLE)
@@ -454,7 +456,7 @@ TAO_GIOP_Message_Base::
     }
 
   if (transport->send ((const u_char *) close_message,
-                       TAO_GIOP_HEADER_LEN) == -1)
+                       TAO_GIOP_MESSAGE_HEADER_LEN) == -1)
     {
       if (TAO_orbdebug)
         ACE_ERROR ((LM_ERROR,

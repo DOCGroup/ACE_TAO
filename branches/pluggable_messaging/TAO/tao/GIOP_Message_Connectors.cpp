@@ -100,12 +100,12 @@ TAO_GIOP_Message_Connectors::validate_version (TAO_GIOP_Message_State *state)
   // Grab the read pointer
   char *buf = state->cdr.rd_ptr ();
 
-  if ((buf[this->major_version_offset ()] != this->major_version ()) ||
-       (buf[this->minor_version_offset ()] != this->minor_version ()))
+  if ((buf[TAO_GIOP_VERSION_MAJOR_OFFSET] != this->major_version ()) ||
+       (buf[TAO_GIOP_VERSION_MINOR_OFFSET] != this->minor_version ()))
     return -1;
   
-  state->giop_version.major = buf[this->major_version_offset ()];
-  state->giop_version.minor = buf[this->minor_version_offset ()];
+  state->giop_version.major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
+  state->giop_version.minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
   
   return 0;
 }

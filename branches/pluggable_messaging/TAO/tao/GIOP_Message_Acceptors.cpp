@@ -553,9 +553,9 @@ TAO_GIOP_Message_Acceptors::
 {
   char *buf = state->cdr.rd_ptr (); 
   CORBA::Octet incoming_major = 
-    buf[this->major_version_offset ()];
+    buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
   CORBA::Octet incoming_minor = 
-    buf[this->minor_version_offset ()];
+    buf[TAO_GIOP_VERSION_MINOR_OFFSET];
 
   if (this->implementations_.check_revision (incoming_major,
                                              incoming_minor) == 0)
