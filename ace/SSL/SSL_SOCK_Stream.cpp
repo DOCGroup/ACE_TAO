@@ -130,7 +130,7 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recvv");
 
-  // From <ACE_SOCK_IO::recvv>.
+  // From ACE_SOCK_IO::recvv().
 #if defined (FIONREAD)
   ACE_Handle_Set handle_set;
   handle_set.reset ();
@@ -238,13 +238,23 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
   //       scatter writes over SSL.
   for (size_t i = 0; i < total_tuples; ++i)
     {
-      ssize_t result = this->send_n (va_arg (argp, char *),
-                                     va_arg (argp, ssize_t));
+      ssize_t result = this->send (va_arg (argp, char *),
+                                   va_arg (argp, ssize_t));
 
       if (result == -1)
         {
-          va_end (argp);
-          return -1;
+          // There is a subtle difference in behaviour depending on
+          // whether or not any data was sent.  If no data was sent,
+          // then always return -1.  Otherwise return bytes_sent.
+          // This gives the caller an opportunity to keep track of
+          // which data was actually sent.
+          if (bytes_sent > 0)
+            break;
+          else
+            {
+              va_end (argp);
+              return -1;
+            }
         }
       else
         bytes_sent += result;
@@ -269,13 +279,23 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
 
   for (size_t i = 0; i < total_tuples; ++i)
     {
-      ssize_t result = this->recv_n (va_arg (argp, char *),
-                                     va_arg (argp, ssize_t));
+      ssize_t result = this->recv (va_arg (argp, char *),
+                                   va_arg (argp, ssize_t));
 
       if (result == -1)
         {
-          va_end (argp);
-          return -1;
+          // There is a subtle difference in behaviour depending on
+          // whether or not any data was received.  If no data was
+          // received, then always return -1.  Otherwise return
+          // bytes_received.  This gives the caller an opportunity to
+          // keep track of which data was actually received.
+          if (bytes_recv > 0)
+            break;
+          else
+            {
+              va_end (argp);
+              return -1;
+            }
         }
       else
         bytes_recv += result;
@@ -472,8 +492,19 @@ ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t iovcnt) const
       ssize_t result = this->send_n (iov[i].iov_base,
                                      iov[i].iov_len);
 
+
       if (result == -1)
-        return -1;
+        {
+          // There is a subtle difference in behaviour depending on
+          // whether or not any data was sent.  If no data was sent,
+          // then always return -1.  Otherwise return bytes_sent.
+          // This gives the caller an opportunity to keep track of
+          // which data was actually sent.
+          if (bytes_sent > 0)
+            break;
+          else
+            return -1;
+        }
       else
         bytes_sent += result;
     }
@@ -494,7 +525,17 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
                                      iov[i].iov_len);
 
       if (result == -1)
-        return -1;
+        {
+          // There is a subtle difference in behaviour depending on
+          // whether or not any data was read.  If no data was read,
+          // then always return -1.  Otherwise return bytes_read.
+          // This gives the caller an opportunity to keep track of
+          // which data was actually read.
+          if (bytes_read > 0)
+            break;
+          else
+            return -1;
+        }
       else
         bytes_read += result;
     }

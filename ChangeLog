@@ -1,3 +1,17 @@
+Mon Nov 12 11:41:35 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (send, recv):
+
+	  In the va_arg versions of these methods, do not use
+	  send/recv_n() to as the underlying send/recv() method.  It
+	  forces unnecessary blocking.
+
+	  Corrected return value semantics in versions of these methods
+	  that use loop to send/receive multiple buffers.  If data was
+	  sent or received than do not return -1 on error.  Instead return
+	  the amount of bytes sent/received.  This is necessary to allow
+	  the caller to keep track of sent or received data.
+
 Sun Nov 11 23:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/Date_Time_Test.cpp: Remove argv variable from
