@@ -1,3 +1,9 @@
+Fri Jan 29 11:01:50 1999 Fred Kuhns <fredk@cs,wustl.edu>
+
+  * Updated profile references in 
+      orbsvcs/Time_Service/IR_Helper.cpp
+      orbsvcs/ImplRepo_Service/ImplRepo_i.cpp
+
 Fri Jan 29 09:57:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service.cpp: 
