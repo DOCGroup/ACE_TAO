@@ -1,3 +1,31 @@
+Fri Jul 21 11:55:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/Makefile:
+
+	  Added IFR_Service to the list of directories.
+
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+
+	  Changed the logic of conditionally setting LIB
+	  and SHLIB to handle the case where interface_repo=1
+	  is set in platform_macros.GNU. Thanks to David Levine
+	  for his help with this. Also updated dependencies.
+
+	* orbsvcs/IFR_Service/Makefile:
+
+	  Added dependency to execute Makefile.TypeCodeFactory
+	  if necessary. Also updated dependencies.
+
+	* orbsvcs/tests/Makefile:
+
+	  Added InterfaceRepo to list of directories.
+
+	* orbsvcs/tests/InterfaceRepo/Makefile:
+
+	  New file, contains directories of individual IFR
+	  tests (there is only one at present, but there
+	  will be more).
+
 Thu Jul 20 23:21:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.dsp:
