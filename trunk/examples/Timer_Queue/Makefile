@@ -15,8 +15,7 @@ BIN     = main_async \
 	  main_reactor \
 	  main_thread
 
-SRC   	= $(addsuffix .cpp,$(BIN))
-OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
+PSRC   	= $(addsuffix .cpp,$(BIN))
 
 LSRC  	= Async_Timer_Queue_Test.cpp \
 	Reactor_Timer_Queue_Test.cpp \
