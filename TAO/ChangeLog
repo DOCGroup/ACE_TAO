@@ -1,3 +1,8 @@
+Mon Dec 13 08:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
+          Fixed compile problem in emulated exception case
+
 Mon Dec 13 04:35:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release:
