@@ -42,7 +42,7 @@ CORBA_Object::_nil (void)
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
 {
-  return obj;
+  return CORBA_Object::_duplicate (obj);
 }
 
 ACE_INLINE CORBA::Boolean
