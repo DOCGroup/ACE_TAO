@@ -1,3 +1,10 @@
+Sun Aug 31 15:43:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.cpp:
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp:
+          Changed const int to int in Client_Task ctor.  Thanks to Johnny
+          Willemsen <jwillemsen@remedy.nl> for this patch.
+
 Sat Aug 30 16:50:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
