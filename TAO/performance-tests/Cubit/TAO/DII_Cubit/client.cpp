@@ -19,12 +19,9 @@
 // ============================================================================
 
 #include "tao/corba.h"
-#include "ace/streams.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
-#include "ace/Env_Value_T.h"
 #include "ace/Read_Buffer.h"
-#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
 // Since we don't yet have an interface repository or dynamic-Any, we
