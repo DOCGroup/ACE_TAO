@@ -56,55 +56,55 @@ public:
   enum
   {
     // = Data and proto
-    /// regular datacol messages (regular and priority)
+    /// Undifferentiated data message
     MB_DATA     = 0x01,
-    /// protocol control
+    /// Undifferentiated protocol control
     MB_PROTO    = 0x02,
 
-    // = Control messag
-    /// line breakes (regular and priority)
+    // = Control messages
+    /// Line break (regular and priority)
     MB_BREAK    = 0x03,
-    /// pass file pointer
+    /// Pass file pointer
     MB_PASSFP   = 0x04,
-    /// post an event to an event queue
+    /// Post an event to an event queue
     MB_EVENT    = 0x05,
-    /// generate process signal
+    /// Generate process signal
     MB_SIG      = 0x06,
     /// ioctl; set/get params
     MB_IOCTL    = 0x07,
-    /// set various stream head options
+    /// Set various stream head options
     MB_SETOPTS  = 0x08,
 
     // = Control messages
-    /// acknowledge ioctl (high priority; go to head of queue)
+    /// Acknowledge ioctl (high priority; go to head of queue)
     MB_IOCACK   = 0x81,
-    /// negative ioctl acknowledge
+    /// Negative ioctl acknowledge
     MB_IOCNAK   = 0x82,
-    /// priority proto message
+    /// Priority proto message
     MB_PCPROTO  = 0x83,
-    /// generate process signal
+    /// Generate process signal
     MB_PCSIG    = 0x84,
-    /// generate read notification
+    /// Generate read notification
     MB_READ     = 0x85,
-    /// flush your queues
+    /// Flush your queues
     MB_FLUSH    = 0x86,
-    /// stop transmission immediately
+    /// Stop transmission immediately
     MB_STOP     = 0x87,
-    /// restart transmission after stop
+    /// Restart transmission after stop
     MB_START    = 0x88,
-    /// line disconnect
+    /// Line disconnect
     MB_HANGUP   = 0x89,
-    /// fatal error used to set u.u_error
+    /// Fatal error used to set u.u_error
     MB_ERROR    = 0x8a,
-    /// post an event to an event queue
+    /// Post an event to an event queue
     MB_PCEVENT  = 0x8b,
 
-    // Message class ma
-    /// Normal priority messagessks
+    // = Message class masks
+    /// Normal priority message mask
     MB_NORMAL   = 0x00,
-    /// High priority control messages
+    /// High priority control message mask
     MB_PRIORITY = 0x80,
-    /// User-defined control messages
+    /// User-defined message mask
     MB_USER     = 0x200
   };
 

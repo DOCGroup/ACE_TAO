@@ -1,3 +1,7 @@
+Tue Apr  9 11:46:52 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Block.h: Doxygen tweaks to block type enum.
+
 Tue Apr  9 11:20:19 2002  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/Server_Logging_Handler_T.cpp (handle_logging_record):
