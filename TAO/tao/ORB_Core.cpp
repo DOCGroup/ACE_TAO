@@ -1333,12 +1333,6 @@ TAO_ORB_Core::fini (void)
   if (!this->server_factory_from_service_config_)
     delete server_factory_;
 
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                              *ACE_Static_Object_Lock::instance (), 0));
-    TAO_ORB_Table::instance ()->unbind (this->orbid_);
-  }
-
   delete this->reactor_registry_;
 
   delete this;
@@ -2634,7 +2628,8 @@ TAO_TSS_Resources::~TAO_TSS_Resources (void)
 // ****************************************************************
 
 TAO_ORB_Table::TAO_ORB_Table (void)
-  : first_orb_ (0)
+  : table_ (),
+    first_orb_ (0)
 {
 }
 
@@ -2642,7 +2637,7 @@ TAO_ORB_Table::~TAO_ORB_Table (void)
 {
   for (Iterator i = this->begin ();
        i != this->end ();
-       i = this->begin ())
+       ++i)
     {
       // Destroy the ORB_Core
       (*i).int_id_->_decr_refcnt ();
@@ -2666,16 +2661,32 @@ int
 TAO_ORB_Table::bind (const char *orb_id,
                      TAO_ORB_Core *orb_core)
 {
-  if (this->first_orb_ == 0)
+  // Make sure that the supplied ORB core pointer is valid,
+  // i.e. non-zero.
+  if (orb_core == 0)
     {
-      this->first_orb_ = orb_core;
-    }
+      errno = EINVAL;
+      return -1;
+    };
+
   ACE_CString id (orb_id);
-  orb_core->_incr_refcnt ();
-  return this->table_.bind (id, orb_core);
+
+  int result = this->table_.bind (id, orb_core);
+  if (result == 0)
+    {
+      // The ORB table now owns the ORB Core.  As such, the reference
+      // count on the ORB Core is *not* increased.
+
+      // Similarly, only set the "first_orb_" member if the given ORB
+      // Core was successfully added to the ORB table.
+      if (this->first_orb_ == 0)
+        this->first_orb_ = orb_core;
+    }
+
+  return result;
 }
 
-TAO_ORB_Core*
+TAO_ORB_Core *
 TAO_ORB_Table::find (const char *orb_id)
 {
   TAO_ORB_Core *found = 0;

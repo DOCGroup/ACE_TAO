@@ -32,6 +32,9 @@ TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *oc)
 
 TAO_Adapter_Registry::~TAO_Adapter_Registry (void)
 {
+  // Deallocate adapter array in case the registry was not closed
+  // properly.
+  delete[] this->adapters_;
 }
 
 void
