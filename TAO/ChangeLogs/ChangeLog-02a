@@ -1,12 +1,19 @@
+Mon Apr 09 09:24:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Naming_Service/Makefile:
+        * examples/PluggableUDP/tests/Makefile:
+          Remove duplicate libraries that were causing warnings on KCC
+          builds.
+
 Mon Apr  9 07:13:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Loader/Server_Manager.cpp: Fixed warnings with g++.  
+        * examples/POA/Loader/Server_Manager.cpp: Fixed warnings with g++.  
 
 Mon Apr  9 06:54:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp : Was aligning a buffer that was
-	  used for supplementary purposes. This alignment was not
-	  needed. Thanks to Chris Kolhloff for poiting this out.
+        * tao/GIOP_Message_Handler.cpp : Was aligning a buffer that was
+          used for supplementary purposes. This alignment was not
+          needed. Thanks to Chris Kolhloff for poiting this out.
 
 Mon Apr  9 09:22:12 2001  Johnny Willemsen <jwillemsen@remedy>
 
@@ -15,34 +22,34 @@ Mon Apr  9 09:22:12 2001  Johnny Willemsen <jwillemsen@remedy>
 
 Sun Apr  8 20:55:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Loader/Server_Manager.cpp: Fixed a typo.
+        * examples/POA/Loader/Server_Manager.cpp: Fixed a typo.
 
 2001-04-08  Yamuna Krishnamurthy  <yamuna@macumbo.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributor.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributor.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/README:
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributor.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributor.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/README:
 
-	  Added the sender switching capability.
+          Added the sender switching capability.
 
 Sun Apr  8 08:27:05 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/POA/Forwarding/server.cpp,
-	* examples/POA/Loader/Server_Manager.cpp,
-	* examples/POA/On_Demand_Activation/server.cpp,
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp:
-	  Added comments these examples to point out why we don't need to
- 	  activate the servant managers since TAO supports the CORBA 3.0
- 	  semantics.  Thanks to Jules Colding <dsl11814@vip.cybercity.dk>
- 	  for noticing this.
+        * examples/POA/Forwarding/server.cpp,
+        * examples/POA/Loader/Server_Manager.cpp,
+        * examples/POA/On_Demand_Activation/server.cpp,
+        * examples/POA/On_Demand_Loading/Server_Manager.cpp:
+          Added comments these examples to point out why we don't need to
+          activate the servant managers since TAO supports the CORBA 3.0
+          semantics.  Thanks to Jules Colding <dsl11814@vip.cybercity.dk>
+          for noticing this.
 
-	* tao/GIOP_Message_Base.cpp: Fixed minor formatting
- 	  inconsistencies.
+        * tao/GIOP_Message_Base.cpp: Fixed minor formatting
+          inconsistencies.
 
 Sat Apr 07 20:07:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 

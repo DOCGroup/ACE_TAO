@@ -37,9 +37,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-TAO_SRVR_LIBS := -lTAO_PortableServer $(TAO_SRVR_LIBS)
-TAO_CLNT_LIBS := -lTAO_PortableServer $(TAO_CLNT_LIBS)
-
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
@@ -50,7 +47,7 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), UDP$(ext))
