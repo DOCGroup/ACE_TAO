@@ -37,8 +37,6 @@
 typedef ACE_Null_Mutex ACE_Thread_Mutex;
 #  endif /* ACE_HAS_THREADS */
 
-typedef CORBA::OctetSeq opaque;
-
 class ACE_Svc_Export IIOP // namespace
 {			
 public:
@@ -62,7 +60,7 @@ public:
     Version iiop_version;
     CORBA::String host;
     CORBA::UShort port;
-    opaque object_key;
+    TAO_opaque object_key;
 
     ProfileBody (void);
 
@@ -70,7 +68,7 @@ public:
     ProfileBody (const Version &v, 
 		 const CORBA::String &h, 
 		 const CORBA::UShort &p, 
-		 const opaque &object_key);
+		 const TAO_opaque &object_key);
 
     ~ProfileBody (void);
 

@@ -61,15 +61,12 @@
 #include "tao/sequence.h"
 #endif
 
-// defined by GIOP 1.0 protocol
-#define	TAO_GIOP_HEADER_LEN 12		
-
 // Apart from the length word, headers are specified to be arrays of
 // bytes.  They're dealt with as such, rather than using CDR routines,
 // to speed up the critical paths for message read and write.
 
 static inline CORBA::Boolean
-start_message (GIOP::MsgType type,
+start_message (TAO_GIOP_MsgType type,
 	       CDR &msg)
 {
   msg.next = msg.buffer;		// for reused streams
@@ -83,8 +80,8 @@ start_message (GIOP::MsgType type,
   msg.next [2] = 'O';
   msg.next [3] = 'P';
 
-  msg.next [4] = GIOP::MY_MAJOR;
-  msg.next [5] = GIOP::MY_MINOR;
+  msg.next [4] = MY_MAJOR;
+  msg.next [5] = MY_MINOR;
   msg.next [6] = MY_BYTE_SEX;
   msg.next [7] = (u_char) type;
 
@@ -101,7 +98,8 @@ static const char *names [] =
   "LocateRequest", 
   "LocateReply",
   "CloseConnection", 
-  "MessageError"
+  "MessageError",
+  "EndOfFile"
 };
 
 static void
@@ -114,8 +112,8 @@ dump_msg (const char *label,
       ACE_DEBUG ((LM_DEBUG, "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s\n",
                   label, digits[ptr[4]], digits[ptr[5]],
                   len - TAO_GIOP_HEADER_LEN,
- (ptr[6] == MY_BYTE_SEX) ? "my" : "other",
- (ptr[7] <= GIOP::MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
+                  (ptr[6] == MY_BYTE_SEX) ? "my" : "other",
+                  (ptr[7] <= TAO_GIOP_MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
 
       if (TAO_debug_level >= 4)
         ACE_HEX_DUMP ((LM_DEBUG, (const char*)ptr, len, " (%P|%t) data bytes\n"));
@@ -123,8 +121,8 @@ dump_msg (const char *label,
 }
 
 CORBA::Boolean
-GIOP::send_message (CDR &stream,
-		    ACE_SOCK_Stream &peer)
+TAO_GIOP::send_message (CDR &stream,
+                        ACE_SOCK_Stream &peer)
 {
   char *buf = (char *) stream.buffer;
   size_t buflen = stream.next - stream.buffer;
@@ -230,16 +228,16 @@ static const char
 close_message [TAO_GIOP_HEADER_LEN] = 
 {
   'G', 'I', 'O', 'P',
-  GIOP::MY_MAJOR, 
-  GIOP::MY_MINOR, 
+  MY_MAJOR, 
+  MY_MINOR, 
   MY_BYTE_SEX, 
-  GIOP::CloseConnection,
+  TAO_GIOP_CloseConnection,
   0, 0, 0, 0
 };
 
 void
-GIOP::close_connection (ACE_SOCK_Stream &peer, 
-			void *)
+TAO_GIOP::close_connection (ACE_SOCK_Stream &peer, 
+                            void *)
 {
   // It's important that we use a reliable shutdown after we send this
   // message, so we know it's received.
@@ -266,10 +264,10 @@ static const char
 error_message [TAO_GIOP_HEADER_LEN] = 
 {
   'G', 'I', 'O', 'P',
-  GIOP::MY_MAJOR, 
-  GIOP::MY_MINOR, 
+  MY_MAJOR, 
+  MY_MINOR, 
   MY_BYTE_SEX, 
-  GIOP::MessageError,
+  TAO_GIOP_MessageError,
   0, 0, 0, 0
 };
 
@@ -338,12 +336,12 @@ read_buffer (ACE_SOCK_Stream &peer,
 // performance.  The two read () calls can be made into one by fancy
 // buffering.  How fast could it be with both optimizations applied?
 
-GIOP::MsgType
-GIOP::read_message (ACE_SOCK_Stream &connection,
-		    CDR &msg, 
-		    CORBA::Environment &env)
+TAO_GIOP_MsgType
+TAO_GIOP::read_message (ACE_SOCK_Stream &connection,
+                        CDR &msg, 
+                        CORBA::Environment &env)
 {
-  GIOP::MsgType	retval;
+  TAO_GIOP_MsgType	retval;
   CORBA::ULong message_size;
 
   // Read the message header off the wire.
@@ -372,7 +370,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
 	  ACE_DEBUG ((LM_DEBUG,
 		      " (%P|%t) Header EOF ... peer probably aborted connection %d\n", 
                       connection.get_handle ()));
-	  return EndOfFile;
+	  return TAO_GIOP_EndOfFile;
 	  // XXX should probably find some way to report this without
 	  // an exception, since for most servers it's not an error.
 	  // Is it _never_ an error?  Not sure ...
@@ -385,7 +383,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
 		    " (%P|%t) GIOP::read_message header failed (short)\n"));
 
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
-      return MessageError;
+      return TAO_GIOP_MessageError;
     }
 
   // NOTE: if message headers, or whome messages, get encrypted in
@@ -401,7 +399,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));	// header
       ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
-      return MessageError;
+      return TAO_GIOP_MessageError;
     }
 
   // Then make sure the major version is ours, and the minor version
@@ -411,13 +409,13 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));	// header
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
-      return MessageError;
+      return TAO_GIOP_MessageError;
     }
 
   // Get the message type out and adjust the buffer's records to record
   // that we've read everything except the length.
 
-  retval = (GIOP::MsgType) msg.buffer[7];
+  retval = (TAO_GIOP_MsgType) msg.buffer[7];
   msg.skip_bytes (8);
 
   // Make sure byteswapping is done if needed, and then read the
@@ -448,10 +446,10 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
     {
       if (len == 0) 
 	ACE_DEBUG ((LM_DEBUG,
-		    " (%P|%t) GIOP::read_message body, EOF on handle %d\n", connection.get_handle ()));
+		    " (%P|%t) TAO_GIOP::read_message body, EOF on handle %d\n", connection.get_handle ()));
       else if (len < 0) 
 	ACE_DEBUG ((LM_ERROR,
-		    " (%P|%t) GIOP::read_message () body %p\n"));
+		    " (%P|%t) TAO_GIOP::read_message () body %p\n"));
       else 
 	ACE_DEBUG ((LM_ERROR,
 		    " (%P|%t) short read, only %d of %d bytes\n", len, message_size));
@@ -459,7 +457,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
       // clean up, and ...
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));	// body
       ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
-      return MessageError;
+      return TAO_GIOP_MessageError;
     }
 
   dump_msg ("recv", msg.buffer, (size_t) (message_size + TAO_GIOP_HEADER_LEN));
@@ -482,9 +480,9 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
 // call.  That is less disruptive (and error prone) in general than
 // restructuring an ORB core in terms of asynchrony.
 
-GIOP::Invocation::Invocation (IIOP_Object *data,
-			      const char *operation,
-			      CORBA::Boolean is_roundtrip) 
+TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
+                                          const char *operation,
+                                          CORBA::Boolean is_roundtrip) 
   : data_ (data),
     opname (operation),
     do_rsvp (is_roundtrip),
@@ -504,7 +502,7 @@ GIOP::Invocation::Invocation (IIOP_Object *data,
   memcpy (&my_request_id, &me, ACE_MIN (sizeof (me), sizeof (my_request_id)));
 }
 
-GIOP::Invocation::~Invocation (void)
+TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
   handler_->in_use (CORBA::B_FALSE);
 }
@@ -525,10 +523,11 @@ static const CORBA::Long _oc_opaque [] =
   0				// ... unbounded
 };
 
-CORBA::TypeCode TC_opaque (CORBA::tk_sequence,
-			  sizeof _oc_opaque,
- (u_char *) &_oc_opaque,
-			  CORBA::B_FALSE);
+CORBA::TypeCode
+TC_opaque (CORBA::tk_sequence,
+           sizeof _oc_opaque,
+           (u_char *) &_oc_opaque,
+           CORBA::B_FALSE);
 
 // Octet codes for the parameters of the ServiceContextList TypeCode
 // ...  this is a CDR encapsulation holding two parameters (like all
@@ -590,10 +589,11 @@ static const CORBA::Long _oc_svc_ctx_list [] =
   // END bytes of encapsulation 0 (sequence params)
 };
 
-static CORBA::TypeCode TC_ServiceContextList (CORBA::tk_sequence,
-					     sizeof _oc_svc_ctx_list,
-					     (u_char *) &_oc_svc_ctx_list,
-					     CORBA::B_FALSE);
+CORBA::TypeCode
+TC_ServiceContextList (CORBA::tk_sequence,
+                       sizeof _oc_svc_ctx_list,
+                       (u_char *) &_oc_svc_ctx_list,
+                       CORBA::B_FALSE);
 
 // The public API involves creating an invocation, starting it, filling
 // in request parameters, actually performing the invocation, getting
@@ -601,9 +601,9 @@ static CORBA::TypeCode TC_ServiceContextList (CORBA::tk_sequence,
 // restarted (e.g. request forwarding).  This is the start/restart entry.
 
 void
-GIOP::Invocation::start (CORBA::Environment &env)
+TAO_GIOP_Invocation::start (CORBA::Environment &env)
 {
-  const opaque	*key;
+  const TAO_opaque *key;
 
   // First try to bind to the appropriate address.  We do that here
   // since we may get forwarded to a different objref in the course of
@@ -678,7 +678,7 @@ GIOP::Invocation::start (CORBA::Environment &env)
 
   // Build the outgoing message, starting with generic GIOP header.
 
-  CORBA::Boolean bt = start_message (Request, stream);
+  CORBA::Boolean bt = start_message (TAO_GIOP_Request, stream);
 
   if (bt != CORBA::B_TRUE) 
     {
@@ -701,7 +701,7 @@ GIOP::Invocation::start (CORBA::Environment &env)
   // this message, then patched shortly before it's sent).
   //
   static CORBA::Principal_ptr anybody = 0;
-  static ServiceContextList svc_ctx;	// all zeroes
+  static TAO_GIOP_ServiceContextList svc_ctx;	// all zeroes
 
   if (stream.encode (&TC_ServiceContextList, 0, &svc_ctx, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -733,13 +733,13 @@ extern CORBA::ExceptionList __system_exceptions;
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
 
-GIOP::ReplyStatusType
-GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
+TAO_GIOP_ReplyStatusType
+TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 			  CORBA::Environment &env)
 {
   // Send Request, return on error or if we're done
 
-  if (!GIOP::send_message (stream, handler_->peer ())) 
+  if (!TAO_GIOP::send_message (stream, handler_->peer ())) 
     {
       // send_message () closed the connection; we just release it here.
       //
@@ -757,10 +757,10 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
       //
       handler_ = 0;
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
-      return SYSTEM_EXCEPTION;
+      return TAO_GIOP_SYSTEM_EXCEPTION;
     }
   if (!do_rsvp)
-    return NO_EXCEPTION;
+    return TAO_GIOP_NO_EXCEPTION;
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
@@ -798,13 +798,13 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
   //
-  switch (GIOP::read_message (handler_->peer (), stream, env)) 
+  switch (TAO_GIOP::read_message (handler_->peer (), stream, env)) 
     {
-    case Reply:
+    case TAO_GIOP_Reply:
       // handle reply ... must be right one etc
       break;
 
-    case CloseConnection:
+    case TAO_GIOP_CloseConnection:
       // Special case of forwarding -- server was closing the
       // connection, which just indicates resource constraints, not an
       // error.  The client is effectively "forwarded" to the same
@@ -815,7 +815,7 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       {
-	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, SYSTEM_EXCEPTION));
+	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, TAO_GIOP_SYSTEM_EXCEPTION));
 
 	delete data_->fwd_profile;
 	data_->fwd_profile = 0;
@@ -823,13 +823,13 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
         handler_->peer ().close ();
         handler_->in_use (CORBA::B_FALSE);
         handler_ = 0;
-	return LOCATION_FORWARD;
+	return TAO_GIOP_LOCATION_FORWARD;
       }
 
-    case Request:
-    case CancelRequest:
-    case LocateRequest:
-    case LocateReply:
+    case TAO_GIOP_Request:
+    case TAO_GIOP_CancelRequest:
+    case TAO_GIOP_LocateRequest:
+    case TAO_GIOP_LocateReply:
     default:
       // These are all illegal messages to find.  If found, they could
       // be indicative of client bugs (lost track of input stream) or
@@ -839,12 +839,12 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       // FALLTHROUGH ...
 
-    case MessageError:
+    case TAO_GIOP_MessageError:
       // Couldn't read it for some reason ... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
       send_error (handler_->peer ());
-      return SYSTEM_EXCEPTION;
+      return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
   // Process reply message.  Again, due to the single threading in
@@ -871,15 +871,15 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
   // guarantees may be provided by the network, and need no support
   // here.
 
-  ServiceContextList reply_ctx;
+  TAO_GIOP_ServiceContextList reply_ctx;
   CORBA::ULong request_id;
-  CORBA::ULong reply_status;		// GIOP::ReplyStatusType
+  CORBA::ULong reply_status;		// TAO_GIOP_ReplyStatusType
 
   if (stream.decode (&TC_ServiceContextList, &reply_ctx, 0, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE) 
     {
       send_error (handler_->peer ());
-      return SYSTEM_EXCEPTION;
+      return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
   delete [] reply_ctx.buffer;
@@ -887,12 +887,12 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
   if (!stream.get_ulong (request_id)
       || request_id != my_request_id
       || !stream.get_ulong (reply_status)
-      || reply_status > LOCATION_FORWARD) 
+      || reply_status > TAO_GIOP_LOCATION_FORWARD) 
     {
       send_error (handler_->peer ());
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       ACE_DEBUG ((LM_DEBUG, " (%P|%t) bad Response header\n"));
-      return SYSTEM_EXCEPTION;
+      return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
   // If there was no exception, let the caller parse the normal
@@ -913,11 +913,11 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   switch (reply_status) 
     {
-    case NO_EXCEPTION:
+    case TAO_GIOP_NO_EXCEPTION:
       break;
 
-    case USER_EXCEPTION:
-    case SYSTEM_EXCEPTION:
+    case TAO_GIOP_USER_EXCEPTION:
+    case TAO_GIOP_SYSTEM_EXCEPTION:
       {
 	CORBA::String exception_id;
 
@@ -934,7 +934,7 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 	    {
 	      send_error (handler_->peer ());
 	      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
-	      return SYSTEM_EXCEPTION;
+	      return TAO_GIOP_SYSTEM_EXCEPTION;
 	    }
 	  exception_id = (CORBA::String) stream.next;
 	  stream.skip_bytes (len);
@@ -944,7 +944,7 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 	// exception typecodes is searched.
 	CORBA::ExceptionList *xlist;
 
-	if (reply_status == USER_EXCEPTION)
+	if (reply_status == TAO_GIOP_USER_EXCEPTION)
 	  xlist = &exceptions;
 	else
 	  xlist = &__system_exceptions;
@@ -967,7 +967,7 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 	      {
 		dexc (env, "invoke (), get exception ID");
 		send_error (handler_->peer ());
-		return SYSTEM_EXCEPTION;
+		return TAO_GIOP_SYSTEM_EXCEPTION;
 	      }
 
 	    if (ACE_OS::strcmp ((char *)exception_id, (char *)xid) == 0) 
@@ -980,7 +980,7 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 		  {
 		    dexc (env, "invoke (), get exception size");
 		    send_error (handler_->peer ());
-		    return SYSTEM_EXCEPTION;
+		    return TAO_GIOP_SYSTEM_EXCEPTION;
 		  }
 
 		// Create the exception, fill in the generic parts
@@ -995,13 +995,13 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 		  {
 		    delete exception;
 		    ACE_DEBUG ((LM_ERROR, " (%P|%t) invoke, unmarshal %s exception %s\n",
-				(reply_status == USER_EXCEPTION) ? "user" : "system",
+				(reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
                                exception_id));
 		    send_error (handler_->peer ());
-		    return SYSTEM_EXCEPTION;
+		    return TAO_GIOP_SYSTEM_EXCEPTION;
 		  }
 		env.exception (exception);
-		return (GIOP::ReplyStatusType) reply_status;
+		return (TAO_GIOP_ReplyStatusType) reply_status;
 	      }
 	  }
 
@@ -1015,15 +1015,15 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 	// to be _very_ useful) ... folk try to find/fix ORB bugs that
 	// don't exist, not bugs in/near the implementation code.
 
-	if (reply_status == USER_EXCEPTION)
+	if (reply_status == TAO_GIOP_USER_EXCEPTION)
 	  env.exception (new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_YES));
 	else
 	  env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_MAYBE));
-	return SYSTEM_EXCEPTION;
+	return TAO_GIOP_SYSTEM_EXCEPTION;
       }
     // NOTREACHED
 
-    case LOCATION_FORWARD:
+    case TAO_GIOP_LOCATION_FORWARD:
       {
 	CORBA::Object_ptr obj;
 	IIOP_Object *obj2;
@@ -1040,7 +1040,7 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 	  {
 	    dexc (env, "invoke, location forward");
 	    send_error (handler_->peer ());
-	    return SYSTEM_EXCEPTION;
+	    return TAO_GIOP_SYSTEM_EXCEPTION;
 	  }
 	CORBA::release (obj);
 
@@ -1054,7 +1054,7 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 	// be recorded here. (This is just an optimization, and is not
 	// related to correctness.)
 
-	ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, SYSTEM_EXCEPTION);
+	ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, TAO_GIOP_SYSTEM_EXCEPTION);
 
 	delete data_->fwd_profile;
 	data_->fwd_profile = new IIOP::ProfileBody (obj2->profile);
@@ -1073,11 +1073,22 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   // All standard exceptions from here on in the call path know for
   // certain that the call "completed" ... except in the case of
-  // system exceptions which say otherwise, and for LOCATION_FORWARD
+  // system exceptions which say otherwise, and for TAO_GIOP_LOCATION_FORWARD
   // responses.
 
-  return (GIOP::ReplyStatusType) reply_status;
+  return (TAO_GIOP_ReplyStatusType) reply_status;
 }
+
+void
+TAO_GIOP::make_error (CDR &msg, ...)
+{
+  ACE_UNUSED_ARG (msg);  // just for now
+  
+  // This [static] method will be somewhat like send_error() except
+  // that it won't actaully do any sending of data...it'll just stuff
+  // things into the <msg> instance.
+}
+
 
 // Generic server side read + dispatch one message; returns when that
 // bit of work is complete.
@@ -1085,25 +1096,12 @@ GIOP::Invocation::invoke (CORBA::ExceptionList &exceptions,
 // In the typical case, the request and response buffers live on the
 // stack so that the heap never gets used.  These grow if needed.
 
-int GIOP::incoming_message (ACE_SOCK_Stream &peer,
-			    ForwardFunc check_forward,
-			    RequestHandler handle_request,
-			    void *context,
-			    CORBA::Environment &env)
-  /*
 int
-GIOP::incoming_message (ACE_SOCK_Stream &peer,
-			LocateStatusType check_forward (opaque &key,
-							CORBA::Object_ptr &objref,
-							void *context),
-			void handle_request (RequestHeader &req,
-					     CDR &req_body,
-					     CDR *reply,
-					     void *context,
-					     CORBA::Environment &env),
-			void *context,
-			CORBA::Environment &env)
-*/
+TAO_GIOP::incoming_message (ACE_SOCK_Stream &peer,
+                        TAO_GIOP_ForwardFunc check_forward,
+                        TAO_GIOP_RequestHandler handle_request,
+                        void *context,
+                        CORBA::Environment &env)
 {
   int retval = 1;		// 1==success, 0==eof, -1==error
 
@@ -1115,9 +1113,9 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
       // These messages should never be sent to the server; it's an
       // error if the peer tries.  Set the environment accordingly, as
       // it's not yet been reported as an error.
-    case Reply:
-    case LocateReply:
-    case CloseConnection:
+    case TAO_GIOP_Reply:
+    case TAO_GIOP_LocateReply:
+    case TAO_GIOP_CloseConnection:
     default:					// Unknown message
       ACE_DEBUG ((LM_DEBUG, " (%P|%t) Illegal message received by server\n"));
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
@@ -1129,19 +1127,19 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
       // General error recovery is to send MessageError to the peer
       // just in case (it'll fail on EOF) and then close the
       // connection.
-    case MessageError:
+    case TAO_GIOP_MessageError:
       retval = -1;
       send_error (peer);
       break;
 
-    case EndOfFile:
+    case TAO_GIOP_EndOfFile:
       retval = 0;
       break;
 
       // This is the common case!
-    case Request:
+    case TAO_GIOP_Request:
       {
-	RequestHeader req;
+	TAO_GIOP_RequestHeader req;
 	CORBA::Boolean hdr_status;
 
 	// Tear out the service context ... we currently ignore it,
@@ -1209,18 +1207,18 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 
 	if (check_forward != 0) 
 	  {
-	    LocateStatusType status;
+	    TAO_GIOP_LocateStatusType status;
 	    CORBA::Object_ptr fwd_ref = 0;
 
 	    status = check_forward (req.object_key, fwd_ref, context);
 
-	    if (status != OBJECT_HERE) 
+	    if (status != TAO_GIOP_OBJECT_HERE) 
 	      {
-		ServiceContextList resp_ctx;
+		TAO_GIOP_ServiceContextList resp_ctx;
 		u_char buf2 [CDR::DEFAULT_BUFSIZE];
 		CDR response (&buf2 [0], sizeof buf2);
 
-		start_message (Reply, response);
+		start_message (TAO_GIOP_Reply, response);
 		resp_ctx.length = 0;
 		response.encode (&TC_ServiceContextList,
 			      &resp_ctx,
@@ -1232,17 +1230,17 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 
 		if (!req.response_expected) 
 		  {
-		    if (status == OBJECT_FORWARD)
+		    if (status == TAO_GIOP_OBJECT_FORWARD)
 		      CORBA::release (fwd_ref);
 
 		    //
 		    // Else either forward the request ...
 		    //
 		  } 
-		else if (status == OBJECT_FORWARD) 
+		else if (status == TAO_GIOP_OBJECT_FORWARD) 
 		  {
 		    ACE_DEBUG ((LM_DEBUG, " (%P|%t) forwarding Request message\n"));
-		    response.put_ulong (LOCATION_FORWARD);
+		    response.put_ulong (TAO_GIOP_LOCATION_FORWARD);
 		    response.encode (CORBA::_tc_Object,
 				  &fwd_ref,
 				  0, 
@@ -1256,7 +1254,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 		  {
 		    CORBA::OBJECT_NOT_EXIST exc (CORBA::COMPLETED_YES);
 
-		    response.put_ulong (SYSTEM_EXCEPTION);
+		    response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
 
 		    (void) response.encode (CORBA::_tc_OBJECT_NOT_EXIST,
 					 &exc,
@@ -1277,11 +1275,11 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 
 	if (req.response_expected) 
 	  {
-	    ServiceContextList resp_ctx;
+	    TAO_GIOP_ServiceContextList resp_ctx;
 	    u_char buf2 [CDR::DEFAULT_BUFSIZE];
 	    CDR response (&buf2 [0], sizeof buf2);
 
-	    start_message (Reply, response);
+	    start_message (TAO_GIOP_Reply, response);
 	    resp_ctx.length = 0;
 	    response.encode (&TC_ServiceContextList,
 			  &resp_ctx,
@@ -1306,10 +1304,10 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 
     // Forward requests as needed; if caller hasn't provided code to
     // support forwarding, we default to doing no forwarding.
-    case LocateRequest:
+    case TAO_GIOP_LocateRequest:
       {
 	CORBA::ULong request_id;
-	opaque key;
+	TAO_opaque key;
 
 	msg.get_ulong (request_id);
 	msg.decode (&TC_opaque, &key, 0, env);
@@ -1320,27 +1318,27 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 	CDR response (resp, sizeof resp);
 	CORBA::Object_ptr fwd_ref = 0;
 
-	start_message (LocateReply, response);
+	start_message (TAO_GIOP_LocateReply, response);
 	response.put_ulong (request_id);
 
 	if (check_forward == 0) 
 	  {
-	    response.put_ulong (OBJECT_HERE);
+	    response.put_ulong (TAO_GIOP_OBJECT_HERE);
 	    ACE_DEBUG ((LM_DEBUG, " (%P|%t) LocateRequest response:  object is (always) here!\n"));
 	  } 
 	else 
 	  {
-	    LocateStatusType status;
+	    TAO_GIOP_LocateStatusType status;
 
 	    status = check_forward (key, fwd_ref, context);
 	    response.put_ulong ((CORBA::ULong) status);
 
-	    if (status == OBJECT_FORWARD) 
+	    if (status == TAO_GIOP_OBJECT_FORWARD) 
 	      {
 		ACE_DEBUG ((LM_DEBUG, "LocateRequest response:  forward requests\n"));
 		response.encode (CORBA::_tc_Object, &fwd_ref, 0, env);
 	      } 
-	    else if (status == OBJECT_HERE)
+	    else if (status == TAO_GIOP_OBJECT_HERE)
 	      ACE_DEBUG ((LM_DEBUG, "LocateRequest response:  object is here!\n"));
 	    else 
 	      ACE_DEBUG ((LM_DEBUG, "LocateRequest response:  no such object\n"));
@@ -1360,7 +1358,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
     // cancellation, and (e) modifying client code to send a
     // CancelRequest when it's been canceled.
 
-    case CancelRequest:
+    case TAO_GIOP_CancelRequest:
       {
 	CORBA::ULong request_id;
 
@@ -1375,11 +1373,11 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class CORBA_SEQUENCE<GIOP::ServiceContext>;
+template class CORBA_SEQUENCE<TAO_GIOP_ServiceContext>;
 template class CORBA_SEQUENCE<CORBA::Octet>;
 template class CORBA_SEQUENCE<CORBA::TypeCode*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate CORBA_SEQUENCE<GIOP::ServiceContext>
+#pragma instantiate CORBA_SEQUENCE<TAO_GIOP_ServiceContext>
 #pragma instantiate CORBA_SEQUENCE<CORBA::Octet>
 #pragma instantiate CORBA_SEQUENCE<CORBA::TypeCode*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

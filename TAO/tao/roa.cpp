@@ -21,15 +21,15 @@
 #include "tao/corba.h"
 
 // Forward declarations...
-static void request_dispatcher (GIOP::RequestHeader &req,
+static void request_dispatcher (TAO_GIOP_RequestHeader &req,
 				CDR &request_body,
 				CDR *reply,
 				TAO_Dispatch_Context *context,
 				CORBA::Environment &env);
 
-static GIOP::LocateStatusType request_forwarder (opaque &target_key,
-						 CORBA::Object_ptr &forward_reference,
-						 TAO_Dispatch_Context *ctx);
+static TAO_GIOP_LocateStatusType request_forwarder (TAO_opaque &target_key,
+                                                    CORBA::Object_ptr &forward_reference,
+                                                    TAO_Dispatch_Context *ctx);
 
 ROA_ptr
 ROA::init (CORBA::ORB_ptr parent,
@@ -41,7 +41,7 @@ ROA::init (CORBA::ORB_ptr parent,
 
   //    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, roa_mon, lock_));
 
-  if (p->oa ())
+  if (p->root_poa ())
     {
       env.exception (new CORBA_INITIALIZE (CORBA::COMPLETED_NO));
       return 0;
@@ -53,7 +53,7 @@ ROA::init (CORBA::ORB_ptr parent,
     
   ROA_ptr rp;
   ACE_NEW_RETURN (rp, ROA (parent, env), 0);
-  p->oa (rp);
+  p->root_poa (rp);
 
   return rp;
 }
@@ -68,7 +68,7 @@ ROA::ROA (CORBA::ORB_ptr owning_orb,
   TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
   TAO_Server_Strategy_Factory *f = owning_orb->server_factory ();
 
-  ACE_ASSERT (p->oa () == 0);
+  ACE_ASSERT (p->root_poa () == 0);
 
   // Initialize the endpoint ... or try!
   if (client_acceptor_.open (p->addr (),
@@ -84,7 +84,7 @@ ROA::ROA (CORBA::ORB_ptr owning_orb,
   this->objtable_ = f->object_lookup_strategy ();
 
   if (this->objtable_ != 0)
-    p->oa (this);
+    p->root_poa (this);
 }
 
 ROA::~ROA (void)
@@ -98,11 +98,11 @@ ROA::handle_message (TAO_Dispatch_Context &ctx,
 		     CORBA::Environment &env)
 {
   int result =
-    GIOP::incoming_message (ctx.endpoint_,
-			    GIOP::ForwardFunc (ctx.check_forward_ ? request_forwarder : 0),
-			    GIOP::RequestHandler (request_dispatcher),
-			    &ctx,
-			    env);
+    TAO_GIOP::incoming_message (ctx.endpoint_,
+                                TAO_GIOP_ForwardFunc (ctx.check_forward_ ? request_forwarder : 0),
+                                TAO_GIOP_RequestHandler (request_dispatcher),
+                                &ctx,
+                                env);
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, roa_mon, lock_, -1));
 
@@ -292,7 +292,7 @@ ROA::QueryInterface (REFIID riid,
 // ROA_Handler::handle_input ()?
 
 static void
-request_dispatcher (GIOP::RequestHeader &req,
+request_dispatcher (TAO_GIOP_RequestHeader &req,
 		    CDR &request_body,
 		    CDR *reply,
 		    TAO_Dispatch_Context *helper,
@@ -300,8 +300,8 @@ request_dispatcher (GIOP::RequestHeader &req,
 {
   TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
   IIOP_ServerRequest svr_req (&request_body,
-			      p->oa ()->orb (),
-			      p->oa ());
+			      p->root_poa ()->orb (),
+			      p->root_poa ());
 
   // ServerRequest is what does the unmarshaling, driven by typecodes
   // that the DSI user provides.  Create the ServerRequest, store away
@@ -315,7 +315,7 @@ request_dispatcher (GIOP::RequestHeader &req,
  (void) ACE_Thread::setspecific (p->oa ().req_key_, &req);
 #endif /* ROA_NEEDS_REQ_KEY */
 
-  CORBA::BOA_ptr oa = p->oa ();
+  CORBA::BOA_ptr oa = p->root_poa ();
   CORBA::BOA::dsi_handler ptmf = helper->skeleton_;
  (oa->*ptmf) (req.object_key, svr_req, helper->context_, env);
   // is this the correct way to do it? skeleton is a member function
@@ -354,7 +354,7 @@ request_dispatcher (GIOP::RequestHeader &req,
       CORBA::Exception *x = env.exception ();
       CORBA::TypeCode_ptr except_tc = x->type ();
 
-      reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
+      reply->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       (void) reply->encode (except_tc, x, 0, env2);
     }
   else if (svr_req._exception)
@@ -369,16 +369,16 @@ request_dispatcher (GIOP::RequestHeader &req,
       //
       // XXX x->type () someday ...
       if (svr_req._ex_type == CORBA::SYSTEM_EXCEPTION)
-	reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
+	reply->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       else
-	reply->put_ulong (GIOP::USER_EXCEPTION);
+	reply->put_ulong (TAO_GIOP_USER_EXCEPTION);
 
       (void) reply->encode (except_tc, x, 0, env);
     }
   else
     {				// normal reply
       // First finish the GIOP header ...
-      reply->put_ulong (GIOP::NO_EXCEPTION);
+      reply->put_ulong (TAO_GIOP_NO_EXCEPTION);
 
       // ... then send any return value ...
       if (svr_req._retval)
@@ -408,8 +408,8 @@ request_dispatcher (GIOP::RequestHeader &req,
 // Helper routine that provides IIOP glue for forwarding requests to
 // specific objects from one process to another.
 
-static GIOP::LocateStatusType
-request_forwarder (opaque &target_key,
+static TAO_GIOP_LocateStatusType
+request_forwarder (TAO_opaque &target_key,
 		   CORBA::Object_ptr &forward_reference,
 		   TAO_Dispatch_Context *helper)
 {
@@ -419,11 +419,11 @@ request_forwarder (opaque &target_key,
   helper->check_forward_ (target_key, forward_reference, helper->context_, env);
 
   if (env.exception () != 0)
-    return GIOP::UNKNOWN_OBJECT;
+    return TAO_GIOP_UNKNOWN_OBJECT;
   else if (forward_reference == 0)
-    return GIOP::OBJECT_HERE;
+    return TAO_GIOP_OBJECT_HERE;
   else
-    return GIOP::OBJECT_FORWARD;
+    return TAO_GIOP_OBJECT_FORWARD;
 }
 
 #if !defined (__ACE_INLINE__)

@@ -122,13 +122,15 @@ public:
   // Haven't figured out what the forwarder really does...don't really
   // care right now.
 
-  CORBA::BOA_ptr oa (void);
+  CORBA::BOA_ptr root_poa (void);
   // Return the handle to the One True Object Adapter.  The code from
   // which <{TAO}> is derived makes a vast assumption that there will
   // only be one Object Adapter in process.
 
-  void oa (CORBA::BOA_ptr anOA);
-  // Set the handle to the One True Object Adapter.
+  void root_poa (CORBA::BOA_ptr a_poa);
+  // Set the handle to the Root Portable Object Adapter.  NOTE: This
+  // version of TAO does not yet implement the POA, but in the name of
+  // forward-thinking the method is called this anyway.
 
   void addr (ACE_INET_Addr &addr);
   // Set the address on which we're listening.
@@ -189,7 +191,7 @@ private:
 
   ForwardFunc forwarder_;	
 
-  CORBA::BOA_ptr oa_;		
+  CORBA::BOA_ptr root_poa_;		
   // Pointer to One True Object Adapter
 
   TAO_Demux_Strategy demux_;  

@@ -365,7 +365,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       stream->put_ulong (1);
 
       // UNSIGNED LONG, tag for this protocol profile;
-      stream->put_ulong (IOP::TAG_INTERNET_IOP);
+      stream->put_ulong (TAO_IOP_TAG_INTERNET_IOP);
 
       // UNSIGNED LONG, number of succeeding bytes in the
       // encapsulation.  We don't actually need to make the
