@@ -5,14 +5,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 unshift @INC, '../../../../bin';
-require Process;
+require ACEutils;
 
 $iorfile = "time.ior";
-$sleeptime = 5;
 
 $SV = Process::Create ("server$Process::EXE_EXT", "-o $iorfile ");
 
-sleep $sleeptime;
+ACE::waitforfile ($iorfile);
 
 $status  = system ("client$Process::EXE_EXT -f $iorfile -x");
 
