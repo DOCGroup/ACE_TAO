@@ -1,3 +1,9 @@
+Sun Nov  9 17:33:06 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/Timeout/client.cpp (send_echo): Added a comment to
+	  explain what the orb->run() call does.  Thanks to Vladimir
+ 	  Naylov <vladimir@monosphere.com> for reporting this.
+
 Mon Nov 10 08:14:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TAO.dsp:
@@ -107,7 +113,6 @@ Sun Nov  9 17:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  
 	  Fixed fuzz errors.
 
->>>>>>> 1.2874
 Sun Nov  9 22:12:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/Makefile.dirs:
