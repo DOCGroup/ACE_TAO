@@ -2119,7 +2119,7 @@ ACE_Dev_Poll_Reactor::handler (int signum,
 
   if (handler == 0)
     return -1;
-  else if (eh != 0 && *eh != 0)
+  else if (eh != 0)
     *eh = handler;
 
   return 0;
