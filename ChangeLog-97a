@@ -38,6 +38,12 @@ Tue Mar 11 14:30:12 1997  David L. Levine  <levine@cs.wustl.edu>
 	  that the test works on WIN32.  Thanks to Luca Priorelli
 	  <lucapri@mbox.vol.it> for identifying this problem.
 
+	* ace/Registry.{h,cpp},Registry_Name_Space.{h,cpp},Svc_Conf_Tokens.h,
+	  Svc_Conf_{l,y}.cpp,Timer_{Heap,List}.cpp,config-aix-4.2.x.h,
+	  config-dgux-4.11-epc.h,config-mvs.h,config-sco-5.0.0-fsu-pthread.h,
+	  config-sco-5.0.0-mit-pthread.h,config-sco-5.0.0-nothread.h:
+	  added CVS header (// $Id$).
+
 Sun Mar  9 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway: Updated the Peer and Gateway applications so that
