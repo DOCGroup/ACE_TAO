@@ -90,13 +90,13 @@ Task::svc (void)
         this->orb_->string_to_object (sender_ior);
 
       DiffServ::Sender_var sender =
-        DiffServ::Sender::_narrow (object);
+        DiffServ::Sender::_narrow (object.in ());
 
       object =
         this->orb_->string_to_object (receiver_ior);
 
       DiffServ::Receiver_var receiver =
-        DiffServ::Receiver::_narrow (object);
+        DiffServ::Receiver::_narrow (object.in ());
 
       sender->start (iterations,
                      corba_priority);

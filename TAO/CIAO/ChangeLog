@@ -1,3 +1,22 @@
+Thu May 20 11:34:33 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tools/ComponentServer/ComponentServer.cpp: 
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp: 
+
+	  Added missing include file.	  
+
+	* tests/RTCCM/DiffServ/descriptors/run_test.pl: 
+
+	  Added new assembly deployer option.
+
+	* tests/RTCCM/DiffServ/descriptors/rtsvc.conf: 
+
+	  Added FIFO scheduling option.
+
+	* tests/RTCCM/DiffServ/Controller/Controller.cpp (svc): 
+
+	  Minor fixes.
+
 Thu May 20 10:36:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * DnC/Core/CCM_Base.idl
