@@ -1,5 +1,7 @@
 Fri Jul 21 14:46:37 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
+	* ace/QoS_Decorator.h: Added ACE_Export for decorator classes for
+	  WinNT.
 	* ace/QoS_Decorator.cpp: Removed an extra semi-colon.
 
 Fri Jul 21 09:11:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
