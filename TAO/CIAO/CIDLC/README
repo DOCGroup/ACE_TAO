@@ -10,8 +10,8 @@ downloaded from:
 
 http://www.boost.org
 
-See documentation files in CIAO_ROOT/CCF for more information
-on supported platforms, design, etc.
+See documentation files in CIAO_ROOT/CCF/External/Utility/Documentation 
+for more information on installation, supported platforms, design, etc.
 
 Binary executables for the CIDL compiler are available at
 
