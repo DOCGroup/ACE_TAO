@@ -1,3 +1,19 @@
+Thu Jul  1 11:06:42 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Process_Element_T.cpp:
+        * DnC/Config_Handlers/Process_Element_T.h:
+
+          Added the files to follow ACE coding standards.
+
+        * DnC/Config_Handlers/Process_Element.tpp:
+        * DnC/Config_Handlers/Process_Element.i:
+
+          Removed these files, as they were not following the
+          ACE standards.
+
+          The code in the above files have been moved to
+          Process_Element_T.cpp and Process_Element_T.h.
+
 Thu Jul  1 10:56:28 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* docs/releasenotes/index.html:
