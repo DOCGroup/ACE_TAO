@@ -919,7 +919,7 @@ TAO_YY_DECL
 	register char *tao_yy_cp, *tao_yy_bp;
 	register int tao_yy_act;
 
-#line 116 "fe/idl.ll"
+#line 117 "fe/idl.ll"
 
 
 
@@ -973,13 +973,13 @@ tao_yy_match:
 			while ( tao_yy_chk[tao_yy_base[tao_yy_current_state] + tao_yy_c] != tao_yy_current_state )
 				{
 				tao_yy_current_state = (int) tao_yy_def[tao_yy_current_state];
-				if ( tao_yy_current_state >= 384 )
+				if ( tao_yy_current_state >= 388 )
 					tao_yy_c = tao_yy_meta[(unsigned int) tao_yy_c];
 				}
 			tao_yy_current_state = tao_yy_nxt[tao_yy_base[tao_yy_current_state] + (unsigned int) tao_yy_c];
 			++tao_yy_cp;
 			}
-		while ( tao_yy_base[tao_yy_current_state] != 664 );
+		while ( tao_yy_base[tao_yy_current_state] != 677 );
 
 tao_yy_find_action:
 		tao_yy_act = tao_yy_accept[tao_yy_current_state];
@@ -1769,7 +1769,7 @@ static tao_yy_state_type tao_yy_get_previous_state()
 		while ( tao_yy_chk[tao_yy_base[tao_yy_current_state] + tao_yy_c] != tao_yy_current_state )
 			{
 			tao_yy_current_state = (int) tao_yy_def[tao_yy_current_state];
-			if ( tao_yy_current_state >= 384 )
+			if ( tao_yy_current_state >= 388 )
 				tao_yy_c = tao_yy_meta[(unsigned int) tao_yy_c];
 			}
 		tao_yy_current_state = tao_yy_nxt[tao_yy_base[tao_yy_current_state] + (unsigned int) tao_yy_c];
@@ -1804,11 +1804,11 @@ tao_yy_state_type tao_yy_current_state;
 	while ( tao_yy_chk[tao_yy_base[tao_yy_current_state] + tao_yy_c] != tao_yy_current_state )
 		{
 		tao_yy_current_state = (int) tao_yy_def[tao_yy_current_state];
-		if ( tao_yy_current_state >= 384 )
+		if ( tao_yy_current_state >= 388 )
 			tao_yy_c = tao_yy_meta[(unsigned int) tao_yy_c];
 		}
 	tao_yy_current_state = tao_yy_nxt[tao_yy_base[tao_yy_current_state] + (unsigned int) tao_yy_c];
-	tao_yy_is_jam = (tao_yy_current_state == 383);
+	tao_yy_is_jam = (tao_yy_current_state == 387);
 
 	return tao_yy_is_jam ? 0 : tao_yy_current_state;
 	}
@@ -2364,7 +2364,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 287 "fe/idl.ll"
+#line 300 "fe/idl.ll"
 
 	/* subroutines */
 
