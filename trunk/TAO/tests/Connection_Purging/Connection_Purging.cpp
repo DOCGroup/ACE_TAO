@@ -240,6 +240,7 @@ setup_server_orbs (test_i &servant,
             info[i].orb->object_to_string (object.in (),
                                            ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
         }
       ACE_CATCHANY
         {

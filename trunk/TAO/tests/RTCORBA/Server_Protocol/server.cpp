@@ -142,6 +142,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
                                                             ACE_TRY_ENV);
           ACE_CHECK_RETURN (-1);
 
+
           if (!CORBA::is_nil (uiop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
                         "     Properties: \n"
@@ -149,6 +150,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
                         "      receive_buffer_size = %d\n",
                         uiop_properties->send_buffer_size (),
                         uiop_properties->recv_buffer_size ()));
+
         }
     }
 

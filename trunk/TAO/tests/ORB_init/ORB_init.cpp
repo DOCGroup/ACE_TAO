@@ -30,7 +30,7 @@ main (int argc, char *argv[])
 
         my_orb = orb.in ();
 
-        // Once we leave this scope, the ORB is released but it should 
+        // Once we leave this scope, the ORB is released but it should
         // be possible to obtain the same ORB with another call to
         // CORBA::ORB_init() by using the same ORBid argument that was
         // assigned to this ORB.
@@ -38,7 +38,7 @@ main (int argc, char *argv[])
 
       // -------------------------------------------------------------
       // Verify that the same ORB is returned from a second call to
-      // CORBA::ORB_init() in a different scope when the same ORBid is 
+      // CORBA::ORB_init() in a different scope when the same ORBid is
       // used in that scope.
       // -------------------------------------------------------------
 
@@ -154,7 +154,7 @@ main (int argc, char *argv[])
                   "during attempt to perform an ORB operation using\n"
                   "destroyed ORB <%s>\n"
                   "The CORBA::OBJECT_NOT_EXIST() exception should have\n"
-                  "been thrown!\n" 
+                  "been thrown!\n"
                   "\n",
                   orbid));
 

@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS   = -lTAO
+LDLIBS  = -lTAO_Strategies -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 IDL_FILES = param_test
@@ -808,8 +808,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
- $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2436,11 +2435,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i \
- client.h client.cpp tests.h any.h bd_long_seq.h bd_short_seq.h \
- bd_str_seq.h bd_wstr_seq.h bd_string.h bd_wstring.h bd_struct_seq.h \
- bd_array_seq.h fixed_array.h fixed_struct.h nested_struct.h \
- recursive_struct.h helper.h \
+ $(ACE_ROOT)/ace/Profile_Timer.i client.h \
+ client.cpp tests.h any.h bd_long_seq.h bd_short_seq.h bd_str_seq.h \
+ bd_wstr_seq.h bd_string.h bd_wstring.h bd_struct_seq.h bd_array_seq.h \
+ fixed_array.h fixed_struct.h nested_struct.h recursive_struct.h \
+ helper.h \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Context.h \
  $(TAO_ROOT)/tao/DynamicInterface/dynamicinterface_export.h \
@@ -2774,13 +2773,12 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- results.h \
- $(ACE_ROOT)/ace/Profile_Timer.h \
+ results.h $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i \
- client.h param_testCli.h param_testCli.i client.cpp
+ $(ACE_ROOT)/ace/Profile_Timer.i client.h \
+ param_testCli.h param_testCli.i client.cpp
 
 .obj/options.o .obj/options.so .shobj/options.o .shobj/options.so: options.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
@@ -2866,8 +2864,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i \
- options.h \
+ $(ACE_ROOT)/ace/Get_Opt.i options.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -3106,8 +3103,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h
 
-.obj/results.o .obj/results.so .shobj/results.o .shobj/results.so: results.cpp \
- $(ACE_ROOT)/ace/Log_Msg.h \
+.obj/results.o .obj/results.so .shobj/results.o .shobj/results.so: results.cpp $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3135,8 +3131,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- results.h \
- $(TAO_ROOT)/tao/corba.h \
+ results.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -13591,8 +13586,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  var_struct.h
 
 .obj/recursive_struct.o .obj/recursive_struct.so .shobj/recursive_struct.o .shobj/recursive_struct.so: recursive_struct.cpp recursive_struct.h \
- param_testCli.h \
- $(TAO_ROOT)/tao/corba.h \
+ param_testCli.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14903,8 +14897,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  small_union.h
 
 .obj/recursive_union.o .obj/recursive_union.so .shobj/recursive_union.o .shobj/recursive_union.so: recursive_union.cpp recursive_union.h \
- param_testCli.h \
- $(TAO_ROOT)/tao/corba.h \
+ param_testCli.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16524,8 +16517,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- param_testCli.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ param_testCli.i $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

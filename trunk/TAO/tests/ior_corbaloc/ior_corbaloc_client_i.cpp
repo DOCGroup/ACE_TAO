@@ -80,7 +80,7 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A system exception oc client side");
+      ACE_PRINT_EXCEPTION (ex, "A system exception on client side");
       return -1;
     }
   ACE_CATCHANY
@@ -132,6 +132,10 @@ IOR_corbaloc_Client_i::init (int argc, char **argv)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot narrow Naming Service\n :client"),
                           1);
+    }
+  ACE_CATCH (CORBA::SystemException, ex)
+    {
+      return -1;
     }
   ACE_CATCHANY
     {
