@@ -10,7 +10,7 @@
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
+typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> TEST_MALLOC;
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 // The Address for the shared memory mapped files defaults to wherever
@@ -36,24 +36,24 @@ main (int, char *[])
   ACE_MMAP_Memory_Pool_Options request_options (REQUEST_BASE_ADDR);
 
   // Create an adapter version of an allocator.
-  ACE_Allocator_Adapter<MALLOC> *adapter_ptr = 0;
+  ACE_Allocator_Adapter<TEST_MALLOC> *adapter_ptr = 0;
   ACE_NEW_RETURN (adapter_ptr,
-                  ACE_Allocator_Adapter<MALLOC> ("request_file",
-                                                 "request_lock",
-                                                 &request_options),
+                  ACE_Allocator_Adapter<TEST_MALLOC> ("request_file",
+                                                      "request_lock",
+                                                      &request_options),
                   1);
 
-  auto_ptr <ACE_Allocator_Adapter<MALLOC> > shmem_request (adapter_ptr);
+  auto_ptr <ACE_Allocator_Adapter<TEST_MALLOC> > shmem_request (adapter_ptr);
   ACE_MMAP_Memory_Pool_Options response_options (RESPONSE_BASE_ADDR);
 
-  MALLOC *ptr = 0;
+  TEST_MALLOC *ptr = 0;
   // Create a non-adapter version of an allocator.
   ACE_NEW_RETURN (ptr,
-                  MALLOC ("response_file",
-                          "response_lock",
-                          &response_options),
+                  TEST_MALLOC ("response_file",
+                               "response_lock",
+                               &response_options),
                   1);
-  auto_ptr <MALLOC> shmem_response (ptr);
+  auto_ptr <TEST_MALLOC> shmem_response (ptr);
   void *data = 0;
 
   // If we find "foo" then we're running the "second" time, so we must
@@ -123,13 +123,13 @@ main (int, char *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr <ACE_Allocator_Adapter<MALLOC> >;
-template class ACE_Auto_Basic_Ptr<ACE_Allocator_Adapter<MALLOC> >;
-template class auto_ptr <MALLOC>;
-template class ACE_Auto_Basic_Ptr<MALLOC>;
+template class auto_ptr <ACE_Allocator_Adapter<TEST_MALLOC> >;
+template class ACE_Auto_Basic_Ptr<ACE_Allocator_Adapter<TEST_MALLOC> >;
+template class auto_ptr <TEST_MALLOC>;
+template class ACE_Auto_Basic_Ptr<TEST_MALLOC>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr <ACE_Allocator_Adapter<MALLOC> >
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Allocator_Adapter<MALLOC> >
-#pragma instantiate auto_ptr <MALLOC>
-#pragma instantiate ACE_Auto_Basic_Ptr<MALLOC>
+#pragma instantiate auto_ptr <ACE_Allocator_Adapter<TEST_MALLOC> >
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Allocator_Adapter<TEST_MALLOC> >
+#pragma instantiate auto_ptr <TEST_MALLOC>
+#pragma instantiate ACE_Auto_Basic_Ptr<TEST_MALLOC>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

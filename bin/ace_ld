@@ -10,13 +10,24 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
 
+##
+## Symbols that produce a warning due to size changing.
+## This is a harmless known bug with the version of gcc that comes with
+## Tornado II.  Anything in this list will be suppressed unless the -w
+## option is used.
+##
+my(@symbols) = ('dequeue__t17ACE_Message_Queue1Z14ACE_NULL_SYNCHRP17ACE_Message_BlockP14ACE_Time_Value',
+                'activate__t17ACE_Message_Queue1Z14ACE_NULL_SYNCH',
+               );
+
 $usage =
-  "usage: $0 [-? | [[-C <compile> --] [-m <munch>] [-n <nm>]] [-f]]] " .
+  "usage: $0 [-? | [-w] [[-C <compile> --] [-m <munch>] [-n <nm>]] [-f]]] " .
   "<ld command>\n";
 
 #### To avoid quoting problems on the command line, all arguments
 #### between -C and -- are combined into the single compile command.
 $compile_option = 0;
+$ss_change_warn = 0;
 
 ####
 #### process command line args
@@ -46,6 +57,8 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ ) {
             print STDERR "$0:  must provide argument for -n option\n";
             die $usage;
         }
+    } elsif ( $ARGV[0] eq '-w' ) {
+      $ss_change_warn = 1;
     } elsif ( $ARGV[0] eq '-?' ) {
         print "$usage";
         exit;
@@ -152,7 +165,33 @@ if ($munch) {
 
 $link_command = join (' ', @args);
 
-system ("$link_command") && &fail ("$0: $link_command failed\n");
+if (open(PP, "$link_command 2>&1 |")) {
+  while(<PP>) {
+    my($line) = $_;
+    if ($ss_change_warn) {
+      print $line;
+    }
+    else {
+      my($found) = 0;
+      foreach my $symbol (@symbols) {
+        if ($line =~ /Warning: size of symbol `$symbol\'/) {
+          $found = 1;
+        }
+      }
+      if (!$found) {
+        print $line;
+      }
+    }
+  }
+  close(PP);
+
+  if ($? ne 0) {
+    fail ("$0: $link_command failed\n");
+  }
+}
+else {
+  fail ("$0: $link_command failed\n");
+}
 
 
 $done = 1;
