@@ -1,5 +1,11 @@
 Mon Sep 28 13:18:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests: Updated all the test-*.exp files to reflect the 
+	  latest "unsigned" changes.
+
+	* src/Key_List.cpp (output_hash_function): Fixed another use of
+ 	  int to be unsigned int.
+
 	* tests/test.cpp: Fixed the signature of in_word_set() to be
 	  consistent with the new gperf.  Thanks to David Levine and
 	  Carlos O'Ryan for this fix.
