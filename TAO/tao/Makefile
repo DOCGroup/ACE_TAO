@@ -101,6 +101,9 @@ include $(TAO_ROOT)/taoconfig.mk
 ifdef CHORUS
   override fakesvcconf = 1
 endif
+ifdef LYNXOS
+  override fakesvcconf = 1
+endif
 ifdef VXWORKS
   override fakesvcconf = 1
 endif
