@@ -64,7 +64,7 @@ main (int argc, char *argv[])
   Tester_Args args (tester_barrier, n_iterations);
 
   if (ACE_Service_Config::thr_mgr ()->spawn_n 
-      (n_threads, ACE_THR_FUNC (tester), 
+      (int(n_threads), ACE_THR_FUNC (tester), 
        (void *) &args, THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
