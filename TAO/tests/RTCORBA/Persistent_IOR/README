@@ -8,7 +8,8 @@ This test makes sure that:
 -ORBEndpoint option.
 
 - Makes sure that if the user tries to combine thread pools and
-persistence, an InvalidPolicy exception is thrown.
+persistence, an InvalidPolicy exception is no longer thrown since this
+feature is now supported with the -ORBLaneEndpoint option.
 
 - Makes sure that for POAs using thread pools, the user can specify
 the protocol selection, protocol version, and other protocol specific

@@ -453,40 +453,97 @@ since domain names are the standard address notation for IORs.</td>
       </tr>
       <tr>
         <td><code>-ORBEndpoint</code> <em>endpoint</em></td>
-        <td><a name="-ORBEndpoint"></a>This option is similar to the <code>-ORBListenEndPoints</code>
-option described below. <font color="red">This option will be
-deprecated in later versions on TAO since the CORBA specification now
-defines the <code>-ORBListenEndpoints</code> option instead. </font> </td>
+        <td><a name="-ORBEndpoint"></a>This option is same as the <a
+        href="#-ORBListenEndpoints"><code>-ORBListenEndPoints</code></a>
+        option described below. <font color="red">This option will be
+        deprecated in later versions on TAO since the CORBA
+        specification now defines the <code>-ORBListenEndpoints</code>
+        option instead. </font> </td>
       </tr>
       <tr>
         <td><code>-ORBListenEndpoints</code> <em>endpoint</em></td>
         <td><a name="-ORBListenEndpoints"></a> This option was
-introduced with the CORBA <a
- href="http://cgi.omg.org/docs/orbos/01-01-04.pdf"> ORT </a> (Object
-Reference Template) specification. It instructs a server ORB to listen
-for requests on the interface specified by <code>endpoint</code>. TAO <a
- href="ORBEndpoint.html"> endpoints</a> are specified using a URL style
-format. An endpoint has the form:
-        <blockquote><code>protocol://V.v@addr1,...,W.w@addrN </code></blockquote>
-where <code>V.v</code> and <code>W.w</code> are optional protocol
-versions for each address. An example of an IIOP endpoint is:
+        introduced with the CORBA <a
+        href="http://cgi.omg.org/docs/orbos/01-01-04.pdf"> ORT </a>
+        (Object Reference Template) specification. It instructs a
+        server ORB to listen for requests on the interface specified
+        by <code>endpoint</code>. When used with RT-CORBA, the option
+        specifies the endpoints that the default thread pool listens
+        to.  TAO endpoints are specified using a URL style format. An
+        endpoint has the form:
+        <blockquote><code>protocol://V.v@addr1,...,W.w@addrN
+        </code></blockquote> where <code>V.v</code> and
+        <code>W.w</code> are optional protocol versions for each
+        address. An example of an IIOP endpoint is:
         <blockquote><code>iiop://<i><em>hostname</em></i>:<i><em>port</em></i>
-          </code></blockquote>
-Sets of endpoints may be specified using multiple <code>-ORBEndpoint</code>
-options or by delimiting endpoints with a semi-colon (;). For example,
-        <blockquote><code>-ORBEndpoint iiop://localhost:9999
--ORBEndpoint uiop:///tmp/mylocalsock -ORBEndpoint shmiop://10002 </code></blockquote>
-is equivalent to:
-        <blockquote><code>-ORBEndpoint
-'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002' </code></blockquote>
-Notice the single quotes (') in the latter option specification. Single
-quotes are needed to prevent the shell from interpreting text after the
-semi-colon as another command to run.
-        <p>If an endpoint is specified without an <code>addr</code>
-such as the following: </p>
-        <blockquote><code>-ORBEndpoint uiop:// -ORBEndpoint shmiop:// </code></blockquote>
-then a default endpoint will be created for the specified protocol.
-        <p></p>
+        </code></blockquote> 
+
+        Sets of endpoints may be specified using multiple
+        <code>-ORBListenEndpoints</code> options or by delimiting
+        endpoints with a semi-colon (;). For example,
+        <blockquote><code>-ORBListenEndpoints iiop://localhost:9999
+        -ORBListenEndpoints uiop:///tmp/mylocalsock
+        -ORBListenEndpoints shmiop://10002 </code></blockquote> is
+        equivalent to: <blockquote><code>-ORBListenEndpoints
+        'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002'
+        </code></blockquote> Notice the single quotes (') in the
+        latter option specification. Single quotes are needed to
+        prevent the shell from interpreting text after the semi-colon
+        as another command to run.  <p>If an endpoint is specified
+        without an <code>addr</code> such as the following: </p>
+        <blockquote><code>-ORBListenEndpoints uiop://
+        -ORBListenEndpoints shmiop:// </code></blockquote> then a
+        default endpoint will be created for the specified
+        protocol. <p>
+
+        Click <a href="ORBEndpoint.html"> here</a> for much more on
+        how to specify endpoints.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBLaneEndpoint</code> <em>endpoint</em></td>
+        <td><a name="-ORBLaneEndpoint"></a>This option is same as the
+        <a
+        href="#-ORBLaneListenEndpoints"><code>-ORBLaneListenEndPoints</code></a>
+        option described below. <font color="red">This option will be
+        deprecated in later versions on TAO.</font>
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBLaneListenEndpoints</code>
+        <em>thread-pool-id:thread-lane-id endpoint</em></td> <td><a
+        name="-ORBLaneListenEndpoints"></a> This option allows the
+        user to specify endpoints for thread pools and lanes. This
+        option is only meaningful when used with RT-CORBA and only
+        makes sense when the thread pools and lanes are created in the
+        same order across server incarnations.  See <a
+        href="#-ORBListenEndpoints"><code>-ORBListenEndPoints</code></a>
+        option on how to specify endpoints.  An example is:
+        <blockquote><code>2:3 iiop://localhost:2345
+        </code></blockquote> where <code>2</code> specifies the second
+        thread pool created by the process and <code>3</code>
+        specifies the third lane of that thread pool.  Note that
+        <code>0</code> should be used for the lane when specifying
+        endpoints for thread pools without lanes.
+
+        <p>Sets of endpoints may be specified using multiple
+        <code>-ORBLaneListenEndpoints</code> options or by delimiting
+        endpoints with a semi-colon (;). For example,
+        <blockquote><code>-ORBLaneListenEndpoints 1:4
+        iiop://localhost:9999 -ORBLaneListenEndpoints 1:4
+        uiop:///tmp/mylocalsock -ORBLaneListenEndpoints 1:4
+        shmiop://10002 </code></blockquote> is equivalent to:
+        <blockquote><code>-ORBLaneListenEndpoints 1:4
+        'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002'
+        </code></blockquote> Notice the single quotes (') in the
+        latter option specification. Single quotes are needed to
+        prevent the shell from interpreting text after the semi-colon
+        as another command to run.  <p>If an endpoint is specified
+        without an <code>addr</code> such as the following: </p>
+        <blockquote><code>-ORBLaneListenEndpoints 2:3 uiop://
+        -ORBLaneListenEndpoints 2:3 shmiop:// </code></blockquote>
+        then a default endpoint will be created for the specified
+        protocol. 
         </td>
       </tr>
       <tr>

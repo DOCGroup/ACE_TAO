@@ -148,8 +148,7 @@ TAO_PriorityModelPolicy::_tao_scope (void) const
   // copied to the list of client exposed policies.
   return ACE_static_cast (TAO_Policy_Scope,
                           TAO_POLICY_ORB_SCOPE |
-                          TAO_POLICY_POA_SCOPE |
-                          TAO_POLICY_CLIENT_EXPOSED);
+                          TAO_POLICY_POA_SCOPE);
 }
 
 // ****************************************************************

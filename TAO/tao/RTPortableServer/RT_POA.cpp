@@ -17,6 +17,8 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Thread_Lane_Resources_Manager.h"
 
 #include "tao/RTCORBA/RT_Policy_i.h"
 
@@ -276,9 +278,30 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   if (this->thread_pool_ == 0 ||
       !this->thread_pool_->with_lanes ())
     {
-      TAO_Acceptor_Registry *acceptor_registry =
-        TAO_POA_RT_Policy_Validator::extract_acceptor_registry (this->orb_core_,
-                                                                this->thread_pool_);
+      TAO_Acceptor_Registry *acceptor_registry = 0;
+
+      if (this->thread_pool_ == 0)
+        {
+          TAO_Thread_Lane_Resources_Manager &thread_lane_resources_manager =
+            this->orb_core_.thread_lane_resources_manager ();
+
+          TAO_Thread_Lane_Resources &resources =
+            thread_lane_resources_manager.default_lane_resources ();
+
+          acceptor_registry =
+            &resources.acceptor_registry ();
+        }
+      else
+        {
+          TAO_Thread_Lane **lanes =
+            this->thread_pool_->lanes ();
+
+          TAO_Thread_Lane_Resources &resources =
+            lanes[0]->resources ();
+
+          acceptor_registry =
+            &resources.acceptor_registry ();
+        }
 
       return
         this->TAO_POA::create_stub_object (object_key,

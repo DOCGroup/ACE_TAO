@@ -202,12 +202,6 @@ public:
                                           ACE_ENV_ARG_DECL) = 0;
 
   //@}
-
-  /// Sets the default ServerProtocolPolicy.
-  virtual int set_default_server_protocol_policy (
-    TAO_Acceptor_Registry &acceptor_registry
-    ACE_ENV_ARG_DECL) = 0;
-
 };
 
 #include /**/ "ace/post.h"

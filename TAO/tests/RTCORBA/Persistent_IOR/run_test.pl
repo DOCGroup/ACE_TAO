@@ -9,32 +9,37 @@ use lib '../../../../bin';
 use PerlACE::Run_Test;
 
 $iiop_port = 27532;
+$tp_iiop_port = 27533;
 
-$extra_server_args = "-d 1 -ORBobjrefstyle url -ORBEndpoint iiop://1.0\@:$iiop_port";
+$extra_server_args = "-d 1 -ORBobjrefstyle url -ORBEndpoint iiop://1.0\@:$iiop_port -ORBLaneEndpoint 2:0 iiop://1.0\@:$tp_iiop_port";
 
 @iorfiles = 
     (
+     "not_used_ior_1",
+     "not_used_ior_2",
      "persistent_ior",
      "transient_ior",
-     "not_used_ior",
+     "tp_persistent_ior",
      );
      
 @configurations = 
     (
      {
-         iorfiles => [ "persistent_ior", "transient_ior" ],
-         server => "-p persistent_ior -t transient_ior $extra_server_args", 
-         clients => [ "-k file://persistent_ior", "-k file://transient_ior -x" ],
+         iorfiles => [ "persistent_ior", "tp_persistent_ior", "transient_ior" ],
+         server => "-a tp_persistent_ior -p persistent_ior -t transient_ior $extra_server_args",
+         clients => [ "-k file://tp_persistent_ior", "-k file://persistent_ior", "-k file://transient_ior -x" ],
      },
      {
-         iorfiles => [ "persistent_ior", "transient_ior", "not_used_ior" ],
-         server => "-p not_used_ior -t transient_ior $extra_server_args", 
-         clients => [ "-k file://not_used_ior", "-k file://transient_ior -x" ],
+         iorfiles => [ "not_used_ior_1", "not_used_ior_2", "transient_ior" ],
+         server => "-a not_used_ior_1 -p not_used_ior_2 -t transient_ior $extra_server_args",
+         clients => [ "-k file://tp_persistent_ior", "-k file://persistent_ior", "-k file://transient_ior -x" ],
      },
      );
 
 sub run_client
 {
+    print "\nRunning client with the following args: @_\n\n";
+
     $CL = new PerlACE::Process ("client", @_);
 
     $CL->Spawn ();
@@ -54,6 +59,8 @@ sub run_server
     my @parms = @_;
     my $args = $parms[0];
     my $iorfiles = $parms[1];
+
+    print "\nRunning server with the following args: $args\n\n";
 
     $SV = new PerlACE::Process ("server", $args);
 

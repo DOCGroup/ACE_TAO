@@ -591,10 +591,6 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Set the default Server Protocol Policy.
-  this->set_default_server_protocol_policy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -613,6 +609,17 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // Merge policies from the ORB level.
   this->validator ().merge_policies (policies.policies ()
                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // If any of the policy objects specified are not valid for the ORB
+  // implementation, if conflicting policy objects are specified, or
+  // if any of the specified policy objects require prior
+  // administrative action that has not been performed, an
+  // InvalidPolicy exception is raised containing the index in the
+  // policies parameter value of the first offending policy object.
+  policies.validate_policies (this->validator (),
+                              this->orb_core_
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Construct a new POA
@@ -648,23 +655,6 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // TAO_POA object takes ownership of the POA_Manager object
   // (actually it shares the ownership with its peers).
   (void) safe_poa_manager._retn ();
-}
-
-void
-TAO_Object_Adapter::set_default_server_protocol_policy (ACE_ENV_SINGLE_ARG_DECL)
-{
-  TAO_Thread_Lane_Resources &default_lane_resources =
-    this->orb_core_.thread_lane_resources_manager ().default_lane_resources ();
-
-  TAO_Acceptor_Registry &acceptor_registry =
-    default_lane_resources.acceptor_registry ();
-
-  TAO_Protocols_Hooks *protocols_hooks =
-    this->orb_core_.get_protocols_hooks ();
-
-  protocols_hooks->set_default_server_protocol_policy (acceptor_registry
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -997,7 +987,7 @@ TAO_Object_Adapter_Factory::init (int /* argc */,
 
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Object_Adapter_Factory,
-                       ACE_TEXT ("TAO_POA"),
+                       ACE_TEXT ("PortableServer"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Object_Adapter_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "ace/Get_Opt.h"
+#include "tao/PortableServer/POA.h"
 
 class Test_i : public POA_Test
 {
@@ -85,16 +86,22 @@ parse_args (int argc, char *argv[])
 }
 
 int
-check_default_server_protocol (CORBA::ORB_ptr orb
-                               ACE_ENV_ARG_DECL)
+check_server_protocol_at_root_poa (CORBA::ORB_ptr orb,
+                                   PortableServer::POA_ptr poa
+                                   ACE_ENV_ARG_DECL)
 {
   // Users should never write code like below.
   // It is for testing purposes only! (Unfortunately, there
-  // is no standard way to access ORB default policies).
+  // is no standard way to access POA policies).
+  TAO_POA &tao_poa =
+    dynamic_cast<TAO_POA &> (*poa);
+
+  TAO_POA_Policy_Set &policies =
+    tao_poa.policies ();
+
   CORBA::Policy_var server_protocol =
-    orb->orb_core ()->get_default_policies ()->get_policy (
-      RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
-      ACE_ENV_ARG_PARAMETER);
+    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   RTCORBA::ServerProtocolPolicy_var policy =
@@ -112,7 +119,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nORB default for ServerProtocolPolicy "
+              "\nRoot POA ServerProtocolPolicy "
               "contains %u protocols:\n", protocols->length ()));
 
   for (CORBA::ULong i = 0; i < protocols->length (); ++i)
@@ -267,9 +274,10 @@ main (int argc, char *argv[])
                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Check ORB default ServerProtocol configuration.
-      int result = check_default_server_protocol (orb.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+      // Check ServerProtocol configurations.
+      int result = check_server_protocol_at_root_poa (orb.in (),
+                                                      root_poa.in ()
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
         return -1;

@@ -24,6 +24,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
+#include "params.h"
 
 class ACE_Allocator;
 class TAO_ORB_Core;
@@ -63,7 +64,8 @@ public:
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Open the acceptor registry.
-  int open_acceptor_registry (int ignore_address
+  int open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
+                              bool ignore_address
                               ACE_ENV_ARG_DECL);
 
   /// Finalize resources.

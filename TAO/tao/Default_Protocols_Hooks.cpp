@@ -86,13 +86,6 @@ TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short
   return 0;
 }
 
-int
-TAO_Default_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &
-                                                                 ACE_ENV_ARG_DECL_NOT_USED)
-{
-  return 0;
-}
-
 void
 TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
                                                  TAO_Service_Context &,
@@ -101,7 +94,7 @@ TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
 {
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Default_Protocols_Hooks::set_client_network_priority (IOP::ProfileId,
                                                           TAO_Stub *
                                                           ACE_ENV_ARG_DECL_NOT_USED)
@@ -109,7 +102,7 @@ TAO_Default_Protocols_Hooks::set_client_network_priority (IOP::ProfileId,
   return false;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Default_Protocols_Hooks::set_server_network_priority (IOP::ProfileId,
                                                           CORBA::Policy *
                                                           ACE_ENV_ARG_DECL_NOT_USED)

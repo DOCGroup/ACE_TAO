@@ -319,6 +319,11 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
 #endif /* TAO_DEFAULT_ROOTPOA_NAME */
 
+// The default lane name used when storing endpoints.
+#if !defined (TAO_DEFAULT_LANE)
+#define TAO_DEFAULT_LANE "default lane"
+#endif /* TAO_DEFAULT_LANE */
+
 // Minimum CORBA
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 # define TAO_HAS_MINIMUM_CORBA 0

@@ -25,6 +25,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Exception.h"
+#include "tao/params.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -67,7 +68,8 @@ public:
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
-            int ignore_address
+            const TAO_EndpointSet &endpoint_set,
+            bool ignore_address
             ACE_ENV_ARG_DECL);
 
   /// Close all open acceptors.
@@ -119,7 +121,7 @@ private:
               ACE_Reactor *reactor,
               ACE_CString &address,
               TAO_ProtocolFactorySetItor &factory,
-              int ignore_address
+              bool ignore_address
               ACE_ENV_ARG_DECL);
 
 private:
