@@ -1,16 +1,21 @@
+Fri Dec 28 10:52:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/SSL/Makefile.bor:
+          Added ACE_SSL_LIB to fix linker errors in BCB build
+
 Thu Dec 27 22:14:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Global_Macros.h: A new file that will house the macros used
 	  by ACE and applications. Have moved a very few macros from OS.h
 	  to this file. The real need for this was the need to include
-	  OS.h even if one wants to use a simple macro like 
+	  OS.h even if one wants to use a simple macro like
 	  ACE_UNIMPLEMENTED_FUNC or something as simple as that. Over a
 	  period of time we need to move more macros into this file so
 	  that applications can use this instead of OS.h. It would be nice
 	  to split this file into pieces having macros for every specific
 	  functionality. That was getting too tedious and error
-	  prone. Thought that this could be a first step to move further. 
-	
+	  prone. Thought that this could be a first step to move further.
+
 	* ace/OS.h: Moved a few macros into Global_Macros.h file. Also
 	  included the file in OS.h The need for inclusion comes from the
 	  fact that there are dependencies that exist between the macros

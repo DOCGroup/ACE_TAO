@@ -8,11 +8,16 @@ NAMES = \
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
-CFLAGS = $(ACE_CFLAGS) $(SSL_CFLAGS) $(ACE_SSL_CFLAGS)
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(SSL_CFLAGS) \
+        $(ACE_SSL_CFLAGS)
 
 CPPDIR = .
 
-LIBFILES = $(ACE_LIB)
+LIBFILES = \
+        $(ACE_LIB) \
+        $(ACE_SSL_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
