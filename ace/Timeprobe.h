@@ -8,25 +8,32 @@
  *
  *  @author Irfan Pyarali
  *
- * If users want to use time probes the ACE_COMPILE_TIMEPROBES flag
- * must be defined when compiling ACE.  This can be achieved by doing
- * one of the following: . Use make probe = 1 if you are using the
- * make utility. . Define ACE_COMPILE_TIMEPROBES in config.h . Define
- * ACE_COMPILE_TIMEPROBES in the VC project file. . Other regular
- * methods will also work. It is not necessary to define
- * ACE_COMPILE_TIMEPROBES when using time probes you simply need
- * ACE_ENABLE_TIMEPROBES.  You can use the ACE_TIMEPROBE_* macros to
- * program the time probes and use the ACE_ENABLE_TIMEPROBE to enable
- * the time probes.  If you define ACE_ENABLE_TIMEPROBE in your code
- * but forget to compile ACE with ACE_COMPILE_TIMEPROBES you will end
- * up with linker errors. Remember that ACE_COMPILE_TIMEPROBES means
- * that the ACE library will contain code for time probes.  This is
- * only useful when compiling ACE. ACE_ENABLE_TIMEPROBES means that
- * the ACE_TIMEPROBE_* macros should spring to life.
+ * If users want to use time probes, the ACE_COMPILE_TIMEPROBES
+ * flag must be defined when compiling ACE.  This can be achieved
+ * by doing one of the following:
  *
+ * . Use make probe = 1, if you are using the make utility.
+ *
+ * . Define ACE_COMPILE_TIMEPROBES in config.h
+ *
+ * . Define ACE_COMPILE_TIMEPROBES in the VC project file.
+ *
+ * . Other regular methods will also work.
+ *
+ * It is not necessary to define ACE_COMPILE_TIMEPROBES when using
+ * time probes, you simply need ACE_ENABLE_TIMEPROBES.  You can use
+ * the ACE_TIMEPROBE_* macros to program the time probes, and use
+ * the ACE_ENABLE_TIMEPROBE to enable the time probes.  If you
+ * define ACE_ENABLE_TIMEPROBE in your code, but forget to compile
+ * ACE with ACE_COMPILE_TIMEPROBES, you will end up with linker
+ * errors.
+ *
+ * Remember that ACE_COMPILE_TIMEPROBES means that the ACE library
+ * will contain code for time probes.  This is only useful when
+ * compiling ACE. ACE_ENABLE_TIMEPROBES means that the
+ * ACE_TIMEPROBE_* macros should spring to life.
  */
 //=============================================================================
-
 
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H

@@ -1,3 +1,41 @@
+Wed Oct 30 11:38:36 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Following are fixes for bug 1344.  Thanks to Ossama for pointing
+	  this out.
+
+	* tao\PortableServer\Object_Adapter.cpp (create): Moved the
+	  registration of the POA Current to the
+	  PortableServer_ORBInitializer.  If POA Current is resolved
+	  before RootPOA, this code executes does not execute in time.
+
+	* tao\PortableServer\PortableServer_ORBInitializer.cpp
+	  (register_poa_current): POA Current is now registered in
+	  TAO_PortableServer_ORBInitializer::post_init().
+
+	* tao\ORB_Core.i (poa_current): Simply return <poa_current>.  It
+	  should have been correctly initialized.
+
+	* tests\POA\Current: Added new test to ensure that accessing the
+	  POA current before the RootPOA does not cause any problems.
+
+	  The following files were added:
+
+	  - tests/POA/Current/Current.cpp
+	  - tests/POA/Current/Current.dsp
+	  - tests/POA/Current/Current.dsw
+	  - tests/POA/Current/Current.mpc
+	  - tests/POA/Current/Makefile
+	  - tests/POA/Current/makefile.bor
+	  - tests/POA/Current/run_test.pl
+
+	  The following files were modified:
+
+	  - $ACE_ROOT/bin/auto_run_tests.lst
+	  - tests/TAO_Tests.dsw
+	  - tests/POA/Makefile
+	  - tests/POA/Makefile.bor
+	  - tests/POA/README
+
 Wed Oct 30 13:15:01 CET 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp (run_orb_within_thread):

@@ -21,6 +21,7 @@ DIRS  = POA_Destruction \
 	Single_Threaded_POA \
 	Persistent_ID \
 	Policies \
+	Current \
 	Identity 
 
 # The following test hasn't been updated yet
