@@ -1,3 +1,23 @@
+Thu Jul 01 18:01:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/tests.dsw:
+	* orbsvcs/tests/Concurrency/CC_client.dsp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+	* orbsvcs/tests/Simple_Naming/client.dsp:
+	* orbsvcs/tests/Trading/Colocated_Test.dsp:
+	* orbsvcs/tests/Trading/Export_Test.dsp:
+	* orbsvcs/tests/Trading/Import_Test.dsp:
+	* orbsvcs/tests/Trading/TradingLib.dsp:
+	  Fixed several .dsp files, the Release version had several broken
+	  paths and options, obsolete or removed tests were still listed,
+	  etc.
+
 Thu Jul  1 19:46:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/Makefile:

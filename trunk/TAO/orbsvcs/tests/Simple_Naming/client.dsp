@@ -17,12 +17,13 @@ CFG=Simple Naming Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Naming Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Naming Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Naming Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Simple Naming Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -49,7 +50,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\orbsvcs"
+# ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
 
@@ -229,15 +230,7 @@ SOURCE=.\test_objectS_T.i
 # Begin Source File
 
 SOURCE=.\test_objectS_T.cpp
-
-!IF  "$(CFG)" == "Simple Naming Client - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # End Group
 # End Target
