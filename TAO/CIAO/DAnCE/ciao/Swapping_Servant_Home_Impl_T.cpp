@@ -161,8 +161,6 @@ namespace CIAO
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    ACE_DEBUG ((LM_DEBUG, "created the home succesfully\n"));
-
     return this->_ciao_activate_component (_ciao_ec.in ()
                                            ACE_ENV_ARG_PARAMETER);
   }
@@ -217,24 +215,15 @@ namespace CIAO
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
           (ec, home, this, this->container_);
 
-    ACE_DEBUG ((LM_DEBUG, "created a servant\n"));
-
     this->container_->add_servant_map (oid, svt);
 
     this->dynamic_servant_map_.bind (oid, svt);
 
-    ACE_DEBUG ((LM_DEBUG, "added the servant to maps\n"));
-
-    ACE_DEBUG ((LM_DEBUG, "trying to narrow the component reference\n"));
-
     COMP_VAR ho = COMP::_narrow (objref.in ()
                                  ACE_ENV_ARG_PARAMETER);
 
-    ACE_DEBUG ((LM_DEBUG, "narrowed the component reference\n"));
-
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    ACE_DEBUG ((LM_DEBUG, "lets return\n"));
     return ho._retn ();
   }
 
