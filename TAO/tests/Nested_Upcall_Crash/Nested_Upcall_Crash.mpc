@@ -1,5 +1,6 @@
 project: messaging, corba_messaging {
   Source_Files {
+    Clock_Ticks.cpp
     Server_Peer.cpp
     server.cpp
   }
@@ -17,6 +18,7 @@ project(client): messaging, corba_messaging {
   exename = client
 
   Source_Files {
+    Clock_Ticks.cpp
     Client_Peer.cpp
     client.cpp
   }
