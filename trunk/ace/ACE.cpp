@@ -627,6 +627,9 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
 			   const ACE_Time_Value *timeout,
 			   int &val)
 {
+  // Give value a default value to keep Purify happy!
+  val = 0;
+
   if (timeout == 0)
     return 0;
 
@@ -683,6 +686,9 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
 			   const ACE_Time_Value* timeout,
 			   int &val)
 {
+  // Give value a default value to keep Purify happy!
+  val = 0;
+
   if (timeout==0)
     return 0;
 

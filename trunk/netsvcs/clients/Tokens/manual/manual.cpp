@@ -129,7 +129,6 @@ STDIN_Token::parse_args (int argc, char *argv[])
 			     "[-p <remote port>]\n"
 			     "[-i ignore deadlock]\n"
 			     "[-d debug]\n", 1), -1);
-	  break;
 	}
     }
 
