@@ -1,0 +1,18 @@
+--- orig/RTCORBAS.cpp	Tue Jan 30 18:58:34 2001
++++ RTCORBAS.cpp	Tue Jan 30 19:08:47 2001
+@@ -19,6 +19,10 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
++#include "tao/orbconf.h"
++
++#if (TAO_HAS_RT_CORBA == 1)
++
+ #include "RTCORBAS.h"
+ #include "tao/PortableServer/Object_Adapter.h"
+ #include "tao/PortableServer/Operation_Table.h"
+@@ -35,3 +39,4 @@
+ #include "RTCORBAS.i"
+ #endif /* !defined INLINE */
+ 
++#endif /* TAO_HAS_RT_CORBA == 1 */

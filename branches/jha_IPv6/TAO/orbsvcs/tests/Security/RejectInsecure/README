@@ -1,0 +1,12 @@
+# $Id$
+
+This test helps make sure that authentication is working properly. 
+This test checks if we are able to reject unauthenticated secure connections.
+
+The server has a single method which when invoked will return a
+boolean value (true) to show that the server has been contacted. We
+need to make sure that not only are unsecured connections rejected,
+but also unauthorized connections, even if they are secure, are also
+rejected.
+
+

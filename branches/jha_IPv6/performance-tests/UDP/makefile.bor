@@ -1,0 +1,17 @@
+#
+# Makefile for building the udp performance-tests
+#
+
+NAME = udp_test
+
+OBJFILES = \
+        $(OBJDIR)\udp_test.obj
+
+CPPDIR = .
+
+CFLAGS = $(ACE_CFLAGS)
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
