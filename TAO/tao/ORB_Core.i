@@ -28,6 +28,13 @@ TAO_ORB_Core::connection_cache (void)
   return this->connection_cache_;
 }
 
+ACE_INLINE TAO_Object_Ref_Table &
+TAO_ORB_Core::object_ref_table (void)
+{
+  return this->object_ref_table_;
+}
+
+
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,
                                          TAO_Profile  *&profile)

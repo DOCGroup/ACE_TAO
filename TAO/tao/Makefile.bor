@@ -106,6 +106,7 @@ OBJFILES = \
 	$(OBJDIR)\OctetSeqC.obj \
 	$(OBJDIR)\StringSeqC.obj \
 	$(OBJDIR)\Smart_Proxies.obj \
+	$(OBJDIR)\Object_Ref_Table.obj \
 	$(OBJDIR)\ORB_Core.obj \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\params.obj \
