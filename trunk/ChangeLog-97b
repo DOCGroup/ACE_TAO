@@ -1,12 +1,12 @@
 Mon Nov 03 18:32:42 1997  Carlos O'Ryan  <coryan@MILONGA>
 
-	* ace/Proactor.cpp: 
-	* ace/Timer_Queue_T.h: 
-	* ace/Timer_Queue_T.cpp: 
-	* ace/Timer_Heap_T.cpp: 
-	* ace/Synch_T.h: 
-	* ace/Synch_T.cpp: 
-	* ace/Atomic_Op.i: 
+	* ace/Proactor.cpp:
+	* ace/Timer_Queue_T.h:
+	* ace/Timer_Queue_T.cpp:
+	* ace/Timer_Heap_T.cpp:
+	* ace/Synch_T.h:
+	* ace/Synch_T.cpp:
+	* ace/Atomic_Op.i:
 	  Changed the method name from lock() to mutex(), otherwise the
 	  lame HP/C++ compiler gets completely confused. Also changed the
 	  field from lock_ to mutex_
@@ -16,7 +16,7 @@ Mon Nov  3 17:15:17 1997  Steve Huston  <shuston@riverace.com>
 	* ace/OS.h: Removed "class ace_dewarn_gplusplus;" from the
 	  ACE_CLASS_IS_NAMESPACE macro.  Produces warnings on AIX and
 	  shouldn't be needed.
-	
+
 Mon Nov  3 15:49:18 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/Connector.cpp (connect): "Fixed" so that the service handler
@@ -30,6 +30,12 @@ Mon Nov  3 14:16:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	  semaphore leaks on Solaris.
 
 Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Managed_Object.[hi] (get_preallocated_{object,array}):
+          inlined function definitions into the class header so that
+          it compiles on AIX 4.1 w/ xlC 3.01.  Thanks to Bob Lyng
+          <rlyng@synertech.highmark.com> for reporting this problem,
+          at to Steve H. for testing the fix.
 
         * include/makeinclude/{platform_linux*.GNU,wrapper_macros.GNU},
           netsvcs/lib/Makefile: suppress -g when compiling ace/Timer_Hash.cpp
@@ -49,6 +55,9 @@ Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.h: added documenation of
           ACE_HAS_NONSTATIC_OBJECT_MANAGER config #define.
+
+        * performance-tests/Misc/preempt.cpp: cleaned up cleanup so that
+          it compiles cleanly.
 
 Mon Nov  3 01:30:52 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
