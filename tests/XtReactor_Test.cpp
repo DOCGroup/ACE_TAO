@@ -152,13 +152,6 @@ client (void *)
   return 0;
 }
 
-static void
-sock_callback (XtPointer , int * , XtInputId *)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "Socket callback called\n"));
-}
-
 // Callback for "Press Me" button.
 
 static void
