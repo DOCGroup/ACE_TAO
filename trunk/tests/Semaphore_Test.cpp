@@ -51,48 +51,14 @@ static size_t n_workers = 10;
 // Amount to release the semaphore.
 static size_t n_release_count = 3;
 
-// Number of times to call test_timeout ().
-static size_t test_timeout_count = 3;
-
 // Number of timeouts.
 static size_t timeouts = 0;
 
-// Explain usage and exit.
-static void
-print_usage_and_die (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n")));
-  ACE_OS::exit (1);
-}
-
-static void
-parse_args (int argc, ASYS_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("s:w:n:"));
-
-  int c;
-
-  while ((c = get_opt ()) != -1)
-    switch (c)
-    {
-    case 's':
-      n_release_count = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'w':
-      n_workers = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.optarg);
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
-}
+#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
+// Number of times to call test_timeout ().
+static size_t test_timeout_count = 3;
 
 // Tests the amount of time spent in a timed wait.
-
 static int
 test_timeout (void)
 {
@@ -134,6 +100,41 @@ test_timeout (void)
 
   ++wait_secs;
   return status;
+}
+#endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
+
+// Explain usage and exit.
+static void
+print_usage_and_die (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n")));
+  ACE_OS::exit (1);
+}
+
+static void
+parse_args (int argc, ASYS_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("s:w:n:"));
+
+  int c;
+
+  while ((c = get_opt ()) != -1)
+    switch (c)
+    {
+    case 's':
+      n_release_count = ACE_OS::atoi (get_opt.optarg);
+      break;
+    case 'w':
+      n_workers = ACE_OS::atoi (get_opt.optarg);
+      break;
+    case 'n':
+      n_iterations = ACE_OS::atoi (get_opt.optarg);
+      break;
+    default:
+      print_usage_and_die ();
+      break;
+  }
 }
 
 // Worker tries to acquire the semaphore, hold it for a while, and
@@ -225,12 +226,3 @@ int main (int argc, ASYS_TCHAR *argv[])
   ACE_END_TEST;
   return test_result;
 }
-
-
-
-
-
-
-
-
-
