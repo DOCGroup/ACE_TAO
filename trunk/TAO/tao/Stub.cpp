@@ -137,11 +137,16 @@ TAO_Stub::~TAO_Stub (void)
 
   this->orb_core_->_decr_refcnt ();
 
-#if (TAO_HAS_RTCORBA == 1)
+#if (TAO_HAS_RT_CORBA == 1)
 
-  this->priority_model_policy_->destroy ();
-  this->priority_banded_connection_policy_->destroy ();
-  this->client_protocol_policy_->destroy ();
+  if (this->priority_model_policy_)
+    this->priority_model_policy_->destroy ();
+
+  if (this->priority_banded_connection_policy_)
+    this->priority_banded_connection_policy_->destroy ();
+
+  if (this->client_protocol_policy_)
+    this->client_protocol_policy_->destroy ();
 
 #endif /* TAO_HAS_RT_CORBA */
 }

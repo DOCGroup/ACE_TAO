@@ -1,3 +1,26 @@
+Mon Oct 23 21:39:22 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Fixed a typo where TAO_HAS_RTCORBA was used instead of
+	  TAO_HAS_RT_CORBA.  This typo prevented the RT CORBA ORB
+	  initializer from being registered, which in turn prevented the
+	  RT CORBA policy factories from being registered.  This fixes a
+	  seg fault.
+
+	* tao/Stub.cpp (TAO_Stub):
+
+	  Fixed a typo where TAO_HAS_RTCORBA was used instead of
+	  TAO_HAS_RT_CORBA.  This fixes a problem where the destroy()
+	  method in each RT policy was not being called.
+
+	  Make sure the pointer to the policy is valid before invoking the
+	  destroy() method through it.  This fixes a seg fault.
+
+	* tao/Profile.cpp (policies):
+
+	  Made this code exception safe by using a Policy_var.
+
 Mon Oct 23 19:13:54 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DomainC.cpp:
