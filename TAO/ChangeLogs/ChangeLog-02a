@@ -1,3 +1,10 @@
+Tue Apr  3 09:58:47 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+	
+          Added portspan option to parse_options method. This part had been 
+	  left out by mistake from portspan changes. [Bug 817]
+
 Tue Apr  3 09:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
