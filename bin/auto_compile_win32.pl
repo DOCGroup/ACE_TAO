@@ -664,6 +664,17 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
         $Debug = 1;
         $Verbose = 1;
     }
+    elsif ( $ARGV[0] eq '-C')   # Script debugging mode
+    {
+        shift;
+        $active_config = $ARGV[0];
+        print "Select $Lists[$active_config]\n";
+        @Lists = ( $Lists[$active_config] );
+        @Win32_DLL_Version_Tests_Configs =
+            ( $Win32_DLL_Version_Tests_Configs[$active_config] );
+        @Win32_LIB_Version_Tests_Configs =
+            ( $Win32_LIB_Version_Tests_Configs[$active_config] );
+    }
     elsif ( $ARGV[0] eq '-D' )  # Build DLL only
     {
         print "Build DLL only\n" if ( $Verbose );
