@@ -176,13 +176,13 @@ public:
    *
    * @return The parsed option character. The following characters have
    * special significance.
-   * @retval 0       A long option was found
-   * @retval \'?\'   An unknown option character was found and the first
-   *                 character of @a optstring was not a colon.
-   * @retval \':\'   An unknown option character was found and the first
-   *                 character of @a optstring was a colon.
-   * @retval \'1\'   @c RETURN_IN_ORDER was specified and a non-option argument
-   *                 was found.
+   * @retval 0      A long option was found
+   * @retval '\?'   An unknown option character was found and the first
+   *                character of @a optstring was not a colon.
+   * @retval ':'    An unknown option character was found and the first
+   *                character of @a optstring was a colon.
+   * @retval '1'    @c RETURN_IN_ORDER was specified and a non-option argument
+   *                was found.
    * @retval EOF No more option characters were found.  @c opt_ind() will
    *             return the index in @a argv of the first @a argv element
    *             that is not an option.  If @c PERMUTE_ARGS was

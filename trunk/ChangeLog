@@ -1,3 +1,9 @@
+Mon Jul 29 17:30:27 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Get_Opt.h (ctor): Changed documented name of the skip_argv0
+          argument to skip_args to better reflect that it's not just
+          argv[0] that can be skipped.
+
 Mon Jul 29 07:45:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.cpp (uname): Only check for PROCESSOR_ARCHITECTURE_IA64
