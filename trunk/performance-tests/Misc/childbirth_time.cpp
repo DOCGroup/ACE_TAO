@@ -171,7 +171,7 @@ prof_native_thread (size_t iteration)
       for (size_t i = 0; i < iteration; i++)
         {
           ptimer.start ();
-          for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
+          for (int j = 0; j < MULTIPLY_FACTOR; j++)
             {
 #if defined (ACE_HAS_WTHREADS)
               if (::CreateThread (NULL,
@@ -219,7 +219,7 @@ prof_ace_os_thread (size_t iteration)
         {
           ptimer.start ();
 
-          for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
+          for (int j = 0; j < MULTIPLY_FACTOR; j++)
             if (ACE_OS::thr_create ((ACE_THR_FUNC) empty,
                                     0,
                                     THR_SUSPENDED,
