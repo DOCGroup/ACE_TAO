@@ -46,6 +46,7 @@ main (int argc, char **argv)
                          "tests failed\n"),
                         -1);
     }
+  return 0;
 }
 
 // constructor
