@@ -9,4 +9,8 @@ project(QoS) : acelib, core {
   specific(borland, bmake, nmake, em3, vc6, vc7, vc71, vc8) {
     macros += ACE_HAS_WINSOCK2_GQOS
   }
+
+  pkgconfig_files {
+    ACE_QoS.pc.in
+  }
 }
