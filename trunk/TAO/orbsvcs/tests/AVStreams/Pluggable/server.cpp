@@ -48,9 +48,9 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
       //                           FTP_SERVER::instance ()->file ());
       if (frame->length () < sizeof(stamp))
         return 0;
-      
+
       ACE_OS::memcpy (&stamp, frame->rd_ptr (), sizeof(stamp));
-      
+
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       if (recv_base == 0)
         {
@@ -94,7 +94,7 @@ Server::init (int argc,
                                       argv,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      this->orb_manager_ = 
+      this->orb_manager_ =
         TAO_AV_CORE::instance ()->orb_manager ();
 
       // Initialize the orb_manager
@@ -178,7 +178,7 @@ Server::parse_args (int argc,char **argv)
 {
   ACE_Get_Opt opts (argc,argv,"f:p:");
 
-  char c;
+  int c;
   while ((c = opts ()) != -1)
     {
       switch (c)
@@ -220,7 +220,7 @@ main (int argc,
   ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
-  
+
   recv_latency.dump_results ("Receive", gsf);
 }
 

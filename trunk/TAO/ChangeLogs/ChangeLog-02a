@@ -1,3 +1,20 @@
+Sat May  6 15:37:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+          Removed several warnings and a couple of errors from these
+          tests.
+
+        * tests/Param_Test/tmplinst.cpp:
+          Add missing template instantiation, or at least it is missing on
+          IRIX.
+
 Sat May  6 15:19:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile.RTSched:

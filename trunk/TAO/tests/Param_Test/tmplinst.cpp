@@ -9,6 +9,7 @@ ACE_RCSID(Param_Test, tmplinst, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<CORBA::Any>;
+template class TAO_Unbounded_Sequence<CORBA::Long>;
 template class TAO_Bounded_Sequence<CORBA::Long,32>;
 template class TAO_Unbounded_Sequence<CORBA::Short>;
 template class TAO_Bounded_Sequence<CORBA::Short,32>;
@@ -21,6 +22,7 @@ template class TAO_Unbounded_Array_Sequence<Param_Test::Fixed_Array,Param_Test::
 template class TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array,Param_Test::Fixed_Array_var,32>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Any>
+#pragma instantiate TAO_Unbounded_Sequence<CORBA::Long>
 #pragma instantiate TAO_Bounded_Sequence<CORBA::Long,32>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Short>
 #pragma instantiate TAO_Bounded_Sequence<CORBA::Short,32>
