@@ -333,7 +333,7 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
                         Security::NoProtection))
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (
-                        CORBA_SystemException::_tao_minor_code (
+                        CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           EPERM),
                         CORBA::COMPLETED_NO),
@@ -377,7 +377,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   if (ACE_BIT_ENABLED (ssl_component.target_requires,
                        Security::NoProtection))
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (
-                        CORBA_SystemException::_tao_minor_code (
+                        CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           EPERM),
                         CORBA::COMPLETED_NO),

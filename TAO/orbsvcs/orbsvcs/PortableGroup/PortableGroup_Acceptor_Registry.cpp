@@ -118,7 +118,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                         ""));
 
           ACE_THROW (CORBA::BAD_PARAM (
-              CORBA_SystemException::_tao_minor_code (
+              CORBA::SystemException::_tao_minor_code (
                 TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                 EINVAL),
               CORBA::COMPLETED_NO));
@@ -143,7 +143,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                         ""));
 
           ACE_THROW (CORBA::BAD_PARAM (
-              CORBA_SystemException::_tao_minor_code (
+              CORBA::SystemException::_tao_minor_code (
                 TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                 EINVAL),
               CORBA::COMPLETED_NO));
@@ -158,7 +158,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                     ));
 
       ACE_THROW (CORBA::BAD_PARAM (
-          CORBA_SystemException::_tao_minor_code (
+          CORBA::SystemException::_tao_minor_code (
             TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
             EINVAL),
           CORBA::COMPLETED_NO));

@@ -774,10 +774,11 @@ TAO_GIOP_Message_Base::generate_exception_reply (
       // Make the GIOP & reply header.
       this->generate_reply_header (cdr,
                                    params);
-      x._tao_encode (cdr ACE_ENV_ARG_PARAMETER);
+      x._tao_encode (cdr
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA_Exception, ex)
+  ACE_CATCH (CORBA::Exception, ex)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.

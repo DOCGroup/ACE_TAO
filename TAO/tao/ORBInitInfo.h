@@ -59,7 +59,7 @@ class TAO_Export TAO_ORBInitInfo :
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
-                                         CORBA_Environment &);
+                                         CORBA::Environment &);
 
 public:
 

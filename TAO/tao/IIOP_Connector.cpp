@@ -10,11 +10,16 @@
 #include "Invocation.h"
 #include "Connect_Strategy.h"
 #include "Thread_Lane_Resources.h"
+#include "Transport.h"
+#include "Wait_Strategy.h"
+
 #include "ace/Strategies_T.h"
+
 
 ACE_RCSID (TAO,
            IIOP_Connector,
            "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;

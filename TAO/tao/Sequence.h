@@ -24,10 +24,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Managed_Types.h"
+#include "ace/CORBA_macros.h"
 #include "ace/Log_Msg.h"        /* For "ACE_ASSERT" */
+#include "ace/Message_Block.h"
 
-class CORBA_Object;
-class CORBA_Environment;
 
 /**
  * @class TAO_Base_Sequence
@@ -75,12 +75,12 @@ public:
   /// Used for sequences of objects to downcast a recently demarshalled
   /// object reference into the right type.
   virtual void _downcast (void *target,
-                          CORBA_Object *src
+                          CORBA::Object *src
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Used for sequences of object to convert from the derived type
   /// into the Object class.
-  virtual CORBA_Object *_upcast (void *src) const;
+  virtual CORBA::Object *_upcast (void *src) const;
 
   // = orbos/98-01-11 proposed extensions.
   /// Returns the state of the sequence release flag.
@@ -519,7 +519,6 @@ public:
 
 // ****************************************************************
 
-class ACE_Message_Block;
 template<class T> class TAO_Unbounded_Sequence;
 // forward declaration, we are going to specialize that template
 // here.

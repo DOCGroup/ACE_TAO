@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
+#include "ace/CORBA_macros.h"
 
 /**
  * @class TAO_IFR_Client_Adapter
@@ -39,26 +40,25 @@ public:
 
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
-      CORBA_InterfaceDef_ptr object_type
+      CORBA::InterfaceDef_ptr object_type
     ) = 0;
 
   virtual void interfacedef_any_insert (
-      CORBA_Any &any,
-      CORBA_InterfaceDef_ptr object_type
+      CORBA::Any &any,
+      CORBA::InterfaceDef_ptr object_type
     ) = 0;
 
   virtual void dispose (
-      CORBA_InterfaceDef_ptr orphan
+      CORBA::InterfaceDef_ptr orphan
     ) = 0;
 
-  virtual CORBA_InterfaceDef_ptr get_interface (
+  virtual CORBA::InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
       const char *repo_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL
     ) = 0;
 
-
-  virtual CORBA_InterfaceDef_ptr get_interface_remote (
+  virtual CORBA::InterfaceDef_ptr get_interface_remote (
       const CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     ) = 0;

@@ -193,7 +193,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
           string[2] != '0')
         {
           ACE_THROW (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             EINVAL),
                           CORBA::COMPLETED_NO));
@@ -227,7 +227,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
           minor >  TAO_DEF_MIOP_MINOR)
         {
           ACE_THROW (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             EINVAL),
                           CORBA::COMPLETED_NO));
@@ -240,7 +240,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
     {
       // The group component version is mandatory.
       ACE_THROW (CORBA::INV_OBJREF (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         EINVAL),
                       CORBA::COMPLETED_NO));
@@ -260,7 +260,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
       // The group_domain_id is mandatory, so throw an
       // exception if it isn't found.
       ACE_THROW (CORBA::INV_OBJREF (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         EINVAL),
                       CORBA::COMPLETED_NO));
@@ -293,7 +293,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
         {
           // The Group ID is mandatory, so throw an exception.
           ACE_THROW (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             EINVAL),
                           CORBA::COMPLETED_NO));
@@ -320,7 +320,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
           // The group version was expected but not found,
           // so throw an exception.
           ACE_THROW (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             EINVAL),
                           CORBA::COMPLETED_NO));
@@ -342,7 +342,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
       // The multicast address is mandatory, so throw an exception,
       // since it wasn't found.
       ACE_THROW (CORBA::INV_OBJREF (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         EINVAL),
                       CORBA::COMPLETED_NO));
@@ -359,7 +359,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
       // The multicast port is mandatory, so throw an exception,
       // since it wasn't found.
       ACE_THROW (CORBA::INV_OBJREF (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         EINVAL),
                       CORBA::COMPLETED_NO));
@@ -716,7 +716,7 @@ TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr_mode
 
     default:
       ACE_THROW (CORBA::BAD_PARAM (
-             CORBA_SystemException::_tao_minor_code (
+             CORBA::SystemException::_tao_minor_code (
                TAO_DEFAULT_MINOR_CODE,
                EINVAL),
              CORBA::COMPLETED_NO));

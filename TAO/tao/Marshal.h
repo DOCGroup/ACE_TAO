@@ -25,9 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Typecode.h"
-#include "tao/Principal.h"
-#include "tao/Any.h"
-#include "tao/ORB.h"
 
 class TAO_OutputCDR;
 class TAO_InputCDR;

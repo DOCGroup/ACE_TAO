@@ -1,6 +1,5 @@
-
-// This may look like C, but it's really -*- C++ -*-
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   IIOP_Transport.h
@@ -14,6 +13,7 @@
 
 #ifndef TAO_IIOP_TRANSPORT_H
 #define TAO_IIOP_TRANSPORT_H
+
 #include "ace/pre.h"
 
 #include "tao/Transport.h"
@@ -22,11 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+#include "tao/IIOPC.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Synch.h"
-#include "ace/Svc_Handler.h"
-#include "tao/IIOPC.h"
+
 
 // Forward decls.
 class TAO_IIOP_Connection_Handler;
@@ -36,24 +35,15 @@ class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
 class TAO_Adapter;
 
-// Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_IIOP_SVC_HANDLER;
-
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
-
 /**
  * @class TAO_IIOP_Transport
  *
  * @brief Specialization of the base TAO_Transport class to handle the
  *  IIOP protocol.
  *
- *
- *
+ * Specialization of the base TAO_Transport class to handle the IIOP
+ * protocol.
  */
-
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
 public:
@@ -63,10 +53,15 @@ public:
                       TAO_ORB_Core *orb_core,
                       CORBA::Boolean flag);
 
-  /// Default destructor.
-  ~TAO_IIOP_Transport (void);
-
 protected:
+
+  /// Destructor
+  /**
+   * Protected destructor to enforce proper memory management through
+   * the reference counting mechanism.
+   */
+  virtual ~TAO_IIOP_Transport (void);
+
   /** @name Overridden Template Methods
    *
    * Please check the documentation in "tao/Transport.h" for more
@@ -146,9 +141,11 @@ private:
   TAO_Pluggable_Messaging *messaging_object_;
 };
 
+
 #if defined (__ACE_INLINE__)
 #include "tao/IIOP_Transport.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif  /* TAO_IIOP_TRANSPORT_H */

@@ -1,13 +1,12 @@
-// $Id$
-
 #include "MCAST_Parser.h"
 #include "default_ports.h"
-#include "tao/Object_Loader.h"
-#include "tao/Object.h"
-#include "tao/ORB.h"
-#include "tao/Exception.h"
-#include "tao/Environment.h"
-#include "tao/debug.h"
+#include "Object_Loader.h"
+#include "Object.h"
+#include "ORB_Core.h"
+#include "Exception.h"
+#include "Environment.h"
+#include "debug.h"
+
 #include "ace/Read_Buffer.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Acceptor.h"
@@ -18,13 +17,18 @@
 #include "MCAST_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, MCAST_Parser, "$Id$")
+
+ACE_RCSID (tao,
+           MCAST_Parser,
+           "$Id$")
+
+
+static const char mcast_prefix[] = "mcast:";
 
 TAO_MCAST_Parser::~TAO_MCAST_Parser (void)
 {
 }
 
-static const char mcast_prefix[] = "mcast:";
 
 int
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const
@@ -69,7 +73,7 @@ TAO_MCAST_Parser::parse_string (const char *ior,
   return object;
 }
 
-CORBA_Object_ptr
+CORBA::Object_ptr
 TAO_MCAST_Parser::multicast_to_service (const char *service_name,
                                         u_short port,
                                         const char *mcast_address,
@@ -84,8 +88,8 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
 
   CORBA::String_var cleaner;
 
-  CORBA_Object_var return_value =
-    CORBA_Object::_nil ();
+  CORBA::Object_var return_value =
+    CORBA::Object::_nil ();
 
   // Use UDP multicast to locate the  service.
   int result = this->multicast_query (ior,
@@ -107,8 +111,8 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
       // Convert IOR to an object reference.
       return_value =
         orb->string_to_object (ior
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
 
   // Return object reference.

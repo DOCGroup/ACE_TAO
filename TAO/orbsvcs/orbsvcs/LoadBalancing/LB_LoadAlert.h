@@ -71,6 +71,9 @@ private:
   /// by the LoadManager?
   CORBA::Boolean alerted_;
 
+  /// Lock used to synchronized access to the LoadAlert state.
+  mutable TAO_SYNCH_MUTEX lock_;
+
 };
 
 

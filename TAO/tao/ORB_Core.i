@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE CORBA::ULong
@@ -512,14 +513,14 @@ TAO_ORB_Core::get_default_policies (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-ACE_INLINE CORBA_Environment *
+ACE_INLINE CORBA::Environment *
 TAO_ORB_Core::default_environment (void) const
 {
   return TAO_TSS_RESOURCES::instance ()->default_environment_;
 }
 
 ACE_INLINE void
-TAO_ORB_Core::default_environment (CORBA_Environment *env)
+TAO_ORB_Core::default_environment (CORBA::Environment *env)
 {
   TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
@@ -636,81 +637,4 @@ ACE_INLINE TAO_IORInterceptor_List::TYPE &
 TAO_ORB_Core::ior_interceptors (void)
 {
   return this->ior_interceptors_.interceptors ();
-}
-
-// ****************************************************************
-
-ACE_INLINE
-TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p)
-  : p_ (p)
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr");
-}
-
-ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Core_Auto_Ptr::get (void) const
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::get");
-  return this->p_;
-}
-
-ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Core_Auto_Ptr::release (void)
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::release");
-  TAO_ORB_Core *old = this->p_;
-  this->p_ = 0;
-  return old;
-}
-
-ACE_INLINE void
-TAO_ORB_Core_Auto_Ptr::reset (TAO_ORB_Core *p)
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::reset");
-  if (this->get () != p && this->get () != 0)
-    this->get ()->_decr_refcnt ();
-  this->p_ = p;
-}
-
-ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Core_Auto_Ptr::operator-> () const
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::operator->");
-  return this->get ();
-}
-
-ACE_INLINE
-TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core_Auto_Ptr &rhs)
-  : p_ (rhs.release ())
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr");
-}
-
-ACE_INLINE TAO_ORB_Core_Auto_Ptr &
-TAO_ORB_Core_Auto_Ptr::operator= (TAO_ORB_Core_Auto_Ptr &rhs)
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::operator=");
-  if (this != &rhs)
-    {
-      this->reset (rhs.release ());
-    }
-  return *this;
-}
-
-ACE_INLINE
-TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr (void)
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr");
-  if (this->get() != 0)
-    this->get ()->_decr_refcnt ();
-}
-
-// Accessor methods to the underlying ORB_Core Object
-
-ACE_INLINE TAO_ORB_Core &
-TAO_ORB_Core_Auto_Ptr::operator *() const
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::operator *()");
-  // @@ Potential problem if this->p_ is zero!
-  return *this->get ();
 }

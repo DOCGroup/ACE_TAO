@@ -667,6 +667,10 @@ SOURCE=.\ORB_Core.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORB_Core_Auto_Ptr.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ORB_Table.cpp
 # End Source File
 # Begin Source File
@@ -1499,6 +1503,10 @@ SOURCE=.\orb_core.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORB_Core_Auto_Ptr.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ORB_Table.h
 # End Source File
 # Begin Source File
@@ -2184,6 +2192,10 @@ SOURCE=.\ORB.i
 # Begin Source File
 
 SOURCE=.\orb_core.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Core_Auto_Ptr.inl
 # End Source File
 # Begin Source File
 

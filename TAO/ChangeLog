@@ -360,8 +360,8 @@ Thu Feb 20 09:07:56 2003  Ossama Othman  <ossama@uci.edu>
 	* tao/Connection_Handler.h (~TAO_Connection_Handler):
 	* tao/IIOP_Transport.h (~TAO_IIOP_Transport):
 
-	  Made this destructor to enforce proper memory management through
-	  the reference counting mechanism.
+	  Made this destructor protected to enforce proper memory
+	  management through the reference counting mechanism.
 
 	* tao/Default_Thread_Lane_Resources_Manager.h:
 	* tao/Dynamic_Adapter.h:
