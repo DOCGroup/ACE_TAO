@@ -1,14 +1,19 @@
 Mon Jun 22 09:25:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/XtReactor.cpp: 
-	  The notify_handler_ is a pointer now, it was still deferenced as
-	  an object.
+        * ace/XtReactor.cpp:
+          The notify_handler_ is a pointer now, it was still deferenced as
+          an object.
 
 Mon Jun 22 09:04:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU: removed suppression
-          of warnig 340, used reference to copied (temporary) value,
+          of warning 340, used reference to copied (temporary) value,
           because it's no longer needed.
+
+        * ace/Message_Queue.cpp (ACE_Message_Queue_Iterator ctor):
+          replaced "queue" with "q" to avoid problems with STL or on
+          platforms that #define queue.  Thanks to Dave Meyer
+          <dmeyer@std.saic.com> for reporting this.
 
 Mon Jun 22 04:49:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
