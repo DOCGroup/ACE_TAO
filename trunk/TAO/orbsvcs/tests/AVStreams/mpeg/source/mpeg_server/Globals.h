@@ -36,12 +36,12 @@
 
 #define FileRead(position, buf, size) \
 	{ \
-	  if (fseek(fp, (position), 0) == -1) \
+	  if (fseek(VIDEO_SINGLETON::instance ()->fp, (position), 0) == -1) \
 	  { \
 	    perror("VS error on fseek VideoFile"); \
 	    return (-1); \
 	  } \
-	  while (fread((buf), (size), 1, fp) == 0) \
+	  while (fread((buf), (size), 1, VIDEO_SINGLETON::instance ()->fp) == 0) \
 	  { if (errno == EINTR) { errno = 0; continue;}\
              perror("VS error on fread VideoFile"); \
              return (-1); \
@@ -52,6 +52,8 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include "../include/common.h"
+#include "ace/Singleton.h"
 
 class Mpeg_Global
 {
@@ -176,7 +178,7 @@ class Video_Global
 
 };
 
-typedef ACE_TSS_SINGLETON <Video_Global, ACE_SYNCH_MUTEX> VIDEO_SINGLETON;
+typedef ACE_TSS_Singleton <Video_Global, ACE_SYNCH_MUTEX> VIDEO_SINGLETON;
  
 
 #endif /* define MPEG_GLOBAL_H */
