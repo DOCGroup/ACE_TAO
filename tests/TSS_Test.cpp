@@ -56,9 +56,10 @@ static u_int errors = 0;
 int Errno::flags_;
 ACE_Thread_Mutex *Errno::lock_ = 0;
 
-// This is our thread-specific error handler...
+// This is our thread-specific error handler . . .
 // See comment below about why it's dynamically allocated.
 static ACE_TSS<Errno> *tss_error;
+
 // This is for testing/demonstrating ACE_TSS_Type_Adapter.  It's
 // dynamically allocated to avoid static objects, also.
 static ACE_TSS<ACE_TSS_Type_Adapter<u_int> > *u;
@@ -183,8 +184,10 @@ worker (void *c)
           // Use the guard to serialize access to errors.
           ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
                                     0));
-          ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("use of ACE_TSS_Type_Adapter failed, value ")
-                      ASYS_TEXT ("is %u, it should be 37!\n"), (*u)->operator u_int ()));
+          ACE_DEBUG ((LM_ERROR,
+                      ASYS_TEXT ("use of ACE_TSS_Type_Adapter failed, value ")
+                      ASYS_TEXT ("is %u, it should be 37!\n"),
+                      (*u)->operator u_int ()));
           ++errors;
         }
 #endif /* !defined (ACE_HAS_BROKEN_EXPLICIT_TYPECAST_OPERATOR_INVOCATION) */
@@ -231,13 +234,6 @@ worker (void *c)
   return 0;
 }
 
-extern "C" void
-handler (int signum)
-{
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("signal = %S\n"), signum));
-  ACE_Thread_Manager::instance ()->exit (0);
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_TSS<Errno>;
 template class ACE_TSS_Type_Adapter<u_int>;
@@ -272,16 +268,13 @@ main (int, ASYS_TCHAR *[])
   // Similarly, dynamically allocate u.
   ACE_NEW_RETURN (u, ACE_TSS<ACE_TSS_Type_Adapter<u_int> >, 1);
 
-  // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
-  ACE_UNUSED_ARG (sa);
-
   if (ACE_Thread_Manager::instance ()->spawn_n
       (threads,
        ACE_THR_FUNC (worker),
        (void *) ITERATIONS,
        THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn_n")), 1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn_n")), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
 
