@@ -31,7 +31,7 @@ static const char *request_string = "hello from request repository";
 static const char *response_string = "hello from response repository";
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_MMAP_Memory_Pool_Options request_options (REQUEST_BASE_ADDR);
 
@@ -49,8 +49,8 @@ main (int, char *[])
   TEST_MALLOC *ptr = 0;
   // Create a non-adapter version of an allocator.
   ACE_NEW_RETURN (ptr,
-                  TEST_MALLOC ("response_file",
-                               "response_lock",
+                  TEST_MALLOC (ACE_TEXT("response_file"),
+                               ACE_TEXT("response_lock"),
                                &response_options),
                   1);
   auto_ptr <TEST_MALLOC> shmem_response (ptr);
