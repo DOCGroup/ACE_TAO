@@ -204,3 +204,7 @@ WEB  = http://amras.ece.uci.edu/cgi-bin/show_log_dir.cgi?amras_QNX
 TYPE = TIMEONLY
 LIST = http://prince.ociweb.com/~buildlog
 
+[RAPI]
+TYPE = TIMEONLY
+LIST = http://amras.ece.uci.edu/~bugzilla/auto_compile_logs/macumbo.cs.wustl.edu_RAPI/
+WEB  = http://amras.ece.uci.edu/cgi-bin/show_log_dir.cgi?macumbo.cs.wustl.edu_RAPI
