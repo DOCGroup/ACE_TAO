@@ -1,4 +1,4 @@
-// $Id
+// $Id$
 
 // ============================================================================
 //
@@ -31,21 +31,17 @@ main (int argc, char **argv)
 
   // initialize the driver
   if (drv->init (argc, argv) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) driver.cpp - "
-                         "Driver initialization failed\n"),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) driver.cpp - "
+                       "Driver initialization failed\n"),
+                      -1);
 
   // run various tests
   if (drv->run () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) driver.cpp - "
-                         "tests failed\n"),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) driver.cpp - "
+                       "tests failed\n"),
+                      -1);
   return 0;
 }
 
@@ -83,12 +79,10 @@ Driver::init (int argc, char **argv)
 
   // Parse command line and verify parameters.
   if (opt->parse_args (argc, argv) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) driver.cpp - "
-                         "parse_args failed\n"),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) driver.cpp - "
+                       "parse_args failed\n"),
+                      -1);
 
   // Retrieve a Param_Test object reference
   CORBA::Object_var temp =
@@ -100,13 +94,10 @@ Driver::init (int argc, char **argv)
     }
 
   if (CORBA::is_nil (temp.in()))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ORB::string_to_object() returned null object for IOR <%s>\n",
-                         opt->param_test_ior ()),
-                        -1);
-    }
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ORB::string_to_object() returned null object for IOR <%s>\n",
+                       opt->param_test_ior ()),
+                      -1);
   
   this->objref_ = Param_Test::_narrow (temp.in(), env);
   if (env.exception () != 0)

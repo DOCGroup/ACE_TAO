@@ -1,4 +1,5 @@
-// $Id:
+// -*- c++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -24,16 +25,16 @@
 
 template <class T>
 class Param_Test_Client
+{
   // = TITLE
   //    Param_Test_Client
   //
   // = DESCRIPTION
   //    This class declares an interface to run the example client for
-  //    Param_Test CORBA server.  All the complexity for initializing the
-  //    client is hidden in the class.  Just the run () interface is
-  //    needed. The template class does the specific work of making the request
-  //    of the desired data type
-{
+  //    Param_Test CORBA server.  All the complexity for initializing
+  //    the client is hidden in the class.  Just the run () interface
+  //    is needed. The template class does the specific work of making
+  //    the request of the desired data type
 public:
   typedef T TEST_OBJECT;
 
@@ -62,7 +63,6 @@ private:
 
   Results results_;
   // results
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -18,9 +18,8 @@
 
 #include "param_test_i.h"
 
-// Parses the command line arguments and returns an error status
-static FILE* ior_output_file = 0;
-
+// Parses the command line arguments and returns an error status.
+static FILE *ior_output_file = 0;
 
 static int
 parse_args (int argc, char *argv[])
@@ -74,11 +73,9 @@ main (int argc, char *argv[])
 
       temp = orb_ptr->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (temp.in()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) Unable to get root poa reference.\n"),
-                            1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) Unable to get root poa reference.\n"),
+                          1);
 
       oa_ptr = PortableServer::POA::_narrow (temp.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -146,9 +143,7 @@ main (int argc, char *argv[])
       TAO_CHECK_ENV;
 
       if (orb_ptr->run () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
       good_poa->destroy (CORBA::B_TRUE,
                          CORBA::B_TRUE,
@@ -173,7 +168,6 @@ main (int argc, char *argv[])
       return -1;
     }
   TAO_ENDTRY;
-
 
   // Free resources
   delete param_test;
