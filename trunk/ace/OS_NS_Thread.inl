@@ -3799,6 +3799,10 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 # else /* ACE_HAS_TSS_EMULATION */
   return ACE_OS::thr_getspecific_native (key, data);
 # endif /* ACE_HAS_TSS_EMULATION */
+#else
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (data);
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
 
