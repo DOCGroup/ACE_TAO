@@ -27,6 +27,7 @@
 #  define TAO_PERSISTENT_NAME_OBJ_MAP "Persistent_Name_Obj_Map"
 #endif /* ! TAO_PERSISTENT_NAME_OBJ_MAP */
 
+#include "ace/Malloc.h"
 #include "ace/Hash_Map_With_Allocator_T.h"
 
 /**
