@@ -1,3 +1,11 @@
+Thu Jul 24 15:01:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added check for !static_libs_only before setting LDFLAGS +=
+          -Wl,-E, since the static_libs and shared_libs variables aren't
+          reset until later in wrapper_macros.GNU, e.g., users can either
+          set shared_libs=0 or static_libs_only=1 to turn off shared_libs.
+
 Thu Jul 24 13:56:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/platform_g++_common.GNU:
