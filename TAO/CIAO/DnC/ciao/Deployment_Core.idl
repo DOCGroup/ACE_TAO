@@ -37,7 +37,7 @@ module Deployment
   //============connection==================
 
   typedef sequence < Object > Endpoints;
-  typedef Object Endpoint;
+  //typedef Object Endpoint;
 
   enum CCMComponentPortKind {
     Facet,
@@ -57,7 +57,7 @@ module Deployment
     CCMComponentPortKind port_kind;
     // the endpoints member is change to endpoint.
     // Since we will not have more than 1 objref in there.
-    Endpoint endpoint;
+    Object endpoint;
   };
   typedef sequence < Connection > Connections;
 
