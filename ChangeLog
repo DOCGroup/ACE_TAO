@@ -1,3 +1,12 @@
+Fri Jan  1 19:33:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Vector.(h i cpp): Removed 'const' from the 2nd template
+          argument (size_T DEFAULT_SIZE). A size_t is always const,
+          and having const there causes errors from HP aC++. I'm not sure
+          if they're completely legit, but Stroustrup 3rd Ed says the
+          template argument is const anyway... if this is a problem,
+          please let me know.
+
 Fri Feb  1 18:53:44 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.icc: Added Framework_Component.(h cpp) to the files list.
