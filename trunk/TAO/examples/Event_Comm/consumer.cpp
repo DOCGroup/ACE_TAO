@@ -5,7 +5,7 @@
 
 ACE_RCSID(Consumer, consumer, "$Id$")
 
-class Consumer : public ACE_Event_Handler
+class Consumer : public ACE_Event_Handler, public ConsumerShutdown
 {
   // = TITLE
   //    Consumer driver for the Publish/Subscribe example.
@@ -26,6 +26,9 @@ public:
 
   int run (void);
   // Execute the consumer;
+
+  virtual void close (void);
+  // shutdown the consumer.
 
 private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
@@ -60,11 +63,17 @@ Consumer::handle_signal (int signum,
   // Indicate that the consumer initiated the shutdown.
   this->ih_.consumer_initiated_shutdown (1);
 
-  // Shut down the ORB
-  ih_.close ();
-  ch_.close ();
+  this->close ();
 
   return 0;
+}
+
+void
+Consumer::close (void)
+{
+ // Shut down the ORB
+  ih_.close ();
+  ch_.close ();
 }
 
 int
@@ -78,7 +87,7 @@ int
 Consumer::initialize (int argc, char *argv[])
 {
   // Initialize the <Consumer_Handler>.
-  if (this->ch_.init (argc, argv) == -1)
+  if (this->ch_.init (argc, argv, this) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
 			"%p\n",
 			"Consumer_Handler failed to initialize\n"),

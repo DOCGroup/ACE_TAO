@@ -17,7 +17,9 @@ Consumer_Handler::~Consumer_Handler (void)
 }
 
 int
-Consumer_Handler::init (int argc, char *argv[])
+Consumer_Handler::init (int argc,
+                        char *argv[],
+                        ConsumerShutdown *consumershutdown)
 {
   char *filtering_criteria = "";
 
@@ -37,6 +39,9 @@ Consumer_Handler::init (int argc, char *argv[])
 				    0,
 				    TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      // set the ConsumerShutdown callback object.
+      this->receiver_i_.set (consumershutdown);
 
       // Start the servant.
       this->receiver_ =

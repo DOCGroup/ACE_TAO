@@ -32,6 +32,14 @@
 #include "ace/SString.h"
 #include "Event_CommS.h"
 
+class ConsumerShutdown
+{
+  // = TITLE
+  //   Helper callback class to shutdown the Consumer application.
+public:
+  virtual void close (void) = 0;
+};
+
 class Consumer_i : public POA_Event_Comm::Consumer
 {
   // = TITLE
@@ -55,6 +63,12 @@ public:
                            CORBA::Environment &TAO_TRY_ENV);
   // Disconnect the <Consumer> from the <Notifier>, giving it the
   // <reason>.
+
+  void set (ConsumerShutdown *_consumershutdown);
+  // Set the Shutdown callback.
+
+private:
+ConsumerShutdown *consumershutdown;
 };
 
 // Forward reference.
