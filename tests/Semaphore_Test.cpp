@@ -30,6 +30,12 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+// msec that times are allowed to differ before test fails.
+#define ACE_ALLOWED_SLACK  100
+
+// Test results, 'success' is 0
+static int test_result = 0;
+
 #if defined (ACE_HAS_THREADS)
 
 // Semaphore used in the tests.  Start it "locked" (i.e., its initial
@@ -47,7 +53,7 @@ static size_t n_release_count = 3;
 
 #if !defined (ACE_HAS_STHREADS)
 // Number of times to call test_timeout().
-static size_t test_timeout_count;
+static size_t test_timeout_count = 3;
 
 // Number of timeouts.
 static size_t timeouts = 0;
@@ -93,26 +99,42 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 static int 
 test_timeout (void)
 {
-  // Pick some random number of milliseconds.
-  ACE_Time_Value wait (0, (ACE_OS::rand () % 10) * 100000);
 
-  ACE_Time_Value begin = ACE_OS::gettimeofday ();
+  int status = 0;
+
+  long msecs_expected, msecs_waited, msecs_diff;      // milliseconds
+
+  // Wait a little longer each time
+  static long  wait_secs = 3;
+
+  ACE_Time_Value wait = ACE_OS::gettimeofday ();
+
+  ACE_Time_Value begin = wait;
+
+  wait.sec(wait.sec() + wait_secs);
 
   if (s.acquire (wait) == -1)
     ACE_ASSERT (errno == ETIME);
 
-  ACE_Time_Value diff = ACE_OS::gettimeofday () - begin;
+  ACE_Time_Value wait_diff = ACE_OS::gettimeofday () - begin;
+  // Also be sure the time was reset to when acquired.
+  ACE_Time_Value reset_check = ACE_OS::gettimeofday () - wait;
 
-  if (diff < wait)
+  msecs_waited = wait_diff.msec();
+  msecs_expected = wait_secs * 1000;
+  msecs_diff = labs(msecs_expected - msecs_waited);
+  if (msecs_diff > ACE_ALLOWED_SLACK)
     {
       ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Timed wait fails length test\n")));
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Value: %d us, actual %d us\n"),
-		  wait.usec (),
-		  diff.usec ()));
-      return -1;
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Value: %d ms, actual %d ms\n"),
+		  msecs_expected, msecs_waited));
+      status = -1;
     }
 
-  return 0;
+  ++wait_secs;
+
+  return status;
+
 }
 
 // Worker tries to acquire the semaphore, hold it for a while, and
@@ -125,12 +147,25 @@ worker (void *)
        iterations <= n_iterations;
        iterations++)
     {
-      ACE_Time_Value tv (0, (ACE_OS::rand () % 1000) * 1000);
+      ACE_Time_Value wait(0, iterations * 1000 * 100);  // Wait 'iter' msec
+      ACE_Time_Value tv = ACE_OS::gettimeofday() + wait;
 
       if (s.acquire (tv))
         ++timeouts;
       else
         {
+	  ACE_Time_Value diff = ACE_OS::gettimeofday();
+	  diff = diff - tv;       // tv should have been reset to time acquired
+	  if (diff.msec() > ACE_ALLOWED_SLACK)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  ASYS_TEXT("Acquire fails time reset test\n")));
+	      ACE_DEBUG ((LM_DEBUG,
+			  ASYS_TEXT("Diff btw now and returned time: %d ms\n"),
+			  diff.msec()));
+	      test_result = 1;
+	    }
+
           // Hold the lock for a while.
           ACE_OS::sleep (ACE_Time_Value (0, (ACE_OS::rand () % 1000) * 1000));
           s.release ();
@@ -158,7 +193,8 @@ int main (int argc, ASYS_TCHAR *argv[])
 #if !defined (ACE_HAS_STHREADS)
   // Test timed waits.
   for (size_t i = 0; i < test_timeout_count; i++)
-    test_timeout ();
+    if (test_timeout () != 0)
+      test_result = 1;
 
   // Release the semaphore a certain number of times.
   s.release (n_release_count);
@@ -183,6 +219,6 @@ int main (int argc, ASYS_TCHAR *argv[])
   ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
-  return 0;
+  return test_result;
 }
 
