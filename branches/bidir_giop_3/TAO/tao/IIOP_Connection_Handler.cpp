@@ -265,11 +265,12 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   // Get the size of the list
   CORBA::ULong len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i <= len; ++ i)
+  for (CORBA::ULong i = 0; i < len; ++ i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
       ACE_INET_Addr addr (listen_point.port,
                           listen_point.host.in ());
+
 
       // Construct an  IIOP_Endpoint object
       TAO_IIOP_Endpoint endpoint (addr,
@@ -281,11 +282,14 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
       // Mark the connection as bidirectional
       prop.set_bidir_flag (1);
 
-      // Add the handler to Cache
-      int retval = this->orb_core ()->connection_cache ().cache_handler (&prop,
-                                                                         this);
+      // The property for this handler has changed. Recache the
+      // handler with this property
+      int retval = this->recache_handler (&prop);
       if (retval == -1)
         return retval;
+
+      // Make the handler idle and ready for use
+      this->make_idle ();
     }
 
   return 0;

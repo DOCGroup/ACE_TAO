@@ -91,7 +91,7 @@ receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
       // invoked.  This is necessary to prevent an interceptor already
       // invoked in this "ending" interception point from being
       // invoked in another "ending" interception point.
-      --this->stack_size_; 
+      --this->stack_size_;
 
       this->interceptors_[this->stack_size_]->receive_exception (
         ri
@@ -100,6 +100,38 @@ receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
     }
 
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+}
+
+ACE_INLINE void
+TAO_ClientRequestInterceptor_Adapter::
+receive_other (PortableInterceptor::ClientRequestInfo_ptr ri,
+               CORBA::Environment &ACE_TRY_ENV)
+{
+  // This is an "ending" interception point so we only process the
+  // interceptors pushed on to the flow stack.
+
+  // Notice that the interceptors are processed in the opposite order
+  // they were pushed onto the stack since this is an "ending"
+  // interception point.
+
+  // Unwind the stack.
+  size_t len = this->stack_size_;
+  for (size_t i = 0; i < len; ++i)
+    {
+      // Pop the interceptor off of the flow stack before it is
+      // invoked.  This is necessary to prevent an interceptor already
+      // invoked in this "ending" interception point from being
+      // invoked in another "ending" interception point.
+      --this->stack_size_;
+
+      this->interceptors_[this->stack_size_]->receive_other (
+        ri
+        TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
 }
 
 // -------------------------------------------------------------------
@@ -170,7 +202,7 @@ send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
       // invoked.  This is necessary to prevent an interceptor already
       // invoked in this "ending" interception point from being
       // invoked in another "ending" interception point.
-      --this->stack_size_;      
+      --this->stack_size_;
 
       this->interceptors_[this->stack_size_]->send_reply (
         ri
@@ -201,7 +233,7 @@ send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
       // invoked.  This is necessary to prevent an interceptor already
       // invoked in this "ending" interception point from being
       // invoked in another "ending" interception point.
-      --this->stack_size_;  
+      --this->stack_size_;
 
       this->interceptors_[this->stack_size_]->send_exception (
         ri

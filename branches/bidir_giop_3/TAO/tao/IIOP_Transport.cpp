@@ -543,7 +543,7 @@ TAO_IIOP_Transport::get_listen_point (
                         -1);
     }
 
-  cout << "Amba sambavi " <<endl;
+
 
   for (size_t index = 0;
        index <= count;
