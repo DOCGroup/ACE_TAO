@@ -66,10 +66,10 @@ endif # Naming
 ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
   ifeq (,$(findstring Event,$(TAO_ORBSVCS)))
     IDL_SRCS += \
+        RtecDefaultEventData \
         RtecEventComm \
         RtecEventChannelAdmin \
-        RtecUDPAdmin \
-        RtecDefaultEventData
+        RtecUDPAdmin
   endif # ! Event
   TAO_ORBSVCS_SRCS += \
         Event/EC_Event_Channel \
@@ -127,10 +127,10 @@ endif # CosEvent
 
 ifneq (,$(findstring Event,$(TAO_ORBSVCS)))
   IDL_SRCS += \
+        RtecDefaultEventData \
         RtecEventComm \
         RtecEventChannelAdmin \
-        RtecUDPAdmin \
-        RtecDefaultEventData
+        RtecUDPAdmin
   TAO_ORBSVCS_SRCS += \
         Event_Utilities \
         Event/BCU \
