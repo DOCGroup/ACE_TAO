@@ -125,7 +125,7 @@ Basic_Test::iteration_time (void)
 {
   return per_iteration (elapsed_time_ > empty_iteration_time_  ?
                           elapsed_time_ - empty_iteration_time_  :
-                          0.0);
+                          0);
 }
 
 void
