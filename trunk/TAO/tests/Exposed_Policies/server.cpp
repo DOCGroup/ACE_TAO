@@ -124,7 +124,7 @@ main (int argc, char *argv[])
         child_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      the_poa_mngr->activate (ACE_TRY_ENV);
+      poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->run (ACE_TRY_ENV);
