@@ -1,3 +1,20 @@
+Thu Jun 10 08:12:14 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/MessageC.cpp:
+
+	  There were serveral instances where the CORBA::Environment
+	  parameter was declared as "env", but we were using the
+	  ACE_THROW_* macros which need the ACE_TRY_ENV variable. This is
+	  now fixed.
+
+	* tao/Pluggable.cpp (start_request, start_locate):
+
+	  The header file was using ACE_THROW_SPEC to indicate all
+	  possible exceptions these operations can throw. The *.cpp file
+	  was, however, using the TAO_THROW_SPEC macro which is a NO-OP
+	  and will soon be deprecated. With exceptions enabled, the
+	  compiler was giving errors. We now use ACE_THROW_SPEC.
+
 Wed Jun 09 23:16:21 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/orbconf.h: Without Minimum CORBA, the user will get regular
