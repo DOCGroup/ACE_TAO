@@ -9,7 +9,8 @@
 #----------------------------------------------------------------------------
 
 DIRS  = IFR_Test \
-	Persistence_Test
+	Persistence_Test \
+        Application_Test
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
