@@ -10430,7 +10430,7 @@ ACE_OS::qsort (void *base,
                int (*compar) (const void *, const void *))
 {
 #if !defined (ACE_LACKS_QSORT)
-  return ::qsort (base, nel, width, compar);
+  ::qsort (base, nel, width, compar);
 #else
   ACE_UNUSED_ARG (base);
   ACE_UNUSED_ARG (nel);
