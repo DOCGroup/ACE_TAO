@@ -1,3 +1,21 @@
+Sun Apr  1 17:20:22 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/INET_Addr.h:
+
+          Added /**/ around for the inclusion of inetLib.h, since some
+          MS compilers pick this up in dependency generation.
+
+        * bin/PerlACE/MSProject.pm:
+
+          Used \Q\E around the library names when matching, otherwise
+          the backslashes were interpreted as escaping, and weird 
+          unicode errors popped up.
+
+        * bin/pippen.pl:
+
+          Pippen was being case sensitive, so tao.lib was different
+          than TAO.lib.  Changes to store only lowercase.
+
 Sat Mar 31 10:16:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ACE-INSTALL.html:
