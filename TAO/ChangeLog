@@ -1,3 +1,17 @@
+Fri Nov  1 07:25:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/MProfile_Connection_Timeout/README:
+	* tests/MProfile_Connection_Timeout/run_test.pl: Added these files
+	  to the test.
+	
+	* tests/MProfile_Connection_Timeout/client.cpp:
+	* tests/MProfile_Connection_Timeout/server.cpp:
+	* tests/MProfile_Connection_Timeout/test.idl:
+	* tests/MProfile_Connection_Timeout/test_i.cpp:
+	* tests/MProfile_Connection_Timeout/test_i.h: Improved error
+	  checking so that any problems will be signalled as errors in our
+	  daily builds.
+
 Fri Nov  1 00:44:22 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Event_Map_T.h: 

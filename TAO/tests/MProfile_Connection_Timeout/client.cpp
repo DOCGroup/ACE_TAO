@@ -52,7 +52,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-void
+CORBA::ULongLong
 run_test (Simple_Server_ptr server
           ACE_ENV_ARG_DECL);
 
@@ -148,7 +148,19 @@ main (int argc, char *argv[])
                             1);
         }
 
-      run_test (server.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::ULongLong freq =
+        run_test (server.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (freq != 919263)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("(%P|%t) ERROR in the test \n")));
+
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("(%P|%t) Shutting server down \n")));
+
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -157,13 +169,13 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
+
   return 0;
 }
 
-void
+CORBA::ULongLong
 run_test (Simple_Server_ptr server
           ACE_ENV_ARG_DECL)
 {
-  (void) server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  return server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
