@@ -25,6 +25,11 @@ project (CosEvent) : orbsvcslib, core, minimum_corba, ec_typed_events {
     CosEventCommC.inl
     CosEventChannelAdminC.inl
   }
+
+  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
+  Resource_Files{
+    CosEvent.rc
+  }
 }
 
 
