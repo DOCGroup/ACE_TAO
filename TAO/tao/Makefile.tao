@@ -650,8 +650,10 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -715,7 +717,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -893,6 +894,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -902,7 +904,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -969,7 +972,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -1144,7 +1146,7 @@ realclean:
   Codeset_Translator_Factory_T.h \
   Codeset_Translator_Factory.h \
   Codeset_Translator_Factory_T.cpp \
-  debug.h \
+  debug.h debug.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
@@ -1391,8 +1393,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -1605,8 +1608,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1623,7 +1627,7 @@ realclean:
   GIOP_Message_Version.h \
   Refcounted_ObjectKey.h \
   Object_KeyC.h \
-  Messaging_PolicyValueC.h IOP_IORC.h Stub.h \
+  Messaging_PolicyValueC.h Stub.h \
   MProfile.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
   ORB_Core_Auto_Ptr.h debug.h \
@@ -1943,8 +1947,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -2192,8 +2197,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -2437,8 +2443,10 @@ realclean:
   Connection_Handler.h LF_CH_Event.h LF_Event.h TAO_Export.h debug.h \
   Transport.h Transport_Cache_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -2475,7 +2483,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   Seq_Var_T.h \
   Seq_Var_T.cpp \
   Seq_Var_T.inl \
@@ -2692,8 +2699,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -3059,8 +3067,9 @@ realclean:
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Strategies_T.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -3267,11 +3276,10 @@ realclean:
   Connector_Impl.h \
   Connector_Impl.cpp \
   Connector_Impl.inl \
-  $(ACE_ROOT)/ace/OS_NS_strings.h \
+  IOP_IORC.h $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/os_include/os_strings.h
 
-.obj/IIOP_Lite_Factory.o .obj/IIOP_Lite_Factory.so .shobj/IIOP_Lite_Factory.o .shobj/IIOP_Lite_Factory.so: IIOP_Lite_Factory.cpp \
-  IIOP_Lite_Factory.h \
+.obj/IIOP_Lite_Factory.o .obj/IIOP_Lite_Factory.so .shobj/IIOP_Lite_Factory.o .shobj/IIOP_Lite_Factory.so: IIOP_Lite_Factory.cpp IIOP_Lite_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -3390,13 +3398,13 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
   TAO_Export.h \
   Basic_Types.h \
-  $(ACE_ROOT)/ace/CDR_Base.h \
-  IIOP_Acceptor.h \
+  $(ACE_ROOT)/ace/CDR_Base.h IIOP_Acceptor.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Strategies_T.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -3603,7 +3611,7 @@ realclean:
   Connector_Impl.h \
   Connector_Impl.cpp \
   Connector_Impl.inl \
-  $(ACE_ROOT)/ace/OS_NS_strings.h \
+  IOP_IORC.h $(ACE_ROOT)/ace/OS_NS_strings.h \
   $(ACE_ROOT)/ace/os_include/os_strings.h
 
 .obj/IIOP_Profile.o .obj/IIOP_Profile.so .shobj/IIOP_Profile.o .shobj/IIOP_Profile.so: IIOP_Profile.cpp IIOP_Profile.h \
@@ -3727,8 +3735,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3890,6 +3899,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -3899,7 +3909,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3967,7 +3978,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -4185,9 +4195,8 @@ realclean:
   debug.h \
   Acceptor_Impl.i \
   GIOP_Message_Version.h \
-  IIOPC.h Acceptor_Registry.h \
-  operation_details.h Exception.h Service_Context.h \
-  IOPC.h \
+  IIOPC.h CDR.h Acceptor_Registry.h operation_details.h Exception.h \
+  Service_Context.h IOPC.h \
   target_specification.h Wait_Strategy.h debug.h GIOP_Message_Base.h \
   Pluggable_Messaging.h \
   GIOP_Message_Generator_Parser_Impl.h \
@@ -4197,7 +4206,8 @@ realclean:
   GIOP_Message_Generator_Parser_12.h \
   GIOP_Utils.h \
   GIOP_Message_State.h \
-  Protocols_Hooks.h TAO_Export.h Basic_Types.h IIOP_Transport.i
+  Protocols_Hooks.h TAO_Export.h Basic_Types.h ORB_Core.h \
+  Thread_Lane_Resources.h IIOP_Transport.i
 
 .obj/IIOP_Connector.o .obj/IIOP_Connector.so .shobj/IIOP_Connector.o .shobj/IIOP_Connector.so: IIOP_Connector.cpp IIOP_Connector.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -4304,8 +4314,10 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
   $(ACE_ROOT)/ace/Strategies_T.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -4412,7 +4424,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_assert.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
@@ -4593,8 +4604,10 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
   $(ACE_ROOT)/ace/Strategies_T.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -4716,7 +4729,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_assert.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
@@ -5092,8 +5104,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -5284,11 +5297,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5404,8 +5418,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5530,8 +5545,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5773,8 +5789,9 @@ realclean:
   Basic_Types.h \
   $(ACE_ROOT)/ace/CDR_Base.h Muxed_TMS.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -6532,8 +6549,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -6680,8 +6698,10 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -6704,7 +6724,6 @@ realclean:
   Exception.h \
   orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   Environment.h \
   CORBA_methods.h \
   Pseudo_VarOut_T.h \
@@ -6888,8 +6907,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -7019,11 +7039,10 @@ realclean:
   $(ACE_ROOT)/ace/iosfwd.h \
   Managed_Types.i
 
-.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
-  Any_Basic_Impl.h \
+.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp Any.h \
   $(ACE_ROOT)/ace/pre.h \
-  Any_Impl.h \
-  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
@@ -7033,9 +7052,6 @@ realclean:
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h \
-  Basic_Types.h \
-  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
@@ -7054,13 +7070,31 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
-  TAO_Export.h \
-  orbconf.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Pseudo_VarOut_T.h \
+  CORBA_methods.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
+  Pseudo_VarOut_T.cpp \
+  Pseudo_VarOut_T.inl \
+  Arg_Traits_T.h \
+  Any_Basic_Impl.h \
+  Any_Impl.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
@@ -7078,21 +7112,6 @@ realclean:
   $(ACE_ROOT)/ace/Cleanup.h \
   Any_Impl_T.h \
   Any_Impl_T.cpp \
-  Any.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  Pseudo_VarOut_T.h \
-  CORBA_methods.h \
-  Pseudo_VarOut_T.cpp \
-  Pseudo_VarOut_T.inl \
-  Arg_Traits_T.h \
   Marshal.h \
   CDR.h \
   Environment.h \
@@ -7100,8 +7119,9 @@ realclean:
   Exception.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7229,8 +7249,10 @@ realclean:
   $(ACE_ROOT)/ace/Cleanup.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7250,7 +7272,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   Exception.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   Environment.h \
   CORBA_methods.h \
   Pseudo_VarOut_T.h \
@@ -7343,8 +7364,10 @@ realclean:
   $(ACE_ROOT)/ace/Cleanup.h Marshal.h \
   CORBA_String.h Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7364,7 +7387,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   Exception.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   Environment.h \
   CORBA_methods.h \
   Pseudo_VarOut_T.h \
@@ -7550,8 +7572,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -7723,8 +7746,9 @@ realclean:
   default_environment.h \
   Marshal.h CORBA_String.h Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8010,8 +8034,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8041,24 +8066,19 @@ realclean:
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   Any_Impl_T.inl
 
-.obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp \
-  $(ACE_ROOT)/ace/Malloc.h \
+.obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp Exception.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -8067,19 +8087,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_stdint.h \
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
-  $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Malloc_Allocator.h \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
-  $(ACE_ROOT)/ace/Free_List.h \
-  $(ACE_ROOT)/ace/Free_List.cpp \
-  $(ACE_ROOT)/ace/Free_List.i \
-  $(ACE_ROOT)/ace/Guard_T.h \
-  $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/OS_NS_Thread.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
@@ -8088,20 +8095,105 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  Environment.h \
+  CORBA_methods.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.cpp \
+  Pseudo_VarOut_T.inl \
+  default_environment.h \
+  Any_SystemException.h \
+  Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
-  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.cpp \
+  Any_Dual_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Arg_Traits_T.h \
+  Marshal.h \
+  CORBA_String.h \
+  Environment.h \
+  Exception.h \
+  CDR.h \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.cpp \
+  Objref_VarOut_T.inl \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.cpp \
+  Dynamic_ParameterC.h \
+  ParameterMode.h \
+  VarOut_T.h \
+  VarOut_T.cpp \
+  VarOut_T.inl \
+  Object_Argument_T.inl \
+  TC_Constants_Forward.h \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  Any_Dual_Impl_T.inl \
+  Typecode.h ORB_Constants.h TC_Constants_Forward.h CORBA_String.h CDR.h \
+  debug.h $(ACE_ROOT)/ace/Malloc.h \
+  $(ACE_ROOT)/ace/Malloc_T.h \
+  $(ACE_ROOT)/ace/Malloc_Allocator.h \
+  $(ACE_ROOT)/ace/Free_List.h \
+  $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Free_List.i \
   $(ACE_ROOT)/ace/Malloc_T.cpp \
   $(ACE_ROOT)/ace/Malloc_T.i \
   $(ACE_ROOT)/ace/OS_NS_string.h \
@@ -8124,7 +8216,6 @@ realclean:
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
-  $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
   $(ACE_ROOT)/ace/os_include/net/os_if.h \
@@ -8133,11 +8224,9 @@ realclean:
   $(ACE_ROOT)/ace/Memory_Pool.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -8145,76 +8234,14 @@ realclean:
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h \
-  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/String_Base.i \
-  $(ACE_ROOT)/ace/Min_Max.h Exception.h \
-  orbconf.h \
-  $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h \
-  TAO_Export.h \
-  Basic_Types.h \
-  $(ACE_ROOT)/ace/CDR_Base.h Environment.h \
-  CORBA_methods.h \
-  Pseudo_VarOut_T.h \
-  Pseudo_VarOut_T.cpp \
-  Pseudo_VarOut_T.inl \
-  default_environment.h \
-  Any_SystemException.h \
-  Any_Impl.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h Any_Dual_Impl_T.h \
-  Any_Dual_Impl_T.cpp \
-  Any_Dual_Impl_T.h \
-  Any.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  Arg_Traits_T.h \
-  Marshal.h \
-  CORBA_String.h \
-  Environment.h \
-  Exception.h \
-  CDR.h \
-  Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
-  $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Functor_T.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
-  Objref_VarOut_T.h \
-  varbase.h \
-  Objref_VarOut_T.cpp \
-  Objref_VarOut_T.inl \
-  Object_Argument_T.h \
-  Argument.h \
-  Object_Argument_T.cpp \
-  Dynamic_ParameterC.h \
-  ParameterMode.h \
-  VarOut_T.h \
-  VarOut_T.cpp \
-  VarOut_T.inl \
-  Object_Argument_T.inl \
-  TC_Constants_Forward.h \
-  OBV_Constants.h \
-  Any_Dual_Impl_T.inl \
-  Typecode.h ORB_Constants.h TC_Constants_Forward.h debug.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
   Exception.i \
   $(ACE_ROOT)/ace/OS_NS_stdio.h
@@ -8336,8 +8363,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8467,11 +8495,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h WrongTransactionA.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8494,8 +8523,7 @@ realclean:
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   Any_Dual_Impl_T.inl
 
-.obj/Environment.o .obj/Environment.so .shobj/Environment.o .shobj/Environment.so: Environment.cpp \
-  Environment.h \
+.obj/Environment.o .obj/Environment.so .shobj/Environment.o .shobj/Environment.so: Environment.cpp Environment.h \
   $(ACE_ROOT)/ace/pre.h \
   TAO_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -8639,6 +8667,7 @@ realclean:
   Objref_VarOut_T.h \
   varbase.h \
   Objref_VarOut_T.cpp \
+  Environment.h \
   Objref_VarOut_T.inl \
   Service_Callbacks.h \
   Invocation_Utils.h \
@@ -8646,8 +8675,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -8693,19 +8723,15 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
-  Interceptor_List.h \
-  PortableInterceptorC.h \
-  PI_ForwardC.h \
-  StringSeqC.h \
-  IOP_CodecC.h \
+  Interceptor_List.h PortableInterceptorC.h PI_ForwardC.h OctetSeqC.h \
+  StringSeqC.h IOP_CodecC.h \
   ORB.h \
   PolicyC.h \
   CurrentC.h \
   OBV_Constants.h \
   Typecode.h \
   TC_Constants_Forward.h \
-  PICurrent.h \
-  LocalObject.h \
+  PICurrent.h orbconf.h Any.h LocalObject.h Object.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -8738,7 +8764,7 @@ realclean:
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
   $(ACE_ROOT)/ace/Lock_Adapter_T.h \
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.inl Exception.h \
   Environment.i
 
 .obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Object.cpp Object.h \
@@ -8865,8 +8891,9 @@ realclean:
   IOP_CodecC.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9199,8 +9226,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9233,8 +9261,9 @@ realclean:
   OBV_Constants.h \
   ObjectIdListC.i
 
-.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp $(ACE_ROOT)/ace/Dynamic_Service.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp ORB.h $(ACE_ROOT)/ace/pre.h \
+  Exception.h orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
@@ -9244,26 +9273,10 @@ realclean:
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
-  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
-  $(ACE_ROOT)/ace/Service_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
-  $(ACE_ROOT)/ace/OS_NS_Thread.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
   $(ACE_ROOT)/ace/os_include/os_stdint.h \
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
@@ -9271,52 +9284,25 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/os_include/os_pthread.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
-  $(ACE_ROOT)/ace/os_include/os_semaphore.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
-  $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/Object_Manager_Base.h \
-  $(ACE_ROOT)/ace/Cleanup.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Guard_T.h \
-  $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(ACE_ROOT)/ace/Guard_T.inl \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
-  $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
-  $(ACE_ROOT)/ace/Dynamic_Service.i \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Timer_Queuefwd.h \
-  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Argv_Type_Converter.h \
-  $(ACE_ROOT)/ace/OS_NS_strings.h \
-  $(ACE_ROOT)/ace/os_include/os_strings.h ORB.h \
-  Exception.h orbconf.h \
+  $(ACE_ROOT)/ace/Lock.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   TAO_Export.h \
   Basic_Types.h \
-  $(ACE_ROOT)/ace/CDR_Base.h objectid.h PolicyC.h \
-  CurrentC.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h objectid.h \
+  PolicyC.h CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -9338,10 +9324,13 @@ realclean:
   Array_VarOut_T.h \
   Array_VarOut_T.cpp \
   Array_VarOut_T.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -9366,20 +9355,49 @@ realclean:
   Arg_Traits_T.h \
   Object_Argument_T.inl \
   Exception.h OBV_Constants.h \
-  CORBA_methods.h ORB_Table.h \
+  CORBA_methods.h $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/os_semaphore.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h ORB_Table.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   corbafwd.h \
   ORB_Constants.h \
   TC_Constants_Forward.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  Connector_Registry.h IOR_Parser.h Typecode_Constants.h Stub.h \
+  Connector_Registry.h IOR_Parser.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  Typecode_Constants.h Stub.h \
   ORB.h \
   MProfile.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
@@ -9500,7 +9518,18 @@ realclean:
   LocalObject.h \
   Policy_Set.h \
   Valuetype_Adapter.h IFR_Client_Adapter.h CodecFactory_ORBInitializer.h \
-  TypeCodeFactory_Adapter.h debug.h PICurrent_ORBInitializer.h ORB.i
+  TypeCodeFactory_Adapter.h debug.h PICurrent_ORBInitializer.h ORB.i \
+  $(ACE_ROOT)/ace/Dynamic_Service.h \
+  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+  $(ACE_ROOT)/ace/Dynamic_Service.i \
+  $(ACE_ROOT)/ace/Arg_Shifter.h \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Timer_Queuefwd.h \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
+  $(ACE_ROOT)/ace/Argv_Type_Converter.h \
+  $(ACE_ROOT)/ace/OS_NS_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h
 
 .obj/Policy_ForwardC.o .obj/Policy_ForwardC.so .shobj/Policy_ForwardC.o .shobj/Policy_ForwardC.so: Policy_ForwardC.cpp Policy_ForwardC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -9593,8 +9622,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9719,8 +9749,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9890,8 +9921,9 @@ realclean:
   ORB_Core_Auto_Ptr.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10018,8 +10050,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10401,8 +10434,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -10729,8 +10763,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -10778,6 +10813,7 @@ realclean:
   $(ACE_ROOT)/ace/Lock_Adapter_T.h \
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(ACE_ROOT)/ace/Lock_Adapter_T.inl Typecode.h \
+  ParameterMode.h DynamicC.h Dynamic_ParameterC.h \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -10900,8 +10936,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h DomainA.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11044,8 +11081,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11177,8 +11215,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h TimeBaseA.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11355,7 +11394,8 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   Sequence_T.i \
-  Sequence.i \
+  Sequence.i Exception.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -11491,8 +11531,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11635,8 +11676,9 @@ realclean:
   IOP_CodecC.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11811,8 +11853,10 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11835,7 +11879,6 @@ realclean:
   Exception.h \
   orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   TAO_Export.h \
@@ -12036,8 +12079,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -12371,8 +12415,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -12677,6 +12722,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  TAO_Export.h \
   Messaging_SyncScopeC.i
 
 .obj/Invocation_Base.o .obj/Invocation_Base.so .shobj/Invocation_Base.o .shobj/Invocation_Base.so: Invocation_Base.cpp Invocation_Base.h \
@@ -12807,8 +12853,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12932,8 +12979,8 @@ realclean:
   $(ACE_ROOT)/ace/Lock_Adapter_T.h \
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(ACE_ROOT)/ace/Lock_Adapter_T.inl Typecode.h \
-  DynamicC.h TAO_Export.h Dynamic_ParameterC.h StringSeqC.h \
-  RequestInfo_Util.h Invocation_Base.inl
+  DynamicC.h Dynamic_ParameterC.h StringSeqC.h RequestInfo_Util.h \
+  Invocation_Base.inl
 
 .obj/Invocation_Adapter.o .obj/Invocation_Adapter.so .shobj/Invocation_Adapter.o .shobj/Invocation_Adapter.so: Invocation_Adapter.cpp Invocation_Adapter.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -13057,8 +13104,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13321,8 +13369,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13584,8 +13633,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13851,8 +13901,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14118,8 +14169,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14270,8 +14322,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14545,8 +14598,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14720,8 +14774,9 @@ realclean:
   IOP_CodecC.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14863,8 +14918,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14881,9 +14937,8 @@ realclean:
   MProfile.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
   ORB_Core_Auto_Ptr.h \
-  Typecode.h ORB_Constants.h DynamicC.h TAO_Export.h Dynamic_ParameterC.h \
-  StringSeqC.h Exception_Data.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h \
+  Typecode.h ORB_Constants.h DynamicC.h Dynamic_ParameterC.h StringSeqC.h \
+  Exception_Data.h $(ACE_ROOT)/ace/OS_NS_string.h \
   operation_details.i
 
 .obj/ClientRequestInfo.o .obj/ClientRequestInfo.so .shobj/ClientRequestInfo.o .shobj/ClientRequestInfo.so: ClientRequestInfo.cpp ClientRequestInfo.h \
@@ -15009,8 +15064,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15160,8 +15216,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15344,8 +15401,10 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15368,7 +15427,6 @@ realclean:
   Exception.h \
   orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   Environment.h \
   CORBA_methods.h \
   Pseudo_VarOut_T.h \
@@ -15408,6 +15466,7 @@ realclean:
   Array_VarOut_T.cpp \
   Array_VarOut_T.inl \
   Sequence_T.i \
+  CDR.h \
   Seq_Var_T.h \
   Seq_Var_T.cpp \
   Seq_Var_T.inl \
@@ -15421,9 +15480,8 @@ realclean:
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
-  CDR.h \
   Policy_ForwardC.h \
-  TAO_Export.h Typecode.h \
+  Typecode.h \
   Dynamic_ParameterC.h
 
 .obj/ClientRequestInterceptor_Adapter.o .obj/ClientRequestInterceptor_Adapter.so .shobj/ClientRequestInterceptor_Adapter.o .shobj/ClientRequestInterceptor_Adapter.so: ClientRequestInterceptor_Adapter.cpp \
@@ -15550,8 +15608,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15766,8 +15825,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15919,8 +15979,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16055,8 +16116,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16206,8 +16268,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16449,8 +16512,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16601,10 +16665,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
-  $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Functor_T.i TAO_Export.h \
-  orbconf.h $(ACE_ROOT)/ace/Global_Macros.h \
+  TAO_Export.h orbconf.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
@@ -16699,6 +16761,10 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -16825,11 +16891,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16958,11 +17025,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16975,7 +17043,7 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   TC_Constants_Forward.h \
-  Dynamic_ParameterC.h StringSeqC.h DynamicA.h \
+  Dynamic_ParameterC.h StringSeqC.h \
   Any_Dual_Impl_T.h \
   Any_Impl.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
@@ -17059,8 +17127,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17169,8 +17238,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17266,6 +17336,558 @@ realclean:
   orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h
+
+.obj/BooleanSeqA.o .obj/BooleanSeqA.so .shobj/BooleanSeqA.o .shobj/BooleanSeqA.so: BooleanSeqA.cpp BooleanSeqC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ORB.h \
+  Exception.h \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
+  Object.h \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  default_environment.h \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  CORBA_methods.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.cpp \
+  Pseudo_VarOut_T.inl \
+  Objref_VarOut_T.inl \
+  Sequence_T.cpp \
+  Array_VarOut_T.h \
+  Array_VarOut_T.cpp \
+  Array_VarOut_T.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  Sequence_T.i \
+  CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Seq_Var_T.h \
+  Seq_Var_T.cpp \
+  Seq_Var_T.inl \
+  Seq_Out_T.h \
+  Seq_Out_T.cpp \
+  Seq_Out_T.inl \
+  VarOut_T.h \
+  VarOut_T.cpp \
+  VarOut_T.inl \
+  Policy_ForwardC.h \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.cpp \
+  Dynamic_ParameterC.h \
+  ParameterMode.h \
+  Any.h \
+  Arg_Traits_T.h \
+  Object_Argument_T.inl \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/os_semaphore.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  TC_Constants_Forward.h \
+  Any_Dual_Impl_T.h \
+  Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  Any_Dual_Impl_T.cpp \
+  Marshal.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  Any_Dual_Impl_T.inl
+
+.obj/BooleanSeqC.o .obj/BooleanSeqC.so .shobj/BooleanSeqC.o .shobj/BooleanSeqC.so: BooleanSeqC.cpp BooleanSeqC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ORB.h \
+  Exception.h \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
+  Object.h \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  default_environment.h \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  CORBA_methods.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.cpp \
+  Pseudo_VarOut_T.inl \
+  Objref_VarOut_T.inl \
+  Sequence_T.cpp \
+  Array_VarOut_T.h \
+  Array_VarOut_T.cpp \
+  Array_VarOut_T.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  Sequence_T.i \
+  CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Seq_Var_T.h \
+  Seq_Var_T.cpp \
+  Seq_Var_T.inl \
+  Seq_Out_T.h \
+  Seq_Out_T.cpp \
+  Seq_Out_T.inl \
+  VarOut_T.h \
+  VarOut_T.cpp \
+  VarOut_T.inl \
+  Policy_ForwardC.h \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.cpp \
+  Dynamic_ParameterC.h \
+  ParameterMode.h \
+  Any.h \
+  Arg_Traits_T.h \
+  Object_Argument_T.inl \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/os_semaphore.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  TC_Constants_Forward.h \
+  BooleanSeqC.i
+
+.obj/FloatSeqA.o .obj/FloatSeqA.so .shobj/FloatSeqA.o .shobj/FloatSeqA.so: FloatSeqA.cpp FloatSeqC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ORB.h \
+  Exception.h \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
+  Object.h \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  default_environment.h \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  CORBA_methods.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.cpp \
+  Pseudo_VarOut_T.inl \
+  Objref_VarOut_T.inl \
+  Sequence_T.cpp \
+  Array_VarOut_T.h \
+  Array_VarOut_T.cpp \
+  Array_VarOut_T.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  Sequence_T.i \
+  CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Seq_Var_T.h \
+  Seq_Var_T.cpp \
+  Seq_Var_T.inl \
+  Seq_Out_T.h \
+  Seq_Out_T.cpp \
+  Seq_Out_T.inl \
+  VarOut_T.h \
+  VarOut_T.cpp \
+  VarOut_T.inl \
+  Policy_ForwardC.h \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.cpp \
+  Dynamic_ParameterC.h \
+  ParameterMode.h \
+  Any.h \
+  Arg_Traits_T.h \
+  Object_Argument_T.inl \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/os_semaphore.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  TC_Constants_Forward.h \
+  Any_Dual_Impl_T.h \
+  Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  Any_Dual_Impl_T.cpp \
+  Marshal.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  Any_Dual_Impl_T.inl
+
+.obj/FloatSeqC.o .obj/FloatSeqC.so .shobj/FloatSeqC.o .shobj/FloatSeqC.so: FloatSeqC.cpp FloatSeqC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ORB.h \
+  Exception.h \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
+  Object.h \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  default_environment.h \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  CORBA_methods.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.cpp \
+  Pseudo_VarOut_T.inl \
+  Objref_VarOut_T.inl \
+  Sequence_T.cpp \
+  Array_VarOut_T.h \
+  Array_VarOut_T.cpp \
+  Array_VarOut_T.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  Sequence_T.i \
+  CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Seq_Var_T.h \
+  Seq_Var_T.cpp \
+  Seq_Var_T.inl \
+  Seq_Out_T.h \
+  Seq_Out_T.cpp \
+  Seq_Out_T.inl \
+  VarOut_T.h \
+  VarOut_T.cpp \
+  VarOut_T.inl \
+  Policy_ForwardC.h \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.cpp \
+  Dynamic_ParameterC.h \
+  ParameterMode.h \
+  Any.h \
+  Arg_Traits_T.h \
+  Object_Argument_T.inl \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/os_semaphore.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  TC_Constants_Forward.h \
+  FloatSeqC.i
 
 .obj/OctetSeqC.o .obj/OctetSeqC.so .shobj/OctetSeqC.o .shobj/OctetSeqC.so: OctetSeqC.cpp OctetSeqC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -17439,8 +18061,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -17604,8 +18227,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17645,6 +18269,282 @@ realclean:
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   Any_Dual_Impl_T.inl
+
+.obj/ShortSeqA.o .obj/ShortSeqA.so .shobj/ShortSeqA.o .shobj/ShortSeqA.so: ShortSeqA.cpp ShortSeqC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ORB.h \
+  Exception.h \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
+  Object.h \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  default_environment.h \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  CORBA_methods.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.cpp \
+  Pseudo_VarOut_T.inl \
+  Objref_VarOut_T.inl \
+  Sequence_T.cpp \
+  Array_VarOut_T.h \
+  Array_VarOut_T.cpp \
+  Array_VarOut_T.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  Sequence_T.i \
+  CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Seq_Var_T.h \
+  Seq_Var_T.cpp \
+  Seq_Var_T.inl \
+  Seq_Out_T.h \
+  Seq_Out_T.cpp \
+  Seq_Out_T.inl \
+  VarOut_T.h \
+  VarOut_T.cpp \
+  VarOut_T.inl \
+  Policy_ForwardC.h \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.cpp \
+  Dynamic_ParameterC.h \
+  ParameterMode.h \
+  Any.h \
+  Arg_Traits_T.h \
+  Object_Argument_T.inl \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/os_semaphore.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  TC_Constants_Forward.h \
+  Any_Dual_Impl_T.h \
+  Any_Impl.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  Any_Dual_Impl_T.cpp \
+  Marshal.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  Any_Dual_Impl_T.inl
+
+.obj/ShortSeqC.o .obj/ShortSeqC.so .shobj/ShortSeqC.o .shobj/ShortSeqC.so: ShortSeqC.cpp ShortSeqC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ORB.h \
+  Exception.h \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config-lite.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
+  Object.h \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  default_environment.h \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  CORBA_methods.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.cpp \
+  Pseudo_VarOut_T.inl \
+  Objref_VarOut_T.inl \
+  Sequence_T.cpp \
+  Array_VarOut_T.h \
+  Array_VarOut_T.cpp \
+  Array_VarOut_T.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  Sequence_T.i \
+  CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Seq_Var_T.h \
+  Seq_Var_T.cpp \
+  Seq_Var_T.inl \
+  Seq_Out_T.h \
+  Seq_Out_T.cpp \
+  Seq_Out_T.inl \
+  VarOut_T.h \
+  VarOut_T.cpp \
+  VarOut_T.inl \
+  Policy_ForwardC.h \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.cpp \
+  Dynamic_ParameterC.h \
+  ParameterMode.h \
+  Any.h \
+  Arg_Traits_T.h \
+  Object_Argument_T.inl \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/os_semaphore.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  TC_Constants_Forward.h \
+  ShortSeqC.i
 
 .obj/StringSeqC.o .obj/StringSeqC.so .shobj/StringSeqC.o .shobj/StringSeqC.so: StringSeqC.cpp StringSeqC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -17708,6 +18608,16 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   Sequence_T.i \
+  CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
   Seq_Var_T.h \
   Seq_Var_T.cpp \
   Seq_Var_T.inl \
@@ -17727,8 +18637,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17740,34 +18651,25 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   Exception.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   Object_Argument_T.h \
   Argument.h \
   Object_Argument_T.cpp \
   Dynamic_ParameterC.h \
   ParameterMode.h \
   Any.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
   Arg_Traits_T.h \
   VarOut_T.h \
   VarOut_T.cpp \
   VarOut_T.inl \
   Object_Argument_T.inl \
   TC_Constants_Forward.h \
-  OBV_Constants.h CDR.h \
+  OBV_Constants.h \
   StringSeqC.i
 
 .obj/StringSeqA.o .obj/StringSeqA.so .shobj/StringSeqA.o .shobj/StringSeqA.so: StringSeqA.cpp StringSeqC.h \
@@ -17832,12 +18734,22 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   Sequence_T.i \
+  CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
   Seq_Var_T.h \
   Seq_Var_T.cpp \
   Seq_Var_T.inl \
   Seq_Out_T.h \
   Seq_Out_T.cpp \
-  Seq_Out_T.inl StringSeqA.h \
+  Seq_Out_T.inl \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -17851,8 +18763,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17864,27 +18777,18 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   Exception.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   Object_Argument_T.h \
   Argument.h \
   Object_Argument_T.cpp \
   Dynamic_ParameterC.h \
   ParameterMode.h \
   Any.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
   Arg_Traits_T.h \
   VarOut_T.h \
   VarOut_T.cpp \
@@ -17897,7 +18801,6 @@ realclean:
   $(ACE_ROOT)/ace/Null_Mutex.h \
   Any_Dual_Impl_T.cpp \
   Marshal.h \
-  CDR.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
@@ -18020,8 +18923,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18153,8 +19057,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18294,8 +19199,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18427,8 +19333,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18615,8 +19522,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -18933,8 +19841,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -19252,8 +20161,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -19712,8 +20622,10 @@ realclean:
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -19757,7 +20669,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
@@ -20095,8 +21006,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -20356,8 +21268,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -20617,8 +21530,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -20872,8 +21786,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -21157,8 +22072,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -21426,8 +22342,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -21761,8 +22678,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -22443,8 +23361,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -22705,8 +23624,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22854,8 +23774,10 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22878,7 +23800,6 @@ realclean:
   Exception.h \
   orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   TAO_Export.h \
@@ -23078,6 +23999,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -23087,7 +24009,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23154,7 +24077,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -23329,8 +24251,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -23598,8 +24521,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -23789,8 +24713,10 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23854,7 +24780,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -23884,6 +24809,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -23902,7 +24828,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23979,7 +24906,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -24316,8 +25242,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -24637,8 +25564,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -24891,8 +25819,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25044,11 +25973,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25177,11 +26107,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25194,7 +26125,7 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   TC_Constants_Forward.h \
-  IOP_CodecA.h Any_Impl_T.h \
+  Any_Impl_T.h \
   Any_Impl.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   Any_Impl_T.cpp \
@@ -25320,11 +26251,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25620,8 +26552,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25779,8 +26712,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25917,8 +26851,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26031,8 +26966,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26174,11 +27110,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26307,11 +27244,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
-  BoundsA.h Typecode.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26451,8 +27389,9 @@ realclean:
   Messaging_SyncScopeC.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26584,8 +27523,9 @@ realclean:
   Messaging_SyncScopeC.h TAOA.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27407,8 +28347,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -28096,8 +29037,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -28531,8 +29473,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -28829,8 +29772,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -29055,8 +29999,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29424,8 +30369,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29670,8 +30616,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29731,7 +30678,7 @@ realclean:
   $(ACE_ROOT)/ace/Managed_Object.i \
   TAO_Singleton_Manager.h \
   TAO_Singleton.inl \
-  ORB_Constants.h
+  ORB_Constants.h TAO_Singleton_Manager.h
 
 .obj/PolicyFactory_Registry.o .obj/PolicyFactory_Registry.so .shobj/PolicyFactory_Registry.o .shobj/PolicyFactory_Registry.so: PolicyFactory_Registry.cpp \
   PolicyFactory_Registry.h $(ACE_ROOT)/ace/pre.h \
@@ -29859,8 +30806,9 @@ realclean:
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -29917,8 +30865,10 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29980,7 +30930,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -30083,6 +31032,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -30092,7 +31042,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30161,7 +31112,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -30456,8 +31406,10 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30475,8 +31427,7 @@ realclean:
   TAO_Export.h \
   orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h ORB.h \
-  Exception.h $(ACE_ROOT)/ace/SStringfwd.h \
-  Basic_Types.h \
+  Exception.h Basic_Types.h \
   $(ACE_ROOT)/ace/CDR_Base.h objectid.h PolicyC.h \
   CurrentC.h \
   Object.h \
@@ -30723,11 +31674,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30863,8 +31815,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30994,11 +31947,12 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31133,6 +32087,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -31142,7 +32097,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31209,7 +32165,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -31258,6 +32213,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -31267,7 +32223,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31334,7 +32291,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -31663,8 +32619,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -31912,8 +32869,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -32263,8 +33221,10 @@ realclean:
   Transport.h Transport_Cache_Manager.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -32304,7 +33264,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -32367,6 +33326,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -32376,7 +33336,8 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32442,7 +33403,6 @@ realclean:
   Sequence_T.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -32553,9 +33513,8 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
-  Exception.h \
-  debug.h \
-  Policy_Set.i
+  Exception.h Environment.h \
+  debug.h Policy_Set.i
 
 .obj/Default_Endpoint_Selector_Factory.o .obj/Default_Endpoint_Selector_Factory.so .shobj/Default_Endpoint_Selector_Factory.o .shobj/Default_Endpoint_Selector_Factory.so:  \
  Default_Endpoint_Selector_Factory.cpp \
@@ -32841,8 +33800,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -33111,8 +34071,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -33677,8 +34638,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33857,6 +34819,7 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -33875,12 +34838,12 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
@@ -34648,8 +35611,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34772,8 +35736,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34932,10 +35897,11 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TAO_Export.h debug.h \
-  Typecode.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h debug.h Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -35101,8 +36067,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -35490,7 +36457,8 @@ realclean:
 
 .obj/Messaging_PolicyValueC.o .obj/Messaging_PolicyValueC.so .shobj/Messaging_PolicyValueC.o .shobj/Messaging_PolicyValueC.so: Messaging_PolicyValueC.cpp \
   Messaging_PolicyValueC.h $(ACE_ROOT)/ace/pre.h \
-  IOP_IORC.h OctetSeqC.h \
+  IOP_IORC.h \
+  OctetSeqC.h \
   Sequence.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -35573,7 +36541,6 @@ realclean:
   PolicyC.h \
   CurrentC.h \
   Object.h \
-  IOP_IORC.h \
   Policy_ForwardC.h \
   Object_Argument_T.h \
   Argument.h \
@@ -35597,8 +36564,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35621,7 +36589,8 @@ realclean:
 
 .obj/Messaging_PolicyValueA.o .obj/Messaging_PolicyValueA.so .shobj/Messaging_PolicyValueA.o .shobj/Messaging_PolicyValueA.so: Messaging_PolicyValueA.cpp \
   Messaging_PolicyValueC.h $(ACE_ROOT)/ace/pre.h \
-  IOP_IORC.h OctetSeqC.h \
+  IOP_IORC.h \
+  OctetSeqC.h \
   Sequence.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -35704,7 +36673,6 @@ realclean:
   PolicyC.h \
   CurrentC.h \
   Object.h \
-  IOP_IORC.h \
   Policy_ForwardC.h \
   Object_Argument_T.h \
   Argument.h \
@@ -35715,7 +36683,6 @@ realclean:
   Arg_Traits_T.h \
   Object_Argument_T.inl \
   Exception.h \
-  Messaging_PolicyValueA.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -35729,8 +36696,9 @@ realclean:
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35970,8 +36938,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -36166,8 +37135,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -36496,8 +37466,9 @@ realclean:
   Cleanup_Func_Registry.h \
   Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -36786,8 +37757,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -37015,8 +37987,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -37296,8 +38269,9 @@ realclean:
   Transport_Cache_Manager.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -37453,8 +38427,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -37809,8 +38784,9 @@ realclean:
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
