@@ -1,12 +1,66 @@
+Fri Oct 13 21:49:54 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+          Add the new Log_Msg files to the Makefiles.
+
+        * ace/ACE_Lib_Find.cpp:
+          Add ACE_RCSID macro
+
+        * ace/config-all.h:
+        * ace/OS_Log_Msg_Attributes.h:
+        * ace/OS_Log_Msg_Attributes.inl:
+        * ace/OS_Log_Msg_Attributes.cpp:
+        * ace/Base_Thread_Adapter.h:
+        * ace/Base_Thread_Adapter.cpp:
+          We pre-allocate the Log_Msg attributes in the Thread_Adapter, to
+          minimize memory allocations during thread creation.
+
+        * ace/Log_Msg_Callback.h:
+        * ace/Log_Msg_Callback.cpp:
+          Move the Log_Msg callback interface to its own file.
+
+        * ace/Log_Msg_Backend.h:
+        * ace/Log_Msg_Backend.cpp:
+          Define the interface for Log_Msg backend strategies.
+
+        * ace/Log_Msg_IPC.h:
+        * ace/Log_Msg_IPC.cpp:
+          Implement a Log_Msg backend based on IPC.
+          The intention is to decouple Log_Msg from IPC components, thus
+          Log_Msg only uses the abstract class ACE_Log_Msg_Backend.
+          In the future we could implement other backends, such as logging
+          to syslog or the NT event log directly.
+          We need to use a dynamically loaded factory to complete the
+          decoupling, but that would take a little more effort.
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+          Use the attributes directly.
+          Use the new Log_Msg_Backend classes.
+
+        * tests/Log_Msg_Test.cpp:
+        * examples/Log_Msg/test_callback.cpp:
+          #include Log_Msg_Callback.h, the file is not included unless
+          ACE_LEGACY_MODE is set.
+
+        * tests/Malloc_Test.cpp:
+          Add missing #include
+
+        * examples/Shared_Malloc/test_position_independent_malloc.h:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+          Reordered #includes to make them more standard.
+
 Fri Oct 13 22:34:59 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added new TAO/tests/RTCORBA/Client_Protocol test to the list.
-	  Removed TAO/tests/Endpoint_Per_Priority because
-	  TAO::Client_Priority_Policy is now disabled in builds by
-	  default. Enabled TAO/tests/RTCORBA/Server_Protocol for linux
-	  builds (it was disabled for some reason).
+          Added new TAO/tests/RTCORBA/Client_Protocol test to the list.
+          Removed TAO/tests/Endpoint_Per_Priority because
+          TAO::Client_Priority_Policy is now disabled in builds by
+          default. Enabled TAO/tests/RTCORBA/Server_Protocol for linux
+          builds (it was disabled for some reason).
 
 Fri Oct 13 19:12:31 2000  Steve Huston  <shuston@riverace.com>
 
@@ -35,33 +89,33 @@ Fri Oct 13 18:43:24 2000  Steve Huston  <shuston@riverace.com>
 
 Fri Oct 13 13:57:40 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Process_Manager.h :
-	* ace/Process_Manager.cpp :
+        * ace/Process_Manager.h :
+        * ace/Process_Manager.cpp :
 
-	* ace/Service_Config.h :
-	* ace/Service_Config.cpp:
+        * ace/Service_Config.h :
+        * ace/Service_Config.cpp:
 
           Removed dependency of Service_Config on Process_Manager by
-	  registering the Process_Manager singleton with the
-	  Object_Manager when it is instantiated. This way we need not call
+          registering the Process_Manager singleton with the
+          Object_Manager when it is instantiated. This way we need not call
           ACE_Process_Manager::close_singleton () in Service_Config
-	  implementation.
+          implementation.
 
 Mon Oct  9 10:34:18 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Corrected comments regarding the ACE_HAS_STREAM_PIPES run-time
-	  test.
+          Corrected comments regarding the ACE_HAS_STREAM_PIPES run-time
+          test.
 
 Fri Oct 13 11:41:29 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Makefile.bor (OBJFILES):
-	* ace/Makefile.am (libACE_Utils_la_SOURCES):
-	  Updated to include the new files.
+        * ace/Makefile.bor (OBJFILES):
+        * ace/Makefile.am (libACE_Utils_la_SOURCES):
+          Updated to include the new files.
 
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
-	  Included a header file.
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+          Included a header file.
 
 Fri Oct 13 11:43:56 2000  David L. Levine <levine@cs.wustl.edu>
 

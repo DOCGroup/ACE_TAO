@@ -94,6 +94,7 @@
 #endif /* ACE_NLOGGING */
 
 #include "ace/Log_Record.h"
+#include "ace/OS_Log_Msg_Attributes.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -110,106 +111,7 @@
 #undef THREAD
 #endif /* THREAD */
 
-class ACE_Export ACE_Log_Msg_Callback
-{
-  // = TITLE
-  //     An interface class used to get logging callbacks.
-  //
-  // = DESCRIPTION
-  //     Users who are interested in getting the logging messages
-  //     directly, can subclass this interface and override the log()
-  //     method. They must then register their subclass with the
-  //     Log_Msg class and make sure that they turn on the
-  //     ACE_Log_Msg::MSG_CALLBACK flag.
-  //
-  //     Your <log> routine is called with an instance of
-  //     ACE_Log_Record.  From this class, you can get the log
-  //     message, the verbose log message, message type, message
-  //     priority, and so on.
-  //
-  //     Remember that there is one Log_Msg object per thread.
-  //     Therefore, you may need to register your callback object with
-  //     many <ACE_Log_Msg> objects (and have the correct
-  //     synchronization in the <log> method) or have a separate
-  //     callback object per Log_Msg object.  Moreover,
-  //     <ACE_Log_Msg_Callbacks> are not inherited when a new thread
-  //     is spawned, so you'll need to reset these in each new thread.
-public:
-  virtual ~ACE_Log_Msg_Callback (void);
-  // No-op virtual destructor.
-
-  virtual void log (ACE_Log_Record &log_record) = 0;
-  // Callback routine.  This is called when we want to log a message.
-  // Since this routine is pure virtual, it must be overwritten by the
-  // subclass.
-};
-
-// ****************************************************************
-
-class ACE_Export ACE_Log_Msg_Attributes
-{
-  // = TITLE
-  //   The Log_Msg attributes inherited by newly spawned threads
-  //
-  // = DESCRIPTION
-  //   When a new thread is created the TSS resources for the Log_Msg
-  //   class in the new thread may be inherited by the creator thread.
-  //   The attributes are encapsulated in this class to simplify their
-  //   manipulation and destruction.
-public:
-  ACE_Log_Msg_Attributes (
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                          ACE_SEH_EXCEPT_HANDLER selector = 0
-                          , ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                          );
-  // Constructor
-
-  ~ACE_Log_Msg_Attributes (void);
-  // Destructor
-
-  static void init_hook (void *&attributes
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                         , ACE_SEH_EXCEPT_HANDLER selector = 0
-                         , ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                         );
-  // Init hook, create a Log_Msg_Attribute object, initialize its
-  // attributes from the TSS Log_Msg and save the object in the
-  // <attributes> argument
-
-  static void inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
-                            void *&attributes);
-  // Inherit hook, the <attributes> field is a Log_Msg_Attribute
-  // object, invoke the <inherit_log_msg> method on it, then destroy
-  // it and set the <attribute> argument to 0
-
-private:
-  void inherit_log_msg (ACE_OS_Thread_Descriptor *thr_desc);
-  // Initialize the TSS Log_Msg from the attributes saved on this
-  // object
-
-  ACE_OSTREAM_TYPE *ostream_;
-  // Ostream where the new TSS Log_Msg will use.
-
-  u_long priority_mask_;
-  // Priority_mask to be used in new TSS Log_Msg.
-
-  int tracing_enabled_;
-  // Are we allowing tracing in this thread?
-
-  int restart_;
-  // Indicates whether we should restart system calls that are
-  // interrupted.
-
-  int trace_depth_;
-  // Depth of the nesting for printing traces.
-
-#   if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
-  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
-#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-};
+class ACE_Log_Msg_Callback;
 
 // ****************************************************************
 
@@ -537,6 +439,22 @@ public:
   // <log> to do the actual print, but formats first to make the chars
   // printable.
 
+  static void init_hook (ACE_OS_Log_Msg_Attributes &attributes
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                         , ACE_SEH_EXCEPT_HANDLER selector = 0
+                         , ACE_SEH_EXCEPT_HANDLER handler = 0
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                         );
+  // Init hook, create a Log_Msg_Attribute object, initialize its
+  // attributes from the TSS Log_Msg and save the object in the
+  // <attributes> argument
+
+  static void inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
+                            ACE_OS_Log_Msg_Attributes &attributes);
+  // Inherit hook, the <attributes> field is a Log_Msg_Attribute
+  // object, invoke the <inherit_log_msg> method on it, then destroy
+  // it and set the <attribute> argument to 0
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -677,5 +595,10 @@ ACE_TSS_cleanup (void *ptr);
 #define THREAD ACE_THREAD_HACK
 #undef ACE_THREAD_HACK
 #endif /* ACE_THREAD_HACK */
+
+#if defined(ACE_LEGACY_MODE)
+#include "ace/Log_Msg_Callback.h"
+#endif /* ACE_LEGACY_MODE */
+
 #include "ace/post.h"
 #endif /* ACE_LOG_MSG_H */

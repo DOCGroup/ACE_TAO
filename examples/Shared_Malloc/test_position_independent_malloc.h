@@ -6,6 +6,8 @@
 #ifndef __TEST_POSITION_INDEPENDENT_MALLOC_H
 #define __TEST_POSITION_INDEPENDENT_MALLOC_H
 
+#include "ace/Based_Pointer_T.h"
+
 // Some test data.
 struct Long_Test
 {
