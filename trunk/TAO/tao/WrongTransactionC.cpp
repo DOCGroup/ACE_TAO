@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "WrongTransactionC.h"
@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -51,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::WrongTransaction::WrongTransaction (void)
   : CORBA::UserException (
@@ -153,11 +153,16 @@ void CORBA::WrongTransaction::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr CORBA::WrongTransaction::_type (void) const
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("This TAO-specific method is now")
+              ACE_LIB_TEXT (" deprecated and will be removed")
+              ACE_LIB_TEXT (" in future versions.\n")));
+  
   return ::CORBA::_tc_WrongTransaction;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_WrongTransaction[] =
 {
@@ -197,7 +202,34 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_exception/cdr_op_cs.cpp:60
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA::WrongTransaction &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::WrongTransaction&
+  )
+{
+  return 1;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
