@@ -8,8 +8,8 @@
 #ifndef	_TEST1_HH
 #define	_TEST1_HH
 
-#include <corba/orb.hh>
-#include <corba/stub.hh>
+#include <corba/orb.h>
+#include <corba/stub.h>
 
 
 #ifdef	_MSC_VER

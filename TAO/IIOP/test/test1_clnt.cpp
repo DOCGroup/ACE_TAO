@@ -20,8 +20,8 @@
 
 #endif	// unix
 
-#include "test1.hh"
-#include <corba/debug.hh>
+#include "test1.h"
+#include <corba/debug.h>
 
 
 #if !defined (_WIN32)
@@ -566,7 +566,7 @@ main (int    argc, char   *argv[])
     while ((c = get_opt ()) != -1)
 	switch (c) {
 	  case 'd':			// debug flag
-	    debug_level++;
+	    TAO_debug_level++;
 	    continue;
 
 	  case 'l':			// skip "long double" test

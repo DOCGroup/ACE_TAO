@@ -13,8 +13,9 @@
 #include	"cubit_i.h"
 #include <ace/Get_Opt.h>
 
-#include	<corba/debug.hh>
-#include <connect.hh>
+#include "corba/orb.h"
+#include	<corba/debug.h>
+#include <connect.h>
 
 extern void
 print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
@@ -59,32 +60,34 @@ main (int    argc, char   *argv[])
   Cubit_i_ptr  my_cubit = new Cubit_i(key);
 
   if (debug_level >= 1)
-  {
-     CORBA_BOA_ptr oa = ROA_PARAMS::instance()->oa();
-     CORBA_OctetSeq	obj_key;
-     obj_key.buffer = (CORBA_Octet *) key;
-     obj_key.length = obj_key.maximum = ACE_OS::strlen ((char *)key);
+    {
+      // Why are we getting the BOA_ptr from here when we've already
+      // got it above?
+      CORBA_BOA_ptr oa = TAO_OA_PARAMS::instance()->oa();
+      CORBA_OctetSeq	obj_key;
+      obj_key.buffer = (CORBA_Octet *) key;
+      obj_key.length = obj_key.maximum = ACE_OS::strlen ((char *)key);
      
-     if (oa)
-        obj = oa->lookup(obj_key);
+      if (oa)
+        (void) oa->find(obj_key, obj);
      
      
-     //
-     // Stringify the objref we'll be implementing, and
-     // print it to stdout.  Someone will take that string
-     // and give it to some client.  Then release the object.
-     //
-     CORBA_String	str;
+      //
+      // Stringify the objref we'll be implementing, and
+      // print it to stdout.  Someone will take that string
+      // and give it to some client.  Then release the object.
+      //
+      CORBA_String	str;
      
-     str = orb_ptr->object_to_string (obj, env);
-     if (env.exception () != 0) {
+      str = orb_ptr->object_to_string (obj, env);
+      if (env.exception () != 0) {
         print_exception (env.exception (), "object2string");
         return 1;
-     }
-     ACE_OS::puts ((char *)str);
-     ACE_OS::fflush (stdout);
-     dmsg1 ("listening as object '%s'", str);
-  }
+      }
+      ACE_OS::puts ((char *)str);
+      ACE_OS::fflush (stdout);
+      dmsg1 ("listening as object '%s'", str);
+    }
 
   // Handle requests for this object until we're killed, or one of
   // the methods asks us to exit.
@@ -92,7 +95,7 @@ main (int    argc, char   *argv[])
   int terminationStatus = 0;
 
   // Insert Object Key into context
-//  params->context(&obj_key);
+  //  params->context(&obj_key);
 
 #if !defined(USE_HOMEBREW_EVENT_LOOP)
   ACE_Service_Config::run_reactor_event_loop();
