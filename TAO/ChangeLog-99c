@@ -1,3 +1,14 @@
+Tue Aug 17 20:51:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/default_resource.cpp:
+	  Also use the new signal masking features with the TP reactor.
+
+	* performance-tests/Latency/client.conf:
+	* performance-tests/Latency/server.conf:
+	* performance-tests/Latency/st_server.conf:
+	  Use the -ORBReactorMaskSignals 0 option to disable signal
+	  masking.
+
 Tue Aug 17 19:17:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/driver.cpp:
