@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Cascadable_DocHandler.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Cascadable_DocHandler.i"
