@@ -121,8 +121,18 @@ ACE_String_Base<CHAR>::operator= (const ACE_String_Base<CHAR> &s)
 
   // Check for identify.
   if (this != &s)
-    this->set (s.rep_, s.len_, 1);
+    {
+      this->set (s.rep_, s.len_, 1);
+    }
 
+  return *this;
+}
+
+// Assignment method (does not copy memory)
+template <class CHAR> ACE_INLINE ACE_String_Base<CHAR> &
+ACE_String_Base<CHAR>::assign_nocopy (const ACE_String_Base<CHAR> &s)
+{
+  this->set (s.rep_, s.len_, 0);
   return *this;
 }
 
