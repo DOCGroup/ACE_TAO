@@ -2806,6 +2806,19 @@ typedef unsigned int size_t;
 # endif /* ACE_HAS_BYTESEX_H */
 # include "ace/Basic_Types.h"
 
+/* This should work for linux, solaris 5.6 and above, IRIX, OSF */
+# if defined (ACE_HAS_LLSEEK)
+#   if ACE_SIZEOF_LONG == 8
+      typedef off_t ACE_LOFF_T;
+#   elif defined (__sgi)
+      typedef off64_t ACE_LOFF_T;
+#   elif defined (__sun)
+      typedef offset_t ACE_LOFF_T;
+#   else
+      typedef loff_t ACE_LOFF_T;
+#   endif
+# endif /* ACE_HAS_LLSEEK */
+
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
@@ -5702,6 +5715,9 @@ public:
   static off_t lseek (ACE_HANDLE handle,
                       off_t offset,
                       int whence);
+#if defined (ACE_HAS_LLSEEK)
+  ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
+#endif /* ACE_HAS_LLSEEK */
   static ACE_HANDLE open (const char *filename,
                           int mode,
                           int perms = 0,

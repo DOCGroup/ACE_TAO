@@ -300,6 +300,7 @@ ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT Optimize
                                         ACE_Handle_Set::count_bits for
                                         select() operations (common
                                         case)
+ACE_HAS_LLSEEK                          Platform supports llseek.
 ACE_HAS_HI_RES_TIMER                    Compiler/platform supports
                                         SunOS high resolution timers
 ACE_HAS_IDTYPE_T                        Compiler/platform supports
