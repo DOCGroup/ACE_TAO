@@ -155,6 +155,10 @@ public:
   int single_read_optimization (void) const;
   void single_read_optimization (int x);
 
+  /// Mutators and accessors for rt_collocation_resolver
+  bool disable_rt_collocation_resolver (void) const;
+  void disable_rt_collocation_resolver (bool);
+
 private:
   // Each "endpoint" is of the form:
   //
@@ -245,6 +249,19 @@ private:
 
   /// Single read optimization.
   int single_read_optimization_;
+
+  /// Default collocation resolver
+  /**
+   * The vanilla ORB has only one collocation resolver. But if the
+   * RTORB is in place, the RTORB can get in a new collocation
+   * resolver. There are some applications that would like to use the
+   * default collocation resolver with the RTORB. This boolean is the
+   * value of the option that the application passes in to enable/disable
+   * the use of RT collocation resolver with the RTORB. The default value
+   * is false to indicate that the RT_Collocation_Resolver will be
+   * loaded if the RTORB is used.
+   */
+  bool disable_rt_collocation_resolver_;
 };
 
 #if defined (__ACE_INLINE__)
