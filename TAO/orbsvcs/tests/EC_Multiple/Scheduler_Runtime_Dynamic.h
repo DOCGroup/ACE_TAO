@@ -1023,4 +1023,10 @@ static ACE_Scheduler_Factory::POD_RT_Info runtime_infos_3[] = {
 };
 static int runtime_infos_3_size = sizeof(runtime_infos_3)/sizeof(runtime_infos_3[0]);
 
+static ACE_Scheduler_Factory::POD_Config_Info runtime_configs_3[] = {
+{          0,        59, (RtecScheduler::Dispatching_Type) 2 }
+};
+static int runtime_configs_3_size = sizeof(runtime_configs_3)/sizeof(runtime_configs_3[0]);
+
+
 // EOF
