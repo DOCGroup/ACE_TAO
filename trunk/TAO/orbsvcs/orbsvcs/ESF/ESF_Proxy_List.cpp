@@ -18,8 +18,8 @@ TAO_ESF_Proxy_List<PROXY>::
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_List<PROXY>::connected (PROXY *proxy,
-                                      CORBA::Environment &)
+TAO_ESF_Proxy_List<PROXY>::connected (PROXY *proxy
+                                      TAO_ENV_ARG_DECL_NOT_USED)
 {
   int r = this->impl_.insert (proxy);
   if (r == 0)
@@ -39,8 +39,8 @@ TAO_ESF_Proxy_List<PROXY>::connected (PROXY *proxy,
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_List<PROXY>::reconnected (PROXY *proxy,
-                                        CORBA::Environment &)
+TAO_ESF_Proxy_List<PROXY>::reconnected (PROXY *proxy
+                                        TAO_ENV_ARG_DECL_NOT_USED)
 {
   int r = this->impl_.insert (proxy);
   if (r == 0)
@@ -64,8 +64,8 @@ TAO_ESF_Proxy_List<PROXY>::reconnected (PROXY *proxy,
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_List<PROXY>::disconnected (PROXY *proxy,
-                                         CORBA::Environment &)
+TAO_ESF_Proxy_List<PROXY>::disconnected (PROXY *proxy
+                                         TAO_ENV_ARG_DECL_NOT_USED)
 {
   int r = this->impl_.remove (proxy);
   if (r != 0)
@@ -78,7 +78,7 @@ TAO_ESF_Proxy_List<PROXY>::disconnected (PROXY *proxy,
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_List<PROXY>::shutdown (CORBA::Environment &)
+TAO_ESF_Proxy_List<PROXY>::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   Iterator end = this->impl_.end ();
   for (Iterator i = this->impl_.begin (); i != end; ++i)

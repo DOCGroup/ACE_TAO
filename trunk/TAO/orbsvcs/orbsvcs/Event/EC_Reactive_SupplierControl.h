@@ -80,16 +80,16 @@ public:
   // = Documented in TAO_EC_SupplierControl
   virtual int activate (void);
   virtual int shutdown (void);
-  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy,
-                                   CORBA::Environment &);
+  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy
+                                   TAO_ENV_ARG_DECL_NOT_USED);
   virtual void system_exception (TAO_EC_ProxyPushConsumer *proxy,
-                                 CORBA::SystemException &,
-                                 CORBA::Environment &);
+                                 CORBA::SystemException &
+                                 TAO_ENV_ARG_DECL_NOT_USED);
 
 private:
   /// Check if the suppliers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_suppliers (CORBA::Environment &ACE_TRY_ENV);
+  void query_suppliers (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// The polling rate
@@ -121,8 +121,8 @@ class TAO_EC_Ping_Supplier : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 public:
   TAO_EC_Ping_Supplier (TAO_EC_SupplierControl *control);
 
-  virtual void work (TAO_EC_ProxyPushConsumer *consumer,
-                     CORBA::Environment &ACE_TRY_ENV);
+  virtual void work (TAO_EC_ProxyPushConsumer *consumer
+                     TAO_ENV_ARG_DECL);
 
 private:
   TAO_EC_SupplierControl *control_;

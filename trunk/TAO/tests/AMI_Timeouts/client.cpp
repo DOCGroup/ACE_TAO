@@ -65,22 +65,22 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TimeoutObj_var timeout_var =
-        TimeoutObj::_narrow (object.in (), ACE_TRY_ENV);
+        TimeoutObj::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (timeout_var.in ()))
@@ -94,7 +94,7 @@ main (int argc, char *argv[])
       // Activate POA to handle the call back.
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -103,21 +103,21 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
       AMI_TimeoutObjHandler_var timeoutHandler_var =
-        timeoutHandler_i._this (ACE_TRY_ENV);
+        timeoutHandler_i._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Instantiate client
@@ -130,19 +130,19 @@ main (int argc, char *argv[])
       client.activate ();
 
       // ORB loop.
-      orb->run (ACE_TRY_ENV);  // Fetch responses
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);  // Fetch responses
       ACE_TRY_CHECK;
 
       root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
+                         0  // wait for completion
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Wait for all the threads to finish before destroying the
       // ORB.
       (void) client.thr_mgr ()->wait ();
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));

@@ -22,8 +22,8 @@ TAO_ClientRequestInterceptor_Adapter::
 
 void
 TAO_ClientRequestInterceptor_Adapter::
-send_request (TAO_ClientRequestInfo *ri,
-              CORBA::Environment &ACE_TRY_ENV)
+send_request (TAO_ClientRequestInfo *ri
+              TAO_ENV_ARG_DECL)
 {
   // This method implements one of the "starting" client side
   // interception point.
@@ -44,7 +44,7 @@ send_request (TAO_ClientRequestInfo *ri,
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      this->process_forward_request (ri, exc, ACE_TRY_ENV);
+      this->process_forward_request (ri, exc TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_ENDTRY;
@@ -53,8 +53,8 @@ send_request (TAO_ClientRequestInfo *ri,
 
 void
 TAO_ClientRequestInterceptor_Adapter::
-receive_reply (TAO_ClientRequestInfo *ri,
-               CORBA::Environment &ACE_TRY_ENV)
+receive_reply (TAO_ClientRequestInfo *ri
+               TAO_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -79,8 +79,6 @@ receive_reply (TAO_ClientRequestInfo *ri,
       ACE_CHECK;
     }
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   // The receive_reply() interception point does not raise a
   // PortableInterceptor::ForwardRequest exception so there is no need
   // to attempt to catch it here.
@@ -88,8 +86,8 @@ receive_reply (TAO_ClientRequestInfo *ri,
 
 void
 TAO_ClientRequestInterceptor_Adapter::
-receive_exception (TAO_ClientRequestInfo *ri,
-                   CORBA::Environment &ACE_TRY_ENV)
+receive_exception (TAO_ClientRequestInfo *ri
+                   TAO_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -118,7 +116,7 @@ receive_exception (TAO_ClientRequestInfo *ri,
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      this->process_forward_request (ri, exc, ACE_TRY_ENV);
+      this->process_forward_request (ri, exc TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -135,11 +133,11 @@ receive_exception (TAO_ClientRequestInfo *ri,
 
       ri->exception (&ACE_ANY_EXCEPTION);
 
-      this->receive_exception (ri, ACE_TRY_ENV);
+      this->receive_exception (ri TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableInterceptor::ReplyStatus status =
-        ri->reply_status (ACE_TRY_ENV);
+        ri->reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Only re-throw the exception if it hasn't been transformed by
@@ -155,8 +153,8 @@ receive_exception (TAO_ClientRequestInfo *ri,
 
 void
 TAO_ClientRequestInterceptor_Adapter::
-receive_other (TAO_ClientRequestInfo *ri,
-               CORBA::Environment &ACE_TRY_ENV)
+receive_other (TAO_ClientRequestInfo *ri
+               TAO_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -185,7 +183,7 @@ receive_other (TAO_ClientRequestInfo *ri,
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      this->process_forward_request (ri, exc, ACE_TRY_ENV);
+      this->process_forward_request (ri, exc TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_ENDTRY;
@@ -195,18 +193,18 @@ receive_other (TAO_ClientRequestInfo *ri,
 void
 TAO_ClientRequestInterceptor_Adapter::process_forward_request (
   TAO_ClientRequestInfo *ri,
-  PortableInterceptor::ForwardRequest &exc,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ForwardRequest &exc
+  TAO_ENV_ARG_DECL)
 {
   ri->forward_reference (exc);
 
   this->invoke_status_ =
-    this->invocation_->location_forward (exc.forward.in (), ACE_TRY_ENV);
+    this->invocation_->location_forward (exc.forward.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // receive_other() is potentially invoked recursively.
-  this->receive_other (ri,
-                       ACE_TRY_ENV);
+  this->receive_other (ri
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

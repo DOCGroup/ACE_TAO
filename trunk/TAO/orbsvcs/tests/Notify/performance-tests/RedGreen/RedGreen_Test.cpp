@@ -70,30 +70,30 @@ RedGreen_Test::~RedGreen_Test ()
 }
 
 void
-RedGreen_Test::init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
 {
-  init_ORB (argc, argv, ACE_TRY_ENV);
+  init_ORB (argc, argv TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  resolve_naming_service (ACE_TRY_ENV);
+  resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  resolve_Notify_factory (ACE_TRY_ENV);
+  resolve_Notify_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  create_EC (ACE_TRY_ENV);
+  create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  create_supplieradmin (ACE_TRY_ENV);
+  create_supplieradmin (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  create_consumeradmin (ACE_TRY_ENV);
+  create_consumeradmin (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  create_consumers (ACE_TRY_ENV);
+  create_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  create_suppliers (ACE_TRY_ENV);
+  create_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RedGreen_Test::run (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::run (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->send_events (ACE_TRY_ENV);
+  this->send_events (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   worker_.thr_mgr ()->wait ();
@@ -108,18 +108,18 @@ RedGreen_Test::done (void)
 
 void
 RedGreen_Test::init_ORB (int argc,
-                      char *argv [],
-                      CORBA::Environment &ACE_TRY_ENV)
+                      char *argv []
+                      TAO_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                "",
-                                ACE_TRY_ENV);
+                                ""
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_ptr poa_object  =
-    this->orb_->resolve_initial_references("RootPOA",
-                                           ACE_TRY_ENV);
+    this->orb_->resolve_initial_references("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (poa_object))
@@ -129,14 +129,14 @@ RedGreen_Test::init_ORB (int argc,
       return;
     }
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object, ACE_TRY_ENV);
+    PortableServer::POA::_narrow (poa_object TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (ACE_TRY_ENV);
+    root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager->activate (ACE_TRY_ENV);
+  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   worker_.orb (this->orb_.in ());
@@ -148,11 +148,11 @@ RedGreen_Test::init_ORB (int argc,
 }
 
 void
-RedGreen_Test::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME,
-                                            ACE_TRY_ENV);
+    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Need to check return value for errors.
@@ -160,91 +160,91 @@ RedGreen_Test::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW (CORBA::UNKNOWN ());
 
   this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+    CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RedGreen_Test::resolve_Notify_factory (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::resolve_Notify_factory (TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNaming::Name name (1);
   name.length (1);
   name[0].id = CORBA::string_dup (NOTIFY_FACTORY_NAME);
 
   CORBA::Object_var obj =
-    this->naming_context_->resolve (name,
-                                   ACE_TRY_ENV);
+    this->naming_context_->resolve (name
+                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in (),
-                                                         ACE_TRY_ENV);
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ()
+                                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RedGreen_Test::create_EC (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::create_EC (TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   ec_ = notify_factory_->create_channel (initial_qos_,
                                          initial_admin_,
-                                         id,
-                                         ACE_TRY_ENV);
+                                         id
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
 
 void
-RedGreen_Test::create_supplieradmin (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::create_supplieradmin (TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
-    ec_->new_for_suppliers (this->ifgop_, adminid, ACE_TRY_ENV);
+    ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 }
 
 void
-RedGreen_Test:: create_consumeradmin (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test:: create_consumeradmin (TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
 
   consumer_admin_ =
-    ec_->new_for_consumers (this->ifgop_, adminid, ACE_TRY_ENV);
+    ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 }
 
 void
-RedGreen_Test::create_consumers (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::create_consumers (TAO_ENV_SINGLE_ARG_DECL)
 {
   normal_consumer_ = new RedGreen_Test_StructuredPushConsumer (this);
-  normal_consumer_->connect (this->consumer_admin_.in (),
-                        ACE_TRY_ENV);
+  normal_consumer_->connect (this->consumer_admin_.in ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   slow_consumer_ = new SlowConsumer (this);
-  slow_consumer_->connect (this->consumer_admin_.in (),
-                        ACE_TRY_ENV);
+  slow_consumer_->connect (this->consumer_admin_.in ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RedGreen_Test::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::create_suppliers (TAO_ENV_SINGLE_ARG_DECL)
 {
   supplier_ = new RedGreen_Test_StructuredPushSupplier ();
-  supplier_->connect (this->supplier_admin_.in (),
-                        ACE_TRY_ENV);
+  supplier_->connect (this->supplier_admin_.in ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RedGreen_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test::send_events (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Setup the Consumer 1 to receive event_type : "DOMAIN_GREEN", "DOMAIN_GREEN"
   CosNotification::EventTypeSeq added_1(1);
@@ -255,8 +255,8 @@ RedGreen_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
   added_1.length (1);
   removed_1.length (0);
 
-  this->normal_consumer_->get_proxy_supplier ()->subscription_change (added_1, removed_1,
-                                                                      ACE_TRY_ENV);
+  this->normal_consumer_->get_proxy_supplier ()->subscription_change (added_1, removed_1
+                                                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Setup the Consumer 2 to receive event_type : "DOMAIN_RED", "TYPE_RED"
@@ -268,8 +268,8 @@ RedGreen_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
   added_2.length (1);
   removed_2.length (0);
 
-  this->slow_consumer_->get_proxy_supplier ()->subscription_change (added_2, removed_2,
-                                                           ACE_TRY_ENV);
+  this->slow_consumer_->get_proxy_supplier ()->subscription_change (added_2, removed_2
+                                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Create the events - one of each type
@@ -301,10 +301,10 @@ RedGreen_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
   // let supplier 1 send all these events
   for (int i = 0; i < this->burst_size_; ++i)
     {
-      supplier_->send_event (red_event, ACE_TRY_ENV);
+      supplier_->send_event (red_event TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      supplier_->send_event (green_event, ACE_TRY_ENV);
+      supplier_->send_event (green_event TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -365,15 +365,15 @@ RedGreen_Test_StructuredPushConsumer::dump_stats (const char* msg, ACE_UINT32 gs
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin TAO_ENV_ARG_DECL)
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (ACE_TRY_ENV);
+    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
-    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_, ACE_TRY_ENV);
+    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_ TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
@@ -381,27 +381,29 @@ RedGreen_Test_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAd
   // narrow
   this->proxy_supplier_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::
-    _narrow (proxysupplier.in (), ACE_TRY_ENV);
+    _narrow (proxysupplier.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
-  proxy_supplier_->connect_structured_push_consumer (objref.in (),
-                                                     ACE_TRY_ENV);
+  proxy_supplier_->connect_structured_push_consumer (objref.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test_StructuredPushConsumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   this->proxy_supplier_->
-    disconnect_structured_push_supplier(ACE_TRY_ENV);
+    disconnect_structured_push_supplier(TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::offer_change (const CosNotification::EventTypeSeq & /*added*/, const CosNotification::EventTypeSeq & /*removed*/, CORBA::Environment & //ACE_TRY_ENV
-)
+RedGreen_Test_StructuredPushConsumer::offer_change
+   (const CosNotification::EventTypeSeq & /*added*/,
+    const CosNotification::EventTypeSeq & /*removed*/
+    TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosNotifyComm::InvalidEventType
@@ -411,7 +413,9 @@ RedGreen_Test_StructuredPushConsumer::offer_change (const CosNotification::Event
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & notification, CORBA::Environment &/*ACE_TRY_ENV*/)
+RedGreen_Test_StructuredPushConsumer::push_structured_event
+   (const CosNotification::StructuredEvent & notification
+    TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -451,7 +455,8 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (const CosNotificati
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::disconnect_structured_push_consumer (CORBA::Environment &/*ACE_TRY_ENV*/)
+RedGreen_Test_StructuredPushConsumer::disconnect_structured_push_consumer
+   (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -476,8 +481,8 @@ SlowConsumer::SlowConsumer (RedGreen_Test* RedGreen_Test)
 
 void
 SlowConsumer::push_structured_event (
-        const CosNotification::StructuredEvent & notification,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::StructuredEvent & notification
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -487,7 +492,7 @@ SlowConsumer::push_structured_event (
   // Slow it down ...
   ACE_OS::sleep (1);
 
-  RedGreen_Test_StructuredPushConsumer::push_structured_event (notification, ACE_TRY_ENV);
+  RedGreen_Test_StructuredPushConsumer::push_structured_event (notification TAO_ENV_ARG_PARAMETER);
 }
 
 /*****************************************************************/
@@ -513,41 +518,43 @@ RedGreen_Test_StructuredPushSupplier::dump_stats (const char* msg, ACE_UINT32 gs
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin, CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin TAO_ENV_ARG_DECL)
 {
   CosNotifyComm::StructuredPushSupplier_var objref =
-    this->_this (ACE_TRY_ENV);
+    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_, ACE_TRY_ENV);
+    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_ TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
   // narrow
   this->proxy_consumer_ =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in (), ACE_TRY_ENV);
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
 
-  proxy_consumer_->connect_structured_push_supplier (objref.in (),
-                                                     ACE_TRY_ENV);
+  proxy_consumer_->connect_structured_push_supplier (objref.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test_StructuredPushSupplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->proxy_consumer_->disconnect_structured_push_consumer(ACE_TRY_ENV);
+  this->proxy_consumer_->disconnect_structured_push_consumer(TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::subscription_change (const CosNotification::EventTypeSeq & /*added*/, const CosNotification::EventTypeSeq & /*removed */, CORBA::Environment & /*ACE_TRY_ENV*/
-      )
+RedGreen_Test_StructuredPushSupplier::subscription_change
+   (const CosNotification::EventTypeSeq & /*added*/,
+    const CosNotification::EventTypeSeq & /*removed */
+    TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
@@ -557,7 +564,7 @@ RedGreen_Test_StructuredPushSupplier::subscription_change (const CosNotification
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::send_event (CosNotification::StructuredEvent& event, CORBA::Environment &ACE_TRY_ENV)
+RedGreen_Test_StructuredPushSupplier::send_event (CosNotification::StructuredEvent& event TAO_ENV_ARG_DECL)
 {
   event.filterable_data.length (1);
   event.filterable_data[0].name = CORBA::string_dup("latency_base");
@@ -570,7 +577,7 @@ RedGreen_Test_StructuredPushSupplier::send_event (CosNotification::StructuredEve
                                  start);
   // any
   event.filterable_data[0].value <<= latency_base;
-  proxy_consumer_->push_structured_event (event, ACE_TRY_ENV);
+  proxy_consumer_->push_structured_event (event TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_hrtime_t end = ACE_OS::gethrtime ();
@@ -581,7 +588,8 @@ RedGreen_Test_StructuredPushSupplier::send_event (CosNotification::StructuredEve
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier (CORBA::Environment &/*ACE_TRY_ENV*/)
+RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier
+   (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

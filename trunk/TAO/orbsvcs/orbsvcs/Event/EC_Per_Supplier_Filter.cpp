@@ -60,7 +60,7 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
 
   ACE_TRY_NEW_ENV
     {
-      this->shutdown (ACE_TRY_ENV);
+      this->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -71,8 +71,8 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
 }
 
 void
-TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
-                                       CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier
+                                       TAO_ENV_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -98,7 +98,7 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
           ACE_DEBUG ((LM_DEBUG, "  matched\n"));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
-          this->collection_->connected (supplier, ACE_TRY_ENV);
+          this->collection_->connected (supplier TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
           return;
         }
@@ -109,8 +109,8 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
 }
 
 void
-TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier,
-                                         CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier
+                                         TAO_ENV_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -131,30 +131,30 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier,
       if (supplier->can_match (event.header))
         {
           //          ACE_DEBUG ((LM_DEBUG, "  matched %x\n", supplier));
-          this->collection_->connected (supplier, ACE_TRY_ENV);
+          this->collection_->connected (supplier TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
           return;
         }
     }
-  this->collection_->disconnected (supplier, ACE_TRY_ENV);
+  this->collection_->disconnected (supplier TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_EC_Per_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier* supplier,
-                                          CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Per_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier* supplier
+                                          TAO_ENV_ARG_DECL)
 {
-  this->collection_->disconnected (supplier, ACE_TRY_ENV);
+  this->collection_->disconnected (supplier TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_EC_Per_Supplier_Filter::shutdown (CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Per_Supplier_Filter::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->collection_->shutdown (ACE_TRY_ENV);
+  this->collection_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
-                                     CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event
+                                     TAO_ENV_ARG_DECL)
 {
   TAO_EC_Scheduling_Strategy* scheduling_strategy =
     this->event_channel_->scheduling_strategy ();
@@ -178,8 +178,8 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
 
         scheduling_strategy->init_event_qos (e.header,
                                              this->consumer_,
-                                             event_info,
-                                             ACE_TRY_ENV);
+                                             event_info
+                                              TAO_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
 
@@ -190,7 +190,7 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
       // until push() returns.
 
       TAO_EC_Filter_Worker worker (single_event, event_info);
-      this->collection_->for_each (&worker, ACE_TRY_ENV);
+      this->collection_->for_each (&worker TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

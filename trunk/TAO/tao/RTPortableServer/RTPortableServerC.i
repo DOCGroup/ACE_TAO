@@ -49,11 +49,11 @@ tao_RTPortableServer_POA_nil (
 
 ACE_INLINE RTPortableServer::POA_ptr
 tao_RTPortableServer_POA_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return RTPortableServer::POA::_narrow (p, ACE_TRY_ENV);
+  return RTPortableServer::POA::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

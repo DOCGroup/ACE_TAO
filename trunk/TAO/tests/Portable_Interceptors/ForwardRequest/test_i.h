@@ -37,13 +37,11 @@ public:
   ~test_i (void);
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short number (CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+  virtual CORBA::Short number (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the ORB.
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment ())
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

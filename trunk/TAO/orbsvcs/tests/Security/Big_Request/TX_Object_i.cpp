@@ -19,8 +19,8 @@ TX_Object_i::~TX_Object_i (void)
 }
 
 void
-TX_Object_i::send (const DataSeq & data,
-                   CORBA::Environment & /* ACE_TRY_ENV */)
+TX_Object_i::send (const DataSeq & data
+                   TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->data_ = data;
@@ -31,8 +31,8 @@ TX_Object_i::send (const DataSeq & data,
 }
 
 void
-TX_Object_i::recv (DataSeq_out data,
-                   CORBA::Environment &ACE_TRY_ENV)
+TX_Object_i::recv (DataSeq_out data
+                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (data,
@@ -48,8 +48,8 @@ TX_Object_i::recv (DataSeq_out data,
 }
 
 void
-TX_Object_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+TX_Object_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

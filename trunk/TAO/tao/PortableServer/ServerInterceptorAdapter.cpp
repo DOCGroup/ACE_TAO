@@ -24,8 +24,8 @@ TAO_ServerRequestInterceptor_Adapter::
 void
 TAO_ServerRequestInterceptor_Adapter::
 receive_request_service_contexts (
-  TAO_ServerRequestInfo *ri,
-  CORBA::Environment &ACE_TRY_ENV)
+  TAO_ServerRequestInfo *ri
+  TAO_ENV_ARG_DECL)
 {
   // This method implements one of the "starting" server side
   // interception point.
@@ -54,8 +54,8 @@ receive_request_service_contexts (
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
       ri->forward_reference (exc);
-      this->send_other (ri,
-                        ACE_TRY_ENV);
+      this->send_other (ri
+                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->location_forwarded_ = 1;
@@ -66,8 +66,8 @@ receive_request_service_contexts (
 
 void
 TAO_ServerRequestInterceptor_Adapter::
-receive_request (TAO_ServerRequestInfo *ri,
-                 CORBA::Environment &ACE_TRY_ENV)
+receive_request (TAO_ServerRequestInfo *ri
+                 TAO_ENV_ARG_DECL)
 {
   // This method implements an "intermediate" server side interception
   // point.  Interceptors are invoked in the same order they were
@@ -102,8 +102,8 @@ receive_request (TAO_ServerRequestInfo *ri,
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
       ri->forward_reference (exc);
-      this->send_other (ri,
-                        ACE_TRY_ENV);
+      this->send_other (ri
+                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->location_forwarded_ = 1;
@@ -115,8 +115,8 @@ receive_request (TAO_ServerRequestInfo *ri,
 
 void
 TAO_ServerRequestInterceptor_Adapter::
-send_reply (TAO_ServerRequestInfo *ri,
-            CORBA::Environment &ACE_TRY_ENV)
+send_reply (TAO_ServerRequestInfo *ri
+            TAO_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -141,8 +141,6 @@ send_reply (TAO_ServerRequestInfo *ri,
       ACE_CHECK;
     }
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   // The send_reply() interception point does not raise a
   // PortableInterceptor::ForwardRequest exception so there is no need
   // to attempt to catch it here.
@@ -150,8 +148,8 @@ send_reply (TAO_ServerRequestInfo *ri,
 
 void
 TAO_ServerRequestInterceptor_Adapter::
-send_exception (TAO_ServerRequestInfo *ri,
-                CORBA::Environment &ACE_TRY_ENV)
+send_exception (TAO_ServerRequestInfo *ri
+                TAO_ENV_ARG_DECL)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -181,8 +179,8 @@ send_exception (TAO_ServerRequestInfo *ri,
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
       ri->forward_reference (exc);
-      this->send_other (ri,
-                        ACE_TRY_ENV);
+      this->send_other (ri
+                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->location_forwarded_ = 1;
@@ -201,11 +199,11 @@ send_exception (TAO_ServerRequestInfo *ri,
 
       ri->exception (&ACE_ANY_EXCEPTION);
 
-      this->send_exception (ri, ACE_TRY_ENV);
+      this->send_exception (ri TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableInterceptor::ReplyStatus status =
-        ri->reply_status (ACE_TRY_ENV);
+        ri->reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Only re-throw the exception if it hasn't been transformed by
@@ -221,8 +219,8 @@ send_exception (TAO_ServerRequestInfo *ri,
 
 void
 TAO_ServerRequestInterceptor_Adapter::
-send_other (TAO_ServerRequestInfo *ri,
-            CORBA::Environment &ACE_TRY_ENV)
+send_other (TAO_ServerRequestInfo *ri
+            TAO_ENV_ARG_DECL)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -252,8 +250,8 @@ send_other (TAO_ServerRequestInfo *ri,
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
       ri->forward_reference (exc);
-      this->send_other (ri,
-                        ACE_TRY_ENV);
+      this->send_other (ri
+                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->location_forwarded_ = 1;

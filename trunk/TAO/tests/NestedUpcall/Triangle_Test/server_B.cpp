@@ -63,15 +63,15 @@ Object_B_Server::parse_args (void)
 
 int
 Object_B_Server::init (int argc,
-                       char** argv,
-                       CORBA::Environment& ACE_TRY_ENV)
+                       char** argv
+                       TAO_ENV_ARG_DECL)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->orb_manager_.init_child_poa (argc,
                                      argv,
-                                     "child_poa",
-                                     ACE_TRY_ENV);
+                                     "child_poa"
+                                     TAO_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
@@ -82,8 +82,8 @@ Object_B_Server::init (int argc,
 
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("object_B",
-                                                 &this->object_B_i_,
-                                                 ACE_TRY_ENV);
+                                                 &this->object_B_i_
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -103,9 +103,9 @@ Object_B_Server::init (int argc,
 
 
 int
-Object_B_Server::run (CORBA::Environment& env)
+Object_B_Server::run (TAO_ENV_SINGLE_ARG_DECL)
 {
-  if (this->orb_manager_.run (env) == -1)
+  if (this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Object_B_Server::run"),
                       -1);
@@ -124,17 +124,17 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Object B Server \n \n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      int retval = object_B_Server.init (argc, argv, ACE_TRY_ENV);
+      int retval = object_B_Server.init (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)
         return 1;
       else
         {
-          object_B_Server.run (ACE_TRY_ENV);
+          object_B_Server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

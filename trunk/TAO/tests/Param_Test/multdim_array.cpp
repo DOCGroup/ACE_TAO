@@ -46,8 +46,8 @@ Test_Multdim_Array::opname (void) const
 }
 
 void
-Test_Multdim_Array::dii_req_invoke (CORBA::Request *req,
-                                    CORBA::Environment &ACE_TRY_ENV)
+Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
+                                    TAO_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= Param_Test::Multdim_Array_forany (this->in_.inout ());
   req->add_inout_arg ("s2") <<= Param_Test::Multdim_Array_forany (this->inout_.inout ());
@@ -55,7 +55,7 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req,
 
   req->set_return_type (Param_Test::_tc_Multdim_Array);
 
-  req->invoke (ACE_TRY_ENV);
+  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
 
@@ -64,21 +64,21 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req,
   Param_Test::Multdim_Array_copy (this->ret_, forany.in ());
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1, ACE_TRY_ENV);
+    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= forany;
   Param_Test::Multdim_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2, ACE_TRY_ENV);
+    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= forany;
   Param_Test::Multdim_Array_copy (this->out_, forany.in ());
 }
 
 int
-Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/,
-                                     CORBA::Environment &/*env*/)
+Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/
+                                     TAO_ENV_ARG_DECL_NOT_USED/*env*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -133,14 +133,25 @@ Test_Multdim_Array::reset_parameters (void)
 }
 
 int
-Test_Multdim_Array::run_sii_test (Param_Test_ptr objref,
-                                  CORBA::Environment &ACE_TRY_ENV)
+Test_Multdim_Array::run_sii_test (Param_Test_ptr objref
+                                  TAO_ENV_ARG_DECL)
 {
-  this->ret_ = objref->test_multdim_array (this->in_.in (),
-                                           this->inout_.inout (),
-                                           this->out_.inout (),
-                                           ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+  ACE_TRY
+    {
+      this->ret_ = objref->test_multdim_array (this->in_.in (),
+                                               this->inout_.inout (),
+                                               this->out_.inout ()
+                                               TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_Multdim_Array::run_sii_test\n");
+    }
+  ACE_ENDTRY;
+  return -1;
 }
 
 CORBA::Boolean

@@ -179,9 +179,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
       << "\"" << node->original_local_name () << "\"," << be_nl
       << "forward_to.out ()";
   if (!be_global->exception_support ())
-    *os << "," << be_nl
-        << "ACE_TRY_ENV" << be_uidt_nl
-        << ");\n" << be_uidt;
+    *os << " TAO_ENV_ARG_PARAMETER);\n" << be_uidt_nl << be_uidt;
   else
     *os << be_uidt_nl << ");\n" << be_uidt;
 

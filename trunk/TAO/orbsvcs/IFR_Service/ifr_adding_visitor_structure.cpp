@@ -39,7 +39,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
 
   AST_Field **f = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Visit each field.
@@ -52,7 +52,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                   ACE_TEXT ("visit_scope -")
                   ACE_TEXT (" field node access failed\n")
-                ), 
+                ),
                 -1
               );
             }
@@ -80,7 +80,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                           ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                           ACE_TEXT ("visit_scope -")
                           ACE_TEXT (" failed to accept visitor\n")
-                        ),  
+                        ),
                         -1
                       );
                     }
@@ -88,9 +88,9 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                   this->ir_current_ =
                     CORBA_IDLType::_duplicate (visitor.ir_current ());
 
-                  CORBA_Contained_ptr tmp = 
-                    CORBA_Contained::_narrow (visitor.ir_current (),
-                                              ACE_TRY_ENV);
+                  CORBA_Contained_ptr tmp =
+                    CORBA_Contained::_narrow (visitor.ir_current ()
+                                              TAO_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   this->move_queue_.enqueue_tail (tmp);
@@ -104,7 +104,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                           ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                           ACE_TEXT ("visit_scope -")
                           ACE_TEXT (" failed to accept visitor\n")
-                        ),  
+                        ),
                         -1
                       );
                     }
@@ -113,12 +113,12 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
           else
             {
               // Updates ir_current_.
-              this->get_referenced_type (ft,
-                                         ACE_TRY_ENV);
+              this->get_referenced_type (ft
+                                         TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
-          this->members_[i].name = 
+          this->members_[i].name =
             CORBA::string_dup ((*f)->local_name ()->get_string ());
 
           // IfR method create_struct does not use this - it just needs
@@ -126,7 +126,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
           this->members_[i].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
-          this->members_[i].type_def = 
+          this->members_[i].type_def =
             CORBA_IDLType::_duplicate (this->ir_current_.in ());
         }
     }
@@ -147,12 +147,12 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
 int
 ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CORBA_Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
+        be_global->repository ()->lookup_id (node->repoID ()
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (prev_def.in ()))
@@ -164,20 +164,20 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                   ACE_TEXT ("visit_structure -")
                   ACE_TEXT (" visit_scope failed\n")
-                ),  
+                ),
                 -1
               );
             }
 
           if (this->is_nested_)
             {
-              this->ir_current_ = 
+              this->ir_current_ =
                 be_global->holding_scope ()->create_struct (
                     node->repoID (),
                     node->local_name ()->get_string (),
                     this->gen_version (node),
-                    this->members_,
-                    ACE_TRY_ENV
+                    this->members_
+                    TAO_ENV_ARG_PARAMETER
                   );
             }
           else
@@ -191,18 +191,18 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                       ACE_TEXT ("visit_structure -")
                       ACE_TEXT (" scope stack is empty\n")
-                    ),  
+                    ),
                     -1
                   );
                 }
 
-              this->ir_current_ = 
+              this->ir_current_ =
                 current_scope->create_struct (
                                    node->repoID (),
                                    node->local_name ()->get_string (),
                                    this->gen_version (node),
-                                   this->members_,
-                                   ACE_TRY_ENV
+                                   this->members_
+                                   TAO_ENV_ARG_PARAMETER
                                 );
             }
 
@@ -215,25 +215,25 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
               CORBA_Contained_var traveller;
 
               CORBA_Container_var new_container =
-                CORBA_Container::_narrow (this->ir_current_.in (),
-                                          ACE_TRY_ENV);
+                CORBA_Container::_narrow (this->ir_current_.in ()
+                                          TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               for (size_t i = 0; i < size; ++i)
                 {
                   this->move_queue_.dequeue_head (traveller);
 
-                  CORBA::String_var name = traveller->name (ACE_TRY_ENV);
+                  CORBA::String_var name = traveller->name (TAO_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  CORBA::String_var version = 
-                    traveller->version (ACE_TRY_ENV);
+                  CORBA::String_var version =
+                    traveller->version (TAO_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   traveller->move (new_container.in (),
                                    name.in (),
-                                   version.in (),
-                                   ACE_TRY_ENV);
+                                   version.in ()
+                                   TAO_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
             }
@@ -248,7 +248,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           // original entry, create the new one, and let the user beware.
           if (node->ifr_added () == 0)
             {
-              prev_def->destroy (ACE_TRY_ENV);
+              prev_def->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // This call will take the other branch.
@@ -256,8 +256,8 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
             }
 
           this->ir_current_ =
-            CORBA_IDLType::_narrow (prev_def.in (),
-                                    ACE_TRY_ENV);
+            CORBA_IDLType::_narrow (prev_def.in ()
+                                    TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -278,19 +278,19 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 int
 ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Is this enum already in the respository?
       CORBA_Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
+        be_global->repository ()->lookup_id (node->repoID ()
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          CORBA::ULong member_count = ACE_static_cast (CORBA::ULong, 
+          CORBA::ULong member_count = ACE_static_cast (CORBA::ULong,
                                                        node->member_count ());
 
           CORBA_EnumMemberSeq members (member_count);
@@ -303,7 +303,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
             {
               member_name = node->value_to_name (i);
 
-              members[i] = 
+              members[i] =
                 CORBA::string_dup (
                     member_name->last_component ()->get_string ()
                   );
@@ -314,14 +314,14 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
                                           node->repoID (),
                                           node->local_name ()->get_string (),
                                           this->gen_version (node),
-                                          members,
-                                          ACE_TRY_ENV
+                                          members
+                                          TAO_ENV_ARG_PARAMETER
                                         );
           ACE_TRY_CHECK;
 
-          CORBA_Contained_ptr tmp = 
-            CORBA_Contained::_narrow (this->ir_current_.in (),
-                                      ACE_TRY_ENV);
+          CORBA_Contained_ptr tmp =
+            CORBA_Contained::_narrow (this->ir_current_.in ()
+                                      TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Since the enclosing StructDef hasn't been created
@@ -340,16 +340,16 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
           // original entry, create the new one, and let the user beware.
           if (node->ifr_added () == 0)
             {
-              prev_def->destroy (ACE_TRY_ENV);
+              prev_def->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // This call will take the other branch.
               return this->visit_enum (node);
             }
 
-          this->ir_current_ = 
-            CORBA_IDLType::_narrow (prev_def.in (),
-                                    ACE_TRY_ENV);
+          this->ir_current_ =
+            CORBA_IDLType::_narrow (prev_def.in ()
+                                    TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -370,13 +370,13 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
 int
 ifr_adding_visitor_structure::visit_union (AST_Union *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Is this union already in the respository?
-      CORBA_Contained_var prev_def = 
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
+      CORBA_Contained_var prev_def =
+        be_global->repository ()->lookup_id (node->repoID ()
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If not, create a new entry.
@@ -393,9 +393,9 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
               this->ir_current_ =
                 CORBA_IDLType::_duplicate (visitor.ir_current ());
 
-              CORBA_Contained_ptr tmp = 
-                CORBA_Contained::_narrow (visitor.ir_current (),
-                                          ACE_TRY_ENV);
+              CORBA_Contained_ptr tmp =
+                CORBA_Contained::_narrow (visitor.ir_current ()
+                                          TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // Since the enclosing StructDef hasn't been created
@@ -415,7 +415,7 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
           // original entry, create the new one, and let the user beware.
           if (node->ifr_added () == 0)
             {
-              prev_def->destroy (ACE_TRY_ENV);
+              prev_def->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // This call will take the other branch.
@@ -423,8 +423,8 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
             }
 
           this->ir_current_ =
-            CORBA_IDLType::_narrow (prev_def.in (),
-                                    ACE_TRY_ENV);
+            CORBA_IDLType::_narrow (prev_def.in ()
+                                    TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -442,7 +442,7 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
   return 0;
 }
 
-CORBA_IDLType_ptr 
+CORBA_IDLType_ptr
 ifr_adding_visitor_structure::ir_current (void) const
 {
   return this->ir_current_.in ();

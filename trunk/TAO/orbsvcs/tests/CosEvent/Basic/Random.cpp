@@ -17,16 +17,16 @@ main (int argc, char* argv[])
 // ****************************************************************
 
 void
-deactivate_servant (PortableServer::Servant servant,
-                    CORBA::Environment &ACE_TRY_ENV)
+deactivate_servant (PortableServer::Servant servant
+                    TAO_ENV_ARG_DECL)
 {
   PortableServer::POA_var poa =
-    servant->_default_POA (ACE_TRY_ENV);
+    servant->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (servant, ACE_TRY_ENV);
+    poa->servant_to_id (servant TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -42,11 +42,11 @@ RND_Driver::RND_Driver (void)
 int
 RND_Driver::run (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -103,15 +103,15 @@ RND_Driver::run (int argc, char *argv[])
       // ****************************************************************
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -122,29 +122,29 @@ RND_Driver::run (int argc, char *argv[])
       attributes.supplier_reconnect = 1;
 
       TAO_CEC_EventChannel ec_impl (attributes);
-      ec_impl.activate (ACE_TRY_ENV);
+      ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_TRY_ENV);
+        ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
       // Obtain the consumer admin..
       this->consumer_admin_ =
-        event_channel->for_consumers (ACE_TRY_ENV);
+        event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the supplier admin..
       this->supplier_admin_ =
-        event_channel->for_suppliers (ACE_TRY_ENV);
+        event_channel->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      this->supplier_.connect (this->supplier_admin_.in (),
-                               ACE_TRY_ENV);
+      this->supplier_.connect (this->supplier_admin_.in ()
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -159,7 +159,7 @@ RND_Driver::run (int argc, char *argv[])
                           1);
 
           CORBA::Object_var obj =
-            this->consumers_[i]->_this (ACE_TRY_ENV);
+            this->consumers_[i]->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -176,7 +176,7 @@ RND_Driver::run (int argc, char *argv[])
           this->suppliers_[j]->activate ();
 
           CORBA::Object_var obj =
-            this->suppliers_[j]->_this (ACE_TRY_ENV);
+            this->suppliers_[j]->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -186,7 +186,7 @@ RND_Driver::run (int argc, char *argv[])
         {
           ACE_Time_Value tv (0, 50000);
           orb->run (tv);
-          this->supplier_.push_new_event (ACE_TRY_ENV);
+          this->supplier_.push_new_event (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -197,10 +197,10 @@ RND_Driver::run (int argc, char *argv[])
       {
         for (int k = 0; k != this->nsuppliers_; ++k)
           {
-            deactivate_servant (this->suppliers_[k],
-                                ACE_TRY_ENV);
+            deactivate_servant (this->suppliers_[k]
+                                TAO_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
-            this->suppliers_[k]->_remove_ref (ACE_TRY_ENV);
+            this->suppliers_[k]->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
         delete[] this->suppliers_;
@@ -211,7 +211,7 @@ RND_Driver::run (int argc, char *argv[])
 
       // We destroy now to verify that the callbacks work and do not
       // produce any problems.
-      event_channel->destroy (ACE_TRY_ENV);
+      event_channel->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -219,10 +219,10 @@ RND_Driver::run (int argc, char *argv[])
       {
         for (int k = 0; k != this->nconsumers_; ++k)
           {
-            deactivate_servant (this->consumers_[k],
-                                ACE_TRY_ENV);
+            deactivate_servant (this->consumers_[k]
+                                TAO_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
-            this->consumers_[k]->_remove_ref (ACE_TRY_ENV);
+            this->consumers_[k]->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
         delete[] this->consumers_;
@@ -231,18 +231,18 @@ RND_Driver::run (int argc, char *argv[])
 
       // ****************************************************************
 
-      deactivate_servant (&ec_impl,
-                          ACE_TRY_ENV);
+      deactivate_servant (&ec_impl
+                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      poa->destroy (1, 1, ACE_TRY_ENV);
+      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -255,8 +255,8 @@ RND_Driver::run (int argc, char *argv[])
 }
 
 void
-RND_Driver::timer (const CORBA::Any &e,
-                   CORBA::Environment &ACE_TRY_ENV)
+RND_Driver::timer (const CORBA::Any &e
+                   TAO_ENV_ARG_DECL)
 {
   int r = ACE_OS::rand ();
   if (r < 0)
@@ -277,7 +277,7 @@ RND_Driver::timer (const CORBA::Any &e,
             CORBA::Any new_event;
             recursion++;
             new_event <<= recursion;
-            this->supplier_.push (new_event, ACE_TRY_ENV);
+            this->supplier_.push (new_event TAO_ENV_ARG_PARAMETER);
             ACE_CHECK;
           }
       }
@@ -297,8 +297,8 @@ RND_Driver::timer (const CORBA::Any &e,
 
         // ACE_DEBUG ((LM_DEBUG, "Connecting supplier %d\n", n));
 
-        this->suppliers_[n]->connect (this->supplier_admin_.in (),
-                                      ACE_TRY_ENV);
+        this->suppliers_[n]->connect (this->supplier_admin_.in ()
+                                      TAO_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
       break;
@@ -309,8 +309,8 @@ RND_Driver::timer (const CORBA::Any &e,
 
         // ACE_DEBUG ((LM_DEBUG, "Connecting consumer %d\n", n));
 
-        this->consumers_[n]->connect (this->consumer_admin_.in (),
-                                      ACE_TRY_ENV);
+        this->consumers_[n]->connect (this->consumer_admin_.in ()
+                                      TAO_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
       break;
@@ -321,7 +321,7 @@ RND_Driver::timer (const CORBA::Any &e,
 
         // ACE_DEBUG ((LM_DEBUG, "Disconnecting supplier %d\n", n));
 
-        this->suppliers_[n]->disconnect (ACE_TRY_ENV);
+        this->suppliers_[n]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
       }
       break;
@@ -332,7 +332,7 @@ RND_Driver::timer (const CORBA::Any &e,
 
         // ACE_DEBUG ((LM_DEBUG, "Disconnecting consumer %d\n", n));
 
-        this->consumers_[n]->disconnect (ACE_TRY_ENV);
+        this->consumers_[n]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
       }
       break;
@@ -340,17 +340,17 @@ RND_Driver::timer (const CORBA::Any &e,
 }
 
 void
-RND_Driver::event (const CORBA::Any &e,
-                   CORBA::Environment &ACE_TRY_ENV)
+RND_Driver::event (const CORBA::Any &e
+                   TAO_ENV_ARG_DECL)
 {
-  this->timer (e, ACE_TRY_ENV);
+  this->timer (e TAO_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
 
 void
-RND_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin,
-                       CORBA::Environment &ACE_TRY_ENV)
+RND_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin
+                       TAO_ENV_ARG_DECL)
 {
   CosEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
@@ -358,43 +358,43 @@ RND_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin,
 
     if (CORBA::is_nil (this->proxy_.in ()))
       {
-        this->proxy_ = admin->obtain_push_supplier (ACE_TRY_ENV);
+        this->proxy_ = admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
       }
     proxy =
       CosEventChannelAdmin::ProxyPushSupplier::_duplicate(this->proxy_.in ());
   }
   CosEventComm::PushConsumer_var me =
-    this->_this (ACE_TRY_ENV);
+    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  proxy->connect_push_consumer (me.in (),
-                                ACE_TRY_ENV);
+  proxy->connect_push_consumer (me.in ()
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RND_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
+RND_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (CORBA::is_nil (this->proxy_.in ()))
     return;
-  this->proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+  this->proxy_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->proxy_ =
     CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void
-RND_Consumer::push (const CORBA::Any &event,
-                    CORBA::Environment &ACE_TRY_ENV)
+RND_Consumer::push (const CORBA::Any &event
+                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->driver_->event (event, ACE_TRY_ENV);
+  this->driver_->event (event TAO_ENV_ARG_PARAMETER);
 }
 
 void
-RND_Consumer::disconnect_push_consumer (CORBA::Environment &)
+RND_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -402,8 +402,8 @@ RND_Consumer::disconnect_push_consumer (CORBA::Environment &)
 // ****************************************************************
 
 void
-RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin,
-                       CORBA::Environment &ACE_TRY_ENV)
+RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin
+                       TAO_ENV_ARG_DECL)
 {
   CosEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
@@ -411,7 +411,7 @@ RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin,
 
     if (CORBA::is_nil (this->proxy_.in ()))
       {
-        this->proxy_ = admin->obtain_push_consumer (ACE_TRY_ENV);
+        this->proxy_ = admin->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
       }
 
@@ -423,40 +423,40 @@ RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin,
   int r = ACE_OS::rand () % 2;
   if (r == 0)
     {
-      me = this->_this (ACE_TRY_ENV);
+      me = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
-  proxy->connect_push_supplier (me.in (),
-                                ACE_TRY_ENV);
+  proxy->connect_push_supplier (me.in ()
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-RND_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
+RND_Supplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (CORBA::is_nil (this->proxy_.in ()))
     return;
-  this->proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+  this->proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->proxy_ =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 void
-RND_Supplier::push_new_event (CORBA::Environment &ACE_TRY_ENV)
+RND_Supplier::push_new_event (TAO_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Any event;
   CORBA::Long recursion = 0;
   event <<= recursion;
 
-  this->push (event, ACE_TRY_ENV);
+  this->push (event TAO_ENV_ARG_PARAMETER);
 }
 
 void
-RND_Supplier::push (CORBA::Any &event,
-                    CORBA::Environment &ACE_TRY_ENV)
+RND_Supplier::push (CORBA::Any &event
+                    TAO_ENV_ARG_DECL)
 {
   CosEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
@@ -469,11 +469,11 @@ RND_Supplier::push (CORBA::Any &event,
       CosEventChannelAdmin::ProxyPushConsumer::_duplicate(this->proxy_.in ());
   }
 
-  proxy->push (event, ACE_TRY_ENV);
+  proxy->push (event TAO_ENV_ARG_PARAMETER);
 }
 
 void
-RND_Supplier::disconnect_push_supplier (CORBA::Environment &)
+RND_Supplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -486,13 +486,13 @@ RND_Supplier::svc (void)
   int niterations = 5000;
   for (int i = 0; i != niterations; ++i)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
+      TAO_ENV_DECLARE_NEW_ENV;
       ACE_TRY
         {
           ACE_Time_Value tv (0, 10000);
           ACE_OS::sleep (tv);
 
-          this->push_new_event (ACE_TRY_ENV);
+          this->push_new_event (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

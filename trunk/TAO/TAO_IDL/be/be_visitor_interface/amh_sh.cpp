@@ -34,8 +34,6 @@ be_visitor_amh_interface_sh::this_method (be_interface *node)
 
   // Print out the _this() method.
   *os << "::" << non_amh_name << " *_this (" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 }

@@ -46,8 +46,6 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   // The current upcall is not being performed through an SSL
   // connection.  If server is configured to disallow insecure
   // invocations then throw a CORBA::NO_PERMISSION exception.
@@ -58,7 +56,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
   //          accept or reject requests on a per-object basis
   //          instead on a per-endpoint basis.
   CORBA::Boolean no_ssl =
-    this->ssliop_current_->no_context (ACE_TRY_ENV);
+    this->ssliop_current_->no_context (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (no_ssl && this->no_protection_ == 0)
@@ -72,7 +70,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
       // exception.  Otherwise, it will return a DER encoded X509
       // certificate.
       SSLIOP::ASN_1_Cert_var cert =
-        this->ssliop_current_->get_peer_certificate (ACE_TRY_ENV);
+        this->ssliop_current_->get_peer_certificate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // @@ The following debugging code works but I don't think that

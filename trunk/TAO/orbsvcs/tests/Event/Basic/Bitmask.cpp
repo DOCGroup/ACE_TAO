@@ -15,24 +15,24 @@ main (int argc, char* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -43,11 +43,11 @@ main (int argc, char* argv[])
       attributes.supplier_reconnect = 1;
 
       TAO_EC_Event_Channel ec_impl (attributes);
-      ec_impl.activate (ACE_TRY_ENV);
+      ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_TRY_ENV);
+        ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -55,12 +55,12 @@ main (int argc, char* argv[])
 
       // Obtain the consumer admin..
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_TRY_ENV);
+        event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the supplier admin..
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_TRY_ENV);
+        event_channel->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -70,29 +70,29 @@ main (int argc, char* argv[])
       EC_Counting_Supplier first_supplier;
 
       first_supplier.activate (consumer_admin.in (),
-                               milliseconds,
-                               ACE_TRY_ENV);
+                               milliseconds
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       first_supplier.connect (supplier_admin.in (),
                               0x00001111UL,
                               0x11110000UL,
                               0x00001111UL,
-                              0x11110000UL,
-                              ACE_TRY_ENV);
+                              0x11110000UL
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       EC_Counting_Supplier second_supplier;
 
       second_supplier.activate (consumer_admin.in (),
-                                milliseconds,
-                                ACE_TRY_ENV);
+                                milliseconds
+                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       second_supplier.connect (supplier_admin.in (),
                                0x01100000UL,
                                0x00000110UL,
                                0x01100000UL,
-                               0x00000110UL,
-                               ACE_TRY_ENV);
+                               0x00000110UL
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -108,8 +108,8 @@ main (int argc, char* argv[])
         consumer_qos.insert (0x01100000, 0x00000110, 0);
 
         consumer_bitmask_reject.connect (consumer_admin.in (),
-                                         consumer_qos.get_ConsumerQOS (),
-                                         ACE_TRY_ENV);
+                                         consumer_qos.get_ConsumerQOS ()
+                                         TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -125,8 +125,8 @@ main (int argc, char* argv[])
         consumer_qos.insert_null_terminator ();
 
         consumer_bitmask_accept.connect (consumer_admin.in (),
-                                         consumer_qos.get_ConsumerQOS (),
-                                         ACE_TRY_ENV);
+                                         consumer_qos.get_ConsumerQOS ()
+                                         TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -142,8 +142,8 @@ main (int argc, char* argv[])
         consumer_qos.insert_null_terminator ();
 
         consumer_bitmask_filter.connect (consumer_admin.in (),
-                                         consumer_qos.get_ConsumerQOS (),
-                                         ACE_TRY_ENV);
+                                         consumer_qos.get_ConsumerQOS ()
+                                         TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -160,8 +160,8 @@ main (int argc, char* argv[])
                                              0x01100000, 0x00000110);
 
         consumer_bitmask_value.connect (consumer_admin.in (),
-                                        consumer_qos.get_ConsumerQOS (),
-                                        ACE_TRY_ENV);
+                                        consumer_qos.get_ConsumerQOS ()
+                                        TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -178,8 +178,8 @@ main (int argc, char* argv[])
                                              0x01100000, 0x00000110);
 
         consumer_bitmask_loose.connect (consumer_admin.in (),
-                                        consumer_qos.get_ConsumerQOS (),
-                                        ACE_TRY_ENV);
+                                        consumer_qos.get_ConsumerQOS ()
+                                        TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -192,36 +192,36 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      consumer_bitmask_loose.disconnect (ACE_TRY_ENV);
+      consumer_bitmask_loose.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer_bitmask_value.disconnect (ACE_TRY_ENV);
+      consumer_bitmask_value.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer_bitmask_filter.disconnect (ACE_TRY_ENV);
+      consumer_bitmask_filter.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer_bitmask_accept.disconnect (ACE_TRY_ENV);
+      consumer_bitmask_accept.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer_bitmask_reject.disconnect (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // ****************************************************************
-
-      second_supplier.deactivate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      second_supplier.disconnect (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      first_supplier.deactivate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      first_supplier.disconnect (ACE_TRY_ENV);
+      consumer_bitmask_reject.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      event_channel->destroy (ACE_TRY_ENV);
+      second_supplier.deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      second_supplier.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      first_supplier.deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      first_supplier.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      poa->destroy (1, 1, ACE_TRY_ENV);
+      event_channel->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // ****************************************************************
+
+      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -239,7 +239,7 @@ main (int argc, char* argv[])
       expected = second_supplier.event_count;
       consumer_bitmask_loose.dump_results (expected, 5);
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

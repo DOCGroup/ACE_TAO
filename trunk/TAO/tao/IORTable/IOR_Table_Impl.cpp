@@ -15,15 +15,15 @@ TAO_IOR_Table_Impl::TAO_IOR_Table_Impl (void)
 }
 
 char *
-TAO_IOR_Table_Impl::find (const char *object_key,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_IOR_Table_Impl::find (const char *object_key
+                          TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         IORTable::NotFound
       ))
 {
   // We don't want the lock held during locate, so make it go out
-  // of scope before then. 
+  // of scope before then.
   {
     ACE_CString key (object_key);
     ACE_CString ior;
@@ -37,14 +37,14 @@ TAO_IOR_Table_Impl::find (const char *object_key,
       ACE_THROW_RETURN (IORTable::NotFound (), 0);
   }
 
-  return this->locator_->locate (object_key, ACE_TRY_ENV);
+  return this->locator_->locate (object_key TAO_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_IOR_Table_Impl::bind (
         const char * object_key,
-        const char * IOR,
-        CORBA::Environment &ACE_TRY_ENV
+        const char * IOR
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -59,8 +59,8 @@ TAO_IOR_Table_Impl::bind (
 void
 TAO_IOR_Table_Impl::rebind (
         const char * object_key,
-        const char * IOR,
-        CORBA::Environment &
+        const char * IOR
+        TAO_ENV_ARG_DECL_NOT_USED
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -72,8 +72,8 @@ TAO_IOR_Table_Impl::rebind (
 
 void
 TAO_IOR_Table_Impl::unbind (
-        const char * object_key,
-        CORBA::Environment &ACE_TRY_ENV
+        const char * object_key
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -87,8 +87,8 @@ TAO_IOR_Table_Impl::unbind (
 
 void
 TAO_IOR_Table_Impl::set_locator (
-        IORTable::Locator_ptr locator,
-        CORBA::Environment &
+        IORTable::Locator_ptr locator
+        TAO_ENV_ARG_DECL_NOT_USED
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

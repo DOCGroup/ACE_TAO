@@ -123,11 +123,11 @@ public:
   // ownership of the data to the new object otherwise we copy the data
   // for the new object.
 
-  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter, CORBA::Environment &ACE_TRY_ENV) const = 0;
+  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL) const = 0;
   // Returns true if the filter matches.
 
-  virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
-  virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
+  virtual void do_push (CosEventComm::PushConsumer_ptr consumer TAO_ENV_ARG_DECL) const = 0;
+  virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const = 0;
   // Push self to <consumer>
 
   // = QoS Properties.
@@ -198,9 +198,9 @@ public:
 
   virtual CORBA::Boolean is_special_event_type (void) const;
   virtual const TAO_Notify_EventType& event_type (void) const;
-  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter, CORBA::Environment &ACE_TRY_ENV) const;
-  virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
-  virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
+  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL) const;
+  virtual void do_push (CosEventComm::PushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
+  virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
 
 protected:
   CORBA::Any* data_;
@@ -230,9 +230,9 @@ public:
 
   virtual CORBA::Boolean is_special_event_type (void) const;
   virtual const TAO_Notify_EventType& event_type (void) const;
-  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter, CORBA::Environment &ACE_TRY_ENV) const;
-  virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
-  virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
+  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL) const;
+  virtual void do_push (CosEventComm::PushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
+  virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
 
 protected:
 

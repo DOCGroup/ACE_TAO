@@ -42,22 +42,22 @@ public:
 
   // = The RtecEventChannelAdmin::Event_Channel methods
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (CORBA::Environment &)
+    for_consumers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (CORBA::Environment &)
+    for_suppliers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void destroy (CORBA::Environment &)
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer,
-                     CORBA::Environment &env)
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer
+                     TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle,
-                                CORBA::Environment &env)
+  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle
+                                TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,

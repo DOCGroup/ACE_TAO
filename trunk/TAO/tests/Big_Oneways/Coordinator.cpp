@@ -29,8 +29,8 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
                                   CORBA::ULong payload_size,
                                   CORBA::ULong thread_count,
                                   CORBA::ULong message_count,
-                                  Test::Session_List &session_list,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  Test::Session_List &session_list
+                                  TAO_ENV_ARG_DECL)
 {
   session_list.length (this->peer_count_);
   CORBA::ULong count = 0;
@@ -43,14 +43,14 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
                               payload_size,
                               thread_count,
                               message_count,
-                              this->peer_count_,
-                              ACE_TRY_ENV);
+                              this->peer_count_
+                              TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-Coordinator::shutdown_all_peers (CORBA::Environment &ACE_TRY_ENV)
+Coordinator::shutdown_all_peers (TAO_ENV_SINGLE_ARG_DECL)
 {
   for (Test::Peer_var *i = this->peers_;
        i != this->peers_ + this->peer_count_;
@@ -58,7 +58,7 @@ Coordinator::shutdown_all_peers (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_TRY
         {
-          (*i)->shutdown (ACE_TRY_ENV);
+          (*i)->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -71,8 +71,8 @@ Coordinator::shutdown_all_peers (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Coordinator::add_peer (Test::Peer_ptr peer,
-                       CORBA::Environment &)
+Coordinator::add_peer (Test::Peer_ptr peer
+                       TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->peer_count_ >= this->peer_max_)

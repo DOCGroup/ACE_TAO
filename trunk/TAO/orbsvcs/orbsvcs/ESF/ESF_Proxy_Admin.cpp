@@ -30,7 +30,7 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> INTERFACE*
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
-    obtain (CORBA::Environment &ACE_TRY_ENV)
+    obtain (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PROXY* proxy;
@@ -39,10 +39,10 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
   PortableServer::ServantBase_var holder = proxy;
 
   ACE_TYPENAME PROXY::_var_type result =
-    proxy->activate (ACE_TRY_ENV);
+    proxy->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (INTERFACE::_nil ());
 
-  this->collection_->connected (proxy, ACE_TRY_ENV);
+  this->collection_->connected (proxy TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (INTERFACE::_nil ());
 
   return result._retn ();
@@ -50,46 +50,46 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
-    shutdown (CORBA::Environment &ACE_TRY_ENV)
+    shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ESF_Shutdown_Proxy<PROXY> worker;
 
-  this->collection_->for_each (&worker, ACE_TRY_ENV);
+  this->collection_->for_each (&worker TAO_ENV_ARG_PARAMETER);
   ACE_CHECK; // Cannot happen, just following the discipline.
 
-  this->collection_->shutdown (ACE_TRY_ENV);
+  this->collection_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
-    connected (PROXY *,
-               CORBA::Environment &)
+    connected (PROXY *
+               TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
-    reconnected (PROXY *proxy,
-                 CORBA::Environment &ACE_TRY_ENV)
+    reconnected (PROXY *proxy
+                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->collection_->reconnected (proxy, ACE_TRY_ENV);
+  this->collection_->reconnected (proxy TAO_ENV_ARG_PARAMETER);
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
-    disconnected (PROXY *proxy,
-                  CORBA::Environment &ACE_TRY_ENV)
+    disconnected (PROXY *proxy
+                  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  proxy->deactivate (ACE_TRY_ENV);
+  proxy->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK; // Cannot happen, just following the discipline.
 
   ACE_TRY
     {
-      this->collection_->disconnected (proxy, ACE_TRY_ENV);
+      this->collection_->disconnected (proxy TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

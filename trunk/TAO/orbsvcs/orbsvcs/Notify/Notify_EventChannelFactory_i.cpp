@@ -23,7 +23,7 @@ TAO_Notify_EventChannelFactory_i::~TAO_Notify_EventChannelFactory_i (void)
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA TAO_ENV_ARG_DECL)
 {
   TAO_Notify_EventChannelFactory_i* channelfactory;
   ACE_NEW_THROW_EX (channelfactory,
@@ -33,22 +33,22 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA, C
 
   PortableServer::ServantBase_var channelfactory_var (channelfactory);
 
-  channelfactory->init_i (default_POA, ACE_TRY_ENV);
+  channelfactory->init_i (default_POA TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
 
   CORBA::Object_var obj = channelfactory->poa_factory_->
     activate_object (channelfactory->my_POA_.in (),
-                     channelfactory, ACE_TRY_ENV);
+                     channelfactory TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
 
   return CosNotifyChannelAdmin::EventChannelFactory
-    ::_narrow (obj.in (), ACE_TRY_ENV);
+    ::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_EventChannelFactory_i::init_i (PortableServer::POA_ptr default_POA, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_EventChannelFactory_i::init_i (PortableServer::POA_ptr default_POA TAO_ENV_ARG_DECL)
 {
-  TAO_Notify_Factory::init (ACE_TRY_ENV);
+  TAO_Notify_Factory::init (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->my_POA_ = PortableServer::POA::_duplicate (default_POA);
@@ -60,23 +60,23 @@ TAO_Notify_EventChannelFactory_i::init_i (PortableServer::POA_ptr default_POA, C
 
   // The POA that we should activate the Event Channels in.
   this->ec_POA_ = this->poa_factory_->
-    create_event_channel_POA (this->my_POA_.in (), ACE_TRY_ENV);
+    create_event_channel_POA (this->my_POA_.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->lock_ =
-    this->channel_objects_factory_->create_channel_factory_lock (ACE_TRY_ENV);
+    this->channel_objects_factory_->create_channel_factory_lock (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->default_filter_factory_ =
-    this->create_default_filter_factory_i (ACE_TRY_ENV);
+    this->create_default_filter_factory_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_EventChannelFactory_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_EventChannelFactory_i::get_ref (TAO_ENV_SINGLE_ARG_DECL)
 {
   return CosNotifyChannelAdmin::EventChannelFactory
     ::_narrow (this->poa_factory_->
-               servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV));
+               servant_to_reference (this->my_POA_.in (), this TAO_ENV_ARG_PARAMETER));
 }
 
 void
@@ -88,29 +88,33 @@ TAO_Notify_EventChannelFactory_i::event_channel_destroyed (CosNotifyChannelAdmin
     ACE_DEBUG ((LM_DEBUG, "event_channel_destroyed %d\n", channel_id));
 }
 
-void TAO_Notify_EventChannelFactory_i::shutdown (CORBA::Environment &ACE_TRY_ENV, CORBA::Boolean destroy_children)
+void TAO_Notify_EventChannelFactory_i::shutdown (TAO_ENV_SINGLE_ARG_DECL
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
+                                                 ,
+#endif
+                                                CORBA::Boolean destroy_children)
 {
   if (destroy_children == 1)
     {
-      this->poa_factory_->destroy_POA (this->ec_POA_.in (), ACE_TRY_ENV);
+      this->poa_factory_->destroy_POA (this->ec_POA_.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->poa_factory_->deactivate_object(this->default_filter_factory_.in (),
-                                            this->my_POA_.in (),
-                                            ACE_TRY_ENV);
+                                            this->my_POA_.in ()
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
   // Deactivate ourselves.
   this->poa_factory_->deactivate_object (this,
-                                         this->my_POA_.in (),
-                                         ACE_TRY_ENV);
+                                         this->my_POA_.in ()
+                                         TAO_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSProperties& initial_qos,
                                                  const CosNotification::AdminProperties& initial_admin,
-                                                 CosNotifyChannelAdmin::ChannelID_out ec_id,
-                                                 CORBA::Environment &ACE_TRY_ENV
+                                                 CosNotifyChannelAdmin::ChannelID_out ec_id
+                                                 TAO_ENV_ARG_DECL
                                                  )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -119,8 +123,8 @@ TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSPrope
                    ))
 {
   TAO_Notify_EventChannel_i* channel =
-    this->channel_objects_factory_->create_event_channel (this,
-                                                          ACE_TRY_ENV);
+    this->channel_objects_factory_->create_event_channel (this
+                                                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
   PortableServer::ServantBase_var channel_var (channel);
@@ -135,13 +139,13 @@ TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSPrope
     ACE_DEBUG ((LM_DEBUG, "event_channel created %d\n", ec_id));
   }
 
-  channel->init (ec_id, initial_qos, initial_admin, this->my_POA_.in (), this->ec_POA_.in (),
-                 ACE_TRY_ENV);
+  channel->init (ec_id, initial_qos, initial_admin, this->my_POA_.in (), this->ec_POA_.in ()
+                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
   CORBA::Object_var obj = this->poa_factory_->
-    activate_object_with_id (ec_id, this->ec_POA_.in (), channel,
-                             ACE_TRY_ENV);
+    activate_object_with_id (ec_id, this->ec_POA_.in (), channel
+                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
   this->ec_ids_.next ();
@@ -149,18 +153,18 @@ TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSPrope
 }
 
 CosNotifyChannelAdmin::ChannelIDSeq*
-TAO_Notify_EventChannelFactory_i::get_all_channels (CORBA::Environment & ACE_TRY_ENV)
+TAO_Notify_EventChannelFactory_i::get_all_channels (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
-  return this->ec_ids_.get_sequence (ACE_TRY_ENV);
+  return this->ec_ids_.get_sequence (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::ChannelID id, CORBA::Environment & ACE_TRY_ENV)
+TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::ChannelID id TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyChannelAdmin::ChannelNotFound
@@ -170,8 +174,8 @@ TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::Chan
 
   ACE_TRY
     {
-      obj = this->poa_factory_->id_to_reference (id, this->ec_POA_.in (),
-                                                 ACE_TRY_ENV);
+      obj = this->poa_factory_->id_to_reference (id, this->ec_POA_.in ()
+                                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY // Translate any exception to "not found"
@@ -181,14 +185,14 @@ TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::Chan
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
-  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in (), ACE_TRY_ENV);
+  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_EventChannelFactory_i::create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_EventChannelFactory_i::create_default_filter_factory_i (TAO_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_FilterFactory_i* filterfactory =
-    this->channel_objects_factory_->create_filter_factory (ACE_TRY_ENV);
+    this->channel_objects_factory_->create_filter_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
 
   PortableServer::ServantBase_var filterfactory_var (filterfactory);
@@ -198,7 +202,7 @@ TAO_Notify_EventChannelFactory_i::create_default_filter_factory_i (CORBA::Enviro
 
   CORBA::Object_var obj =
     this->poa_factory_->activate_object (this->my_POA_.in (),
-                                         filterfactory, ACE_TRY_ENV);
+                                         filterfactory TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
 
   return CosNotifyFilter::FilterFactory::_narrow (obj.in ());

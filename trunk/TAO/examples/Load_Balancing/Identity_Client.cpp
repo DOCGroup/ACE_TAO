@@ -73,12 +73,12 @@ Identity_Client::init (int argc,
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       result = this->orb_manager_.init (argc,
-                                        argv,
-                                        ACE_TRY_ENV);
+                                        argv
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return result;
@@ -100,19 +100,19 @@ Identity_Client::init (int argc,
 }
 
 int
-Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
+Identity_Client::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Identity_Client: Initialized \n"));
 
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
   CORBA::ORB_var orb = orb_manager_.orb ();
   CORBA::Object_var obj =
-    orb->string_to_object (this->group_factory_ior_,
-                           ACE_TRY_ENV);
+    orb->string_to_object (this->group_factory_ior_
+                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   Load_Balancer::Object_Group_Factory_var factory =
-    Load_Balancer::Object_Group_Factory::_narrow (obj.in (),
-                                                  ACE_TRY_ENV);
+    Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
+                                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (factory.in ()))
@@ -130,12 +130,12 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
               "Identity_Client: Requesting Object Group "
               "with id <%s>\n", group_name));
   Load_Balancer::Object_Group_var object_group =
-    factory->resolve (group_name,
-                      ACE_TRY_ENV);
+    factory->resolve (group_name
+                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // List <Object_Group>'s id.
-  CORBA::String_var id = object_group->id (ACE_TRY_ENV);
+  CORBA::String_var id = object_group->id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (ACE_OS::strcmp (id.in (), group_name) != 0)
@@ -150,7 +150,7 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
               group_name));
 
   Load_Balancer::Member_ID_List_var id_list =
-    object_group->members (ACE_TRY_ENV);
+    object_group->members (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -177,19 +177,19 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
 
   for (size_t ind = 0; ind < this->number_of_invocations_; ++ind)
     {
-      obj = object_group->resolve (ACE_TRY_ENV);
+      obj = object_group->resolve (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      identity_object = Identity::_narrow (obj.in (),
-                                           ACE_TRY_ENV);
+      identity_object = Identity::_narrow (obj.in ()
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       if (CORBA::is_nil (identity_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Identity_Client: cannot narrow an object received from"
                            "<Object_Group::resolve> to <Identity>\n"),
                           -1);
-      identity_object->get_name (identity.out (),
-                                 ACE_TRY_ENV);
+      identity_object->get_name (identity.out ()
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -212,10 +212,10 @@ main (int argc, char *argv[])
   if (client.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      result = client.run (ACE_TRY_ENV);
+      result = client.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

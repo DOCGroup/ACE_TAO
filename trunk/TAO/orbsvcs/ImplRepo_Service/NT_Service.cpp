@@ -79,7 +79,7 @@ ImR_NT_Service::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      status = server.init (ACE_TRY_ENV);
+      status = server.init (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == -1)
@@ -89,10 +89,10 @@ ImR_NT_Service::svc (void)
       else
         {
           report_status (SERVICE_RUNNING);
-          server.run (ACE_TRY_ENV);
+          server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          status = server.fini (ACE_TRY_ENV);
+          status = server.fini (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (status == -1)

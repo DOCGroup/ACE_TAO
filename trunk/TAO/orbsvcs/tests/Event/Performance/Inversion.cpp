@@ -54,10 +54,10 @@ EC_Inversion::parse_args (int &argc, char *argv [])
 }
 
 void
-EC_Inversion::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
+EC_Inversion::connect_consumers (TAO_ENV_SINGLE_ARG_DECL)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (ACE_TRY_ENV);
+    this->event_channel_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ConsumerQOS_Factory qos0;
@@ -67,8 +67,8 @@ EC_Inversion::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
 
   this->consumers_[0]->connect (consumer_admin.in (),
                                 qos0.get_ConsumerQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 1,
-                                ACE_TRY_ENV);
+                                ACE_ES_EVENT_UNDEFINED + 1
+                                TAO_ENV_ARG_PARAMETER);
 
   for (int i = 1; i < this->n_consumers_; ++i)
     {
@@ -83,18 +83,18 @@ EC_Inversion::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
 
       this->consumers_[i]->connect (consumer_admin.in (),
                                     qos1.get_ConsumerQOS (),
-                                    base_event + 1,
-                                    ACE_TRY_ENV);
+                                    base_event + 1
+                                    TAO_ENV_ARG_PARAMETER);
     }
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected consumer(s)\n"));
 }
 
 void
-EC_Inversion::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
+EC_Inversion::connect_suppliers (TAO_ENV_SINGLE_ARG_DECL)
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel_->for_suppliers (ACE_TRY_ENV);
+    this->event_channel_->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_SupplierQOS_Factory qos0;
@@ -103,8 +103,8 @@ EC_Inversion::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 
   this->suppliers_[0]->connect (supplier_admin.in (),
                                 qos0.get_SupplierQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 1,
-                                ACE_TRY_ENV);
+                                ACE_ES_EVENT_UNDEFINED + 1
+                                TAO_ENV_ARG_PARAMETER);
 
   for (int j = 1; j != this->n_suppliers_; ++j)
     {
@@ -118,8 +118,8 @@ EC_Inversion::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 
       this->suppliers_[j]->connect (supplier_admin.in (),
                                     qos1.get_SupplierQOS (),
-                                    base_event + 1,
-                                    ACE_TRY_ENV);
+                                    base_event + 1
+                                    TAO_ENV_ARG_PARAMETER);
     }
 
   if (this->verbose ())
@@ -127,7 +127,7 @@ EC_Inversion::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-EC_Inversion::activate_tasks (CORBA::Environment &)
+EC_Inversion::activate_tasks (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   int priority;
 

@@ -49,8 +49,8 @@ public:
 
   /// Parse the ior-string that is passed.
   virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb,
-                                          CORBA::Environment &)
+                                          CORBA::ORB_ptr orb
+                                          TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -61,8 +61,8 @@ private:
                                          const char *mcast_ttl,
                                          const char *mcast_nic,
                                          CORBA::ORB_ptr orb,
-                                         ACE_Time_Value *timeout,
-                                         CORBA::Environment&);
+                                         ACE_Time_Value *timeout
+                                         TAO_ENV_ARG_DECL_NOT_USED);
 
   int multicast_query (char *&buf,
                        const char *service_name,

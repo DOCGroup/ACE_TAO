@@ -24,10 +24,10 @@ public:
   // = The skeleton methods
   virtual void start_workers (CORBA::Short worker_count,
                               CORBA::Long milliseconds,
-                              Test::Controller_ptr controller,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              Test::Controller_ptr controller
+                              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -70,15 +70,15 @@ public:
                       int *pending_replies);
   // Constructor
 
-  virtual void worker_started (CORBA::Environment &ACE_TRY_ENV)
+  virtual void worker_started (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_started_excep (Test::AMI_ControllerExceptionHolder*,
-                                     CORBA::Environment &ACE_TRY_ENV)
+  virtual void worker_started_excep (Test::AMI_ControllerExceptionHolder*
+                                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished (CORBA::Environment &ACE_TRY_ENV)
+  virtual void worker_finished (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished_excep (Test::AMI_ControllerExceptionHolder*,
-                                      CORBA::Environment &ACE_TRY_ENV)
+  virtual void worker_finished_excep (Test::AMI_ControllerExceptionHolder*
+                                      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

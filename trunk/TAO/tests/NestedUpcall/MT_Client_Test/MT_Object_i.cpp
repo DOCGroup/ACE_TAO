@@ -9,7 +9,7 @@
 //    MT_Object_i.cpp
 //
 // = DESCRIPTION
-//    This class implements the Object A  of the 
+//    This class implements the Object A  of the
 //    Nested Upcalls - MT Client test.
 //
 // = AUTHORS
@@ -37,8 +37,8 @@ MT_Object_i::~MT_Object_i (void)
 
 CORBA::Long
 MT_Object_i::yadda (CORBA::Long hop_count,
-                       MT_Object_ptr partner,
-                       CORBA::Environment &env)
+                       MT_Object_ptr partner
+                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -48,7 +48,9 @@ MT_Object_i::yadda (CORBA::Long hop_count,
   if (hop_count < MAX_HOP_COUNT)
   {
     if (partner != 0)
-      return partner->yadda (hop_count + 1, this->_this (env), env) + 1;
+      return partner->yadda (hop_count + 1,
+                             this->_this (TAO_ENV_SINGLE_ARG_PARAMETER)
+                             TAO_ENV_ARG_PARAMETER) + 1;
   }
 
   return 0;

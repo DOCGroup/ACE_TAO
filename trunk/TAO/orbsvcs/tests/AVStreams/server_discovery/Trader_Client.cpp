@@ -59,7 +59,7 @@ Trader_Client::init (int argc, char** argv)
       //ACE_DEBUG ((LM_DEBUG, "Bootstrapping to the trading service"));
       CORBA::ORB_var orb = this->orb_manager_.orb ();
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("TradingService", ACE_TRY_ENV);
+        orb->resolve_initial_references ("TradingService" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the lookup interface.

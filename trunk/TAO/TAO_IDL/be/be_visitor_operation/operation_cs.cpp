@@ -171,7 +171,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   *os << intf->base_proxy_impl_name () << " &proxy = " << be_idt_nl
       << "this->the" << intf->base_proxy_broker_name ()
-      << "_->select_proxy (this, ACE_TRY_ENV);" << be_uidt_nl;
+      << "_->select_proxy (this TAO_ENV_ARG_PARAMETER);" << be_uidt_nl;
 
   if (!this->void_return_type (bt))
     {
@@ -215,7 +215,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         {
           *os << "0);";
         }
-      
+
       *os << be_nl << be_nl
           << "return ";
     }
@@ -251,17 +251,17 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
             }
 
-	        *os << "," << be_nl;
+                *os << "," << be_nl;
           be_decl *decl = be_decl::narrow_from_decl (d);
 
-	        *os << decl->local_name();
-	        si->next ();
-	      }
+                *os << decl->local_name();
+                si->next ();
+              }
     }
 
   if (!be_global->exception_support ())
     {
-      *os << "," << be_nl << "ACE_TRY_ENV";
+      *os << " TAO_ENV_ARG_PARAMETER";
     }
 
   *os << be_uidt_nl << ");" << be_uidt << be_uidt_nl << "}\n\n";

@@ -69,37 +69,37 @@ ACE_Push_Consumer_Proxy::correlation (void)
 }
 
 ACE_INLINE RtecEventChannelAdmin::ConsumerAdmin_ptr
-ACE_ES_Consumer_Module::get_ref (CORBA::Environment &env)
+ACE_ES_Consumer_Module::get_ref (TAO_ENV_SINGLE_ARG_DECL)
 {
-  return this->_this (env);
+  return this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE RtecEventChannelAdmin::SupplierAdmin_ptr
-ACE_ES_Supplier_Module::get_ref (CORBA::Environment &env)
+ACE_ES_Supplier_Module::get_ref (TAO_ENV_SINGLE_ARG_DECL)
 {
-  return this->_this (env);
+  return this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // **************************************************
 
 ACE_INLINE RtecEventChannelAdmin::EventChannel_ptr
-ACE_EventChannel::get_ref (CORBA::Environment &env)
+ACE_EventChannel::get_ref (TAO_ENV_SINGLE_ARG_DECL)
 {
-  return this->_this (env);
+  return this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE RtecEventChannelAdmin::SupplierAdmin_ptr
-ACE_EventChannel::for_suppliers (CORBA::Environment &env)
+ACE_EventChannel::for_suppliers (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return supplier_module_->get_ref (env);
+  return supplier_module_->get_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE RtecEventChannelAdmin::ConsumerAdmin_ptr
-ACE_EventChannel::for_consumers (CORBA::Environment &env)
+ACE_EventChannel::for_consumers (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return consumer_module_->get_ref (env);
+  return consumer_module_->get_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE TAO_EC_Timer_Module*

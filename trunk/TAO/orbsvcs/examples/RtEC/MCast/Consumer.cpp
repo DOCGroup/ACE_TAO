@@ -12,15 +12,15 @@ Consumer::Consumer (void)
 }
 
 void
-Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                   CORBA::Environment &ACE_TRY_ENV)
+Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
+                   TAO_ENV_ARG_DECL)
 {
   this->proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
+    consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventComm::PushConsumer_var me =
-    this->_this (ACE_TRY_ENV);
+    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Simple subscription, but usually the helper classes in
@@ -39,18 +39,18 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
   h1.type   = ACE_ES_EVENT_UNDEFINED;  // first free event type
   h1.source = ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
-  this->proxy_->connect_push_consumer (me.in (), qos,
-                                       ACE_TRY_ENV);
+  this->proxy_->connect_push_consumer (me.in (), qos
+                                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
+Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       // Disconnect from the proxy
-      this->proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+      this->proxy_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -62,20 +62,20 @@ Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
   // Deactivate this object
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   // Get the Object Id used for the servant..
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this, ACE_TRY_ENV);
+    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   // Deactivate the object
-  poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events,
-                CORBA::Environment &)
+Consumer::push (const RtecEventComm::EventSet& events
+                TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
@@ -95,7 +95,7 @@ Consumer::push (const RtecEventComm::EventSet& events,
 }
 
 void
-Consumer::disconnect_push_consumer (CORBA::Environment &)
+Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

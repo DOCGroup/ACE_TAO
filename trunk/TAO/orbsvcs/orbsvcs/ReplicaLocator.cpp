@@ -23,13 +23,11 @@ TAO_LB_ReplicaLocator::preinvoke (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   if (this->load_balancer_ == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
   CORBA::Object_var replica =
-    this->load_balancer_->replica (ACE_TRY_ENV);
+    this->load_balancer_->replica (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Throw a forward exception to force the client to redirect its

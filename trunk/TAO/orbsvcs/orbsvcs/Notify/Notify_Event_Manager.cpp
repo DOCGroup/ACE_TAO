@@ -35,7 +35,7 @@ TAO_Notify_Event_Manager::~TAO_Notify_Event_Manager ()
 }
 
 void
-TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::init (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->lock_,
                     ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
@@ -46,22 +46,22 @@ TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
   this->admin_properties_ = new TAO_Notify_AdminProperties ();
 
   this->event_map_ =
-    this->emo_factory_->create_event_map (ACE_TRY_ENV);
+    this->emo_factory_->create_event_map (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->event_processor_ =
-    this->emo_factory_->create_event_processor (this, ACE_TRY_ENV);
+    this->emo_factory_->create_event_processor (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->updates_dispatching_task_ =
-    this->emo_factory_->create_updates_task (ACE_TRY_ENV);
+    this->emo_factory_->create_updates_task (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Init the objects
-  this->event_map_->init (ACE_TRY_ENV);
+  this->event_map_->init (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->event_processor_->init (ACE_TRY_ENV);
+  this->event_processor_->init (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ check return value
@@ -70,58 +70,58 @@ TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_Notify_Event_Manager::shutdown (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                       CORBA::INTERNAL ());
   ACE_CHECK;
 
-  this->event_processor_->shutdown (ACE_TRY_ENV);
+  this->event_processor_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->event_map_->shutdown (ACE_TRY_ENV);
+  this->event_map_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->updates_dispatching_task_->shutdown (ACE_TRY_ENV);
+  this->updates_dispatching_task_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Manager::subscribe_for_events (TAO_Notify_EventListener* event_listener, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::subscribe_for_events (TAO_Notify_EventListener* event_listener, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed TAO_ENV_ARG_DECL)
 {
   TAO_Notify_EventType_List added_update, removed_update;
 
   this->event_map_->subscribe_for_events (event_listener, added_update,
-                                         added, ACE_TRY_ENV);
+                                         added TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->event_map_->unsubscribe_from_events (event_listener, removed_update,
-                                              removed, ACE_TRY_ENV);
+                                              removed TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // if either of the lists are *not* empty, send updates
   if (added_update.is_empty () == 0 || removed_update.is_empty () == 0)
     this->dispatch_updates_i (this->event_map_->subscription_change_listeners (),
-                              added_update, removed_update, ACE_TRY_ENV);
+                              added_update, removed_update TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Manager::update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed TAO_ENV_ARG_DECL)
 {
   TAO_Notify_EventType_List added_list;
   TAO_Notify_EventType_List removed_list;
 
   this->event_map_->update_publication_list (added, removed,
-                                            added_list, removed_list, ACE_TRY_ENV);
+                                            added_list, removed_list TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // if either of the lists are *not* empty, send updates
   if (added_list.is_empty () == 0 || removed_list.is_empty () == 0)
     this->dispatch_updates_i (this->event_map_->publication_change_listeners (),
-                              added_list, removed_list, ACE_TRY_ENV);
+                              added_list, removed_list TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Manager::dispatch_updates_i (TAO_Notify_UpdateListener_List* update_listener_list, TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::dispatch_updates_i (TAO_Notify_UpdateListener_List* update_listener_list, TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed TAO_ENV_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                       CORBA::INTERNAL ());
@@ -129,7 +129,7 @@ TAO_Notify_Event_Manager::dispatch_updates_i (TAO_Notify_UpdateListener_List* up
   TAO_Notify_Update_Worker update_worker (this->updates_dispatching_task_,
                                           added, removed);
 
-  update_listener_list->for_each (&update_worker, ACE_TRY_ENV);
+  update_listener_list->for_each (&update_worker TAO_ENV_ARG_PARAMETER);
 }
 
 /********************************************************************/
@@ -142,13 +142,13 @@ TAO_Notify_Update_Worker::TAO_Notify_Update_Worker (TAO_Notify_Worker_Task * upd
 }
 
 void
-TAO_Notify_Update_Worker::work (TAO_Notify_UpdateListener* listener, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Update_Worker::work (TAO_Notify_UpdateListener* listener TAO_ENV_ARG_DECL)
 {
   TAO_Notify_Update_Dispatch_Command* mb =
     new TAO_Notify_Update_Dispatch_Command (listener, this->added_,
                                             this->removed_);
 
-  this->updates_dispatching_task_->process_event (mb, ACE_TRY_ENV);
+  this->updates_dispatching_task_->process_event (mb TAO_ENV_ARG_PARAMETER);
 }
 
 /********************************************************************/

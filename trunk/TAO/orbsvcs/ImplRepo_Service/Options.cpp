@@ -16,7 +16,7 @@
 
 #if defined (ACE_WIN32)
 const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
-const ACE_TCHAR *SERVICE_REG_PATH = 
+const ACE_TCHAR *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImplRepo\\Parameters");
 const ACE_TCHAR *SERVICE_REG_VALUE_NAME = ACE_TEXT ("ORBOptions");
 #endif /* ACE_WIN32 */
@@ -60,9 +60,9 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter shifter (argc, argv);
 
-  while (shifter.is_anything_left ()) 
+  while (shifter.is_anything_left ())
     {
-      if (ACE_OS::strcasecmp (shifter.get_current (), 
+      if (ACE_OS::strcasecmp (shifter.get_current (),
                               ACE_TEXT ("-c")) == 0)
         {
           // Run the service command
@@ -80,7 +80,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           // Since we just ran a command, we will exit right away.
           return 1;
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-d")) == 0)
         {
           // Set the debug level
@@ -94,13 +94,13 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           this->debug_ = ACE_OS::atoi (shifter.get_current ());
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-l")) == 0)
         {
           // Lock the database
           this->readonly_ = 1;
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-m")) == 0)
         {
           // multicast?
@@ -114,7 +114,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           this->multicast_ = ACE_OS::atoi (shifter.get_current ());
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-o")) == 0)
         {
           // Output the IOR to a file.
@@ -132,7 +132,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
                                "Error: Unable to open %s for writing: %p\n",
                                shifter.get_current ()), -1);
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-p")) == 0)
         {
           // Initialize file persistence
@@ -147,20 +147,20 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           if (this->initialize_file_persistence (shifter.get_current ()) != 0)
             return -1;
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-r")) == 0)
         {
           // win32 registry implementation
           if (this->initialize_registry_persistence () != 0)
             return -1;
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-s")) == 0)
         {
           // Run as a service
           this->service_ = 1;
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-t")) == 0)
         {
           // Set timeout value
@@ -172,18 +172,18 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
               return -1;
             }
 
-          this->startup_timeout_ = 
+          this->startup_timeout_ =
             ACE_Time_Value (ACE_OS::atoi (shifter.get_current ()));
         }
-      else if ((ACE_OS::strcasecmp (shifter.get_current (), 
+      else if ((ACE_OS::strcasecmp (shifter.get_current (),
                                     ACE_TEXT ("-?")) == 0)
-               || (ACE_OS::strcasecmp (shifter.get_current (), 
+               || (ACE_OS::strcasecmp (shifter.get_current (),
                                        ACE_TEXT ("-h")) == 0))
         {
           this->print_usage ();
           return 1;
         }
-      else 
+      else
         {
           shifter.ignore_arg ();
           continue;
@@ -244,13 +244,13 @@ Options::init (int argc, ACE_TCHAR *argv[])
 
   // Now initialize the orb and pass it the leftover arguments
 
-  ACE_TRY_NEW_ENV 
+  ACE_TRY_NEW_ENV
     {
-      
-      this->orb_ = CORBA::ORB_init (orb_argc, 
-                                    orb_args.argv (), 
-                                    0, 
-                                    ACE_TRY_ENV);
+
+      this->orb_ = CORBA::ORB_init (orb_argc,
+                                    orb_args.argv (),
+                                    0
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -261,14 +261,14 @@ Options::init (int argc, ACE_TCHAR *argv[])
   ACE_ENDTRY;
 
   // If there are any arguments left (besides the executable filename)
-  // then they were not picked up by us or the orb and must be 
+  // then they were not picked up by us or the orb and must be
   // unrecognized.
 
-  if (orb_argc > 1) 
+  if (orb_argc > 1)
     {
       // Just print out the first option as an error
-      ACE_ERROR ((LM_ERROR, 
-                  "Unrecognized option: %s\n", 
+      ACE_ERROR ((LM_ERROR,
+                  "Unrecognized option: %s\n",
                   orb_args.argv ()[1]));
       return -1;
     }
@@ -286,10 +286,10 @@ Options::init (int argc, ACE_TCHAR *argv[])
 /**
  * Just print out the usage message to STDERR
  */
-void 
+void
 Options::print_usage (void) const
 {
-  ACE_ERROR ((LM_ERROR, 
+  ACE_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
               "ImplRepo_Service [-c cmd] [-d lvl] [-l] [-m 0/1] [-o file]"
@@ -316,12 +316,12 @@ Options::print_usage (void) const
  * @retval  0 Success
  * @retval -1 Failure
  */
-int 
+int
 Options::initialize_file_persistence (const ACE_TCHAR *filename)
 {
   if (this->config_ != 0)
   {
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 "Error: initialize_file_persistence (): "
                 "Configuration already defined. \n"
                 "Did you pass multiple persistence options?\n"));
@@ -330,7 +330,7 @@ Options::initialize_file_persistence (const ACE_TCHAR *filename)
 
   ACE_Configuration_Heap *heap = 0;
   ACE_NEW_RETURN (heap, ACE_Configuration_Heap, -1);
-  
+
   if (heap->open (filename) == 0)
     {
       this->config_ = heap;
@@ -350,31 +350,31 @@ Options::initialize_file_persistence (const ACE_TCHAR *filename)
 
 /**
  * On Windows, we have the option of using the Registry to store the
- * server data.  Assigns a ACE_Configuration_Win32Registry to 
+ * server data.  Assigns a ACE_Configuration_Win32Registry to
  * this->config_.  On non-Win32 systems, just returns an error.
  *
- * @todo Where in the registry should this be stored?  
- * 
+ * @todo Where in the registry should this be stored?
+ *
  * @retval  0 Success
  * @retval -1 Failure
  */
-int 
+int
 Options::initialize_registry_persistence (void)
 {
 #if defined (ACE_WIN32)
   if (this->config_ != 0)
   {
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 "Error: initialize_registry_persistence (): "
                 "Configuration already defined. \n"
                 "Did you pass multiple persistence options?\n"));
     return -1;
   }
 
-  HKEY root = 
-    ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, 
+  HKEY root =
+    ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE,
                                                  "Software\\TAO\\IR");
-  ACE_NEW_RETURN (this->config_, 
+  ACE_NEW_RETURN (this->config_,
                   ACE_Configuration_Win32Registry(root),
                   -1);
   return 0;
@@ -385,14 +385,14 @@ Options::initialize_registry_persistence (void)
 
 
 /**
- * In cases where persistence isn't needed, create an object of 
+ * In cases where persistence isn't needed, create an object of
  * the ACE_Configuration_Heap class to be used.  Initializes
  * this->config_ to an opened ACE_Configuration_Heap.
  *
  * @retval 0  Success
  * @retval -1 Failure
  */
-int 
+int
 Options::initialize_non_persistence (void)
 {
   ACE_Configuration_Heap *heap = 0;
@@ -407,7 +407,7 @@ Options::initialize_non_persistence (void)
   delete heap;
   heap = 0;
 
-  ACE_ERROR ((LM_ERROR, 
+  ACE_ERROR ((LM_ERROR,
              ACE_TEXT ("Error: Opening ACE_Configuration heap\n")));
 
   return -1;
@@ -423,13 +423,13 @@ Options::initialize_non_persistence (void)
  * @todo Finish implementing Options::run_service_command
  * @todo Update to unicode
  */
-int 
+int
 Options::run_service_command (const ACE_TCHAR *command)
 {
 #if defined (ACE_WIN32)
   SERVICE::instance ()->name (IMR_SERVICE_NAME, IMR_DISPLAY_NAME);
 
-  if (ACE_OS::strcmp (command, ACE_TEXT ("install")) == 0) 
+  if (ACE_OS::strcmp (command, ACE_TEXT ("install")) == 0)
     {
       ACE_TCHAR pathname[_MAX_PATH * 2 + 3];  // +3 for the ' -s' at the end
 
@@ -439,14 +439,14 @@ Options::run_service_command (const ACE_TCHAR *command)
           return -1;
         }
 
-      // Append the command used for running the implrepo as 
+      // Append the command used for running the implrepo as
       ACE_OS::strcat (pathname, ACE_TEXT (" -s"));
 
       return SERVICE::instance ()->insert (SERVICE_AUTO_START,
                                            SERVICE_ERROR_IGNORE,
                                            pathname);
     }
-  else if (ACE_OS::strcmp (command, ACE_TEXT ("remove")) == 0) 
+  else if (ACE_OS::strcmp (command, ACE_TEXT ("remove")) == 0)
     {
       return SERVICE::instance ()->remove ();
     }
@@ -457,13 +457,13 @@ Options::run_service_command (const ACE_TCHAR *command)
 #else /* ACE_WIN32 */
   ACE_UNUSED_ARG (command);
   ACE_ERROR ((LM_ERROR, "Service not supported on this platform"));
-  
+
   return -1;
 #endif /* ACE_WIN32 */
 }
 
 /**
- *  We will only load from the registry if we are a service.  
+ *  We will only load from the registry if we are a service.
  *  The location we store options in is HKEY_LOCAL_MACHINE:
  *  SYSTEM\CurrentControlSet\Services\TAOImplRepo\Parameters
  *
@@ -471,7 +471,7 @@ Options::run_service_command (const ACE_TCHAR *command)
  *
  *  @todo Is there a better way to handle the hKey? (as in a auto_ptr)
  */
-int 
+int
 Options::load_registry_options (ACE_ARGV &orb_options)
 {
 #if defined (ACE_WIN32)
@@ -479,7 +479,7 @@ Options::load_registry_options (ACE_ARGV &orb_options)
   if (!this->service ())
   {
     if (this->debug () > 1)
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Not running as a service, will not load data from "
                   "registry\n"));
     return 0;
@@ -494,7 +494,7 @@ Options::load_registry_options (ACE_ARGV &orb_options)
                              KEY_READ,
                              &hKey) != ERROR_SUCCESS)
     {
-      if (this->debug () > 1) 
+      if (this->debug () > 1)
         {
           ACE_DEBUG ((LM_DEBUG, "Could not open Registry Key, skipping\n"));
         }
@@ -512,7 +512,7 @@ Options::load_registry_options (ACE_ARGV &orb_options)
                                 buffer,
                                 &dwSize) != ERROR_SUCCESS)
     {
-      if (this->debug () > 1) 
+      if (this->debug () > 1)
         {
           ACE_DEBUG ((LM_DEBUG, "Could not read Registry Key, skipping\n"));
           ::RegCloseKey (hKey);
@@ -520,7 +520,7 @@ Options::load_registry_options (ACE_ARGV &orb_options)
         }
     }
 
-  if (dwType != REG_MULTI_SZ) 
+  if (dwType != REG_MULTI_SZ)
     {
       ACE_ERROR ((LM_ERROR, "Error: ORB Options registry key not MULTI_SZ\n"));
      ::RegCloseKey (hKey);
@@ -528,7 +528,7 @@ Options::load_registry_options (ACE_ARGV &orb_options)
     }
 
   // Skip the case where there are no arguments
-  if (dwSize > 1) 
+  if (dwSize > 1)
     {
       // Create an argv array
       ACE_TCHAR **orb_argv = 0;
@@ -538,8 +538,8 @@ Options::load_registry_options (ACE_ARGV &orb_options)
       ACE_TCHAR *tchar_buffer = ACE_reinterpret_cast (ACE_TCHAR *, buffer);
       orb_argv[0] = tchar_buffer;
 
-      if (this->debug () > 1) 
-        ACE_DEBUG ((LM_DEBUG, 
+      if (this->debug () > 1)
+        ACE_DEBUG ((LM_DEBUG,
                     "Registry Argument Added: %s\n",
                     orb_argv[0]));
 
@@ -551,8 +551,8 @@ Options::load_registry_options (ACE_ARGV &orb_options)
         {
           if (tchar_buffer[buffer_pos] == 0)
             {
-              if (this->debug () > 1) 
-                ACE_DEBUG ((LM_DEBUG, 
+              if (this->debug () > 1)
+                ACE_DEBUG ((LM_DEBUG,
                             "Registry Argument Added: %s\n",
                             &tchar_buffer[buffer_pos] + 1));
 
@@ -577,7 +577,7 @@ Options::load_registry_options (ACE_ARGV &orb_options)
 #else /* ACE_WIN32 */
   ACE_UNUSED_ARG (orb_options);
   ACE_ERROR ((LM_ERROR, "Service not supported on this platform"));
-  
+
   return -1;
 #endif /* ACE_WIN32 */
 }
@@ -596,7 +596,7 @@ Options::service (void) const
 
 
 /**
- * Debug level for the IR.  
+ * Debug level for the IR.
  *
  * @retval 0 Quiet
  * @retval 1 Trace messages
@@ -662,7 +662,7 @@ Options::orb (void) const
  * @retval 0 Do not listen for multicast location requests.
  * @retval 1 Do Listen.
  */
-int 
+int
 Options::multicast (void) const
 {
   return this->multicast_;
@@ -672,7 +672,7 @@ Options::multicast (void) const
  * @retval 0 Normal operation.
  * @retval 1 Do not let server info be modified.
  */
-int 
+int
 Options::readonly (void) const
 {
   return this->readonly_;

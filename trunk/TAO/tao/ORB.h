@@ -87,10 +87,10 @@ public:
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
+    virtual void _tao_encode (TAO_OutputCDR &cdr
+                              TAO_ENV_ARG_DECL_NOT_USED) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr
+                              TAO_ENV_ARG_DECL_NOT_USED);
 
     /// = TAO extension
     static InvalidName* _downcast (CORBA_Exception *ex);
@@ -122,9 +122,8 @@ public:
    * Typically these strings are created using <object_to_string()>,
    * but not necessarily locally.
    */
-  CORBA::Object_ptr string_to_object (const char *str,
-                                      CORBA_Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+  CORBA::Object_ptr string_to_object (const char *str
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Turn an object reference into a string.  Each type of ORB,
@@ -133,25 +132,21 @@ public:
    * this is typically eventually given to <string_to_object()> as an
    * argument.
    */
-  char * object_to_string (CORBA::Object_ptr obj,
-                           CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ());
+  char * object_to_string (CORBA::Object_ptr obj
+                           TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
 #ifdef TAO_HAS_VALUETYPE
   // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory_ptr register_value_factory (
          const char *repository_id,
-         CORBA::ValueFactory_ptr factory,
-         CORBA_Environment &ACE_TRY_ENV =
-             TAO_default_environment () );
-  void unregister_value_factory (const char * repository_id,
-                                 CORBA_Environment &ACE_TRY_ENV =
-                                     TAO_default_environment () );
+         CORBA::ValueFactory_ptr factory
+         TAO_ENV_ARG_DECL_WITH_DEFAULTS );
+  void unregister_value_factory (const char * repository_id
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS );
   CORBA::ValueFactory_ptr lookup_value_factory (
-         const char *repository_id,
-         CORBA_Environment &ACE_TRY_ENV =
-             TAO_default_environment () );
+         const char *repository_id
+         TAO_ENV_ARG_DECL_WITH_DEFAULTS );
 #endif /* TAO_HAS_VALUETYPE */
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -164,145 +159,123 @@ public:
   typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
 
   void create_list (CORBA::Long count,
-                    CORBA::NVList_ptr &new_list,
-                    CORBA_Environment &ACE_TRY_ENV =
-                        TAO_default_environment ());
+                    CORBA::NVList_ptr &new_list
+                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void create_named_value (CORBA::NamedValue_ptr &nmval,
-                           CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ());
+  void create_named_value (CORBA::NamedValue_ptr &nmval
+                           TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void create_exception_list (CORBA::ExceptionList_ptr &exclist,
-                              CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
+  void create_exception_list (CORBA::ExceptionList_ptr &exclist
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void create_environment (CORBA::Environment_ptr &new_env,
-                           CORBA_Environment &ACE_TRY_ENV =
-                           TAO_default_environment ());
+  void create_environment (CORBA::Environment_ptr &new_env
+                           TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // The following are not implemented and just throw
   // CORBA::NO_IMPLEMENT.
 
-  void create_context_list (CORBA::ContextList_ptr &ctxtlist,
-                            CORBA_Environment &ACE_TRY_ENV =
-                            TAO_default_environment ());
+  void create_context_list (CORBA::ContextList_ptr &ctxtlist
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void get_default_context (CORBA::Context_ptr &ctx,
-                            CORBA_Environment &ACE_TRY_ENV =
-                            TAO_default_environment ());
+  void get_default_context (CORBA::Context_ptr &ctx
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   CORBA::Boolean get_service_information (CORBA::ServiceType service_type,
-                                          CORBA::ServiceInformation_out service_information,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+                                          CORBA::ServiceInformation_out service_information
+                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq &req ,
-                                      CORBA_Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ());
+  void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq &req
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq &req,
-                                        CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ());
+  void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq &req
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void get_next_response (CORBA_Request_ptr &req,
-                          CORBA_Environment &ACE_TRY_ENV =
-                          TAO_default_environment ());
+  void get_next_response (CORBA_Request_ptr &req
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ());
+  CORBA::Boolean poll_next_response (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// The ORB TypeCode creation functions.
 
   CORBA::TypeCode_ptr create_struct_tc (
       const char *id,
       const char *name,
-      const CORBA::StructMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::StructMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_union_tc (
       const char *id,
       const char *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::UnionMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_enum_tc (
       const char *id,
       const char *name,
-      const CORBA::EnumMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::EnumMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_alias_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr original_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::TypeCode_ptr original_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_exception_tc (
       const char *id,
       const char *name,
-      const CORBA::StructMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::StructMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_interface_tc (
       const char *id,
-      const char *name,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const char *name
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_string_tc (
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_wstring_tc (
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_fixed_tc (
       CORBA::UShort digits,
-      CORBA::UShort scale,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::UShort scale
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_sequence_tc (
       CORBA::ULong bound,
-      CORBA::TypeCode_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::TypeCode_ptr element_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_array_tc (
       CORBA::ULong length,
-      CORBA::TypeCode_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::TypeCode_ptr element_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_value_tc (
@@ -310,51 +283,45 @@ public:
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::ValueMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_value_box_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr boxed_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::TypeCode_ptr boxed_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_native_tc (
       const char *id,
-      const char *name,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const char *name
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_recursive_tc (
-      const char *id,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const char *id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char *id,
-      const char *name,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const char *name
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   CORBA::TypeCode_ptr create_local_interface_tc (
       const char *id,
-      const char *ame,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const char *ame
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -367,7 +334,7 @@ public:
    * If an error occurs during initialization or at run-time, a CORBA
    * system exception will be thrown.
    */
-  void run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Instructs the ORB to initialize itself and run its event loop in
@@ -377,8 +344,8 @@ public:
    * exception will be thrown.  <tv> is reduced by the amount of time
    * spent in this call.
    **/
-  void run (ACE_Time_Value &tv,
-            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void run (ACE_Time_Value &tv
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Instructs the ORB to initialize itself and run its event loop in
@@ -390,20 +357,18 @@ public:
    * infinite.  If <tv> is ACE_Time_Value::zero, it specifies to poll
    * and does not block.
    **/
-  void run (ACE_Time_Value *tv,
-            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void run (ACE_Time_Value *tv
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Returns an indication of whether the ORB needs to perform some
   /// work.
-  CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ());
+  CORBA::Boolean work_pending (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Returns an indication of whether the ORB needs to perform some work
   /// but will look for work pending for no more than the specified time.
   /// This is useful for implementing an event loop with an idle timeout.
-  CORBA::Boolean work_pending (ACE_Time_Value &tv,
-                               CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ());
+  CORBA::Boolean work_pending (ACE_Time_Value &tv
+                               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * This operation performs an implementation-defined unit of work.
@@ -411,14 +376,11 @@ public:
    * not present; this behavior can be modified by passing an
    * appropriate <ACE_Time_Value> as described in run().
    **/
-  void perform_work (CORBA_Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-  void perform_work (ACE_Time_Value &,
-                     CORBA_Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-  void perform_work (ACE_Time_Value *,
-                     CORBA_Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+  void perform_work (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void perform_work (ACE_Time_Value &
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  void perform_work (ACE_Time_Value *
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * This operation instructs the ORB to shut down. Shutting down the
@@ -428,8 +390,8 @@ public:
    * deactivation or other operations associated with object adapters)
    * has completed.
    */
-  void shutdown (CORBA::Boolean wait_for_completion = 0,
-                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void shutdown (CORBA::Boolean wait_for_completion = 0
+                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Explicitly destroy the ORB, releasing any resources.  Note that
@@ -442,11 +404,10 @@ public:
    * The results of multi-threaded applications, trying to destroy ()
    * the ORB in one thread and trying to service a request in another
    * thread are not well defined. TAO does not support such cases.  */
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA_Object_ptr resolve_initial_references (const char *name,
-                                               CORBA_Environment &ACE_TRY_ENV =
-                                               TAO_default_environment ());
+  CORBA_Object_ptr resolve_initial_references (const char *name
+                                               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * This method acts as a mini-bootstrapping Naming Service, which is
@@ -463,31 +424,28 @@ public:
    * <resolve_initial_references> specification.
    */
   CORBA_Object_ptr resolve_initial_references (const char *name,
-                                               ACE_Time_Value *timeout,
-                                               CORBA_Environment &ACE_TRY_ENV =
-                                               TAO_default_environment ());
+                                               ACE_Time_Value *timeout
+                                               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Returns a sequence of ObjectIds that lists which objects have
   /// references available via the initial references mechanism.
   CORBA_ORB_ObjectIdList_ptr list_initial_services (
-              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any& val,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
+                                   const CORBA::Any& val
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
 
   /// Resolve the POA.
-  CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV);
+  CORBA_Object_ptr resolve_root_poa (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Initialize the ORB globals correctly, i.e., only when they
   /// haven't been initialized yet.
-  static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ());
+  static void init_orb_globals (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // The function used by tao to handle the "unexpected" exceptions,
   // It raises CORBA::UNKNOWN.
@@ -531,31 +489,31 @@ protected:
   ~CORBA_ORB (void);
 
   /// Resolve the POA current.
-  CORBA_Object_ptr resolve_poa_current (CORBA_Environment &ACE_TRY_ENV);
+  CORBA_Object_ptr resolve_poa_current (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Resolve the Policy Manager for this ORB.
-  CORBA_Object_ptr resolve_policy_manager (CORBA::Environment&);
+  CORBA_Object_ptr resolve_policy_manager (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   /// Resolve the Policy Current for this thread.
-  CORBA_Object_ptr resolve_policy_current (CORBA::Environment&);
+  CORBA_Object_ptr resolve_policy_current (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
 private:
 
   /// Resolve the given service based on the service ID.
   CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id,
-                                    ACE_Time_Value *timeout,
-                                    CORBA::Environment& ACE_TRY_ENV);
+                                    ACE_Time_Value *timeout
+                                    TAO_ENV_ARG_DECL);
 
   /// Convert an OMG IOR into an object reference.
-  CORBA::Object_ptr ior_string_to_object (const char* ior,
-                                          CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Object_ptr ior_string_to_object (const char* ior
+                                          TAO_ENV_ARG_DECL);
 
   /// Convert an URL style IOR into an object reference.
-  CORBA::Object_ptr url_ior_string_to_object (const char* ior,
-                                              CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Object_ptr url_ior_string_to_object (const char* ior
+                                              TAO_ENV_ARG_DECL);
 
   /// Check if ORB has shutdown.  If it has, throw an exception.
-  void check_shutdown (CORBA::Environment &ACE_TRY_ENV);
+  void check_shutdown (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// lock required for mutual exclusion between multiple threads.

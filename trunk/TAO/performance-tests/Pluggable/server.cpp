@@ -15,13 +15,13 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n\tPluggable_Test: server\n\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       int status = pp_test_server.init (argc,
-                                        argv,
-                                        ACE_TRY_ENV);
+                                        argv
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == -1)
@@ -32,7 +32,7 @@ main (int argc, char *argv[])
         }
       else
         {
-          pp_test_server.run (ACE_TRY_ENV);
+          pp_test_server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

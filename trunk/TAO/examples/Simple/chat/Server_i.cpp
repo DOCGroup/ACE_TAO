@@ -46,12 +46,12 @@ Server_i::parse_args (int argc, char *argv[])
 
       case '?':  // display help for use of the server.
       default:
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "usage:  %s"
-			   " [-o] <ior_output_file>"
-			   "\n",
-			   argv [0]),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " [-o] <ior_output_file>"
+                           "\n",
+                           argv [0]),
+                          -1);
       }
 
   return 0;
@@ -59,28 +59,28 @@ Server_i::parse_args (int argc, char *argv[])
 
 int
 Server_i::init (int argc,
-		char *argv[],
-		CORBA::Environment &ACE_TRY_ENV)
+                char *argv[]
+                TAO_ENV_ARG_DECL)
 {
   // Parse the command line options.
   if (this-> parse_args(argc, argv) == -1)
     return -1;
 
   if (this->orb_manager_.init (argc,
-			       argv,
-			       ACE_TRY_ENV) == -1)
+                               argv
+                               TAO_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "orb manager init failed\n"),
-		      -1);
+                       "%p\n",
+                       "orb manager init failed\n"),
+                      -1);
   ACE_CHECK_RETURN (-1);
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Activate the servant.
   CORBA::String_var str =
-    this->orb_manager_.activate (&this->broadcaster_i_,
-				 ACE_TRY_ENV);
+    this->orb_manager_.activate (&this->broadcaster_i_
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Write the IOR to a file.
@@ -89,18 +89,18 @@ Server_i::init (int argc,
 }
 
 int
-Server_i::run (CORBA::Environment &ACE_TRY_ENV)
+Server_i::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "Running chat server...\n"));
+              "Running chat server...\n"));
 
   // Run the main event loop for the ORB.
-  int ret = this->orb_manager_.run (ACE_TRY_ENV);
+  int ret = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Server_i::run"),
-		      -1);
+                       "Server_i::run"),
+                      -1);
   return 0;
 }
 

@@ -282,9 +282,8 @@ public:
 
   /// For use along with <<= of a value of aliased type when the alias must
   /// be preserved.
-  void type (CORBA::TypeCode_ptr type,
-             CORBA_Environment &ACE_TRY_ENV =
-               TAO_default_environment ());
+  void type (CORBA::TypeCode_ptr type
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Returns 0 if the Any has not been assigned a value, following the
@@ -334,12 +333,12 @@ public:
 
   /// Encode the contents of the Any into <cdr>
   void _tao_encode (TAO_OutputCDR &cdr,
-                    TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV);
+                    TAO_ORB_Core *orb_core
+                    TAO_ENV_ARG_DECL);
 
   /// Decode the <cdr> using the typecode in the Any object.
-  void _tao_decode (TAO_InputCDR &cdr,
-                    CORBA::Environment &ACE_TRY_ENV);
+  void _tao_decode (TAO_InputCDR &cdr
+                    TAO_ENV_ARG_DECL);
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Any_ptr _ptr_type;

@@ -10,25 +10,25 @@ main (int argc, char *argv[])
 {
   IFR_DII_Client client;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      if (client.init (argc, 
-                       argv, 
-                       ACE_TRY_ENV) 
+      if (client.init (argc,
+                       argv
+                       TAO_ENV_ARG_PARAMETER)
            == -1)
         {
           return 1;
         }
       else
         {
-          client.run (ACE_TRY_ENV);
+          client.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Client Exception");
       return -1;
     }

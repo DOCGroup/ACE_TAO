@@ -53,10 +53,10 @@ public:
   virtual ~TAO_CEC_ProxyPushConsumer (void);
 
   /// Activate in the POA
-  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr activate (TAO_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (CORBA::Environment &ACE_TRY_ENV)
+  virtual void deactivate (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return 0 if no supplier is connected...
@@ -71,11 +71,11 @@ public:
    * it is disconnected then it returns true and sets the
    * <disconnected> flag.
    */
-  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected,
-                                        CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected
+                                        TAO_ENV_ARG_DECL);
 
   /// The event channel is shutting down
-  virtual void shutdown (CORBA::Environment&);
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt (void);
@@ -83,22 +83,20 @@ public:
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
-                CosEventComm::PushSupplier_ptr push_supplier,
-                CORBA::Environment &)
+                CosEventComm::PushSupplier_ptr push_supplier
+                TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
-  virtual void push (const CORBA::Any& event,
-                     CORBA::Environment &)
+  virtual void push (const CORBA::Any& event
+                     TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
-  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =
-                             TAO_default_environment ());
-  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _remove_ref (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
   /// Set the supplier, used by some implementations to change the

@@ -58,11 +58,11 @@ tao_CORBA_Current_nil (
 
 CORBA_Current_ptr
 tao_CORBA_Current_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return CORBA_Current::_narrow (p, ACE_TRY_ENV);
+  return CORBA_Current::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -123,7 +123,7 @@ CORBA_Current_var::operator const ::CORBA_Current_ptr &() const // cast
   return this->ptr_;
 }
 
-CORBA_Current_var::operator ::CORBA_Current_ptr &() // cast 
+CORBA_Current_var::operator ::CORBA_Current_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -183,11 +183,11 @@ CORBA_Current_var::tao_nil (void)
 
 ::CORBA_Current_ptr
 CORBA_Current_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::CORBA_Current::_narrow (p, ACE_TRY_ENV);
+  return ::CORBA_Current::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -265,18 +265,18 @@ CORBA_Current::CORBA_Current (void)
   // destructor
   CORBA_Current::~CORBA_Current (void)
   {}
-  
+
   CORBA_Current_ptr CORBA_Current::_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL
     )
   {
-    return CORBA_Current::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_Current::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   CORBA_Current_ptr CORBA_Current::_unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_NOT_USED
     )
   {
     if (CORBA::is_nil (obj))
@@ -314,7 +314,7 @@ void *CORBA_Current::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;

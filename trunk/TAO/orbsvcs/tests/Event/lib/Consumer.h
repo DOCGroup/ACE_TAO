@@ -47,15 +47,15 @@ public:
   virtual void connect (
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type,
-      CORBA::Environment &ACE_TRY_ENV);
+      int shutdown_event_type
+      TAO_ENV_ARG_DECL);
   // The driver program can build the QoS attributes and obtain the
   // ConsumerAdmin, we do the rest.
 
   virtual void connect (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type,
-      CORBA::Environment &ACE_TRY_ENV);
+      int shutdown_event_type
+      TAO_ENV_ARG_DECL);
   // The driver program can build the QoS attributes and we use
   // whatevet supplier_proxy we already have (useful for reconnection
   // tests).
@@ -63,11 +63,11 @@ public:
   virtual int connected (void) const;
   // returns 0 if it is not connected
 
-  void disconnect (CORBA::Environment& ACE_TRY_ENV);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // The application can invoke this method to disconnect from the EC
   // and deactivate this class.
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL);
   // The application is shutting down, deactivate the consumer.
 
   void accumulate (ACE_Throughput_Stats& throughput) const;
@@ -79,10 +79,10 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+  virtual void push (const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 

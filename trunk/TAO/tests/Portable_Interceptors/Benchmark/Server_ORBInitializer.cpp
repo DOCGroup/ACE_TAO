@@ -30,7 +30,6 @@ Server_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
   PortableInterceptor::ServerRequestInterceptor_ptr tmp =
     PortableInterceptor::ServerRequestInterceptor::_nil ();
@@ -70,7 +69,7 @@ Server_ORBInitializer::post_init (
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor = tmp;
 
-  info->add_server_request_interceptor (interceptor.in (),
-                                        ACE_TRY_ENV);
+  info->add_server_request_interceptor (interceptor.in ()
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

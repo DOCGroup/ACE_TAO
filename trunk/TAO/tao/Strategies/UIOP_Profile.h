@@ -76,12 +76,12 @@ public:
   ~TAO_UIOP_Profile (void);
 
   /// Initialize this object using the given input string.
-  virtual void parse_string (const char *string,
-                             CORBA::Environment &ACE_TRY_ENV);
+  virtual void parse_string (const char *string
+                             TAO_ENV_ARG_DECL);
 
   /// Return a string representation for this profile.
   /// client must deallocate memory.
-  virtual char * to_string (CORBA::Environment &ACE_TRY_ENV);
+  virtual char * to_string (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Initialize this object using the given CDR octet string.
   virtual int decode (TAO_InputCDR& cdr);
@@ -137,8 +137,8 @@ public:
   virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::ULong hash (CORBA::ULong max
+                             TAO_ENV_ARG_DECL);
 
   /// Please see the Profile.h for the documentation of this method
   virtual IOP::TaggedProfile &create_tagged_profile (void);

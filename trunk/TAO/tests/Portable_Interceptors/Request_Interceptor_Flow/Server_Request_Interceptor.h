@@ -96,8 +96,8 @@ private:
   /// Returns 1 if the server-side test is currently being run, and 0
   /// otherwise.
   CORBA::Boolean server_side_test (
-    PortableInterceptor::ServerRequestInfo_ptr info,
-    CORBA::Environment &ACE_TRY_ENV);
+    PortableInterceptor::ServerRequestInfo_ptr info
+    TAO_ENV_ARG_DECL);
 
 private:
 

@@ -94,8 +94,8 @@ private:
   // Returns 1 if the client-side test is currently being run, and 0
   // otherwise.
   CORBA::Boolean client_side_test (
-    PortableInterceptor::ClientRequestInfo_ptr info,
-    CORBA::Environment &ACE_TRY_ENV);
+    PortableInterceptor::ClientRequestInfo_ptr info
+    TAO_ENV_ARG_DECL);
 
 };
 

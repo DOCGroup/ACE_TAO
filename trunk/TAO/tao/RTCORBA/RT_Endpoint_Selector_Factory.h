@@ -64,8 +64,8 @@ public:
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
-                             TAO_GIOP_Invocation *invocation,
-                             CORBA::Environment &ACE_TRY_ENV);
+                             TAO_GIOP_Invocation *invocation
+                             TAO_ENV_ARG_DECL);
 
 protected:
 
@@ -73,13 +73,13 @@ protected:
 
   /// Initializes RTCORBA::ClientProtocolPolicy in the endpoint
   /// selection state.
-  void init_client_protocol (TAO_GIOP_Invocation *invocation,
-                             CORBA::Environment &ACE_TRY_ENV);
+  void init_client_protocol (TAO_GIOP_Invocation *invocation
+                             TAO_ENV_ARG_DECL);
 
   /// Initializes RTCORBA::PriorityBandsPolicy in the endpoint
   /// selection state.
   //  void init_bands (TAO_GIOP_Invocation *invocation,
-  //                 CORBA::Environment &ACE_TRY_ENV);
+  //                 TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// The possible endpoint selector strategies that can be

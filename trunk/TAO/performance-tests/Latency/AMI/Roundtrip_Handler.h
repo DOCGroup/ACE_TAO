@@ -32,17 +32,17 @@ public:
   void dump_results (ACE_UINT32 gsf);
 
   // = The skeleton methods
-  virtual void test_method (Test::Timestamp send_time,
-                            CORBA::Environment &ACE_TRY_ENV)
+  virtual void test_method (Test::Timestamp send_time
+                            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_method_excep (Test::AMI_RoundtripExceptionHolder *holder,
-                                  CORBA::Environment &ACE_TRY_ENV)
+  virtual void test_method_excep (Test::AMI_RoundtripExceptionHolder *holder
+                                  TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown_excep (Test::AMI_RoundtripExceptionHolder *holder,
-                               CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown_excep (Test::AMI_RoundtripExceptionHolder *holder
+                               TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

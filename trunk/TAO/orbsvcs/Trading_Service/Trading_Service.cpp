@@ -47,8 +47,8 @@ Trading_Service::~Trading_Service (void)
 
 int
 Trading_Service::init (int argc,
-                       char *argv[],
-                       CORBA::Environment &)
+                       char *argv[]
+                       TAO_ENV_ARG_DECL_NOT_USED)
 {
   int result_trader =
     this->trading_loader_.init (argc, argv);
@@ -60,12 +60,12 @@ Trading_Service::init (int argc,
 }
 
 int
-Trading_Service::run (CORBA::Environment &ACE_TRY_ENV)
+Trading_Service::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   Trading_Shutdown trading_shutdown (*this);
 
   int return_value =
-    this->trading_loader_.run (ACE_TRY_ENV);
+    this->trading_loader_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return return_value;

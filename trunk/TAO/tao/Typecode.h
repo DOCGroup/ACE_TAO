@@ -70,10 +70,10 @@ public:
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
+    virtual void _tao_encode (TAO_OutputCDR &cdr
+                              TAO_ENV_ARG_DECL_NOT_USED) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr
+                              TAO_ENV_ARG_DECL_NOT_USED);
 
     static Bounds* _downcast (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
@@ -86,10 +86,10 @@ public:
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
+    virtual void _tao_encode (TAO_OutputCDR &cdr
+                              TAO_ENV_ARG_DECL_NOT_USED) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr
+                              TAO_ENV_ARG_DECL_NOT_USED);
 
     static BadKind* _downcast (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
@@ -105,68 +105,54 @@ public:
   static CORBA::TypeCode_ptr _nil (void);
 
   /// Compares two typecodes. Must be identical in every respect.
-  CORBA::Boolean equal (CORBA::TypeCode_ptr,
-                        CORBA_Environment &ACE_TRY_ENV =
-                          TAO_default_environment ()) const;
+  CORBA::Boolean equal (CORBA::TypeCode_ptr
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Conforms to CORBA 2.3.1 (99-10-07).
-  CORBA::Boolean equivalent (CORBA::TypeCode_ptr,
-                             CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ()) const;
+  CORBA::Boolean equivalent (CORBA::TypeCode_ptr
+                             TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// For all TypeCode kinds, returns the "kind" of the typecode.
-  CORBA::TCKind kind (CORBA_Environment &ACE_TRY_ENV =
-                        TAO_default_environment ()) const;
+  CORBA::TCKind kind (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// For tk_{objref,struct,union,enum,alias,except}. Returns the
   /// repository ID, raises BadKind.
-  const char *id (CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ()) const;
+  const char *id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns name (), raises (BadKind).
-  const char *name (CORBA_Environment &ACE_TRY_ENV =
-                      TAO_default_environment ()) const;
+  const char *name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns member_count (), raises (BadKind). Useful for tk_struct,
   /// tk_union, tk_enum, tk_alias, and tk_except.
-  CORBA::ULong member_count (CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ()) const;
+  CORBA::ULong member_count (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns member_name (...), raises (BadKind, Bounds); Useful for
   /// tk_struct, tk_union, tk_enum, tk_alias, and tk_except.
-  const char *member_name (CORBA::ULong slot,
-                           CORBA_Environment &ACE_TRY_ENV =
-                             TAO_default_environment ()) const;
+  const char *member_name (CORBA::ULong slot
+                           TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns member_type (...), raises (BadKind, Bounds); Useful for
   /// tk_struct, tk_union, and tk_except.
-  CORBA::TypeCode_ptr member_type (CORBA::ULong slot,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ()) const;
+  CORBA::TypeCode_ptr member_type (CORBA::ULong slot
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// For tk_union. Returns the label. Raises BadKind, Bounds.
-  CORBA::Any_ptr member_label (CORBA::ULong n,
-                               CORBA_Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ()) const;
+  CORBA::Any_ptr member_label (CORBA::ULong n
+                               TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns the discriminator type for tk_union. raises (BadKind).
-  CORBA::TypeCode_ptr discriminator_type (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    ) const;
+  CORBA::TypeCode_ptr discriminator_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns the default slot for the tk_union. Raises (BadKind).
-  CORBA::Long default_index (CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ()) const;
+  CORBA::Long default_index (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns length, raises (BadKind). Used for tk_string,
   /// tk_sequence, and tk_array.
-  CORBA::ULong length (CORBA_Environment &ACE_TRY_ENV =
-                         TAO_default_environment ()) const;
+  CORBA::ULong length (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns the content type (element type). Raises (BadKind); Useful
   /// for tk_sequence, tk_array, and tk_alias.
-  CORBA::TypeCode_ptr content_type (CORBA_Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()) const;
+  CORBA::TypeCode_ptr content_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   // = Creation/refcounting
 
@@ -223,21 +209,19 @@ public:
 
   /// Deprecated in the CORBA 2.2 spec and
   /// missing altogether from 2.3a (98-12-04),
-  CORBA::Any_ptr parameter (const CORBA::Long slot,
-                            CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
+  CORBA::Any_ptr parameter (const CORBA::Long slot
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Deprecated, CORBA 1.2, not fully usable. Returns the number of
   /// parameters that the typecode takes.
-  CORBA::ULong param_count (CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()) const;
+  CORBA::ULong param_count (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// CDR decoding: the >> operator is not enough because we must also
   /// respect the parent/child relationship among TypeCodes.
   static void _tao_decode (const CORBA_TypeCode *parent,
                            TAO_InputCDR &cdr,
-                           CORBA_TypeCode *&child,
-                           CORBA::Environment &ACE_TRY_ENV);
+                           CORBA_TypeCode *&child
+                           TAO_ENV_ARG_DECL);
 
   // private:
   //
@@ -300,141 +284,121 @@ private:
    * flag, to differentiate the behavior where necessary.
    */
   CORBA::Boolean equ_common (CORBA::TypeCode_ptr tc,
-                             CORBA::Boolean equiv_only,
-                             CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()) const;
+                             CORBA::Boolean equiv_only
+                             TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Compares the typecodes.
   CORBA::Boolean private_equal (CORBA::TypeCode_ptr tc,
-                                CORBA::Boolean equiv_only,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()) const;
+                                CORBA::Boolean equiv_only
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// For tk_{objref,struct,union,enum,alias,except}. Returns the
   /// repository ID, raises BadKind.
-  const char *private_id (CORBA_Environment &ACE_TRY_ENV =
-                            TAO_default_environment ()) const;
+  const char *private_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// returns name (), raises (BadKind)
-  const char *private_name (CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()) const;
+  const char *private_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// returns member_count (), raises (BadKind). Useful for tk_struct,
   /// tk_union, tk_enum, tk_alias, and tk_except.
-  CORBA::ULong private_member_count (CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ()) const;
+  CORBA::ULong private_member_count (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// returns member_type (...), raises (BadKind, Bounds); Useful for
   /// tk_struct, tk_union, and tk_except
   CORBA::TypeCode_ptr private_member_type (
-      CORBA::ULong slot,
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      CORBA::ULong slot
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
     ) const;
 
   /// returns member_name (...), raises (BadKind, Bounds); Useful for
   /// tk_union, tk_struct, tk_except, and tk_enum
-  const char *private_member_name (CORBA::ULong slot,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ()) const;
+  const char *private_member_name (CORBA::ULong slot
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// For tk_union. Returns the label. Raises BadKind, Bounds.
-  CORBA::Any_ptr private_member_label (CORBA::ULong n,
-                                       CORBA_Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ()) const;
+  CORBA::Any_ptr private_member_label (CORBA::ULong n
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// returns the discriminator type for tk_union, and acquires the lock
   /// for the wrapped function below. raises (BadKind)
   CORBA::TypeCode_ptr private_discriminator_type (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) const;
 
   /// Acquires no lock so it can be called internally from blocks
   /// which have a lock.
   CORBA::TypeCode_ptr private_discriminator_type_i (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) const;
 
   /// returns the default slot for the tk_union. Raises (BadKind);
-  CORBA::Long private_default_index (CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ()) const;
+  CORBA::Long private_default_index (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Acquires no lock so it can be called internally from blocks
   /// which have a lock.
-  CORBA::Long private_default_index_i (CORBA_Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ()) const;
+  CORBA::Long private_default_index_i (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// returns length, raises (BadKind). Used for tk_string,
   /// tk_sequence, and tk_array
-  CORBA::Long private_length (CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()) const;
+  CORBA::Long private_length (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// returns the content type (element type). Raises (BadKind); Useful
   /// for tk_sequence, tk_array, and tk_alias
   CORBA::TypeCode_ptr private_content_type (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) const;
 
   // = All the private helpers testing for equality of typecodes
 
   /// test equality for typecodes of objrefs
   CORBA::Boolean private_equal_objref (CORBA::TypeCode_ptr tc,
-                                       CORBA::Boolean equiv_only,
-                                       CORBA_Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ()) const;
+                                       CORBA::Boolean equiv_only
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of structs
   CORBA::Boolean private_equal_struct (CORBA::TypeCode_ptr tc,
-                                       CORBA::Boolean equiv_only,
-                                       CORBA_Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ()) const;
+                                       CORBA::Boolean equiv_only
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of unions
   CORBA::Boolean private_equal_union (CORBA::TypeCode_ptr tc,
-                                      CORBA::Boolean equiv_only,
-                                      CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()) const;
+                                      CORBA::Boolean equiv_only
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of enums
   CORBA::Boolean private_equal_enum (CORBA::TypeCode_ptr tc,
-                                     CORBA::Boolean equiv_only,
-                                     CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ()) const;
+                                     CORBA::Boolean equiv_only
+                                     TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of strings
   CORBA::Boolean private_equal_string (CORBA::TypeCode_ptr tc,
-                                       CORBA::Boolean equiv_only,
-                                       CORBA_Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ()) const;
+                                       CORBA::Boolean equiv_only
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of wide strings
   CORBA::Boolean private_equal_wstring (CORBA::TypeCode_ptr tc,
-                                        CORBA::Boolean equiv_only,
-                                        CORBA_Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ()) const;
+                                        CORBA::Boolean equiv_only
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of sequences
   CORBA::Boolean private_equal_sequence (CORBA::TypeCode_ptr tc,
-                                         CORBA::Boolean equiv_only,
-                                         CORBA_Environment &ACE_TRY_ENV =
-                                           TAO_default_environment ()) const;
+                                         CORBA::Boolean equiv_only
+                                         TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of array
   CORBA::Boolean private_equal_array (CORBA::TypeCode_ptr tc,
-                                      CORBA::Boolean equiv_only,
-                                      CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()) const;
+                                      CORBA::Boolean equiv_only
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of typedefs
   CORBA::Boolean private_equal_alias (CORBA::TypeCode_ptr tc,
-                                      CORBA::Boolean equiv_only,
-                                      CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()) const;
+                                      CORBA::Boolean equiv_only
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of exceptions
   CORBA::Boolean private_equal_except (CORBA::TypeCode_ptr tc,
-                                       CORBA::Boolean equiv_only,
-                                       CORBA_Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ()) const;
+                                       CORBA::Boolean equiv_only
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// if refcount reaches 0, free this typecode
   CORBA::ULong refcount_;

@@ -39,8 +39,8 @@ class Logging_Service
   int parse_args (int argc, char *argv []);
   // Parses the command line arguments.
 
-  void startup (int argc, char *argv[],
-               CORBA::Environment &ACE_TRY_ENV);
+  void startup (int argc, char *argv[]
+               TAO_ENV_ARG_DECL);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -48,17 +48,16 @@ class Logging_Service
   // run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Shutdown the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
 protected:
-  void init_ORB (int& argc, char *argv [],
-                 CORBA::Environment &ACE_TRY_ENV);
+  void init_ORB (int& argc, char *argv []
+                 TAO_ENV_ARG_DECL);
   // initialize the ORB.
 
-  void resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
+  void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
   // = Data members

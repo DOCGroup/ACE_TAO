@@ -85,13 +85,13 @@ public:
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
 
     static CORBA_PolicyError *_downcast (CORBA::Exception *);
@@ -218,13 +218,13 @@ public:
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
 
     static CORBA_InvalidPolicies *_downcast (CORBA::Exception *);
@@ -270,7 +270,7 @@ public:
     static CORBA_Policy_ptr tao_duplicate (CORBA_Policy_ptr);
     static void tao_release (CORBA_Policy_ptr);
     static CORBA_Policy_ptr tao_nil (void);
-    static CORBA_Policy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA_Policy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -332,15 +332,13 @@ class TAO_Export CORBA_Policy
     // the static operations
     static CORBA_Policy_ptr _duplicate (CORBA_Policy_ptr obj);
     static CORBA_Policy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static CORBA_Policy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static CORBA_Policy_ptr _nil (void)
       {
         return (CORBA_Policy_ptr)0;
@@ -349,34 +347,30 @@ class TAO_Export CORBA_Policy
     static void _tao_any_destructor (void*);
 
     virtual CORBA::PolicyType policy_type (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual CORBA::Policy_ptr copy (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        const CORBA::Char *type_id
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
     virtual const char* _interface_repository_id (void) const;
@@ -433,24 +427,24 @@ class TAO_Export CORBA_Policy
     virtual ~CORBA_TAO_Policy_Proxy_Impl (void) { }
 
         virtual CORBA::PolicyType policy_type (
-        CORBA::Object_ptr _collocated_tao_target_,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::Object_ptr _collocated_tao_target_
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Policy_ptr copy (
-        CORBA::Object_ptr _collocated_tao_target_,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::Object_ptr _collocated_tao_target_
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void destroy (
-        CORBA::Object_ptr _collocated_tao_target_,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::Object_ptr _collocated_tao_target_
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -479,24 +473,24 @@ public:
   virtual ~CORBA_TAO_Policy_Remote_Proxy_Impl (void) { }
 
   virtual CORBA::PolicyType policy_type (
-      CORBA::Object_ptr _collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Object_ptr _collocated_tao_target_
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
 virtual CORBA::Policy_ptr copy (
-      CORBA::Object_ptr _collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Object_ptr _collocated_tao_target_
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
 virtual void destroy (
-      CORBA::Object_ptr _collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Object_ptr _collocated_tao_target_
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -525,8 +519,8 @@ class TAO_Export CORBA_TAO_Policy_Proxy_Broker
 public:
   virtual ~CORBA_TAO_Policy_Proxy_Broker (void);
   virtual CORBA_TAO_Policy_Proxy_Impl &select_proxy (
-    CORBA_Policy *object,
-    CORBA_Environment &ACE_TRY_ENV
+    CORBA_Policy *object
+    TAO_ENV_ARG_DECL
   ) = 0;
 
 protected:
@@ -551,8 +545,8 @@ public:
   virtual ~CORBA_TAO_Policy_Remote_Proxy_Broker (void);
 
   virtual CORBA_TAO_Policy_Proxy_Impl &select_proxy (
-    CORBA_Policy *object,
-    CORBA_Environment &ACE_TRY_ENV
+    CORBA_Policy *object
+    TAO_ENV_ARG_DECL
   );
 
 private:
@@ -604,10 +598,9 @@ public:
     virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
     virtual void _downcast (
         void* target,
-        CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA_Object *src
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     virtual CORBA_Object* _upcast (void *src) const;
 
   };
@@ -901,7 +894,7 @@ public:
   static CORBA_PolicyManager_ptr tao_duplicate (CORBA_PolicyManager_ptr);
   static void tao_release (CORBA_PolicyManager_ptr);
   static CORBA_PolicyManager_ptr tao_nil (void);
-  static CORBA_PolicyManager_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA_PolicyManager_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * tao_upcast (void *);
 
 private:
@@ -955,35 +948,31 @@ public:
   // the static operations
   static CORBA_PolicyManager_ptr _duplicate (CORBA_PolicyManager_ptr obj);
   static CORBA_PolicyManager_ptr _narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   static CORBA_PolicyManager_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   static CORBA_PolicyManager_ptr _nil (void)
     {
       return (CORBA_PolicyManager_ptr)0;
     }
 
   virtual CORBA::PolicyList * get_policy_overrides (
-      const CORBA::PolicyTypeSeq & ts,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::PolicyTypeSeq & ts
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
 
   virtual void set_policy_overrides (
       const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::SetOverrideType set_add
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       CORBA::InvalidPolicies
@@ -1035,7 +1024,7 @@ public:
   static CORBA_PolicyCurrent_ptr tao_duplicate (CORBA_PolicyCurrent_ptr);
   static void tao_release (CORBA_PolicyCurrent_ptr);
   static CORBA_PolicyCurrent_ptr tao_nil (void);
-  static CORBA_PolicyCurrent_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA_PolicyCurrent_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * tao_upcast (void *);
 
 private:
@@ -1089,15 +1078,13 @@ public:
   // the static operations
   static CORBA_PolicyCurrent_ptr _duplicate (CORBA_PolicyCurrent_ptr obj);
   static CORBA_PolicyCurrent_ptr _narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   static CORBA_PolicyCurrent_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   static CORBA_PolicyCurrent_ptr _nil (void)
     {
       return (CORBA_PolicyCurrent_ptr)0;

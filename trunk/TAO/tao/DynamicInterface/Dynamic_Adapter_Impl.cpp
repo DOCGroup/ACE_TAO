@@ -27,8 +27,8 @@ TAO_Dynamic_Adapter_Impl::create_request (
     CORBA::NamedValue_ptr result,
     CORBA::ExceptionList_ptr exceptions,
     CORBA::Request_ptr &request,
-    CORBA::Flags req_flags,
-    CORBA_Environment &ACE_TRY_ENV
+    CORBA::Flags req_flags
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_NEW_THROW_EX (request,
@@ -38,8 +38,8 @@ TAO_Dynamic_Adapter_Impl::create_request (
                                     arg_list,
                                     result,
                                     req_flags,
-                                    exceptions,
-                                    ACE_TRY_ENV),
+                                    exceptions
+                                    TAO_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY (
                         CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -52,15 +52,15 @@ TAO_Dynamic_Adapter_Impl::create_request (
 CORBA::Request_ptr
 TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                                    CORBA::ORB_ptr orb,
-                                   const char *operation,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   const char *operation
+                                   TAO_ENV_ARG_DECL)
 {
   CORBA::Request_ptr req = CORBA::Request::_nil ();
   ACE_NEW_THROW_EX (req,
                     CORBA::Request (obj,
                                     orb,
-                                    operation,
-                                    ACE_TRY_ENV),
+                                    operation
+                                    TAO_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY (
                         CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -120,8 +120,8 @@ TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
 
 void
 TAO_Dynamic_Adapter_Impl::create_exception_list (
-    CORBA::ExceptionList_ptr &list,
-    CORBA_Environment &ACE_TRY_ENV
+    CORBA::ExceptionList_ptr &list
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_NEW_THROW_EX (list,

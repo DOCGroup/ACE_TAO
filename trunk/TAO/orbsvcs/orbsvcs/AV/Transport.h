@@ -69,7 +69,7 @@ class TAO_AV_Flow_Protocol_Factory;
 
 /**
  * @class TAO_AV_Flow_Protocol_Item
- * @brief 
+ * @brief
  */
 class TAO_AV_Export TAO_AV_Flow_Protocol_Item
 {

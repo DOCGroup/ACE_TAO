@@ -52,25 +52,22 @@ public:
   ~CORBA_ServerRequest (void);
   // Destructor.
 
-  void arguments (CORBA::NVList_ptr &list,
-                  CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
+  void arguments (CORBA::NVList_ptr &list
+                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Implementation uses this to provide the ORB with the operation's
   // parameter list ... on return, their values are available; the
   // list fed in has typecodes and (perhap) memory assigned.
 
-  void set_result (const CORBA::Any &value,
-                   CORBA_Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+  void set_result (const CORBA::Any &value
+                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Implementation uses this to provide the operation result
   // ... illegal if exception() was called or params() was not called.
   //
   // XXX Implementation should be able to assume response has been
   // sent when this returns, and reclaim memory it allocated.
 
-  void set_exception (const CORBA::Any &value,
-                      CORBA_Environment &ACE_TRY_ENV =
-                        TAO_default_environment ());
+  void set_exception (const CORBA::Any &value
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Implementation uses this to provide the exception value which is
   // the only result of this particular invocation.
   //
@@ -86,8 +83,7 @@ public:
   // this stuff is a catastrophic error since this is all part of the
   // basic CORBA Object Model.
 
-  void dsi_marshal (CORBA_Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());
+  void dsi_marshal (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Marshal outgoing parameters.
 
   CORBA::Context_ptr ctx (void) const;

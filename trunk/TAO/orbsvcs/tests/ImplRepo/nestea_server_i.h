@@ -26,7 +26,7 @@
  *
  * @brief Nestea Bookshelf Server Implementation Class
  *
- * Sets up everything necessary to get the Nestea Bookshelf Server 
+ * Sets up everything necessary to get the Nestea Bookshelf Server
  * running.
  */
 class Nestea_Server_i
@@ -40,10 +40,10 @@ public:
   ~Nestea_Server_i (void);
 
   /// Initialize the Server state - parsing arguments and waiting
-  int init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
+  int init (int argc, char **argv TAO_ENV_ARG_DECL);
 
-  /// Run the orb 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  /// Run the orb
+  int run (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Parses the commandline arguments.
@@ -63,8 +63,8 @@ private:
 
   /// The POA manager.
   PortableServer::POAManager_var poa_manager_;
-  
-  /// The Nestea Bookshelf Server Implementation.  
+
+  /// The Nestea Bookshelf Server Implementation.
   Nestea_i *server_impl_;
 
   /// File where the IOR of the server object is stored.

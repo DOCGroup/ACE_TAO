@@ -265,8 +265,8 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
 
 int
 TAO_Connector_Registry::connect (TAO_GIOP_Invocation *invocation,
-                                 TAO_Transport_Descriptor_Interface *desc,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 TAO_Transport_Descriptor_Interface *desc
+                                 TAO_ENV_ARG_DECL)
 {
   TAO_Endpoint *endpoint = desc->endpoint ();
   if (endpoint == 0)
@@ -280,14 +280,14 @@ TAO_Connector_Registry::connect (TAO_GIOP_Invocation *invocation,
       return -1;
 
   return connector->connect (invocation,
-                             desc,
-                             ACE_TRY_ENV);
+                             desc
+                              TAO_ENV_ARG_PARAMETER);
 }
 
 int
 TAO_Connector_Registry::make_mprofile (const char *ior,
-                                       TAO_MProfile &mprofile,
-                                       CORBA::Environment &ACE_TRY_ENV)
+                                       TAO_MProfile &mprofile
+                                       TAO_ENV_ARG_DECL)
 {
   if (!ior)
     // Failure: Null IOR string pointer
@@ -308,8 +308,8 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
       if (*connector)
         {
           int mp_result = (*connector)->make_mprofile (ior,
-                                                       mprofile,
-                                                       ACE_TRY_ENV);
+                                                       mprofile
+                                                        TAO_ENV_ARG_PARAMETER);
 
           ACE_CHECK_RETURN (mp_result);
 

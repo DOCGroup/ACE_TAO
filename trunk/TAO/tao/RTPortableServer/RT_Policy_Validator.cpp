@@ -37,19 +37,19 @@ TAO_POA_RT_Policy_Validator::acceptor_registry (void)
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
-                                            CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies
+                                            TAO_ENV_ARG_DECL)
 {
-  this->validate_thread_pool (policies, ACE_TRY_ENV);
+  this->validate_thread_pool (policies TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->validate_lifespan (policies, ACE_TRY_ENV);
+  this->validate_lifespan (policies TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->validate_server_protocol (policies, ACE_TRY_ENV);
+  this->validate_server_protocol (policies TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->validate_priorities (policies, ACE_TRY_ENV);
+  this->validate_priorities (policies TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -64,8 +64,8 @@ TAO_POA_RT_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies,
-                                                       CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
+                                                       TAO_ENV_ARG_DECL)
 {
   // Make sure we have an endpoint for at least one of the protocols
   // specified in the RTCORBA::ServerProtocolPolicy.  This ensure we
@@ -74,8 +74,8 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies,
     policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
   RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
-    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in (),
-                                            ACE_TRY_ENV);
+    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ()
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_ServerProtocolPolicy *server_protocol =
@@ -110,8 +110,8 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies,
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
+                                                  TAO_ENV_ARG_DECL)
 {
   // Initialize to the default priority/priority model.
   CORBA::Short priority =
@@ -123,18 +123,18 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
     policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
   RTCORBA::PriorityModelPolicy_var priority_model =
-    RTCORBA::PriorityModelPolicy::_narrow (policy.in (),
-                                           ACE_TRY_ENV);
+    RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (priority_model.in ()))
     {
-      priority = priority_model->server_priority (ACE_TRY_ENV);
+      priority = priority_model->server_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       rt_priority_model =
         TAO_POA_Cached_Policies::PriorityModel (
-          priority_model->priority_model (ACE_TRY_ENV));
+          priority_model->priority_model (TAO_ENV_SINGLE_ARG_PARAMETER));
       ACE_CHECK;
 
       // Check that the priority is in bounds.
@@ -155,8 +155,8 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
     policies.get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
   RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
-    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in (),
-                                                        ACE_TRY_ENV);
+    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in ()
+                                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_PriorityBandedConnectionPolicy *bands_policy =
@@ -299,19 +299,19 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_thread_pool (TAO_Policy_Set &policies,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_RT_Policy_Validator::validate_thread_pool (TAO_Policy_Set &policies
+                                                   TAO_ENV_ARG_DECL)
 {
   this->thread_pool_ =
     TAO_POA_RT_Policy_Validator::extract_thread_pool (this->orb_core_,
-                                                      policies,
-                                                      ACE_TRY_ENV);
+                                                      policies
+                                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_lifespan (TAO_Policy_Set &policies,
-                                                CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_RT_Policy_Validator::validate_lifespan (TAO_Policy_Set &policies
+                                                TAO_ENV_ARG_DECL)
 {
   // If this POA is using a RTCORBA thread pool, make sure the
   // lifespan policy is not persistent since we cannot support it
@@ -321,12 +321,12 @@ TAO_POA_RT_Policy_Validator::validate_lifespan (TAO_Policy_Set &policies,
       CORBA::Policy_var policy =
         policies.get_cached_policy (TAO_CACHED_POLICY_LIFESPAN);
       PortableServer::LifespanPolicy_var lifespan_policy =
-        PortableServer::LifespanPolicy::_narrow (policy.in (),
-                                                 ACE_TRY_ENV);
+        PortableServer::LifespanPolicy::_narrow (policy.in ()
+                                                 TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       PortableServer::LifespanPolicyValue lifespan =
-        lifespan_policy->value (ACE_TRY_ENV);
+        lifespan_policy->value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (lifespan == PortableServer::PERSISTENT)
@@ -337,8 +337,8 @@ TAO_POA_RT_Policy_Validator::validate_lifespan (TAO_Policy_Set &policies,
 }
 
 void
-TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies
+                                                  TAO_ENV_ARG_DECL)
 {
   // Check if the user has specified the priority model policy.
   CORBA::Policy_var priority_model =
@@ -353,7 +353,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies,
       if (!CORBA::is_nil (priority_model.in ()))
         {
           // If so, we'll use that policy.
-          policies.set_policy (priority_model.in (), ACE_TRY_ENV);
+          policies.set_policy (priority_model.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -371,7 +371,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies,
       if (!CORBA::is_nil (server_protocol.in ()))
         {
           // If so, we'll use that policy.
-          policies.set_policy (server_protocol.in (), ACE_TRY_ENV);
+          policies.set_policy (server_protocol.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -389,7 +389,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies,
       if (!CORBA::is_nil (thread_pool.in ()))
         {
           // If so, we'll use that policy.
-          policies.set_policy (thread_pool.in (), ACE_TRY_ENV);
+          policies.set_policy (thread_pool.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -398,32 +398,32 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies,
 /* static */
 TAO_Thread_Pool *
 TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
-                                                  TAO_Policy_Set &policies,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+                                                  TAO_Policy_Set &policies
+                                                  TAO_ENV_ARG_DECL)
 {
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
 
   RTCORBA::ThreadpoolPolicy_var thread_pool_policy =
-    RTCORBA::ThreadpoolPolicy::_narrow (policy.in (),
-                                        ACE_TRY_ENV);
+    RTCORBA::ThreadpoolPolicy::_narrow (policy.in ()
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (CORBA::is_nil (thread_pool_policy.in ()))
     return 0;
 
   RTCORBA::ThreadpoolId thread_pool_id =
-    thread_pool_policy->threadpool (ACE_TRY_ENV);
+    thread_pool_policy->threadpool (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Get the RTORB.
   CORBA::Object_var object =
-    orb_core.resolve_rt_orb (ACE_TRY_ENV);
+    orb_core.resolve_rt_orb (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   RTCORBA::RTORB_var rt_orb =
-    RTCORBA::RTORB::_narrow (object.in (),
-                             ACE_TRY_ENV);
+    RTCORBA::RTORB::_narrow (object.in ()
+                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_RT_ORB *tao_rt_orb =

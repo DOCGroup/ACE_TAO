@@ -54,7 +54,7 @@ public:
   int init (int argc, char *argv[]);
   // Initializes <orb_manager_>, and parses commandline arguments.
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // See TITLE.
 
 private:

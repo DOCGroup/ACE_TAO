@@ -19,8 +19,6 @@ TAO_Security_PolicyFactory::create_policy (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
-  TAO_ENV_ARG_DEFN;
-
   // Not all security policies can be created using the
   // ORB::create_policy() mechanism.  Only those that can be created
   // using that mechanism are supported by this factory.

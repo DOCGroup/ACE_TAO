@@ -30,7 +30,7 @@ class Signal_Handler : public ACE_Event_Handler
   //   Useful to gracefully release the process
 
 public:
-  
+
   Signal_Handler (void);
 
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
@@ -45,11 +45,11 @@ class Sender_Callback : public TAO_AV_Callback
   //    Defines a class for the sender application callback.
   //
   // = DESCRIPTION
-  //    This class overides the methods of the TAO_AV_Callback so the 
+  //    This class overides the methods of the TAO_AV_Callback so the
   //    AVStreams can make upcalls to the application.
 
 public:
-  
+
   int handle_destroy (void);
   /// Called when the sender has finished reading the file and wants
   /// to close down the connection. Also called when the distributer
@@ -58,7 +58,7 @@ public:
   ACE_CString &flowname (void);
   void flowname (const ACE_CString &flowname);
   /// Accessor methods for the flowname of the callback
-  
+
 private:
   ACE_CString flowname_;
   /// Flowname of the callback.
@@ -109,14 +109,14 @@ public:
   ~Sender (void);
   /// Destructor
 
-  void shut_down (CORBA::Environment &);
+  void shut_down (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment&);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   /// Method to initialize the various data components.
 
-  int pace_data (CORBA::Environment &);
+  int pace_data (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   /// Method to pace and send data from a file.
 
   Connection_Manager &connection_manager (void);
@@ -152,10 +152,10 @@ private:
 
   Connection_Manager connection_manager_;
   /// Connection manager.
-  
+
   //  int stream_count_;
   /// Teh count of the number of streams that are active
-  
+
   Signal_Handler signal_handler_;
   /// Reference to the signal handler.
 };

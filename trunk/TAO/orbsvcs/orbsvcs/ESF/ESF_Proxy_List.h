@@ -49,20 +49,20 @@ public:
   size_t size (void) const;
 
   /// Insert a new element to the collection
-  void connected (PROXY *,
-                  CORBA::Environment &);
+  void connected (PROXY *
+                  TAO_ENV_ARG_DECL_NOT_USED);
 
   /// Insert a new element that could be there already.
-  void reconnected (PROXY *,
-                    CORBA::Environment &);
+  void reconnected (PROXY *
+                    TAO_ENV_ARG_DECL_NOT_USED);
 
   /// Remove an element from the collection
-  void disconnected (PROXY *,
-                     CORBA::Environment &);
+  void disconnected (PROXY *
+                     TAO_ENV_ARG_DECL_NOT_USED);
 
   /// Shutdown the collection, i.e. remove all elements and release
   /// resources
-  void shutdown (CORBA::Environment &);
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
 private:
   /// The underlying implementation object

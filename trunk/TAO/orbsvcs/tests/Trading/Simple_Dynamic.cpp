@@ -10,14 +10,14 @@ ACE_RCSID(Trading, Simple_Dynamic, "$Id$")
 template <class T>
 TAO_Simple_Dynamic_Property<T>::TAO_Simple_Dynamic_Property (const T& dp)
   : dp_ (dp)
-{  
+{
 }
 
 template <class T> CORBA::Any*
 TAO_Simple_Dynamic_Property<T>::evalDP (const char*,
                                         CORBA::TypeCode_ptr,
-                                        const CORBA::Any&,
-                                        CORBA::Environment&)
+                                        const CORBA::Any&
+                                        TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   CORBA::Any* return_value = 0;

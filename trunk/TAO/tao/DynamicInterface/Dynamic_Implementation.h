@@ -29,7 +29,7 @@
 
 #include "dynamicinterface_export.h"
 
-class TAO_DynamicInterface_Export TAO_DynamicImplementation 
+class TAO_DynamicInterface_Export TAO_DynamicImplementation
   : public virtual TAO_ServantBase
 {
   // = TITLE
@@ -41,25 +41,22 @@ class TAO_DynamicInterface_Export TAO_DynamicImplementation
   //    serving a CORBA request. Invoking this method in other
   //    circumstances may lead to unpredictable results.
 public:
-  virtual void invoke (CORBA::ServerRequest_ptr request,
-                       CORBA_Environment &ACE_TRY_ENV = 
-                         TAO_default_environment ()) = 0;
+  virtual void invoke (CORBA::ServerRequest_ptr request
+                       TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
   // The invoke() method receives requests issued to any CORBA object
   // incarnated by the DSI servant and performs the processing
   // necessary to execute the request.
 
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa,
-      CORBA_Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    ) = 0;
+      PortableServer::POA_ptr poa
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+
   // The _primary_interface() method receives an ObjectId value and a
   // POA_ptr as input parameters and returns a valid RepositoryId
   // representing the most-derived interface for that oid.
 
-  CORBA::Object_ptr _this (CORBA_Environment &ACE_TRY_ENV = 
-                             TAO_default_environment ());
+  CORBA::Object_ptr _this (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Returns a CORBA::Object_ptr for the target object.
 
 protected:
@@ -70,14 +67,12 @@ protected:
   virtual void *_downcast (const char *repository_id);
   // Simply returns "this"
 
-  virtual TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV = 
-                                    TAO_default_environment ());
+  virtual TAO_Stub *_create_stub (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // This is an auxiliary method for _this() and _narrow().
 
   virtual void _dispatch (TAO_ServerRequest &request,
-                          void *context,
-                          CORBA_Environment &ACE_TRY_ENV = 
-                            TAO_default_environment ());
+                          void *context
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Turns around and calls invoke.
 };
 

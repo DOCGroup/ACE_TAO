@@ -93,8 +93,8 @@ public:
   static void tao_release (CORBA_PrimitiveDef_ptr);
   static CORBA_PrimitiveDef_ptr tao_nil (void);
   static CORBA_PrimitiveDef_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -172,8 +172,8 @@ public:
   static void tao_release (CORBA_StringDef_ptr);
   static CORBA_StringDef_ptr tao_nil (void);
   static CORBA_StringDef_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -251,8 +251,8 @@ public:
   static void tao_release (CORBA_SequenceDef_ptr);
   static CORBA_SequenceDef_ptr tao_nil (void);
   static CORBA_SequenceDef_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -330,8 +330,8 @@ public:
   static void tao_release (CORBA_ArrayDef_ptr);
   static CORBA_ArrayDef_ptr tao_nil (void);
   static CORBA_ArrayDef_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -409,8 +409,8 @@ public:
   static void tao_release (CORBA_WstringDef_ptr);
   static CORBA_WstringDef_ptr tao_nil (void);
   static CORBA_WstringDef_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -488,8 +488,8 @@ public:
   static void tao_release (CORBA_FixedDef_ptr);
   static CORBA_FixedDef_ptr tao_nil (void);
   static CORBA_FixedDef_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -566,8 +566,8 @@ public:
   static void tao_release (CORBA_Repository_ptr);
   static CORBA_Repository_ptr tao_nil (void);
   static CORBA_Repository_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -630,16 +630,14 @@ public:
   static CORBA_Repository_ptr _duplicate (CORBA_Repository_ptr obj);
 
   static CORBA_Repository_ptr _narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   static CORBA_Repository_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   static CORBA_Repository_ptr _nil (void)
     {
@@ -649,85 +647,76 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA_Contained_ptr lookup_id (
-      const char * search_id,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const char * search_id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (
-      CORBA::TypeCode_ptr tc,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::TypeCode_ptr tc
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA_PrimitiveDef_ptr get_primitive (
-      CORBA::PrimitiveKind kind,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::PrimitiveKind kind
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA_StringDef_ptr create_string (
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA_WstringDef_ptr create_wstring (
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA_SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
-      CORBA_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA_IDLType_ptr element_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA_ArrayDef_ptr create_array (
       CORBA::ULong length,
-      CORBA_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA_IDLType_ptr element_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA_FixedDef_ptr create_fixed (
       CORBA::UShort digits,
-      CORBA::Short scale,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Short scale
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      const CORBA::Char *type_id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -776,8 +765,8 @@ public:
   virtual ~_TAO_CORBA_Repository_Proxy_Impl (void) { }
   virtual CORBA_Contained_ptr lookup_id (
       CORBA_Object *_collocated_tao_target_,
-      const char * search_id,
-      CORBA::Environment &ACE_TRY_ENV
+      const char * search_id
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -785,8 +774,8 @@ public:
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::TypeCode_ptr tc,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::TypeCode_ptr tc
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -794,8 +783,8 @@ public:
 
   virtual CORBA_PrimitiveDef_ptr get_primitive (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::PrimitiveKind kind,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::PrimitiveKind kind
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -803,8 +792,8 @@ public:
 
   virtual CORBA_StringDef_ptr create_string (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -812,8 +801,8 @@ public:
 
   virtual CORBA_WstringDef_ptr create_wstring (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -822,8 +811,8 @@ public:
   virtual CORBA_SequenceDef_ptr create_sequence (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong bound,
-      CORBA_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA_IDLType_ptr element_type
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -832,8 +821,8 @@ public:
   virtual CORBA_ArrayDef_ptr create_array (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong length,
-      CORBA_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA_IDLType_ptr element_type
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -842,8 +831,8 @@ public:
   virtual CORBA_FixedDef_ptr create_fixed (
       CORBA_Object *_collocated_tao_target_,
       CORBA::UShort digits,
-      CORBA::Short scale,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Short scale
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -874,8 +863,8 @@ public:
   virtual ~_TAO_CORBA_Repository_Remote_Proxy_Impl (void) { }
   virtual CORBA_Contained_ptr lookup_id (
       CORBA_Object *_collocated_tao_target_,
-      const char * search_id,
-      CORBA::Environment &ACE_TRY_ENV
+      const char * search_id
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -883,8 +872,8 @@ public:
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::TypeCode_ptr tc,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::TypeCode_ptr tc
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -892,8 +881,8 @@ public:
 
   virtual CORBA_PrimitiveDef_ptr get_primitive (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::PrimitiveKind kind,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::PrimitiveKind kind
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -901,8 +890,8 @@ public:
 
   virtual CORBA_StringDef_ptr create_string (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -910,8 +899,8 @@ public:
 
   virtual CORBA_WstringDef_ptr create_wstring (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -920,8 +909,8 @@ public:
   virtual CORBA_SequenceDef_ptr create_sequence (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong bound,
-      CORBA_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA_IDLType_ptr element_type
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -930,8 +919,8 @@ public:
   virtual CORBA_ArrayDef_ptr create_array (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong length,
-      CORBA_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA_IDLType_ptr element_type
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -940,8 +929,8 @@ public:
   virtual CORBA_FixedDef_ptr create_fixed (
       CORBA_Object *_collocated_tao_target_,
       CORBA::UShort digits,
-      CORBA::Short scale,
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Short scale
+      TAO_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -969,8 +958,8 @@ class TAO_IFR_Client_Export _TAO_CORBA_Repository_Proxy_Broker
 public:
   virtual ~_TAO_CORBA_Repository_Proxy_Broker (void);
   virtual _TAO_CORBA_Repository_Proxy_Impl &select_proxy (
-      CORBA_Repository *object,
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      CORBA_Repository *object
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
     ) = 0;
 
 protected:
@@ -996,8 +985,8 @@ public:
   virtual ~_TAO_CORBA_Repository_Remote_Proxy_Broker (void);
 
   virtual _TAO_CORBA_Repository_Proxy_Impl &select_proxy (
-      CORBA_Repository *object,
-      CORBA_Environment &ACE_TRY_ENV
+      CORBA_Repository *object
+      TAO_ENV_ARG_DECL
     );
 
   private:
@@ -1057,8 +1046,8 @@ public:
     static void tao_release (CORBA_ModuleDef_ptr);
     static CORBA_ModuleDef_ptr tao_nil (void);
     static CORBA_ModuleDef_ptr tao_narrow (
-        CORBA::Object *,
-        CORBA::Environment &
+        CORBA::Object *
+        TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1122,16 +1111,14 @@ public:
     static CORBA_ModuleDef_ptr _duplicate (CORBA_ModuleDef_ptr obj);
 
     static CORBA_ModuleDef_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     static CORBA_ModuleDef_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     static CORBA_ModuleDef_ptr _nil (void)
       {
@@ -1141,10 +1128,9 @@ public:
     static void _tao_any_destructor (void*);
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        const CORBA::Char *type_id
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -1238,8 +1224,8 @@ public:
   public:
     virtual ~_TAO_CORBA_ModuleDef_Proxy_Broker (void);
     virtual _TAO_CORBA_ModuleDef_Proxy_Impl &select_proxy (
-        CORBA_ModuleDef *object,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+        CORBA_ModuleDef *object
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
       ) = 0;
 
   protected:
@@ -1265,8 +1251,8 @@ public:
     virtual ~_TAO_CORBA_ModuleDef_Remote_Proxy_Broker (void);
 
     virtual _TAO_CORBA_ModuleDef_Proxy_Impl &select_proxy (
-        CORBA_ModuleDef *object,
-        CORBA_Environment &ACE_TRY_ENV
+        CORBA_ModuleDef *object
+        TAO_ENV_ARG_DECL
       );
 
     private:
@@ -1393,8 +1379,8 @@ public:
       static void tao_release (CORBA_ConstantDef_ptr);
       static CORBA_ConstantDef_ptr tao_nil (void);
       static CORBA_ConstantDef_ptr tao_narrow (
-          CORBA::Object *,
-          CORBA::Environment &
+          CORBA::Object *
+          TAO_ENV_ARG_DECL_NOT_USED
         );
       static CORBA::Object * tao_upcast (void *);
 
@@ -1457,16 +1443,14 @@ public:
       static CORBA_ConstantDef_ptr _duplicate (CORBA_ConstantDef_ptr obj);
 
       static CORBA_ConstantDef_ptr _narrow (
-          CORBA::Object_ptr obj,
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        );
+          CORBA::Object_ptr obj
+          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
       static CORBA_ConstantDef_ptr _unchecked_narrow (
-          CORBA::Object_ptr obj,
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        );
+          CORBA::Object_ptr obj
+          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
       static CORBA_ConstantDef_ptr _nil (void)
         {
@@ -1476,52 +1460,46 @@ public:
       static void _tao_any_destructor (void*);
 
       virtual CORBA::TypeCode_ptr type (
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        )
+          TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
 
       virtual CORBA_IDLType_ptr type_def (
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        )
+          TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
 
       virtual void type_def (
-          CORBA_IDLType_ptr type_def,
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        )
+          CORBA_IDLType_ptr type_def
+          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
 
       virtual CORBA::Any * value (
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        )
+          TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
 
       virtual void value (
-          const CORBA::Any & value,
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        )
+          const CORBA::Any & value
+          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
 
       virtual CORBA::Boolean _is_a (
-          const CORBA::Char *type_id,
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        );
+          const CORBA::Char *type_id
+          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
       virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -1569,16 +1547,16 @@ public:
     public:
       virtual ~_TAO_CORBA_ConstantDef_Proxy_Impl (void) { }
       virtual CORBA::TypeCode_ptr type (
-          CORBA_Object *_collocated_tao_target_,
-          CORBA::Environment &ACE_TRY_ENV
+          CORBA_Object *_collocated_tao_target_
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
 
       virtual CORBA_IDLType_ptr type_def (
-          CORBA_Object *_collocated_tao_target_,
-          CORBA::Environment &ACE_TRY_ENV
+          CORBA_Object *_collocated_tao_target_
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -1586,16 +1564,16 @@ public:
 
       virtual void type_def (
           CORBA_Object *_collocated_tao_target_,
-          CORBA_IDLType_ptr type_def,
-          CORBA::Environment &ACE_TRY_ENV
+          CORBA_IDLType_ptr type_def
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
 
       virtual CORBA::Any * value (
-          CORBA_Object *_collocated_tao_target_,
-          CORBA::Environment &ACE_TRY_ENV
+          CORBA_Object *_collocated_tao_target_
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -1603,8 +1581,8 @@ public:
 
       virtual void value (
           CORBA_Object *_collocated_tao_target_,
-          const CORBA::Any & value,
-          CORBA::Environment &ACE_TRY_ENV
+          const CORBA::Any & value
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -1634,16 +1612,16 @@ public:
 
       virtual ~_TAO_CORBA_ConstantDef_Remote_Proxy_Impl (void) { }
       virtual CORBA::TypeCode_ptr type (
-          CORBA_Object *_collocated_tao_target_,
-          CORBA::Environment &ACE_TRY_ENV
+          CORBA_Object *_collocated_tao_target_
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
 
       virtual CORBA_IDLType_ptr type_def (
-          CORBA_Object *_collocated_tao_target_,
-          CORBA::Environment &ACE_TRY_ENV
+          CORBA_Object *_collocated_tao_target_
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -1651,16 +1629,16 @@ public:
 
       virtual void type_def (
           CORBA_Object *_collocated_tao_target_,
-          CORBA_IDLType_ptr type_def,
-          CORBA::Environment &ACE_TRY_ENV
+          CORBA_IDLType_ptr type_def
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
 
       virtual CORBA::Any * value (
-          CORBA_Object *_collocated_tao_target_,
-          CORBA::Environment &ACE_TRY_ENV
+          CORBA_Object *_collocated_tao_target_
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -1668,8 +1646,8 @@ public:
 
       virtual void value (
           CORBA_Object *_collocated_tao_target_,
-          const CORBA::Any & value,
-          CORBA::Environment &ACE_TRY_ENV
+          const CORBA::Any & value
+          TAO_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -1697,8 +1675,8 @@ public:
     public:
       virtual ~_TAO_CORBA_ConstantDef_Proxy_Broker (void);
       virtual _TAO_CORBA_ConstantDef_Proxy_Impl &select_proxy (
-          CORBA_ConstantDef *object,
-          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+          CORBA_ConstantDef *object
+          TAO_ENV_ARG_DECL_WITH_DEFAULTS
         ) = 0;
 
     protected:
@@ -1724,8 +1702,8 @@ public:
       virtual ~_TAO_CORBA_ConstantDef_Remote_Proxy_Broker (void);
 
       virtual _TAO_CORBA_ConstantDef_Proxy_Impl &select_proxy (
-          CORBA_ConstantDef *object,
-          CORBA_Environment &ACE_TRY_ENV
+          CORBA_ConstantDef *object
+          TAO_ENV_ARG_DECL
         );
 
       private:
@@ -1856,8 +1834,8 @@ public:
         static void tao_release (CORBA_StructDef_ptr);
         static CORBA_StructDef_ptr tao_nil (void);
         static CORBA_StructDef_ptr tao_narrow (
-            CORBA::Object *,
-            CORBA::Environment &
+            CORBA::Object *
+            TAO_ENV_ARG_DECL_NOT_USED
           );
         static CORBA::Object * tao_upcast (void *);
 
@@ -1921,16 +1899,14 @@ public:
         static CORBA_StructDef_ptr _duplicate (CORBA_StructDef_ptr obj);
 
         static CORBA_StructDef_ptr _narrow (
-            CORBA::Object_ptr obj,
-            CORBA::Environment &ACE_TRY_ENV =
-              TAO_default_environment ()
-          );
+            CORBA::Object_ptr obj
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
         static CORBA_StructDef_ptr _unchecked_narrow (
-            CORBA::Object_ptr obj,
-            CORBA::Environment &ACE_TRY_ENV =
-              TAO_default_environment ()
-          );
+            CORBA::Object_ptr obj
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
         static CORBA_StructDef_ptr _nil (void)
           {
@@ -1940,27 +1916,24 @@ public:
         static void _tao_any_destructor (void*);
 
         virtual CORBA_StructMemberSeq * members (
-            CORBA::Environment &ACE_TRY_ENV =
-              TAO_default_environment ()
-          )
+            TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
           ACE_THROW_SPEC ((
             CORBA::SystemException
           ));
 
         virtual void members (
-            const CORBA_StructMemberSeq & members,
-            CORBA::Environment &ACE_TRY_ENV =
-              TAO_default_environment ()
-          )
+            const CORBA_StructMemberSeq & members
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
           ACE_THROW_SPEC ((
             CORBA::SystemException
           ));
 
         virtual CORBA::Boolean _is_a (
-            const CORBA::Char *type_id,
-            CORBA::Environment &ACE_TRY_ENV =
-              TAO_default_environment ()
-          );
+            const CORBA::Char *type_id
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
         virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -2009,8 +1982,8 @@ public:
       public:
         virtual ~_TAO_CORBA_StructDef_Proxy_Impl (void) { }
         virtual CORBA_StructMemberSeq * members (
-            CORBA_Object *_collocated_tao_target_,
-            CORBA::Environment &ACE_TRY_ENV
+            CORBA_Object *_collocated_tao_target_
+            TAO_ENV_ARG_DECL
           )
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -2018,8 +1991,8 @@ public:
 
         virtual void members (
             CORBA_Object *_collocated_tao_target_,
-            const CORBA_StructMemberSeq & members,
-            CORBA::Environment &ACE_TRY_ENV
+            const CORBA_StructMemberSeq & members
+            TAO_ENV_ARG_DECL
           )
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -2050,8 +2023,8 @@ public:
 
         virtual ~_TAO_CORBA_StructDef_Remote_Proxy_Impl (void) { }
         virtual CORBA_StructMemberSeq * members (
-            CORBA_Object *_collocated_tao_target_,
-            CORBA::Environment &ACE_TRY_ENV
+            CORBA_Object *_collocated_tao_target_
+            TAO_ENV_ARG_DECL
           )
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -2059,8 +2032,8 @@ public:
 
         virtual void members (
             CORBA_Object *_collocated_tao_target_,
-            const CORBA_StructMemberSeq & members,
-            CORBA::Environment &ACE_TRY_ENV
+            const CORBA_StructMemberSeq & members
+            TAO_ENV_ARG_DECL
           )
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -2088,8 +2061,8 @@ public:
       public:
         virtual ~_TAO_CORBA_StructDef_Proxy_Broker (void);
         virtual _TAO_CORBA_StructDef_Proxy_Impl &select_proxy (
-            CORBA_StructDef *object,
-            CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+            CORBA_StructDef *object
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS
           ) = 0;
 
       protected:
@@ -2115,8 +2088,8 @@ public:
         virtual ~_TAO_CORBA_StructDef_Remote_Proxy_Broker (void);
 
         virtual _TAO_CORBA_StructDef_Proxy_Impl &select_proxy (
-            CORBA_StructDef *object,
-            CORBA_Environment &ACE_TRY_ENV
+            CORBA_StructDef *object
+            TAO_ENV_ARG_DECL
           );
 
         private:
@@ -2177,8 +2150,8 @@ public:
           static void tao_release (CORBA_UnionDef_ptr);
           static CORBA_UnionDef_ptr tao_nil (void);
           static CORBA_UnionDef_ptr tao_narrow (
-              CORBA::Object *,
-              CORBA::Environment &
+              CORBA::Object *
+              TAO_ENV_ARG_DECL_NOT_USED
             );
           static CORBA::Object * tao_upcast (void *);
 
@@ -2242,16 +2215,14 @@ public:
           static CORBA_UnionDef_ptr _duplicate (CORBA_UnionDef_ptr obj);
 
           static CORBA_UnionDef_ptr _narrow (
-              CORBA::Object_ptr obj,
-              CORBA::Environment &ACE_TRY_ENV =
-                TAO_default_environment ()
-            );
+              CORBA::Object_ptr obj
+              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
           static CORBA_UnionDef_ptr _unchecked_narrow (
-              CORBA::Object_ptr obj,
-              CORBA::Environment &ACE_TRY_ENV =
-                TAO_default_environment ()
-            );
+              CORBA::Object_ptr obj
+              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
           static CORBA_UnionDef_ptr _nil (void)
             {
@@ -2261,52 +2232,46 @@ public:
           static void _tao_any_destructor (void*);
 
           virtual CORBA::TypeCode_ptr discriminator_type (
-              CORBA::Environment &ACE_TRY_ENV =
-                TAO_default_environment ()
-            )
+              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
             ACE_THROW_SPEC ((
               CORBA::SystemException
             ));
 
           virtual CORBA_IDLType_ptr discriminator_type_def (
-              CORBA::Environment &ACE_TRY_ENV =
-                TAO_default_environment ()
-            )
+              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
             ACE_THROW_SPEC ((
               CORBA::SystemException
             ));
 
           virtual void discriminator_type_def (
-              CORBA_IDLType_ptr discriminator_type_def,
-              CORBA::Environment &ACE_TRY_ENV =
-                TAO_default_environment ()
-            )
+              CORBA_IDLType_ptr discriminator_type_def
+              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
             ACE_THROW_SPEC ((
               CORBA::SystemException
             ));
 
           virtual CORBA_UnionMemberSeq * members (
-              CORBA::Environment &ACE_TRY_ENV =
-                TAO_default_environment ()
-            )
+              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
             ACE_THROW_SPEC ((
               CORBA::SystemException
             ));
 
           virtual void members (
-              const CORBA_UnionMemberSeq & members,
-              CORBA::Environment &ACE_TRY_ENV =
-                TAO_default_environment ()
-            )
+              const CORBA_UnionMemberSeq & members
+              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
             ACE_THROW_SPEC ((
               CORBA::SystemException
             ));
 
           virtual CORBA::Boolean _is_a (
-              const CORBA::Char *type_id,
-              CORBA::Environment &ACE_TRY_ENV =
-                TAO_default_environment ()
-            );
+              const CORBA::Char *type_id
+              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
           virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -2355,16 +2320,16 @@ public:
         public:
           virtual ~_TAO_CORBA_UnionDef_Proxy_Impl (void) { }
           virtual CORBA::TypeCode_ptr discriminator_type (
-              CORBA_Object *_collocated_tao_target_,
-              CORBA::Environment &ACE_TRY_ENV
+              CORBA_Object *_collocated_tao_target_
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
             )) = 0;
 
           virtual CORBA_IDLType_ptr discriminator_type_def (
-              CORBA_Object *_collocated_tao_target_,
-              CORBA::Environment &ACE_TRY_ENV
+              CORBA_Object *_collocated_tao_target_
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -2372,16 +2337,16 @@ public:
 
           virtual void discriminator_type_def (
               CORBA_Object *_collocated_tao_target_,
-              CORBA_IDLType_ptr discriminator_type_def,
-              CORBA::Environment &ACE_TRY_ENV
+              CORBA_IDLType_ptr discriminator_type_def
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
             )) = 0;
 
           virtual CORBA_UnionMemberSeq * members (
-              CORBA_Object *_collocated_tao_target_,
-              CORBA::Environment &ACE_TRY_ENV
+              CORBA_Object *_collocated_tao_target_
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -2389,8 +2354,8 @@ public:
 
           virtual void members (
               CORBA_Object *_collocated_tao_target_,
-              const CORBA_UnionMemberSeq & members,
-              CORBA::Environment &ACE_TRY_ENV
+              const CORBA_UnionMemberSeq & members
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -2421,16 +2386,16 @@ public:
 
           virtual ~_TAO_CORBA_UnionDef_Remote_Proxy_Impl (void) { }
           virtual CORBA::TypeCode_ptr discriminator_type (
-              CORBA_Object *_collocated_tao_target_,
-              CORBA::Environment &ACE_TRY_ENV
+              CORBA_Object *_collocated_tao_target_
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
             ));
 
           virtual CORBA_IDLType_ptr discriminator_type_def (
-              CORBA_Object *_collocated_tao_target_,
-              CORBA::Environment &ACE_TRY_ENV
+              CORBA_Object *_collocated_tao_target_
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -2438,16 +2403,16 @@ public:
 
           virtual void discriminator_type_def (
               CORBA_Object *_collocated_tao_target_,
-              CORBA_IDLType_ptr discriminator_type_def,
-              CORBA::Environment &ACE_TRY_ENV
+              CORBA_IDLType_ptr discriminator_type_def
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
             ));
 
           virtual CORBA_UnionMemberSeq * members (
-              CORBA_Object *_collocated_tao_target_,
-              CORBA::Environment &ACE_TRY_ENV
+              CORBA_Object *_collocated_tao_target_
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -2455,8 +2420,8 @@ public:
 
           virtual void members (
               CORBA_Object *_collocated_tao_target_,
-              const CORBA_UnionMemberSeq & members,
-              CORBA::Environment &ACE_TRY_ENV
+              const CORBA_UnionMemberSeq & members
+              TAO_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -2484,8 +2449,8 @@ public:
         public:
           virtual ~_TAO_CORBA_UnionDef_Proxy_Broker (void);
           virtual _TAO_CORBA_UnionDef_Proxy_Impl &select_proxy (
-              CORBA_UnionDef *object,
-              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+              CORBA_UnionDef *object
+              TAO_ENV_ARG_DECL_WITH_DEFAULTS
             ) = 0;
 
         protected:
@@ -2511,8 +2476,8 @@ public:
           virtual ~_TAO_CORBA_UnionDef_Remote_Proxy_Broker (void);
 
           virtual _TAO_CORBA_UnionDef_Proxy_Impl &select_proxy (
-              CORBA_UnionDef *object,
-              CORBA_Environment &ACE_TRY_ENV
+              CORBA_UnionDef *object
+              TAO_ENV_ARG_DECL
             );
 
           private:
@@ -2573,8 +2538,8 @@ public:
             static void tao_release (CORBA_EnumDef_ptr);
             static CORBA_EnumDef_ptr tao_nil (void);
             static CORBA_EnumDef_ptr tao_narrow (
-                CORBA::Object *,
-                CORBA::Environment &
+                CORBA::Object *
+                TAO_ENV_ARG_DECL_NOT_USED
               );
             static CORBA::Object * tao_upcast (void *);
 
@@ -2637,16 +2602,14 @@ public:
             static CORBA_EnumDef_ptr _duplicate (CORBA_EnumDef_ptr obj);
 
             static CORBA_EnumDef_ptr _narrow (
-                CORBA::Object_ptr obj,
-                CORBA::Environment &ACE_TRY_ENV =
-                  TAO_default_environment ()
-              );
+                CORBA::Object_ptr obj
+                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
             static CORBA_EnumDef_ptr _unchecked_narrow (
-                CORBA::Object_ptr obj,
-                CORBA::Environment &ACE_TRY_ENV =
-                  TAO_default_environment ()
-              );
+                CORBA::Object_ptr obj
+                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
             static CORBA_EnumDef_ptr _nil (void)
               {
@@ -2656,27 +2619,24 @@ public:
             static void _tao_any_destructor (void*);
 
             virtual CORBA_EnumMemberSeq * members (
-                CORBA::Environment &ACE_TRY_ENV =
-                  TAO_default_environment ()
-              )
+                TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
               ACE_THROW_SPEC ((
                 CORBA::SystemException
               ));
 
             virtual void members (
-                const CORBA_EnumMemberSeq & members,
-                CORBA::Environment &ACE_TRY_ENV =
-                  TAO_default_environment ()
-              )
+                const CORBA_EnumMemberSeq & members
+                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
               ACE_THROW_SPEC ((
                 CORBA::SystemException
               ));
 
             virtual CORBA::Boolean _is_a (
-                const CORBA::Char *type_id,
-                CORBA::Environment &ACE_TRY_ENV =
-                  TAO_default_environment ()
-              );
+                const CORBA::Char *type_id
+                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
             virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -2724,8 +2684,8 @@ public:
           public:
             virtual ~_TAO_CORBA_EnumDef_Proxy_Impl (void) { }
             virtual CORBA_EnumMemberSeq * members (
-                CORBA_Object *_collocated_tao_target_,
-                CORBA::Environment &ACE_TRY_ENV
+                CORBA_Object *_collocated_tao_target_
+                TAO_ENV_ARG_DECL
               )
               ACE_THROW_SPEC ((
                 CORBA::SystemException
@@ -2733,8 +2693,8 @@ public:
 
             virtual void members (
                 CORBA_Object *_collocated_tao_target_,
-                const CORBA_EnumMemberSeq & members,
-                CORBA::Environment &ACE_TRY_ENV
+                const CORBA_EnumMemberSeq & members
+                TAO_ENV_ARG_DECL
               )
               ACE_THROW_SPEC ((
                 CORBA::SystemException
@@ -2764,8 +2724,8 @@ public:
 
             virtual ~_TAO_CORBA_EnumDef_Remote_Proxy_Impl (void) { }
             virtual CORBA_EnumMemberSeq * members (
-                CORBA_Object *_collocated_tao_target_,
-                CORBA::Environment &ACE_TRY_ENV
+                CORBA_Object *_collocated_tao_target_
+                TAO_ENV_ARG_DECL
               )
               ACE_THROW_SPEC ((
                 CORBA::SystemException
@@ -2773,8 +2733,8 @@ public:
 
             virtual void members (
                 CORBA_Object *_collocated_tao_target_,
-                const CORBA_EnumMemberSeq & members,
-                CORBA::Environment &ACE_TRY_ENV
+                const CORBA_EnumMemberSeq & members
+                TAO_ENV_ARG_DECL
               )
               ACE_THROW_SPEC ((
                 CORBA::SystemException
@@ -2802,8 +2762,8 @@ public:
           public:
             virtual ~_TAO_CORBA_EnumDef_Proxy_Broker (void);
             virtual _TAO_CORBA_EnumDef_Proxy_Impl &select_proxy (
-                CORBA_EnumDef *object,
-                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                CORBA_EnumDef *object
+                TAO_ENV_ARG_DECL_WITH_DEFAULTS
               ) = 0;
 
           protected:
@@ -2829,8 +2789,8 @@ public:
             virtual ~_TAO_CORBA_EnumDef_Remote_Proxy_Broker (void);
 
             virtual _TAO_CORBA_EnumDef_Proxy_Impl &select_proxy (
-                CORBA_EnumDef *object,
-                CORBA_Environment &ACE_TRY_ENV
+                CORBA_EnumDef *object
+                TAO_ENV_ARG_DECL
               );
 
             private:
@@ -2891,8 +2851,8 @@ public:
               static void tao_release (CORBA_AliasDef_ptr);
               static CORBA_AliasDef_ptr tao_nil (void);
               static CORBA_AliasDef_ptr tao_narrow (
-                  CORBA::Object *,
-                  CORBA::Environment &
+                  CORBA::Object *
+                  TAO_ENV_ARG_DECL_NOT_USED
                 );
               static CORBA::Object * tao_upcast (void *);
 
@@ -2955,16 +2915,14 @@ public:
               static CORBA_AliasDef_ptr _duplicate (CORBA_AliasDef_ptr obj);
 
               static CORBA_AliasDef_ptr _narrow (
-                  CORBA::Object_ptr obj,
-                  CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ()
-                );
+                  CORBA::Object_ptr obj
+                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
               static CORBA_AliasDef_ptr _unchecked_narrow (
-                  CORBA::Object_ptr obj,
-                  CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ()
-                );
+                  CORBA::Object_ptr obj
+                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
               static CORBA_AliasDef_ptr _nil (void)
                 {
@@ -2974,27 +2932,24 @@ public:
               static void _tao_any_destructor (void*);
 
               virtual CORBA_IDLType_ptr original_type_def (
-                  CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ()
-                )
+                  TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                 ACE_THROW_SPEC ((
                   CORBA::SystemException
                 ));
 
               virtual void original_type_def (
-                  CORBA_IDLType_ptr original_type_def,
-                  CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ()
-                )
+                  CORBA_IDLType_ptr original_type_def
+                  TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                 ACE_THROW_SPEC ((
                   CORBA::SystemException
                 ));
 
               virtual CORBA::Boolean _is_a (
-                  const CORBA::Char *type_id,
-                  CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ()
-                );
+                  const CORBA::Char *type_id
+                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
               virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -3042,8 +2997,8 @@ public:
             public:
               virtual ~_TAO_CORBA_AliasDef_Proxy_Impl (void) { }
               virtual CORBA_IDLType_ptr original_type_def (
-                  CORBA_Object *_collocated_tao_target_,
-                  CORBA::Environment &ACE_TRY_ENV
+                  CORBA_Object *_collocated_tao_target_
+                  TAO_ENV_ARG_DECL
                 )
                 ACE_THROW_SPEC ((
                   CORBA::SystemException
@@ -3051,8 +3006,8 @@ public:
 
               virtual void original_type_def (
                   CORBA_Object *_collocated_tao_target_,
-                  CORBA_IDLType_ptr original_type_def,
-                  CORBA::Environment &ACE_TRY_ENV
+                  CORBA_IDLType_ptr original_type_def
+                  TAO_ENV_ARG_DECL
                 )
                 ACE_THROW_SPEC ((
                   CORBA::SystemException
@@ -3082,8 +3037,8 @@ public:
 
               virtual ~_TAO_CORBA_AliasDef_Remote_Proxy_Impl (void) { }
               virtual CORBA_IDLType_ptr original_type_def (
-                  CORBA_Object *_collocated_tao_target_,
-                  CORBA::Environment &ACE_TRY_ENV
+                  CORBA_Object *_collocated_tao_target_
+                  TAO_ENV_ARG_DECL
                 )
                 ACE_THROW_SPEC ((
                   CORBA::SystemException
@@ -3091,8 +3046,8 @@ public:
 
               virtual void original_type_def (
                   CORBA_Object *_collocated_tao_target_,
-                  CORBA_IDLType_ptr original_type_def,
-                  CORBA::Environment &ACE_TRY_ENV
+                  CORBA_IDLType_ptr original_type_def
+                  TAO_ENV_ARG_DECL
                 )
                 ACE_THROW_SPEC ((
                   CORBA::SystemException
@@ -3120,8 +3075,8 @@ public:
             public:
               virtual ~_TAO_CORBA_AliasDef_Proxy_Broker (void);
               virtual _TAO_CORBA_AliasDef_Proxy_Impl &select_proxy (
-                  CORBA_AliasDef *object,
-                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                  CORBA_AliasDef *object
+                  TAO_ENV_ARG_DECL_WITH_DEFAULTS
                 ) = 0;
 
             protected:
@@ -3147,8 +3102,8 @@ public:
               virtual ~_TAO_CORBA_AliasDef_Remote_Proxy_Broker (void);
 
               virtual _TAO_CORBA_AliasDef_Proxy_Impl &select_proxy (
-                  CORBA_AliasDef *object,
-                  CORBA_Environment &ACE_TRY_ENV
+                  CORBA_AliasDef *object
+                  TAO_ENV_ARG_DECL
                 );
 
               private:
@@ -3209,8 +3164,8 @@ public:
                 static void tao_release (CORBA_NativeDef_ptr);
                 static CORBA_NativeDef_ptr tao_nil (void);
                 static CORBA_NativeDef_ptr tao_narrow (
-                    CORBA::Object *,
-                    CORBA::Environment &
+                    CORBA::Object *
+                    TAO_ENV_ARG_DECL_NOT_USED
                   );
                 static CORBA::Object * tao_upcast (void *);
 
@@ -3273,16 +3228,14 @@ public:
                 static CORBA_NativeDef_ptr _duplicate (CORBA_NativeDef_ptr obj);
 
                 static CORBA_NativeDef_ptr _narrow (
-                    CORBA::Object_ptr obj,
-                    CORBA::Environment &ACE_TRY_ENV =
-                      TAO_default_environment ()
-                  );
+                    CORBA::Object_ptr obj
+                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                 static CORBA_NativeDef_ptr _unchecked_narrow (
-                    CORBA::Object_ptr obj,
-                    CORBA::Environment &ACE_TRY_ENV =
-                      TAO_default_environment ()
-                  );
+                    CORBA::Object_ptr obj
+                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                 static CORBA_NativeDef_ptr _nil (void)
                   {
@@ -3292,10 +3245,9 @@ public:
                 static void _tao_any_destructor (void*);
 
                 virtual CORBA::Boolean _is_a (
-                    const CORBA::Char *type_id,
-                    CORBA::Environment &ACE_TRY_ENV =
-                      TAO_default_environment ()
-                  );
+                    const CORBA::Char *type_id
+                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                 virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -3387,8 +3339,8 @@ public:
               public:
                 virtual ~_TAO_CORBA_NativeDef_Proxy_Broker (void);
                 virtual _TAO_CORBA_NativeDef_Proxy_Impl &select_proxy (
-                    CORBA_NativeDef *object,
-                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                    CORBA_NativeDef *object
+                    TAO_ENV_ARG_DECL_WITH_DEFAULTS
                   ) = 0;
 
               protected:
@@ -3414,8 +3366,8 @@ public:
                 virtual ~_TAO_CORBA_NativeDef_Remote_Proxy_Broker (void);
 
                 virtual _TAO_CORBA_NativeDef_Proxy_Impl &select_proxy (
-                    CORBA_NativeDef *object,
-                    CORBA_Environment &ACE_TRY_ENV
+                    CORBA_NativeDef *object
+                    TAO_ENV_ARG_DECL
                   );
 
                 private:
@@ -3461,16 +3413,14 @@ public:
                   static CORBA_PrimitiveDef_ptr _duplicate (CORBA_PrimitiveDef_ptr obj);
 
                   static CORBA_PrimitiveDef_ptr _narrow (
-                      CORBA::Object_ptr obj,
-                      CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ()
-                    );
+                      CORBA::Object_ptr obj
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                   static CORBA_PrimitiveDef_ptr _unchecked_narrow (
-                      CORBA::Object_ptr obj,
-                      CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ()
-                    );
+                      CORBA::Object_ptr obj
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                   static CORBA_PrimitiveDef_ptr _nil (void)
                     {
@@ -3480,18 +3430,16 @@ public:
                   static void _tao_any_destructor (void*);
 
                   virtual CORBA::PrimitiveKind kind (
-                      CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ()
-                    )
+                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
                     ));
 
                   virtual CORBA::Boolean _is_a (
-                      const CORBA::Char *type_id,
-                      CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ()
-                    );
+                      const CORBA::Char *type_id
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -3539,8 +3487,8 @@ public:
                 public:
                   virtual ~_TAO_CORBA_PrimitiveDef_Proxy_Impl (void) { }
                   virtual CORBA::PrimitiveKind kind (
-                      CORBA_Object *_collocated_tao_target_,
-                      CORBA::Environment &ACE_TRY_ENV
+                      CORBA_Object *_collocated_tao_target_
+                      TAO_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -3570,8 +3518,8 @@ public:
 
                   virtual ~_TAO_CORBA_PrimitiveDef_Remote_Proxy_Impl (void) { }
                   virtual CORBA::PrimitiveKind kind (
-                      CORBA_Object *_collocated_tao_target_,
-                      CORBA::Environment &ACE_TRY_ENV
+                      CORBA_Object *_collocated_tao_target_
+                      TAO_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -3599,8 +3547,8 @@ public:
                 public:
                   virtual ~_TAO_CORBA_PrimitiveDef_Proxy_Broker (void);
                   virtual _TAO_CORBA_PrimitiveDef_Proxy_Impl &select_proxy (
-                      CORBA_PrimitiveDef *object,
-                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                      CORBA_PrimitiveDef *object
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS
                     ) = 0;
 
                 protected:
@@ -3626,8 +3574,8 @@ public:
                   virtual ~_TAO_CORBA_PrimitiveDef_Remote_Proxy_Broker (void);
 
                   virtual _TAO_CORBA_PrimitiveDef_Proxy_Impl &select_proxy (
-                      CORBA_PrimitiveDef *object,
-                      CORBA_Environment &ACE_TRY_ENV
+                      CORBA_PrimitiveDef *object
+                      TAO_ENV_ARG_DECL
                     );
 
                   private:
@@ -3673,16 +3621,14 @@ public:
                     static CORBA_StringDef_ptr _duplicate (CORBA_StringDef_ptr obj);
 
                     static CORBA_StringDef_ptr _narrow (
-                        CORBA::Object_ptr obj,
-                        CORBA::Environment &ACE_TRY_ENV =
-                          TAO_default_environment ()
-                      );
+                        CORBA::Object_ptr obj
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                     static CORBA_StringDef_ptr _unchecked_narrow (
-                        CORBA::Object_ptr obj,
-                        CORBA::Environment &ACE_TRY_ENV =
-                          TAO_default_environment ()
-                      );
+                        CORBA::Object_ptr obj
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                     static CORBA_StringDef_ptr _nil (void)
                       {
@@ -3692,27 +3638,24 @@ public:
                     static void _tao_any_destructor (void*);
 
                     virtual CORBA::ULong bound (
-                        CORBA::Environment &ACE_TRY_ENV =
-                          TAO_default_environment ()
-                      )
+                        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
                       ));
 
                     virtual void bound (
-                        CORBA::ULong bound,
-                        CORBA::Environment &ACE_TRY_ENV =
-                          TAO_default_environment ()
-                      )
+                        CORBA::ULong bound
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
                       ));
 
                     virtual CORBA::Boolean _is_a (
-                        const CORBA::Char *type_id,
-                        CORBA::Environment &ACE_TRY_ENV =
-                          TAO_default_environment ()
-                      );
+                        const CORBA::Char *type_id
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -3760,8 +3703,8 @@ public:
                   public:
                     virtual ~_TAO_CORBA_StringDef_Proxy_Impl (void) { }
                     virtual CORBA::ULong bound (
-                        CORBA_Object *_collocated_tao_target_,
-                        CORBA::Environment &ACE_TRY_ENV
+                        CORBA_Object *_collocated_tao_target_
+                        TAO_ENV_ARG_DECL
                       )
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -3769,8 +3712,8 @@ public:
 
                     virtual void bound (
                         CORBA_Object *_collocated_tao_target_,
-                        CORBA::ULong bound,
-                        CORBA::Environment &ACE_TRY_ENV
+                        CORBA::ULong bound
+                        TAO_ENV_ARG_DECL
                       )
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -3800,8 +3743,8 @@ public:
 
                     virtual ~_TAO_CORBA_StringDef_Remote_Proxy_Impl (void) { }
                     virtual CORBA::ULong bound (
-                        CORBA_Object *_collocated_tao_target_,
-                        CORBA::Environment &ACE_TRY_ENV
+                        CORBA_Object *_collocated_tao_target_
+                        TAO_ENV_ARG_DECL
                       )
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -3809,8 +3752,8 @@ public:
 
                     virtual void bound (
                         CORBA_Object *_collocated_tao_target_,
-                        CORBA::ULong bound,
-                        CORBA::Environment &ACE_TRY_ENV
+                        CORBA::ULong bound
+                        TAO_ENV_ARG_DECL
                       )
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -3838,8 +3781,8 @@ public:
                   public:
                     virtual ~_TAO_CORBA_StringDef_Proxy_Broker (void);
                     virtual _TAO_CORBA_StringDef_Proxy_Impl &select_proxy (
-                        CORBA_StringDef *object,
-                        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                        CORBA_StringDef *object
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS
                       ) = 0;
 
                   protected:
@@ -3865,8 +3808,8 @@ public:
                     virtual ~_TAO_CORBA_StringDef_Remote_Proxy_Broker (void);
 
                     virtual _TAO_CORBA_StringDef_Proxy_Impl &select_proxy (
-                        CORBA_StringDef *object,
-                        CORBA_Environment &ACE_TRY_ENV
+                        CORBA_StringDef *object
+                        TAO_ENV_ARG_DECL
                       );
 
                     private:
@@ -3912,16 +3855,14 @@ public:
                       static CORBA_WstringDef_ptr _duplicate (CORBA_WstringDef_ptr obj);
 
                       static CORBA_WstringDef_ptr _narrow (
-                          CORBA::Object_ptr obj,
-                          CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ()
-                        );
+                          CORBA::Object_ptr obj
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                       static CORBA_WstringDef_ptr _unchecked_narrow (
-                          CORBA::Object_ptr obj,
-                          CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ()
-                        );
+                          CORBA::Object_ptr obj
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                       static CORBA_WstringDef_ptr _nil (void)
                         {
@@ -3931,27 +3872,24 @@ public:
                       static void _tao_any_destructor (void*);
 
                       virtual CORBA::ULong bound (
-                          CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ()
-                        )
+                          TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                         ACE_THROW_SPEC ((
                           CORBA::SystemException
                         ));
 
                       virtual void bound (
-                          CORBA::ULong bound,
-                          CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ()
-                        )
+                          CORBA::ULong bound
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                         ACE_THROW_SPEC ((
                           CORBA::SystemException
                         ));
 
                       virtual CORBA::Boolean _is_a (
-                          const CORBA::Char *type_id,
-                          CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ()
-                        );
+                          const CORBA::Char *type_id
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                       virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -3999,8 +3937,8 @@ public:
                     public:
                       virtual ~_TAO_CORBA_WstringDef_Proxy_Impl (void) { }
                       virtual CORBA::ULong bound (
-                          CORBA_Object *_collocated_tao_target_,
-                          CORBA::Environment &ACE_TRY_ENV
+                          CORBA_Object *_collocated_tao_target_
+                          TAO_ENV_ARG_DECL
                         )
                         ACE_THROW_SPEC ((
                           CORBA::SystemException
@@ -4008,8 +3946,8 @@ public:
 
                       virtual void bound (
                           CORBA_Object *_collocated_tao_target_,
-                          CORBA::ULong bound,
-                          CORBA::Environment &ACE_TRY_ENV
+                          CORBA::ULong bound
+                          TAO_ENV_ARG_DECL
                         )
                         ACE_THROW_SPEC ((
                           CORBA::SystemException
@@ -4039,8 +3977,8 @@ public:
 
                       virtual ~_TAO_CORBA_WstringDef_Remote_Proxy_Impl (void) { }
                       virtual CORBA::ULong bound (
-                          CORBA_Object *_collocated_tao_target_,
-                          CORBA::Environment &ACE_TRY_ENV
+                          CORBA_Object *_collocated_tao_target_
+                          TAO_ENV_ARG_DECL
                         )
                         ACE_THROW_SPEC ((
                           CORBA::SystemException
@@ -4048,8 +3986,8 @@ public:
 
                       virtual void bound (
                           CORBA_Object *_collocated_tao_target_,
-                          CORBA::ULong bound,
-                          CORBA::Environment &ACE_TRY_ENV
+                          CORBA::ULong bound
+                          TAO_ENV_ARG_DECL
                         )
                         ACE_THROW_SPEC ((
                           CORBA::SystemException
@@ -4077,8 +4015,8 @@ public:
                     public:
                       virtual ~_TAO_CORBA_WstringDef_Proxy_Broker (void);
                       virtual _TAO_CORBA_WstringDef_Proxy_Impl &select_proxy (
-                          CORBA_WstringDef *object,
-                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                          CORBA_WstringDef *object
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS
                         ) = 0;
 
                     protected:
@@ -4104,8 +4042,8 @@ public:
                       virtual ~_TAO_CORBA_WstringDef_Remote_Proxy_Broker (void);
 
                       virtual _TAO_CORBA_WstringDef_Proxy_Impl &select_proxy (
-                          CORBA_WstringDef *object,
-                          CORBA_Environment &ACE_TRY_ENV
+                          CORBA_WstringDef *object
+                          TAO_ENV_ARG_DECL
                         );
 
                       private:
@@ -4151,16 +4089,14 @@ public:
                         static CORBA_SequenceDef_ptr _duplicate (CORBA_SequenceDef_ptr obj);
 
                         static CORBA_SequenceDef_ptr _narrow (
-                            CORBA::Object_ptr obj,
-                            CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()
-                          );
+                            CORBA::Object_ptr obj
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                         static CORBA_SequenceDef_ptr _unchecked_narrow (
-                            CORBA::Object_ptr obj,
-                            CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()
-                          );
+                            CORBA::Object_ptr obj
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                         static CORBA_SequenceDef_ptr _nil (void)
                           {
@@ -4170,52 +4106,46 @@ public:
                         static void _tao_any_destructor (void*);
 
                         virtual CORBA::ULong bound (
-                            CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()
-                          )
+                            TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           ));
 
                         virtual void bound (
-                            CORBA::ULong bound,
-                            CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()
-                          )
+                            CORBA::ULong bound
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           ));
 
                         virtual CORBA::TypeCode_ptr element_type (
-                            CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()
-                          )
+                            TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           ));
 
                         virtual CORBA_IDLType_ptr element_type_def (
-                            CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()
-                          )
+                            TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           ));
 
                         virtual void element_type_def (
-                            CORBA_IDLType_ptr element_type_def,
-                            CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()
-                          )
+                            CORBA_IDLType_ptr element_type_def
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           ));
 
                         virtual CORBA::Boolean _is_a (
-                            const CORBA::Char *type_id,
-                            CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()
-                          );
+                            const CORBA::Char *type_id
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                         virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -4263,8 +4193,8 @@ public:
                       public:
                         virtual ~_TAO_CORBA_SequenceDef_Proxy_Impl (void) { }
                         virtual CORBA::ULong bound (
-                            CORBA_Object *_collocated_tao_target_,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA_Object *_collocated_tao_target_
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
@@ -4272,24 +4202,24 @@ public:
 
                         virtual void bound (
                             CORBA_Object *_collocated_tao_target_,
-                            CORBA::ULong bound,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA::ULong bound
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           )) = 0;
 
                         virtual CORBA::TypeCode_ptr element_type (
-                            CORBA_Object *_collocated_tao_target_,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA_Object *_collocated_tao_target_
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           )) = 0;
 
                         virtual CORBA_IDLType_ptr element_type_def (
-                            CORBA_Object *_collocated_tao_target_,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA_Object *_collocated_tao_target_
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
@@ -4297,8 +4227,8 @@ public:
 
                         virtual void element_type_def (
                             CORBA_Object *_collocated_tao_target_,
-                            CORBA_IDLType_ptr element_type_def,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA_IDLType_ptr element_type_def
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
@@ -4328,8 +4258,8 @@ public:
 
                         virtual ~_TAO_CORBA_SequenceDef_Remote_Proxy_Impl (void) { }
                         virtual CORBA::ULong bound (
-                            CORBA_Object *_collocated_tao_target_,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA_Object *_collocated_tao_target_
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
@@ -4337,24 +4267,24 @@ public:
 
                         virtual void bound (
                             CORBA_Object *_collocated_tao_target_,
-                            CORBA::ULong bound,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA::ULong bound
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           ));
 
                         virtual CORBA::TypeCode_ptr element_type (
-                            CORBA_Object *_collocated_tao_target_,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA_Object *_collocated_tao_target_
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
                           ));
 
                         virtual CORBA_IDLType_ptr element_type_def (
-                            CORBA_Object *_collocated_tao_target_,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA_Object *_collocated_tao_target_
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
@@ -4362,8 +4292,8 @@ public:
 
                         virtual void element_type_def (
                             CORBA_Object *_collocated_tao_target_,
-                            CORBA_IDLType_ptr element_type_def,
-                            CORBA::Environment &ACE_TRY_ENV
+                            CORBA_IDLType_ptr element_type_def
+                            TAO_ENV_ARG_DECL
                           )
                           ACE_THROW_SPEC ((
                             CORBA::SystemException
@@ -4391,8 +4321,8 @@ public:
                       public:
                         virtual ~_TAO_CORBA_SequenceDef_Proxy_Broker (void);
                         virtual _TAO_CORBA_SequenceDef_Proxy_Impl &select_proxy (
-                            CORBA_SequenceDef *object,
-                            CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                            CORBA_SequenceDef *object
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS
                           ) = 0;
 
                       protected:
@@ -4418,8 +4348,8 @@ public:
                         virtual ~_TAO_CORBA_SequenceDef_Remote_Proxy_Broker (void);
 
                         virtual _TAO_CORBA_SequenceDef_Proxy_Impl &select_proxy (
-                            CORBA_SequenceDef *object,
-                            CORBA_Environment &ACE_TRY_ENV
+                            CORBA_SequenceDef *object
+                            TAO_ENV_ARG_DECL
                           );
 
                         private:
@@ -4465,16 +4395,14 @@ public:
                           static CORBA_ArrayDef_ptr _duplicate (CORBA_ArrayDef_ptr obj);
 
                           static CORBA_ArrayDef_ptr _narrow (
-                              CORBA::Object_ptr obj,
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-                            );
+                              CORBA::Object_ptr obj
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                           static CORBA_ArrayDef_ptr _unchecked_narrow (
-                              CORBA::Object_ptr obj,
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-                            );
+                              CORBA::Object_ptr obj
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                           static CORBA_ArrayDef_ptr _nil (void)
                             {
@@ -4484,52 +4412,46 @@ public:
                           static void _tao_any_destructor (void*);
 
                           virtual CORBA::ULong length (
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-                            )
+                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual void length (
-                              CORBA::ULong length,
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-                            )
+                              CORBA::ULong length
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual CORBA::TypeCode_ptr element_type (
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-                            )
+                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual CORBA_IDLType_ptr element_type_def (
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-                            )
+                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual void element_type_def (
-                              CORBA_IDLType_ptr element_type_def,
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-                            )
+                              CORBA_IDLType_ptr element_type_def
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual CORBA::Boolean _is_a (
-                              const CORBA::Char *type_id,
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-                            );
+                              const CORBA::Char *type_id
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                           virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -4577,8 +4499,8 @@ public:
                         public:
                           virtual ~_TAO_CORBA_ArrayDef_Proxy_Impl (void) { }
                           virtual CORBA::ULong length (
-                              CORBA_Object *_collocated_tao_target_,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA_Object *_collocated_tao_target_
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -4586,24 +4508,24 @@ public:
 
                           virtual void length (
                               CORBA_Object *_collocated_tao_target_,
-                              CORBA::ULong length,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA::ULong length
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             )) = 0;
 
                           virtual CORBA::TypeCode_ptr element_type (
-                              CORBA_Object *_collocated_tao_target_,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA_Object *_collocated_tao_target_
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             )) = 0;
 
                           virtual CORBA_IDLType_ptr element_type_def (
-                              CORBA_Object *_collocated_tao_target_,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA_Object *_collocated_tao_target_
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -4611,8 +4533,8 @@ public:
 
                           virtual void element_type_def (
                               CORBA_Object *_collocated_tao_target_,
-                              CORBA_IDLType_ptr element_type_def,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA_IDLType_ptr element_type_def
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -4642,8 +4564,8 @@ public:
 
                           virtual ~_TAO_CORBA_ArrayDef_Remote_Proxy_Impl (void) { }
                           virtual CORBA::ULong length (
-                              CORBA_Object *_collocated_tao_target_,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA_Object *_collocated_tao_target_
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -4651,24 +4573,24 @@ public:
 
                           virtual void length (
                               CORBA_Object *_collocated_tao_target_,
-                              CORBA::ULong length,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA::ULong length
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual CORBA::TypeCode_ptr element_type (
-                              CORBA_Object *_collocated_tao_target_,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA_Object *_collocated_tao_target_
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual CORBA_IDLType_ptr element_type_def (
-                              CORBA_Object *_collocated_tao_target_,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA_Object *_collocated_tao_target_
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -4676,8 +4598,8 @@ public:
 
                           virtual void element_type_def (
                               CORBA_Object *_collocated_tao_target_,
-                              CORBA_IDLType_ptr element_type_def,
-                              CORBA::Environment &ACE_TRY_ENV
+                              CORBA_IDLType_ptr element_type_def
+                              TAO_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -4705,8 +4627,8 @@ public:
                         public:
                           virtual ~_TAO_CORBA_ArrayDef_Proxy_Broker (void);
                           virtual _TAO_CORBA_ArrayDef_Proxy_Impl &select_proxy (
-                              CORBA_ArrayDef *object,
-                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                              CORBA_ArrayDef *object
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS
                             ) = 0;
 
                         protected:
@@ -4732,8 +4654,8 @@ public:
                           virtual ~_TAO_CORBA_ArrayDef_Remote_Proxy_Broker (void);
 
                           virtual _TAO_CORBA_ArrayDef_Proxy_Impl &select_proxy (
-                              CORBA_ArrayDef *object,
-                              CORBA_Environment &ACE_TRY_ENV
+                              CORBA_ArrayDef *object
+                              TAO_ENV_ARG_DECL
                             );
 
                           private:
@@ -4793,8 +4715,8 @@ public:
                             static void tao_release (CORBA_ExceptionDef_ptr);
                             static CORBA_ExceptionDef_ptr tao_nil (void);
                             static CORBA_ExceptionDef_ptr tao_narrow (
-                                CORBA::Object *,
-                                CORBA::Environment &
+                                CORBA::Object *
+                                TAO_ENV_ARG_DECL_NOT_USED
                               );
                             static CORBA::Object * tao_upcast (void *);
 
@@ -4858,16 +4780,14 @@ public:
                             static CORBA_ExceptionDef_ptr _duplicate (CORBA_ExceptionDef_ptr obj);
 
                             static CORBA_ExceptionDef_ptr _narrow (
-                                CORBA::Object_ptr obj,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()
-                              );
+                                CORBA::Object_ptr obj
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                             static CORBA_ExceptionDef_ptr _unchecked_narrow (
-                                CORBA::Object_ptr obj,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()
-                              );
+                                CORBA::Object_ptr obj
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                             static CORBA_ExceptionDef_ptr _nil (void)
                               {
@@ -4877,35 +4797,31 @@ public:
                             static void _tao_any_destructor (void*);
 
                             virtual CORBA::TypeCode_ptr type (
-                                CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()
-                              )
+                                TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
                               ));
 
                             virtual CORBA_StructMemberSeq * members (
-                                CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()
-                              )
+                                TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
                               ));
 
                             virtual void members (
-                                const CORBA_StructMemberSeq & members,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()
-                              )
+                                const CORBA_StructMemberSeq & members
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
                               ));
 
                             virtual CORBA::Boolean _is_a (
-                                const CORBA::Char *type_id,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()
-                              );
+                                const CORBA::Char *type_id
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                             virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -4954,16 +4870,16 @@ public:
                           public:
                             virtual ~_TAO_CORBA_ExceptionDef_Proxy_Impl (void) { }
                             virtual CORBA::TypeCode_ptr type (
-                                CORBA_Object *_collocated_tao_target_,
-                                CORBA::Environment &ACE_TRY_ENV
+                                CORBA_Object *_collocated_tao_target_
+                                TAO_ENV_ARG_DECL
                               )
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
                               )) = 0;
 
                             virtual CORBA_StructMemberSeq * members (
-                                CORBA_Object *_collocated_tao_target_,
-                                CORBA::Environment &ACE_TRY_ENV
+                                CORBA_Object *_collocated_tao_target_
+                                TAO_ENV_ARG_DECL
                               )
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
@@ -4971,8 +4887,8 @@ public:
 
                             virtual void members (
                                 CORBA_Object *_collocated_tao_target_,
-                                const CORBA_StructMemberSeq & members,
-                                CORBA::Environment &ACE_TRY_ENV
+                                const CORBA_StructMemberSeq & members
+                                TAO_ENV_ARG_DECL
                               )
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
@@ -5003,16 +4919,16 @@ public:
 
                             virtual ~_TAO_CORBA_ExceptionDef_Remote_Proxy_Impl (void) { }
                             virtual CORBA::TypeCode_ptr type (
-                                CORBA_Object *_collocated_tao_target_,
-                                CORBA::Environment &ACE_TRY_ENV
+                                CORBA_Object *_collocated_tao_target_
+                                TAO_ENV_ARG_DECL
                               )
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
                               ));
 
                             virtual CORBA_StructMemberSeq * members (
-                                CORBA_Object *_collocated_tao_target_,
-                                CORBA::Environment &ACE_TRY_ENV
+                                CORBA_Object *_collocated_tao_target_
+                                TAO_ENV_ARG_DECL
                               )
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
@@ -5020,8 +4936,8 @@ public:
 
                             virtual void members (
                                 CORBA_Object *_collocated_tao_target_,
-                                const CORBA_StructMemberSeq & members,
-                                CORBA::Environment &ACE_TRY_ENV
+                                const CORBA_StructMemberSeq & members
+                                TAO_ENV_ARG_DECL
                               )
                               ACE_THROW_SPEC ((
                                 CORBA::SystemException
@@ -5049,8 +4965,8 @@ public:
                           public:
                             virtual ~_TAO_CORBA_ExceptionDef_Proxy_Broker (void);
                             virtual _TAO_CORBA_ExceptionDef_Proxy_Impl &select_proxy (
-                                CORBA_ExceptionDef *object,
-                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                                CORBA_ExceptionDef *object
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS
                               ) = 0;
 
                           protected:
@@ -5076,8 +4992,8 @@ public:
                             virtual ~_TAO_CORBA_ExceptionDef_Remote_Proxy_Broker (void);
 
                             virtual _TAO_CORBA_ExceptionDef_Proxy_Impl &select_proxy (
-                                CORBA_ExceptionDef *object,
-                                CORBA_Environment &ACE_TRY_ENV
+                                CORBA_ExceptionDef *object
+                                TAO_ENV_ARG_DECL
                               );
 
                             private:
@@ -5213,10 +5129,9 @@ public:
 
                               virtual void _downcast (
                                   void* target,
-                                  CORBA_Object *src,
-                                  CORBA_Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                );
+                                  CORBA_Object *src
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
                               virtual CORBA_Object* _upcast (void *src) const;
                             };
 
@@ -5535,8 +5450,8 @@ public:
                               static void tao_release (CORBA_AttributeDef_ptr);
                               static CORBA_AttributeDef_ptr tao_nil (void);
                               static CORBA_AttributeDef_ptr tao_narrow (
-                                  CORBA::Object *,
-                                  CORBA::Environment &
+                                  CORBA::Object *
+                                  TAO_ENV_ARG_DECL_NOT_USED
                                 );
                               static CORBA::Object * tao_upcast (void *);
 
@@ -5599,16 +5514,14 @@ public:
                               static CORBA_AttributeDef_ptr _duplicate (CORBA_AttributeDef_ptr obj);
 
                               static CORBA_AttributeDef_ptr _narrow (
-                                  CORBA::Object_ptr obj,
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                );
+                                  CORBA::Object_ptr obj
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                               static CORBA_AttributeDef_ptr _unchecked_narrow (
-                                  CORBA::Object_ptr obj,
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                );
+                                  CORBA::Object_ptr obj
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                               static CORBA_AttributeDef_ptr _nil (void)
                                 {
@@ -5618,52 +5531,46 @@ public:
                               static void _tao_any_destructor (void*);
 
                               virtual CORBA::TypeCode_ptr type (
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                )
+                                  TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 ));
 
                               virtual CORBA_IDLType_ptr type_def (
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                )
+                                  TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 ));
 
                               virtual void type_def (
-                                  CORBA_IDLType_ptr type_def,
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                )
+                                  CORBA_IDLType_ptr type_def
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 ));
 
                               virtual CORBA::AttributeMode mode (
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                )
+                                  TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 ));
 
                               virtual void mode (
-                                  CORBA::AttributeMode mode,
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                )
+                                  CORBA::AttributeMode mode
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 ));
 
                               virtual CORBA::Boolean _is_a (
-                                  const CORBA::Char *type_id,
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ()
-                                );
+                                  const CORBA::Char *type_id
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                               virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -5711,16 +5618,16 @@ public:
                             public:
                               virtual ~_TAO_CORBA_AttributeDef_Proxy_Impl (void) { }
                               virtual CORBA::TypeCode_ptr type (
-                                  CORBA_Object *_collocated_tao_target_,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA_Object *_collocated_tao_target_
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 )) = 0;
 
                               virtual CORBA_IDLType_ptr type_def (
-                                  CORBA_Object *_collocated_tao_target_,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA_Object *_collocated_tao_target_
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
@@ -5728,16 +5635,16 @@ public:
 
                               virtual void type_def (
                                   CORBA_Object *_collocated_tao_target_,
-                                  CORBA_IDLType_ptr type_def,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA_IDLType_ptr type_def
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 )) = 0;
 
                               virtual CORBA::AttributeMode mode (
-                                  CORBA_Object *_collocated_tao_target_,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA_Object *_collocated_tao_target_
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
@@ -5745,8 +5652,8 @@ public:
 
                               virtual void mode (
                                   CORBA_Object *_collocated_tao_target_,
-                                  CORBA::AttributeMode mode,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA::AttributeMode mode
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
@@ -5776,16 +5683,16 @@ public:
 
                               virtual ~_TAO_CORBA_AttributeDef_Remote_Proxy_Impl (void) { }
                               virtual CORBA::TypeCode_ptr type (
-                                  CORBA_Object *_collocated_tao_target_,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA_Object *_collocated_tao_target_
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 ));
 
                               virtual CORBA_IDLType_ptr type_def (
-                                  CORBA_Object *_collocated_tao_target_,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA_Object *_collocated_tao_target_
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
@@ -5793,16 +5700,16 @@ public:
 
                               virtual void type_def (
                                   CORBA_Object *_collocated_tao_target_,
-                                  CORBA_IDLType_ptr type_def,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA_IDLType_ptr type_def
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
                                 ));
 
                               virtual CORBA::AttributeMode mode (
-                                  CORBA_Object *_collocated_tao_target_,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA_Object *_collocated_tao_target_
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
@@ -5810,8 +5717,8 @@ public:
 
                               virtual void mode (
                                   CORBA_Object *_collocated_tao_target_,
-                                  CORBA::AttributeMode mode,
-                                  CORBA::Environment &ACE_TRY_ENV
+                                  CORBA::AttributeMode mode
+                                  TAO_ENV_ARG_DECL
                                 )
                                 ACE_THROW_SPEC ((
                                   CORBA::SystemException
@@ -5839,8 +5746,8 @@ public:
                             public:
                               virtual ~_TAO_CORBA_AttributeDef_Proxy_Broker (void);
                               virtual _TAO_CORBA_AttributeDef_Proxy_Impl &select_proxy (
-                                  CORBA_AttributeDef *object,
-                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                                  CORBA_AttributeDef *object
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS
                                 ) = 0;
 
                             protected:
@@ -5866,8 +5773,8 @@ public:
                               virtual ~_TAO_CORBA_AttributeDef_Remote_Proxy_Broker (void);
 
                               virtual _TAO_CORBA_AttributeDef_Proxy_Impl &select_proxy (
-                                  CORBA_AttributeDef *object,
-                                  CORBA_Environment &ACE_TRY_ENV
+                                  CORBA_AttributeDef *object
+                                  TAO_ENV_ARG_DECL
                                 );
 
                               private:
@@ -6339,8 +6246,8 @@ public:
                                 static void tao_release (CORBA_OperationDef_ptr);
                                 static CORBA_OperationDef_ptr tao_nil (void);
                                 static CORBA_OperationDef_ptr tao_narrow (
-                                    CORBA::Object *,
-                                    CORBA::Environment &
+                                    CORBA::Object *
+                                    TAO_ENV_ARG_DECL_NOT_USED
                                   );
                                 static CORBA::Object * tao_upcast (void *);
 
@@ -6403,16 +6310,14 @@ public:
                                 static CORBA_OperationDef_ptr _duplicate (CORBA_OperationDef_ptr obj);
 
                                 static CORBA_OperationDef_ptr _narrow (
-                                    CORBA::Object_ptr obj,
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  );
+                                    CORBA::Object_ptr obj
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                 static CORBA_OperationDef_ptr _unchecked_narrow (
-                                    CORBA::Object_ptr obj,
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  );
+                                    CORBA::Object_ptr obj
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                 static CORBA_OperationDef_ptr _nil (void)
                                   {
@@ -6422,103 +6327,91 @@ public:
                                 static void _tao_any_destructor (void*);
 
                                 virtual CORBA::TypeCode_ptr result (
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA_IDLType_ptr result_def (
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual void result_def (
-                                    CORBA_IDLType_ptr result_def,
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    CORBA_IDLType_ptr result_def
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA_ParDescriptionSeq * params (
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual void params (
-                                    const CORBA_ParDescriptionSeq & params,
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    const CORBA_ParDescriptionSeq & params
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA::OperationMode mode (
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual void mode (
-                                    CORBA::OperationMode mode,
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    CORBA::OperationMode mode
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA_ContextIdSeq * contexts (
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual void contexts (
-                                    const CORBA_ContextIdSeq & contexts,
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    const CORBA_ContextIdSeq & contexts
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA_ExceptionDefSeq * exceptions (
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual void exceptions (
-                                    const CORBA_ExceptionDefSeq & exceptions,
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  )
+                                    const CORBA_ExceptionDefSeq & exceptions
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA::Boolean _is_a (
-                                    const CORBA::Char *type_id,
-                                    CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()
-                                  );
+                                    const CORBA::Char *type_id
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                 virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -6566,16 +6459,16 @@ public:
                               public:
                                 virtual ~_TAO_CORBA_OperationDef_Proxy_Impl (void) { }
                                 virtual CORBA::TypeCode_ptr result (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   )) = 0;
 
                                 virtual CORBA_IDLType_ptr result_def (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6583,16 +6476,16 @@ public:
 
                                 virtual void result_def (
                                     CORBA_Object *_collocated_tao_target_,
-                                    CORBA_IDLType_ptr result_def,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_IDLType_ptr result_def
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   )) = 0;
 
                                 virtual CORBA_ParDescriptionSeq * params (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6600,16 +6493,16 @@ public:
 
                                 virtual void params (
                                     CORBA_Object *_collocated_tao_target_,
-                                    const CORBA_ParDescriptionSeq & params,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    const CORBA_ParDescriptionSeq & params
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   )) = 0;
 
                                 virtual CORBA::OperationMode mode (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6617,16 +6510,16 @@ public:
 
                                 virtual void mode (
                                     CORBA_Object *_collocated_tao_target_,
-                                    CORBA::OperationMode mode,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA::OperationMode mode
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   )) = 0;
 
                                 virtual CORBA_ContextIdSeq * contexts (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6634,16 +6527,16 @@ public:
 
                                 virtual void contexts (
                                     CORBA_Object *_collocated_tao_target_,
-                                    const CORBA_ContextIdSeq & contexts,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    const CORBA_ContextIdSeq & contexts
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   )) = 0;
 
                                 virtual CORBA_ExceptionDefSeq * exceptions (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6651,8 +6544,8 @@ public:
 
                                 virtual void exceptions (
                                     CORBA_Object *_collocated_tao_target_,
-                                    const CORBA_ExceptionDefSeq & exceptions,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    const CORBA_ExceptionDefSeq & exceptions
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6682,16 +6575,16 @@ public:
 
                                 virtual ~_TAO_CORBA_OperationDef_Remote_Proxy_Impl (void) { }
                                 virtual CORBA::TypeCode_ptr result (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA_IDLType_ptr result_def (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6699,16 +6592,16 @@ public:
 
                                 virtual void result_def (
                                     CORBA_Object *_collocated_tao_target_,
-                                    CORBA_IDLType_ptr result_def,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_IDLType_ptr result_def
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA_ParDescriptionSeq * params (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6716,16 +6609,16 @@ public:
 
                                 virtual void params (
                                     CORBA_Object *_collocated_tao_target_,
-                                    const CORBA_ParDescriptionSeq & params,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    const CORBA_ParDescriptionSeq & params
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA::OperationMode mode (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6733,16 +6626,16 @@ public:
 
                                 virtual void mode (
                                     CORBA_Object *_collocated_tao_target_,
-                                    CORBA::OperationMode mode,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA::OperationMode mode
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA_ContextIdSeq * contexts (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6750,16 +6643,16 @@ public:
 
                                 virtual void contexts (
                                     CORBA_Object *_collocated_tao_target_,
-                                    const CORBA_ContextIdSeq & contexts,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    const CORBA_ContextIdSeq & contexts
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                   ));
 
                                 virtual CORBA_ExceptionDefSeq * exceptions (
-                                    CORBA_Object *_collocated_tao_target_,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    CORBA_Object *_collocated_tao_target_
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6767,8 +6660,8 @@ public:
 
                                 virtual void exceptions (
                                     CORBA_Object *_collocated_tao_target_,
-                                    const CORBA_ExceptionDefSeq & exceptions,
-                                    CORBA::Environment &ACE_TRY_ENV
+                                    const CORBA_ExceptionDefSeq & exceptions
+                                    TAO_ENV_ARG_DECL
                                   )
                                   ACE_THROW_SPEC ((
                                     CORBA::SystemException
@@ -6796,8 +6689,8 @@ public:
                               public:
                                 virtual ~_TAO_CORBA_OperationDef_Proxy_Broker (void);
                                 virtual _TAO_CORBA_OperationDef_Proxy_Impl &select_proxy (
-                                    CORBA_OperationDef *object,
-                                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                                    CORBA_OperationDef *object
+                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS
                                   ) = 0;
 
                               protected:
@@ -6823,8 +6716,8 @@ public:
                                 virtual ~_TAO_CORBA_OperationDef_Remote_Proxy_Broker (void);
 
                                 virtual _TAO_CORBA_OperationDef_Proxy_Impl &select_proxy (
-                                    CORBA_OperationDef *object,
-                                    CORBA_Environment &ACE_TRY_ENV
+                                    CORBA_OperationDef *object
+                                    TAO_ENV_ARG_DECL
                                   );
 
                                 private:
@@ -7389,8 +7282,8 @@ public:
                                   static void tao_release (CORBA_InterfaceDef_ptr);
                                   static CORBA_InterfaceDef_ptr tao_nil (void);
                                   static CORBA_InterfaceDef_ptr tao_narrow (
-                                      CORBA::Object *,
-                                      CORBA::Environment &
+                                      CORBA::Object *
+                                      TAO_ENV_ARG_DECL_NOT_USED
                                     );
                                   static CORBA::Object * tao_upcast (void *);
 
@@ -7455,16 +7348,14 @@ public:
                                   static CORBA_InterfaceDef_ptr _duplicate (CORBA_InterfaceDef_ptr obj);
 
                                   static CORBA_InterfaceDef_ptr _narrow (
-                                      CORBA::Object_ptr obj,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    );
+                                      CORBA::Object_ptr obj
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                   static CORBA_InterfaceDef_ptr _unchecked_narrow (
-                                      CORBA::Object_ptr obj,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    );
+                                      CORBA::Object_ptr obj
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                   static CORBA_InterfaceDef_ptr _nil (void)
                                     {
@@ -7474,27 +7365,24 @@ public:
                                   static void _tao_any_destructor (void*);
 
                                   virtual CORBA_InterfaceDefSeq * base_interfaces (
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    )
+                                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
                                     ));
 
                                   virtual void base_interfaces (
-                                      const CORBA_InterfaceDefSeq & base_interfaces,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    )
+                                      const CORBA_InterfaceDefSeq & base_interfaces
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
                                     ));
 
                                   virtual CORBA::Boolean is_a (
-                                      const char * interface_id,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    )
+                                      const char * interface_id
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
                                     ));
@@ -7574,9 +7462,8 @@ public:
                                   static CORBA::TypeCode_ptr _tc_FullInterfaceDescription;
 
                                   virtual CORBA_InterfaceDef::FullInterfaceDescription * describe_interface (
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    )
+                                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
                                     ));
@@ -7586,10 +7473,9 @@ public:
                                       const char * name,
                                       const char * version,
                                       CORBA_IDLType_ptr type,
-                                      CORBA::AttributeMode mode,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    )
+                                      CORBA::AttributeMode mode
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
                                     ));
@@ -7602,19 +7488,17 @@ public:
                                       CORBA::OperationMode mode,
                                       const CORBA_ParDescriptionSeq & params,
                                       const CORBA_ExceptionDefSeq & exceptions,
-                                      const CORBA_ContextIdSeq & contexts,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    )
+                                      const CORBA_ContextIdSeq & contexts
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
                                     ));
 
                                   virtual CORBA::Boolean _is_a (
-                                      const CORBA::Char *type_id,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                    );
+                                      const CORBA::Char *type_id
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -7664,8 +7548,8 @@ public:
                                 public:
                                   virtual ~_TAO_CORBA_InterfaceDef_Proxy_Impl (void) { }
                                   virtual CORBA_InterfaceDefSeq * base_interfaces (
-                                      CORBA_Object *_collocated_tao_target_,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      CORBA_Object *_collocated_tao_target_
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7673,8 +7557,8 @@ public:
 
                                   virtual void base_interfaces (
                                       CORBA_Object *_collocated_tao_target_,
-                                      const CORBA_InterfaceDefSeq & base_interfaces,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      const CORBA_InterfaceDefSeq & base_interfaces
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7682,16 +7566,16 @@ public:
 
                                   virtual CORBA::Boolean is_a (
                                       CORBA_Object *_collocated_tao_target_,
-                                      const char * interface_id,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      const char * interface_id
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
                                     )) = 0;
 
                                   virtual CORBA_InterfaceDef::FullInterfaceDescription * describe_interface (
-                                      CORBA_Object *_collocated_tao_target_,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      CORBA_Object *_collocated_tao_target_
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7703,8 +7587,8 @@ public:
                                       const char * name,
                                       const char * version,
                                       CORBA_IDLType_ptr type,
-                                      CORBA::AttributeMode mode,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      CORBA::AttributeMode mode
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7719,8 +7603,8 @@ public:
                                       CORBA::OperationMode mode,
                                       const CORBA_ParDescriptionSeq & params,
                                       const CORBA_ExceptionDefSeq & exceptions,
-                                      const CORBA_ContextIdSeq & contexts,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      const CORBA_ContextIdSeq & contexts
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7752,8 +7636,8 @@ public:
 
                                   virtual ~_TAO_CORBA_InterfaceDef_Remote_Proxy_Impl (void) { }
                                   virtual CORBA_InterfaceDefSeq * base_interfaces (
-                                      CORBA_Object *_collocated_tao_target_,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      CORBA_Object *_collocated_tao_target_
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7761,8 +7645,8 @@ public:
 
                                   virtual void base_interfaces (
                                       CORBA_Object *_collocated_tao_target_,
-                                      const CORBA_InterfaceDefSeq & base_interfaces,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      const CORBA_InterfaceDefSeq & base_interfaces
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7770,16 +7654,16 @@ public:
 
                                   virtual CORBA::Boolean is_a (
                                       CORBA_Object *_collocated_tao_target_,
-                                      const char * interface_id,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      const char * interface_id
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
                                     ));
 
                                   virtual CORBA_InterfaceDef::FullInterfaceDescription * describe_interface (
-                                      CORBA_Object *_collocated_tao_target_,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      CORBA_Object *_collocated_tao_target_
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7791,8 +7675,8 @@ public:
                                       const char * name,
                                       const char * version,
                                       CORBA_IDLType_ptr type,
-                                      CORBA::AttributeMode mode,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      CORBA::AttributeMode mode
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7807,8 +7691,8 @@ public:
                                       CORBA::OperationMode mode,
                                       const CORBA_ParDescriptionSeq & params,
                                       const CORBA_ExceptionDefSeq & exceptions,
-                                      const CORBA_ContextIdSeq & contexts,
-                                      CORBA::Environment &ACE_TRY_ENV
+                                      const CORBA_ContextIdSeq & contexts
+                                      TAO_ENV_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                       CORBA::SystemException
@@ -7836,8 +7720,8 @@ public:
                                 public:
                                   virtual ~_TAO_CORBA_InterfaceDef_Proxy_Broker (void);
                                   virtual _TAO_CORBA_InterfaceDef_Proxy_Impl &select_proxy (
-                                      CORBA_InterfaceDef *object,
-                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                                      CORBA_InterfaceDef *object
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS
                                     ) = 0;
 
                                 protected:
@@ -7863,8 +7747,8 @@ public:
                                   virtual ~_TAO_CORBA_InterfaceDef_Remote_Proxy_Broker (void);
 
                                   virtual _TAO_CORBA_InterfaceDef_Proxy_Impl &select_proxy (
-                                      CORBA_InterfaceDef *object,
-                                      CORBA_Environment &ACE_TRY_ENV
+                                      CORBA_InterfaceDef *object
+                                      TAO_ENV_ARG_DECL
                                     );
 
                                   private:
@@ -7994,8 +7878,8 @@ public:
                                     static void tao_release (CORBA_AbstractInterfaceDef_ptr);
                                     static CORBA_AbstractInterfaceDef_ptr tao_nil (void);
                                     static CORBA_AbstractInterfaceDef_ptr tao_narrow (
-                                        CORBA::Object *,
-                                        CORBA::Environment &
+                                        CORBA::Object *
+                                        TAO_ENV_ARG_DECL_NOT_USED
                                       );
                                     static CORBA::Object * tao_upcast (void *);
 
@@ -8058,16 +7942,14 @@ public:
                                     static CORBA_AbstractInterfaceDef_ptr _duplicate (CORBA_AbstractInterfaceDef_ptr obj);
 
                                     static CORBA_AbstractInterfaceDef_ptr _narrow (
-                                        CORBA::Object_ptr obj,
-                                        CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ()
-                                      );
+                                        CORBA::Object_ptr obj
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                     static CORBA_AbstractInterfaceDef_ptr _unchecked_narrow (
-                                        CORBA::Object_ptr obj,
-                                        CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ()
-                                      );
+                                        CORBA::Object_ptr obj
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                     static CORBA_AbstractInterfaceDef_ptr _nil (void)
                                       {
@@ -8077,10 +7959,9 @@ public:
                                     static void _tao_any_destructor (void*);
 
                                     virtual CORBA::Boolean _is_a (
-                                        const CORBA::Char *type_id,
-                                        CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ()
-                                      );
+                                        const CORBA::Char *type_id
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -8172,8 +8053,8 @@ public:
                                   public:
                                     virtual ~_TAO_CORBA_AbstractInterfaceDef_Proxy_Broker (void);
                                     virtual _TAO_CORBA_AbstractInterfaceDef_Proxy_Impl &select_proxy (
-                                        CORBA_AbstractInterfaceDef *object,
-                                        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                                        CORBA_AbstractInterfaceDef *object
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS
                                       ) = 0;
 
                                   protected:
@@ -8199,8 +8080,8 @@ public:
                                     virtual ~_TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Broker (void);
 
                                     virtual _TAO_CORBA_AbstractInterfaceDef_Proxy_Impl &select_proxy (
-                                        CORBA_AbstractInterfaceDef *object,
-                                        CORBA_Environment &ACE_TRY_ENV
+                                        CORBA_AbstractInterfaceDef *object
+                                        TAO_ENV_ARG_DECL
                                       );
 
                                     private:
@@ -8261,8 +8142,8 @@ public:
                                       static void tao_release (CORBA_LocalInterfaceDef_ptr);
                                       static CORBA_LocalInterfaceDef_ptr tao_nil (void);
                                       static CORBA_LocalInterfaceDef_ptr tao_narrow (
-                                          CORBA::Object *,
-                                          CORBA::Environment &
+                                          CORBA::Object *
+                                          TAO_ENV_ARG_DECL_NOT_USED
                                         );
                                       static CORBA::Object * tao_upcast (void *);
 
@@ -8325,16 +8206,14 @@ public:
                                       static CORBA_LocalInterfaceDef_ptr _duplicate (CORBA_LocalInterfaceDef_ptr obj);
 
                                       static CORBA_LocalInterfaceDef_ptr _narrow (
-                                          CORBA::Object_ptr obj,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                            TAO_default_environment ()
-                                        );
+                                          CORBA::Object_ptr obj
+                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                       static CORBA_LocalInterfaceDef_ptr _unchecked_narrow (
-                                          CORBA::Object_ptr obj,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                            TAO_default_environment ()
-                                        );
+                                          CORBA::Object_ptr obj
+                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                       static CORBA_LocalInterfaceDef_ptr _nil (void)
                                         {
@@ -8344,10 +8223,9 @@ public:
                                       static void _tao_any_destructor (void*);
 
                                       virtual CORBA::Boolean _is_a (
-                                          const CORBA::Char *type_id,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                            TAO_default_environment ()
-                                        );
+                                          const CORBA::Char *type_id
+                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
                                       virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -8439,8 +8317,8 @@ public:
                                     public:
                                       virtual ~_TAO_CORBA_LocalInterfaceDef_Proxy_Broker (void);
                                       virtual _TAO_CORBA_LocalInterfaceDef_Proxy_Impl &select_proxy (
-                                          CORBA_LocalInterfaceDef *object,
-                                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+                                          CORBA_LocalInterfaceDef *object
+                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS
                                         ) = 0;
 
                                     protected:
@@ -8466,8 +8344,8 @@ public:
                                       virtual ~_TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Broker (void);
 
                                       virtual _TAO_CORBA_LocalInterfaceDef_Proxy_Impl &select_proxy (
-                                          CORBA_LocalInterfaceDef *object,
-                                          CORBA_Environment &ACE_TRY_ENV
+                                          CORBA_LocalInterfaceDef *object
+                                          TAO_ENV_ARG_DECL
                                         );
 
                                       private:
@@ -8624,8 +8502,8 @@ public:
                                       TAO_IFR_Client_Export
                                       CORBA_FixedDef_ptr
                                       tao_CORBA_FixedDef_narrow (
-                                          CORBA::Object *,
-                                          CORBA::Environment &
+                                          CORBA::Object *
+                                          TAO_ENV_ARG_DECL_NOT_USED
                                         );
                                       TAO_IFR_Client_Export
                                       CORBA::Object *

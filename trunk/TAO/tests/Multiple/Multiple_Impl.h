@@ -40,27 +40,27 @@ public:
   virtual ~Bottom_Impl (void);
 
   // IDL Interface Methods
-  virtual char * top_quote (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * top_quote (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual char * left_quote (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * left_quote (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual char * right_quote (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * right_quote (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual char * bottom_quote (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * bottom_quote (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -89,24 +89,24 @@ public:
   virtual ~Delegated_Bottom_Impl (void);
 
   // IDL Interface Methods.
-  virtual char * top_quote (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * top_quote (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  virtual char * left_quote (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * left_quote (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  virtual char * right_quote (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * right_quote (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  virtual char * bottom_quote (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * bottom_quote (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

@@ -42,7 +42,7 @@
  * object while other times they may use a remote implementation.
  * For example, the application could be configured to use a remote
  * Event Service or to dynamically load an Event Service
- * implementation and use the local copy instead.  The local Event 
+ * implementation and use the local copy instead.  The local Event
  * Service would federate to its remote peers to work as-if a single
  * Event Service was in place.
  *
@@ -83,8 +83,8 @@ public:
   //   IOR_Parser.h
   virtual int match_prefix (const char *ior_string) const;
   virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb,
-                                          CORBA::Environment &)
+                                          CORBA::ORB_ptr orb
+                                          TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

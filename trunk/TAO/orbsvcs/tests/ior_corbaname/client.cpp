@@ -33,7 +33,7 @@ int main (int argc, char *argv [])
         return 1;
       else
         {
-          return client.run (ACE_TRY_ENV);
+          return client.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

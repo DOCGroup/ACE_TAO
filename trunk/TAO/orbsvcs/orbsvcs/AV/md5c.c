@@ -324,4 +324,3 @@ static void MD5_memset (POINTER output, int value, unsigned int len)
   for (i = 0; i < len; i++)
  ((char *)output)[i] = (char)value;
 }
-

@@ -42,7 +42,7 @@ class TAO_ComponentRepository_i : public TAO_Repository_i
   //
   // = DESCRIPTION
   //    Provides global access to the Interface Repository,
-  //    including access to information related to 
+  //    including access to information related to
   //    CORBA Components.
   //
 public:
@@ -59,10 +59,9 @@ public:
       const char *name,
       const char *version,
       IR::ComponentDef_ptr base_component,
-      const CORBA_InterfaceDefSeq & supports_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      const CORBA_InterfaceDefSeq & supports_interfaces
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   IR::ComponentDef_ptr create_component_i (
@@ -70,10 +69,9 @@ public:
       const char *name,
       const char *version,
       IR::ComponentDef_ptr base_component,
-      const CORBA_InterfaceDefSeq & supports_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      const CORBA_InterfaceDefSeq & supports_interfaces
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual IR::HomeDef_ptr create_home (
@@ -82,10 +80,9 @@ public:
       const char *version,
       IR::HomeDef_ptr base_home,
       IR::ComponentDef_ptr managed_component,
-      CORBA_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA_ValueDef_ptr primary_key
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   IR::HomeDef_ptr create_home_i (
@@ -94,10 +91,9 @@ public:
       const char *version,
       IR::HomeDef_ptr base_home,
       IR::ComponentDef_ptr managed_component,
-      CORBA_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA_ValueDef_ptr primary_key
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -90,47 +90,47 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
       double tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-		  "\treal_time\t = %0.06f ms, \n"
-		  "\tuser_time\t = %0.06f ms, \n"
-		  "\tsystem_time\t = %0.06f ms, \n"
-		  "\t%0.00f calls/second\n",
-		  elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
-		  elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
-		  elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
-		  tmp < 0.0 ? 0.0 : tmp));
+                  "\treal_time\t = %0.06f ms, \n"
+                  "\tuser_time\t = %0.06f ms, \n"
+                  "\tsystem_time\t = %0.06f ms, \n"
+                  "\t%0.00f calls/second\n",
+                  elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
+                  elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
+                  elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
+                  tmp < 0.0 ? 0.0 : tmp));
     }
   else
     ACE_ERROR ((LM_ERROR,
-		"\tNo time stats printed.  Zero iterations or error ocurred.\n"));
+                "\tNo time stats printed.  Zero iterations or error ocurred.\n"));
 }
 
-template <class T, class T_var> 
+template <class T, class T_var>
 class Test
 {
 public:
-  static void run (CORBA::ORB_ptr orb, 
-		   char *IOR,
-		   CORBA::Environment &ACE_TRY_ENV)
+  static void run (CORBA::ORB_ptr orb,
+                   char *IOR
+                   TAO_ENV_ARG_DECL)
   {
     if (IOR != 0)
       {
         // Get an object reference from the argument string.
-        CORBA::Object_var object = orb->string_to_object (IOR, ACE_TRY_ENV);
+        CORBA::Object_var object = orb->string_to_object (IOR TAO_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        /*if (env.exception () != 0)
+        /*if (TAO_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
           {
-            env.print_exception ("CORBA::ORB::string_to_object");
+            TAO_ENV_ARG_PARAMETER.print_exception ("CORBA::ORB::string_to_object");
             return;
           }
         */
         // Try to narrow the object reference to a reference.
-        T_var foo = T::_narrow (object.in (), ACE_TRY_ENV);
+        T_var foo = T::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
         ACE_CHECK;
-      
-        /*if (env.exception () != 0)
+
+        /*if (TAO_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
           {
-            env.print_exception ("_narrow");
+            TAO_ENV_ARG_PARAMETER.print_exception ("_narrow");
             return;
           }
         */
@@ -145,10 +145,10 @@ public:
         for (i = 0; i < iterations ; i++)
           {
             // Invoke the doit() method on the reference.
-            result = foo->doit (ACE_TRY_ENV);
+            result = foo->doit (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_CHECK;
           }
-     
+
         // stop the timer.
         timer.stop ();
         timer.elapsed_time (elapsed_time);
@@ -156,16 +156,16 @@ public:
         // compute average time.
         print_stats (elapsed_time, i);
 
-        /*if (env.exception () != 0)
+        /*if (TAO_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
           {
-            env.print_exception ("doit");
+            TAO_ENV_ARG_PARAMETER.print_exception ("doit");
             return;
           }
         */
         // Print the result of doit () method on the reference.
         ACE_DEBUG ((LM_DEBUG,
                     "%d\n",
-                    result)); 
+                    result));
       }
   }
 };
@@ -173,51 +173,48 @@ public:
 int
 main (int argc, char **argv)
 {
-  //CORBA::Environment env;
-
-  
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
         // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
       if (parse_args_result != 0)
         return parse_args_result;
-  
+
       int i = 1;
 
-      Test<A, A_var>::run (orb.in (), 
-                           IOR[i++], 
-                           ACE_TRY_ENV);
+      Test<A, A_var>::run (orb.in (),
+                           IOR[i++]
+                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Test<Outer::B, Outer::B_var>::run (orb.in (), 
-                                         IOR[i++], 
-                                         ACE_TRY_ENV);
+      Test<Outer::B, Outer::B_var>::run (orb.in (),
+                                         IOR[i++]
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), 
-                                                       IOR[i++], 
-                                                       ACE_TRY_ENV);
+      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
+                                                       IOR[i++]
+                                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test<A, A_var>::run (orb.in (),
-                           IOR[i++], 
-                           ACE_TRY_ENV);
+                           IOR[i++]
+                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Test<Outer::B, Outer::B_var>::run (orb.in (), 
-                                         IOR[i++], 
-                                         ACE_TRY_ENV);
+      Test<Outer::B, Outer::B_var>::run (orb.in (),
+                                         IOR[i++]
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), 
-                                                       IOR[i++], 
-                                                       ACE_TRY_ENV);
+      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
+                                                       IOR[i++]
+                                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -26,7 +26,6 @@ Server_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
   // Create and register the test request interceptors.
   PortableInterceptor::ServerRequestInterceptor_ptr si =
@@ -43,8 +42,8 @@ Server_ORBInitializer::post_init (
   PortableInterceptor::ServerRequestInterceptor_var si_interceptor =
     si;
 
-  info->add_server_request_interceptor (si_interceptor.in (),
-                                        ACE_TRY_ENV);
+  info->add_server_request_interceptor (si_interceptor.in ()
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_NEW_THROW_EX (si,
@@ -58,8 +57,8 @@ Server_ORBInitializer::post_init (
 
   si_interceptor = si;
 
-  info->add_server_request_interceptor (si_interceptor.in (),
-                                        ACE_TRY_ENV);
+  info->add_server_request_interceptor (si_interceptor.in ()
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_NEW_THROW_EX (si,
@@ -73,7 +72,7 @@ Server_ORBInitializer::post_init (
 
   si_interceptor = si;
 
-  info->add_server_request_interceptor (si_interceptor.in (),
-                                        ACE_TRY_ENV);
+  info->add_server_request_interceptor (si_interceptor.in ()
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

@@ -57,15 +57,15 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &ACE_TRY_ENV);
+            char **argv
+            TAO_ENV_ARG_DECL);
   // Initialize the Logger_Server state - parsing arguments and ...
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the ORB.
 
-  Logger_ptr make_logger (const char *name,
-                          CORBA::Environment &ACE_TRY_ENV);
+  Logger_ptr make_logger (const char *name
+                          TAO_ENV_ARG_DECL);
   // This function creates and returns a logger with the given <name>.
   // Currently, <name> is unused.
 
@@ -73,7 +73,7 @@ private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (CORBA::Environment &ACE_TRY_ENV);
+  int init_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Initialises the name server and registers logger_factory with the
   // name server.
 

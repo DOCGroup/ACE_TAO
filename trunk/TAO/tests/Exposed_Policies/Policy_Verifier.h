@@ -39,19 +39,16 @@ public:
   ~Policy_Verifier (void);
 
   void init (int argc,
-             char *argv[],
-             CORBA::Environment &ACE_TRY_ENV
-             = TAO_default_environment ());
+             char *argv[]
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void run (CORBA::Environment &ACE_TRY_ENV
-            = TAO_default_environment ());
+  void run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 private:
   // -- Helper methods --
   void verify_reference (Counter_ptr counter,
-                         RT_Properties *rt_properties,
-                         CORBA::Environment &ACE_TRY_ENV
-                         = TAO_default_environment ());
+                         RT_Properties *rt_properties
+                         TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   CORBA::Boolean check_reference (CORBA::Object_ptr object,
                                   const char *msg);

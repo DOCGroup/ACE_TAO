@@ -39,7 +39,7 @@ CC_Lock::~CC_Lock (void)
 }
 
 void
-CC_Lock::lock (CORBA::Environment &)
+CC_Lock::lock (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));
@@ -47,7 +47,7 @@ CC_Lock::lock (CORBA::Environment &)
 }
 
 CORBA::Boolean
-CC_Lock::try_lock (CORBA::Environment &ACE_TRY_ENV)
+CC_Lock::try_lock (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::try_lock. "));
@@ -82,7 +82,7 @@ CC_Lock::try_lock (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-CC_Lock::unlock (CORBA::Environment &ACE_TRY_ENV)
+CC_Lock::unlock (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
@@ -102,8 +102,8 @@ CC_Lock::unlock (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode,
-                      CORBA::Environment &ACE_TRY_ENV)
+CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode
+                      TAO_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::change_mode\n"));
@@ -201,7 +201,7 @@ void CC_LockModeIterator::First (void)
   current_ = CosConcurrencyControl::intention_read;
 }
 
-void CC_LockModeIterator::Next (CORBA::Environment &ACE_TRY_ENV)
+void CC_LockModeIterator::Next (TAO_ENV_SINGLE_ARG_DECL)
 {
   switch (current_)
     {

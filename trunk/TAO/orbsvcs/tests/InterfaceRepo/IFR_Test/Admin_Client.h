@@ -50,24 +50,24 @@ public:
   // Execute test code.
 
 private:
-  void array_test (CORBA::Environment &ACE_TRY_ENV);
-  void enum_test (CORBA::Environment &ACE_TRY_ENV);
-  void alias_test (CORBA::Environment &ACE_TRY_ENV);
-  void native_test (CORBA::Environment &ACE_TRY_ENV);
-  void struct_test (CORBA::Environment &ACE_TRY_ENV);
-  void union_test (CORBA::Environment &ACE_TRY_ENV);
-  void exception_test (CORBA::Environment &ACE_TRY_ENV);
-  void constant_test (CORBA::Environment &ACE_TRY_ENV);
-  void interface_test (CORBA::Environment &ACE_TRY_ENV);
-  void move_test (CORBA::Environment &ACE_TRY_ENV);
-  void module_test (CORBA::Environment &ACE_TRY_ENV);
+  void array_test (TAO_ENV_SINGLE_ARG_DECL);
+  void enum_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void alias_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void native_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void struct_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void union_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void exception_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void constant_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void interface_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void move_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void module_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // The various IFR tests.
 
   int parse_args (int argc,
                   char *argv[]);
   // Process the command line arguments.
 
-  void (Admin_Client::*test_array_[NUMBER_OF_TESTS])(CORBA::Environment &);
+  void (Admin_Client::*test_array_[NUMBER_OF_TESTS])(TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Array of pointers to the test functions.
 
   static const char *test_names_[];

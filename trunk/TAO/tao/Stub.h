@@ -106,27 +106,22 @@ public:
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  virtual CORBA::Policy_ptr get_policy (CORBA::PolicyType type,
-                                        CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ()
-                                        );
+  virtual CORBA::Policy_ptr get_policy (CORBA::PolicyType type
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  virtual CORBA::Policy_ptr get_client_policy (CORBA::PolicyType type,
-                                               CORBA::Environment &ACE_TRY_ENV =
-                                               TAO_default_environment ()
-                                               );
+
+  virtual CORBA::Policy_ptr get_client_policy (CORBA::PolicyType type
+                                               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
-                                          CORBA::SetOverrideType set_add,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+                                          CORBA::SetOverrideType set_add
+                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  virtual CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types,
-                                                    CORBA::Environment &ACE_TRY_ENV =
-                                                    TAO_default_environment ());
+  virtual CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types
+                                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA::Boolean validate_connection (CORBA::PolicyList_out inconsistent_policies,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ());
+  CORBA::Boolean validate_connection (CORBA::PolicyList_out inconsistent_policies
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -165,8 +160,8 @@ public:
    * that refers/points to the same remote object (i.e. are
    * equivalent).
    */
-  CORBA::ULong hash (CORBA::ULong maximum,
-                     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  CORBA::ULong hash (CORBA::ULong maximum
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Implement the is_equivalent() method for the CORBA::Object
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj);
@@ -293,8 +288,8 @@ public:
    * Get the index of the profile we are using to make the invocation.
    */
   int create_ior_info (IOP::IOR *&ior_info,
-                       CORBA::ULong &index,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       CORBA::ULong &index
+                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
@@ -323,8 +318,8 @@ private:
 
   /// THREAD-SAFE Create the IOR info
   int get_profile_ior_info (TAO_MProfile &profile,
-                            IOP::IOR *&ior_info,
-                            CORBA::Environment &ACE_TRY_ENV)
+                            IOP::IOR *&ior_info
+                            TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 

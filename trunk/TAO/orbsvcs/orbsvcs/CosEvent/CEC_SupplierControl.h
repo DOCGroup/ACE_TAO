@@ -62,21 +62,21 @@ public:
    * not exists (i.e. _non_existent() returns true and/or the
    * CORBA::OBJECT_NOT_EXIST exception has been raised).
    */
-  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy,
-                                   CORBA::Environment &);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy
+                                   TAO_ENV_ARG_DECL_NOT_USED);
 
   /**
    * Invoked by helper classes when they detect that a supplier does
    * not exists (i.e. _non_existent() returns true and/or the
    * CORBA::OBJECT_NOT_EXIST exception has been raised).
    */
-  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy,
-                                   CORBA::Environment &);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy
+                                   TAO_ENV_ARG_DECL_NOT_USED);
 
   /// Some system exception was rasied while trying to push an event.
   virtual void system_exception (TAO_CEC_ProxyPullConsumer *proxy,
-                                 CORBA::SystemException &,
-                                 CORBA::Environment &);
+                                 CORBA::SystemException &
+                                 TAO_ENV_ARG_DECL_NOT_USED);
 };
 
 #if defined (__ACE_INLINE__)

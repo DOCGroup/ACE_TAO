@@ -34,17 +34,17 @@ public:
 
   void connect (int event_a,
                 int event_b,
-                RtecEventChannelAdmin::EventChannel_ptr ec,
-                CORBA::Environment& _env);
+                RtecEventChannelAdmin::EventChannel_ptr ec
+                TAO_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void disconnect (CORBA::Environment &_env);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
-  virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+  virtual void push (const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -80,8 +80,8 @@ public:
 
   void push_consumer (void* consumer_cookie,
                       ACE_hrtime_t arrival,
-                      const RtecEventComm::EventSet& events,
-                      CORBA::Environment&);
+                      const RtecEventComm::EventSet& events
+                      TAO_ENV_ARG_DECL_NOT_USED);
   // Callback method for consumers, if any of our consumers has
   // received events it will invoke this method.
 
@@ -89,9 +89,9 @@ private:
   int parse_args (int argc, char* argv[]);
   // parse the command line args
 
-  void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-                          CORBA::Environment &_env);
-  void disconnect_consumers (CORBA::Environment &_env);
+  void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec
+                          TAO_ENV_ARG_DECL);
+  void disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL);
   // Connect and disconnect the consumers.
 
 private:

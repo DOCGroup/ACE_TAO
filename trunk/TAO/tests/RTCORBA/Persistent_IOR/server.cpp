@@ -12,13 +12,13 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (CORBA::Environment &ACE_TRY_ENV)
+  void method (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
 
@@ -34,7 +34,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (CORBA::Environment &)
+test_i::method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -42,19 +42,19 @@ test_i::method (CORBA::Environment &)
 }
 
 void
-test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));
 
-  this->orb_->shutdown (0,
-                        ACE_TRY_ENV);
+  this->orb_->shutdown (0
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (CORBA_Environment &)
+test_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -111,16 +111,16 @@ parse_args (int argc, char *argv[])
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const char *filename,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    const char *filename
+                    TAO_ENV_ARG_DECL)
 {
   FILE *file =
     ACE_OS::fopen (filename, "w");
   ACE_ASSERT (file != 0);
 
   CORBA::String_var ior =
-    orb->object_to_string (object,
-                           ACE_TRY_ENV);
+    orb->object_to_string (object
+                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (debug)
@@ -143,19 +143,19 @@ write_iors_to_file (CORBA::Object_ptr object,
 void
 create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
                                                PortableServer::POA_ptr root_poa,
-                                               PortableServer::POAManager_ptr poa_manager,
-                                               CORBA::Environment &ACE_TRY_ENV)
+                                               PortableServer::POAManager_ptr poa_manager
+                                               TAO_ENV_ARG_DECL)
 {
   CORBA::PolicyList policies;
 
   CORBA::Policy_var implicit_activation_policy =
-    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
-                                                 ACE_TRY_ENV);
+    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Policy_var lifespan_policy =
-    root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
-                                      ACE_TRY_ENV);
+    root_poa->create_lifespan_policy (PortableServer::PERSISTENT
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   policies.length (policies.length () + 1);
@@ -169,8 +169,8 @@ create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
   PortableServer::POA_var poa =
     root_poa->create_POA ("persistent_child",
                           poa_manager,
-                          policies,
-                          ACE_TRY_ENV);
+                          policies
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   test_i *servant = 0;
@@ -183,13 +183,13 @@ create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
   PortableServer::ServantBase_var safe_servant (servant);
 
   test_var test =
-    servant->_this (ACE_TRY_ENV);
+    servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   write_iors_to_file (test.in (),
                       orb,
-                      persistent_ior,
-                      ACE_TRY_ENV);
+                      persistent_ior
+                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -197,8 +197,8 @@ void
 create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
                                        RTCORBA::RTORB_ptr rt_orb,
                                        PortableServer::POA_ptr root_poa,
-                                       PortableServer::POAManager_ptr poa_manager,
-                                       CORBA::Environment &ACE_TRY_ENV)
+                                       PortableServer::POAManager_ptr poa_manager
+                                       TAO_ENV_ARG_DECL)
 {
   RTCORBA::ThreadpoolId threadpool_id =
     rt_orb->create_threadpool (stacksize,
@@ -207,18 +207,18 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
                                default_thread_priority,
                                allow_request_buffering,
                                max_buffered_requests,
-                               max_request_buffer_size,
-                               ACE_TRY_ENV);
+                               max_request_buffer_size
+                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Policy_var threadpool_policy =
-    rt_orb->create_threadpool_policy (threadpool_id,
-                                      ACE_TRY_ENV);
+    rt_orb->create_threadpool_policy (threadpool_id
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Policy_var implicit_activation_policy =
-    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
-                                                 ACE_TRY_ENV);
+    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::PolicyList policies;
@@ -234,8 +234,8 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
   PortableServer::POA_var poa =
     root_poa->create_POA ("tp_child",
                           poa_manager,
-                          policies,
-                          ACE_TRY_ENV);
+                          policies
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   test_i *servant = 0;
@@ -248,20 +248,20 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
   PortableServer::ServantBase_var safe_servant (servant);
 
   test_var test =
-    servant->_this (ACE_TRY_ENV);
+    servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   write_iors_to_file (test.in (),
                       orb,
-                      transient_ior,
-                      ACE_TRY_ENV);
+                      transient_ior
+                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 create_poa_with_tp_and_persistent_policy (RTCORBA::RTORB_ptr rt_orb,
-                                          PortableServer::POA_ptr root_poa,
-                                          CORBA::Environment &ACE_TRY_ENV)
+                                          PortableServer::POA_ptr root_poa
+                                          TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -274,18 +274,18 @@ create_poa_with_tp_and_persistent_policy (RTCORBA::RTORB_ptr rt_orb,
                                    default_thread_priority,
                                    allow_request_buffering,
                                    max_buffered_requests,
-                                   max_request_buffer_size,
-                                   ACE_TRY_ENV);
+                                   max_request_buffer_size
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Policy_var threadpool_policy =
-        rt_orb->create_threadpool_policy (threadpool_id,
-                                          ACE_TRY_ENV);
+        rt_orb->create_threadpool_policy (threadpool_id
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Policy_var lifespan_policy =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
-                                          ACE_TRY_ENV);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       policies.length (policies.length () + 1);
@@ -299,8 +299,8 @@ create_poa_with_tp_and_persistent_policy (RTCORBA::RTORB_ptr rt_orb,
       PortableServer::POA_var invalid_poa =
         root_poa->create_POA ("invalid",
                               PortableServer::POAManager::_nil (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This next line of code should not run because an exception
@@ -331,8 +331,8 @@ main (int argc, char **argv)
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result =
@@ -341,68 +341,68 @@ main (int argc, char **argv)
         return result;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RTORB"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in (),
-                                 ACE_TRY_ENV);
+        RTCORBA::RTORB::_narrow (object.in ()
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTCurrent",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RTCurrent"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in (),
-                                   ACE_TRY_ENV);
+        RTCORBA::Current::_narrow (object.in ()
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       default_thread_priority =
-        current->the_priority (ACE_TRY_ENV);
+        current->the_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       create_poa_and_servant_with_tp_policy (orb.in (),
                                              rt_orb.in (),
                                              root_poa.in  (),
-                                             poa_manager.in (),
-                                             ACE_TRY_ENV);
+                                             poa_manager.in ()
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       create_poa_and_servant_with_persistent_policy (orb.in (),
                                                      root_poa.in  (),
-                                                     poa_manager.in (),
-                                                     ACE_TRY_ENV);
+                                                     poa_manager.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       create_poa_with_tp_and_persistent_policy (rt_orb.in (),
-                                                root_poa.in  (),
-                                                ACE_TRY_ENV);
+                                                root_poa.in  ()
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

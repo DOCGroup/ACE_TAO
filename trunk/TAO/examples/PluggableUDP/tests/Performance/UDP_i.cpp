@@ -29,21 +29,21 @@ UDP_i::orb (CORBA::ORB_ptr orb)
 
 
 void
-UDP_i::setResponseHandler (UDP_ptr udpHandler,
-                           CORBA::Environment &)
+UDP_i::setResponseHandler (UDP_ptr udpHandler
+                           TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (udpHandler))
     ACE_DEBUG ((LM_DEBUG,
-		"response handler is nil\n"));
+                "response handler is nil\n"));
 
   this->responseHandler_ = UDP::_duplicate (udpHandler);
 }
 
 void
 UDP_i::invoke (const char * client_name,
-               CORBA::Long request_id,
-               CORBA::Environment &ACE_TRY_ENV)
+               CORBA::Long request_id
+               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -79,8 +79,8 @@ UDP_i::invoke (const char * client_name,
       if (!CORBA::is_nil (responseHandler_.in ()))
         {
           responseHandler_->invoke (client_name,
-                                    request_id,
-                                    ACE_TRY_ENV);
+                                    request_id
+                                    TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -95,8 +95,8 @@ UDP_i::invoke (const char * client_name,
 
 
 void
-UDP_i::reset (const char * client_name,
-              CORBA::Environment &ACE_TRY_ENV)
+UDP_i::reset (const char * client_name
+              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -108,8 +108,8 @@ UDP_i::reset (const char * client_name,
                                 0);
       if (!CORBA::is_nil (responseHandler_.in ()))
         {
-          responseHandler_->reset (client_name,
-                                   ACE_TRY_ENV);
+          responseHandler_->reset (client_name
+                                   TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -123,8 +123,8 @@ UDP_i::reset (const char * client_name,
 
 // Shutdown.
 
-void 
-UDP_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+void
+UDP_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -134,13 +134,13 @@ UDP_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_TRY
     {
       // Instruct the ORB to shutdown.
-      this->orb_->shutdown (0, ACE_TRY_ENV);
+      this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception: orb->run");
+                           "Caught exception: orb->run");
     }
   ACE_ENDTRY;
 }

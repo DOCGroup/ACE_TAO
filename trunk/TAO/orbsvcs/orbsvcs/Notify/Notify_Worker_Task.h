@@ -52,10 +52,10 @@ public:
   virtual int init_task (TAO_Notify_AdminProperties* const admin_properties);
   // Init the task
 
-  virtual void shutdown (CORBA::Environment& ACE_TRY_ENV);
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
   // shutdown this task.
 
-  virtual int process_event (TAO_Notify_Command *mb, CORBA::Environment& ACE_TRY_ENV, ACE_Time_Value *tv = 0);
+  virtual int process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DECL, ACE_Time_Value *tv = 0);
   // Process the command.
 };
 

@@ -79,7 +79,7 @@ RTPortableServer::POA_var::operator const ::RTPortableServer::POA_ptr &() const 
   return this->ptr_;
 }
 
-RTPortableServer::POA_var::operator ::RTPortableServer::POA_ptr &() // cast 
+RTPortableServer::POA_var::operator ::RTPortableServer::POA_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -139,11 +139,11 @@ RTPortableServer::POA_var::tao_nil (void)
 
 ::RTPortableServer::POA_ptr
 RTPortableServer::POA_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::RTPortableServer::POA::_narrow (p, ACE_TRY_ENV);
+  return ::RTPortableServer::POA::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -224,16 +224,16 @@ RTPortableServer::POA::~POA (void)
 {}
 
 RTPortableServer::POA_ptr RTPortableServer::POA::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return POA::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return POA::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 RTPortableServer::POA_ptr RTPortableServer::POA::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -283,7 +283,7 @@ void *RTPortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;

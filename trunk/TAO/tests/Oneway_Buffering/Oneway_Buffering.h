@@ -26,17 +26,17 @@ public:
                     Test::Oneway_Buffering_Admin_ptr admin);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &the_payload,
-                             CORBA::Environment &ACE_TRY_ENV)
+  virtual void receive_data (const Test::Payload &the_payload
+                             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void flush (CORBA::Environment &ACE_TRY_ENV)
+  virtual void flush (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void sync (CORBA::Environment &ACE_TRY_ENV)
+  virtual void sync (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

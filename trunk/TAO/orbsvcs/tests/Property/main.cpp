@@ -40,31 +40,31 @@ public:
   ~TAO_PropertySet_Tester (void);
   // Destructor.
 
-  int test_define_property (CORBA::Environment &ACE_TRY_ENV);
+  int test_define_property (TAO_ENV_SINGLE_ARG_DECL);
   // Defines a char,a short, a long, a float and a string property.
 
-  int test_get_number_of_properties (CORBA::Environment &ACE_TRY_ENV);
+  int test_get_number_of_properties (TAO_ENV_SINGLE_ARG_DECL);
   // Gets the number of properties currently defined in the PropertySet.
 
-  int test_delete_property (const char *property_name,
-                            CORBA::Environment &ACE_TRY_ENV);
+  int test_delete_property (const char *property_name
+                            TAO_ENV_ARG_DECL);
   // Delete a given property.
 
-  int test_is_property_defined (CORBA::Environment &ACE_TRY_ENV);
+  int test_is_property_defined (TAO_ENV_SINGLE_ARG_DECL);
   // Check the following properties are defined or
   // no. "char_property", "short_property" and a "string_property".
 
-  int test_get_property_value (CORBA::Environment &ACE_TRY_ENV);
+  int test_get_property_value (TAO_ENV_SINGLE_ARG_DECL);
   // Get the "float_property" and "string_property" and print them
   // out.
 
-  int test_delete_properties (CORBA::Environment &ACE_TRY_ENV);
+  int test_delete_properties (TAO_ENV_SINGLE_ARG_DECL);
   // Delete char, short,long, and string properties.
 
-  int test_delete_all_properties (CORBA::Environment &ACE_TRY_ENV);
+  int test_delete_all_properties (TAO_ENV_SINGLE_ARG_DECL);
   // Delete all the properties.
 
-  int test_define_properties (CORBA::Environment &ACE_TRY_ENV);
+  int test_define_properties (TAO_ENV_SINGLE_ARG_DECL);
   // Define a sequence of properties. a char, a short, a long, a float
   // and a string.
 
@@ -89,14 +89,14 @@ public:
   ~TAO_PropertyNamesIterator_Tester (void);
   // Destructor.
 
-  int test_next_one (CORBA::Environment &ACE_TRY_ENV);
+  int test_next_one (TAO_ENV_SINGLE_ARG_DECL);
   // Test next one method. Iterate thru all the names in the
   // PropertySet and print them out.
 
-  int test_reset (CORBA::Environment &ACE_TRY_ENV);
+  int test_reset (TAO_ENV_SINGLE_ARG_DECL);
   // Test the reset method.
 
-  int test_next_n (size_t n, CORBA::Environment &ACE_TRY_ENV);
+  int test_next_n (size_t n TAO_ENV_ARG_DECL);
   // Test the next_n method.
 private:
   TAO_PropertyNamesIterator iterator_;
@@ -116,7 +116,7 @@ TAO_PropertySet_Tester::~TAO_PropertySet_Tester (void)
 
 // Defines a char, a short, a long, a float and a string.
 int
-TAO_PropertySet_Tester::test_define_property (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertySet_Tester::test_define_property (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking define_property\n"));
@@ -132,8 +132,8 @@ TAO_PropertySet_Tester::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               "Main : Char ch = %c\n",
               ch));
   property_set_.define_property ("char_property",
-                                 anyval,
-                                 ACE_TRY_ENV);
+                                 anyval
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
 
   // Prepare a Short and "define" that in the PropertySet.
@@ -145,8 +145,8 @@ TAO_PropertySet_Tester::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               "Main : Short s = %d\n",
               s));
   property_set_.define_property ("short_property",
-                                 anyval,
-                                 ACE_TRY_ENV);
+                                 anyval
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
 
 
@@ -161,8 +161,8 @@ TAO_PropertySet_Tester::test_define_property (CORBA::Environment &ACE_TRY_ENV)
   CORBA::Any newany(anyval);
 
   property_set_.define_property ("long_property",
-                                 anyval,
-                                 ACE_TRY_ENV);
+                                 anyval
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
 
   // Prepare a Float and "define" that in the PropertySet.
@@ -174,8 +174,8 @@ TAO_PropertySet_Tester::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               "Main : Float f = %f\n",
               f));
   property_set_.define_property ("float_property",
-                                 anyval,
-                                 ACE_TRY_ENV);
+                                 anyval
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
 
   // Prepare a String and "define" that in the PropertySet.
@@ -190,8 +190,8 @@ TAO_PropertySet_Tester::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               strvar.in (),
               newstr));
   property_set_.define_property ("string_property",
-                                 anyval,
-                                 ACE_TRY_ENV);
+                                 anyval
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
 
   return 0;
@@ -199,11 +199,11 @@ TAO_PropertySet_Tester::test_define_property (CORBA::Environment &ACE_TRY_ENV)
 
 // Testing, get_number_of_properties.
 int
-TAO_PropertySet_Tester::test_get_number_of_properties (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertySet_Tester::test_get_number_of_properties (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Main : Number of props : %d\n",
-              property_set_.get_number_of_properties (ACE_TRY_ENV)));
+              property_set_.get_number_of_properties (TAO_ENV_SINGLE_ARG_PARAMETER)));
   ACE_CHECK_RETURN ( 1);
 
   return 0;
@@ -212,12 +212,12 @@ TAO_PropertySet_Tester::test_get_number_of_properties (CORBA::Environment &ACE_T
 // Testing the delete_property. Delets property, with the given name,
 // if that exsists.
 int
-TAO_PropertySet_Tester::test_delete_property (const char *property_name,
-                                              CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertySet_Tester::test_delete_property (const char *property_name
+                                              TAO_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "\nChecking delete_property\n"));
-  property_set_.delete_property (property_name,
-                                 ACE_TRY_ENV);
+  property_set_.delete_property (property_name
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
 
   return 0;
@@ -226,13 +226,13 @@ TAO_PropertySet_Tester::test_delete_property (const char *property_name,
 // Gets the value of "short_property" and "string_property".
 
 int
-TAO_PropertySet_Tester::test_get_property_value (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertySet_Tester::test_get_property_value (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking get_property_value\n"));
 
-  CORBA::Any_ptr anyptr = property_set_.get_property_value ("short_property",
-                                                            ACE_TRY_ENV);
+  CORBA::Any_ptr anyptr = property_set_.get_property_value ("short_property"
+                                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
 
   // Get the short value.
@@ -248,8 +248,8 @@ TAO_PropertySet_Tester::test_get_property_value (CORBA::Environment &ACE_TRY_ENV
     ACE_DEBUG ((LM_DEBUG,
                 "Short property not found\n"));
   // Get the string.
-  anyptr = property_set_.get_property_value ("string_property",
-                                             ACE_TRY_ENV);
+  anyptr = property_set_.get_property_value ("string_property"
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
   if (anyptr != 0)
     {
@@ -268,28 +268,28 @@ TAO_PropertySet_Tester::test_get_property_value (CORBA::Environment &ACE_TRY_ENV
 // "string_property" and "char_property".
 
 int
-TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertySet_Tester::test_is_property_defined (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking is_property_defined ()\n"));
-  if (property_set_.is_property_defined ("short_property",
-                                         ACE_TRY_ENV) == 0)
+  if (property_set_.is_property_defined ("short_property"
+                                         TAO_ENV_ARG_PARAMETER) == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "short_property not defined\n"));
   else
     ACE_DEBUG ((LM_DEBUG,
                 "short_property defined\n"));
   ACE_CHECK_RETURN ( 1);
-  if (property_set_.is_property_defined ("string_property",
-                                         ACE_TRY_ENV) == 0)
+  if (property_set_.is_property_defined ("string_property"
+                                         TAO_ENV_ARG_PARAMETER) == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "string_property not defined\n"));
   else
     ACE_DEBUG ((LM_DEBUG,
                 "string_property defined\n"));
   ACE_CHECK_RETURN ( 1);
-  if (property_set_.is_property_defined ("char_property",
-                                         ACE_TRY_ENV) == 0)
+  if (property_set_.is_property_defined ("char_property"
+                                         TAO_ENV_ARG_PARAMETER) == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "char_property not defined\n"));
   else
@@ -304,7 +304,7 @@ TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &ACE_TRY_EN
 // PropertySet.  Deleting char, short, long, float and string
 // properties.
 int
-TAO_PropertySet_Tester::test_delete_properties (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertySet_Tester::test_delete_properties (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_properties == Deleting a sequence of Properties\n"));
@@ -318,8 +318,8 @@ TAO_PropertySet_Tester::test_delete_properties (CORBA::Environment &ACE_TRY_ENV)
               "Length of sequence %d, Maxlength : %d\n",
               prop_names.length (),
               prop_names.maximum ()));
-  property_set_.delete_properties (prop_names,
-                                   ACE_TRY_ENV);
+  property_set_.delete_properties (prop_names
+                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 0);
 
   return 0;
@@ -328,7 +328,7 @@ TAO_PropertySet_Tester::test_delete_properties (CORBA::Environment &ACE_TRY_ENV)
 // Defines a sequnce of properties containing, char, short, long,
 // float and string property in the property set.
 int
-TAO_PropertySet_Tester::test_define_properties (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertySet_Tester::test_define_properties (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking define_properties == Defining sequence of properties\n"));
@@ -376,7 +376,7 @@ TAO_PropertySet_Tester::test_define_properties (CORBA::Environment &ACE_TRY_ENV)
   nproperties[4].property_value <<= strvar.in ();
 
   // Define this sequence of properties now.
-  property_set_.define_properties (nproperties, ACE_TRY_ENV);
+  property_set_.define_properties (nproperties TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
 
   return 0;
@@ -384,12 +384,12 @@ TAO_PropertySet_Tester::test_define_properties (CORBA::Environment &ACE_TRY_ENV)
 
 // Delete all the properties.
 int
-TAO_PropertySet_Tester::test_delete_all_properties (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertySet_Tester::test_delete_all_properties (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Deleting all the properties
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_all_properties\n"));
-  int ret = property_set_.delete_all_properties (ACE_TRY_ENV);
+  int ret = property_set_.delete_all_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   if (ret == 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -414,18 +414,18 @@ TAO_PropertyNamesIterator_Tester::~TAO_PropertyNamesIterator_Tester (void)
 // Test next one method. Iterate thru all the names in the
 // PropertySet and print them out.
 int
-TAO_PropertyNamesIterator_Tester::test_next_one (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertyNamesIterator_Tester::test_next_one (TAO_ENV_SINGLE_ARG_DECL)
 {
   CORBA::String_var strvar;
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting next_one of NamesIterator, Iterating thru names.\n"));
   // Let us iterate, now.
-  int ret = iterator_.next_one (strvar.out (), ACE_TRY_ENV);
+  int ret = iterator_.next_one (strvar.out () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
   while (ret != 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Str : %s\n", strvar.in ()));
-      ret = iterator_.next_one (strvar.out (), ACE_TRY_ENV);
+      ret = iterator_.next_one (strvar.out () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (1);
     }
   return 0;
@@ -433,25 +433,25 @@ TAO_PropertyNamesIterator_Tester::test_next_one (CORBA::Environment &ACE_TRY_ENV
 
 // Reset the names iterator.
 int
-TAO_PropertyNamesIterator_Tester::test_reset (CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertyNamesIterator_Tester::test_reset (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Resetting (reset ()) the NamesIterator."));
-  iterator_.reset (ACE_TRY_ENV);
+  iterator_.reset (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN ( 1);
   return 0;
 }
 
 // Test the next_n method. Get the next n names and print them all.
 int
-TAO_PropertyNamesIterator_Tester::test_next_n (size_t n,
-                                               CORBA::Environment &ACE_TRY_ENV)
+TAO_PropertyNamesIterator_Tester::test_next_n (size_t n
+                                               TAO_ENV_ARG_DECL)
 {
   CosPropertyService::PropertyNames_var pnames_var;
   ACE_DEBUG ((LM_DEBUG,
               "Checking next_n (), next %d\n",
               n));
-  int ret = iterator_.next_n (n, pnames_var.out (), ACE_TRY_ENV);
+  int ret = iterator_.next_n (n, pnames_var.out () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
   if (ret == 0)
     {
@@ -474,8 +474,8 @@ main (int argc, char *argv [])
     {
       CORBA::ORB_var orb_var = CORBA::ORB_init (argc,
                                                 argv,
-                                                "internet",
-                                                ACE_TRY_ENV);
+                                                "internet"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // = Checking PropertySet interface.
@@ -486,57 +486,57 @@ main (int argc, char *argv [])
 
       // Checking define_property. define a char, a short,a long, a float
       // and a string.
-      propertyset_tester.test_define_property (ACE_TRY_ENV);
+      propertyset_tester.test_define_property (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test the number of properties and print it out.
-      propertyset_tester.test_get_number_of_properties (ACE_TRY_ENV);
+      propertyset_tester.test_get_number_of_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test delete property. Delete "string_property"
-      propertyset_tester.test_delete_property ("string_property", ACE_TRY_ENV);
+      propertyset_tester.test_delete_property ("string_property" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test the number of properties and print it out.
-      propertyset_tester.test_get_number_of_properties (ACE_TRY_ENV);
+      propertyset_tester.test_get_number_of_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test delete_properties. Delete char, short, long and float.
-      propertyset_tester.test_delete_properties (ACE_TRY_ENV);
+      propertyset_tester.test_delete_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test the number of properties and print it out.
-      propertyset_tester.test_get_number_of_properties (ACE_TRY_ENV);
+      propertyset_tester.test_get_number_of_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Define a sequence of properties. char, short, long, float and
       // string.
-      propertyset_tester.test_define_properties (ACE_TRY_ENV);
+      propertyset_tester.test_define_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test the number of properties and print it out.
-      propertyset_tester.test_get_number_of_properties (ACE_TRY_ENV);
+      propertyset_tester.test_get_number_of_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Checking get_property_value. get the value of short and string.
-      propertyset_tester.test_get_property_value (ACE_TRY_ENV);
+      propertyset_tester.test_get_property_value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Checking delete_all_properties.
-      propertyset_tester.test_delete_all_properties (ACE_TRY_ENV);
+      propertyset_tester.test_delete_all_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test the number of properties and print it out.
-      propertyset_tester.test_get_number_of_properties (ACE_TRY_ENV);
+      propertyset_tester.test_get_number_of_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Define a sequence of properties. char, short, long, float and
       // string.
-      propertyset_tester.test_define_properties (ACE_TRY_ENV);
+      propertyset_tester.test_define_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test the number of properties and print it out.
-      propertyset_tester.test_get_number_of_properties (ACE_TRY_ENV);
+      propertyset_tester.test_get_number_of_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // = Checking the PropertyNamesIterator interface.
@@ -548,37 +548,37 @@ main (int argc, char *argv [])
       TAO_PropertyNamesIterator_Tester names_iterator_tester (propertyset_tester);
 
       // Checking next_one. Iterate thru the property names.
-      names_iterator_tester.test_next_one (ACE_TRY_ENV);
+      names_iterator_tester.test_next_one (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Checking the reset () method.
-      names_iterator_tester.test_reset (ACE_TRY_ENV);
+      names_iterator_tester.test_reset (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Iterating again thru the property names.
-      names_iterator_tester.test_next_one (ACE_TRY_ENV);
+      names_iterator_tester.test_next_one (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Reset again.
-      names_iterator_tester.test_reset (ACE_TRY_ENV);
+      names_iterator_tester.test_reset (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Checking next_n. Prints out all the names it has got.
-      names_iterator_tester.test_next_n (6, ACE_TRY_ENV);
+      names_iterator_tester.test_next_n (6 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try next_n without resetting.
-      names_iterator_tester.test_next_n (6, ACE_TRY_ENV);
+      names_iterator_tester.test_next_n (6 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_TRY_ENV.print_exception ("System Exception");
+      TAO_ENV_ARG_PARAMETER.print_exception ("System Exception");
       return -1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_TRY_ENV.print_exception ("User Exception");
+      TAO_ENV_ARG_PARAMETER.print_exception ("User Exception");
       return -1;
     }
   ACE_ENDTRY;

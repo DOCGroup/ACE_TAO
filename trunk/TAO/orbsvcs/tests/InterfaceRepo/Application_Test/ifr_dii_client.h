@@ -19,11 +19,11 @@ public:
   ~IFR_DII_Client (void);
 
   int init (int argc,
-            char *argv[],
-            CORBA::Environment &ACE_TRY_ENV);
+            char *argv[]
+            TAO_ENV_ARG_DECL);
   // Initialize the client.
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the client.
 
 private:
@@ -31,20 +31,20 @@ private:
                   char *argv[]);
   // Process the command line arguments.
 
-  void find_interface_def (CORBA::Environment &ACE_TRY_ENV);
+  void find_interface_def (TAO_ENV_SINGLE_ARG_DECL);
   // Query the object reference to get its InterfaceDef in the IFR.
 
-  void lookup_interface_def (CORBA::Environment &ACE_TRY_ENV);
+  void lookup_interface_def (TAO_ENV_SINGLE_ARG_DECL);
   // Look up the InterfaceDef by name in the IFR.
 
-  void get_operation_def (CORBA::Environment &ACE_TRY_ENV);
+  void get_operation_def (TAO_ENV_SINGLE_ARG_DECL);
   // Find the desired operation in the interface definition.
 
-  void create_dii_request (CORBA::Environment &ACE_TRY_ENV);
+  void create_dii_request (TAO_ENV_SINGLE_ARG_DECL);
   // Query the interface definition to get the info needed
   // to construct a CORBA::Request.
 
-  void invoke_and_display (CORBA::Environment &ACE_TRY_ENV);
+  void invoke_and_display (TAO_ENV_SINGLE_ARG_DECL);
   // Do the invocation and display the results.
 
   CORBA::ORB_var orb_;

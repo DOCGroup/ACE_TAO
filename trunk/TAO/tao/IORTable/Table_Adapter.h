@@ -37,16 +37,16 @@ public:
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (CORBA::Environment &ACE_TRY_ENV);
-  virtual void close (int wait_for_completion,
-                      CORBA::Environment &ACE_TRY_ENV);
-  virtual void check_close (int wait_for_completion,
-                            CORBA::Environment &ACE_TRY_ENV);
+  virtual void open (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void close (int wait_for_completion
+                      TAO_ENV_ARG_DECL);
+  virtual void check_close (int wait_for_completion
+                            TAO_ENV_ARG_DECL);
   virtual int priority (void) const;
   virtual int dispatch (TAO_ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Object_out foward_to
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual const char *name (void) const;
   virtual CORBA::Object_ptr root (void);

@@ -16,15 +16,15 @@ EC_Counting_Supplier::EC_Counting_Supplier (void)
 
 void
 EC_Counting_Supplier::activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                    int milliseconds,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    int milliseconds
+                    TAO_ENV_ARG_DECL)
 {
   RtecEventComm::PushConsumer_var consumer =
-    this->consumer_adapter_._this (ACE_TRY_ENV);
+    this->consumer_adapter_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
+    consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Let's say that the execution time for event 2 is 1
@@ -40,24 +40,24 @@ EC_Counting_Supplier::activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consume
                             0);
 
   this->supplier_proxy_->connect_push_consumer (consumer.in (),
-                                                consumer_qos.get_ConsumerQOS (),
-                                                ACE_TRY_ENV);
+                                                consumer_qos.get_ConsumerQOS ()
+                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-EC_Counting_Supplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
+EC_Counting_Supplier::deactivate (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+  this->supplier_proxy_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POA_var consumer_poa =
-    this->consumer_adapter_._default_POA (ACE_TRY_ENV);
+    this->consumer_adapter_._default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (&this->consumer_adapter_, ACE_TRY_ENV);
+    consumer_poa->servant_to_id (&this->consumer_adapter_ TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  consumer_poa->deactivate_object (consumer_id.in (), ACE_TRY_ENV);
+  consumer_poa->deactivate_object (consumer_id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -67,8 +67,8 @@ EC_Counting_Supplier::connect (
     int published_source,
     int published_type,
     int event_source,
-    int event_type,
-    CORBA::Environment &ACE_TRY_ENV)
+    int event_type
+    TAO_ENV_ARG_DECL)
 {
   this->event_source_ = event_source;
   this->event_type_ = event_type;
@@ -78,49 +78,49 @@ EC_Counting_Supplier::connect (
                        published_type,
                        0, 1);
   this->connect (supplier_admin,
-                 supplier_qos.get_SupplierQOS (),
-                 ACE_TRY_ENV);
+                 supplier_qos.get_SupplierQOS ()
+                 TAO_ENV_ARG_PARAMETER);
 }
 
 void
 EC_Counting_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    const RtecEventChannelAdmin::SupplierQOS &qos,
-    CORBA::Environment &ACE_TRY_ENV)
+    const RtecEventChannelAdmin::SupplierQOS &qos
+    TAO_ENV_ARG_DECL)
 {
   RtecEventComm::PushSupplier_var supplier =
-    this->_this (ACE_TRY_ENV);
+    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     {
       this->consumer_proxy_ =
-        supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
+        supplier_admin->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   this->consumer_proxy_->connect_push_supplier (supplier.in (),
-                                                qos,
-                                                ACE_TRY_ENV);
+                                                qos
+                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-EC_Counting_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
+EC_Counting_Supplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
     {
-      this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+      this->consumer_proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   PortableServer::POA_var supplier_poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var supplier_id =
-    supplier_poa->servant_to_id (this, ACE_TRY_ENV);
+    supplier_poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  supplier_poa->deactivate_object (supplier_id.in (), ACE_TRY_ENV);
+  supplier_poa->deactivate_object (supplier_id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ =
@@ -128,8 +128,8 @@ EC_Counting_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-EC_Counting_Supplier::push (const RtecEventComm::EventSet&,
-                CORBA::Environment &ACE_TRY_ENV)
+EC_Counting_Supplier::push (const RtecEventComm::EventSet&
+                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
@@ -141,19 +141,19 @@ EC_Counting_Supplier::push (const RtecEventComm::EventSet&,
   event[0].header.type = this->event_type_;
   event[0].header.ttl = 1;
 
-  this->consumer_proxy_->push (event, ACE_TRY_ENV);
+  this->consumer_proxy_->push (event TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->event_count++;
 }
 
 void
-EC_Counting_Supplier::disconnect_push_consumer (CORBA::Environment &)
+EC_Counting_Supplier::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-EC_Counting_Supplier::disconnect_push_supplier (CORBA::Environment &)
+EC_Counting_Supplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
@@ -176,7 +176,7 @@ EC_Counting_Supplier_Task::svc ()
 {
   ACE_TRY_NEW_ENV
     {
-      this->run (ACE_TRY_ENV);
+      this->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -201,13 +201,13 @@ EC_Counting_Supplier_Task::push_count (void)
 }
 
 void
-EC_Counting_Supplier_Task::run (CORBA::Environment &ACE_TRY_ENV)
+EC_Counting_Supplier_Task::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   this->event_.length (1);
 
   int stop = 0;
   do {
-    this->supplier_->push (this->event_, ACE_TRY_ENV);
+    this->supplier_->push (this->event_ TAO_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     // Sleep for a short time to avoid spinning...

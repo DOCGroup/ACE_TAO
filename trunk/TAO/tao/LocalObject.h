@@ -54,30 +54,26 @@ public:
    * object.  Or, even easier, add a <is_local> member into
    * CORBA_Object.  I'll take the easier route for now.
    */
-  static CORBA_LocalObject_ptr _narrow (CORBA::Object_ptr obj,
-                                        CORBA_Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+  static CORBA_LocalObject_ptr _narrow (CORBA::Object_ptr obj
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// No-op it is just here to simplify some templates.
   static CORBA_LocalObject_ptr _unchecked_narrow (
-             CORBA::Object_ptr obj,
-             CORBA_Environment &ACE_TRY_ENV =
-               TAO_default_environment ());
+             CORBA::Object_ptr obj
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
   /// Always returns false.
-  virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+  virtual CORBA::Boolean _non_existent (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Throws CORBA::NO_IMPLEMENT.
   virtual CORBA::ImplementationDef_ptr
-      _get_implementation (CORBA_Environment &ACE_TRY_ENV =
-                             TAO_default_environment ());
+      _get_implementation (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Gets info about object from the Interface Repository.
   virtual CORBA_InterfaceDef_ptr _get_interface (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
   /// Throws NO_IMPLEMENT.
@@ -86,9 +82,8 @@ public:
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
+                                CORBA::Flags req_flags
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual void _create_request (CORBA::Context_ptr ctx,
                                 const CORBA::Char *operation,
@@ -97,14 +92,12 @@ public:
                                 CORBA::ExceptionList_ptr exclist,
                                 CORBA::ContextList_ptr ctxtlist,
                                 CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
+                                CORBA::Flags req_flags
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Throws NO_IMPLEMENT.
-  virtual CORBA::Request_ptr _request (const CORBA::Char *operation,
-                                       CORBA_Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ());
+  virtual CORBA::Request_ptr _request (const CORBA::Char *operation
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -112,39 +105,34 @@ public:
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Policy_ptr _get_policy (
-      CORBA::PolicyType type,
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::PolicyType type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Policy_ptr _get_client_policy (
-      CORBA::PolicyType type,
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::PolicyType type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::SetOverrideType set_add
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::PolicyList * _get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types,
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      const CORBA::PolicyTypeSeq & types
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Boolean _validate_connection (
-      CORBA::PolicyList_out inconsistent_policies,
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::PolicyList_out inconsistent_policies
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -153,9 +141,8 @@ public:
    * address of the object.  On non-32 bit platforms, the hash may be
    * non-unique.
    */
-  virtual CORBA::ULong _hash (CORBA::ULong maximum,
-                              CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+  virtual CORBA::ULong _hash (CORBA::ULong maximum
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Try to determine if this object is the same as <other_obj>.  This
@@ -163,9 +150,8 @@ public:
    * private state.  Since that changes easily (when different ORB
    * protocols are in use) there is no default implementation.
    */
-  virtual CORBA::Boolean _is_equivalent (CORBA_Object_ptr other_obj,
-                                         CORBA_Environment &ACE_TRY_ENV =
-                                             TAO_default_environment ())
+  virtual CORBA::Boolean _is_equivalent (CORBA_Object_ptr other_obj
+                                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (());
 
   // = Reference count managment.
@@ -178,7 +164,7 @@ public:
   // = TAO extensions
 
   /// Throws CORBA::NO_IMPLEMENT.
-  virtual TAO_ObjectKey *_key (CORBA_Environment &ACE_TRY_ENV);
+  virtual TAO_ObjectKey *_key (TAO_ENV_SINGLE_ARG_DECL);
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   /// Useful for template programming.

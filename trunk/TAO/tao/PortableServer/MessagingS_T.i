@@ -90,12 +90,12 @@ POA_Messaging::ReplyHandler_tie<T>::_is_owner (CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::ReplyHandler_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_Messaging::ReplyHandler_tie<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->ReplyHandler::_default_POA (ACE_TRY_ENV);
+  return this->ReplyHandler::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */

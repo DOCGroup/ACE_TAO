@@ -89,20 +89,20 @@ public:
 
   /// Concrete implementations can use this methods to keep track of
   /// the consumers interested in this events.
-  virtual void connected (TAO_EC_ProxyPushSupplier *supplier,
-                          CORBA::Environment &env) = 0;
-  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier,
-                          CORBA::Environment &env) = 0;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier,
-                             CORBA::Environment &env) = 0;
+  virtual void connected (TAO_EC_ProxyPushSupplier *supplier
+                          TAO_ENV_ARG_DECL) = 0;
+  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier
+                          TAO_ENV_ARG_DECL) = 0;
+  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier
+                             TAO_ENV_ARG_DECL) = 0;
 
   /// The event channel is shutting down.
-  virtual void shutdown (CORBA::Environment &env) = 0;
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL) = 0;
 
   /// The ProxyPushConsumer delegates on this class to actually send
   /// the event.
-  virtual void push (const RtecEventComm::EventSet &event,
-                     CORBA::Environment &) = 0;
+  virtual void push (const RtecEventComm::EventSet &event
+                     TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
   /// Increment and decrement the reference count, locking must be
   /// provided by the user.
@@ -118,8 +118,8 @@ public:
   TAO_EC_Filter_Worker (RtecEventComm::EventSet &event,
                         const TAO_EC_QOS_Info &event_info);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier,
-                     CORBA::Environment &ACE_TRY_ENV);
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier
+                     TAO_ENV_ARG_DECL);
 
 private:
   /// The event we push on each case, use a reference to avoid copies.

@@ -39,11 +39,11 @@ public:
   // chosen.
 
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-			     const AVStreams::flowSpec &/* the_flows */,
-			     CORBA::Environment &ACE_TRY_ENV)
-	                    ACE_THROW_SPEC(( CORBA::SystemException,
-					     AVStreams::noSuchFlow,
-					     AVStreams::QoSRequestFailed ));
+                             const AVStreams::flowSpec &/* the_flows */
+                             TAO_ENV_ARG_DECL)
+                            ACE_THROW_SPEC(( CORBA::SystemException,
+                                             AVStreams::noSuchFlow,
+                                             AVStreams::QoSRequestFailed ));
 protected:
   TAO_AV_Callback callback_;
   // Application callback.
@@ -68,11 +68,11 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment&);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   // Method to initialize the various data components.
 
-  int pace_data (CORBA::Environment &);
+  int pace_data (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Method to pace and send data from a file.
 
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
@@ -85,7 +85,7 @@ private:
   int parse_args (int argc, char **argv);
   // Method to parse the command line arguments.
 
-  int bind_to_receiver (CORBA::Environment& ACE_TRY_ENV);
+  int bind_to_receiver (TAO_ENV_SINGLE_ARG_DECL);
   // Method that binds the sender to the receiver.
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;

@@ -45,8 +45,8 @@ Test_Small_Union::opname (void) const
 }
 
 void
-Test_Small_Union::dii_req_invoke (CORBA::Request *req,
-                                CORBA::Environment &ACE_TRY_ENV)
+Test_Small_Union::dii_req_invoke (CORBA::Request *req
+                                TAO_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -54,7 +54,7 @@ Test_Small_Union::dii_req_invoke (CORBA::Request *req,
 
   req->set_return_type (Param_Test::_tc_Small_Union);
 
-  req->invoke (ACE_TRY_ENV);
+  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Param_Test::Small_Union *tmp;
@@ -62,26 +62,26 @@ Test_Small_Union::dii_req_invoke (CORBA::Request *req,
   this->ret_ = new Param_Test::Small_Union (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1, ACE_TRY_ENV);
+    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = *tmp;
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2, ACE_TRY_ENV);
+    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Small_Union (*tmp);
 }
 
 int
-Test_Small_Union::init_parameters (Param_Test_ptr objref,
-                                 CORBA::Environment &ACE_TRY_ENV)
+Test_Small_Union::init_parameters (Param_Test_ptr objref
+                                 TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       // get access to a Coffee Object
-      this->cobj_ = objref->make_coffee (ACE_TRY_ENV);
+      this->cobj_ = objref->make_coffee (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->reset_parameters ();
@@ -129,15 +129,15 @@ Test_Small_Union::reset_parameters (void)
 }
 
 int
-Test_Small_Union::run_sii_test (Param_Test_ptr objref,
-                                CORBA::Environment &ACE_TRY_ENV)
+Test_Small_Union::run_sii_test (Param_Test_ptr objref
+                                TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       this->ret_ = objref->test_small_union (this->in_,
                                            this->inout_,
-                                           this->out_,
-                                           ACE_TRY_ENV);
+                                           this->out_
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;

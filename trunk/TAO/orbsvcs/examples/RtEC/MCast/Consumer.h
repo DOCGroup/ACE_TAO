@@ -37,19 +37,19 @@ public:
   Consumer (void);
   // Constructor
 
-  void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                CORBA::Environment &ACE_TRY_ENV);
+  void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
+                TAO_ENV_ARG_DECL);
   // Connect to the Event Channel
 
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the event channel
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+  virtual void push (const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 

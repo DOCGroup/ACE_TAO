@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 #include /**/ "NT_Naming_Service.h"
@@ -136,7 +137,7 @@ TAO_NT_Naming_Service::svc (void)
   ACE_TRY
     {
       report_status (SERVICE_RUNNING);
-      naming_service.run (ACE_TRY_ENV);
+      naming_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

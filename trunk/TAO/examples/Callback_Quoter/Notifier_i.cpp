@@ -40,8 +40,8 @@ Notifier_i::~Notifier_i (void)
 void
 Notifier_i::register_callback (const char *stock_name,
                                CORBA::Long threshold_value,
-                               Callback_Quoter::Consumer_ptr consumer_handler,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               Callback_Quoter::Consumer_ptr consumer_handler
+                               TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Callback_Quoter::Invalid_Stock))
 {
@@ -78,7 +78,7 @@ Notifier_i::register_callback (const char *stock_name,
     {
       // the unbounded set entry is created.
       // NOTE:: its pathetic, but to make this macro call its necessary to name
-      // your environment variable ACE_TRY_ENV
+      // your TAO_ENV_SINGLE_ARG_PARAMETERironment variable TAO_ENV_SINGLE_ARG_PARAMETER
       ACE_NEW_THROW_EX (consumers, CONSUMERS, CORBA::NO_MEMORY ());
       ACE_CHECK;
 
@@ -111,8 +111,8 @@ Notifier_i::orb (CORBA::ORB_ptr orb)
 // Remove the client handler.
 
 void
-Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
-                                 CORBA::Environment &ACE_TRY_ENV)
+Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer
+                                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Callback_Quoter::Invalid_Handle))
 {
@@ -158,8 +158,8 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
 
 void
 Notifier_i::market_status (const char *stock_name,
-                           CORBA::Long stock_value,
-                           CORBA::Environment &)
+                           CORBA::Long stock_value
+                           TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -207,7 +207,7 @@ Notifier_i::market_status (const char *stock_name,
 }
 
 void
-Notifier_i::shutdown (CORBA::Environment &)
+Notifier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if ( this->consumer_map_.close () > 0)

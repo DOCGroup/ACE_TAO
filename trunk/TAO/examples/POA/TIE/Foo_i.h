@@ -25,7 +25,7 @@ public:
   Tie_i (CORBA::Long value);
 
   // Simple doit method
-  virtual CORBA::Long doit (CORBA::Environment &env)
+  virtual CORBA::Long doit (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
@@ -41,11 +41,11 @@ public:
        PortableServer::POA_ptr poa);
 
   // Simple doit method
-  virtual CORBA::Long doit (CORBA::Environment &env)
+  virtual CORBA::Long doit (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
+  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
 
 protected:
 
@@ -67,11 +67,11 @@ public:
          PortableServer::POA_ptr poa);
 
     // Simple doit method
-    virtual CORBA::Long doit (CORBA::Environment &env)
+    virtual CORBA::Long doit (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Returns the Default POA of this Servant object
-    virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
+    virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
 
   protected:
 
@@ -93,11 +93,11 @@ public:
            PortableServer::POA_ptr poa);
 
       // Simple doit method
-      virtual CORBA::Long doit (CORBA::Environment &env)
+      virtual CORBA::Long doit (TAO_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       // Returns the Default POA of this Servant object
-      virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
+      virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
 
     protected:
 

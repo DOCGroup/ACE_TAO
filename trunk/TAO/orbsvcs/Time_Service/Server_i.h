@@ -41,14 +41,14 @@ public:
   // Destructor.
 
   int init (int argc,
-            char *argv[],
-            CORBA::Environment &env);
+            char *argv[]
+            TAO_ENV_ARG_DECL);
   // Initialize the Server state.
 
-  int run (CORBA::Environment &env);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the orb.
 
-  int init_naming_service (CORBA::Environment &env);
+  int init_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Initialises the name server.
 
   int create_server (void);

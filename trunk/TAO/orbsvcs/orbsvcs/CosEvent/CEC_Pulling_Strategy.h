@@ -50,12 +50,12 @@ public:
 
 #if 0
   /// Some strategies may want to keep track of connected consumers.
-  virtual void connected (TAO_CEC_ProxyPullConsumer *,
-                          CORBA::Environment &) = 0;
-  virtual void reconnected (TAO_CEC_ProxyPullConsumer *,
-                            CORBA::Environment &) = 0;
-  virtual void diconnected (TAO_CEC_ProxyPullConsumer *,
-                            CORBA::Environment &) = 0;
+  virtual void connected (TAO_CEC_ProxyPullConsumer *
+                          TAO_ENV_ARG_DECL_NOT_USED) = 0;
+  virtual void reconnected (TAO_CEC_ProxyPullConsumer *
+                            TAO_ENV_ARG_DECL_NOT_USED) = 0;
+  virtual void diconnected (TAO_CEC_ProxyPullConsumer *
+                            TAO_ENV_ARG_DECL_NOT_USED) = 0;
 #endif /* 0 */
 };
 

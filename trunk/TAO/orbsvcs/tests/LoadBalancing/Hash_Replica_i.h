@@ -27,8 +27,8 @@ public:
   Hash_Replica_Impl (Hash_ReplicaControl *control);
   // Constructor
 
-  virtual CORBA::ULong do_hash (const char * str,
-                                CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::ULong do_hash (const char * str
+                                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Perform a simple hashing operation on the input string <str> and
   // return the hashed string <hash_str>.

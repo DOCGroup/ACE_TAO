@@ -46,11 +46,11 @@ public:
 
   virtual void invoke (const char *client_name,
                        UDP_ptr udpHandler,
-                       CORBA::Long request_id,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       CORBA::Long request_id
+                       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &env)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Shutdown the server.

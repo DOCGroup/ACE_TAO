@@ -62,8 +62,8 @@ private:
 
   // Obtain the TSS slot ID assigned to the "SSLIOPCurrent" object.
   size_t get_tss_slot_id (
-    PortableInterceptor::ORBInitInfo_ptr info,
-    CORBA::Environment &ACE_TRY_ENV);
+    PortableInterceptor::ORBInitInfo_ptr info
+    TAO_ENV_ARG_DECL);
 
 private:
 

@@ -77,12 +77,12 @@ public:
   ~TAO_SHMIOP_Profile (void);
 
   /// Initialize this object using the given input string.
-  virtual void parse_string (const char *string,
-                             CORBA::Environment &ACE_TRY_ENV);
+  virtual void parse_string (const char *string
+                             TAO_ENV_ARG_DECL);
 
   /// Return a string representation for this profile.
   /// client must deallocate memory.
-  char * to_string (CORBA::Environment &ACE_TRY_ENV);
+  char * to_string (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Initialize this object using the given CDR octet string.
   int decode (TAO_InputCDR& cdr);
@@ -138,8 +138,8 @@ public:
   CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (CORBA::ULong max,
-                     CORBA::Environment &ACE_TRY_ENV);
+  CORBA::ULong hash (CORBA::ULong max
+                     TAO_ENV_ARG_DECL);
 
   /// Please refer to Profile.h for the documentation of this method
   IOP::TaggedProfile &create_tagged_profile (void);

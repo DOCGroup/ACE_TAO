@@ -145,7 +145,7 @@ NContextExt_Client_i::get_name ()
 }
 
 int
-NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
+NContextExt_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
 {
 
   ACE_TRY_EX (OuterBlock)
@@ -160,8 +160,8 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 
       // Get the stringified form of the name
        CORBA::String_var str_name =
-        this->naming_context_->to_string (name,
-                                          ACE_TRY_ENV);
+        this->naming_context_->to_string (name
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (OuterBlock);
 
       CORBA::Object_var factory_object;
@@ -170,8 +170,8 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
         {
           // Resolve the name using the stringified form of the name
           factory_object =
-            this->naming_context_->resolve_str (str_name.in (),
-                                                ACE_TRY_ENV);
+            this->naming_context_->resolve_str (str_name.in ()
+                                                TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (InnerBlock);
         }
       ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
@@ -181,7 +181,7 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 
       // Narrow
       Web_Server::Iterator_Factory_var factory =
-        Web_Server::Iterator_Factory::_narrow (factory_object.in (), ACE_TRY_ENV);
+        Web_Server::Iterator_Factory::_narrow (factory_object.in () TAO_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK_EX (OuterBlock);
 
@@ -191,15 +191,15 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 
       this->naming_context_->list (2,
                                    bindings_list.out (),
-                                   iter.out (),
-                                   ACE_TRY_ENV);
+                                   iter.out ()
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (OuterBlock);
 
       // Convert the stringified name back as CosNaming::Name and print
       // them out.
       CosNaming::Name *nam =
-        this->naming_context_->to_name (str_name.in (),
-                                        ACE_TRY_ENV);
+        this->naming_context_->to_name (str_name.in ()
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (OuterBlock);
 
       // Declare a CosNaming::Name variable and assign length to it.
@@ -223,8 +223,8 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       CORBA::String_var obj_name = get_name ();
 
       CORBA::String_var url_string = this->naming_context_->to_url (address.in (),
-                                                                    obj_name.in(),
-                                                                    ACE_TRY_ENV);
+                                                                    obj_name.in()
+                                                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (OuterBlock);
 
       if (this->view_ == 0)
@@ -263,7 +263,7 @@ NContextExt_Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
 
@@ -271,8 +271,8 @@ NContextExt_Client_i::init (int argc, char **argv)
       CORBA::ORB_var orb =
         CORBA::ORB_init (this->argc_,
                          this->argv_,
-                         "" /* the ORB name, it can be anything! */,
-                         ACE_TRY_ENV);
+                         "" /* the ORB name, it can be anything! */
+                         TAO_ENV_ARG_PARAMETER);
 
       // There must be at least one argument, the file that has to be
       // retrieved
@@ -281,7 +281,7 @@ NContextExt_Client_i::init (int argc, char **argv)
 
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
-        orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
+        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_context_object.in ()))
@@ -291,8 +291,8 @@ NContextExt_Client_i::init (int argc, char **argv)
 
       // Narrow to get the correct reference
       this->naming_context_ =
-        CosNaming::NamingContextExt::_narrow (naming_context_object.in (),
-                                              ACE_TRY_ENV);
+        CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
+                                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->naming_context_.in ()))

@@ -35,8 +35,8 @@ public:
   virtual ~TAO_Protocols_Hooks (void);
 
   /// Initialize the protocols hooks instance.
-  virtual void init_hooks (TAO_ORB_Core *orb_core,
-                           CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void init_hooks (TAO_ORB_Core *orb_core
+                           TAO_ENV_ARG_DECL) = 0;
 
   virtual int call_client_protocols_hook (int &send_buffer_size,
                                           int &recv_buffer_size,
@@ -51,13 +51,13 @@ public:
 
   virtual void rt_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
-                                   CORBA::Boolean restart,
-                                   CORBA::Environment &ACE_TRY_ENV) = 0;
+                                   CORBA::Boolean restart
+                                   TAO_ENV_ARG_DECL) = 0;
 
   virtual void add_rt_service_context_hook (TAO_Service_Context &service_context,
                                             CORBA::Policy *model_policy,
-                                            CORBA::Short &client_priority,
-                                            CORBA::Environment &ACE_TRY_ENV) = 0;
+                                            CORBA::Short &client_priority
+                                            TAO_ENV_ARG_DECL) = 0;
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean
@@ -77,32 +77,32 @@ public:
    * these operations are no-ops.
    */
   //@{
-  virtual int get_thread_CORBA_priority (CORBA::Short &,
-                                         CORBA::Environment &) = 0;
+  virtual int get_thread_CORBA_priority (CORBA::Short &
+                                         TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
-  virtual int get_thread_native_priority (CORBA::Short &,
-                                          CORBA::Environment &) = 0;
+  virtual int get_thread_native_priority (CORBA::Short &
+                                          TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
   virtual int get_thread_CORBA_and_native_priority (CORBA::Short &,
-                                                    CORBA::Short &,
-                                                    CORBA::Environment &) = 0;
+                                                    CORBA::Short &
+                                                    TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
-  virtual int set_thread_CORBA_priority (CORBA::Short,
-                                         CORBA::Environment &) = 0;
+  virtual int set_thread_CORBA_priority (CORBA::Short
+                                         TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
-  virtual int set_thread_native_priority (CORBA::Short,
-                                          CORBA::Environment &) = 0;
+  virtual int set_thread_native_priority (CORBA::Short
+                                          TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
   //@}
 
   /// Sets the default_policies for ORB.
   /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
   /// default RTCORBA policies: ClientProtocolPolicy.
-  virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual int set_default_policies (TAO_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Sets the default ServerProtocolPolicy.
-  virtual int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry,
-                                                  CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry
+                                                  TAO_ENV_ARG_DECL) = 0;
 
 };
 

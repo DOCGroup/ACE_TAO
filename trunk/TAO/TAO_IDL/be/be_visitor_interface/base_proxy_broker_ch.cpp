@@ -47,8 +47,8 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (be_interface *node)
       << "select_proxy ("
       << be_idt << be_idt_nl;
 
-  *os << node->local_name () << " *object," << be_nl
-      << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
+  *os << node->local_name () << " *object" << be_nl
+      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ") = 0;"
       << be_uidt_nl  // idt = 1
       << be_uidt_nl; // idt = 0

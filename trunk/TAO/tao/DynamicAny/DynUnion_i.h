@@ -33,7 +33,7 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_DynamicAny_Export TAO_DynUnion_i 
+class TAO_DynamicAny_Export TAO_DynUnion_i
   : public virtual DynamicAny::DynUnion,
     public virtual TAO_DynCommon,
     public virtual TAO_Local_RefCounted_Object
@@ -50,96 +50,86 @@ public:
   ~TAO_DynUnion_i (void);
   // Destructor.
 
-  void init (const CORBA_Any& any, CORBA::Environment &ACE_TRY_ENV);
+  void init (const CORBA_Any& any TAO_ENV_ARG_DECL);
   // Constructor taking an Any argument.
 
-  void init (CORBA_TypeCode_ptr tc, CORBA::Environment &ACE_TRY_ENV);
+  void init (CORBA_TypeCode_ptr tc TAO_ENV_ARG_DECL);
   // Constructor taking a typecode argument.
 
   // = LocalObject methods.
   static TAO_DynUnion_i *_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
   // = Functions specific to DynUnion.
 
   virtual DynamicAny::DynAny_ptr get_discriminator (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void set_discriminator (
-      DynamicAny::DynAny_ptr d,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      DynamicAny::DynAny_ptr d
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
       ));
 
   virtual void set_to_default_member (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
       ));
 
   virtual void set_to_no_active_member (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
       ));
 
   virtual CORBA::Boolean has_no_active_member (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::TCKind discriminator_kind (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr member (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::InvalidValue
       ));
 
   virtual char * member_name (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::InvalidValue
       ));
 
   virtual CORBA::TCKind member_kind (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::InvalidValue
@@ -148,10 +138,9 @@ public:
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (
-      const CORBA::Any & value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::Any & value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -159,34 +148,30 @@ public:
       ));
 
   virtual CORBA::Any * to_any (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::Boolean equal (
-      DynamicAny::DynAny_ptr dyn_any,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      DynamicAny::DynAny_ptr dyn_any
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
@@ -196,9 +181,8 @@ private:
   // Code common to the constructor from an Any arg and the member
   // function from_any().
   void set_from_any (const CORBA_Any &any,
-                     CORBA::Boolean from_factory,
-                     CORBA::Environment &ACE_TRY_ENV =
-                       TAO_default_environment ())
+                     CORBA::Boolean from_factory
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -210,9 +194,8 @@ private:
 
   // Iterative check for label value match.
   CORBA::Boolean label_match (const CORBA_Any &my_any,
-                              const CORBA_Any &other_any,
-                              CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ())
+                              const CORBA_Any &other_any
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));

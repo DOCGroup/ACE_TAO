@@ -23,11 +23,11 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
   if (signum == SIGINT)
     {
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "In the signal handler\n"));
-      
+        ACE_DEBUG ((LM_DEBUG,
+                    "In the signal handler\n"));
+
       done = 1;
-    }  
+    }
   return 0;
 }
 
@@ -41,54 +41,54 @@ Receiver_StreamEndPoint::get_callback (const char *flow_name,
   /// Return the receiver application callback to the AVStreams for
   /// future upcalls.
   callback = &this->callback_;
-  
+
   ACE_CString fname = flow_name;
   this->callback_.flowname (fname);
   return 0;
 }
 
-CORBA::Boolean 
-Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec,
-						      CORBA::Environment &)
+CORBA::Boolean
+Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec
+                                                      TAO_ENV_ARG_DECL_NOT_USED)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"In Handle Conection Requested \n"));	     
-  
+                "In Handle Conection Requested \n"));
+
   for (CORBA::ULong i = 0;
        i < flowspec.length ();
        i++)
     {
       TAO_Forward_FlowSpec_Entry entry;
       entry.parse (flowspec[i].in ());
-      
+
       ACE_DEBUG ((LM_DEBUG,
-		  "Handle Conection Requested flowname %s \n",
-		  entry.flowname ()));	     
-      
+                  "Handle Conection Requested flowname %s \n",
+                  entry.flowname ()));
+
       ACE_CString flowname (entry.flowname ());
-        
+
       int result =
-	connection_manager->streamctrls ().find (flowname);
-      
+        connection_manager->streamctrls ().find (flowname);
+
       /// If the flowname is found.
       if (result == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "\nReceiver switching distributers handle connection requested\n\n"));
-	  
-	  ///Destroy old stream with the same flowname.
-	  
-	  connection_manager->destroy (flowname);
-	  
-	}
-      
+        {
+          ACE_DEBUG ((LM_DEBUG, "\nReceiver switching distributers handle connection requested\n\n"));
+
+          ///Destroy old stream with the same flowname.
+
+          connection_manager->destroy (flowname);
+
+        }
+
       /// Store the related streamctrl.
       connection_manager->add_streamctrl (flowname.c_str (),
-					 this);
-      
+                                         this);
+
     }
   return 1;
-  
+
 }
 
 Receiver_Callback::Receiver_Callback (void)
@@ -102,7 +102,7 @@ Receiver_Callback::flowname (void)
   return this->flowname_;
 }
 
-void 
+void
 Receiver_Callback::flowname (const ACE_CString &flowname)
 {
   this->flowname_ = flowname;
@@ -113,11 +113,11 @@ Receiver_Callback::handle_destroy (void)
 {
   /// Called when the sender requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
-	      "Receiver_Callback::end_stream\n"));
+              "Receiver_Callback::end_stream\n"));
 
   /// Remove the related stream control reference.
   connection_manager->streamctrls ().unbind (this->flowname_.c_str ());
-  
+
   return 0;
 }
 int
@@ -180,8 +180,8 @@ Receiver::receiver_name (void)
 
 int
 Receiver::init (int,
-                char **,
-                CORBA::Environment &ACE_TRY_ENV)
+                char **
+                TAO_ENV_ARG_DECL)
 {
   /// Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -197,17 +197,17 @@ Receiver::init (int,
     return result;
 
   connection_manager = &this->connection_manager_;
-  
-  ACE_Reactor *reactor = 
+
+  ACE_Reactor *reactor =
     TAO_AV_CORE::instance ()->reactor ();
-  
+
   if (reactor->register_handler (SIGINT,
-				 &this->signal_handler_) == -1)
+                                 &this->signal_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Error in handler register\n"),
-		      -1);
+                       "Error in handler register\n"),
+                      -1);
   /// Register the signal handler for clean termination of the process.
-  
+
   /// Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
                   TAO_MMDevice (&this->reactive_strategy_),
@@ -218,18 +218,18 @@ Receiver::init (int,
     this->mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->mmdevice_->_this (ACE_TRY_ENV);
+    this->mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   /// Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->receiver_name_,
-                                            mmdevice.in (),
-                                            ACE_TRY_ENV);
+                                            mmdevice.in ()
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   /// Connect to the sender.
-  this->connection_manager_.connect_to_sender (ACE_TRY_ENV);
+  this->connection_manager_.connect_to_sender (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -275,20 +275,20 @@ Receiver::output_file_name (void)
 }
 
 void
-Receiver::shut_down (CORBA::Environment &ACE_TRY_ENV)
+Receiver::shut_down (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       AVStreams::MMDevice_var mmdevice_obj =
-	this->mmdevice_->_this (ACE_TRY_ENV);
-      
+        this->mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+
       ACE_TRY_CHECK;
 
       this->connection_manager_.unbind_receiver (this->sender_name_,
-						 this->receiver_name_,
-						 mmdevice_obj.in ());
+                                                 this->receiver_name_,
+                                                 mmdevice_obj.in ());
 
-      this->connection_manager_.destroy (ACE_TRY_ENV);
+      this->connection_manager_.destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -297,46 +297,46 @@ Receiver::shut_down (CORBA::Environment &ACE_TRY_ENV)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Receiver::unbind");
     }
   ACE_ENDTRY;
-	
+
 }
 
 int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       /// Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA",
-                                           ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_TRY_ENV);
+        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (ACE_TRY_ENV);
+      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in (),
-                                      ACE_TRY_ENV);
+                                      root_poa.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Receiver receiver;
@@ -362,20 +362,20 @@ main (int argc,
 
       result =
         receiver.init (argc,
-                       argv,
-                       ACE_TRY_ENV);
+                       argv
+                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
-      while (!done) 
-	{
-	  orb->perform_work (ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
+      while (!done)
+        {
+          orb->perform_work (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
-      receiver.shut_down (ACE_TRY_ENV);
+      receiver.shut_down (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::fclose (output_file);

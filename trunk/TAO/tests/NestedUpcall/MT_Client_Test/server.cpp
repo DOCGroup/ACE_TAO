@@ -63,15 +63,15 @@ MT_Object_Server::parse_args (void)
 
 int
 MT_Object_Server::init (int argc,
-                       char** argv,
-                       CORBA::Environment& ACE_TRY_ENV)
+                       char** argv
+                       TAO_ENV_ARG_DECL)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->orb_manager_.init_child_poa (argc,
                                      argv,
-                                     "child_poa",
-                                     ACE_TRY_ENV);
+                                     "child_poa"
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
@@ -82,8 +82,8 @@ MT_Object_Server::init (int argc,
 
   CORBA::String_var str;
   str = this->orb_manager_.activate_under_child_poa ("MT_Object",
-                                                     &this->mT_Object_i_,
-                                                     ACE_TRY_ENV);
+                                                     &this->mT_Object_i_
+                                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -104,9 +104,9 @@ MT_Object_Server::init (int argc,
 
 
 int
-MT_Object_Server::run (CORBA::Environment& env)
+MT_Object_Server::run (TAO_ENV_SINGLE_ARG_DECL)
 {
-  if (this->orb_manager_.run (env) == -1)
+  if (this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "NestedUpCalls_Server::run"),
                       -1);
@@ -125,17 +125,17 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Object A Server \n \n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      int r = MT_Object_Server.init (argc,argv,ACE_TRY_ENV);
+      int r = MT_Object_Server.init (argc,argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (r == -1)
         return 1;
       else
         {
-          MT_Object_Server.run (ACE_TRY_ENV);
+          MT_Object_Server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

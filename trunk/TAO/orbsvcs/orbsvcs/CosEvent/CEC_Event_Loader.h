@@ -48,9 +48,8 @@ public:
    * @name Derived from TAO_Object_Loader
    */
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                   int argc, char *argv[],
-                                   CORBA::Environment
-                                   &ACE_TRY_ENV)
+                                   int argc, char *argv[]
+                                   TAO_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

@@ -2,41 +2,41 @@
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    connected (PROXY *proxy,
-               CORBA::Environment &ACE_TRY_ENV)
+    connected (PROXY *proxy
+               TAO_ENV_ARG_DECL)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   proxy->_incr_refcnt ();
-  this->collection_.connected (proxy, ACE_TRY_ENV);
+  this->collection_.connected (proxy TAO_ENV_ARG_PARAMETER);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    reconnected (PROXY *proxy,
-                 CORBA::Environment &ACE_TRY_ENV)
+    reconnected (PROXY *proxy
+                 TAO_ENV_ARG_DECL)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   proxy->_incr_refcnt ();
-  this->collection_.reconnected (proxy, ACE_TRY_ENV);
+  this->collection_.reconnected (proxy TAO_ENV_ARG_PARAMETER);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    disconnected (PROXY *proxy,
-                  CORBA::Environment &ACE_TRY_ENV)
+    disconnected (PROXY *proxy
+                  TAO_ENV_ARG_DECL)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-  this->collection_.disconnected (proxy, ACE_TRY_ENV);
+  this->collection_.disconnected (proxy TAO_ENV_ARG_PARAMETER);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    shutdown (CORBA::Environment &ACE_TRY_ENV)
+    shutdown (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-  this->collection_.shutdown (ACE_TRY_ENV);
+  this->collection_.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 }

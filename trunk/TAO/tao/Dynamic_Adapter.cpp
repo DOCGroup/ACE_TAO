@@ -12,7 +12,7 @@ TAO_Dynamic_Adapter::~TAO_Dynamic_Adapter (void)
 
 // Methods to be overridden.
 
-void 
+void
 TAO_Dynamic_Adapter::create_request (
     CORBA::Object_ptr /* obj */,
     CORBA::ORB_ptr /* orb */,
@@ -21,57 +21,57 @@ TAO_Dynamic_Adapter::create_request (
     CORBA::NamedValue_ptr /* result */,
     CORBA::ExceptionList_ptr /* exceptions */,
     CORBA::Request_ptr & /* request */,
-    CORBA::Flags /* req_flags */,
-    CORBA_Environment & /* ACE_TRY_ENV */
+    CORBA::Flags /* req_flags */
+    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
   )
 {
 }
 
-CORBA::Request_ptr 
+CORBA::Request_ptr
 TAO_Dynamic_Adapter::request (CORBA::Object_ptr /* obj */,
                               CORBA::ORB_ptr /* orb */,
-                              const char * /* op */,
-                              CORBA::Environment & /* ACE_TRY_ENV */)
+                              const char * /* op */
+                              TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
 {
   return 0;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Dynamic_Adapter::context_is_nil (CORBA::Context_ptr)
 {
   return 0;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Dynamic_Adapter::request_is_nil (CORBA::Request_ptr)
 {
   return 0;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Dynamic_Adapter::server_request_is_nil (CORBA::ServerRequest_ptr)
 {
   return 0;
 }
 
-void 
+void
 TAO_Dynamic_Adapter::context_release (CORBA::Context_ptr)
 {
 }
 
-void 
+void
 TAO_Dynamic_Adapter::request_release (CORBA::Request_ptr)
 {
 }
 
-void 
+void
 TAO_Dynamic_Adapter::server_request_release (CORBA::ServerRequest_ptr)
 {
 }
 
 void
-TAO_Dynamic_Adapter::create_exception_list (CORBA::ExceptionList_ptr &,
-                                            CORBA_Environment &)
+TAO_Dynamic_Adapter::create_exception_list (CORBA::ExceptionList_ptr &
+                                            TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -85,7 +85,7 @@ CORBA::is_nil (CORBA::Context_ptr ctx)
 {
   TAO_Dynamic_Adapter *dynamic_adapter =
     ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
-	      TAO_ORB_Core::dynamic_adapter_name ()
+              TAO_ORB_Core::dynamic_adapter_name ()
       );
 
   return dynamic_adapter->context_is_nil (ctx);

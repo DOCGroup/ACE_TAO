@@ -49,7 +49,7 @@ public:
 private:
   int frame_count_;
   // Keeping a count of the incoming frames.
-  
+
   ACE_Message_Block mb_;
   // Message block into which data is read from a file and then sent.
 };
@@ -93,8 +93,8 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   // Initialize data components.
 
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
@@ -130,7 +130,7 @@ protected:
 
   ACE_CString filename_;
   // File from which data is read.
-  
+
   int parse_args (int argc, char **argv);
   // Method to parse the command line arguments.
 

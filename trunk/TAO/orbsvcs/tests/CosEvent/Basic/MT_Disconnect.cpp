@@ -10,48 +10,48 @@
 ACE_RCSID(CEC_Tests, MT_Disconnect, "$Id$")
 
 static void run_test (PortableServer::POA_ptr poa,
-                      int use_callbacks,
-                      CORBA::Environment &ACE_TRY_ENV);
+                      int use_callbacks
+                      TAO_ENV_ARG_DECL);
 
 int
 main (int argc, char* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // ****************************************************************
-
-      run_test (poa.in (), 0, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      run_test (poa.in (), 1, ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      poa->destroy (1, 1, ACE_TRY_ENV);
+      run_test (poa.in (), 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      run_test (poa.in (), 1 TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // ****************************************************************
+
+      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -67,33 +67,33 @@ main (int argc, char* argv[])
 // ****************************************************************
 
 void
-deactivate_servant (PortableServer::Servant servant,
-                    CORBA::Environment &ACE_TRY_ENV)
+deactivate_servant (PortableServer::Servant servant
+                    TAO_ENV_ARG_DECL)
 {
   PortableServer::POA_var poa =
-    servant->_default_POA (ACE_TRY_ENV);
+    servant->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (servant, ACE_TRY_ENV);
+    poa->servant_to_id (servant TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 run_test (PortableServer::POA_ptr poa,
-          int use_callbacks,
-          CORBA::Environment &ACE_TRY_ENV)
+          int use_callbacks
+          TAO_ENV_ARG_DECL)
 {
   TAO_CEC_EventChannel_Attributes attributes (poa, poa);
   attributes.disconnect_callbacks = use_callbacks;
 
   TAO_CEC_EventChannel ec_impl (attributes);
-  ec_impl.activate (ACE_TRY_ENV);
+  ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosEventChannelAdmin::EventChannel_var event_channel =
-    ec_impl._this (ACE_TRY_ENV);
+    ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Task task (event_channel.in (), use_callbacks);
@@ -106,10 +106,10 @@ run_test (PortableServer::POA_ptr poa,
   // Wait for all the threads to complete and the return
   ACE_Thread_Manager::instance ()->wait ();
 
-  event_channel->destroy (ACE_TRY_ENV);
+  event_channel->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  deactivate_servant (&ec_impl, ACE_TRY_ENV);
+  deactivate_servant (&ec_impl TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -128,7 +128,7 @@ Task::svc ()
     {
       ACE_TRY_NEW_ENV
         {
-          this->run_iteration (ACE_TRY_ENV);
+          this->run_iteration (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -141,16 +141,16 @@ Task::svc ()
 }
 
 void
-Task::run_iteration (CORBA::Environment &ACE_TRY_ENV)
+Task::run_iteration (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Obtain the consumer admin..
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel->for_consumers (ACE_TRY_ENV);
+    this->event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // and the supplier admin..
   CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel->for_suppliers (ACE_TRY_ENV);
+    this->event_channel->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // ****************************************************************
@@ -164,38 +164,38 @@ Task::run_iteration (CORBA::Environment &ACE_TRY_ENV)
 
   for (int i = 0; i != iterations; ++i)
     {
-      supplier_0.connect (supplier_admin.in (),
-                          ACE_TRY_ENV);
+      supplier_0.connect (supplier_admin.in ()
+                          TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      consumer_0.connect (consumer_admin.in (),
-                          ACE_TRY_ENV);
+      consumer_0.connect (consumer_admin.in ()
+                          TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
       if (i % 2 == 1)
         {
-          supplier_1.connect (supplier_admin.in (),
-                              ACE_TRY_ENV);
+          supplier_1.connect (supplier_admin.in ()
+                              TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          consumer_1.connect (consumer_admin.in (),
-                              ACE_TRY_ENV);
+          consumer_1.connect (consumer_admin.in ()
+                              TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
-      supplier_0.disconnect (ACE_TRY_ENV);
+      supplier_0.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      consumer_0.disconnect (ACE_TRY_ENV);
+      consumer_0.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       if (i % 2 == 1)
         {
-          consumer_1.disconnect (ACE_TRY_ENV);
+          consumer_1.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
-          supplier_1.disconnect (ACE_TRY_ENV);
+          supplier_1.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
 
-  deactivate_servant (&supplier_0, ACE_TRY_ENV);
+  deactivate_servant (&supplier_0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  deactivate_servant (&consumer_0, ACE_TRY_ENV);
+  deactivate_servant (&consumer_0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong count_0 = 0;

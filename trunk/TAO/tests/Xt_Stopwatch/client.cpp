@@ -7,7 +7,7 @@ ACE_RCSID(Xt_Stopwatch, client, "$Id$")
 
 #if !defined (ACE_HAS_XT)
 
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_INFO,
@@ -38,17 +38,17 @@ main (int argc, char *argv[])
 
   Control control (toplevel);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Client client (orb.in ());
 
-      client.parse_args (argc, argv, ACE_TRY_ENV);
+      client.parse_args (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       client.add_callback (control);
@@ -60,7 +60,7 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Catched exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
@@ -78,8 +78,8 @@ Client::~Client (void)
 
 void
 Client::parse_args (int argc,
-                    char *argv[],
-                    CORBA::Environment &ACE_TRY_ENV)
+                    char *argv[]
+                    TAO_ENV_ARG_DECL)
 {
   const char *ior = "file://test.ior";
 
@@ -102,11 +102,11 @@ Client::parse_args (int argc,
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior, ACE_TRY_ENV);
+    this->orb_->string_to_object (ior TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->server_ =
-    Stopwatch::_narrow (object.in (), ACE_TRY_ENV);
+    Stopwatch::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil(this->server_.in ()))
@@ -157,10 +157,10 @@ Client::stop_callback (Widget /*widget*/,
 void
 Client::start_hook (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      this->server_->start (ACE_TRY_ENV);
+      this->server_->start (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -175,10 +175,10 @@ Client::start_hook (void)
 void
 Client::stop_hook (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      this->server_->stop (ACE_TRY_ENV);
+      this->server_->stop (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

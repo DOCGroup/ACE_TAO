@@ -11,14 +11,14 @@ TAO_IFR_Client_Adapter::~TAO_IFR_Client_Adapter (void)
 
 // Methods to be overridden.
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_IFR_Client_Adapter::interfacedef_cdr_insert (TAO_OutputCDR &,
                                                  CORBA_InterfaceDef_ptr)
 {
   return 0;
 }
 
-void 
+void
 TAO_IFR_Client_Adapter::interfacedef_any_insert (CORBA_Any &,
                                                  CORBA_InterfaceDef_ptr)
 {
@@ -31,15 +31,15 @@ TAO_IFR_Client_Adapter::dispose (CORBA_InterfaceDef_ptr)
 
 CORBA_InterfaceDef_ptr
 TAO_IFR_Client_Adapter::get_interface (CORBA::ORB_ptr,
-                                       const char *,
-                                       CORBA::Environment &)
+                                       const char *
+                                       TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }
 
 CORBA_InterfaceDef_ptr
-TAO_IFR_Client_Adapter::get_interface_remote (const CORBA::Object_ptr,
-                                              CORBA_Environment &)
+TAO_IFR_Client_Adapter::get_interface_remote (const CORBA::Object_ptr
+                                              TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }

@@ -26,8 +26,8 @@ TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
 void
 TAO_PolicyFactory_Registry::register_policy_factory (
   CORBA::PolicyType type,
-  PortableInterceptor::PolicyFactory_ptr policy_factory,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::PolicyFactory_ptr policy_factory
+  TAO_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (policy_factory))
     ACE_THROW (CORBA::BAD_PARAM (
@@ -58,8 +58,8 @@ TAO_PolicyFactory_Registry::register_policy_factory (
 
 CORBA::Policy_ptr
 TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any &value,
-                                           CORBA::Environment &ACE_TRY_ENV)
+                                           const CORBA::Any &value
+                                           TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {

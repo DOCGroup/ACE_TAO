@@ -34,8 +34,8 @@ public:
   virtual ~Object_B_i (void);
   // Destructor.
 
-  virtual void foo(Object_A_ptr theObject_A_ptr,
-                   CORBA::Environment &env)
+  virtual void foo(Object_A_ptr theObject_A_ptr
+                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -22,8 +22,8 @@ TAO_ThruPOA_Object_Proxy_Impl::~TAO_ThruPOA_Object_Proxy_Impl (void)
 
 CORBA::Boolean
 TAO_ThruPOA_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
-                                      const CORBA::Char *logical_type_id,
-                                      CORBA_Environment &ACE_TRY_ENV)
+                                      const CORBA::Char *logical_type_id
+                                      TAO_ENV_ARG_DECL)
 {
   TAO_Object_Adapter::Servant_Upcall
     servant_upcall (target->_stubobj ()->servant_orb_var ()->orb_core ());
@@ -32,18 +32,18 @@ TAO_ThruPOA_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
   servant_upcall.prepare_for_upcall (
     target->_object_key (),
     "_is_a",
-    forward_to.out (),
-    ACE_TRY_ENV);
+    forward_to.out ()
+    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  return servant_upcall.servant ()->_is_a (logical_type_id, ACE_TRY_ENV);
+  return servant_upcall.servant ()->_is_a (logical_type_id TAO_ENV_ARG_PARAMETER);
 }
 
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 CORBA::Boolean
-TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
-                                              CORBA_Environment &ACE_TRY_ENV)
+TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
+                                              TAO_ENV_ARG_DECL)
 {
   CORBA::Boolean _tao_retval = 0;
 
@@ -58,11 +58,11 @@ TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
       servant_upcall.prepare_for_upcall (
          target->_object_key (),
          "_non_existent",
-         forward_to.out (),
-         ACE_TRY_ENV);
+         forward_to.out ()
+         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      return servant_upcall.servant ()->_non_existent (ACE_TRY_ENV);
+      return servant_upcall.servant ()->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
@@ -78,8 +78,8 @@ TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
 }
 
 CORBA_InterfaceDef_ptr
-TAO_ThruPOA_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target,
-                                               CORBA_Environment &ACE_TRY_ENV)
+TAO_ThruPOA_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
+                                               TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -92,11 +92,11 @@ TAO_ThruPOA_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target,
       servant_upcall.prepare_for_upcall (
          target->_object_key (),
          "_get_interface",
-         forward_to.out (),
-         ACE_TRY_ENV);
+         forward_to.out ()
+         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      return servant_upcall.servant ()->_get_interface (ACE_TRY_ENV);
+      return servant_upcall.servant ()->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {

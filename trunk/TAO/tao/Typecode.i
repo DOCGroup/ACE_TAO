@@ -36,51 +36,51 @@ CORBA::TypeCode::_nil (void)
 }
 
 ACE_INLINE CORBA::TCKind
-CORBA_TypeCode::kind (CORBA::Environment &) const
+CORBA_TypeCode::kind (TAO_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return (CORBA::TCKind) this->kind_;
 }
 
 // Returns true if the two typecodes are equivalent.
 ACE_INLINE CORBA::Boolean
-CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
-                            CORBA::Environment &ACE_TRY_ENV) const
+CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc
+                            TAO_ENV_ARG_DECL) const
 {
   return this->equ_common (tc,
-                           1,
-			   ACE_TRY_ENV);
+                           1
+			    TAO_ENV_ARG_PARAMETER);
 }
 
 // Returns true if the two typecodes are identical.
 ACE_INLINE CORBA::Boolean
-CORBA_TypeCode::equal (CORBA::TypeCode_ptr tc,
-                       CORBA::Environment &ACE_TRY_ENV) const
+CORBA_TypeCode::equal (CORBA::TypeCode_ptr tc
+                       TAO_ENV_ARG_DECL) const
 {
   return this->equ_common (tc,
-                           0,
-			   ACE_TRY_ENV);
+                           0
+			    TAO_ENV_ARG_PARAMETER);
 }
 
 // returns the Repository ID
 ACE_INLINE const char *
-CORBA_TypeCode::id (CORBA::Environment &ACE_TRY_ENV) const
+CORBA_TypeCode::id (TAO_ENV_SINGLE_ARG_DECL) const
 {
   // if already precomputed
   if (this->private_state_->tc_id_known_)
     return this->private_state_->tc_id_;
   else
-    return this->private_id (ACE_TRY_ENV);
+    return this->private_id (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // returns the string name
 ACE_INLINE const char *
-CORBA_TypeCode::name (CORBA::Environment &ACE_TRY_ENV) const
+CORBA_TypeCode::name (TAO_ENV_SINGLE_ARG_DECL) const
 {
   // if already precomputed
   if (this->private_state_->tc_name_known_)
     return this->private_state_->tc_name_;
   else
-    return this->private_name (ACE_TRY_ENV);
+    return this->private_name (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // Return the number of members defined by this typecode
@@ -89,13 +89,13 @@ CORBA_TypeCode::name (CORBA::Environment &ACE_TRY_ENV) const
 // For the rest of the cases, raises the BadKind exception.
 
 ACE_INLINE CORBA::ULong
-CORBA_TypeCode::member_count (CORBA::Environment &ACE_TRY_ENV) const
+CORBA_TypeCode::member_count (TAO_ENV_SINGLE_ARG_DECL) const
 {
   // if already precomputed
   if (this->private_state_->tc_member_count_known_)
     return this->private_state_->tc_member_count_;
   else
-    return this->private_member_count (ACE_TRY_ENV);
+    return this->private_member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // ************************************************************

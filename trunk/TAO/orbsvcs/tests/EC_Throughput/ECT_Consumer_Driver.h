@@ -44,8 +44,8 @@ public:
   int run (int argc, char* argv[]);
   // Execute the test.
 
-  virtual void shutdown_consumer (void* consumer_cookie,
-                                  CORBA::Environment&);
+  virtual void shutdown_consumer (void* consumer_cookie
+                                  TAO_ENV_ARG_DECL_NOT_USED);
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.
@@ -55,9 +55,9 @@ private:
   // parse the command line args
 
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec,
-                          CORBA::Environment &_env);
-  void disconnect_consumers (CORBA::Environment &_env);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec
+                          TAO_ENV_ARG_DECL);
+  void disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL);
   // Connect and disconnect the consumers.
 
   void dump_results (void);

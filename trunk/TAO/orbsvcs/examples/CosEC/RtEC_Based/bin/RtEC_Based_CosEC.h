@@ -43,8 +43,8 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
   int parse_args (int argc, char *argv []);
   // Parses the command line arguments.
 
-  void startup (int argc, char *argv[],
-               CORBA::Environment &ACE_TRY_ENV);
+  void startup (int argc, char *argv[]
+               TAO_ENV_ARG_DECL);
   // Initializes the COS Event Service.
   // Returns 0 on success, -1 on error.
 
@@ -52,31 +52,30 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
   // run the COS Event Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Shutdown the COS Event Service.
   // Returns 0 on success, -1 on error.
 
 protected:
   // = Methods from CosEC_ServantBase
   virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec (CORBA::Environment &ACE_TRY_ENV);
+  create_rtec (TAO_ENV_SINGLE_ARG_DECL);
   // Create a local rtec.
 
-  virtual void activate_rtec (CORBA::Environment &ACE_TRY_ENV);
+  virtual void activate_rtec (TAO_ENV_SINGLE_ARG_DECL);
   // Activates the rtec.
 
-  virtual void deactivate_rtec (CORBA::Environment &ACE_TRY_ENV);
+  virtual void deactivate_rtec (TAO_ENV_SINGLE_ARG_DECL);
   // Deactivates the rtec.
 
-  void init_ORB (int& argc, char *argv [],
-                 CORBA::Environment &ACE_TRY_ENV);
+  void init_ORB (int& argc, char *argv []
+                 TAO_ENV_ARG_DECL);
   // initialize the ORB.
 
-  void resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
+  void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
-  void locate_rtec (CORBA::Environment &ACE_TRY_ENV);
+  void locate_rtec (TAO_ENV_SINGLE_ARG_DECL);
   // Locate a rtec.
 
   // = Data members

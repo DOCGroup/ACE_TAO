@@ -118,7 +118,7 @@ int main (int argc, char *argv[])
                                             argv);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
@@ -130,8 +130,8 @@ int main (int argc, char *argv[])
       mgr->activate ();
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in (),
-                                      ACE_TRY_ENV);
+                                      poa.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Reactive_Strategy *reactive_strategy;
@@ -145,11 +145,11 @@ int main (int argc, char *argv[])
                       1);
 
       AVStreams::MMDevice_var mmdevice =
-        mmdevice_impl->_this (ACE_TRY_ENV);
+        mmdevice_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (mmdevice.in (), ACE_TRY_ENV);
+        orb->object_to_string (mmdevice.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -177,17 +177,17 @@ int main (int argc, char *argv[])
                       1);
 
       AVStreams::FDev_var ping_fdev =
-        ping_fdev_impl->_this (ACE_TRY_ENV);
+        ping_fdev_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       AVStreams::FDev_var pong_fdev =
-        pong_fdev_impl->_this (ACE_TRY_ENV);
+        pong_fdev_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mmdevice->add_fdev (ping_fdev.in (), ACE_TRY_ENV);
+      mmdevice->add_fdev (ping_fdev.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (respond == 1)
         {
-          mmdevice->add_fdev (pong_fdev.in (), ACE_TRY_ENV);
+          mmdevice->add_fdev (pong_fdev.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -208,7 +208,7 @@ int main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

@@ -25,34 +25,36 @@ be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss (void)
 {
 }
 
-void 
+void
 be_visitor_amh_interface_ss::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   // the _this () operation
   const char *non_amh_name = node->full_name () + 4;
 
-  *os << non_amh_name << "*" << be_nl  
+  *os << non_amh_name << "*" << be_nl
       << node->full_skel_name ()
-      << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
+      << "::_this (TAO_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl // idt = 1
-      << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
+      << "TAO_Stub *stub = this->_create_stub (TAO_ENV_SINGLE_ARG_PARAMETER);"
+      << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
 }
 
-void 
+void
 be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   // now the dispatch method
   *os << "void " << node->full_skel_name () <<
     "::_dispatch (TAO_ServerRequest &req, " <<
-    "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
+    "void *context TAO_ENV_ARG_DECL)" << be_nl;
   *os << "{" << be_idt_nl;
   // @todo ACE_TRY_ENV without check;
-  *os << "this->asynchronous_upcall_dispatch (req, context, this, ACE_TRY_ENV);" << be_nl;
+  *os << "this->asynchronous_upcall_dispatch" << be_idt_nl
+      << " (req, context, this TAO_ENV_ARG_PARAMETER);" << be_uidt_nl;
   *os << "this->asynchronous_upcall_reply (req);" << be_uidt_nl;
   *os << "}" << be_nl;
 }
