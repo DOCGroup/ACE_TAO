@@ -10,63 +10,91 @@
 
 CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 {
-  ACE_DEBUG ((LM_DEBUG, "Dtor: NAM\n"));
+  ACE_DEBUG ((LM_DEBUG, "NAM:Dtor\n"));
 }
 
-CIAO::NodeApplicationManager_Impl *
+PortableServer::POA_ptr
 CIAO::NodeApplicationManager_Impl::
 init (const char *nodeapp_location,
-      CORBA::ULong delay,
-      const Deployment::DeploymentPlan & plan
+      const CORBA::ULong delay,
+      const Deployment::DeploymentPlan & plan,
+      const PortableServer::POA_ptr callback_poa
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::InvalidProperty))
 {
-  if (nodeapp_location == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+  ACE_TRY
+  {
+    if (nodeapp_location == 0)
+      ACE_THROW (CORBA::BAD_PARAM ());
 
-  if (spawn_delay_ == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    if (spawn_delay_ == 0)
+      ACE_THROW (CORBA::BAD_PARAM ());
 
-  this->nodeapp_path_.set (nodeapp_location);
-  this->spawn_delay_ = delay;
+    this->nodeapp_path_.set (nodeapp_location);
+    this->spawn_delay_ = delay;
 
-  // Make a copy of the plan for later usage.
-  this->plan_ =  plan;
+    // Make a copy of the plan for later usage.
+    this->plan_ =  plan;
 
-  PortableServer::POAManager_var mgr
-    = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    // Create a separate POA for callback objects if this is the first
+    // time.
+    this->callback_poa_ = callback_poa;
+    ACE_DEBUG ((LM_DEBUG, "NAM:init 05\n"));
 
-  CORBA::PolicyList policies (0);
+    if (CORBA::is_nil (this->callback_poa_.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "NAM:init callback poa is nil!!!\n"));
 
-  // Create a separate POA for callback objects.
-  this->callback_poa_ =
-    this->poa_->create_POA ("callback_poa",
-                            mgr.in (),
-                            policies
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+      PortableServer::POAManager_var mgr
+	= this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-  // Activate the ourself.
-  PortableServer::ObjectId_var oid
-    = this->poa_->activate_object (this
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+      CORBA::PolicyList policies (0);
 
-  CORBA::Object_var obj = this->poa_->id_to_reference (oid.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+      ACE_DEBUG ((LM_DEBUG, "NAM:init before creat poa\n"));
 
-  // And cache the object reference.
-  this->objref_ = Deployment::NodeApplicationManager::_narrow (obj.in ()
-							       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+      this->callback_poa_ =
+	this->poa_->create_POA ("callback_poa",
+				mgr.in (),
+				policies
+				ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG ((LM_DEBUG, "NAM:init after creat poa\n"));
 
-  // Note: even I created the object here but I don't hold the object ref.
-  // Here I return pointer of myself so the NodeManager could do
-  // servant_to_reference to get the reference since we are in the same POA.
-  return this;
+      ACE_TRY_CHECK;
+    }
+
+    ACE_DEBUG ((LM_DEBUG, "NAM:init 1\n"));
+
+    // Activate the ourself.
+    PortableServer::ObjectId_var oid
+      = this->poa_->activate_object (this
+				     ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "NAM:init 2\n"));
+
+    CORBA::Object_var obj = this->poa_->id_to_reference (oid.in ()
+							 ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    ACE_DEBUG ((LM_DEBUG, "NAM:init 3\n"));
+
+    // And cache the object reference.
+    this->objref_ = Deployment::NodeApplicationManager::_narrow (obj.in ()
+								 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    ACE_DEBUG ((LM_DEBUG, "NAM:init 4\n"));
+
+    return PortableServer::POA::_duplicate (this->callback_poa_);
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                         "NodeApplicationManager_Impl::init\t\n");
+    ACE_RE_THROW;
+  }
+
+  ACE_ENDTRY;
 }
 
 void
@@ -90,7 +118,6 @@ create_node_application (const ACE_CString & options
 		   Deployment::InvalidProperty))
 {
   ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplicationManager_Impl::create_node_application\n"));
-
   Deployment::NodeApplication_var retval;
   Deployment::Properties_var prop;
 
@@ -287,10 +314,11 @@ startLaunch (const Deployment::Properties & configProperty,
   // This is what we will get back, a sequence of compoent object refs.
   Deployment::ComponentInfos_var comp_info;
 
-  ///////////////////////////////////////////////////////////////////
-  /*for (CORBA::ULong i = 0; i < infos.length (); ++i)
+  // For debugging.
+  if (CIAO::debug_level () > 1)
+  {
+    for (CORBA::ULong i = 0; i < infos.length (); ++i)
     {
-      // Add the names and entry points of each of the DLLs
       ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
 		  infos[i].component_instance_name.in (),
 		  infos[i].executor_dll.in (),
@@ -298,8 +326,7 @@ startLaunch (const Deployment::Properties & configProperty,
 		  infos[i].servant_dll.in (),
 		  infos[i].servant_entrypt.in () ));
     }
-  */
-  ///////////////////////////////////////////////////////////////////
+  }
 
   // This will install all homes and components.
   comp_info = this->nodeapp_->install (infos ACE_ENV_ARG_PARAMETER);
@@ -311,13 +338,11 @@ startLaunch (const Deployment::Properties & configProperty,
        ++len)
   {
     //Since we know the type ahead of time...narrow is omitted here.
-    //I might have to come back to this.
     if (this->component_map_.
 	bind (comp_info[len].component_instance_name.in(),
 	      Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
       ACE_THROW_RETURN (Deployment::StartError (), 0);
   }
-
 
   providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -343,13 +368,11 @@ destroyApplication (Deployment::Application_ptr app
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   //@@ Since we know there is only 1 nodeapp so the passed in
-  //   parameter could be ignored.
+  //   parameter is ignored for now.
 
   if (CORBA::is_nil (this->nodeapp_.in () ))
     ACE_THROW (Deployment::StopError ());
 
   this->nodeapp_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
-  //@@ I might have to deal with the leftover in the comoponentmap here.
 }

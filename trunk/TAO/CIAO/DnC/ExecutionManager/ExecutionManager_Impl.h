@@ -95,24 +95,17 @@ namespace CIAO
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     protected:
-      typedef
+      /*typedef
       ACE_Hash_Map_Manager_Ex
-      < const char *,
-        Deployment::DomainApplicationManager_ptr,
-	ACE_Hash<const char *>,
-	ACE_Equal_To<const char *>,
+      < ACE_CString,
+        Deployment::DomainApplicationManager_var,
+	ACE_Hash<ACE_CString>,
+	ACE_Equal_To<ACE_CString>,
 	TAO_SYNCH_MUTEX
       >
       Table;
-
       typedef Table::iterator Iterator;
-
-      // Helper operations to maintain list of NodeApplication
-      // Managers
-      int bind (const char *id,
-                Deployment::DomainApplicationManager_ptr obj);
-
-      int unbind (const char *id);
+      */
 
       // Cached ORB pointer
       CORBA::ORB_var orb_;
@@ -121,12 +114,15 @@ namespace CIAO
       PortableServer::POA_var poa_;
 
       // Internal Hashtable
-      Table table_;
+      // Table table_;
 
       // Path to the initialization file
-      char * init_file_;
+      ACE_CString init_file_;
 
       Deployment::DomainApplicationManager_var dam_;
+
+      // Cached servant of the DomainApplicaitonmanager.
+      CIAO::DomainApplicationManager_Impl * dam_servant_;
     };
 
 };

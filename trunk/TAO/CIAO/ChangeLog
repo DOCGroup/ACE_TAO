@@ -1,3 +1,26 @@
+Fri Jun 11 20:34:12 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h
+	* DnC/ExecutionManager/ExecutionManager_Impl.cpp
+	* DnC/ExecutionManager/ExecutionManager_Impl.h
+	* DnC/ExecutionManager/ExecutionManager_Impl.inl
+	* DnC/NodeApplication/NodeApplication.cpp
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.inl
+	* DnC/NodeManager/NodeDaemon_Impl.cpp
+	* DnC/NodeManager/NodeDaemon_Impl.h
+	* DnC/NodeManager/NodeDaemon_Impl.inl
+	* DnC/RepositoryManager/Repository_Manager.cpp
+	* DnC/ciao/Deployment_Core.idl
+	* DnC/ciao/NodeApplication_Impl.cpp
+	* DnC/ciao/NodeApplication_Impl.h
+	  Many Changes of the files. Now on linux it runs up to 3 times
+	  correctly and hangs on the fourth time. I am moving to windows
+	  for this now. Don't commit any change till I send out
+	  notification email, please!
+
 Fri Jun 11 18:58:04 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Utils.h:
