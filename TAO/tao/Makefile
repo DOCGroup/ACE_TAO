@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile for TAO
+#       Makefile for TAO
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
@@ -28,7 +28,6 @@ ORBCORE_SRCS = \
 	DynSequence_i \
 	DynStruct_i \
 	DynUnion_i \
-	DynUnion_i_T \
 	Exception \
 	Environment \
         Forwarding_Servant \
@@ -76,7 +75,7 @@ ORBCORE_SRCS = \
 	Typecode_Constants \
 	TAO
 
-FILES	 = $(ORBCORE_SRCS)
+FILES    = $(ORBCORE_SRCS)
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
@@ -84,15 +83,13 @@ endif
 
 BIN = # t-sizes
 
-DEFS  	= $(addsuffix .h,$(PUB_HDRS))
-LSRC	= $(addsuffix .cpp,$(FILES))
-LSRC2	= $(addsuffix .cpp,$(TEMPLATE_FILES))
+DEFS    = $(addsuffix .h,$(PUB_HDRS))
+LSRC    = $(addsuffix .cpp,$(FILES))
+LSRC2   = $(addsuffix .cpp,$(TEMPLATE_FILES))
 
 LDLIBS = -lACE
 LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-
-BUILD	= $(VSHLIB) $(VLIB) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
