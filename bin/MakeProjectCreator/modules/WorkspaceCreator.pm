@@ -88,6 +88,7 @@ sub new {
   $self->{'global_feature_file'} = $gfeature;
   $self->{'coexistence'}         = $makeco;
   $self->{'project_file_list'}   = {};
+  $self->{'ordering_cache'}      = {};
 
   if (defined $$exclude[0]) {
     my($type) = $self->{'wctype'};
@@ -931,6 +932,26 @@ sub array_contains {
   my($self)   = shift;
   my($left)   = shift;
   my($right)  = shift;
+  my(%check)  = ();
+
+  ## Initialize the hash keys with the left side array
+  @check{@$left} = ();
+
+  ## Check each element on the right against the left.
+  foreach my $r (@$right) {
+    if (exists $check{$r}) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
+
+sub non_intersection {
+  my($self)   = shift;
+  my($left)   = shift;
+  my($right)  = shift;
   my($over)   = shift;
   my($status) = 0;
   my(%check)  = ();
@@ -944,7 +965,7 @@ sub array_contains {
     if (exists $check{$r}) {
       $status = 1;
     }
-    elsif (defined $over) {
+    else {
       push(@$over, $r);
     }
   }
@@ -1004,7 +1025,7 @@ sub add_implicit_project_dependencies {
           (!defined $bidir{$ikey} ||
            !$self->array_contains($bidir{$ikey}, [$key]))) {
         my(@over) = ();
-        if ($self->array_contains(
+        if ($self->non_intersection(
                       $self->{'project_file_list'}->{$key}->[2],
                       $self->{'project_file_list'}->{$ikey}->[2],
                       \@over)) {
@@ -1434,50 +1455,54 @@ sub generate_recursive_input_list {
 
 sub verify_build_ordering {
   my($self) = shift;
-
   foreach my $project (@{$self->{'projects'}}) {
-    $self->get_validated_ordering($project, 1);
+    $self->get_validated_ordering($project);
   }
 }
 
 
 sub get_validated_ordering {
-  my($self)     = shift;
-  my($project)  = shift;
-  my($warn)     = shift;
-  my($pjs)      = $self->{'project_info'};
-  my($name)     = undef;
-  my($deps)     = '';
+  my($self)    = shift;
+  my($project) = shift;
+  my($deps)    = undef;
 
-  if (defined $$pjs{$project}) {
-    ($name, $deps) = @{$$pjs{$project}};
-    if (defined $deps && $deps ne '') {
-      my($darr)     = $self->create_array($deps);
-      my($projects) = $self->{'projects'};
-      foreach my $dep (@$darr) {
-        my($found) = 0;
-        ## Avoid circular dependencies
-        if ($dep ne $name && $dep ne basename($project)) {
-          foreach my $p (@$projects) {
-            if ($dep eq $$pjs{$p}->[0] || $dep eq basename($p)) {
-              $found = 1;
-              last;
+  if (defined $self->{'ordering_cache'}->{$project}) {
+    $deps = $self->{'ordering_cache'}->{$project};
+  }
+  else {
+    $deps = '';
+    if (defined $self->{'project_info'}->{$project}) {
+      my($name) = undef;
+      ($name, $deps) = @{$self->{'project_info'}->{$project}};
+      if (defined $deps && $deps ne '') {
+        my($darr) = $self->create_array($deps);
+        foreach my $dep (@$darr) {
+          my($found) = 0;
+          ## Avoid circular dependencies
+          if ($dep ne $name && $dep ne basename($project)) {
+            foreach my $p (@{$self->{'projects'}}) {
+              if ($dep eq $self->{'project_info'}->{$p}->[0] ||
+                  $dep eq basename($p)) {
+                $found = 1;
+                last;
+              }
             }
-          }
-          if (!$found) {
-            if ($warn && defined $ENV{MPC_VERBOSE_ORDERING}) {
-              $self->warning("'$name' references '$dep' which has " .
-                             "not been processed.");
+            if (!$found) {
+              if (defined $ENV{MPC_VERBOSE_ORDERING}) {
+                $self->warning("'$name' references '$dep' which has " .
+                               "not been processed.");
+              }
+              my($reg) = $self->escape_regex_special($dep);
+              $deps =~ s/\s*"$reg"\s*/ /g;
             }
-            my($reg) = $self->escape_regex_special($dep);
-            $deps =~ s/\s*"$reg"\s*/ /g;
           }
         }
       }
-    }
 
-    $deps =~ s/^\s+//;
-    $deps =~ s/\s+$//;
+      $deps =~ s/^\s+//;
+      $deps =~ s/\s+$//;
+      $self->{'ordering_cache'}->{$project} = $deps;
+    }
   }
 
   return $deps;

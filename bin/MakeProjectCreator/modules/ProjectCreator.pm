@@ -1724,15 +1724,15 @@ sub add_corresponding_component_files {
   my($ftags) = shift;
   my($tag)   = shift;
   my(@all)   = ();
+  my($names) = undef;
 
   foreach my $filetag (@$ftags) {
-    my($names) = $self->{$filetag};
+    $names = $self->{$filetag};
     foreach my $name (keys %$names) {
       foreach my $comp (keys %{$$names{$name}}) {
         foreach my $sfile (@{$$names{$name}->{$comp}}) {
-          my($scopy) = $sfile;
-          $scopy =~ s/\.[^\.]+$//;
-          push(@all, $scopy);
+          push(@all, $sfile);
+          $all[$#all] =~ s/\.[^\.]+$//;
         }
       }
     }
@@ -1744,14 +1744,13 @@ sub add_corresponding_component_files {
     $exts[$#exts] =~ s/\\//g;
   }
 
-  my($names) = $self->{$tag};
+  $names = $self->{$tag};
   foreach my $name (keys %$names) {
-    my($comps) = $$names{$name};
-    foreach my $comp (keys %$comps) {
-      my($array) = $$comps{$comp};
+    foreach my $comp (keys %{$$names{$name}}) {
+      my($array)   = $$names{$name}->{$comp};
+      my(%scfiles) = ();
       foreach my $sfile (@all) {
-        my($found)   = 0;
-        my(%scfiles) = ();
+        my($found) = 0;
         foreach my $ext (@exts) {
           $scfiles{"$sfile$ext"} = 1;
         }

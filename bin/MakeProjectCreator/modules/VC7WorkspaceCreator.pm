@@ -85,7 +85,7 @@ sub print_dependencies {
   ## I hate to add yet another loop through all the projects, but
   ## we must have some way to map plain project names to guids.
   my(%name_to_guid_map) = ();
-  foreach my $project(@$list) {
+  foreach my $project (@$list) {
     my($name, $deps, $guid) = @{$$pjs{$project}};
     $name_to_guid_map{$name} = $guid;
   }
@@ -116,21 +116,21 @@ sub write_comps {
   my($fh)       = shift;
   my($gen)      = shift;
   my($projects) = $self->get_projects();
-  my($vc7guid)     = '8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942';
+  my($vc7guid)  = '8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942';
   my($pjs)      = $self->get_project_info();
-  my(@list)     = $self->sort_dependencies($projects, $pjs);
+  my(@list)     = sort @$projects;
   my($crlf)     = $self->crlf();
 
   ## I hate to add yet another loop through all the projects, but
   ## we must have some way to map plain project names to guids.
   my(%name_to_guid_map) = ();
-  foreach my $project(@list) {
+  foreach my $project (@list) {
     my($name, $deps, $guid) = @{$$pjs{$project}};
     $name_to_guid_map{$name} = $guid;
   }
 
   ## Project Information
-  foreach my $project (sort @list) {
+  foreach my $project (@list) {
     my($name, $rawdeps, $guid) = @{$$pjs{$project}};
     my($deps) = $self->get_validated_ordering($project);
     ## Convert all /'s to \
@@ -160,7 +160,7 @@ sub write_comps {
 
   ## Project Configuration Names
   print $fh "\tGlobalSection(ProjectConfiguration) = postSolution$crlf";
-  foreach my $project (sort @list) {
+  foreach my $project (@list) {
     my($name, $deps, $pguid, @cfgs) = @{$$pjs{$project}};
     foreach my $cfg (sort @cfgs) {
       my($c) = $cfg;
