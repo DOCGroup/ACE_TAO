@@ -1,35 +1,30 @@
-PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.3
+PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.5
 ====================================================
+ . Split the current NodeApplication entity into
+   ComponentServer(still bearing the name "NodeApplication" though)
+   and  Container. (Gan)
+
+ . Allow colocated and non-colocated decisions within the schema
+   (Gan)
+
+ . Support for server-side RT policies, including extension for schema, container,
+   and NodeApplication.  Configuring client-side (receptacle) policies
+   to honor these server policies.  (Gan, Nanbor)
 
  . Convert C++ datastructures generated from XSC to IDL data types
-   defined in D+C. (Boris, Jules, Kitty)
+   defined in D+C. (Will, Jules)
      
  . Change spec defined IDL's for adding policies (Depends on last)
 
- . Attribute configuration, atleast the basic types. (Jules, Bala)
-
- . Support homeless component deployment (Low priority)
-
- . Allow colocated and non-colocated decisions within the schema
-   (Arvind)
-  
  . Add binding to the NameService (Gan Deng)
 
  . Connections to supported interfaces. 
 
- . Split the current NodeApplication entity into
-   ComponentServer(still bearing the name "NodeApplication" though)
-   and  Container. (Tao)
-
- . NodeApplication will be responsible for creating Containers for an
-   assembly. Atleast 1 per node application will be created to start
-   off.  (Tao)
-
  . Have more than one NodeApplicationManager within the NodeManager (Tao)
 
- . Event Channel Integration (Amogh Kavimandan)
+ . RT Event Channel Integration (Gan Deng)
 
- . Tools for dynamic replacement of components (Dr. Schmidt)
+ . Tools for dynamic replacement of components (Jai)
 
  . Thread pools and the like. (Bala and Nanbor).
 
@@ -37,11 +32,7 @@ PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.3
 
  . Static Configuration for DAnCE (??) 
 
- . Target Manager (Jai and Kitty)
-
- . Support for server-side RT policies, including extension for schema, container,
-   and NodeApplication.  Configuring client-side (receptacle) policies
-   to honor these server policies.  (Gan, Nanbor)
+ . Target Manager (Jai and Gan and Kitty)
 
  . Tools and utilities for developing and debugging components and
-   applications. (low prio.)
+   applications. (Kitty)
