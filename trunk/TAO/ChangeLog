@@ -1,3 +1,11 @@
+Wed Aug 11 22:28:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/CSI.idl:
+	* orbsvcs/orbsvcs/CSIIOP.idl:
+	* orbsvcs/orbsvcs/SecurityLevel3.idl:
+
+	  Fixed fuzz errors. 
+
 Wed Aug 11 18:54:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
