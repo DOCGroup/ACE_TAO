@@ -15,11 +15,11 @@ Wed Aug 19 17:37:51 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 Wed Aug 19 17:32:40 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: I decided not to add an
-	  init_old_naming () method to the Naming_Server since it seemed
-	  inappropriate. I added a get_context () method which is
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: I decided not to
+	  add an init_old_naming () method to the Naming_Server since it
+	  seemed inappropriate. I added a get_context () method which is
 	  basically the same as "->" (they both return the
-	  Naming_Context_ptr) for stylistic reasons.
+	  Naming_Context_ptr) for stylistic reasons. 
 
 Wed Aug 19 16:49:21 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
