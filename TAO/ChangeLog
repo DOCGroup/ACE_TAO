@@ -1,3 +1,14 @@
+Tue Mar 18 15:45:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+
+          Added patches from Phil Mesnier <mesnier_p@ociweb.com>
+          to treat the codeset translators in TAO::Unknown_IDL_Type
+          as singletons attached to a CDR stream instead of being
+          produced by a facory in the ORB core. This removeds the
+          dependency of Anys on the ORB core and closes [BUGID 446].
+
 Mon Mar 17 09:51:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp (fe_add_module):

@@ -330,8 +330,8 @@ namespace TAO
                       const ACE_Message_Block *,
                       int byte_order,
                       CORBA::Boolean release_tc = 0,
-                      TAO_Codeset_Translator_Factory *ctrans = 0,
-                      TAO_Codeset_Translator_Factory *wtrans = 0);
+                      ACE_Char_Codeset_Translator *ctrans = 0,
+                      ACE_WChar_Codeset_Translator *wtrans = 0);
     virtual ~Unknown_IDL_Type (void);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
@@ -346,15 +346,15 @@ namespace TAO
     virtual void assign_translator (CORBA::TCKind,
                                     TAO_InputCDR *cdr);
 
-    TAO_Codeset_Translator_Factory *char_translator (void);
-    TAO_Codeset_Translator_Factory *wchar_translator (void);
+    ACE_Char_Codeset_Translator *char_translator (void);
+    ACE_WChar_Codeset_Translator *wchar_translator (void);
 
   private:
     ACE_Message_Block *cdr_;
     int byte_order_;
     CORBA::Boolean release_tc_;
-    TAO_Codeset_Translator_Factory *char_translator_;
-    TAO_Codeset_Translator_Factory *wchar_translator_;
+    ACE_Char_Codeset_Translator *char_translator_;
+    ACE_WChar_Codeset_Translator *wchar_translator_;
   };
 };
 
