@@ -341,7 +341,7 @@ ACE_CString::substring (size_t offset,
   if (offset >= this->len_)
     return nil;
   // No length == empty string.
-  else if (lenth == 0)
+  else if (length == 0)
     return nil;
   // Get all remaining bytes.
   else if (length == -1)
