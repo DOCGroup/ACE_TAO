@@ -1,3 +1,13 @@
+Wed Apr 14 09:07:38 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* ace/POSIX_Proactor.cpp:
+
+	  Several methods were missing the "int signal_number" parameter
+	  that was added as mentioned in the log entry below. In addition,
+	  an undefined ACE_SIG_AIO flag was used. I found a log entry in
+	  ChangeLog-98b which says that ACE_SIG_AIO is ACE_SIGRTMIN. So I
+	  replaced the 5 occurrences of ACE_SIG_AIO with ACE_SIGRTMIN. 
+
 Wed Apr 14 02:34:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	Added additional parameter <int signal_number> to all the Asynchronos
