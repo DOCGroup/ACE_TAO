@@ -50,6 +50,20 @@
 	have been eliminated.
 	</li>
 
+	<li>Fixed problems seen by <a
+	href="mailto:brian.r.mendel@boeing.com">Brian Mendel</a> of
+	Boeing where the Cubit server application was crashing in
+	<code>TAO_OA_Connection_Handler::handle_message</code> when it
+	was trying to call <code>CORBA::POA::handle_request</code>
+	through a NULL <code>root_poa</code> pointer.  The NULL
+	pointer resulted from the inadvertent use of the
+	Thread-per-Connection concurrency model, which is currently
+	incompatible with the ORB-per-thread model.  It was not caught
+	because the change is normally done in configuration files
+	parsed by the Service Configurator, and VxWorks requires
+	special code in that area which was not tested until Boeing
+	got hold of the code.</li>
+
       </BLOCKQUOTE>
 
       Ongoing Work:
@@ -58,11 +72,6 @@
 	<LI>Verify ACE_ & TAO on Linux.</LI>
 
 	<LI>Use Purify to eliminate straggling problems.</LI>
-
-	<LI>Use Purify to track down problems Brian has found.
-	<em>Brian is checking out some suggestions, so this will be
-	deferred pending his results.</em> E-mail sent the morning of
-	20-Oct-1997.</LI>
 
       </BLOCKQUOTE>
 
@@ -160,7 +169,9 @@
 	<LI>Assist in porting higher level services (e.g., <A
 	HREF="#eventchannel">Event Channel</A>) to TAO.</LI>
 
-	<li>Compile 
+	<li>Compile and verify ACE and TAO on Linux using the Kuck and
+	Associates, Inc. (KAI) compiler tools.</li>
+
       </UL>
     </BLOCKQUOTE>
 
@@ -168,7 +179,7 @@
     <address><a href="mailto:cleeland@cs.wustl.edu">Chris Cleeland</a></address>
 <!-- Created: Mon Oct 20 09:53:33 CDT 1997 -->
 <!-- hhmts start -->
-Last modified: Mon Oct 20 14:28:04 CDT 1997
+Last modified: Mon Oct 20 16:54:34 CDT 1997
 <!-- hhmts end -->
   </body>
 </html>

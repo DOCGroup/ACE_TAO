@@ -124,8 +124,27 @@ public:
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
   IIOP::ProfileBody profile;
-  IIOP::ProfileBody *fwd_profile;
 
+  // = Thread-safe accessors for the forwarding profile
+  IIOP::ProfileBody *fwd_profile (void);
+  // THREAD-SAFE.  Returns the current forwarding profile.
+  
+  IIOP::ProfileBody *fwd_profile (IIOP::ProfileBody *new_profile);
+  // THREAD-SAFE.  Sets a new value for the forwarding profile and
+  // returns the current value.
+
+  // = Non-thread-safe accessors for the forwarding profile
+  ACE_Thread_Mutex &fwd_profile_lock (void);
+  // Gives reference to the lock guarding the forwarding profile.
+  
+  IIOP::ProfileBody *fwd_profile_i (void);
+  // THREAD-SAFE.  Returns the current forwarding profile.
+  
+  IIOP::ProfileBody *fwd_profile_i (IIOP::ProfileBody *new_profile);
+  // THREAD-SAFE.  Sets a new value for the forwarding profile and
+  // returns the current value.
+
+  // = Construction
   IIOP_Object (char *repository_id);
   IIOP_Object (char *repository_id,
                const IIOP::ProfileBody &profile);
@@ -140,8 +159,22 @@ public:
 
 private:
   CORBA::Object base;
-  ACE_Thread_Mutex lock_;
+
+  ACE_Thread_Mutex IUnknown_lock_;
+  // Mutex to protect <IUnknown>-related stuff.
+  
   u_int refcount_;
+  // Number of outstanding references to this object.
+
+  ACE_Thread_Mutex fwd_profile_lock_;
+  // This lock covers the mutable info in all IIOP objref data,
+  // namely the forwarded-to objref.  It must be held when a client
+  // thread is reading or modifying that data, to prevent one from
+  // overwriting data the other's reading or writing.
+
+  IIOP::ProfileBody *fwd_profile_;
+  // This is a pointer to a profile used if the object is not
+  // colocated in the current process.
 
   ~IIOP_Object (void);
   // Destructor is to be called only through Release()
