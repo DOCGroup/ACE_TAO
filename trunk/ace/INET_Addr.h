@@ -28,7 +28,8 @@
 class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
   // = TITLE
-  //    Defines the Internet domain address family address format.
+  //    Defines a C++ wrapper facade for the Internet domain address
+  //    family format.
 public:
   // = Initialization methods.
   ACE_INET_Addr (void);
@@ -51,16 +52,19 @@ public:
   // is assumed to be a port number, with the IP address being
   // INADDR_ANY.
 
-  ACE_INET_Addr (u_short port_number, ACE_UINT32 ip_addr  = INADDR_ANY);
+  ACE_INET_Addr (u_short port_number,
+		 ACE_UINT32 ip_addr  = INADDR_ANY);
   // Creates an <ACE_INET_Addr> from a <port_number> and an Internet
   // <ip_addr>.  This method assumes that <port_number> and <ip_addr>
   // are in host byte order.
 
-  ACE_INET_Addr (const ASYS_TCHAR port_name[], const ASYS_TCHAR host_name[]);
+  ACE_INET_Addr (const ASYS_TCHAR port_name[],
+		 const ASYS_TCHAR host_name[]);
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name> and the remote <host_name>.
 
-  ACE_INET_Addr (const ASYS_TCHAR port_name[], ACE_UINT32 ip_addr);
+  ACE_INET_Addr (const ASYS_TCHAR port_name[],
+		 ACE_UINT32 ip_addr);
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name> and an Internet <ip_addr>.  This method assumes that
   // <ip_addr> is in host byte order.
@@ -68,12 +72,15 @@ public:
   ~ACE_INET_Addr (void);
   // Default dtor.
 
-  // = Direct initialization methods (useful after the object has been
-  // constructed).
+  // = Direct initialization methods.
+
+  // These methods are useful after the object has been constructed.
+
   int set (const ACE_INET_Addr &);
   // Initializes from another <ACE_INET_Addr>.
 
-  int set (u_short port_number, const ASYS_TCHAR host_name[],
+  int set (u_short port_number,
+	   const ASYS_TCHAR host_name[],
            int encode = 1);
   // Initializes an <ACE_INET_Addr> from a <port_number> and the
   // remote <host_name>.  If <encode> is enabled then <port_number> is
@@ -89,11 +96,13 @@ public:
   // they are assumed to be in network byte order already and are
   // passed straight through.
 
-  int set (const ASYS_TCHAR port_name[], const ASYS_TCHAR host_name[]);
+  int set (const ASYS_TCHAR port_name[],
+	   const ASYS_TCHAR host_name[]);
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name> and the remote <host_name>.
 
-  int set (const ASYS_TCHAR port_name[], ACE_UINT32 ip_addr);
+  int set (const ASYS_TCHAR port_name[],
+	   ACE_UINT32 ip_addr);
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name> and an Internet address.  This assumes that <ip_addr>
   // is already in network byte order.
@@ -105,7 +114,8 @@ public:
   // is assumed to be a port number, with the IP address being
   // INADDR_ANY.
 
-  int set (const sockaddr_in *, int len);
+  int set (const sockaddr_in *, 
+	   int len);
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
 
   virtual void *get_addr (void) const;
@@ -133,7 +143,8 @@ public:
   // is no ':' in the <address> it is assumed to be a port number,
   // with the IP address being INADDR_ANY.
 
-  void set_port_number (u_short, int encode = 1);
+  void set_port_number (u_short,
+			int encode = 1);
   // Sets the port number without affecting the host name.  If
   // <encode> is enabled then <port_number> is converted into network
   // byte order, otherwise it is assumed to be in network byte order

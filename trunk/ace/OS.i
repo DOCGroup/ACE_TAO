@@ -5109,11 +5109,46 @@ ACE_OS::shutdown (ACE_HANDLE handle, int how)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_OS::socket (int domain, int type, int proto)
+ACE_OS::socket (int domain,
+		int type,
+		int proto)
 {
   ACE_TRACE ("ACE_OS::socket");
-  ACE_SOCKCALL_RETURN (::socket (domain, type, proto),
-                       ACE_HANDLE, ACE_INVALID_HANDLE);
+  ACE_SOCKCALL_RETURN (::socket (domain,
+				 type,
+				 proto),
+                       ACE_HANDLE,
+		       ACE_INVALID_HANDLE);
+}
+
+ACE_INLINE ACE_HANDLE
+ACE_OS::socket (int domain,
+		int type,
+		int proto,
+		ACE_Protocol_Info *protocolinfo,
+		ACE_SOCK_GROUP g,
+		u_long flags)
+{
+  ACE_TRACE ("ACE_OS::socket");
+
+#if defined (ACE_HAS_WINSOCK2)
+  ACE_SOCKCALL_RETURN (::WSASocket (domain,
+				    type,
+				    proto,
+				    protocolinfo,
+				    g,
+				    flags),
+                       ACE_HANDLE,
+		       ACE_INVALID_HANDLE);
+#else
+  ACE_UNUSED_ARG (protocolinfo);
+  ACE_UNUSED_ARG (g);
+  ACE_UNUSED_ARG (flags);
+
+  return ACE_OS::socket (domain,
+			 type,
+			 proto),
+#endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE int
