@@ -1,3 +1,13 @@
+Tue Apr 10 22:27:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/PortableServer/Servant_Base.cpp (synchronous_upcall_dispatch):
+
+          Added a check before sending an exception reply, the same as
+          the check made before sending the regular reply. The Reliable
+          Oneways test showed that an exception thrown in the 
+          implementation was bypassing the SYNC_WITH_SERVER and other
+          oneway logic that was in place for regular replies.
+
 Tue Apr 10 19:42:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Messaging_ORBInitializer.h:
