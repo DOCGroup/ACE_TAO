@@ -20,11 +20,45 @@
 // ============================================================================
 
 #include "server.h"
+#include "tao/debug.h"
+#include "ace/Get_Opt.h"
 
 // The following headers are #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.
 //#include <time.h>
 //#include <iostream.h>
+
+const char *ior_output_file = "server.ior";
+int done = 0;
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "o:d");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.optarg;
+        break;
+      case 'd':
+        TAO_debug_level++;
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }                       
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
+
 
 TimeOfDay
 Time_impl::
@@ -39,11 +73,16 @@ get_gmt ( CORBA_Environment &)
   tod.minute = time_p->tm_min;
   tod.second = time_p->tm_sec;
 
+  done = 1;
+
   return tod;
 }
 
 void do_something_else()
 {
+  // Sleep a bit so we don't eat up
+  // a ton of cpu
+  ACE_OS::sleep(3);
 }
 
 int
@@ -60,6 +99,9 @@ main (int argc, char *argv[])
                                             "",
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
       // Get reference to Root POA.
       CORBA::Object_var obj
@@ -89,8 +131,20 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       cout << str.in () << endl;
 
+      if (ior_output_file != 0)
+         {
+           FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+           if (output_file == 0)
+             ACE_ERROR_RETURN ((LM_ERROR,
+                                "Cannot open output file for writing IOR: %s",
+                                ior_output_file),
+                               1);
+           ACE_OS::fprintf (output_file, "%s", str.in ());
+           ACE_OS::fclose (output_file);
+         }
+
       // Explicit Event Loop
-      while (1)
+      while (!done)
         {
           CORBA::Boolean pending =
             orb->work_pending(ACE_TRY_ENV);
@@ -102,6 +156,8 @@ main (int argc, char *argv[])
             }
           do_something_else();
         }
+      orb->shutdown ();
+      orb->destroy ();
     }
 
   ACE_CATCHANY

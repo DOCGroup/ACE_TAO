@@ -1,56 +1,40 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
 # $Id$
 # -*- perl -*-
 
-use lib "../../../bin";
+use lib '../../../bin';
+use PerlACE::Run_Test;
 
-require ACEutils;
-require Process;
-use Cwd;
-
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
-
-$status = 0;
-$iorfile = "$cwd$DIR_SEPARATOR" . "chapter_test.ior";
+$iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
+$status = 0;
 
+$SV = new PerlACE::Process ("server", "-o $iorfile");
+$CL = new PerlACE::Process ("client", "file://$iorfile");
 
+$SV->Spawn ();
 
-# Hacked call
-$server = Process::Create ("exec ".$EXEPREFIX."server".$EXE_EXT.">$iorfile",
-                           "");
-# Proper call
-#$server = Process::Create ($EXEPREFIX."server".$EXE_EXT, ">$iorfile");
+if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
 
-if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
-  print STDERR "ERROR: timedout waiting for file <$iorfile>\n";
-  $server->Kill (); $server->TimedWait (1);
-  exit 1;
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-open(ior_handle, "$iorfile");
-$ior_content = <ior_handle>;
+$server = $SV->WaitKill (10);
 
-$client = Process::Create($EXEPREFIX."client$EXE_EXT", "$ior_content");
-
-if ($client->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $client->Kill (); $client->TimedWait (1);
-}
-
-
-
-
-$server->Terminate (); 
-if ($server->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate the server\n";
-  $server->Kill (); $server->TimedWait (1);
-  $status = 1;
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
 unlink $iorfile;
