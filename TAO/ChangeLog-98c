@@ -1,3 +1,7 @@
+Tue Nov 11 01:27:13 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.28, released Tue Nov 11 01:27:13 1997.
+
 Tue Nov 11 01:16:07 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/orbobj.cpp (resolve_name_service): Reformatted the
