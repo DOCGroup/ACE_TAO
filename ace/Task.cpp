@@ -113,6 +113,8 @@ ACE_Task_Base::activate (long flags,
     ACE_UNUSED_ARG (grp_id);
     ACE_UNUSED_ARG (task);
     ACE_UNUSED_ARG (thread_handles);
+    ACE_UNUSED_ARG (stack);
+    ACE_UNUSED_ARG (stack_size);
     errno = EINVAL;
     return -1;
   }
