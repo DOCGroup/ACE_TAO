@@ -1,3 +1,10 @@
+Wed Mar 26 16:40:58 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IORManipulation/IORManipulation.cpp: Fixed a leak that
+	  arose when we tried to use CORBA::String_var::_retn () to
+	  ORB_Core::create_stub () call. Thanks to Sebastien Lalonde
+	  <SLalonde@interstarinc.com> for reporting this.
+
 Wed Mar 26 18:14:21 2003  Edward Scott  <eas@prismtechnologies.com>
 
 	* orbsvcs/PSS/Makefile.parser:
