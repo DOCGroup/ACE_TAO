@@ -1,5 +1,12 @@
 Sun Apr  6 14:16:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tests/Timer_Queue_Test.cpp: Added tests to make sure that the
+ 	  new ACE_Timer_Queue::cancel() logic is working correctly.  So
+ 	  far, it seems to be fine.
+
+	* ace/Timer_{Heap,List}.cpp (cancel): Changed the comparison for
+ 	  dont_call_handle_close to be correct.
+
 	* ace/OS.cpp: Deleted a useless return.  Thanks to Gonzalo
  	  A. Diethelm <gonzo@ing.puc.cl> for reporting this.
 
