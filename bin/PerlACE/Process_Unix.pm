@@ -6,6 +6,7 @@ use strict;
 use POSIX "sys_wait_h";
 use Cwd;
 use File::Basename;
+use Config;
 
 ###############################################################################
 
@@ -31,6 +32,26 @@ for(my $i = 0; $i <= $#ARGV; $i++) {
         splice(@ARGV, $i, 2);
         # Don't break from the loop just in case there
         # is an accidental duplication of the -chorus option
+    }
+}
+
+###############################################################################
+
+###  Grab signal names
+
+my @signame;
+
+if (defined $Config{sig_name}) {
+    my $i = 0;
+    foreach my $name (split (' ', $Config{sig_name})) {
+        $signame[$i] = $name;
+        $i++;
+    }
+}
+else {
+    my $i;
+    for ($i = 0; $i < 255; ++$i) {
+        $signame[$i] = $i;
     }
 }
 
@@ -236,6 +257,47 @@ sub TerminateWaitKill ($)
     return $self->WaitKill ($timeout);
 }
 
+# really only for internal use
+sub check_return_value ($)
+{
+    my $self = shift;
+    my $rc = shift;
+
+    if ($rc == 0) {
+        return 0;
+    }
+    elsif ($rc == 0xff00) {
+        print STDERR "ERROR: <", $self->{EXECUTABLE},
+                     "> failed: $!\n";
+        return ($rc >> 8);
+    }
+    elsif (($rc & 0xff) == 0) {
+        $rc >>= 8;
+        return $rc;
+    }
+
+    my $dump = 0;
+
+    if ($rc & 0x80) {
+        $rc &= ~0x80;
+        $dump = 1;
+    }
+
+    # check for KILL or TERM
+    if ($rc == 9 || $rc == 15) {
+        return 0;
+    }
+
+    print STDERR "ERROR: <", $self->{EXECUTABLE},
+                 "> exited with ";
+
+    print STDERR "coredump from " if ($dump == 1);
+
+    print STDERR "signal $rc : ", $signame[$rc], "\n";
+
+    return 0;
+}
+
 sub Kill ()
 {
     my $self = shift;
@@ -243,6 +305,7 @@ sub Kill ()
     if ($self->{RUNNING}) {
         kill ('KILL', $self->{PROCESS});
         waitpid ($self->{PROCESS}, 0);
+        $self->check_return_value ($?);
     }
 
     $self->{RUNNING} = 0;
@@ -263,8 +326,8 @@ sub TimedWait ($)
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
         if ($pid != 0 && $? != -1) {
-            return $?;
-        }
+            return $self->check_return_value ($?);
+        }            
         sleep 1;
     }
 
@@ -272,3 +335,4 @@ sub TimedWait ($)
 }
 
 1;
+
