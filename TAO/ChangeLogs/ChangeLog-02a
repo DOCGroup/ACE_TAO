@@ -1,3 +1,10 @@
+Fri Jan 28 20:11:23 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/ORB_Core.cpp:
+	  When the last ORB is detroyed it must reset the first_orb_
+	  variable in TAO_ORB_Table to 0.  Thanks to Alex for reporting
+ 	  this bug and providing a fix.
+
 Fri Jan 28 18:35:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Request.cpp:

@@ -2312,6 +2312,8 @@ TAO_ORB_Table::unbind (const char *orb_id)
           Iterator end = this->end ();
           if (begin != end)
             this->first_orb_ = (*begin).int_id_;
+          else
+            this->first_orb_ = 0;
         }
     }
   return result;
