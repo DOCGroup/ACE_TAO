@@ -122,10 +122,10 @@ public:
                       const PortableGroup::Location & location
                       ACE_ENV_ARG_DECL);
 
-  /// Verify that the MinimumNumberMembers criterion is satisfied.
+  /// Verify that the MinimumNumberReplicas criterion is satisfied.
   /**
    * If the current number of members in the given object group is
-   * less than the MinimumNumberMembers criterion in effect for that
+   * less than the MinimumNumberReplicas criterion in effect for that
    * group, the infrastructure will attempt create and add more
    * members to the group by invoking any unused application-supplied
    * GenericFactorys.
@@ -164,7 +164,7 @@ private:
          PortableGroup::ObjectGroup_ptr object_group,
          const char * type_id,
          const PortableGroup::FactoryInfos &factory_infos,
-         PortableGroup::InitialNumberMembersValue initial_number_members,
+         PortableGroup::InitialNumberReplicasValue initial_number_members,
          TAO_PG_Factory_Set & factory_set
          ACE_ENV_ARG_DECL);
 
@@ -180,8 +180,8 @@ private:
   /// Process criteria to be applied to the object group being
   /// created.
   /**
-   * Only the MemberShipStyle, Factories, InitialNumberMembers and
-   * MinimumNumberMembers criteria/properties are defined by the
+   * Only the MemberShipStyle, Factories, InitialNumberReplicas and
+   * MinimumNumberReplicas criteria/properties are defined by the
    * PortableGroup IDL.  Other services that implement the
    * GenericFactory interface, such as load balancing and fault
    * tolerance, may choose to support more.
@@ -194,8 +194,8 @@ private:
     const PortableGroup::Criteria & criteria,
     PortableGroup::MembershipStyleValue & membership_style,
     PortableGroup::FactoriesValue & factory_infos,
-    PortableGroup::InitialNumberMembersValue & initial_number_members,
-    PortableGroup::MinimumNumberMembersValue & minimum_number_members
+    PortableGroup::InitialNumberReplicasValue & initial_number_members,
+    PortableGroup::MinimumNumberReplicasValue & minimum_number_members
     ACE_ENV_ARG_DECL);
 
 private:

@@ -39,9 +39,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   char ** asciiArgv = command_line.get_ASCII_argv();
 
-  // create an instance of the eplication manager and give it the first
+  // create an instance of the replication manager and give it the first
   // chance at the arguments.
-  FT_ReplicationManager rm;
+  TAO::FT_ReplicationManager rm;
   int result = rm.parse_args (argc, asciiArgv);
   if (result == 0)
   {

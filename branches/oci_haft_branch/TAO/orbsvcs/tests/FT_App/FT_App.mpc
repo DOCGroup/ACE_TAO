@@ -11,6 +11,15 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe{
   }
 }
 
+project(*Client_Unit): taoclient, fault_tolerance, iormanip, ftorb, orbsvcsexe {
+  exename = ft_client_unit
+  includes += $(TAO_ROOT)
+  Source_Files {
+    FT_Client_Unit.cpp
+    FT_UnitTests.cpp
+  }
+}
+
 project(*Client): taoclient, fault_tolerance, iormanip, ftorb, orbsvcsexe {
   exename = ft_client
   includes += $(TAO_ROOT)

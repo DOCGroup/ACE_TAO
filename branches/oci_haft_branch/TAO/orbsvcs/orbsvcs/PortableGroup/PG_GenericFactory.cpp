@@ -4,6 +4,9 @@
 #include "PG_PropertyManager.h"
 #include "PG_Property_Utils.h"
 #include "PG_conf.h"
+#include "orbsvcs/PortableGroupC.h"
+#include "PG_Properties_Encoder.h"
+#include "PG_Properties_Decoder.h"
 
 
 ACE_RCSID (PortableGroup,
@@ -75,10 +78,10 @@ TAO_PG_GenericFactory::create_object (
     TAO_PG_MEMBERSHIP_STYLE;
   PortableGroup::FactoriesValue factory_infos;
 
-  PortableGroup::InitialNumberMembersValue initial_number_members =
-    TAO_PG_INITIAL_NUMBER_MEMBERS;
-  PortableGroup::MinimumNumberMembersValue minimum_number_members =
-    TAO_PG_MINIMUM_NUMBER_MEMBERS;
+  PortableGroup::InitialNumberReplicasValue initial_number_replicas =
+    TAO_PG_INITIAL_NUMBER_REPLICAS;
+  PortableGroup::MinimumNumberReplicasValue minimum_number_replicas =
+    TAO_PG_MINIMUM_NUMBER_REPLICAS;
 
   // Make sure the criteria for the object group being created are
   // valid.
@@ -86,8 +89,8 @@ TAO_PG_GenericFactory::create_object (
                           the_criteria,
                           membership_style,
                           factory_infos,
-                          initial_number_members,
-                          minimum_number_members
+                          minimum_number_replicas,
+                          minimum_number_replicas
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -124,7 +127,7 @@ TAO_PG_GenericFactory::create_object (
   }
 
   {
-    //    int _todo_get_the_domain_id_from_somewhere_;
+    int _todo_get_the_domain_id_from_somewhere_;
   }
   const char * domain_id = "dummy-domain-id";
 
@@ -149,7 +152,7 @@ TAO_PG_GenericFactory::create_object (
           this->populate_object_group (object_group.in (),
                                        type_id,
                                        factory_infos,
-                                       initial_number_members,
+                                       minimum_number_replicas,
                                        factory_set
                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -239,7 +242,7 @@ TAO_PG_GenericFactory::delete_object (
 
 //TODO - fix this code. Factory-ids and group-ids are now different
 {
-  //  int _todo_fix_temporarily_disabled_code_;
+  int _todo_fix_temporarily_disabled_code_;
 }
 #if 0
           PortableServer::ObjectId_var oid;
@@ -250,7 +253,7 @@ TAO_PG_GenericFactory::delete_object (
             oid.in ()
             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-#endif
+#endif 0
         }
     }
   else
@@ -312,16 +315,16 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
 
 void
 TAO_PG_GenericFactory::delete_member (
-  PortableGroup::ObjectGroupId ,
-  const PortableGroup::Location &
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableGroup::ObjectGroupId group_id,
+  const PortableGroup::Location & location
+  ACE_ENV_ARG_DECL)
 {
 
   //TODO - Fix this code. The original implementation for the load balancer assumed
   //       that the factory-creation-id was the same as the object-group-id. This
   //       is not longer true. The find below is supposed to be a factory-creation-id.
 {
-  //  int _todo_fix_temporarily_disabled_code_;
+  int _todo_fix_temporarily_disabled_code_;
 }
   return;
 
@@ -396,7 +399,7 @@ TAO_PG_GenericFactory::populate_object_group (
   PortableGroup::ObjectGroup_ptr object_group,
   const char * type_id,
   const PortableGroup::FactoryInfos & factory_infos,
-  PortableGroup::InitialNumberMembersValue initial_number_members,
+  PortableGroup::InitialNumberReplicasValue minimum_number_replicas,
   TAO_PG_Factory_Set & factory_set
   ACE_ENV_ARG_DECL)
 {
@@ -409,7 +412,7 @@ TAO_PG_GenericFactory::populate_object_group (
 
       const PortableGroup::FactoryInfo &factory_info = factory_infos[j];
 
-      if (j < ACE_static_cast (CORBA::ULong, initial_number_members))
+      if (j < ACE_static_cast (CORBA::ULong, minimum_number_replicas))
         {
           PortableGroup::GenericFactory_ptr factory =
             factory_info.the_factory.in ();
@@ -479,8 +482,8 @@ TAO_PG_GenericFactory::process_criteria (
   const PortableGroup::Criteria & criteria,
   PortableGroup::MembershipStyleValue & membership_style,
   PortableGroup::FactoriesValue & factory_infos,
-  PortableGroup::InitialNumberMembersValue & initial_number_members,
-  PortableGroup::MinimumNumberMembersValue & minimum_number_members
+  PortableGroup::InitialNumberReplicasValue & initial_number_replicas,
+  PortableGroup::MinimumNumberReplicasValue & minimum_number_replicas
   ACE_ENV_ARG_DECL)
 {
   // Get type-specific properties.
@@ -505,7 +508,7 @@ TAO_PG_GenericFactory::process_criteria (
   PortableGroup::Value value;
 
   // MembershipStyle
-  name[0].id = CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
+  name[0].id = CORBA::string_dup (PortableGroup::PG_MEMBERSHIP_STYLE);
   if (TAO_PG::get_property_value (name, props.in (), value)
       && (!(value >>= membership_style)
           || (membership_style != PortableGroup::MEMB_APP_CTRL
@@ -518,7 +521,7 @@ TAO_PG_GenericFactory::process_criteria (
 
   // Factories
   const PortableGroup::FactoryInfos * factory_infos_tmp = 0;
-  name[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
+  name[0].id = CORBA::string_dup (PortableGroup::PG_FACTORIES);
   if (TAO_PG::get_property_value (name, props.in (), value)
       && !(value >>= factory_infos_tmp))
     {
@@ -530,11 +533,27 @@ TAO_PG_GenericFactory::process_criteria (
   const CORBA::ULong factory_infos_count =
     (factory_infos_tmp == 0 ? 0 : factory_infos_tmp->length ());
 
-  // InitialNumberMembers
+/////////////////////////////////////////////////////
+  // InitialNumberReplicas
+  PortableGroup::Properties_var p_out = props;
+  ::TAO_PG::Properties_Decoder decoder_out(p_out);
+
+  CORBA::Long value_out;
+  CORBA::Boolean result = 
+    TAO_PG::find (decoder_out, 
+                  PortableGroup::PG_INITIAL_NUMBER_REPLICAS, 
+                  value_out);
+
+  result = TAO_PG::get_property_value (name, props.in (), value);
+  result = value >>= minimum_number_replicas;
+/////////////////////////////////////////////////////
+
+
+  // InitialNumberReplicas
   name[0].id =
-    CORBA::string_dup ("org.omg.PortableGroup.InitialNumberMembers");
+    CORBA::string_dup (PortableGroup::PG_INITIAL_NUMBER_REPLICAS);
   if (TAO_PG::get_property_value (name, props.in (), value)
-      && !(value >>= initial_number_members))
+      && !(value >>= minimum_number_replicas))
     {
       // This only occurs if extraction of the actual value from the
       // Any fails.
@@ -548,18 +567,18 @@ TAO_PG_GenericFactory::process_criteria (
       // possibly be created.
 
       if (factory_infos_count < ACE_static_cast (CORBA::ULong,
-                                                 initial_number_members))
+                                                 minimum_number_replicas))
         {
           unmet_criteria[uc].nam = name;
           unmet_criteria[uc++].val = value;
         }
     }
 
-  // MinimumNumberMembers
+  // MinimumNumberReplicas
   name[0].id =
-    CORBA::string_dup ("org.omg.PortableGroup.MinimumNumberMembers");
+    CORBA::string_dup (PortableGroup::PG_MINIMUM_NUMBER_REPLICAS);
   if (TAO_PG::get_property_value (name, props.in (), value)
-      && !(value >>= minimum_number_members))
+      && !(value >>= minimum_number_replicas))
     {
       // This only occurs if extraction of the actual value from the
       // Any fails.
@@ -575,9 +594,9 @@ TAO_PG_GenericFactory::process_criteria (
   //       changed.
   if (membership_style == PortableGroup::MEMB_INF_CTRL)
     {
-      if (minimum_number_members < initial_number_members
+      if (minimum_number_replicas < minimum_number_replicas
           || ACE_static_cast (CORBA::ULong,
-                              minimum_number_members) > factory_infos_count)
+                              minimum_number_replicas) > factory_infos_count)
         {
           unmet_criteria[uc].nam = name;
           unmet_criteria[uc++].val = value;
@@ -600,17 +619,17 @@ TAO_PG_GenericFactory::process_criteria (
 
 void
 TAO_PG_GenericFactory::check_minimum_number_members (
-  PortableGroup::ObjectGroup_ptr ,
-  PortableGroup::ObjectGroupId ,
-  const char *
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableGroup::ObjectGroup_ptr object_group,
+  PortableGroup::ObjectGroupId group_id,
+  const char * type_id
+  ACE_ENV_ARG_DECL)
 {
 
   //TODO - Fix this code. The original implementation for the load balancer assumed
   //       that the factory-creation-id was the same as the object-group-id. This
   //       is not longer true. The find below is supposed to be a factory-creation-id.
 {
-  //  int _todo_fix_temporarily_disabled_code_;
+  int _todo_fix_temporarily_disabled_code_;
 }
   return;
 
@@ -639,13 +658,13 @@ TAO_PG_GenericFactory::check_minimum_number_members (
 
   // MinimumNumberMembers
   name[0].id =
-    CORBA::string_dup ("org.omg.PortableGroup.MinimumNumberMembers");
+    CORBA::string_dup (PG_MINIMUM_NUMBER_REPLICAS);
 
-  PortableGroup::MinimumNumberMembersValue minimum_number_members;
+  PortableGroup::MinimumNumberMembersValue minimum_number_replicas;
 
   if (TAO_PG::get_property_value (name, props.in (), value))
     {
-      if (!(value >>= minimum_number_members))
+      if (!(value >>= minimum_number_replicas))
         {
           // This only occurs if extraction of the actual value from
           // the Any fails.  It shouldn't fail at this point.
@@ -657,12 +676,12 @@ TAO_PG_GenericFactory::check_minimum_number_members (
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (count >= ACE_static_cast (CORBA::ULong, minimum_number_members))
+      if (count >= ACE_static_cast (CORBA::ULong, minimum_number_replicas))
         return;
 
       const CORBA::ULong gap =
         ACE_static_cast (CORBA::ULong,
-                         minimum_number_members) - count;
+                         minimum_number_replicas) - count;
 
       CORBA::ULong creation_count = 0;
 

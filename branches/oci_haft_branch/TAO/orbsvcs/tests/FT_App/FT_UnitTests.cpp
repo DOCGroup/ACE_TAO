@@ -51,10 +51,10 @@ int FT_UnitTests::test_001 (int run_test,
       value <<= ::FT::MEMB;
       encoder.add(::FT::FT_FAULT_MONITORING_GRANULARITY, value);
 
-      value <<= 2;
+      value <<= 5;
       encoder.add(::FT::FT_INITIAL_NUMBER_REPLICAS, value);
 
-      value <<= 2;
+      value <<= 3;
       encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
 
       // allocate and populate the criteria
@@ -164,10 +164,10 @@ int FT_UnitTests::test_002 (int run_test,
       value <<= ::FT::CONS_INF_CTRL;
       encoder.add(::FT::FT_CONSISTENCY_STYLE, value);
 
-      value <<= 10;
+      value <<= 3;
       encoder.add(::FT::FT_INITIAL_NUMBER_REPLICAS, value);
 
-      value <<= 3;
+      value <<= 2;
       encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
 
       // allocate and populate the criteria
@@ -374,7 +374,7 @@ int FT_UnitTests::test_004 (int run_test,
       TAO_PG::Properties_Encoder encoder;
       PortableGroup::Value value;
 
-      value <<= ::FT::MEMB_APP_CTRL;
+      value <<= ::FT::MEMB_INF_CTRL;
       encoder.add(::FT::FT_MEMBERSHIP_STYLE, value);
 
       value <<= ::FT::CONS_INF_CTRL;

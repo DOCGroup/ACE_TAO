@@ -1,3 +1,35 @@
+Mon Sep 25 04:15:55 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+
+        * TAO/orbsvcs/FT_ReplicationManager/FT_Property_Validator.cpp
+        * TAO/orbsvcs/FT_ReplicationManager/FT_Property_Validator.h
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp
+        * TAO/orbsvcs/orbsvcs/FTORB.mpc
+        * TAO/orbsvcs/orbsvcs/FT_CORBA.idl
+        * TAO/orbsvcs/orbsvcs/FT_CORBA_ORB.idl
+        * TAO/orbsvcs/orbsvcs/FT_ReplicationManager.idl
+        * TAO/orbsvcs/orbsvcs/FaultTolerance.mpc
+        * TAO/orbsvcs/orbsvcs/PortableGroup.idl
+        * TAO/orbsvcs/orbsvcs/PortableGroup.mpc
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_conf.h
+          TagFTGroupTaggedComponent was previously moved to Portablegroups
+          as  TagGroupTaggedComponent, but was never removed from
+          FT_CORBA_ORB.idl.   Consequently, some code was using the
+          PortableGroup version and some code was using the FT
+          version. This removes the FT version and changes all code that
+          referenced it to now use the PortableGroup version.
+
+        * TAO/orbsvcs/tests/FT_App/FT_App.mpc
+        * TAO/orbsvcs/tests/FT_App/FT_Client_Unit.cpp
+        * TAO/orbsvcs/tests/FT_App/FT_UnitTests.cpp
+        The Replication Manager's unit tests were removed from the FT test
+        App and moved into its own module.
+
 Mon Sep 25 07:22:35 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
         * CIAO/CIDLC/cidlc.vcproj
