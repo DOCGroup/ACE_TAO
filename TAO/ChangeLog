@@ -1,3 +1,10 @@
+Thu Jan 23 10:54:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynCommon.cpp (get_reference):
+
+          Fixed memory leak. Thanks to Grigory <grig@plesk.com> for
+          reporting the bug.
+
 Wed Jan 22 14:56:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Invocation.cpp (invoke_i): Unbind the dispatcher instead of

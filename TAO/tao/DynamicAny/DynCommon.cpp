@@ -1156,21 +1156,21 @@ TAO_DynCommon::get_reference (ACE_ENV_SINGLE_ARG_DECL)
   if (this->has_components_)
     {
       DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       return cc->get_reference (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
   else
     {
-      CORBA::Object_ptr retval;
+      CORBA::Object_var retval;
 
-      if ((this->any_ >>= CORBA::Any::to_object (retval)) == 0)
+      if ((this->any_ >>= CORBA::Any::to_object (retval.inout ())) == 0)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
                             CORBA::Object::_nil ());
         }
 
-      return CORBA::Object::_duplicate (retval);
+      return retval._retn ();
     }
 }
 
