@@ -114,10 +114,10 @@ TAO_Naming_Service::init (int argc,
 
       result = this->my_naming_server_.init (orb.in (),
                                              child_poa.in (),
-                                             persistence_file_name_,
                                              context_size_,
                                              0,
-                                             0);
+                                             0,
+                                             persistence_file_name_);
       if (result == -1)
         return result;
     }
