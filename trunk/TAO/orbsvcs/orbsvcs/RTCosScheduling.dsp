@@ -132,7 +132,7 @@ InputDir=.
 
 BuildCmds= \
 	PATH=%PATH%;..\..\..\lib \
-	..\..\..\bin\tao_idl -o . -Gd -Wb,export_macro=TAO_RTCosScheduling_Export -Wb,export_include=RTCosScheduling\RTCosScheduling_export.h -Gv -I$(TAO_ROOT) -I$(TAO_ROOT)\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
+	..\..\..\bin\Release\tao_idl -o . -Gd -Wb,export_macro=TAO_RTCosScheduling_Export -Wb,export_include=RTCosScheduling\RTCosScheduling_export.h -Gv -I$(TAO_ROOT) -I$(TAO_ROOT)\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
