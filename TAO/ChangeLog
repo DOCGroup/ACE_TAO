@@ -1,3 +1,14 @@
+Fri Dec 19 10:27:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Concurrency_Service/Makefile:
+	* orbsvcs/Notify_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Makefile:
+	* orbsvcs/Naming_Service/Makefile:
+
+	  Moved the checks for the status of the conditional variables in 
+	  rules.tao.GNU, after the inclusion of rules.tao.GNU. Thanks to
+	  Thomas Lockhart for reporting this problem.
+
 Fri Dec 19 11:25:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Abstract_Servant_Base.h:
