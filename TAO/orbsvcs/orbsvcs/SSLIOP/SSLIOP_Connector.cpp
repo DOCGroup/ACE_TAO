@@ -631,7 +631,7 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
       TAO_SSLIOP_Credentials_ptr c = ssliop_credentials.out ();
       ACE_NEW_THROW_EX (c,
                         TAO_SSLIOP_Credentials (::SSL_get_certificate (ssl),
-                                                ::SSL_get_private_key (ssl)),
+                                                ::SSL_get_privatekey (ssl)),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
     }

@@ -136,7 +136,7 @@ TAO_SSLIOP_Current_Impl::received_credentials (
 
   TAO_SSLIOP_ReceivedCredentials *c = 0;
   ACE_NEW_THROW_EX (c,
-                    TAO_SSLIOP_ReceivedCredentials (cert.in ()),
+                    TAO_SSLIOP_ReceivedCredentials (cert.in (), 0),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
