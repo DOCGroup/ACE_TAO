@@ -9,7 +9,7 @@
 
 #if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 int
-main (int, char *argv[])
+ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_ERROR_RETURN ((LM_INFO,
                      ACE_TEXT ("%s: not supported with ")

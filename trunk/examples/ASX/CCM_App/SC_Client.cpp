@@ -6,8 +6,8 @@ ACE_RCSID(CCM_App, SC_Client, "$Id$")
 
 // Pretty simple, eh? ;-)
 
-int 
-main (int, char *[])
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }
