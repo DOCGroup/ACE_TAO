@@ -233,14 +233,9 @@ TAO_Default_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
 {
   ACE_Lock *the_lock = 0;
 
-  if (this->cached_connector_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
-                    0);
-  else
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX>,
-                    0);
+  ACE_NEW_RETURN (the_lock,
+                  ACE_Lock_Adapter<ACE_SYNCH_MUTEX>,
+                  0);
 
   return the_lock;
 }
