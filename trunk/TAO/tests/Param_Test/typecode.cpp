@@ -50,8 +50,8 @@ Test_TypeCode::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_TypeCode::init_parameters (Param_Test_ptr objref,
-                                CORBA::Environment &/*ACE_TRY_ENV*/)
+Test_TypeCode::init_parameters (Param_Test_ptr,
+                                CORBA::Environment &)
 {
   static CORBA::TypeCode_ptr tc_table [] =
     {
@@ -145,7 +145,6 @@ Test_TypeCode::add_args (CORBA::NVList_ptr param_list,
 CORBA::Boolean
 Test_TypeCode::check_validity (void)
 {
-  //CORBA::Environment env;
   ACE_DECLARE_NEW_CORBA_ENV;
   if (this->in_.in ()->equal (this->inout_.in (), ACE_TRY_ENV) &&
       this->in_.in ()->equal (this->out_.in (), ACE_TRY_ENV) &&
@@ -156,7 +155,7 @@ Test_TypeCode::check_validity (void)
 }
 
 CORBA::Boolean
-Test_TypeCode::check_validity (CORBA::Request_ptr req)
+Test_TypeCode::check_validity (CORBA::Request_ptr)
 {
   return this->check_validity ();
 }

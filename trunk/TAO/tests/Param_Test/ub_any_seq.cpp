@@ -299,7 +299,7 @@ Test_AnySeq::check_validity (void)
 }
 
 CORBA::Boolean
-Test_AnySeq::check_validity (CORBA::Request_ptr req)
+Test_AnySeq::check_validity (CORBA::Request_ptr)
 {
   return this->check_validity ();
 }

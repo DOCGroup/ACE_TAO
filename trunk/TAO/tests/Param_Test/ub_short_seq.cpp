@@ -54,7 +54,7 @@ Test_Short_Sequence::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Short_Sequence::init_parameters (Param_Test_ptr objref,
+Test_Short_Sequence::init_parameters (Param_Test_ptr,
                                       CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
