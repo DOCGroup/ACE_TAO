@@ -102,18 +102,6 @@ SOURCE=.\Event\BCU.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Concurrency\CC_LockSet.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Concurrency\CC_LockSetFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Concurrency\Concurrency_Utils.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\Config_Scheduler.cpp
 # End Source File
 # Begin Source File
@@ -139,14 +127,6 @@ SOURCE=.\Trader\Constraint_y.cpp
 # Begin Source File
 
 SOURCE=.\CosEvent\ConsumerAdmin_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlS.cpp
 # End Source File
 # Begin Source File
 
@@ -666,18 +646,6 @@ SOURCE=.\Naming\Bindings_Iterator_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Concurrency\CC_LockSet.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Concurrency\CC_LockSetFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Concurrency\Concurrency_Utils.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\Config_Scheduler.h
 # End Source File
 # Begin Source File
@@ -695,14 +663,6 @@ SOURCE=.\Trader\Constraint_Tokens.h
 # Begin Source File
 
 SOURCE=.\Trader\Constraint_Visitors.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlS.h
 # End Source File
 # Begin Source File
 
@@ -1210,14 +1170,6 @@ SOURCE=.\Naming\Transient_Naming_Context.h
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\CosConcurrencyControlC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControlS.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosLifeCycleC.i
 # End Source File
 # Begin Source File
@@ -1442,91 +1394,6 @@ USERDEP__AVSTR="..\..\..\bin\tao_idl_static -Ge 1 .exe"
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\AVStreams.idl
 InputName=AVStreams
-
-BuildCmds= \
-	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosConcurrencyControl.idl
-
-!IF  "$(CFG)" == "ORB Services Static - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSCO="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\CosConcurrencyControl.idl
-InputName=CosConcurrencyControl
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -Ge 1  -I../../         -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h         $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__COSCO="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\CosConcurrencyControl.idl
-InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
