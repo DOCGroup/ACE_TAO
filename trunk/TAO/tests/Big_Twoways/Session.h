@@ -61,7 +61,7 @@ private:
   int more_work (void) const;
 
   /// Validate all the connections
-  void validate_connections (ACE_ENV_ARG_DECL)
+  void validate_connections (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC (());
 
 private:
