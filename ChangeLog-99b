@@ -1,3 +1,9 @@
+Thu Apr 29 18:32:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h: Removed ghs from the list of compilers for which
+	  ACE_NOTREACHED disappears.  It was causing warnings for
+	  TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp.
+
 Thu Apr 29 19:48:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.{h,i} (ACE_OS): 
