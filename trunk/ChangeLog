@@ -1,3 +1,35 @@
+Tue May 20 01:50:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-aix-4.x.h:
+        * ace/config-cygwin32-common.h:
+        * ace/config-freebsd.h:
+        * ace/config-irix5.2.h:
+        * ace/config-irix5.3-g++.h:
+        * ace/config-irix5.3-sgic++.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-m88k.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp.h:
+        * ace/config-sunos4-g++.h:
+        * ace/config-sunos4-lucid3.2.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tandem.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-win32-msvc.h:
+          Commented out ACE_HAS_ALLOCA.  Even though these
+          compiler/platform combinations do have alloca(), it can be
+          dangerous.  Users can uncomment it or define it in their own
+          config.h file if they want to use it.  Please see ChangeLog
+          entry "Mon May 19 11:03:31 2003  Ossama Othman
+          <ossama@dre.vanderbilt.edu>" below for how to use it with autoconf.
+
 Tue May 20 01:10:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/DLL_Manager.cpp (get_handle):

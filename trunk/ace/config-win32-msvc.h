@@ -57,7 +57,10 @@
 #endif
 
 #include <malloc.h>
-#define ACE_HAS_ALLOCA 1
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA 1
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_H */

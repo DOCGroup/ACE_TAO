@@ -83,7 +83,10 @@
 #define ACE_HAS_P_READ_WRITE 1
 
 /* Compiler/platform supports alloca() */
-#define ACE_HAS_ALLOCA 1
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA 1
 
 /* Compiler/platform correctly calls init()/fini() for shared libraries */
 #define ACE_HAS_AUTOMATIC_INIT_FINI 1

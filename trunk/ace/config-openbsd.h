@@ -110,7 +110,10 @@
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 // Compiler/platform supports alloca().
-#define ACE_HAS_ALLOCA
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA
 
 // Compiler/platform supports SVR4 dynamic linking semantics..
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
