@@ -156,6 +156,7 @@ CONTROLLED_FILES = \
         docs \
         etc \
         examples \
+        html \
         include \
         install-sh \
         ltcf-c.sh \
@@ -197,8 +198,7 @@ RELEASE_LIB_FILES = \
 # found in those lists.
 RELEASE_TAG_FILES = \
         man/Makefile.am \
-        man/man3/Makefile.am \
-        man/html/Makefile.am
+        man/man3/Makefile.am
 
 .PHONY: release releasetao releaseall tag
 
@@ -216,7 +216,7 @@ REL                = beta
 ZIP_FILES          =
 
 #### The release target creates the ACE (only) kit.
-release: $(APPLY_NEW_TAG) ACE-INSTALL
+release: $(APPLY_NEW_TAG)
 	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 

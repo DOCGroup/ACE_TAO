@@ -12,8 +12,10 @@ require File::Path;
 # Configuration and default values
 
 $is_release = 0;
+$exclude_ace = 0;
+$exclude_tao = 0;
 @ACE_DOCS = ('ace',
-	     'ace_man',
+             'ace_man',
              'ace_rmcast',
              'ace_ssl');
 @TAO_DOCS = ('tao',
@@ -25,7 +27,7 @@ $is_release = 0;
              'tao_esf',
              'tao_rtevent',
              'tao_implrepo',
-	     'tao_strategies');
+             'tao_strategies');
 
 # Modify defaults using the command line arguments
 &parse_args ();
@@ -35,8 +37,8 @@ open(CONFIG_H, ">ace/config.h")
 print CONFIG_H "#include \"ace/config-doxygen.h\"\n";
 close (CONFIG_H);
 
-&generate_doxy_files ('ACE',     'VERSION', @ACE_DOCS);
-&generate_doxy_files ('TAO', 'TAO/VERSION', @TAO_DOCS);
+&generate_doxy_files ('ACE',     'VERSION', @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO', 'TAO/VERSION', @TAO_DOCS) if (!$exclude_tao);
 
 unlink "ace/config.h";
 
@@ -49,6 +51,10 @@ sub parse_args {
       push @ARGS, $ARGV[0];
     } elsif ($ARGV[0] eq "-is_release") {
       $is_release = 1;
+    } elsif ($ARGV[0] eq "-exclude_ace") {
+      $exclude_ace = 1;
+    } elsif ($ARGV[0] eq "-exclude_tao") {
+      $exclude_tao = 1;
     } else {
       print "Ignoring option $ARGV[0]\n";
     }
@@ -88,21 +94,21 @@ sub generate_doxy_files {
       chomp;
       if (/^PROJECT_NUMBER/) {
         print DOXYOUTPUT "PROJECT_NUMBER        = ", $VERSION, "\n";
-	next;
+        next;
       } elsif (/^GENERATE_MAN/ && /= YES/) {
-	$generate_man = 1;
+        $generate_man = 1;
       } elsif (/^GENERATE_HTML/ && /= YES/) {
-	$generate_html = 1;
+        $generate_html = 1;
       } elsif ($generate_html && /^HTML_OUTPUT/) {
         my @field = split(' = ');
-	if ($#field >= 1) {
-	  push @output_dirs, $field[1];
-	}
+        if ($#field >= 1) {
+          push @output_dirs, $field[1];
+        }
       } elsif ($generate_html && /^MAN_OUTPUT/) {
         my @field = split(' = ');
-	if ($#field >= 1) {
-	  push @output_dirs, $field[1];
-	}
+        if ($#field >= 1) {
+          push @output_dirs, $field[1];
+        }
       }
       print DOXYOUTPUT $_, "\n";
     }

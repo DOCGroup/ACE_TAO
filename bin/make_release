@@ -38,6 +38,15 @@ my $long_usage="   -? option prints this message\n" .
 $ENV{'SIGNATURE'} ||
   die "$0: must set your SIGNATURE environment variable\n";
 
+&can_run('perl -V') ||
+  die "$0: perl should be in your path\n";
+
+&can_run('dot -V') ||
+  die "$0: dot should be in your path\n";
+
+&can_run('doxygen --version | grep -q 1.2.3') ||
+  die "$0: doxygen should be in your path\n";
+
 my $hostname;
 chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
 unless ("$hostname" eq 'ace') {
@@ -264,12 +273,12 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
         die "$0: unable to mkdir $stage_dir/ACE_wrappers/man\n";
       mkdir "ACE_wrappers/man/man3", 0755  ||
         die "$0: unable to mkdir $stage_dir/ACE_wrappers/man/man3\n";
-      mkdir "ACE_wrappers/man/html", 0755  ||
-        die "$0: unable to mkdir $stage_dir/ACE_wrappers/man/html\n";
     }
     if ($generate_man_pages) {
-      &ex ("cd ACE_wrappers  && bin/generate_man_pages")  &&
-        die "$0: failed to generate man pages in $stage_dir/ACE_wrappers\n";
+      &ex ("cd ACE_wrappers && bin/generate_doxygen.pl -is_release -exclude_tao")
+	&& die "$0: failed to generate ACE man pages in $stage_dir\n";
+      &ex ("cd ACE_wrappers/man && catman -w -M .")
+	&& die "$0: failed to generate man page index in $stage_dir\n";
     }
     &ex ("cd ACE_wrappers  &&  $make ACE-INSTALL")  &&
       die "$0: failed make ACE-INSTALL in $stage_dir/ACE_wrappers\n";
@@ -281,6 +290,11 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
     &ex ("cd ACE_wrappers/TAO  &&  $make INSTALL orbsvcs/README")  &&
       die "$0: failed make INSTALL TAO/orbsvcs/README in " .
           "$stage_dir/ACE_wrappers/TAO\n";
+
+    if ($generate_man_pages) {
+      &ex ("cd ACE_wrappers && bin/generate_doxygen.pl -is_release -exclude_ace")
+	&& die "$0: failed to generate TAO man pages in $stage_dir\n";
+    }
   }
 
   $status = &create_kit ();
@@ -731,4 +745,18 @@ sub ex ()
   } else {
     system ("$command");
   }
+}
+
+########
+######## Verify that a command can be executed, return 1 on sucess
+########
+sub can_run {
+  my $command = shift;
+
+  open (RUN, "$command 2>&1 |")
+    || return 0;
+  while (<RUN>) {}
+  close(RUN)
+    || return 0;
+  return 1;
 }
