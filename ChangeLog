@@ -1,3 +1,26 @@
+Mon Apr 21 04:51:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/generate_compile_stats.sh:
+
+          More changes to html generation, added system info, tables
+          to the detail section, last compile times, and %change.
+
+        * ace/SStringfwd.h:
+        * ace/SString.h:
+
+          Moved typedef for ACE_TString to SStringfwd.h to go with 
+          ACE_CString and ACE_WString.
+
+        * ace/Get_Opt.{h,cpp,i}:
+
+          Include ace/SStringfwd.h instead of ace/SString.h in header, 
+          changed members variables to pointers, and uninlined optstring()
+          to reduce inter header dependencies.
+
+        * tests/Multicast_Test.cpp:
+
+          Added #include "ace/SString.h".
+
 Sun Apr 20 11:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Timer_Queue/Timer_Queue.dsw:

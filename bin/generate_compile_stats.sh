@@ -371,6 +371,50 @@ create_index_page ()
   echo '<li><a href="ace.html">ACE</a>'
   echo '<li><a href="tao.html">TAO</a>'
   echo '</ul>'
+  echo '<hr>'
+
+  echo '<P>All the experiments run on a dual Pentium 4 @2.4Ghz, with
+      512Mb of RAM.  The machine is running Linux (Redhat 8.1),
+      and we use gcc-3.2 to compile ACE+TAO.
+    </P>'
+
+  echo '<TABLE border="2"><TBODY><TR><TD>ACE+TAO Configuration</TD><TD>config.h</TD></TR>'
+  echo '<TR><TD colspan="2"><PRE>'
+
+  cat $ACE_ROOT/ace/config.h
+
+  echo '</PRE></TD></TR><TR><TD>ACE+TAO Configuration</TD><TD>platform_macros.GNU</TD></TR>'
+  echo '<TR><TD colspan="2"><PRE>'
+
+  cat $ACE_ROOT/include/makeinclude/platform_macros.GNU
+
+  echo '</PRE></TD></TR><TR><TD>CPU Information</TD><TD>/proc/cpuinfo</TD></TR>'
+  echo '<TR><TD colspan="2"><PRE>'
+
+  cat /proc/cpuinfo
+
+  echo '</PRE></TD></TR><TR><TD>Available Memory</TD><TD>/proc/meminfo</TD></TR>'
+  echo '<TR><TD colspan="2"><PRE>'
+
+  cat /proc/meminfo
+
+  echo '</PRE></TD></TR><TR><TD>OS Version</TD><TD>uname -a</TD></TR>'
+  echo '<TR><TD colspan="2"><PRE>'
+
+  /bin/uname -a
+
+  echo '</PRE></TD></TR><TR><TD>Compiler Version</TD><TD>gcc -v</TD></TR>'
+  echo '<TR><TD colspan="2">'
+
+  /usr/bin/gcc -v > .metrics/gcc.txt 2>&1
+  cat .metrics/gcc.txt
+
+  echo '</TD></TR><TR><TD>Library Version</TD><TD>/lib/libc.so.6</TD></TR>'
+  echo '<TR><TD colspan="2"><PRE>'
+
+  /lib/libc.so.6 | sed -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
+
+  echo '</PRE></TD></TR></TBODY></TABLE>'
   echo '</body></html>'
 }
 
@@ -384,6 +428,12 @@ create_page ()
   # header
   echo "<html>"
   echo "<head><title>$TITLE</title></head>"
+  echo '<style><!--'
+  echo 'body,td,a,p,.h{font-family:arial,sans-serif;}'
+  echo '.h{font-size: 20px;}'
+  echo '.q{text-decoration:none; color:#0000cc;}'
+  echo '//-->'
+  echo '</style>'
   echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
   echo "<br><center><h1>$TITLE</h1></center><br>"
   if [ -e ".metrics/images/$BASE.png" ]; then
@@ -395,20 +445,40 @@ create_page ()
   echo "<br><hr><br>"
   echo "<center><h2>Detail</h2></center>"
 
-  # todo: make this a table and add more detail to each object.
-  echo "<ul>"
+  echo '<TABLE border="2"><TBODY><TR><TD rowspan=2><b>Object</b></TD>'
+  echo '<TD colspan="3"; align=center><b>Last Compile</b></TD></TR>'
+  echo '<TD align=center><b>Date</b></TD><TD align=center><b>Milliseconds</b></TD>'
+  echo '<TD align=center><b>%chg</b></TD></TR>'
   while read i; do
+    LAST=0 PRE=0 VAL_TMP=0 VAL_INT=0 VAL_SIGN="+"
+    echo '<TR><TD>'
     if [ -e ".metrics/${i}.html" ]; then
       # strip off "TAO___" if it exists
       NAME=${i#TAO___}
-      echo "<li><a href=\"$i.html\">${NAME//___//}</a>"
+      echo "<a href=\"$i.html\">${NAME//___//}</a>"
     elif [ -e ".metrics/images/${i}.png" ]; then
       # since you'll only have images if it's a composite, strip off the
       # path for the name
-      echo "<li><a href=\"images/$i.png\">${i##*___}</a>"
+      echo "<a href=\"images/$i.png\">${i##*___}</a>"
     fi
+    echo '</TD><TD>'
+    echo `tail -n1 .metrics/data/${i}.txt | cut -d" " -f1`
+    let LAST=`tail -n1 .metrics/data/${i}.txt | cut -d" " -f2`
+    echo "</TD><TD align=right>$LAST</TD>"
+    let PRE=`tail -n2 .metrics/data/${i}.txt | head -n1 | cut -d" " -f2`
+    let VAL_TMP="(($LAST-$PRE)*1000)/$PRE"
+    if [ $VAL_TMP -lt 0 ]; then
+      VAL_SIGN="-"
+      let VAL_TMP="-1*$VAL_TMP"
+    elif [ $VAL_TMP -eq 0 ]; then
+      VAL_SIGN=
+    fi
+    let VAL_INT="$VAL_TMP/10"
+    let VAL_TENTH="$VAL_TMP-($VAL_INT*10)"
+    echo "<TD align=right>${VAL_SIGN}${VAL_INT}.${VAL_TENTH}</TD></TR>"
+
   done # for
-  echo '</ul>'
+  echo '</TBODY></TABLE>'
 
   # footer
   echo '</body></html>'
@@ -429,7 +499,7 @@ sort_list ()
   done
 
   # sort eats underscores, soo...
-  sed "s/___/000/g" .metrics/tmp_list | sort | sed "s/000/___/g"
+  sed "s/___/000/g" .metrics/tmp_list | sort -f | sed "s/000/___/g"
 }
 
 create_html ()
