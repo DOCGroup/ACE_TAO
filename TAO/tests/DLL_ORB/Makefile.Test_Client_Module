@@ -7,6 +7,10 @@
 #----------------------------------------------------------------------------
 
 # Override default to make dependency generation work properly.
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 MAKEFILE = Makefile.Test_Client_Module
 
 TAO_IDLFLAGS += -Ge 1
