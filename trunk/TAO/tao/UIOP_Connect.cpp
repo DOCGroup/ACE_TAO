@@ -1,15 +1,16 @@
 // $Id$
 
+#include "tao/UIOP_Connect.h"
+
 #if !defined(ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "tao/UIOP_Connect.h"
-#include "tao/Timeprobe.h"
 #include "tao/UIOP_Transport.h"
+#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
-#include "tao/GIOP.h"
+#include "tao/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Connect.i"

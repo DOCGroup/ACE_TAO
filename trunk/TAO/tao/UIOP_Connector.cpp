@@ -16,9 +16,10 @@
 //     Ossama Othman <othman@cs.wustl.edu>
 // ============================================================================
 
+#include "tao/UIOP_Connector.h"
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "tao/UIOP_Connector.h"
 #include "tao/UIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/debug.h"

@@ -1,9 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "tao/UIOP_Transport.h"
+
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "tao/UIOP_Transport.h"
 #include "tao/UIOP_Connect.h"
 #include "tao/UIOP_Profile.h"
 #include "tao/Timeprobe.h"
