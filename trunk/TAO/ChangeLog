@@ -1,3 +1,9 @@
+Sun Mar 30 15:12:20 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Client.dsp:
+	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Server.dsp: Fixed the
+	  link path in the project files.
+
 Sun Mar 30 15:03:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Param_Test/server.dsp: Enabled RTTI on a few files to
