@@ -1,3 +1,9 @@
+Tue Oct 13 22:09:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Mem_Map.cpp (map_it): One more try to get this right ;)
+ 	  Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for the bug
+ 	  reports, suggested fixes, and test program.
+
 Tue Oct 13 21:17:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/Asynch_IO.cpp: 

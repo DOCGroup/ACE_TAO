@@ -1,11 +1,20 @@
+Tue Oct 13 22:15:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp (svc): Must set the
+ 	  wr_ptr correctly.  Otherwise, the ORB doesn't know how much to
+ 	  data to encode.
+
+	* orbsvcs/orbsvcs/Event/Event_Manip.cpp (_create): event_set
+ 	  length must be calculated before the call to get_buffer() since
+	  that call will change the length.
+
 Tue Oct 13 17:04:15 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-  * tao/Any.cpp:
-    Modified copy constructor and assignment operator to avoid
-    encoding the value of the source Any when it is 0 (which it
-    is if the Any was constructed from just a typecode. Perhaps
-    this sequence of calls should never be made, but this guards
-    against it anyway.
+        * tao/Any.cpp: Modified copy constructor and assignment operator
+ 	  to avoid encoding the value of the source Any when it is 0
+ 	  (which it is if the Any was constructed from just a
+ 	  typecode. Perhaps this sequence of calls should never be made,
+ 	  but this guards against it anyway.
 
 Tue Oct 13 10:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
