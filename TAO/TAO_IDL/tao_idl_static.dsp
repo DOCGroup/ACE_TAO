@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=TAO_IDL Compiler Static - Win32 Debug
+CFG=TAO_IDL Compiler Static - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=TAO_IDL Compiler Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tao_idl_static.mak" CFG="TAO_IDL Compiler Static - Win32 Debug"
+!MESSAGE NMAKE /f "tao_idl_static.mak" CFG="TAO_IDL Compiler Static - Win32 Static Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TAO_IDL Compiler Static - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "TAO_IDL Compiler Static - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "TAO_IDL Compiler Static - Win32 Static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "TAO_IDL Compiler Static - Win32 Static Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=TAO_IDL Compiler Static - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "TAO_IDL Compiler Static - Win32 Release"
+!IF  "$(CFG)" == "TAO_IDL Compiler Static - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -37,7 +37,7 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
+# PROP Output_Dir "LIB\Release"
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 aces.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\Release\tao_idl_static.exe" /libpath:"../../ace"
 # SUBTRACT LINK32 /map
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler Static - Win32 Debug"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler Static - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -83,8 +83,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "TAO_IDL Compiler Static - Win32 Release"
-# Name "TAO_IDL Compiler Static - Win32 Debug"
+# Name "TAO_IDL Compiler Static - Win32 Static Release"
+# Name "TAO_IDL Compiler Static - Win32 Static Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
