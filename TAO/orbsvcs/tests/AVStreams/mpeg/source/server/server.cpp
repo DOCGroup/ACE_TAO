@@ -69,8 +69,8 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         */
 
         ACE_Process_Options video_process_options;
-        video_process_options.command_line ("./vs -ORBport 8522");
-
+        video_process_options.command_line ("./vs -ORBport 0");
+        // ORBport of 0 makes the video server pick a port for itself
         
         ACE_Process video_process;
         pid_t child_pid;
@@ -86,10 +86,18 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         char sem_str [BUFSIZ];
 
         // create a unique semaphore name
-        sprintf (sem_str,"%s%d","Video_Server_Semaphore",child_pid);
-        ACE_DEBUG ((LM_DEBUG,"(%P|%t) semaphore is %s\n",sem_str));
+        ::sprintf (sem_str,
+                   "%s:%d",
+                   "Video_Server_Semaphore",
+                   child_pid);
+
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) semaphore is %s\n",
+                    sem_str));
         // Create the semaphore
-        ACE_Process_Semaphore semaphore (0,sem_str);
+        ACE_Process_Semaphore semaphore (0, // 0 means that the
+                                            // semaphore is locked initially
+                                         sem_str);
 
         // %% wait until the child finishes booting
         if (semaphore.acquire () == -1)
@@ -97,10 +105,10 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                              "(%P|%t) semaphore acquire failed: %p\n",
                              "acquire"),
                             -1);
-        //        ::sleep (5);
         // Wait until a ACE_SV_Semaphore's value is greater than 0, the
         // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
         // DOWN operation.
+        //        ::sleep (5);
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
         int ack = 42;
         if (this->peer ().send_n (&ack,
@@ -110,6 +118,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                              "AV_Svc_Handler::handle_connection"),
                             -1);
       }
+      // close down the connected socket in the main process
       this->destroy ();
       break;
     default:
@@ -231,7 +240,7 @@ AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 int
 AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
 
   switch (signum)
     {
@@ -249,7 +258,7 @@ AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       break;
     default:
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) %S: not handled, returning to program\n", 
+		  "(%P|%t) %S: not handled, returning to program\n", 
                   signum));
       break;
     }
@@ -264,7 +273,7 @@ AV_Server_Sig_Handler::clear_child (int sig)
   int status;
   
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Reaping the children\n"));
+              "(%P|%t) AV_Server: Reaping the children\n"));
   // reap the children
   while ((pid = ACE_OS::waitpid (-1, 
                                  &status, 
@@ -277,30 +286,11 @@ AV_Server_Sig_Handler::clear_child (int sig)
       continue;
     
     ACE_DEBUG ((LM_DEBUG, 
-                "(%P|%t) VCRS: child %d (status %d) ", 
+                "(%P|%t) AV_Server: child %d (status %d)\n", 
                 pid, 
                 status));
-
-    // %% what does the following do
-    if (WIFEXITED(status)) 
-      {
-        // @@ Can you replace these fprintfs with the appropriate
-        // ACE_DEBUG/ACE_ERROR macros?!
-        fprintf(stderr, "exited with status %d\n", WEXITSTATUS(status));
-      }
-    else if (WIFSIGNALED(status)) 
-      {
-        // %% can we remove the below ?
-#if defined(_HPUX_SOURCE) || defined(__svr4__) || defined(IRIX)
-        fprintf (stderr, "terminated at signal %d%s.\n", WTERMSIG(status),
-                 WCOREDUMP(status) ? ", core dumped" : "");
-#else
-        fprintf (stderr, "terminated at signal %d.\n", WTERMSIG(status));
-#endif /* defined(_HPUX_SOURCE) || defined(__svr4__) || defined(IRIX) */
-      }
-    else if (WIFSTOPPED(status)) 
-      fprintf(stderr, "stopped at signal %d\n", WSTOPSIG(status));
   }
+  return;
 }
 
 //  ctrl-c, Bus error, interrupt sig handler
@@ -309,7 +299,7 @@ AV_Server_Sig_Handler::int_handler (int sig)
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
   ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) killed by signal %d\n",
+              "(%P|%t) AV server killed by signal %d\n",
               sig));
 }
 

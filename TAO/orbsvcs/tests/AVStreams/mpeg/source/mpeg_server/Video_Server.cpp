@@ -253,6 +253,9 @@ Video_Server::initialize_orb (int argc,
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   int result;
 
+
+
+
   // Initialize the orb_manager
   this->orb_manager_.init_child_poa (argc,
                                      argv,
@@ -260,8 +263,22 @@ Video_Server::initialize_orb (int argc,
                                      env);
   TAO_CHECK_ENV_RETURN (env,
                         -1);
+
+
+  // %% hack to make the ORB manager pick its own port
+  // we create an Ace_Time_Value of time out zero,
+  // and then call a dummy orb run
+  ACE_Time_Value tv (0);
+  if (this->orb_manager_.orb ()-> run (tv) == -1)
+    ACE_ERROR_RETURN ( (LM_ERROR,
+                        "(%P|%t) ORB_run %p\n",
+                        "run"),
+                       -1);
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+
   VIDEO_CONTROL_I::instance ()-> create_handlers ();
+
   this->orb_manager_.activate_under_child_poa ("Video_Control",
                                                VIDEO_CONTROL_I::instance (),
                                                env);
