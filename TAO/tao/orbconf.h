@@ -331,6 +331,7 @@
 #define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
 #define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
 #define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
+#define TAO_OBJID_TYPECODEFACTORY     "TypeCodeFactory"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
