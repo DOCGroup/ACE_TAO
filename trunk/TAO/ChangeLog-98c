@@ -1,7 +1,8 @@
 Tue Oct 28 20:49:28 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* tao/giop.cpp (start): Added codes to reset this->handler_ so
-	  that ACE_Cached_Connect_Strategy won't complain.
+	* tao/giop.cpp (start): NT Access Violation error, AGAIN! Added
+	  codes to reset this->handler_ so that
+	  ACE_Cached_Connect_Strategy won't complain.
 
 Tue Oct 28 19:19:05 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
