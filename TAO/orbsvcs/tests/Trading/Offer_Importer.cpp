@@ -243,10 +243,11 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 {
   TAO_TRY
     {
+      CORBA::ULong length = 0, i = 0;
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
       ACE_DEBUG ((LM_DEBUG, "Offers in the sequence:\n"));
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
-      for (int length = offer_seq.length (), i = 0; i < length; i++)
+      for (length = offer_seq.length (), i = 0; i < length; i++)
         {
           // Call back to the exported object.
           TAO_Trader_Test::Remote_Output_var remote_output =
@@ -265,7 +266,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
       if (! CORBA::is_nil (offer_iterator))
 	{
-          int length = offer_seq.length ();
+          length = offer_seq.length ();
 	  CORBA::Boolean any_left = CORBA::B_FALSE;
 
 	  do

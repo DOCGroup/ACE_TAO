@@ -9,7 +9,7 @@ TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
     lookup_ (lookup_if)
 {  
   // Obtain the Service Type Repository.
-  CosTrading::TypeRepository_ptr obj = lookup_if->type_repos (_env);
+  CosTrading::TypeRepository_var obj = lookup_if->type_repos (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
       
   // Narrow the Service Type Repository.
