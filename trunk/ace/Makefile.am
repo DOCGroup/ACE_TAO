@@ -720,13 +720,10 @@ INLINE_FILES = \
   ATM_Params.i \
   ATM_QoS.i \
   ATM_Stream.i \
-  Acceptor.i \
   Activation_Queue.i \
   Active_Map_Manager.i \
   Active_Map_Manager_T.i \
   Addr.i \
-  Asynch_Acceptor.i \
-  Asynch_IO.i \
   Asynch_IO_Impl.i \
   Atomic_Op.i \
   Auto_IncDec_T.i \
@@ -735,15 +732,9 @@ INLINE_FILES = \
   Basic_Types.i \
   CDR_Stream.i \
   CORBA_Handler.i \
-  CORBA_Ref.i \
   Cache_Map_Manager_T.i \
-  Cached_Connect_Strategy_T.i \
   Caching_Strategies_T.i \
-  Caching_Utility_T.i \
   Capabilities.i \
-  Cleanup_Strategies_T.i \
-  Configuration.i \
-  Connector.i \
   Containers.i \
   Containers_T.i \
   DEV.i \
@@ -774,23 +765,19 @@ INLINE_FILES = \
   Handle_Gobbler.i \
   Handle_Set.i \
   Hash_Cache_Map_Manager_T.i \
-  Hash_Map_Manager.i \
   Hash_Map_Manager_T.i \
   Hash_Map_With_Allocator_T.i \
   High_Res_Timer.i \
   INET_Addr.i \
   IOStream_T.i \
-  IO_Cntl_Msg.i \
   IO_SAP.i \
   IPC_SAP.i \
   LSOCK.i \
-  LSOCK_Acceptor.i \
   LSOCK_CODgram.i \
   LSOCK_Connector.i \
   LSOCK_Dgram.i \
   LSOCK_Stream.i \
   Local_Tokens.i \
-  Log_Msg.i \
   Log_Record.i \
   MEM_Acceptor.i \
   MEM_Addr.i \
@@ -801,7 +788,6 @@ INLINE_FILES = \
   Malloc.i \
   Malloc_T.i \
   Managed_Object.i \
-  Map.i \
   Map_Manager.i \
   Map_T.i \
   Mem_Map.i \
@@ -819,11 +805,9 @@ INLINE_FILES = \
   Obstack.i \
   POSIX_Asynch_IO.i \
   POSIX_Proactor.i \
-  Pair.i \
   Pair_T.i \
   Parse_Node.i \
   Pipe.i \
-  Priority_Reactor.i \
   Proactor.i \
   Process.i \
   Process_Manager.i \
@@ -844,7 +828,6 @@ INLINE_FILES = \
   SOCK_IO.i \
   SOCK_Stream.i \
   SPIPE.i \
-  SPIPE_Acceptor.i \
   SPIPE_Addr.i \
   SPIPE_Connector.i \
   SPIPE_Stream.i \
@@ -855,7 +838,6 @@ INLINE_FILES = \
   SV_Semaphore_Simple.i \
   SV_Shared_Memory.i \
   Sched_Params.i \
-  Select_Reactor.i \
   Select_Reactor_Base.i \
   Select_Reactor_T.i \
   Service_Config.i \
@@ -872,13 +854,10 @@ INLINE_FILES = \
   Strategies.i \
   Strategies_T.i \
   Stream.i \
-  Stream_Modules.i \
-  Svc_Handler.i \
   Synch.i \
   Synch_Options.i \
   Synch_T.i \
   TLI.i \
-  TLI_Acceptor.i \
   TLI_Connector.i \
   TLI_Stream.i \
   TP_Reactor.i \
@@ -891,10 +870,8 @@ INLINE_FILES = \
   Timer_Queue_T.i \
   Token.i \
   Token_Collection.i \
-  Token_Invariants.i \
   Token_Manager.i \
   Token_Request_Reply.i \
-  Trace.i \
   Typed_SV_Message.i \
   Typed_SV_Message_Queue.i \
   UNIX_Addr.i \
@@ -902,8 +879,6 @@ INLINE_FILES = \
   UPIPE_Connector.i \
   UPIPE_Stream.i \
   WFMO_Reactor.i \
-  WIN32_Asynch_IO.i \
-  WIN32_Proactor.i \
   XTI_ATM_Mcast.i
 
 
