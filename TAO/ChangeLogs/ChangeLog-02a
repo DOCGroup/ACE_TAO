@@ -1,3 +1,10 @@
+Tue May  8 09:01:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Object_Ref_Table.cpp (~TAO_Object_Ref_Table): Removed a
+	  destroy () from the destructor. The destroy () has already been
+	  invoked during ORB_Core::shutdown (). The second call to destroy
+	  ()  really caused havoc in Win32 builds.
+
 Tue May  8 08:17:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.h: Added a TAO_Export to TAO_ORB_Core_Auto_Ptr
@@ -11,7 +18,7 @@ Tue May  8 07:32:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  Set. When the ORB_Core gets destroyed, the destructor of the
 	  Unbounded set is called. This creates problems as the allocators
 	  have already been removed. We now destroy the list by calling
-	  reset () before the ORB_Core gets destroyed. 
+	  reset () before the ORB_Core gets destroyed.
 
 Mon May  7 20:30:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
