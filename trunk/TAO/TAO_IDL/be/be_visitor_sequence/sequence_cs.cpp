@@ -476,15 +476,15 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
               << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<"
                                         : "TAO_VarSeq_Var_T<")
               << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
+              << node->name () << "," << be_nl
               << bt->name () << be_uidt_nl
               << ">;" << be_uidt << be_uidt;
 
           *os << be_nl << be_nl
               << "template class" << be_idt_nl
               << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_var," << be_nl
+              << node->name () << "," << be_nl
+              << node->name () << "_var," << be_nl
               << bt->name () << be_uidt_nl
               << ">;" << be_uidt << be_uidt;
         }
