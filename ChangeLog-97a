@@ -1,3 +1,7 @@
+Mon Jun 23 09:12:04 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
+
+	* ace/Auto_Ptr.i (auto_array_ptr): Fixed a typo.
+
 Mon Jun 23 08:03:46 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Auto_Ptr.h: changed inheritance of auto_basic_array_ptr in 
