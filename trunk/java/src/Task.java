@@ -86,6 +86,24 @@ public abstract class Task implements Runnable, EventHandler
       return 0;
     }
 
+  /**
+   * Set the underlying Thread Manager.
+   *@param t Thread Manager to use
+   */
+  public synchronized void thrMgr (ThreadManager t)
+  {
+    this.thrMgr_ = t;
+  }
+
+  /**
+   * Get the Thread Manager.
+   *@return Underlying Thread Manager 
+   */
+  public synchronized ThreadManager thrMgr ()
+  {
+    return this.thrMgr_;
+  }
+
   // = Active object method.
 
   /**
