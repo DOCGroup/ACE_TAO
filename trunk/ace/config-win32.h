@@ -17,6 +17,9 @@
 // Define this if you want to use the standard C++ library
 //#define ACE_HAS_STANDARD_CPP_LIBRARY 1
 
+// MSVC enforces the One Definition Rule
+#define ACE_HAS_ONE_DEFINITION_RULE
+
 // Define this if you're running NT 4.x
 //  Setting applies to  : building ACE
 //  Runtime restrictions: System must be Windows NT => 4.0
