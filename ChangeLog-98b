@@ -1,3 +1,8 @@
+Tue Sep 22 11:42:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: added ACE_HAS_POWERPC_TIMER with
+          __powerpc__, but commented it out because it requires an OS patch.
+
 Tue Sep 22 10:58:04 1998  Ossama Othman <othman@astrosun.tn.cornell.edu>
 
         * ace/OS.i (ACE_cond_t::waiters): only define this function if
