@@ -1,3 +1,15 @@
+Thu Jan 13 20:11:55 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (run): Generalized to work with <perform_work>.
+	  In <perform_work>, we only run the loop once.
+
+	* tao/ORB.cpp (perform_work): The method now calls
+	  orb_core->run(), specifying that it is <perform_work> which
+	  prevents looping of the event loop.
+
+	* tao/ORB.h (CORBA_ORB): There are now three versions of
+	  perform_work() and are similar to the run() methods.
+
 Tue Jan 11 21:27:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Messaging.pidl (Messaging): Added two TAO specific SYNC
