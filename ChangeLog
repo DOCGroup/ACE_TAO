@@ -1,9 +1,17 @@
+Fri Sep  3 21:36:51 2004  Olli Savia  <ops@iki.fi>
+
+        * apps/drwho/File_Manager.cpp:
+          Use ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
+          to check if explicit template instantiation is needed.
+          Thanks to Johnny Willemsen for informing me about this
+          macro.
+        
 Fri Sep  3 20:02:20 2004  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_unistd.inl:
           There is no need to check missing prototype since this has
           already been taken care by os_unistd.h.
-          
+
         * ace/os_include/arpa/os_inet.h:
         * ace/os_include/os_stdlib.h:
         * ace/os_include/os_strings.h:
@@ -11,13 +19,13 @@ Fri Sep  3 20:02:20 2004  Olli Savia  <ops@iki.fi>
           To make things easier to maintain use new ACE_LACKS_xxx_PROTOTYPE
           macros to check whether we need to declare missing function
           prototype.
-        
+
         * ace/README:
           Added new ACE_LACKS_xxx_PROTOTYPE macros
-        
+
         * ace/config-lynxos.h:
           Modified to follow changes above.
-        
+
 Fri Sep  3 19:35:48 2004  Olli Savia  <ops@iki.fi>
 
         * ace/Log_Msg.h:
