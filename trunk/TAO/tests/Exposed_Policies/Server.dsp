@@ -134,10 +134,6 @@ SOURCE=.\Policy_Tester.h
 SOURCE=.\RT_Properties.h
 # End Source File
 # End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-# End Group
 # Begin Group "IDL Files"
 
 # PROP Default_Filter "idl"
@@ -147,12 +143,14 @@ SOURCE=.\Counter.idl
 
 !IF  "$(CFG)" == "Server - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
+USERDEP__COUNT="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Counter.idl
 InputName=Counter
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -184,6 +182,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Server - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 # Begin Custom Build
 InputPath=.\Counter.idl
 InputName=Counter
