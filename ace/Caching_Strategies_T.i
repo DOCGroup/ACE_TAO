@@ -51,7 +51,8 @@ ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> void
 ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::purge_percent (double percentage)
 {
-  return this->implementation_->purge_percent (percentage);
+  this->implementation_->purge_percent (percentage);
+  return;
 }
 
 
