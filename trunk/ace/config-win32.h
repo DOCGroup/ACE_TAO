@@ -29,7 +29,7 @@
 // Include the platform specific config file (Windows CE is special)
 
 #if defined (_WIN32_WCE)
-#	include "ace/config-win32-wince.h"
+#	include "ace/config-WinCE.h"
 #else /* _WIN32_WCE */
 #   include "ace/config-win32-common.h"
 #endif /* _WIN32_WCE */
