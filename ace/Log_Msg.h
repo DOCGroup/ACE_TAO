@@ -364,7 +364,7 @@ public:
   // Return true if the requested priority is enabled.
 
   int log_priority_enabled (ACE_Log_Priority log_priority,
-                            const ASYS_TCHAR *,
+                            const ACE_TCHAR *,
                             ...);
   // Return true if the requested priority is enabled.
 
