@@ -1126,8 +1126,9 @@ ImplRepo_i::~ImplRepo_i (void)
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
 
   // Register event handler for the ior multicast.
-  if (reactor->remove_handler (this->ior_multicast_,
-                               ACE_Event_Handler::READ_MASK) == -1)
+  if (this->ior_multicast_ 
+      && reactor->remove_handler (this->ior_multicast_,
+                                  ACE_Event_Handler::READ_MASK) == -1)
     if (OPTIONS::instance ()->debug () > 0)
       ACE_DEBUG ((LM_DEBUG,
                   "Implementation Repository: cannot remove handler\n"));
