@@ -1,19 +1,27 @@
+Mon Jun 21 06:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.{h,cpp}:
+        * orbsvcs/orbsvcs/AV.mpc:
+          Instead of adding the sctp files conditionally to the generated
+          makefile, always add the files, but use ACE_HAS_SCTP in the code
+          itself. This makes the MPC file easier and more portable.
+
 Sun Jun 20 18:34:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Typecode_Constants.cpp:	
-		  
+	* tao/Typecode_Constants.cpp:
+
 	  Removed all the use of stupid namespace macros. Moved TC_opaque
 	  and TC_completion_status inside the TAO namespace. They are
 	  proprietary to TAO and shouldn't have been in the global
-	  namespace in the first place. 
-	
+	  namespace in the first place.
+
  	* tao/Exception.cpp:
 	* tao/Marshal.h:
 	* tao/append.cpp:
 
 	  Added TAO namespace scoping to the extern declarations in these
-	  places for the typecodes mentioned above. 
-	
+	  places for the typecodes mentioned above.
+
 Sun Jun 20 12:45:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Advanced/ch_3/Advanced_ch_3.mpc:
