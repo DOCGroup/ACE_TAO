@@ -25,7 +25,11 @@ ACE_Registry_ImpExp::~ACE_Registry_ImpExp (void)
 int
 ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 {
-  ACE_ASSERT (filename != NULL); // Cannot have a NULL filename
+  if (0 == filename)
+    {
+      errno = EINVAL;
+      return -1;
+    }
   FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
   if (!in)
     return -1;
@@ -160,7 +164,11 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 int
 ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
 {
-  ACE_ASSERT (filename != NULL); // Cannot have a NULL filename
+  if (0 == filename)
+    {
+      errno = EINVAL;
+      return -1;
+    }
   int result = -1;
 
   FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
@@ -336,10 +344,14 @@ ACE_Ini_ImpExp::~ACE_Ini_ImpExp (void)
 
 // Method to read file and populate object.
 int
-ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
+ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
 {
-  ACE_ASSERT (fileName != NULL); // Cannot have a NULL filename
-  FILE* in = ACE_OS::fopen (fileName, ACE_LIB_TEXT ("r"));
+  if (0 == filename)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
   if (!in)
     return -1;
 
@@ -433,13 +445,19 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
 int
 ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
 {
-  ACE_ASSERT (filename != NULL); // Cannot have a NULL filename
+  if (0 == filename)
+    {
+      errno = EINVAL;
+      return -1;
+    }
   int result = -1;
 
   FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
   if (out)
     {
-      result = this->export_section (config_.root_section (), ACE_LIB_TEXT (""), out);
+      result = this->export_section (config_.root_section (),
+                                     ACE_LIB_TEXT (""),
+                                     out);
       ACE_OS::fclose (out);
     }
   return result;
