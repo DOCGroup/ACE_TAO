@@ -3,6 +3,9 @@ Tue May 11 14:34:56 1999  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Cubit/TAO/IDL_Cubit/{client,server}.cpp:
           removed unnecessary #includes of "tests/test_config.h".
 
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_tests.pl: fixed
+          check for existing files to work on NT, by using full path.
+
 Tue May 11 14:17:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/DomainS.cpp:
