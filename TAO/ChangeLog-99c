@@ -1,3 +1,10 @@
+Sat Dec  4 17:19:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/fe_interface_header.cpp:
+	  Added missing variable initialization that was causing
+	  bogus name clash errors. Thanks to Darrell for reporting
+	  this bug.
+
 Sat Dec  4 17:18:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Makefile:
