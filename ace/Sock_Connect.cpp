@@ -34,6 +34,7 @@
 extern "C" {
   extern struct in_ifaddr* in_ifaddr;
 }
+#include "ace/OS_NS_stdio.h"
 #endif /* VXWORKS */
 
 #if defined (ACE_HAS_WINCE)
