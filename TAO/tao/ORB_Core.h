@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//#include "ORB.h"
+#include "Collocation_Strategy.h"
 #include "Resource_Factory.h"
 #include "params.h"
 #include "Adapter.h"

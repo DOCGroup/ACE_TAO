@@ -26,7 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
+#include "tao/Collocation_Strategy.h"
 #include "tao/Pseudo_VarOut_T.h"
 
 class TAO_ServerRequest;

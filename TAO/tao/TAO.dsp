@@ -1283,6 +1283,10 @@ SOURCE=.\Collocation_Resolver.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocation_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connect_Strategy.h
 # End Source File
 # Begin Source File

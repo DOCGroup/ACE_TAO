@@ -12,21 +12,21 @@
 //=============================================================================
 #ifndef TAO_COLLOCATED_INVOCATION_H
 #define TAO_COLLOCATED_INVOCATION_H
+
 #include "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
+#include "tao/Collocation_Strategy.h"
 #include "tao/Invocation_Base.h"
-#include "ace/CORBA_macros.h"
-
 
 class TAO_Operation_Details;
 class TAO_Stub;
-
 
 namespace TAO
 {
