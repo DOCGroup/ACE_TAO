@@ -1,3 +1,29 @@
+Thu Jun 24 21:51:10 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.{h,cpp}
+	* orbsvcs/tests/Simple_Naming/README
+	Added persistent naming test.  Cleaned up the perl script and
+	added the persistent test to it.  Updated
+	README and added examples for how to run the tests.
+
+	* orbsvc/orbsvcs/Naming/Persistent_Naming_Context.{h,cpp} 
+	* orbsvc/orbsvcs/Naming/Hash_Naming_Context.{h,cpp} 
+	* orbsvc/orbsvcs/Naming/Transient_Naming_Context.cpp 
+	* orbsvc/orbsvcs/Naming/Persistent_Context_Index.{h,cpp} 
+	* orbsvc/orbsvcs/Naming/Naming_Utils.cpp 
+	* orbsvc/orbsvcs/Naming/Binding_Iterators.{h,cpp} 
+	Updated the code so after <destroy> method is invoked on a Naming
+	Context, all of its BindingIterators become invalid.  When
+	<destroy> is invoked on a Naming Context, the context deregisters from POA,
+	but is not deleted until all of its iterators are destroyed.  This
+	is implemented through the reference counting on Naming Contexts.
+	Iterators are destroyed in the "lazy evaluation" fashion.  When a
+	user invokes an operation on an iterator, that iterator check its
+	own validity, and, if appropriate, self-destroys.  This appoach is
+	harder on resources, but is a lot easier and cleaner to implement
+	than explicitely keeping track of collections. Plus this use-case
+	is not on the critical path.
+
 Thu Jun 24 22:13:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/CurrentC.cpp:
