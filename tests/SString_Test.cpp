@@ -150,7 +150,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
     // Rep. Error if they are not equal
     ACE_Auto_Basic_Array_Ptr<char> s (s1.rep ());
-    if (ACE_OS::strlen (s.get ()) != s1.length ());
+    if (ACE_OS::strlen (s.get ()) != s1.length ())
+      {
+        ACE_ERROR((LM_ERROR,"Auto_ptr s: \n"));
+      };
 
     ACE_CString s7 (s.get ());
     if (s1 != s7){ACE_ERROR((LM_ERROR,"Set #2: \n"));}
@@ -225,14 +228,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
     if (!(s1 > s2)){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
     if (s1 < s2){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
-    
+
     ACE_CString s3 ("dog");
     ACE_CString s4 ("dogbert");
-    
+
     if (s3 == s4){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
     if (!(s3 < s4)){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
     if (s3 > s4){ACE_ERROR((LM_ERROR,"Set #4: \n"));}
-  
+
     ACE_CString s5 ("dogbert",3);
     ACE_CString s6 ("dogbert",5);
 
