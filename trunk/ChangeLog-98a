@@ -7,8 +7,11 @@ Wed Dec 03 07:39:15 1997  Steve Huston  <shuston@riverace.com>
 
 Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/Future.cpp: restored ACE_Atomic_Op instantiation because
-          it is needed with g++.
+        * ace/Future.cpp,
+          tests/{Future_Test,Reactors_Test,Reader_Writer_Test.cpp,
+          examples/Threads/manual_event.cpp:
+          moved ACE_Atomic_Op<ACE_Thread_Mutex, int> instantiation from
+          ace/Future.cpp to where it is used.
 
 Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 
