@@ -296,6 +296,8 @@ ACE_NEEDS_DEV_IO_CONVERSION		Necessary with some compilers
  to pass ACE_TTY_IO as parameter to DEV_Connector.
 ACE_NEEDS_HUGE_THREAD_STACKSIZE		Required by platforms with small default stacks.
 ACE_NEEDS_READV				Platform doesn't define readv, so use our own
+ACE_NEEDS_SCHED_H			Platform needs to #include <sched.h>
+					to get thread scheduling defs.
 ACE_NEEDS_SYSTIME_H			<time.h> doesn't automatically #include /**/ <sys/time.h>
 ACE_NEEDS_WRITEV			Platform doesn't define writev, so use our own
 ACE_NEW_THROWS_EXCEPTIONS		Compiler's 'new' throws exception on
