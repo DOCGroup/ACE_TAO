@@ -48,13 +48,18 @@ TAO_ServerRequestInfo::request_id (CORBA::Environment &)
 
   CORBA::ULong id = 0;
 
+  // Note that we reinterpret_cast to an "unsigned long" instead of
+  // CORBA::ULong since we need to first cast to an integer large
+  // enough to hold an address to avoid compile-time warnings on some
+  // 64-bit platforms.
+
   if (sizeof (this) == 4)       // 32 bit address
     id =
-      ACE_reinterpret_cast (CORBA::ULong, &(this->server_request_));
+      ACE_reinterpret_cast (unsigned long, &(this->server_request_));
 
   else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
     id =
-      ACE_reinterpret_cast (CORBA::ULong,
+      ACE_reinterpret_cast (unsigned long,
                             &(this->server_request_)) & 0xFFFFFFFFu;
 
   else

@@ -6,6 +6,7 @@
 #include "Invocation.h"
 #include "Stub.h"
 #include "Tagged_Components.h"
+#include "debug.h"
 
 ACE_RCSID (TAO,
            ClientRequestInfo,
@@ -277,7 +278,7 @@ TAO_ClientRequestInfo::add_request_service_context (
 }
 
 CORBA::ULong
-TAO_ClientRequestInfo::request_id (CORBA::Environment &)
+TAO_ClientRequestInfo::request_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @todo We may have to worry about AMI once we support interceptors
@@ -304,9 +305,14 @@ TAO_ClientRequestInfo::request_id (CORBA::Environment &)
 
   CORBA::ULong id = 0;
 
+  // Note that we reinterpret_cast to an "unsigned long" instead of
+  // CORBA::ULong since we need to first cast to an integer large
+  // enough to hold an address to avoid compile-time warnings on some
+  // 64-bit platforms.
+
   // 32 bit address
   if (sizeof (this) == 4)
-    id = ACE_reinterpret_cast (CORBA::ULong, this->invocation_);
+    id = ACE_reinterpret_cast (unsigned long, this->invocation_);
 
   // 64 bit address -- bits 8 through 39  (see notes above!)
   // In this case, we make sure this object is large enough to safely
@@ -315,13 +321,12 @@ TAO_ClientRequestInfo::request_id (CORBA::Environment &)
   else if (sizeof (this) == 8
            && sizeof (*(this->invocation_)) > 256 /* 2 << 8 */)
     id =
-      (ACE_reinterpret_cast (CORBA::ULong,
+      (ACE_reinterpret_cast (unsigned long,
                              this->invocation_) >> 8) & 0xFFFFFFFFu;
 
   // 64 bit address -- lower 32 bits
-  //
   else if (sizeof (this) == 8)
-    id = ACE_reinterpret_cast (CORBA::ULong,
+    id = ACE_reinterpret_cast (unsigned long,
                                this->invocation_) & 0xFFFFFFFFu;
 
   // @@ The following request ID generator prevents the
@@ -335,8 +340,19 @@ TAO_ClientRequestInfo::request_id (CORBA::Environment &)
   //
   //    Ideally, this request ID generator should go away, especially
   //    since it adds a lock to the critical path.
-  else    // Fallback
-    id = this->invocation_->request_id ();
+  //   else    // Fallback
+  //     id = this->invocation_->request_id ();
+
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) ClientRequestInfo::request_id() failed\n"
+                    "(%P|%t) since its request ID generator is not\n"
+                    "(%P|%t) supported on this platform.\n"));
+
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    }
 
   return id;
 }
