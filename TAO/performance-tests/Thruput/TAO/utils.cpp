@@ -11,6 +11,8 @@
 // = AUTHOR
 //    Aniruddha Gokhale
 //
+// = BEING MODIFIED BY
+//    Shawn Atkins
 // ============================================================================
 
 // This file has all the helper functions that do the computation of
@@ -150,8 +152,64 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
            SeqPtr[i].o = (unsigned char)(c++ & 0x7f);
        }
        Sseq = new ttcp_sequence::StructSeq(num, num, SeqPtr);
-
+       
     }
+    break;
+  case SEND_COMPOSITE:
+    /*still being worked on*/
+    /*
+   { fill in the RtiPacketSequence
+     register RtiPacket *SeqPtr = (RtiPacket *)cp;
+     register char c = 0;
+     num = bufLen / sizeof (RtiPacket);
+     can't know sizeof (RtiPacket) can it? if can have variable length sequence inside of it.
+     num = bufLen;
+     int numUpdates = 2;
+     int numAttrs = 5;
+     for (i = 0; bufLen > 0; i++){
+       SeqPtr [i].packetHeader.packetLength = 1; // this is probably redundant
+       SeqPtr [i].packetHeader.federationHandle = 2;
+       SeqPtr [i].packetHeader.channelHandle = 3;
+       SeqPtr [i].packetHeader.packetColor = 4;
+       
+       SeqPtr [i].msgs.length (numUpdates);
+       
+       for (int j = 0; j < numUpdates; ++j) 
+	 {
+	   SeqPtr [i].msgs[j].oumh (RtiObjectUpdateMessageHeader ());
+	   RtiObjectUpdateMessageHeader & oumh = SeqPtr [i].msgs[j].oumh ();
+	   oumh.updateLength = 2001; // redundant
+	   oumh.updateTag = 2002;
+	   oumh.objectHandle = 2003;
+	   oumh.timestamp = 3.14159;
+	   oumh.eventRetractionHandle = 2004;
+	   oumh.classHandle = 2005;
+	   oumh.sendingFederateHandle = 2006;
+	   oumh.userTag = CORBA::string_dup ("beefcake!");
+	   oumh.regionData.length(0);
+	   oumh.transportationHandle = 1;
+	   oumh.orderingHandle = 1;
+	   oumh.messagePayload.length (numAttrs);
+  	   
+	   for (int k = 0; k < numAttrs; ++k) 
+	     {
+	       oumh.messagePayload[k] = HandleValuePair ();
+	       HandleValuePair &hvp = oumh.messagePayload[k];
+	       hvp.handle = k * k;
+	       char *d1 = "somedata";
+	       hvp.data.length (ACE_OS::strlen (d1)+1);
+	       ACE_OS::strcpy ((char *) hvp.data.get_buffer (), d1);
+	     }
+	   num -= sizeof (SeqPtr [i]);
+	   printf ("SIZE OF RTIPACKET IS %d", sizeof (SeqPtr [i]));
+	 }
+
+       fill in the RtiPacket
+     }
+     rtipacketSeq = new ttcp_sequence::RtiPacketSeq (num, num, SeqPtr);
+
+   }*/ 
+ 
     break;
   case SEND_OCTET:
   default:
@@ -259,8 +317,7 @@ delay (int us)
 // @@ This file should be updated to use ACE_Profile_Timer instead of
 //    using rusage directly.
 
-static struct itimerval itime0; /* Time at which timing started */
-static struct rusage ru0;       /* Resource utilization at the start */
+ACE_Profile_Timer ru0; //Timer to calculate stats
 
 /*
  *                    P R E P _ T I M E R
@@ -269,21 +326,7 @@ static struct rusage ru0;       /* Resource utilization at the start */
 void
 prep_timer (void)
 {
-  itime0.it_interval.tv_sec = 0;
-  itime0.it_interval.tv_usec = 0;
-  itime0.it_value.tv_sec = (ACE_INT32) LONG_MAX / 22;   /* greatest possible value , itimer() count backwards */
-  itime0.it_value.tv_usec = 0;
-
-
-  ACE_OS::getrusage (RUSAGE_SELF, &ru0);
-
-  /* Init REAL Timer */
-  if (setitimer (ITIMER_REAL, &itime0, NULL))
-    {
-      perror ("Setting 'itimer' REAL failed");
-      return;
-    }
-
+  ru0.start ();
 }
 
 /*
@@ -294,32 +337,20 @@ prep_timer (void)
 double
 read_timer (CORBA::Char *str, CORBA::Long len)
 {
-  struct itimerval itimedol;
-  struct rusage ru1;
-  struct timeval td;
-  struct timeval tend, tstart;
   char line[132];
+  ACE_Profile_Timer::ACE_Elapsed_Time et;
+ 
+  ru0.stop ();
+  ru0.elapsed_time (et);
 
-  ACE_OS::getrusage (RUSAGE_SELF, &ru1);
-
-  if (getitimer (ITIMER_REAL, &itimedol))
-    {
-      perror ("Getting 'itimer' REAL failed");
-      return (0.0);
-    }
-
-  prusage (&ru0, &ru1, &itime0.it_value, &itimedol.it_value, line);
+  prusage (line);
   (void) strncpy (str, line, len);
-
-  /* Get real time */
-  tvsub (&td, &itime0.it_value, &itimedol.it_value);
-  realt = td.tv_sec + ((double) td.tv_usec) / 1000000;
-
-  /* Get CPU time (user+sys) */
-  tvadd (&tend, &ru1.ru_utime, &ru1.ru_stime);
-  tvadd (&tstart, &ru0.ru_utime, &ru0.ru_stime);
-  tvsub (&td, &tend, &tstart);
-  cput = td.tv_sec + ((double) td.tv_usec) / 1000000;
+  
+  //Get real time 
+  realt = et.real_time;
+ 
+  //Get CPU time (user+sys) 
+  cput = et.user_time + et.system_time;
   if (cput < 0.00001)
     cput = 0.00001;
   return (cput);
@@ -327,28 +358,29 @@ read_timer (CORBA::Char *str, CORBA::Long len)
 
 // prints the rusage stats
 void
-prusage (register struct rusage *r0, struct rusage *r1,
-         struct timeval *e, struct timeval *b, char *outp)
+prusage (char *outp)
 {
-  struct timeval tdiff;
   register time_t t;
   register char *cp;
   register int i;
   int ms;
+  struct rusage *r1, *r0;
 
-  t = (r1->ru_utime.tv_sec - r0->ru_utime.tv_sec) * 100 +
-    (r1->ru_utime.tv_usec - r0->ru_utime.tv_usec) / 10000 +
-    (r1->ru_stime.tv_sec - r0->ru_stime.tv_sec) * 100 +
-    (r1->ru_stime.tv_usec - r0->ru_stime.tv_usec) / 10000;
-  ms = (e->tv_sec - b->tv_sec) * 100 + (e->tv_usec - b->tv_usec) / 10000;
-
+  ACE_Profile_Timer::ACE_Elapsed_Time et;
+  ACE_Profile_Timer::Rusage rusage;
+  ru0.elapsed_time (et);
+  ru0.elapsed_rusage (rusage);
+  
+  t = et.user_time + et.system_time;
+  ms = et.real_time; 
+  
 #define END(x)  {while(*x) x++;}
 #if defined(SYSV)
   cp = "%Uuser %Ssys %Ereal %P";
 #else
 #if defined(sgi)                /* IRIX 3.3 will show 0 for %M,%F,%R,%C */
   cp = "%Uuser %Ssys %Ereal %P %Mmaxrss %F+%Rpf %Ccsw";
-#else
+#else 
   cp = "%Uuser %Ssys %Ereal %P %Xi+%Dd %Mmaxrss %F+%Rpf %Ccsw";
 #endif
 #endif
@@ -361,81 +393,134 @@ prusage (register struct rusage *r0, struct rusage *r1,
           {
 
           case 'U':
-            tvsub (&tdiff, &r1->ru_utime, &r0->ru_utime);
-            ACE_OS::sprintf (outp, "%d.%01d", tdiff.tv_sec, tdiff.tv_usec / 100000);
+            ACE_OS::sprintf (outp, "%f ", et.user_time);
             END (outp);
             break;
-
+	    
           case 'S':
-            tvsub (&tdiff, &r1->ru_stime, &r0->ru_stime);
-            ACE_OS::sprintf (outp, "%d.%01d", tdiff.tv_sec, tdiff.tv_usec / 100000);
+	    ACE_OS::sprintf (outp, "%f ", et.system_time);
             END (outp);
             break;
 
           case 'E':
-            psecs (ms / 100, outp);
+            psecs (ms, outp);
             END (outp);
             break;
 
           case 'P':
-            ACE_OS::sprintf (outp, "%d%%", (int) (t * 100 / ((ms ? ms : 1))));
-            END (outp);
+	    ACE_OS::sprintf (outp, "%d%%", (int) (t * 100 / ((ms ? ms : 1))));
+	    END (outp);
             break;
 
-#if !defined(SYSV)
+	    /*possible thing to add in is the equivalent for case X, D, K, M, F, and R for prusage_t*/
+#if !defined(SYSV) 
+#   if defined (ACE_HAS_PRUSAGE_T)
           case 'W':
-            i = r1->ru_nswap - r0->ru_nswap;
+            i = rusage.pr_nswap;;
             ACE_OS::sprintf (outp, "%d", i);
             END (outp);
             break;
 
           case 'X':
-            ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (r1->ru_ixrss - r0->ru_ixrss) / t);
+	    // ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (rusage.ru_ixrss) / t);
+            //END (outp);
+            break;
+
+          case 'D':
+            //ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
+            //         (rusage.ru_idrss + rusage.ru_isrss) / t);
+            //END (outp);
+            break;
+
+          case 'K':
+            //ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
+	    //        (rusage.ru_ixrss + rusage.ru_isrss + rusage.ru_idrss) / t);
+            //END (outp);
+            break;
+
+          case 'M':
+	    /* ACE_OS::sprintf (outp, "%d", rusage.ru_maxrss / 2);
+            END (outp);*/
+            break;
+
+          case 'F':
+	    /*
+            ACE_OS::sprintf (outp, "%d", rusage.ru_majflt);
+	    END (outp);*/
+            break;
+
+          case 'R':
+	    /*ACE_OS::sprintf (outp, "%d", rusage.ru_minflt);
+            END (outp);*/
+            break;
+
+          case 'I':
+            ACE_OS::sprintf (outp, "%d", rusage.pr_inblk);
+            END (outp);
+            break;
+
+          case 'O':
+            ACE_OS::sprintf (outp, "%d", rusage.pr_oublk);
+            END (outp);
+            break;
+          case 'C':
+	    ACE_OS::sprintf (outp, "%d+%d", rusage.pr_vctx, rusage.pr_ictx);
+            END (outp);
+            break;
+#   elif defined (ACE_HAS_GETRUSAGE)
+	  case 'W':
+            i = rusage.ru_nswap;;
+            ACE_OS::sprintf (outp, "%d", i);
+            END (outp);
+            break;
+
+          case 'X':
+	    /ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (rusage.ru_ixrss) / t);
             END (outp);
             break;
 
           case 'D':
             ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
-                     (r1->ru_idrss + r1->ru_isrss - (r0->ru_idrss + r0->ru_isrss)) / t);
+                     (rusage.ru_idrss + rusage.ru_isrss) / t);
             END (outp);
             break;
 
           case 'K':
             ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
-                     ((r1->ru_ixrss + r1->ru_isrss + r1->ru_idrss) -
-                      (r0->ru_ixrss + r0->ru_idrss + r0->ru_isrss)) / t);
+	            (rusage.ru_ixrss + rusage.ru_isrss + rusage.ru_idrss) / t);
             END (outp);
             break;
 
           case 'M':
-            ACE_OS::sprintf (outp, "%d", r1->ru_maxrss / 2);
+	    ACE_OS::sprintf (outp, "%d", rusage.ru_maxrss / 2);
             END (outp);
             break;
 
           case 'F':
-            ACE_OS::sprintf (outp, "%d", r1->ru_majflt - r0->ru_majflt);
-            END (outp);
+            ACE_OS::sprintf (outp, "%d", rusage.ru_majflt);
+	    END (outp);
             break;
 
           case 'R':
-            ACE_OS::sprintf (outp, "%d", r1->ru_minflt - r0->ru_minflt);
+	    ACE_OS::sprintf (outp, "%d", rusage.ru_minflt);
             END (outp);
             break;
 
           case 'I':
-            ACE_OS::sprintf (outp, "%d", r1->ru_inblock - r0->ru_inblock);
+            ACE_OS::sprintf (outp, "%d", rusage.ru_inbloc);
             END (outp);
             break;
 
           case 'O':
-            ACE_OS::sprintf (outp, "%d", r1->ru_oublock - r0->ru_oublock);
+            ACE_OS::sprintf (outp, "%d", rusage.ru_oublock);
             END (outp);
             break;
-          case 'C':
-            ACE_OS::sprintf (outp, "%d+%d", r1->ru_nvcsw - r0->ru_nvcsw,
-                     r1->ru_nivcsw - r0->ru_nivcsw);
+          
+	  case 'C':
+	    ACE_OS::sprintf (outp, "%d+%d", rusage.ru_nvcsw, rusage.ru_nivcsw);
             END (outp);
             break;
+#   endif /*ACE HAS PRUSAGE_T |   ACE_HAS_GETRUSAGE*/
 #endif /* !SYSV */
           }
     }
@@ -446,7 +531,6 @@ prusage (register struct rusage *r0, struct rusage *r1,
 void
 tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1)
 {
-
   tsum->tv_sec = t0->tv_sec + t1->tv_sec;
   tsum->tv_usec = t0->tv_usec + t1->tv_usec;
   if (tsum->tv_usec > 1000000)
@@ -457,7 +541,6 @@ tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1)
 void
 tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0)
 {
-
   tdiff->tv_sec = t1->tv_sec - t0->tv_sec;
   tdiff->tv_usec = t1->tv_usec - t0->tv_usec;
   if (tdiff->tv_usec < 0)
@@ -476,7 +559,7 @@ psecs (CORBA::Long l, register CORBA::Char *cp)
       ACE_OS::sprintf (cp, "%d:", i);
       END (cp);
       i = l % 3600;
-      ACE_OS::sprintf (cp, "%d%d", (i / 60) / 10, (i / 60) % 10);
+      ACE_OS::sprintf (cp, "%d%d ", (i / 60) / 10, (i / 60) % 10);
       END (cp);
     }
   else
@@ -487,8 +570,9 @@ psecs (CORBA::Long l, register CORBA::Char *cp)
     }
   i %= 60;
   *cp++ = ':';
-  ACE_OS::sprintf (cp, "%d%d", i / 10, i % 10);
+  ACE_OS::sprintf (cp, "%d%d ", i / 10, i % 10);
 }
+
 
 #else /* ! ACE_HAS_PRUSAGE_T || ! ACE_HAS_GETRUSAGE */
 
@@ -506,3 +590,12 @@ read_timer (CORBA::Char *str, CORBA::Long len)
 }
 
 #endif /* ! ACE_HAS_PRUSAGE_T || ! ACE_HAS_GETRUSAGE */
+
+
+
+
+
+
+
+
+
