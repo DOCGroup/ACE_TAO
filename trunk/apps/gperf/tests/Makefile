@@ -240,7 +240,7 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.i
 
 .obj/cinset.o .obj/cinset.so .shobj/cinset.o .shobj/cinset.so: cinset.cpp
-c++
+
 .obj/inset.o .obj/inset.so .shobj/inset.o .shobj/inset.so: c++inset.cpp
 
 .obj/iinset.o .obj/iinset.so .shobj/iinset.o .shobj/iinset.so: iinset.cpp
