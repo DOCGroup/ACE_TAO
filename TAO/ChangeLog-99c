@@ -1,11 +1,16 @@
+Tue May 11 11:03:16 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
+          support shells that don't have $OPTIND.
+
 Tue May 11 09:48:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.h:
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
-	  Added missing TAO_ORBSVCS_Export macros, thanks to Frank Hodum
-	  <fhodum@sito.saic.com> for pointing this out.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+          Added missing TAO_ORBSVCS_Export macros, thanks to Frank Hodum
+          <fhodum@sito.saic.com> for pointing this out.
 
 Tue May 11 09:22:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
