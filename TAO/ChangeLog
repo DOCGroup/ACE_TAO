@@ -102,7 +102,7 @@ Wed Aug 11 09:36:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	 * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
 
 	   Changed to inherit from minimum_corba instead of providing
-	   avoids statements to eliminate duplicate entries in list. 
+	   avoids statements to eliminate duplicate entries in list.
 
 Wed Aug 11 13:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -32,7 +32,7 @@ TAO_SSLIOP_password_callback (char *buf,
   //    what you get when you try to be overly efficient.  :-)
   //        -Ossama
 
-  const char *password = static_cast<char *> (userdata);
+  const char * password = static_cast<char *> (userdata);
 
   int pwlen = -1;
 
@@ -41,7 +41,7 @@ TAO_SSLIOP_password_callback (char *buf,
       pwlen = ACE_OS::strlen (password);
 
       int copy_len = pwlen + 1;  // Include the NULL terminator
- 
+
       // Clear the portion of the buffer that exceeds the space that
       // will be occupied by the password.
       if (copy_len < size)
