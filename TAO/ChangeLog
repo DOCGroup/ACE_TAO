@@ -1,3 +1,22 @@
+Mon Oct 14 17:50:12 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tests/Abstract_Interface/Abstract Interface Client.dsp:
+        * tests/Abstract_Interface/Abstract Interface Server.dsp:
+        * tests/Abstract_Interface/Abstract_Interface.dsw:
+        * tests/Abstract_Interface/Makefile:
+        * tests/Abstract_Interface/Makefile.bor:
+        * tests/Abstract_Interface/README:
+        * tests/Abstract_Interface/client.bor:
+        * tests/Abstract_Interface/client.cpp:
+        * tests/Abstract_Interface/run_test.pl:
+        * tests/Abstract_Interface/server.bor:
+        * tests/Abstract_Interface/server.cpp:
+        * tests/Abstract_Interface/test.idl:
+        * tests/Abstract_Interface/test_i.cpp:
+        * tests/Abstract_Interface/test_i.h:
+
+	  New test for abstract interfaces.
+
 Mon Oct 14 17:35:56 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * tao/PortableServer/Default_ORTC.cpp:
