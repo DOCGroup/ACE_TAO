@@ -14,8 +14,12 @@ ACE_RCSID (LoadBalancing,
 #endif /* defined INLINE */
 
 
-TAO_LB_LeastLoaded::TAO_LB_LeastLoaded (void)
-  : load_map_ (TAO_PG_MAX_LOCATIONS),
+TAO_LB_LeastLoaded::TAO_LB_LeastLoaded (CORBA::Float critical_threshold,
+                                        CORBA::Float reject_threshold,
+                                        CORBA::Float tolerance,
+                                        CORBA::Float dampening,
+                                        CORBA::Float per_balance_load)
+  : load_map_ (0),
     lock_ (),
     critical_threshold_ (0),
     reject_threshold_ (0),
@@ -23,10 +27,16 @@ TAO_LB_LeastLoaded::TAO_LB_LeastLoaded (void)
     dampening_ (0),
     per_balance_load_ (0)
 {
+  // A load map that retains previous load values at a given location
+  // is only needed if dampening is enabled, i.e. non-zero.
+  if (this->dampening_ != 0)
+    ACE_NEW (this->load_map_,
+             LoadMap (TAO_PG_MAX_LOCATIONS));
 }
 
 TAO_LB_LeastLoaded::~TAO_LB_LeastLoaded (void)
 {
+  delete this->load_map_;
 }
 
 char *
@@ -58,8 +68,7 @@ TAO_LB_LeastLoaded::push_loads (
     const PortableGroup::Location & the_location,
     const CosLoadBalancing::LoadList & loads
     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::StrategyNotAdaptive))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Only the first load is used by this load balancing strategy.
   if (loads.length () == 0)
@@ -67,33 +76,37 @@ TAO_LB_LeastLoaded::push_loads (
 
   const CosLoadBalancing::Load & new_load = loads[0];
 
-  TAO_LB_LoadMap::ENTRY * load;
-  if (this->load_map_.find (the_location, load) == 0)
+  if (this->load_map_ != 0)
     {
-      CosLoadBalancing::Load & previous_load = load->int_id_;
-
-      if (previous_load.id != new_load.id)
-        ACE_THROW (CORBA::BAD_PARAM ());  // Somebody switched LoadIds
-                                          // on us!
-
-      previous_load.value =
-        this->effective_load (previous_load.value, new_load.value);
-    }
-  else
-    {
-      const CosLoadBalancing::Load eff_load =
+      TAO_LB_LoadMap::ENTRY * load;
+      if (this->load_map_->find (the_location, load) == 0)
         {
-          new_load.id,
-          this->effective_load (0, new_load.value);
-        };
+          CosLoadBalancing::Load & previous_load = load->int_id_;
 
-      if (this->load_map_.bind (the_location, eff_load) != 0)
+          if (previous_load.id != new_load.id)
+            ACE_THROW (CORBA::BAD_PARAM ());  // Somebody switched
+                                              // LoadIds on us!
+
+          previous_load.value =
+            this->effective_load (previous_load.value, new_load.value);
+        }
+      else
         {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        "ERROR: TAO_LB_LeastLoaded - Unable to push loads\n"));
+          const CosLoadBalancing::Load eff_load =
+            {
+              new_load.id,
+              this->effective_load (0, new_load.value);
+            };
 
-          ACE_THROW (CORBA::INTERNAL ());
+          if (this->load_map_->bind (the_location, eff_load) != 0)
+            {
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            "ERROR: TAO_LB_LeastLoaded - "
+                            "Unable to push loads\n"));
+
+              ACE_THROW (CORBA::INTERNAL ());
+            }
         }
     }
 }
@@ -224,6 +237,7 @@ TAO_LB_LeastLoaded::analyze_loads (
 
 CORBA::Boolean
 TAO_LB_LeastLoaded::get_location (
+  const CosLoadBalancing::LoadManager_ptr load_manager,
   const PortableGroup::Locations & locations,
   PortableGroup::Location & location)
 {
@@ -241,6 +255,20 @@ TAO_LB_LeastLoaded::get_location (
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
+        const PortableGroup::Location & loc = locations[i];
+
+        // Retrieve the load list for the location from the
+        // LoadManager and push it to this Strategy's load processor.
+        CosLoadBalancing::LoadList_var current_loads =
+          load_manager->get_loads (loc
+                                   ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        this->push_loads (loc,
+                          current_loads.in ()
+                          ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
         // WRONG!!!  THIS IS LEAST LOADED, NOT MINIMUM DISPERSION!
         LoadMap::ENTRY * entry;
         if (this->load_map_.find (locations[i], entry) == 0

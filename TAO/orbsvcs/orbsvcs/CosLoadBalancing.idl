@@ -81,11 +81,16 @@ module CosLoadBalancing
 
     Properties get_properties ();
 
-    // Report loads at given location to the Strategy.
+    // Report loads at given location to the LoadManager.
     void push_loads (in PortableGroup::Location the_location,
                      in LoadList loads)
-      raises (LocationNotFound,
-              StrategyNotAdaptive);
+      raises (LocationNotFound);
+
+    // Get loads, if any, at the given location.  Load balancing
+    // strategies may use this method to query loads at specific
+    // locations.
+    LoadList get_loads (in PortableGroup::Location the_location)
+      raises (LocationNotFound);
 
     // Return the next member from the given object group which will
     // requests will be forward to.
@@ -143,8 +148,7 @@ module CosLoadBalancing
 
     // For the PUSH load monitoring style.
     void push_loads (in PortableGroup::Location the_location,
-                     in LoadList loads)
-      raises (StrategyNotAdaptive);
+                     in LoadList loads);
 
     // The following load monitor methods are only used for the PULL
     // load monitoring style.
