@@ -1,7 +1,7 @@
 Thu May 7  16:11:00 1998  Robert Eric Thornton <ret1@cec.wustl.edu>
 
         * orbsvcs/tests/Naming/ns_tree.cpp: added the NamingService to this
-	   test.
+          test.
 
 Thu May  7 15:29:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -78,6 +78,8 @@ Thu May 07 11:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: reordered
           initializers to match declaration order.
+
+        * orbsvcs/tests/Sched/DynSched.cpp,Makefile: added Quantify probes.
 
 Thu May  7 00:44:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
