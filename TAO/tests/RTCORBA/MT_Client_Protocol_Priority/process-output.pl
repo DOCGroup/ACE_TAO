@@ -128,7 +128,7 @@ elsif (($priority1 != $priority2
              or $priority1_requests != $iterations))
        or ($priority1 == $priority2 
            and ($priority2_requests != 0 
-                or $priority1_requests != @*$iterations)))
+                or $priority1_requests != 2*$iterations)))
 {
     print "ERROR: Nonmatching number of requests of each priority\n";
 }
