@@ -180,7 +180,7 @@ public:
   // @@ (othman) IMHO, it is the lesser of two evils to use the
   //    correct type for the platform rather than (forcibly) assume
   //    that all wide characters are 16 bits.
-#ifdef ACE_HAS_WCHAR
+#if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
   typedef wchar_t WChar;
 #else
   typedef ACE_UINT16 WChar;
