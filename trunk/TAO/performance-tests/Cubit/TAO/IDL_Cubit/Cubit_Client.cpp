@@ -1166,7 +1166,15 @@ Cubit_Client::~Cubit_Client (void)
 
   if (this->cubit_factory_key_ != 0)
     ACE_OS::free (this->cubit_factory_key_);
+
+  // Release the objects, to have a clean shutdown.
+  this->factory_ = Cubit_Factory::_nil ();
+  this->cubit_ = Cubit::_nil ();
+
+  // Now release the ORB
+  this->orb_ = CORBA::ORB::_nil ();
 }
+
 
 int
 Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)

@@ -141,14 +141,15 @@ private:
   int shutdown_;
   // Flag to tell server to shutdown.
 
+  CORBA::ORB_var orb_;
+  // Remember our orb, must show up before the other objects to
+  // shutdown in the proper order.
+
   Cubit_Factory_var factory_;
   // factory pointer for cubit.
 
   Cubit_var cubit_;
   // Cubit obj ref.
-
-  CORBA::ORB_var orb_;
-  // Remember our orb.
 
   u_int call_count_;
   // # of calls made to functions.
