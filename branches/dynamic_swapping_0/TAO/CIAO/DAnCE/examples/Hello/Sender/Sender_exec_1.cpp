@@ -133,7 +133,12 @@ Sender_Impl::Sender_exec_1_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-createSenderExec_Impl (void)
+createSenderExec_Impl (SenderSwap_exec_i *p)
 {
-  return new Sender_Impl::Sender_exec_1_i ();
+  Sender_exec_1_i *tmp =
+    new Sender_Impl::Sender_exec_1_i ();
+
+  tmp->swap_exec (p);
+
+  return tmp;
 }
