@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_codegen.cpp:887
 
 #ifndef TESTI_H_
@@ -40,25 +40,25 @@
 class  Bug1495_i : public virtual POA_Bug1495_Regression::Bug1495, public virtual PortableServer::RefCountServantBase
 {
 public:
-    //Constructor 
+    //Constructor
     Bug1495_i (void);
 
     Bug1495_i (CORBA::ORB_ptr orb);
-    
-  
-    //Destructor 
+
+
+    //Destructor
     virtual ~Bug1495_i (void);
-  
+
     virtual
-    void get_thread_id (CORBA::Long_out thread_id)
+    void get_thread_id (CORBA::Long_out thread_id ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
     virtual
-    void shutdown ()
+    void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 private:
     CORBA::ORB_ptr orb_;
-    
+
 };
 
 

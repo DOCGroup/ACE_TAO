@@ -30,6 +30,7 @@ Server_Task::Server_Task (const char *output,
 int
 Server_Task::svc (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV
     {
       CORBA::Object_var poa_object =
