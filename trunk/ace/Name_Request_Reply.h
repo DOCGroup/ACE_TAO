@@ -139,35 +139,35 @@ private:
 
   struct Transfer
   {
+    /// Length of entire request.
     ACE_UINT32 length_;
-    // Length of entire request.
 
+    /// Type of the request (i.e., <BIND>, <REBIND>, <RESOLVE>, and <UNBIND>).
     ACE_UINT32 msg_type_;
-    // Type of the request (i.e., <BIND>, <REBIND>, <RESOLVE>, and <UNBIND>).
 
+    /// Indicates if we should block forever.  If 0, then <secTimeout_>
+    /// and <usecTimeout_> indicates how long we should wait.
     ACE_UINT32 block_forever_;
-    // Indicates if we should block forever.  If 0, then <secTimeout_>
-    // and <usecTimeout_> indicates how long we should wait.
 
+    /// Max seconds willing to wait for name if not blocking forever.
     ACE_UINT32 sec_timeout_;
-    // Max seconds willing to wait for name if not blocking forever.
 
+    /// Max micro seconds to wait for name if not blocking forever.
     ACE_UINT32 usec_timeout_;
-    // Max micro seconds to wait for name if not blocking forever.
 
+    /// Len of name in bytes
     ACE_UINT32 name_len_;
-    // Len of name in bytes
 
+    /// Len of value in bytes
     ACE_UINT32 value_len_;
-    // Len of value in bytes
 
+    /// Len of type in bytes
     ACE_UINT32 type_len_;
-    // Len of type in bytes
 
+    /// The data portion contains the <name_>
+    /// followed by the <value_>
+    /// followed by the <type_>.
     ACE_USHORT16 data_[MAX_NAME_LENGTH + MAXPATHLEN + MAXPATHLEN + 2];
-    // The data portion contains the <name_>
-    // followed by the <value_>
-    // followed by the <type_>.
   };
 
   /// Transfer buffer.
@@ -240,16 +240,16 @@ private:
 
   struct Transfer
   {
+    /// Length of entire reply.
     ACE_UINT32 length_;
-    // Length of entire reply.
 
+    /// Type of the reply, i.e., success (0) or failure (-1).
     ACE_INT32 type_;
-    // Type of the reply, i.e., success (0) or failure (-1).
 
+    /// Indicates why error occurred if <this->type_> == failure (-1).
+    /// Typical reasons include: <ETIME> (if the client timed out after
+    /// waiting for the name).
     ACE_UINT32 errno_;
-    // Indicates why error occurred if <this->type_> == failure (-1).
-    // Typical reasons include: <ETIME> (if the client timed out after
-    // waiting for the name).
   };
 
   /// Transfer buffer.
