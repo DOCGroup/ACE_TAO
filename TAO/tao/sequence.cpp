@@ -19,6 +19,11 @@ void TAO_Base_Sequence::_shrink_buffer (CORBA::ULong, CORBA::ULong)
   // default is no op.
 }
 
+void TAO_Base_Sequence::_narrow_fixup (CORBA::Environment& )
+{
+  // default is no op.
+}
+
 // *************************************************************
 // Operations for class TAO_Unbounded_Base_Sequence
 // *************************************************************

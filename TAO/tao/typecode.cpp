@@ -543,18 +543,9 @@ TC_Private_State::~TC_Private_State (void)
     }
 }
 
-// COM's IUnknown support
-
-// {A201E4C1-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_TypeCode,
-0xa201e4c1, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-// COM stuff
-u_long
+CORBA::ULong
 CORBA_TypeCode::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
   assert (this != 0);
 
   if (this->orb_owns_)
@@ -567,14 +558,9 @@ CORBA_TypeCode::AddRef (void)
     return this->refcount_++;
 }
 
-// COM stuff
-u_long
+CORBA::ULong
 CORBA_TypeCode::Release (void)
 {
-  // This code is subtle since we need to make sure that we don't try
-  // to release the lock after we've deleted this...
-  ACE_MT (this->lock_.acquire ());
-
   ACE_ASSERT (this != 0);
 
   u_long result;
@@ -587,7 +573,6 @@ CORBA_TypeCode::Release (void)
   else
     {
       result = --this->refcount_;
-      ACE_MT (this->lock_.release ());
 
       if (result == 0)
         delete this;
@@ -595,25 +580,7 @@ CORBA_TypeCode::Release (void)
       return result;
     }
 
-  ACE_MT (this->lock_.release ());
   return result;
-}
-
-// COM stuff
-TAO_HRESULT
-CORBA_TypeCode::QueryInterface (REFIID riid,
-                                void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_CORBA_TypeCode == riid || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
-
- (void) AddRef ();
-  return TAO_NOERROR;
 }
 
 // check if typecodes are equal. Equality is based on a mix of structural and

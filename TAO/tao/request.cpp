@@ -6,24 +6,16 @@
 
 #include "tao/corba.h"
 
-// {77420085-F276-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_Request,
-0x77420085, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-ULONG
+CORBA::ULong
 CORBA_Request::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
   return refcount_++;
 }
 
-ULONG
+CORBA::ULong
 CORBA_Request::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
-
     ACE_ASSERT (this != 0);
 
     if (--refcount_ != 0)
@@ -32,22 +24,6 @@ CORBA_Request::Release (void)
 
   delete this;
   return 0;
-}
-
-TAO_HRESULT
-CORBA_Request::QueryInterface (REFIID riid,
-			       void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_CORBA_Request == riid || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
-
-  (void) AddRef ();
-  return TAO_NOERROR;
 }
 
 // Reference counting for DII Request object
