@@ -38,7 +38,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
 TAO_Service_Type_Repository::incarnation (CORBA::Environment &)
-      ACE_THROW_SPEC (())
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
 

@@ -48,7 +48,7 @@ class TAO_Event_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
                                    int argc, char *argv[],
                                    CORBA::Environment
                                    &ACE_TRY_ENV)
-     ACE_THROW_SPEC (());
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
  protected:
 
