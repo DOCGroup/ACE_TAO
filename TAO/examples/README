@@ -8,6 +8,11 @@ examples:
           Contains various small examples of POA features based on
           the OMG POA specification.
 
+        . Callback_Quoter
+
+          Illustrates how to implement distributed callbacks using
+          TAO.
+
         . Quoter
         
           Illustrates how to use the Global POA options with multiple
