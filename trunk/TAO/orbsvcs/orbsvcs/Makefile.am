@@ -4032,6 +4032,7 @@ lib_LTLIBRARIES += libTAO_HTIOP.la
 libTAO_HTIOP_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
+  -I$(ACE_ROOT)/protocols \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
@@ -4045,7 +4046,7 @@ libTAO_HTIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_HTIOP_la_LIBADD = \
-  -lACE_HTBP \
+  $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4681,7 +4682,7 @@ libTAO_RTKokyuEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_RTKokyuEvent_la_LIBADD = \
-  -lKokyu \
+  $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
   libTAO_RTSched.la \
   libTAO_CosNaming.la \
   libTAO_RTEvent.la \
