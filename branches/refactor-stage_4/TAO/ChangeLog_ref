@@ -1,3 +1,10 @@
+Mon Jul  7 06:03:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Array_VarOut_T.inl:
+	* tao/BD_String_Argument_T.cpp:
+	* tao/UB_String_Argument_T.cpp: Fixed compile errors with g++
+	  3.3. There is one more error which is a show-stopper.
+
 Mon Jul  7 04:55:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp:
