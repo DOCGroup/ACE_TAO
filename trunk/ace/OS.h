@@ -8318,6 +8318,11 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
+# if !defined (ACE_HAS_MINIMAL_ACE_OS)
+    // This needs to come here to avoid problems with circular dependencies.
+#   include "ace/Log_Msg.h"
+# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE
@@ -8325,11 +8330,6 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #   define ACE_INLINE inline
 #   include "ace/OS.i"
 # endif /* ACE_HAS_INLINED_OSCALLS */
-
-# if !defined (ACE_HAS_MINIMAL_ACE_OS)
-    // This needs to come here to avoid problems with circular dependencies.
-#   include "ace/Log_Msg.h"
-# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 // Byte swapping macros to deal with differences between little endian
 // and big endian machines.  Note that "long" here refers to 32 bit
