@@ -1,3 +1,22 @@
+Tue Nov 18 17:44:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/corbacom.h: Added special case for CORBA::WChar to be a
+ 	short on VxWorks/GreenHills.
+
+	* TAO_IDL/be/be_state.cpp: Added template instantiations for SGI.
+	
+	* tao/deep_free.cpp (deep_free): Removed unused 'alignment'
+ 	variable.
+
+	* tao/deep_copy.cpp (deep_copy): Removed unused 'alignment'
+ 	variable.
+
+	* tao/encode.cpp (encode): Removed unused 'continue_encoding'
+ 	variable.
+
+	* tao/orbobj.cpp (POA_init): Removed options which were no longer
+ 	supported/necessary, as well as their corresponding variables.
+
 Tue Nov 18 17:33:20 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* orbsvcs/lib/RtecEventChannelAdmin.idl: 
