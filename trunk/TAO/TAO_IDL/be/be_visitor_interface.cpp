@@ -1017,8 +1017,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "_tao_elem = " << node->name () << "::_narrow (_tao_obj, _tao_env);"
       << be_nl
       << "CORBA::release (_tao_obj);" << be_nl
+      << "_tao_obj = _tao_elem;" << be_nl
       << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
-      << "&_tao_elem, 1, _tao_env);"
+      << "&_tao_obj, 1, _tao_env);"
       << be_nl
       << "if (_tao_env.exception ()) return 0; // narrow failed" << be_uidt_nl
       << "}" << be_nl
