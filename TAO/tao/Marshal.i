@@ -1,3 +1,4 @@
+//$Id$
 ACE_INLINE
 TAO_Marshal_Object::TAO_Marshal_Object (void)
 {
@@ -259,7 +260,8 @@ TAO_Marshal_ObjRef::deep_free (CORBA::TypeCode_ptr,
 			       const void *,
 			       CORBA::Environment &)
 {
-  CORBA::release (*(CORBA::Object_ptr *) source);
+  CORBA::Object_ptr obj = *(CORBA::Object_ptr *)source;
+  CORBA::release (obj);
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
