@@ -4,7 +4,7 @@
 #	Makefile for the server-side ACE network services
 #----------------------------------------------------------------------------
 
-#LIB	= libnetsvcs.a
+LIB	= libnetsvcs.a
 SHLIB	= libnetsvcs.$(SOEXT)
 
 FILES	=  TS_Server_Handler \

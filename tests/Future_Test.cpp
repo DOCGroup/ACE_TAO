@@ -286,6 +286,9 @@ static int n_loops = 100;
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Future<const char *>;
 template class ACE_Future<u_long>;
+template class auto_ptr<ACE_Method_Object>;
+template class ACE_Future_Rep<char const *>;
+template class ACE_Future_Rep<unsigned long>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #endif /* ACE_HAS_THREADS */
@@ -400,9 +403,3 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class auto_ptr<ACE_Method_Object>;
-template class ACE_Future_Rep<char const *>;
-template class ACE_Future_Rep<unsigned long>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

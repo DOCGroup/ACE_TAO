@@ -2,7 +2,6 @@
 
 // client.C
 
-
 #include "Log_Wrapper.h"
 
 Log_Wrapper::Log_Wrapper (void)

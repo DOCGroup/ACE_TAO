@@ -1,5 +1,31 @@
 Mon Mar 24 14:08:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/SOCK_Dgram: Removed the #if defined (ACE_HAS_IP_MULTICAST) 
+	  since this is now handled at the ACE_OS level.
+
+	* ace/OS.h: Added support for IP multicast macros and structs even
+ 	  on platforms that don't support it so that the tests will
+ 	  compile without having lots of #ifdefs.
+
+	* tests/Future_Test.cpp: Added a check for platforms that lack
+ 	  threads.
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: Added a check for
+	  platforms that lack threads.
+
+	* examples/Threads/context_switch_time.cpp: Added an #ifdef for
+ 	  ACE_HAS_THREADS to this test so that it will compile on
+ 	  platforms that don't have threading.  Thanks to Scott Halstead
+ 	  <scott.halstead@gs.com> for reporting this.
+
+	* tests/IOStream_Test.cpp: Fixed up this test so that it works
+ 	  correctly on platforms that lack multi-threading.  Thanks to
+ 	  Scott Halstead <scott.halstead@gs.com> for reporting this.
+
+	* netsvcs/lib/Makefile: Reincluded the LIB target so that we'll
+ 	  build a static library.  Thanks to Scott Halstead
+ 	  <scott.halstead@gs.com> for reporting this.
+
 	* ace/SOCK_Dgram.cpp (recv): Added a check to make sure that we
  	  don't try to copy more into the recv buffer than we've really
  	  got.  Thanks to Alan_Cabrera@fp.cibc.com for this fix.
