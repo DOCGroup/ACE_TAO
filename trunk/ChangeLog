@@ -1,3 +1,9 @@
+Tue May 18 11:07:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+	  Removed arguments from ACE_OS::tempnam() call, forcing it to use
+	  the defaults and select the char* variant.
+
 Tue May 18 14:28:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/LSOCK.cpp:
