@@ -1,3 +1,10 @@
+Tue Apr  6 18:20:48 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/ORB.cpp (multicast_query ()): Used ACE_HTONS for the 
+ 	  sent data length (CORBA::Short).
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input()): Used 
+	  ACE_NTOHS on the received CORBA::Short.
+	  
 Tue Apr  6 17:55:48 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/NewPOA/NewPOA.cpp (main): 
