@@ -4,7 +4,7 @@
 #
 
 DIRS = \
-        FaultTolerance \
-        Simple_Naming
+        IOGR \
+        IOGRManipulation
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
