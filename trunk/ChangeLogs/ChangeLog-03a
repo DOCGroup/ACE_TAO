@@ -1,3 +1,9 @@
+Tue Nov 14 17:55:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Makefile:
+          PACE is disabled by default, unless pace=1 is set in the command
+          line or the platform_macros.GNU file.
+
 Tue Nov 14 19:36:47 2000  Steve Huston  <shuston@riverace.com>
 
         * examples/Reactor/Proactor/test_siosig_ace.cpp: Don't log
@@ -29,7 +35,7 @@ Tue Nov 14 14:19:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Log_Record.cpp:
 
           In ACE_Log_Record::print, changed the call to ACE_OS::fprintf
-          to use ACE_TEXT("%s") as the second argument instead of just 
+          to use ACE_TEXT("%s") as the second argument instead of just
           "%s".  This should make logging under ACE_USES_UNICODE readable.
           Thanks to James Buck <jim@nowsol.com> for reporting the problem
           and submitting this patch.
@@ -39,8 +45,8 @@ Tue Nov 14 09:19:16 2000  Carlos O'Ryan  <coryan@uci.edu>
         * examples/Threads/thread_specific.cpp:
           Simply use %u to print an ACE_hthread_t.  This is what we seem
           to be doing in other places in the code.  However, this seems to
-	  be non-portable, the code in ACE_Log_Msg to print the thread ID
-	  is a lot more complicated.
+          be non-portable, the code in ACE_Log_Msg to print the thread ID
+          is a lot more complicated.
 
 Mon Nov 13 15:13:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -69,7 +75,7 @@ Mon Nov 13 01:07:36 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/config-win32-borland.h:
         * ace/config-win32-msvc.h:
 
-          Christopher Kohlhoff <chris@kohlhoff.com> mentioned to me 
+          Christopher Kohlhoff <chris@kohlhoff.com> mentioned to me
           that Borland did have a wcsdup, but it was named differently
           than the _wcsdup in MSVC.  I took his suggestion and added
           a ACE_WCSDUP_EQUIVALENT for MSVC's version and enabled
@@ -97,7 +103,7 @@ Sun Nov 12 17:00:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Removed the old Windows CE project files, and replaced
           them with ones created by the eMbedded Visual C++ from
-          MS.  
+          MS.
 
         * ace/OS_Errno.cpp: (added)
         * ace/OS_Errno.h: (added)
@@ -141,13 +147,13 @@ Sun Nov 12 17:00:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Base_Thread_Adapter.inl:
         * ace/Thread_Adapter.inl:
 
-          Moved some of the ACE_OS_Thread_Descriptor methods to 
-          Base_Thread_Adapter, since they were declared in 
+          Moved some of the ACE_OS_Thread_Descriptor methods to
+          Base_Thread_Adapter, since they were declared in
           Base_Thread_Adapter.h.
 
         * ace/SUN_Proactor.cpp:
 
-          Removed ACE_BUILD_DLL from this file, since it should only 
+          Removed ACE_BUILD_DLL from this file, since it should only
           be defined in the project file.
 
         * ace/OS_Dirent.h:
@@ -159,7 +165,7 @@ Sun Nov 12 17:00:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS_String.inl:
         * ace/OS.h:
 
-          Added /**/ to the #includes of pace, since they seem to 
+          Added /**/ to the #includes of pace, since they seem to
           totally confuse EVC's automatic dependency generation.
 
         * ace/OS_String.cpp:
@@ -195,7 +201,7 @@ Sun Nov 12 17:00:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Service_Config.i:
 
           The char versions of the following fuctions (which are defined
-          only under WinCE) were recursive and would fail miserably if 
+          only under WinCE) were recursive and would fail miserably if
           ever used.  I added ACE_CHAR_TO_TCHAR to resolve the infinate
           recursion.
           - ACE_Service_Config::initialize ()
@@ -214,15 +220,15 @@ Sun Nov 12 17:00:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Added ACE_LACKS_CUSERID and ACE_LACKS_CHDIR.
 
-          Added writev and readv emulation methods to ACE_OS, since they 
-          were just being defined as global functions.  This is more 
-          consistent with what we are doing elsewhere. 
+          Added writev and readv emulation methods to ACE_OS, since they
+          were just being defined as global functions.  This is more
+          consistent with what we are doing elsewhere.
 
           Added ACE_LACKS_SYS_NERR emulation.
 
         * ace/config-WinCE.h:
 
-          Added all the necessary defined to get ACE compiling for Windows 
+          Added all the necessary defined to get ACE compiling for Windows
           CE 3.0.  As for previous versions, they do not currently compile,
           although that could change in the future
 
@@ -249,9 +255,9 @@ Sun Nov 12 12:29:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Nov 11 18:55:04 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* ace/Profile_Timer.cpp: 
-	  Included Log_Msg.h to fix compile error.
-	
+        * ace/Profile_Timer.cpp:
+          Included Log_Msg.h to fix compile error.
+
 Fri Nov 10 19:41:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
@@ -262,11 +268,11 @@ Fri Nov 10 19:41:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Nov 10 20:26:01 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Profile_Timer.cpp: Replaced ACE_OS::perror() with
-	  ACE_ERROR macros so that the output can be redirected to the
- 	  same place that the ACE logging output is configured to go.
-  	  Thanks to Jeff Greif <jgreif@befree.com> for reportin this.
-	
+        * ace/Profile_Timer.cpp: Replaced ACE_OS::perror() with
+          ACE_ERROR macros so that the output can be redirected to the
+          same place that the ACE logging output is configured to go.
+          Thanks to Jeff Greif <jgreif@befree.com> for reportin this.
+
 Fri Nov 10 17:15:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * bin/fuzz.pl:
