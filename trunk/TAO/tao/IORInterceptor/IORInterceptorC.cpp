@@ -45,7 +45,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
@@ -84,7 +84,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInfo>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*PortableInterceptor__TAO_IORInfo_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -105,10 +105,10 @@ PortableInterceptor::IORInfo::_narrow (
     {
       return IORInfo::_nil ();
     }
-  
+
   IORInfo_ptr proxy =
     dynamic_cast<IORInfo_ptr> (_tao_objref);
-  
+
   return IORInfo::_duplicate (proxy);
 }
 
@@ -119,7 +119,7 @@ PortableInterceptor::IORInfo::_duplicate (IORInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

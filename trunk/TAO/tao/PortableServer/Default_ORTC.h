@@ -69,22 +69,22 @@
 
 namespace TAO_Default_ORT
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:527
-  
-  
+
+
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__VAR_OUT_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__VAR_OUT_CH_
-  
+
   class ObjectReferenceTemplate;
   typedef
     TAO_Value_Var_T<
         ObjectReferenceTemplate
       >
     ObjectReferenceTemplate_var;
-  
+
   typedef
     TAO_Value_Out_T<
         ObjectReferenceTemplate
@@ -92,61 +92,61 @@ namespace TAO_Default_ORT
     ObjectReferenceTemplate_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_
-  
+
   class TAO_PortableServer_Export ObjectReferenceTemplate
     : public virtual PortableInterceptor::ObjectReferenceTemplate
   {
   public:
     typedef ObjectReferenceTemplate_var _var_type;
-    
+
     static ObjectReferenceTemplate* _downcast (CORBA::ValueBase *);
-    
+
     // (TAO extensions or internals)
     static CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &,
         ObjectReferenceTemplate *&
       );
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
-    
+
     static const char* _tao_obv_static_repository_id (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:250
-  
+
   protected:
     ObjectReferenceTemplate (void);
-    
+
     virtual ~ObjectReferenceTemplate (void);
-    
+
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+
   private:
     ObjectReferenceTemplate (const ObjectReferenceTemplate &);
     void operator= (const ObjectReferenceTemplate &);
-    
+
   protected:
     virtual CORBA::Boolean
     _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) = 0;
-    
+
     virtual CORBA::Boolean
     _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &) = 0;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
 
 // TAO_IDL - Generated from
@@ -159,33 +159,33 @@ namespace TAO_Default_ORT
 
 namespace OBV_TAO_Default_ORT
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_obv_ch.cpp:58
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OBV_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OBV_CH_
-  
+
   // OBV_ class
   class TAO_PortableServer_Export ObjectReferenceTemplate
     : public virtual TAO_Default_ORT::ObjectReferenceTemplate
   {
   public:
-    
+
   protected:
     ObjectReferenceTemplate (void);
     virtual ~ObjectReferenceTemplate (void);
-    
+
   protected:
     virtual CORBA::Boolean
     _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &);
-    
+
     virtual CORBA::Boolean
     _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &);
-    
+
     CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
     CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-  
+
   private:
   };
 
@@ -201,7 +201,7 @@ namespace TAO
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__TRAITS_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>
   {
@@ -211,7 +211,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_valuetype/any_op_ch.cpp:54

@@ -517,7 +517,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // Hand crafted.
 
