@@ -137,7 +137,7 @@ Thu Feb 24 12:54:54 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/PortableServer/Fixed_Size_SArgument_T.inl:
 
 	  Fixed memory management and parameter passing problems.
-	  Addresses run-time problems exhibited applications that pass
+	  Addresses run-time problems exhibited by applications that pass
 	  fixed size types, such as fixed size structures, as parameters
 	  or return values.
 
