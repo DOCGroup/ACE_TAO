@@ -853,6 +853,9 @@ protected:
   /// Accessor methods to ObjectReferenceTemplate
   PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
 
+  /// Accessor methods to ObjectReferenceTemplate, non locked version
+  PortableInterceptor::ObjectReferenceTemplate *get_adapter_template_i (void);
+
   /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
   PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void);
 
@@ -881,11 +884,15 @@ protected:
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  TAO::ORT_Adapter *
-    object_reference_template_adapter (void);
+  /// Get the ORT adapter, in case there is no adapter yet, this method will
+  /// try to create one and hold the POA lock
+  TAO::ORT_Adapter *ORT_adapter (void);
 
-  TAO::ORT_Adapter_Factory *
-    object_reference_template_adapter_factory (void);
+  /// Get the ORT adapter, in case there is no adapter yet, this method will
+  /// try to create one but assumes the POA lock is already hole
+  TAO::ORT_Adapter *ORT_adapter_i (void);
+
+  TAO::ORT_Adapter_Factory *ORT_adapter_factory (void);
 
   const TAO_Creation_Time &creation_time (void);
 

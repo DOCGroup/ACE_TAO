@@ -466,7 +466,18 @@ TAO_POA::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
 TAO_POA::get_adapter_template ()
 {
-  if (this->object_reference_template_adapter ())
+  if (this->ORT_adapter ())
+    {
+      return this->ort_adapter_->get_adapter_template();
+    }
+
+  return 0;
+}
+
+ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
+TAO_POA::get_adapter_template_i ()
+{
+  if (this->ORT_adapter_i ())
     {
       return this->ort_adapter_->get_adapter_template();
     }
@@ -477,7 +488,7 @@ TAO_POA::get_adapter_template ()
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
 TAO_POA::get_obj_ref_factory ()
 {
-  if (this->object_reference_template_adapter ())
+  if (this->ORT_adapter ())
     {
       return this->ort_adapter_->get_obj_ref_factory();
     }

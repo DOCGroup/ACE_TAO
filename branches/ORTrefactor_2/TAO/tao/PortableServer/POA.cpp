@@ -174,7 +174,7 @@ TAO_POA::set_obj_ref_factory (
   PortableInterceptor::ObjectReferenceFactory *current_factory
   ACE_ENV_ARG_DECL)
 {
-  if (this->object_reference_template_adapter ())
+  if (this->ORT_adapter ())
     {
       // Activate a different factory
       this->ort_adapter_->set_obj_ref_factory (current_factory
@@ -420,7 +420,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->ort_adapter_ != 0)
   {
     TAO::ORT_Adapter_Factory *ort_factory =
-      this->object_reference_template_adapter_factory ();
+      this->ORT_adapter_factory ();
 
     ort_factory->destroy (this->ort_adapter_);
     this->ort_adapter_ = 0;
@@ -745,7 +745,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       // Get the adapter template related to the ChildPOA
       PortableInterceptor::ObjectReferenceTemplate *child_at =
-        child_poa->get_adapter_template ();
+        child_poa->get_adapter_template_i ();
 
       // In case no ORT library is linked we get zero
       if (child_at != 0)
@@ -842,7 +842,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       // Get the adapter template
       PortableInterceptor::ObjectReferenceTemplate *adapter =
-        this->get_adapter_template ();
+        this->get_adapter_template_i ();
 
       if (adapter != 0)
         {
@@ -1948,7 +1948,7 @@ TAO_POA::invoke_key_to_object_helper (const char * repository_id,
     reinterpret_cast <const PortableInterceptor::ObjectId &>(id);
 
   // Ask the ORT to create the object.
-  if (this->object_reference_template_adapter ())
+  if (this->ORT_adapter ())
     {
       // Ask the ORT to create the object.
       return this->ort_adapter_->make_object (repository_id,
@@ -4085,14 +4085,14 @@ TAO_POA::imr_notify_shutdown (void)
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 TAO::ORT_Adapter_Factory *
-TAO_POA::object_reference_template_adapter_factory (void)
+TAO_POA::ORT_adapter_factory (void)
 {
   return ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance (
            TAO_POA::ort_adapter_factory_name ());
 }
 
 TAO::ORT_Adapter *
-TAO_POA::object_reference_template_adapter (void)
+TAO_POA::ORT_adapter_i (void)
 {
   if (this->ort_adapter_ != 0)
     return this->ort_adapter_;
@@ -4102,20 +4102,10 @@ TAO_POA::object_reference_template_adapter (void)
     ACE_TRY
       {
         TAO::ORT_Adapter_Factory * ort_ap_factory =
-          this->object_reference_template_adapter_factory();
+          this->ORT_adapter_factory();
 
         if (!ort_ap_factory)
           return 0;
-
-        // Lock access for the duration of this transaction, this method is also
-        // called in the cleanup process, so don't let the guard check for closure
-        TAO_POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
-        ACE_TRY_CHECK;
-        ACE_UNUSED_ARG (poa_guard);
-
-        // DCL ..
-        if (this->ort_adapter_ != 0)
-          return this->ort_adapter_;
 
         // Get the full adapter name of this POA, do this before we create the
         // adapter so that in case this fails, we just return 0 and not a not
@@ -4132,8 +4122,9 @@ TAO_POA::object_reference_template_adapter (void)
           return 0;
 
         // @todo We have to look at this, we activate it but hold the POA lock,
-        // we shouldn't keep the lock here, but then the ort_adapter should be
-        // guarded against multiple activations.
+        // in case we are called by ORT_adapter, we shouldn't keep the lock
+        // here, but then the ort_adapter should be guarded against multiple
+        // activations.
         this->ort_adapter_->activate (this->orb_core_.server_id (),
                                       this->orb_core_.orbid (),
                                       adapter_name,
@@ -4150,8 +4141,24 @@ TAO_POA::object_reference_template_adapter (void)
   }
 
   return this->ort_adapter_;
+
 }
 
+TAO::ORT_Adapter *
+TAO_POA::ORT_adapter (void)
+{
+  if (this->ort_adapter_ != 0)
+    return this->ort_adapter_;
+
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (0);
+
+  // DCL ..
+  if (this->ort_adapter_ != 0)
+    return this->ort_adapter_;
+
+  return this->ORT_adapter_i();
+}
 
 TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
                               ACE_ENV_ARG_DECL,
