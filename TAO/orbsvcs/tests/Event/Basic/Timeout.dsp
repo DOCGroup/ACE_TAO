@@ -92,10 +92,6 @@ SOURCE=.\Timeout.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter ".h"
-# Begin Source File
-
-SOURCE=.\Timeout.h
-# End Source File
 # End Group
 # End Target
 # End Project
