@@ -1,5 +1,5 @@
 /**
- * @file Reactor_Notification_Queue_Test
+ * @file Reactor_Notification_Queue_Test.cpp
  *
  * $Id$
  *
