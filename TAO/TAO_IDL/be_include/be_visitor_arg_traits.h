@@ -71,6 +71,8 @@ public:
 
   virtual int visit_component_fwd (be_component_fwd *node);
 
+  virtual int visit_home (be_home *node);
+
 private:
 
   idl_bool generated (be_decl *node) const;
