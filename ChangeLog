@@ -1,3 +1,8 @@
+Tue Aug 21 06:58:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Fixed problematic uses of strncpy. Thanks to
+	  Alain Decamps <Alain.Decamps@advalvas.be> for giving this patch.
+
 Tue Aug 21 10:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Map.i: Made the return value of ACE_Incremental_Key_Generator
