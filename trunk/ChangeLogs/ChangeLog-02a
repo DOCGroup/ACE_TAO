@@ -1,3 +1,12 @@
+Thu Jan  4 17:14:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp (dispatch_i): Eliminate a portion of the
+	  code from SunCC5 builds. This piece of code was trying to set
+	  things right when it sees all the masks clear and <size_>
+	  greater than zero. This seems to be creating problems with SunCC
+	  5 builds alone. Commenting out this piece for SunCC5 helps. This
+	  should also be a work around for the bug #750 in bugzilla.
+	  
 Thu Jan 04 17:07:48 2001  Luther Baker  <luther@cs.wustl.edu>
 
  	* ace/ace_dll.dsp
