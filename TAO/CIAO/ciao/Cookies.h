@@ -13,58 +13,57 @@
 #include /**/ "ace/pre.h"
 
 #include "CCM_BaseC.h"
-#include "CIAO_Container_Export.h"
-#include "CIAO_ValueC.h"
-#include "ace/Active_Map_Manager.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "CIAO_Container_Export.h"
+#include "CIAO_ValueC.h"
+#include "ace/Active_Map_Manager.h"
 
 namespace CIAO
 {
   /**
    * @class Map_Key_Cookie
    *
-   * @brief A CIAO internal Cookie valuetype implementation.
+   * @brief A internal cookie valuetype implementation.
    */
   class CIAO_CONTAINER_Export Map_Key_Cookie
-    : public virtual OBV_CIAO::Cookie
+    : public virtual OBV_Components::Cookie
   {
   public:
-    /// Default constructor.
-    Map_Key_Cookie ();
+    Map_Key_Cookie (void);
+
+    virtual ~Map_Key_Cookie (void);
 
     /// Initialize a @c Cookie with an @c ACE_Active_Map_Manager_Key
     Map_Key_Cookie (const ACE_Active_Map_Manager_Key &key);
 
-    virtual ::CORBA::OctetSeq * get_cookie (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
-    /// Initialize a @c Cookie with an @c ACE_Active_Map_Manager_Key
-    /// This contructor make a copy of the Cookie.  Perhaps we can somehow
-    /// avoid this?
-    //Map_Key_Cookie (const ::OBV_Components::Cookie &ck);
-
-    /// Destroy the @c Cookie
-    ~Map_Key_Cookie (void);
-
     /// Insert the @c ACE_Active_Map_Manager_Key
-    int insert (ACE_Active_Map_Manager_Key &key);
+    bool insert (ACE_Active_Map_Manager_Key &key);
+
+    /// Operation on the valuetype
+    CORBA::OctetSeq * get_cookie (void);
 
     /// Extract the @c ACE_Active_Map_Manager_Key
-    static int extract (::Components::Cookie *c,
-                        ACE_Active_Map_Manager_Key &key);
-
-  protected:
+    static bool extract (::Components::Cookie *c,
+                         ACE_Active_Map_Manager_Key &key);
   };
 
-  class CIAO_CONTAINER_Export Map_Key_Cookie_init : public virtual ::Components::Cookie_init
+  /**
+   * @class Map_Key_Cookie_init
+   *
+   * @brief Valuefactory implementation for Cookies.
+   */
+  class CIAO_CONTAINER_Export Map_Key_Cookie_init :
+    public virtual ::Components::Cookie_init
   {
   public:
-    Map_Key_Cookie_init (void);
     virtual ~Map_Key_Cookie_init (void);
 
-    virtual CORBA::ValueBase *create_for_unmarshal (void);
+    virtual CORBA::ValueBase *create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL);
   };
 }
 

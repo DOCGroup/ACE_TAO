@@ -1,3 +1,42 @@
+Mon Apr 26 23:40:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Cookies.cpp:
+	* ciao/Cookies.h:
+	* ciao/Cookies.inl:
+
+	  Subtle changes to improve interoperability. 
+
+	  Problem: We, for some unknown reason, created a proprietary
+	  cookie called  CIAO::Map_Key_Cookie (which inherited from an IDL
+	  type CIAO::Cookie) and used that as a concrete implementation of 
+	  Components::Cookie.  
+
+	  Context: Though this would work, this breaks interoperability
+	  when the Cookies are send on the wire. The remote target tries
+	  to unmarshal the CIAO::Cookie valuetype as a Component::Cookie
+	  which fails miserably. 
+
+	  Solution: Deprecate this proprietary IDL type CIAO::Cookie and
+	  make Map_Key_Cookie inherit directly from Component::Cookie. 
+
+	  Made some changes to the interface to return a bool instead of
+	  an int. 
+	  
+	* ciao/CIAO_Value.idl:
+
+	  Added note for deprecation. 
+
+	
+ 	* CIDLC/ServantSourceGenerator.cpp:
+
+	  The call to Map_Key_Cookie::extract () should check for a false
+	  instead of -1. 
+
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+
+  	  The call to Map_Key_Cookie::extract () should check for a false
+	  instead of -1. 
+
 Mon Apr 26 17:35:29 2004  George Edwards  <g.edwards@vanderbilt.edu>
 
         * DnC/Config_Handlers/CompPkgDesc_Handler.cpp:
