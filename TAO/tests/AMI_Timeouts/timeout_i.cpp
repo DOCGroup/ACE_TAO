@@ -77,6 +77,7 @@ TimeoutHandler_i::~TimeoutHandler_i ()
 
 void
 TimeoutHandler_i::sendTimeToWait (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "reply"));
@@ -87,6 +88,7 @@ TimeoutHandler_i::sendTimeToWait (CORBA::Environment &ACE_TRY_ENV)
 void
 TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutExceptionHolder * excep_holder,
                                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "excep"));
