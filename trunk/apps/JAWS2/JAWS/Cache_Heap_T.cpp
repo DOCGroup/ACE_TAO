@@ -41,8 +41,10 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::~JAWS_Cache_Heap (void)
         {
           if (this->heap_[i])
             {
-              ACE_DES_FREE (this->heap_[i], this->allocator_->free,
-                            Cache_Heap_Item);
+              ACE_DES_FREE_TEMPLATE4(this->heap_[i], this->allocator_->free,
+                                     JAWS_Cache_Heap_Item,
+                                     EXT_ID, FACT, H_FN, E_FN);
+
               this->heap_[i] = 0;
             }
         }
@@ -217,7 +219,10 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
   ext_id = item->ext_id_;
   int_id = item->int_id_;
 
-  ACE_DES_FREE (item, this->allocator_->free, Cache_Heap_Item);
+  ACE_DES_FREE_TEMPLATE4(item, this->allocator_->free,
+                         JAWS_Cache_Heap_Item,
+                         EXT_ID, FACT, H_FN, E_FN);
+
   item = 0;
   return 0;
 }
@@ -237,7 +242,10 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
   real_item->int_id_->heap_item (0);
   this->remove_i (real_item->heap_idx_);
 
-  ACE_DES_FREE (real_item, this->allocator_->free, Cache_Heap_Item);
+  ACE_DES_FREE_TEMPLATE4(real_item, this->allocator_->free,
+                         JAWS_Cache_Heap_Item,
+                         EXT_ID, FACT, H_FN, E_FN);
+
   real_item = 0;
 
   return 0;
