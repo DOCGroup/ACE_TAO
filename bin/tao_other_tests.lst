@@ -93,3 +93,5 @@ TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/Notify/Lanes/run_test.pl: !ST !Linux
+TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl: !ST !Linux
