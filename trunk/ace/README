@@ -463,10 +463,10 @@ ACE_HAS_POSIX_SEM                       Platform supports POSIX
 ACE_HAS_POSIX_TIME                      Platform supports the POSIX
                                         struct timespec type
 ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
-                                        LynxOS versions prior 4.0 define
-                                        THREAD_CANCELLED macro in system
-                                        headers. This macro must be undefined
-                                        to avoid compilation errors in TAO code.
+                                        LynxOS defines THREAD_CANCELLED macro
+                                        in system headers. This macro must be
+                                        undefined to avoid compilation errors
+                                        in TAO code.
 ACE_HAS_PROC_FS                         Platform supports the /proc
                                         file system and defines tid_t
                                         in <sys/procfs.h>
