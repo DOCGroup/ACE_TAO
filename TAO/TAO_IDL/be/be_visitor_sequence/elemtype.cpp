@@ -89,8 +89,8 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
           }
         if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
           {
-            *os << bt->nested_type_name (this->ctx_->scope ()) << ","
-                << bt->nested_type_name (this->ctx_->scope (), "_var") << "> ";
+            *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
+            *os << bt->nested_type_name (this->ctx_->scope (), "_var") << "> ";
           }
         else
           {
