@@ -105,7 +105,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << " (int collocated)" << be_nl
           << "{" << be_idt_nl
-          << "this->setup_collocation (collocated);" << be_uidt_nl;
+          << "this->_tao_setup_collocation (collocated);" << be_uidt_nl;
     }
   else
     {
@@ -124,7 +124,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       // Collocation setup method.
       *os << "void" << be_nl
-          << node->name () << "::setup_collocation (int collocated)" << be_nl
+          << node->name () << "::_tao_setup_collocation (int collocated)" << be_nl
           << "{"
           << be_idt_nl // idt = 1
           << "if (collocated)" << be_idt_nl //idt = 2
@@ -158,8 +158,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                       << ")";
                 }
               else
-                *os << node->name ();
-              *os << "::setup_collocation" << " (collocated);" << be_nl;
+                *os << inherited->name ();
+              *os << "::_tao_setup_collocation" << " (collocated);" << be_nl;
             }
         }
 
