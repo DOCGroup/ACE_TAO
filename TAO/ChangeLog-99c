@@ -1,3 +1,14 @@
+Sun May 30 22:09:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+	* tao/ tao/* tao/IIOP_Transport.cpp
+	* tao/ tao/Request_Mux_Strategy.cpp:
+			
+	Just a few indentations. Nothing else.		
+
+	* tao/default_client.cpp:
+
+	Init'ed the this->wait_strategy_ based on the precompiler macros
+	for the connection handlers. This aviods the UMR purify errors. 
+
 Sat May 29 22:49:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Wait_Strategy.h:
