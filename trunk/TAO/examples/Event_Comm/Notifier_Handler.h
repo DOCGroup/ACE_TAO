@@ -62,15 +62,15 @@ public:
   // returns the ORB's reactor.
 
 private:
+  CORBA::ORB_var orb_;
+  // Remember our orb.
+
   Event_Comm::Notifier *notifier_;
   // Pointer to an <Event_Comm::Notifier> object.
 
  TAO_Naming_Client naming_client_;
   // An instance of the name client used for resolving the factory
   // objects.
-
-  CORBA::ORB_var orb_;
-  // Remember our orb.
 
   ShutdownCallback *shutdowncallback;
   // The handler to shutdown the app.

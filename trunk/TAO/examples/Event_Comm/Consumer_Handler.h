@@ -68,6 +68,9 @@ private:
   // gets the notifier reference from the naming service.
   // returns 0 on success, -1 on error.
 
+  CORBA::ORB_var orb_;
+  // Remember our orb.
+
   Consumer_i receiver_i_;
   // The <Consumer> implementation.
 
@@ -80,9 +83,6 @@ private:
   TAO_Naming_Client naming_services_client_;
   // An instance of the name client used for resolving the factory
   // objects.
-
-  CORBA::ORB_var orb_;
-  // Remember our orb.
 
   ShutdownCallback* shutdowncallback;
   // The Shutdown callback used to shutdown the consumer application.
