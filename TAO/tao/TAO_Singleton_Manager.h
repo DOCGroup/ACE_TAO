@@ -22,15 +22,13 @@
 #include "ace/pre.h"
 
 #include "tao/TAO_Export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS.h"
-
-// Forward declarations
-class TAO_SYNCH_RECURSIVE_MUTEX;
 
 // Adapter for cleanup, used to register cleanup function with the
 // ACE_Object_Manager.

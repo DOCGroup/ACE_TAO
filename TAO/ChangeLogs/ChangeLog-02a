@@ -1,3 +1,10 @@
+Fri Feb  2 14:34:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/TAO_Singleton_Manager.h: Removed forward reference for 
+	  TAO_SYNCH_RECURSIVE_MUTEX and added #include "tao/orbconf.h".  
+	  The forward reference wasn't necessary, and it was causing an 
+	  internal compiler error under gcc 2.95.2.
+
 Fri Feb  2 14:20:26 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/README: Changed the README file so that
