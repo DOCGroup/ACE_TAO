@@ -24,9 +24,9 @@
 #include "Container_T.h"
 #include "Destroy_Callback.h"
 #include "AdminProperties.h"
+#include "EventChannelFactory.h"
 
 class TAO_NS_Admin;
-class TAO_NS_EventChannelFactory;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

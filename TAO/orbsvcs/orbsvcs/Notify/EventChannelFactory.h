@@ -22,8 +22,8 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "Container_T.h"
 #include "Destroy_Callback.h"
+#include "Notify_Service.h"
 
-class TAO_NS_Notify_Service;
 class TAO_NS_EventChannel;
 
 #if defined(_MSC_VER)
