@@ -1,3 +1,33 @@
+Mon Jun 21 08:07:46 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+        * Implemented an IOR Manipulation interface (IOR.pidl).
+          Added new files
+              IORC.{h,i,cpp}
+              IORS.{h,i,cpp}
+              IORManipulation.{h,cpp}
+          IOR{C,S} are the usual IDL generated files although the
+          IOR Manipulation object is constrained to be local.  The new
+          class (TAO_IOR_Manipulaiton) is implemted in IORManipultion.
+
+        * Enhanced MProfile to facilitate the new IOR Manipulation
+          class.  MProfile objects can now grow dynamically, that is
+          if you try to add a profile to an already full MProfile, 
+          the internal buffer will be increased in size rather then
+          returning an error.
+
+        * Added the default per ORB IOR manipulation object to the ORB
+          class.
+
+        * Updated the Makefile 
+
+        * Addressed comments in IIOP_factory.
+
+        * Removed CORBA::Environment arg from TAO_XX_Profile::is_equivalent ()
+          and CORBA_Object::is_equivalent () and TAO_Stub::is_equivalent () 
+
+        * Added the following macro to orbconf.h 
+             #define TAO_OBJID_IORMANIPULATION "IORManipulation"
+
 Sun Jun 20 19:35:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
