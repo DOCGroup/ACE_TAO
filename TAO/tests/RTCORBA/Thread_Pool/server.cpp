@@ -76,7 +76,7 @@ main (int argc, char *argv[])
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (root_poa))
+      if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ERROR: Panic <RootPOA> is nil\n"),
                           -1);
