@@ -101,7 +101,7 @@ public:
   event_type event_type_;
 
   /// Timestamp.
-  ACE_Time_Value time_;
+  ACE_hrtime_t time_;
 
   /// Id of thread posting the time probe.
   ACE_thread_t thread_;
