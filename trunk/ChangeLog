@@ -1,3 +1,9 @@
+Sat Mar  12 13:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Removed SANDBOX for the ImplRepo NameService test, I see no reason
+          why we just can't run it. Only in a minimum build we can't run it
+
 Fri Mar 11 18:21:49 2005 Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: When checking for std namespace, decide which
