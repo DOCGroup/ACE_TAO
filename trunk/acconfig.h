@@ -362,6 +362,10 @@
 /* Compiler/platform uses macro for ctime (e.g., MVS) */
 #undef ACE_HAS_BROKEN_CTIME
 
+/* Platform sendv() does not work properly with datagrams, i.e. it
+   fails when the iovec size is IOV_MAX. */
+#undef ACE_HAS_BROKEN_DGRAM_SENDV
+
 /* Earlier versions of HP/UX C++ are damned... */
 #undef ACE_HAS_BROKEN_HPUX_TEMPLATES
 
@@ -487,6 +491,9 @@
 
 /* Optimize ACE_Handle_Set::count_bits for select() operations (common case) */
 #undef ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
+/* Platform supports ::llseek() */
+#undef ACE_HAS_LLSEEK
 
 /* Compiler/platform supports SunOS high resolution timers */
 #undef ACE_HAS_HI_RES_TIMER
@@ -669,11 +676,22 @@
    XPG4 Worldwide Portability Interface wide-character classification. */
 #undef ACE_HAS_XPG4_MULTIBYTE_CHAR
 
+/* Platform does not support ::atexit ().  Use ACE's at_exit ()
+   emulation instead.
+   NOTE: should be used with ACE_HAS_NONSTATIC_OBJECT_MANAGER for
+   proper semantics of _when_ exit hooks are destroyed, i.e., prior to
+   static object destruction. */
+#undef ACE_LACKS_ATEXIT
+
 /* No system support for replacing any previous mappings. */
 #undef ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
 /* Platform lacks support for the standard C++ auto_ptr class */
 #undef ACE_LACKS_AUTO_PTR
+
+/* Compiler/platform standard C++ auto_ptr implementation lacks
+   reset() method */
+#undef ACE_AUTO_PTR_LACKS_RESET
 
 /* Compiler/platform lacks the standard C library bsearch() function  */
 #undef ACE_LACKS_BSEARCH
@@ -755,6 +773,9 @@
 
 /* Automatically restart OS system calls when EINTR occurs */
 #undef ACE_HAS_SIGNAL_SAFE_OS_CALLS
+
+/* Platform has the sigtimedwait() system call */
+#undef ACE_HAS_SIGTIMEDWAIT
 
 /* Platform/compiler has the sigwait(2) prototype */
 #undef ACE_HAS_SIGWAIT
@@ -873,6 +894,14 @@
 /* Compiler implements template specialization */
 #undef ACE_HAS_TEMPLATE_SPECIALIZATION
 
+/* Compiler supports standard C++ template specializations
+   (e.g. "template <>" syntax.) */
+#undef ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+
+/* Compiler supports standard C++ template method specializations
+   (e.g. "template <>" syntax.) */
+#undef ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
+
 /* Compiler implements templates that support typedefs inside of classes used
    as formal arguments to a template class. */
 #undef ACE_HAS_TEMPLATE_TYPEDEFS
@@ -944,6 +973,12 @@
 /* Most APIs in platform/compiler supports UNICODE. (No char version
    available.) */
 #undef ACE_HAS_MOSTLY_UNICODE_APIS
+
+/* Compiler supports explicit constructors. */
+#undef ACE_HAS_EXPLICIT_KEYWORD
+
+/* Compiler supports the C++ `mutable' keyword. */
+#undef ACE_HAS_MUTABLE_KEYWORD
 
 /* Compiler supports the C++ typename keyword */
 #undef ACE_HAS_TYPENAME_KEYWORD
@@ -1027,6 +1062,9 @@
 
 /* Platform lacks getpgid() call (e.g., Win32, Chorus, and FreeBSD). */
 #undef ACE_LACKS_GETPGID
+
+/* Platform lacks getppid() call. */
+#undef ACE_LACKS_GETPPID
 
 /* Platforms lacks getservbyname() (e.g., VxWorks and Chorus). */
 #undef ACE_LACKS_GETSERVBYNAME
