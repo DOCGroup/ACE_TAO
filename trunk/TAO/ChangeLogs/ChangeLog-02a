@@ -1,3 +1,12 @@
+Wed Apr 25 03:34:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): No
+	  longer need to hint for cleanup as we use reference counter to
+	  determine when to cleanup the backing store now.  This should
+	  fix the RTCORBA tests crashing as those tests also use the
+	  connection handler on the client side and the backing stores
+	  were being cleaned up in the wrong order.
+
 Tue Apr 24 22:58:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/GIOP_Message_Handler.cpp:
