@@ -1,4 +1,4 @@
-// $:Id$
+\// $:Id$
 //
 // FILE  
 //   Program to test the property services.
@@ -57,10 +57,10 @@ main (int argc, char *argv [])
     
     // delete a few properties
     propSet.delete_property ("short_property", TAO_TRY_ENV);
-    ACE_DEBUG ( (LM_DEBUG, "short_property deleted !!") );
+    ACE_DEBUG ( (LM_DEBUG, "\nshort_property deleted !!") );
 
     // Let us test the number of properties now
-    ACE_DEBUG ( (LM_DEBUG, "Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
+    ACE_DEBUG ( (LM_DEBUG, "\n Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
     
 
     // Let us try to "get" back those values
