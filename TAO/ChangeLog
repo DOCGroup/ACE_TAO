@@ -1,3 +1,9 @@
+Wed Oct 13 13:13:39 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
+          Was incorrectly using the dynamic object names with the
+          normal test.
+
 Wed Oct 13 14:36:47 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
