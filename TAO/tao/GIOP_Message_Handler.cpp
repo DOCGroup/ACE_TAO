@@ -270,7 +270,7 @@ TAO_GIOP_Message_Handler::read_ulong (const char *ptr)
 }
 
 int
-TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
+TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport * /*transport*/)
 {
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
     {

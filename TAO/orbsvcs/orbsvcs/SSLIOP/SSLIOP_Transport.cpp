@@ -133,16 +133,8 @@ TAO_SSLIOP_Transport::register_handler_i (void)
   if (TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Transport::register_handler %d\n",
+                  "TAO (%P|%t) - SSLIOP_Transport::register_handler %d\n",
                   this->id ()));
-    }
-  if (this->connection_handler_->is_registered ())
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Transport::register_handler %d"
-                  ", already registered\n",
-                  this->id ()));
-      return 0;
     }
 
   // @@ It seems like this method should go away, the right reactor is

@@ -158,8 +158,9 @@ TAO_Transport::provide_handle (ACE_Handle_Set &handle_set)
                      guard,
                      *this->handler_lock_));
   ACE_Event_Handler *eh = this->event_handler_i ();
-  TAO_Connection_Handler *ch = ACE_reinterpret_cast (TAO_Connection_Handler *, eh);
-  if (ch && ch->is_registered ())
+  // TAO_Connection_Handler *ch = ACE_reinterpret_cast (TAO_Connection_Handler *, eh);
+
+  if (eh && this->ws_->is_registered ())
     handle_set.set_bit (eh->get_handle ());
 }
 

@@ -1,3 +1,32 @@
+Wed Apr 25 16:09:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.inl:
+	* tao/Connection_Handler.cpp: Removed the is_registered_
+	  flag. This flag was used when the ORB was caching the connection
+	  handlers. This flag was used to indicate whether the connections
+	  handlers have been registered with the reactor or not. This flag
+	  is not necessary now as this work is done by a flag in the
+	  wait_strategy. 
+
+	* tao/IIOP_Connection_Handler.cpp
+	* tao/IIOP_Transport.cpp:
+	* tao/Transport.cpp: Removed references to the is_registered flag
+	  in the Connection_Handler. Changed them to use the
+	  Wait_Strategy::is_registered flag instead.
+
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	  Replicated the above changes.
+
+	* tao/GIOP_Message_Handler.cpp: Fixed a unused variable warning. 
+	
 Wed Apr 25 12:34:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:

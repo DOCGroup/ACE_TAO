@@ -206,7 +206,7 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   --this->pending_upcalls_;
   if (this->pending_upcalls_ <= 0)
     {
-      if (this->is_registered ())
+      if (this->transport ()->wait_strategy ()->is_registered ())
         {
           // Make sure there are no timers.
           this->reactor ()->cancel_timer (this);
@@ -214,7 +214,7 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
           // Set the flag to indicate that it is no longer registered with
           // the reactor, so that it isn't included in the set that is
           // passed to the reactor on ORB destruction.
-          this->is_registered (0);
+          this->transport ()->wait_strategy ()->is_registered (0);
         }
 
       // Close the handle..
