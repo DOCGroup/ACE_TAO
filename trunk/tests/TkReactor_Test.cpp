@@ -295,25 +295,6 @@ main (int argc, char *argv[])
   // set up callback
   Tcl_CreateCommand (tcl_interp, "pressme", inc_count, "label_var", 0);
 
-//   eval ("set label_var \"label for all events\"");
-//   eval ("button .goodbye -text \"Stop Test\"");
-//   eval ("button .pressme -text \"Press Me\"");
-//   eval ("label .label_for_event_one -textvariable $label_var");
-
-//   Tk_Window goodbye = Tk_NameToWindow (tcl_interp,".goodbye",tk);
-//   if (goodbye == NULL)
-//     ACE_ERROR_RETURN ((LM_ERROR,"Tk_NameToWindow failed\n"),1);
-
-//   Tk_Window press_me = Tk_NameToWindow (tcl_interp,".pressme",tk);
-//   if (press_me == NULL)
-//     ACE_ERROR_RETURN ((LM_ERROR,"Tk_NameToWindow failed\n"),1);
-
-//   Tk_CreateEventHandler (goodbye,0,Quit,0);
-//   //Register callback for "Stop Test" button
-
-//   Tk_CreateEventHandler (press_me,0,inc_count,"label_var");
-//   //Register callback for "Press Me" button
-
   // Register callback for X Timer
   (void) Tk_CreateTimerHandler (1000,
                                 inc_tmo,
@@ -347,7 +328,6 @@ main (int argc, char *argv[])
                                           NULL,
                                           THR_NEW_LWP | THR_DETACHED);
 
-  //  eval ("pack .label_for_event_one .goodbye .pressme -side top -anchor w");
   while (!quit)
     {
       int result = reactor.handle_events ();
@@ -362,10 +342,6 @@ main (int argc, char *argv[])
           break;
         }
     }
-  //  while (!quit)
-  //    {
-  //      Tk_DoOneEvent (0);
-  //    }
 
   ACE_END_TEST;
   return 0;
