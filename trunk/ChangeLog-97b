@@ -83,6 +83,9 @@ Mon Oct 13 12:58:01 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/Priority_Reactor_Test.cpp (handle_input): added
 	  ACE_UNUSED_ARG (h).
 
+	* examples/Connection/non_blocking/CPP-connector.cpp (handle_signal):
+	  added ACE_UNUSED_ARG (signum).
+
 Mon Oct 13 03:25:45 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.16, released Mon Oct 13 03:25:45 1997.
