@@ -1,3 +1,19 @@
+Fri Feb 18 19:05:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/driver/drv_args.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_root/root_sh.cpp:
+	* TAO_IDL/be/be_visitor_root/root_si.cpp:
+	* TAO_IDL/be/be_visitor_root/root_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+	  Added command line option -Sc to suppress generation
+	  of tie classes and *S_T.* files. A question about this
+	  was sent in by Alex Hornby <alex@anvil.co.uk>, which
+	  prompted the implementation.
+
 Fri Feb 18 13:53:43 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp: 
