@@ -1,3 +1,11 @@
+Tue Sep  2 13:38:37 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
+
+	* TAOACE_Static.dsw:
+
+	  Fixed incorrect inter-project dependencies for PortableServer,
+	  ObjRefTemplate, and IORInterceptor projects.  Fixes "duplicate
+	  definition" link-time errors.
+
 Tue Sep  2 07:20:13 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:
