@@ -10,7 +10,8 @@ the client or open a separate window for the client and server.
 
 Now the server and client can also make use of the Naming service.
 You need to start the 
-	TAO/orbsvcs/Naming_service/Naming_service
+	TAO/orbsvcs/Naming_service/Naming_service 
+before running the server and the client to make use of the Namingservice.
 
 server:
 -------
