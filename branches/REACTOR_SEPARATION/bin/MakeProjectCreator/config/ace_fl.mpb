@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// ace_fltk.mpb,v
+
+project : ace_x11, ace_gl {
+  requires += fl
+  macros   += ACE_HAS_FL
+
+  // Depends on configuration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_FL_CPPFLAGS)
+    LIBS += $(PLATFORM_FL_LIBS)
+    LDFLAGS += $(PLATFORM_FL_LDFLAGS)
+  }
+}
