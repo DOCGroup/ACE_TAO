@@ -108,7 +108,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c TypeCode::Alias.
        */
-      CORBA::TypeCode_ptr const * content_type_;
+      CORBA::TypeCode_ptr const * const content_type_;
 
     };
 

@@ -128,9 +128,10 @@ namespace CORBA
   }; // ValueBase
 
   /// Valuetype-related type codes.
-  extern TAO_Valuetype_Export TypeCode_ptr _tc_ValueBase;
-  extern TAO_Valuetype_Export TypeCode_ptr _tc_Visibility;
-  extern TAO_Valuetype_Export TypeCode_ptr _tc_ValueModifier;
+  extern TAO_Valuetype_Export TypeCode_ptr const _tc_ValueBase;
+  extern TAO_Valuetype_Export TypeCode_ptr const _tc_EventBase;
+  extern TAO_Valuetype_Export TypeCode_ptr const _tc_Visibility;
+  extern TAO_Valuetype_Export TypeCode_ptr const _tc_ValueModifier;
 
   /**
    * @class DefaultValueRefCountBase
