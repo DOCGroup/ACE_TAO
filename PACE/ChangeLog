@@ -1,3 +1,9 @@
+Fri Jul 14 21:20:59 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/types.h:
+
+	  Added #include <windef.h> for common definitions and basic types.
+
 Fri Jul 14 20:49:46 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h:
@@ -37,7 +43,7 @@ Fri Jul 14 19:06:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * pace/pthread.h:
         * pace/unistd.h:
-pp          Removed a duplicate closing }.
+          Removed a duplicate closing }.
 
 	* pace/pthread.h:
 	  Added (void) in arguments to pointers to functions
