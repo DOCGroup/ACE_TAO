@@ -1,5 +1,8 @@
 Wed Nov  5 22:46:47 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tao/params.i (addr): Fixed a bug where we should have been using
+ 	  const ACE_INET_Addr & rather than just ACE_INET_Addr &.
+
 	* tao/orbobj: Began adding the hooks for a multicast-based
  	  implementation of resolve_initial_references().
 
