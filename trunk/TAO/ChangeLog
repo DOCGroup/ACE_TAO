@@ -1,3 +1,15 @@
+Sun Mar  9 16:04:27 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/DynamicInterface/DII_ClientRequestInfo.cpp: The ctor takes
+          a pointer to a Request, but assigns this to a Request_var
+          without incrementing the reference count. Now, the assignment to
+          the Request_var first increments the reference count. This
+          quiets the DII Param Test errors.
+
+        * tao/Codeset_Manager.cpp:
+        * tao/default_resource.cpp: Cleaned up debug output to be more
+          standard compliant.
+
 Sun Mar  9 10:06:59 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/compiler.html: Updated the discussion on what files are
