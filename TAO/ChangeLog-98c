@@ -1,3 +1,16 @@
+Fri Dec 12 12:09:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Changed to use
+ 	CORBA::Object::key() rather than _get_name().
+
+	* tests/Cubit/TAO/{DII_Cubit,IDL_Cubit,MT_Cubit}/Makefile: Updated
+ 	to use taoconfig.mk.
+
+	* tao/orb_core.i: Removed stray printf.
+
+	* taoconfig.mk: Added this file which contains common
+ 	configuration stuff for applications.
+
 Thu Dec 11 21:28:09 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/poa.{h,cpp}: Moved handle_request to
