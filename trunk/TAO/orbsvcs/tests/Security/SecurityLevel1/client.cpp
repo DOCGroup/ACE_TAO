@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Get_Opt.h"
+
 #include "SLevel1_TestC.h"
 
 ACE_RCSID (SecurityLevel1, client, "$Id$")
@@ -59,17 +61,20 @@ main (int argc, char *argv [])
                             1);
         }
 
-      CORBA::Boolean authorized = 
+      CORBA::Boolean authorized =
         server->authorize_level1 (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (authorized == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "AUTHORIZED\n"));
       else if (authorized == 1)
         ACE_DEBUG ((LM_DEBUG,
                     "DENIED: You Do NOT have enough privileges\n"));
-        
+      
+      server->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -83,4 +88,3 @@ main (int argc, char *argv [])
 
   return 0;
 }
-      
