@@ -1,3 +1,14 @@
+Thu Nov  6 14:13:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+          Fixed some ACE_CHECK_RETURN's that were trying to return -1 from
+	  functions that were suppoed to return pointers.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+          #included "ace/OS_NS_string.h"
+
 Thu Nov 6 14:54:42 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 
@@ -19,7 +30,7 @@ Thu Nov  6 13:17:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  If the ORB prepares to throw a COMM_FAILURE exception with
 	  completed_maybe, just delegate to the ORB_Core to take the right
-	  decision.
+	  decision. This is required to for FT_CORBA.
 	
 Thu Nov  6 12:53:46 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
