@@ -135,6 +135,12 @@ sub slash_to_backslash {
 # Virtual Methods To Be Overridden
 # ************************************************************
 
+sub convert_slashes {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub parse_line {
   #my($self) = shift;
   #my($ih)   = shift;
