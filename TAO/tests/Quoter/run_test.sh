@@ -9,8 +9,12 @@
 #
 # =DESCRIPTION
 #  This script restarts the Naming, Scheduling and Event Service,
-#  if "clean" is specified as a parameter, then the old
-#  services are only killed and not restarted 
+#  "clean"  if it is specified as a parameter, then the old
+#            services are only killed and not restarted 
+#  "lifecycle" if it is specified as a parameter, then
+#              the LifeCycle Service Object is used 
+#              inbetween to ask the Generic Factory to 
+#              create an Quoter.               
 
 # save the old working dir
 old_dir=$cwd
@@ -60,8 +64,6 @@ if [ -r /tmp/logfile_$login ]; then
   rm /tmp/logfile_$login
 fi
 
-echo // Logfile for the script "ss" which startes Name, Scheduling and Event Service  > /tmp/logfile_$login
-
 nameserviceport=`expr 20023 + $uid`
 serverport=`expr 20024 + $uid`
 factoryfinderport=`expr 20025 + $uid`
@@ -73,7 +75,7 @@ clientport=`expr 20028 + $uid`
 cd $TAO_ROOT/orbsvcs/Naming_Service
 ./Naming_Service -ORBport $nameserviceport >> /tmp/logfile_$login 2>&1  &
 
-sleep 2
+sleep 2 
 
 IOR=`cat /tmp/logfile_$login | grep IOR | cut -c21-300 | cut -f1 -d">" `
 
@@ -86,25 +88,37 @@ cd $TAO_ROOT/tests/Quoter
 
 echo // Started server on port $serverport
 
-sleep 2 
+sleep  1
 
 ./Factory_Finder -ORBnameserviceior $IOR -ORBport $factoryfinderport >> /tmp/logfile_$login 2>&1 &
 
 
 echo // Started Factory Finder on port $factoryfinderport
 
-#sleep 2
+if [ $1 ]; then
+  if [ $1 =  "lifecycle" ]; then
 
-# ./Life_Cycle_Service -ORBnameserviceior $IOR -ORBport $lifecycleserviceport >>  /tmp/logfile_$login 2>&1 &
+    sleep 1
 
-#echo // Started the Life Cycle Service on port $lifecycleserviceport
+    ./Life_Cycle_Service -ORBnameserviceior $IOR -ORBport $lifecycleserviceport >>  /tmp/logfile_$login 2>&1 &
 
-sleep 2
+    echo // Started Life Cycle Service on port $lifecycleserviceport
+    sleep 1
 
-./Generic_Factory -ORBnameserviceior $IOR -ORBport $genericfactoryport >> /tmp/logfile_$login 2>&1 &
+    ./Generic_Factory -l -ORBnameserviceior $IOR -ORBport $genericfactoryport >> /tmp/logfile_$login 2>&1 &
 
-echo // Started Generic Factory on port $genericfactoryport
+    echo // Started Generic Factory on port $genericfactoryport
+    echo // using the LifeCycle Service;
 
+  fi
+else
+  sleep 1
+
+  ./Generic_Factory  -ORBnameserviceior $IOR -ORBport $genericfactoryport >> /tmp/logfile_$login 2>&1 &
+
+  echo // Started Generic Factory on port $genericfactoryport
+
+fi
 
 echo "// Enjoy the use ;-)"
 echo See what is running:

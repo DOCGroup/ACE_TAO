@@ -3,6 +3,8 @@
 #
 # needed for the trading service stuff
 
+ifdef trader
+
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # TAO_ROOT
@@ -36,9 +38,16 @@ endif
 
 LDFLAGS += -L$(STL_ROOT)/lib
 
+endif # trader
 # end of the trading service stuff
 
-BIN = client server Factory_Finder Generic_Factory #Life_Cycle_Service
+BIN = client server Factory_Finder Generic_Factory Life_Cycle_Service
+
+ifdef trader
+
+CPPFLAGS += -DTRADER_AVAILABLE
+
+endif # trader
 
 BUILD = $(BIN)
 
@@ -76,8 +85,15 @@ GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_Impl.o
 LIFE_CYCLE_SERVICE_OBJS = $(COMMON_OBJS) Life_Cycle_Service.o Life_Cycle_Service_Impl.o \
 		Factory_Trader.o Criteria_Evaluator.o
 
+ifdef trader
 
 LDLIBS = -lorbsvcs -lospace -lTAO
+
+else
+
+LDLIBS = -lorbsvcs -lTAO
+
+endif
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
