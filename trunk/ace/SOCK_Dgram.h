@@ -58,7 +58,7 @@ public:
 
   ssize_t recv (iovec *io_vec, 
 		ACE_Addr &addr, 
-		int flags) const;
+		int flags = 0) const;
   // Allows a client to read from a socket without having to provide a
   // buffer to read.  This method determines how much data is in the
   // socket, allocates a buffer of this size, reads in the data, and
