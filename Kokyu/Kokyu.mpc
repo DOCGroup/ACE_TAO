@@ -1,4 +1,0 @@
-project : acelib, core {
-  sharedname   = Kokyu
-  dynamicflags = KOKYU_BUILD_DLL
-}

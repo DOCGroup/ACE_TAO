@@ -1,8 +1,0 @@
-project: namingexe, rt_server {
-  exename      = activity
-  // todo : This doesn't make any sense for an EXE. What is the
-  // code really supposed to look like? MPC will not let you add 
-  // dynamicflags to an exe project anyway, so the following is ignored.
-  dynamicflags = ACTIVITY_BUILD_DLL
-}
-

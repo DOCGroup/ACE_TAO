@@ -1,7 +1,0 @@
-project(CosEvent Test Lib): orbsvcslib, event, naming, svc_utils, iortable, portableserver {
-  sharedname   = CECTests
-  dynamicflags = CEC_TEST_BUILD_DLL
-  Header_Files {
-    cectest_export.h
-  }
-}

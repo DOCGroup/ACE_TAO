@@ -1,4 +1,0 @@
-project(*Client) : namingexe {
-  exename  = client
-}
-

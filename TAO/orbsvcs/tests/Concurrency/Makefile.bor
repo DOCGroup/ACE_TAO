@@ -1,8 +1,0 @@
-#
-# Makefile for building the Concurrency test
-#
-
-MAKEFILES = CC_client.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
-

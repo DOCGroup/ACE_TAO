@@ -1,3 +1,0 @@
-project : orbsvcsexe, core, concurrency, naming {
-  exename  = Concurrency_Service
-}

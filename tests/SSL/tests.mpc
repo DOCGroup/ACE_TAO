@@ -1,7 +1,0 @@
-project(Thread Pool Reactor SSL Test) : aceexe, ssl {
-  exename = Thread_Pool_Reactor_SSL_Test
-  Source_Files {
-    Thread_Pool_Reactor_SSL_Test.cpp
-  }
-}
-
