@@ -1,3 +1,22 @@
+Mon Jun 11 11:26:38 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem: 
+
+	* orbsvcs/tests/Security/SecurityLevel1/ca.pem: 
+	* orbsvcs/tests/Security/SecurityLevel1/client_cert.pem: 
+	* orbsvcs/tests/Security/SecurityLevel1/client_key.pem: 
+	* orbsvcs/tests/Security/SecurityLevel1/server_cert.pem: 
+	* orbsvcs/tests/Security/SecurityLevel1/server_key.pem: 
+	  Updated certs to expire only after 10 years.
+	
+	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
+	(shutdown): 
+	  Modified the check parameters to go with the new certificates.
+	
 Sun Jun 10 16:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Stub_Factory.cpp: Enclosed a debug statement within if
