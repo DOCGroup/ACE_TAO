@@ -1160,7 +1160,7 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::remove (T *&item)
     {
       item = &this->s_.search_structure_[this->next_].item_;
       this->s_.remove (*item);
-      --iterated_items_;
+      --(this->iterated_items_);
       return 1;
     }
     
