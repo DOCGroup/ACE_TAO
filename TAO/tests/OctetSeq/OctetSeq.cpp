@@ -113,7 +113,7 @@ run (char* buf, size_t bufsize,
       for (size_t i = 0; i < n; ++i)
         {
           writing.start_incr ();
-          TAO_OutputCDR output (bufsize + 4);
+          TAO_OutputCDR output;
 
           if (writer (output, buf, x, env) != 0)
 	    return -1;
@@ -139,8 +139,8 @@ run (char* buf, size_t bufsize,
       rusecs *= ACE_static_cast (ACE_UINT32, ACE_ONE_SECOND_IN_USECS);
       rusecs += rtv.usec ();
 
-      double write_average = wusecs / m;
-      double read_average = rusecs / m;
+      double write_average = ACE_reinterpret_cast(ACE_INT32,wusecs) / m;
+      double read_average = ACE_reinterpret_cast(ACE_INT32,rusecs) / m;
       ACE_DEBUG ((LM_DEBUG,
 		  "%s: %d %.3f %.3f\n",
 		  name, x, write_average, read_average));
@@ -243,6 +243,6 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<CORBA::Char>;
-#else
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Char>
 #endif  /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

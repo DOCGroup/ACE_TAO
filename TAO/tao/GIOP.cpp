@@ -82,6 +82,40 @@ TAO_GIOP::dump_msg (const char *label,
     }
 }
 
+// @@ TODO: this is a good candidate for an ACE routine, even more,
+// all the code to write a Message_Block chain could be encapsulated
+// in ACE.
+static ssize_t
+writev_n (ACE_HANDLE h, iovec* iov, int iovcnt)
+{
+  ssize_t writelen = 0;
+  int s = 0;
+  while (s < iovcnt)
+    {
+      ssize_t n = ACE_OS::writev (h, iov + s, iovcnt - s);
+
+      if (n == -1)
+	{
+	  return n;
+	}
+      else
+	{
+	  writelen += n;
+	  while (n >= iov[s].iov_len && s < iovcnt)
+	    {
+	      n -= iov[s].iov_len;
+	      s++;
+	    }
+	  if (n != 0)
+	    {
+	      iov[s].iov_base += (iov[s].iov_len - n);
+	      iov[s].iov_len -= n;
+	    }
+	}
+    }
+  return writelen;
+}
+
 CORBA::Boolean
 TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                         TAO_OutputCDR &stream)
@@ -89,7 +123,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   ACE_TIMEPROBE ("  -> GIOP::send_request - start");
 
   char *buf = (char *) stream.buffer ();
-  size_t buflen = stream.length ();
+  size_t buflen = stream.total_length ();
 
   // assert (buflen == (stream.length - stream.remaining));
 
@@ -103,81 +137,100 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g. IPSEC).
 
-  *(CORBA::Long *) (buf + 8) =
-    (CORBA::Long) (buflen - TAO_GIOP_HEADER_LEN);
+  CORBA::ULong bodylen = buflen - TAO_GIOP_HEADER_LEN;
+#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
+  *ACE_reinterpret_cast(CORBA::ULong*,buf + 8) = bodylen;
+#else
+  if (!stream->do_byte_swap_)
+    {
+      *ACE_reinterpret_cast(CORBA::ULong*, buf + 8) = bodylen;
+    }
+  else
+    {
+      CDR::swap_4 (ACE_reinterpret_cast(char*,&bodylen), buf + 8);
+    }
+#endif
 
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
   // versions seem to need it though.  Leaving it costs little.
 
+#if 0
   TAO_GIOP::dump_msg ("send",
                       ACE_reinterpret_cast (u_char *, buf),
                       buflen);
+#endif
 
   TAO_SOCK_Stream &peer = handler->peer ();
 
-  while (buflen > 0)
+  const int TAO_WRITEV_MAX = 16;
+  iovec iov[TAO_WRITEV_MAX];
+  int iovcnt = 0;
+  for (ACE_Message_Block* i = stream.begin ();
+       i != stream.end ();
+       i = i->cont ())
     {
-      if (buflen > stream.length ())
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) ?? writebuf, buflen %u > length %u\n",
-                      buflen, stream.length ()));
-          ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-          return CORBA::B_FALSE;
-        }
+      iov[iovcnt].iov_base = i->rd_ptr ();
+      iov[iovcnt].iov_len = i->length ();
+      iovcnt++;
 
-      ssize_t writelen = peer.send_n (buf, buflen);
-
-#if defined (DEBUG)
-      //      dmsg_filter (6, "wrote %d bytes to connection %d",
-      //           writelen, connection);
-      dmsg_filter (6, "wrote %d bytes", writelen);
-#endif  /* DEBUG */
-
-      assert ((writelen >= 0
-               && ((size_t)writelen) <= buflen) || writelen == -1);
-
-      // On error or EOF, report the fault, close the connection, and
-      // mark it as unusable/defunct.
-      //
-      // @@ on client side write errors, we may hit the case that the
-      // server did a clean shutdown but we've not yet read the
-      // GIOP::CloseConnection message.  If we get an error, we need
-      // to see if there is such a message waiting for us, and if so
-      // we should cause (full) rebinding to take place.
-
-      if (writelen == -1)
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) %p\n", "OutgoingMessage::writebuf ()"));
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) closing conn %d after fault\n", peer.get_handle ()));
-          handler->close ();
-          ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-          return CORBA::B_FALSE;
-        }
-      else if (writelen == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) OutgoingMessage::writebuf () ... EOF, closing conn %d\n",
-                      peer.get_handle ()));
-          handler->close ();
-          ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-          return CORBA::B_FALSE;
-        }
-      if ((buflen -= writelen) != 0)
-        buf += writelen;
-
-#if defined (DEBUG)
-      //
-      // NOTE:  this should never be seen.  However, on Linux
-      // it's been seen with UNIX domain sockets.
-      //
-      if (buflen)
-        dmsg_filter (8, "%u more bytes to write...\n", buflen);
-#endif /* DEBUG */
+      // The buffer is full make a OS call.
+      // @@ TODO this should be optimized on a per-platform basis, for
+      // instance, some platforms do not implement writev() there we
+      // should copy the data into a buffer and call send_n(). In
+      // other cases there may be some limits on the size of the
+      // iovec, there we should set TAO_WRITEV_MAX to that limit.
+      if (iovcnt == TAO_WRITEV_MAX)
+	{
+	  ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
+	  if (n == -1)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  "(%P|%t) closing conn %d after fault %p\n",
+			  peer.get_handle (), "GIOP::send_request"));
+	      handler->close ();
+	      ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+	      return CORBA::B_FALSE;
+	    }
+	  else if (n == 0)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  "(%P|%t) GIOP::send_request (): "
+			  "EOF, closing conn %d\n",
+			  peer.get_handle ()));
+	      handler->close ();
+	      ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+	      return CORBA::B_FALSE;
+	    }
+	  iovcnt = 0;
+	}
     }
+
+  if (iovcnt != 0)
+    {
+      ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
+      if (n == -1)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "(%P|%t) closing conn %d after fault %p\n",
+		      peer.get_handle (), "GIOP::send_request"));
+	  handler->close ();
+	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+	  return CORBA::B_FALSE;
+	}
+      else if (n == 0)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "(%P|%t) GIOP::send_request (): "
+		      "EOF, closing conn %d\n",
+		      peer.get_handle ()));
+	  handler->close ();
+	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+	  return CORBA::B_FALSE;
+	}
+      iovcnt = 0;
+    }
+
   ACE_TIMEPROBE ("  -> GIOP::send_request - done");
   return CORBA::B_TRUE;
 }
@@ -266,7 +319,7 @@ TAO_GIOP::read_buffer (TAO_SOCK_Stream &peer,
                        char *buf,
                        size_t len)
 {
-  ssize_t bytes_read = bytes_read = peer.recv_n (buf, len);
+  ssize_t bytes_read = peer.recv_n (buf, len);
 
   if (bytes_read == -1 && errno == ECONNRESET)
     {

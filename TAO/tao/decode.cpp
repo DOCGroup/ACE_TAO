@@ -761,8 +761,6 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                         continue_decoding =
                           stream->read_wchar (*(CORBA::WChar *) data);
                         break;
-                      case CORBA::tk_string:
-                      case CORBA::tk_wstring:
                       case CORBA::tk_TypeCode:
                       case CORBA::tk_objref:
                         retval = stream->decode (param, &data, 0, env);
@@ -775,6 +773,8 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                       case CORBA::tk_array:
                       case CORBA::tk_alias:
                       case CORBA::tk_except:
+                      case CORBA::tk_string:
+                      case CORBA::tk_wstring:
                         retval = stream->decode (param, data, 0, env);
                         break;
                       default:

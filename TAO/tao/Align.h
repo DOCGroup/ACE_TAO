@@ -53,7 +53,7 @@ typedef u_long long ptr_arith_t;
 //
 //    alignment - 1  = 0...001...1 = T1
 //
-// so the completent is:
+// so the complement is:
 //
 //  ~(alignment - 1) = 1...110...0 = T2
 //

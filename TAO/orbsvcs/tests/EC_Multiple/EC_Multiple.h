@@ -154,13 +154,13 @@ public:
   Test_ECG (void);
 
   enum {
-    MAX_EVENTS = 2048,
+    MAX_EVENTS = 1024,
     // Maximum number of events to send...
 
-    MAX_CONSUMERS = 32,
+    MAX_CONSUMERS = 16,
     // Maximum number of consumers.
 
-    MAX_SUPPLIERS = 32
+    MAX_SUPPLIERS = 16
     // Maximum number of suppliers.
   };
 

@@ -510,9 +510,10 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              // free up the memory allocated for the typecode only if it has a parent
+              // free up the memory allocated for the typecode only if
+	      // it has a parent
               if (this->tc_member_type_list_[i]->parent_)
-                delete this->tc_member_type_list_[i];
+		CORBA::release (this->tc_member_type_list_[i]);
 
             // Now free up the array.
             delete [] this->tc_member_type_list_;
@@ -557,7 +558,7 @@ TC_Private_State::~TC_Private_State (void)
               // free up the memory allocated for the typecode if it has a
               // parent that owns it
               if (this->tc_member_type_list_[i]->parent_)
-                delete this->tc_member_type_list_[i];
+                CORBA::release (this->tc_member_type_list_[i]);
 
             // Now free up the array.
             delete [] this->tc_member_type_list_;
@@ -575,9 +576,10 @@ TC_Private_State::~TC_Private_State (void)
 	    this->tc_member_label_list_ = 0;
           }
         this->tc_member_count_ = 0;
+
         // Discriminator must come last b/c it will be inside the Any
         // in each element of the label list.
-        delete this->tc_discriminator_type_;
+        CORBA::release (this->tc_discriminator_type_);
 	this->tc_discriminator_type_ = 0;
       }
       break;

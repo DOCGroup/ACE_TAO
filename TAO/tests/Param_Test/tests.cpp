@@ -719,7 +719,7 @@ Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr objref,
       // the sequence
       //      char *str = gen->gen_string ();
       //this->in_[i] = str;
-      this->in_[i] = choiceList[i];
+      this->in_[i] = choiceList[i%3];
 
     }
   return 0;
