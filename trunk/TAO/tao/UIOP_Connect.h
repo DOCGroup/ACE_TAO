@@ -135,9 +135,6 @@ protected:
   TAO_UIOP_Server_Transport *transport_;
   // @@ New transport object reference.
 
-  virtual void send_response (TAO_OutputCDR &response);
-  // Send <response> to the client on the other end.
-
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -153,12 +150,6 @@ protected:
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
-
-  TAO_GIOP_MessageHeader message_header_;
-  CORBA::ULong current_offset_;
-  TAO_InputCDR input_;
-  // This keep the state of the current message, to enable
-  // non-blocking reads.
 };
 
 #if defined (__ACE_INLINE__)

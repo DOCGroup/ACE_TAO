@@ -32,12 +32,12 @@ ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_INTERNET_IOP),
     base_acceptor_ (),
+    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0)
 {
 }
 
 // TODO =
-//    1) Set the version number for IIOP for which this acceptor is is valid
 //    2) For V1.[1,2] there are tagged components
 //    3) Create multiple profiles for wild carded endpoints (may be multiple
 //       interfaces over which we can receive requests.  Thus a profile
@@ -61,6 +61,7 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     this->address_.get_port_number (),
                                     object_key,
                                     this->address_,
+                                    this->version_,
                                     this->orb_core_),
                   -1);
 
@@ -94,8 +95,13 @@ TAO_IIOP_Acceptor::close (void)
 
 int
 TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+                         int major,
+                         int minor,
                          ACE_CString &address)
 {
+  if (major >=0 && minor >= 0)
+    this->version_.set_version (ACE_static_cast (CORBA::Octet,major),
+                                ACE_static_cast (CORBA::Octet,minor));
   ACE_INET_Addr addr (address.c_str ());
 
   return this->open_i (orb_core, addr);
@@ -175,7 +181,7 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n",
+                  "\nTAO (%P|%t) IIOP_Acceptor::open_i - "
                   "listening on: <%s:%u>\n",
                   this->host_.c_str (),
                   this->address_.get_port_number ()));

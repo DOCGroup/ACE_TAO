@@ -21,49 +21,6 @@
 
 ACE_RCSID(tao, Pluggable, "$Id$")
 
-TAO_IOP_Version::~TAO_IOP_Version (void)
-{
-}
-
-TAO_IOP_Version::TAO_IOP_Version (const TAO_IOP_Version &src)
-  : major (src.major),
-    minor (src.minor)
-{
-}
-
-TAO_IOP_Version::TAO_IOP_Version (CORBA::Octet maj, CORBA::Octet min)
-  : major (maj),
-    minor (min)
-{
-}
-
-void
-TAO_IOP_Version::set_version (CORBA::Octet maj, CORBA::Octet min)
-{
-  this->major = maj;
-  this->minor = min;
-}
-
-int
-TAO_IOP_Version::operator== (const TAO_IOP_Version *&src)
-{
-  return this->major == src->major && this->minor == src->minor;
-}
-
-int
-TAO_IOP_Version::operator== (const TAO_IOP_Version &src)
-{
-  return this->major == src.major && this->minor == src.minor;
-}
-
-TAO_IOP_Version &
-TAO_IOP_Version::operator= (const TAO_IOP_Version &src)
-{
-  this->major = src.major;
-  this->minor = src.minor;
-  return *this;
-}
-
 // ****************************************************************
 
 TAO_Profile::~TAO_Profile (void)
@@ -221,31 +178,6 @@ TAO_Transport::tag (void) const
   return this->tag_;
 }
 
-// @@ Alex: this stream stuff belongs to the TMS, right?
-//    Maybe the right interface is:
-//    TAO_Transport::bind_reply_dispatcher (request_id,
-//                                          reply_dispatcher,
-//                                          input_cdr);
-
-// @@ Do you need an accessor? Or is the CDR stream simply passed by
-//    the TMS to the right target.  We should go to the TMS and obtain
-//    the CDR stream from it, that way we can implement an optimized
-//    version of the TMS that uses a single CDR stream allocated from
-//    the stack.
-
-// Get the CDR stream for reading the input message.
-TAO_InputCDR *
-TAO_Transport::input_cdr_stream (void) const
-{
-  return this->tms_->get_cdr_stream ();
-}
-
-void
-TAO_Transport::destroy_cdr_stream (TAO_InputCDR *cdr) const
-{
-  this->tms_->destroy_cdr_stream (cdr);
-}
-
 // Get it.
 TAO_ORB_Core *
 TAO_Transport::orb_core (void) const
@@ -303,6 +235,30 @@ int
 TAO_Transport::wait_for_reply (void)
 {
   return this->ws_->wait ();
+}
+
+void
+TAO_Transport::start_request (TAO_ORB_Core *,
+                              const TAO_Profile *,
+                              const char* ,
+                              CORBA::ULong ,
+                              CORBA::Boolean,
+                              TAO_OutputCDR &,
+                              CORBA::Environment &ACE_TRY_ENV)
+    TAO_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_THROW (CORBA::INTERNAL ());
+}
+
+void
+TAO_Transport::start_locate (TAO_ORB_Core *,
+                             const TAO_Profile *,
+                             CORBA::ULong,
+                             TAO_OutputCDR &,
+                             CORBA::Environment &ACE_TRY_ENV)
+    TAO_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_THROW (CORBA::INTERNAL ());
 }
 
 // *********************************************************************

@@ -23,6 +23,7 @@
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
+#include "tao/GIOP.h"
 
 #include "ace/Map_Manager.h"
 #include "ace/Singleton.h"
@@ -134,6 +135,9 @@ public:
 
   ACE_WChar_Codeset_Translator *to_unicode (void) const;
   // Convert from the native wide character set to UNICODE
+
+  TAO_GIOP_ServiceContextList& service_context (void);
+  // Obtain the service context list used to send requests...
 
   // @@ This is just note on how could the translator database be
   //    implemented: use the service configurator to load the
@@ -423,6 +427,12 @@ protected:
   ACE_WChar_Codeset_Translator *from_unicode_;
   ACE_WChar_Codeset_Translator *to_unicode_;
   // Codeset translators for simple implementations.
+
+  // @@ TODO: the service context list may need to be in TSS
+  //    storage...
+  // NOTE: this is only used to *send* requests, not to store the
+  // service context list of a reply...
+  TAO_GIOP_ServiceContextList service_context_;
 };
 
 // ****************************************************************

@@ -57,6 +57,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       ACE_NEW_RETURN (new_pfile,
                       TAO_IIOP_Profile (iiop_pfile->object_addr (),
                                         iiop_pfile->object_key (),
+                                        iiop_pfile->version (),
                                         stub_obj->orb_core ()),
                       CORBA::Object::_nil ());
 

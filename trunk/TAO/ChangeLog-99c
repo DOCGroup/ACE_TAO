@@ -1,3 +1,118 @@
+Wed Jun  9 20:16:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Started the work on GIOP 1.1, the current version is still
+	  incomplete, but works and has to be tested in more
+	  platforms. The features implemented so far include:
+	  + Requests are issued using version 1.1 or version 1.0,
+	    depending on the version of the profile.
+	  + Acceptors create v 1.1 profiles by default, but can generate
+	    1.0 profiles if a -ORBendpoint option with an explicit version 
+	    is present (like -ORBendpoint iiop://1.0@host:0)
+	  + Replys are sent using the same version that the request
+	  + There is a framework to receive a request (or reply) broken in 
+	    multiple fragments.  The framework is not specially efficient, 
+	    is does not handle fragments with different byte order or
+	    different GIOP versions and is completely untested. TAO does
+	    *not* generate fragments.
+	  + Notice that the tagged components in the profile are *not*
+	    implemented yet.
+
+	* tao/orbconf.h:
+	  Added new macros to control the default GIOP protocol version,
+	  either 1.0 or 1.1
+
+	* tao/Acceptor_Registry.cpp:
+	  Use the version in the command-line endpoint to initialize the
+	  Acceptor.
+
+	* tao/Environment.h:
+	  Cosmetic fixes
+
+	* tao/GIOP.h:
+	* tao/GIOP.i:
+	* tao/GIOP.cpp:
+	  Many changes to support 1.1, including a new class to keep the
+	  state of an incoming message composed by multiple fragments.
+
+	* tao/Server_Request.h:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.cpp:
+	  The server request uses the version of the request to determine
+	  the version of the reply.
+	  We don't need to use exceptions in the constructor, saving us
+	  from some really nasty portability problems.
+
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+	* tao/Invocation.cpp:
+	  Moved the code to initialize a Request or LocateRequest message
+	  to the transport classes, not only this isolates the use of
+	  TAO_GIOP even further, it is also needed because the transport
+	  class needs to query the version of the Profile to determine the 
+	  version of the GIOP message.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	  Added the Service Context List to the ORB core, it lacks an
+	  elegant interface, but at least it can be set and is used.
+
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Transport_Mux_Strategy.h:
+	* tao/Transport_Mux_Strategy.cpp:
+	  Changed the interfaces in the the ORB core to use a
+	  TAO_GIOP_Message_State that keeps track of not only the payload, 
+	  but of any fragments for the current message, the current amount 
+	  of data read on the fragment, etc.
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.i:
+	* tao/Pluggable.cpp:
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connect.cpp:
+	* tao/IIOP_Factory.h:
+	* tao/IIOP_Factory.cpp:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/IIOP_Profile.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/UIOP_Acceptor.h:
+	* tao/UIOP_Acceptor.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connect.cpp:
+	* tao/UIOP_Factory.h:
+	* tao/UIOP_Factory.cpp:
+	* tao/UIOP_Profile.h:
+	* tao/UIOP_Profile.i:
+	* tao/UIOP_Profile.cpp:
+	* tao/UIOP_Transport.h:
+	* tao/UIOP_Transport.cpp:
+	  All the classes where change to propagate the GIOP version of
+	  the message and the profile used for each request.
+
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	  Use CORBA::is_nil() to validate object references
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	  Updated to use the new TAO IIOP_Profile constructor
+
+	* utils/catior/catior.cpp:
+	  TAO moved to GIOP 1.1, but this test can only handle GIOP 1.0
+
+	* utils/nslist/nslist.cpp:
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+	  Fixed use of String_var and managed types must passed using
+	  .in() to ACE_DEBUG()
+
+	* orbsvcs/tests/Trading/Makefile:
+	* examples/POA/Generic_Servant/Makefile:
+	  Define PSRC so the dependencies for the program files
+	  are also generated.
+
 Wed Jun  9 17:16:44 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/run_test.pl:
