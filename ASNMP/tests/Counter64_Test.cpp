@@ -76,6 +76,7 @@ ACE_RCSID(tests, Counter64_Test, "$Id$")
 
 static void TestCounter64()
 {
+#if !defined (ACE_WIN32)
   static unsigned long ul = ULONG_MAX;
   LLONG ll =  (LLONG) 0x7fffffffffffffffLL;
   LLONG mll =  (LLONG) ((-ll) - 1);
@@ -140,6 +141,7 @@ static void TestCounter64()
   c5 = mll;
   c5 = c5 + (ULLONG) 10;
   ACE_ASSERT(c5 == (mll + 10));
+#endif /*ACE_WIN32 */
 }
 
 int
