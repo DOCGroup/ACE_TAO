@@ -1,20 +1,33 @@
 // $Id$
 
-//#include "ace/Profile_Timer.h"
-//#include "ace/Env_Value_T.h"
 #include "ace/Read_Buffer.h"
 #include "CC_client.h"
-#include "orbsvcs/CosNamingC.h"
 
 // Constructor.
 CC_Client::CC_Client (void)
   : cc_factory_key_ (0),
     shutdown_ (0),
-    cc_lock_set_ (CosConcurrencyControl::LockSet::_nil ()),
     cc_factory_ior_file_ (0),
     f_handle_ (ACE_INVALID_HANDLE),
-    use_naming_service_ (1)
+    use_naming_service_ (1),
+    run_basic_tests_ (0),
+    naming_service_ (0)
 {
+}
+
+CC_Client::~CC_Client (void)
+{
+  // Free resources
+  // Close the ior files
+  if (this->cc_factory_ior_file_)
+    ACE_OS::fclose (this->cc_factory_ior_file_);
+  if (this->f_handle_ != ACE_INVALID_HANDLE)
+    ACE_OS::close (this->f_handle_);
+
+  if (this->cc_factory_key_ != 0)
+    ACE_OS::free (this->cc_factory_key_);
+  if(naming_service_!=0)
+    delete naming_service_;
 }
 
 // Reads the lock set factory ior from a file
@@ -45,13 +58,16 @@ CC_Client::read_ior (char *filename)
 int
 CC_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dsf:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, "dsf:k:xbh");
   int c;
   int result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'b':  // debug flag
+        run_basic_tests_ = 1;
+        break;
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
@@ -73,18 +89,10 @@ CC_Client::parse_args (void)
       case 's': // Don't use the TAO Naming Service.
         this->use_naming_service_ = 0;
         break;
-      case '?':
+      case 'h':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-f cc_factory-obj-ref-key-file]"
-                           " [-k cc-obj-ref-key]"
-                           " [-x]"
-                           " [-s]"
-                           "\n",
-                           this->argv_ [0]),
-                          -1);
+        print_usage();
+        ACE_ERROR_RETURN((LM_ERROR, ""), -1);
       }
 
   // Indicates successful parsing of command line.
@@ -96,86 +104,73 @@ CC_Client::parse_args (void)
 int
 CC_Client::run (void)
 {
-  CORBA::Environment _env;
-  CORBA::Boolean lock_held;
+  int tests_run = 0;
+  // Tells whether any tests have been run
+  int success = 0;
+  // Did test succeed?
 
-  this->cc_lock_set_->lock(CosConcurrencyControl::read, _env);
-  ACE_DEBUG((LM_DEBUG, "Read lock set\n"));
-  lock_held = this->cc_lock_set_->try_lock(CosConcurrencyControl::read, _env);
-  if(lock_held)
-      ACE_DEBUG((LM_DEBUG, "Read lock not held\n"));
-  else
-      ACE_DEBUG((LM_DEBUG, "Read lock held\n"));
-  this->cc_lock_set_->unlock(CosConcurrencyControl::read, _env);
-  ACE_DEBUG((LM_DEBUG, "Read lock released\n"));
-  this->cc_lock_set_->lock(CosConcurrencyControl::write, _env);
-  ACE_DEBUG((LM_DEBUG, "Write lock set\n"));
+  if(run_basic_tests_) 
+    {
+      success = run_basic_tests();
+      tests_run = 1;
+    }
 
-
+  // Other tests go here
+  // if(other_test_flag && success==CC_SUCCESS) ...
 
   if (this->shutdown_)
     {
       // @@TAO is this needed??
     }
 
+  if (tests_run==0)
+    {
+      print_usage();
+      ACE_ERROR_RETURN((LM_ERROR, "No tests given\n"), -1);
+    }
+
   return 0;
 }
 
-CC_Client::~CC_Client (void)
+
+// This function runs basic tests concerned with only one lock set
+int
+CC_Client::run_basic_tests(void)
 {
-  // Free resources
-  // Close the ior files
-  if (this->cc_factory_ior_file_)
-    ACE_OS::fclose (this->cc_factory_ior_file_);
-  if (this->f_handle_ != ACE_INVALID_HANDLE)
-    ACE_OS::close (this->f_handle_);
+  Test_Single_Lock_With_Mode t1(naming_service_,
+                                CosConcurrencyControl::read);
 
-  CORBA::release (this->cc_lock_set_);
+  return t1.run();
+}
 
-  if (this->cc_factory_key_ != 0)
-    ACE_OS::free (this->cc_factory_key_);
+int 
+CC_Client::run_extended_tests(char lock_set_name)
+{
+  Test_Against_Other_LockSet t1(naming_service_,
+                                "LockSet_1");
+
+  return t1.run();
+}
+
+void
+CC_Client::print_usage(void)
+{
+  ACE_ERROR ((LM_ERROR,
+              "usage:  %s"
+              " [-b]"
+              " [-d]"
+              " [-f cc_factory-obj-ref-key-file]"
+              " [-k cc-obj-ref-key]"
+              " [-x]"
+              " [-s]"
+              "\n",
+              this->argv_ [0]));
 }
 
 int
 CC_Client::init_naming_service (void)
 {
-  TAO_TRY
-    {
-      CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService");
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CosNaming::Name cc_factory_name (2);
-      cc_factory_name.length (2);
-      cc_factory_name[0].id = CORBA::string_dup ("CosConcurrency");
-      cc_factory_name[1].id = CORBA::string_dup ("LockSetFactory");
-      CORBA::Object_var factory_obj =
-        naming_context->resolve (cc_factory_name,TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->factory_ =
-        CosConcurrencyControl::LockSetFactory::_narrow
-          (factory_obj.in (),TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (CORBA::is_nil (this->factory_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve lock set factory in Naming service <%s>\n"),
-                          -1);
-   }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("CC_Client::init_naming_service");
-      return -1;
-    }
-  TAO_ENDTRY;
+  naming_service_ = new CC_naming_service(this->orb_);
 
   return 0;
 }
@@ -220,7 +215,8 @@ CC_Client::init (int argc, char **argv)
                                           TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          this->factory_ =
+          /* The test cannot currently run without the naming service
+                      this->factory_ =
             CosConcurrencyControl::LockSetFactory::_narrow
               (factory_object.in(), TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -229,21 +225,11 @@ CC_Client::init (int argc, char **argv)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid factory key <%s>\n",
                                this->cc_factory_key_),
-                              -1);
+                              -1);*/
         }
 
       ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
 
-      // Now create the lock set and return an obj ref corresponding
-      // to the key.
-      this->cc_lock_set_ =
-        this->factory_->create (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (CORBA::is_nil (this->cc_lock_set_))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "null lock set objref returned by factory\n"),
-                          -1);
     }
   TAO_CATCHANY
     {
