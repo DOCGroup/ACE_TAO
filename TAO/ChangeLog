@@ -1,3 +1,11 @@
+Mon Aug  5 09:38:18 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+        * orbsvcs/examples/PSS/Client.dsp:
+	* orbsvcs/examples/PSS/Server.dsp:
+	* orbsvcs/examples/PSS/Simple_Naming.dsp:
+	* orbsvcs/examples/PSS/PSS.dsw:
+	   Updated teh release configurations.
+
 Mon Aug  5 07:23:10 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/PSS/PSDL_l.cpp: 
