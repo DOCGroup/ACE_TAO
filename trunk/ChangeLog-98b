@@ -1,3 +1,8 @@
+Wed Sep 16 20:42:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Added a typedef for ACE_IO_Vector_Base so that it will
+ 	  shield the differences between Win32 and UNIX.
+
 Wed Sep 16 20:09:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h: 

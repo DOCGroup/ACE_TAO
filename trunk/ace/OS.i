@@ -6304,7 +6304,7 @@ ACE_OS::filesize (ACE_HANDLE handle)
 
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle,
-               struct iovec *iov,
+               ACE_IO_Vector_Base *iov,
                int iovlen)
 {
   // ACE_TRACE ("ACE_OS::readv");
@@ -6320,7 +6320,7 @@ ACE_OS::readv (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE_OS::writev (ACE_HANDLE handle,
-                const struct iovec *iov,
+                const ACE_IO_Vector_Base *iov,
                 int iovcnt)
 {
   // ACE_TRACE ("ACE_OS::writev");
@@ -6338,7 +6338,7 @@ ACE_OS::writev (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle,
-               WSABUF *buffers,
+               ACE_IO_Vector_Base *buffers,
                int n)
 {
   ssize_t bytes_received = 0;
@@ -6360,7 +6360,7 @@ ACE_OS::readv (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE_OS::writev (ACE_HANDLE handle,
-                const WSABUF *buffers,
+                const ACE_IO_Vector_Base *buffers,
                 int n)
 {
   ssize_t bytes_sent = 0;

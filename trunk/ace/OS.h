@@ -4762,20 +4762,11 @@ public:
                          size_t nbyte,
                          off_t offset);
   static ssize_t readv (ACE_HANDLE handle,
-                        struct iovec *iov,
+                        ACE_IO_Vector_Base *iov,
                         int iovlen);
   static ssize_t writev (ACE_HANDLE handle,
-                         const struct iovec *iov,
+                         const ACE_IO_Vector_Base *iov,
                          int iovcnt);
-
-# if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-  static ssize_t writev (ACE_HANDLE handle,
-                         const WSABUF *buffers,
-                         int n);
-  static ssize_t readv (ACE_HANDLE handle,
-                        WSABUF *buffers,
-                        int n);
-# endif /* ACE_HAS_WINSOCK2 */
 
   // = A set of wrappers for event demultiplexing and IPC.
   static int select (int width,
@@ -6130,16 +6121,20 @@ private:
 #   define ACE_INLINE_FOR_GNUC
 # endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
 
-struct ACE_Export ACE_IO_Vector :
 # if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-  public WSABUF
+typedef WSABUF ACE_IO_Vector_Base;
 # else
-  public iovec
+typedef iovec ACE_IO_Vector_Base;
 # endif /* ACE_HAS_WINSOCK2 */
+
+class ACE_Export ACE_IO_Vector : public ACE_IO_Vector_Base
 {
+  // = TITLE
+  //   This little adapter class makes it easier to use writev() and
+  //   readv() portably on Win32 and UNIX.
+public:
   ssize_t length (void) const;
   void length (ssize_t new_length);
-
   void *buffer (void) const;
   void buffer (void *new_buffer);
 };
