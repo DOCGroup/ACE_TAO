@@ -1,3 +1,18 @@
+Wed Jan 24 14:34:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Added IDL compiler capability to pass a line of
+          the form '#ident <some string>' in an IDL file
+          through to each generated file. Suggested by
+          Jody Hagins <jody@atdesk.com>.
+
 Wed Jan 24 09:44:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/CORBALOC_Parser.h:
