@@ -1,24 +1,43 @@
-interface Cubit 
+// $Id$
+
+interface Cubit
+  // = TITLE
+  //    Defines an interface that encapsulates operations that cube
+  //    numbers.
+  //
+  // = DESCRIPTION
+  //    This interface encapsulates operations that cube
+  //    octets, shorts, longs, structs and unions.
 {
-  struct Many 
+  struct Many
   {
-    octet o;		// + 3 bytes padding (normally) ...
+    octet o;            // + 3 bytes padding (normally) ...
     long l;
-    short s;		// + 2 bytes padding (normally) ...
+    short s;            // + 2 bytes padding (normally) ...
   };
-    
-  octet	 cube_octet  (in octet o);
-  short	 cube_short  (in short s);
+
+  octet  cube_octet  (in octet o);
+  // cube an octet
+
+  short  cube_short  (in short s);
+  // cube a short
+
   long   cube_long   (in long l);
+  // cube a long
+
   Many   cube_struct (in Many values);
-        
+  // cube each of the members of a struct
+
   oneway void noop ();
+  // null operation
 
   oneway void shutdown ();
+  // shut down the application
 };
 
-interface Cubit_Factory 
-{ 
+interface Cubit_Factory
+  // = TITLE
+  //    Creates Cubit objects.
+{
   string create_cubit (in unsigned short index);
 };
-
