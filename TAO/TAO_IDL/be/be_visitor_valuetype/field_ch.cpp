@@ -132,9 +132,12 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
           << "_" << bt->local_name () << ")"
           << post_op() << "    // set" << be_nl;
       // the get method
+      *os << pre_op() << "const _" << bt->local_name ()
+          << "_slice * " << ub->local_name ()
+          << " (void)" << post_op() << be_nl;
       *os << pre_op() << "_" << bt->local_name ()
           << "_slice * " << ub->local_name ()
-          << " (void) const" << post_op() << "     // get method\n\n";
+          << " (void)" << post_op();
     }
   else
     {
@@ -145,15 +148,13 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
           << bt->nested_type_name (bu) << ")" << post_op() << "    // set"
           << be_nl;
       // the get method
- /* %! is const return really in the specs ?
-      *os << pre_op() << "const "
+      *os << pre_op()
           << bt->nested_type_name (bu, "_slice *") << " " << ub->local_name ()
-          << " (void) const" << post_op() << "     // get (read only) method\n\n";
- */
+          << " (void)" << post_op() << be_nl;
       // the get (read/write) method
       *os << pre_op() << "const "
           << bt->nested_type_name (bu, "_slice *") << " " << ub->local_name ()
-          << " (void) const" << post_op() << "     // get method\n\n";
+          << " (void) const" << post_op() << "\n\n";
     }
 
   return 0;
