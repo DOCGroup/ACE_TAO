@@ -527,7 +527,7 @@ Fri Oct  4 20:22:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram.{h cpp} (recv, send):
         * ace/SOCK_Dgram_Bcast.{h cpp} (recv, send):
-        * ace/SOCK_Sgram_Mcast.{h i} (send, recv): Change iovcnt from
+        * ace/SOCK_Dgram_Mcast.{h i} (send, recv): Change iovcnt from
           size_t to int to match the args used by other iovcnt-accepting
           methods in ACE.
 
