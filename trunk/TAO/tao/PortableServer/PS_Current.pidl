@@ -22,7 +22,7 @@
 
 ///FUZZ: disable check_for_include/
 #include <tao/PortableServer/PS_Forward.pidl>
-#include <tao/Current.pidl>
+#include <Current.pidl>
 
 #pragma prefix "omg.org"
 

@@ -17,8 +17,7 @@
 #ifndef _PORTABLESERVER_REQUESTPROCESSINGPOLICY_IDL_
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY_IDL_
 
-///FUZZ: disable check_for_include/
-#include <tao/Policy.pidl>
+#include <Policy.pidl>
 
 #pragma prefix "omg.org"
 
