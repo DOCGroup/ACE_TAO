@@ -157,12 +157,10 @@ TAO_GIOP_Message_Base::
       return this->write_request_header (opdetails,
                                          spec,
                                          cdr);
-      break;
     case TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER:
       return this->write_locate_request_header (opdetails.request_id (),
                                                 spec,
                                                 cdr);
-      break;
     default:
       if (TAO_debug_level > 0)
         ACE_ERROR_RETURN ((LM_ERROR,
