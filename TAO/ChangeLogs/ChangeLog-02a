@@ -1,3 +1,9 @@
+Tue Mar 21 12:16:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+          Removed encode.cpp, decode.cpp and deep_free.cpp, i could not
+          make it on the first commit because there was a conflict.
+
 Tue Mar 21 13:51:23 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * Merged in the changes in the non_interpretive branch.
