@@ -21,4 +21,9 @@ project(RTSched) : orbsvcslib, core {
       Sched
     }
   }
+
+  // To avoid picking up RTSchedEvent.rc as well, explicitly list the files.
+  Resource_Files {
+    RTSched.rc
+  }
 }
