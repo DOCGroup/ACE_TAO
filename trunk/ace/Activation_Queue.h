@@ -6,11 +6,10 @@
  *
  *  $Id$
  *
- *  @author Andres Kruse <Andres.Kruse@cern.ch>
+ *  @author Andres Kruse <Andres.Kruse@cern.ch> and
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_ACTIVATION_QUEUE_H
 #define ACE_ACTIVATION_QUEUE_H

@@ -14,7 +14,7 @@
 //    and the max early timeout.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ================================================================
 
