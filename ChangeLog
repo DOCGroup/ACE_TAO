@@ -6,7 +6,7 @@ Sun Jul 18 09:08:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/tao_orb_tests.lst:
 
-	  Added new PolicyFactory list to the test run list.
+	  Added new PolicyFactory test to the test run list.
 
 Sun Jul 18 00:26:19 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
