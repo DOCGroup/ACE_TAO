@@ -4,6 +4,10 @@ Tue Feb 23 16:53:14 1999  David L. Levine  <levine@cs.wustl.edu>
           removed old comment that server shutdown would cause a
           memPartFree on VxWorks.  It no longer does.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}
+          (sched_fifo_init): removed SCHED_PARAMS_FIFO macro, because
+          it's not needed, fixed name of program in comment.
+
 Tue Feb 23 15:24:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
