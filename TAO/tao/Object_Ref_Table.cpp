@@ -110,6 +110,12 @@ TAO_Object_Ref_Table::end (void)
   return this->table_.end ();
 }
 
+size_t
+TAO_Object_Ref_Table::current_size (void) const
+{
+  return this->table_.current_size ();
+}
+
 int
 TAO_Object_Ref_Table::bind (const char *id,
                             CORBA::Object_ptr obj)
@@ -178,9 +184,6 @@ TAO_Object_Ref_Table::unbind (const char *id)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Hash_Map_Entry<const char *, CORBA::Object_ptr>;
-template class ACE_Hash_Map_Manager<const char *, CORBA::Object_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<const char *, CORBA::Object_ptr, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<const char *, CORBA::Object_ptr, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<const char *, CORBA::Object_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA::Object_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<const char *, CORBA::Object_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
@@ -189,9 +192,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA::Object_ptr,
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<const char *, CORBA::Object_ptr>
-#pragma instantiate ACE_Hash_Map_Manager<const char *, CORBA::Object_ptr, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<const char *, CORBA::Object_ptr, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<const char *, CORBA::Object_ptr, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, CORBA::Object_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA::Object_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, CORBA::Object_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>

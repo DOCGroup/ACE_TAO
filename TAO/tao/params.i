@@ -139,7 +139,7 @@ TAO_ORB_Parameters::default_init_ref (const char *default_init_ref)
 ACE_INLINE char *
 TAO_ORB_Parameters::default_init_ref (void) const
 {
-  return this->default_init_ref_.rep ();
+  return CORBA::string_dup (this->default_init_ref_.c_str ());
 }
 
 ACE_INLINE int
