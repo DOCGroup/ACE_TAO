@@ -903,9 +903,12 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
           ACE_CDR::Octet len;
 
           if (this->read_1 (&len))
-            return this->read_octet_array
+            return this->read_array
               (reinterpret_cast<ACE_CDR::Octet*> (&x),
-               static_cast<ACE_CDR::ULong> (len));
+               static_cast<ACE_CDR::ULong> (len),
+               ACE_CDR::OCTET_ALIGN,
+               1);
+
           else
             return (this->good_bit_ = false);
         }
@@ -926,9 +929,11 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
           if (len == 2)
             {
               ACE_CDR::Short sx;
-              if (this->read_octet_array
+              if (this->read_array
                   (reinterpret_cast<ACE_CDR::Octet*> (&sx),
-                   static_cast<ACE_CDR::ULong> (len)))
+                   static_cast<ACE_CDR::ULong> (len),
+                   ACE_CDR::OCTET_ALIGN,
+                   1))
                 {
                   x = static_cast<ACE_CDR::WChar> (sx);
                   return true;
@@ -937,9 +942,11 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
           else
             {
               ACE_CDR::Octet ox;
-              if (this->read_octet_array
+              if (this->read_array
                   (reinterpret_cast<ACE_CDR::Octet*> (&ox),
-                   static_cast<ACE_CDR::ULong> (len)))
+                   static_cast<ACE_CDR::ULong> (len),
+                   ACE_CDR::OCTET_ALIGN,
+                   1))
                 {
                   x = static_cast<ACE_CDR::WChar> (ox);
                   return true;
