@@ -1,3 +1,9 @@
+Mon Feb 7 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Added a test to check if the previous_version directory is
+          writeable for the user running this script
+
 Mon Feb  7 05:32:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
