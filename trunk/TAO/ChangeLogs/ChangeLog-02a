@@ -688,7 +688,7 @@ Sat Mar 10 11:29:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Sat Mar 10 09:39:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * Reverted the change made by Paul Calabrese vide "Fri Mar  9
-          14:38:06 2001  Paul Calabrese <calabrese_p@ociweb.com>". This
+          14:38:06 2001  Paul Calabrese <calabrese_p@ociweb.com>. This
           change was breaking all the tests for Sequences in
           $TAO_ROOT/tests/Param_Test.
 
