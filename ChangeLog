@@ -1,3 +1,15 @@
+Fri Mar  11 10:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc.h:
+          Added fuzz disable for check_for_msc_ver
+
+        * bin/fuzz.pl:
+          Lowered the level for the _MSC_VER check to level 3. This is for
+          checking if we don't check _MSC_VER >= 1200. This is the checking
+          for msvc 6 or newer and that is the minimum we support. A lof of
+          files are updated yesterday, this fuzz check is to detect the last
+          and to detect newer commits that have this check
+
 Fri Mar  11 10:43:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
