@@ -39,6 +39,7 @@ CFG=Process_Mutex_Test - Win32 DLL Unicode Release
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 

@@ -39,6 +39,7 @@ CFG=MM_Shared_Memory_Test - Win32 DLL Unicode Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
