@@ -1,3 +1,12 @@
+Thu Aug 22 19:14:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.i (fgetwc, ungetwc):
+
+	  These functions are supposed to return WEOF on error, not -1 as
+	  their ACE_OS wrappers were doing.  Corrects a warning about
+	  initialization of a negative value to "wint_t", which is an
+	  unsigned integer on some platforms (e.g. GNU libc).
+
 Thu Aug 15 10:43:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue_T.cpp (enqueue_tail): Moved notify() call outside
