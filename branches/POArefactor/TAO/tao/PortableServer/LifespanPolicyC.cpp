@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:303
 
 
-#include "LifeSpanPolicyC.h"
+#include "LifespanPolicyC.h"
 #include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
@@ -39,7 +39,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "LifeSpanPolicyC.inl"
+#include "LifespanPolicyC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

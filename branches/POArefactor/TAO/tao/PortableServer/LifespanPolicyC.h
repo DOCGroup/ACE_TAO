@@ -251,7 +251,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Portab
 // be\be_codegen.cpp:964
 
 #if defined (__ACE_INLINE__)
-#include "LifeSpanPolicyC.inl"
+#include "LifespanPolicyC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

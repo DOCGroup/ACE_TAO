@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "LifeSpanPolicyC.h"
+#include "LifespanPolicyC.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 
