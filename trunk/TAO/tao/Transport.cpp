@@ -611,13 +611,12 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 }
 
 void
-TAO_Transport::mark_invalid (void)
+TAO_Transport::purge_entry (void)
 {
-  // @@ Do we need this method at all??
   if (this->cache_map_entry_ != 0)
     {
-      this->orb_core_->transport_cache ()->mark_invalid (
-        this->cache_map_entry_);
+      (void) this->orb_core_->transport_cache ()->purge_entry (
+               this->cache_map_entry_);
     }
 }
 

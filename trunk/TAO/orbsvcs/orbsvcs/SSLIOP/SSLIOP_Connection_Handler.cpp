@@ -227,8 +227,8 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Close the handle..
       if (this->get_handle () != ACE_INVALID_HANDLE)
         {
-          // Mark the entry as invalid.
-          this->transport ()->mark_invalid ();
+          // Remove the entry as it is invalid
+          this->transport ()->purge_entry ();
 
           // Signal the transport that we will no longer have
           // a reference to it.  This will eventually call
