@@ -131,6 +131,8 @@ private:
   // TAO_IIOP_Client_Connection_Handler *hint_;
   // Hint indicating the last successfully used connection handler for
   // a connection established through this endpoint's acceptor.
+  // @@ This needs to be used for optimization. Will look in to this
+  // after MS defense - Bala
 
   TAO_IIOP_Endpoint *next_;
   // IIOP Endpoints can be stringed into a list.  Return the next

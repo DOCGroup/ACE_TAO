@@ -6,7 +6,7 @@
  *  $Id$
  *
  *  @author Originally by Chris Cleeland as IIOP_Connect.h
- *  @author modified by Bala Natarajan <bala@cs.wustl.edu>
+ *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -126,15 +126,15 @@ protected:
   /// Perform appropriate closing but without grabbing any locks.
   virtual int handle_close_i (
       ACE_HANDLE = ACE_INVALID_HANDLE,
-      ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+      ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK) {return 1;}
+
+  /// This method deregisters the handler from the reactor and closes it.
+  int handle_cleanup (void);
 
 private:
 
   /// Transport object reference.
   TAO_IIOP_Transport transport_;
-
-  /// Messaging acceptor factory
-  //TAO_Pluggable_Messaging *acceptor_factory_;
 
   /// Reference count.It is used to count nested upcalls on this
   /// svc_handler i.e., the connection can close during nested upcalls,

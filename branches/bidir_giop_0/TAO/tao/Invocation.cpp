@@ -21,6 +21,7 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/ORB_Core.h"
+#include "tao/Pluggable_Messaging_Utils.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -242,7 +243,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 #if (TAO_HAS_RT_CORBA == 1)
 
       // RTCORBA::PrivateConnectionPolicy processing.
-      TAO_Private_Connection_Descriptor 
+      TAO_Private_Connection_Descriptor
         private_desc (this->endpoint_,
                       ACE_reinterpret_cast (long, this->stub_));
       if (this->endpoint_selection_state_.private_connection_)

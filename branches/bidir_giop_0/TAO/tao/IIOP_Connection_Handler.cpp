@@ -1,15 +1,13 @@
 // $Id$
 
 
-#include "tao/IIOP_Connect.h"
+#include "tao/IIOP_Connection_Handler.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "tao/Messaging_Policy_i.h"
-#include "tao/GIOP_Message_Lite.h"
-#include "tao/GIOP_Message_Acceptors.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Endpoint.h"
@@ -24,46 +22,10 @@ ACE_RCSID(tao, IIOP_Connect, "$Id$")
 
 
 
-#if defined (ACE_ENABLE_TIMEPROBES)
-
-static const char *TAO_IIOP_Connect_Timeprobe_Description[] =
-{
-  "IIOP_Server_Connection_Handler::handle_input - start",
-  "IIOP_Server_Connection_Handler::handle_input - end",
-
-  "IIOP_Server_Connection_Handler::handle_locate - start",
-  "IIOP_Server_Connection_Handler::handle_locate - end",
-
-  "IIOP_Server_Connection_Handler::receive_request - end",
-
-  "IIOP_Client_Connection_Handler::send_request - start",
-  "IIOP_Client_Connection_Handler::send_request - end"};
-
-enum
-{
-  // Timeprobe description table start key
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 300,
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
-
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_END,
-
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END,
-
-  TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
-  TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END
-};
-
-// Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Connect_Timeprobe_Description,
-                                  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
-
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    transport_ (this, 0),
+    transport_ (this, 0, 0),
     refcount_ (1),
     tcp_properties_ (0)
 {
@@ -81,7 +43,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
                                                           void *arg)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    transport_ (this, orb_core),
+    transport_ (this, orb_core, flag),
     refcount_ (1),
     tcp_properties_ (ACE_static_cast
                      (TAO_IIOP_Properties *, arg))
@@ -259,17 +221,16 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
 {
   this->refcount_++;
 
-//  int result = this->acceptor_factory_->handle_input (this->transport (),
-//                                                      this->orb_core (),
-//                                                      this->transport_.message_state_,
-//                                                      max_wait_time);
-//
+  // Call the transport read the message
+  int result = this->transport_.read_process_message (max_wait_time);
+
+  // Now the message has been read
   if (result == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("IIOP_Server_Connection_Handler::handle_input, ")
-                  ACE_TEXT ("handle_input")));
+                  ACE_TEXT ("IIOP_Connection_Handler::read_message \n")));
+
     }
 
   if (result == 0 || result == -1)
@@ -278,9 +239,10 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
       if (this->refcount_ == 0)
           this->decr_ref_count ();
 
-      //this->TAO_IIOP_SVC_HANDLER::handle_close ();
       return result;
     }
+
+
 
   //
   // Take out all the information from the <message_state> and reset
@@ -292,7 +254,7 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   // same Event_Handler in two threads at the same time.
 
   // Copy message type.
-  TAO_GIOP_Message_State &ms = this->transport_.message_state_;
+  /*  TAO_GIOP_Message_State &ms = this->transport_.message_state_;
   CORBA::Octet message_type = ms.message_type;
 
   // Copy version.
@@ -315,7 +277,7 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                      message_type);
 
   if (result != -1)
-    result = 0;
+  result = 0;*/
 
   --this->refcount_;
   if (this->refcount_ == 0)

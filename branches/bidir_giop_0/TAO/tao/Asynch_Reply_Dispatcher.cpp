@@ -5,6 +5,7 @@
 
 ACE_RCSID(tao, Asynch_Reply_Dispatcher, "$Id$")
 
+#include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Message_State.h"
 #include "tao/ORB_Core.h"
 #include "tao/Leader_Follower.h"

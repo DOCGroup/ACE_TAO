@@ -103,13 +103,7 @@ enum TAO_Pluggable_Header_Type
   TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER
 };
 
-// @@ Bala: This is a hopeless GIOPism. it should not be exposed in
-// the Pluggable Messaging generic classes.  What we should think
-// about is what *methods* are required to expose this functionality
-// to the rest of the ORB.
-// @@Carlos: Good idea. I would start doing that. I will slowly start
-// changing things as I work on GIOP1.2. So, please do not remove the
-// comments here.
+
 enum TAO_Pluggable_Message_Type
 {
   // = DESCRIPTION
@@ -119,6 +113,12 @@ enum TAO_Pluggable_Message_Type
   //   types you are welcome but please do not change the numbering
   //   scheme as this would affect GIOP.
 
+  //   NOTE: We may not need evrything here. It would be good if we
+  //   have only the following messages TAO_PLUGGABLE_MESSAGE_REQUEST,
+  //   TAO_PLUGGABLE_MESSAGE_REPLY,
+  //   TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
+  //   TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.  Changes will be made once
+  //   the rest of the stuff gets ready to roll.
   TAO_PLUGGABLE_MESSAGE_REQUEST = 0,                // sent by client.
   TAO_PLUGGABLE_MESSAGE_REPLY = 1,                  // by server.
   TAO_PLUGGABLE_MESSAGE_CANCELREQUEST = 2,          // by client.
