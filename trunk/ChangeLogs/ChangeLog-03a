@@ -1,3 +1,15 @@
+Fri Apr 28 21:30:46 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl:
+
+          Fixed the build core logic to work correctly when more than
+          one configuration is specified.
+
+        * bin/vc_filter.pl:
+
+          Now ignores the LINK4089 warnings.  We haven't quite figured
+          out how to fix them yet.
+
 Fri Apr 28 21:11:32 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * bin/clean_dsp.pl: (added)
