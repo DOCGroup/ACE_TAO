@@ -1,4 +1,4 @@
-Tue Sep  2 16:43:29 2004  Steve Huston  <shuston@riverace.com>
+Thu Sep  2 16:43:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* m4/ace.m4: Added AM_CONDITIONAL for BUILD_EXCEPTIONS, BUILD_THREADS,
 	  BUILD_ACE_CODECS, BUILD_ACE_FILECACHE, BUILD_ACE_OTHER,
