@@ -447,14 +447,14 @@ ACE_ES_Consumer_Rep_Timeout::init (ACE_ES_Consumer_Correlation *correlation,
   ACE_ES_Consumer_Rep::init (correlation, dep);
 }
 
-ACE_INLINE int
+ACE_INLINE long
 ACE_ES_Consumer_Rep_Timeout::timer_id (void)
 {
   return timer_id_;
 }
 
 ACE_INLINE void
-ACE_ES_Consumer_Rep_Timeout::timer_id (int id)
+ACE_ES_Consumer_Rep_Timeout::timer_id (long id)
 {
   timer_id_ = id;
 }
