@@ -619,7 +619,7 @@ ACE_Proactor::timer_queue (Timer_Queue *tq)
   // new timer queue
   if (tq == 0)
     {
-      this->timer_queue_ = new Timer_List;
+      this->timer_queue_ = new Timer_Heap;
       this->delete_timer_queue_ = 1;
     }
   else
