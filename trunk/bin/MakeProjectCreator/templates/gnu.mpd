@@ -187,6 +187,8 @@ endif
 <%endif%>
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+## We don't need the ACELIB setting from wrapper_macros.GNU
+ACELIB =
 <%if(exename)%>
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU

@@ -1,18 +1,29 @@
+Fri Aug 29 13:21:01 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Elaborated on a key point of custom definitions.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Empty the ACELIB variable after including wrapper_macros.GNU.
+          This is a feature of wrapper_macros.GNU that MPC doesn't need.
+
 Fri Aug 29 08:27:58 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-        
-	* Kokyu/Dispatcher_Task.cpp:
-	* Kokyu/Kokyu_defs.cpp:
-	* Kokyu/tests/DSRT_MIF/MIF.cpp: Added explicit template
-	  instantiations to fix compile errors in
-	  Solaris_9_Forte7_ACE_(MPC) build. Thanks to Don Hinton for
-	  pointing this out.
+
+        * Kokyu/Dispatcher_Task.cpp:
+        * Kokyu/Kokyu_defs.cpp:
+        * Kokyu/tests/DSRT_MIF/MIF.cpp: Added explicit template
+          instantiations to fix compile errors in
+          Solaris_9_Forte7_ACE_(MPC) build. Thanks to Don Hinton for
+          pointing this out.
 
 Thu Aug 28 22:29:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Don Hinton <dhinton@dresystems.com>
-	* tests/Bug_1576_Regression_Test.cpp:
+        From Don Hinton <dhinton@dresystems.com>
+        * tests/Bug_1576_Regression_Test.cpp:
 
-	  Updated to work in wchar builds.
+          Updated to work in wchar builds.
 
 Thu Aug 28 07:57:33 2003  Chad Elliott  <elliott_c@ociweb.com>
 

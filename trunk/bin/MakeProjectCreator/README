@@ -249,6 +249,13 @@ generic_outputext   If the command does not generate any of the other output
                     types listed above, then the extensions should be listed
                     under this.
 
+Particular output extensions are not required.  However at least one output
+extension type is required in order for MPC to generate a target.  Your
+command doesn't necessarily have to generate output, but an extension type
+is none the less required.  This can be desirable in some situations,
+whereas the command set to run for the custom type may be a script that runs
+a test.  Thereby, integrating building and testing.
+
 For custom file types, there are two keywords that can be used within the
 custom file type input lists: commandflags and gendir.  The commandflags can
 be used to augment or override the commandflags defined in the Define_Custom
