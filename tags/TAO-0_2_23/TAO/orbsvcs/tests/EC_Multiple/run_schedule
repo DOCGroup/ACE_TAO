@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+if [ -z "$NameServicePort" ]; then
+  NameServicePort=0
+  export NameServicePort
+fi
+
+# The number of high-priority messages to send.
+HP_MSG_COUNT=400
+
+# The number of high-priority consumers.
+HP_CONSUMERS=25
+
+# The number of high-priority suppliers
+HP_SUPPLIERS=10
+
+# The number of low-priority messages to send.
+LP_MSG_COUNT=10
+
+# The number of low-priority consumers.
+LP_CONSUMERS=5
+
+# The number of low-priority suppliers
+LP_SUPPLIERS=5
+
+/bin/rm -f NameService.ior NameService.pid EC1.pid EC2.pid EC.pid
+
+../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+      -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
+sleep 2
+NameService=`cat NameService.ior`
+export NameService
+
+./EC_Multiple -ORBport 0 -l ECM1 -r ECM2 -p ECM1.pid \
+    -h ${HP_SUPPLIERS},${HP_CONSUMERS},1,${HP_MSG_COUNT},1,2,1,3 \
+    -w ${LP_SUPPLIERS},${LP_CONSUMERS},1,${LP_MSG_COUNT},4,5,4,5 \
+    -d SCHED_ECM1.cpp > SCH1.log 2>&1 &
+./EC_Multiple -ORBport 0 -l ECM2 -r ECM1 -p ECM2.pid \
+    -h ${HP_SUPPLIERS},${HP_CONSUMERS},1,${HP_MSG_COUNT},6,3,6,2 \
+    -w ${LP_SUPPLIERS},${LP_CONSUMERS},1,${LP_MSG_COUNT},7,8,7,8 \
+    -d SCHED_ECM2.cpp > SCH2.log 2>&1 &
+sleep 2
+wait `cat ECM1.pid`
+wait `cat ECM2.pid`
+kill `cat NameService.pid`
