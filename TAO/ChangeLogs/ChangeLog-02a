@@ -1,3 +1,10 @@
+Fri Dec 21 14:28:49 2001  Steve Huston  <shuston@riverace.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (ssliop_open_i):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open): Remove the
+          call to ACE_SSL_SOCK_(Connector|Acceptor)::reactor () - that
+          method does not exist anymore.
+
 Fri Dec 21 11:25:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/Naming_Service/NT_Naming_Server.cpp:
