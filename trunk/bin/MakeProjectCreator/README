@@ -202,7 +202,7 @@ automatic           If set to 1, then attempt to automatically determine
                     then automatic is assumed to be 1.  Custom file types
                     that are automatic will have the side effect of possibly
                     adding files to Source_Files, Inline_Files, Header_Files
-                    Template_Files, Resource_Files and Documenation_Files
+                    Template_Files, Resource_Files and Documentation_Files
                     depending on which extension types the command generates.
 command             The name of the command that should be used to process
                     the input files for the custom type.
@@ -237,10 +237,10 @@ template_outputext  This is a comma separated list of possible template file
 resource_outputext  This is a comma separated list of possible resource file
                     output extensions.  If the command does not produce
                     resource files, then this can be omitted.
-documenation_outputext  This is a comma separated list of possible
-                        documentation file output extensions.  If the
-                        command does not produce documenation files, then
-                        this can be omitted.
+documentation_outputext  This is a comma separated list of possible
+                         documentation file output extensions.  If the
+                         command does not produce documentation files, then
+                         this can be omitted.
 generic_outputext   If the command does not generate any of the other output
                     types listed above, then the extensions should be listed
                     under this.
@@ -264,6 +264,50 @@ example:
 
 In the above example, the generated file (QtReactor_moc.cpp) is placed in
 the moc_generated directory and the -nw option is added to commandflags.
+
+Special type of feature project
+-------------------------------
+A feature project contains information as a project would, but can only
+be a base project, can not inherit from other projects and will only be
+added to a sub project if the features that it requires (or avoids) are
+present.
+
+A feature definition requires at least one feature name.  A name by itself
+specifies that the feature is required.  A '!' in front of the feature name
+indicates that the feature must be disabled.  There may be more than one
+feature listed between the parenthesis and they must be comma separated.
+
+The following feature definition requires that the qt feature be enabled.
+
+feature(qt) {
+  Define_Custom(MOC) {
+    automatic        = 0
+    command          = $(QTDIR)/bin/moc
+    output_option    = -o
+    inputext         = .h
+    pre_extension    = _moc
+    source_outputext = .cpp
+  }
+
+  MOC_Files {
+    QtReactor.h
+  }
+
+  Source_Files(ACE_COMPONENTS) {
+    Demux {
+      QtReactor_moc.cpp
+    }
+  }
+}
+
+Assuming that the above feature definition is stored in a file named
+qt_reactor.mpb, an mpc project could inherit from it and would only receive
+the feature definition if the qt feature was enabled.
+
+project: acelib, qt_reactor {
+  ...
+}
+
 
 Special Keywords Available to Templates
 ---------------------------------------

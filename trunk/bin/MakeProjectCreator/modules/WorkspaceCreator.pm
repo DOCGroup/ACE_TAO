@@ -249,14 +249,14 @@ sub parse_exclude {
   my($status)      = 0;
   my($errorString) = 'ERROR: Unable to process exclude';
 
-  if ($typestr eq 'default') {
+  if ($typestr eq $self->get_default_component_name()) {
     $typestr = $self->{'wctype'};
   }
 
   my(@types)   = split(/\s*,\s*/, $typestr);
   my(@exclude) = ();
 
-  while(<$fh>) {
+  while($_ = $fh->getline()) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
