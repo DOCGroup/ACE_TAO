@@ -1,5 +1,22 @@
-// Test the Log_Msg abstraction.
 // $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    examples/Log_Msg
+// 
+// = FILENAME
+//    test_log_msg.cpp
+//
+// = DESCRIPTION
+//     This program tests the Log_Msg abstraction and demontrates 
+//     several use cases.  
+//
+// = AUTHOR
+//    Douglas Schmidt
+// 
+// ============================================================================
+
 
 #include "ace/OS.h"
 
@@ -20,6 +37,8 @@ int
 main (int argc, char *argv[])
 {
   // Note that the default behavior is to log to STDERR...
+
+  int counter = 1 ;
 
   if (argc > 1)
     {
@@ -50,32 +69,32 @@ main (int argc, char *argv[])
 
       // Exercise many different combinations of STDERR and OSTREAM.
 
-      ACE_DEBUG ((LM_INFO, "%f, %*s%s = %d\n", 
-		  3.1416, 8, "", "hello", 10000));
+      ACE_DEBUG ((LM_INFO, "%10f, %*s%s = %d\n", 
+		  3.1416 * counter++, 8, "", "hello", 10000));
 
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (&cout);
 
-      ACE_DEBUG ((LM_INFO, "%f, %*s%s = %d\n", 
-		  3.1416 * 3.1416, 8, "", "world", 20000));
+      ACE_DEBUG ((LM_INFO, "%10f, %*s%s = %d\n", 
+		  3.1416 * counter, 8, "", "world", 10000 * counter++));
 
       ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
 
-      ACE_DEBUG ((LM_INFO, "%f, %*s%s = %d\n", 
-		  3.1416 * 3.1416, 8, "", "world", 20000));
+      ACE_DEBUG ((LM_INFO, "%10f, %*s%s = %d\n", 
+		  3.1416 * counter, 8, "", "world", 10000 * counter++));
 
       ACE_LOG_MSG->msg_ostream (0);
 
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-      ACE_DEBUG ((LM_INFO, "%f, %*s%s = %d\n", 
-		  3.1416 * 3.1416, 8, "", "world", 20000));
+      ACE_DEBUG ((LM_INFO, "%10f, %*s%s = %d\n", 
+		  3.1416 * counter, 8, "", "world", 10000 * counter++));
 
       ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (&cerr);
 
-      ACE_DEBUG ((LM_INFO, "%f, %*s%s = %d\n", 
-		  3.1416 * 3.1416, 8, "", "world", 20000));
+      ACE_DEBUG ((LM_INFO, "%10f, %*s%s = %d\n", 
+		  3.1416 * counter, 8, "", "world", 10000 * counter++));
 
       static int array[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
 
