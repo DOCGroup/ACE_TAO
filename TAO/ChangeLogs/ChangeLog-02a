@@ -492,7 +492,8 @@ Mon Sep 25 16:17:01 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
         * orbsvcs/orbsvcs/Notify_Default_Collection_Factory.cpp:
         * orbsvcs/orbsvcs/Notify_Default_EMO_Factory.cpp:
           Fixes for various compilation problems - thanks to Wei Chiang
-          <Wei.Chiang@nokia.com> for providing missing code for template instantiation.
+          <Wei.Chiang@nokia.com> for providing missing code for template
+	  instantiation.
         * orbsvcs/Notify_Service/README:
           Added a svc.conf option to show how show available options.
 
