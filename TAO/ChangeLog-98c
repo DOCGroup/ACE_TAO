@@ -1,3 +1,11 @@
+Fri Jan 02 10:24:21 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* tao/connect.cpp: 
+	* orbsvcs/Scheduling_Service/Scheduler.cpp: 
+	* orbsvcs/Event_service/Gplot_File.cpp:
+	* orbsvcs/Event_Service/Event_Channel.cpp: Added explicit template
+ 	  instantiation for ACE_Map_Iterator_Base.
+
 Fri Jan  2 10:39:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_type.cpp: Completely reimplemented the way
