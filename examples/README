@@ -47,6 +47,12 @@ please take a look at $ACE_ROOT/ACE-categories.
 		Various miscellaneous tests that illustrate how ACE
 		utility components work.
 
+        . NT_Service
+		Illustrates how to write an NT Service using the
+		ACE_NT_Service class, and how to insert it and remove it
+		in the SCM, start it, and stop it, and how to run as a
+		service.
+
 	. Reactor
 		Contains many examples of how to utilize the ACE
 		object-oriented event demultiplexer.
