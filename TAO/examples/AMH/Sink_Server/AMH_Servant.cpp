@@ -62,7 +62,7 @@ AMH_Servant::parse_args (int *argc, char **argv)
 void
 AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                                   Test::Timestamp send_time
-                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Handler will 'kill' itself when it is done.
@@ -83,7 +83,7 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
 void
 AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                         TAO_ENV_ARG_DECL_NOT_USED)
+                         ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->start_test ();
@@ -91,7 +91,7 @@ AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
 
 void
 AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                         TAO_ENV_ARG_DECL_NOT_USED)
+                         ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->end_test ();
