@@ -10,41 +10,36 @@ ACE_RCSID(IDL_Cubit, server, "$Id$")
 int
 main (int argc, char *argv[])
 {
-//  ACE_START_TEST (ASYS_TEXT ("Cubit_Server"));
-
   Cubit_Server cubit_server;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tIDL_Cubit: server\n\n"));
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
-      if (cubit_server.init (argc, argv, ACE_TRY_ENV) == -1)
+      if (cubit_server.init (argc, argv, TAO_TRY_ENV) == -1)
         {
-          ACE_TRY_ENV.print_exception ("Initialization Exception");
+          TAO_TRY_ENV.print_exception ("Initialization Exception");
           return -1;
         }
       else
         {
-          cubit_server.run (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          cubit_server.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
       ACE_UNUSED_ARG (sysex);
-      ACE_TRY_ENV.print_exception ("System Exception");
+      TAO_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  TAO_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
-      ACE_TRY_ENV.print_exception ("User Exception");
+      TAO_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   ACE_TIMEPROBE_PRINT;
-
-//  ACE_END_TEST;
-
   return 0;
 }

@@ -24,14 +24,9 @@ class TAO_Export TAO_ObjectKey : public TAO_Unbounded_Sequence<CORBA::Octet>
   // = DESCRIPTION
   //   The object is basically a sequence of octets, but we derive
   //   from it to create a unique type; this is useful for
-  //   overloading.
+  //   overloading. 
   //
 public:
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef TAO_ObjectKey_ptr _ptr_type;
-    typedef TAO_ObjectKey_var _var_type;
-  #endif /* __GNUC__ */
-
   TAO_ObjectKey (void);
   TAO_ObjectKey (CORBA::ULong max);
   TAO_ObjectKey (CORBA::ULong max,
@@ -88,6 +83,9 @@ private:
   // assignment from T_var not allowed
   void operator= (const TAO_ObjectKey_var &);
 };
+
+extern TAO_Export int operator== (const TAO_ObjectKey &l,
+                                  const TAO_ObjectKey &r);
 
 #if defined (__ACE_INLINE__)
 #include "tao/Object_KeyC.i"

@@ -15,7 +15,6 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/ARGV.h"
-#include "ace/Get_Opt.h"
 #include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/SOCK_Dgram.h"
@@ -113,34 +112,41 @@ private:
 };
 
 
-class Globals
+class Client : public ACE_Task<ACE_SYNCH>
+// one of these per client thread
 {
-  // = TITLE
-  //     Globals class to be used as a singleton.
-  //
-  // = DESCRIPTION
-  //     This is used both by the client.
 public:
-  Globals (void);
-  // constructor.
+  Client (int argc, char **argv, ACE_Barrier *barrier);
+
+  virtual int svc (void);
+
+  void set_stream (ACE_SOCK_Stream & stream);
+private:
 
   int parse_args (int argc,char **argv);
-  //parse the arguments.
+  int bind_to_server (void);
 
-  ACE_Barrier *barrier_;
-  //  barrier for the client threads.
+  int establish_stream (void);
 
-  int ready_;
-  // ready flag used by the high priority thread to wake up the low
-  // priority threads after it's parsed the arguments.
 
-  ACE_SYNCH_MUTEX ready_mtx_;
-  // mutex for the condition variable.
+  TAO_ORB_Manager orb_manager_;
 
-  ACE_Condition<ACE_SYNCH_MUTEX> ready_cond_;
-  // condition variable for the low priority threads to wait
-  //until the high priority thread is done with the arguments parsing.
+  TAO_Naming_Client my_name_client_;
 
+  //  ttcp_Endpoint_Reactive_Strategy_A reactive_strategy_;
+
+  TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
+
+  AVStreams::MMDevice_var server_mmdevice_;
+
+  TAO_MMDevice client_mmdevice_;
+
+  TAO_StreamCtrl streamctrl_;
+  // Video stream controller
+
+  int argc_;
+
+  char **argv_;
 
   int block_size_;
   // size of the block to be sent in Kilobytes.
@@ -148,57 +154,7 @@ public:
   int number_;
   // number of times to send the block
 
-  char *hostname_;
-  // hostname to bind to.
-
-  u_short port_;
-  //  port number to bind to.
-
-  enum strategy {TTCP_REACTIVE=0,DGRAM_REACTIVE =1};
-  strategy strategy_;
-  // strategy to be used for MMDevice.
-
-  int thread_count_;
-  // No. of threads.
-};
-
-typedef ACE_Singleton <Globals,ACE_SYNCH_MUTEX> GLOBALS;
-
-class Client : public ACE_Task<ACE_SYNCH>
-// one of these per client thread
-{
-public:
-  Client (int argc, char **argv, int task_id);
-
-  virtual int svc (void);
-
-  void set_stream (ACE_SOCK_Stream & stream);
-
-private:
-  int bind_to_server (void);
-
-  int establish_stream (void);
-
-  TAO_ORB_Manager orb_manager_;
-
-  TAO_Naming_Client my_name_client_;
-
-  ttcp_Endpoint_Reactive_Strategy_A ttcp_reactive_strategy_;
-
-  TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
-
-  AVStreams::MMDevice_var server_mmdevice_;
-
-  TAO_MMDevice *client_mmdevice_;
-
-  TAO_StreamCtrl streamctrl_;
-  // Video stream controller
-
-  int argc_;
-  char **argv_;
-
-  int task_id_;
-  // id of this task.
+  ACE_Barrier *barrier_;
 
   ACE_SOCK_Stream stream_;
 };

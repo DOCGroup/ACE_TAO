@@ -45,7 +45,7 @@ registration: $(addprefix $(VDIR),$(TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) testC.* testS.* testS_T.*
+	-/bin/rm -rf testC.* testS.* testS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
@@ -283,7 +283,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
- $(TAO_ROOT)/tao/CDR_Interpreter.h \
+ $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Invocation.h \
@@ -526,7 +526,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
- $(TAO_ROOT)/tao/CDR_Interpreter.h \
+ $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Invocation.h \
@@ -769,7 +769,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
- $(TAO_ROOT)/tao/CDR_Interpreter.h \
+ $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Invocation.h \

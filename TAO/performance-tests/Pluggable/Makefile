@@ -58,6 +58,8 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 .PRECIOUS: PP_TestC.cpp PP_TestS.cpp PP_TestC.h PP_TestS.h
+#$(IDL_SRC): PP_Test.idl
+#	$(TAO_ROOT)/TAO_IDL/tao_idl PP_Test.idl
 
 server:	$(addprefix $(VDIR),$(PP_TEST_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -66,7 +68,7 @@ client:	$(addprefix $(VDIR),$(PP_TEST_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) PP_TestC.* PP_TestS.* PP_TestS_T.*
+	-/bin/rm -rf PP_TestC.* PP_TestS.* PP_TestS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

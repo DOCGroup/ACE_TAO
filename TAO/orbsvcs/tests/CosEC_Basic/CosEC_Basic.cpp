@@ -31,7 +31,7 @@ CosEC_Basic::~CosEC_Basic (void)
 int
 CosEC_Basic::init_ORB  (int argc, char *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV
   ACE_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
@@ -73,13 +73,13 @@ CosEC_Basic::init_ORB  (int argc, char *argv [])
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 int
 CosEC_Basic::init_RtEC (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV
     ACE_TRY
     {
       this->scheduler_ =
@@ -125,13 +125,13 @@ CosEC_Basic::init_RtEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 int
 CosEC_Basic::init_CosEC (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV
     ACE_TRY
     {
       // Setup the QOS params..
@@ -156,7 +156,7 @@ CosEC_Basic::init_CosEC (void)
 
       if (this->ec_i_.init (consumerqos,
                             supplierqos,
-                            this->rtec_.in (),
+                            this->rtec_,
                             ACE_TRY_ENV) != 0)
         return -1;
 
@@ -176,7 +176,7 @@ CosEC_Basic::init_CosEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 int

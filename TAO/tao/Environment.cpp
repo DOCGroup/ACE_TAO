@@ -37,7 +37,12 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
 
 CORBA_Environment::CORBA_Environment (void)
   : exception_ (0),
+#if !defined (TAO_USES_FLICK)
     previous_ (0)
+#else
+    previous_ (0),
+    _major(CORBA::NO_EXCEPTION)
+#endif /* TAO_USES_FLICK */
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
 }
@@ -47,8 +52,7 @@ CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
     previous_ (0)
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
-  if (this->exception_)
-    this->exception_->_incr_refcnt ();
+  exception_->_incr_refcnt ();
 }
 
 CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
@@ -58,27 +62,6 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
   orb_core->default_environment (this);
 }
 #endif
-
-CORBA::ULong
-CORBA_Environment::_incr_refcnt (void)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
-  return refcount_++;
-}
-
-CORBA::ULong
-CORBA_Environment::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  delete this;
-  return 0;
-}
 
 CORBA_Environment&
 CORBA_Environment::operator= (const CORBA_Environment& rhs)
@@ -113,6 +96,9 @@ CORBA_Environment::exception (CORBA_Exception *ex)
   if (this->exception_ != 0)
     {
       this->exception_->_incr_refcnt ();
+#if defined (TAO_USES_FLICK)
+      this->_major = this->exception_type();
+#endif /* TAO_USES_FLICK */
 #if defined (TAO_HAS_EXCEPTIONS)
       this->exception_->_raise ();
 #endif /* TAO_HAS_EXCEPTIONS */
@@ -149,7 +135,13 @@ CORBA_Environment::default_environment ()
   TAO_ORB_Core_instance ()->default_environment ()->clear ();
 #endif /* TAO_HAS_EXCEPTIONS */
 
-  return CORBA::default_environment ();
+  return *TAO_ORB_Core_instance ()->default_environment ();
+}
+
+CORBA_Environment&
+CORBA::default_environment ()
+{
+  return CORBA_Environment::default_environment ();
 }
 
 // Convenience -- say if the exception is a system exception or not.
@@ -199,7 +191,7 @@ CORBA::Environment::print_exception (const char *info,
     {
       const char *id = this->exception_->_id ();
 
-      ACE_DEBUG ((LM_ERROR, "TAO: (%P|%t) EXCEPTION, %s\n", info));
+      ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
 
       CORBA::SystemException *x2 =
         CORBA_SystemException::_narrow (this->exception_);
@@ -214,10 +206,10 @@ CORBA::Environment::print_exception (const char *info,
           // directly in the exception value so it can be queried.
 
           ACE_DEBUG ((LM_ERROR,
-                      "TAO: (%P|%t) system exception, ID '%s'\n",
+                      "(%P|%t) system exception, ID '%s'\n",
                       id));
           ACE_DEBUG ((LM_ERROR,
-                      "TAO: (%P|%t) minor code = %x, completed = %s\n",
+                      "(%P|%t) minor code = %x, completed = %s\n",
                       x2->minor (),
                       (x2->completed () == CORBA::COMPLETED_YES) ? "YES" :
                       (x2->completed () == CORBA::COMPLETED_NO) ? "NO" :
@@ -229,38 +221,10 @@ CORBA::Environment::print_exception (const char *info,
         // held within it ...
 
         ACE_DEBUG ((LM_ERROR,
-                    "TAO: (%P|%t) user exception, ID '%s'\n",
+                    "(%P|%t) user exception, ID '%s'\n",
                     id));
     }
   else
     ACE_DEBUG ((LM_ERROR,
-                "TAO: (%P|%t) no exception\n"));
+                "(%P|%t) no exception\n"));
 }
-
-// *********************************************************
-
-CORBA_Environment_var &
-CORBA_Environment_var::operator= (CORBA_Environment_ptr p)
-{
-  if (this->ptr_ != p)
-  {
-    if (this->ptr_ != 0)
-    delete (this->ptr_);
-
-    this->ptr_ = p;
-  }
-  return *this;
-}
-
-CORBA_Environment_var &
-CORBA_Environment_var::operator= (const CORBA_Environment_var &r)
-{
-  if (this->ptr_ != 0)
-    delete this->ptr_;
-
-  this->ptr_ = new CORBA::Environment (*r.ptr_);
-  return *this;
-}
-
-
-

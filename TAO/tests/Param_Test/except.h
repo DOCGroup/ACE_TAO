@@ -57,7 +57,7 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *, CORBA::Environment &);
+  void dii_req_invoke (CORBA::Request *);
   // invoke DII request with appropriate exception handling.
 
 private:
@@ -75,9 +75,6 @@ private:
 
   CORBA::ULong ret_;
   // return value
-
-  CORBA::ULong iterations_;
-  // Current iterations.
 };
 
 #endif /* PARAM_TEST_EXCEPTION_H */

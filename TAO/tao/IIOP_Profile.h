@@ -32,11 +32,11 @@ class TAO_Export TAO_IIOP_Profile : public TAO_Profile
 {
   // = TITLE
   //   This class defines the protocol specific attributes required
-  //   for locating ORBs over a TCP/IP network.
+  //   for locating ORBs over a TCP/IP network.  
   //
   // = DESCRIPTION
   //   This class defines the IIOP profile as specified in the CORBA
-  //   specification.
+  //   specification.  
 public:
   // = Currently, TAO supports IIOP 1.0.
   enum
@@ -108,9 +108,13 @@ public:
   ~TAO_IIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag (void);
   // The tag, each concrete class will have a specific tag value.  for
   // example we are TAO_IOP_TAG_INTERNET_IOP.
+
+  TAO_Transport* transport (void);
+  // Return a pointer to the underlying transport object.  this will
+  // provide access to lower layer protocols and processing.
 
   int parse (TAO_InputCDR& cdr,
              CORBA::Boolean& continue_decoding,
@@ -128,7 +132,8 @@ public:
   const TAO_opaque& body (void) const;
   // Create IIOP_Profile Object from marshalled data.
 
-  virtual int encode (TAO_OutputCDR &stream) const;
+  CORBA::TypeCode::traverse_status encode (TAO_OutputCDR *&stream,
+                                           CORBA::Environment &env);
   // Encode this profile in a stream, i.e. marshal it.
 
   const TAO_ObjectKey &object_key (void) const;
@@ -139,6 +144,12 @@ public:
 
   TAO_ObjectKey *_key (CORBA::Environment &env);
   //  Return a pointer to the Object Key.
+
+  virtual void forward_to (TAO_MProfile *mprofiles);
+  // Client object will assume ownership for this object!!
+
+  virtual TAO_MProfile *forward_to (void);
+  // copy of MProfile, user must delete.
 
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
                                 CORBA::Environment &env);
@@ -153,7 +164,10 @@ public:
   char *addr_to_string (void);
   // Return a string representation for the address.
 
-  const ACE_INET_Addr &object_addr (void) const;
+  ACE_Addr &object_addr (const ACE_Addr *addr);
+  // set the object_addr for the profile.
+
+  ACE_Addr &object_addr (void);
   //  return a reference to the object_addr.
 
   const char *host (void);
@@ -197,9 +211,30 @@ public:
   // Decrement the object's reference count.  When this count goes to
   // 0 this object will be deleted.
 
+#if defined (TAO_USES_FLICK)
+  char *&_host_ (void);
+  // Return a reference to the underlying <host_> to allow Flick to
+  // manipulate it directly.
+
+  CORBA::UShort &_port_ (void);
+  // Return a reference to the underlying <port_> to allow Flick to
+  // manipulate it directly.
+
+  TAO_ObjectKey &_object_key_ (void);
+  // Return a non-const reference of object key.
+
+  int reset_object_addr (void);
+  // Reset <object_addr_> after setting <host_> and <port_>.
+#endif /* TAO_USES_FLICK */
+
 private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
+
+  virtual TAO_MProfile *forward_to_i (void);
+  // reference to the TAO_MProfile which the current profile was
+  // forwarded to.  This object keeps ownership.  Note that this
+  // method is NOT thread-safe, so it must be called with locks held.
 
   void create_body (void);
   // Does the work for <add_profile>.
@@ -237,6 +272,9 @@ private:
 
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
+
+  TAO_MProfile *forward_to_;
+  // list of profiles which we should try forwarding on.
 };
 
 #if defined (__ACE_INLINE__)

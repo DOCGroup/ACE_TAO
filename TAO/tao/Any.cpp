@@ -60,7 +60,7 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
     }
   else
     {
-      env.exception (new CORBA::BAD_TYPECODE ());
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
     }
 }
 
@@ -70,7 +70,10 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
 const void *
 CORBA_Any::value (void) const
 {
-  return this->value_;
+  if (this->any_owns_data_)
+    return this->value_;
+  else
+    return this->cdr_;
 }
 
 // Default "Any" constructor -- initializes to nulls per the
@@ -114,12 +117,11 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
 
 // Constructor using a message block.
 CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
-                      CORBA::UShort,
                       const ACE_Message_Block* mb)
   : type_ (CORBA::TypeCode::_duplicate (type)),
     value_ (0),
     cdr_ (ACE_Message_Block::duplicate (mb)),
-    any_owns_data_ (0)
+    any_owns_data_ (1)
 {
 }
 
@@ -127,7 +129,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
 CORBA_Any::CORBA_Any (const CORBA_Any &src)
   : value_ (0),
     cdr_ (0),
-    any_owns_data_ (0)
+    any_owns_data_ (1)
 {
   if (src.type_ != 0)
     this->type_ = CORBA::TypeCode::_duplicate (src.type_);
@@ -169,7 +171,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
     this->type_ = CORBA::TypeCode::_duplicate (src.type_);
   else
     this->type_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-  this->any_owns_data_ = 0;
+  this->any_owns_data_ = 1;
 
   this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
   // Simply duplicate the cdr string here.  We can save the decode operation
@@ -203,16 +205,14 @@ void
 CORBA_Any::replace (CORBA::TypeCode_ptr tc,
                     const void *value,
                     CORBA::Boolean any_owns_data,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    CORBA::Environment &env)
 {
   // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
   // message block (i.e. it is always cloned or duplicated).
   ACE_Message_Block::release (this->cdr_);
-  this->cdr_ = 0;
 
- this->free_value (ACE_TRY_ENV);
-  ACE_CHECK;
+  this->free_value (env);
 
   // Duplicate tc and then release this->type_, just in case tc and
   // type_ are the same thing.
@@ -220,18 +220,17 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   CORBA::release (this->type_);
   this->type_ = tmp;
 
+  this->value_ = ACE_const_cast(void *, value);
+  this->any_owns_data_ = any_owns_data;
+  this->cdr_ = 0;
+
   // NW: I think an Any should alway owns the CDR stream, so I removed the
   //     check here.
   // if the Any owns the data, we encode the "value" into a CDR stream and
   // store it. We also destroy the "value" since we own it.
   TAO_OutputCDR stream;
-  stream.encode (tc, value, 0, ACE_TRY_ENV);
-  ACE_CHECK;
 
-  this->value_ = ACE_const_cast(void *, value);
-  this->any_owns_data_ = any_owns_data;
-  this->cdr_ = 0;
-
+  stream.encode (tc, value, 0, env);
   // retrieve the start of the message block chain and duplicate it
   this->cdr_ = ACE_Message_Block::duplicate (stream.begin ());
 }
@@ -239,6 +238,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 void
 CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
                          const ACE_Message_Block *mb,
+                         CORBA::Boolean any_owns_data,
                          CORBA::Environment &env)
 {
   // Decrement the refcount on the Message_Block we hold, it does not
@@ -255,63 +255,12 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   CORBA::release (this->type_);
   this->type_ = tmp;
 
-  this->any_owns_data_ = 0;
-
-  this->cdr_ = ACE_Message_Block::duplicate (mb);
+  this->any_owns_data_ = any_owns_data;
+  
+  this->cdr_ = mb->duplicate ();
   // We can save the decode operation
   // if there's no need to extract the object.
  }
-
-void
-CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
-                         const ACE_Message_Block *mb,
-                         CORBA::Boolean any_owns_data,
-                         void* value,
-                         CORBA::Environment &ACE_TRY_ENV)
-{
-  // Decrement the refcount on the Message_Block we hold, it does not
-  // matter if we own the data or not, because we always own the
-  // message block (i.e. it is always cloned or duplicated).
-  ACE_Message_Block::release (this->cdr_);
-  this->cdr_ = 0;
-
-  this->free_value (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->value_ = value;
-
-  // Duplicate tc and then release this->type_, just in case tc and
-  // type_ are the same thing.
-  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
-  CORBA::release (this->type_);
-  this->type_ = tmp;
-
-  this->any_owns_data_ = any_owns_data;
-
-  this->cdr_ = ACE_Message_Block::duplicate (mb);
-  // We can save the decode operation
-  // if there's no need to extract the object.
-}
-
-void
-CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
-                         CORBA::Boolean any_owns_data,
-                         void* value,
-                         CORBA::Environment &ACE_TRY_ENV)
-{
-  this->free_value (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->value_ = value;
-
-  // Duplicate tc and then release this->type_, just in case tc and
-  // type_ are the same thing.
-  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
-  CORBA::release (this->type_);
-  this->type_ = tmp;
-
-  this->any_owns_data_ = any_owns_data;
-}
 
 // Free internal data.
 void
@@ -340,7 +289,7 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
                  env);
 }
 
-// insertion of CORBA object - copying
+// insertion of CORBA object
 void
 CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
 {
@@ -348,7 +297,6 @@ CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
   (*this) <<= &objptr;
 }
 
-// insertion of CORBA object - non-copying
 void
 CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
 {
@@ -814,16 +762,6 @@ CORBA_Any::operator>>= (to_object obj) const
   return 0;
 }
 
-// this is a copying version for unbounded strings
-// Not inline, to avoid use in Any.i before definition in ORB.i.
-void
-CORBA_Any::operator<<= (const char* s)
-{
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_string, new char* (CORBA::string_dup (s)),
-                 1, env);
-}
-
 // ----------------------------------------------------------------------
 // Any_var type
 // ----------------------------------------------------------------------
@@ -845,7 +783,7 @@ CORBA::Any_var &
 CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
   if (this->ptr_ != 0)
-    delete this->ptr_;
+  delete this->ptr_;
 
   this->ptr_ = new CORBA::Any (*r.ptr_);
   return *this;
@@ -857,7 +795,7 @@ CORBA_Any_var::operator= (const CORBA::Any_var& r)
 // supported only for standard data types.
 
 void
-CORBA_Any::dump (const CORBA::Any &any_value)
+CORBA_Any::dump (const CORBA::Any any_value)
 {
   CORBA::Environment env;
 

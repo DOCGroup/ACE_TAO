@@ -141,8 +141,8 @@ PortableServer::POA_out::POA_out (PortableServer::POA_var &p) // constructor fro
 }
 
 ACE_INLINE
-PortableServer::POA_out::POA_out (const PortableServer::POA_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (POA_out&,p).ptr_)
+PortableServer::POA_out::POA_out (PortableServer::POA_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::POA_out &
@@ -337,8 +337,8 @@ PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (PortableServer::_tao_seq
 }
 
 ACE_INLINE
-PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (const PortableServer::_tao_seq_Octet_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (_tao_seq_Octet_out&,p).ptr_)
+PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (PortableServer::_tao_seq_Octet_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::_tao_seq_Octet_out &
@@ -382,11 +382,9 @@ PortableServer::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 
 #endif // end #if !defined
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 ACE_INLINE
 PortableServer::ThreadPolicy::ThreadPolicy(
-                                           TAO_Stub *objref,
+                                           STUB_Object *objref,
                                            TAO_ServantBase *servant,
                                            CORBA::Boolean collocated
                                            )
@@ -507,6 +505,7 @@ PortableServer::ThreadPolicy_var::_retn (void)
 
 #endif // end #if !defined
 
+
 #if !defined (_PORTABLESERVER_THREADPOLICY___OUT_CI_)
 #define _PORTABLESERVER_THREADPOLICY___OUT_CI_
 
@@ -530,8 +529,8 @@ PortableServer::ThreadPolicy_out::ThreadPolicy_out (PortableServer::ThreadPolicy
 }
 
 ACE_INLINE
-PortableServer::ThreadPolicy_out::ThreadPolicy_out (const PortableServer::ThreadPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ThreadPolicy_out&,p).ptr_)
+PortableServer::ThreadPolicy_out::ThreadPolicy_out (PortableServer::ThreadPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ThreadPolicy_out &
@@ -576,11 +575,9 @@ PortableServer::ThreadPolicy_out::operator-> (void)
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 ACE_INLINE
 PortableServer::LifespanPolicy::LifespanPolicy(
-                                               TAO_Stub *objref,
+                                               STUB_Object *objref,
                                                TAO_ServantBase *servant,
                                                CORBA::Boolean collocated
                                                )
@@ -725,8 +722,8 @@ PortableServer::LifespanPolicy_out::LifespanPolicy_out (PortableServer::Lifespan
 }
 
 ACE_INLINE
-PortableServer::LifespanPolicy_out::LifespanPolicy_out (const PortableServer::LifespanPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (LifespanPolicy_out&,p).ptr_)
+PortableServer::LifespanPolicy_out::LifespanPolicy_out (PortableServer::LifespanPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::LifespanPolicy_out &
@@ -773,7 +770,7 @@ PortableServer::LifespanPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy::IdUniquenessPolicy(
-                                                       TAO_Stub *objref,
+                                                       STUB_Object *objref,
                                                        TAO_ServantBase *servant,
                                                        CORBA::Boolean collocated
                                                        )
@@ -918,8 +915,8 @@ PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (PortableServer::
 }
 
 ACE_INLINE
-PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (const PortableServer::IdUniquenessPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (IdUniquenessPolicy_out&,p).ptr_)
+PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (PortableServer::IdUniquenessPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::IdUniquenessPolicy_out &
@@ -966,7 +963,7 @@ PortableServer::IdUniquenessPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy::IdAssignmentPolicy(
-                                                       TAO_Stub *objref,
+                                                       STUB_Object *objref,
                                                        TAO_ServantBase *servant,
                                                        CORBA::Boolean collocated
                                                        )
@@ -1111,8 +1108,8 @@ PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (PortableServer::
 }
 
 ACE_INLINE
-PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (const PortableServer::IdAssignmentPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (IdAssignmentPolicy_out&,p).ptr_)
+PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (PortableServer::IdAssignmentPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::IdAssignmentPolicy_out &
@@ -1157,11 +1154,9 @@ PortableServer::IdAssignmentPolicy_out::operator-> (void)
 
 #endif // end #if !defined
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy(
-                                                                   TAO_Stub *objref,
+                                                                   STUB_Object *objref,
                                                                    TAO_ServantBase *servant,
                                                                    CORBA::Boolean collocated
                                                                    )
@@ -1306,8 +1301,8 @@ PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (Port
 }
 
 ACE_INLINE
-PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (const PortableServer::ImplicitActivationPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplicitActivationPolicy_out&,p).ptr_)
+PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (PortableServer::ImplicitActivationPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ImplicitActivationPolicy_out &
@@ -1354,7 +1349,7 @@ PortableServer::ImplicitActivationPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy::ServantRetentionPolicy(
-                                                               TAO_Stub *objref,
+                                                               STUB_Object *objref,
                                                                TAO_ServantBase *servant,
                                                                CORBA::Boolean collocated
                                                                )
@@ -1499,8 +1494,8 @@ PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (Portable
 }
 
 ACE_INLINE
-PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (const PortableServer::ServantRetentionPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ServantRetentionPolicy_out&,p).ptr_)
+PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (PortableServer::ServantRetentionPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantRetentionPolicy_out &
@@ -1547,7 +1542,7 @@ PortableServer::ServantRetentionPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy::RequestProcessingPolicy(
-                                                                 TAO_Stub *objref,
+                                                                 STUB_Object *objref,
                                                                  TAO_ServantBase *servant,
                                                                  CORBA::Boolean collocated
                                                                  )
@@ -1692,8 +1687,8 @@ PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (Portab
 }
 
 ACE_INLINE
-PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (const PortableServer::RequestProcessingPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (RequestProcessingPolicy_out&,p).ptr_)
+PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (PortableServer::RequestProcessingPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::RequestProcessingPolicy_out &
@@ -1738,11 +1733,208 @@ PortableServer::RequestProcessingPolicy_out::operator-> (void)
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+// **************************************************
+//
+// TAO spcific POA locking policy (non-standard)
+//
+// **************************************************
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy::SynchronizationPolicy(
+                                                             STUB_Object *objref,
+                                                             TAO_ServantBase *servant,
+                                                             CORBA::Boolean collocated
+                                                             )
+  : ACE_CORBA_1 (Object) (objref, servant, collocated)
+{}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy::~SynchronizationPolicy (void) // destructor
+{}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy::_nil (void)
+{
+  return (PortableServer::SynchronizationPolicy_ptr)0;
+}
+
+
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CI_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class PortableServer::SynchronizationPolicy_var
+// *************************************************************
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_var::SynchronizationPolicy_var (void) // default constructor
+  : ptr_ (PortableServer::SynchronizationPolicy::_nil ())
+{}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_var::SynchronizationPolicy_var (PortableServer::SynchronizationPolicy_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_var::SynchronizationPolicy_var (const PortableServer::SynchronizationPolicy_var &p) // copy constructor
+  : ptr_ (PortableServer::SynchronizationPolicy::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_var::~SynchronizationPolicy_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_var &
+PortableServer::SynchronizationPolicy_var::operator= (PortableServer::SynchronizationPolicy_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_var &
+PortableServer::SynchronizationPolicy_var::operator= (const PortableServer::SynchronizationPolicy_var &p)
+{
+  if (this != &p)
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = PortableServer::SynchronizationPolicy::_duplicate (p.ptr ());
+    }
+  return *this;
+}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_var::operator const PortableServer::SynchronizationPolicy_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_var::operator PortableServer::SynchronizationPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr &
+PortableServer::SynchronizationPolicy_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr &
+PortableServer::SynchronizationPolicy_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = PortableServer::SynchronizationPolicy::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  PortableServer::SynchronizationPolicy_ptr val = this->ptr_;
+  this->ptr_ = PortableServer::SynchronizationPolicy::_nil ();
+  return val;
+}
+
+
+#endif // end #if !defined
+
+
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CI_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class PortableServer::SynchronizationPolicy_out
+// *************************************************************
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_out::SynchronizationPolicy_out (PortableServer::SynchronizationPolicy_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = PortableServer::SynchronizationPolicy::_nil ();
+}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_out::SynchronizationPolicy_out (PortableServer::SynchronizationPolicy_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = PortableServer::SynchronizationPolicy::_nil ();
+}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_out::SynchronizationPolicy_out (PortableServer::SynchronizationPolicy_out &p) // copy constructor
+  : ptr_ (p.ptr_)
+{}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_out &
+PortableServer::SynchronizationPolicy_out::operator= (PortableServer::SynchronizationPolicy_out &p)
+{
+  this->ptr_ = p.ptr_;
+  return *this;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_out &
+PortableServer::SynchronizationPolicy_out::operator= (const PortableServer::SynchronizationPolicy_var &p)
+{
+  this->ptr_ = PortableServer::SynchronizationPolicy::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_out &
+PortableServer::SynchronizationPolicy_out::operator= (PortableServer::SynchronizationPolicy_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+PortableServer::SynchronizationPolicy_out::operator PortableServer::SynchronizationPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr &
+PortableServer::SynchronizationPolicy_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif // end #if !defined
 
 ACE_INLINE
 PortableServer::POAManager::POAManager(
-                                       TAO_Stub *objref,
+                                       STUB_Object *objref,
                                        TAO_ServantBase *servant,
                                        CORBA::Boolean collocated
                                        )
@@ -1887,8 +2079,8 @@ PortableServer::POAManager_out::POAManager_out (PortableServer::POAManager_var &
 }
 
 ACE_INLINE
-PortableServer::POAManager_out::POAManager_out (const PortableServer::POAManager_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (POAManager_out&,p).ptr_)
+PortableServer::POAManager_out::POAManager_out (PortableServer::POAManager_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::POAManager_out &
@@ -1933,11 +2125,9 @@ PortableServer::POAManager_out::operator-> (void)
 
 #endif // end #if !defined
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 ACE_INLINE
 PortableServer::AdapterActivator::AdapterActivator(
-                                                   TAO_Stub *objref,
+                                                   STUB_Object *objref,
                                                    TAO_ServantBase *servant,
                                                    CORBA::Boolean collocated
                                                    )
@@ -2082,8 +2272,8 @@ PortableServer::AdapterActivator_out::AdapterActivator_out (PortableServer::Adap
 }
 
 ACE_INLINE
-PortableServer::AdapterActivator_out::AdapterActivator_out (const PortableServer::AdapterActivator_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (AdapterActivator_out&,p).ptr_)
+PortableServer::AdapterActivator_out::AdapterActivator_out (PortableServer::AdapterActivator_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::AdapterActivator_out &
@@ -2130,7 +2320,7 @@ PortableServer::AdapterActivator_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantManager::ServantManager(
-                                               TAO_Stub *objref,
+                                               STUB_Object *objref,
                                                TAO_ServantBase *servant,
                                                CORBA::Boolean collocated
                                                )
@@ -2275,8 +2465,8 @@ PortableServer::ServantManager_out::ServantManager_out (PortableServer::ServantM
 }
 
 ACE_INLINE
-PortableServer::ServantManager_out::ServantManager_out (const PortableServer::ServantManager_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ServantManager_out&,p).ptr_)
+PortableServer::ServantManager_out::ServantManager_out (PortableServer::ServantManager_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantManager_out &
@@ -2323,7 +2513,7 @@ PortableServer::ServantManager_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantActivator::ServantActivator(
-                                                   TAO_Stub *objref,
+                                                   STUB_Object *objref,
                                                    TAO_ServantBase *servant,
                                                    CORBA::Boolean collocated
                                                    )
@@ -2468,8 +2658,8 @@ PortableServer::ServantActivator_out::ServantActivator_out (PortableServer::Serv
 }
 
 ACE_INLINE
-PortableServer::ServantActivator_out::ServantActivator_out (const PortableServer::ServantActivator_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ServantActivator_out&,p).ptr_)
+PortableServer::ServantActivator_out::ServantActivator_out (PortableServer::ServantActivator_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantActivator_out &
@@ -2516,7 +2706,7 @@ PortableServer::ServantActivator_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantLocator::ServantLocator(
-                                               TAO_Stub *objref,
+                                               STUB_Object *objref,
                                                TAO_ServantBase *servant,
                                                CORBA::Boolean collocated
                                                )
@@ -2661,8 +2851,8 @@ PortableServer::ServantLocator_out::ServantLocator_out (PortableServer::ServantL
 }
 
 ACE_INLINE
-PortableServer::ServantLocator_out::ServantLocator_out (const PortableServer::ServantLocator_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ServantLocator_out&,p).ptr_)
+PortableServer::ServantLocator_out::ServantLocator_out (PortableServer::ServantLocator_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantLocator_out &
@@ -2707,11 +2897,9 @@ PortableServer::ServantLocator_out::operator-> (void)
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 ACE_INLINE
 PortableServer::POA::POA(
-                         TAO_Stub *objref,
+                         STUB_Object *objref,
                          TAO_ServantBase *servant,
                          CORBA::Boolean collocated
                          )
@@ -2850,8 +3038,8 @@ PortableServer::POA_out::POA_out (PortableServer::POA_var &p) // constructor fro
 }
 
 ACE_INLINE
-PortableServer::POA_out::POA_out (const PortableServer::POA_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (POA_out&,p).ptr_)
+PortableServer::POA_out::POA_out (PortableServer::POA_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::POA_out &
@@ -2898,7 +3086,7 @@ PortableServer::POA_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::Current::Current(
-                                 TAO_Stub *objref,
+                                 STUB_Object *objref,
                                  TAO_ServantBase *servant,
                                  CORBA::Boolean collocated
                                  )
@@ -3043,8 +3231,8 @@ PortableServer::Current_out::Current_out (PortableServer::Current_var &p) // con
 }
 
 ACE_INLINE
-PortableServer::Current_out::Current_out (const PortableServer::Current_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (Current_out&,p).ptr_)
+PortableServer::Current_out::Current_out (PortableServer::Current_out &p) // copy constructor
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE PortableServer::Current_out &
@@ -3086,813 +3274,5 @@ PortableServer::Current_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ThreadPolicyValue &_tao_enumval)
-{
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
-}
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ThreadPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
-}
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const PortableServer::ThreadPolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    PortableServer::ThreadPolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::ThreadPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::ThreadPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      PortableServer::ThreadPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-#endif /* end #if !defined */
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::LifespanPolicyValue &_tao_enumval)
-{
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::LifespanPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const PortableServer::LifespanPolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    PortableServer::LifespanPolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::LifespanPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::LifespanPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      PortableServer::LifespanPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::IdUniquenessPolicyValue &_tao_enumval)
-{
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdUniquenessPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const PortableServer::IdUniquenessPolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    PortableServer::IdUniquenessPolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::IdUniquenessPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::IdUniquenessPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      PortableServer::IdUniquenessPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::IdAssignmentPolicyValue &_tao_enumval)
-{
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdAssignmentPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const PortableServer::IdAssignmentPolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    PortableServer::IdAssignmentPolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::IdAssignmentPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::IdAssignmentPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      PortableServer::IdAssignmentPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ImplicitActivationPolicyValue &_tao_enumval)
-{
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ImplicitActivationPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
-}
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const PortableServer::ImplicitActivationPolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    PortableServer::ImplicitActivationPolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::ImplicitActivationPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::ImplicitActivationPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      PortableServer::ImplicitActivationPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-#endif /* !defined (TAO_HAS_MINIMUM_CORBA) */
-
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ServantRetentionPolicyValue &_tao_enumval)
-{
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ServantRetentionPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
-}
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const PortableServer::ServantRetentionPolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    PortableServer::ServantRetentionPolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::ServantRetentionPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::ServantRetentionPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      PortableServer::ServantRetentionPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::RequestProcessingPolicyValue &_tao_enumval)
-{
-  return strm.write_ulong ((CORBA::ULong) _tao_enumval);
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::RequestProcessingPolicyValue &_tao_enumval)
-{
-  CORBA::ULong _tao_temp;
-  if (strm.read_ulong (_tao_temp))
-  {
-    ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));
-    return 1;
-  }
-  else
-    return 0;
-}
-
-#if !defined(TAO_HAS_MINIMUM_CORBA)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const PortableServer::RequestProcessingPolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    PortableServer::RequestProcessingPolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::RequestProcessingPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::RequestProcessingPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      PortableServer::RequestProcessingPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::AdapterAlreadyExists &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::AdapterAlreadyExists &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::AdapterInactive &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::AdapterInactive &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::AdapterNonExistent &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::AdapterNonExistent &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::InvalidPolicy &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.index)
-    )
-      return 1;
-    else
-      return 0;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::InvalidPolicy &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    // now marshal the members
-    if (
-      (strm >> _tao_aggregate.index)
-    )
-      return 1;
-    else
-      return 0;
-  }
-  else
-    return 0;
-}
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::NoServant &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::NoServant &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-#endif /* !defined (TAO_HAS_MINIMUM_CORBA) */
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::ObjectAlreadyActive &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::ObjectAlreadyActive &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::ObjectNotActive &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::ObjectNotActive &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::ServantAlreadyActive &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::ServantAlreadyActive &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::ServantNotActive &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::ServantNotActive &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::WrongAdapter &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::WrongAdapter &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::WrongPolicy &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::WrongPolicy &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const PortableServer::Current_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    PortableServer::Current_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::Current::NoContext &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Current::NoContext &_tao_aggregate)
-{
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const PortableServer::Current_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    PortableServer::Current_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      PortableServer::Current::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
 #endif // end #if !defined

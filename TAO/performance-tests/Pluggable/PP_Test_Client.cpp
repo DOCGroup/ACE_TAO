@@ -301,14 +301,14 @@ PP_Test_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet",
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
@@ -321,13 +321,13 @@ PP_Test_Client::init (int argc, char **argv)
 
       CORBA::Object_var factory_object =
         this->orb_->string_to_object (this->factory_key_,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       this->factory_ =
         Pluggable_Test_Factory::_narrow (factory_object.in(),
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->factory_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -343,21 +343,21 @@ PP_Test_Client::init (int argc, char **argv)
         ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_MAKE_PLUGGABLE_START);
 
         this->objref_ =
-          this->factory_->make_pluggable_test (ACE_TRY_ENV);
+          this->factory_->make_pluggable_test (TAO_TRY_ENV);
       }
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->objref_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null objref returned by factory\n"),
                           -1);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Pluggable_Test::init");
+      TAO_TRY_ENV.print_exception ("Pluggable_Test::init");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
