@@ -1,3 +1,10 @@
+Thu Mar 11 10:27:51 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/DLL_Test.cpp (main): Allowed the main to be accessible on
+	  all platforms by shifting the #ifdefs inside the main. The
+	  problem arose due to the main being declared an undefined
+	  reference on LynxOS.
+	
 Wed Mar 10 13:31:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * ace/config-linux-common.h:
