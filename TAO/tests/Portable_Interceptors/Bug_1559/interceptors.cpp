@@ -255,9 +255,7 @@ Echo_Client_Request_Interceptor::receive_other (
     {
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
-                                    this->orb_id_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                    this->orb_id_.in ());
     }
 
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
