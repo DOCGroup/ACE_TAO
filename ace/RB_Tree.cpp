@@ -315,7 +315,8 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::remove (const KEY &k)
       z->key () = y->key ();
       z->item () = y->item ();
     }
-    if (y->color () == ACE_RB_Tree_Node_Base::BLACK)
+    // CLR pp. 263 says that nil nodes are implicitly colored BLACK
+    if (!y || y->color () == ACE_RB_Tree_Node_Base::BLACK)
     {
       RB_delete_fixup (x);
     }
@@ -434,27 +435,36 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree_Node<KE
 template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  void
 ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<KEY, T> * x)
 {
-  while ((x) && (x->parent ()) && (x->color () == ACE_RB_Tree_Node_Base::BLACK))
+  while (x && 
+         x->parent () && 
+         x->color () == ACE_RB_Tree_Node_Base::BLACK)
   {
     if (x == x->parent ()->left ())
     {
       ACE_RB_Tree_Node<KEY, T> *w = x->parent ()->right ();
-      if (w->color () == ACE_RB_Tree_Node_Base::RED)
+      if (w && w->color () == ACE_RB_Tree_Node_Base::RED)
       {
         w->color (ACE_RB_Tree_Node_Base::BLACK);
         x->parent ()->color (ACE_RB_Tree_Node_Base::RED);
         RB_rotate_left (x->parent ());
         w = x->parent ()->right ();
       }
-      if ((w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK) &&
-          (w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
+      // CLR pp. 263 says that nil nodes are implicitly colored BLACK
+      if ((w) && 
+          (!w->left () || 
+           w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK) &&
+          (!w->right () ||
+           w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
       {
         w->color (ACE_RB_Tree_Node_Base::RED);
         x = x->parent ();
       }
       else
       {
-        if (w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK)
+        // CLR pp. 263 says that nil nodes are implicitly colored BLACK
+        if (w && 
+            (!w->right () || 
+             w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
         {
           w->left ()->color (ACE_RB_Tree_Node_Base::BLACK);
           w->color (ACE_RB_Tree_Node_Base::RED);
@@ -471,22 +481,27 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<K
     else
     {
       ACE_RB_Tree_Node<KEY, T> *w = x->parent ()->left ();
-      if (w->color () == ACE_RB_Tree_Node_Base::RED)
+      if (w && w->color () == ACE_RB_Tree_Node_Base::RED)
       {
         w->color (ACE_RB_Tree_Node_Base::BLACK);
         x->parent ()->color (ACE_RB_Tree_Node_Base::RED);
         RB_rotate_right (x->parent ());
         w = x->parent ()->left ();
       }
-      if ((w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK) &&
-          (w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
+      // CLR pp. 263 says that nil nodes are implicitly colored BLACK
+      if ((!w->left () || 
+           w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK) &&
+          (!w->right () ||
+           w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
       {
         w->color (ACE_RB_Tree_Node_Base::RED);
         x = x->parent ();
       }
       else
       {
-        if (w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK)
+        // CLR pp. 263 says that nil nodes are implicitly colored BLACK
+        if (!w->left () || 
+            w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK)
         {
           w->right ()->color (ACE_RB_Tree_Node_Base::BLACK);
           w->color (ACE_RB_Tree_Node_Base::RED);
@@ -569,8 +584,9 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_Node<KEY,
 {
   ACE_RB_Tree_Node<KEY, T> *y = 0;
 
-  while ((x) && (x->parent ())
-         && (x->parent ()->color () == ACE_RB_Tree_Node_Base::RED))
+  while (x && 
+         x->parent () &&
+         x->parent ()->color () == ACE_RB_Tree_Node_Base::RED)
   {
     if (! x->parent ()->parent ())
     {
@@ -584,7 +600,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_Node<KEY,
     if (x->parent () == x->parent ()->parent ()->left ())
     {
       y = x->parent ()->parent ()->right ();
-      if (y && (y->color () == ACE_RB_Tree_Node_Base::RED))
+      if (y && y->color () == ACE_RB_Tree_Node_Base::RED)
       {
         // Handle case 1 (see CLR book, pp. 269).
         x->parent ()->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -610,7 +626,7 @@ ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_Node<KEY,
     else
     {
       y = x->parent ()->parent ()->left ();
-      if (y && (y->color () == ACE_RB_Tree_Node_Base::RED))
+      if (y && y->color () == ACE_RB_Tree_Node_Base::RED)
       {
         // Handle case 1 (see CLR book, pp. 269).
         x->parent ()->color (ACE_RB_Tree_Node_Base::BLACK);
