@@ -118,8 +118,8 @@ public:
                             int twoway = 1,
                             ACE_Time_Value *max_time_wait = 0);
 
-  virtual int generate_request_header (TAO_Target_Specification &spec,
-                                       TAO_Operation_Details &opdetails,
+  virtual int generate_request_header (TAO_Operation_Details &opdetails,
+                                       TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
 
   /// Initialising the messaging object
