@@ -21,7 +21,7 @@
 #if !defined (SERVER_IMPL_H)
 #define SERVER_IMPL_H
 
-#include "simple_object_impl.h"
+#include "Time_impl.h"
 #include "tao/TAO.h"
 
 class Server_Impl
@@ -46,7 +46,7 @@ public:
   // Run the orb 
 
 private:
-  Simple_Impl server_impl;
+  Time_Impl server_impl;
 
   int parse_args (void);
   // Parses the commandline arguments.
@@ -64,4 +64,4 @@ private:
   // The command line arguments.
 };
 
-#endif /* SERVER_IMPL_H */
+#endif /* TIME_IMPL_H */

@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "Simple_ObjectC.h"
+#include "TimeC.h"
 #include "tao/corba.h"
 
 class Client_Impl
@@ -68,7 +68,7 @@ private:
   CORBA::Environment env_;
   // Environment variable.
 
-  simple_object_ptr server_;
+  Time_ptr server_;
   // Server object ptr.
 
   CORBA::ORB_var orb_;

@@ -4,14 +4,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-ACE_RCSID(Simple, client_impl, "$Id$")
+ACE_RCSID(Time, client_impl, "$Id$")
 
 // Constructor.
 Client_Impl::Client_Impl (void)
   : server_key_ (ACE_OS::strdup ("key0")),
     loop_count_ (10),
     shutdown_ (0),
-    server_ (simple_object::_nil ())
+    server_ (Time::_nil ())
 {
 }
 
@@ -93,16 +93,13 @@ Client_Impl::time (void)
 {
   CORBA::Long timedate = this->server_->time (this->env_);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "The cube of %d is %d\n", i, ret_long));
-
   if (this->env_.exception () != 0)
     this->env_.print_exception ("from time");
   else
     {
-      dmsg2 ("time:  %d --> %d\n", i, timedate);
+      dmsg1 ("time:  %d\n", timedate);
 
-      char *ascii_timedate = ACE_OS::ctime (&timedate);
+      char *ascii_timedate = ACE_OS::ctime (ACE_static_cast (time_t *, &timedate));
 
       ACE_DEBUG ((LM_DEBUG,
                   "string time is %s\n",
@@ -118,7 +115,10 @@ Client_Impl::run (void)
   u_int i;
 
   for (i = 0; i < this->loop_count_; i++)
-    this->time ();
+    {
+      this->time ();
+      ACE_OS::sleep (1);
+    }
 
   if (this->shutdown_)
     this->server_->shutdown (this->env_);
@@ -167,7 +167,7 @@ Client_Impl::init (int argc, char **argv)
         this->orb_->string_to_object (this->server_key_, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->server_ = simple_object::_narrow (server_object.in(), TAO_TRY_ENV);
+      this->server_ = Time::_narrow (server_object.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (server_object.in ()))
