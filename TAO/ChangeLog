@@ -1,3 +1,19 @@
+Fri Jan 14 18:15:21 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/QtTests/server.cpp (Module):
+	* tests/QtTests/client.cpp (Module):
+	* tao/Strategies/advanced_resource.h (Module):
+	* tao/Strategies/advanced_resource.cpp (Module):
+	* tao/qt_resource_loader.h (Module):
+	* tao/qt_resource_loader.cpp (Module):
+	* tao/qt_resource.cpp (Module):
+	* tao/ORB_Core.h (Module):
+	* tao/ORB_Core.cpp (Module):
+	* tao/Leader_Follower.cpp (Module):
+	Created reactor factory on ORB_Core level to create GUI reactors.
+	Removed resouce_factory chain from Advanced_Resource_Factory.
+	Adapted qt_resource_loader to new reactor creation schema. Some style changes.
+
 Tue Jan 11 23:39:37 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* tao/Strategies/advanced_resource.h (Module):

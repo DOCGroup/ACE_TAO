@@ -55,7 +55,7 @@ main (int argc, char *argv[])
 
   // Qt specific stuff for running with TAO...
   QApplication app (argc, argv);
-  TAO_QtResource_Loader qt_resources( &app );
+  TAO_QtResource_Loader qt_resources (&app);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

@@ -104,6 +104,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     collocation_resolver_name_ ("Default_Collocation_Resolver"),
     stub_factory_name_ ("Default_Stub_Factory"),
     resource_factory_name_ ("Resource_Factory"),
+    reactor_factory_name_ (""),
     dynamic_adapter_name_ ("Dynamic_Adapter"),
     ifr_client_adapter_name_ ("IFR_Client_Adapter"),
     typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
@@ -138,6 +139,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     object_key_table_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
+    reactor_factory_ (0),
 //    server_id_ (0),
     client_factory_ (0),
     server_factory_ (0),
@@ -1222,6 +1224,13 @@ TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 }
 
 void
+TAO_ORB_Core::set_reactor_factory (const char *reactor_factory_name)
+{
+  TAO_ORB_Core_Static_Resources::instance ()->reactor_factory_name_ =
+    reactor_factory_name;
+}
+
+void
 TAO_ORB_Core::dynamic_adapter_name (const char *name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->dynamic_adapter_name_ = name;
@@ -1297,6 +1306,26 @@ TAO_ORB_Core::resource_factory (void)
 
   return this->resource_factory_;
 }
+
+TAO_Resource_Factory *
+TAO_ORB_Core::reactor_factory (void)
+{
+  if ( TAO_ORB_Core_Static_Resources::instance ()->reactor_factory_name_== "" )
+    return resource_factory( );
+  // Check if there is a cached reference.
+  if (this->reactor_factory_ != 0)
+    {
+      return this->reactor_factory_;
+    }
+
+  // Look in the service repository for an instance.
+  this->reactor_factory_ =
+    ACE_Dynamic_Service<TAO_Resource_Factory>::instance
+    (TAO_ORB_Core_Static_Resources::instance ()->reactor_factory_name_.c_str());
+
+  return this->reactor_factory_;
+}
+
 
 TAO_Thread_Lane_Resources_Manager &
 TAO_ORB_Core::thread_lane_resources_manager (void)
