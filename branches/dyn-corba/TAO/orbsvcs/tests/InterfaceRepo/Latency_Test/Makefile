@@ -20,7 +20,7 @@ SRC = $(PROG_SRCS)
 
 IFR_TEST_OBJS = client.o Latency_Query_Client.o
 
-BIN = Latency_Test
+BIN = client
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -40,7 +40,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 LDFLAGS += -L$(TAO_ROOT)/tao
 
-Latency_Test: $(addprefix $(VDIR),$(IFR_TEST_OBJS))
+client: $(addprefix $(VDIR),$(IFR_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
