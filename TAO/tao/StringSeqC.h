@@ -161,9 +161,6 @@
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_StringSeq;
-
-
 #if !defined (_CORBA_WSTRINGSEQ_CH_)
 #define _CORBA_WSTRINGSEQ_CH_
 
@@ -269,9 +266,6 @@
 
 
 #endif /* end #if !defined */
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_WStringSeq;
-
 
 // Proxy Broker Factory function pointer declarations.
 

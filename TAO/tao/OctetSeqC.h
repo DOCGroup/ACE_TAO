@@ -171,9 +171,6 @@
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_OctetSeq;
-
-
 // Proxy Broker Factory function pointer declarations.
 
 TAO_Export void operator<<= (CORBA::Any &, const CORBA_OctetSeq &); // copying version
