@@ -174,7 +174,9 @@ worker (void *c)
       // types when used with ACE_TSS.  See DESCRIPTION of template
       // class ACE_TSS_Type_Adapter in ace/Synch_T.h for what this
       // should look like.  Unfortunately, some compilers have trouble
-      // with the implicit type conversions.
+      // with the implicit type conversions.  Others have problems with
+      // the *explicit* type conversions.
+#if !defined (ACE_HAS_BROKEN_EXPLICIT_TYPECAST_OPERATOR_INVOCATION)
       (*u)->operator u_int & () = 37;
       if ((*u)->operator u_int () != 37)
         {
@@ -185,6 +187,7 @@ worker (void *c)
                       ASYS_TEXT ("is %u, it should be 37!\n"), (*u)->operator u_int ()));
           ++errors;
         }
+#endif /* !defined (ACE_HAS_BROKEN_EXPLICIT_TYPECAST_OPERATOR_INVOCATION) */
 
 #if !defined (__Lynx__) || defined (ACE_HAS_TSS_EMULATION)
       key = ACE_OS::NULL_key;

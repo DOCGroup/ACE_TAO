@@ -10,8 +10,12 @@
 //    Functor_T.h
 //
 // = DESCRIPTION
-//     Templatized classes for implementing the GOF Command Pattern,
-//     also known as functors or function objects.
+//     Templatized classes for implementing function objects that are used in 
+//     various places in ACE.  There are currently two major categories of  
+//     function objects in ACE: GOF Command Pattern objects, and STL-style 
+//     functors for comparison of container elements.  The command objects
+//     are invoked via an execute () method, while the STL-style functors are
+//     invoked via an operator() () method.
 //
 // = AUTHOR
 //     Chris Gill          <cdgill@cs.wustl.edu>
@@ -21,6 +25,10 @@
 //    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
 //    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
+//    and on STL-style functor implementations originally done by
+//
+//    Irfan Pyarali  <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -33,12 +41,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+///////////////////////////////////
+// GOF Command Pattern Templates //
+///////////////////////////////////
+
 template <class RECEIVER, class ACTION>
 class ACE_Command_Callback : public ACE_Command_Base
 {
   // = TITLE
-  //    Defines a class template that allows us to invoke a callback to an
-  //    object without knowing anything about the object except its type.
+  //    Defines a class template that allows us to invoke a GOF command style
+  //    callback to an object without knowing anything about the object except
+  //    its type.
   //
   // = DESCRIPTION
   //    This class declares an interface to execute operations,
@@ -66,139 +79,48 @@ private:
   // Method that is going to be invoked.
 };
 
-/////////////////////////////
-// Unary functor templates //
-/////////////////////////////
+/////////////////////////////////
+// STL-style Functor Templates //
+/////////////////////////////////
 
-template <class OPERAND>
-class ACE_Unary_Functor_Base
+template <class TYPE>
+class ACE_Hash
 {
   // = TITLE
-  //    Defines a class template that allows us to invoke a function object
-  //    over a single non-const parameterized type without knowing anything
-  //    about the function and operand objects except their types.
   //
-  // = DESCRIPTION
-  //    This class declares an interface to execute a unary operation over a
-  //    single object of the non-const paramterized type.  A class can invoke
-  //    such operation without knowing anything about it, or how it was
-  //    implemented.
+  //     Function object for hashing
   //
 public:
-
-  virtual ~ACE_Unary_Functor_Base () {};
-  // Virtual destructor.
-
-  virtual int execute (OPERAND &operand) = 0;
-  // Invokes the function object.
-
-  virtual ACE_Unary_Functor_Base * clone () = 0;
-  // Creates another object of the same type.
+  u_long operator () (const TYPE &t) const;  
+  // Simply calls t.hash ()
 };
 
-template <class OPERAND>
-class ACE_Const_Unary_Functor_Base
+template <class TYPE>
+class ACE_Equal_To
 {
   // = TITLE
-  //    Defines a class template that allows us to invoke a function object
-  //    over a single parameterized type without knowing anything about
-  //    the function and operand objects except their types.
   //
-  // = DESCRIPTION
-  //    This class declares an interface to execute a unary operation over a
-  //    single object of the paramterized type.  A class can invoke such
-  //    an operation without knowing anything about it, or its implementation.
+  //     Function object for comparing two objects of 
+  //     the given type for equality.
   //
 public:
-
-  virtual ~ACE_Const_Unary_Functor_Base () {};
-  // Virtual destructor.
-
-  virtual int execute (const OPERAND &operand) = 0;
-  // Invokes the function object.
-
-  virtual ACE_Const_Unary_Functor_Base * clone () = 0;
-  // Creates another object of the same type.
+  int operator () (const TYPE &lhs,
+                   const TYPE &rhs) const;  
+  // Simply calls operator==
 };
 
-/////////////////////////////
-// Binary functor templates //
-/////////////////////////////
-
-template <class OPERAND1, class OPERAND2>
-class ACE_Binary_Functor_Base
+template <class TYPE>
+class ACE_Less_Than
 {
   // = TITLE
-  //    Defines a class template that allows us to invoke a binary function
-  //    object over two non-const parameterized types without knowing anything
-  //    about the function and operand objects except their types.
   //
-  // = DESCRIPTION
-  //    This class declares an interface to execute a binary operation over two
-  //    objects of the paramterized non-const types.  A class can invoke such
-  //    an operation without knowing anything about it, or its implementation.
+  //     Function object for determining whether the first object of the
+  //     given type is less than the second object of the same type.
   //
 public:
-
-  virtual ~ACE_Binary_Functor_Base () {};
-  // Virtual destructor.
-
-  virtual int execute (OPERAND1 &operand1, OPERAND2 &operand2) = 0;
-  // Invokes the function object.
-
-  virtual ACE_Binary_Functor_Base * clone () = 0;
-  // Creates another object of the same type.
-};
-
-template <class OPERAND1, class OPERAND2>
-class ACE_Const_Binary_Functor_Base
-{
-  // = TITLE
-  //    Defines a class template that allows us to invoke a binary function
-  //    object over two parameterized types without knowing anything about
-  //    the function and operand objects except their types.
-  //
-  // = DESCRIPTION
-  //    This class declares an interface to execute a binary operation over two
-  //    objects of the paramterized types.  A class can invoke such
-  //    an operation without knowing anything about it, or its implementation.
-  //
-public:
-
-  virtual ~ACE_Const_Binary_Functor_Base () {};
-  // Virtual destructor.
-
-  virtual int execute (const OPERAND1 &operand1, const OPERAND2 &operand2) = 0;
-  // Invokes the function object.
-
-  virtual ACE_Const_Binary_Functor_Base * clone () = 0;
-  // Creates another object of the same type.
-};
-
-
-template <class OPERAND1, class OPERAND2>
-class ACE_Less_Than_Functor :
-  public ACE_Const_Binary_Functor_Base<OPERAND1, OPERAND2>
-{
-  // = TITLE
-  //    Defines a class template that allows us to invoke a binary less than
-  //    function over two parameterized types without knowing anything about
-  //    the function and operand objects except their types.
-  //
-  // = DESCRIPTION
-  //    This class depends on the definition
-  //    objects of the paramterized types.  A class can invoke such
-  //    an operation without knowing anything about it, or its implementation.
-  //
-public:
-
-  virtual int execute (const OPERAND1 &operand1, const OPERAND2 &operand2);
-  // Invokes the function object.
-
-  virtual
-    ACE_Const_Binary_Functor_Base<OPERAND1, OPERAND2>
-          * clone ();
-  // Creates another object of the same type.
+  int operator () (const TYPE &lhs,
+                   const TYPE &rhs) const;
+  // Simply calls operator<
 };
 
 

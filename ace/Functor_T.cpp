@@ -11,8 +11,7 @@
 //
 // = DESCRIPTION
 //    Non-inlinable method definitions for templatized classes
-//    implementing the GOF Command Pattern, also known as functors
-//    or function objects.
+//    implementing the GOF Command Pattern, or STL-style functors.
 //
 // = AUTHOR
 //    Chris Gill           <cdgill@cs.wustl.edu>
@@ -22,6 +21,10 @@
 //    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
 //    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
+//    and on STL-style functor implementations originally done by
+//
+//    Irfan Pyarali  <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -42,6 +45,11 @@
 ACE_RCSID(ace, Functor_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Command_Callback)
+
+
+///////////////////////////////////
+// GOF Command Pattern Templates //
+///////////////////////////////////
 
 // Constructor.
 

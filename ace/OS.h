@@ -778,6 +778,12 @@ typedef struct
 #   define ACE_PLATFORM_A "pSOS"
 #   define ACE_PLATFORM_EXE_SUFFIX_A ""
 
+# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#   define ASYS_WIDE_STRING(ASCII_STRING) ACE_WString (ASCII_STRING).fast_rep ()
+# else
+#   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
+# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+
 #   if defined (ACE_HAS_UNICODE)
 #     define ACE_DIRECTORY_SEPARATOR_STR_W L"/"
 #     define ACE_DIRECTORY_SEPARATOR_CHAR_W L'/'
@@ -6145,7 +6151,7 @@ ace_main_i (int, char *[]);               /* forward declaration */ \
 ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 { \
   int argc = 1;                           /* dummy arg count */ \
-  char *argv[] = {""};                    /* dummy arg list */ \
+  char *argv[] = {"root"};                /* dummy arg list */ \
   ACE_Object_Manager ace_object_manager;  /* has program lifetime */ \
   ace_main_i (argc, argv);                /* call user main, ignore result */ \
 } \

@@ -18,35 +18,11 @@
 #define ACE_HASH_MAP_MANAGER_T_H
 
 #include "ace/OS.h"
+#include "ace/Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-template <class TYPE>
-class ACE_Hash
-{
-  // = TITLE
-  //
-  //     Function object for hashing
-  //
-public:
-  u_long operator () (const TYPE &t);  
-  // Simply calls t.hash ()
-};
-
-template <class TYPE>
-class ACE_Equal_To
-{
-  // = TITLE
-  //
-  //     Function object for comparing types
-  //
-public:
-  int operator () (const TYPE &lhs,
-                   const TYPE &rhs);  
-  // Simply calls operator==
-};
 
 template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_Entry

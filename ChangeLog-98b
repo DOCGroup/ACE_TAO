@@ -1,3 +1,31 @@
+Wed Dec 30 13:22:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Functor.{cpp, h, i}
+          ace/Functor_T.{cpp, h, i}
+          ace/Hash_Map_Manager.{h, i}
+          ace/Hash_Map_Manager_T.{h, i}: Moved ACE_Hash and ACE_Equal_To 
+          STL-style functors from the Hash_Map_Manager files into the
+          Functor files (so other containers can use these from a central 
+          place).  Added ACE_Less_Than STL-style functor.  Thanks to Doug
+          Schmidt, Carlos O'Ryan, and Irfan Pyarali for comments on the
+          distinctions between GOF command pattern functors and STL-style
+          functors.
+
+        * ace/RB_Tree.{cpp, h, i}: Reworked templates so RB_Tree can take
+          advantage of template specialization for strcmp semantics without
+          the overhead of a virtual function call.  Thanks to Carlos O'Ryan
+          for his suggestions on how to achieve this.
+
+        * ace/OS.h
+          ace/config-psos-diab.h
+          include/makeinclude/platform_psos_diab.GNU
+          tests/Handle_Set_Test.cpp
+          tests/Process_Strategy_Test.cpp
+          tests/RB_Tree_Test.cpp
+          tests/Reactor_Performance_Test.cpp
+          tests/TSS_Test.cpp: A number of fixes to allow ACE pSOS tests to
+          compile and link successfully.
+
 Wed Dec 30 10:36:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Env_Value_Test.cpp: protected tests of doubles with
