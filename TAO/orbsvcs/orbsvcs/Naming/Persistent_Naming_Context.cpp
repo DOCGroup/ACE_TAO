@@ -16,7 +16,7 @@
 #include "Persistent_Context_Index.h"
 #include "Bindings_Iterator_T.h"
 
-ACE_RCSID(Naming, Persistent_Naming_Context, "$Id:")
+ACE_RCSID(Naming, Persistent_Naming_Context, "$Id$")
 
 int
 TAO_Persistent_Bindings_Map::unbind (const char *id,

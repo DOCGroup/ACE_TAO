@@ -134,7 +134,7 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
 
   *os << "if (this->_stubobj ()->orb_core ()->get_collocation_strategy ()"
          " == TAO_ORB_Core::THRU_POA)" << be_idt_nl
-      << "{" << be_idt_nl;
+      << "{\n" << be_idt;
 
   // Declare a return type
   ctx = *this->ctx_;
@@ -151,16 +151,16 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
     }
 
   os->indent ();
-
-  *os <<"TAO_Object_Adapter::Servant_Upcall" << be_idt_nl
-      << "servant_upcall (*this->_stubobj ()->servant_orb ()->orb_core ()->object_adapter ());"
+  *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
+      << be_idt << be_idt_nl
+      << "*this->_stubobj ()->servant_orb ()->orb_core ()->object_adapter ()"
       << be_uidt_nl
-
+      << ");" << be_uidt_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
       << "this->_object_key ()," << be_nl
       << "\"" << node->local_name () << "\"," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ");\n" << be_uidt;
 
   // check if there is an exception
   if (!idl_global->exception_support ())
@@ -182,14 +182,26 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
       *os << "return ";
     }
 
-  *os << "ACE_reinterpret_cast (" << intf->full_skel_name ()
-      << "_ptr, servant_upcall.servant ()->_downcast (\"" << intf->repoID ()
-      << "\"))";
+  *os << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << intf->full_skel_name () << "_ptr," << be_nl
+      << "servant_upcall.servant ()->_downcast (" << be_idt << be_idt_nl
+      << "\"" << intf->repoID ()  << "\"" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ")" << be_uidt;
 
   if (this->gen_invoke (ctx, node) == -1)
     return -1;
 
-  *os << "}" << be_uidt_nl;
+  if (bt->node_type () == AST_Decl::NT_pre_defined
+      && be_predefined_type::narrow_from_decl (bt)->pt ()
+      == AST_PredefinedType::PT_void)
+    {
+      os->indent ();
+      *os << "return;";
+    }
+
+  *os << be_uidt_nl
+      << "}" << be_uidt_nl;
 
   if (bt->node_type () != AST_Decl::NT_pre_defined
       || be_predefined_type::narrow_from_decl (bt)->pt ()
@@ -201,7 +213,9 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
   *os << "this->servant_";
   if (this->gen_invoke (ctx, node) == -1)
     return -1;
-  *os << "}\n\n";
+
+  *os << be_uidt_nl
+      << "}\n\n";
 
   return 0;
 }
@@ -211,7 +225,9 @@ int be_visitor_operation_collocated_ss::gen_invoke (be_visitor_context &ctx,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "->" << node->local_name () << " (" << be_idt_nl;
+  *os << "->" << node->local_name () << " ("
+      << be_idt << be_idt << "\n";
+
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -226,8 +242,8 @@ int be_visitor_operation_collocated_ss::gen_invoke (be_visitor_context &ctx,
     }
 
   // end the upcall
-  *os << be_uidt_nl;
-  *os << ");" << be_uidt_nl;
+  *os << be_uidt_nl
+      << ");\n" << be_uidt;
   return 0;
 }
 
