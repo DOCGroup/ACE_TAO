@@ -134,6 +134,9 @@
 				RelativePath=".\ExecutorMappingGenerator.cpp">
 			</File>
 			<File
+				RelativePath=".\RepositoryIdGenerator.cpp">
+			</File>
+			<File
 				RelativePath=".\ServantGenerator.cpp">
 			</File>
 			<File
@@ -158,6 +161,9 @@
 			</File>
 			<File
 				RelativePath=".\Literals.hpp">
+			</File>
+			<File
+				RelativePath=".\RepositoryIdGenerator.hpp">
 			</File>
 			<File
 				RelativePath=".\ServantGenerator.hpp">

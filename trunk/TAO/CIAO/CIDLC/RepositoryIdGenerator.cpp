@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "RepositoryIdGenerator.hpp"
+#include "Literals.hpp"
 
 #include "CCF/CompilerElements/Diagnostic.hpp"
 
@@ -19,9 +20,6 @@ namespace
 
   char const* const
   type_prefix_label = "CIDLC::RepositoryIdGenerator::TypePrefix";
-
-  char const* const
-  rep_id_label = "CIDLC::RepositoryIdGenerator::RepId";
 }
 
 namespace
@@ -32,27 +30,28 @@ namespace
   class TypeIdLabelGenerator : public Traversal::TypeId
   {
   public:
-    TypeIdLabelGenerator (Diagnostic::Stream dout)
+    TypeIdLabelGenerator (Diagnostic::Stream& dout)
         : dout_ (dout)
     {
     }
 
     virtual void
-    traverse (TypeIdDeclPtr const& ti)
+    traverse (TypeIdPtr const& ti)
     {
       ScopedName decl_name (ti->declaration ());
 
       DeclarationTable::IteratorPair iters (
-        ti->scope ()->table ()->lookup (decl_name));
+        ti->scope ()->table ().lookup (decl_name));
 
       for (; iters.first != iters.second; ++iters.first)
       {
         DeclarationPtr decl (*iters.first);
 
-        if (decl->context ().count (type_id_label))
+        if (decl->context ().count (
+              StringLiterals::STRS[StringLiterals::TYPE_ID]))
         {
-          //@@ Seems ti should containt filename and line
-          //   of it's origin.
+          //@@ Seems it should contain filename and line
+          //   of its origin.
           //
 
           Diagnostic::Error err ("???", 0);
@@ -70,7 +69,10 @@ namespace
         }
         else
         {
-          decl->context ().set (type_id_label, ti);
+          decl->context ().set (
+            StringLiterals::STRS[StringLiterals::TYPE_ID], ti);
+          decl->context ().set (
+            StringLiterals::STRS[StringLiterals::REPO_ID], ti->id ().str ());
         }
       }
     }
@@ -86,29 +88,31 @@ namespace
   class TypePrefixLabelGenerator : public Traversal::TypePrefix
   {
   public:
-    TypePrefixLabelGenerator (Diagnostic::Stream dout)
+    TypePrefixLabelGenerator (Diagnostic::Stream& dout)
         : dout_ (dout)
     {
     }
 
     virtual void
-    traverse (TypePrefixDeclPtr const& tp)
+    traverse (TypePrefixPtr const& tp)
     {
       ScopedName decl_name (tp->declaration ());
 
       DeclarationTable::IteratorPair iters (
-        tp->scope ()->table ()->lookup (decl_name));
+        tp->scope ()->table ().lookup (decl_name));
 
       for (; iters.first != iters.second; ++iters.first)
       {
         DeclarationPtr decl (*iters.first);
 
-        if (decl->context ().count (type_prefix_label))
+        if (decl->context ().count (
+              StringLiterals::STRS[StringLiterals::TYPE_PREFIX]))
         {
-          TypePrefixDeclPtr prev (
-            decl->context ().get<TypePrefixDeclPtr> (type_prefix_label));
+          TypePrefixPtr prev (
+            decl->context ().get<TypePrefixPtr> (
+              StringLiterals::STRS[StringLiterals::TYPE_PREFIX]));
 
-          if (prev->prefix != tp->prefix ())
+          if (prev->prefix () != tp->prefix ())
           {
 
             //@@ Seems tp should containt filename and line
@@ -131,7 +135,8 @@ namespace
         }
         else
         {
-          decl->context ().set (type_prefix_label, tp);
+          decl->context ().set (
+            StringLiterals::STRS[StringLiterals::TYPE_PREFIX], tp);
         }
       }
     }
@@ -145,8 +150,6 @@ namespace
 bool RepositoryIdGenerator::
 generate (TranslationUnitPtr const& u)
 {
-  // Phase One: generate labels
-  //
   {
     Diagnostic::Stream dout;
 
@@ -154,8 +157,8 @@ generate (TranslationUnitPtr const& u)
     TypePrefixLabelGenerator type_prefix (dout);
 
     Traversal::Scope scope;
-    module.add_scope_delegate (&type_id);
-    module.add_scope_delegate (&type_prefix);
+    scope.add_scope_delegate (&type_id);
+    scope.add_scope_delegate (&type_prefix);
 
     Traversal::TranslationRegion region (&scope);
 
@@ -164,21 +167,10 @@ generate (TranslationUnitPtr const& u)
 
     unit.dispatch (u);
 
+    if (dout.error_count () != 0) return false;
+
     //@@ check errors
   }
-
-
-  // Phase Two: generate repository id's (@@ that's for you, Jeff ;-)
-  //
-
-  // A few notes:
-  //
-  // (1) There is no need to generate repid's for declarations outside
-  //     PrincipalTranslationUnit (i.e. for declarations that were
-  //     #includ'ed) since we normally don't generate any code for them.
-  //
-  //
-
-
+  
   return true;
 }

@@ -1,3 +1,15 @@
+Fri Oct 10 18:39:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/CIDLC.vcproj:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/RepositoryIdGenerator.cpp:
+        * CIDLC/RepositoryIdGenerator.hpp:
+        * CIDLC/cidlc.cpp:
+          
+          Added backend support for typeid and typeprefix, used in
+          computing the repository id string.
+
 Fri Oct 10 15:54:00 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.hpp:
