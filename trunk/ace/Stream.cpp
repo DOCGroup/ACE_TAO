@@ -265,7 +265,8 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
       h2 = new ACE_Stream_Head<ACE_SYNCH_2>;
       head = new ACE_Module<ACE_SYNCH_2> ("ACE_Stream_Head", 
 					  h1, h2, 
-					  a | M_DELETE);
+					  a,
+					  M_DELETE);
     }
 
   if (tail == 0)
@@ -274,7 +275,8 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
       t2 = new ACE_Stream_Tail<ACE_SYNCH_2>;
       tail = new ACE_Module<ACE_SYNCH_2> ("ACE_Stream_Tail", 
 					  t1, t2, 
-					  a | M_DELETE);
+					  a,
+					  M_DELETE);
     }
 
   // Make sure *all* the allocation succeeded!
