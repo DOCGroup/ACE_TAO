@@ -1,0 +1,26 @@
+Welcome to TAO--The ACE ORB.  This is an implementation of a
+CORBA2-compliant ORB with support for real-time extensions.
+
+As mentioned, TAO will eventually be a CORBA2-compliant ORB.  But
+right now it's not there.  Specifically, TAO contains the following:
+* an [optimized] ORB Core based on ACE components
+* an implementation of the Basic Object Adapter (BOA)
+* various sample applications illustrating how to use the ORB in its
+  current state
+
+The current release of TAO DOES NOT contain the following:
+* an IDL compiler
+* an real-time version of the new Portable Object Adapter (POA)
+* a real-time scheduling service
+
+Our current shedule will provide these remaining features throughout
+the summer of 1997.
+
+Please feel free to experiment with, dissect, repair, use, etc., TAO.
+We accept bug reports, appreciate bug fixes/enhancements, and quickly
+integrate correct bug fixes!  Just remember that we do not expect TAO
+to provide all the features of a real ORB at the moment, and that very
+important parts of TAO will be changing substantially in the
+not-so-distant future.  Thus, any development performed in the interim
+will require a little more effort, and will likely have to be
+completely re-written to work with newer releases.
