@@ -1,3 +1,9 @@
+Wed Dec 15 20:21:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Collocation/Diamond_i.h:
+	* tests/Collocation/Diamond_i.cpp: Replaced CORBA::String with
+	  char*.
+
 Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         Where to start?  The major points:
@@ -9,12 +15,12 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           IMR's use on the server side is transparent code-wise (you still
           will need a command line option to enable it).  [Bug 24]
 
-        - Thanks to a submission by Chris Hafey <chris@stentorsoft.com>, 
-          persistence was added to the Implementation Repository.  The flags 
-          used are -p for specifying a file to save the settings to, and -r 
+        - Thanks to a submission by Chris Hafey <chris@stentorsoft.com>,
+          persistence was added to the Implementation Repository.  The flags
+          used are -p for specifying a file to save the settings to, and -r
           for saving to the Win32 Registry. [Bug 195]
 
-        - The new scheme should also work better with pluggable protocols, 
+        - The new scheme should also work better with pluggable protocols,
           but multiple profiles isn't currently supported. [Bug 134]
 
         - Another activation mode, AUTO_START was added. This mode means that
@@ -23,13 +29,13 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         - Added a callback method to the IOR lookup table.  This allows me to
           add support for simple names in the Implementation Repository.  The
-          way this works is that the IMR recognizes Interoperable Naming 
-          Service short names and activates the server and then forwards to 
+          way this works is that the IMR recognizes Interoperable Naming
+          Service short names and activates the server and then forwards to
           it.  [Note] Even though it works with INS, I still have some changes
           I want to integrate to make it easier.  Right now there is no way
-          to get the endpoint portion for the IMR IOR without copying it from 
-          the IOR output file.  
-       
+          to get the endpoint portion for the IMR IOR without copying it from
+          the IOR output file.
+
 
         * tao/Profile.cpp:
         * tao/Profile.h:
@@ -37,9 +43,9 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * tao/IIOP_Profile.i:
         * tao/UIOP_Profile.h:
         * tao/UIOP_Profile.i:
-          
+
           Added a new accessor method called get_object_key_delimeter ().
-          It returns the object key delimeter.  It was added so string IORs 
+          It returns the object key delimeter.  It was added so string IORs
           could be altered in a pluggable way.
 
         * orbsvcs/orbsvcs/ImplRepo.idl: (removed)
@@ -64,8 +70,8 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * tao/POA.cpp:
         * tao/POA.h:
 
-          Removed the IR_Helper classes and integrated their function into 
-          the POA.  The ORB_Core now supports a new flag, ORBUseIMR, and 
+          Removed the IR_Helper classes and integrated their function into
+          the POA.  The ORB_Core now supports a new flag, ORBUseIMR, and
           keeps track of the ImplRepo IOR.  The POA now does the notify
           startup and shutdown calls, plus alters the references to point
           to the IMR.
@@ -74,10 +80,10 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * tao/IOR_LookupTable.h:
         * tao/ORB.h:
         * tao/ORB.cpp:
-          
-          Added a callback hook to the IOR Lookup Table so a application 
+
+          Added a callback hook to the IOR Lookup Table so a application
           method can be used to create IORs dynamically.  The IMR uses this
-          for activation purposes when a simplified name is used (eg. 
+          for activation purposes when a simplified name is used (eg.
           iiop://maxixe:5050/NameService).
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
@@ -107,8 +113,8 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/tests/ImplRepo/nestea_i.h:
         * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
         * orbsvcs/tests/ImplRepo/nestea_server_i.h:
-         
-          Removed all IMR specific code, and have them now register short 
+
+          Removed all IMR specific code, and have them now register short
           names with INS.
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
@@ -125,18 +131,18 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/tests/ImplRepo/ImplRepo.dsw:
         * orbsvcs/tests/ImplRepo/airplane_server.dsp:
         * orbsvcs/tests/ImplRepo/nestea_server.dsp:
-        
+
           Updated the makefiles/projects because of these changes.
 
         * orbsvcs/tests/ImplRepo/NameService/README:
-          
+
           Readme for an upcoming test that will display how to use the IMR to
-          start common services such as the Trading, Naming, etc. via 
+          start common services such as the Trading, Naming, etc. via
           resolve_init_references ().
 
         * orbsvcs/Naming_Service/Naming_Service.cpp:
         * orbsvcs/Naming_Service/Naming_Service.h:
-          
+
           Preliminary work for getting the Naming_Service to work with IMR.
           Changes are minor, changing the child POA name to NameService instead
           of child_poa, and removing the use of orb_manager while I was there.
@@ -144,12 +150,12 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * docs/Options.html:
 
           Covers the new -ORBUseIMR option.
-          
+
         * docs/implrepo/index.html:
         * docs/implrepo/tao_imr.html: (added)
         * docs/implrepo/tao_ir.html: (removed)
         * docs/implrepo/usersguide.html:
-          
+
           Changed the documentation to cover all these changes.
 
         * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
@@ -157,17 +163,17 @@ Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.h:
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
         * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
-          
+
           Added more blocks of disabling MSVC 4250 compiler warnings.
 
 Wed Dec 15 19:00:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-	
+
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp
 	(visit_interface): Changed ACE_Recurisive_Thread_Mutex to
 	ACE_SYNCH_RECURSIVE_MUTEX to take care of single-threaded case
 	too. Thanks to Jeff Parsons <parsons@cs.wustl.edu> for pointing it
 	out.
-			 
+
 Tue Dec 14 20:22:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Factory.h:
