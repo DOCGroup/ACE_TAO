@@ -1,3 +1,9 @@
+Mon Feb 12 18:53:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/ior_corbaname/Makefile:
+          Add missing file to the list of sources for make depend.  This
+          should fix some intermittent failures in our nightly builds.
+
 Mon Feb 12 13:14:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/Makefile:
@@ -8,36 +14,36 @@ Mon Feb 12 13:14:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sun Feb 11 23:45:41 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/RT_ORBInitializer.cpp (register_policy_factories):
+        * tao/RT_ORBInitializer.cpp (register_policy_factories):
 
-	  Fixed "unused parameter" warning that occured when native
-	  exceptions were enabled.
+          Fixed "unused parameter" warning that occured when native
+          exceptions were enabled.
 
 2001-02-12  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
-	
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/serevr.cpp: 
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
 
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/serevr.cpp:
 
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
 
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h: 
-	
-	  Added an init method to the endpoint strategies to initialize
-	  the orb and poa and hence fix the SUNCC5 compile errors.
-	
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+
+          Added an init method to the endpoint strategies to initialize
+          the orb and poa and hence fix the SUNCC5 compile errors.
+
 Mon Feb 12 00:28:26 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Strategies/SHMIOP_Acceptor.cpp (open): Added error detection
