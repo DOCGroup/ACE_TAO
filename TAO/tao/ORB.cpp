@@ -53,7 +53,8 @@
 # else
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   include /**/ <exception>
-#   if !defined (_MSC_VER)
+#   if !defined (_MSC_VER) && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+                                      (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0) 
 using std::set_unexpected;
 #   endif /* !_MSC_VER */
 #  else
