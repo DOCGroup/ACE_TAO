@@ -3278,22 +3278,22 @@ ACE::max_handles (void)
 #if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   rlimit rl;
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
-# if defined (RLIM_INFINITY)
+# if !defined (RLIM_INFINITY)
+  return rl.rlim_cur;
+#else
   if (rl.rlim_cur != RLIM_INFINITY)
     return rl.rlim_cur;
-#else
-  return rl.rlim_cur;
+  // If == RLIM_INFINITY, fall through to the ACE_LACKS_RLIMIT sections
 # endif /* RLIM_INFINITY */
-# if defined (_SC_OPEN_MAX)
+#endif /* RLIMIT_NOFILE && !ACE_LACKS_RLIMIT */
+
+#if defined (_SC_OPEN_MAX)
   return ACE_OS::sysconf (_SC_OPEN_MAX);
-# elif defined (FD_SETSIZE)
+#elif defined (FD_SETSIZE)
   return FD_SETSIZE;
-# else
-  ACE_NOTSUP_RETURN (-1);
-# endif /* _SC_OPEN_MAX */
 #else
   ACE_NOTSUP_RETURN (-1);
-#endif /* defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT) */
+#endif /* _SC_OPEN_MAX */
 }
 
 // Set the number of currently open handles in the process.
