@@ -4,6 +4,8 @@ Mon Jan  5 11:50:00 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	attribute value (in the server skeleton) had some undefined symbol
 	errors as well as the create_list parameter was wrong.
 
+	* TAO/tao/object.{h.i}: Added code for Object_var and Object_out
+
 Mon Jan 05 09:53:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbacom.{h,cpp},encode.cpp: replaced defined (VXWORKS) &&
