@@ -1,5 +1,11 @@
 Sun Oct 26 17:53:25 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tests/IDL_Cubit/svc.conf,
+	  tests/Cubit/TAO/svc.conf:
+	Changed the default concurrency policy to be reactive so that
+ 	things work correctly if TAO_HAS_TSS_ORBCORE.  Thanks to Sumedh
+	for pointing this out.
+
 	* tao/orbobj.cpp (ORB_init): Put the TAO_DEFAULT_SERVER_PORT into
  	ACE's OS.h file and used it in TAO.
 
