@@ -120,7 +120,7 @@ public:
   // Return a string representation for the address.
 
   const ACE_INET_Addr &object_addr (void) const;
-  //  return a reference to the object_addr.
+  // Return a reference to the object_addr.
 
   const char *host (void) const;
   // Return a pointer to the host string.  This object maintains
@@ -152,10 +152,6 @@ public:
 private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
-
-  ACE_UNIMPLEMENTED_FUNC (TAO_SHMIOP_Profile (const TAO_SHMIOP_Profile &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_SHMIOP_Profile & operator= (const TAO_SHMIOP_Profile &))
-  // Profiles should not be copied.
 
 private:
 

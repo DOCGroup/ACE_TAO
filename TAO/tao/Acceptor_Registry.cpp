@@ -260,14 +260,13 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                       // specified.
                       int major = -1;
                       int minor = -1;
-                      const char *temp_iop = address.c_str ();
-                      if (isdigit (temp_iop[0])
-                          && temp_iop[1] == '.'
-                          && isdigit (temp_iop[2])
-                          && temp_iop[3] == '@')
+                      if (isdigit (address[0])
+                          && address[1] == '.'
+                          && isdigit (address[2])
+                          && address[3] == '@')
                         {
-                          major = temp_iop[0] - '0';
-                          minor = temp_iop[2] - '0';
+                          major = address[0] - '0';
+                          minor = address[2] - '0';
                           address = address.substring (4);
                         }
 

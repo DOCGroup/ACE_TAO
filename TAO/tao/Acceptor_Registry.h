@@ -99,6 +99,11 @@ private:
   // Create a default acceptor using the specified protocol factory.
 
 private:
+  // The acceptor registry should not be copied.
+  ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry (const TAO_Acceptor_Registry&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Acceptor_Registry&))
+
+private:
   TAO_Acceptor **acceptors_;
   // List of acceptors that are currently open.
 

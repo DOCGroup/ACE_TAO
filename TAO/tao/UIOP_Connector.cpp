@@ -472,6 +472,13 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
   const ACE_UNIX_Addr &remote_address =
     uiop_profile->object_addr ();
 
+  // @@ Note, POSIX.1g renames AF_UNIX to AF_LOCAL.
+
+  // Verify that the remote ACE_UNIX_Addr was initialized properly.
+  // Failure should never occur in the case of an ACE_UNIX_Addr!
+  if (remote_address.get_type () != AF_UNIX)
+    return -1;
+
   TAO_UIOP_Client_Connection_Handler *svc_handler = 0;
   int result = 0;
 
@@ -505,17 +512,15 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
       // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
-          char buffer [MAXNAMELEN * 2];
-          profile->addr_to_string (buffer,
-                                   (MAXNAMELEN * 2) - 1);
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %s:%u, connection to ")
                       ACE_TEXT ("%s failed (%p)\n"),
                       __FILE__,
                       __LINE__,
-                      buffer,
+                      uiop_profile->rendezvous_point (),
                       "errno"));
         }
+
       return -1;
     }
 

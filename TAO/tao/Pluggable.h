@@ -227,6 +227,12 @@ protected:
                       size_t bytes_delivered,
                       int queued_message);
 
+private:
+  // Prohibited
+  ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
+
+protected:
   CORBA::ULong tag_;
   // IOP protocol tag.
 

@@ -84,6 +84,12 @@ public:
   ~TAO_ORB_Core_TSS_Resources (void);
   // destructor
 
+private:
+  // The ORB Core TSS resources should not be copied
+  ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core_TSS_Resources (const TAO_ORB_Core_TSS_Resources&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_ORB_Core_TSS_Resources&))
+
+public:
   // = The rest of the resources are not currently in use, just a plan
   //   for the future...
 
@@ -462,6 +468,11 @@ protected:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
+private:
+  // The ORB Core should not be copied
+  ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core(const TAO_ORB_Core&))
+  ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_ORB_Core&))
+
 protected:
   ACE_SYNCH_MUTEX lock_;
   // Synchronize internal state...
@@ -681,6 +692,13 @@ public:
   ~TAO_TSS_Resources (void);
   // destructor
 
+private:
+  // Do not copy TSS resources
+  ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Resources(const TAO_TSS_Resources&))
+  ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_TSS_Resources&))
+
+public:
+
   TAO_POA_Current_Impl *poa_current_impl_;
   // Points to structure containing state for the current upcall
   // context in this thread.  Note that it does not come from the
@@ -755,6 +773,11 @@ protected:
   friend class ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
   TAO_ORB_Table (void);
   // Constructor
+
+private:
+  // Prevent copying
+  ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Table (const TAO_ORB_Table&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_ORB_Table&))
 
 private:
   Table table_;

@@ -167,17 +167,6 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-    if (this->object_addr_.set (this->port_,
-                                this->host_.in ()) == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - ")
-                      ACE_TEXT ("ACE_INET_Addr::set() failed\n")));
-        }
-      return -1;
-    }
   // ... and object key.
 
   if ((cdr >> this->object_key_) == 0)
@@ -202,7 +191,12 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
     }
 
   if (cdr.good_bit ())
-    return 1;
+    {
+      // Invalidate the object_addr_ until first access.
+      this->object_addr_.set_type (-1);
+
+      return 1;
+    }
 
   return -1;
 }
