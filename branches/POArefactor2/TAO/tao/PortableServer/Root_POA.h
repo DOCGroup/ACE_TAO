@@ -423,7 +423,6 @@ public:
   PortableInterceptor::AdapterState get_adapter_state (
     ACE_ENV_SINGLE_ARG_DECL);
 
-  /// @todo check if we really need this method here.
   virtual void *thread_pool (void) const;
 
   virtual CORBA::Policy *server_protocol (void);

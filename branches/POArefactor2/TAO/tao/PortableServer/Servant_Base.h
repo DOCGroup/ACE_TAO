@@ -22,8 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "PS_ForwardC.h"
-#include "tao/Abstract_Servant_Base.h"
 #include "ace/Atomic_Op.h"
+#include "tao/Abstract_Servant_Base.h"
 
 class TAO_Operation_Table;
 
@@ -39,9 +39,6 @@ class TAO_PortableServer_Export TAO_ServantBase
   : public virtual TAO_Abstract_ServantBase
 {
 public:
-  friend class TAO_Object_Adapter;
-  friend class TAO_Local_ServantBase;
-
   /// Destructor.
   virtual ~TAO_ServantBase (void);
 
@@ -97,7 +94,6 @@ public:
                      TAO::Collocation_Strategy st,
                      const unsigned int length = 0);
 
-  /// @todo Johnny moved this to public because of the policies, have to look at this
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 
