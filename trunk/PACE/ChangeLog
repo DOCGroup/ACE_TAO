@@ -1,3 +1,15 @@
+Tue Sep 26 15:19:20 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/Makefile:
+        * pace/Makefile:
+          Moved checks for inlining flags down in the file so
+          that include/makeinclude/platform_macros.GNU can be
+          checked to see if the flags are set there.
+
+        * pace/posix/stdio.h:
+          Moved stdio.h header file include after stdarg.h
+          header file (per comment in ace/OS.h file)
+
 Fri Sep 22 11:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * PACE/pace/posix/math.inl:

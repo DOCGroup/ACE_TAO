@@ -5,26 +5,6 @@
 #       Makefile for all the PACE tests
 #----------------------------------------------------------------------------
 
-ifndef static_libs_only
-  ifndef shared_libs_only
-    static_libs_only = 1
-  endif # shared_libs_only
-endif # static_libs_only
-
-# If we are inlining the PACE functions then we don't want to include
-# the PACE library (and we need to define PACE_HAS_INLINE). If we're not
-# inlining then we need to include the PACE library. Inlining is the default.
-
-ifndef inline
-  CFLAGS += -DPACE_HAS_INLINE
-else
-  ifneq (0,$(inline))
-    CFLAGS += -DPACE_HAS_INLINE
-  else
-    LIBS += -L$(ACE_ROOT)/PACE/pace -lPACE
-  endif # ! inline
-endif # ! inline
-
 CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 
 #----------------------------------------------------------------------------
@@ -60,6 +40,26 @@ endif
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
+
+ifndef static_libs_only
+  ifndef shared_libs_only
+    static_libs_only = 1
+  endif # shared_libs_only
+endif # static_libs_only
+
+# If we are inlining the PACE functions then we don't want to include
+# the PACE library (and we need to define PACE_HAS_INLINE). If we're not
+# inlining then we need to include the PACE library. Inlining is the default.
+
+ifndef inline
+  CFLAGS += -DPACE_HAS_INLINE
+else
+  ifneq (0,$(inline))
+    CFLAGS += -DPACE_HAS_INLINE
+  else
+    LIBS += -L$(ACE_ROOT)/PACE/pace -lPACE
+  endif # ! inline
+endif # ! inline
 
 # To compile in the PACE lib on platforms that compile c code
 ifeq  (1, $(emulation))
