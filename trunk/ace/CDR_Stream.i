@@ -564,6 +564,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_char_array (ACE_CDR::Char* x,
                                ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   if (this->char_translator_ == 0)
     return this->read_array (x,
                              ACE_CDR::OCTET_SIZE,
@@ -576,6 +581,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_wchar_array (ACE_CDR::WChar* x,
                                 ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   if (this->wchar_translator_ == 0)
     return this->read_array (x,
                              ACE_CDR::SHORT_SIZE,
@@ -588,6 +598,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_octet_array (ACE_CDR::Octet* x,
                                 ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::OCTET_SIZE,
                            ACE_CDR::OCTET_ALIGN,
@@ -598,6 +613,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_short_array (ACE_CDR::Short *x,
                                 ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::SHORT_SIZE,
                            ACE_CDR::SHORT_ALIGN,
@@ -608,6 +628,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_ushort_array (ACE_CDR::UShort *x,
                                  ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::SHORT_SIZE,
                            ACE_CDR::SHORT_ALIGN,
@@ -618,6 +643,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_long_array (ACE_CDR::Long *x,
                                ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::LONG_SIZE,
                            ACE_CDR::LONG_ALIGN,
@@ -628,6 +658,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_ulong_array (ACE_CDR::ULong *x,
                                 ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::LONG_SIZE,
                            ACE_CDR::LONG_ALIGN,
@@ -638,6 +673,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_longlong_array (ACE_CDR::LongLong *x,
                                    ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::LONGLONG_SIZE,
                            ACE_CDR::LONGLONG_ALIGN,
@@ -648,6 +688,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_ulonglong_array (ACE_CDR::ULongLong *x,
                                     ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::LONGLONG_SIZE,
                            ACE_CDR::LONGLONG_ALIGN,
@@ -658,6 +703,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_float_array (ACE_CDR::Float *x,
                                 ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::LONG_SIZE,
                            ACE_CDR::LONG_ALIGN,
@@ -669,6 +719,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_double_array (ACE_CDR::Double *x,
                                  ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::LONGLONG_SIZE,
                            ACE_CDR::LONGLONG_ALIGN,
@@ -679,6 +734,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_longdouble_array (ACE_CDR::LongDouble* x,
                                      ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   return this->read_array (x,
                            ACE_CDR::LONGDOUBLE_SIZE,
                            ACE_CDR::LONGDOUBLE_ALIGN,
