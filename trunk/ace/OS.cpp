@@ -791,7 +791,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 
   return 0;
 
-#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+#elif defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
       // quantums not supported
