@@ -6,9 +6,12 @@
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Service_Context.h"
+#include "tao/Protocols_Hooks.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, Default_Acceptor_Filter, "$Id$")
+ACE_RCSID (RTPortableServer,
+           RT_Servant_Dispatcher,
+           "$Id$")
 
 TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
 {
