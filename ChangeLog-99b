@@ -10,9 +10,10 @@ Thu Jul 22 11:54:58 1999  David L. Levine  <levine@cs.wustl.edu>
           semaphore.  This allows the test to succeed on LynxOS/PPC
           (with fork ()).
 
-        * tests/Process_Mutex_Test.cpp (main): added a one second
-          sleep after spawning each server, to give it a chance to
-          start.  Also, wrapped some string literals with ASYS_TEXT.
+        * tests/Process_Mutex_Test.cpp,Process_Strategy_Test.cpp (main):
+          added a one second sleep after spawning each server, to give it
+          a chance to start.  Also, wrapped some string literals with
+          ASYS_TEXT.  Again, success on LynxOS/PPC with fork ().
 
 Thu Jul 22 10:42:06 1999  Clarence M. Weaver  <clarence_m_weaver@md.northgrum.com>
 
