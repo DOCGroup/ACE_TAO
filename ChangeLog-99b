@@ -2,7 +2,7 @@ Sun Aug 29 22:57:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Signal_Test.cpp (worker_parent): Revised the test
 	  so that we transmit the parent process ID in argv so that the
- 	  child doesn't have to "guess."  This should solve the annoying
+ 	  child doesn't have to "guess."  This solves the annoying
  	  problems with Linux threads...
 
 Sun Aug 29 21:35:17 1999  David L. Levine  <levine@cs.wustl.edu>
