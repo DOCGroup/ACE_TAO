@@ -104,7 +104,7 @@ private:
   /// Variable used to keep track of the scenario count.  Used to get
   /// around the inability to call RequestInfo::arguments() in the
   /// receive_service_contexts() interception point.
-  Test::TestScenario scenario_;
+  CORBA::ULong scenario_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

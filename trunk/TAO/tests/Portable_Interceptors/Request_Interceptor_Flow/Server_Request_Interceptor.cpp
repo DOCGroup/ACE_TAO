@@ -79,7 +79,7 @@ Server_Request_Interceptor::receive_request (
     return;  // Don't continue if the client side is being tested.
 
   ACE_DEBUG ((LM_INFO,
-              "%s.receive_request",
+              "%s.receive_request\n",
               this->name_.in ()));
 }
 
