@@ -22,12 +22,14 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Env_Value_T.h"
 #include "clnt.h"
+#include "orbsvcs/CosNamingC.h"
 
-// Constructor.
+
 
 #define quote(x) #x
 #define MAX_IOR_SIZE 512
 
+// Constructor.
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ (0),
     cubit_key_ (ACE_OS::strdup ("key0")),
@@ -36,7 +38,8 @@ Cubit_Client::Cubit_Client (void)
     cubit_ (Cubit::_nil ()),
     call_count_ (0),
     error_count_ (0),
-    cubit_factory_ior_file_ (0)
+    cubit_factory_ior_file_ (0),
+    use_naming_service (0)
 {
 }
 
@@ -54,7 +57,7 @@ Cubit_Client::func (u_int i)
 int
 Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:k:x:s");
   int c;
   char temp_buf[MAX_IOR_SIZE];
   char *result = 0;
@@ -88,6 +91,9 @@ Cubit_Client::parse_args (void)
       case 'x':
         this->exit_later_++;
         break;
+      case 's':
+	use_naming_service = 1;
+	break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -97,6 +103,7 @@ Cubit_Client::parse_args (void)
                            " [-f cubit_factory-obj-ref-key-file]"
                            " [-k cubit-obj-ref-key]"
                            " [-x]"
+			   " [-s]"
                            "\n",
                            this->argv_ [0]),
                           -1);
@@ -701,28 +708,59 @@ Cubit_Client::init (int argc, char **argv)
       if (this->parse_args () == -1)
 	return -1;
 
-      if (this->cubit_factory_key_ == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "%s: no cubit factory key specified\n",
-			   this->argv_[0]),
-			  -1);
-
-
-      CORBA::Object_var factory_object = 
-	this->orb_->string_to_object (this->cubit_factory_key_,
-				      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->factory_ = 
-	Cubit_Factory::_narrow (factory_object.in(), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (CORBA::is_nil (this->factory_.in ()))
+      if ( use_naming_service )
 	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "invalid factory key <%s>\n",
-			     this->cubit_factory_key_),
-			    -1);
+	  CORBA::Object_var naming_obj =
+	    this->orb_->resolve_initial_references ("NameService");
+	  if (CORBA::is_nil (naming_obj.in ()))
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       " (%P|%t) Unable to resolve the Name Service.\n"),
+			      -1);
+	  CosNaming::NamingContext_var naming_context = 
+	    CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+		
+	  CosNaming::Name cubit_factory_name (2);
+	  cubit_factory_name.length (2);
+	  cubit_factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
+	  cubit_factory_name[1].id = CORBA::string_dup ("cubit_factory");
+	  CORBA::Object_var factory_obj = naming_context->resolve (cubit_factory_name,TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  this->factory_ =
+	    Cubit_Factory::_narrow (factory_obj.in (),TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  if (CORBA::is_nil (this->factory_.in ()))
+	    {
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 " could not resolve cubit factory in Naming service <%s>\n"),
+				-1);
+	    }
+	} else {
+	  if (this->cubit_factory_key_ == 0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "%s: no cubit factory key specified\n",
+			       this->argv_[0]),
+			      -1);
+	  
+	  
+	  CORBA::Object_var factory_object = 
+	    this->orb_->string_to_object (this->cubit_factory_key_,
+					  TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  this->factory_ = 
+	    Cubit_Factory::_narrow (factory_object.in(), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  if (CORBA::is_nil (this->factory_.in ()))
+	    {
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "invalid factory key <%s>\n",
+				 this->cubit_factory_key_),
+				-1);
+	    }
 	}
 
       ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
