@@ -24,6 +24,10 @@
 
 #include "be_visitor.h"
 #include "be_visitor_scope.h"
+#include "be_visitor_enum.h"
+#include "be_visitor_structure.h"
+#include "be_visitor_union.h"
+
 #include "be_visitor_exception/exception.h"
 #include "be_visitor_exception/exception_ch.h"
 #include "be_visitor_exception/exception_ci.h"

@@ -47,6 +47,12 @@ public:
 
   virtual int visit_field (be_field *node);
   // visit field
+
+  virtual int visit_union (be_union *node);
+  // visit field
+
+  virtual int visit_enum (be_enum *node);
+  // visit field
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_ANY_OP_CS_H_ */
