@@ -5811,7 +5811,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 }
 
 ACE_INLINE int
-ACE_OS::set_error_to_last_error (void)
+ACE_OS::set_errno_to_last_error (void)
 {
 # if defined (ACE_WIN32)
 // Borland C++ Builder 4 has a bug in the RTL that resets the
