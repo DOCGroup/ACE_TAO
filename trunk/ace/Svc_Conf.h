@@ -75,7 +75,8 @@ public:
     : type (SVC_CONF_FILE),
       yyerrno (0),
       yylineno (1),
-      buffer (0)
+      buffer (0),
+      obstack ()
   {
     source.file = file;
   }
@@ -85,7 +86,8 @@ public:
     : type (SVC_CONF_DIRECTIVE),
       yyerrno (0),
       yylineno (1),
-      buffer (0)
+      buffer (0),
+      obstack ()
   {
     source.directive = directive;
   }
@@ -120,6 +122,10 @@ public:
   /// Lexer buffer that corresponds to the current Service
   /// Configurator file/direct scan.
   ace_yy_buffer_state *buffer;
+
+  /// Obstack used for efficient memory allocation when
+  /// parsing/scanning a service configurator directive.
+  ACE_Obstack_T<ACE_TCHAR> obstack;
 
 };
 
@@ -187,9 +193,6 @@ extern ACE_TCHAR *ace_yytext;
 
 /// Holds the length of the lexeme for the current token
 extern int ace_yyleng;
-
-/// Efficient memory allocation technique
-extern ACE_Obstack_T<ACE_TCHAR> *ace_obstack;
 
 /// Factory that creates a new ACE_Service_Type_Impl.
 extern ACE_Service_Type_Impl *
