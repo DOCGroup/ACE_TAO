@@ -1,3 +1,10 @@
+Fri Mar 26 01:33:05 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Updated the InterOperable Naming Service sections of the 
+	following:
+	* docs/Options.html: 
+	* docs/releasenotes/#nservices:
+
 Thu Mar 25 22:08:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/CDR.{h,cpp}:

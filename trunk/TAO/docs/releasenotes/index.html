@@ -555,12 +555,17 @@ Naming Service</a> supports a hierarchical mapping between sequences
 of strings and object references.  The CORBA <A
 HREF="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">Interoperable
 Naming Service</A> defines a standard way for clients and servers to
-locate the Naming Service. <P>
+locate the Naming Service. It allows the ORB to be administratively
+configured for bootstrapping to services not set up with the orb at
+install time. <P>
 
 <p>Current status (as of 22nd Feb 1999):
 <ul>
 <li>
 Implementation of the CORBA Naming Service spec is complete.</li>
+<li>
+Implementation of the CORBA InterOperable Naming Service is in
+progress. </li>
 </ul>
 Recently completed work:
 <ul>
@@ -570,7 +575,34 @@ exception macros, which allow it to work both with C++ exceptions and without.</
 <li>
 Destroy method has been updated.</li>
 <li>
-More test examples have been added to TAO/orbsvcs/tests/Simple_Naming.</li>
+More test examples have been added to TAO/orbsvcs/tests/Simple_Naming.
+</li>
+<li>
+Added support for the InterOperable Naming Service, which enables the
+ORB to support IORs in user-friendly <CODE>iioploc</CODE> format.
+These features allow the ORB to be configured to return arbitrary object
+references from <CODE>CORBA::ORB::resolve_initial_references</CODE>
+for non-locality-constrained objects. Two options -ORBInitRef and
+-ORBDefaultInitRef have been added to the orb for bootstrapping to
+arbitrary services.
+</li>
+
+<li>The Naming Service is being used as an agent to understand IIOP
+request messages from clients and respond with reply messages with a
+LOCATION_FORWARD/OBJECT_NOT_EXIST status. The Naming Service can be
+configured through ORB options to register arbitrary services given
+the URL-format IOR for the service. The resolve_initial_references ()
+resolves a service in the following order :
+<br>1. -ORBInitRef 
+<br>2. -ORBDefaultInitRef
+<br>3. Multicast to service.
+</li>
+
+<li>
+Added a test for the InterOperable Naming Service that works in
+conjunction with the current TAO examples.
+</li> 
+
 </ul>
 
 Work in progress:
@@ -578,23 +610,16 @@ Work in progress:
 <li>
 Currently the bindings are stored as a table in memory. Work is under way
 to provide persistance option for the Naming Service.</li>
+</li>
 
-<LI> Currently adding support for the Interoperable Naming Service,
-which enables the ORB to support IORs in user-friendly URL formats
-using the <CODE>iioploc</CODE> and <CODE>iiopname</CODE> formats.
-These features allow the ORB to configured to return arbitrary object
-references from <CODE>CORBA::ORB::resolve_initial_references</CODE>
-for non-locality-constrained objects.  In addition, two standard
-<CODE>CORBA::ORB_init</CODE> arguments are being added to override the
-TAO's initial reference configuration. The service provides an
-extension to the existing Naming Service to include conversions to and
-from URL-style IORs.
+<LI> Currently adding support for the iiopname format and conversions
+to and from URL-style IORs.
+</LI>
 
-<LI>The Naming Service is being used as an agent to understand IIOP
-request messages from clients and respond with reply messages with a
-LOCATION_FORWARD status. Work is in progress for the client-side
-lookup tables built through commandline arguments to the ORB,
-<CODE>-ORBInitRef</CODE> and <CODE>-ORBDefaultInitRef</CODE>.<P>
+<LI>
+Adding a more detailed test for the InterOperable Naming Service.
+</LI>
+
 </ul>
 Future work:
 <ul>
@@ -607,7 +632,12 @@ Update destroy method, once the POA restructuring effort is complete, to do the 
 </li>
 <li>
 Replication of the bindings to other Naming Service's currently running.
-It will probably be modeled after the LDAP Multi-Master Replication Protocol.</li>
+It will probably be modeled after the LDAP Multi-Master Replication
+Protocol.</li>
+<li>
+Support will be added for the Naming Service to handle the IIOP
+LocateRequest messages and respond with LocateReply messages with a
+LOCATION_FORWARD/OBJECT_NOT_EXIST status.
 </ul>
 
 <p>
