@@ -51,9 +51,6 @@ public:
   TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core);
 
   virtual TAO_Transport *transport (void) = 0;
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the handler.
 };
 
 class TAO_Export TAO_IIOP_Client_Connection_Handler : public TAO_IIOP_Handler_Base

@@ -63,10 +63,6 @@ public:
   // Call the corresponding connection handler's <handle_close>
   // method.
 
-  virtual void resume_connection (ACE_Reactor *reactor) = 0;
-  // Calls the Reactor's <resume_handler> on behalf of the
-  // corresponding connection handler.
-
   virtual int idle (void) = 0;
   // Idles the corresponding connection handler.
 
@@ -200,16 +196,6 @@ public:
   virtual int register_handler (void);
   // Register the handler with the reactor. Will be called by the Wait
   // Strategy if Reactor is used  for that strategy. Default
-  // implementation out here returns -1 setting <errno> to ENOTSUP.
-
-  virtual int suspend_handler (void);
-  // Suspend the handler from the reactor. Will be called by the Wait
-  // Strategy if Reactor is used  for that strategy. Default
-  // implementation out here returns -1 setting <errno> to ENOTSUP.
-
-  virtual int resume_handler (void);
-  // Resume the handler from the reactor. This will be called by the
-  // Wait Strategies, if Reactor is used in the strategy. Default
   // implementation out here returns -1 setting <errno> to ENOTSUP.
 
   virtual int handle_close (void);

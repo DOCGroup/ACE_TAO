@@ -374,18 +374,6 @@ TAO_Transport::register_handler (void)
 }
 
 int
-TAO_Transport::suspend_handler (void)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-
-int
-TAO_Transport::resume_handler (void)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-
-int
 TAO_Transport::handle_close (void)
 {
   ACE_NOTSUP_RETURN (-1);
