@@ -59,21 +59,18 @@ check_ace_u_longlong (const char *const name,
                       const u_long lo)
 {
   if (ull.hi () == hi  &&  ull.lo () == lo)
-    {
-      return 0;
-    }
+    return 0;
   else
-    {
-      ACE_ERROR ((LM_ERROR, "%s; hi: %x, should be %x; "
-                            "lo: %x, should be %x.\n",
-                  name, ull.hi (), hi, ull.lo (), lo));
-      return 1;
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%s; hi: %x, should be %x; "
+                       "lo: %x, should be %x.\n",
+                       name, ull.hi (), hi, ull.lo (), lo),
+                      1);
 }
 
 static
 u_long
-test_ace_u_longlong ()
+test_ace_u_longlong (void)
 {
   u_long errors = 0;
 
@@ -110,7 +107,6 @@ test_ace_u_longlong ()
 }
 #endif /* ! ACE_WIN32 && ACE_SIZEOF_LONG == 4 */
 
-
 int
 main (int, char *[])
 {
@@ -139,7 +135,8 @@ main (int, char *[])
   ACE_ASSERT (tv5 == tv7);
 
 #if !defined (ACE_WIN32) && (ACE_SIZEOF_LONG == 4)
-  if (test_ace_u_longlong () != 0) ++ret;
+  if (test_ace_u_longlong () != 0) 
+    ++ret;
 #endif /* ! ACE_WIN32 && ACE_SIZEOF_LONG == 4 */
 
   ACE_END_TEST;
