@@ -19,7 +19,7 @@
 
 ACE_RCSID(Generic_Servant, client, "$Id$")
 
-static char *IOR = "file://ior";
+static const char *IOR = "file://ior";
 static int shutdown_server = 0;
 
 static int
