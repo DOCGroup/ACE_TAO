@@ -29,8 +29,18 @@
     </CENTER>
 
     <UL>
-      <LI>Move the EC specific things out of this file to the ec.html
-	file.
+      <LI>Add suspend and resume operations to the PushConsumerProxy
+	and PushSupplierProxy interfaces, following the Notification
+	Service spec.
+      </LI>
+
+      <LI>The current implementation of octet sequences based on
+	message blocks has a few problems, it cannot marshall
+	chains of message blocks properly.
+	Notice that complete support for chains of message blocks will
+	complicate the sequence of octets implementation (like
+	operator[]) and will make others either hard or expensive
+	(like get_buffer ()). 
       </LI>
 
       <LI>The IDL compiler gets confused with paths in NT, this may be
@@ -44,22 +54,28 @@
 	faster.
       </LI>
 
-      <LI>Optimize twoways by delaying memory allocation for the
-	incoming data buffer.
-      </LI>
-      
-      <LI>Optimize connection lookup in the client side, using "hints"
-	from the previous lookup, or keeping smaller sets on each IIOP
-	profile or a combination of both. [STATUS] Irfan is working on
-	this.
+      <LI>Object references inside structures or sequences are not
+	decoded properly, the problem starts because the interpreter
+	expects a CORBA::Object_ptr, but the real type is a T_var;
+	virtual inheritance adds the last ingredient to the poison.
+	[STATUS] A possible solution is to use a T_manager_var that
+	has two fields a Object_ptr and a T_ptr....
       </LI>
 
+      <LI>Optimize twoways by delaying memory allocation for the
+	incoming data buffer, thus improving interleaving between the
+	client and server (the client does something useful before
+	starting to wait for the server).
+      </LI>
+      
       <LI>Further optimize memory allocation by using a memory pool
 	for the incoming CDR stream.
       </LI>
       
       <LI>Further optimize the outgoing memory allocation by adding
-	support for message blocks allocated from a pool.
+	support for message blocks allocated from a pool (the
+	Message_Block class itself not the Data_Block or the buffer it
+	contains).
       </LI>
 
       <LI>Add compiled marshalling [STATUS] Andy is working on this.
@@ -80,13 +96,15 @@
 	subsequent) buffers come out of the allocator, so their sizes
 	could be configured in the already mentioned file
       </LI>
-
-      <LI>The operation tables do not need to be statics.
+ 
+      <LI>We need some TAO_TRY_* macro to encapsulate a common use of
+	the CORBA::Environment argument: checking if it contains an
+	exception and then returning.
       </LI>
-      
-      <LI>Add suspend and resume operations to the PushConsumerProxy
-	and PushSupplierProxy interfaces, following the Notification
-	Service spec.
+
+      <LI>The TypeCode internal (private) state needs locking, double
+	checked locking is needed to avoid excessive overhead, there
+	is potential for memory leaks if this locking is not used.
       </LI>
 
       <LI>IDL compiler front-end should be case insensitive (actually
@@ -94,8 +112,15 @@
 	conflict).
       </LI>
 
-      <LI>Support nested upcalls in different concurrency models, like
-	thread-per-connection.
+      <LI>Support for 64bit longs in the IDL compiler
+      </LI>
+
+      <LI>The operation tables do not need to be statics, they could
+	be created on creation of the first servant of that type.
+      </LI>
+      
+      <LI>Are nested upcalls in different concurrency models, like
+	thread-per-connection working?
       </LI>
 
       <LI>Add an option to the IDL-compiler (e.g. -rp) meaning
@@ -109,22 +134,9 @@
       <LI>Add options to the IDL compiler to set the suffixes.
       </LI>
 
-      <LI>We need some TAO_TRY_* macro to encapsulate a common use of
-	the CORBA::Environment argument: checking if it contains an
-	exception and then returning.
-      </LI>
-
-      <LI>The TypeCode internal (private) state needs locking, double
-	checked locking is needed to avoid excessive overhead, there
-	is potential for memory leaks if this locking is not used.
-      </LI>
-
-      <LI>Object references inside structures or sequences are not
-	decoded properly, the problem starts because the interpreter
-	expects a CORBA::Object_ptr, but the real type is a T_var;
-	virtual inheritance adds the last ingredient to the poison.
-	[STATUS] A possible solution is to use a T_manager_var that
-	has two fields a Object_ptr and a T_ptr....
+      <LI>The IDL compiler should generate the code locally (not in
+	the directory where the .idl resides) or at least give an
+	option to do so
       </LI>
 
       <LI>Support for unions with default cases (implicit or explicit)
@@ -133,9 +145,6 @@
 
       <LI>It seems that some memory is leaked from the ORB cached
 	connector.
-      </LI>
-
-      <LI>Support for 64bit longs in the IDL compiler
       </LI>
 
       <LI>Support for fixed in the IDL compiler
@@ -168,11 +177,6 @@
 	ACE_DEBUG output destination in all TAO applications
       </LI>
       
-      <LI>Study the CORBAlite spec and see how we could implement it
-	with TAO, considering dynamic and static configurations for
-	the full CORBA support
-      </LI>
-
       <LI>Add the _raise() method to the exceptions...
       </LI>
 
@@ -235,9 +239,9 @@
       <LI>Implement operation demuxing for clients.
       </LI>
 
-      <LI>The current implementation of octet sequences based on
-	message blocks has a few problems, it cannot marshall
-	sequences of message blocks properly.
+      <LI>Study the CORBAlite spec and see how we could implement it
+	with TAO, considering dynamic and static configurations for
+	the full CORBA support
       </LI>
 
       <LI><P>The CORBAlite RFP is very interesting IMHO we just need to
@@ -246,22 +250,23 @@
 	CORBA implementation also, this is an idea:
 	Write the TAOlite version of a class (example TypeCode):</P>
 
-	<CODE>
+	<PRE>
 	class TAO_CORBAlite_TypeCode {
 	// Just the CORBAlite methods are implemented.
 	};
-	</CODE>
+	</PRE>
 
 	<P>Derive the full blown implementation:</P>
 
-	<CODE>
+	<PRE>
 	  class TAO_CORBA_TypeCode : public TAO_CORBAlite_TypeCode {
+          // Declare all the other methods.
 	  };
-	</CODE>
+	</PRE>
 
 	<P>create two namespaces:</P>
 
-	<CODE>
+	<PRE>
 	  // in tao/CORBAlite.h
 	  class CORBA {
 	    tyedef TAO_CORBAlite_TypeCode TypeCode;
@@ -271,18 +276,19 @@
 	  class CORBA {
 	    typedef TAO_CORBAfull_TypeCode TypeCode;
 	  };
-	</CODE>
+	</PRE>
 
 	<P>then (at compile time) the users chooses between the CORBAlite
 	or CORBAfull implementations:</P>
 
-	<CODE>
+	<PRE>
+	// In $TAO_ROOT/tao/corba.h
 	#if USERS_WANTS_FAT_FREE_CORBA
 	#include "tao/CORBAlite.h"
 	#else
 	#include "tao/CORBAfull.h"
 	#endif
-	</CODE>
+	</PRE>
 
 	<P>We need to consider how to support even smaller profiles that
 	the CORBAlite RFP, like removing <any> or <fixed> support.
@@ -401,6 +407,13 @@
     </CENTER>
 
     <UL>
+      <LI>Optimize connection lookup in the client side, using "hints"
+	from the previous lookup, or keeping smaller sets on each IIOP
+	profile or a combination of both. [STATUS] Irfan is working on
+	this.
+	[DONE]
+      </LI>
+
       <LI>Optimize the outgoing CDR streams by using TSS memory pools
 	for both the data blocks and the buffers.
 	[DONE] But we may consider strategizing the kind of allocator
