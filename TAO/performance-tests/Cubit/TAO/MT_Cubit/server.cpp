@@ -49,6 +49,7 @@ Server::Server (void)
 int
 Server::init (int argc, char **argv)
 {
+  // @@ Naga, can't this be abstracted away into the Globals.* files?!
 #if defined (ACE_HAS_THREADS)
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
@@ -193,7 +194,9 @@ Server::write_iors (void)
     {
       if (ior_f != 0)
         {
-          ACE_OS::fprintf (ior_f, "%s\n", this->cubits_[j]);
+          ACE_OS::fprintf (ior_f,
+                           "%s\n",
+                           this->cubits_[j]);
           ACE_DEBUG ((LM_DEBUG,
                       "this->cubits_[%d] ior = %s\n",
                       j,
@@ -219,18 +222,15 @@ Server::activate_high_servant (void)
   ACE_OS::sprintf (orbhost,
                    "-ORBhost %s ",
                    GLOBALS::instance ()->hostname);
-
   char *high_second_argv[] = {orbport,
                               orbhost,
                               "-ORBobjrefstyle URL ",
                               "-ORBsndsock 32768 ",
                               "-ORBrcvsock 32768 ",
                               0};
-
   ACE_NEW_RETURN (this->high_argv_,
                   ACE_ARGV (this->argv_,high_second_argv),
                   -1);
-
   ACE_NEW_RETURN (this->high_priority_task_,
                   Cubit_Task (this->high_argv_->buf (),
                               "internet",
@@ -256,6 +256,7 @@ Server::activate_high_servant (void)
 
   // Wait on the condition variable for the high priority client to
   // finish parsing the arguments.
+
   while (!GLOBALS::instance ()->ready_)
     GLOBALS::instance ()->ready_cnd_.wait ();
 
@@ -266,28 +267,25 @@ Server::activate_high_servant (void)
 int
 Server::activate_low_servants (void)
 {
-  char orbport[BUFSIZ];
   char orbhost[BUFSIZ];
-  int i;
 
   ACE_OS::sprintf (orbhost,
                    "-ORBhost %s ",
                    GLOBALS::instance ()->hostname);
-
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d servants starting at priority %d\n",
               this->num_low_priority_,
               this->low_priority_));
-
   // Create the low priority servants.
   ACE_NEW_RETURN (this->low_priority_tasks_,
                   Cubit_Task *[GLOBALS::instance ()->num_of_objs],
                   -1);
-
-  for (i = this->num_low_priority_;
+  for (int i = this->num_low_priority_;
        i > 0;
        i--)
     {
+      char orbport[BUFSIZ];
+
       ACE_OS::sprintf (orbport,
                       "-ORBport %d",
                        GLOBALS::instance ()->base_port == 0
@@ -314,10 +312,11 @@ Server::activate_low_servants (void)
                       -1);
 
       // Make the low priority task an active object.
-      if (this->low_priority_tasks_ [i - 1]->activate (THR_BOUND | ACE_SCHED_FIFO,
-                                               1,
-                                               0,
-                                               this->low_priority_) == -1)
+      if (this->low_priority_tasks_ [i - 1]->activate 
+          (THR_BOUND | ACE_SCHED_FIFO,
+           1,
+           0,
+           this->low_priority_) == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n"
                     "\tthis->low_priority_tasks_[i]->activate"));
@@ -338,9 +337,10 @@ Server::activate_low_servants (void)
                //threads, we make sure we don't go overboard.
               && this->num_priorities_ * this->grain_ > this->num_low_priority_ - (i - 1))
             // Get the next higher priority.
-            this->low_priority_ = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                                   this->low_priority_,
-                                                                   ACE_SCOPE_THREAD);
+            this->low_priority_ = ACE_Sched_Params::next_priority 
+              (ACE_SCHED_FIFO,
+               this->low_priority_,
+               ACE_SCOPE_THREAD);
         }
     } /* end of for() */
 
@@ -351,7 +351,6 @@ Server::activate_low_servants (void)
 int
 Server::start_servants (void)
 {
-  int result;
   // Do the preliminary argument processing for options -p and -h.
   this->prelim_args_process ();
 
@@ -379,12 +378,13 @@ Server::start_servants (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failure in activating low priority servant\n"),
                       -1);
+
   // Wait in the barrier.
   GLOBALS::instance ()->barrier_->wait ();
-  result = this->write_iors ();
+
+  int result = this->write_iors ();
   if (result != 0)
     return result;
-
   return 0;
 }
 

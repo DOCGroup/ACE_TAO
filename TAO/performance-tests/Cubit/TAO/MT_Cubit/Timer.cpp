@@ -26,11 +26,11 @@ void
 MT_Cubit_Timer::stop (void)
 {
 #if defined (CHORUS)
-          pstopTime = pccTime1Get ();
+  pstopTime = pccTime1Get ();
 #else /* CHORUS */
-          // If CHORUS is not defined just use plain timer_.stop ().
-          this->timer_.stop ();
-          this->timer_.elapsed_time (this->delta_);
+  // If CHORUS is not defined just use plain timer_.stop ().
+  this->timer_.stop ();
+  this->timer_.elapsed_time (this->delta_);
 #endif /* !CHORUS */
 }
 
