@@ -96,7 +96,7 @@ be_visitor_traits::visit_interface (be_interface *node)
 
   // I think we need to generate this only for non-defined forward
   // declarations.
-  if (!node->imported () && !node->is_defined ())
+  if (!node->imported ())
     {
       os->gen_ifdef_macro (node->flat_name (), "traits");
 
@@ -105,7 +105,7 @@ be_visitor_traits::visit_interface (be_interface *node)
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
           << node->name () << ">" << be_nl
           << "{" << be_idt_nl
-          << "static " << node->name () << "_ptr tao_duplicate (" 
+          << "static " << node->name () << "_ptr tao_duplicate ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr" << be_uidt_nl
           << ");" << be_uidt_nl
@@ -134,7 +134,7 @@ be_visitor_traits::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
 {
   if (node->cli_traits_gen ())
@@ -142,7 +142,7 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
       return 0;
     }
 
-  be_interface *fd = 
+  be_interface *fd =
     be_interface::narrow_from_decl (node->full_definition ());
 
   // The logic in visit_interface() should handle what gets generated
@@ -159,7 +159,7 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-int 
+int
 be_visitor_traits::visit_valuetype (be_valuetype *node)
 {
   if (node->cli_traits_gen ())
@@ -171,7 +171,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
 
   // I think we need to generate this only for non-defined forward
   // declarations.
-  if (!node->imported () && !node->is_defined ())
+  if (!node->imported ())
     {
       os->gen_ifdef_macro (node->flat_name (), "traits");
 
@@ -181,7 +181,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
           << node->name () << ">" << be_nl
           << "{" << be_idt_nl
           << "static void tao_add_ref (" << node->name () << " *);" << be_nl
-          << "static void tao_remove_ref (" << node->name () << " *);" 
+          << "static void tao_remove_ref (" << node->name () << " *);"
           << be_uidt_nl
           << "};";
 
@@ -202,7 +202,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-int 
+int
 be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   if (node->cli_traits_gen ())
@@ -210,7 +210,7 @@ be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
       return 0;
     }
 
-  be_valuetype *fd = 
+  be_valuetype *fd =
     be_valuetype::narrow_from_decl (node->full_definition ());
 
   // The logic in visit_valuetype() should handle what gets generated
@@ -229,19 +229,19 @@ be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
   return 0;
 }
 
-int 
+int
 be_visitor_traits::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
 
-int 
+int
 be_visitor_traits::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   return this->visit_valuetype_fwd (node);
 }
 
-int 
+int
 be_visitor_traits::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
@@ -262,5 +262,3 @@ be_visitor_traits::visit_typedef (be_typedef *node)
   node->cli_traits_gen (I_TRUE);
   return 0;
 }
-
-

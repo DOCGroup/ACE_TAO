@@ -533,19 +533,7 @@ be_valuetype:: gen_var_out_seq_decls (void)
   const char *lname = this->local_name ();
 
   *os << be_nl << be_nl
-      << "class " << lname << ";";
-
-  *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
-      << "struct " << be_global->stub_export_macro () << " TAO::Value_Traits<"
-      << lname << ">" << be_nl
-      << "{" << be_idt_nl
-      << "static void tao_add_ref (" << lname << " *);" << be_nl
-      << "static void tao_remove_ref (" << lname << " *);" 
-      << be_uidt_nl
-      << "};";
-
-  *os << be_nl << be_nl
+      << "class " << lname << ";" << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Value_Var_T<" << be_idt << be_idt_nl
       << lname << be_uidt_nl
