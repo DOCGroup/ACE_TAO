@@ -386,7 +386,7 @@ test_ostream (void)
       // Set the ostream back to NULL to prevent "later functions using myostream".
       ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n",)
+                         ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
                          size,
                          info.size_),
                         -1);

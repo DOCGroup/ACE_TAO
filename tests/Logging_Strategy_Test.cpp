@@ -65,7 +65,7 @@ cdecl_decoration (ACE_TCHAR const *func_name)
 }
 
 // Global variables.
-static ACE_TCHAR *file_name;
+static ACE_TCHAR *file_name = 0;
 static int max_size_files = 0;
 static int max_num_files = 0;
 static int interval_time = 0;
@@ -291,7 +291,8 @@ remove_files (void)
 static int 
 parse_args (int argc, char* argv [])
 {
-  ACE_OS::printf ("Specifications:\n");
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Specifications:\n")));
   ACE_Get_Opt get_opt (argc, argv, "s:i:m:f:n:o");
   int c;
 
@@ -301,30 +302,40 @@ parse_args (int argc, char* argv [])
         {
         case 's':
           file_name = get_opt.optarg;
-          ACE_OS::printf ("File name: %s\n", file_name);
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File name: %s\n"),
+                      file_name));
           break;
 
         case 'i':
           interval_time = atoi (get_opt.optarg);
-          ACE_OS::printf ("Interval time (s): %d\n", interval_time);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Interval time (s): %d\n"),
+                      interval_time));
           break;
 
         case 'm':
           max_size_files = atoi (get_opt.optarg);
-          ACE_OS::printf ("Maximum size (KB): %d\n", max_size_files);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Maximum size (KB): %d\n"),
+                      max_size_files));
           break;
 
         case 'f':
-          ACE_OS::printf ("Modes: %s\n", get_opt.optarg);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Modes: %s\n"),
+                      get_opt.optarg));
           break;
 
         case 'n':
           max_num_files = atoi (get_opt.optarg);
-          ACE_OS::printf ("Maximum files number: %d\n", max_num_files);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Maximum files number: %d\n"),
+                      max_num_files));
           break;
 
         case 'o':
-          ACE_OS::printf ("Ordering files activated\n");
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Ordering files activated\n")));
           order_state = 1;
           break;
 
@@ -356,7 +367,7 @@ int main (int argc, char *argv[])
   defined (__hpux)
 
   // Implement the dynamic entries via main arguments
-  ACE_LOG_MSG -> open (argv[0]);
+  ACE_LOG_MSG->open (argv[0]);
 
   if (parse_args (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -365,22 +376,25 @@ int main (int argc, char *argv[])
 
   ACE_TCHAR arg_str[250];
   sprintf (arg_str, 
-           "dynamic Logger Service_Object *ACE:_make_ACE_Logging_Strategy()\" ");
+           "dynamic Logger Service_Object *ACE:_make_ACE_Logging_Strategy() \"");
 
-  for(int i=1; i<argc;i++)
-    {
-      ACE_OS_String::strcat(arg_str,argv[i]);
-      ACE_OS_String::strcat(arg_str, " ");
-    }
+  if (argc > 1)
+    for (int i = 1; i < argc; i++)
+      {
+        ACE_OS_String::strcat (arg_str, argv[i]);
+        ACE_OS_String::strcat (arg_str, " ");
+      }
+  else
+    ACE_OS_String::strcat (arg_str, ACE_TEXT ("-sfoo -o"));
 
-  ACE_OS_String::ACE_OS_String::strcat (arg_str, " \"");
+  ACE_OS_String::ACE_OS_String::strcat (arg_str, "\"");
 
   if (ACE_Service_Config::process_directive (arg_str) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "Error opening _make_Detail_Log_Strategy object.\n"),
+                       "Error opening _make_ACE_Log_Strategy object.\n"),
                       1);
 
-  //launch a new Thread
+  // launch a new Thread
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (run_reactor)) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Spawning Reactor.\n"),
