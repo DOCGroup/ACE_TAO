@@ -47,7 +47,7 @@ namespace CIAO
 {
   namespace Config_Handler
   {
-    class ResourceUsageKind_Handler {
+    class RUK_Handler {
     public:
 
       /// Process elements of type ResourceUsageKind definitions in

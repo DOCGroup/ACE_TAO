@@ -29,7 +29,7 @@ namespace CIAO
      * Class ResourceUsageKind_Handler
      */
 
-     void ResourceUsageKind_Handler::process_ResourceUsageKind
+     void RUK_Handler::process_ResourceUsageKind
         (DOMNodeIterator *iter, ::Deployment::ResourceUsageKind &kind)
      {
        // -- ResourceUsageKind enum
@@ -53,7 +53,7 @@ namespace CIAO
        
        // Something wrong here.. Throw exception
        ACE_DEBUG ((LM_DEBUG,
-		   "Config_Handler::ResourceUsageKind_Handler::process_ResourceUsageKind \
+		   "Config_Handler::RUK_Handler::process_ResourceUsageKind \
                     illegal <ResourceUsageKind> value found \n"));
        ACE_THROW (CORBA::INTERNAL ());
      }

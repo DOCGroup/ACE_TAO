@@ -78,11 +78,19 @@ process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
 
 // Processes reference sequences
 inline bool
-process_reference(DOMNode* node,
-                  XStr& node_name, const char* name,
-                  CORBA::ULongSeq& seq,
-                  int& index,
-                  IDREF_MAP& idref_map);
+process_reference_seq (DOMNode* node,
+                       XStr& node_name, const char* name,
+                       CORBA::ULongSeq& seq,
+                       int& index,
+                       IDREF_MAP& idref_map);
+
+// Process reference
+inline bool
+process_reference (DOMNode* node,
+                   XStr& node_name, const char* name,
+                   CORBA::ULong& ref,
+                   int& index,
+                   IDREF_MAP& idref_map);
 
 /*
  *  Process function for non-sequential elements
