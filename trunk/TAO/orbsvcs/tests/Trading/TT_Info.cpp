@@ -143,6 +143,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
   
   for (int length = prop_seq.length (), k = 0; k < length; k++)
     {
+      CORBA::ULong length = 0, i= 0;
       CORBA::Any* value = 0;
       CORBA::TypeCode_ptr tc = 0;
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
@@ -176,7 +177,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 	  TAO_Trader_Test::StringSeq* str_seq;
 	  (*value) >>= str_seq;
 
-	  for (int length = str_seq->length (), i = 0; i < length; i++)
+	  for (length = str_seq->length (), i = 0; i < length; i++)
 	    ACE_DEBUG ((LM_DEBUG, "%s ", (const char *) (*str_seq)[i]));
 
 	  ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -186,7 +187,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 	  TAO_Trader_Test::ULongSeq* ulong_seq;
 	  (*value) >>= ulong_seq;
 
-	  for (int length = ulong_seq->length (), i = 0; i < length; i++)
+	  for (length = ulong_seq->length (), i = 0; i < length; i++)
 	    ACE_DEBUG ((LM_DEBUG, "%d ", (*ulong_seq)[i]));
 
 	  ACE_DEBUG ((LM_DEBUG, "\n"));

@@ -31,8 +31,7 @@ FILES   = $(IDL_FILES) \
 	  Simple_Dynamic
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG) \
-	-DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 LDLIBS  = -lTTest -lorbsvcs -lTAO
