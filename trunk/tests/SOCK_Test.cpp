@@ -183,7 +183,7 @@ server (void *arg)
 		}
 	      else if (r_bytes == -1)
 		{
-		  if (errno == EWOULDBLOCK)
+		  if (errno == EAGAIN || errno == EWOULDBLOCK)
 		    ACE_DEBUG ((LM_DEBUG, "(%P|%t) no input available, going back to reading\n"));
 		  else
 		    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "recv_n"), 0);
