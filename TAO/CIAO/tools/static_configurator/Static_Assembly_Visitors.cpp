@@ -295,7 +295,7 @@ CIAO::Static_Assembly_Builder_Visitor::visit_homeplacement
 int
 CIAO::Static_Assembly_Builder_Visitor::visit_componentinstantiation
 (CIAO::Assembly_Placement::componentinstantiation *ci
- ACE_ENV_ARG_DECL)
+ ACE_ENV_ARG_DECL_NOT_USED)
 {
   // @@ instantiation and register component.
   ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n", ci->id ()));
@@ -671,10 +671,10 @@ generate_static_app_mpc (const char* app_mpc_file_name)
     printf ("error in open\n");
 
   ACE_OS::fprintf (mpc_file, "%s\n\n",
-  "project(Static_CCM_App) : ciao_server, ciao_client, rtcorba, iortable {
-  includes += $(ACE_ROOT)/TAO/CIAO/tools/Assembly_Deployer
-  includes += $(ACE_ROOT)/TAO/CIAO/tools/static_configurator
-  libs += CIAO_XML_Helpers Static_Configurator
+  "project(Static_CCM_App) : ciao_server, ciao_client, rtcorba, iortable { \
+  includes += $(ACE_ROOT)/TAO/CIAO/tools/Assembly_Deployer \
+  includes += $(ACE_ROOT)/TAO/CIAO/tools/static_configurator \
+  libs += CIAO_XML_Helpers Static_Configurator \
   after += CIAO_XML_Helpers Static_Configurator");
 
   for (int i=0; i<=homes_table_last_index_; ++i)
@@ -710,15 +710,16 @@ generate_static_app_mpc (const char* app_mpc_file_name)
     }
 
   ACE_OS::fprintf (mpc_file, "%s\n",
-  "   Source_Files {
-         Static_CCM_App.cpp
-      }
-
-      IDL_Files {
-      }
+  "   Source_Files { \
+         Static_CCM_App.cpp \
+      } \
+      IDL_Files { \
+      } \
    }");
 
   ACE_OS::fclose (mpc_file);
+
+  return 0;
 }
 
 void CIAO::Static_Assembly_Builder_Visitor::
@@ -728,17 +729,15 @@ generate_static_app_driver (const char* app_driver_file_name)
     ACE_OS::fopen (app_driver_file_name, "w");
 
   const char *text =
-"
-#include \"ComponentServer_Impl.h\"
-#include \"CIAO_ServersC.h\"
-#include \"Server_init.h\"
-#include \"Static_Configurator.h\"
-#include \"ace/SString.h\"
+"#include \"ComponentServer_Impl.h\" 
+#include \"CIAO_ServersC.h\" 
+#include \"Server_init.h\" 
+#include \"Static_Configurator.h\" 
+#include \"ace/SString.h\" 
 #include \"ace/Get_Opt.h\"
-
 #include \"Static_Assembly_Config.h\"
 
-char *ior_file_name_ = 0;
+char *ior_file_name_ = 0; \
 
 int
 parse_args (int argc, char *argv[])

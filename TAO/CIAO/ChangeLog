@@ -1,3 +1,10 @@
+Sat Feb 28 15:42:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tools/static_configurator/Static_Assembly_Visitors.cpp:
+	 
+	  Fixed a couple of small errors. But this file still doeasn't
+	  compile with gcc 3.3.2. Sending Venkita note. 
+
 Fri Feb 27 11:35:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
