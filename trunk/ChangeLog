@@ -1,3 +1,11 @@
+Fri Aug 15 01:49:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * Kokyu/Makefile.Kokyu:
+          Moved the assigment to ACE_SHLIBS to a point prior to including
+          wrapper_macros.GNU, because the code the modifies the link
+          library names to work with Kylix is located in
+          wrapper_macros.GNU, and must come after the assignment.
+
 Fri Aug 15 00:37:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/tests.mpc:
