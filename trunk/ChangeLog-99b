@@ -5,6 +5,10 @@ Tue Mar 09 15:15:19 1999  David L. Levine  <levine@cs.wustl.edu>
           This allows use with trimmed-down workspaces.  Thanks to Jeff
           for suggesting this.
 
+        * include/makeinclude/platform_chorus_ghs.GNU: added exceptions
+          make option support.  Thanks to Wei Chang for reporting that
+          it wasn't supported.
+
 Tue Mar  9 12:59:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * docs/ACE-subsets.html: Updated the subsets to reflect what's
