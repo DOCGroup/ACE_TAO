@@ -1,3 +1,10 @@
+Sat Apr 07 20:07:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Crash_On_Write/Crash_On_Write.dsw:
+        * tests/Crash_On_Write/client.dsp:
+        * tests/Crash_On_Write/server.dsp:
+          Add the MSVC project files
+
 Sat Apr  7 20:52:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp (close_connection):
