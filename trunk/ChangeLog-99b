@@ -1,3 +1,9 @@
+Mon Jan 25 09:35:42 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_timed_complete): If connect times out, set
+          errno to ETIMEDOUT, not ETIME.  Matches what will happen if a
+          simple blocking connect times out.
+
 Sun Jan 24 22:04:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added operator==/!= guideline.
