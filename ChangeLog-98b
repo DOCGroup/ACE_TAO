@@ -1,3 +1,17 @@
+Sun Oct  4 14:30:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp (handle_events): Made sure we never suspend
+	  the <notify_handler_> without holding the <token_>.  Otherwise,
+	  depend on how an OS schedules ready threads, we may have a
+	  Reactor that could never be woken up.  This leads to a very
+	  delicate race condition when other threads which need to modify
+	  Reactor's state get block on the token (because they couldn't
+	  wake up the reactor).  These threads later block the
+	  nofify_handler thread when it's ready to resume
+	  <notify_handler_.>
+	  (notify_handle): Since we don't suspend the <notify_handler_>,
+	  there's no need to resume it here.
+
 Sat Oct  3 13:11:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * bin/auto_compile:
