@@ -1,3 +1,11 @@
+Mon Nov 11 12:52:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * docs/ACE-subsets.html: Added the Timer component to the list of
+          buildable pieces. Thanks to Jason Pasion <J.Pasion@motorola.com>
+          for reporting this problem.
+
+        * THANKS: Added Jason Pasion to the Hall of Fame.
+
 Mon Nov 11 12:39:18 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/FIFO_Send_Msg.cpp (send): When setting iovec length,
