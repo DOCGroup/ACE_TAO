@@ -1,14 +1,18 @@
 Mon Aug 17 11:07:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff: 
-	* orbsvcs/tests/Concurrency/CC_command.tab.cpp: 
-	  Removed unused label. Thanks to David for pointing this out.
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff:
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+          Removed unused label. Thanks to David for pointing this out.
 
 Mon Aug 17 10:45:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Trading/Makefile: removed shared_libs_only=1,
           because that's taken care of in the platform_macros.GNU file.
           This module now builds on VxWorks.
+
+        * tests/Cubit/TAO/IDL_Cubit/README: removed instructions for
+          building client w/o libraries for VxWorks.  They were out-of-date,
+          and too much of libACE is needed now for it to be done easily.
 
 Sun Aug 16 23:49:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
