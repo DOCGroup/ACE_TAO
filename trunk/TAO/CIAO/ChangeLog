@@ -1,3 +1,13 @@
+Mon May 26 21:34:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+	  Change the IOR output logic to write the component IOR if one is
+	  instatiated with the -c flag instead of the home IOR (when the
+	  -c flag is not specified.)
+
+	* tools/Simple_Component_Server/README: Updated documentation for
+	  simple component server.
+
 Mon May 26 21:13:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/Simple_Component_Server/Simple_Server.idl:

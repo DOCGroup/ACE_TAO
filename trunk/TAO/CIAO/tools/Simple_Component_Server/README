@@ -4,27 +4,34 @@ Summary
 -------
 
 This directory contains an implmentation for a "simple" component
-server.
+server.  It is simple because it circumvent the mechanism to read the
+XML descriptors and therefore there's no way to configure the
+container or the component server thru these XML descriptors.  It is,
+however, useful for testing the correct functioning of a single
+component and its home (as you don't need to jump thru a bunch of
+hoops to instantiate them for testing.)
 
 Running
 -------
 
 To run the component server, invoke it from command line as foloowing:
 
-  Simple_Component_Server -i <config_file> -o <home_finder_ior_output_file>
+  Simple_Component_Server -c -i <config_file> -o <home or component ior_output_filename>
 
-The <config_file> currently contains information the component server
-needs to install component implementations.  The detail format of the
-file will be explained at the end of this file.  This configuration
-mechanism should eventually be replaced by the standard component
-deployment interfaces so component are installed and instantiated
-through a set of interfaces.
+The <config_file> contains information the component server needs to
+install component implementations.  The detail format of the file will
+be explained at the end of this file.  This configuration mechanism
+should eventually be replaced by the standard component deployment
+interfaces so component are installed and instantiated through a set
+of interfaces.
 
-The <home_finder_ior_output_file> points to the file name where the
-component server will output a IOR (for the HomeFinder interfaces)
-hosted on the component server.  Currently, Simple_Component_Server
-always instantiates a HomeRegistrar service within the server process.
+If "-c" flag is specify, the simple component server creates a
+component writes the IOR for the component into the file specified by
+-o flag.  Otherwise, only the component home is instantiated and the
+IOR for the home is written to the file.
 
+The <ior_output_filename> points to the file name where the
+component server will output the IOR to.
 
 Server Configuration:
 ---------------------
@@ -55,6 +62,8 @@ Here's a breakdown of what each field contains:
 4 -> Repo ID for the component home interface
 5 -> Repo ID for the managed component interface
 6 -> Canonical name for the installed component home.
+
+** Currently, only the first 4 config values are used (field 0-3).
 
 Todos
 -----
