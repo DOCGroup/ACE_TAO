@@ -22,10 +22,9 @@ TAO_EC_Kokyu_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushConsumer *consumer
       ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %x %x\n",
-              supplier, consumer));
   const RtecEventChannelAdmin::SupplierQOS& qos =
     consumer->publications ();
+
   for (CORBA::ULong i = 0; i < qos.publications.length (); ++i)
     {
       const RtecEventComm::EventHeader &header =

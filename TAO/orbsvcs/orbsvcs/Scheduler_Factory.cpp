@@ -5,6 +5,8 @@
 #include "ace/Null_Mutex.h"
 
 #include "orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/Sched/Reconfig_Scheduler.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -20,12 +22,71 @@ RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
 ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =
   ACE_Scheduler_Factory::UNINITIALIZED;
 
+
+RtecScheduler::Period_t ACE_Scheduler_Factory::period_default_ = 0;
+RtecScheduler::Threads_t ACE_Scheduler_Factory::threads_default_ = 0;
+RtecScheduler::Importance_t ACE_Scheduler_Factory::importance_default_ = RtecScheduler::MEDIUM_IMPORTANCE;
+RtecScheduler::Criticality_t ACE_Scheduler_Factory::criticality_default_ = RtecScheduler::HIGH_CRITICALITY;
+RtecScheduler::RT_Info_Enabled_Type_t ACE_Scheduler_Factory::rt_info_enable_state_default_ = RtecScheduler::RT_INFO_NON_VOLATILE;
+
+RtecScheduler::Period_t ACE_Scheduler_Factory::period_default()
+{
+   return period_default_;
+}
+
+RtecScheduler::Threads_t ACE_Scheduler_Factory::threads_default()
+{
+   return threads_default_;
+}
+
+RtecScheduler::Importance_t ACE_Scheduler_Factory::importance_default()
+{
+   return importance_default_;
+}
+
+RtecScheduler::Criticality_t ACE_Scheduler_Factory::criticality_default()
+{
+   return criticality_default_;
+}
+
+void ACE_Scheduler_Factory::period_default(RtecScheduler::Period_t period_default)
+{
+   period_default_ = period_default;
+}
+
+void ACE_Scheduler_Factory::threads_default(RtecScheduler::Threads_t threads_default)
+{
+   threads_default_ = threads_default;
+}
+
+void ACE_Scheduler_Factory::importance_default(RtecScheduler::Importance_t importance_default)
+{
+   importance_default_ = importance_default;
+}
+
+void ACE_Scheduler_Factory::criticality_default(RtecScheduler::Criticality_t criticality_default)
+{
+   criticality_default_ = criticality_default;
+}
+
+RtecScheduler::RT_Info_Enabled_Type_t ACE_Scheduler_Factory::rt_info_enable_state_default()
+{
+   return rt_info_enable_state_default_;
+}
+
+void ACE_Scheduler_Factory::rt_info_enable_state_default(RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default)
+{
+   rt_info_enable_state_default_ = rt_info_enable_state_default;
+}
+
 // This symbols are extern because the automatic template
-// instantiation mechanism in SunCC get confused otherwise.
+// instantiation mechanism in SunCC gets confused otherwise.
 int TAO_SF_config_count = -1;
 ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info = 0;
 int TAO_SF_entry_count = -1;
 ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info = 0;
+int TAO_SF_dependency_count = -1;
+ACE_Scheduler_Factory::POD_Dependency_Info* TAO_SF_dep_info = 0;
 
 struct ACE_Scheduler_Factory_Data
 {
@@ -34,8 +95,13 @@ struct ACE_Scheduler_Factory_Data
   //   ACE_TSS objects.  We can't use ACE_Singleton directly, because
   //   construction of ACE_Runtime_Scheduler takes arguments.
 
+/* WSOA merge - commented out 
   ACE_Runtime_Scheduler scheduler_;
   // The static runtime scheduler.
+*/
+  
+  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX> scheduler_;
+  // The scheduler.
 
   ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
   preemption_priority_;
@@ -47,7 +113,10 @@ struct ACE_Scheduler_Factory_Data
     : scheduler_ (TAO_SF_config_count,
                   TAO_SF_config_info,
                   TAO_SF_entry_count,
-                  TAO_SF_rt_info),
+                  TAO_SF_rt_info, 
+                  TAO_SF_dependency_count,
+                  TAO_SF_dep_info,
+                  0),
       preemption_priority_ ()
   {
   }
@@ -211,6 +280,17 @@ static char end_infos_empty[] =
 "};\n\n"
 "static int infos_size = 0;\n\n";
 
+static char start_dependencies[] =
+"\n\nstatic ACE_Scheduler_Factory::POD_Dependency_Info dependencies[] = {\n";
+
+static char end_dependencies[] =
+"};\n\n"
+"static int dependencies_size = sizeof(dependencies)/sizeof(dependencies[0]);\n\n";
+
+static char end_dependencies_empty[] =
+"};\n\n"
+"static int dependencies_size = 0;\n\n";
+
 static char start_configs[] =
 "\nstatic ACE_Scheduler_Factory::POD_Config_Info configs[] = {\n";
 
@@ -224,28 +304,48 @@ static char end_configs_empty[] =
 
 int ACE_Scheduler_Factory::dump_schedule
    (const RtecScheduler::RT_Info_Set& infos,
+    const RtecScheduler::Dependency_Set& dependencies,
     const RtecScheduler::Config_Info_Set& configs,
     const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
     const char* file_name,
     const char* rt_info_format,
-    const char* config_info_format)
+    const char* dependency_format,
+    const char* config_info_format,
+    int dump_disabled_infos,
+    int dump_disabled_dependencies)
 {
   u_int i;
   char entry_point [BUFSIZ];
 
   // Default format for printing RT_Info output.
   if (rt_info_format == 0)
-    rt_info_format = "{%20s, %10d, %10d, %10d, "
-                     "%10d, %10d, "
-                     "(RtecScheduler::Criticality_t) %d, "
-                     "(RtecScheduler::Importance_t) %d, "
-                     "%10d, %10d, %10d, %10d, %10d, "
-                     "(RtecScheduler::Info_Type_t) %d }";
+    rt_info_format = "{%20s, /* entry_point */\n"
+                     "%10d, /* handle */\n"
+                     "%10d, /* worst_case_execution_time */,\n"
+                     "%10d, /* typical_execution_time */,\n"
+                     "%10d, /* cached_execution_time */,\n"
+                     "%10d, /* period */\n"
+                     "(RtecScheduler::Criticality_t) %d, /* [ VL_C = 0, L_C = 1, M_C = 2, H_C = 3, VH_C = 4] */\n"
+                     "(RtecScheduler::Importance_t) %d, /* [ VL_I = 0, L_I = 1, M_I = 2, H_I = 3, VH_I = 4] */\n"
+                     "%10d, /* quantum */\n"
+                     "%10d, /* threads */\n"
+                     "%10d, /* priority */\n"
+                     "%10d, /* preemption_subpriority */\n"
+                     "%10d, /* preemption_priority */\n"
+                     "(RtecScheduler::Info_Type_t) %d, /* [OPERATION = 0, CONJUNCTION = 1, DISJUNCTION = 2, REMOTE_DEPENDANT = 3] */\n"
+                     "(RtecScheduler::RT_Info_Enabled_Type_t) %d } /* [RT_INFO_DISABLED = 0, RT_INFO_ENABLED = 1, RT_INFO_NON_VOLATILE = 2] */\n";
+
+
+  // Default format for printing dependency output.
+  if (dependency_format == 0)
+      dependency_format = "  { (RtecScheduler::Dependency_Type_t) %d, %10d, "
+                          "%10d, %10d,"
+                          "(RtecScheduler::Dispatching_Type_t) %d }";
 
   // Default format for printing Config_Info output.
   if (config_info_format == 0)
     config_info_format = "  { %10d, %10d, "
-                         "(RtecScheduler::Dispatching_Type_t) %d }";
+                         "(RtecScheduler::Dependency_Enabled_Type_t) %d }";
 
   FILE* file = stdout;
   if (file_name != 0)
@@ -289,6 +389,16 @@ int ACE_Scheduler_Factory::dump_schedule
                        (const char *) anomaly.description);
     }
 
+  // Print out banner indicating which infos are dumped.
+  if (dump_disabled_infos)
+    {
+      ACE_OS::fprintf (file, "\n// Both enabled and disabled RT_Infos were dumped to this file.\n\n");
+    }
+  else
+    {
+      ACE_OS::fprintf (file, "\n// Only enabled RT_Infos were dumped to this file.\n\n");
+    }
+
   // Print out operation QoS info.
   ACE_OS::fprintf (file, start_infos);
 
@@ -296,6 +406,12 @@ int ACE_Scheduler_Factory::dump_schedule
        i < infos.length ();
        ++i)
     {
+      const RtecScheduler::RT_Info& info = infos[i];
+
+      if (dump_disabled_infos
+          || info.enabled == RtecScheduler::RT_INFO_ENABLED
+          || info.enabled == RtecScheduler::RT_INFO_NON_VOLATILE)
+	{
       if (i != 0)
         // Finish previous line.
         ACE_OS::fprintf(file, ",\n");
@@ -323,17 +439,67 @@ int ACE_Scheduler_Factory::dump_schedule
                        info.threads,
                        info.priority,
                        info.preemption_subpriority,
-                       info.preemption_priority,
-                       info.info_type);
+                           info.preemption_priority,
+                           info.info_type,
+                           info.enabled);
     }
+    }
+  
   // Finish last line.
-  ACE_OS::fprintf(file,
-                  "\n");
+  ACE_OS::fprintf(file, "\n");
 
   if (infos.length () > 0)
     ACE_OS::fprintf (file, end_infos);
   else
     ACE_OS::fprintf (file, end_infos_empty);
+
+  // Print out banner indicating which dependencies are dumped.
+  if (dump_disabled_dependencies)
+    {
+      ACE_OS::fprintf (file, "\n// Both enabled and disabled dependencies were dumped to this file.\n\n");
+    }
+  else
+    {
+      ACE_OS::fprintf (file, "\n// Only enabled dependencies were dumped to this file.\n\n");
+    }
+
+  // Print out operation dependency info.
+  ACE_OS::fprintf (file, start_dependencies);
+
+  for (i = 0;
+       i < dependencies.length ();
+       ++i)
+    {
+      const RtecScheduler::Dependency_Info& dep = dependencies[i];
+
+      if (dump_disabled_infos
+          || dep.enabled == RtecBase::DEPENDENCY_ENABLED
+          || dep.enabled == RtecBase::DEPENDENCY_NON_VOLATILE)
+	{
+          // Finish previous line.
+          if (i != 0)
+	    {
+              ACE_OS::fprintf (file, ",\n");
+	    }
+
+          ACE_OS::fprintf (file,
+                           dependency_format,
+                           dep.dependency_type,
+                           dep.number_of_calls,
+                           dep.rt_info,
+                           dep.rt_info_depended_on,
+                           dep.enabled);
+	}
+    }
+
+  // Finish last line.
+  ACE_OS::fprintf (file, "\n");
+
+  if (dependencies.length () > 0)
+    ACE_OS::fprintf (file, end_dependencies);
+  else
+    ACE_OS::fprintf (file, end_dependencies_empty);
+
 
   // Print out queue configuration info.
   ACE_OS::fprintf (file, start_configs);
@@ -367,6 +533,205 @@ int ACE_Scheduler_Factory::dump_schedule
   return 0;
 }
 
+void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * entry, FILE* file)
+{
+
+   if( entry == 0 ) 
+   {
+      ACE_OS::fprintf (file, "Entry is NULL");
+      return;
+   }
+
+   // Print out the actual rt_info data
+   const char* rt_info_format = "{%20s, /* entry_point */\n"
+                                 "%10d, /* handle */\n"
+                                 "%10d, /* period */\n"
+                                 "%10d, /* criticality */\n"
+                                 "%10d, /* threads */\n"
+                                 "%10d, /* priority */\n"
+                                 "%10d, /* preemption_subpriority */\n"
+                                 "%10d, /* preemption_priority */\n"
+                                 "%10d  /* enabled */\n";
+
+   TAO_RT_Info_Ex* actual_info = entry->actual_rt_info();
+
+   ACE_OS::fprintf (file,
+                    rt_info_format,
+                    actual_info->entry_point.in(),
+                    actual_info->handle,
+                    actual_info->period,
+                    actual_info->criticality,
+                    actual_info->threads,
+                    actual_info->priority,
+                    actual_info->preemption_subpriority,
+                    actual_info->preemption_priority,
+                    actual_info->enabled);
+
+
+   // Print out the current admitted tuple
+   const char* admitted_tuple_format = "             {"
+                                       "%13d, /* handle */\n"
+                                       "%13d, /* rate_index */\n"
+                                       "%13d, /* period */\n"
+                                       "%13d, /* criticality */\n"
+                                       "%13d, /* priority */\n"
+                                       "%13d, /* preemption_subpriority */\n"
+                                       "%13d, /* preemption_priority */\n"
+                                       "%13d } /* enabled */\n";
+
+   TAO_RT_Info_Tuple* current_admitted_tuple = entry->current_admitted_tuple();
+
+   ACE_OS::fprintf(file, "\n   Current admitted Tuple:\n");
+   if( current_admitted_tuple == 0 ) 
+   {
+      ACE_OS::fprintf (file, "   =>NONE_ADMITTED\n");
+   }
+   else 
+   {
+      ACE_OS::fprintf (file,
+                       admitted_tuple_format,
+                       current_admitted_tuple->handle,
+                       current_admitted_tuple->rate_index,
+                       current_admitted_tuple->period,
+                       current_admitted_tuple->criticality,
+                       current_admitted_tuple->priority,
+                       current_admitted_tuple->preemption_subpriority,
+                       current_admitted_tuple->preemption_priority,
+                       current_admitted_tuple->enabled);
+   }
+
+   // Print out the orig_tuple_subset_
+   ACE_OS::fprintf(file, "\n      Original Tuple Subset\n   {\n");
+   log_tuple_subset(entry->orig_tuple_subset(), file);
+   ACE_OS::fprintf(file, "\n   }");
+   
+   // Print out the prop_tuple_subset_
+   ACE_OS::fprintf(file, "\n      Propagated Tuple Subset\n   {\n");
+   log_tuple_subset(entry->prop_tuple_subset(), file);
+   ACE_OS::fprintf(file, "\n   }\n}");
+
+
+}
+
+void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
+                      FILE* file)                      
+{
+   TAO_RT_Info_Tuple **tuple_ptr_ptr;
+   const char* subset_tuple_format = "             {\n"
+                                     "%13d, /* handle */\n"
+                                     "%13d, /* rate_index */\n"
+                                     "%13d, /* period */\n"
+                                     "%13d, /* criticality */\n"
+                                     "%13d, /* threads */\n"
+                                     "%13d, /* priority */\n"
+                                     "%13d, /* preemption_subpriority */\n"
+                                     "%13d, /* preemption_priority */\n"
+                                     "%13d } /* enabled */\n";
+
+   TUPLE_SET_ITERATOR
+      tuple_iter (tuple_subset);
+   
+   
+   while (tuple_iter.done () == 0)
+   {
+      // Get a pointer to the tuple COPY under the iterator.
+      if (tuple_iter.next (tuple_ptr_ptr) == 0
+         || tuple_ptr_ptr == 0 || ((*tuple_ptr_ptr) == 0) )
+      {
+         ACE_OS::fprintf (file, "{ NULL TUPLE POINTER }\n");
+      } 
+      else 
+      {
+      
+      ACE_OS::fprintf (file,
+         subset_tuple_format,
+         (*tuple_ptr_ptr)->handle,
+         (*tuple_ptr_ptr)->rate_index,
+         (*tuple_ptr_ptr)->period,
+         (*tuple_ptr_ptr)->criticality,
+         (*tuple_ptr_ptr)->threads,
+         (*tuple_ptr_ptr)->priority,
+         (*tuple_ptr_ptr)->preemption_subpriority,
+         (*tuple_ptr_ptr)->preemption_priority,
+         (*tuple_ptr_ptr)->enabled);
+      }
+      
+      tuple_iter.advance ();
+   }
+}
+
+int 
+ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array, 
+                                              long entry_ptr_array_size,
+                                              const char* file_name)
+{
+   // Open the file
+   FILE* file = stdout;
+   if (file_name != 0)
+   {
+      file = ACE_OS::fopen (file_name, "w");
+      if (file == 0)
+        return -1;
+    }
+
+
+   // Iterate through the array.  The index is the (handle - 1) of the rt_info in the array
+   for(int index = 0; index < entry_ptr_array_size; ++index)
+   {  
+      ACE_OS::fprintf(file, "\n\nScheduler Entry Array contents\n");
+      TAO_Reconfig_Scheduler_Entry * entry = entry_ptr_array[index];
+
+      log_scheduling_entry(entry, file);
+         
+
+   }
+
+   
+   ACE_OS::fclose (file);
+   return 0;
+
+}
+ 
+void 
+ACE_Scheduler_Factory::log_scheduling_tuples(TAO_RT_Info_Tuple ** tuple_ptr_array,
+                                    long tuple_ptr_array_size,
+                                    const char* file_name)
+{
+   // Open the file
+   FILE* file = stdout;
+   if (file_name != 0)
+   {
+      file = ACE_OS::fopen (file_name, "w");
+      if (file == 0)
+        return;
+    }
+
+   const char* subset_tuple_format = "             {\n"
+                                     "%13d, /* handle */\n"
+                                     "%13d, /* rate_index */\n"
+                                     "%13d, /* period */\n"
+                                     "%13d, /* criticality */\n"
+                                     "%13d, /* priority */\n"
+                                     "%13d, /* preemption_subpriority */\n"
+                                     "%13d, /* preemption_priority */\n"
+                                     "%13d } /* enabled */\n";
+
+   for (int ndx = 0; ndx < tuple_ptr_array_size; ndx++)
+   {
+	   fprintf(file,
+		       subset_tuple_format,
+               tuple_ptr_array[ndx]->handle,
+               tuple_ptr_array[ndx]->rate_index,
+               tuple_ptr_array[ndx]->period,
+               tuple_ptr_array[ndx]->criticality,
+               tuple_ptr_array[ndx]->priority,
+               tuple_ptr_array[ndx]->preemption_subpriority,
+               tuple_ptr_array[ndx]->preemption_priority,
+               tuple_ptr_array[ndx]->enabled);
+   }
+
+   ACE_OS::fclose (file);
+}
 #if defined (HPUX) && !defined (__GNUG__)
   // aCC can't handle RtecScheduler::Preemption_Priority_t used as an operator
   // name.
@@ -425,10 +790,12 @@ ACE_Scheduler_Factory::set_preemption_priority
 template class ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>;
 template class ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >;
 template class ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>;
+template class ACE_Ordered_MultiSet<TAO_RT_Info_Tuple *>;
+template class ACE_Ordered_MultiSet_Iterator<TAO_RT_Info_Tuple *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>
 #pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
 #pragma instantiate ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
-template ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex> * ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>::singleton_;
+#pragma instantiate ACE_Ordered_MultiSet<TAO_RT_Info_Tuple *>
+#pragma instantiate ACE_Ordered_MultiSet_Iterator<TAO_RT_Info_Tuple *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -28,6 +28,10 @@ TAO_EC_Kokyu_Filter::
      info_type_ (info_type)
 {
   this->adopt_child (this->body_);
+
+#if 1 //by VS
+this->rt_info_computed_ = 1;
+#endif
 }
 
 TAO_EC_Kokyu_Filter::~TAO_EC_Kokyu_Filter (void)
@@ -149,40 +153,93 @@ TAO_EC_Kokyu_Filter::can_match (const RtecEventComm::EventHeader& header) const
   return this->body_->can_match (header);
 }
 
+/* 
+    Kokyu_Filter
+        |
+        |body
+        |
+    Con/DisjunctionFilter
+        |
+        |children
+        |*
+    Kokyu_Filter
+        |
+        |body
+        |
+    Type_Filter
+
+The entire hierarchy will have the same rt_info as the root. Only the root
+rt_info will be part of the dependency graph in the scheduler. The root
+rt_info will have a dependency on the consumer rt_info. 
+
+<--- shows dependency (oneway)
+
+supplier1<-----|
+          con/disj_rt_info<-------consumer_rt_info
+supplier2<-----|
+*/
+
 int
 TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
                                        const TAO_EC_QOS_Info &qos_info
                                        ACE_ENV_ARG_DECL)
 {
+#ifdef EC_KOKYU_LOGGING
+  ACE_DEBUG ((LM_DEBUG, "Entering EC_Kokyu_Filter::add_dependencies\n"));
+#endif
   this->init_rt_info (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+#ifdef EC_KOKYU_LOGGING
+  ACE_DEBUG ((LM_DEBUG, 
+              "this->rt_info_ = %d, header.type = %d, qos_info.rt_info = %d\n",
+              this->rt_info_, header.type, qos_info.rt_info));
+#endif
+
+  //this call the add_dependencies() on con/disjunction filter
   int matches = this->body_->add_dependencies (header,
                                                qos_info
-                                                ACE_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (matches != 0)
     {
+#ifdef EC_KOKYU_LOGGING
+      ACE_DEBUG ((LM_DEBUG, "Kokyu_Filter::matches != 0\n"));
+#endif 
       this->scheduler_->add_dependency (this->rt_info_, qos_info.rt_info, 1,
-                                        RtecBase::TWO_WAY_CALL
+                                        RtecBase::ONE_WAY_CALL
                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (qos_info.rt_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
-      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ACE_DEBUG ((LM_DEBUG, "[%s][%d] ----> [%s][%d]\n",
                   this->name_.c_str (),
-                  info->entry_point.in ()));
+                  this->rt_info_,
+                  info->entry_point.in (),
+                  qos_info.rt_info));
+    }
+  else
+    {
+#ifdef EC_KOKYU_LOGGING
+      ACE_DEBUG ((LM_DEBUG, "Kokyu_Filter::matches == 0\n"));
+#endif 
     }
 
+#ifdef EC_KOKYU_LOGGING
+  ACE_DEBUG ((LM_DEBUG, "about to iterate thru children\n"));
+#endif  
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
       (*i)->add_dependencies (header, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
+#ifdef EC_KOKYU_LOGGING
+  ACE_DEBUG ((LM_DEBUG, "Exiting EC_Kokyu_Filter: add_dependencies\n"));
+#endif
   return 0;
 }
 
@@ -202,7 +259,7 @@ TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   if (this->rt_info_computed_)
     return;
 
-#if 0 //ifdef'ed by VS
+#if 1 //ifdef'ed from 1 to 0 by VS
 
   // Provide dummy values the scheduler will compute them based on the
   // dependencies and the fact that this is a DISJUNCTION.
@@ -219,32 +276,6 @@ TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif  //ifdef'ed by VS
-
-#if 0
-  ChildrenIterator end = this->end ();
-  for (ChildrenIterator i = this->begin (); i != end; ++i)
-    {
-      TAO_EC_Filter* filter = *i;
-
-      TAO_EC_QOS_Info child;
-      filter->get_qos_info (child ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      this->scheduler_->add_dependency (this->rt_info_,
-                                        child.rt_info, 1,
-                                        RtecBase::TWO_WAY_CALL
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      RtecScheduler::RT_Info_var info =
-        this->scheduler_->get (child.rt_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
-                  info->entry_point.in (),
-                  this->name_.c_str ()));
-
-    }
-#endif /* 0 */
 
 #if 0 //ifdef changed from 1 to 0 by VS
   if (this->body_info_ != this->rt_info_)

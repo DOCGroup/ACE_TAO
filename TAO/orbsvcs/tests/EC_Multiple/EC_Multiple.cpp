@@ -581,6 +581,7 @@ Test_ECG::run (int argc, char* argv[])
       if (this->schedule_file_ != 0)
         {
           RtecScheduler::RT_Info_Set_var infos;
+          RtecScheduler::Dependency_Set_var deps;
           RtecScheduler::Config_Info_Set_var configs;
           RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
 
@@ -596,6 +597,7 @@ Test_ECG::run (int argc, char* argv[])
           // not define instances of _out types.
 
           RtecScheduler::RT_Info_Set_out infos_out (infos);
+          RtecScheduler::Dependency_Set_out deps_out (deps);
           RtecScheduler::Config_Info_Set_out configs_out (configs);
           RtecScheduler::Scheduling_Anomaly_Set_out anomalies_out (anomalies);
           ACE_Scheduler_Factory::server ()->compute_scheduling
@@ -603,7 +605,8 @@ Test_ECG::run (int argc, char* argv[])
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos_out, configs_out, anomalies_out ACE_ENV_ARG_PARAMETER);
+             infos_out, deps_out, 
+             configs_out, anomalies_out ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 #else  /* ! __SUNPRO_CC */
           ACE_Scheduler_Factory::server ()->compute_scheduling
@@ -611,12 +614,14 @@ Test_ECG::run (int argc, char* argv[])
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos.out (), configs.out (), anomalies.out ()
+             infos.out (), deps.out (),
+             configs.out (), anomalies.out ()
              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 #endif /* ! __SUNPRO_CC */
 
           ACE_Scheduler_Factory::dump_schedule (infos.in (),
+                                                deps.in (),
                                                 configs.in (),
                                                 anomalies.in (),
                                                 this->schedule_file_);

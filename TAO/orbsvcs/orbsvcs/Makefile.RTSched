@@ -33,7 +33,7 @@ override TAO_IDLFLAGS += \
         -Wb,post_include=ace/post.h
 
 
-IDL_FILES += RtecScheduler
+IDL_FILES += RtecScheduler RtecBase
 
 CPP_SRCS += \
         Scheduler_Factory \

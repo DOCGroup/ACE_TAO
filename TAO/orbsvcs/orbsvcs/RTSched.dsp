@@ -184,6 +184,15 @@ SOURCE=.\RtecSchedulerS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RtecBaseC.cpp
+# ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecBaseS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Runtime_Scheduler.cpp
 # End Source File
 # Begin Source File
