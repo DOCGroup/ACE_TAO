@@ -1,3 +1,43 @@
+Tue Aug 12 07:50:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Abstract_Servant_Base.h:
+
+          Added typedef for function pointer to the static collocation
+          skeletons.
+
+        * tao/PortableServer/Operation_Table.h:
+
+          Expanded the definition of the class TAO_operation_db_entry
+          to include two function pointers of the type described above,
+          one each for direct and through-POA collocation.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+
+          Enabled collocated calls to use the existing operation table.
+          This involved changes in two areas.
+
+          - Added traversals of the inheritance graph for the direct and
+            through-POA proxy classes. To use the table, static methods
+            must exist for all operations of the base classes. Since the
+            implementation of these methods is just a delegation, they are
+            inlined, as are the non-collocated skeletons for base class
+            operations. Since the code generation for the implementation
+            of the direct and through-POA collocations differ only in a
+            piece of the class name, just a specialized helper for the
+            inheritance graph traversal mechanism, which is called from
+            the be_visitor_interface_si visitor, was created.
+
+          - Added two elements to each operation table entry, corresponding
+            to the additional elements in TAO_operation_db_entry described
+            above. If direct and/or through-POA collocation code
+            generation is not turned on, the corresponding 
+            TAO_operation_db_entry slots will be 0.
+
 Mon Aug 11 23:05:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Base.cpp (reply_service_context): Return the
@@ -20,7 +60,7 @@ Mon Aug 11 12:22:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
 
           Overhauled generation of direct collocation operations to
-          match the changes for thruPOA collocation.
+          match the changes for through-POA collocation.
 
         * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
 

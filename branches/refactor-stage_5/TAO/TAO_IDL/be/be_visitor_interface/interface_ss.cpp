@@ -76,7 +76,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   const char *flat_name = flat_name_holder.c_str ();
 
-  if (node->gen_operation_table (flat_name, full_skel_name) == -1)
+  if (node->gen_operation_table () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::"
@@ -711,7 +711,7 @@ be_visitor_interface_ss::generate_local_name (be_interface *node)
 }
 
 ACE_CString
-be_visitor_interface_ss::generate_full_skel_name (be_interface *node)
+be_visitor_interface_ss::generate_full_skel_name  (be_interface *node)
 {
   return ACE_CString (node->full_skel_name ());
 }

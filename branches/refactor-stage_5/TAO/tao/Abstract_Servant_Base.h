@@ -28,7 +28,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/TAO_Export.h"
-
+#include "tao/Pseudo_VarOut_T.h"
 
 class TAO_ServerRequest;
 class TAO_Stub;
@@ -42,12 +42,29 @@ namespace CORBA
 
   class Object;
   typedef Object *Object_ptr;
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+};
+
+namespace TAO
+{
+  class Argument;
 };
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
     void *,
     void *
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+    , CORBA::Environment &
+#endif
+  );
+
+typedef void (*TAO_Collocated_Skeleton)(
+    CORBA::Object_ptr,
+    CORBA::Object_out,
+    TAO::Argument **,
+    int
 #if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
     , CORBA::Environment &
 #endif
