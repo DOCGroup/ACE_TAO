@@ -1,3 +1,9 @@
+Fri Jan 16 23:19:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/tests.mpc: 
+
+	  Added the new tests to the MPC.
+
 Fri Jan 16 23:01:11 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Multihomed_INET_Addr_Test_IPV6.cpp:
