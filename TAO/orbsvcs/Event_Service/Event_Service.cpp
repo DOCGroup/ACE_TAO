@@ -113,6 +113,12 @@ int main (int argc, char *argv[])
       auto_ptr<POA_RtecScheduler::Scheduler> scheduler_impl;
       RtecScheduler::Scheduler_var scheduler;
 
+      // This is the name we (potentially) register the Scheduling
+      // Service in the Naming Service.
+      CosNaming::Name schedule_name (1);
+      schedule_name.length (1);
+      schedule_name[0].id = CORBA::string_dup ("ScheduleService");
+
       if (global_scheduler == 0)
         {
           scheduler_impl =
@@ -129,9 +135,6 @@ int main (int argc, char *argv[])
 		      str.in ()));
 
 	  // Register the servant with the Naming Context....
-	  CosNaming::Name schedule_name (1);
-	  schedule_name.length (1);
-	  schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 	  naming_context->bind (schedule_name, scheduler.in (), TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
         }
@@ -163,6 +166,15 @@ int main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "%s; running event service\n", __FILE__));
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
+
+      naming_context->unbind (channel_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (global_scheduler == 0)
+	{
+	  naming_context->unbind (schedule_name, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
 
     }
   TAO_CATCHANY

@@ -240,7 +240,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
   *ACE_reinterpret_cast(CORBA::ULong*,buf + 8) = bodylen;
 #else
-  if (!stream->do_byte_swap_)
+  if (!stream->do_byte_swap ())
     {
       *ACE_reinterpret_cast(CORBA::ULong*, buf + 8) = bodylen;
     }
