@@ -1,3 +1,10 @@
+Tue Dec 16 08:29:05 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Fixed the install targets when installing to the current
+          directory.
+
 Tue Dec 16 07:13:53 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/TMCast/TMCast.mpc:
