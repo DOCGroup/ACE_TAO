@@ -105,7 +105,7 @@ private:
   }
  // Listing 2
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_PWD_FUNCTIONS)
  // Listing 10 code/ch10
   int setUserID (ACE_Process_Options &options)
   {
@@ -159,7 +159,7 @@ public:
   void showWho (void)
   {
     ACE_TRACE ("Slave::showWho");
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_PWD_FUNCTIONS)
     passwd *pw = ::getpwuid (::geteuid ());
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) Running this process as:%s\n"),
