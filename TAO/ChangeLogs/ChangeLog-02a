@@ -1,3 +1,15 @@
+Tue May 15 10:36:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+
+          Modified the top level tao_idl executable to process
+          only one IDL file per run, even if multiple filenames
+          are in the command line. If the latter is the case,
+          a warning is output saying that all files except the
+          first will be ignored. The mechanism for parsing and
+          storing multiple filenames has been left in place, since
+          one day this may be implemented portably.
+
 Tue Apr 15 10:32:42 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
         * tao/Makefile:
