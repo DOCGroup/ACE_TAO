@@ -7,6 +7,7 @@
 #include "Pluggable_Messaging.h"
 #include "GIOP_Utils.h"
 #include "Transport.h"
+#include "CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "TAO_Server_Request.i"

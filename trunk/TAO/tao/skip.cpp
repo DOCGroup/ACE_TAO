@@ -25,6 +25,7 @@
 #include "ORB_Core.h"
 #include "Typecode.h"
 #include "Any.h"
+#include "tao/CDR.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao,

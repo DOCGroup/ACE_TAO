@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/Tagged_Components.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"

@@ -11,6 +11,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
 #include "SHMIOP_Acceptor.i"

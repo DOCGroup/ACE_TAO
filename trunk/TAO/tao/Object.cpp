@@ -16,6 +16,7 @@
 #include "Dynamic_Adapter.h"
 #include "IFR_Client_Adapter.h"
 #include "Remote_Object_Proxy_Broker.h"
+#include "CDR.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
