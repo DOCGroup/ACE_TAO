@@ -505,6 +505,9 @@ if eval $ac_compile 2>&5; then
     *) ;; # Ignore the rest.
     esac
   done
+
+  # Clean up.
+  rm -f a.out
 else
   echo "ltcf-cxx.sh: error: problem compiling test program"
 fi
