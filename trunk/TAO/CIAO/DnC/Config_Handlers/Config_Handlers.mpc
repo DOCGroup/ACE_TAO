@@ -8,7 +8,7 @@ project (Config_Handlers) : taolib {
   macros   += XML_USE_PTHREADS
   includes += $(XERCESCROOT)/include $(CIAO_ROOT)/DnC
   libpaths += $(XERCESCROOT)/lib $(ACE_ROOT)/lib
-  libs     += xerces-c
+//  libs     += xerces-c
 
   Source_Files {
     Any_Handler.cpp
