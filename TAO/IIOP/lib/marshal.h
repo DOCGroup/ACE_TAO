@@ -67,7 +67,8 @@ public:
   ~TAO_MarshalFactory();
   // destructor
 
-  virtual TAO_MarshalObject *make_marshal_object(CORBA_TypeCode_ptr tc);
+  virtual TAO_MarshalObject *make_marshal_object(CORBA_TypeCode_ptr tc,
+						 CORBA_Environment &env);
   // factory method that returns the appropriate marshal object
 private:
   // define data members that are instances of various MarshalObject classes

@@ -77,6 +77,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind,
     _parent (0),
     _refcount (1),
     _orb_owns (orb_owns_tc),
+    _delete_flag (CORBA_B_FALSE),
     _prv_state (new TC_PRV_State)
 {
   // The CDR code used to interpret TypeCodes requires in-memory
@@ -107,6 +108,43 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind,
     }
 }
 
+// Destructor.  For "indirected" typecodes, the typecode reuses the
+// buffer owned by its parent, and so rather than deleting the buffer
+// it just drops the parent's refcount.
+
+CORBA_TypeCode::~CORBA_TypeCode (void)
+{
+  if (_orb_owns)
+    {
+      // we are constants, don't do anything
+      return;
+    }
+  else
+    {
+      // check if we have a parent
+      if (_parent)
+	{
+	  if (_parent->_delete_flag) // parent is deleteing, so we have to go 
+	    {
+	      _delete_flag = CORBA_B_TRUE;
+	      child_free();
+	      delete _prv_state;
+	      delete _buffer; // our buffer was allocated on the heap
+	    }
+	  // else, somebody maliciously tried to delete us
+	}
+      else
+	{
+	  // we are free standing and are to be deleted
+	  _delete_flag = CORBA_B_TRUE; // we indicate to our children that we
+				       // are getting deleted
+	  child_free(); // first delete any children and the subtree
+	  delete _prv_state;
+	  //	  delete _buffer; // careful. This may be static
+	}
+    }
+}
+
 // decreases the refcount and deletes when refcount reaches 0
 void CORBA_release (CORBA_TypeCode_ptr tc)
 {
@@ -132,7 +170,25 @@ CORBA_TypeCode::AddRef (void)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
 
-  return _refcount++;
+  assert (this != 0);
+
+  if (_orb_owns)
+    {
+      return _refcount; // this better be 1
+    }
+  else
+    {
+      if (_parent)
+	{
+	  // we are owned by the parent
+	  //	  return _parent->Addref();
+	  return _refcount; // 1
+	}
+      else
+	{
+	  return _refcount++;
+	}
+    }
 }
 
 // COM stuff
@@ -143,11 +199,52 @@ CORBA_TypeCode::Release (void)
 
   assert (this != 0);
 
-  if (--_refcount != 0)
-    return _refcount;
   if (_orb_owns)
-    delete this;
-  return 0;
+    {
+      return _refcount; // 1
+    }
+  else
+    {
+      if (_parent)
+	{
+	  //	  return _parent->Release();
+	  return _refcount; // 1
+	}
+      else
+	{
+	  --_refcount;
+	  if (_refcount == 0)
+	    delete this;
+	}
+    }
+}
+
+void CORBA_TypeCode::child_free()
+{
+  CORBA_Long i;
+
+  switch (_kind)
+    {
+    case tk_struct:
+    case tk_except:
+      // free up members
+      for (i=0; i < _prv_state->tc_member_count_; i++)
+	{
+	  delete _prv_state->tc_member_type_list_[i];
+	}
+      break;
+    case tk_sequence:
+    case tk_array:
+    case tk_alias:
+      delete _prv_state->tc_content_type_;
+      break;
+    case tk_union:
+      // implement this
+      break;
+    default:
+      // nothing to do
+      break;
+    }
 }
 
 // COM stuff
@@ -444,7 +541,7 @@ CORBA_TypeCode::prv_member_type (CORBA_ULong index, CORBA_Environment &env) cons
 		  _prv_state->tc_member_type_list_known_ = CORBA_B_TRUE;
 		  if (index >= 0 && index < mcount)
 		    {
-		      return CORBA_TypeCode::_duplicate(_prv_state->tc_member_type_list_[index]);
+		      return _prv_state->tc_member_type_list_[index];
 		    }
 		  else
 		    {
@@ -513,7 +610,7 @@ CORBA_TypeCode::prv_member_type (CORBA_ULong index, CORBA_Environment &env) cons
 		  _prv_state->tc_member_type_list_known_ = CORBA_B_TRUE;
 		  if (index >= 0 && index < mcount)
 		    {
-		      return CORBA_TypeCode::_duplicate(_prv_state->tc_member_type_list_[index]);
+		      return _prv_state->tc_member_type_list_[index];
 		    }
 		  else
 		    {
@@ -651,7 +748,7 @@ CORBA_TypeCode::prv_discriminator_type(CORBA_Environment &env) const
   else
     {
       _prv_state->tc_discriminator_type_known_ = CORBA_B_TRUE;
-      return CORBA_TypeCode::_duplicate(_prv_state->tc_discriminator_type_);
+      return _prv_state->tc_discriminator_type_;
     }
 }
 
@@ -752,7 +849,7 @@ CORBA_TypeCode::prv_content_type (CORBA_Environment &env) const
 	else
 	  {
 	    _prv_state->tc_content_type_known_ = CORBA_B_TRUE;
-	    return CORBA_TypeCode::_duplicate(_prv_state->tc_content_type_);
+	    return _prv_state->tc_content_type_;
 	  }
 	break;
       case tk_alias:
@@ -769,7 +866,7 @@ CORBA_TypeCode::prv_content_type (CORBA_Environment &env) const
 	  else
 	    {
 	      _prv_state->tc_content_type_known_ = CORBA_B_TRUE;
-	      return CORBA_TypeCode::_duplicate(_prv_state->tc_content_type_);
+	      return _prv_state->tc_content_type_;
 	    }
 	}
       default:

@@ -277,6 +277,7 @@ TAO_Marshal_TypeCode::decode(
   CDR *stream = (CDR *) context;  // context is the CDR stream
   CORBA_TypeCode_ptr *tcp;         // typecode to be encoded
   CORBA_ULong kind;
+  CORBA_TypeCode_ptr parent = (CORBA_TypeCode_ptr) parent_typecode;
 
   // decode the "kind" field of the typecode
   continue_decoding = stream->get_ulong ((CORBA_ULong) kind);
@@ -322,7 +323,8 @@ TAO_Marshal_TypeCode::decode(
 			else 
 			  {
 			    *tcp = new CORBA_TypeCode ((CORBA_TCKind) kind,
-						       bound, 0, CORBA_B_TRUE);
+						       bound, 0, CORBA_B_FALSE);
+			    (*tcp)->_parent = parent;
 			  }
 		      }
 		  }
@@ -335,14 +337,11 @@ TAO_Marshal_TypeCode::decode(
 		// the case where this is legal as described above.
 		case ~0:
 		  {
-		    CORBA_TypeCode_ptr parent;
-
 		    if (parent_typecode == 0) 
 		      {
 			env.exception (new CORBA_INTERNAL (COMPLETED_MAYBE));
 			return CORBA_TypeCode::TRAVERSE_STOP;
 		      }
-		    parent = (CORBA_TypeCode_ptr) parent_typecode;
 
 		    // Get the long indicating the encapsulation offset,
 		    // then set up indirection stream that's like "stream"
@@ -434,7 +433,8 @@ TAO_Marshal_TypeCode::decode(
 		    *tcp = new CORBA_TypeCode ((CORBA_TCKind) kind,
 					       len,
 					       buffer,
-					       CORBA_B_TRUE);
+					       CORBA_B_FALSE);
+		    (*tcp)->_parent = parent;
 		  }
 		} // end of switch
 	    }
@@ -1039,7 +1039,7 @@ TAO_Marshal_Sequence::decode (
 			  continue_decoding = stream->get_short (*(CORBA_Short *)value);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (continue_decoding == CORBA_B_TRUE)
 			{
 			  return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1054,7 +1054,7 @@ TAO_Marshal_Sequence::decode (
 			  continue_decoding = stream->get_long (*(CORBA_Long *)value);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (continue_decoding == CORBA_B_TRUE)
 			{
 			  return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1069,7 +1069,7 @@ TAO_Marshal_Sequence::decode (
 			  continue_decoding = stream->get_longlong (*(CORBA_LongLong *)value);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (continue_decoding == CORBA_B_TRUE)
 			{
 			  return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1082,7 +1082,7 @@ TAO_Marshal_Sequence::decode (
 			  continue_decoding = stream->get_boolean (*(CORBA_Boolean *)value);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (continue_decoding == CORBA_B_TRUE)
 			{
 			  return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1096,7 +1096,7 @@ TAO_Marshal_Sequence::decode (
 			  continue_decoding = stream->get_char (*(CORBA_Char *)value);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (continue_decoding == CORBA_B_TRUE)
 			{
 			  return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1109,7 +1109,7 @@ TAO_Marshal_Sequence::decode (
 			  continue_decoding = stream->get_longdouble (*(CORBA_LongDouble *)value);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (continue_decoding == CORBA_B_TRUE)
 			{
 			  return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1122,7 +1122,7 @@ TAO_Marshal_Sequence::decode (
 			  continue_decoding = stream->get_wchar (*(CORBA_WChar *)value);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (continue_decoding == CORBA_B_TRUE)
 			{
 			  return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1135,7 +1135,7 @@ TAO_Marshal_Sequence::decode (
 			  continue_decoding = stream->get_long (*(CORBA_Long *)value);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (continue_decoding == CORBA_B_TRUE)
 			{
 			  return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1161,7 +1161,7 @@ TAO_Marshal_Sequence::decode (
 			  retval = stream->decode(tc2, value, 0, env);
 			  value += size;
 			}
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      if (retval == CORBA_TypeCode::TRAVERSE_CONTINUE){
 			return CORBA_TypeCode::TRAVERSE_CONTINUE;
 		      }
@@ -1227,7 +1227,7 @@ TAO_Marshal_Array::decode (
 		      continue_decoding = stream->get_short (*(CORBA_Short *)value);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (continue_decoding == CORBA_B_TRUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1242,7 +1242,7 @@ TAO_Marshal_Array::decode (
 		      continue_decoding = stream->get_long (*(CORBA_Long *)value);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (continue_decoding == CORBA_B_TRUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1257,7 +1257,7 @@ TAO_Marshal_Array::decode (
 		      continue_decoding = stream->get_longlong (*(CORBA_LongLong *)value);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (continue_decoding == CORBA_B_TRUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1270,7 +1270,7 @@ TAO_Marshal_Array::decode (
 		      continue_decoding = stream->get_boolean (*(CORBA_Boolean *)value);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (continue_decoding == CORBA_B_TRUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1284,7 +1284,7 @@ TAO_Marshal_Array::decode (
 		      continue_decoding = stream->get_char (*(CORBA_Char *)value);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (continue_decoding == CORBA_B_TRUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1297,7 +1297,7 @@ TAO_Marshal_Array::decode (
 		      continue_decoding = stream->get_longdouble (*(CORBA_LongDouble *)value);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (continue_decoding == CORBA_B_TRUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1310,7 +1310,7 @@ TAO_Marshal_Array::decode (
 		      continue_decoding = stream->get_wchar (*(CORBA_WChar *)value);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (continue_decoding == CORBA_B_TRUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1323,7 +1323,7 @@ TAO_Marshal_Array::decode (
 		      continue_decoding = stream->get_long (*(CORBA_Long *)value);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (continue_decoding == CORBA_B_TRUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -1349,7 +1349,7 @@ TAO_Marshal_Array::decode (
 		      retval = stream->decode(tc2, value, 0, env);
 		      value += size;
 		    }
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (retval == CORBA_TypeCode::TRAVERSE_CONTINUE){
 		    return CORBA_TypeCode::TRAVERSE_CONTINUE;
 		  }
@@ -1440,7 +1440,7 @@ TAO_Marshal_Alias::decode(
 	retval = CORBA_TypeCode::TRAVERSE_STOP;
       }
   }
-  tc2->Release();
+  //  tc2->Release();
   if ((retval == CORBA_TypeCode::TRAVERSE_CONTINUE) && (continue_decoding ==
 							  CORBA_B_TRUE)) 
     {
