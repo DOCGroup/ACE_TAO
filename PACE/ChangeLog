@@ -1,6 +1,24 @@
+Fri Jun 16 16:15:25 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* pace/Makefile:
+          Added POSIX Units of Functionality targets for libraries.
+
+	* pace/{assert,locale}.h:
+	* pace/posix/{assert,locale}.{h,inl,c}:
+          Added new POSIX APIs for assert and setlocale.
+
+	* pace/posix/stdio.{h,inl}:
+          Added needed POSIX APIs.
+
+	* pace/config/{compile,temp}.h:
+          Redefined PACE_UNUSED_ARG and moved from temp.h to compile.h.
+
+	* pace/posix/aio.inl:
+          Made some formatting changes.
+
 Fri Jun 16 16:05:52 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
-	* pace/tests/{Makefile,Stdio_Test,Posix_SP_Test.c}:
+	* tests/{Makefile,Stdio_Test,Posix_SP_Test.c}:
           Updated the tests to more informational and adding uname -s
           information for some different platforms.
 
