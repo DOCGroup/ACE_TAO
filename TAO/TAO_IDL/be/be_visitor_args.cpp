@@ -191,7 +191,7 @@ int be_visitor_args_decl::visit_enum (be_enum *node)
   return 0;
 }
 
-int be_visitor_args_decl::visit_union (be_union *node)
+int be_visitor_args_decl::visit_union (be_union *)
 {
   return this->dump_structure ();
 }
@@ -217,7 +217,7 @@ int be_visitor_args_decl::visit_array (be_array *node)
   return 0;
 }
 
-int be_visitor_args_decl::visit_sequence (be_sequence *node)
+int be_visitor_args_decl::visit_sequence (be_sequence *)
 {
   return this->dump_structure ();
 }
@@ -244,7 +244,7 @@ int be_visitor_args_decl::visit_typedef (be_typedef *node)
   return node->primitive_base_type ()->accept (this);
 }
 
-int be_visitor_args_decl::visit_native (be_native *node)
+int be_visitor_args_decl::visit_native (be_native *)
 {
   switch (this->argument_direction_)
     {

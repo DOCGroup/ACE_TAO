@@ -1,3 +1,15 @@
+Thu Jan 22 16:56:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  Fixed some relative name problems for the server header file.
+
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	* TAO_IDL/be/be_visitor_root.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Get rid of some "unused arg" warnings.
+
 Thu Jan 22 15:26:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/object.i: CORBA::Object --> CORBA_Object for internal stuff.

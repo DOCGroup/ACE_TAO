@@ -698,7 +698,7 @@ int be_interface::gen_server_header (void)
 
       *sh << "public virtual ";
       intf = be_interface::narrow_from_decl (inherits ()[0]);
-      *sh << intf->full_skel_name ();
+      *sh << intf->relative_skel_name (this->full_skel_name ());
       for (i = 1; i < n_inherits (); i++)
         {
           *sh << ", public virtual ";
@@ -2014,14 +2014,29 @@ be_interface::gen_skel_helper (be_interface *derived,
   return 0;
 }
 
+const char*
+be_interface::relative_coll_name (const char *collname)
+{
+  return be_interface::relative_name (this->full_coll_name (),
+				      collname);
+}
+
 // return the relative skeleton name (needed due to NT compiler insanity)
-char *
+const char *
 be_interface::relative_skel_name (const char *skelname)
 {
-  // some compilers do not like generating a fully scoped name for a type that
-  // was defined in the same enclosing scope in which it was defined. For such,
-  // we emit a macro defined in the ACE library.
-  //
+  return be_interface::relative_name (this->full_skel_name (),
+				      skelname);
+}
+
+const char*
+be_interface::relative_name (const char *localname,
+			     const char *othername)
+{
+  // some compilers do not like generating a fully scoped name for a
+  // type that was defined in the same enclosing scope in which it was
+  // defined.  We have to emit just the partial name, relative to our
+  // "localname"
 
   // The tricky part here is that it is not enough to check if the
   // typename we are using was defined in the current scope. But we
@@ -2053,8 +2068,8 @@ be_interface::relative_skel_name (const char *skelname)
   // macro. Whenever there is no match, the remaining components of the
   // def_scope form the second argument
 
-  ACE_OS::strcpy (def_name, this->full_skel_name ());
-  ACE_OS::strcpy (use_name, skelname);
+  ACE_OS::strcpy (def_name, localname);
+  ACE_OS::strcpy (use_name, othername);
 
   while (def_curr && use_curr)
     {

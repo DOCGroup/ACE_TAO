@@ -37,7 +37,8 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
 	  *os << "," << nl;
 	  be_interface* parent =
 	    be_interface::narrow_from_decl (node->inherits()[i]);
-	  *os << "  public virtual " << parent->full_coll_name ();
+	  *os << "  public virtual "
+	      << parent->relative_coll_name (node->full_coll_name ());
 	}
     }
   *os << "\n";

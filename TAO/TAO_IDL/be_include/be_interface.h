@@ -118,8 +118,11 @@ public:
                                           TAO_OutStream *os);
   // template method using breadth first traversal of inheritance graph
 
-  char *relative_skel_name (const char *);
+  const char *relative_skel_name (const char *other_class_name);
   // relative skeleton name
+
+  const char *relative_coll_name (const char *other_class_name);
+  // relative name for collocated class.
 
   // Visiting
   virtual int accept (be_visitor *visitor);
@@ -156,6 +159,10 @@ private:
 
   int gen_operation_table (void);
   // generate the operation table including entries for inherited interfaces
+
+  static const char *relative_name (const char* our_name,
+				    const char *other_class_name);
+  // relative name for collocated class.
 
   int gen_optable_entries (be_interface *);
   // generate the operation table entries
