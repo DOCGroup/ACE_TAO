@@ -1,3 +1,10 @@
+1998-11-02  Kirthika Parameswaran  <kirthika@macarena.cs.wustl.edu>
+
+	* examples/Callback_Quoter/Supplier_Timer_Handler.h: 
+	* examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
+		Added these files, for implementing the timer handler for
+	the supplier. 
+
 Sun Nov 01 19:53:15 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/TAO.h (TAO_ORB_Manager::run): Added default environment to
