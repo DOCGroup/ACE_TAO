@@ -241,13 +241,13 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
 void
 ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
 {
-  // ACE_ASSERT(n > 0); The caller checks that n > 0
+  // ACE_ASSERT (n > 0); The caller checks that n > 0
 
-#if ACE_LONG_SIZE == 8
+#if ACE_SIZEOF_LONG == 8
   // Later, we read from *orig in 64 bit chunks,
   // so make sure we don't generate unaligned readings.
-  const char* const o8 = ACE_ptr_align_binary(orig, 8);
-  // The mistmatch can only be by 4.
+  const char* const o8 = ACE_ptr_align_binary (orig, 8);
+  // The mismatch can only be by 4.
   if (orig != o8)
     {
       ACE_CDR::swap_4 (orig, target);
@@ -255,7 +255,8 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
       target += 4;
       --n;
     }
-#endif
+#endif  /* ACE_SIZEOF_LONG == 8 */
+
   if (n == 0)
     return;
 
@@ -267,12 +268,12 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
   // In the while loop, orig will move over the array by 16 byte
   // increments (4 elements of 4 bytes).
   // ends marks our barrier for not falling outside.
-  const char* const end = orig + 4*(n & (~3));
+  const char* const end = orig + 4 * (n & (~3));
 
-#if ACE_LONG_SIZE == 8
+#if ACE_SIZEOF_LONG == 8
   // 64 bits architecture.
   // See if we can write in 8 byte chunks.
-  if (target == ACE_ptr_align_binary(target, 8))
+  if (target == ACE_ptr_align_binary (target, 8))
     {
       while (orig < end)
         {
@@ -327,7 +328,7 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
           ACE_UINT32 c3 = ACE_static_cast (ACE_UINT32, (b >> 32));
           ACE_UINT32 c4 = ACE_static_cast (ACE_UINT32, (b & 0xffffffff));
 
-#if defined(ACE_LITTLE_ENDIAN)
+#if defined (ACE_LITTLE_ENDIAN)
           * ACE_reinterpret_cast (ACE_UINT32*, target + 0) = c2;
           * ACE_reinterpret_cast (ACE_UINT32*, target + 4) = c1;
           * ACE_reinterpret_cast (ACE_UINT32*, target + 8) = c4;
@@ -343,11 +344,11 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
         }
     }
 
-#else /* ACE_LONG_SIZE != 8 */
+#else  /* ACE_SIZEOF_LONG != 8 */
 
   while (orig < end)
     {
-#if defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
+#if defined (ACE_HAS_PENTIUM) && defined (__GNUG__)
       register unsigned int a =
         *ACE_reinterpret_cast (const unsigned int*, orig);
       register unsigned int b =
@@ -366,9 +367,9 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
       *ACE_reinterpret_cast (unsigned int*, target + 4) = b;
       *ACE_reinterpret_cast (unsigned int*, target + 8) = c;
       *ACE_reinterpret_cast (unsigned int*, target + 12) = d;
-#elif defined(ACE_HAS_PENTIUM) \
-      && (defined(_MSC_VER) || defined(__BORLANDC__)) \
-      && !defined(ACE_LACKS_INLINE_ASSEMBLY)
+#elif defined (ACE_HAS_PENTIUM) \
+      && (defined (_MSC_VER) || defined (__BORLANDC__)) \
+      && !defined (ACE_LACKS_INLINE_ASSEMBLY)
       __asm mov eax, orig
       __asm mov esi, target
       __asm mov edx, [eax]
@@ -410,10 +411,10 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
       target += 16;
     }
 
-#endif /* ACE_LONG_SIZE == 8 */
+#endif /* ACE_SIZEOF_LONG == 8 */
 
   // (n & 3) == (n % 4).
-  switch (n&3) {
+  switch (n & 3) {
   case 3:
     ACE_CDR::swap_4 (orig, target);
     orig += 4;

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -29,10 +29,11 @@
 
 #ifndef ACE_TP_REACTOR_H
 #define ACE_TP_REACTOR_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Select_Reactor.h"
-#include "ace/Log_Msg.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -349,4 +350,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_TP_REACTOR_H */
