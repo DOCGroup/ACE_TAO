@@ -1,3 +1,33 @@
+Wed Sep 03 15:21:46 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: define ACE_TSS macros with ACE_HAS_TSS_EMULATION,
+	  and renamed some ACE_TSS_Emulation methods.
+
+	* ace/OS.i: allow TSS_Emulation storage to be on thread stack,
+	  instead of always dynamically allocating it.
+
+	* ace/OS.cpp (ACE_Thread_Adapter::invoke): allocate TSS_Emulation
+ 	  storage on thread stack.  (ACE_TSS_Cleanup::exit): only call
+	  a TSS destructor if the thread's value is non-zero.
+
+	* ace/Thread_Manager.cpp: support TSS_Emulation.
+
+	* ace/Synch_T.*: allow ACE_HAS_TSS_EMULATION _or_
+	  ACE_HAS_THREAD_SPECIFIC_STORAGE.
+
+	* ace/Object_Manager.{h,cpp}: allocate main thread's TSS_Emulation
+	  storage in the ACE_Object_Manager instance.
+
+	* ace/Log_Msg.h: befriend ACE_OS::cleanup_tss () instead of
+	  ACE_Object_Manager, because the cleanup path is now indirect
+ 	  from the ACE_Object_Manager.
+
+	* ace/Log_Msg.cpp: use TSS_Emulation on VxWorks, so
+	  VxWorks-specific code was removed.
+
+	* ace/Task.cpp: removed unused #include of Dynamic.h.  (It had
+	  been used for template instantiations, but they were moved.)
+
 Wed Sep  3 08:05:26 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Message_Block.h: Corrected comment on release(void) - the
