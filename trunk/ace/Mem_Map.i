@@ -82,6 +82,21 @@ ACE_Mem_Map::size (void) const
   return this->length_;
 }
 
+ACE_INLINE int
+ACE_Mem_Map::close_filemapping_handle (void)
+{
+  int result = 0;
+
+  if (this->file_mapping_ != this->handle_
+      && this->file_mapping_ != ACE_INVALID_HANDLE)
+    {
+      result = ACE_OS::close (this->file_mapping_);
+      this->file_mapping_ = ACE_INVALID_HANDLE;
+    }
+
+  return result;
+}
+
 // Unmap the region starting at <this->base_addr_>.
 
 ACE_INLINE int
@@ -183,18 +198,4 @@ ACE_Mem_Map::close_handle (void)
   return result;
 }
 
-ACE_INLINE int
-ACE_Mem_Map::close_filemapping_handle (void)
-{
-  int result = 0;
-
-  if (this->file_mapping_ != this->handle_
-      && this->file_mapping_ != ACE_INVALID_HANDLE)
-    {
-      result = ACE_OS::close (this->file_mapping_);
-      this->file_mapping_ = ACE_INVALID_HANDLE;
-    }
-
-  return result;
-}
 
