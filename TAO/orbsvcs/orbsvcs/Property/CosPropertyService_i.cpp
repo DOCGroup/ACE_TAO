@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "CosPropertyService_i.h"
+#include "orbsvcs/Property/CosPropertyService_i.h"
 
 TAO_PropertySetFactory::TAO_PropertySetFactory (void)
 {
@@ -24,6 +24,7 @@ TAO_PropertySetFactory::create_propertyset (CORBA::Environment &env)
 {
   CosPropertyService::PropertySet_ptr return_val = 0;
   
+
   return return_val;
 }
 
@@ -163,17 +164,18 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
     // Nothing to do.
     return;
   // Set the length of the property_names appropriately.
+  CORBA::ULong sequence_length = 0;
   if (how_many > 0)
     {
       property_names = new CosPropertyService::PropertyNames;
-      property_names->length ((how_many >= num_of_properties) ? 
-                              num_of_properties : how_many);
+      sequence_length = (how_many >= num_of_properties) ? num_of_properties : how_many;
+      property_names->length (sequence_length);
     }
   // Iterate thru names and put them in the property_names.
   CosProperty_Hash_Entry_ptr entry_ptr;
   CosProperty_Hash_Iterator iterator (this->hash_table_);
   for (int ni = 0;
-       ni < property_names->length ();
+       ni < sequence_length;
        ni++, iterator.advance ())
     if (iterator.next (entry_ptr) != 0)
       property_names [ni] = CORBA::string_dup (entry_ptr->ext_id_.pname_);
@@ -219,11 +221,6 @@ TAO_PropertySet::get_property_value (const char *property_name,
 // values for all requested property names. If false, then all
 // properties with a value of type tk_void may have failed due to
 // PropertyNotFound or InvalidPropertyName.
-// A separate invocation of get_property for each such property name
-// is necessary to determine the specific exception or to verify that
-// tk_void is the correct any TypeCode for that property name. This
-// approach was taken to avoid a complex, hard to program structure to
-// carry mixed results. 
 CORBA::Boolean
 TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &property_names,
                                  CosPropertyService::Properties_out nproperties,
@@ -238,7 +235,7 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
   CORBA::Boolean ret_val = CORBA::B_TRUE;
   for (size_t i = 0;  i < n; i++)
     if ((any_ptr = get_property_value (property_names [i], env)) != 0)
-      { 
+      {
         // Property name is valid.
         nproperties [i].property_name = CORBA::string_dup (property_names [i]);
         nproperties [i].property_value = *any_ptr;
@@ -248,8 +245,14 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
         // Invalid name. Ret value is False. 
         ret_val = CORBA::B_FALSE;
         nproperties [i].property_name = CORBA::string_dup (property_names [i]);
-        //nproperties [i].property_value = CORBA::tk_void;
+        // @@ Make any value with tk_void type. Using replace method,
+        // <<= operator doesnot exist yet for this.
+        nproperties [i].property_value.replace (CORBA::_tc_void,
+                                                0,
+                                                CORBA::B_FALSE,
+                                                env);
       }
+  TAO_CHECK_ENV_RETURN (env, 1);
   return ret_val;
 }
 
@@ -263,22 +266,26 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
   if (num_of_properties == 0)
     return;
   // Alloc memory for nproperties if how_many > 0.
+  CORBA::ULong sequence_length = 0;
   if (how_many > 0)
     {
       nproperties= new CosPropertyService::Properties;
-      nproperties->length ((how_many >= num_of_properties) ? num_of_properties : how_many);
+      sequence_length = (how_many >= num_of_properties) ? num_of_properties : how_many;
+      nproperties->length (sequence_length);
     }
   // Prepare an iterator and iterate thru the PropertySet. Retrive the
   // values.
   CosProperty_Hash_Iterator iterator (this->hash_table_);
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
-  for (size_t i = 0; i < nproperties->length (); i++, iterator.advance ())
+  for (CORBA::ULong i = 0;
+       i < sequence_length;
+       i++, iterator.advance ()) 
     if (iterator.next (entry_ptr) != 0)
       {
         nproperties[i].property_name = CORBA::string_dup (entry_ptr->ext_id_.pname_);
         nproperties[i].property_value = entry_ptr->int_id_.pvalue_.in ();
       }
-
+  
   // If there are more properties, put them in the PropertiesIterator.
   // Make a new TAO_PropertySet and use that to create an Properties
   // iterator.  put that in a iterator and assign that to the out
@@ -516,6 +523,7 @@ TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
       aproperty = new CosPropertyService::Property ;
       aproperty->property_name = entry_ptr->ext_id_.pname_;
       aproperty->property_value = entry_ptr->int_id_.pvalue_.in ();
+      this->iterator_.advance ();
       return CORBA::B_TRUE;
     }
   else
