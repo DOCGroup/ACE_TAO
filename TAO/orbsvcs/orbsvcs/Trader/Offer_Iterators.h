@@ -89,7 +89,7 @@ public:
   // to be extracted.  
   // END SPEC
  protected:
-
+  
   TAO_Property_Filter pfilter_;
 };
 
