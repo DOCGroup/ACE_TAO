@@ -1,5 +1,9 @@
 Wed Jul 29 04:19:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/Select_Reactor.cpp (renew): Moved decision of renew
+	  supression from ACE_Select_Reactor_Notify::handle_input to this
+	  method, which is a more appropriate place.
+
 	* ace/Token.h (ACE_Token): Added more comprehensive comments about
 	  the recent changes of reader/writer semantic.
 
