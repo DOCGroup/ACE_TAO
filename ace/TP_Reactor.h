@@ -166,9 +166,6 @@ public:
   /// Called from handle events
   static void no_op_sleep_hook (void *);
 
-  /// Wake up all threads in waiting in the event loop
-  virtual void wakeup_all_threads (void);
-
   // = Any thread can perform a <handle_events>, override the owner()
   //   methods to avoid the overhead of setting the owner thread.
 

@@ -169,19 +169,6 @@ public:
   /// Return the id of the current thread that owns the token.
   ACE_thread_t current_owner (void);
 
-  /**
-   * Force all threads waiting to acquire the token to return one by
-   * one.  The method sets the <signal_all_thread_> to non-zero if
-   * there're threads waiting, and returns the number of threads
-   * waiting.  If there's no thread waiting for the token, the call
-   * returns 0 and doesn't do anything.  The last thread releases the
-   * token also reset the <singal_all_thread_> flag to 0.  This means,
-   * any threads that try to acquire the token after the call is
-   * issued will also get "signaled" and the number of threads waiting
-   * the token is only a snapshot.
-   */
-  int signal_all_threads (void);
-
   /// Dump the state of an object.
   void dump (void) const;
 
@@ -281,9 +268,6 @@ private:
 
   /// Current nesting level.
   int nesting_level_;
-
-  /// Whether we are "signaling" all threads or not.
-  int signal_all_threads_;
 
   /// The attributes for the condition variables, optimizes lock time.
   ACE_Condition_Attributes attributes_;
