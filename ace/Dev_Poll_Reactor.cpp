@@ -1109,6 +1109,9 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value & max_wait_time)
   this_timeout = this->timer_queue_->calculate_timeout (&max_wait_time,
                                                         &timer_buf);
 
+  // If "this_timeout" != 0, the poll must timeout to allow timers
+  // scheduled in the reactor to fire at the appropriate time.
+
   long timeout =
     (this_timeout == 0 ? -1 /* Infinity */ : this_timeout->msec ());
 
@@ -1153,7 +1156,9 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value & max_wait_time)
   if (nfds > -1)
     this->end_pfds_ = this->start_pfds_ + nfds;
 
-  return (nfds > 0 ? 1 : nfds);
+  // "nfds > 0" means that we have IO events to dispatch.
+  // "this_timeout != 0" means that we have timers to fire.
+  return (nfds > 0 || this_timeout != 0 ? 1 : nfds);
 }
 
 
