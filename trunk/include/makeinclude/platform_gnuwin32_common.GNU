@@ -90,7 +90,7 @@ ifeq ($(mingw32),1)
 ifeq ($(winsock2),1)
 LIBS    += -lws2_32 -lmswsock
 endif
-LIBS    += -lwsock32
+LIBS    += -lwsock32 -lnetapi32
 endif
 
 OCFLAGS += -O3
