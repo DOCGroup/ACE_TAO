@@ -51,6 +51,7 @@ public:
   /// Destructor
   virtual ~TAO_Connect_Strategy (void);
 
+  /// Obtain the synch options that can be passed to ACE_Connector
   /* Return the synch option for the connector, based on the timeout
    * and the strategy in place. ACE_Connectors behavior can be altered
    * by passing the right ACE_Synch_Options to the connect () call.
@@ -58,10 +59,9 @@ public:
   virtual void synch_options (ACE_Time_Value *val,
                               ACE_Synch_Options &opt) = 0;
 
-  /* Wait for the connection to be completed and return a transport
-   * whose reference count has been incremented. If the connection
-   * establishment fails this method returns a null transport
-   * indicating the failure of connection.
+  /// Wait for the connection to be completed till a timeout occurs.
+  /* If the connection establishment fails the state within the
+   * connection handler is set appropriately.
    */
   virtual int wait (TAO_Connection_Handler *ch,
                     ACE_Time_Value *val) = 0;
@@ -71,13 +71,12 @@ public:
    * Do any left over memory management or related things after
    * the connect failed. The argument @c is_successful indicates
    * whether the connection handler had undergone a sucessful state
-   * transitions or not.
+   * completion or not.
    */
   virtual int post_failed_connect (TAO_Connection_Handler *ch,
-                                   int is_successful = 1);
+                                   int is_finalized = 1);
 
 protected:
-
   /// Cached copy of the ORB core pointer
   TAO_ORB_Core *orb_core_;
 };
