@@ -16,22 +16,27 @@ bgcolor="#ffffff">
 <H3>Overview</H3>
 <blockquote>
 
-<p>TAO can be configured in several ways.  Certain components in TAO,
-such as the ORB Core or Object Adapter, can be tuned by users by
-providing value for options or environment variables to them.  These
-options are commonly specified as (1) environment variables or (2)
-strings passed on the command-line.  Command-line options and
-environment variables to control global ORB features, such as the IOR
-format or ORB's bootstrapping methods.  They are generally passed to
-component initialization methods for consumption. <P>
+<p>TAO can be configured in several ways:
 
-In addition, options in <code>svc.conf</code> file provide a mechanism
-to fine-tune internal components in TAO that are specific to
-particular configurations.  If your program use-cases have particular
-characteristics, you can use the <code>svc.conf</code> file to
-customize your programs and use various optimization provided by TAO .
-However, a <code>svc.conf</code> file is not required to run TAO
-programs. </p>
+<UL>
+
+<LI> <B>Command-line options or environment variables</B> -- Certain
+components in TAO, such as the ORB Core or Object Adapter, can be
+tuned by users by providing value for options or environment variables
+to them.  These options are commonly specified as environment
+variables or strings passed on the command-line.  Command-line options
+and environment variables to control global ORB features, such as the
+IOR format or ORB's bootstrapping methods.  They are generally passed
+to component initialization methods for consumption. <P>
+
+<LI> <B>svc.conf file</B> -- Options in <code>svc.conf</code> file
+provide a mechanism to fine-tune internal components in TAO that are
+specific to particular configurations.  If your program use-cases have
+particular characteristics, you can use the <code>svc.conf</code> file
+to customize your programs and use various optimization provided by
+TAO .  However, a <code>svc.conf</code> file is not required to run
+TAO programs. </p>
+</UL>
 
 <P><EM>Programmer's Note:</EM> the internal structure for options is
 the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings
@@ -109,9 +114,10 @@ The following environment variables are supported by TAO:
   <LI><A HREF="#RT_ORB_Loader"><CODE>RT_ORB_Loader</CODE></A>
 </UL>
 
-Typically, CORBA::ORB options are set via command line parameters that
-are eventually passed to CORBA::ORB_init (), while the rest of the
-options are set via the service configurator (svc.conf) file.
+Typically, <CODE>CORBA::ORB</CODE> options are set via command line
+parameters that are eventually passed to
+<CODE>CORBA::ORB_init()</CODE>, while the rest of the options are set
+via the service configurator (<CODE>svc.conf</CODE>) file.
 
 </blockquote>
 
@@ -277,8 +283,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         without checking POA's status (which translates to better
         performance.)  Notice that the interfaces that you wish to use
         direct collocation with must be compiled with <code>
-        <a href="compiler.html#collocation-stubs">-Gd</a>
-        </code>. Default is thru_poa.
+        <a href="compiler.html#collocation-stubs">-Gd</a></code>. Default is thru_poa.
     </TD>
   </TR>
   <TR>
@@ -562,7 +567,7 @@ the ORB.
 
 <H3><A NAME="AdvancedResourceFactory"></A><CODE>TAO_Advanced_Resource_Factory</CODE></H3>
 
-<p>This factory is located in the TAO_Strategies library.
+<p>This factory is located in the <CODE>TAO_Strategies</CODE> library.
 It accepts the options below as well as those described above in the
 <A HREF="#DefaultResourceFactory"><CODE>TAO_Default_Resource_Factory</CODE></A>.
 This factory can be loaded dynamically using a service configurator
@@ -572,11 +577,13 @@ directive of the form (all on one line):
 <p>It can also be loaded statically by doing the following:
 <UL>
    <LI>Add a <code>#include "tao/Strategies/advanced_resource.h"</code> to the file containing <code>main()</code>
-   <LI>Link the TAO_Strategies library into the executable
+   <LI>Link the <CODE>TAO_Strategies</CODE> library into the executable
    <LI>Specify a service configurator directive of the form: <code>static Advanced_Resource_Factory "-ORBReactorType select_st"</code>
 </UL>
 <p>You can omit the <code>#include</code> if you always use dynamic libraries.
-<p>Once you have loaded the Advanced_Resource_Factory, then directives for the Resource_Factory have no effect (and generate warnings telling you so).
+<p>Once you have loaded the <CODe>Advanced_Resource_Factory</CODE>,
+then directives for the <CODE>Resource_Factory</CODE> have no effect (and generate
+warnings telling you so). 
 <p><em>Note:</em> <code>-ORBReactorLock</code> flag has been
 superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 
