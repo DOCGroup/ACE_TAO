@@ -15,6 +15,7 @@ ACE_RCSID(RT_Notify, TAO_NS_ThreadPool_Task, "$Id$")
 TAO_NS_ThreadPool_Task::TAO_NS_ThreadPool_Task (void)
   : buffering_strategy_ (0), shutdown_ (0), timer_ (0)
 {
+  this->destroy_callback (this); // The <release> method is called to release memory.
 }
 
 TAO_NS_ThreadPool_Task::~TAO_NS_ThreadPool_Task ()
@@ -27,7 +28,6 @@ TAO_NS_ThreadPool_Task::init (int argc, char **argv)
 {
   return this->ACE_Task<ACE_NULL_SYNCH>::init (argc, argv);
 }
-
 
 TAO_NS_Timer*
 TAO_NS_ThreadPool_Task::timer (void)
@@ -56,12 +56,27 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
     TAO_NS_PROPERTIES::instance()->scope_policy () |
     TAO_NS_PROPERTIES::instance()->sched_policy ();
 
+  // Increment the count on this object by the number of threads using it.
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->TAO_NS_Refcountable::lock_);
+
+    this->refcount_+=tp_params.static_threads;
+  }
+
   // Become an active object.
   if (this->ACE_Task <ACE_NULL_SYNCH>::activate (flags,
-                                            tp_params.static_threads,
-                                            0,
-                                            ACE_THR_PRI_OTHER_DEF) == -1)
+                                                 tp_params.static_threads,
+                                                 0,
+                                                 ACE_THR_PRI_OTHER_DEF) == -1)
     {
+      // Decrement the count on this object. We know that this object's owner is holding a count on this object so
+      // we can neglect our responsibility of checking if the refcount is decremented to 0.
+      {
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->TAO_NS_Refcountable::lock_);
+
+        this->refcount_-=tp_params.static_threads;
+      }
+
       if (TAO_debug_level > 0)
         {
           if (ACE_OS::last_error () == EPERM)
@@ -73,8 +88,8 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
                         tp_params.default_priority));
         }
 
-        ACE_THROW (CORBA::BAD_PARAM ());
-    }
+      ACE_THROW (CORBA::BAD_PARAM ());
+  }
 }
 
 void
@@ -149,15 +164,18 @@ TAO_NS_ThreadPool_Task::shutdown (void)
   return;
 }
 
+void
+TAO_NS_ThreadPool_Task::release (void)
+{
+  this->timer_->_decr_refcnt ();
+
+  delete this;
+}
+
 int
 TAO_NS_ThreadPool_Task::close (u_long /*flags*/)
 {
-  if (this->thr_count () == 0)
-  {
-    this->timer_->_decr_refcnt ();
-
-    delete this;
-  }
+  this->_decr_refcnt ();
 
   return 0;
 }

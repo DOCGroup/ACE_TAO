@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Method_Request.h"
+#include "Refcountable.h"
 
 class TAO_NS_AdminProperties;
 class TAO_NS_QoSProperties;
@@ -35,7 +36,7 @@ class TAO_NS_Buffering_Strategy;
  * the <shutdown> method should be called to release memory.
  *
  */
-class TAO_Notify_Export TAO_NS_Worker_Task
+class TAO_Notify_Export TAO_NS_Worker_Task : public TAO_NS_Refcountable
 {
 public:
   /// Constuctor
