@@ -85,10 +85,6 @@ public:
                                       CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
 
-  virtual void create_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-                                             CORBA::Environment &ACE_TRY_ENV =
-                                               TAO_default_environment ());
-
   // Used to force the initialization of the ORB code.
   static int Initializer (void);
 };
