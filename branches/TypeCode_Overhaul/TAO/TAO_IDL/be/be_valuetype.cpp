@@ -225,8 +225,8 @@ be_valuetype::determine_factory_style (void)
       // Initialize an iterator to iterate thru our scope
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator si (this,
-                                       UTL_Scope::IK_decls); 
-           !si.is_done (); 
+                                       UTL_Scope::IK_decls);
+           !si.is_done ();
            si.next())
         {
           AST_Decl *d = si.item ();
@@ -286,8 +286,8 @@ be_valuetype::have_operation (void)
       // Initialize an iterator to iterate thru our scope
       // Continue until each element is checked.
       for (UTL_ScopeActiveIterator si (this,
-                                       UTL_Scope::IK_decls); 
-           !si.is_done (); 
+                                       UTL_Scope::IK_decls);
+           !si.is_done ();
            si.next())
         {
           AST_Decl *d = si.item ();
@@ -342,7 +342,7 @@ be_valuetype::have_operation (void)
 
           if (intf != 0)
             {
-	            have_operation = be_valuetype::have_supported_op (intf);
+                    have_operation = be_valuetype::have_supported_op (intf);
             }
         }
     }
@@ -362,7 +362,7 @@ be_valuetype::have_supported_op (be_interface * node)
     }
 
   // Initialize an iterator for supported interface elements
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls); 
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        si.is_done ();
        si.next())
     {
@@ -374,7 +374,7 @@ be_valuetype::have_supported_op (be_interface * node)
                              "(%N:%l) be_valuetype::"
                              "have_supported_op"
                              "bad node in this scope\n"),
-                            0);  
+                            0);
         }
 
       AST_Decl::NodeType nt = d->node_type ();
@@ -629,7 +629,7 @@ idl_bool
 be_valuetype::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
   list.enqueue_tail (this);
-        
+
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())

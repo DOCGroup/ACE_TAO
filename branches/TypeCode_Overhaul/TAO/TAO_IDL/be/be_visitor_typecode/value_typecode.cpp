@@ -34,6 +34,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
   size_t const count =
     node->data_members_count ();
 
+  /*
   if (count == 1 &&
       count == node->nmembers ()  // Verify no operations.
       && node->n_inherits () == 0)
@@ -66,6 +67,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
         << be_uidt_nl;
     }
   else
+  */
     {
       std::string const fields_name (std::string ("_tao_fields_")
                                      + node->flat_name ());
