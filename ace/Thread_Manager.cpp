@@ -1975,7 +1975,6 @@ ACE_Thread_Manager::task_all_list (ACE_Task_Base *task_list[],
   ACE_TRACE ("ACE_Thread_Manager::task_all_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_Task_Base **task_list_iterator = task_list;
   size_t task_list_count = 0;
 
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
@@ -1985,10 +1984,17 @@ ACE_Thread_Manager::task_all_list (ACE_Task_Base *task_list[],
       if (task_list_count >= n)
         break;
 
-      if ( iter.next ()->task_ )
+      ACE_Task_Base *task_p = iter.next ()->task_;
+      if (0 != task_p)
         {
-          task_list_iterator[task_list_count] = iter.next ()->task_;
-          task_list_count++;
+          // This thread has a task pointer; see if it's already in the
+          // list. Don't add duplicates.
+          size_t i = 0;
+          for (; i < task_list_count; ++i)
+            if (task_list[i] == task_p)
+              break;
+          if (i == task_list_count)        // No match - add this one
+            task_list[task_list_count++] = task_p;
         }
     }
 

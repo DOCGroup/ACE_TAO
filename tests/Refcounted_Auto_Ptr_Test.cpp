@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// $Id$
 
 //=============================================================================
 /**
@@ -340,7 +340,8 @@ main (int, ACE_TCHAR *[])
     ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex> r6 = r1;
   }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer object should have been deleted\n")));
+              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              Printer::instance_count_));
   ACE_ASSERT (Printer::instance_count_ == 0);
 
 #if defined (ACE_HAS_THREADS)
@@ -382,7 +383,8 @@ main (int, ACE_TCHAR *[])
   scheduler->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer object should have been deleted\n")));
+              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              Printer::instance_count_));
   ACE_ASSERT (Printer::instance_count_ == 0);
 
 #endif /* ACE_HAS_THREADS */
