@@ -122,6 +122,12 @@ sub is_warning ()
     # HP-UX uses 'nocompatwarnings' as an option to the compiler.
     return 3 if (m/vnocompatwarnings/);
 
+    # SUN CC 5.0 defines __pthread_cleanup_push as a macro which causes
+    # warnings. See /usr/include/pthread.h and
+    # $ACE_ROOT/examples/Timer_Queue/Thread_Timer_Queue_Test.cpp for more
+    # information.
+    return 0 if (m/in call to __pthread_cleanup_push\(extern/);
+
     # Look for lines that also should be color coded, but not counted
     # as warnings.
     return 2 if (/see declaration of/);
@@ -161,7 +167,7 @@ sub is_error ()
     # have the word 'error' in the symbol name - ignore those.
     return 0 if (m/^ld: \d+\-\d+ WARNING: Duplicate symbol:/);
 
-    # Linux has this annoying mktemp, mkstemp stuff. Ignore that 
+    # Linux has this annoying mktemp, mkstemp stuff. Ignore that
     # for the timebeing
     return 0 if (/is dangerous, better use/);
 
