@@ -2,6 +2,7 @@
 
 project(*CodeGenerationKit) {
   requires += cidl
+  sharedname =
   staticname = CodeGenerationKit
   includes += ../..
 }
