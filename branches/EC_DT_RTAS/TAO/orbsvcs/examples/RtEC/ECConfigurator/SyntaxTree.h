@@ -204,7 +204,7 @@ public:
 
   // Attributes
   ACE_CString name;
-  RtEventChannelAdmin::Event_Type type; // TODO: handle Event::type
+  RtEventChannelAdmin::Event_Type type;
 };
 
 class Criticality : public VisitableSyntax
@@ -440,7 +440,7 @@ public:
 
   // Attributes
   ACE_CString name;
-  RtEventChannelAdmin::EventSourceID id; // TODO: handle Supplier::id
+  RtEventChannelAdmin::EventSourceID id;
 };
 
 class Publications : public VisitableSyntax
@@ -528,9 +528,10 @@ public:
   Time *time;
 
   // Attributes
-  enum { GLOBALTIME,
-         DELAYAFTERSTART,
-         DELAYAFTERCONNECT } type;
+  typedef enum { GLOBALTIME,
+                 DELAYAFTERSTART,
+                 DELAYAFTERCONNECT } TYPE;
+  TYPE type;
   bool master;
 };
 
@@ -555,8 +556,9 @@ public:
   Value *value;
 
   // Attributes
-  enum { DURATION,
-         EVENTNUMBER } type;
+  typedef enum { DURATION,
+                 EVENTNUMBER } TYPE;
+  TYPE type;
 };
 
 // String value elements
