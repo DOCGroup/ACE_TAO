@@ -42,12 +42,15 @@ int
 TAO_Naming_Service::parse_args (int argc,
                             char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:p:");
+  ACE_Get_Opt get_opts (argc, argv, "do:p:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'd':  // debug flag.
+        TAO_debug_level++;
+        break;
       case 'o': // outputs the naming service ior to a file.
         this->ior_output_file_ =
           ACE_OS::fopen (get_opts.optarg, "w");
