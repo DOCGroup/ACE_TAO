@@ -57,8 +57,6 @@ Echo_Client_Request_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  send_request_count++;
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
@@ -86,6 +84,13 @@ Echo_Client_Request_Interceptor::send_request (
               this->myname_,
               operation.in (),
               ior.in ()));
+
+  // No svccontextx for _is_a call.
+  if (ACE_OS::strcmp (operation.in (),
+                      "_is_a") == 0)
+    return;
+
+  send_request_count++;
 
   ACE_TRY_NEW_ENV
     {
@@ -137,6 +142,7 @@ Echo_Client_Request_Interceptor::send_request (
     }
   else if (send_request_count == 2)
     {
+      ACE_DEBUG ((LM_DEBUG, "Exception count: %i\n", exception_count));
       ACE_ASSERT (exception_count == 2);
       // Populate target member of the ClientRequestInfo.
 

@@ -1,3 +1,9 @@
+Wed Nov 12  5:01:00 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+
+          Added check for "is_a" calls in client interceptors.
+
 Wed Nov 12 16:55:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * docs/tutorials/Quoter/AMI/Quoter_AMI.mpc:
