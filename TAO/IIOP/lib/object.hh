@@ -23,7 +23,7 @@ public:
   virtual skeleton lookup(const CORBA_String &opname) = 0;
   // CORBA IDL operation name lookup strategy
 
-  virtual void register_op(const CORBA_String &opname) = 0;
+  virtual void register_op(const CORBA_String &opname, skeleton skel_ptr) = 0;
   // Register a CORBA IDL operation name
 
   virtual ~TAO_Operation_Table();
@@ -115,6 +115,10 @@ class _EXPCLASS CORBA_Object : public IUnknown
 
     virtual skeleton                    lookup(const CORBA_String &opname) { return
 								       optable_->lookup(opname); } 
+  virtual void register_op(const CORBA_String &opname, skeleton skel_ptr) {
+    optable_->register_op(opname, skel_ptr); }
+    // Register a CORBA IDL operation name
+
 protected:
     TAO_Operation_Table         *optable_;
   void  set_parent(IUnknown *p);
