@@ -214,36 +214,39 @@ main (int argc, char * argv[])
   // Create a QoS Session Factory.
   ACE_QoS_Session_Factory session_factory;
 
-  // Ask the factory to create a QoS session. This could be RAPI or GQoS 
-  // based on the parameter passed.
+  // Ask the factory to create a QoS session. This could be RAPI or
+  // GQoS based on the parameter passed.
   ACE_QoS_Session *qos_session = 
-	  session_factory.create_session (ACE_QoS_Session_Factory::ACE_GQOS_SESSION);
+    session_factory.create_session (ACE_QoS_Session_Factory::ACE_GQOS_SESSION);
 
-  // Create a destination address for the QoS session. The same address should be used 
-  // for the subscribe call later. A copy is made below only to distinguish the two 
-  // usages of the dest address. 
+  // Create a destination address for the QoS session. The same
+  // address should be used for the subscribe call later. A copy is
+  // made below only to distinguish the two usages of the dest
+  // address.
 
   ACE_INET_Addr dest_addr (mult_addr);
 
-  // A QoS session is defined by the 3-tuple [DestAddr, DestPort, Protocol]. Initialize 
-  // the QoS session.
+  // A QoS session is defined by the 3-tuple [DestAddr, DestPort,
+  // Protocol]. Initialize the QoS session.
   if (qos_session->open (mult_addr,
-					     IPPROTO_UDP) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-					   "Error in opening the QoS session\n"),
-						-1);
+                         IPPROTO_UDP) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error in opening the QoS session\n"),
+                      -1);
 
   // The following call opens the Dgram_Mcast and calls the
   // <ACE_OS::join_leaf> with the qos_params supplied here. Note the
-  // QoS session object is passed into this call. This subscribes the 
-  // underlying socket to the passed in QoS session. For joining multiple 
-  // multicast sessions, the following subscribe call should be made with 
-  // different multicast addresses and a new QoS session object should be passed in for 
-  // each such call. The QoS session objects can be created only through the
-  // session factory. Care should be taken that the mult_addr for the subscribe()
-  // call matches the dest_addr of the QoS session object. If this is not done,
-  // the subscribe call will fail. A more abstract version of subscribe will be 
-  // added that constrains the various features of GQoS like different flags etc.
+  // QoS session object is passed into this call. This subscribes the
+  // underlying socket to the passed in QoS session. For joining
+  // multiple multicast sessions, the following subscribe call should
+  // be made with different multicast addresses and a new QoS session
+  // object should be passed in for each such call. The QoS session
+  // objects can be created only through the session factory. Care
+  // should be taken that the mult_addr for the subscribe() call
+  // matches the dest_addr of the QoS session object. If this is not
+  // done, the subscribe call will fail. A more abstract version of
+  // subscribe will be added that constrains the various features of
+  // GQoS like different flags etc.
 
   if (dgram_mcast.subscribe (mult_addr,
                              qos_params,
@@ -256,7 +259,7 @@ main (int argc, char * argv[])
                              ACE_OVERLAPPED_SOCKET_FLAG 
                              | ACE_FLAG_MULTIPOINT_C_LEAF 
                              | ACE_FLAG_MULTIPOINT_D_LEAF,
-							 qos_session) == -1)
+                             qos_session) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in subscribe\n"),
                       -1);
@@ -268,8 +271,8 @@ main (int argc, char * argv[])
   char achInBuf [BUFSIZ];
   u_long dwBytes;
 
-  // Should this be abstracted into QoS objects ?? Doesnt seem to 
-  // have to do anything directly with QoS.
+  // Should this be abstracted into QoS objects ?? Doesnt seem to have
+  // to do anything directly with QoS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
                      ACE_SIO_MULTICAST_SCOPE, // IO control code.
                      &nIP_TTL, // In buffer.
@@ -287,8 +290,8 @@ main (int argc, char * argv[])
 
   int bFlag = FALSE;
 
-  // Should this be abstracted into QoS objects ?? Doesnt seem to 
-  // have to do anything directly with QoS.
+  // Should this be abstracted into QoS objects ?? Doesnt seem to have
+  // to do anything directly with QoS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
                      ACE_SIO_MULTIPOINT_LOOPBACK, // IO control code.
                      &bFlag, // In buffer.
@@ -308,8 +311,8 @@ main (int argc, char * argv[])
   // that uses the I/O control code as SIO_SET_QOS.
   ACE_QoS ace_qos;
 
-  // Make sure the flowspec is set in the correct direction for
-  // the sender/client.
+  // Make sure the flowspec is set in the correct direction for the
+  // sender/client.
   ACE_Flow_Spec sending_flowspec;
   ACE_Flow_Spec receiving_flowspec;
   const iovec iov = {0, 0};
@@ -321,21 +324,21 @@ main (int argc, char * argv[])
   ace_qos.receiving_flowspec (receiving_flowspec);
   ace_qos.provider_specific (iov); 
   
-  // Set the QoS for the session. Replaces the ioctl () call that was being 
-  // made previously.
+  // Set the QoS for the session. Replaces the ioctl () call that was
+  // being made previously.
   if (qos_session->qos (&dgram_mcast,
-						ace_qos) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-					   "Unable to set QoS\n"),
-					   -1);
+                        ace_qos) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to set QoS\n"),
+                      -1);
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Setting QOS succeeds.\n"));
 
-  // Instantiate a QOS Event Handler and pass the Dgram_Mcast and
-  // QoS session object into it.
+  // Instantiate a QOS Event Handler and pass the Dgram_Mcast and QoS
+  // session object into it.
   ACE_QOS_Event_Handler qos_event_handler (dgram_mcast,
-										   qos_session);
+                                           qos_session);
 	
   // Register the QOS Handler with the Reactor.
   if (ACE_Reactor::instance ()->register_handler 
