@@ -3,7 +3,7 @@
 #
 
 DIRS = \
-	AMI \
+        AMI \
 	CDR \
 	Collocation \
 	Connection_Purging \
@@ -11,7 +11,8 @@ DIRS = \
 	DynAny_Test \
 	Endpoint_Per_Priority \
 	Explicit_Event_Loop \
-	FL_Cube \
+        Exposed_Policies \
+        FL_Cube \
 	Faults \
 	IDL_Test \
 	IORManipulation \
