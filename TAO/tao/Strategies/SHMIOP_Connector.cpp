@@ -462,7 +462,6 @@ TAO_SHMIOP_Connector::object_key_delimiter (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_NOOP_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>;
 template class ACE_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>;
 template class ACE_Creation_Strategy<TAO_SHMIOP_Client_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_SHMIOP_Client_Connection_Handler, ACE_MEM_CONNECTOR>;
@@ -479,7 +478,6 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Client_Connection_Handler*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Strategy_Connector<TAO_SHMIOP_Client_Connection_Handler, ACE_MEM_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_SHMIOP_Client_Connection_Handler, ACE_MEM_CONNECTOR>
