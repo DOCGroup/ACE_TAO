@@ -1,3 +1,9 @@
+Sat Jul 18 05:24:37 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Changed the default ORB
+	  concurrency model from reactive to thread-per-connection since
+	  the latter is considerably faster.
+
 Fri Jul 17 17:42:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * docs/Options.html: Added documentation for the TAO environment
