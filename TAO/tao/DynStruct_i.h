@@ -13,7 +13,7 @@
 //
 // ========================================================================
 
-#ifndef (TAO_DYNSTRUCT_I_H)
+#ifndef TAO_DYNSTRUCT_I_H
 #define	TAO_DYNSTRUCT_I_H
 
 #include "ace/Containers.h"
