@@ -14,7 +14,7 @@ ACE_Sample_History::ACE_Sample_History (size_t max_samples)
   : max_samples_ (max_samples)
   , sample_count_ (0)
 {
-  ACE_NEW (this->samples_, ACE_UINT64[this->max_samples_]);
+  ACE_NEW(this->samples_, ACE_UINT64[this->max_samples_]);
 }
 
 ACE_Sample_History::~ACE_Sample_History (void)
@@ -29,7 +29,8 @@ ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
   for (size_t i = 0; i != this->sample_count_; ++i)
     {
       ACE_UINT64 x = this->samples_[i] / scale_factor;
-      ACE_DEBUG ((LM_DEBUG, "%s: %d %Q\n", msg, i, x));
+      ACE_UINT32 val = ACE_CU64_TO_CU32 (x);
+      ACE_DEBUG ((LM_DEBUG, "%s: %d %u\n", msg, i, val));
     }
 }
 
