@@ -763,10 +763,6 @@ SOURCE=.\Tagged_Profile.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TAO_AMH_Response_Handler.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\TAO_Internal.cpp
 # End Source File
 # Begin Source File
@@ -1616,10 +1612,6 @@ SOURCE=.\Tagged_Components.h
 # Begin Source File
 
 SOURCE=.\Tagged_Profile.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAO_AMH_Response_Handler.h
 # End Source File
 # Begin Source File
 
