@@ -1,40 +1,45 @@
+Sat May 08 08:17:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/DynUnion_i_T.{h,cpp} (DU_Extractor): added virtual
+          destructor, to please egcs 1.1.2.
+
 Sat May 08 03:45:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO/TAO_Static.dsp: Added missing source files.
+        * TAO/TAO_Static.dsp: Added missing source files.
 
-	* TAO_IDL/tao_idl_static.dsp:
-	* examples/Simple/time/client_static.dsp:
-	* examples/Simple/time/server_static.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
-	* performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
-	* performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
-	* tao/TAO_Static.dsp: We should have used ACE_NO_INLINE instead of
-	  defining __ACE_INLINE__=0 to supress the use of inlining.
-	  Thanks to Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com> for
-	  reporting this.
+        * TAO_IDL/tao_idl_static.dsp:
+        * examples/Simple/time/client_static.dsp:
+        * examples/Simple/time/server_static.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+        * tao/TAO_Static.dsp: We should have used ACE_NO_INLINE instead of
+          defining __ACE_INLINE__=0 to supress the use of inlining.
+          Thanks to Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com> for
+          reporting this.
 
 Sat May 08 02:36:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Identity/Identity.cpp (test_poas): Added testing
-	  for root POA.
+        * examples/POA/Identity/Identity.cpp (test_poas): Added testing
+          for root POA.
 
-	* tao/POA.cpp (reference_to_servant and reference_to_id): Fixed
-	  the checking of results from TAO_POA::parse_key().  POA names
-	  should not be compared when the target POA is the root POA.
-	  Thanks to Tommy Andreasen <tommy.andreasen@post.tele.dk> for
-	  pointing out this bug.
+        * tao/POA.cpp (reference_to_servant and reference_to_id): Fixed
+          the checking of results from TAO_POA::parse_key().  POA names
+          should not be compared when the target POA is the root POA.
+          Thanks to Tommy Andreasen <tommy.andreasen@post.tele.dk> for
+          pointing out this bug.
 
-	* tao/TAO_Static.dsp and tao/TAO.dsp: Removed Sequence_T.cpp from
-	  compilation list; it only contains template code.
+        * tao/TAO_Static.dsp and tao/TAO.dsp: Removed Sequence_T.cpp from
+          compilation list; it only contains template code.
 
 Fri May 07 23:49:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/default_server.cpp (parse_args): Fixed
-	  ORBuniqueidpolicyreversedemuxstrategy option.  Thanks to Phil
-	  Mesnier <mesnier_p@ociweb.com> for pointing out that the "user"
-	  option was extra and that the "linear" option was missing.
+        * tao/default_server.cpp (parse_args): Fixed
+          ORBuniqueidpolicyreversedemuxstrategy option.  Thanks to Phil
+          Mesnier <mesnier_p@ociweb.com> for pointing out that the "user"
+          option was extra and that the "linear" option was missing.
 
 Fri May 07 22:45:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
