@@ -72,6 +72,25 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
                             -1);
         }
 
+      // If we contain an anonymous sequence, 
+      // generate code for the sequence here.
+
+      if (bt->node_type () == AST_Decl::NT_sequence)
+        {
+          // @@ (JP) TODO - change state arg to _CI when the rest of
+          // the cdr_op files get unhacked.
+          if (this->gen_anonymous_base_type (bt, 
+                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS) 
+              == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_field_cdr_op_ch::"
+                                 "visit_array - "
+                                 "gen_anonymous_base_type failed\n"),
+                                -1);
+            }              
+        }
+
       // for anonymous arrays, the type name has a _ prepended. We compute the
       // fullname with or without the underscore and use it later on.
       char fname [NAMEBUFSIZE];  // to hold the full and

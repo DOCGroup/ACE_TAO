@@ -120,10 +120,19 @@ int be_visitor_exception_ctor::visit_array (be_array *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
-  else
-    *os << "const " << bt->name ();
+  *os << "const ";
+
+  be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+
+  if (this->ctx_->state () != TAO_CodeGen::TAO_EXCEPTION_CTOR_CH
+      && !tdef)
+    *os << this->ctx_->scope ()->fullname () << "::";
+
+  if (!tdef)
+    *os << "_";
+
+  *os << bt->nested_type_name (this->ctx_->scope ());
+
   return 0;
 }
 

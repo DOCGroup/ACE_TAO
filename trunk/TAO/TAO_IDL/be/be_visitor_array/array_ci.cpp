@@ -48,6 +48,32 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   this->ctx_->node (node); // save the array node
 
+  // If we contain an anonymous sequence, generate code for it here.
+
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ch::"
+                         "visit_array - "
+                         "bad base type\n"),
+                        -1);
+    }
+
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      if (this->gen_anonymous_base_type (bt, 
+                                         TAO_CodeGen::TAO_SEQUENCE_CI) 
+          == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_array_ci::"
+                             "visit_array - "
+                             "gen_anonymous_base_type failed\n"),
+                            -1);
+        }              
+    }
+
   // generate code for the _var, _out, and _forany types
   if (this->gen_var_impl (node) == -1)
     {

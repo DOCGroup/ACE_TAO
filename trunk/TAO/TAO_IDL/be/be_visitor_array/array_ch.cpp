@@ -57,14 +57,30 @@ int be_visitor_array_ch::visit_array (be_array *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ch::"
+                         "(%N:%l) be_visitor_array_ch::"
                          "visit_array - "
-                         "Bad base type\n"),
+                         "bad base type\n"),
                         -1);
     }
 
   // generate the ifdefined macro
   os->gen_ifdef_macro (node->flatname ());
+
+  // If we contain an anonymous sequence, 
+  // generate code for the sequence here.
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      if (this->gen_anonymous_base_type (bt, 
+                                         TAO_CodeGen::TAO_SEQUENCE_CH) 
+          == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_array_ch::"
+                             "visit_array - "
+                             "gen_anonymous_base_type failed\n"),
+                            -1);
+        }              
+    }
 
   os->indent ();
   *os << "typedef ";

@@ -251,6 +251,22 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
   *os << be_uidt_nl << "}\n\n";
 
+  // If we contain an anonymous sequence, 
+  // generate code for the seuqence here.
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      if (this->gen_anonymous_base_type (bt, 
+                                         TAO_CodeGen::TAO_SEQUENCE_CS) 
+          == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_array_cs::"
+                             "visit_array - "
+                             "gen_anonymous_base_type failed\n"),
+                            -1);
+        }              
+    }
+
 #if 0
   // typecode for anonymous arrays is not required since we do not generate the
   // Any operators for it and it cannot be used as a type
