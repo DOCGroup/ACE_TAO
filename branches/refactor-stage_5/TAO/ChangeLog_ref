@@ -1,3 +1,15 @@
+Sun Aug 10 22:40:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInfo_i.h:
+	* tao/ClientRequestInfo_i.inl:
+	* tao/ClientRequestInterceptor_Adapter.cpp:
+	* tao/Exception.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Synch_Invocation.h: Fixed syntax errors that prevented
+	  compilation of code on VC6.0
+	
+	* tao/TAO.dsp: Added new files into the project.
+
 Sat Aug  9 23:17:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ClientRequestInterceptor_Adapter.cpp:

@@ -263,7 +263,7 @@ protected:
   CORBA::Exception *caught_exception_;
 
   /// True if a two-way operation, false otherwise.
-  bool response_expected_;
+  CORBA::Boolean response_expected_;
 
   /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;

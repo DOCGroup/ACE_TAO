@@ -8,7 +8,7 @@
 
 #include "ClientRequestInfo.h"
 #include "ClientRequestInfo_i.h"
-#include "Invocation.h"
+#include "Invocation_Base.h"
 #include "ORB_Core.h"
 
 ACE_RCSID (tao,
@@ -203,7 +203,7 @@ namespace TAO
   }
 
   void
-  TAO_ClientRequestInterceptor_Adapter::process_forward_request (
+  ClientRequestInterceptor_Adapter::process_forward_request (
       TAO_ClientRequestInfo_i *ri,
       PortableInterceptor::ForwardRequest &exc
       ACE_ENV_ARG_DECL)
