@@ -18,13 +18,12 @@
 #define ACE_SCHEDULER_UTILITIES_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "orbsvcs/RtecSchedulerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Sched/sched_export.h"
 
 class TAO_RTSched_Export ACE_RT_Info : public RtecScheduler::RT_Info

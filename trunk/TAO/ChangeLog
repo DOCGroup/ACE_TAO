@@ -1,3 +1,25 @@
+Fri Aug  1 20:11:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.h:
+	* orbsvcs/orbsvcs/Scheduler_Utilities.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
+	* orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h:
+	* orbsvcs/orbsvcs/Event/BCU.h:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Busy_Lock.h
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
+	* orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
+	* orbsvcs/orbsvcs/Notify/RT_POA_Helper.cpp:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: #included "ace/SString.h"
+	  to get them compiling for the timebeing. We need to take a
+	  closer look to see whether they are even necessary in the first
+	  place. We need to take a closer look in the next checkin. 
+
 Fri Aug  1 20:13:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
@@ -19,7 +41,7 @@ Fri Aug  1 20:13:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  valuetype factories, and for the exception references
 	  of operations, attributes and valuetype factories.
 
-Fri Aug  1 17:28:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+Fri Aug  1 20:08:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Adapter.h: Forward declared CORBA::Exception.
 	* tao/Adapter.cpp: #included Exception.h
