@@ -106,8 +106,6 @@ namespace TAO
                              cdr.start ()->length (),
                              0);
 
-
-
     // Pull the exception ID out of the marshaling buffer.
     if (tmp_stream.read_string (buf.inout ()) == 0)
       {
@@ -138,8 +136,7 @@ namespace TAO
           ACE_NEW_RETURN (unk,
                           TAO::Unknown_IDL_Type (
                               tc.in (),
-                              cdr.start (),
-                              cdr.byte_order ()
+                              cdr
                             ),
                           TAO_INVOKE_FAILURE);
 

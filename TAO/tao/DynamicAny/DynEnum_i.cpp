@@ -50,28 +50,26 @@ TAO_DynEnum_i::init (const CORBA::Any &any
 
   this->type_ = tc;
 
-  ACE_Message_Block *mb = any._tao_get_cdr ();
-  bool type_known = false;
+  TAO::Any_Impl *impl = any.impl ();
 
-  if (mb == 0)
+  if (impl->encoded ())
     {
-      ACE_NEW (mb,
-               ACE_Message_Block);
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+        
+      // We don't want unk's rd_ptr to move, in case we are shared by
+      // another Any, so we use this to copy the state, not the buffer.
+      TAO_InputCDR for_reading (unk->_tao_get_cdr ());
+      for_reading.read_ulong (this->value_);
+    }
+  else
+    {
       TAO_OutputCDR out;
-      any.impl ()->marshal_value (out);
-      ACE_CDR::consolidate (mb, out.begin ());
-      type_known = true;
+      impl->marshal_value (out);
+      TAO_InputCDR in (out);
+      in.read_ulong (this->value_);
     }
 
-  TAO_InputCDR cdr (mb,
-                    any._tao_byte_order ());
-
-  if (type_known)
-    {
-      mb->release ();
-    }
-
-  cdr.read_ulong (this->value_);
   this->init_common ();
 }
 
@@ -212,29 +210,26 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
 
   if (kind == CORBA::tk_enum)
     {
-      // Get the CDR stream of the argument.
-      ACE_Message_Block* mb = any._tao_get_cdr ();
-      bool type_known = false;
+      // Get the CDR stream of the Any, if there isn't one, make one.
+      TAO::Any_Impl *impl = any.impl ();
 
-      if (mb == 0)
+      if (impl->encoded ())
         {
-          ACE_NEW (mb,
-                   ACE_Message_Block);
+          TAO::Unknown_IDL_Type *unk =
+            dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+            
+          // We don't want unk's rd_ptr to move, in case we are shared by
+          // another Any, so we use this to copy the state, not the buffer.
+          TAO_InputCDR for_reading (unk->_tao_get_cdr ());
+          for_reading.read_ulong (this->value_);
+        }
+      else
+        {
           TAO_OutputCDR out;
-          any.impl ()->marshal_value (out);
-          ACE_CDR::consolidate (mb, out.begin ());
-          type_known = true;
+          impl->marshal_value (out);
+          TAO_InputCDR in (out);
+          in.read_ulong (this->value_);
         }
-
-      TAO_InputCDR cdr (mb,
-                        any._tao_byte_order ());
-
-      if (type_known)
-        {
-          mb->release ();
-        }
-
-      cdr.read_ulong (this->value_);
     }
   else
     {
@@ -258,11 +253,11 @@ TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  TAO_InputCDR in_cdr (out_cdr);
   TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
-                                           out_cdr.begin (),
-                                           TAO_ENCAP_BYTE_ORDER),
+                                           in_cdr),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -292,30 +287,26 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
   CORBA::Any_var any = rhs->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  ACE_Message_Block *mb = any->_tao_get_cdr ();
-  bool type_known = false;
-
-  if (mb == 0)
-    {
-      ACE_NEW_RETURN (mb,
-                      ACE_Message_Block,
-                      0);
-      TAO_OutputCDR out;
-      any->impl ()->marshal_value (out);
-      ACE_CDR::consolidate (mb, out.begin ());
-      type_known = true;
-    }
-
-  TAO_InputCDR cdr (mb,
-                    any->_tao_byte_order ());
-
-  if (type_known)
-    {
-      mb->release ();
-    }
-
+  TAO::Any_Impl *impl = any->impl ();
   CORBA::ULong value;
-  cdr.read_ulong (value);
+
+  if (impl->encoded ())
+    {
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+        
+      // We don't want unk's rd_ptr to move, in case we are shared by
+      // another Any, so we use this to copy the state, not the buffer.
+      TAO_InputCDR for_reading (unk->_tao_get_cdr ());
+      for_reading.read_ulong (value);
+    }
+  else
+    {
+      TAO_OutputCDR out;
+      impl->marshal_value (out);
+      TAO_InputCDR in (out);
+      in.read_ulong (value);
+    }
 
   return value == this->value_;
 }

@@ -204,10 +204,9 @@ TAO_PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
 
     TAO::Unknown_IDL_Type *unk = 0;
     ACE_NEW_RETURN (unk,
-		    TAO::Unknown_IDL_Type (tc.in (),
-					   &mb2,
-					   data.byte_order),
-		    -1);
+		                TAO::Unknown_IDL_Type (tc.in (),
+					                                 TAO_InputCDR (&mb2)),
+		               -1);
     rec.info.replace (unk);
 
     retval = 1;

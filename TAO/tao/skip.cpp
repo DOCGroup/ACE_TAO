@@ -24,7 +24,7 @@
 #include "Valuetype_Adapter.h"
 #include "ORB_Core.h"
 #include "Typecode.h"
-#include "Any_Impl.h"
+#include "Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 #include "SystemException.h"
 
@@ -500,34 +500,27 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
 
         case CORBA::tk_enum:
           {
-            ACE_Message_Block *mb = any->_tao_get_cdr ();
             CORBA::ULong d;
-            bool type_known = false;
+            TAO::Any_Impl *impl = any->impl ();
 
-            if (mb == 0)
+            if (impl->encoded ())
               {
-                ACE_NEW_RETURN (mb,
-                                ACE_Message_Block,
-                                TAO::TRAVERSE_STOP);
-                TAO_OutputCDR out;
-                any->impl ()->marshal_value (out);
-                ACE_CDR::consolidate (mb, out.begin ());
-                type_known = true;
+                TAO::Unknown_IDL_Type *unk =
+                  dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+                  
+                // We don't want unk's rd_ptr to move, in case 
+                // we are shared by another Any, so we use this
+                // to copy the state, not the buffer.
+                TAO_InputCDR for_reading (unk->_tao_get_cdr ());
+
+                for_reading.read_ulong (d);
               }
-
-            TAO_InputCDR cdr (mb->data_block (),
-                              ACE_Message_Block::DONT_DELETE,
-                              mb->rd_ptr () - mb->base (),
-                              mb->wr_ptr () - mb->base (),
-                              any->_tao_byte_order (),
-                              TAO_DEF_GIOP_MAJOR,
-                              TAO_DEF_GIOP_MINOR);
-
-            cdr.read_ulong (d);
-
-            if (type_known)
+            else
               {
-                mb->release ();
+                TAO_OutputCDR out;
+                impl->marshal_value (out);
+                TAO_InputCDR cdr (out);
+                cdr.read_ulong (d);
               }
 
             if (d == enum_v)

@@ -73,11 +73,13 @@ Test_DynSequence::run_test (void)
                             -1);
         }
 
-      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
+      DynAnyAnalyzer analyzer (this->orb_.in (),
+                               dynany_factory.in (),
+                               debug_);
 
       DynAnyTests::SeqShort shortseq1;
 
-      shortseq1.length(2);
+      shortseq1.length (2);
       shortseq1[0] = 2;
       shortseq1[1] = -2;
 
@@ -85,14 +87,14 @@ Test_DynSequence::run_test (void)
       any <<= shortseq1;
 
       DynamicAny::DynAny_var shortdany =
-        dynany_factory->create_dyn_any(any ACE_ENV_ARG_PARAMETER);
+        dynany_factory->create_dyn_any (any ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      analyzer.analyze(shortdany.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze(shortdany.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Any_var any3;
-      any3 = shortdany->to_any(ACE_ENV_SINGLE_ARG_PARAMETER);
+      any3 = shortdany->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ts[0] = data.m_string2;
@@ -118,7 +120,8 @@ Test_DynSequence::run_test (void)
       fa1->seek (1
                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::String_var out_str1 = fa1->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::String_var out_str1 =
+        fa1->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!ACE_OS::strcmp (out_str1.in (), data.m_string1))

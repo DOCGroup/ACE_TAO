@@ -461,11 +461,11 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
     {
       TAO_OutputCDR cdr;
       cdr.write_ulong (static_cast<CORBA::ULong> (value));
+      TAO_InputCDR in_cdr (cdr);
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW (impl,
                TAO::Unknown_IDL_Type (tc.in (),
-                                      cdr.begin (),
-                                      TAO_ENCAP_BYTE_ORDER));
+                                      in_cdr));
       member.label.replace (impl);
       break;
     }

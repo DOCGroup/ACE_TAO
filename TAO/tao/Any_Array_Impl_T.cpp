@@ -78,9 +78,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl *impl = any.impl ();
 
-      ACE_Message_Block *mb = impl->_tao_get_cdr ();
-
-      if (mb == 0)
+      if (!impl->encoded ())
         {
           TAO::Any_Array_Impl_T<T_slice, T_forany> *narrow_impl =
             dynamic_cast <TAO::Any_Array_Impl_T <T_slice, T_forany> *> (impl);
@@ -106,22 +104,18 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
           replacement
         );
 
-      TAO_InputCDR cdr (mb->data_block (),
-                        ACE_Message_Block::DONT_DELETE,
-                        mb->rd_ptr () - mb->base (),
-                        mb->wr_ptr () - mb->base (),
-                        impl->_tao_byte_order (),
-                                                            TAO_DEF_GIOP_MAJOR,
-                                                            TAO_DEF_GIOP_MINOR);
+      // We know this will work since the unencoded case is covered above.  
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-      impl->assign_translator (any_tc,
-                               &cdr
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // We don't want the rd_ptr of unk to move, in case it is
+      // shared by another Any. This copies the state, not the buffer.
+      TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean result = replacement->demarshal_value (cdr);
+      CORBA::Boolean good_decode =
+        replacement->demarshal_value (for_reading);
 
-      if (result == 1)
+      if (good_decode)
         {
           _tao_elem = reinterpret_cast <T_slice*> (replacement->value_);
           const_cast<CORBA::Any &> (any).replace (replacement);

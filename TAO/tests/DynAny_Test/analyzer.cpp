@@ -22,7 +22,9 @@
     ACE_DEBUG ((LM_DEBUG, str , b)); \
   } break;
 
-DynAnyAnalyzer::DynAnyAnalyzer(CORBA::ORB_ptr orb, DynamicAny::DynAnyFactory_ptr dynany_factory, int debug)
+DynAnyAnalyzer::DynAnyAnalyzer (CORBA::ORB_ptr orb,
+                                DynamicAny::DynAnyFactory_ptr dynany_factory,
+                                int debug)
   : orb_ (CORBA::ORB::_duplicate(orb)),
     dynany_factory_ (DynamicAny::DynAnyFactory::_duplicate(dynany_factory)),
     level_ (0),
@@ -30,7 +32,7 @@ DynAnyAnalyzer::DynAnyAnalyzer(CORBA::ORB_ptr orb, DynamicAny::DynAnyFactory_ptr
 {
 }
 
-void DynAnyAnalyzer::tab(int t)
+void DynAnyAnalyzer::tab (int t)
 {
   if (debug_)
     {

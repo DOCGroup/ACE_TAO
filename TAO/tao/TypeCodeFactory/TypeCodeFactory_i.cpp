@@ -6,7 +6,7 @@
 #include "tao/Marshal.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
-#include "tao/Any_Impl.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/SystemException.h"
 
 #include "ace/SString.h"
@@ -255,7 +255,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
             }
         }
 
-      CORBA::TCKind kind = discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind kind =
+        discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       if (index == raw_default_index)
         {
@@ -270,7 +271,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
           CORBA::Boolean good_label =
             members[index].label.impl ()->marshal_value (cdr);
 
-          if (good_label == 0)
+          if (!good_label)
             {
               return CORBA::TypeCode::_nil ();
             }
@@ -771,9 +772,28 @@ TAO_TypeCodeFactory_i::compute_default_label (
 #endif /* ACE_LACKS_LONGLONG_T */
             case CORBA::tk_enum:
             {
-              TAO_InputCDR cdr (members[i].label._tao_get_cdr (),
-                                members[i].label._tao_byte_order ());
-              cdr.read_ulong (u.enum_val);
+              TAO::Any_Impl *impl = members[i].label.impl ();
+              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
+              
+              if (impl->encoded ())
+                {
+                  TAO::Unknown_IDL_Type *unk =
+                    dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+                    
+                  // We don't want unk's rd_ptr to move, in case
+                  // we are shared by another Any, so we use this
+                  // to copy the state, not the buffer.
+                  for_reading = unk->_tao_get_cdr ();
+                }
+              else
+                {
+                  TAO_OutputCDR out;
+                  impl->marshal_value (out);
+                  TAO_InputCDR tmp (out);
+                  for_reading = tmp;
+                }
+                
+              for_reading.read_ulong (u.enum_val);
 
               if (u.enum_val == dv.enum_val)
                 {
@@ -1426,9 +1446,28 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members
               break;
             case CORBA::tk_enum:
             {
-              TAO_InputCDR cdr (members[i].label._tao_get_cdr (),
-                                members[i].label._tao_byte_order ());
-              cdr.read_ulong (s.enum_val);
+              TAO::Any_Impl *impl = members[i].label.impl ();
+              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
+              
+              if (impl->encoded ())
+                {
+                  TAO::Unknown_IDL_Type *unk =
+                    dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+                    
+                  // We don't want unk's rd_ptr to move, in case
+                  // we are shared by another Any, so we use this
+                  // to copy the state, not the buffer.
+                  for_reading = unk->_tao_get_cdr ();
+                }
+              else
+                {
+                  TAO_OutputCDR out;
+                  impl->marshal_value (out);
+                  TAO_InputCDR tmp (out);
+                  for_reading = tmp;
+                }
+                
+              for_reading.read_ulong (s.enum_val);
 
               if (checker.insert (s.enum_val) != 0)
                 {

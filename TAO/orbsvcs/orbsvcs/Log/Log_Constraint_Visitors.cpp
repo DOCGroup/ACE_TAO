@@ -193,13 +193,12 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                     {
                       TAO_OutputCDR cdr;
                       cdr.write_ulong ((CORBA::ULong) disc_val);
-
+                      TAO_InputCDR in_cdr (cdr);
                       TAO::Unknown_IDL_Type *unk = 0;
                       ACE_NEW_RETURN (unk,
                                       TAO::Unknown_IDL_Type (
                                           disc_tc.in (),
-                                          cdr.begin (),
-                                          TAO_ENCAP_BYTE_ORDER
+                                          in_cdr
                                         ),
                                       -1);
 
