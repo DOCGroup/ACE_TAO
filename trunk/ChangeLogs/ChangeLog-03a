@@ -1,3 +1,13 @@
+Mon Dec  3 16:30:07 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h:
+
+	  Added group write permissions to the default file and directory
+	  permission macros supplied by ACE.  Allows the ACE_Process_Mutex
+	  to be used with process from different used in the same group.
+	  Thanks to Michael Brinkmann <michael.brinkmann@materna.de> for
+	  providing a fix.
+
 Mon Dec  3 16:22:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Process_Mutex.h:
