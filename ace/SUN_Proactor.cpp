@@ -282,31 +282,71 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
 int
 ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result *result)
 {
-  ACE_UNUSED_ARG (result);
-  // Force I/O completion.
-  ACE::set_flags (result->aio_fildes, ACE_NONBLOCK);
+  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::cancel_aiocb");
+  int rc = ::aiocancel (& result->aio_resultp);
+  
+  if (rc == 0)    //  AIO_CANCELED
+     return 0;
 
   return 2;
-  // AL
-  // I tried to implement the following code but result was:
-  // aiocancel returned -1 with errno=ACCESS_DENIED moreover, later
-  // this operation had been never finished on aiowait .  Is it Sun
-  // error ??
-  //
-  // So with SUN_Proactor there is only one way to cancel AIO just
-  // close the file handle.
-  // 
-  //  int rc = ::aiocancel (& result->aio_resultp);
-  //  
-  // Check the return value and return 0/1/2 appropriately.
-  //  if (rc == 0)    //  AIO_CANCELED
-  //    return 0;
-  //
-  //  ACE_ERROR_RETURN ((LM_ERROR,
-  //                       "%N:%l:(%P | %t)::%p\n",
-  //                       "cancel_aiocb:"
-  //                       "Unexpected result from <aiocancel>"),
-  //                      -1);
+}
+
+int
+ACE_SUN_Proactor::cancel_aio (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::cancel_aio");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
+        
+  int    num_total     = 0;
+  int    num_cancelled = 0;
+  size_t ai = 0;
+
+  for (ai = 0; ai < aiocb_list_max_size_; ai++)
+    {
+      if (result_list_[ai] == 0)    //skip empty slot
+        continue ;
+
+      if (result_list_[ai]->aio_fildes != handle)  //skip not our slot
+        continue ;
+
+      num_total++ ;  
+
+      ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
+
+      int rc_cancel = 0 ;   // let assume canceled 
+    
+      if (aiocb_list_ [ai] == 0)  //deferred aio
+        num_deferred_aiocb_--;
+      else      //cancel started aio
+        rc_cancel = this->cancel_aiocb (asynch_result);
+
+      if (rc_cancel == 0)
+        {  
+          num_cancelled ++ ;   
+
+          aiocb_list_[ai] = 0;
+          result_list_[ai] = 0;
+          aiocb_list_cur_size_--;
+
+          // after aiocancel Sun does not notify us
+          // so we should send notification  
+          // to save POSIX behavoir.
+          // Also we should do this for deffered aio's
+
+          asynch_result->set_error (ECANCELED);
+          asynch_result->set_bytes_transferred (0);
+          this->post_completion (asynch_result);
+        }
+    }
+
+  if (num_total == 0)
+    return 1;  // ALLDONE
+
+  if (num_cancelled == num_total)
+    return 0;  // CANCELLED
+
+  return 2; // NOT CANCELLED
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
