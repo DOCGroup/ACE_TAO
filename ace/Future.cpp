@@ -144,33 +144,37 @@ ACE_Future_Rep<T>::set (const T &r,
   // If the value is already produced, ignore it...
   if (this->value_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
+                                ace_mon,
+                                this->value_ready_mutex_,
+                                -1));
       // Otherwise, create a new result value.  Note the use of the
       // Double-checked locking pattern to avoid multiple allocations.
 
-      if (this->value_ == 0)
-        ACE_NEW_RETURN (this->value_,
-                        T (r),
-                        -1);
-
-      // Remove and notify all subscribed observers.
-      ACE_TYPENAME OBSERVER_COLLECTION::iterator iterator =
-        this->observer_collection_.begin ();
-
-      ACE_TYPENAME OBSERVER_COLLECTION::iterator end =
-        this->observer_collection_.end ();
-
-      for (;
-           iterator != end;
-           ++iterator)
+      if (this->value_ == 0)       // Still no value, so proceed
         {
-          OBSERVER *observer = *iterator;
-          observer->update (caller);
+          ACE_NEW_RETURN (this->value_,
+                          T (r),
+                          -1);
+
+          // Remove and notify all subscribed observers.
+          ACE_TYPENAME OBSERVER_COLLECTION::iterator iterator =
+            this->observer_collection_.begin ();
+
+          ACE_TYPENAME OBSERVER_COLLECTION::iterator end =
+            this->observer_collection_.end ();
+
+          for (;
+               iterator != end;
+               ++iterator)
+            {
+              OBSERVER *observer = *iterator;
+              observer->update (caller);
+            }
+
+          // Signal all the waiting threads.
+          return this->value_ready_.broadcast ();
         }
-
-      // Signal all the waiting threads.
-      return this->value_ready_.broadcast ();
-
       // Destructor releases the lock.
     }
   return 0;
