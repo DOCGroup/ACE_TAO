@@ -11,6 +11,7 @@
 // =========================
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_H
 #define TAO_CODESET_TRANSLATOR_FACTORY_H
+
 #include "ace/pre.h"
 #include "ace/Service_Object.h"
 
@@ -18,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "tao/CONV_FRAMEC.h"
 
 class TAO_InputCDR;

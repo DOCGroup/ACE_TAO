@@ -16,16 +16,16 @@
 
 #ifndef TAO_CONNECTOR_REGISTRY_H
 #define TAO_CONNECTOR_REGISTRY_H
+
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Endpoint.h"
-#include "ace/CORBA_macros.h"
+#include "tao/Endpoint.h"
 
 // Forward declarations.
 class ACE_Addr;

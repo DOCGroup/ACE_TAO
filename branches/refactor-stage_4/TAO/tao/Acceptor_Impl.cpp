@@ -26,9 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ORB_Core.h"
-// #include "ORB_Table.h"
 #include "Server_Strategy_Factory.h"
-// #include "Connector_Registry.h"
 #include "Transport_Cache_Manager.h"
 #include "Thread_Lane_Resources.h"
 #include "Transport.h"

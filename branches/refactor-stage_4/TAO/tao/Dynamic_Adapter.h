@@ -13,16 +13,47 @@
 
 #ifndef TAO_DYNAMIC_ADAPTER_H
 #define TAO_DYNAMIC_ADAPTER_H
-#include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/pre.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
+
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+
+namespace CORBA
+{
+  class Object;
+  typedef Object *Object_ptr;
+
+  class ORB;
+  typedef ORB *ORB_ptr;
+
+  class NVList;
+  typedef NVList *NVList_ptr;
+
+  class NamedValue;
+  typedef NamedValue *NamedValue_ptr;
+
+  class ExceptionList;
+  typedef ExceptionList *ExceptionList_ptr;
+
+  class Request;
+  typedef Request *Request_ptr;
+
+  class Context;
+  typedef Context *Context_ptr;
+
+  class ServerRequest;
+  typedef ServerRequest *ServerRequest_ptr;
+
+  typedef ULong Flags;
+};
 
 class TAO_GIOP_Twoway_Invocation;
 

@@ -1,3 +1,53 @@
+Thu Jul 17 20:59:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/Acceptor_Filter.h:
+        * tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.h:
+        * tao/Acceptor_Registry.h:
+        * tao/Argument.h:
+        * tao/BiDir_Adapter.h:
+        * tao/Bind_Dispatcher_Guard.h:
+        * tao/BoundsC.h:
+        * tao/CDR.h:
+        * tao/CORBA_String.cpp:
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
+        * tao/ClientRequestInfo_i.h:
+        * tao/Codeset_Translator_Factory.h:
+        * tao/Collocation_Resolver.h:
+        * tao/Connector_Impl.h:
+        * tao/Connector_Registry.h:
+        * tao/Dynamic_Adapter.h:
+        * tao/Encodable.h:
+        * tao/Endpoint.h:
+        * tao/Exception.h:
+        * tao/Managed_Types.h:
+        * tao/Object_Loader.h:
+        * tao/Resource_Factory.h:
+        * tao/Sequence.cpp:
+        * tao/TAO.dsp:
+        * tao/TypeCodeFactory_Adapter.h:
+        * tao/Typecode.h:
+        * tao/corbafwd.cpp:
+        * tao/corbafwd.h:
+        * tao/corbafwd.i:
+
+	  Cleaned up include structure a little by substituting for
+	  includes of corbafwd.h in some of TAO's files. Some
+	  declarations and definitions were moved around to accomplish
+	  this.
+
+	* tao/Basic_Types.h:
+
+	  Moved typedefs of basic IDL types (from the corresponding
+	  ACE_CDR declarations) to a new file.
+
+	* tao/OBV_Constants.h:
+
+	  Moved constants and typedefs related to valuetypes to a
+	  new file.
+
 Wed Jul 16 14:38:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:

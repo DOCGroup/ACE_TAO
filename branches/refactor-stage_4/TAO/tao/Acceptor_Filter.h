@@ -14,15 +14,14 @@
 
 #ifndef TAO_ACCEPTOR_FILTER_H
 #define TAO_ACCEPTOR_FILTER_H
+
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/Object_KeyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Object_KeyC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

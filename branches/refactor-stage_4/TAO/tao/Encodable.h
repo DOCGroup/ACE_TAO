@@ -18,11 +18,16 @@
 #define TAO_ENCODABLE_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/TAO_Export.h"
+
+class TAO_OutputCDR;
+class TAO_InputCDR;
 
 /**
  * @class TAO_Encodable

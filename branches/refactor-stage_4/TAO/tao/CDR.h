@@ -41,16 +41,18 @@
 
 #ifndef TAO_CDR_H
 #define TAO_CDR_H
+
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
 #include "ace/CDR_Stream.h"
+
+#include "tao/corbafwd.h"
 
 class TAO_ORB_Core;
 
