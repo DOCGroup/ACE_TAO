@@ -31,7 +31,7 @@ CC_LockSetFactory::~CC_LockSetFactory (void)
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_LockSetFactory::create ( CORBA::Environment &env)
+CC_LockSetFactory::create ( CORBA::Environment &_env)
 {
   CC_LockSet *ls = 0;
 
@@ -47,12 +47,12 @@ CC_LockSetFactory::create ( CORBA::Environment &env)
                   CosConcurrencyControl::LockSet::_nil ());
   env.clear ();
 
-  return ls->_this (env);
+  return ls->_this (_env);
 }
 
 CosConcurrencyControl::LockSet_ptr
 CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which,
-                                   CORBA::Environment &env)
+                                   CORBA::Environment &_env)
 {
   CC_LockSet *ls = 0;
 
@@ -68,5 +68,5 @@ CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which,
                   CosConcurrencyControl::LockSet::_nil ());
   env.clear ();
 
-  return ls->_this (env);
+  return ls->_this (_env);
 }

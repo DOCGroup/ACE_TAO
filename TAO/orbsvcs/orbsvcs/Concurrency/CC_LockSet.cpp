@@ -55,7 +55,7 @@ CC_LockSet::~CC_LockSet (void)
 
 void 
 CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
-                  CORBA::Environment &env)
+                  CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
   if (lock_ == 0) 
@@ -70,7 +70,7 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
     }
   TAO_TRY 
     {
-      lock_->lock (env);
+      lock_->lock (_env);
     }
   TAO_CATCHANY 
     {
@@ -84,13 +84,13 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
 
 CORBA::Boolean 
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
-                      CORBA::Environment &env)
+                      CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::try_lock\n"));
   TAO_TRY 
     {
-      return lock_->try_lock (env);
+      return lock_->try_lock (_env);
     }
   TAO_CATCHANY 
     {
@@ -104,13 +104,13 @@ CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
 
 void 
 CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
-                    CORBA::Environment &env)
+                    CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::unlock\n"));
   TAO_TRY 
     {
-      lock_->unlock (env);
+      lock_->unlock (_env);
     }
   TAO_CATCHANY 
     {
@@ -126,13 +126,13 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
 void 
 CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
                          CosConcurrencyControl::lock_mode new_mode,
-                         CORBA::Environment &env)
+                         CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::change_mode\n"));
   TAO_TRY
     {
-      lock_->change_mode (new_mode, env);
+      lock_->change_mode (new_mode, _env);
     }
   TAO_CATCHANY
     {
