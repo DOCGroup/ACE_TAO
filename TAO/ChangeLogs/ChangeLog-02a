@@ -1,7 +1,6 @@
 Fri Mar 24 22:24:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosConcurrency:
-	* orbsvcs/orbsvcs/Makefile.CosEvent:
 	* orbsvcs/orbsvcs/Makefile.CosLifeCycle:
 	* orbsvcs/orbsvcs/Makefile.CosNaming:
 	* orbsvcs/orbsvcs/Makefile.CosNotification:
@@ -13,6 +12,7 @@ Fri Mar 24 22:24:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
 	  Set the MAKEFILE macro properly.
 
+	* orbsvcs/orbsvcs/Makefile.CosEvent:
 	* orbsvcs/orbsvcs/Makefile.RTEvent:
 	  Disabled the new EC on old versions of g++.
 
