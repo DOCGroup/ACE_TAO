@@ -1,7 +1,7 @@
 Thu Mar  4 12:26:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Message_Queue_Notifications_Test.cpp (svc): Made increment
-	  of <role_> thread-safe.
+        * tests/Message_Queue_Notifications_Test.cpp (svc): Made increment
+          of <role_> thread-safe.
 
 Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -27,6 +27,9 @@ Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/CLASSIX/Makefile: removed unused TEMPLATE_FILES and
           LSRC2 macros, and gethrtime build rule.
+
+        * docs/ACE-subsets.html: updated, and added documentation for
+          ACE_COMPONENTS and the ACE_OS adapation layer.
 
 Wed Mar  3 22:30:02 1999  James CE Johnson  <jcej@lads.com>
 
