@@ -319,7 +319,9 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
               }
             break;
 
-          case RtecScheduler::ANOMALY_NONE:
+          // case RtecScheduler::ANOMALY_NONE:
+          // case Anomaly_Severity_TAO_ENUM_32BIT_ENFORCER:
+          default:
             anomaly_severity_msg = "UNKNOWN";
             break;
         }
@@ -334,7 +336,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         anomalies[anomaly_index] = **anomaly;
 
         // Release the anomaly node.
-        delete (*anomaly);
+        delete *anomaly;
     }
 
   switch (severity)
