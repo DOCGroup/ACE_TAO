@@ -524,24 +524,24 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
                                       ACE_TP_Token_Guard &guard)
 {
 
-  // We got the lock, lets handle some events.  Note: this method will
-  // *not* dispatch any I/O handlers.  It will dispatch signals,
-  // timeouts, and notifications.
+  // We got the lock, lets handle some I/O events.
   ACE_EH_Dispatch_Info dispatch_info;
 
   this->get_socket_event_info (dispatch_info);
 
   // If there is any event handler that is ready to be dispatched, the
   // dispatch information is recorded in dispatch_info.
-  if (dispatch_info.dispatch ())
+  if (!dispatch_info.dispatch ())
     {
-      // Suspend the handler so that other threads don't start
-      // dispatching it.
-      // NOTE: This check was performed in older versions of the
-      // TP_Reactor. Looks like it is a waste..
-      if (dispatch_info.event_handler_ != this->notify_handler_)
-        this->suspend_i (dispatch_info.handle_);
+      return 0;
     }
+
+  // Suspend the handler so that other threads don't start
+  // dispatching it.
+  // NOTE: This check was performed in older versions of the
+  // TP_Reactor. Looks like it is a waste..
+  if (dispatch_info.event_handler_ != this->notify_handler_)
+    this->suspend_i (dispatch_info.handle_);
 
   // Release the lock.  Others threads can start waiting.
   guard.release_token ();
@@ -549,31 +549,56 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   int result = 0;
 
   // If there was an event handler ready, dispatch it.
-  if (dispatch_info.dispatch ())
+  /// Decrement the event left
+  --event_count;
+
+  if (this->dispatch_socket_event (dispatch_info) == 0)
+    ++result;                // Dispatched an event
+
+  int flag = 0;
+
+  // Acquire the token since we want to access the handler
+  // repository. The call to find () does not hold a lock and hence
+  // this is required.
+  guard.acquire_token ();
+
+  // Get the handler for the handle that we have dispatched to.
+  ACE_Event_Handler *eh =
+    this->handler_rep_.find (dispatch_info.handle_);
+
+  // This check is required for the following reasons
+  // 1. If dispatch operation returned a -1, then there is a
+  // possibility that the event handler could be deleted. In such
+  // cases the pointer to the event_handler that <dispatch_info>
+  // holds is set to 0.
+  //
+  // 2. If the application did its own memory management, a return
+  // value of 0 cannot be believed since the event handler could
+  // be deleted by the application based on some conditions. This
+  // is *bad*. But we dont have much of a choice with the existing
+  // reactor setup. To get around this, we can make a check for
+  // the handler registered with the repository for the handle
+  // that we have and compare with the handler that we
+  // posses. Yeah, I know it is like touching your nose by taking
+  // your hand around your head. But that is the way it is. This
+  // is a fix for [BUGID 1231]
+
+  if (dispatch_info.event_handler_ != 0 &&
+      eh == dispatch_info.event_handler_)
     {
-      /// Decrement the event left
-      --event_count;
-
-      if (this->dispatch_socket_event (dispatch_info) == 0)
-          ++result;                // Dispatched an event
-
-      int flag = 0;
-
-      // Hack of the decade ;-). We make an extra check for the handle
-      // in addition to the event handler before we make a check for
-      // the resume_handler ().
-      if (dispatch_info.event_handler_ != 0 &&
-          this->handler_rep_.find (dispatch_info.handle_) != 0)
-        {
-         flag =
+      flag =
            dispatch_info.event_handler_->resume_handler ();
-        }
-
-      if (dispatch_info.handle_ != ACE_INVALID_HANDLE &&
-          dispatch_info.event_handler_ != this->notify_handler_ &&
-          flag == 0)
-        this->resume_handler (dispatch_info.handle_);
     }
+
+  // Use resume_i () since we hold the token already.
+  if (dispatch_info.handle_ != ACE_INVALID_HANDLE &&
+      dispatch_info.event_handler_ != this->notify_handler_ &&
+      flag == ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
+    this->resume_i (dispatch_info.handle_);
+
+  // Let me release the token here. This is not required since the
+  // destruction of the object on the stack will take care of this.
+  guard.release_token ();
 
   return result;
 }
