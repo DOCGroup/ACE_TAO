@@ -1442,7 +1442,7 @@ IMR_Forwarder::_primary_interface (const PortableServer::ObjectId &,
 }
 
 void
-IMR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
+IMR_Forwarder::invoke (CORBA::ServerRequest_ptr,
                        CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ This could be optimized, the PortableServer::Current object
