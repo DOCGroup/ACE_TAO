@@ -1,6 +1,26 @@
+Wed Dec 30 20:45:42 1998  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+          moved initialization from contructor to the init method.
+	  added a shutdown method.
+
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
+	  moved initialization from contructor to the init method.
+
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
+	  moved initialization from contructor to the init method.
+
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+	  initialize the EventHeader using the SupplierQOS.
+	  added <connected> method.
+
 Wed Dec 30 19:17:44 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Server_Manager.{h,cpp}: 
+	* examples/POA/On_Demand_Loading/Server_Manager.{h,cpp}:
           Added these two files for the helper class Server_i used by the
 	  server application.
 
@@ -11,7 +31,7 @@ Wed Dec 30 19:17:44 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* examples/POA/On_Demand_Loading/Makefile:
 	  Added an extra entry for Server_Manager used by the server
 	  program.
-        
+
 Wed Dec 30 17:25:51 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	The following files have been added to the newly created
