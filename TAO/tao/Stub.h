@@ -247,6 +247,7 @@ public:
                         CORBA::NamedValue_ptr result,
                         CORBA::Flags flags,
                         CORBA::ExceptionList &exceptions,
+                        int lazy_evaluation,
                         CORBA_Environment &ACE_TRY_ENV =
                               TAO_default_environment ());
   // Dynamic invocations use a more costly "varargs" calling

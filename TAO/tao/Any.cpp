@@ -389,6 +389,79 @@ CORBA_Any::free_value (CORBA::Environment &ACE_TRY_ENV)
   this->value_ = 0;
 }
 
+void
+CORBA_Any::_tao_encode (TAO_OutputCDR &cdr,
+                        TAO_ORB_Core *orb_core,
+                        CORBA::Environment &ACE_TRY_ENV)
+{
+  // If the Any owns the data, then we have allocated space.
+  if (this->value_ != 0)
+    {
+      (void) cdr.encode (this->type_,
+                         this->value_,
+                         0,
+                         ACE_TRY_ENV);
+      return;
+    }
+
+  TAO_InputCDR in (this->cdr_,
+                   TAO_ENCAP_BYTE_ORDER,
+                   orb_core);
+  cdr.append (this->type_,
+              &in,
+              ACE_TRY_ENV);
+}
+
+void
+CORBA_Any::_tao_decode (TAO_InputCDR &cdr,
+                        CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->value_ != 0)
+    {
+      // @@ Should we free that value first?
+      cdr.decode (this->type_,
+                  this->value_,
+                  0,
+                  ACE_TRY_ENV);
+      return;
+    }
+
+  // @@ (JP) The following code depends on the fact that
+  //         TAO_InputCDR does not contain chained message blocks,
+  //         otherwise <begin> and <end> could be part of
+  //         different buffers!
+
+  // This will be the start of a new message block.
+  char *begin = cdr.rd_ptr ();
+
+  // Skip over the next aregument.
+  CORBA::TypeCode::traverse_status status =
+    cdr.skip (this->type_, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+
+  // This will be the end of the new message block.
+  char *end = cdr.rd_ptr ();
+
+  size_t size = end - begin;
+  ACE_Message_Block mb (size + ACE_CDR::MAX_ALIGNMENT);
+  ACE_CDR::mb_align (&mb);
+  ptr_arith_t offset = ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;
+  mb.rd_ptr (offset);
+  mb.wr_ptr (offset + size);
+  ACE_OS::memcpy (mb.rd_ptr (), begin, size);
+
+  // Stick it into the Any. It gets duplicated there.
+  this->_tao_replace (this->type_,
+                      &mb,
+                      ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
 // insertion operators
 
 void

@@ -35,8 +35,8 @@ sub run_test
   }
 
   $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-                         " $debug -f $iorfile  -i $invocation -t ".
-                         "$type -n $num -x");
+                         " $debug -f $iorfile  -i $invocation "
+			 . "-t $type -n $num -x");
 
   $client = $CL->TimedWait (60);
   if ($client == -1) {

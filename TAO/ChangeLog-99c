@@ -1,3 +1,51 @@
+Thu Oct  7 13:14:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Any.h:
+	* tao/Any.cpp:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.i:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/NVList.h:
+	* tao/NVList.i:
+	* tao/NVList.cpp:
+	* tao/Request.h:
+	* tao/Request.i:
+	* tao/Request.cpp:
+	* tao/Server_Request.h:
+	* tao/Stub.h:
+	* tao/Stub.cpp:
+	  The implementation of efficient DSI/DII gateways is trickier
+	  than i first thought. The problem is that the spec supports the
+	  following use case:
+	  + Initialize an Any with some user provided variable.
+	  + Put the Any into an NVList
+	  + Use the NVList in a Server_Request.
+	  + The argument should be in the user variable after that.
+	  Obviously lazy evaluation does not work in that case, because
+	  the user does not invoke any operation after the invocation.
+	  I have changed the code to use lazy evaluation *only* if a flag
+	  is set, this flag is controlled by the application developer
+	  using a TAO extension.  Later we could figure out an automatic
+	  way to set the flag.
+	  Finally i simplified the marshaling and demarshaling of
+	  arguments into Anys, by moving the code into the Any class, and
+	  out of Stub, NVList, Request and other places it was spread
+	  over.
+	  I also fixed a couple of latent bugs with the implementations of 
+	  Any demarshaling.
+
+	* tests/DSI_Gateway/test_dsi.cpp:
+	  Use the new TAO extensions to enable lazy evaluation.
+
+	* tests/DSI_Gateway/run_test.pl:
+	  Fixed typo
+
+	* tests/Param_Test/param_test_i.cpp:
+	  Added debugging messages in the <test_short> method.
+
+	* tests/Param_Test/run_test.pl:
+	  Minor cosmetic fixes.
+
 Thu Oct  7 11:46:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:

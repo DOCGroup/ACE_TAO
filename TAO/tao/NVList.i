@@ -249,7 +249,7 @@ CORBA_NVList::CORBA_NVList (void)
 ACE_INLINE CORBA::ULong
 CORBA_NVList::count (CORBA_Environment &ACE_TRY_ENV) const
 {
-  (ACE_const_cast(CORBA_NVList*,this))->compute_list (ACE_TRY_ENV);
+  (ACE_const_cast(CORBA_NVList*,this))->evaluate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   return this->max_;

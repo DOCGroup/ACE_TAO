@@ -19,7 +19,7 @@ if (ACE::waitforfile_timed ($svfile, 5) == -1) {
 }
 
 $gwfile = "gateway.ior";
-$GW = Process::Create ($EXEPREFIX."gatewat$EXE_EXT ",
+$GW = Process::Create ($EXEPREFIX."gateway$EXE_EXT ",
                        " -k file://$svfile"
 		       . " -o $gwfile");
 
