@@ -42,7 +42,7 @@ public:
   TAO_Transport_Timer (TAO_Transport *transport);
 
   /// Receive timeout events from the Reactor and forward them to the
-  /// TAO_Transport 
+  /// TAO_Transport
   virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *act);
 private:

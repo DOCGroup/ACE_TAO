@@ -106,10 +106,6 @@ public:
   /// Return the underlying handle
   virtual ACE_HANDLE fetch_handle (void);
 
-  /// Called when buffering timer expires.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 

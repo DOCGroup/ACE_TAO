@@ -41,7 +41,7 @@ class TAO_Export TAO_Asynch_Timeout_Handler
   //    TAO_Asynch_Timeout_Handler
   //
   // = DESCRIPTION
-  //    Handler registered with the reactor in case of AMI 
+  //    Handler registered with the reactor in case of AMI
   //    timeouts.
   //
 public:

@@ -256,20 +256,6 @@ TAO_DIOP_Connection_Handler::fetch_handle (void)
 
 
 int
-TAO_DIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                             const void *)
-{
-  // Cannot deal with errors, and therefore they are ignored.
-  if (this->transport ()->handle_output () == -1)
-    {
-      return -1;
-    }
-
-  return 0;
-}
-
-
-int
 TAO_DIOP_Connection_Handler::add_transport_to_cache (void)
 {
   ACE_INET_Addr addr;

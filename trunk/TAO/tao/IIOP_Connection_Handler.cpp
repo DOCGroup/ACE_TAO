@@ -244,19 +244,6 @@ TAO_IIOP_Connection_Handler::fetch_handle (void)
 }
 
 int
-TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                             const void *)
-{
-  // Cannot deal with errors, and therefore they are ignored.
-  if (this->transport ()->handle_output () == -1)
-    {
-      return -1;
-    }
-
-  return 0;
-}
-
-int
 TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
   return this->transport ()->handle_output ();

@@ -111,10 +111,6 @@ public:
   /// Return the underlying handle
   virtual ACE_HANDLE fetch_handle (void);
 
-  /// Called when buffering timer expires.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-
   /// Documented in ACE_Event_Handler
   virtual int handle_output (ACE_HANDLE);
 

@@ -538,30 +538,6 @@ public:
   /// is being closed and destroyed.
   virtual void connection_handler_closing (void);
 
-  /// Register the associated connection handler with the reactor
-  /// for a timer.
-  /**
-   * At this point, only
-   * <code>TAO_Eager_Buffering_Sync_Strategy::timer_check()</code>
-   * uses this, and it's unclear whether it needs to stay around.
-   * But, it's here because it uses the associated protocol-specific
-   * connection handler, and accesses to that must be serialized on
-   * the internal lock.
-   *
-   * @param arg argument passed to the handle_timeout() method of the
-   *        event handler
-   * @param delay  time interval after which the timer will expire
-   * @param interval  time interval after which the timer will be
-   *        automatically rescheduled
-   * @return -1 on failure, a Reactor timer_id value on success
-   *
-   * @see ACE_Reactor::schedule_timer()
-   * @see TAO_Eager_Buffering_Sync_Strategy::timer_check()
-   */
-  long register_for_timer_event (const void* arg,
-                                 const ACE_Time_Value &delay,
-                                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
-
   // Maintain reference counting with these
   static TAO_Transport* _duplicate (TAO_Transport* transport);
   static void release (TAO_Transport* transport);
