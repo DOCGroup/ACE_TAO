@@ -1033,6 +1033,47 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
   locateRequestHeader.init (input, ACE_TRY_ENV);
   ACE_CHECK;
 
+#if !defined (TAO_NO_IOR_TABLE)
+
+  const CORBA::Octet *object_key = locateRequestHeader.object_key.get_buffer ();
+
+  if (ACE_OS::memcmp (object_key,
+                      &TAO_POA::objectkey_prefix[0],
+                      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+    {
+      ACE_CString object_id (ACE_reinterpret_cast (const char *, object_key),
+                             locateRequestHeader.object_key.length (),
+                             0,
+                             0);
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Simple Object key %s. Doing the Table Lookup ...\n",
+                    object_id.c_str ()));
+
+      CORBA::Object_ptr object_reference;
+
+      // Do the Table Lookup.
+      int status =
+        orb_core->orb ()->_tao_find_in_IOR_table (object_id,
+                                                  object_reference);
+
+      // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
+
+      if (CORBA::is_nil (object_reference) || status == -1)
+        ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+
+      // ObjectID present in the table with an associated NON-NULL reference.
+      // Throw a forward request exception.
+
+      CORBA::Object_ptr dup = CORBA::Object::_duplicate (object_reference);
+
+      // @@ We could simply write the response at this point...
+      ACE_THROW (PortableServer::ForwardRequest (dup));
+    }
+
+#endif /* TAO_NO_IOR_TABLE */
+
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
   TAO_OutputCDR dummy_output (repbuf, sizeof(repbuf));
   // This output CDR is not used!
