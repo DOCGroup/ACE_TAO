@@ -937,18 +937,18 @@ export (CORBA::Object_ptr reference,
   this->validate_properties (type, type_struct.ptr (), properties, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
 
-  CORBA::ULong plength = properties.length ();
+  // CORBA::ULong plength = properties.length ();
   ACE_NEW_RETURN (offer, CosTrading::Offer, 0);
 
   // No copying, no memory leaks. Violates the "in" parameter semantics
-  // when this object is colocated with the client, however. 
+  // when this object is colocated with the client, however.
   //  CosTrading::PropertySeq* hack_seq =
   //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
   //  CosTrading::Property* pbuf = hack_seq->get_buffer (1);
 
   //  CosTrading::PropertySeq* hack_seq =
   //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
-  //  CosTrading::Property* pbuf = hack_seq->get_buffer (0);  
+  //  CosTrading::Property* pbuf = hack_seq->get_buffer (0);
   //  offer->properties.replace (plength, plength, pbuf, 0);
   //  offer->properties._allocate_buffer (plength);
   offer->properties = properties;
