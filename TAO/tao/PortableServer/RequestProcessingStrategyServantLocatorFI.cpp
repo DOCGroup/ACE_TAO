@@ -1,6 +1,6 @@
 // $Id$
 
-#include "RequestProcessingStrategyServantLocatorFactoryImpl.h"
+#include "RequestProcessingStrategyServantLocatorFI.h"
 #include "RequestProcessingStrategy.h"
 #include "RequestProcessingStrategyServantLocator.h"
 #include "ace/Dynamic_Service.h"
