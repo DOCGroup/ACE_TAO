@@ -8,7 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= server
+BIN   	= server foo
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
