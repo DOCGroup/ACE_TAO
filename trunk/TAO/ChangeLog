@@ -1,3 +1,12 @@
+Sat Aug  3 20:44:51 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* examples/AMH/Sink_Server/Base_Server.cpp:
+	* examples/AMH/Sink_Server/client.cpp:
+	  Fixes for warnings in g++ 2.96 static builds.  The compiler was,
+	  in essense, complaining about uninitialised variables
+	  (start_test, end_test) in Base_Server.cpp.  Thanks to Bala for
+	  already fixing the return-warning in client.cpp
+	
 Sat Aug 03 18:50:11 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/PSS/PSDL.dsp:
