@@ -1,3 +1,16 @@
+Mon Apr 12 22:12:27 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	Removed the resolve_commandline_ref (). This was no longer 
+	being used. Also passed ACE_TRY_ENV as a parameter to the
+	following functions. Carlos suggested these changes :
+
+	resolve_service ()
+	multicast_to_service ()
+	resolve_trading_service ()
+	
+	* tao/ORB.h  
+	* tao/ORB.cpp
+
 Mon Apr 12 17:13:37 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp: Added the AVStreams_i_T.{h,cpp} and
@@ -184,6 +197,7 @@ Sun Apr 11 11:45:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
           Added missing template instantiation.
 
+	
 Sat Apr 10 20:55:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/Param_Test/multdim_array.cpp:
@@ -197,10 +211,15 @@ Sat Apr 10 20:55:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tests/Param_Test/tests.h: Added a new test case for
           multi-dimensional array checking.
 
+Sat Apr 10 16:22:59 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* doc/papers/COOTS-99/poa.tex (): Made the Nos. in the table 
+	  consistent with the figure.
+
 Sat Apr 10 14:26:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * tao/POA.cpp: Removed #POA_NO_TIMESTAMP according to Irfan's
-        suggestion to get things to work on Soalris.
+          suggestion to get things to work on Soalris.
 
 Fri Apr  9 22:18:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
