@@ -47,3 +47,27 @@ struct nestedSeqStruct
 {
   sequence<sequence<outside>, 7> inside;
 };
+
+// Tests forward declared interface as element type.
+// Had to override visit_interface_fwd()
+// for the be_visitor_sequence_base_template_args
+// visitor to fix this. Also had to separate calls
+// to nested_type_name() into individual insertions
+// into the code generating stream, because of side
+// effects.
+module Thwoik
+{
+  interface TestType;
+};  
+
+module Thwoik
+{
+  typedef sequence<TestType> ub_TestTypeSeq;
+  typedef sequence<TestType, 3> bd_TestTypeSeq;
+};
+
+module Thwoik
+{
+  interface TestType {};
+};
+

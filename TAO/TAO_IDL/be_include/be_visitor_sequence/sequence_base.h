@@ -88,6 +88,8 @@ public:
   //= Visit methods
   virtual int visit_interface (be_interface *node);
 
+  virtual int visit_interface_fwd (be_interface_fwd *node);
+
   virtual int visit_predefined_type (be_predefined_type *node);
 private:
   be_sequence *beseq_;

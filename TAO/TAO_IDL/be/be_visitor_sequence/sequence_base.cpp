@@ -59,13 +59,18 @@ be_visitor_sequence_base::visit_node (be_type *node)
   be_type *bt;
 
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
     {
-      if (this->ctx_->sub_state () == TAO_CodeGen::TAO_ARRAY_SEQ_CH_TEMPLATE_VAR)
+      if (this->ctx_->sub_state () 
+            == TAO_CodeGen::TAO_ARRAY_SEQ_CH_TEMPLATE_VAR)
         {
           *os << bt->nested_type_name (this->ctx_->scope (), "_var");
         }
@@ -142,7 +147,9 @@ be_visitor_sequence_base::visit_array (be_array *node)
 int
 be_visitor_sequence_base::visit_typedef (be_typedef *node)
 {
-  this->ctx_->alias (node); // set the alias node
+  // Set the alias node.
+  this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -151,21 +158,24 @@ be_visitor_sequence_base::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }
 
 
-be_visitor_sequence_base_template_args::be_visitor_sequence_base_template_args (be_visitor_context *ctx,
-                                                                                be_sequence *seq)
-  :be_visitor_sequence_base (ctx),
-   beseq_ (seq)
+be_visitor_sequence_base_template_args::
+  be_visitor_sequence_base_template_args (be_visitor_context *ctx,
+                                          be_sequence *seq)
+  : be_visitor_sequence_base (ctx),
+    beseq_ (seq)
 {
   // no-op
 }
 
 
-be_visitor_sequence_base_template_args::~be_visitor_sequence_base_template_args (void)
+be_visitor_sequence_base_template_args::
+  ~be_visitor_sequence_base_template_args (void)
 {
   //no-op
 }
@@ -173,34 +183,76 @@ be_visitor_sequence_base_template_args::~be_visitor_sequence_base_template_args 
 int
 be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
 {
-TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = node;
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ())
-        << ",";
+      *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
       *os << bt->nested_type_name (this->ctx_->scope (), "_var");
     }
   else
-    *os << bt->name ()
-        << "," << bt->name () << "_var";
+    {
+      *os << bt->name () << ",";
+      *os << bt->name () << "_var";
+    }
 
-  return 0;  
-    
+  return 0;      
 }
 
 int
-be_visitor_sequence_base_template_args::visit_predefined_type (be_predefined_type *node)
+be_visitor_sequence_base_template_args::visit_interface_fwd (
+    be_interface_fwd *node
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
+    {
+      *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+    }
+  else
+    {
+      *os << bt->name () << ",";
+      *os << bt->name () << "_var";
+    }
+
+  return 0;      
+}
+
+int
+be_visitor_sequence_base_template_args::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
   *os << node->name ();
-  if (beseq_->managed_type () == be_sequence::MNG_PSEUDO ||
-      beseq_->managed_type () == be_sequence::MNG_OBJREF)
-    *os << "," << node->name () << "_var";
+
+  if (beseq_->managed_type () == be_sequence::MNG_PSEUDO 
+      || beseq_->managed_type () == be_sequence::MNG_OBJREF)
+    {
+      *os << "," << node->name () << "_var";
+    }
       
   return 0;
 }
