@@ -326,6 +326,18 @@ JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
 }
 
+void
+JAWS_Asynch_Handler::handler (JAWS_IO_Handler *ioh)
+{
+  this->ioh_ = ioh;
+}
+
+JAWS_IO_Handler *
+JAWS_Asynch_Handler::handler (void)
+{
+  return this->ioh_;
+}
+
 JAWS_Asynch_IO_Handler::JAWS_Asynch_IO_Handler (JAWS_IO_Handler_Factory
                                                 *factory)
   : JAWS_IO_Handler (factory),

@@ -227,6 +227,11 @@ JAWS_Asynch_IO::~JAWS_Asynch_IO (void)
 }
 
 void
+JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh)
+{
+}
+
+void
 JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
                       ACE_Message_Block* mb,
                       unsigned int size)

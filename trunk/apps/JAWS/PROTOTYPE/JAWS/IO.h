@@ -191,23 +191,6 @@ protected:
                              const char *buffer,
                              unsigned int length,
                              int act);
-
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
-                                   &result);
-  // This method will be called when an asynchronous read completes on
-  // a stream.
-
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
-                                    &result);
-  // This method will be called when an asynchronous write completes
-  // on a stream.
-
-  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result
-                                     &result);
-  // This method will be called when an asynchronous transmit file
-  // completes.
-
-  virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 };
 
 typedef ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>

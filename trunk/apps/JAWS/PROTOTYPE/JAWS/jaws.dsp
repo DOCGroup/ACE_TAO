@@ -113,10 +113,18 @@ SOURCE=.\Policy.cpp
 
 SOURCE=.\Server.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Waiter.cpp
+# End Source File
 # End Group
 # Begin Group "Header files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Assoc_Array.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\Concurrency.h
@@ -169,10 +177,18 @@ SOURCE=.\Policy.h
 
 SOURCE=.\Server.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\Waiter.h
+# End Source File
 # End Group
 # Begin Group "Template files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Assoc_Array.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\Pipeline_Handler.cpp
