@@ -26,8 +26,6 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
-# CPP_LOCATION is for TAO builds - says where the C preprocessor is
-CPP_LOCATION    = /usr/ccs/lbin/cpp
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
 # If the user has requested building without threads, then don't set any
