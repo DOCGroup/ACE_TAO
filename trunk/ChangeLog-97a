@@ -1,3 +1,13 @@
+Mon Jan 27 09:16:03 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU,
+	  include/makeinclude/platform_sunos5_sunc++_orbix.GNU,
+	  ace/config-sunos5.5-sunc++-4.x-orbix.h
+	  ace/config-sunos5.5-sunc++-4.x.h:
+	  disabled exception handling by commenting out ACE_HAS_EXCEPTIONS
+	  in the config files and adding -noex to the platform files,
+	  because it causes trouble, at least on MP machines.
+
 Sat Jan 25 20:30:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos5.5-sunc++-4.1.h: commented out ACE_HAS_EXCEPTIONS
