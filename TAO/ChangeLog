@@ -1,3 +1,10 @@
+Sat Jan 10 21:42:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+	  
+	  Added a missing file, which gave rise to link errors with VC71
+	  builds. 
+
 Sat Jan 10 21:17:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp:
