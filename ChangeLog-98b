@@ -1,3 +1,10 @@
+Fri May 29 16:19:34 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Synch_T.h (class ACE_Guard): ACE_Guard's destructor was
+ 	  changing the errno value.  Fixed this to avoid doing so...
+  	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+ 	  this.
+	  
 Fri May 29 15:33:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/context_switch_time.cpp:
