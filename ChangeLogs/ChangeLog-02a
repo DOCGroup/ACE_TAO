@@ -1,21 +1,31 @@
+Mon Feb 28 20:42:17 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          with Tornado 2 (VxWorks 5.4) and later, use
+          ld$(TOOLENV) instead of ace_ld.  Apparently, munch
+          is no longer required.  Thanks to Elias Sreih
+          <sealstd1@nortelnetworks.com> for reporting that
+          ace_ld/munch caused undefined symbols for calls to
+          global ctors with Tornado 2.
+
 Mon Feb 28 17:34:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.h:
         * ace/ACE.cpp:
-          
+
           Realized that the Unix and Win32 behavior wasn't the same.  Now
           both will return -1 if there is any problem such as if the buffer
           is not long enough.  The Win32 version used to return the size of
-          the buffer needed, so -1 wasn't returned on error.  
+          the buffer needed, so -1 wasn't returned on error.
 
 Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.h:
         * ace/ACE.cpp:
-          
+
           Added get_temp_dir () method that fills a buffer with the path
           for the temporary directory.  ACE has previously hardcoded the
-          path.  The right way is to find the path at runtime, especially on 
+          path.  The right way is to find the path at runtime, especially on
           Win32 where the TEMP directory can be different from machine to
           machine (or even different for each user).
 
@@ -38,28 +48,28 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
           ACE_DEFAULT_TEMP_FILE
           ACE_DEFAULT_LOGFILE
           ACE_DEFAULT_NAMESPACE
-          
+
           The default path in these cases are now found by using the
           ACE::get_temp_dir method.  The macros are still supported in
-          that they can still be used to override the default case.  
+          that they can still be used to override the default case.
 
         * tests/test_config.h:
         * tests/MM_Shared_Memory_Test.cpp:
         * tests/Mem_Map_Test.cpp:
         * tests/Process_Strategy_Test.cpp:
         * tests/Process_Strategy_Test.h:
-          
+
           Removed the macro definitions for:
           ACE_DEFAULT_TEST_FILE
           ACE_TEMP_FILE_NAME
           ACE_LOG_DIRECTORY
 
-          and replaced with ACE::get_temp_dir.  
+          and replaced with ACE::get_temp_dir.
 
-          Also changed the default log file directory on Win32 to be in 
+          Also changed the default log file directory on Win32 to be in
           the log subdirectory.  So now both Unix and NT have the same
           behavior, the logs will be written to $ACE_ROOT/tests/log.
-          
+
         * tests/ACE_Init_Test.res:  (removed)
 
           This file was giving me warnings when I built, and since it
@@ -71,8 +81,8 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/version_tests/Process_Manager_Test.dsp:  (added)
         * tests/tests.dsw:
         * tests/version_tests/version_tests.dsw:
-          
-          Enabled the Process_Manager_Test on NT and created a MSVC 
+
+          Enabled the Process_Manager_Test on NT and created a MSVC
           workspace for it.  Also fixed some miscellaneous UNICODE issues.
 
         * tests/run_tests.bat:
@@ -86,12 +96,12 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Feb 28 09:16:40 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry):
 
-	  Removed cast of ACE_thread_t to long unsigned int since some
-	  platforms (e.g. HPUX) declare the underlying thread type as a
-	  structure.  This change reverts back to the version prior to
-	  Steve's change.
+          Removed cast of ACE_thread_t to long unsigned int since some
+          platforms (e.g. HPUX) declare the underlying thread type as a
+          structure.  This change reverts back to the version prior to
+          Steve's change.
 
 Mon Feb 28 08:33:43 2000  Zoran Ivanovic <Zoran_Ivanovic@i2.com>
 
