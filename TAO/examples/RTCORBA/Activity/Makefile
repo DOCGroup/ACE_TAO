@@ -8,13 +8,13 @@ IDL_FILES = Job
 IDL_SRC = JobC.cpp JobS.cpp
 
 FILES  = \
-        Periodic_Task \
-        Thread_Task \
-        Activity \
-        Builder \
-        POA_Holder \
-        Job_i \
-        Task_Stats
+	Periodic_Task \
+	Thread_Task \
+	Activity \
+	Builder \
+	POA_Holder \
+	Job_i \
+	Task_Stats
 
 LSRC = $(addsuffix .cpp, $(FILES)) $(IDL_SRC)
 ACTIVITY_OBJS=$(LSRC:.cpp=.o)
@@ -54,10 +54,10 @@ TAO_IDLFLAGS += -Ge 1
 .PRECIOUS: $(foreach ext, $(IDL_EXT), Job$(ext))
 
 activity: $(addprefix $(VDIR),$(ACTIVITY_OBJS))
-        $(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(RT_TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(RT_TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
-        -$(RM) $(foreach ext, $(IDL_EXT), Job$(ext))
+	-$(RM) $(foreach ext, $(IDL_EXT), Job$(ext))
 
 #----------------------------------------------------------------------------
 #       Dependencies
