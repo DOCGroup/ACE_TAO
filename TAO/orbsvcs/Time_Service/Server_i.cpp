@@ -145,24 +145,26 @@ Server_i::create_server (void)
   return 0;
 }
 
-int 
+// This function checks if this is the first server being executed. If yes,
+// the call to resolve returns an exception and 1 is returned. If there is
+// no exception 0 is returned.
+
+int
 Server_i::if_first_server (CosNaming::Name &server_context_name)
 {
-	TAO_TRY
-	{
-		this->my_name_server_->resolve
-			 (server_context_name, TAO_TRY_ENV);
-		TAO_CHECK_ENV;
-	}
-	TAO_CATCH (CORBA::UserException, userex)
+  TAO_TRY
+    {
+      this->my_name_server_->resolve
+	(server_context_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
-	  printf("First Server\n");
-      //TAO_TRY_ENV.print_exception ("User Exception");
       return 1;
     }
-	TAO_ENDTRY;
-	return 0;
+  TAO_ENDTRY;
+  return 0;
 }
 
 // Bind the Server in the context 'ServerContext' with the name
@@ -179,22 +181,11 @@ Server_i::register_server (void)
 
       CosNaming::NamingContext_var server_context;
 
-	  printf("gotchya");
-      //CORBA::Object_ptr temp = this->my_name_server_->resolve
-		//	 (server_context_name, TAO_TRY_ENV);
-      //TAO_TRY_ENV.print_exception ("except:");
-	  
-	  //TAO_CHECK_ENV;
-	
-	if (if_first_server (server_context_name))	
-	{
-		//printf("isnil\n");
-	   //TAO_TRY_ENV.print_exception ("except:");
-	  // This is the first server. Get a new context and bind it
-	  // to the naming service.
-	  //TAO_TRY_ENV.clear ();
-	  //printf("exception cleared\n");
+      // If this is the first server then get a new Naming Context
+      // and bind it to the Naming Server.
 
+      if (if_first_server (server_context_name))
+	{
 	  // Get context.
 	  server_context =
             this->my_name_server_->new_context (TAO_TRY_ENV);
@@ -206,15 +197,10 @@ Server_i::register_server (void)
 						 TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	}
-      //TAO_CHECK_ENV;
 
       char host_name[MAXHOSTNAMELEN];
       char server_mc_name[MAXHOSTNAMELEN];
       ACE_OS::hostname (host_name,MAXHOSTNAMELEN);
-
-	  ACE_DEBUG ((LM_DEBUG,
-				  "hostname %s",
-				   host_name));
 
       CosNaming::Name server_name (server_context_name);
 
@@ -223,25 +209,21 @@ Server_i::register_server (void)
       strcat (server_mc_name, host_name);
       server_name[1].id = CORBA::string_dup (server_mc_name);
 
-      this->my_name_server_->bind (server_name,
-				   this->time_service_server_.in (),
-				   TAO_TRY_ENV);
+      // Bind the compound name (ServerContext(Server:<hostname>))
+      // to the Naming Server.
+
+      this->my_name_server_->rebind (server_name,
+				     this->time_service_server_.in (),
+				     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
 		  "Binding ServerContext -> %s\n",
 		  server_name[1].id.in ()));
     }
-  TAO_CATCH (CORBA::UserException, userex)
-    {
-      ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
-      return -1;
-    }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("(%P|%t) Exception from init_naming_service ()\n");
-      //TAO_TRY_ENV.clear ();
       return -1;
     }
   TAO_ENDTRY;
