@@ -46,6 +46,7 @@ public:
     };
 
   static const char object_key_delimiter;
+  // The object key delimiter that IIOP uses or expects.
 
   static const char *prefix (void);
   // Return the char string prefix.

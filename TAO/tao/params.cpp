@@ -34,7 +34,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
   // Parse the string into seperate endpoints, where `endpoints' is of
   // the form:
   //
-  //    protocol1:V.v//addr1,...,addrN/;protocol2:W.w//addr1,...,addrN/;...
+  //    protocol1://V,v@addr1,...,addrN;protocol2://addr1,...,W.w@addrN;...
   //
   // A single endpoint, instead of several, can be added just as well.
 
@@ -49,8 +49,8 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
       endpoints[length - 1] == endpoints_delimiter)
     {
       return -1;
-      // Failure:  endpoints string has an empty endpoint at the beginning
-      //           or the end of the string (e.g. ";uiop://foo;iiop:1.3//bar")
+      // Failure: endpoints string has an empty endpoint at the beginning
+      //          or the end of the string (e.g. ";uiop://foo;iiop://1.3@bar")
     }
 
   if (length > 0)
@@ -84,11 +84,10 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
           // from the offset `begin' to the end of the string.
 
           // Check for a valid URL style endpoint set
-          int check_offset = endpt.find (':');
+          int check_offset = endpt.find ("://");
 
           if (check_offset > 0 &&
-              check_offset != endpt.npos &&
-              endpt.find ("//", check_offset + 1) != endpt.npos)
+              check_offset != endpt.npos)
             {
               endpoints_list.insert (endpt);
               // Insert endpoint into list

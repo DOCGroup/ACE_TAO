@@ -264,8 +264,8 @@ TAO_Connector::make_mprofile (const char *string,
 
   ior.set (string, ACE_OS::strlen (string), 1);
 
-  // Find out where the protocol name ends
-  int ior_index = ior.find (':');
+  // Find out where the protocol ends
+  int ior_index = ior.find ("://");
 
   if (ior_index == ACE_CString::npos)
     {
@@ -274,11 +274,10 @@ TAO_Connector::make_mprofile (const char *string,
     }
   else
     {
-      ior_index++;
-      // Add the length of the colon to the IOR index (i.e. 1)
+      ior_index += 3;
+      // Add the length of the colon and the two forward slashes `://'
+      // to the IOR string index (i.e. 3)
     }
-
-
   const char endpoint_delimiter = ',';
   // The delimiter used to seperate inidividual addresses.
 
@@ -302,52 +301,17 @@ TAO_Connector::make_mprofile (const char *string,
       // Error while setting the MProfile size!
     }
 
-  // Find the version, if it exists, and keep track of it so that it
-  // may be passed to each Profile.
-
-  int version_index;
-  // Index denoting where version is located in the IOR
-
-  if (ior.find ("//") == ior_index)
-    {
-      version_index = 0;
-      // No version provided
-      // `protocol://'
-    }
-  else if (ior.find ("//") == ior_index + 3)
-    {
-      version_index = ior_index;
-      // Version provided
-      // `protocol:N.n//'
-
-      ior_index += 5;
-      // Skip over the `N.n//'
-    }
-  else
-    {
-      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
-      // Problem in IOR between protocol prefix and double slash "//"
-    }
-
   // The idea behind the following loop is to split the IOR into several
   // strings that can be parsed by each profile.
   // For example,
-  //    `1.3//moo,shu,chicken/arf'
+  //    `//1.3@moo,shu,1.1chicken/arf'
   // will be parsed into:
-  //    `1.3//moo/arf'
-  //    `1.3//shu/arf'
-  //    `1.3//chicken/arf'
-  //
-  // If no version is provided then the string will be of the form:
-  //    `//moo/arf'
+  //    `//1.3@moo/arf'
+  //    `//shu/arf'
+  //    `//1.1chicken/arf'
 
   int objkey_index = ior.find (this->object_key_delimiter (), ior_index);
   // Find the object key
-  //
-  // Typically, a forward slash '/' is used to delimit endpoints from the
-  // object key.  However, some protocols may use forward slashes in
-  // the endpoints themselves.  To prevent ambiguities from arising, a
-  // protocol specific object key delimiter can be used.
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
     {
@@ -372,22 +336,11 @@ TAO_Connector::make_mprofile (const char *string,
         {
           ACE_CString endpoint = ior.substring (begin, end);
 
-          if (version_index > 0)
-            {
-              endpoint = ior.substring (version_index, 5) + endpoint;
-              // Concatenate version string and endpoint
-            }
-          else
-            {
-              endpoint = ior.substring (ior_index - 2, 2) + endpoint;
-              // No version provided
-            }
-
           endpoint += ior.substring (objkey_index);
           // Add the object key to the string.
 
           // The endpoint should now be of the form:
-          //    `N.n://endpoint/object_key'
+          //    `//N.n@endpoint/object_key'
           // or
           //    `//endpoint/object_key'
 

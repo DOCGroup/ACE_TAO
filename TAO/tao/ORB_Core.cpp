@@ -255,19 +255,20 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         {
           // Each "endpoint" is of the form:
           //
-          //   protocol:V.v//addr1,addr2,...,addrN/
+          //   protocol://V.v@addr1,addr2,...,addrN
           //
           // or:
           //
-          //   protocol://addr1,addr2,...,addrN/
+          //   protocol://addr1,addr2,...,addrN
           //
-          // where "V.v" is an optional version.  All preconnect or endpoint
-          // strings should be of the above form(s).
+          // where "V.v" is an optional protocol version for each
+          // addr.  All preconnect or endpoint strings should be of
+          // the above form(s).
           //
           // Multiple sets of endpoint may be seperated by a semi-colon `;'.
           // For example:
           //
-          //   iiop://space:2001,odyssey:2010/;uiop://foo,bar/
+          //   iioploc://space:2001,1.2@odyssey:2010;uiop://foo,bar
           //
           // All preconnect or endpoint strings should be of the above form(s).
 
@@ -490,21 +491,25 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // Get a string which describes the connections we want to
           // cache up-front, thus reducing the latency of the first call.
           //
-          // For example,  specify -ORBpreconnect once for each protocol
-          //   -ORBpreconnect iiop://tango:10015,watusi:10016/
-          //   -ORBpreconnect busX_iop://board1:0x07450000,board2,0x08450000/
-          // Or chain all possible endpoint designations together
+          // For example,  specify -ORBpreconnect once for each
+          // protocol:
+          //
+          //   -ORBpreconnect iiop://tango:10015,watusi:10016
+          //   -ORBpreconnect busX_iop://board1:0x07450000,board2,0x08450000
+          //
+          // Or chain all possible endpoint designations together:
+          //
           //   -ORBpreconnect iiop://tango:10015,watusi:10016/;
           //              busX_iop://board1:0x07450000,board2,0x08450000/
           //
-          // The old style command line was meant for IIOP:
+          // The old style command line only works for IIOP:
           //    -ORBpreconnect tango:10015,tango:10015,watusi:10016
 
           if (arg_shifter.is_parameter_next ())
             {
               ACE_CString preconnections (arg_shifter.get_current ());
 
-              if (this->orb_params ()->endpoints (preconnections) != 0)
+              if (this->orb_params ()->preconnects (preconnections) != 0)
                 {
                   // Handle old style preconnects for backward compatibility.
                   // The old style preconnects only work for IIOP!
@@ -527,7 +532,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                               "will be used:\n%s\n",
                               preconnections.c_str()));
 
-                  this->orb_params ()->endpoints (preconnections);
+                  this->orb_params ()->preconnects (preconnections);
                 }
             }
         }

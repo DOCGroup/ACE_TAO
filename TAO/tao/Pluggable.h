@@ -422,7 +422,7 @@ protected:
   // with a given pluggable protocol.
 
   virtual char object_key_delimiter (void) const = 0;
-  // Return the object key delimiter to be used.
+  // Return the object key delimiter to use or expect.
 
 private:
   CORBA::ULong tag_;
