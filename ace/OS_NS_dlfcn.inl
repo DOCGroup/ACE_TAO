@@ -10,6 +10,10 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_string.h"
 
+#if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
+#include "ace/OS_NS_stdio.h"
+#endif
+
 #if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
 #  include "ace/OS_Memory.h"
 #  include "ace/OS_NS_string.h"
