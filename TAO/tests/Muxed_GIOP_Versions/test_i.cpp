@@ -21,8 +21,10 @@ Simple_Server_i::test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // We dont shutdown the ORB. We allow the server to go away as it
+  // wants.
   // this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
