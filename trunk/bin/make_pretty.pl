@@ -161,6 +161,10 @@ sub is_error ()
     # have the word 'error' in the symbol name - ignore those.
     return 0 if (m/^ld: \d+\-\d+ WARNING: Duplicate symbol:/);
 
+    # Linux has this annoying mktemp, mkstemp stuff. Ignore that 
+    # for the timebeing
+    return 0 if (/is dangerous, better use/);
+
     # Look for lines that also should be color coded, but not counted
     # as errors.
     return 2 if (/Types pointed to are unrelated/
