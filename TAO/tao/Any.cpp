@@ -1793,11 +1793,18 @@ operator<< (TAO_OutputCDR& cdr,
     {
       TAO_InputCDR input (x._tao_get_cdr (),
                           x._tao_byte_order ());
-      TAO_Marshal_Object::perform_append (tc.in (),
-                                          &input,
-                                          &cdr
-                                          ACE_ENV_ARG_PARAMETER);
+
+      CORBA::TypeCode::traverse_status status =
+        TAO_Marshal_Object::perform_append (tc.in (),
+                                            &input,
+                                            &cdr
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        {
+          return 0;
+        }
     }
   ACE_CATCH (CORBA_Exception, ex)
     {

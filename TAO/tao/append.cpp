@@ -594,7 +594,10 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
                                                       ACE_ENV_ARG_PARAMETER);
         }
 
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      // If we're here, we have an implicit default case, and we
+      // should just return without appending anything, since no
+      // union member was marshaled in the first place.
+      return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
 
   // If we found the member successfully then just use that one...
