@@ -39,28 +39,20 @@
 
 
 
-
 typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
         TAO_SHMIOP_SVC_HANDLER;
 
+
 // ****************************************************************
 
-class TAO_SHMIOP_Handler_Base : public TAO_SHMIOP_SVC_HANDLER
-{
-public:
-  TAO_SHMIOP_Handler_Base (ACE_Thread_Manager *t);
-  TAO_SHMIOP_Handler_Base (TAO_ORB_Core *orb_core);
-
-  virtual TAO_Transport *transport (void) = 0;
-};
-
-class TAO_Export TAO_SHMIOP_Client_Connection_Handler : public TAO_SHMIOP_Handler_Base,
+class TAO_Export TAO_SHMIOP_Client_Connection_Handler : public TAO_SHMIOP_SVC_HANDLER
                                                         public TAO_Connection_Handler
 {
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.
 public:
+
   // = Intialization method.
   TAO_SHMIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
                                         TAO_ORB_Core* orb_core = 0,
@@ -112,7 +104,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_SHMIOP_Server_Connection_Handler : public TAO_SHMIOP_Handler_Base,
+class TAO_Export TAO_SHMIOP_Server_Connection_Handler : public TAO_SHMIOP_SVC_HANDLER
                                                         public TAO_Connection_Handler
 {
   // = TITLE

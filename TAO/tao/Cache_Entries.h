@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    tao
+//    TAO
 //
 // = FILENAME
 //   Cache_Entries.h
@@ -32,21 +32,22 @@
 #endif /* _MSC_VER */
 
 class TAO_Connection_Handler;
+class Tao_Base_Connection_Property;
 
 class TAO_Export TAO_Cache_IntId
 {
   // = TITLE
-  //     Helper class for TAO_Connection_Cache_Manager: unifies
-  //     several  data items, so they can be stored together as a
-  //     <value> for a <key> in a table holding the state of the
-  //     Connection Cache.
+  //     Helper class for TAO_Connection_Cache_Manager
   //
   // = DESCRIPTION
   //     Helper class that wraps the <value> part of the Map or
-  //     table holding the Connection state.
+  //     table holding the Connection state.: unifies data items, so
+  //     they can be stored together as a <value> for a <key> in a
+  //     table holding the state of the Connection Cache.
 
 public:
-   // = Initialization and termination methods.
+
+  // = Initialization and termination methods.
 
   TAO_Cache_IntId (void);
   // Constructor.
@@ -60,19 +61,26 @@ public:
   ~TAO_Cache_IntId (void);
   // Destructor.
 
+  void operator= (const TAO_Cache_IntId &rhs);
+  // Assignment operator (does copy memory).
+
+  int operator== (const TAO_Cache_IntId &rhs) const;
+  // Equality comparison operator (must match both id_ and kind_).
+
+  int operator!= (const TAO_Cache_IntId &rhs) const;
+  // Inequality comparison operator.
+
   TAO_Connection_Handler *handler (void);
   // Return the underlying handler
 
   const TAO_Connection_Handler *handler (void) const;
   // Return the underlying handler
 
-  //Do we need a = operator? Lert me decide??
+
 private:
+
   TAO_Connection_Handler *handler_;
   // The connection handler that needs to be cached.
-
-  // @@ Need to add properties that need to be associated with this
-  // connection when I get to purging....
 };
 
 
@@ -122,7 +130,8 @@ public:
   // Return the index value
 
   void index (CORBA::ULong index);
-  // Set the index value
+  // Set the index value. This calls should not be used by any users
+  // but for the TAO_Connection_Cache_Manager class.
 
   // = Accessors
 
@@ -136,12 +145,15 @@ private:
   // Do we need to delete connection_propert_?
 
   CORBA::ULong index_;
-  // This is a supplementary index
+  // This is a supplementary index. Would be set to zero by
+  // default. Would be altered by the Connection_Cache of TAO. Please
+  // see the documentation of TAO_Connection_Cache_Manager for
+  // details.
 };
 
 
 #if defined (__ACE_INLINE__)
-# include "tao/Cache_Entries.i"
+# include "tao/Cache_Entries.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

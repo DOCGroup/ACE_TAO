@@ -464,7 +464,7 @@ TAO_UIOP_Connector::close (void)
 }
 
 int
-TAO_UIOP_Connector::connect (TAO_Endpoint *endpoint,
+TAO_UIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                              TAO_Transport *& transport,
                              ACE_Time_Value *max_wait_time,
                              CORBA::Environment &)
@@ -474,8 +474,11 @@ TAO_UIOP_Connector::connect (TAO_Endpoint *endpoint,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for UIOP connection.\n")));
 
+  TAO_Endpoint *endpoint = prop->endpoint ();
+
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
     return -1;
+
 
   TAO_UIOP_Endpoint *uiop_endpoint =
     ACE_dynamic_cast (TAO_UIOP_Endpoint *,

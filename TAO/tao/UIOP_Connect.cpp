@@ -60,20 +60,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_UIOP_Connect_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core)
-    : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
-{
-}
-
-TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (ACE_Thread_Manager *t)
-  : TAO_UIOP_SVC_HANDLER (t, 0, 0)
-{
-}
-
-// ****************************************************************
-
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_UIOP_Handler_Base (t),
+  : TAO_UIOP_SVC_HANDLER (t, 0, 0),
     TAO_Connection_Handler (0),
     transport_ (this, 0),
     refcount_ (1),
@@ -90,7 +78,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
                                                                         CORBA::Boolean lite_flag,
                                                                         void *arg)
-  : TAO_UIOP_Handler_Base (orb_core),
+  : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     refcount_ (1),
@@ -302,7 +290,7 @@ TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                     TAO_ORB_Core* orb_core,
                                     CORBA::Boolean flag,
                                     void *arg)
-  : TAO_UIOP_Handler_Base (t),
+  : TAO_UIOP_Handler_Base (t, 0, 0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     uiop_properties_ (ACE_static_cast

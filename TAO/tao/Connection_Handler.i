@@ -46,9 +46,3 @@ TAO_Connection_Handler::tss_resources (void)
 {
   return this->tss_resources_;
 }
-
-ACE_INLINE int
-TAO_Connection_Handler::make_idle (void)
-{
-  return this->orb_core_->connection_cache ().make_idle (this->cache_map_entry_);
-}

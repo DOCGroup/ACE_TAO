@@ -145,7 +145,7 @@ TAO_IIOP_Endpoint::duplicate (void)
   TAO_IIOP_Endpoint *endpoint = 0;
 
   ACE_NEW_RETURN (endpoint,
-                  TAO_IIOP_Endpoint (this->host_,
+                  TAO_IIOP_Endpoint (this->host_.in (),
                                      this->port_,
                                      this->object_addr_),
                   0);
@@ -156,8 +156,11 @@ TAO_IIOP_Endpoint::duplicate (void)
 CORBA::Boolean
 TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
+  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
+                                        other_endpoint);
+
   TAO_IIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                                                  other_endpoint);
+                                                  endpt);
   if (endpoint == 0)
     return 0;
 

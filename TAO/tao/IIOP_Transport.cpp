@@ -86,11 +86,7 @@ TAO_IIOP_Transport::handler (void)
   return this->handler_;
 }
 
-int
-TAO_IIOP_Transport::idle (void)
-{
-  return this->handler_->idle ();
-}
+
 
 void
 TAO_IIOP_Transport::close_connection (void)
@@ -125,6 +121,19 @@ TAO_IIOP_Server_Transport::~TAO_IIOP_Server_Transport (void)
 {
 }
 
+int
+TAO_IIOP_Server_Transport::idle (void)
+{
+  return this->handler_->make_idle ();
+}
+
+TAO_IIOP_SVC_HANDLER *
+TAO_IIOP_Server_Transport::service_handler (void)
+{
+  return this->handler_;
+}
+
+
 // ****************************************************************
 
 TAO_IIOP_Client_Transport::
@@ -143,6 +152,13 @@ TAO_IIOP_Client_Transport::~TAO_IIOP_Client_Transport (void)
 {
   delete this->client_mesg_factory_;
 }
+
+int
+TAO_IIOP_Client_Transport::idle (void)
+{
+  return this->handler_->make_idle ();
+}
+
 
 void
 TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
@@ -327,6 +343,13 @@ TAO_IIOP_Client_Transport::register_handler (void)
                               ACE_Event_Handler::READ_MASK);
 }
 
+
+TAO_IIOP_SVC_HANDLER *
+TAO_IIOP_Server_Transport::service_handler (void)
+{
+  return this->handler_;
+}
+
 int
 TAO_IIOP_Client_Transport::messaging_init (CORBA::Octet major,
                                            CORBA::Octet minor)
@@ -427,14 +450,14 @@ TAO_IIOP_Transport::send (TAO_Stub *stub,
 ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
                           const ACE_Time_Value *max_wait_time,
-			  size_t *bytes_transferred)
+                          size_t *bytes_transferred)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
 
   return ACE::send_n (this->handle (),
                       message_block,
                       max_wait_time,
-		      bytes_transferred);
+                      bytes_transferred);
 }
 
 ssize_t

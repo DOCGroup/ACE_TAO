@@ -56,20 +56,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_SHMIOP_Connect_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_SHMIOP_Handler_Base::TAO_SHMIOP_Handler_Base (TAO_ORB_Core *orb_core)
-  : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
-{
-}
-
-TAO_SHMIOP_Handler_Base::TAO_SHMIOP_Handler_Base (ACE_Thread_Manager *t)
-  : TAO_SHMIOP_SVC_HANDLER (t, 0, 0)
-{
-}
-
 // ****************************************************************
 
 TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SHMIOP_Handler_Base (t),
+  : TAO_SHMIOP_SVC_HANDLEr (t, 0, 0),
     TAO_Connection_Handler (0),
     transport_ (this, 0),
     acceptor_factory_ (0),
@@ -86,7 +76,7 @@ TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (ACE_
 TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
                                                                             CORBA::Boolean lite_flag,
                                                                             void *)
-  : TAO_SHMIOP_Handler_Base (orb_core),
+  : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     acceptor_factory_ (0),
@@ -298,7 +288,7 @@ TAO_SHMIOP_Client_Connection_Handler::
 TAO_SHMIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                       TAO_ORB_Core* orb_core,
                                       CORBA::Boolean lite_flag)
-  : TAO_SHMIOP_Handler_Base (t),
+  : TAO_SHMIOP_SVC_HANDLER (t, 0, 0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core)
 {

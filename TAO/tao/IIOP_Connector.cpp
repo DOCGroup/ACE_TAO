@@ -98,7 +98,7 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
   if (prop->endpoint ()->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
 
-  const TAO_Endpoint *endpoint = prop->endpoint ();
+  TAO_Endpoint *endpoint = prop->endpoint ();
 
   TAO_IIOP_Endpoint *iiop_endpoint =
     ACE_dynamic_cast (TAO_IIOP_Endpoint *,

@@ -16,13 +16,6 @@ TAO_Base_Connection_Property::
 {
 }
 
-ACE_INLINE
-TAO_Base_Connection_Property::~TAO_Base_Connection_Property (void)
-{
-  if (endpoint_flag_)
-    delete this->endpoint_;
-}
-
 
 ACE_INLINE TAO_Endpoint *
 TAO_Base_Connection_Property::endpoint (void)
