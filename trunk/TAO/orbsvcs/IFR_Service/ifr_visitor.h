@@ -20,7 +20,6 @@
 #ifndef TAO_IFR_VISITOR_H
 #define TAO_IFR_VISITOR_H
 
-#include "ifr_visitor_macro.h"
 #include "ast_visitor.h"
 #include "be_extern.h"
 #include "tao/Environment.h"
@@ -41,7 +40,7 @@ class ifr_visitor : public ast_visitor
   //    derived visitors that override only a few.
   //
 public:
-  ifr_visitor (CORBA::Environment &ACE_TRY_ENV);
+  ifr_visitor (void);
   // Constructor.
 
   virtual ~ifr_visitor (void);
@@ -133,10 +132,6 @@ public:
 
   ACE_Lock &lock (void) const;
   // Accessor for our lock.
-
-protected:
-  CORBA::Environment env_;
-  // All the repository calls need this.
 
 private:
   ACE_Lock *lock_;

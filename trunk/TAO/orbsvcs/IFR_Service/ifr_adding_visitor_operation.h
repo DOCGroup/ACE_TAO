@@ -37,7 +37,7 @@ class ifr_adding_visitor_operation : public ifr_adding_visitor
   //    for the case when an operation node is seen in the AST.
   //
 public:
-  ifr_adding_visitor_operation (CORBA::Environment &ACE_TRY_ENV);
+  ifr_adding_visitor_operation (void);
   // Constructor.
 
   virtual ~ifr_adding_visitor_operation (void);

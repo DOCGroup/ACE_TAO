@@ -5,55 +5,64 @@
 
 ACE_RCSID(IFR_Service, ifr_visitor, "$Id$")
 
-ifr_visitor::ifr_visitor (CORBA::Environment &ACE_TRY_ENV)
-  : env_ (ACE_TRY_ENV),
-    lock_ (0)
+ifr_visitor::ifr_visitor (void)
+  : lock_ (0)
 {
   int argc = 0;
-  be_global->orb (CORBA::ORB_init (argc,
-                                   0,
-                                   0,
-                                   this->env_));
-  ACE_CHECK;
-
-  CORBA::Object_var object =
-    be_global->orb ()->resolve_initial_references ("InterfaceRepository",
-                                                   this->env_);
-  ACE_CHECK;
-
-  if (CORBA::is_nil (object.in ()))
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      ACE_ERROR ((
-          LM_ERROR,
-          ACE_TEXT ("Null objref from resolve_initial_references\n")
-        ));
+      be_global->orb (CORBA::ORB_init (argc,
+                                       0,
+                                       0,
+                                       ACE_TRY_ENV));
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var object =
+        be_global->orb ()->resolve_initial_references ("InterfaceRepository",
+                                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (object.in ()))
+        {
+          ACE_ERROR ((
+              LM_ERROR,
+              ACE_TEXT ("Null objref from resolve_initial_references\n")
+            ));
+        }
+
+      IR_Repository_var repo = IR_Repository::_narrow (object.in (),
+                                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (repo.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IR_Repository::_narrow failed\n")));
+        }
+
+      be_global->repository (repo._retn ());
+
+      // Create the appropriate lock.
+      if (be_global->enable_locking ())
+        {
+          ACE_NEW_THROW_EX (this->lock_,
+                            ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
+                            CORBA::NO_MEMORY ());
+        }
+      else
+        {
+          ACE_NEW_THROW_EX (this->lock_,
+                            ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                            CORBA::NO_MEMORY ());
+        }
     }
-
-  be_global->repository (IR_Repository::_narrow (object.in (),
-                                                 this->env_));
-  ACE_CHECK;
-
-  if (CORBA::is_nil (be_global->repository ()))
+  ACE_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("IR_Repository::_narrow failed\n")));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("ifr_visitor"));
     }
-
-  // Create the appropriate lock.
-  if (be_global->enable_locking ())
-    {
-      ACE_NEW_THROW_EX (this->lock_,
-                        ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
-                        CORBA::NO_MEMORY ());
-    }
-  else
-    {
-      ACE_NEW_THROW_EX (this->lock_,
-                        ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-                        CORBA::NO_MEMORY ());
-    }
-
-  ACE_CHECK;
+  ACE_ENDTRY;
 }
 
 ifr_visitor::~ifr_visitor (void)
