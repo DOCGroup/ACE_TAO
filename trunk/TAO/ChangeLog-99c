@@ -1,6 +1,6 @@
 Sun Mar 07 16:39:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.cpp (main):
           removed call to ACE_OS::thr_exit ().  It's no longer
           necessary; it's just a relic from a workaround that's
           no longer needed.  Thanks to Jeff for noticing it.
