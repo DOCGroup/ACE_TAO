@@ -15,6 +15,7 @@ Mon Feb 26 16:34:55 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
           Include IFR_Service and TAO_Service in default build.
 
 Mon Feb 26 15:35:10 2001  Phil Mesnier  <mesnier_p@ociweb.com>
+  
         Port to Unixware 7 (7.1.1) Using UDK CC (7.1.1.b)
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
