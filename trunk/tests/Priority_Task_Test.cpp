@@ -19,7 +19,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
-#include "ace/Thread_Priority.h"
+#include "ace/Sched_Params.h"
 #include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -53,13 +53,9 @@ Priority_Task::close (u_long)
 int
 Priority_Task::open (void *arg)
 {
-  ACE_Thread_Priority priority(ACE_Thread_Priority::ACE_NORMAL_PRIORITY_CLASS,
-			       ACE_Thread_Priority::Thread_Priority(*(int *) arg));
-  this->priority_ = priority.os_default_thread_priority ();
-
+  this->priority_ = *(int *) arg;
   // Become an active object.
-  ACE_ASSERT (this->activate (THR_NEW_LWP, 1, 0,
-			      priority.os_default_thread_priority ()) != -1);
+  ACE_ASSERT (this->activate (THR_NEW_LWP, 1, 0, this->priority_) != -1);
   return 0;
 }
 
@@ -98,8 +94,23 @@ main (int, char *[])
   // Spawn off ACE_MAX_ITERATIONS of tasks, passing each one their
   // iteration number as their priority.
 
+  // NOTE:  on Solaris, for example, this requests the min FIFO
+  // priority.  But, this test doesn't use the Realtime scheduling
+  // class.  The FIFO priorities are used because they're all nonnegative.
+  int priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                                 ACE_SCOPE_THREAD);
+
+  // skip priority 0 until that gets fixed in ACE_OS:
+  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                              priority,
+                                              ACE_SCOPE_THREAD);
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
-    tasks[i].open ((void *) &i);
+    {
+      tasks[i].open ((void *) &priority);
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                  priority,
+                                                  ACE_SCOPE_THREAD);
+    }
 
   // Wait for all tasks to exit.
   ACE_Service_Config::thr_mgr ()->wait ();
