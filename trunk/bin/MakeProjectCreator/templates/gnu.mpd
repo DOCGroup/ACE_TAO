@@ -16,13 +16,19 @@ DEPENDENCY_FILE  = .depend.<%project_file%>
 BIN_UNCHECKED    = <%exename%>
 <%endif%>
 <%if(staticname)%>
-LIB              = lib<%staticname%>.a
+
+## LIB may be set to empty later on in this file
+LIB_UNCHECKED    = lib<%staticname%>.a
+LIB              = $(LIB_UNCHECKED)
 <%if(!sharedname)%>
 static_libs_only = 1
 <%endif%>
 <%endif%>
 <%if(sharedname)%>
-SHLIB            = lib<%sharedname%>.$(SOEXT)
+
+## SHLIB may be set to empty later on in this file
+SHLIB_UNCHECKED  = lib<%sharedname%>.$(SOEXT)
+SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
 <%if(tao)%>
 
@@ -520,6 +526,7 @@ endif
 <%endif%>
 
 realclean: clean <%compclean%>
+	-$(RM) $(BIN_UNCHECKED) $(LIB_UNCHECKED) $(SHLIB_UNCHECKED)
 <%if(idl_files)%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
