@@ -108,6 +108,9 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node,
 
   default_case = 0;
 
+  be_type * const discriminant_type =
+    be_type::narrow_from_decl (node->disc_type ());
+
   for (size_t i = 0; i < count; ++i)
     {
       node->field (member_ptr, i);
@@ -122,7 +125,9 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node,
           // Only deal with non-default cases.  The default case has
           // special handling in the union TypeCode implementation.
 
-          os << "{ ";
+          os << "TAO::TypeCode::Non_Default_Case<"
+             << discriminant_type->full_name () << ", "
+             << "char const *> (";
 
           // Generate the label value.  Only the first label value is
           // used in the case where multiple labels are used for the
@@ -136,9 +141,9 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node,
 
           os << "\"" << branch->original_local_name () << "\", "
              << "&"  << type->tc_name ()
-             << " }";
+             << ")";
 
-          if (i < count - 1)
+          if (i < count - (node->default_index () != -1 ? 2 : 1))
             os << ",";
 
           os << be_nl;
