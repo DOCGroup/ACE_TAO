@@ -50,6 +50,22 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
   *os << " (" << be_idt << be_idt_nl;
 
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
+
+      os->indent ();
+      *os << "CORBA_Object *_collocated_tao_target_ " << be_nl;
+      if (node->argument_count () > 0 || !be_global->exception_support () )
+        *os << ",\n";
+      break;
+
+    default:
+      break;
+    }
+
   // all we do is hand over code generation to our scope
   if (this->visit_scope (node) == -1)
     {
@@ -81,6 +97,8 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
           break;
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+        case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
+        case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
           // last argument - is always CORBA::Environment
           *os << "CORBA::Environment &ACE_TRY_ENV";
           break;
@@ -111,11 +129,17 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
       else
         *os << ";\n\n";
       break;
+
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
+      *os << ";\n\n";
+      break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
       // each method is pure virtual in the server header
       *os << " = 0;\n\n";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
     default:
       *os << "\n";
     }
@@ -171,6 +195,9 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
       break;

@@ -43,6 +43,7 @@
 #include "tao/Principal.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Object.h"
+#include "tao/Remote_Object_Proxy_Impl.h"
 #include "tao/LocalObject.h"
 #include "tao/Typecode.h"
 

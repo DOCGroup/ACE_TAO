@@ -119,6 +119,23 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
       break;
+      
+    case TAO_CodeGen::TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_PROXY_IMPL_XH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_PROXY_IMPL_XH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_REMOTE_PROXY_IMPL_CS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_PROXY_IMPL_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_PROXY_IMPL_SS);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_PROXY_IMPL_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_PROXY_IMPL_SS);
+      break;
+
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH);
       break;
@@ -261,6 +278,22 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
+      break;
+
+    case TAO_CodeGen::TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_PROXY_IMPL_XH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_PROXY_IMPL_XH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_REMOTE_PROXY_IMPL_CS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_PROXY_IMPL_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_PROXY_IMPL_SS);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_PROXY_IMPL_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_PROXY_IMPL_SS);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);

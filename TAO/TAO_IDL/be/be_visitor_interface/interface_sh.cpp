@@ -27,12 +27,12 @@
 ACE_RCSID(be_visitor_interface, interface_sh, "$Id$")
 
 
-// ************************************************************
-// Interface visitor for server header
-// ************************************************************
+  // ************************************************************
+  // Interface visitor for server header
+  // ************************************************************
 
-be_visitor_interface_sh::be_visitor_interface_sh (be_visitor_context *ctx)
-  : be_visitor_interface (ctx)
+  be_visitor_interface_sh::be_visitor_interface_sh (be_visitor_context *ctx)
+    : be_visitor_interface (ctx)
 {
 }
 
@@ -74,6 +74,20 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // generate the _ptr declaration
   *os << "typedef " << namebuf << " *" << namebuf
       << "_ptr;" << be_nl;
+  
+  // Forward class declaration
+  *os << "// Forward Classes Declaration" << be_nl;
+
+  if (be_global->gen_thru_poa_collocation ())
+    *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
+  if (be_global->gen_direct_collocation ())
+    *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
+  
+  if (be_global->gen_thru_poa_collocation () ||
+      be_global->gen_direct_collocation ())
+    *os << "class " << node->strategized_proxy_broker_name () << ";" << be_nl;
+
+  *os << be_nl;
 
   // now generate the class definition
   *os << "class " << be_global->skel_export_macro ()
@@ -129,7 +143,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
-      // add a skeleton for our _non_existent method
+  // add a skeleton for our _non_existent method
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
@@ -139,7 +153,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
-      // add the dispatch method
+  // add the dispatch method
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_req," << be_nl
       << "void *_tao_context," << be_nl
@@ -180,7 +194,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                          "inheritance graph traversal failed\n"),
                         -1);
     }
-// Generate the embedded RequestInfo classes per operation.
+  // Generate the embedded RequestInfo classes per operation.
   // This is to be used by interceptors.
   be_visitor_context ctx (*this->ctx_);
   be_visitor *visitor = 0;
@@ -200,13 +214,34 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   visitor = 0;
 
   *os << be_uidt_nl << "};\n\n";
+  
+  if (be_global->gen_thru_poa_collocation () ||
+      be_global->gen_direct_collocation ())
+    {
+      ctx = *this->ctx_;
+      // Generate Strategized  Proxy Broker
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SH);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (node->accept (visitor) == -1)
+	{
+	  delete visitor;
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "be_visitor_interface_sh::"
+			     "visit_interface - "
+			     "codegen for thru_poa_collocated class failed\n"),
+			    -1);
+	}
+      delete visitor;
+    }
   ctx = *this->ctx_;
   // generate the collocated class
   if (be_global->gen_thru_poa_collocation ())
     {
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
+      visitor = 0;
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH);
       visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (visitor == 0 || node->accept (visitor) == -1)
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -216,25 +251,24 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                             -1);
         }
       delete visitor;
-      visitor = 0;
     }
-
+  ctx = *this->ctx_;
   if (be_global->gen_direct_collocation ())
     {
+      visitor = 0;
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH);
       visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (visitor == 0 || node->accept (visitor) == -1)
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_sh::"
                              "visit_interface - "
-                             "codegen for direct_collocated class failed\n"),
+                             "codegen for thru_poa_collocated class failed\n"),
                             -1);
         }
       delete visitor;
-      visitor = 0;
     }
 
   if (be_global->gen_tie_classes ())

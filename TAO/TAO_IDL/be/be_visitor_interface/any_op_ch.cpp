@@ -53,11 +53,12 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   os->indent ();
 
-  // Generate the stub factory function pointer declaration the interface is
+  // Generate the proxy broker factory function pointer declaration the interface is
   // not locality constraint.
   *os << "extern " << be_global->stub_export_macro () << " "
-      << node->full_name () << "_ptr (*_TAO_collocation_"
-      << node->flat_name () << "_Stub_Factory_function_pointer) ("
+      << node->full_base_proxy_broker_name () << " * (*"
+      << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
+      << "_Factory_function_pointer) ("
       << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_uidt_nl
       << ");" << be_uidt_nl;

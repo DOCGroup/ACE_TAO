@@ -1,3 +1,147 @@
+Sun Nov 19 19:11:19 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+
+	* TAO_IDL/be_include/be_visitor_interface/proxy_brokers_ch.h:
+	* TAO_IDL/be/be_visitor_interface/proxy_brokers_ch.cpp:
+
+	  Visitor that manages the generation of the code for the
+	  proxy broker in the client header.
+
+	* TAO_IDL/be_include/be_visitor_interface/base_proxy_broker_ch.h:
+	* TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
+
+	  Visitor that generates the declaration for the proxy broker
+	  base class.
+
+	* TAO_IDL/be_include/be_visitor_interface/remote_proxy_broker_ch.h:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
+
+	  Visitor that generates the declaration for the remote  proxy
+	  broker.
+
+	* TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_sh:
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+
+	  Visitor that generates the declaration for the stategized proxy
+	  broker.
+
+	* TAO_IDL/be_include/be_visitor_interface/proxy_impls_ch.h:
+	* TAO_IDL/be/be_visitor_interface/proxy_impls_ch.cpp:
+
+	  Visitor that  manages the generation of the code for the
+	  proxy implementation in the client header.
+
+	* TAO_IDL/be_include/be_visitor_interface/base_proxy_impl_ch.h:
+	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+
+	  Visitor that generates the declaration for the proxy impl.
+	  base class.
+
+	* TAO_IDL/be_include/be_visitor_interface/direct_proxy_impl_sh.h:
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+
+	  Visitor that generates the declaration for the proxy
+	  implementation tha uses the "DIRECT" strategy to perform the
+	  call to the servant.
+
+	* TAO_IDL/be_include/be_visitor_interface/remote_proxy_impl_ch.h:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+
+	  Visitor that generates the declaration for the proxy
+	  implementation tha uses the "REMOTE" strategy to perform the
+	  call to the servant.
+
+	* TAO_IDL/be_include/be_visitor_interface/thru_poa_proxy_impl_sh.h:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+
+	  Visitor that generates the declaration for the proxy
+	  implementation tha uses the "THRUPOA" strategy to perform the
+	  call to the servant.
+
+	* TAO_IDL/be_include/be_visitor_operation/inv_arglist.h:
+	* TAO_IDL/be/be_visitor_operation/inv_arglist.cpp:
+
+	  This visitor generates the paramether list needed to perform and
+	  invocation on a given interface operation.
+
+	* TAO_IDL/be_include/be_visitor_operation/proxy_impl_xh.h:
+	* TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+
+	  Visitor that generates the operation signature for _any_
+	  concrete proxy implementation.
+
+	* TAO_IDL/be_include/be_visitor_operation/base_proxy_impl_ch.h:
+	* TAO_IDL/be/be_visitor_operation/base_proxy_impl_ch.cpp:
+
+	  Visitor that generates the operation signature for the base_
+	  proxy implementation.
+
+
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+
+	* TAO_IDL/be_include/be_interface_strategy.h:
+	* TAO_IDL/be/be_interface_strategy.cpp:
+
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+
+          Modified to support the new collocation scheme.
+
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	  Updated dependencies.
+
+	* TAO_IDL/be_include/be_visitor_operation/operation_cs.h:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.h:
+	* tao/MessagingC.i:
+	* tao/PortableServer/MessagingS.cpp:
+	* tao/PortableServer/MessagingS.h:
+
+	  Modified handcrafted code to reflect the new collocation scheme.
+
+	* tao/corba.h:
+
+	  Added include directive for including the
+	  Remote_Object_Proxy_Iml.
+
+	  With this change in the TAO IDL compiler, the collocation
+	  scheme changes quite a bit from the former. Now for each IDL
+	  interface, along with the proxy class associated to the
+	  interface, are generated a seried of other class that are needed
+	  to respectively get the right proxy implementation to perform a
+	  call (Proxy Brokers) and perform the call (Proxy Impls). There
+	  are two different kind of proxy brokers, and three different
+	  kind of proxy implementation. The main difference with the
+	  previous collocation scheme is that now the "strategy" used to
+	  perform a call can change on a call-by-call basis. This
+	  flexability was added because it is needed to immplement the
+	  forthcoming RT-CORBBA implementation.
+
+
 Sun Nov 19 16:09:39 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/PortableServer/POA.h

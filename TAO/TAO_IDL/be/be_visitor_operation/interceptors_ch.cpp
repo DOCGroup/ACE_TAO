@@ -104,6 +104,14 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
 
   *os << parent->full_name () << ";" << be_nl << be_nl;
 
+  // The Proxy Implementation actually perform calls to
+  // the ClientRequestInfo class, so these class need
+  // to be friend as well.
+  be_interface *iface = be_interface::narrow_from_scope (node->defined_in ());
+  *os << "friend class " << iface->remote_proxy_impl_name () << ";" << be_nl
+      << "friend class " << iface->thru_poa_proxy_impl_name () << ";" << be_nl
+      << "friend class " << iface->direct_proxy_impl_name () << ";" << be_uidt_nl << be_nl;
+
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,

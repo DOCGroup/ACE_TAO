@@ -12,6 +12,7 @@
 
 #include "ace/pre.h"
 #include "tao/orbconf.h"
+#include "Remote_Object_Proxy_Impl.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -2515,6 +2516,12 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYHANDLER_CH_)
 #define _MESSAGING_REPLYHANDLER_CH_
 
+// Forward Classes Declaration
+class _TAO_ReplyHandler_Proxy_Impl;
+class _TAO_ReplyHandler_Remote_Proxy_Impl;
+class _TAO_ReplyHandler_Proxy_Broker;
+class _TAO_ReplyHandler_Remote_Proxy_Broker;
+  
 class TAO_Export ReplyHandler : public virtual CORBA_Object
   {
   public:
@@ -2551,16 +2558,119 @@ class TAO_Export ReplyHandler : public virtual CORBA_Object
 
     virtual const char* _interface_repository_id (void) const;
 
+  private:
+    _TAO_ReplyHandler_Proxy_Broker *the_TAO_ReplyHandler_Proxy_Broker_;
+                              
   protected:
-    ReplyHandler (void);
-    ReplyHandler (TAO_Stub *objref,
-        CORBA::Boolean _tao_collocated = 0
-      );
+    ReplyHandler (int collocated = 0);
+  
+  protected:
+    virtual void setup_collocation (int collocated);
+
+     ReplyHandler (
+		  TAO_Stub *objref, 
+		  CORBA::Boolean _tao_collocated = 0,
+		  TAO_Abstract_ServantBase *servant = 0
+		  );
+                                
+    friend class _TAO_ReplyHandler_Remote_Proxy_Impl;
+    friend class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
+    friend class _TAO_ReplyHandler_Direct_Proxy_Impl;
+
     virtual ~ReplyHandler (void);
   private:
     ReplyHandler (const ReplyHandler &);
     void operator= (const ReplyHandler &);
   };
+
+
+  // The Proxy Implementations are used by each interface to
+  // perform a call. Each different implementation encapsulate
+  // an invocation logics.
+
+                              
+  ///////////////////////////////////////////////////////////////////////
+  //                    Base  Impl. Declaration
+  //
+                              
+  class TAO_Export _TAO_ReplyHandler_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
+  {
+  public:
+    virtual ~_TAO_ReplyHandler_Proxy_Impl (void);
+                                
+  };
+                              
+  //
+  //                Base  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+                              
+                              
+  ///////////////////////////////////////////////////////////////////////
+  //                    Remote  Impl. Declaration
+  //
+                            
+  class TAO_Export _TAO_ReplyHandler_Remote_Proxy_Impl : 
+  public virtual _TAO_ReplyHandler_Proxy_Impl,
+  public virtual TAO_Remote_Object_Proxy_Impl
+  {
+  public:
+    virtual ~_TAO_ReplyHandler_Remote_Proxy_Impl (void);
+                              
+  };
+                            
+  //
+  //                Base  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+
+ ///////////////////////////////////////////////////////////////////////
+  //                 Base Proxy Broker Declaration 
+  //
+                            
+  class TAO_Export _TAO_ReplyHandler_Proxy_Broker
+  {
+  public:
+    virtual ~_TAO_ReplyHandler_Proxy_Broker (void);
+
+    virtual _TAO_ReplyHandler_Proxy_Impl &select_proxy (
+							ReplyHandler *object,
+							CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+							) = 0;
+                            
+  };
+                          
+                          
+  //
+  //              End Base Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
+                          
+                                                    
+  ///////////////////////////////////////////////////////////////////////
+  //                 Remote Proxy Broker Declaration 
+  //
+                          
+  class TAO_Export _TAO_ReplyHandler_Remote_Proxy_Broker : public virtual _TAO_ReplyHandler_Proxy_Broker
+  {
+  public: 
+    virtual ~_TAO_ReplyHandler_Remote_Proxy_Broker (void);
+
+    virtual _TAO_ReplyHandler_Proxy_Impl &select_proxy (
+							ReplyHandler *object,
+							CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+							);
+                          
+  private:
+    _TAO_ReplyHandler_Remote_Proxy_Impl remote_proxy_impl_;
+  };
+                          
+  // This funxtion is used to get an handle to the unique instance
+  // of the Remote Proxy Broker that is available for a given
+  // interface.
+                          
+  _TAO_ReplyHandler_Remote_Proxy_Broker *the_TAO_ReplyHandler_Remote_Proxy_Broker (void);
+                          
+  //
+  //              End Remote Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
 
 #if (TAO_HAS_SMART_PROXIES == 1)
 class TAO_Export TAO_Messaging_ReplyHandler_Default_Proxy_Factory
@@ -2576,7 +2686,8 @@ class TAO_Export TAO_Messaging_ReplyHandler_Default_Proxy_Factory
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-  };
+};
+
 
 class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
   {
@@ -2743,6 +2854,10 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValu
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::PolicyValueSeq *&);
 
 #if (TAO_HAS_AMI_CALLBACK == 1)
+
+extern TAO_Export Messaging::_TAO_ReplyHandler_Proxy_Broker * (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
+																    CORBA::Object_ptr obj
+	     );
 
 extern TAO_Export Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj

@@ -64,6 +64,71 @@ public:
   virtual const char *local_coll_name (int) = 0;
   // retrieve the fully qualified collocated class name.
 
+  virtual const char *base_proxy_impl_name (void) = 0;
+  // retrieve the name of the base proxy implementation.
+
+  virtual const char *full_base_proxy_impl_name (void) = 0;
+  // retrieve the fully qualified name of the base proxy
+  // implementation.
+
+  virtual const char *remote_proxy_impl_name (void) = 0;
+  // retrieve the name of the remote  proxy implementation.
+
+  virtual const char *full_remote_proxy_impl_name (void) = 0;
+  // retrieve the fully qualified name of the remote
+  // proxy implementation.
+
+  virtual const char *thru_poa_proxy_impl_name (void) = 0;
+  // retrieve the name of the ThruPOA  proxy implementation.
+
+  virtual const char *full_thru_poa_proxy_impl_name (void) = 0;
+  // retrieve the fully qualified name of the ThruPOA  proxy
+  // implementation.
+
+  virtual const char *direct_proxy_impl_name (void) =0;
+  // retrieve the name of the Directx  proxy implementation.
+
+  virtual const char *full_direct_proxy_impl_name (void) =0;
+  // retrieve the fully qualified name of the Directx  proxy
+  // implementation.
+
+  virtual const char *base_proxy_broker_name (void) = 0;
+  // retrieve the name of the base proxy broker.
+
+  virtual const char *full_base_proxy_broker_name (void) = 0;
+  // retrieve the fully qualified name of the base proxy broker.
+
+  virtual const char *remote_proxy_broker_name (void) = 0;
+  // retrieve the name of the remote  proxy broker implementation.
+
+  virtual const char *full_remote_proxy_broker_name (void) = 0;
+  // retrieve the fully qualified name of the remote  proxy broker
+  // implementation.
+
+  virtual const char *strategized_proxy_broker_name (void) = 0;
+  // retrieve the name of the strategized proxy broker implementation.
+
+  virtual const char *full_strategized_proxy_broker_name (void) = 0;
+  // retrieve the fully qualified name of the strategized proxy broker
+  // implementation.
+  
+  virtual const char *client_scope (void) = 0;
+  // Return the scope that encloses the client related 
+  // interface.
+
+  virtual const char *flat_client_scope (void) = 0;
+  // Return the "flat" version of the scope 
+  //that encloses the interface.
+  
+  virtual const char *server_scope (void) = 0;
+  // Return the scope that encloses the server related 
+  // interface.
+
+  virtual const char *flat_server_scope (void) = 0;
+  // Return the "flat" version of the scope 
+  //that encloses the interface.
+
+
   const char *relative_skel_name (const char *skel_name);
   // relative skeleton name
 
@@ -83,13 +148,13 @@ public:
 
   virtual TAO_OutStream *get_out_stream ();
   // return the out stream depending on the strategy
-  // @@ Michael: Right now every strategy behaves 
+  // @@ Michael: Right now every strategy behaves
   // the same way, but it might be in the future that we
-  // have to differentiate. 
+  // have to differentiate.
 
   virtual const char *get_out_stream_fname ();
   // return the file name of the output stream.
-  // @@ Michael: Right now every strategy behaves the 
+  // @@ Michael: Right now every strategy behaves the
   // same way.
 
   int strategy_type ();
@@ -131,6 +196,8 @@ protected:
 
   Strategy_Kind strategy_type_;
   // The type of strategy
+
+
 };
 
 
@@ -166,7 +233,133 @@ public:
   virtual const char *local_coll_name (int);
   // retrieve the fully qualified collocated class name.
 
+  virtual const char *base_proxy_impl_name (void);
+  // retrieve the name of the base proxy implementation.
+
+  virtual const char *full_base_proxy_impl_name (void);
+  // retrieve the fully qualified name of the base proxy
+  // implementation.
+
+  virtual const char *remote_proxy_impl_name (void);
+  // retrieve the name of the remote  proxy implementation.
+
+  virtual const char *full_remote_proxy_impl_name (void);
+  // retrieve the fully qualified name of the remote
+  // proxy implementation.
+
+  virtual const char *thru_poa_proxy_impl_name (void);
+  // retrieve the name of the ThruPOA  proxy implementation.
+
+  virtual const char *full_thru_poa_proxy_impl_name (void);
+  // retrieve the fully qualified name of the ThruPOA  proxy
+  // implementation.
+
+  virtual const char *direct_proxy_impl_name (void);
+  // retrieve the name of the Directx  proxy implementation.
+
+  virtual const char *full_direct_proxy_impl_name (void);
+  // retrieve the fully qualified name of the Directx  proxy
+  // implementation.
+
+  virtual const char *base_proxy_broker_name (void);
+  // retrieve the name of the base proxy broker.
+
+  virtual const char *full_base_proxy_broker_name (void);
+  // retrieve the fully qualified name of the base proxy broker.
+
+  virtual const char *remote_proxy_broker_name (void);
+  // retrieve the name of the remote  proxy broker implementation.
+
+  virtual const char *full_remote_proxy_broker_name (void);
+  // retrieve the fully qualified name of the remote  proxy broker
+  // implementation.
+
+  virtual const char *strategized_proxy_broker_name (void);
+  // retrieve the name of the strategized proxy broker implementation.
+
+  virtual const char *full_strategized_proxy_broker_name (void);
+  // retrieve the fully qualified name of the strategized proxy broker
+  // implementation.
+
+  virtual const char *client_scope (void);
+  // Return the scope that encloses the client related 
+  // interface.
+
+  virtual const char *flat_client_scope (void);
+  // Return the "flat" version of the scope 
+  //that encloses the interface.
+  
+  virtual const char *server_scope (void);
+  // Return the scope that encloses the server related 
+  // interface.
+
+  virtual const char *flat_server_scope (void);
+  // Return the "flat" version of the scope 
+  //that encloses the interface.
+
+
   // end of overridden methods
+
+protected:
+
+  char *create_with_prefix_suffix (const char *prefix,
+                                   const char *str,
+                                   const char *suffix,
+                                   const char *separator = "");
+  // create a new string made by the concatenation of "str" and "suffix" and using the
+  // "separator" to concatenate the two.
+
+
+
+protected:
+
+  enum Suffix_Code
+  {
+    PROXY_IMPL = 0,
+    PROXY_BROKER = 1
+  };
+
+  enum Tag_Code
+  {
+    REMOTE = 0,
+    THRU_POA = 1,
+    DIRECT = 2,
+    STRATEGIZED = 3,
+    GC_PREFIX = 4 // Prefix used for the generated class
+                  // This prefix is used to avoid name conflicts
+                  // with the user classes.
+  };
+
+
+
+  static const char *suffix_table_[];
+  static const char *tag_table_[];
+
+  // Proxy Implementation names.
+  char *base_proxy_impl_name_;
+  char *remote_proxy_impl_name_;
+  char *thruPOA_proxy_impl_name_;
+  char *direct_proxy_impl_name_;
+
+  char *full_base_proxy_impl_name_;
+  char *full_remote_proxy_impl_name_;
+  char *full_thruPOA_proxy_impl_name_;
+  char *full_direct_proxy_impl_name_;
+
+  // Proxy Broker Names.
+  char *base_proxy_broker_;
+  char *remote_proxy_broker_;
+  char *strategized_proxy_broker_;
+
+  char *full_base_proxy_broker_name_;
+  char *full_remote_proxy_broker_name_;
+  char *full_strategized_proxy_broker_name_;
+
+  char *client_scope_;
+  char *flat_client_scope_;
+  
+  char *server_scope_;
+  char *flat_server_scope_;
 };
 
 

@@ -14,7 +14,7 @@
 //    Visitor for generating code for IDL operations in client stubs
 //
 // = AUTHOR
-//    Aniruddha Gokhale
+//    Aniruddha Gokhale & Angelo Corsaro
 //
 // ============================================================================
 
@@ -47,43 +47,11 @@ public:
 
   virtual int visit_argument (be_argument *node);
   // visit argument to generate ParamData entries
-
-  // = template methods
-  virtual int gen_pre_stub_info (be_operation *node);
-  // generate any info before the actual code for the stub is generated
-
-  virtual int gen_marshal_and_invoke (be_operation *node, 
-                                      be_type *bt);
-  // generate code that marshals the arguments and transmits them
-
+  
   // =helper
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled
-
-  virtual int gen_raise_exception (be_type *,
-                                   const char *excep,
-                                   const char *status);
-  // helper that generates code for raising an exception
-
-  virtual int gen_check_exception (be_type *);
-  // helper that generates code for checking for an exception
-
-  virtual int gen_raise_interceptor_exception (be_type *,
-                                               const char *excep,
-                                               const char *status);
-  // helper that generates code for raising an exception within
-  // interceptor's try block
-
-  virtual int gen_check_interceptor_exception (be_type *);
-  // helper that generates code for checking for an exception within
-  // interceptor's try block
-
-  virtual const char *compute_operation_name (be_operation *node);
-  // compute the operation name.  Notice that this operation
-  // _does_ include the double quote.
-
-private:
-  char *operation_name_;
+  
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_CS_H_ */
