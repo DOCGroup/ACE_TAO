@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Offer_Modifier.h"
+#include "Trader.h"
 
 TAO_Offer_Modifier::
 TAO_Offer_Modifier (const char* type_name,

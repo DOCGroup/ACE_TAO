@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Property_Filter.h"
+#include "Trader.h"
 
 TAO_Property_Filter::
 TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,

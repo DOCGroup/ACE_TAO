@@ -16,7 +16,7 @@
 
 #define ACE_BUILD_DLL
 
-#include "Trader_Base.h"
+#include "Trader.h"
 #include "ace/OS.h"
 #include <iostream.h>
 

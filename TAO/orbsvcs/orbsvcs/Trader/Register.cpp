@@ -20,7 +20,7 @@
 
 #include "Register.h"
 #include "Property_Evaluator.h"
-#include "Trader_Base.h"
+#include "Trader.h"
 #include <iostream.h>
 #include <algorithm>
 
