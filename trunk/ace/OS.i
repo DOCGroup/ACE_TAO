@@ -4273,19 +4273,25 @@ ACE_OS::select (int width,
   ACE_TRACE ("ACE_OS::select");
 #if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // We must defend against non-conformity!
-  ACE_Time_Value copy;
+  timeval copy;
+  timeval *timep;
 
   if (timeout != 0)
     {
       copy = *timeout;
-      timeout = &copy;
+      timep = &copy;
     }
+  else
+    timep = 0;
+#else
+  const timeval *timep = (timeout == 0 ? (const timeval *)0 : *timeout);
 #endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
   ACE_SOCKCALL_RETURN (::select (width,
                                  (ACE_FD_SET_TYPE *) rfds,
                                  (ACE_FD_SET_TYPE *) wfds,
                                  (ACE_FD_SET_TYPE *) efds,
-                                 timeout == 0 ? 0 : (timeval *) (const timeval *) *timeout) , int, -1);
+                                 timep),
+                       int, -1);
 }
 
 ACE_INLINE int
@@ -4295,16 +4301,17 @@ ACE_OS::select (int width,
 {
   ACE_TRACE ("ACE_OS::select");
 #if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
-# define ___ACE_TIMEOUT copy
-  ACE_Time_Value copy(timeout);
+# define ___ACE_TIMEOUT &copy
+  timeval copy = timeout;
 #else
-# define ___ACE_TIMEOUT timeout
+# define ___ACE_TIMEOUT timep
+  const timeval *timep = timeout;
 #endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
   ACE_SOCKCALL_RETURN (::select (width,
                                  (ACE_FD_SET_TYPE *) rfds,
                                  (ACE_FD_SET_TYPE *) wfds,
                                  (ACE_FD_SET_TYPE *) efds,
-                                 (timeval *) (const timeval *) ___ACE_TIMEOUT),
+                                 ___ACE_TIMEOUT),
                        int, -1);
 #undef ___ACE_TIMEOUT
 }
@@ -9374,15 +9381,15 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
   ::Sleep (tv.msec ());
   return 0;
 #else
-# if defined (linux)
-  // Copy the timeval, because Linux modifies it!  It's strange that
-  // the compiler doesn't warn about passing the address of a const as
-  // a non-const argument.
+# if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
+  // Copy the timeval, because this platform doesn't declare the timeval
+  // as a pointer to const.
   timeval tv_copy = tv;
   ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &tv_copy), int, -1);
-# else  /* ! linux */
-  ACE_OSCALL_RETURN (::select (0, 0, 0, 0, (timeval *) &tv), int, -1);
-# endif /* ! linux */
+# else  /* ! ACE_HAS_NONCONST_SELECT_TIMEVAL */
+  const timeval *tvp = tv;
+  ACE_OSCALL_RETURN (::select (0, 0, 0, 0, tvp), int, -1);
+# endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
 #endif /* ACE_WIN32 */
 }
 
