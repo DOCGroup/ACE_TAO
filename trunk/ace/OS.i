@@ -2825,14 +2825,14 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 #  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   int msec_timeout;
 
-  if (timeout->sec () == 0 && timeout->usec () == 0)
+  if (tv.sec () == 0 && tv.usec () == 0)
     msec_timeout = 0; // Do a "poll."
   else
     {
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what
       // <WaitForSingleObjects> expects).
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+      ACE_Time_Value relative_time (tv - ACE_OS::gettimeofday ());
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
