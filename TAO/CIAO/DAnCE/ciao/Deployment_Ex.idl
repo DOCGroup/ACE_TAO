@@ -1,0 +1,45 @@
+// $Id$
+#include <orb.idl>
+
+module Deployment {
+
+  exception ResourceNotAvailable {
+    string name;
+    string resourceType;
+    string propertyName;
+    string elementName;
+    string resourceName;
+  };
+
+  exception PlanError {
+    string name;
+    string reason;
+  };
+
+  exception InvalidProperty {
+    string name;
+    string reason;
+  };
+
+  exception StopError {
+    string name;
+    string reason;
+  };
+
+  exception NameExists {
+  };
+
+  exception PackageError {
+    string source;
+    string reason;
+  };
+
+  exception NoSuchName {
+  };
+
+  exception LastConfiguration {
+  };
+
+  exception InvalidReference {
+  };
+};
