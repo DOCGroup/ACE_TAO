@@ -19,8 +19,6 @@ project (Config_Handlers) : ciao_deployment_stub {
     CompImplDesc_Handler.cpp
     CompIntrDesc_Handler.cpp
     CompPkgDesc_Handler.cpp
-    CompPortDesc_Handler.cpp
-    CompPropDesc_Handler.cpp
     Config_Error_Handler.cpp
     CPK_Handler.cpp
     CPR_Handler.cpp

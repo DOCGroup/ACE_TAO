@@ -1,3 +1,16 @@
+Tue Jun  1 17:39:57 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/CompPortDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompPortDesc_Handler.h:
+        * DnC/Config_Handlers/CompPropDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompPropDesc_Handler.h:
+
+          Removed the above handlers as they are not used at all.
+
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+
+          Updated the MPC file accordingly.
+
 Tue Jun  1 15:30:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Basic_Handler.h:
