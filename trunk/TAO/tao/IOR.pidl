@@ -10,11 +10,14 @@
 //   XXX
 //
 // = DESCRIPTION
-//   This file was used to generate the code in IOR{C,S,S_T}.{h,i,cpp}
+//   This file was used to generate the code in IORManipulation/IORC.{h,i,cpp}
 //   The code is then hand-crafted to compile it inside the ORB, avoid
 //   cyclic dependencies and enforce the locality constraints on
 //   certain objects.
-//
+//   Can be compiled using $TAO_ROOT/TAO_IDL/tao_idl -Ge 1
+//   -I$(TAO_ROOT) \
+//   -Wb,export_macro=TAO_IORManip_Export \
+//   IOR.idl
 // ================================================================
 
 module TAO_IOP
