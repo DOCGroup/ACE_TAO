@@ -206,7 +206,7 @@ sub Build_Core ()
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\IFRService.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RT_Notification.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Service.dsp",
-                      $ACE_ROOT."\\tests\Test_Output.dsp");
+                      $ACE_ROOT."\\tests\\Test_Output.dsp");
          } 
 
 
