@@ -1,3 +1,9 @@
+Fri Aug 24 13:40:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst: Removed HPUX and AIX_VAC for the
+	  timebeing. Looks like OCI is running different versions of the
+	  OS for their internal use.
+
 Fri Aug 24 10:17:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log_hexdump): Added a patch provided by Massimo
