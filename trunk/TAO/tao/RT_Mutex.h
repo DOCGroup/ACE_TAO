@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
+ *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -43,9 +43,7 @@
  *
  */
 
-class TAO_Export TAO_RT_Mutex :
-  public RTCORBA::Mutex,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_RT_Mutex : public RTCORBA::Mutex, public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
@@ -54,21 +52,27 @@ public:
   /// Destructor.
   virtual ~TAO_RT_Mutex (void);
 
+  /// Acquire the lock.
   virtual void lock (CORBA::Environment &ACE_TRY_ENV =
                      TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Release the lock.
   virtual void unlock (CORBA::Environment &ACE_TRY_ENV =
                        TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Acquire the lock, but only wait up to <max_wait> time.  Note
+  //that this operation may not be available on all OS platforms, so
+  //if you're interested in writing maximally portable programs avoid
+  //using this operation in your program designs.
   virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait,
                                    CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-
+  /// Synchronization lock.
   TAO_SYNCH_MUTEX mu_;
 };
 
@@ -82,27 +86,26 @@ class TAO_Named_RT_Mutex_Manager;
  *
  */
 
-class TAO_Export TAO_Named_RT_Mutex :
-  public TAO_RT_Mutex
+class TAO_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex (const char *name, TAO_Named_RT_Mutex_Manager &mutex_mgr);
+  /// @@ Frank, can you please change this to be "Unicode friendly"?  Please ask Nanbor or Irfan about this.
+  TAO_Named_RT_Mutex (const char *name,
+                      TAO_Named_RT_Mutex_Manager &mutex_mgr);
 
   /// Destructor.
   virtual ~TAO_Named_RT_Mutex (void);
 
 protected:
-
   // Don't allow unnamed named mutexes
   TAO_Named_RT_Mutex (void);
 
+  /// @@ Frank, this will also need to be changed.
   char *name_;
 
   TAO_Named_RT_Mutex_Manager &mutex_mgr_;
 };
-
-
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
