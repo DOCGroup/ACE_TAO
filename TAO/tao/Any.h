@@ -269,7 +269,7 @@ public:
 
   // = Debugging method.
 
-  static void dump (const CORBA::Any any_value);
+  static void dump (const CORBA::Any &any_value);
   // Prints the type and the value of the any value. Dumping is
   // supported only for standard data types.
 
