@@ -1,0 +1,2648 @@
+Wed Mar  8 19:16:56 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Time_Service_Test.cpp (main): Added the ASYS_TEXT macro
+	  to the "ace-malloc-XXXXXX" string to avoid an error when
+ 	  compiled with Unicode.  Thanks to Steve Huston
+ 	  <shuston@riverace.com> for reporting this.  This fixes BUGID
+ 	  479.
+
+Wed Mar  8 19:19:46 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-irix6.x-common.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
+	  to 2.
+
+Wed Mar  8 15:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-hpux-10.x.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
+	  to 2.  The alignment computing macros didn't work in this case.
+	  Thanks to Steve H. for reporting this.
+
+Wed Mar 08 15:26:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc: On AIX, the shared lib is now libACE.o and the
+          associated archive is libACE.a. Attempting to unify ACE with the
+          screwy way AIX does libraries. When the static library gets built,
+          it'll be called libACEns.a.
+
+        * tests/vacpp_setup.icc: On AIX, link libACE.a, not libACEshr.a
+
+        * tests/libDLL_Test.icc: New file to build the library required for
+          DLL_Test. Can't be built from DLL_Test.icc because the codestore
+          will complain that main() is already defined.
+
+Wed Mar 08 14:46:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h:
+        * include/makeinclude/platform_aix4_cset++.GNU: Allow building w/o
+          threads by including threads=0 on build command line. Include
+          -O2 compile option when optimize=1 is set on build command line.
+
+Wed Mar  8 11:13:04 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Reverted this change.
+	  Tue Mar  7 14:21:12 CST 2000  Loren Rittle
+	  <rittle@rsch.comm.mot.com>. The change gave compile errors on
+	  EGCS.
+
+Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com>
+
+	* tests/Makefile.bor: Added new test Process_Manager_Test.
+
+        * include/makeinclude/compiler.bor, make_flags.bor: Added support
+	  for BCB's codeguard memory checking tool.
+
+        * include/makeinclude/outputdir.bor: Allow a different directory
+	  creation tool to be substituted for "mkdir" on Win9x.
+
+Tue Mar 07 18:37:26 2000  Tom Ziomek <tomz@cc701.comm.mot.com>
+
+        * ace/Singleton.h: added comment to ACE_Unmanaged_Singleton
+          description to clarify that friend declaration must be
+          be for ACE_Unmanaged_Singleton.
+
+Tue Mar  7 14:21:12 CST 2000  Loren Rittle  <rittle@rsch.comm.mot.com>
+
+        * ace/Log_Msg.cpp (log): Correct cast usage, a reinterpret
+          cast was needed.
+
+Tue Mar 07 11:00:10 2000 Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * examples/Reactor/Proactor/test_proactor.cpp: Updated the comments
+          to make it clear how the ACE_Message_Block buffers are reused.
+          Thanks to Dong-Yueh Liu <dyliu@ms1.hinet.net> for suggesting
+          this.
+
+Tue Mar 07 10:28:16 2000  bala  <bala@cs.wustl.edu>
+
+        * ACE version 5.0.15 released.
+
+Mon Mar  6 17:56:56 2000  Ossama Othman  <ossama@uci.edu>
+
+        * bin/make_release (release_tag_files):
+
+          Added missing declaration of this variable.
+
+Mon Mar  6 13:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+        * tests/run_tests.vxworks: Removed Cached_Conn_Test from the
+          list as this test fails for the current configuration. Until
+          researched completely, it has been disabled on vxworks.
+          Thanks to David Hall <David.Hall@grc.nasa.gov> for reporting
+          this bug.
+
+Sun Mar  5 21:32:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ace/CDR_Stream.cpp:
+          When allocating a new buffer in ACE_CDR::grow() we must leave
+          enough room for the buffer required by the user *and* space to
+          adjust the alignment.  Thanks to Bala and Jeff for tracking this
+          down.
+
+Fri Mar 03 17:01:54 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/Malloc_Test.cpp: Changed a couple of straggling
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC to
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+
+Fri Mar 03 11:52:10 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.nested.GNU: added -f $(MAKEFILE)
+          to $(MAKE) invocation, to support overriding of the default
+          Makefile name.  Added definition of MAKEFILE, if it is null.
+          Thanks to Wei Chiang <wei.chiang@nokia.com> for suggesting this.
+
+        * include/makeinclude/rules.local.GNU: changed test to see if
+          MAKEFILE macro isn't set from ifndef to ifeq null, for consistency
+          with above addition to rules.nested.GNU.
+
+Thu Mar  2 13:23:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/TLI.cpp, TLI_Connector.cpp, TLI_Stream.cpp: Removed comments
+          regarding the quality of SunOS 4...  Thanks to Malcolm Spence
+          <spence_m@ociweb.com> for reporting this!
+
+Wed Mar  1 22:39:04 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Log_Record.cpp:
+
+          Thanks to Valery Arkhangorodsky <valerya@servicesoft.com>,
+          who took the time to figure out the code in round_up () and
+          spotted a mistake in it.
+
+        * examples/Shared_Malloc/test_persistence.cpp:
+
+          The last bug in my changes.  Changing a pointer to an array
+          is not something to be done on a whim.  Needed to change a
+          couple of "== 0" to strcpy's, etc.
+
+Wed Mar 01 19:25:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Based_Pointer_T.cpp:
+        * ace/Malloc.cpp: Replaced ACE_ASSERT (!"A STRING") with
+          ACE_ASSERT (0).  Some brain-damaged compilers (i.e., Diab DCC
+          4.2b) can't handle this.  Thanks to Bob Bouterse
+          <BBouterse@escient.com> for reporting and fixing this.
+
+Wed Mar  1 16:29:55 2000  Ossama Othman  <ossama@uci.edu>
+
+        * configure.in (ACE_HAS_ALT_CUSERID):
+
+          Wrapped the test for this macro with
+          ACE_CONVERT_WARNINGS_TO_ERRORS to cause implicit prototype
+          declaration warnings to be converted to errors when using
+          gcc < 2.95.2 (including egcs <= 1.1.x).  This fixes a warning on
+          Red Hat 6.1 systems.  Thanks to Rich Seibel
+          <seibel_r@ociweb.com> for providing a fix.
+
+Tue Feb 29 23:36:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/README:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.i:
+        * ace/Thread_Manager.cpp (append_thr): Moved thread descriptor
+          reset statement into reset.
+
+          (reset): Added reset methods to
+          ACE_Thread_Descriptor and ACE_Thread_Descriptor_Base to reset
+          Thread_Descriptor back to its initialized state.
+
+          (ACE_Thread_Descriptor): Removed reset statements for
+          cleanup_info_.  They are handle by ACE_Cleanup_Info's contructor
+          already.
+
+          (acquire_release): Added a macro
+          ACE_THREAD_MANAGER_USES_SAFE_SPAWN to disable double-checked
+          locking.  When this macro is defined, a spawned thread will
+          always acquire the release the <sync_> lock before starting any
+          other initialization.  This should avoid a potential race
+          condition on some platforms (i.e., DEC Alpha, Marced) using
+          aggressive read/write reordering strategies.
+
+          (spawn_i): Call <reset> method on the "new" thread descriptor
+          after acquiring a thread descriptor from the freelist.  This
+          change moved most of the thread descriptor initialization code
+          from append_thr into <reset>, before spawning the thread.
+
+          Thanks to John Hickin <hickin@nortelnetworks.com> for motivating
+          these changes.
+
+Tue Feb 29 21:18:12 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.cpp:
+
+          One more warning cleaned up from my get_temp_dir () change.
+          Hopefully the last (crossing my fingers).
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+
+          Missing some header files, thanks to Andres Kruse
+          <andres.kruse@creaturelabs.com> for noticing.
+
+        * ace/OS.h:
+
+          Even when ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS was not defined,
+          ACE_SEH_TRY and family was still being defined to the seh
+          commands (like __try) on Win32.  When the above macro is not
+          defined, they are now noops.  Thanks to Natarajan Kalpathy
+          <Natarajan_Kalpathy@mw.3com.com> for reporting this.
+
+Tue Feb 29 16:40:43 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Fixed alignment problems when inserting message blocks without
+          copying.  The same fix was a good excuse to optimize the
+          OutputCDR class, as described in bug #160.
+
+        * ace/OS.h:
+          Use the ACE_ prefix in a couple of naked macros.
+
+        * ace/ACE.cpp:
+          Fixed the crc32 routine, it seems we inherited a bug from the
+          FreeBSD code.  Thanks to Jonathan Reis <reis@stentorsoft.com>
+          for finding the bug and providing a patch for it.
+
+Tue Feb 29 16:23:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Handle_Set.h: Added some explanation to a few ACE_Handle_Set
+          member functions to clarify their purpose and use.
+
+Tue Feb 29 13:48:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/OS.h: Updated a comment about using ACE_Malloc for class-specific
+          allocations.  Thanks to Boris Sukholitko <boris@webglide.com>
+          for reporting this.
+
+Tue Feb 29 08:48:28 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Time_Service_Test.cpp:  Enabled the test on Win32 and removed
+          a use of ACE_DEFAULT_BACKING_STORE.
+
+Tue Feb 29 08:56:51 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          reverted this change:
+
+          Mon Feb 28 20:42:17 2000  David L. Levine  <levine@cs.wustl.edu>
+
+          because it caused static constructors not to be called.
+          Thanks to Elias Sreih <sealstd1@nortelnetworks.com> for
+          reporting this.
+
+Mon Feb 28 20:04:23 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Time_Service_Test.cpp:  Missed a semicolon.
+
+Mon Feb 28 20:42:17 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          with Tornado 2 (VxWorks 5.4) and later, use
+          ld$(TOOLENV) instead of ace_ld.  Apparently, munch
+          is no longer required.  Thanks to Elias Sreih
+          <sealstd1@nortelnetworks.com> for reporting that
+          ace_ld/munch caused undefined symbols for calls to
+          global ctors with Tornado 2.
+
+Mon Feb 28 17:34:00 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+
+          The Unix and Win32 behavior for get_temp_dir () wasn't consistent.
+          Now both will return -1 if there is any problem such as the buffer
+          not being long enough.
+
+Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+
+          Added get_temp_dir () method that fills a buffer with the path
+          for the temporary directory.  ACE has previously hardcoded the
+          path.  The right way is to find the path at runtime, especially on
+          Win32 where the TEMP directory can be different from machine to
+          machine (or even different for each user).
+
+        * ace/OS.h:
+        * ace/FILE_Addr.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/Memory_Pool.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/Naming_Context.h:
+        * ace/System_Time.cpp:
+        * ace/System_Time.h:
+        * examples/Shared_Malloc/test_persistence.cpp:
+        * netsvcs/lib/Logging_Strategy.cpp:
+        * netsvcs/lib/Logging_Strategy.h:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * tests/Time_Service_Test.cpp:
+
+          Removed the macro definitions that used C:\\temp:
+          ACE_DEFAULT_BACKING_STORE
+          ACE_DEFAULT_TEMP_FILE
+          ACE_DEFAULT_LOGFILE
+          ACE_DEFAULT_NAMESPACE
+
+          The default path in these cases are now found by using the
+          ACE::get_temp_dir method.  The macros are still supported in
+          that they can still be used to override the default case.
+
+        * tests/test_config.h:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Process_Strategy_Test.h:
+
+          Removed the macro definitions for:
+          ACE_DEFAULT_TEST_FILE
+          ACE_TEMP_FILE_NAME
+          ACE_LOG_DIRECTORY
+
+          and replaced with ACE::get_temp_dir.
+
+          Also changed the default log file directory on Win32 to be in
+          the log subdirectory.  So now both Unix and NT have the same
+          behavior, the logs will be written to $ACE_ROOT/tests/log.
+
+        * tests/ACE_Init_Test.res:  (removed)
+
+          This file was giving me warnings when I built, and since it
+          should be generated from the .rc file, I don't think it should
+          be in the repository.
+
+        * tests/Process_Manager_Test.cpp:
+        * tests/Process_Manager_Test.dsp:  (added)
+        * tests/version_tests/Process_Manager_Test.dsp:  (added)
+        * tests/tests.dsw:
+        * tests/version_tests/version_tests.dsw:
+
+          Enabled the Process_Manager_Test on NT and created a MSVC
+          workspace for it.  Also fixed some miscellaneous UNICODE issues.
+
+        * tests/run_tests.bat:
+
+          Added the Process_Manager_Test and changed the location of the
+          log files.
+
+        * tests/README:
+
+          Changed the location of the output of the log files.
+
+Mon Feb 28 09:16:40 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+
+          Removed cast of ACE_thread_t to long unsigned int since some
+          platforms (e.g. HPUX) declare the underlying thread type as a
+          structure.  This change reverts back to the version prior to
+          Steve's change.
+
+Mon Feb 28 08:33:43 2000  Zoran Ivanovic <Zoran_Ivanovic@i2.com>
+
+        * docs/ACE-guidelines.html: fixed typo, in example
+          #include directive (Foo_T.i instead of Active_Map_Manager_T.i).
+
+Sun Feb 27 16:20:43 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Synch_T.h: Made the ACE_TSS_Type_Adapter operator TYPE() a const
+          to avoid overloading ambiguities.  Thanks to Bruce McIntosh
+          <Bruce.McIntosh@australia.boeing.com> for reporting this.
+
+        * ace/TP_Reactor.h: Improved the comments.
+
+Sat Feb 26 19:52:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/CDR_Stream.cpp:
+          The grow() function was re-allocating the buffer even when there
+          was just enough memory, i.e. this was an off-by-one error, in
+          the form of a < instead of <= comparison.  When it finally
+          decided to grow the buffer it was using the global heap instead
+          of the allocators in the message block, which may be more
+          efficient.
+
+Sat Feb 26 19:47:05 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+
+          Needed to go a step further.  Taking the jackhammer approach by
+          switching to a C style cast until a better solution presents
+          itself.
+
+Sat Feb 26 13:40:57 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+
+          Compaq C++ doesn't like the static cast from ACE_thread_t to
+          long unsigned int.  Take the sledgehammer approach and use a
+          reinterpret cast instead.
+
+Sat Feb 26 13:20:13 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/OS.h (INADDR_LOOPBACK):
+
+          Define this macro to hexidecimal value of the loopback address
+          127.0.0.1 (0x7f000001).  LynxOS doesn't define this constant.
+
+Fri Feb 25 16:50:37 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Profile_Timer.cpp (ACE_Profile_Timer ctor):
+        * ace/Log_Msg.cpp (format_msg):
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry::ACE_TPQ_Entry):
+          Fixed to avoid a gcc 2.95 warning about mismatch format/arg types.
+
+Fri Feb 25 14:56:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_vacpp.GNU: New file for use
+          with Visual Age C++ on AIX. It isn't really needed for much at this
+          point except building the tests via Makefile. If you like doing
+          everything directly with vacbld without the aid of ACE's make
+          scheme, you don't need to use this.
+
+Fri Feb 25 14:48:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.bin.GNU: Add a rule to build a binary
+          based on a Visual Age C++ configuration (.icc file) and sources.
+          This allows building using Makefile, but defers all the real work
+          to Visual Age C++ builder (vacbld). Useful for building the ACE
+          tests especially.
+
+Fri Feb 25 14:44:37 2000  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.local.GNU: Add *.ics to files deleted
+          in cleanup. This cleans up Visual Age C++ codestores.
+
+Fri Feb 25 13:06:14 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_{ghs,g++}.GNU:
+          updated platform information to reflect that these
+          files are intended for VxWorks 5.3.1 and later.
+
+Fri Feb 25 13:03:35 2000  Fernando D. Mato Mira  <matomira@iname.com>
+
+        * include/makeinclude/platform_vxworks5.x_{diab,g++}.GNU:
+          added PPC603 support.
+
+Fri Feb 25 10:47:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/config-win32-msvc.h,
+        * ace/config-win32-borland.h: Added ACE_INT64_FORMAT_SPECIFIER
+          for both platforms.  Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for providing the fix.
+
+Thu Feb 24 15:55:16 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Heap_T.cpp: Added "&& defined (_WINDOWS)" to all the places
+          where memory alloc sizes had been faked out on conditionals selecting
+          Visual Age C++. The reported issues that originated the conditions
+          are not problems for AIX; with the conditional code in, tests
+          failed due to memory corruptions.
+
+Thu Feb 24 15:44:42 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc: Added Capabilities.h and Capabilities.cpp.
+
+Thu Feb 24 12:35:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/ARGV_Test.icc:
+        * tests/Auto_IncDec_Test.icc:
+        * tests/CDR_File_Test.icc:
+        * tests/Cache_Map_Manager_Test.icc:
+        * tests/Cached_Accept_Conn_Test.icc:
+        * tests/Cached_Conn_Test.icc:
+        * tests/Capabilities_Test.icc:
+        * tests/FlReactor_Test.icc:
+        * tests/Future_Set_Test.icc:
+        * tests/Hash_Map_Bucket_Iterator_Test.icc:
+        * tests/Lazy_Map_Manager_Test.icc:
+        * tests/Log_Msg_Test.icc:
+        * tests/Malloc_Test.icc:
+        * tests/New_Fail_Test.icc:
+        * tests/Object_Manager_Test.icc:
+        * tests/Process_Manager_Test.icc:
+        * tests/Reverse_Lock_Test.icc:
+        * tests/SOCK_Send_Recv_Test.icc:
+        * tests/Signal_Test.icc:
+        * tests/Svc_Handler_Test.icc:
+        * tests/TkReactor_Test.icc:
+            New test configuration files for use w/ Visual Age C++, NT and AIX.
+
+        * tests/Aio_Platform_Test.icc:
+        * tests/Atomic_Op_Test.icc:
+        * tests/Barrier_Test.icc:
+        * tests/Basic_Types_Test.icc:
+        * tests/Buffer_Stream_Test.icc:
+        * tests/CDR_Test.icc:
+        * tests/Collection_Test.icc:
+        * tests/Conn_Test.icc:
+        * tests/DLL_Test.icc:
+        * tests/DLList_Test.icc:
+        * tests/Dynamic_Priority_Test.icc:
+        * tests/Enum_Interfaces_Test.icc:
+        * tests/Env_Value_Test.icc:
+        * tests/Future_Test.icc:
+        * tests/Handle_Set_Test.icc:
+        * tests/Hash_Map_Manager_Test.icc:
+        * tests/High_Res_Timer_Test.icc:
+        * tests/IOStream_Test.icc:
+        * tests/MM_Shared_Memory_Test.icc:
+        * tests/MT_Reactor_Timer_Test.icc:
+        * tests/MT_SOCK_Test.icc:
+        * tests/Map_Manager_Test.icc:
+        * tests/Map_Test.icc:
+        * tests/Mem_Map_Test.icc:
+        * tests/Message_Block_Test.icc:
+        * tests/Message_Queue_Notifications_Test.icc:
+        * tests/Message_Queue_Test.icc:
+        * tests/Naming_Test.icc:
+        * tests/Notify_Performance_Test.icc:
+        * tests/OrdMultiSet_Test.icc:
+        * tests/Pipe_Test.icc:
+        * tests/Priority_Buffer_Test.icc:
+        * tests/Priority_Reactor_Test.icc:
+        * tests/Priority_Task_Test.icc:
+        * tests/Process_Mutex_Test.icc:
+        * tests/Process_Strategy_Test.icc:
+        * tests/Purgable_Map_Manager_Test.icc:
+        * tests/RB_Tree_Test.icc:
+        * tests/Reactor_Exceptions_Test.icc:
+        * tests/Reactor_Notify_Test.icc:
+        * tests/Reactor_Performance_Test.icc:
+        * tests/Reactor_Timer_Test.icc:
+        * tests/Reactors_Test.icc:
+        * tests/Reader_Writer_Test.icc:
+        * tests/Recursive_Mutex_Test.icc:
+        * tests/SOCK_Connector_Test.icc:
+        * tests/SOCK_Test.icc:
+        * tests/SPIPE_Test.icc:
+        * tests/SString_Test.icc:
+        * tests/SV_Shared_Memory_Test.icc:
+        * tests/Semaphore_Test.icc:
+        * tests/Service_Config_Test.icc:
+        * tests/Sigset_Ops_Test.icc:
+        * tests/Simple_Message_Block_Test.icc:
+        * tests/TSS_Test.icc:
+        * tests/Task_Test.icc:
+        * tests/Thread_Manager_Test.icc:
+        * tests/Thread_Mutex_Test.icc:
+        * tests/Thread_Pool_Reactor_Test.icc:
+        * tests/Thread_Pool_Test.icc:
+        * tests/Time_Service_Test.icc:
+        * tests/Time_Value_Test.icc:
+        * tests/Timeprobe_Test.icc:
+        * tests/Timer_Queue_Test.icc:
+        * tests/Tokens_Test.icc:
+        * tests/UPIPE_SAP_Test.icc:
+        * tests/Upgradable_RW_Test.icc:
+        * tests/XtReactor_Test.icc:
+             Changed to work for both NT and AIX Visual Age C++, using new
+             vacpp_setup.icc file, added below.
+
+Thu Feb 24 12:15:46 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/makeicc.pl: Corrected to write Id variable in new .icc
+          file properly.
+
+Thu Feb 24 01:52:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Thread_Manager.cpp (append_thr): Moved the setting of
+          THR_SPAWNED state down to right before releasing the thread
+          creation lock.  Hopefully, this will eliminate a warning about a
+          non-existing race condition from KAI Assure.  Thanks to John
+          Hickin <hickin@nortelnetworks.com> for reporting this.
+
+Wed Feb 23 23:52:15 2000  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+        * ace/Log_Msg.h: Added a hack to work around nasty libraries
+          that #define THREAD 1.  Thanks to Pierre Oberson
+          <oberson@nagra-kudelski.ch> for reporting this.
+
+Wed Feb 23 19:37:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Dynamic_Priority_Test.cpp:
+          More stuff that is not used unless ACE_HAS_TIMED_MESSAGE_BLOCKS
+          is defined.
+
+Wed Feb 23 18:58:06 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Synch.i (lock): Make sure that ACE_File_Lock::set_handle()
+          sets this->removed_ = 0.  Thanks to Sanwoo Jin
+          <swjinjin@sei.co.kr> for reporting this.
+
+        * tests/FlReactor_Test.cpp (main): Minor reformatting.
+
+        * ace/config-win32-borland.h: When you define _DEBUG the orbsvcs
+          dll exports all "inline" functions, and this seems to be too
+          much for BCB4 linker.  Thaddeus L. Olczyk
+          <olczyk@interaccess.com> reported this problem and Christopher
+          Kohlhoff <chris@kohlhoff.com> provided the fix.
+
+        * ace/OS,
+          ace/Synch: Added a new parameter to flock_destroy() and
+          ACE_File_Lock::remove() that controls whether the lockfile is
+          removed when the filelock is destroyed.  By default, this is
+          "enabled" so the existing semantics don't change.  Thanks to
+          Sanwoo Jin <swjinjin@sei.co.kr> for suggesting this.
+
+Wed Feb 23 17:02:34 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/vacpp_setup.icc: Settings for Visual Age C++ which are included
+          in the individual tests' VAC++ configurations. Captures all of the
+          platform (AIX vs. NT) differences in one place.
+
+        * tests/makeicc.pl: Changed to generate .icc files that work on either
+          NT or AIX, using the above vacpp_setup.icc.
+
+Wed Feb 23 16:54:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Based_Pointer_Repository.cpp (ACE_Based_Pointer_Repository_Rep):
+          Moved typedefs for MAP_MANAGER, MAP_ITERATOR, MAP_ENTRY inside
+          the class definition so they don't conflict with other types of
+          the same name (Visual Age C++ sees all of them at once, even if
+          other compilers may never see those two definitions in the same
+          compilation unit ever).
+
+Wed Feb 23 14:48:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc: Platform-specifics further segmented out to make
+          Visual Age C++ builds work for both NT and AIX. Removed Multiplexor.h
+          and Multiplexor.cpp since those files are not used. Added
+          Based_Pointer_Repository.(cpp h).
+
+        * ace/OS.i (getpwnam_r): Add a condition for the Visual Age C++ on
+          AIX compiler - it can't correctly handle the ::getpwnam_r call.
+
+Wed Feb 23 14:45:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Message_Block.cpp:
+        * tests/Dynamic_Priority_Test.cpp:
+          Fixed warnings when compiling without
+          ACE_HAS_TIMED_MESSAGE_BLOCKS defined.
+
+Wed Feb 23 12:19:51 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/OS.i (ACE_LACKS_SETREUID_PROTOTYPE,
+                    ACE_LACKS_SETREGID_PROTOTYPE):
+
+          If either _BSD_SOURCE, _XOPEN_SOURCE or _XOPEN_SOURCE_EXTENEDED
+          is defined then do not allow the prototypes corresponding to
+          these macros to become visible since defining any of these
+          macros may make the real prototypes in the system headers
+          visible.  Thanks to Rich Seibel <seibel_r@ociweb.com> for
+          pointing this out.
+
+Tue Feb 22 21:11:03 2000  Ossama Othman  <ossama@uci.edu>
+
+        * configure.in (ACE_HAS_XPG4_MULTIBYTE_CHAR):
+
+          Added test for wcslen().  Only define this macro if both the
+          wchar_t type and the wcslen() function exist.  This fixes a link
+          problem on a ACE+autoconf QNX build.
+
+Tue Feb 22 20:56:51 2000  Ossama Othman  <ossama@uci.edu>
+
+        * config.guess:
+
+          Updated to latest version from the GNU CVS repository.
+
+        * config.sub:
+
+          Merged my QNX Neutrino patches into the latest version from the
+          GNU CVS repository.
+
+Tue Feb 22 20:09:14 2000  Ossama Othman  <ossama@uci.edu>
+
+        * config.sub:
+
+          Added support for QNX Neutrino.  Hosts specifications such as
+          "i386-nto," "i386-qnx," "i386-qnx-nto," etc, will now be
+          accepted by the configure script's "--host" command line
+          option.  A patch has been sent to the upstream maintainers of
+          this script.
+
+        * ace/OS.cpp (unique_name):
+
+          Fixed warning about mismatched format specifier by explicitly
+          casting the result of ACE_OS::getpid(), a "pid_t," to an "int."
+
+        * ace/OS.h (ACE_LOFF_T):
+
+          QNX Nuetrino has a 64-bit offset type, "off64_t."
+
+        * m4/platform.m4 (ACE_SET_PLATFORM_MACROS):
+
+          Added support for QNX Neutrino.
+
+Tue Feb 22 17:42:09 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Synch.cpp: Reset the ACE_File_Lock::remove_ data member to
+          0 in the open() method so that it can be reused.  Thanks to
+          Sanwoo Jin <swjinjin@sei.co.kr> for reporting this.
+
+Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/ACE.cpp (send_n and recv_n): Reduced the number of calls to
+          message_block->length () by caching the value.  Also inlined
+          some of the smaller functions.
+
+Tue Feb 22 12:29:44 2000  Ossama Othman  <ossama@uci.edu>
+
+        * m4/threads.m4 (ACE_CHECK_THREAD_FLAGS):
+
+          Added run-time tests to this M4 macro to get around the annoying
+          fact that some platforms implement no-op thread function stubs,
+          which cause link-time tests to pass.  The run-time tests check
+          the return value of pthread_create() and/or thr_create() to
+          determine if the function is working or not.  The cross-compiled
+          case falls back on the link-time test.  This fixes a problem on
+          Solaris with both Sun C++ and g++.
+
+Tue Feb 22 14:00:38 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (cond_timedwait): added pSOS support.  Thanks
+          to Sarmeesha Reddy <sarmeesha@bigfoot.com> for the
+          implementation.
+
+Tue Feb 22 09:52:50 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/config-linux-common.h (ACE_HAS_PROC_FS):
+
+          A conflict appears when including both <ucontext.h> and
+          <sys/procfs.h> with recent glibc headers, so don't define it.
+          However, at some point we should redefine this macro since the
+          latest glibc fixes this problem.
+
+Tue Feb 22 09:16:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * ace/streams.h: Commented out an inclusion of the file
+          <iomanip.h> as this was causing problems with Qt.
+
+        * ace/Signal.h: One of the variables for the constructors of
+          ACE_Sig_Action  was named as "signals". This apparently causes
+          conflict with the Qt library as the library has a macro by that
+          name. So it was changed as "signalss". Thanks to James Briggs
+          <James.Briggs@dsto.defence.gov.au> for reporting this.
+
+Tue Feb 22 01:52:09 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Message_Block.cpp: Refactored the code in duplicate()
+          and clone() so that it doesn't have macro within macros.
+          Thanks to Nanbor for reporting this.
+
+Tue Feb 22 01:19:40 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/MEM_IO.h: Added more comments.
+
+Tue Feb 22 00:39:03 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/MEM_IO.h: Changed method fetch_recv_buf as protected and
+          added some missing comments.
+
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Connector.h: Added some missing comments.
+
+Mon Feb 21 20:40:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/MEM_*: Minor modifications to formatting here.
+
+        * tests/Dynamic_Priority_Test.cpp: Only run this test if
+          ACE_HAS_TIMED_MESSAGE_BLOCKS is enabled.
+
+        * ace/Message_Block: By default, the deadline_time_ and execution_time_
+          data members are now omitted and their accessor/mutator
+          operations rendered "no-op"s unless ACE_HAS_TIMED_MESSAGE_BLOCKS
+          is enabled.  This is necessary to avoid an unnecessary 16 bytes
+          per-Message_Block.  Thanks to Irfan for pointing this out.
+
+Mon Feb 21 17:22:33 2000  Ossama Othman  <ossama@uci.edu>
+
+        * configure.in (ACE_LACKS_SETREUID):
+
+          Fixed typo.
+
+          (ACE_HAS_SOCKADDR_MSG_NAME):
+
+          Fixed broken test.  A `struct sockaddr' was being cast to a
+          `struct sockaddr *', which is obviously broken.  This fix has
+          the side effect of causing ACE_HAS_SOCKADDR_MSG_NAME to be
+          defined on platforms where the "msg_name" field of the "msghdr"
+          structure is a `void*', such as Linux and Solaris.  This isn't
+          necessarily a bad thing since it is perfectly valid.
+
+          (ACE_HAS_VOIDPTR_SOCKOPT, ACE_HAS_CHARPTR_SOCKOPT):
+
+          Fixed the tests for these two macros.  The fifth "optlen"
+          argument to setsockopt() was being passed in as a pointer to
+          some integral type.  The "optlen" argument to setsockopt() is
+          not a pointer.  Rather, it should be one of the following:
+          socklen_t, size_t or int.  The appropriate type for "optlen"
+          will be determined from previous tests, such as the test for
+          socklen_t.
+
+          The test for ACE_HAS_CHARPTR_SOCKOPT will now only be run if the
+          test for ACE_HAS_VOIDPTR_SOCKOPT fails.
+
+Mon Feb 21 16:23:03 2000  Ossama Othman  <ossama@uci.edu>
+
+        Thanks to Rich Seibel <seibel_r@ociweb.com> for providing the
+        highly detailed feedback that led to the following changes/fixes:
+
+        * THANKS:
+
+          Added Rich Seibel <seibel_r@ociweb.com> to the list of
+          contributors.
+
+        * acconfig.h (ACE_HAS_IOMANIP_NO_H):
+
+          Removed this macro since it isn't used anywhere.
+
+          (ACE_LACKS_SETREGID_PROTO, ACE_LACKS_SETREUID_PROTO):
+
+          These should have been ACE_LACKS_SETREGID_PROTOTYPE, and
+          ACE_LACKS_SETREUID_PROTOTYPE, respectively.
+
+        * configure.in (ACE_HAS_IOMANIP_NO_H):
+
+          Removed the test for this macro.  It isn't used anywhere.
+
+          (ACE_HAS_SIZET_SOCKET_LEN):
+
+          Only test for this macro if ACE_HAS_SOCKLEN_T isn't defined.
+
+          (ACE_LACKS_SETREGID_PROTO, ACE_LACKS_SETREUID_PROTO):
+
+          These should have been ACE_LACKS_SETREGID_PROTOTYPE, and
+          ACE_LACKS_SETREUID_PROTOTYPE, respectively.
+
+          Added "-U_BSD_SOURCE" to list of macros to undefine for each of
+          the tests for these macros.  Defining "_BSD_SOURCE" on some
+          platforms may make the prototypes corresponding to the above
+          macros visible, so we need to explicitly undefine it.
+
+        * ace/config-linux-common.h (ACE_HAS_PROCFS):
+
+          Corrected typo.  This macro should have been ACE_HAS_PROC_FS.
+
+Mon Feb 21 16:19:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+          Protect the definitions of the CDR macros, so users can override
+          them in their config.h file.  Thanks to Jim Scheller
+          <csoftware@iname.com> for pointing this out.
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Fixed the algorithm to allocate new CDR blocks in the chain.  In
+          all but a few weird cases it was allocating fixed sized blocks,
+          while the intention was to grow the size of the blocks to
+          minimize the number of allocations.  Thanks to Jim Scheller
+          <csoftware@iname.com> for finding this problem.
+          Also added a new ACE_CDR::consolidate() method to reduce a
+          message block chain into a single message block (with proper
+          alignment).  This is useful in the implementation of the CDR
+          streams and Anys.
+
+Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * ace/Makefile.bor: Added new files.
+
+        * tests/*.cpp, tests/test_config.h: Removed macros that had been
+          used by C++Builder 3.
+
+        * include/makeinclude/compiler.bor: Added support for C++Builder 5
+          VCL libs.
+
+        * include/makeinclude/recurse.bor, lots of Makefile.bor files:
+          Added support for makefile recursion.
+
+Mon Feb 21 14:35:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * include/makeinclude/compiler.bor: Increased the limit of
+          LIB_LFLAGS from 2048 to 4096.  Thanks to Mogens Hansen
+          <mogens_h@dk-online.dk> for reporting this.
+
+Mon Feb 21 15:43:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.cpp (create_shm_malloc): Renamed the typedef
+          <MALLOC> to <MALLOC_TYPE> to avoid name clashing problem on GHS
+          cross compilers.  Thanks to Bill Tovrea
+          <gwtovrea@west.raytheon.com> for reporting this and the help in
+          tracking this down.
+
+Mon Feb 21 12:51:52 2000  Ossama Othman  <ossama@uci.edu>
+
+        * Makefile (RELEASE_TAG_FILES):
+
+          Added `man/Makefile.am' to the list of files to be tagged at
+          release time.
+
+Mon Feb 21 08:35:58 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-hpux-11.00.h
+          Corrected a build problem with KCC.  Things were lost in the
+          transition to the new header file.
+
+Sun Feb 20 18:31:46 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace: Removed ACED.cpp and ACER.cpp.  These were only
+          needed by Borland C++Builder 3.0, which is not supported by ACE
+          (i.e., you need to upgrade to BCB 4.0 or later).  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for this fix.
+
+Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Changed Base_Pointer_T.cpp to Based_Pointer_T.cpp.
+          Also synced ace_lib with ace_dll to bring up to date.
+
+Sun Feb 20 11:33:09 2000  Ossama Othman  <ossama@uci.edu>
+
+        * THANKS:
+
+          Added Todd Gruhn <tgruhn2@mail.com> to the list of
+          contributors.
+
+        * ace/config-netbsd.h:
+
+          Defined ACE_HAS_DIRENT, and undefined ACE_LACKS_SIGSET.  Thanks
+          to Todd Gruhn <tgruhn2@mail.com> for confirming that these
+          changes were necessary.
+
+Sat Feb 19 17:53:47 2000  Ossama Othman  <ossama@uci.edu>
+
+        * bin/make_release (create_kit):
+
+          Another attempt to fix MD5 checksum generation at release time:
+          The problem was that an attempt to get the MD5 checksum for a
+          file in the current directory was being made, but that file had
+          already been moved to the destination FTP directory.  Prepending
+          the destination directory to the filename should correct the
+          problem.  MD5 checksum generation has been re-enabled.
+
+Sat Feb 19 17:32:28 2000  Ossama Othman  <ossama@uci.edu>
+
+        * Makefile (RELEASE_TAG_FILES):
+
+          Added this new variable.  It contains a list of files that
+          should be tagged at release time, but shouldn't be listed in any
+          of the release/controlled file lists.  This is necessary to
+          prevent multiple instances of the same file from being passed to
+          the `.zip' file creation command line.  For example,
+          ACE_wrappers/man, ACE_wrappers/man/man3/Makefile.am and
+          ACE_wrappers/man/html/Makefile.am were all being passed to the
+          `.zip' file creation command line, resulting in duplicate file
+          names on that command line.  Thanks to David for pointing this
+          out.
+
+          The `bin/make_release' script will use this new list of files
+          when tagging a release.
+
+          (show_release_tag_files):
+
+          Makefile target that lists files that should be tagged at
+          release time.
+
+        * bin/make_release:
+
+          Invoke "$make show_release_tag_files" to determine if there are
+          any additional files to tag at release time.
+
+          (tag):
+
+          Added "$release_tag_files" to list of files to be tagged by CVS
+          at release time.  This fixes a problem where the man page
+          Makefile.am files were not being tagged, which also prevented
+          them from being distributed with the ACE distribution. [Bug 408]
+
+Sat Feb 19 15:33:05 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 5.0.14 released.
+
+Fri Feb 18 20:58:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Do not send email if the build completed without errors.
+
+Fri Feb 18 17:30:26 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: Filled out with the known compiler settings
+          for g++, KCC, HP CC, and HP aC++. This is now the official HP-UX 11
+          config.h file for all compilers.
+
+        * ace/config-hpux-11.x-hpc++.h: This file is no longer in use. It
+          generates a compiler error if used. It is planned to go away
+          for ACE 5.1.
+
+Fri Feb 18 10:25:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ace/OS.h:
+          Workaround MSVC5 bug when invoking explicit destructors. Thanks
+          to Achim Stindt <stindt@conbis.de> for this fix.
+
+Thu Feb 17 18:32:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * OS.h:
+          Removed the ACE_GLOBAL_COLONS macro I added yesterday.
+          Found another way to generate code with the IDL compiler
+          that doesn't need it.
+
+Thu Feb 17 09:38:06 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reader_Writer_Test.cpp: use default n_iterations
+          of 25 and n_loops of 10 on VxWorks.  With the old defaults,
+          the test took too long, e.g., 7 minutes on a 450 MHz
+          Pentium.  With the new defaults, it takes about 20 seconds.
+          Thanks to Dave Hall <David.Hall@grc.nasa.gov> for reporting this.
+
+Thu Feb 17 08:10:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Service_Config.cpp (close_singletons): Don't bother calling
+          ACE_Proactor::close_singleton() on WinCE, Win95/98, or if
+          these's no support for AIO calls.  Thanks to Sanwoo Jin
+          <swjinjin@sei.co.kr> for reporting this.
+
+Wed Feb 16 17:03:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/version_tests/version_tests.dsw: Add Capabilities_Test.dsp.
+
+Wed Feb 16 14:53:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * ace/OS.h:
+          Added ACE_GLOBAL_COLONS macro. In certain cases in IDL files
+          where nested scoped names repeat (after skipping a scope so
+          it's legal), all comilers except SucCC 5.0 need the fully
+          scoped name with the global double colon in order to resolve
+          the name. SunCC 5.0, on the other hand, not only doesn't
+          need it, but outputs an error whenever it sees these global
+          double colons just inside an open paranthesis, for example,
+          (::foo::...). This macro is used in generating code in
+          just these instances so all comilers can be happy.
+
+Tue Feb 15 22:57:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/MEM_IO.h:
+        * ace/MEM_IO.cpp (send): Added a new method that sends a chain of
+          Message_Block.  This function aggregates the data in
+          Message_Block and copies them directly into shared memory.
+
+Tue Feb 15 21:26:00 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp,CPP-unserver.cpp (main),
+          examples/Reactor/Multicast/server.cpp (main),
+          examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp (main),
+          examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp (main),
+          wrapped final return with ACE_NOTREACHED to please cxx T6.3-003.
+
+Mon Feb 14 16:52:24 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux_cxx.GNU:
+          no longer need to explicitly link all of the
+          template instantiation files into shared libs.
+          -shared works properly with T6.3-003.
+
+Mon Feb 14 12:21:01 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-hpux-11.x-hpc++.h
+
+          Added a conditional include for the KCC common include file.
+          Modified the values of ACE_HAS_EXCEPTIONS and
+          ACE_LACKS_LINEBUFFERED_STREAMBUF to match those of the KCC
+          common header.  This will not affect non-KCC builds on HP.
+
+        * include/makeinclude/platform_hpux_kcc.GNU
+
+          Added this file for building on HPUX with KCC.
+
+        * include/makeinclude/platform_sunos5_kcc.GNU
+
+          Modified to allow building static libraries.
+
+        * include/makeinclude/platform_linux_kcc.GNU
+
+          Modified to allow building static libraries.
+
+Mon Feb 14 08:43:31 2000  Ossama Othman  <ossama@uci.edu>
+
+        * acconfig.h:
+
+          Changed ACE_HAS_POSITION_INDEPENDENT_MALLOC macro to
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS since the name changed in
+          ACE as well.
+
+        * configure.in (AC_LANG_CPLUSPLUS):
+
+          Set the test language to C++ earlier in the configure script to
+          make sure all tests are done using the C++ compiler.
+
+          (ACE_CONFIGURATION_OPTIONS, ACE_COMPILATION_OPTIONS):
+
+          Moved configure script option macros to new `m4/ace.m4' M4
+          macros file.
+
+          (ACE_TEMPLATES_REQUIRE_SOURCE,
+           ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
+           ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA):
+
+          Overhauled the tests for these macros.  Since there may be a
+          tight dependency between some of these macros, the
+          ACE_TEMPLATES_REQUIRE_SOURCE test also tests if either of the
+          other two macros are required.  This fixes a problem that was
+          occurring with Sun C++ 5.0.
+
+          Corrected a syntax error in the previous
+          ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA test, which is now part of
+          the ACE_TEMPLATES_REQUIRE_SOURCE test.
+
+          (ACE_TEMPLATES_REQUIRE_PRAGMA):
+
+          Added a test for this macro.  It is only run if the
+          ACE_TEMPLATES_REQUIRE_SOURCE test failed.  This should improve
+          AIX support.
+
+        * m4/ace.m4 (ACE_CONFIGURATION_OPTIONS, ACE_COMPILATION_OPTIONS):
+
+          Moved all configure script command line option macros to this
+          file and placed them in the above M4 macros.  This makes things
+          a bit cleaner, and it also allows other macros to AC_REQUIRE the
+          above macros.
+
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+
+          Made this macro depend on ACE_COMPILATION_OPTIONS
+          (i.e. AC_REQUIRE it).
+
+          Moved more compiler specific variable settings from configure.in
+          to this macro.
+
+Sun Feb 13 11:17:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+        * tests/Malloc_Test.cpp: Changed
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC to
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+
+Sat Feb 12 20:35:23 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp (initialize):
+          Zapped several temporary variables that were causing warnings
+          when ACE_ASSERT is disabled.  Thanks to David Levine for
+          reporting this.
+
+Sat Feb 12 17:06:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.h:
+        * ace/Thread_Manager.cpp (ACE_Thread_Exit): Removed member
+          <status_> and its accessors.  They don't seem to be used
+          anywhere in ACE and can't be accessed by users.  Thanks to
+          "Elias Sreih" <sealstd1@nortelnetworks.com> for noticing this.
+
+Sat Feb 12 15:15:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/README (ACE_HAS_POSITION_INDEPENDENT_POINTERS): Renamed
+          the depricated ACE_HAS_POSITION_INDEPENDENT_MALLOC to
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+
+        * ace/OS.h: Made ACE_HAS_POSITION_INDEPENDENT_POINTERS=1 the default
+          if it is not defined already.  If you don't want the support of
+          position independent pointers (which means you don't care about
+          position independent malloc,)  define
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS to 0.
+
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.cpp:
+        * ace/Malloc.h:
+        * ace/Malloc.cpp:
+        * ace/Malloc.i:
+        * ace/Malloc_T.i:
+        * ace/Memory_Pool.cpp: Changed ACE_HAS_POSITION_INDEPENDENT_MALLOC
+          to ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+
+        * ace/config-sunos5.5.h:
+        * ace/config-win32-common.h: Removed depricated
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC.
+
+Sat Feb 12 14:40:20 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Connection/misc/Connection_Handler.cpp,
+          examples/Logger/Acceptor-server/server_loggerd.cpp,
+          examples/Logger/simple-server/Logging_Handler.cpp (handle_timeout):
+          added ACE_UNUSED_ARG (arg), only with ACE_NDEBUG.
+
+Sat Feb 12 00:27:45 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.h: Changed to conditionally define
+          ACE_DEFAULT_TEMP_DIR_ENV according to whether the unicode is
+          supported or not.
+
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_Acceptor.cpp (accept):
+        * ace/MEM_Connector.cpp (connect): Made UNICODE friendly.  Thanks
+          to Steve for reporting the problem.
+
+Fri Feb 11 13:26:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/MEM_Acceptor.cpp (accept): Changed to use
+          ACE_reinterpret_cast to cast (sockaddr *) to (sockaddr_in *).
+          This eliminate the warning on HPUX aCC compiler.
+
+Fri Feb 11 01:16:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Acceptor.h: Changed to use ACE_LACKS_INLINE_FUNCTIONS to
+          determine where to include MEM_Acceptor.i file as ASYS_INLINE is
+          used.  Thanks to Marina and SunCC 5 for reporting the problem.
+
+Thu Feb 10 21:57:04 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/MEM_SAP.h
+        * ace/MEM_SAP.i (set_buf_len): Removed the const'ness of argument
+          <buf>.
+
+Thu Feb 10 14:09:56 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added MEM_* files.
+
+Thu Feb 10 13:49:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.i:
+        * ace/MEM_SAP.cpp: Implemented the adaptation layer for managing
+          shared memory in shared memory transport.
+
+        * ace/MEM_Addr.h:
+        * ace/MEM_Addr.i:
+        * ace/MEM_Addr.cpp: Implemented the "endpoint" addressing
+          mechanism for shared memory transport.  The ACE_MEM_Addr make
+          sure the "endpoint" is not on an interface that is accessable
+          outside of the running host.  It also serves as endpoint
+          identification and provides the <same_host> checking method.
+
+        * ace/MEM_IO.h:
+        * ace/MEM_IO.i:
+        * ace/MEM_IO.cpp: Implemented the IO routines for shared memory
+          transport.  Currently, these IO routines treat shared memory
+          transport as a streaming devide and copy the data into its own
+          buffer before sending the data over.  We'll add method for
+          acquiring and sending the internal buffer later.
+
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.i:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Connector.h:
+        * ace/MEM_Connector.i:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_Stream.h:
+        * ace/MEM_Stream.i:
+        * ace/MEM_Stream.cpp: These classes emulate SOCK_* classes but use
+          shared memory as their transport mechanism.
+
+        * ace/Malloc_T.cpp: Fixed a mis-matched ACE_TRACE message.
+
+        * ace/OS.h: Added definitions of ACE_MEM_ACCEPTOR,
+          ACE_MEM_CONNECTOR and, ACE_MEM_STREAM.
+
+        * ace/Makefile: Aded MEM_* files and updated dependencies.
+
+        * tests/Malloc_Test.cpp: Removed explicit template instantiations
+          for ACE_Malloc[_T] as they are taken care of in MEM_SAP.cpp
+          now.
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_memclient.dsp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_memserver.dsp:
+        * examples/IPC_SAP/SOCK_SAP/SOCK_SAP.dsw: Added a simple example
+          on how to use the shared-memory transport.
+
+Thu Feb 10 10:18:00 2000  Ossama Othman  <ossama@uci.edu>
+
+        * THANKS:
+
+          Added Hajdukiewicz Markus <MHajdukiewic@heyde.de> and Gerwin
+          Robert <RGerwin@heyde.de> to the list of fame.
+
+        * configure.in (ACE_LACKS_SETSCHED):
+
+          Fixed test so that it defines ACE_LACKS_SETSCHED when
+          sched_setscheduler() isn't found.  This was the intended
+          behavior.  Thanks to Hajdukiewicz Markus <MHajdukiewic@heyde.de>
+          and Gerwin Robert <RGerwin@heyde.de> for providing a patch for
+          this problem.
+
+          (ace_cv_feature_cxx_std_template_specialization):
+
+          It appears that this variable had to be quoted when testing if
+          it was set to "yes" on AIX.  Thanks again to Markus and Robert
+          for providing a patch.
+
+Wed Feb 09 00:41:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/Pipe_Test.cpp (main): Spawn command should be
+          "./Pipe_Test" and not "Pipe_Test".  Otherwise the test will fail
+          if the user does not have "." in his/her PATH.  Thanks to Ossama
+          for reporting this problem.
+
+Tue Feb 08 21:22:45 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/Token: Yesterday's change caused one problem.  There was no
+          way to distinguish which thread was going to be the next owner.
+          So the following happened:
+
+          Thread A had a read lock and was waiting in select().  Thread B
+          wanted a write lock, therefore it executed the sleep hook, and
+          then waited on the condition.  Thread A got up through the sleep
+          hook, signaled thread B, released the lock and went back to grab
+          the read lock.  Even though thread B was runnable, it hadn't
+          gotten a chance to become the owner and <in_use_> was still
+          zero.  When thread A tried to reacquire the read lock, it
+          succeeded.  Thread B finally ran to find out that the token was
+          in use and went back to sleep, and hence got starved in the
+          process.
+
+          Therefore, the following changes were made to fix the above:
+
+          - wakeup_next_waiter() always reset <in_use_> and <owner_>.  If
+            there is a waiter, it sets <in_use_> and <owner_> for the next
+            owner.
+
+          - release() doesn't reset <in_use_> and <owner_> since
+            wakeup_next_waiter() now does.
+
+          - renew() doesn't set or reset <in_use_> and <owner_> since
+            wakeup_next_waiter() now does.
+
+          - shared_acquire() doesn't set <in_use_> and <owner_> since
+            wakeup_next_waiter() now does.
+
+          - The while loops in shared_acquire() and renew() now loop until
+            the calling thread becomes the owner.
+
+          Note that this version of the Token implementation is still
+          better than the previous one since it does not double delete on
+          timeouts and wakes up the next waiter if it timed out and became
+          the owner simultaneously.
+
+Tue Feb 08 21:46:51 2000  Girish Birajdar  <birajdar@lucent.com>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          added SIMSPARCSOLARIS support.
+
+Tue Feb  8 16:29:38 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ltcf-cxx.sh:
+        * ltconfig:
+        * ltmain.sh:
+
+          Updated from latest libtool multi-language branch versions.
+
+Tue Feb  8 14:25:46 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/config-sunos5.5.h (ACE_HAS_TYPENAME_KEYWORD):
+
+          According to ACE's configure script, Sun C++ 5.0 also supports
+          the typename keyword.
+
+Tue Feb  8 16:17:21 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Thread_Manager.h: Added comment text to ACE_Thread_Manager::wait
+          noting that it doesn't wait during ACE_Object_Manager rundown.
+
+Tue Feb  8 14:16:50 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/config-sunos5.5.h (ACE_HAS_USING_KEYWORD):
+
+          Sun C++ 5.0 supports the `using' keyword.  Thanks to David Wicks
+          <wicks@swbell.net> for pointing this out.
+
+Mon Feb 07 21:11:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/Token: Bug 416
+          (http://ace.cs.wustl.edu/bugs/show_bug.cgi?id=416) was causing
+          problems for TAO/tests/Leader_Followers.  The current owner of
+          the token was in the process of waking up the next thread. In
+          the meantime, the thread that was going to be woken up next
+          timed out.  This lead to double deletes from queues and double
+          decrements of counters: one by the thread doing the signaling
+          and the other by the thread timing out. In addition, the other
+          threads waiting for token never woke up since there was nobody
+          to wake them up.
+
+          The following changes were made to rectify this problem:
+
+          - ACE_Token::ACE_Token_Queue::insert_entry() factored out common
+            code for adding followers to the queue.
+
+          - The thread adding itself to the waiter queue and changing the
+            counters is the one responsible for undoing the state
+            changes.  The thread doing to wake up is only responsible for
+            the signaling.
+
+          - When a thread timeouts, it must check if it was also selected
+            as the next owner.  If it was, it must wakeup another waiter.
+
+          - renew() was simplified and made consistent with
+            shared_acquire() and release().
+
+          - wakeup_next_waiter() abstracted out the code for the selection
+            of the next owner.
+
+          - Improved state management including values for <this->owner_>
+            and <this->in_use_>.
+
+          - The wait() loop was not correct. We now loop until the token
+            is no longer in use.  This way if the token ownership was taken
+            by another (new) waiter thread by the time we wake up, we simply
+            go back to sleep.
+
+Mon Feb  7 17:54:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * bin/run_all_list.pm:
+          Added TAO/tests/DynAny_Test/run_test.pl to the general
+          and single-threaded test groups.
+
+Mon Feb  7 17:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+        * ace/ACE.cpp (out_of_handles): Added ENOTSUP (Operation not
+          supported) check for SunOS. This helped in solving a bug when
+          the Cached_Conn_Test was executed using a single-threaded build.
+          Thanks to Steve Huston <shuston@riverace.com> for reporting this
+          bug.
+
+Mon Feb  7 17:28:40 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * netsvcs/clients/Naming/Client/main.cpp (main): Removed two
+          warnings that crept in recently.  Thanks to David Levine
+          for reporting this.
+
+Mon Feb  7 08:34:26 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/ACE-subsets.html:
+          Removed the instructions for subsets on Win32. Subsets are not
+          supported under MSVC Project files.
+
+Sun Feb  6 20:44:26 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace-config.1.in:
+
+          Updated e-mail address of author (me).
+
+        * configure.in:
+
+          Updated e-mail address of configure script maintainer (me again).
+
+          (PURE_CACHE_DIR):
+
+          Fixed syntax of shell script variables.  This fixes a problem
+          that occurred on FreeBSD.
+
+          (LIBS):
+
+          Removed manual addition of some thread related libraries.  They
+          are now in the auto-detection list in threads.m4.
+
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+
+          Improved support for HP aCC, and corrections.  Set WERROR to
+          "+We67" to cause use of "#pragma once" to be an error instead of
+          a warning.
+
+        * m4/features.m4 (ACE_CHECK_ASYNCH_IO):
+
+          Reduce timeout value in test program from INT_MAX to 5 seconds.
+
+        * m4/threads.m4 (ACE_CHECK_THREADS):
+
+          Add "-xnolib" to CXXFLAGS when testing thread flag support using
+          Sun C++.  Sun C++ links a thread function stub library in the
+          single-threaded case.  The stubs are no-ops but they exist,
+          nonetheless.  This causes the link tests used to determine if a
+          thread flag is needed to incorrectly pass.
+
+Sun Feb  6 14:52:28 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/Makefile.am (libACE_Demux_la_SOURCES):
+
+          Added `QtReactor.cpp' to list of sources.
+
+          (libACE_Other_la_SOURCES):
+
+          Added `QoS_Session_Impl.cpp' and `QoS_Session_Factory.cpp' to
+          the list of sources.
+
+          (HEADER_FILES):
+
+          Added `Min_Max.h', `QoS_Session_Impl.h' and
+          `QoS_Session_Factory.h' to the list of headers.
+
+          (INLINE_FILES):
+
+          Added `QoS_Session_Impl.i' to the list of inline files.
+
+        * ace/OS.h (ACE_LOFF_T):
+
+          HP-UX has a 64 bit offset type "off64_t."
+
+Sat Feb  5 20:49:50 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ltcf-c.sh:
+        * ltcf-cxx.sh:
+        * ltconfig:
+        * ltmain.sh:
+
+          Updated from latest libtool multi-language CVS branch.
+
+        * m4/compiler.m4 (LDFLAGS):
+
+          Remove "-xildoff" from the Sun C++ linker flags.  It doesn't
+          seem to be needed since the compiler is smart enough to know
+          when to use it.
+
+Fri Feb  4 23:12:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp (handle_input): Added code to
+          handle the case where all the data isn't available when we do a
+          "recv()" from the socket.  Thanks to David X. Callaway
+          <david.x.callaway@intel.com> for reporting this.
+
+        * ace/Log_Msg.cpp (open): Add a special-purpose case for NT to make sure
+          that handles are reused in the client logging daemon.  Thanks to
+          David X. Callaway <david.x.callaway@intel.com> for reporting
+          this.
+
+Fri Feb  4 19:29:31 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Process.h:
+        * ace/Process.cpp:
+          The method command_line_argv () now returns a LPTSTR const *
+          instead of a char * const *.  This enables it to compile under
+          UNICODE.  Thanks to Steve Huston for pointing this out.
+
+Fri Feb  4 16:46:42 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_tests.sh: Added . to PATH to be sure that tests which
+          fork/exec and rely on PATH to find the program (like Pipe_Test)
+          run correctly.
+
+Fri Feb  4 16:31:22 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/Message_Queue_Notifications_Test.cpp: Use ACE_HAS_THREADS
+          rather than ACE_MT to leave out the ACE_Barriers in Watermark_Test
+          class when building without threads to avoid compile errors on
+          Sun C++ 4.2.
+
+Fri Feb  4 15:11:53 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: New config file to handle building on
+          HP-UX 11.00 with aCC, CC, or g++ (tested on 2.95.2). This file
+          will be the new file for this platform when autoconf is not used.
+          The other config-hpux-11* files will go away soon (maybe before
+          ACE 5.1 is released).
+
+Fri Feb  4 15:56:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_gcc.GNU: Added -fstrict-prototype
+          for HP-UX 11 - it resolves a pthread_atfork dispute between two
+          slightly different declarations in pthread.h and unistd.h.
+
+Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Malloc_T.cpp (unbind): Removed the != 0 test since it was
+          causing ambiguity problems for G++.  Thanks to David Levine for
+          reporting this.
+
+        * ace/Malloc_T.cpp (unbind): Make sure to update the prev_ pointer
+          so that we don't end up with an improperly linked list.  Thanks
+          to Sandro Doro <doro.s@flashnet.it> for reporting this.
+
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp: Only
+          explicitly instantiate a template for ACE_Malloc_T if we've got
+          ACE_HAS_POSITION_INDEPEDENT_MALLOC enabled.  Thanks to David
+          Levine for reporting this.
+
+Thu Feb  3 11:40:27 2000  Ossama Othman  <ossama@uci.edu>
+
+        * docs/ACE-subsets.html:
+
+          Added some notes about building ACE subsets using MSVC++.
+          Thanks to Paul von Behren <vonbepd@lmy-deja.com> for providing
+          the tips.
+
+Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/OS.i,
+        * ace/Synch.cpp: Added a cast of (short) to the use of USYNC_THREAD
+          in order to prevent ambiguity problems for KAI C++.  Thanks to
+          Chad Elliott <elliott_c@ociweb.com> for reporting this.  This
+          fixes bugid 418.
+
+        * ace/OS.cpp (thr_create): Added yet another cast to (long) for
+          PRIORITY_MAX so that the types will be consistent for the
+          ace_min() function.  Thanks to Stephen Moon <smoon@oxmol.co.uk>
+          for reporting this.
+
+Thu Feb  3 08:38:22 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/run_all_list.pm:
+          Disable the $TAO_ROOT/orbsvcs/tests/Event/* tests under single
+          threaded builds because the tests do indeed use threads.
+
+Wed Feb  2 23:35:19 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/OS.cpp (thr_create): Added a cast to (long) for
+          PRIORITY_MAX so that the types will be consistent for the
+          ace_min() function.  Thanks to James Briggs
+          <James.Briggs@dsto.defence.gov.au> for reporting this.
+
+Wed Feb 02 21:56:32 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: added -p option to check Purify
+          output for anomaly and leak reports.
+
+Wed Feb 02 16:29:19 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (lwp_getparam): if the LWP is in the TS
+          class, set the policy to ACE_SCHED_OTHER instead of
+          ACE_SCHED_RR.  That's the only thread scheduling policy
+          that's supported in TS class on Solaris, where this function
+          can be used.  Thanks to Chris Gill for tracking this bug down.
+
+Wed Feb 02 12:46:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.cpp (open): Changed to determine whether files should be
+          opened using FILE_SHARE_DELETE flag on Win32 at runtime.  This
+          allows ace libraries built for Win95/98 work correctly on NT.
+          Thanks to Alex Chachanashvili <achacha@panix.com> for reporting
+          this. [Bug 419]
+
+        * ace/OS.{h,i,cpp}:  Added a static data member of type
+          OSVERSIONINFO on win32 and initialize it in
+          ACE_OS_Object_Manager::init to cache the OS version
+          informaiton.
+
+Wed Feb  2 11:08:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Thread.h: Clarified that cancel() is only portable
+          on platforms that support cancellation.  Thanks to Jason
+          Czavislak <jczavislak@osprey.smcm.edu> for motivating this.
+
+Wed Feb  2 08:43:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_linux_lxpthread.GNU:
+          Add support for gprof, not very useful when compared to
+          Quantify, but helps.
+
+        * bin/auto_compile:
+          Some tests print ERROR to indicate a failure.
+
+Tue Feb  1 12:59:28 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ltcf-cxx.sh:
+
+          Added HPUX shared library support for the aCC C++ compiler.
+
+Tue Feb  1 09:40:50 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tests/Pipe_Test.cpp (main):
+
+          Exit with error if child exited with error.  Previously, the
+          test returned successfully which was misleading.
+
+        * ltcf-cxx.sh:
+        * ltconfig:
+        * ltmain.sh:
+
+          Updated from latest libtool multi-language branch sources.
+
+Mon Jan 31 00:09:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * Added the following changes for Borland C++Builder 4:
+
+          ace/OS.cpp: Removed processor architecture "hack" since
+          Borland C++Builder 4 supports the required structure definition,
+          and earlier versions are no longer supported.
+
+          ace/OS.h: Do not define the ACE_No_Heap_Check class when
+          building with Borland C++Builder.
+
+          ace/OS.h, OS.i, config-win32-borland.h: Updated compiler version
+          numbers for macro definitions.
+
+          ace/Thread_Manager.h: ACE_Thread_Descriptor_Base class needs to
+          be exported when building a DLL.
+
+          include/makeinclude/build_dll.bor, build_exe.bor, build_lib.bor:
+          Added makefile target for "clean".
+
+          include/makeinclude/compiler.bor: Added -D_DEBUG compiler flag
+          when building debug configuration.
+
+          include/makeinclude/outputdir.bor: Allow object directory to be
+          overridden.
+
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+          contributing these.
+
+        * ace/OS.i: Minor reformatting.
+
+        * ace/SOCK_Dgram_Mcast: Updated the implementation comments related to
+          the subscribe_ifs() return value of 1 to indicate why this is
+          needed.  Also, updated the documentation to indicate to check
+          for -1 on failure.  Thanks to Mark Boriac for motivating this.
+
+        * etc/Svc_Conf_l.cpp.diff: The context diff was incorrectly
+          written, therefore, the wrong ACE_YY_BREAK was being commented
+          out.  This is now fixed.  Thanks to David Levine for reporting
+          this.
+
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+          Added a typedef to handle cases where
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC is not set.  Thanks to David
+          Levine for reporting this.
+
+        * examples/Service_Configurator/Misc/main.cpp (main): Changed
+          int i to size_t i to avoid complaint about signed/unsigned
+          mismatch.  Thanks to David Levine for reporting this.
+
+Sun Jan 30 12:35:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Token.cpp (remove_entry): <tail_> should point to <prev>
+          entry if we are removing the last entry in the queue.  Thanks to
+          Irfan for pointing this out.
+
+Sat Jan 29 12:56:16 2000  bala  <bala@cs.wustl.edu>
+
+        * ACE version 5.0.13 released.
+
+Fri Jan 28 20:14:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RB_Tree.h:
+        * ace/RB_Tree.i:
+          current_size() was not const.
+
+Fri Jan 28 13:57:37 2000  Fred Kuhns    <fredk@cs.wustl.edu>
+
+        * fixed QoS realted bugs in QoS_Session_Impl.cpp QoS_Session_Impl.h
+          SOCK_Dgram_Mcast.cpp.  Just added some error checking and
+          check errno after call to join_leaf.
+
+Thu Jan 27 20:25:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/Token.cpp (shared_acquire and renew): Must decrement
+          <waiters_> in case of condition variable wait errors and
+          timeouts.
+
+        * ace/TP_Reactor.cpp (handle_events): If the user gives us a
+          timeout, we must call <token_.acquire_read> with that timeout.
+          Also, we must be more careful when dealing with the return value
+          from <token_.acquire_read> to distinguish timeouts from errors.
+
+Thu Jan 27 16:52:40 2000  James Hu <jxh@entera.com>
+
+        * ace/Message_Block.*:
+          Added a ACE_Message_Block::reset() method that puts the
+          rd_ptr() and wr_ptr() back to the beginning of the message
+          block.
+
+Thu Jan 27 16:38:03 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_IO.h: Updated comments for ACE_Asynch_Read_Stream::read
+          and ACE_Asynch_Write_Stream::write to state that the affected
+          message block's wr_ptr and rd_ptr, respectively, are updated upon
+          successful completion of the operation.
+
+Thu Jan 27 11:06:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Parse_Node.cpp: Strings duplicated using ACE::strnew() must
+          be deleted using delete[] instead of delete.  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for catching this.
+
+Thu Jan 27 09:11:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Block.h: Tried to clarify the comments regarding the
+          handling of the data block pointer in the <ACE_Data_Block>
+          manipulating functions. Thanks to Defang Zhou <dzhou@zoo.uvm.edu>
+          for pointing out the lack of documentation regarding this.
+
+        * THANKS: Added Defang Zhou to the Hall of Fame.
+
+Thu Jan 27 00:15:08 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/ACE.cpp (recv_n and send_n): There was a bug in these
+          methods introduced by the double while loops and the use of a
+          single break ;-) Changed break to a return.  Thanks to the
+          HPUX_aCC auto compile build for leading me to this bug!
+
+Wed Jan 26 21:49:16 2000 James Hu <jxh@entera.com>
+
+        * ace/Message_Block.*:
+          Added new methods mark(), capacity(), and ::total_capacity().
+          mark() points at base_ + cur_size_, capacity_ returns
+          max_size_, and total_capacity_ sums all capcity()'s for all
+          MBs in the continuation.  Changed space() to return
+          mark() - wr_ptr().
+
+Wed Jan 26 21:03:43 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/High_Res_Timer.cpp: Thanks to Adamo, Vince <adamo@vignette.com>
+          who noticed that global_scale_factor_ wasn't being set on ACE_WIN32
+          when QueryPerformanceFrequency () worked.  Now the code sets it
+          to one when that happens.
+
+Wed Jan 26 17:04:24 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Proactor.h: Changed some comments to work better with the
+          HTML man page generator.
+
+Tue Jan 25 16:23:52 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp: Updated
+          this example to use the ACE_Malloc_T<> template with the
+          ACE_PI_Control_Block so that we get true "position-independent"
+          malloc behavior.  Thanks to Rick Ohnemus
+          <rjohnemus@systemware-inc.com> for reporting this.
+
+Tue Jan 25 14:05:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/Connector.cpp (connect_i): In addition to checking <sh_copy>
+          for a zero value, <*sh_copy> should also be checked for a zero
+          value.
+
+Mon Jan 24 12:09:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/Connector.cpp (connect_i):
+        * ace/Strategies_T.cpp (ACE_Cached_Connect_Strategy::connect_svc_handler):
+
+          Cannot use <sh> after the connector lock has been released since
+          other threads now have access to <sh> and can reset it.  We must
+          use <sh_copy> instead (even when activating the newly connected
+          svc_handler).  This should help with TAO/tests/MT_Client
+          crashes.
+
+Sun Jan 23 14:08:12 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/OS.h (setgid):
+
+          Added prototype for ACE_OS::setgid() method.
+
+        * ace/OS.i (setgid):
+
+          Added wrapper for setgid() system call.
+
+          (getgid):
+
+          Removed duplicate getgid() wrapper, and fixed it so that it
+          returns with ENOTSUP on Win32 platforms, just like the getuid()
+          wrapper.
+
+Sat Jan 22 21:10:49 2000  Ossama Othman  <ossama@uci.edu>
+
+        * configure.in:
+
+          Moved check for old GNU C++ to m4/compilers.m4.
+
+        * m4/acinclude.m4 (ACE_CONVERT_WARNINGS_TO_ERRORS):
+
+          This macro depends on the compiler settings performed by the
+          ACE_SET_COMPILER_FLAGS macro, so added an
+          AC_REQUIRE([ACE_SET_COMPILER_FLAGS]).
+
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+
+          Moved check for old GNU C++ from configure.in to here.
+
+Sat Jan 22 15:27:39 2000  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+        * ace/Svc_Conf_l.cpp: Updated this file to use the new
+          "warning-free" generated file.
+
+        * etc/Svc_Conf_l.cpp.diff: Commented out a YY_BREAK macro that was
+          causing an "unreached statement" warning on some C++ compilers.
+          Thanks to David Levine for reporting this.
+
+        * tests/Thread_Pool_Test.cpp: In the method
+          test_empty_message_shutdown() we don't need to allocate a new
+          message block when sending a "null" message.  This removes
+          another memory leak.  Thanks to David Levine for reporting this.
+
+Sat Jan 21 12:30:33 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/ACE.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Template_Instantiations.cpp:
+
+          Moved ACE_LOCAL_MEMORY_POOL/ACE_Null_Mutex related template
+          instantions to ACE.cpp.  This fixes a single threaded build
+          problem.
+
+Thu Jan 20 09:15:50 2000  Ossama Othman  <ossama@uci.edu>
+
+        * bin/bootstrap:
+
+          Create NEWS file before automake is run.  Automake complains
+          about missing NEWS file.
+
+Thu Jan 20 09:03:37 2000  Ossama Othman  <ossama@uci.edu>
+
+        * NEWS:
+
+          This file is currently generated during the autoconf support
+          bootstrapping process.  As such, it shouldn't be placed under
+          version control.  Removed this file from the repository.
+
+        * configure.in:
+
+          Added thread related preprocessor flags to CPPFLAGS prior to
+          running the tests that check for the pthread_cancel() strtok_r()
+          prototypes in case such flags are needed on some platforms.
+
+          If the configure script determines that no usable thread library
+          was found it then removes any thread related preprocessor flags
+          from the CPPFLAGS preprocessor flags variable.
+
+        * ace/README:
+
+          Added description of ACE_HAS_ALT_CUSERID.
+
+        * m4/threads.m4 (ACE_CHECK_THREADS):
+
+          Remove any definitions of _REENTRANT and _THREAD_SAFE from the
+          preprocessor flags prior to checking if the compiler defines
+          either one, and prior to searching for compiler thread flags by
+          using the sed stream editor.  This is done instead of using the
+          "-U" preproccesor flag since using that flag may undefine the
+          same preprocessor macros potentially defined by the thread flag
+          being tested.
+
+          Added "kthread" to the list of thread flags to be searched.
+          FreeBSD uses "-kthread" to enable support for kernel threads.
+
+          (ACE_CHECK_THREAD_FLAGS):
+
+          Relaxed criteria used to determine if compiler provides thread
+          support by removing requirement that either _REENTRANT or
+          _THREAD_SAFE should be defined.
+
+          (ACE_CHECK_THREAD_CPPFLAGS):
+
+          Added this test.  It checks if the compiler defines thread
+          related preprocessor flags, such as _REENTRANT and
+          _THREAD_SAFE.  The test is a compile-time test that is performed
+          after the thread flag search test so that the thread flag (if
+          any) is used during this test in case it defines any
+          preprocessor flags.
+
+Wed Jan 19 23:21:07 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * tests/Thread_Pool_Test.cpp (test_queue_deactivation_shutdown): Make
+          sure to release the message block once we've decided to shutdown
+          the message queue to avoid a memory leak.  Thanks to David
+          Levine for reporting this.
+
+Tue Jan 19 13:33:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/ATM_Addr.cpp, ATM_QoS.cpp:
+          Fixing format characters for ACE_Log_Msg::log() method.
+
+Tue Jan 18 20:56:58 2000  Ossama Othman  <ossama@uci.edu>
+
+        * THANKS:
+
+          Added Daniel Lang <dl@leo.org> to the list of contributors.
+
+        * acconfig.h (ACE_HAS_ALT_CUSERID):
+
+          Added this ACE macro to the list of macros.
+
+        * configure.in:
+
+          Thanks to Daniel Lang <dl@leo.org> for motivating the following
+          ACE+autoconf related FreeBSD 3.4 fixes.
+
+          (ACE_LACKS_SEMBUF_T):
+
+          Improved the test for this macro by including <sys/types.h> and
+          <sys/ipc.h> prior to <sys/sem.h>.   It incorrectly failed on
+          FreeBSD.  Presumably this change should correct the problem.
+
+          (ACE_HAS_ALT_CUSERID):
+
+          Added test for this macro.  It should get defined for platforms
+          that lack support for or have deprecated support for the
+          cuserid() function, and have POSIX password file functions.
+
+          (ACE_LACKS_PWD_FUNCTIONS):
+
+          Added getpwuid() to list of functions necessary for
+          ACE_LACKS_PWD_FUNCTIONS to *not* be defined.
+
+          (ACE_LACKS_PTHREAD_CANCEL):
+
+          Added check for the pthread_cancel() prototype.  If it doesn't
+          exist then don't use pthread_cancel(), i.e. define
+          ACE_LACKS_PTHREAD_CANCEL.  It it probably a bad idea to create a
+          prototype for pthread_cancel in ACE, so just don't use
+          pthread_cancel().  FreeBSD 3.4 appears to have the
+          pthread_cancel() function but no prototype for it.
+
+        * ace/OS.i (cuserid):
+
+          Changed Linux implementation so that it can be used for other
+          platforms by simply defining ACE_HAS_ALT_CUSERID.
+
+          Added preprocessor error if ACE_HAS_ALT_CUSERID and
+          ACE_LACKS_PWD_FUNCTIONS are both defined.  ACE's alternate
+          cuserid() implementation requires that password file related
+          functions exist.
+
+        * ace/config-linux-common.h:
+
+          Define ACE_HAS_ALT_CUSERID on glibc 2.1.x since the use of the
+          system cuserid() is discouraged.
+
+        * m4/acinclude.m4:
+
+          Cosmetic updates.
+
+Tue Jan 18 22:53:18 2000  Toshio HORI <toshi@etl.go.jp>
+
+        * include/makeinclude/platform_vxworks_5.x_g++.GNU:
+          added support for compiling ACE for VxWorks/SPARC target.
+
+Tue Jan 18 15:55:54 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * netsvcs/ACE-netsvcs.html: Fixed a typo.  Thanks to
+          Brian Jones <bjones@edgemail.com> for reporting this.
+
+        * ACE-INSTALL.html: Updated the text from
+          Dr. Toshio HORI <toshi@etl.go.jp>.
+
+Tue Jan 18 15:37:25 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/ATM_Connector.{cpp,h,i}, ATM_QoS.{cpp,h}, ATM_Stream.{cpp,i}:
+          Adding changes to support FORE's latest WinSock2 ATM support.
+
+Tue Jan 18 13:44:34 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * tests/Thread_Pool_Test.cpp: Replaced int with size_t to
+          prevent compiler warnings comparing signed and unsigned
+          quantities.
+
+Tue Jan 18 09:13:43 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: ACE works just fine on RedHat 5.1 and
+          later, not just 5.1 through 6.1.  Thanks to Raj Narayanaswamy
+          <rnarayanaswamy@hologic.com> for asking about this.
+
+Mon Jan 17 18:03:17 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Process_Manager.cpp: Under WIN32, the ACE_Process_Manager
+          registered itself as an event handler with ACE_Reactor, but did
+          not properly unregister itself when it closed.  For error to be
+          noticed, you must instantiate ACE_Process_Manager with an
+          ACE_Reactor.  ACE_Process_Manager should *not* be run as a
+          singleton.  It must be instantiated such that it will be
+          destroyed *before* the ACE_Reactor is destroyed.
+
+          When you call ACE_Process_Manager::spawn, the newly created
+          process is added to the ACE_Process_Manager's process table and
+          (under WIN32) the ACE_Process_Manager is registered as an event
+          handler for the new process (ace/Process_Manager.cpp, line 523)
+          using this call:
+
+          r->register_handler (this, proc->gethandle ());
+
+          This will happen for every process spawned. Thus,
+          ACE_Process_Manager will potentially be associated with more
+          than one WIN32 process handle.
+
+          When the ACE_Process_Manager was destroyed, the dtor calls
+          ACE_Process_Manager::close which (for WIN32) attempts to remove
+          ACE_Process_Manager as an Event_Handler from the ACE_Reactor
+          using the following code (ace/Process_Manager.cpp, line 256)
+
+          this->reactor ()->remove_handler (this, 0);
+
+          This version of ACE_Reactor::remove_handler is:
+
+          int ACE_Reactor::remove_handler
+          (
+                ACE_Event_Handler *event_handler,
+                ACE_Reactor_Mask mask
+          );
+
+          It calls event_handler->get_handle() to obtain the handle to
+          which 'event_handler' is associated.  The problem is that
+          ACE_Process_Manager::get_handle returns ACE_INVALID_HANDLE, so
+          the ACE_Reactor never properly unregistered the
+          ACE_Process_Manager. This is now fixed and should work correctly
+          on Win32 and other platforms.
+
+          Thanks to Greg Gallant <gcg@intercap.com> for tracking all this
+          down and providing the fix.
+
+        * ace/Process_Manager.cpp (open): Wrapped the setpgid() call with a
+          #if !defined (ACE_LACKS_SETPGID) to remove spurious run-time
+          warnings on platforms that don't support setpgid().  Thanks to
+          Craig Perras <cperras@watchguard.com> for reporting this.
+
+        * ace/NT_Service: Reformatted this header to conform to the ACE
+          programming guidelines.  Also, replaced
+
+          #if defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0)
+
+          with
+
+          #if defined (ACE_WIN32)
+
+          This change allows a single dll to be built that supports both
+          NT and Win9x.  The app can use GetVersionEx() to check whether
+          the platform is NT or not dynamically, or it can just call the
+          various service functions, which will return a function not
+          supported error.  Thanks to Craig Perras
+          <cperras@watchguard.com> for reporting this.
+
+        * tests/Thread_Pool_Test.cpp: Enhanced this test to illustrate how
+          to shut down Tasks using either the "empty message" strategy or
+          the "queue deactivation" strategy.
+
+        * ace/Message_Queue.h: Updated the documentation of the enqueue*()
+          and dequeue*() methods to clarify which errno values are set
+          when the calls return -1.
+
+        * examples/Threads/thread_pool.cpp: Updated this example to
+          remove the use of the now-defunct "wait_for_threads_to_shutdown"
+          feature of ACE_Task.
+
+        * ace/Task_T: Removed the recent feature added on
+
+          Sat Jan  8 09:44:51 2000  Douglas C. Schmidt
+          <schmidt@tango.cs.wustl.edu>
+
+          that allowed to an ACE_Task's destructor to wait for threads in
+          a task to exit.  It turns out this is practically impossible to
+          use correctly because of the way that destructors are destroyed
+          from the "top down".  However, it's trivial to get the same
+          behavior by simply calling the Tasks's wait() method whenever
+          you want to implement barrier synchronization on a Task's thread
+          exits.
+
+        * tests/Thread_Pool_Test.cpp: Updated this test to illustrate
+          various strategies to wait for threads to exit.  Thanks to Mark
+          C. Barnes <marcus@muse3d.com> for motivating this example.
+
+Mon Jan 17 14:20:17 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.h:
+        * ace/OS.i: Changed the signature of isatty to (int) and added a
+          (ACE_HANDLE) version for Win32.
+
+        * ace/Makefile:
+        * ace/Svc_Conf_l.cpp: Removed the explicit casting of fileno()
+          from int to ACE_HANDLE.
+
+        * ace/config-WinCE.h: Added ACE_LACKS_ISATTY.
+
+        * ace/OS.i (isatty): Removed WinCE specific section.
+
+Mon Jan 17 00:53:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/OS.h: Added a cast to (long) for ACE_THR_PRI_FIFO_MIN,
+          ACE_THR_PRI_FIFO_MAX ACE_THR_PRI_RR_MIN, ACE_THR_PRI_RR_MAX,
+          ACE_THR_PRI_OTHER_MIN, ACE_THR_PRI_OTHER_MAX since these are all
+          used as priority values, which is defined as a long.  This
+          should solve a problem with the ACE_MAX()/ACE_MIN() templates on
+          Linux with G++.  Thanks to Bala for reporting this problem.
+
+        * netsvcs/lib/Logging_Strategy: Added a new '-w' option that
+          instructs the logging strategy to "wipeout", rather than append
+          to, an existing logfile.  Thanks to David X. Callaway
+          <david.x.callaway@intel.com> for reporting this.
+
+Sun Jan 16 21:32:18 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/OS.h: Moved the #defines for ACE_MIN and ACE_MAX into the
+          new $ACE_ROOT/Min_Max.h file, along with their template function
+          definitions.
+
+        * ace: Added a new file called Min_Max.h that uses templates, rather
+          than macros, to implement the ACE_MIN and ACE_MAX macros.  This
+          is a "Good Thing" because the use of macros has undesirable
+          side-effects due to the "call-by-name" semantics of macro
+          paramter expansion...  If for some reason your compiler can't
+          handle this, please #define ACE_LACKS_MIN_MAX_TEMPLATES in your
+          config.h file.  Thanks to Derek Dominish
+          <Derek.Dominish@Australia.Boeing.com> for contributing this.
+
+Sun Jan 16 16:43:10 2000  Ossama Othman  <ossama@uci.edu>
+
+        * ace/config.h.in:
+
+          Removed this file from the repository.  It is automatically
+          generated when autoconf support is bootstrapped into a
+          workspace.
+
+Sun Jan 16 16:13:00 2000  Ossama Othman  <ossama@uci.edu>
+
+        * acconfig.h:
+        * configure.in:
+
+          Added support/tests for:
+
+            ACE_LACKS_SETREGID
+            ACE_LACKS_SETREUID
+            ACE_LACKS_SETREGID_PROTO
+            ACE_LACKS_SETREUID_PROTO
+
+        * ace/ACE.cpp:
+        * ace/Configuration.cpp:
+
+          Moved template instantiations related to ACE_LOCAL_MEMORY_POOL
+          to ACE.cpp, and fixed them so that they work in the single
+          threaded case.  The idea is to place this set of template
+          instantiations in a "common" area, since TAO also needs these
+          templates instantations.
+
+Sun Jan 16 10:49:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Makefile (Svc_Conf_l.cpp): Fixed the "isatty()" sed hack to
+          use fileno and then add a cast to (ACE_HANDLE) since this is
+          what the ACE_OS::isatty() wrapper expects Thanks to Nanbor and
+          Bala for reporting this.
+
+        * etc/Svc_Conf_l.cpp.diff: Added a #define for ACE_YY_NO_UNPUT
+          to supress an unnecessary warning.
+
+        * tests/ARGV_Test.cpp (main): Fixed several warnings.
+
+        * ace/Process.i: Rearranged the order of the process_name() methods
+          so they are defined before being used/inlined.
+
+Sat Jan 15 19:59:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace: Reran flex on Svc_Conf.y to generate the Svc_Conf_l.cpp file
+          with Darrell's fixes.
+
+Sat Jan 15 15:49:28 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-win32-common.h:
+          Readded the ACE_LACKS_FCNTL macro, since it seems to have been
+          missed in the latest changes to the config-win32 files.
+
+        * ace/Makefile:
+          With Doug's help, added a couple of new commands to the generation
+          of the Svc_Conf_l.cpp, because the generated files were causing
+          a warning on NT.
+
+Sat Jan 15 00:41:12 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/ARGV: Added a new add() method that adds an entire argv
+          array in one fell swoop.
+
+        * netsvcs/clients/Naming/Client/main.cpp (main): Replaced
+          the ad hoc use of argc/argv processing with the ACE_ARGV
+          approach.
+
+        * examples/Service_Configurator/Misc/main.cpp (main): Replaced
+          the ad hoc use of argc/argv processing with the ACE_ARGV
+          approach.  Note that this required the enhancement shown in the
+          following bullet.
+
+        * ace/Svc_Conf.l: Updated the Service Configurator lexer so that
+          it will also accept strings that are delimited by single quotes,
+          as well as double quotes.  This helps to simplify the use of
+          ACE_ARGV to create svc.conf entries "on-the-fly".
+
+        * tests: Added a new test ARGV_Test.cpp that  illustrates how to
+          use advanced features of <ACE_ARGV>.  Thanks to Suresh Kannan
+          <kannan@uav.ae.gatech.edu> for contributing this.
+
+        * ace/config-win32-common.h: Added
+
+          #define ACE_LACKS_SETREGID
+          #define ACE_LACKS_SETREUID
+
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+          reporting this.
+
+        * ace/Task.h: Added a comment to the suspend() and resume() methods
+          encouraging developers not to use these methods unless
+          absolutely necessary.  Thanks to Mark C. Barnes <marcus@muse3d.com>
+          for motivating this.
+
+        * ace: Reorganized the config-win32*.h files
+          to insulate the different compiler configurations from each
+          other.  The changes are as follows:
+
+          * Concatenated config-win32.h and config-win32-common.h to form
+            the new config-win32-common.h.
+
+          * Moved MSVC-specific language defines from config-win32-common.h
+            into config-win32-msvc.h
+
+          * Updated the other compilers' files to add required language
+            defines originally in config-win32-common.h.
+
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+          contributing this.
+
+Fri Jan 14 15:42:28 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/Select_Reactor_T.cpp (work_pending): Made the code more
+          general such that any thread can call it, i.e., it is not
+          limited to the owner thread.  This change alleviated the need
+          for the specialization in TP_Reactor.
+
+Fri Jan 14 01:48:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Process: Moved the command_line_argv() from the
+          non-Win32 part of the ACE_Process class to the generic
+          part since it shouldn't depend on the platform.  Thanks
+          to Michael Kircher for reporting this.
+
+        * ace/Process: Consider a process that spawns a number of
+          processes using a same executable name but with different
+          arguments <say svc.conf file..>. Depending on the arguments,
+          each process does different things.  Currently
+          <ACE_Process::spawn> calls <execvp> with argv[0] as the
+          exeutable name. Therefore, if you do a <ps> command now, all
+          these processes will look the same, since they are all launched
+          with the same command.
+
+          But for <execvp> call, you could actually give a different
+          executable name and a different argv[0]. This helps us to have
+          the name for a process to be different from the executable
+          name. In this case, <ps> command will show the processes with
+          different argv[0] names.
+
+          Therefore, we added a method called <process_name> to
+          ACE_Process_Options to specify the executable name.  If you do
+          not call <process_name> method, argv[0] is taken as the
+          executable name.  Thanks to Alex Arulanthu <alex@sylantro.com>
+          for these enhancements.
+
+Thu Jan 13 20:11:55 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/TP_Reactor.cpp (work_pending): This version is similar to
+          the select reactor except there is no owner check.
+
+        * ace/Select_Reactor_T.cpp (work_pending): The handle set must be
+          copied before calling select().
+
+Thu Jan 13 16:06:19 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * bin/auto_compile:
+        * bin/run_all.pl:
+        * bin/run_all_list.pm: Added an AMI test case for testing in the
+          nightly builds.
+
+Wed Jan 12 23:46:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Service_Config.h: Updated the
+          ACE_Service_Config::close_singletons() method documentation to
+          reflect the fact that it no longer deletes the Allocator, which
+          is deleted by the ACE_Object_Manager now.  Thanks to Craig
+          Perras <cperras@watchguard.com> for reporting this.
+
+Wed Jan 12 09:49:57 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: don't create diffs if not installing
+          the kit.
+
+Wed Jan 12 07:22:42 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile (CONTROLLED_FILES): removed
+          man/man3/Makefile.am and man/html/Makefile.am.  There
+          addition in
+          Tue Jan  4 12:58:54 2000  Ossama Othman  <othman@cs.wustl.edu>
+          caused creation of .zip files to break.  zip doesn't like
+          multiple occurrences of a file, apparently. [Bug 408]
+
+Tue Jan 11 21:59:34 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release (create_kit): disable creation of
+          md5 files, because it didn't work:  just empty files
+          were created.  I think that it was looking in the wrong
+          directory.
+
+Tue Jan 11 21:26:14 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release (check_workspace): removed the bootstrap
+          invocation.  That is done in create_kit (), and should only
+          be done once.  (create_kit): set umask to 2, so that the
+          kits will have group write permission.
+
+Tue Jan 11 17:39:10 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Service_Config.h: Updated the ACE_Service_Config::close()
+          method documentation to reflect the fact that it no longer
+          closes the singletons (these are closed by the
+          ACE_Object_Manager now).  Thanks to Craig Perras
+          <cperras@watchguard.com> for reporting this.
+
+Tue Jan 11 17:22:21 2000  bala  <bala@cs.wustl.edu>
+
+        * ACE version 5.0.12 released.
+
+Mon Jan 10 12:50:10 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Select_Reactor_T.h (class ACE_Select_Reactor_T): Reformatted the
+          documentation a bit...
+
+Mon Jan 10 15:37:22 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/Pair_T: Added const accessors to the pair class.  Also,
+          changed the Reference_Pair accessors to be const.  Thanks to
+          Serge Kolgan <skolgan@cisco.com> for reporting this.
+
+Sun Jan  9 00:25:58 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Process.i (setreugid): Added an ACE_UNUSED_ARG for the
+          ACE_LACKS_PWD_FUNCTIONS case.  Thanks to David for catching
+          this!
+
+        * ace/Process.i (setreugid): Guard against the case where
+          ACE_LACKS_PWD_FUNCTIONS.  Thanks to David Levine for
+          reporting this problem with VxWorks.
+
+        * ace/Pair_T.h: Reformatted to conform to the ACE style.
+
+Sat Jan  8 09:44:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * examples/Threads/thread_pool.cpp: Revised the example to
+          illustrate the new "wait_for_threads_in_destructor" feature of
+          ACE_Task.
+
+        * examples/Threads/task_four.cpp: Reformatted the code.
+
+        * ace/Task_T: Added a new flag to the constructor that enables
+          applications to request that an ACE_Task will wait in its
+          destructor for any and all threads in the task to exit before
+          returning.  Thanks to Valery Arkhangorodsky
+          <valerya@servicesoft.com> for suggesting this.
+
+        * ace/OS.i: Needed to add an extern "C" {} block around the
+          setregid() and setreuid() functions.  Thanks to David Levine
+          for reporting this.
+
+Fri Jan  7 20:01:48 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/OS.i,
+          ace/config-sunos5.5.h: Some platforms seem to lack function
+          prototypes for setreuid() and setregid(), even though they are
+          in the library.  Therefore, I've added
+
+          #define ACE_LACKS_SETREGID_PROTOTYPE
+
+          and
+
+          #define ACE_LACKS_SETREUID_PROTOTYPE
+
+          macros to handle this case.
+
+        * ace/Process: Added support to allow UNIX applications to
+          automagically set the real and effective user/group ids when
+          ACE_Process::spawn() is called.  Thanks to Craig Perras
+          <cperras@watchguard.com> for contributing this.
+
+        * ace: Updated the following files to include
+
+          #define ACE_LACKS_SETREGID
+          #define ACE_LACKS_SETREUID
+
+          config-chorus.h
+          config-cray.h:168
+          config-cygwin32-common.h
+          config-freebsd-pthread.h
+          config-freebsd.h:33
+          config-hpux-9.x.h
+          config-lynxos.h
+          config-netbsd.h
+          config-sunos4-g++.h
+          config-sunos4-sun4.1.4.h
+          config-win32-common.h
+
+          Ideally, Ossama's autoconf stuff will auto-detect anything that
+          I'm missing.
+
+        * ace/OS: Added wrapper facade methods for setregid() and
+          setregid().
+
+Fri Jan  7 16:05:32 2000  Ossama Othman  <ossama@uci.edu>
+
+        * configure.in:
+
+          Only define ACE_HAS_XT if both the Xt headers and libraries are
+          available.  Previously, the existence of the Xt libraries was
+          not part of the XtReactor enable criterion.
+
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+
+          Added C++ preprocessor flag documentation and trivial support.
+
+          Many AIX related compiler flag updates.
+
+        * m4/platform.m4 (ACE_SET_PLATFORM_MACROS):
+
+          Moved/consolidated platform-specific settings from configure.in
+          to here.
+
+          Improved AIX support (updates, fixes, etc).
+
+Fri Jan  7 10:48:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * bin/run_all_list.pm: Added missing commas.
+
+Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/OS.i (fcntl): There was a special fcntl() for Win32.
+          Removed that special version and added ACE_LACKS_FCNTL to
+          config-win32-common.h.
+
+        * ace/ACE.cpp: Removed the non-"_n" versions of send/recv
+          functions that deal with message blocks.  Since we deal with
+          continuation chains and linked messages, we are essentially
+          dealing with "_n" style functions.  Also, improved the error
+          handling in case of timeouts.
+
+        * ace/Strategies_T.cpp
+          (ACE_Cached_Connect_Strategy::connect_svc_handler): If an error
+          occurs while activating the handler, the <activate_svc_handler>
+          method will close the handler.  We must set the handler to zero
+          to make sure that the higher layer doesn't try to close the
+          handler again!
+
+Thu Jan  6 15:00:56 2000  Ossama Othman  <othman@cs.wustl.edu>
+
+        * aclocal.m4:
+        * configure:
+        * All Makefile.in:
+
+          Removed these files.  They are automatically generated, so they
+          should not be in the repository.  Thanks to David for pointing
+          out that my ACE+autoconf updates caused CVS conflicts when
+          updating existing workspaces.
+
+Wed Jan  5 10:09:35 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Dirent.h: Added an ACE_Export on the ACE_Dirent class.  I'm
+          surprised this hasn't been a problem before...  Thanks to
+          Dominic Williams <dom@connected-place.co.uk> for indirectly
+          motivating this change.
+
+        * ace/SString.h: Updated the documentation for the various string
+          wrapper facades to clarify that they don't perform any locking.
+          Thanks to Jerry Jiang <javalist@21cn.com> for motivating this.
+
+Wed Jan 05 09:53:04 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/SOCK_Stream.[hi] (sendv_n): added const to iov[]
+          argument declaration.  Thanks to Rob Ruff <rruff@scires.com>
+          for reporting that TAO's AV service failed to compile
+          with Sun CC 5.0 because of this.
+
+Tue Jan  4 15:06:41 2000  Ossama Othman  <othman@cs.wustl.edu>
+
+        * configure.in:
+
+          Added note that asks user to use stock ACE build procedure
+          detailed in ACE-INSTALL.html in the event that the configure
+          script fails.
+
+Tue Jan  4 14:40:17 2000  Ossama Othman  <othman@cs.wustl.edu>
+
+        * ace/OS.h:
+
+          AIX defines "off64_t" as its 64 bit offset type.  Typedef
+          ACE_LOFF_T as that type if ACE_HAS_LLSEEK or ACE_HAS_LSEEK64 is
+          defined.  This should correct a problem that occurred during an
+          AIX configure script run.  Thanks to Mike Winter for pointing
+          this out.
+
+Tue Jan  4 14:09:51 2000  Ossama Othman  <othman@cs.wustl.edu>
+
+        * configure.in:
+
+          Fixed test that checks if sched.h is needed for thread
+          scheduling definitions.  This should correct problems discovered
+          on RedHat 6.1 installations.  Thanks to
+
+          Improved sys_nerr and sys_errlist[] tests by checking for
+          external global variables in libraries.  This should correct a
+          problem discovered in an AIX configure script run.  Thanks to
+          Mike Winter for providing feedback.
+
+Tue Jan  4 13:23:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Service_Config: Updated the documentation for the various
+          open() methods and the constructors.  Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for reporting this.
+
+Tue Jan  4 12:58:54 2000  Ossama Othman  <othman@cs.wustl.edu>
+
+        * Makefile (CONTROLLED_FILES):
+
+          man/man3/Makefile.am and man/html/Makefile.am previously weren't
+          being labelled.  Thanks to David for pointing this out.
+
+Mon Jan  3 21:01:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * examples/Service_Configurator/IPC-tests: Updated the
+          README file so it'll point to the right documentation!  Thanks
+          to John Buttitto for reporting this.
+
+Tue Jan 04 07:26:24 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 5.0.11 released.
+
+Mon Jan 03 07:34:38 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (gmtime_r): return res instead of *res, because
+          the function returns a struct tm *, not a struct tm.
+
+Sun Jan  2 11:02:54 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/OS.i (gmtime_r): We should return *res rather than
+          *result to make the behavior correct for Win32.  Thanks to
+          J. Afshar <jafshar@vignette.com> for reporting this.
+
+Sun Jan 02 00:50:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/OS.{cpp, h, i}
+          ace/Signal.cpp
+          ace/Synch.cpp
+          ace/config-psos-diab-ppc.h: Added support for native mutexs,
+          condition variables, and thread-specific storage in pSOS.  Native
+          pSOS mutexes, where available, support several cool features,
+          including lock recursion and priority inheritance protocol and
+          priority ceiling protocol support.
+
+Sat Jan 01 09:16:39 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ChangeLog,Makefile: moved to ChangeLog-99b.
