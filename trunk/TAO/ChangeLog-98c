@@ -1,3 +1,7 @@
+Sun Oct 26 01:01:32 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.16, released Sun Oct 26 01:01:32 1997.
+
 Sun Oct 26 00:32:29 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* TAO/TAO_IDL/fe/idl.ll: Reverted a change that Carlos had
