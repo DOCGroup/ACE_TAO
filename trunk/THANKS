@@ -1803,6 +1803,7 @@ John Poplett <John_Poplett@3com.com>
 Heiko Bachmann <h.bachmann@unicontrol.de>
 Andrew Metcalfe <Andrew.Metcalfe@ccur.com>
 Simon Dutkowski <dutkowski@fokus.fraunhofer.de>
+Mickael P. Golovin <migel@garant.ru>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
