@@ -1,17 +1,21 @@
-Fri May  9 00:00:21 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+Fri May  9 00:26:58 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* apps/JAWS/server/HTTP_Request.{h,cpp}: Added a uritopath
-	  translation method, so that CGI location can be computed as it
-	  is searched.  Added methods to access the parsed headers.
+	* ace/Timer_{Heap,List}_T.cpp: To ensure backwards compatibility
+ 	  with the old "int" return value of Timer_*::schedule() we must
+ 	  cast the long value to int before returning it.  Thanks to Thilo
+ 	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
 
-	* apps/JAWS/server/HTTP_Response.{h,cpp}: Flushed out the
-	  implementation of cgi_response () method.  If all goes well, it
-	  should be able to execute a CGI program.  I don't set the IO
-	  handles to point at the socket handle yet.
+	* ace/Acceptor.cpp,
+	  ace/Connector.cpp:
+	  If an active or passive connection times out and the Connector
+ 	  or Acceptor calls the handle_timeout() method of the
+ 	  Svc_Handler, we now keep track of whether the handle_timeout()
+ 	  method returns -1.  If so, we call handle_close() on the
+ 	  Svc_Handler automatically.  Thanks to Michael Hartman
+ 	  <c62nt57@ibx.com> for suggesting this.
 
-	* apps/JAWS/server/README: Updated description of JAWS behavior.
-
-Thu May  8 20:55:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* tests/IOStream_Test.cpp: Fixed this test so that it runs on
+ 	  non-MT platforms.
 
 	* ace/Module.cpp: Changed the implementation of the close_i()
  	  method so that it will wait for all active threads in a Task to
@@ -63,6 +67,19 @@ Thu May  8 20:55:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Containers: Revised all the interfaces for the various
  	  containers so that they all have the same "look and feel."
+
+Fri May  9 00:00:21 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* apps/JAWS/server/HTTP_Request.{h,cpp}: Added a uritopath
+	  translation method, so that CGI location can be computed as it
+	  is searched.  Added methods to access the parsed headers.
+
+	* apps/JAWS/server/HTTP_Response.{h,cpp}: Flushed out the
+	  implementation of cgi_response () method.  If all goes well, it
+	  should be able to execute a CGI program.  I don't set the IO
+	  handles to point at the socket handle yet.
+
+	* apps/JAWS/server/README: Updated description of JAWS behavior.
 
 Thu May  8 18:04:14 1997  Irfan Pyarali  <irfan@cs.wustl.edu>
 

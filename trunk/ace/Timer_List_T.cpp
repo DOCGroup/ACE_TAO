@@ -204,13 +204,14 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::schedule (const TYPE &type,
 template <class TYPE, class FUNCTOR, class LOCK> int
 ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::timer_id (void)
 {
-  this->timer_id_++;
+  // We need to truncate this to <int> for backwards compatibility.
+  int tid = this->timer_id_++;
 
   // Make sure this never == -1
-  if (this->timer_id_ == -1)
-    this->timer_id_ = 0;
+  if (tid == -1)
+    tid = 0;
 
-  return this->timer_id_;
+  return tid;
 }
 
 // Locate and remove the single <ACE_Event_Handler> with a value of

@@ -112,6 +112,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::pop_freelist (void)
 {
   ACE_TRACE ("ACE_Timer_Heap::pop_freelist");
 
+  // We need to truncate this to <int> for backwards compatibility.
   int new_id = (int) this->timer_ids_freelist_;
   // The freelist values in the <timer_ids_> are negative, so we need
   // to negate them to get the next freelist "pointer."
@@ -131,7 +132,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::push_freelist (int old_id)
   this->timer_ids_freelist_ = old_id;
 }
 
-
 template <class TYPE, class FUNCTOR, class LOCK> int
 ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::timer_id (void)
 {
@@ -142,7 +142,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::timer_id (void)
 }
 
 // Checks if queue is empty. 
-
 
 template <class TYPE, class FUNCTOR, class LOCK> int 
 ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::is_empty (void) const

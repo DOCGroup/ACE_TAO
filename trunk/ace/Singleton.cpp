@@ -61,7 +61,6 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
   return ACE_Singleton<TYPE, LOCK>::instance_;
 
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
-
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
