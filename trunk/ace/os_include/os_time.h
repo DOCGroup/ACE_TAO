@@ -96,7 +96,7 @@ extern "C"
 typedef struct timespec * ACE_TIMESPEC_PTR;
 #else
 typedef const struct timespec * ACE_TIMESPEC_PTR;
-#endif /* HPUX */
+#endif /* ACE_LACKS_CONST_TIMESPEC_PTR */
 
 #if defined (DIGITAL_UNIX)
   extern char *_Pctime_r (const time_t *, char *);
