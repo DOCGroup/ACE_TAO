@@ -3,7 +3,7 @@
 //
 
 #include "QuoterC.h"
-#include <orbsvcs/CosNamingC.h>
+#include <orbsvcs/orbsvcs/CosNamingC.h>
 #include "ace/streams.h"
 
 int main (int argc, char* argv[])
