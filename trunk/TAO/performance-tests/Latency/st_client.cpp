@@ -16,7 +16,7 @@ int do_shutdown = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:p:");
+  ACE_Get_Opt get_opts (argc, argv, "k:i:p:x");
   int c;
 
   while ((c = get_opts ()) != -1)
