@@ -1,3 +1,21 @@
+Thu Dec 19 06:47:07 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/aceversion.mpb:
+        * bin/MakeProjectCreator/config/taoversion.mpb:
+
+          Updated the version to reflect the current release version.
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Moved the Cwd::getcwd() outside the loop to avoid calling it
+          multiple times.
+
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Modified the ProgramDatabaseFile to use the intermediate_dir as
+          the output location.  Thanks to Steve Huston
+          <shuston@riverace.com> for reporting it.
+
 Wed Dec 18 20:52:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram_Mcast.cpp (open_i): Call shared_open using the

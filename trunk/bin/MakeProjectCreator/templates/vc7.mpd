@@ -68,7 +68,7 @@
 				GenerateDebugInformation="TRUE"
 <%endif%>
 <%if(pdb)%>
-				ProgramDatabaseFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%><%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%><%endif%><%if(type_is_static)%><%output_dir%>\<%staticdname%><%lib_modifier%><%endif%>.pdb"
+				ProgramDatabaseFile=".\<%intermediate_dir%>\<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%><%endif%><%if(exename)%><%exename%><%endif%><%if(type_is_static)%><%staticname%><%lib_modifier%><%endif%>.pdb"
 <%endif%>
 <%if(type_is_dynamic)%>
 				SubSystem="<%subsystem("2")%>"
