@@ -1,3 +1,7 @@
+Tue Apr 22 21:43:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Makefile: Fixed dependencies.
+
 Tue Apr 22 21:39:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_interface.cpp: Fixed warnings in g++ builds.
