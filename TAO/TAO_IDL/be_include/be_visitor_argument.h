@@ -39,11 +39,5 @@
 #include "be_visitor_argument/compiled_marshal_cs.h"
 #include "be_visitor_argument/compiled_marshal_ss.h"
 #include "be_visitor_argument/pre_invoke_cs.h"
-#include "be_visitor_argument/ami_arglist.h"
-#include "be_visitor_argument/ami_handler_arglist.h"
-#include "be_visitor_argument/ami_handler_result_arg.h"
-#include "be_visitor_argument/ami_handler_compiled_marshal_cs.h"
-#include "be_visitor_argument/ami_handler_upcall_cs.h"
-#include "be_visitor_argument/ami_handler_vardecl_cs.h"
 
 #endif /* _BE_VISITOR_ARGUMENT_H */

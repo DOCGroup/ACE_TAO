@@ -150,14 +150,12 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
   *os << parent->full_name ();
   *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
 
-//#if 0
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// Exception handling" << be_nl
       << "switch (reply_status)" << be_idt_nl
       << "{" << be_idt_nl
       << "case TAO_AMI_REPLY_OK:" << be_idt_nl
       << "{\n";
-//#endif /* 0 */
 
   // declare variables for arguments
   ctx = *this->ctx_;
@@ -185,7 +183,6 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
                         -1);
     }
 
-//#if 0
   os->indent ();
   *os << be_uidt_nl
       << "}" << be_uidt_nl << "return;" << be_uidt_nl
@@ -247,7 +244,6 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "//             We have to think about this case." << be_nl
       << "break;" << be_uidt_nl
       << "}" << be_uidt_nl;
-//#endif /* 0 */
   *os << be_uidt_nl << "};" << be_nl << be_nl;
 
   return 0;
