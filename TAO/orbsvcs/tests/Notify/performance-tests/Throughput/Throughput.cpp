@@ -37,7 +37,7 @@ Throughput_StructuredPushConsumer::dump_stats (const char* msg, ACE_UINT32 gsf)
 
 void
 Throughput_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & notification
-                                                          TAO_ENV_ARG_DECL)
+                                                          TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
