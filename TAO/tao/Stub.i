@@ -323,7 +323,7 @@ TAO_Stub_Auto_Ptr::reset (TAO_Stub *p)
 ACE_INLINE TAO_Stub *
 TAO_Stub_Auto_Ptr::operator-> () const
 {
-  ACE_TRACE ("auto_ptr::operator->");
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator->");
   return this->get ();
 }
 
