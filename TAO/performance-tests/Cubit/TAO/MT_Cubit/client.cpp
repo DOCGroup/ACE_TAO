@@ -617,6 +617,15 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
   if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) errno = %p: activate failed\n"));
 
+  // The high priority thread is parsing the arguments, so wait on the
+  // condition variable until it wakes us up.
+
+  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, ts->ready_mtx_,-1));
+  while (!ts->ready_)
+    ts->ready_cnd_.wait ();
+  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                   priority,
                                                   ACE_SCOPE_THREAD);
