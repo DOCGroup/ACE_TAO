@@ -1,3 +1,37 @@
+Mon Jul 10 13:47:25 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/stddef.h
+	* pace/stdio.h
+	* pace/string.h
+	* pace/unistd.h
+	  Changed to new format, all functions should now be
+	  declared in pace/
+
+	* pace/mqueue.h
+	* pace/emulation/mqueue*
+	  Emulated mqueue for linux. Curently there is no support for
+	  mq_notify, and there is a race condition if two procs try to
+	  create the same queue at the same time.
+
+	* pace/stdio.h
+	* pace/posix/stdio.inl
+	* pace/unistd.h
+	* pace/posix/unistd.inl
+	  Moved ctermid back to where it should be (stdio).
+
+	* pace/string.h
+	* pace/posix/string.inl
+	  Added mem* functions (e.g. memset), since they are C std.
+
+	* pace/time.h
+	* pace/posix/time.inl
+	  ENOSYSed clock_* and timer_* functions for Linux, although
+	  emulation may be possible.
+
+	* pace/posix/pthread.inl
+	  ENOSYSed many functions not supported on Linux. Linux should
+	  build clean now for the moment.
+
 Mon Jul 10 08:50:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/posix/time.inl:
@@ -6,7 +40,7 @@ Mon Jul 10 08:50:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
           Changed code to use PACE_NONCONST_ARG_CAST rather than
           #idef'ing for LynxOS and doing the cast.
 
-        * pace/config/defines.h: 
+        * pace/config/defines.h:
           Changed order of include so that platform.h (and
           POSIX_HAS_* #defines) will be first.
 
@@ -15,7 +49,7 @@ Mon Jul 10 08:50:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
           when it doesn't use const args for POSIX functions
           taking const args.
 
-        * tests/Makefile: 
+        * tests/Makefile:
         * pace/Makefile:
           Took out common rules and included
           include/makeinclude/rules.common.GNU instead.
@@ -24,7 +58,7 @@ Mon Jul 10 08:50:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
           Added this file to take out common rules from the
           different Makefiles.
 
-        * tests/Posix_SP_Test.c: 
+        * tests/Posix_SP_Test.c:
           Made test more robust (e.g., check for all specified POSIX
           names for sysconf and for NULL and non-NULL arg to time)
           Also, ifdefed out some sysconf names for LynxOS since those
