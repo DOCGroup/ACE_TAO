@@ -16,7 +16,7 @@
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -60,6 +60,12 @@ namespace CORBA
   {
   public:
 
+    /// Copy constructor.
+    Exception (const Exception &src);
+
+    /// Assignment operator.
+    Exception &operator = (const Exception &src);
+
     /// Destructor.
     virtual ~Exception (void);
 
@@ -69,13 +75,13 @@ namespace CORBA
     // = The static narrow operation.
     static Exception *_downcast (Exception *x);
 
+    // = These are TAO-specific extensions.
+
     /// Return the repository ID of the Exception.
-    virtual const char *_rep_id (void) const;
+    const char *_rep_id (void) const;
 
     /// Return the name of the Exception.
-    virtual const char *_name (void) const;
-
-    // = These are TAO-specific extensions.
+    const char *_name (void) const;
 
     /// Will be overridden in the concrete derived classes.
     virtual CORBA::TypeCode_ptr _type (void) const;
@@ -133,12 +139,6 @@ namespace CORBA
     /// Default constructor is protected.
     Exception (void);
 
-    /// Copy constructor is protected.
-    Exception (const Exception &src);
-
-    /// Assignment operator is protected.
-    Exception &operator = (const Exception &src);
-
   private:
     /// Storage of our repository id and local name.
     char *id_;
@@ -155,20 +155,23 @@ namespace CORBA
   {
   public:
 
+    /// Copy constructor.
+    UserException (const UserException &src);
+
     /// Destructor.
     ~UserException (void);
 
+    /// Assignment operator.
+    UserException &operator= (const UserException &src);
+
     /// The narrow operation.
     static UserException *_downcast (CORBA::Exception *exception);
-
-    /// The const version of narrow operation
-    static const UserException *_downcast(const CORBA::Exception *exception);
 
     // = TAO specific extension.
 
     /// Constructor from a repository id.
     UserException (const char *repository_id,
-                   const char *local_name);
+                         const char *local_name);
 
     virtual int _is_a (const char *interface_id) const;
 
@@ -178,16 +181,9 @@ namespace CORBA
     /// function is not CORBA compliant.
     virtual ACE_CString _info (void) const;
 
-  protected:
-
+    //protected:
     /// Default constructor.
     UserException (void);
-
-    /// Copy constructor.
-    UserException (const UserException &src);
-
-    /// Assignment operator.
-    UserException &operator= (const UserException &src);
   };
 
   /**
@@ -202,8 +198,17 @@ namespace CORBA
   {
   public:
 
+    /// Default constructtor
+    SystemException (void);
+
+    /// Copy constructor.
+    SystemException (const SystemException &src);
+
     /// Destructor.
     ~SystemException (void);
+
+    /// Assignment operator.
+    SystemException &operator= (const SystemException &src);
 
     /// Get the minor status.
     CORBA::ULong minor (void) const;
@@ -219,9 +224,6 @@ namespace CORBA
 
     /// Narrow to a SystemException.
     static SystemException *_downcast (CORBA::Exception *exception);
-
-    /// The const version of narrow operation to a SystemException
-    static const SystemException *_downcast(const CORBA::Exception *exception);
 
     // = TAO-specific extension.
 
@@ -250,18 +252,6 @@ namespace CORBA
     static CORBA::ULong _tao_errno (int errno_value);
 
   protected:
-    /// Default constructtor
-    SystemException (void);
-
-    /// Copy constructor.
-    SystemException (const SystemException &src);
-
-    /// Assignment operator.
-    SystemException &operator= (const SystemException &src);
-
-    /// Constructor using a repository id.
-    SystemException (CORBA::ULong code,
-                     CORBA::CompletionStatus completed);
 
     /// Constructor using a repository id.
     SystemException (const char *repository_id,
@@ -432,6 +422,6 @@ public:
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_EXCEPTION_H */

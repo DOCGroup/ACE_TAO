@@ -1,3 +1,15 @@
+Thu Jul 24 11:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+
+          Reverted the previous changes to these files. They were
+          somehow causing exceptions thrown in the servant to 
+          bypass the catch block in 
+          TAO_ServantBase::synchronous_upcall_dispatch and instead be
+          caught in TAO_GIOP_Message_Base::process_request, where they
+          were incorrectly handled.
+
 Thu Jul 24 08:27:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* README:
