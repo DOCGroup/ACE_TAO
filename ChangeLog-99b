@@ -1,3 +1,11 @@
+Thu Jul 15 16:39:06 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* Makefile:
+	* NEWS:
+
+	  The NEWS file is no longer a generated file so it was added to
+	  the list of controlled files.
+
 Thu Jul 15 16:20:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Manager.cpp (init): Check to see the acceptor handle
