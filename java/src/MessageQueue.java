@@ -462,7 +462,7 @@ public class MessageQueue
 	this.tail_ = newItem;
       }
 
-    if (item.msgType() != MessageType.MB_OBJECT)
+    if (newItem.msgType() != MessageType.MB_OBJECT)
       {
 	// Make sure to count *all* the bytes in a composite message!!! 
 	for (MessageBlock temp = newItem; 
@@ -490,7 +490,7 @@ public class MessageQueue
 
     this.head_ = newItem;
 
-    if (item.msgType() != MessageType.MB_OBJECT)
+    if (newItem.msgType() != MessageType.MB_OBJECT)
       {
 	// Make sure to count *all* the bytes in a composite message!!!
 	for (MessageBlock temp = newItem; 
@@ -550,7 +550,7 @@ public class MessageQueue
 	  }
       }
 
-    if (item.msgType() != MessageType.MB_OBJECT)
+    if (newItem.msgType() != MessageType.MB_OBJECT)
       {    
 	// Make sure to count *all* the bytes in a composite message!!!
 	for (MessageBlock temp = newItem; 
@@ -571,7 +571,7 @@ public class MessageQueue
     if (this.head_ == null)
       this.tail_ = null;
 
-    if (item.msgType() != MessageType.MB_OBJECT)
+    if (firstItem.msgType() != MessageType.MB_OBJECT)
       {
 	// Make sure to subtract off all of the bytes associated with this
 	// message.
