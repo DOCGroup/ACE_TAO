@@ -32,11 +32,13 @@ public:
   static const char *HTTP_date (void);
   static const char *HTTP_date (char *s);
 
+  // Month conversions (ascii <--> numeric)
   static int HTTP_month (const char *month);
   static const char *HTTP_month (int month);
 
   static char *HTTP_decode_string (char *path);
 
+  // Encode/Decode base64 stuff (weak security model)
   static char *HTTP_decode_base64 (char *data);
   static char *HTTP_encode_base64 (char *data);
 
@@ -57,9 +59,7 @@ private:
 
 class HTTP_Status_Code
   // = TITLE
-  //    Simplify interface to HTTP_types:
-  //     -> type(path) returns the type of the path matched by extension.
-  //     -> app(path) returns the app for the path matched by extension.
+  //     Go from numeric status codes to descriptive strings.
   //
   // = DESCRIPTION
   //     Design around the Singleton pattern

@@ -4,9 +4,8 @@
 #include "ace/OS.h"
 #include "HTTP_Config.h"
 
-// James, is it possible to eliminate this static object?  They are
-// non-portable.
-static HTTP_Config_Info config_info;
+// static HTTP_Config_Info config_info;
+
 HTTP_Config_Info *HTTP_Config::instance_ = 0;
 
 HTTP_Config_Info *
@@ -14,7 +13,7 @@ HTTP_Config::instance (void)
 {
   if (HTTP_Config::instance_ == 0)
     {
-      HTTP_Config::instance_ = &config_info;
+      HTTP_Config::instance_ = new HTTP_Config_Info;
 
       HTTP_Config::instance_->document_root (0);
       HTTP_Config::instance_->cgi_path (0);
