@@ -14,7 +14,7 @@
 //   implementation. This file should be included in
 //   ORB file headers that use one or more FT namespace
 //   types. A portion of the  source files will be in
-//   FT_CORBA_ORB.h and the rest in FT_CORBA_Service.h in
+//   FT_CORBA_ORBC.h and the rest in FT_CORBA_ServiceC.h in
 //   $TAO_ROOT/orbsvcs/
 //
 // = AUTHOR
