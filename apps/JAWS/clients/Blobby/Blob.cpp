@@ -79,6 +79,7 @@ template class ACE_Svc_Tuple <ACE_Blob_Handler>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *>;
 template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, ACE_SYNCH_RW_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Connector<ACE_Blob_Handler, ACE_SOCK_CONNECTOR>
@@ -86,6 +87,6 @@ template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, A
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple <ACE_Blob_Handler> *, ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
