@@ -1,3 +1,17 @@
+Tue Sep 24 08:58:54 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run): 
+	  Removed unnecessary debug statements.
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
+ 	  Fixed the reregister method implementation to work correctly in
+	  case when the ImR_Activator is locked.
+	
+	* orbsvcs/tests/ImplRepo/locked/run_test.pl: 
+	  Fixed the service name from ImplRepo_Service to ImplRepoService
+	  to get the correct initial references.
+
 Sat Sep 21 12:49:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAOACE.dsw:
