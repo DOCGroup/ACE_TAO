@@ -194,11 +194,12 @@ Test_ObjRef_Sequence::check_validity (void)
         }
       return 0;
     }
-  TAO_CATCHANY;
+  TAO_CATCHANY
     {
       return 0;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 CORBA::Boolean
