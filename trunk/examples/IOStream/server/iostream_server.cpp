@@ -11,6 +11,10 @@
 
 #include "iostream_server.h"
 
+#if defined (ACE_HAS_STRING_CLASS)
+#  include "ace/OS_NS_unistd.h"
+#endif // ACE_HAS_STRING_CLASS 
+
 ACE_RCSID(server, iostream_server, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
