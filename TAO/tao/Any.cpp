@@ -685,6 +685,11 @@ CORBA::Any::operator<<= (CORBA::Any::from_wchar wc)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_string s)
 {
+  if (s.bound_ > 0 && s.val_ != 0 && ACE_OS::strlen (s.val_) > s.bound_)
+    {
+      return;
+    }
+
   TAO::Any_Special_Impl_T<
       char, 
       CORBA::Any::from_string,
@@ -699,6 +704,11 @@ CORBA::Any::operator<<= (CORBA::Any::from_string s)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
 {
+  if (ws.bound_ > 0 && ws.val_ != 0 && ACE_OS::wslen (ws.val_) > ws.bound_)
+    {
+      return;
+    }
+
   TAO::Any_Special_Impl_T<
       CORBA::WChar, 
       CORBA::Any::from_wstring,

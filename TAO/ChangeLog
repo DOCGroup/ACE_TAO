@@ -1,3 +1,10 @@
+Wed Apr  2 23:05:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any_T.cpp:
+
+          Fixed a build problem with Debian Linux.
+
 Wed Apr  2 18:28:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
