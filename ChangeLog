@@ -1,3 +1,8 @@
+Sun Dec 19 15:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_time.h:
+          Fixed incorrect comment after endif
+
 Sun Dec 19 16:35:34 2004  Olli Savia  <ops@iki.fi>
 
         * ace/README:
