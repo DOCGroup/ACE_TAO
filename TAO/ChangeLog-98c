@@ -1,5 +1,11 @@
 Sun Oct 26 15:07:18 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/orb_core.h (TAO_DEFAULT_PORT): Added manifest constant for
+ 	default port.
+
+	* tao/orbobj.cpp (ORB_init): Eliminated ugly anonymous constant
+ 	use for hbuf's size.  Utilized manifest constant for default port.
+
 	* tao/giop.cpp: Changed calls to
  	TAO_Client_Connection_Handler::in_use() to call the underlying
  	Svc_Handler::idle().
