@@ -1,3 +1,15 @@
+Tue Dec  7 17:56:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Pool_Per_Endpoint.h:
+	  Use the THR_BOUND flag to ensure that a new LWP is assigned in
+	  real-time configurations. Thanks to Marina for pointing this
+	  out.
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf: 
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf: 
+	  Don't use thread-per-connection as it is hard to control the
+	  priority of the ORB created threads.
+
 Tue Dec  7 13:44:55 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp: Fixed some template
