@@ -1,3 +1,31 @@
+Mon Feb 21 17:22:33 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in (ACE_LACKS_SETREUID):
+
+	  Fixed typo.
+
+	  (ACE_HAS_SOCKADDR_MSG_NAME):
+
+	  Fixed broken test.  A `struct sockaddr' was being cast to a
+	  `struct sockaddr *', which is obviously broken.  This fix has
+	  the side effect of causing ACE_HAS_SOCKADDR_MSG_NAME to be
+	  defined on platforms where the "msg_name" field of the "msghdr"
+	  structure is a `void*', such as Linux and Solaris.  This isn't
+	  necessarily a bad thing since it is perfectly valid.
+
+	  (ACE_HAS_VOIDPTR_SOCKOPT, ACE_HAS_CHARPTR_SOCKOPT):
+
+	  Fixed the tests for these two macros.  The fifth "optlen"
+	  argument to setsockopt() was being passed in as a pointer to
+	  some integral type.  The "optlen" argument to setsockopt() is
+	  not a pointer.  Rather, it should be one of the following:
+	  socklen_t, size_t or int.  The appropriate type for "optlen"
+	  will be determined from previous tests, such as the test for
+	  socklen_t.
+
+	  The test for ACE_HAS_CHARPTR_SOCKOPT will now only be run if the
+	  test for ACE_HAS_VOIDPTR_SOCKOPT fails.
+
 Mon Feb 21 16:23:03 2000  Ossama Othman  <ossama@uci.edu>
 
 	Thanks to Rich Seibel <seibel_r@ociweb.com> for providing the
