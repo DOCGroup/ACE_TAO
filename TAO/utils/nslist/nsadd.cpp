@@ -40,6 +40,7 @@ main (int argc, char *argv[])
       const char * ior = 0;
       const char * name = 0;
       int rebind = 0;
+      int newcontext = 0;
       while (argc > 0)
         {
           if (ACE_OS::strcmp (*argv, "--ior") == 0)
@@ -70,17 +71,23 @@ main (int argc, char *argv[])
             {
               rebind = 1;
             }
+          else if (ACE_OS::strcmp(*argv, "--newcontext") == 0)
+          {
+             newcontext = 1;
+          }
           else if (ACE_OS::strncmp (*argv, "--", 2) == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Usage: %s --name <name> "
-                          "--ior <ior> [ --rebind ]  \n", pname));
+                          "--ior <ior> [ --rebind ] "
+                          "[ --newcontext ] \n", pname));
               return 1;
             }
+
           argc--;
           argv++;
         }
-      if (ior == 0 || name == 0)
+      if (( ior == 0 && newcontext == 0 ) || name == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s --name <name> "
@@ -88,9 +95,12 @@ main (int argc, char *argv[])
           return 1;
         }
 
-      CORBA::Object_var obj =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj;
+      if(ior)
+      {
+         obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      }
 
       CORBA::Object_var nc_obj =
         orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
@@ -105,7 +115,6 @@ main (int argc, char *argv[])
                       "Error: nil naming context\n"));
           return 1;
         }
-      //printf (" make a copy\n");
       char buf[BUFSIZ];
       ACE_OS::strcpy (buf, name);
       char *bp = &buf[0];
@@ -163,11 +172,16 @@ main (int argc, char *argv[])
           root_nc->rebind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      else
+      else if (!newcontext)
         {
           root_nc->bind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+      else if(newcontext)
+      {
+         root_nc->bind_new_context(the_name);
+         ACE_TRY_CHECK;
+      }
     }
   ACE_CATCHANY
     {
