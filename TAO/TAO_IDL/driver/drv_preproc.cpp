@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Process_Manager.h"
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
+#include "ace/ARGV.h"
 
 ACE_RCSID(driver, drv_preproc, "$Id$")
 
@@ -148,49 +149,67 @@ DRV_cpp_init (void)
 #endif /* _MSC_VER */
 
   DRV_cpp_putarg (cpp_loc);
-#if defined (__BORLANDC__)
-  DRV_cpp_putarg("-P-");
-  DRV_cpp_putarg("-ocon");
-#else
-#if defined (ACE_WIN32)
-  DRV_cpp_putarg ("-nologo");
-#endif /* ACE_WIN32 */
-#if defined (ACE_MVS)
-  DRV_cpp_putarg ("-+");
-#endif /* ACE_MVS */
-  DRV_cpp_putarg ("-E");
-#endif /* !defined (__BORLANDC__) */
   DRV_cpp_putarg("-DIDL");
   DRV_cpp_putarg ("-I.");
 
-  // So we can find the required orb.idl file.
-  char* option = new char[BUFSIZ];
-  ACE_OS::strcpy (option, "-I");
-  const char* TAO_ROOT =
-    ACE_OS::getenv ("TAO_ROOT");
-  if (TAO_ROOT != 0)
+  // Added some customisable preprocessor options
+
+  ACE_Env_Value<char*> cpp_flags ("TAO_IDL_DEFAULT_CPP_FLAGS", (char *) 0);
+
+  if (cpp_flags == 0)
     {
-      ACE_OS::strcat (option, TAO_ROOT);
-      ACE_OS::strcat (option, "/tao");
-    }
-  else
-    {
-      const char* ACE_ROOT =
-        ACE_OS::getenv ("ACE_ROOT");
-      if (ACE_ROOT != 0)
+      // If no cpp flag was defined by the user, we define some
+      // platform specific flags here.
+#if defined (__BORLANDC__)
+      DRV_cpp_putarg("-P-");
+      DRV_cpp_putarg("-ocon");
+#else
+#if defined (ACE_WIN32)
+      DRV_cpp_putarg ("-nologo");
+#endif /* ACE_WIN32 */
+#if defined (ACE_MVS)
+      DRV_cpp_putarg ("-+");
+#endif /* ACE_MVS */
+      DRV_cpp_putarg ("-E");
+#endif /* !defined (__BORLANDC__) */
+
+      // So we can find the required orb.idl file.
+      char* option = new char[BUFSIZ];
+      ACE_OS::strcpy (option, "-I");
+      const char* TAO_ROOT =
+        ACE_OS::getenv ("TAO_ROOT");
+      if (TAO_ROOT != 0)
         {
-          ACE_OS::strcat (option, ACE_ROOT);
-          ACE_OS::strcat (option, "/TAO/tao");
+          ACE_OS::strcat (option, TAO_ROOT);
+          ACE_OS::strcat (option, "/tao");
         }
       else
         {
-          ACE_ERROR ((LM_ERROR,
-                      "TAO_IDL: neither TAO_ROOT nor ACE_ROOT defined\n"));
-          ACE_OS::strcat (option, ".");
+          const char* ACE_ROOT =
+            ACE_OS::getenv ("ACE_ROOT");
+          if (ACE_ROOT != 0)
+            {
+              ACE_OS::strcat (option, ACE_ROOT);
+              ACE_OS::strcat (option, "/TAO/tao");
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "TAO_IDL: neither TAO_ROOT nor ACE_ROOT defined\n"));
+              ACE_OS::strcat (option, ".");
+            }
         }
-    }
 
-  DRV_cpp_putarg (option);
+      DRV_cpp_putarg (option);
+    }
+  else
+    {
+      // Users specify their own.  Add them to cpp's arglist.
+      ACE_ARGV arglist (cpp_flags);
+
+      for (size_t arg_cnt = 0; arg_cnt < arglist.argc (); ++arg_cnt)
+        DRV_cpp_putarg (arglist[arg_cnt]);
+    }
 }
 
 /*
