@@ -1,17 +1,32 @@
+Mon May 28 14:44:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Heap_T.{h cpp}: Add new member, cur_limbo_ to keep track
+          of timer entries removed from the heap, but not reclaimed (caller
+          must call either reschedule() or free_node() to finish up the
+          work).
+
+        * ace/Timer_Queue_T.cpp (expire): When expiring a ACE_Timer_Node,
+          either reschedule it or free it prior to doing the upcall.
+          This necessitates having a copy of the TYPE element, not a
+          reference. In the vast majority of cases, this is an
+          ACE_Event_Handler pointer, and should make no difference in
+          performance.
+
 Sat May 27 10:40:27 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* ace/QoS/QoS_Session_Impl.cpp: 
 
-	  Added an adhoc fix for propagating the right service type when a PATH message is received.
+	  Added an adhoc fix for propagating the right service type when
+	  a PATH message is received.
 
 Sat May 26 16:36:27 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst:
 
-	Switched off TAO/examples/PluggableUDP/tests/Basic/run_test.pl
-	from the Single Threaded builds. Added
-	TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
-	instead to run on all the builds.
+	  Switched off TAO/examples/PluggableUDP/tests/Basic/run_test.pl
+	  from the Single Threaded builds. Added
+	  TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
+	  instead to run on all the builds.
 
 Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -20,8 +35,8 @@ Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri May 25 13:38:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Message_Block.h: Added a better explanation of what "crunch()" does.
-	  Thanks to Masaoud T. Moonim <masaoud@mailandnews.com> for
+	* ace/Message_Block.h: Added a better explanation of what "crunch()"
+	  does. Thanks to Masaoud T. Moonim <masaoud@mailandnews.com> for
  	  motivating this.
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>

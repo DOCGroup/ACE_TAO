@@ -79,6 +79,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
   : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
     max_size_ (size),
     cur_size_ (0),
+    cur_limbo_ (0),
     timer_ids_curr_ (0),
     timer_ids_min_free_ (0),
     preallocated_nodes_ (0),
@@ -135,6 +136,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
   : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
     max_size_ (ACE_DEFAULT_TIMERS),
     cur_size_ (0),
+    cur_limbo_ (0),
     timer_ids_curr_ (0),
     timer_ids_min_free_ (0),
     preallocated_nodes_ (0),
@@ -207,9 +209,12 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::pop_freelist (void)
   // a free ID, even if we need to wrap around and start reusing freed IDs.
   // On entry, the curr_ index is at the previous ID given out; start
   // up where we left off last time.
+  // NOTE - a timer_ids_ slot with -2 is out of the heap, but not freed.
+  // It must be either freed (free_node) or rescheduled (reschedule).
   ++this->timer_ids_curr_;
   while (this->timer_ids_curr_ < this->max_size_ &&
-         this->timer_ids_[this->timer_ids_curr_] >= 0)
+         (this->timer_ids_[this->timer_ids_curr_] >= 0 ||
+          this->timer_ids_[this->timer_ids_curr_] == -2  ))
     ++this->timer_ids_curr_;
   if (this->timer_ids_curr_ == this->max_size_)
     {
@@ -242,6 +247,11 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::push_freelist (int old_id)
   // freed entry back to 'free'. If this is the new lowest value free
   // timer ID that curr_ won't see on it's normal march through the list,
   // remember it.
+  ACE_ASSERT (this->timer_ids_[oldid] >= 0 || this->timer_ids_[oldid] == -2);
+  if (this->timer_ids_[oldid] == -2)
+    --this->cur_limbo_;
+  else
+    --this->cur_size_;
   this->timer_ids_[oldid] = -1;
   if (oldid < this->timer_ids_min_free_ && oldid <= this->timer_ids_curr_)
     this->timer_ids_min_free_ = oldid;
@@ -290,6 +300,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmax_size_ = %d"), this->max_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ncur_size_ = %d"), this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ncur_limbo_= %d"), this->cur_limbo_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nids_curr_ = %d"),
               this->timer_ids_curr_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmin_free_ = %d"),
@@ -341,11 +352,11 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove (size_t slot)
   ACE_Timer_Node_T<TYPE> *removed_node =
     this->heap_[slot];
 
-  // NOTE - this is a temporary decrement of cur_size_, since other
-  // member functions that will be called from here use it without
-  // wanting the removed node included. However, we will bump it back up
-  // before return to be sure that the removed node is still included in
-  // the size of this timer heap.
+  // NOTE - the cur_size_ is being decremented since the queue has one
+  // less active timer in it. However, this ACE_Timer_Node is not being
+  // freed, and there is still a place for it in timer_ids_ (the timer ID
+  // is not being relinquished). The node can still be rescheduled, or
+  // it can be freed via free_node.
   --this->cur_size_;
 
   // Only try to reheapify if we're not deleting the last entry.
@@ -374,7 +385,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove (size_t slot)
                          parent);
     }
 
-  ++this->cur_size_;
+  this->timer_ids_[removed_node->get_timer_id ()] = -2;
+  ++this->cur_limbo_;
   return removed_node;
 }
 
@@ -549,6 +561,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *e
   // heap, but did not free the timer ID. The ACE_Timer_Node still has
   // its assigned ID - just needs to be inserted at the new proper
   // place, and the heap restored properly.
+  if (this->timer_ids_[expired->get_timer_id ()] == -2)
+    --this->cur_limbo_;
   this->insert (expired);
 }
 
@@ -583,7 +597,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::free_node (ACE_Timer_Node_T<TYPE> *no
 
   // Return this timer id to the freelist.
   this->push_freelist (node->get_timer_id ());
-  --this->cur_size_;
 
   // Only free up a node if we are *not* using the preallocated heap.
   if (this->preallocated_nodes_ == 0)
@@ -608,7 +621,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
-  if (this->cur_size_ < this->max_size_)
+  if ((this->cur_size_ + this->cur_limbo_) < this->max_size_)
     {
       // Obtain the next unique sequence number.
       int timer_id = this->timer_id ();
