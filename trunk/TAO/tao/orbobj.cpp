@@ -241,7 +241,8 @@ CORBA::ORB_init (int &argc,
   svc_config_argv[svc_config_argc++] = argv[0];
 
   CORBA::String_var host = CORBA::string_dup ("");
-  CORBA::UShort port = TAO_DEFAULT_PORT;
+  CORBA::UShort port = TAO_DEFAULT_SERVER_PORT;
+
   for (int i = 1; i < argc; )
     {
       if (ACE_OS::strcmp (argv[i], "-ORBsvcconf") == 0)

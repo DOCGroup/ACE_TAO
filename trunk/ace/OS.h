@@ -190,6 +190,11 @@
 #endif /* ACE_LACKS_FIFO */
 #endif /* ACE_DEFAULT_RENDEZVOUS */
 
+// The default starting port number for TAO servers.
+#if !defined (TAO_DEFAULT_SERVER_PORT)
+#define TAO_DEFAULT_SERVER_PORT 10013
+#endif /* TAO_DEFAULT_SERVER_PORT */
+
 #if !defined (ACE_DEFAULT_SERVER_HOST)
 #define ACE_DEFAULT_SERVER_HOST "localhost"
 #endif /* ACE_DEFAULT_SERVER_HOST */
