@@ -32,8 +32,9 @@
 
 #include "ace/Singleton.h"
 #include "mpeg_shared/Video_ControlS.h"
+#include "mpeg_server/Video_Control_i.h"
 
-class Video_Control_Handler;
+class Video_Control_i;
 
 class Video_Control_State
 {
@@ -46,7 +47,7 @@ class Video_Control_State
   //   Video_States enum. They can be implemented by subclassing from
   //   this class and overriding the handle_input method.
 public:
-  Video_Control_State ();
+  Video_Control_State (void);
   // constructor
 
   enum Video_States 
@@ -57,10 +58,6 @@ public:
     VIDEO_FAST_BACKWARD = 3
   };
 
-  virtual int handle_input (ACE_HANDLE h = 0) = 0;
-  // state pattern - this is handled differently
-  // depending on the state
- 
   Video_States get_state (void);
   // returns the current state
 
@@ -71,11 +68,11 @@ public:
                                      Video_Control::INITvideoReply_out reply) ;
   
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
-                                      CORBA::Long_out size) ;
+                                      CORBA::Long_out size);
 
-  virtual CORBA::Boolean close (void) ;
+  virtual CORBA::Boolean close (void);
   
-  virtual CORBA::Boolean stat_sent (void) ;
+  virtual CORBA::Boolean stat_sent (void);
 
   virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para) ;
 
@@ -95,9 +92,9 @@ public:
 protected:
   Video_States state_;
   // State of this object
+
+  Video_Control_i *vci_;
  
-  Video_Control_Handler *vch_;
-  // My Video Control Handler
 };
 
 class Video_Control_Waiting_State : public virtual Video_Control_State
@@ -108,21 +105,16 @@ class Video_Control_Waiting_State : public virtual Video_Control_State
 public:
   Video_Control_Waiting_State (void);
   // Default constructor, sets the state to WAITING
-
-  virtual int handle_input (ACE_HANDLE h = 0);
-  // Called by the Video_Control_handler when control events occur in
-  // the waiting state  
-  //  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para);
   
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
                                       CORBA::Long_out size);
-
+  
   virtual CORBA::Boolean close (void);
   
   virtual CORBA::Boolean stat_sent (void);
-
+  
   virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para);
-
+  
   virtual CORBA::Boolean fast_backward (const Video_Control::FFpara &para);
 
   virtual CORBA::Boolean step (const Video_Control::STEPpara &para);
@@ -147,10 +139,6 @@ public:
   Video_Control_Play_State (void);
   // Default constructor, sets the state to VIDEO_PLAY
 
-  virtual int handle_input (ACE_HANDLE h = 0);
-  // Called by the Video_Control_handler when control events occur in
-  // the playing state  
-
   virtual CORBA::Boolean stop (CORBA::Long cmdsn);
 
   virtual CORBA::Boolean speed (const Video_Control::SPEEDpara &para);
@@ -165,9 +153,6 @@ public:
   Video_Control_Fast_Forward_State (void);
   // Default constructor, sets the state to VIDEO_FAST_FORWARD
 
-  virtual int handle_input (ACE_HANDLE h = 0);
-  // Called by the Video_Control_handler when control events occur in
-  // the fast_forward state  
   CORBA::Boolean close (void);
 
   CORBA::Boolean stop (CORBA::Long cmdsn);
@@ -181,10 +166,6 @@ class Video_Control_Fast_Backward_State : public virtual Video_Control_State
 public:
   Video_Control_Fast_Backward_State (void);
   // Default constructor, sets the state to VIDEO_FAST_BACKWARD
-
-  virtual int handle_input (ACE_HANDLE h = 0);
-  // Called by the Video_Control_handler when control events occur in
-  // the fast_backward state  
 
   CORBA::Boolean close (void);
 

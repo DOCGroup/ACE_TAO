@@ -192,9 +192,6 @@ private:
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
-  Video_Control_i video_control_;
-  // The Video_Control implementation object.
-
   AV_Acceptor acceptor_;
   // the acceptor
 
