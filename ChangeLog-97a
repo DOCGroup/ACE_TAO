@@ -1,5 +1,8 @@
 Wed Apr 30 09:22:33 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/IOStream.{h,cpp}: James CE Johnson <jcej@lads.com> updated
+	  the IOStream class, see comments in IOStream.h.
+
 	* examples/Logger/client/logging_app.cpp (main),
 	  performance-tests/Misc/test_naming.cpp (*): replaced sprintf
 	  with ACE_OS::sprintf.  Thanks to Thilo Kielmann
