@@ -70,17 +70,6 @@ public:
   // environment variable.  Returns 0 on success, -1 on failure.  Note
   // if <env> points to string "0" (value zero), this call will fail.
 
-  static ACE_Time_Value gettimeofday (void);
-  // Calls ACE_High_Res_Timer::hrtime_to_tv passing ACE_OS::gethrtime.
-  // This function can be used to parameterize objects such as
-  // ACE_Timer_Queue::gettimeofday.  If global_scale_factor_ is not
-  // set, and we're on a platform that requires global_scale_factor_
-  // (e.g., Win32), ACE_OS::gettimeofday will be used instead of
-  // ACE_OS::gethrtime.  This allows applications on Intel to use
-  // High_Res_Timer even when global_scale_factor is not set.
-  // However, setting the global_scale_factor_ appropriately will
-  // result in the finest resolution possible.
-
   ACE_High_Res_Timer (void);
   // Initialize the timer.
 
@@ -134,10 +123,30 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  static ACE_Time_Value gettimeofday (void);
+  // THIS FUNCTION IS DEPRECATED.  PLEASE USE ACE_OS::gettimeofday ()
+  // INSTEAD!
+  // Calls ACE_High_Res_Timer::hrtime_to_tv passing ACE_OS::gethrtime.
+  // This function can be used to parameterize objects such as
+  // ACE_Timer_Queue::gettimeofday.  If global_scale_factor_ is not
+  // set, and we're on a platform that requires global_scale_factor_
+  // (e.g., Win32), ACE_OS::gettimeofday will be used instead of
+  // ACE_OS::gethrtime.  This allows applications on Intel to use
+  // High_Res_Timer even when global_scale_factor is not set.
+  // However, setting the global_scale_factor_ appropriately will
+  // result in the finest resolution possible.
+
 private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
 			    ACE_hrtime_t hrt);
   // Converts an <hrt> to <tv> using global_scale_factor_.
+
+  static ACE_hrtime_t gettime ();
+  // For internal use:  gets the high-resolution time using
+  // ACE_OS::gethrtime ().  Except on platforms that require
+  // that the global_scale_factor_ be set, such as ACE_WIN32,
+  // uses the low-resolution clock if the global_scale_factor_
+  // has not been set.
 
   ACE_hrtime_t start_;
   // Starting time.
