@@ -133,27 +133,15 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       for (i = 0; i < node->n_inherits (); i++)
         {
-          be_interface *inherited =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
-
-          be_decl *scope = 0;
-
-          if (inherited->is_nested ())
-            {
-              // Inherited node is used in the scope of "node" node
-              scope =
-                be_scope::narrow_from_scope (node->defined_in ())->decl ();
-            }
-
-          *os << "public virtual ";
-          *os << inherited->nested_type_name (scope);
+          *os << "public virtual " 
+              << node->inherits ()[i]->name ();
 
           if (i < node->n_inherits () - 1) 
             {
               // Node has multiple inheritance, so put a comma.
-              *os << ", " << be_nl;
+              *os << "," << be_nl;
             }
-        }  // end of for loop
+        }
 
       *os << be_uidt << be_uidt_nl;
     }
