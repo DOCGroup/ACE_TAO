@@ -26,7 +26,7 @@ public:  // Functions
   
   EXT_ID (const CosPropertyService::PropertyName &name);
 
-  EXT_ID (const EXT_ID &ext_id);
+  //EXT_ID (const EXT_ID &ext_id);
   
   virtual int operator == (const EXT_ID &ext_id) const;
 
@@ -46,7 +46,7 @@ public:  // Functions
   
   INT_ID (const CORBA::Any &value);
 
-  INT_ID (const INT_ID &int_id);
+  //INT_ID (const INT_ID &int_id);
 
   virtual ~INT_ID ();
 
