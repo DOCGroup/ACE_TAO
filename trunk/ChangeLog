@@ -1,3 +1,9 @@
+Sat Jul 17 14:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.{h,cpp,i}:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.{h,cpp,i}:
+          Fixed compile errors in wchar build
+
 Sat Jul 17 14:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Shared_Malloc/test_position_independent_malloc.cpp:
