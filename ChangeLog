@@ -1,3 +1,8 @@
+Sun Jun 20 17:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TLI_Acceptor.cpp:
+          Fixed compile warning in Tru64 build
+
 Sun Jun 20 09:39:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_time.h:
@@ -29,7 +34,7 @@ Sun Jun 20 14:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sun Jun 20 00:25:17 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_time.inl:
-          Instructions in powerpc inline assembly code introduced in: 
+          Instructions in powerpc inline assembly code introduced in:
           Fri Jun 18 12:42:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
           need to be separated by newlines, not semicolons, which may be
           interpreted as comment characters.
