@@ -159,7 +159,7 @@ A complete list of all modifications to TAO is available in the <a href="../../C
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:parsons@cs.wustl.edu">
 Jeff Parsons</a>
-<p>Current status: (As of July 29, 2002.)
+<p>Current status: (As of October 1, 2002.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -474,27 +474,8 @@ Support for valuetypes has been expanded.<br>
 </ul>
 </li>
 
-<li>
-CCM-related keywords are recognized:<br>
-<ul>
-<li>component</li>
-<li>consumes</li>
-<li>emits</li>
-<li>eventtype</li>
-<li>finder</li>
-<li>getraises</li>
-<li>home</li>
-<li>import</li>
-<li>multiple</li>
-<li>primarykey</li>
-<li>provides</li>
-<li>publishes</li>
-<li>setraises</li>
-<li>typeid</li>
-<li>typeprefix</li>
-<li>uses</li>
-</ul>
-Full support for CORBA Components is in progress.
+<li>Support for the CCM extensions to IDL, which first appeared in CORBA 3.0 is 
+complete, with the exception of support for the 'import' keyword.
 </li>
 
 </ul>
@@ -521,11 +502,6 @@ and this has been done in all cases we could find in the IDL compiler source cod
 Another way to avoid the problem is to change the Release project Optimization
 setting to 'Minimize Size'. Reportedly the problem has been fixed in MSVC version
 7.0.
-</li>
-<li>
-In conditional #includes, where there is an inclusion for either value of the
-condition, and where the non-included base filename is a substring of the included
-one, both files will be included.
 </li>
 </ul>
 
@@ -554,16 +530,6 @@ Marshaling of complex state (graphs with cycles)<p>
 For a complete description of value type semantics, see chapter 5 in the
 CORBA specification.<p>
 
-<li>
-Support for CORBA Components in the TAO IDL compiler. As the implementation
-of CORBA Components in TAO progresses, the extensions to IDL that go with
-CORBA Components must be integrated into the IDL compiler. The CORBA
-Components specification is a separate OMG document from the CORBA
-specification, and a very large document in its own right. Implementation of
-CORBA Components in TAO is a long-term ongoing project. Note that, unlike
-the other items in the list, this item does not represent a CORBA
-compliance issue, since CORBA applicatons can always be used either with
-or without components.<p>
 
 <li>
 The generated sequence classes should not be generated per sequence, but
