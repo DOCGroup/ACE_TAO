@@ -13,33 +13,24 @@ CFG=Process_Strategy_Test - Win32 DLL Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Process_Strategy_Test.mak"\
- CFG="Process_Strategy_Test - Win32 DLL Debug"
+!MESSAGE NMAKE /f "Process_Strategy_Test.mak" CFG="Process_Strategy_Test - Win32 DLL Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Process_Strategy_Test - Win32 DLL Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Process_Strategy_Test - Win32 DLL Unicode Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Process_Strategy_Test - Win32 static Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Process_Strategy_Test - Win32 static Unicode Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Process_Strategy_Test - Win32 DLL Unicode Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Process_Strategy_Test - Win32 DLL Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Process_Strategy_Test - Win32 static Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Process_Strategy_Test - Win32 static Unicode Release" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Process_Strategy_Test - Win32 DLL Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Process_Strategy_Test - Win32 DLL Unicode Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Process_Strategy_Test - Win32 static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Process_Strategy_Test - Win32 static Unicode Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Process_Strategy_Test - Win32 DLL Unicode Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Process_Strategy_Test - Win32 DLL Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Process_Strategy_Test - Win32 static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Process_Strategy_Test - Win32 static Unicode Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
@@ -107,7 +98,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Process_Strategy_Test"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -132,7 +123,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Process_Strategy_Test"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -207,7 +198,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Process_Strategy_Test"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -232,7 +223,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Process_Strategy_Test"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
