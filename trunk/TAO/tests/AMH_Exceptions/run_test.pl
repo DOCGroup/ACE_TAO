@@ -11,7 +11,7 @@ use lib "../../../bin";
 use PerlACE::Run_Test;
 
 # Amount of delay (in seconds) between starting a server and a client.
-$sleeptime = 4;
+$sleeptime = 6;
 
 # File used to pass AMH server ior to its clients.
 # This file name is hard-coded in the server.cpp and client.cpp files
@@ -34,7 +34,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
 
 
 # Run client.
-$client = $CL->SpawnWaitKill (300);
+$client = $CL->SpawnWaitKill (30);
 
 # Clean up.
 $amhserver= $AMH->TerminateWaitKill (5);

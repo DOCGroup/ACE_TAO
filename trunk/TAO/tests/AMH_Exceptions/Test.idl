@@ -12,17 +12,17 @@ module Test
   /// Use a timestamp to measure the roundtrip delay
   typedef unsigned long long Timestamp;
 
+   valuetype Red_Herring
+   {
+     Timestamp test_method (in Timestamp send_time)
+       raises (InvalidTimestamp, ServerOverload);
+   };
 
-  //valuetype Red_Herring {};
-  
   /// Measure roundtrip Delay
   interface Roundtrip
   {
     Timestamp test_method (in Timestamp send_time)
       raises (InvalidTimestamp, ServerOverload);
-
-    //    void some_other_test (in Timestamp other_time)
-    //  raises (InvalidTimestamp, ServerOverload);
-
   };
+
 };
