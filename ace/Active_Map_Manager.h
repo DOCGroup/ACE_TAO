@@ -72,11 +72,25 @@ public:
   // Increment the <slot_generation> number.
 
 private:
-  ACE_UINT32 slot_index_;
-  // Slot index in the active map.
 
-  ACE_UINT32 slot_generation_;
-  // Slot generation number of <slot_index_> slot in the active map.
+  struct key_data
+  {
+    // = TITLE
+    //     Data for the Active Object Map Key.
+    //
+    // = DESCRIPTION
+    //     This separate structure makes it easier to manage copying
+    //     the index and the generation to and from the user buffer.
+
+    ACE_UINT32 slot_index_;
+    // Slot index in the active map.
+
+    ACE_UINT32 slot_generation_;
+    // Slot generation number of <slot_index_> slot in the active map.
+  };
+
+  key_data key_data_;
+  // Data for the Active Object Map Key.
 };
 
 #if defined (__ACE_INLINE__)
