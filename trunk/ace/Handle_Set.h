@@ -105,7 +105,7 @@ private:
   void set_max (ACE_HANDLE max);
   // Resets the MAX_FD after a clear of the original MAX_FD.
 
-  static const char nbits_[ACE_Handle_Set::NBITS];
+  static const char nbits_[NBITS];
   // Table that maps bytes to counts of the enabled bits.
 };
 

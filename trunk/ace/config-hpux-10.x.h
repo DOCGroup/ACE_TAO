@@ -24,10 +24,6 @@
 #define HPUX
 #endif /* HPUX */
 
-#if __cplusplus < 199707L
-#define ACE_HAS_BROKEN_HPUX_TEMPLATES
-#endif /* __cplusplus < 199707L */
-
 // The HP/UX compiler doesn't support volatile!!!!
 #define volatile
 

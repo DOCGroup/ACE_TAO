@@ -24,7 +24,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::expire (void)
     return 0;
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> void
+template <class TYPE, class FUNCTOR, class LOCK> ACE_INLINE void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::upcall (TYPE &type,
 						const void *act,
 						const ACE_Time_Value &cur_time)
@@ -33,26 +33,20 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::upcall (TYPE &type,
 }
 
 
-template <class TYPE, class FUNCTOR, class LOCK> ACE_Time_Value
+template <class TYPE, class FUNCTOR, class LOCK> ACE_INLINE ACE_Time_Value
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::gettimeofday (void)
 {
   // Invoke gettimeofday via pointer to function.
   return gettimeofday_ ();
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> void
+template <class TYPE, class FUNCTOR, class LOCK> ACE_INLINE void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::gettimeofday (ACE_Time_Value (*gettimeofday)(void))
 {
   gettimeofday_ = gettimeofday;
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> LOCK &
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::mutex (void)
-{
-  return this->mutex_;
-}
-
-template <class TYPE, class FUNCTOR, class LOCK> FUNCTOR &
+template <class TYPE, class FUNCTOR, class LOCK> ACE_INLINE FUNCTOR &
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::upcall_functor (void)
 {
   return this->upcall_functor_;

@@ -347,7 +347,7 @@ ACE_Sig_Adapter::handle_signal (int signum,
 // There are bugs with HP/UX's C++ compiler that prevents this stuff
 // from compiling...
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-#define ACE_MAX_SIGNAL_HANDLERS size_t (20)
+#define ACE_MAX_SIGNAL_HANDLERS (const size_t) (20)
 
 // Keeps track of the id that uniquely identifies each registered
 // signal handler.  This id can be used to cancel a timer via the

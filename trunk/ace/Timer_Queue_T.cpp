@@ -210,4 +210,10 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
   return number_of_timers_expired;
 }
 
+template <class TYPE, class FUNCTOR, class LOCK> LOCK &
+ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::mutex (void)
+{
+  return this->mutex_;
+}
+
 #endif /* ACE_TIMER_QUEUE_T_C*/

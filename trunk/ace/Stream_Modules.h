@@ -14,10 +14,10 @@
 // 
 // ============================================================================
 
+#include "ace/Task.h"
+
 #if !defined (ACE_STREAM_MODULES)
 #define ACE_STREAM_MODULES
-
-#include "ace/Task.h"
 
 template <ACE_SYNCH_1>
 class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_2>

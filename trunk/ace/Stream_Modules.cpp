@@ -4,8 +4,6 @@
 #if !defined (ACE_STREAM_MODULES_C)
 #define ACE_STREAM_MODULES_C
 
-#if !defined (ACE_LACKS_STREAM_MODULES)
-
 #define ACE_BUILD_DLL
 #include "ace/Stream_Modules.h"
 

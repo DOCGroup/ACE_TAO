@@ -16,6 +16,58 @@ Tue May 20 13:50:17 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  the apps and tests to run.  Thanks to Tom Dobridge for this
  	  help.
 
+Tue May 20 17:13:15 1997  Carlos O'Ryan  <coryan@charlie>
+
+	* ace/config-hpux-10.x-nothread.h: 
+	* ace/config-hpux-10.x-aCC.h: 
+	* ace/Stream_Modules.cpp: 
+	ACE_LACKS_STREAM_MODULES is no longer needed, moving the inclusion
+	of "ace/Task.h" to the beginning of "ace/Stream_Modules.h" solved
+	the problem nicely.
+
+	* ace/config-hpux-10.x.h: 
+	* ace/config-hpux-10.x-aCC.h: 
+	ACE_HAS_BROKEN_HPUX_TEMPLATES is not needed on newer HP/CXX
+	compilers; further, old ones will not compile ACE even if the
+	macro is defined.
+
+	* ace/Timer_List_T.h: 
+	* ace/Timer_Queue_T.i: 
+	I moved the definition of ACE_Timer_Queue_T::lock() from the .i
+	file to the .h file, HP/CXX gets completely confused otherwise.
+	I also added a number of ACE_INLINE missing in the .i file.
+
+	* ace/Stream_Modules.h: 
+	* ace/Stream_Modules.cpp: 
+	I had to move the inclusion of "ace/Task.h" outside of the
+	protections against multiple inclusion for Stream_Modules.h.
+	That seems to solve the ciclyc dependancy for
+	Task->Module->Stream_Module->Task.
+	BTW, the same thing was already done in "ace/Log_Record.h".
+	I'll try to remove the ACE_LACKS_STREAM_MODULES macro, it seems
+	that the last change makes it redundant.
+
+	* ace/Signal.cpp: 
+	HP/CXX compiler will not close the library unless
+	ACE_MAX_SIGNAL_HANDLERS is defined as "const size_t". The previous
+	definition ("size_t") did compile tough.
+
+	* ace/Log_Record.h: 
+	We need to include "ace/ACE.h" before "ace/Log_Priority.h".
+
+	* ace/Log_Priority.h: 
+	HP/CXX compiler seems to reserve a few bits in enums, so the
+	ENSURE_32_BITS trick would result in a compile time error.
+	Since HP enums are always 32 bits we could skip the definition for
+	ENSURE_32_BITS altogether, but I prefer to keep a consistent
+	namespace across plaforms, I have found a value for ENSURE_32_BITS
+	that seems to work.
+
+	* include/makeinclude/platform_hpux.GNU: 
+	Some options to improve compile time, since we use explicit
+	template instantiation there is no need for a ptcomp o ptlink
+	phase.
+
 Tue May 20 09:10:18 1997  Nanbor Wang  <nw1@number.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: 
