@@ -40,10 +40,7 @@ TAO_DynamicAny_Loader::create_object (CORBA::ORB_ptr,
 int
 TAO_DynamicAny_Loader::Initializer (void)
 {
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_DynamicAny_Loader);
-
-  return 0;
+  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_DynamicAny_Loader);
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_DynamicAny_Loader,

@@ -4,7 +4,6 @@
 #define Alt_Resource_Factory_BUILD_DLL
 
 #include "Time_Date.h"
-#include "tao/TAO_Singleton.h"
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"

@@ -40,11 +40,7 @@ TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr,
 int
 TAO_TypeCodeFactory_Loader::Initializer (void)
 {
-  ACE_Service_Config::static_svcs ()-> insert (
-      &ace_svc_desc_TAO_TypeCodeFactory_Loader
-    );
-
-  return 0;
+  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_TypeCodeFactory_Loader);
 }
 
 ACE_STATIC_SVC_DEFINE (
