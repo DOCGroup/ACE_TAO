@@ -685,6 +685,7 @@ TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
   {
     CORBA::Object **tmp = ACE_static_cast (CORBA::Object**, target);
     *tmp = CORBA::Object::_narrow (src, ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   CORBA_Object*
@@ -806,11 +807,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::EmptyProf
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TAO_IOP::_tc_EmptyProfileList, ACE_TRY_ENV)) // not equal
+    int retval =
+      type->equivalent (TAO_IOP::_tc_EmptyProfileList,
+                        ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+    if (!retval)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (TAO_IOP::EmptyProfileList *)_tao_any.value ();
@@ -894,11 +899,14 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::NotFound 
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TAO_IOP::_tc_NotFound, ACE_TRY_ENV)) // not equal
+    int retval =
+      type->equivalent (TAO_IOP::_tc_NotFound, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+    if (!retval)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (TAO_IOP::NotFound *)_tao_any.value ();
@@ -982,11 +990,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::Duplicate
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TAO_IOP::_tc_Duplicate, ACE_TRY_ENV)) // not equal
+
+    int retval =
+      type->equivalent (TAO_IOP::_tc_Duplicate, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+    // not equal
+    if (!retval)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (TAO_IOP::Duplicate *)_tao_any.value ();
@@ -1070,11 +1083,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::Invalid_I
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TAO_IOP::_tc_Invalid_IOR, ACE_TRY_ENV)) // not equal
+
+    int retval = type->equivalent (TAO_IOP::_tc_Invalid_IOR,
+                                   ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+    if (!retval)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (TAO_IOP::Invalid_IOR *)_tao_any.value ();
@@ -1158,7 +1175,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::MultiProf
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TAO_IOP::_tc_MultiProfileList, ACE_TRY_ENV)) // not equal
+
+    int retval =
+      type->equivalent (TAO_IOP::_tc_MultiProfileList, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!retval)
       {
         return 0;
       }
