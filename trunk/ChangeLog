@@ -1,3 +1,11 @@
+Mon Aug 11 01:46:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Modified the test for "GNU ld" to grep for the count instead of
+          relying on the return value which doesn't appear to work
+          correctly on all versions, specifically MacOSX and older
+          versions of OpenBSD (two platforms to which I lack access).
+
 Sun Aug 10 14:04:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/tests/DSRT_MIF/Makefile: Updated dependencies.
