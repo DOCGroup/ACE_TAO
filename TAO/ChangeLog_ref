@@ -1,3 +1,22 @@
+Sun Jun 22 000:31:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+
+          Removed unnecessary template parameter.
+
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Makefile.tao:
+        * tao/TAO.dsp:
+
+          Added new files and classes for fixed and variable size structs,
+          unions, and sequences.
+
 Fri Jun 20 17:17:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Basic_Argument_T.h:

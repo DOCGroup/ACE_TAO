@@ -180,7 +180,6 @@ namespace TAO
    */
   template<typename S, 
            typename S_var, 
-           typename S_out, 
            typename to_S, 
            typename from_S, 
            size_t BOUND>
@@ -191,7 +190,7 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 
-    S_out arg (void);
+    S *& arg (void);
 
   private:
     S_var x_;
@@ -282,7 +281,6 @@ namespace TAO
                                         BOUND>    inout_sarg_val;
     typedef Out_BD_String_SArgument_T<T,
                                       T_var,
-                                      T_out,
                                       to_T,
                                       from_T,
                                       BOUND>      out_sarg_val;

@@ -214,22 +214,22 @@ TAO::Inout_UB_String_SArgument_T<S,S_var>::arg (void)
 
 // ==============================================================
 
-template<typename S, typename S_var, typename S_out>
-TAO::Out_UB_String_SArgument_T<S,S_var,S_out>::Out_UB_String_SArgument_T (
+template<typename S, typename S_var>
+TAO::Out_UB_String_SArgument_T<S,S_var>::Out_UB_String_SArgument_T (
     void
   )
 {}
 
-template<typename S, typename S_var, typename S_out>
+template<typename S, typename S_var>
 CORBA::Boolean
-TAO::Out_UB_String_SArgument_T<S,S_var,S_out>::marshal (TAO_OutputCDR &cdr)
+TAO::Out_UB_String_SArgument_T<S,S_var>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
 
-template<typename S, typename S_var, typename S_out>
-S_out
-TAO::Out_UB_String_SArgument_T<S,S_var,S_out>::arg (void)
+template<typename S, typename S_var>
+S *&
+TAO::Out_UB_String_SArgument_T<S,S_var>::arg (void)
 {
   return this->x_.out ();
 }

@@ -320,22 +320,20 @@ TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void)
 
 template<typename S, 
          typename S_var, 
-         typename S_out, 
          typename to_S, 
          typename from_S, 
          size_t BOUND>
-TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::
+TAO::Out_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
 Out_BD_String_SArgument_T (void)
 {}
 
 template<typename S, 
          typename S_var, 
-         typename S_out, 
          typename to_S, 
          typename from_S, 
          size_t BOUND>
 CORBA::Boolean
-TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::marshal (
+TAO::Out_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
     TAO_OutputCDR &cdr
   )
 {
@@ -344,12 +342,11 @@ TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::marshal (
 
 template<typename S, 
          typename S_var, 
-         typename S_out, 
          typename to_S, 
          typename from_S, 
          size_t BOUND>
-S_out
-TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::arg (void)
+S *&
+TAO::Out_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void)
 {
   return this->x_.out ();
 }
