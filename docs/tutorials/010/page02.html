@@ -31,7 +31,7 @@ int
 run_test (int iterations,
           int threads)
 {
-  <font color=red>/* Create and star an instance of our Task object.  */</font>
+  <font color=red>/* Create and start an instance of our Task object.  */</font>
   Task task (threads);
 
   if (task.open () == -1)
@@ -100,8 +100,7 @@ main (int argc, char *argv[])
   int iterations = argc > 1 ? atoi (argv[1]) : 9;
   int threads = argc > 2 ? atoi (argv[2]) : 2;
   
-  un_test (iterations,
-           threads);
+  run_test (iterations, threads);
 
   ACE_DEBUG ((LM_DEBUG,
               "<font color=green>(%P|%t) Application exiting\n</font>"));

@@ -5,7 +5,7 @@
 #include "data.h"
 
 Task::Task (size_t n_threads)
-  : barrier_ (0),
+  : barrier_ (n_threads),
     n_threads_ (n_threads)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -22,20 +22,11 @@ Task::~Task (void)
   ACE_Message_Block *message;
   this->getq (message);
   message->release ();
-
-  delete barrier_;
 }
 
 int 
 Task::open (void *)
 {
-
-  barrier_;
-
-  ACE_NEW_RETURN (barrier_,
-                  ACE_Barrier (this->n_threads_),
-                  -1);
-
   return this->activate (THR_NEW_LWP,
                         this->n_threads_);
 
@@ -53,7 +44,7 @@ Task::close (u_long flags)
 int 
 Task::svc (void)
 {
-  this->barrier_->wait ();
+  this->barrier_.wait ();
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Task 0x%x starts in thread %d\n",

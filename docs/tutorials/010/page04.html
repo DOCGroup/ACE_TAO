@@ -55,9 +55,9 @@ public:
   int close (u_long flags = 0);
 
 protected:
-  <font color=red>/* Just to be clever, jI'll use an ACE_Barrier to cause the threads
+  <font color=red>/* Just to be clever, I'll use an ACE_Barrier to cause the threads
     to sync in svc() before doing any real work.  */</font>
-  ACE_Barrier *barrier_;
+  ACE_Barrier barrier_;
 
   size_t n_threads_;
   <font color=red>// Number of threads in the pool.</font>

@@ -1,3 +1,14 @@
+Tue Feb  9 16:12:42 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/{010|011}/task.{h|cpp} : barrier_ doesn't need to be a
+	pointer since Doug moved n_threads to the ctor.  Minor typos
+	corrected also.
+
+	* docs/tutorials/010/message_queue.cpp :  Typos...
+
+	* docs/tutorials/002/server.cpp: Added call to notify() in the
+	signal handler so that ^C will exit as expected.
+
 Tue Feb 09 13:57:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/DLList_Test.cpp (main): The test should log the result to
