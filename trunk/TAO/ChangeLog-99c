@@ -21,6 +21,13 @@ Sat Jan  9 22:50:35 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 Sat Jan  9 22:06:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+	  Changed to generate code using TAO_IN_ENV instead of _env.
+
 	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
 	* orbsvcs/LifeCycle_Service/Life_Cycle_Service_i.cpp:
@@ -85,13 +92,6 @@ Sat Jan  9 22:06:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* examples/Quoter/Quoter_i.cpp:
 	* examples/Simple/bank/AccountManager_i.cpp:
 	* examples/Simple/grid/Grid_i.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
-	  Changed to generate code using TAO_IN_ENV instead of _env.
-
 	* Any.h:
 	* CDR.h:
 	* Connect.h:
@@ -132,7 +132,7 @@ Sat Jan  9 22:06:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* Typecode.h:
 	* corba.h:
 	* poa_T.h:
-	* varout.h: Replaced all occurances of <_env> to TAO_IN_ENV.
+	* varout.h: Replaced all occurances of <_env> with TAO_IN_ENV.
 
 	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp
 	  (connect_push_supplier): Changed to use TAO_IN_ENV.
