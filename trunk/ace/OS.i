@@ -2027,14 +2027,14 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
 #  elif defined (ACE_HAS_WTHREADS)
 
+  // Note that we must convert between absolute time (which is passed
+  // as a parameter) and relative time (which is what the system call
+  // expects).
+  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
+
   switch (m->type_)
     {
     case USYNC_PROCESS:
-      // Note that we must convert between absolute time (which is
-      // passed as a parameter) and relative time (which is what the
-      // system call expects).
-      ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
-
       switch (::WaitForSingleObject (m->proc_mutex_,
                                      relative_time.msec ()))
         {
@@ -2285,7 +2285,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
   // timeouts due to a lack of timeout features for this type of MS
   // Windows synchronization mechanism.
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && !defined (ACE_HAS_WTHREADS)
 # if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
   return ACE_OS::mutex_lock (m, timeout);
 #elif defined (VXWORKS) || defined (ACE_PSOS)
