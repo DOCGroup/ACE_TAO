@@ -9,6 +9,7 @@
 #include <tao/Services.pidl>
 #include <tao/TimeBase.pidl>
 #include <orb.idl>
+#include <OctetSeq.pidl>
 
 #pragma prefix "omg.org"
 
@@ -192,10 +193,10 @@ module Security {
 
     struct ChannelBindings {
       unsigned long   initiator_addrtype;
-      sequence<octet> initiator_address;
+      CORBA::OctetSeq initiator_address;
       unsigned long   acceptor_addrtype;
-      sequence<octet> acceptor_address;
-      sequence<octet> application_data;
+      CORBA::OctetSeq acceptor_address;
+      CORBA::OctetSeq application_data;
     };
 
     // For use with SecurityReplaceable
