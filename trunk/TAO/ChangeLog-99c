@@ -10,8 +10,7 @@ Wed Sep  8 14:30:00 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	* orbsvcs/tests/Time/run_test.pl:
 
 	  Changed -ORBImplRepoServiceIOR file://foo.bar to 
-	  -ORBInitRef ImplRepoService=file://foo.bar in the following
-	  file.
+	  -ORBInitRef ImplRepoService=file://foo.bar.
 
 Wed Sep  8 14:08:49 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
