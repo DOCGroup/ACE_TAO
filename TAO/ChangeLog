@@ -1,3 +1,24 @@
+Fri Feb 13 12:19:58 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Synch_Invocation.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * tao/Exception.cpp:
+        
+          Added deprecations to the TAO_specific _type() method
+          for exceptions. They are no longer used anywhere in ORB
+          code.
+          
+        * docs/compiler.html:
+        
+          Updated the table entry for the -St command line option,
+          pointing out that its use is incompatible with the
+          presence of user exceptions. Thanks to Oliver Kellogg
+          <okellogg@freenet.de> for pointing out this incompatibility
+          situation whose user friendliness index has been neglected
+          for so long.
 
 Fri Feb 13 11:18:21 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
