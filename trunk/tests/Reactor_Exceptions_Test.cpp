@@ -25,8 +25,23 @@
 
 #if defined (ACE_HAS_EXCEPTIONS)
 
+#if defined (ACE_WIN32)
+static void
+raise_exception (void)
+{
+  // Cause a Win32 structured exception.
+  *(char *) 0 = 0;
+}
+#else
 // Just need a simple exception class.
 class Except {};
+
+static void
+raise_exception (void)
+{
+  throw Except ();
+}
+#endif /* ACE_WIN32 */
 
 class Memory_Exception : public ACE_Event_Handler, public ACE_SOCK_Dgram
 {
@@ -54,22 +69,22 @@ Memory_Exception::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
   ACE_INET_Addr from_addr;
 
-  ACE_DEBUG ((LM_DEBUG, "Activity occurred on handle %d!\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "Activity occurred on handle %d!\n",
               ACE_SOCK_Dgram::get_handle ()));
 
   ssize_t n = ACE_SOCK_Dgram::recv (buf, sizeof buf, from_addr);
 
   if (n == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "handle_input"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "handle_input"));
   else
-    ACE_DEBUG ((LM_DEBUG, "got buf = %s\n", buf));
+    ACE_DEBUG ((LM_DEBUG,
+                "got buf = %s\n",
+                buf));
 
-#if defined (ACE_WIN32)
-  // Cause a Win32 structured exception.
-  *(char *) 0 = 0;
-#else
-  throw Except ();
-#endif /* ACE_WIN32 */
+  raise_exception ();
   ACE_NOTREACHED (return 0);
 }
 
