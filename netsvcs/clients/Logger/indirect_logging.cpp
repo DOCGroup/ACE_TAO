@@ -20,7 +20,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_STARTUP, "starting up the test\n"));
 
-  for (size_t i = 0; i < iterations; i++)
+  for (int i = 0; i < iterations; i++)
     {
       size_t priority = ACE_OS::rand () % int (LM_MAX);
       ACE_POW (priority);
