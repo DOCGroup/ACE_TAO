@@ -7,8 +7,8 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 TAO_LB_Pull_Handler::TAO_LB_Pull_Handler (
-  TAO_LB_ObjectGroup_Map &object_group_map)
-  : object_group_map_ (object_group_map)
+  TAO_LB_Location_Map &location_map)
+  : location_map_ (location_map)
 {
 }
 
@@ -17,58 +17,39 @@ TAO_LB_Pull_Handler::handle_timeout (
   const ACE_Time_Value & /* current_time */,
   const void * /* arg */)
 {
-  TAO_LB_ObjectGroup_Map::iterator begin =
-    this->object_group_map_.begin ();
+  TAO_LB_Location_Map::iterator begin =
+    this->location_map_.begin ();
 
-  TAO_LB_ObjectGroup_Map::iterator begin =
-    this->object_group_map_.end ();
+  TAO_LB_Location_Map::iterator begin =
+    this->location_map_.end ();
 
-  // Iterate over all registered object groups.
+  // Iterate over all registered load monitors.
   //
   // @todo This could be potentially very slow.  Improve concurrent
   //       operation at some point in the near future.
-  for (TAO_LB_ObjectGroup_Map::iterator i = begin;
+  for (TAO_LB_Location_Map::iterator i = begin;
        i != end;
-       ++i
-  {
-    TAO_LB_ObjectGroup_Map_Entry *object_group = i->ext_id_;
+       ++i)
+    {
+      TAO_LB_Location_Map_Entry *location = i->ext_id_;
 
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, object_group->lock, 0);
-
-    if (entry->replica_infos.is_empty ())
-      // @@ What do we do if the set is empty?
-      continue;
-
-    TAO_LB_ReplicaInfo_Set::iterator begin =
-      object_group->replica_infos.begin ();
-
-    TAO_LB_ReplicaInfo_Set::iterator end =
-      object_group->replica_infos.end ();
-
-    // Now iterate over the replica set.
-
-      TAO_LB_ReplicaInfo *replica_info = (*i);
-
-      for (TAO_LB_ReplicaInfo_Set::iterator i = begin;
-           i != end;
-           ++i)
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
         {
-          LoadBalancing::LoadList_var load =
-            (*i)->load_monitor->current_load (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-          // @@ Hardcode one load and don't bother checking the
-          // LoadId, for now.  (just to get things going)
-          if (d[CORBA::Long (0)].value > load[CORBA::Long (0)].value)
-            {
-              replica_info = *i;
-              d = (*i)->load_monitor->current_load (ACE_TRY_ENV);
-              ACE_CHECK_RETURN (CORBA::Object::_nil ());
-            }
+          location->load_list =
+            location->load_monitor->current_load (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
+      ACE_CATCHANY
+        {
+          // Catch the exception and ignore it.
 
-  }
-
+          if (TAO_debug_level > 0)
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                 "(%P|%t) Load monitoring exception");
+        }
+      ACE_ENDTRY;
+    }
 
   return 0;
 }

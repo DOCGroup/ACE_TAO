@@ -133,6 +133,8 @@ module LoadBalancing
   exception CannotMeetCriteria {
     Criteria unmet_criteria;
   };
+  exception MonitorAlreadyPresent {};
+  exception LocationNotFound {};
 
   /// Specification of PropertyManager Interface which
   /// ReplicationManager Inherits
@@ -246,10 +248,11 @@ module LoadBalancing
       raises (InterfaceNotFound);
 
     void register_load_monitor (in LoadMonitor load_monitor,
-                                in Location the_location);
+                                in Location the_location)
+      raises (MonitorAlreadyPresent);
 
     LoadMonitor get_load_monitor (in Location the_location)
-      raises (InterfaceNotFound);
+      raises (LocationNotFound);
 
   };
 

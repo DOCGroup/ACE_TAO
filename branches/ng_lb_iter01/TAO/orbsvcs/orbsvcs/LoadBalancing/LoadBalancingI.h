@@ -64,14 +64,15 @@ public:
       LoadBalancing::LoadMonitor_ptr load_monitor,
       const LoadBalancing::Location & the_location,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     LoadBalancing::MonitorAlreadyPresent));
 
-  /// Return a reference to the load notifier in use.
+  /// Return a reference to the load monitor at the given location.
   virtual LoadBalancing::LoadMonitor_ptr get_load_monitor (
       const LoadBalancing::Location & the_location,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     LoadBalancing::InterfaceNotFound));
+                     LoadBalancing::LocationNotFound));
 
   /**
    * @name LoadBalancing::PropertyManager methods
@@ -323,6 +324,11 @@ private:
 
   /// Mutex that provides synchronization.
   TAO_SYNCH_MUTEX lock_;
+
+  /// Table that maps LoadBalancing::Location to load monitor at that
+  /// location, in addition to the replicas residing at that
+  /// location.
+  TAO_LB_Location_Map location_map_;
 
   /// Map between RepositoryId, ObjectGroup reference, replica list and
   /// factory creation ID.

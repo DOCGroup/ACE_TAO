@@ -26,10 +26,13 @@
 
 #include "orbsvcs/LoadBalancingC.h"
 
-#include "LB_ObjectGroup_Map.h"
 
 /// Forward declarations.
+class TAO_LB_Location_Map;
+class TAO_LB_ObjectGroup_Map;
 class TAO_LB_PropertyManager;
+
+struct TAO_LB_ObjectGroup_Map_Entry;
 
 
 /**
@@ -48,8 +51,9 @@ class TAO_LB_GenericFactory
 public:
 
   /// Constructor.
-  TAO_LB_GenericFactory (TAO_LB_PropertyManager &property_manager,
-                         TAO_LB_ObjectGroup_Map &object_group_map);
+  TAO_LB_GenericFactory (TAO_LB_Location_Map &location_map,
+                         TAO_LB_ObjectGroup_Map &object_group_map,
+                         TAO_LB_PropertyManager &property_manager);
 
   /**
    * @name TAO_LoadBalancer::GenericFactory methods
@@ -118,11 +122,14 @@ private:
   /// Reference to the POA used to create object group references.
   PortableServer::POA_var poa_;
 
-  /// Reference to the PropertyManager.
-  TAO_LB_PropertyManager &property_manager_;
+  /// Reference to the Location map.
+  TAO_LB_Location_Map &location_map_;
 
   /// Reference to the ObjectGroup map.
   TAO_LB_ObjectGroup_Map &object_group_map_;
+
+  /// Reference to the PropertyManager.
+  TAO_LB_PropertyManager &property_manager_;
 
   /// The FactoryCreationId that will be assigned to the next object
   /// group that is created.

@@ -19,12 +19,15 @@ TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
 (void)
   : poa_ (),
     lock_ (),
+    location_map_
     object_group_map_ (),
     property_manager_ (this->object_group_map_),
-    generic_factory_ (this->property_manager_,
-                      this->object_group_map_),
-    object_group_manager_ (this->property_manager_,
-                           this->object_group_map_),
+    generic_factory_ (this->location_map_,
+                      this->object_group_map_,
+                      this->property_manager_),
+    object_group_manager_ (this->location_map_,
+                           this->object_group_map_,
+                           this->property_manager_),
     balancing_strategy_ (new TAO_LB_Minimum_Dispersion_Strategy) //@@ FIXME!
 {
   //  (void) this->init ();  
@@ -57,23 +60,64 @@ TAO_LoadBalancing_ReplicationManager_i::get_load_notifier (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
-    LoadBalancing::LoadMonitor_ptr /* load_monitor */,
-    const LoadBalancing::Location & /* the_location */,
+    LoadBalancing::LoadMonitor_ptr load_monitor,
+    const LoadBalancing::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   LoadBalancing::MonitorAlreadyPresent))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  TAO_LB_Location_Map_Entry *location_entry = 0;
+  auto_ptr<TAO_LB_Location_Map_Entry> safe_location_entry;
 
+  int result = this->location_map_.find (the_location,
+                                         location_entry);
+  
+  // If no location entry exists for the given location, then create
+  // and bind a new one.
+  if (result != 0)
+    {
+      ACE_NEW_THROW_EX (location_entry,
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      safe_location_entry = location_entry;
+
+      if (this->location_map_.bind (the_location,
+                                    location_entry) != 0)
+        ACE_THROW (CORBA::INTERNAL ());  // @@ Pick a better (user?)
+                                         //    exception.
+    }
+  else if (CORBA::is_nil (location_entry->load_monitor))
+    {
+      location_entry->load_monitor =
+        LoadBalancing::LoadMonitor::_duplicate (load_monitor);
+    }
+  else
+    ACE_THROW (LoadBalancing::MonitorAlreadyPresent ());
 }
 
 LoadBalancing::LoadMonitor_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_load_monitor (
-    const LoadBalancing::Location & /* the_location */,
+    const LoadBalancing::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::InterfaceNotFound))
+                   LoadBalancing::LocationNotFound))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+  TAO_LB_Location_Map_Entry *location_entry = 0;
+
+  if (this->location_map_.find (the_location,
+                                location_entry) == 0)
+    {
+      return
+        LoadBalancing::LoadMonitor::_duplicate (
+          location_entry->load_monitor.in ());
+    }
+
+  ACE_THROW_RETURN (LoadBalancing::LocationNotFound (),
                     LoadBalancing::LoadMonitor::_nil ());
 }
 
