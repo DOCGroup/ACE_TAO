@@ -57,7 +57,7 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
 
   // When it comes for bind we know the handler is going to be busy
   // and is marked for a partcular thread. So, mark it busy
-  ext_id.recycle_state (ACE_RECYCLABLE_BUSY);
+  int_id.recycle_state (ACE_RECYCLABLE_BUSY);
 
   int retval = this->cache_map_.bind (ext_id,
                                       int_id,
@@ -200,7 +200,7 @@ TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
   if (retval == 0)
     {
 
-      new_entry->ext_id_.
+      new_entry->int_id_.
         recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
 
       entry = new_entry;
@@ -229,7 +229,7 @@ TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
        iter != this->cache_map_.end ();
        ++iter)
     {
-      if ((*iter).ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED)
+      if ((*iter).int_id_.recycle_state () == ACE_RECYCLABLE_CLOSED)
         {
           HASH_MAP_ENTRY *entry = 0;
           this->cache_map_.find ((*iter).ext_id_,
@@ -306,14 +306,14 @@ int
 TAO_Connection_Cache_Manager::
     is_entry_idle (HASH_MAP_ENTRY *&entry)
 {
-  if (entry->ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
-      entry->ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
+  if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+      entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
     {
       // Save that in the handler
       entry->int_id_.handler ()->cache_map_entry (entry);
 
       // Mark the connection as busy
-      entry->ext_id_.recycle_state (ACE_RECYCLABLE_BUSY);
+      entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
 
       return 1;
     }

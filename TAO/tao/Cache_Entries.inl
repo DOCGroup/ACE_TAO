@@ -3,13 +3,15 @@
 
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (void)
-  : handler_ (0)
+  : handler_ (0),
+    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
 {
 }
 
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (TAO_Connection_Handler *handler)
-  : handler_ (handler)
+  : handler_ (handler),
+    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
 {
 }
 
@@ -17,6 +19,7 @@ ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (const TAO_Cache_IntId &rhs)
 {
   this->handler_ = rhs.handler_;
+  this->recycle_state_ = rhs.recycle_state_;
 }
 
 ACE_INLINE
@@ -28,6 +31,7 @@ ACE_INLINE void
 TAO_Cache_IntId::operator= (const TAO_Cache_IntId &rhs)
 {
   this->handler_ = rhs.handler_;
+  this->recycle_state_ = rhs.recycle_state_;
 }
 
 ACE_INLINE int
@@ -54,13 +58,25 @@ TAO_Cache_IntId::handler (void) const
   return this->handler_;
 }
 
+ACE_INLINE void
+TAO_Cache_IntId::recycle_state (ACE_Recyclable_State st)
+{
+  this->recycle_state_ = st;
+}
+
+ACE_INLINE ACE_Recyclable_State
+TAO_Cache_IntId::recycle_state (void)
+{
+  return this->recycle_state_;
+}
+
+
 /*******************************************************/
 ACE_INLINE
 TAO_Cache_ExtId::TAO_Cache_ExtId (void)
   : connection_property_ (0),
     is_delete_ (0),
-    index_ (0),
-    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
+    index_ (0)
 {
 }
 
@@ -68,8 +84,7 @@ ACE_INLINE
 TAO_Cache_ExtId::TAO_Cache_ExtId (TAO_Base_Connection_Property *prop)
   : connection_property_ (prop),
     is_delete_ (0),
-    index_ (0),
-    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
+    index_ (0)
 {
 
 }
@@ -89,7 +104,6 @@ TAO_Cache_ExtId::TAO_Cache_ExtId (const TAO_Cache_ExtId &rhs)
     rhs.connection_property_->duplicate ();
   this->is_delete_ = 1;
   this->index_ = rhs.index_;
-  this->recycle_state_ = rhs.recycle_state_;
 }
 
 ACE_INLINE void
@@ -100,7 +114,6 @@ TAO_Cache_ExtId::operator= (const TAO_Cache_ExtId &rhs)
     rhs.connection_property_->duplicate ();
   this->is_delete_ = 1;
   this->index_ = rhs.index_;
-  this->recycle_state_ = rhs.recycle_state_;
 }
 
 ACE_INLINE int
@@ -164,16 +177,4 @@ ACE_INLINE TAO_Base_Connection_Property *
 TAO_Cache_ExtId::property (void) const
 {
   return this->connection_property_;
-}
-
-ACE_INLINE void
-TAO_Cache_ExtId::recycle_state (ACE_Recyclable_State st)
-{
-  this->recycle_state_ = st;
-}
-
-ACE_INLINE ACE_Recyclable_State
-TAO_Cache_ExtId::recycle_state (void)
-{
-  return this->recycle_state_;
 }
