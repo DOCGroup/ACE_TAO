@@ -714,11 +714,7 @@ TAO_Abstract_Manager<T,T_var,T_life>::operator= (const T_var & p)
 template<typename T, typename T_var, typename T_life>
 TAO_Abstract_Manager<T,T_var,T_life>::operator const T_var () const
 {
-  if (*this->ptr_ != 0)
-    {
-      (*this->ptr_)->_add_ref ();
-    }
-
+  T_life::tao_duplicate (*this->ptr_);
   return *this->ptr_;
 }
 
@@ -726,11 +722,7 @@ template<typename T, typename T_var, typename T_life>
 T *&
 TAO_Abstract_Manager<T,T_var,T_life>::out (void)
 {
-  if (*this->ptr_ != 0)
-    {
-      (*this->ptr_)->_remove_ref ();
-    }
-
+  T_life::tao_release (*this->ptr_);
   *this->ptr_ = 0;
   return *this->ptr_;
 }

@@ -1,3 +1,11 @@
+Mon Mar 31 22:31:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+        * tao/Sequence_T.cpp:
+
+          Fixed some bugs with sequence template code generation.
+
 Mon Mar 31 18:05:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Services.cpp:
