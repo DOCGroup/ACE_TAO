@@ -15,6 +15,8 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+#include "ace/OS.h"
+
 /// Implement the Test::Hello interface
 class Hello
   : public virtual POA_Test::Hello
@@ -22,7 +24,8 @@ class Hello
 {
 public:
   /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  Hello (CORBA::ORB_ptr orb,
+         ACE_thread_t thr_id);
 
   // = The skeleton methods
   virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
@@ -35,6 +38,8 @@ private:
   /// Use an ORB reference to conver strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
+
+  ACE_thread_t thr_id_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

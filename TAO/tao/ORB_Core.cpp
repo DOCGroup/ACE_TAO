@@ -520,7 +520,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
               this->use_global_collocation_ = 1;
             }
           else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("NO")) == 0)
-            this->opt_for_collocation_ = 0;
+            {
+              this->opt_for_collocation_ = 0;
+              this->use_global_collocation_ = 0;
+            }
           else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("per-orb")) == 0)
             {
               this->opt_for_collocation_ = 1;

@@ -12,7 +12,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
+#include "tao/ORB.h"
 
 /// Implement a Task to run the server in a single thread
 class Server_Task : public ACE_Task_Base
@@ -20,7 +20,7 @@ class Server_Task : public ACE_Task_Base
 public:
   /// Constructor
   Server_Task (const char *output,
-               const int named_orbs,
+               CORBA::ORB_ptr sorb,
                ACE_Manual_Event &me,
                ACE_Thread_Manager *thr_mgr);
 
@@ -28,7 +28,6 @@ public:
   int svc (void);
 
 private:
-
   /// Output file for IOR
   const char *output_;
 
@@ -36,7 +35,7 @@ private:
   /// thread.
   ACE_Manual_Event &me_;
 
-  ACE_CString name_;
+  CORBA::ORB_var sorb_;
 };
 
 #include "ace/post.h"

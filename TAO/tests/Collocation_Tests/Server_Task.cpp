@@ -10,16 +10,14 @@ ACE_RCSID(Collocated_Test,
           "$Id$")
 
 Server_Task::Server_Task (const char *output,
-                          const int named_orbs,
+                          CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-  , output_ (output)
-  , me_ (me)
-  , name_ ()
+    , output_ (output)
+    , me_ (me)
+    , sorb_ (CORBA::ORB::_duplicate (sorb))
 {
-  if (named_orbs)
-    this->name_.set ("server_orb");
 }
 
 int
@@ -27,22 +25,14 @@ Server_Task::svc (void)
 {
  ACE_TRY_NEW_ENV
    {
-     int argc = 1;
-     char *argv [] = {"-ORBCollocation per-orb"};
-
-     CORBA::ORB_var orb =
-       CORBA::ORB_init (argc,
-                        argv,
-                        this->name_.c_str ()
-                        ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
-
      CORBA::Object_var poa_object =
-       orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+       this->sorb_->resolve_initial_references("RootPOA"
+                                               ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
      PortableServer::POA_var root_poa =
-       PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+       PortableServer::POA::_narrow (poa_object.in ()
+                                     ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
      if (CORBA::is_nil (root_poa.in ()))
@@ -56,7 +46,8 @@ Server_Task::svc (void)
 
      Hello *hello_impl;
      ACE_NEW_RETURN (hello_impl,
-                     Hello (orb.in ()),
+                     Hello (this->sorb_.in (),
+                            ACE_Thread::self ()),
                      1);
 
      PortableServer::ServantBase_var owner_transfer(hello_impl);
@@ -66,7 +57,8 @@ Server_Task::svc (void)
      ACE_TRY_CHECK;
 
      CORBA::String_var ior =
-       orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
+       this->sorb_->object_to_string (hello.in ()
+                                      ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
      // Output the IOR to the <this->output_>
@@ -87,7 +79,7 @@ Server_Task::svc (void)
      // Signal the main thread before we call orb->run ();
      this->me_.signal ();
 
-     orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+     this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
@@ -95,7 +87,7 @@ Server_Task::svc (void)
      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+     this->sorb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
    }
  ACE_CATCHANY
