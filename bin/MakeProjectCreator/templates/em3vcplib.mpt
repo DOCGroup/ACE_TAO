@@ -6,6 +6,7 @@ configurations        = "Static Release" "Static Debug"
 common_defines        = UNICODE _UNICODE
 type_is_static        = 1
 need_libflags         = 1
+stack                 =
 
 WCE x86 {
   type_code   = 0x8304
