@@ -36,15 +36,16 @@ namespace CIAO
     virtual PortableServer::Servant create (void) = 0;
 
   };
-
+/*
   template<typename COMP_SERVANT>
   class Dynamic_Component_Servant : public Dynamic_Component_Servant_Base
   {
   public:
-    PortableServer::Servant create (void)
+    virtual PortableServer::Servant create (void)
     {
       return new COMP_SERVANT;
     }
+*/
 }
 
 #include /**/ "ace/post.h"
