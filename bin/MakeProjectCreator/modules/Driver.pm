@@ -248,8 +248,8 @@ sub run {
     $global = $self->{'path'} . "/config/global.mpb";
   }
   ## Always add the default include paths
-  unshift(@include, $self->{'path'} . "/templates");
   unshift(@include, $self->{'path'} . "/config");
+  unshift(@include, $self->{'path'} . "/templates");
 
   if ($reldefs) {
     if (!defined $relative{'ACE_ROOT'} && defined $ENV{ACE_ROOT}) {
@@ -281,7 +281,7 @@ sub run {
         print STDERR "Unable to process: $file\n";
         $status++;
       }
-      print "  End Time: " . scalar(localtime(time())) . "\n";
+      print "\r  End Time: " . scalar(localtime(time())) . "\n";
     }
   }
 
@@ -292,7 +292,7 @@ sub run {
 sub progress {
   ## This method will be called before each output
   ## file (or set of output files in vc6's case) is written.
-  print "$progress[$index]\r";
+  print "\r$progress[$index]";
   $index++;
   if ($index > $#progress) {
     $index = 0;

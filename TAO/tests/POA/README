@@ -13,12 +13,6 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 The program tests the destruction of a POA during an
                 upcall.
 
-        . Default_Servant
-
-                This program tests the behavior of
-                POA::id_to_servant() and POA::reference_to_servant()
-                with the use of default servants.
-
         . Object_Reactivation
 
                 This program tests the reactivation of a servant that
@@ -65,8 +59,3 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 This test checks the combination of PERSISTENT &
                 SYSTEM_ID POA policies.
 
-        . Policies
-
-                This program tests the construction of POA policies,
-                both through the generic ORB::create_policy interface
-                and the PortableServer specific interfaces.

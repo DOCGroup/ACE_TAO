@@ -51,21 +51,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosLoadBalancing_Static"=.\CosLoadBalancing_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name PortableGroup_Static
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "CosNaming_Static"=.\CosNaming_Static.dsp - Package Owner=<4>
 
 Package=<5>
@@ -162,7 +147,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "PortableGroup_Static"=.\PortableGroup_Static.dsp - Package Owner=<4>
+Project: "LoadBalancing_Static"=.\LoadBalancing_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -170,9 +155,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name CosNaming_Static
-    End Project Dependency
 }}}
 
 ###############################################################################

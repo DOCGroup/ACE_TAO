@@ -70,11 +70,12 @@ Server_IORInterceptor::establish_components (
 }
 
 void
-Server_IORInterceptor::components_established (
-     PortableInterceptor::IORInfo_ptr ior_info
-     ACE_ENV_ARG_DECL)
+Server_IORInterceptor::
+components_established (PortableInterceptor::IORInfo_ptr ior_info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   Gateway_ObjRef_Factory *my_factory;
 
   PortableInterceptor::ObjectReferenceFactory_var current_factory =
@@ -91,8 +92,7 @@ Server_IORInterceptor::components_established (
 void
 Server_IORInterceptor::adapter_manager_state_changed (
     PortableInterceptor::AdapterManagerId ,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
@@ -101,8 +101,7 @@ Server_IORInterceptor::adapter_manager_state_changed (
 void
 Server_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;

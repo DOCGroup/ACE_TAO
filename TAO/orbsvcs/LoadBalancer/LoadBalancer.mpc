@@ -1,25 +1,5 @@
-project(CosLoadManager): namingexe, messaging, core {
-  libs     += TAO_CosLoadBalancing TAO_PortableGroup
-  depends  += LoadBalancing PortableGroup
-  requires += ami interceptors
-  comps    += CosLoadBalancing
-  exename   = LoadManager
-
-  Source_Files {
-    LoadBalancer.cpp
-    LoadManager.cpp
-  }
-}
-
-project(CosLoadMonitor): namingexe, messaging, core {
-  libs     += TAO_CosLoadBalancing TAO_PortableGroup
-  depends  += LoadBalancing PortableGroup
-  requires += ami interceptors
-  comps    += CosLoadBalancing
-  exename   = LoadMonitor
-
-  Source_Files {
-    LoadMonitor.cpp
-    Push_Handler.cpp
-  }
+project : orbsvcsexe {
+  depends += LoadBalancing PortableServer
+  exename  = LoadBalancer_Service
+  libs    += TAO_LoadBalancing TAO_PortableServer
 }

@@ -43,8 +43,11 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/streams.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -149,8 +152,9 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- ../Generic_Servant/test_i.h ../Generic_Servant/testS.h \
- ../Generic_Servant/testC.h $(TAO_ROOT)/tao/corba.h \
+ ../Generic_Servant/MyFooServant.h ../Generic_Servant/FooS.h \
+ ../Generic_Servant/FooC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -237,7 +241,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- ../Generic_Servant/generic_servant_export.h ../Generic_Servant/testC.i \
+ ../Generic_Servant/generic_servant_export.h ../Generic_Servant/FooC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -252,7 +256,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- ../Generic_Servant/testS_T.h ../Generic_Servant/testS_T.i \
- ../Generic_Servant/testS_T.cpp ../Generic_Servant/testS.i
+ ../Generic_Servant/FooS_T.h ../Generic_Servant/FooS_T.i \
+ ../Generic_Servant/FooS_T.cpp ../Generic_Servant/FooS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -72,7 +72,7 @@ if ($clients > 2) { $CL3->Spawn (); }
 
 
 if ($clients > 0) {
-  $client = $CL1->WaitKill (210);
+  $client = $CL1->WaitKill (180);
 
   if ($client != 0) {
     print STDERR "ERROR: client 1 returned $client\n";

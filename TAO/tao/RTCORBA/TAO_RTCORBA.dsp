@@ -160,18 +160,6 @@ SOURCE=.\Continuous_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Network_Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Network_Priority_Mapping_Manager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Network_Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
@@ -265,18 +253,6 @@ SOURCE=.\Thread_Pool.cpp
 # Begin Source File
 
 SOURCE=.\Continuous_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Network_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Network_Priority_Mapping_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Network_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -377,18 +353,6 @@ SOURCE=.\Thread_Pool.h
 # Begin Source File
 
 SOURCE=.\Continuous_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Network_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Network_Priority_Mapping_Manager.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Network_Priority_Mapping.i
 # End Source File
 # Begin Source File
 

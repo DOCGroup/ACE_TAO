@@ -1,2 +1,4 @@
-project : server, messaging_only {
+project : server {
+  depends += Messaging
+  libs    += TAO_Messaging
 }

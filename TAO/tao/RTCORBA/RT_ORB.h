@@ -149,8 +149,7 @@ public:
                                   CORBA::Long recv_buffer_size,
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
-                                  CORBA::Boolean no_delay,
-				  CORBA::Boolean enable_network_priority
+                                  CORBA::Boolean no_delay
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException ));
 

@@ -125,7 +125,7 @@ public:
   virtual ACE_Asynch_Read_Stream_Result_Impl *create_asynch_read_stream_result (ACE_Handler &handler,
                                                                                 ACE_HANDLE handle,
                                                                                 ACE_Message_Block &message_block,
-                                                                                size_t bytes_to_read,
+                                                                                u_long bytes_to_read,
                                                                                 const void* act,
                                                                                 ACE_HANDLE event,
                                                                                 int priority,
@@ -134,7 +134,7 @@ public:
   virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
                                                                                   ACE_HANDLE handle,
                                                                                   ACE_Message_Block &message_block,
-                                                                                  size_t bytes_to_write,
+                                                                                  u_long bytes_to_write,
                                                                                   const void* act,
                                                                                   ACE_HANDLE event,
                                                                                   int priority,
@@ -143,7 +143,7 @@ public:
   virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler &handler,
                                                                             ACE_HANDLE handle,
                                                                             ACE_Message_Block &message_block,
-                                                                            size_t bytes_to_read,
+                                                                            u_long bytes_to_read,
                                                                             const void* act,
                                                                             u_long offset,
                                                                             u_long offset_high,
@@ -154,7 +154,7 @@ public:
   virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler &handler,
                                                                               ACE_HANDLE handle,
                                                                               ACE_Message_Block &message_block,
-                                                                              size_t bytes_to_write,
+                                                                              u_long bytes_to_write,
                                                                               const void* act,
                                                                               u_long offset,
                                                                               u_long offset_high,
@@ -189,7 +189,7 @@ public:
                                                                       ACE_HANDLE listen_handle,
                                                                       ACE_HANDLE accept_handle,
                                                                       ACE_Message_Block &message_block,
-                                                                      size_t bytes_to_read,
+                                                                      u_long bytes_to_read,
                                                                       const void* act,
                                                                       ACE_HANDLE event,
                                                                       int priority,
@@ -207,10 +207,10 @@ public:
                                                                                     ACE_HANDLE socket,
                                                                                     ACE_HANDLE file,
                                                                                     ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                                                    size_t bytes_to_write,
+                                                                                    u_long bytes_to_write,
                                                                                     u_long offset,
                                                                                     u_long offset_high,
-                                                                                    size_t bytes_per_send,
+                                                                                    u_long bytes_per_send,
                                                                                     u_long flags,
                                                                                     const void *act,
                                                                                     ACE_HANDLE event,
@@ -248,7 +248,7 @@ protected:
   /// Protect against structured exceptions caused by user code when
   /// dispatching handles.
   void application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
-				  size_t bytes_transferred,
+				  u_long bytes_transferred,
 				  const void *completion_key,
 				  u_long error);
 
@@ -309,7 +309,7 @@ protected:
                           int signal_number = 0);
 
   /// This method calls the <handler>'s handle_timeout method.
-  virtual void complete (size_t bytes_transferred,
+  virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error = 0);

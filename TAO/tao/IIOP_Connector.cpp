@@ -49,7 +49,7 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connec
 
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
-  : TAO_Connector (IOP::TAG_INTERNET_IOP),
+  : TAO_Connector (TAO_TAG_IIOP_PROFILE),
     lite_flag_ (flag),
     connect_strategy_ (),
     base_connector_ ()
@@ -353,7 +353,6 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   int send_buffer_size = this->orb_core ()->orb_params ()->sock_sndbuf_size ();
   int recv_buffer_size = this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
   int no_delay = this->orb_core ()->orb_params ()->nodelay ();
-  int enable_network_priority = 0;
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -367,7 +366,6 @@ TAO_IIOP_Connector::init_tcp_properties (void)
         tph->call_client_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
-					 enable_network_priority,
                                          protocol_type);
 
       if(hook_result == -1)
@@ -381,8 +379,6 @@ TAO_IIOP_Connector::init_tcp_properties (void)
     recv_buffer_size;
   this->tcp_properties_.no_delay =
     no_delay;
-  this->tcp_properties_.enable_network_priority  =
-    enable_network_priority;
 
   return 0;
 }
@@ -391,7 +387,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 TAO_IIOP_Endpoint *
 TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
-  if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
+  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return 0;
 
   TAO_IIOP_Endpoint *iiop_endpoint =

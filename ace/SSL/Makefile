@@ -36,20 +36,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-ifneq ($(ssl),)
-  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-  LIBS += $(PLATFORM_SSL_LIBS)
-  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
-endif # ssl
-
 #----------------------------------------------------------------------------
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-# This shouldn't be necessary... -Steve Huston
-#ifeq ($(HPUX_VERS),)
-#ACE_SHLIBS = -lACE -lssl -lcrypto
-#endif # HPUX_VERS
+ifeq ($(HPUX_VERS),)
+ACE_SHLIBS = -lACE -lssl -lcrypto
+endif # HPUX_VERS
 
 #----------------------------------------------------------------------------
 #       Dependencies
@@ -207,8 +200,9 @@ endif # ssl
  $(ACE_ROOT)/ace/pre.h SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl SSL_SOCK_Stream.h \
- SSL_SOCK.h $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ SSL_SOCK_Stream.h SSL_SOCK.h \
+ $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
@@ -238,7 +232,8 @@ endif # ssl
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i SSL_Context.h \
+ $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
+ SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -314,15 +309,18 @@ endif # ssl
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- SSL_Context.inl $(ACE_ROOT)/ace/SOCK_Stream.h \
+ SSL_Context.inl \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i SSL_SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/OS_QoS.h SSL_SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/OS_QoS.h \
+ SSL_SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i
 
@@ -330,8 +328,9 @@ endif # ssl
  $(ACE_ROOT)/ace/pre.h SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl SSL_SOCK_Stream.h \
- SSL_SOCK.h $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ SSL_SOCK_Stream.h SSL_SOCK.h \
+ $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
@@ -361,7 +360,8 @@ endif # ssl
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i SSL_Context.h \
+ $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
+ SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -437,15 +437,18 @@ endif # ssl
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- SSL_Context.inl $(ACE_ROOT)/ace/SOCK_Stream.h \
+ SSL_Context.inl \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i SSL_SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/OS_QoS.h SSL_SOCK_Connector.i \
+ $(ACE_ROOT)/ace/OS_QoS.h \
+ SSL_SOCK_Connector.i \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i
 
@@ -491,7 +494,8 @@ endif # ssl
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i SSL_Context.h \
+ $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
+ SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -563,15 +567,18 @@ endif # ssl
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- SSL_Context.inl $(ACE_ROOT)/ace/SOCK_Stream.h \
+ SSL_Context.inl \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i SSL_SOCK_Stream.i
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ SSL_SOCK_Stream.i
 
 .obj/SSL_Asynch_Stream.o .obj/SSL_Asynch_Stream.so .shobj/SSL_Asynch_Stream.o .shobj/SSL_Asynch_Stream.so: SSL_Asynch_Stream.cpp SSL_Asynch_Stream.h \
- $(ACE_ROOT)/ace/pre.h SSL_Context.h SSL_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSL_Context.h \
+ SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -675,14 +682,16 @@ endif # ssl
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- SSL_Context.inl $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
+ SSL_Context.inl \
+ $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
  $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp SSL_Asynch_BIO.h \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ SSL_Asynch_BIO.h \
  $(ACE_ROOT)/ace/POSIX_Proactor.h \
  $(ACE_ROOT)/ace/Proactor_Impl.h \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -774,8 +783,9 @@ endif # ssl
  $(ACE_ROOT)/ace/pre.h SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl SSL_Asynch_Stream.h \
- SSL_Context.h $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ SSL_Asynch_Stream.h SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -875,7 +885,8 @@ endif # ssl
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- SSL_Context.inl $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
+ SSL_Context.inl \
+ $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
  $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
  $(ACE_ROOT)/ace/Message_Block.h \

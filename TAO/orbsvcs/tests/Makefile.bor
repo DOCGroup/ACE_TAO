@@ -1,5 +1,5 @@
 #
-# Makefile for building the TAO orbsvcs tests
+# Makefile for building the TAO obsvcs tests
 # $Id$
 #
 
@@ -15,6 +15,7 @@ DIRS = \
 	EC_Custom_Marshal \
         ior_corbaname \
         IOR_MCast \
+        LoadBalancing \
         Miop \
         Notify \
 	Property \

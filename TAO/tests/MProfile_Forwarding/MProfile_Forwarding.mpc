@@ -13,7 +13,7 @@ project: client, minimum_corba {
 }
 
 project(Manager): server, minimum_corba {
-  depends += IORManipulation
+  depends += IORManpulation
   libs    += TAO_IORManip
   exename  = Manager
 

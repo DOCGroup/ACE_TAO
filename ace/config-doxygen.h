@@ -85,10 +85,4 @@
 /// Generate token library documentation
 #define ACE_HAS_TOKENS_LIBRARY
 
-/// Generate ACE ATM classes documentation
-#define ACE_HAS_ATM
-
-/// Generate ACE XTI ATM class documentation
-#define ACE_HAS_XTI_ATM
-
 #endif /* ACE_CONFIG_DOXYGEN_H */

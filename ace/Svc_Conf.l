@@ -12,6 +12,9 @@ ACE_RCSID (ace,
 	   Svc_Conf_l,
 	   "$Id$")
 
+// Keeps track of the current line for debugging output.
+int yylineno = 1;
+
 #define token(x)  x
 %}
 
@@ -76,7 +79,7 @@ inactive	      { return token (ACE_INACTIVE); }
 		      }
 {white_space}+	      ; /* EMPTY */
 {carrage_retn}        ; /* EMPTY */
-{newline}	      { ACE_SVC_CONF_PARAM->yylineno++; }
+{newline}	      { ACE_SVC_CONF_PARAM->yylineno++; ace_yylineno++; }
 {other}		      {
                          ACE_ERROR ((LM_ERROR,
                                      ACE_LIB_TEXT ("unknown character = (%d"), 
@@ -85,7 +88,7 @@ inactive	      { return token (ACE_INACTIVE); }
                           ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("|%c"), *yytext));
                         ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT (")\n")));
                       }
-<<EOF>>               { yyterminate (); }
+<<EOF>>               { yyterminate(); }
 %%
 int
 yywrap (void)

@@ -18,6 +18,7 @@ OBJFILES = \
         $(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\Key_Adapters.obj \
 	$(OBJDIR)\Object_Adapter.obj \
+        $(OBJDIR)\ObjectReferenceFactory.obj \
         $(OBJDIR)\ObjectReferenceTemplate.obj \
 	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB_Manager.obj \
@@ -31,8 +32,6 @@ OBJFILES = \
         $(OBJDIR)\PortableGroup_Hooks.obj \
 	$(OBJDIR)\PortableServer.obj \
 	$(OBJDIR)\PortableServerC.obj \
-	$(OBJDIR)\PortableServer_PolicyFactory.obj \
-	$(OBJDIR)\PortableServer_ORBInitializer.obj \
 	$(OBJDIR)\Servant_Base.obj \
 	$(OBJDIR)\Servant_Dispatcher.obj \
 	$(OBJDIR)\ServerInterceptorAdapter.obj \

@@ -11,7 +11,6 @@
 #----------------------------------------------------------------------------
 
 DIRS  = POA_Destruction \
-	Default_Servant \
 	wait_for_completion \
 	Excessive_Object_Deactivations \
 	Etherealization \
@@ -19,7 +18,6 @@ DIRS  = POA_Destruction \
 	Non_Servant_Upcalls \
 	Single_Threaded_POA \
 	Persistent_ID \
-	Policies \
 	Identity 
 
 # The following test hasn't been updated yet

@@ -50,7 +50,7 @@ int
 TAO_PSDL_Scope::check_identifier (ACE_CString identifier,
                                   TAO_PSDL_Scope *scope)
 {
-  int result = 0;
+  int result;
 
   this->to_lower_case (identifier);
 

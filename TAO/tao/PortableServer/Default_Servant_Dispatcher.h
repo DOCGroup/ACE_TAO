@@ -40,7 +40,8 @@ public:
   /// Pre_invoke remote request.
   void pre_invoke_remote_request (TAO_POA &poa,
                                   CORBA::Short servant_priority,
-								  TAO_ServerRequest &req, 	
+                                  TAO_Service_Context &request_service_context,
+                                  TAO_Service_Context &reply_service_context,
                                   TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
                                   ACE_ENV_ARG_DECL);
 

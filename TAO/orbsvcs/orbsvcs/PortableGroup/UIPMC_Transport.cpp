@@ -480,18 +480,18 @@ TAO_UIPMC_Transport::register_handler_i (void)
 
 int
 TAO_UIPMC_Transport::send_request (TAO_Stub *stub,
-                                   TAO_ORB_Core *orb_core,
-                                   TAO_OutputCDR &stream,
-                                   int message_semantics,
-                                   ACE_Time_Value *max_wait_time)
+                                  TAO_ORB_Core *orb_core,
+                                  TAO_OutputCDR &stream,
+                                  int is_synchronous,
+                                  ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
-                                  message_semantics) == -1)
+                                  is_synchronous) == -1)
     return -1;
 
   if (this->send_message (stream,
                           stub,
-                          message_semantics,
+                          is_synchronous,
                           max_wait_time) == -1)
 
     return -1;
@@ -502,7 +502,7 @@ TAO_UIPMC_Transport::send_request (TAO_Stub *stub,
 int
 TAO_UIPMC_Transport::send_message (TAO_OutputCDR &stream,
                                    TAO_Stub *stub,
-                                   int message_semantics,
+                                   int is_synchronous,
                                    ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
@@ -515,7 +515,7 @@ TAO_UIPMC_Transport::send_message (TAO_OutputCDR &stream,
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = this->send_message_shared (stub,
-                                         message_semantics,
+                                         is_synchronous,
                                          stream.begin (),
                                          max_wait_time);
 

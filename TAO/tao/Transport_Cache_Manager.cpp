@@ -258,9 +258,6 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
 int
 TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 {
-  if(entry == 0)
-    return -1;
-
   // First get the entry again (if at all things had changed in the
   // cache map in the mean time)
 
@@ -332,12 +329,13 @@ TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &reactor_registered,
 int
 TAO_Transport_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
 {
-  if (entry == 0)
-    return 0;
+  int retval = 0;
 
-  // Remove the entry from the Map
- int retval =
-    this->cache_map_.unbind (entry);
+  if (entry)
+    {
+      // Remove the entry from the Map
+      retval =  this->cache_map_.unbind (entry);
+    }
 
   // Set the entry pointer to zero
   entry = 0;
@@ -348,11 +346,12 @@ TAO_Transport_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
 void
 TAO_Transport_Cache_Manager::mark_invalid_i (HASH_MAP_ENTRY *&entry)
 {
-  if (entry == 0)
-    return;
+  if (entry)
+    {
+      // Mark the entry as not usable
+      entry->int_id_.recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
+    }
 
-  // Mark the entry as not usable
-  entry->int_id_.recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
 }
 
 

@@ -39,7 +39,8 @@ ServantManager_i::~ServantManager_i (void)
 
 PortableServer::Servant
 ServantManager_i::obtain_servant (const char *str,
-                                  PortableServer::POA_ptr poa)
+                                  PortableServer::POA_ptr poa,
+                                  long value)
 {
   // The string format is <dllname:factory_function> that must be
   // parsed.
@@ -80,8 +81,10 @@ ServantManager_i::obtain_servant (const char *str,
 
   // Cannot go from void* to function pointer directly. Cast the void*
   // to long first.
-  void *symbol = dll->symbol (create_symbol_.c_str ());
+  char *function_name = ACE::ldname (create_symbol_.c_str());
+  void *symbol = dll->symbol (function_name);
   long function = ACE_reinterpret_cast (long, symbol);
+  delete [] function_name;
 
   SERVANT_FACTORY servant_creator =
     ACE_reinterpret_cast (SERVANT_FACTORY, function);
@@ -96,7 +99,8 @@ ServantManager_i::obtain_servant (const char *str,
   // Now create and return the servant using the <servant_creator>
   // factory function.
   return (*servant_creator) (this->orb_.in (),
-                             poa);
+                             poa,
+                             value);
 }
 
 // The objectID is in a format of dllname:factory_function which has

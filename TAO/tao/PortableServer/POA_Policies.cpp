@@ -61,25 +61,6 @@ TAO_Thread_Policy::_tao_scope (void) const
   return TAO_POLICY_POA_SCOPE;
 }
 
-CORBA::Policy_ptr
-TAO_Thread_Policy::create (const CORBA::Any &val
-                           ACE_ENV_ARG_DECL)
-{
-  PortableServer::ThreadPolicyValue value;
-  if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
-
-  TAO_Thread_Policy *tmp = 0;
-  ACE_NEW_THROW_EX (tmp,
-                    TAO_Thread_Policy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return tmp;
-}
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 /////////////////////////////////////////////////////////////////////////////
@@ -134,25 +115,6 @@ TAO_Lifespan_Policy::_tao_scope (void) const
   return TAO_POLICY_POA_SCOPE;
 }
 
-CORBA::Policy_ptr
-TAO_Lifespan_Policy::create (const CORBA::Any &val
-                             ACE_ENV_ARG_DECL)
-{
-  PortableServer::LifespanPolicyValue value;
-  if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
-
-  TAO_Lifespan_Policy *tmp = 0;
-  ACE_NEW_THROW_EX (tmp,
-                    TAO_Lifespan_Policy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return tmp;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value)
@@ -205,25 +167,6 @@ TAO_Id_Uniqueness_Policy::_tao_scope (void) const
   return TAO_POLICY_POA_SCOPE;
 }
 
-CORBA::Policy_ptr
-TAO_Id_Uniqueness_Policy::create (const CORBA::Any &val
-                                  ACE_ENV_ARG_DECL)
-{
-  PortableServer::IdUniquenessPolicyValue value;
-  if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
-
-  TAO_Id_Uniqueness_Policy *tmp = 0;
-  ACE_NEW_THROW_EX (tmp,
-                    TAO_Id_Uniqueness_Policy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return tmp;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value)
@@ -274,25 +217,6 @@ TAO_Policy_Scope
 TAO_Id_Assignment_Policy::_tao_scope (void) const
 {
   return TAO_POLICY_POA_SCOPE;
-}
-
-CORBA::Policy_ptr
-TAO_Id_Assignment_Policy::create (const CORBA::Any &val
-                                  ACE_ENV_ARG_DECL)
-{
-  PortableServer::IdAssignmentPolicyValue value;
-  if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
-
-  TAO_Id_Assignment_Policy *tmp = 0;
-  ACE_NEW_THROW_EX (tmp,
-                    TAO_Id_Assignment_Policy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return tmp;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -349,25 +273,6 @@ TAO_Implicit_Activation_Policy::_tao_scope (void) const
   return TAO_POLICY_POA_SCOPE;
 }
 
-CORBA::Policy_ptr
-TAO_Implicit_Activation_Policy::create (const CORBA::Any &val
-                                        ACE_ENV_ARG_DECL)
-{
-  PortableServer::ImplicitActivationPolicyValue value;
-  if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
-
-  TAO_Implicit_Activation_Policy *tmp = 0;
-  ACE_NEW_THROW_EX (tmp,
-                    TAO_Implicit_Activation_Policy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return tmp;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value)
@@ -420,25 +325,6 @@ TAO_Servant_Retention_Policy::_tao_scope (void) const
   return TAO_POLICY_POA_SCOPE;
 }
 
-CORBA::Policy_ptr
-TAO_Servant_Retention_Policy::create (const CORBA::Any &val
-                                      ACE_ENV_ARG_DECL)
-{
-  PortableServer::ServantRetentionPolicyValue value;
-  if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
-
-  TAO_Servant_Retention_Policy *tmp = 0;
-  ACE_NEW_THROW_EX (tmp,
-                    TAO_Servant_Retention_Policy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return tmp;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value)
@@ -489,25 +375,6 @@ TAO_Policy_Scope
 TAO_Request_Processing_Policy::_tao_scope (void) const
 {
   return TAO_POLICY_POA_SCOPE;
-}
-
-CORBA::Policy_ptr
-TAO_Request_Processing_Policy::create (const CORBA::Any &val
-                                       ACE_ENV_ARG_DECL)
-{
-  PortableServer::RequestProcessingPolicyValue value;
-  if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
-
-  TAO_Request_Processing_Policy *tmp = 0;
-  ACE_NEW_THROW_EX (tmp,
-                    TAO_Request_Processing_Policy (value),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return tmp;
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

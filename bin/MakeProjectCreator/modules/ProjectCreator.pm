@@ -58,8 +58,6 @@ my(%validNames) = ('exename'         => 1,
                    'comps'           => 1,
                    'tagname'         => 1,
                    'tagchecks'       => 1,
-                   'include_dir'     => 1,
-                   'core'            => 1,
                   );
 
 ## Deal with these components in a special way
@@ -217,9 +215,7 @@ sub parse_line {
         ## Copy each value from global_assign into assign
         if (!$self->{'reading_global'}) {
           foreach my $key (keys %{$self->{'global_assign'}}) {
-            if (!defined $self->{'assign'}->{$key}) {
-              $self->{'assign'}->{$key} = $self->{'global_assign'}->{$key};
-            }
+            $self->{'assign'}->{$key} = $self->{'global_assign'}->{$key};
           }
         }
       }
@@ -408,7 +404,7 @@ sub process_assignment_add {
     $nval = $value;
   }
   $self->process_assignment($name, $nval);
-  $self->process_duplicate_modification($name);
+  $self->process_lib_modification($name);
 }
 
 
@@ -427,20 +423,20 @@ sub process_assignment_sub {
       }
     }
     $self->process_assignment($name, $nval);
-    $self->process_duplicate_modification($name);
+    $self->process_lib_modification($name);
   }
 }
 
 
-sub process_duplicate_modification {
+sub process_lib_modification {
   my($self)   = shift;
   my($name)   = shift;
 
-  ## If we are modifying the libs, libpaths or includes assignment with
+  ## If we are modifying the "libs" assignment with
   ## either addition or subtraction, we are going to
   ## perform a little fix on the value to avoid multiple
   ## libraries and to try to insure the correct linking order
-  if ($name eq "libs" || $name eq "libpaths" || $name eq "includes") {
+  if ($name eq "libs") {
     my($nval) = $self->get_assignment($name);
     if (defined $nval) {
       my($parts) = $self->create_array($nval);
@@ -901,13 +897,6 @@ sub add_source_corresponding_component_files {
     }
   }
 
-  ## We need to cross-check the idl files.  But we need to remove
-  ## the idl extension first.
-  my(@idl) = $self->get_component_list('idl_files');
-  for(my $i = 0; $i <= $#idl; $i++) {
-    $idl[$i] =~ s/\.idl$//;
-  }
-
   ## for each cpp file, we add a corresponding header or inline file
   ## if it exists and is not already in the list of headers
   my($names) = $self->{$tag};
@@ -950,18 +939,13 @@ sub add_source_corresponding_component_files {
             ## we must check to see if the file *would be* generated
             ## from idl.  If so, we will add the file with the default
             ## (i.e. first) file extension.
-            foreach my $idl (@idl) {
-              if ($c =~ /^$idl/) {
-                foreach my $ending (@{$self->{'skeleton_endings'}}) {
-                  if ($c =~ /^$idl$ending$/) {
-                    my($ext) = $$vc{$tag}->[0];
-                    $ext =~ s/\\//g;
-                    push(@$array, "$c$ext");
-                    last;
-                  }
-                }
+            foreach my $ending (@{$self->{'skeleton_endings'}}) {
+              if ($c =~ /$ending$/) {
+                my($ext) = $$vc{$tag}->[0];
+                $ext =~ s/\\//g;
+                push(@$array, "$c$ext");
+                last;
               }
-              last;
             }
           }
         }

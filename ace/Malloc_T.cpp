@@ -23,28 +23,14 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   : pool_ (0),
     free_list_ (ACE_PURE_FREE_LIST)
 {
-  // To maintain alignment requirements, make sure that each element
-  // inserted into the free list is aligned properly for the platform.
-  // Since the memory is allocated as a char[], the compiler won't help.
-  // To make sure enough room is allocated, round up the size so that
-  // each element starts aligned.
-  //
-  // NOTE - this would probably be easier by defining pool_ as a pointer
-  // to T and allocating an array of them (the compiler would probably
-  // take care of the alignment for us), but then the ACE_NEW below would
-  // require a default constructor on T - a requirement that is not in
-  // previous versions of ACE
-  size_t chunk_size = sizeof (T);
-  if (chunk_size % ACE_MALLOC_ALIGN != 0)
-    chunk_size += (ACE_MALLOC_ALIGN - (chunk_size % ACE_MALLOC_ALIGN));
   ACE_NEW (this->pool_,
-           char[n_chunks * chunk_size]);
+           char[n_chunks * sizeof (T)]);
 
   for (size_t c = 0;
        c < n_chunks;
        c++)
     {
-      void* placement = this->pool_ + c * chunk_size;
+      void* placement = this->pool_ + c * sizeof(T);
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<T>);
     }
   // Put into free list using placement contructor, no real memory
@@ -147,7 +133,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->memory_pool_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("cb_ptr_ = %@\n"), this->cb_ptr_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("cb_ptr_ = %x"), this->cb_ptr_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   this->cb_ptr_->dump ();
 #if defined (ACE_HAS_MALLOC_STATS)
   if (this->cb_ptr_ != 0)
@@ -175,7 +162,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats (void) const
        currp = currp->next_block_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) ptr = %@, MALLOC_HEADER units = %d, byte units = %d\n"),
+                  ACE_LIB_TEXT ("(%P|%t) ptr = %u, MALLOC_HEADER units = %d, byte units = %d\n"),
                   currp,
                   currp->size_,
                   currp->size_ * sizeof (MALLOC_HEADER)));
@@ -223,7 +210,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
                       -1);
   else if (first_time)
     {
-      // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) first time in, control block = %@\n"), this->cb_ptr_));
+      // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) first time in, control block = %u\n"), this->cb_ptr_));
 
       MALLOC_HEADER::init_ptr (&this->cb_ptr_->freep_,
                                &this->cb_ptr_->base_,
@@ -392,9 +379,10 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
     {
       currp = prevp->next_block_;
     }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif
 
   // Search the freelist to locate a block of the appropriate size.
+
 
   while (1)
 

@@ -3,7 +3,6 @@
 #
 
 DIRS = \
-        SAXPrint \
-        svcconf
+	SAXPrint
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -414,6 +414,10 @@ SOURCE=.\Hash_Map_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hash_Map_Manager_rt.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Hashable.cpp
 # End Source File
 # Begin Source File

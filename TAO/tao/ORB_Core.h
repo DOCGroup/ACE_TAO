@@ -126,12 +126,29 @@ private:
 
 public:
 
-
+  /*
+   * @@todo: All these allocators should be on a per-lane basis. Need
+   * to move it to the lanes. It makes no sense to leave it in the TSS
+   * resources class -- Bala
+   *
+   */
   /// The allocators for the output CDR streams.
   //@{
   ACE_Allocator *output_cdr_dblock_allocator_;
   ACE_Allocator *output_cdr_buffer_allocator_;
   ACE_Allocator *output_cdr_msgblock_allocator_;
+  //@}
+
+  /// The allocators for the input CDR streams.
+  //@{
+  ACE_Allocator *input_cdr_dblock_allocator_;
+  ACE_Allocator *input_cdr_buffer_allocator_;
+  ACE_Allocator *input_cdr_msgblock_allocator_;
+  //@}
+
+  /// The allocators for the buffering messages in the transport.
+  //@{
+  ACE_Allocator *transport_message_buffer_allocator_;
   //@}
 
   /**
@@ -671,8 +688,7 @@ public:
 
   /// End the event loop
   void shutdown (CORBA::Boolean wait_for_completion
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+                 ACE_ENV_ARG_DECL);
 
   /// Get the shutdown flag value
   int has_shutdown (void);
@@ -979,10 +995,8 @@ protected:
   void services_callbacks_init (void);
 
   /// Helper method that invokes Interceptor::destroy() on all
-  /// registered interceptors when ORB::destroy() is called. Prevents
-  /// exceptions from propagating up the call chain.
-  void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC (());
+  /// registered interceptors when ORB::destroy() is called.
+  void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Pointer to the list of protocol loaded into this ORB instance.
   /// Helper method to hold the common code part for -ORBEndpoint and
@@ -1423,10 +1437,6 @@ public:
  */
 typedef TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
         TAO_TSS_RESOURCES;
-
-TAO_SINGLETON_DECLARE (TAO_TSS_Singleton,
-                       TAO_TSS_Resources,
-                       TAO_SYNCH_MUTEX)
 
 // ****************************************************************
 

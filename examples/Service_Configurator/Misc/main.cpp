@@ -55,17 +55,17 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
               ACE_TEXT (args.argc ())));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < args.argc (); i++)
+  for (size_t i = 0; i < args.argc (); i++)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%d) %s\n"),
                 i,
                 args.argv ()[i]));
 
-  int result = ACE_Service_Config::open (args.argc (),
-                                         args.argv (),
-                                         ACE_DEFAULT_LOGGER_KEY,
-                                         0);
-  if (result != 0)
+  if (ACE_Service_Config::open (args.argc (),
+                                args.argv (),
+                                ACE_DEFAULT_LOGGER_KEY,
+                                0) == -1 
+      && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),

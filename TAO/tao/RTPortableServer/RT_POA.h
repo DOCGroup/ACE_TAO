@@ -270,8 +270,6 @@ public:
 
   void *thread_pool (void) const;
 
-  CORBA::Policy *server_protocol (void);
-
 protected:
 
   /// Template method for creating new POA's of this type.

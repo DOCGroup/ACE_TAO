@@ -291,9 +291,8 @@ TAO_AV_TCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_AV_Transport *transport)
 {
   TAO_AV_Callback *callback = 0;
-  if ( endpoint->get_callback (entry->flowname (), callback) ) {
-    ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
-  }
+  endpoint->get_callback (entry->flowname (),
+                          callback);
 
   TAO_AV_TCP_Object *object = 0;
   ACE_NEW_RETURN (object,

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 #include "POA_Hooks.h"
 #include "PortableGroup_Loader.h"
 #include "PortableGroup_Request_Dispatcher.h"
@@ -5,23 +7,19 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 
-
-ACE_RCSID (PortableGroup,
-           POA_Hooks,
+ACE_RCSID (tao,
+           PortableGroup,
            "$Id$")
 
 
-TAO_POA_Hooks::TAO_POA_Hooks (
-  PortableGroup_Request_Dispatcher &request_dispatcher)
-  : request_dispatcher_ (request_dispatcher)
+TAO_POA_Hooks::TAO_POA_Hooks (PortableGroup_Request_Dispatcher &request_dispatcher) :
+  request_dispatcher_ (request_dispatcher)
 {
 }
 
 TAO_POA_Hooks::~TAO_POA_Hooks (void)
 {
 }
-
-#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ObjectId *
 TAO_POA_Hooks::create_id_for_reference (
@@ -90,7 +88,7 @@ TAO_POA_Hooks::find_group_component_in_profile (const TAO_Profile* profile,
   const TAO_Tagged_Components& components = profile->tagged_components ();
 
   IOP::TaggedComponent tagged_component;
-  tagged_component.tag = IOP::TAG_GROUP;
+  tagged_component.tag = TAO_TAG_GROUP;
 
   // Try to find it.
   if (components.get_component (tagged_component) == 0)
@@ -250,5 +248,3 @@ TAO_POA_Hooks::disassociate_reference_with_id (
     ))
 {
 }
-
-#endif  /* TAO_HAS_MINIMUM_POA == 0 */

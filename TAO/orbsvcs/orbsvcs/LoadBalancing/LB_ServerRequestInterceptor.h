@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_LB_SERVER_REQUEST_INTERCEPTOR_H
 
@@ -113,6 +112,5 @@ private:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #endif  /* TAO_LB_SERVER_REQUEST_INTERCEPTOR_H */

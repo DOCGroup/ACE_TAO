@@ -192,8 +192,6 @@ TAO_PSDL_Struct_Visitor::gen_code_for_si (void)
 
   // Some invocation call to put in the stuff that goes between
   // braces.
-  *ps_si << "TAO_ENCAP_BYTE_ORDER";
-  ps_si->nl ();
   *ps_si << "// Typecode related information should go in here";
   ps_si->nl ();
 
@@ -577,24 +575,24 @@ TAO_PSDL_Struct_Visitor::print_class_for_structure (ACE_CString struct_name)
          << " _tc_" << struct_name << ";";
   ps_sh->nl ();
   ps_sh->nl ();
-
+  
   *ps_sh << " void operator<<= (CORBA::Any &, const " << struct_name << " &);"
          << "// copying version";
   ps_sh->nl ();
-
+ 
   *ps_sh << " void operator<<= (CORBA::Any &, " << struct_name << "*);"
          << "// noncopying version";
   ps_sh->nl ();
-
+ 
   *ps_sh << " CORBA::Boolean operator>>= "
          << "(const CORBA::Any &, " << struct_name << " *&);"
          << "// deprecated";
   ps_sh->nl ();
-
+ 
   *ps_sh << " CORBA::Boolean operator>>= "
          << "(const CORBA::Any &, const " << struct_name << " *&);";
   ps_sh->nl ();
-
+  
   ps_sh->nl ();
 
   *ps_sh << "#ifndef __ACE_INLINE__";
@@ -607,7 +605,7 @@ TAO_PSDL_Struct_Visitor::print_class_for_structure (ACE_CString struct_name)
   ps_sh->nl ();
 
   *ps_sh << " CORBA::Boolean operator>> (TAO_InputCDR &, " << struct_name << " &);";
-
+  
   ps_sh->decr_indent (0);
   ps_sh->nl ();
   ps_sh->nl ();
@@ -637,13 +635,13 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   ps_sin->nl ();
 
   ps_sin->nl ();
-
+  
   *ps_sin << "ACE_INLINE"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_var::" << this->struct_name_ << "_var (void) // default constructor";
 
   ps_sin->incr_indent (0);
   ps_sin->nl ();
-
+    
   *ps_sin << ": ptr_ (0)";
 
   ps_sin->decr_indent (0);
@@ -655,7 +653,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   ps_sin->nl ();
 
   *ps_sin << "ACE_INLINE"; ps_sin->nl ();
-  *ps_sin << this->struct_name_ << "_var::" << this->struct_name_ << "_var (" << this->struct_name_ << " *p)";
+  *ps_sin << this->struct_name_ << "_var::" << this->struct_name_ << "_var (" << this->struct_name_ << " *p)"; 
 
   ps_sin->incr_indent (0);
   ps_sin->nl ();
@@ -676,12 +674,12 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   ps_sin->incr_indent (0);
   ps_sin->nl ();
-
+  
   *ps_sin << "if (p.ptr_)";
 
   ps_sin->incr_indent (0);
   ps_sin->nl ();
-
+  
   *ps_sin << "ACE_NEW (this->ptr_, ::" << this->struct_name_ << " (*p.ptr_));";
 
   ps_sin->decr_indent (0);
@@ -692,13 +690,13 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   ps_sin->incr_indent (0);
   ps_sin->nl ();
 
-  *ps_sin << "this->ptr_ = 0;";
+  *ps_sin << "this->ptr_ = 0;"; 
 
   ps_sin->decr_indent (0);
   ps_sin->decr_indent (0);
   ps_sin->nl ();
 
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
@@ -709,13 +707,13 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   ps_sin->incr_indent (0);
   ps_sin->nl ();
-
-  *ps_sin << "delete this->ptr_;";
+  
+  *ps_sin << "delete this->ptr_;"; 
 
   ps_sin->decr_indent (0);
   ps_sin->nl ();
 
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
@@ -729,7 +727,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   *ps_sin << "delete this->ptr_;"; ps_sin->nl ();
   *ps_sin << "this->ptr_ = p;"; ps_sin->nl ();
-  *ps_sin << "return *this;";
+  *ps_sin << "return *this;"; 
 
   ps_sin->decr_indent (0);
   ps_sin->nl ();
@@ -745,26 +743,26 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   ps_sin->incr_indent (0);
   ps_sin->nl ();
 
-  *ps_sin << "if (this != &p)";
+  *ps_sin << "if (this != &p)"; 
 
   ps_sin->incr_indent (0);
   ps_sin->nl ();
-
-  *ps_sin << "{";
-
-  ps_sin->incr_indent (0);
-  ps_sin->nl ();
-
-  *ps_sin << "if (p.ptr_ == 0)";
+  
+  *ps_sin << "{"; 
 
   ps_sin->incr_indent (0);
   ps_sin->nl ();
-
-  *ps_sin << "{";
+  
+  *ps_sin << "if (p.ptr_ == 0)"; 
 
   ps_sin->incr_indent (0);
   ps_sin->nl ();
+  
+  *ps_sin << "{"; 
 
+  ps_sin->incr_indent (0);
+  ps_sin->nl ();
+  
   *ps_sin << "delete this->ptr_;"; ps_sin->nl ();
   *ps_sin << "this->ptr_ = 0;";
 
@@ -773,7 +771,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "}";
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-
+  
   *ps_sin << "else";
 
   ps_sin->incr_indent (0);
@@ -785,16 +783,16 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   *ps_sin << this->struct_name_ << " *deep_copy =";
   ps_sin->incr_indent (0); ps_sin->nl ();
-  *ps_sin << "new " << this->struct_name_ << " (*p.ptr_);";
+  *ps_sin << "new " << this->struct_name_ << " (*p.ptr_);"; 
 
   ps_sin->decr_indent (0);ps_sin->nl ();
 
   ps_sin->nl ();
-
-  *ps_sin << "if (deep_copy != 0)";
+          
+  *ps_sin << "if (deep_copy != 0)"; 
 
   ps_sin->incr_indent (0); ps_sin->nl ();
-  *ps_sin << "{";
+  *ps_sin << "{"; 
 
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << this->struct_name_ << " *tmp = deep_copy;"; ps_sin->nl ();
@@ -803,25 +801,25 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "delete deep_copy;";
 
   ps_sin->decr_indent (0);ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->decr_indent (0);
   ps_sin->decr_indent (0);ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->decr_indent (0);
   ps_sin->nl ();
   ps_sin->nl ();
-
+ 
   *ps_sin << "return *this;";
 
   ps_sin->decr_indent (0);
   ps_sin->decr_indent (0);
   ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
@@ -831,23 +829,23 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "{";
 
   ps_sin->incr_indent (0); ps_sin->nl ();
-  *ps_sin << "return this->ptr_;";
+  *ps_sin << "return this->ptr_;"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
-
+ 
   *ps_sin << "ACE_INLINE ::" << this->struct_name_ << " *"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_var::operator-> (void)"; ps_sin->nl ();
   *ps_sin << "{";
 
   ps_sin->incr_indent (0); ps_sin->nl ();
-  *ps_sin << "return this->ptr_;";
+  *ps_sin << "return this->ptr_;"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
@@ -858,7 +856,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << "return *this->ptr_;";
-
+  
   ps_sin->decr_indent (0); ps_sin->nl ();
   *ps_sin << "}";
 
@@ -868,9 +866,9 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "ACE_INLINE"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_var::operator ::" << this->struct_name_ << " &() // cast "; ps_sin->nl ();
   *ps_sin << "{";
-
+  
   ps_sin->incr_indent (0); ps_sin->nl ();
-  *ps_sin << "return *this->ptr_;";
+  *ps_sin << "return *this->ptr_;"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
   *ps_sin << "}";
@@ -897,11 +895,11 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "{";
   ps_sin->incr_indent (0); ps_sin->nl ();
 
-  *ps_sin << "return this->ptr_;";
+  *ps_sin << "return this->ptr_;"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
-
+  *ps_sin << "}"; 
+  
   ps_sin->nl ();
   ps_sin->nl ();
 
@@ -921,28 +919,28 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "ACE_INLINE ::" << this->struct_name_ << " &"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_var::inout (void)"; ps_sin->nl ();
   *ps_sin << "{";
-
+  
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << "return *this->ptr_;";
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
-
+ 
   *ps_sin << "// mapping for variable size "; ps_sin->nl ();
   *ps_sin << "ACE_INLINE ::" << this->struct_name_ << " *&"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_var::out (void)"; ps_sin->nl ();
   *ps_sin << "{";
-
+  
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << "delete this->ptr_;"; ps_sin->nl ();
   *ps_sin << "this->ptr_ = 0;"; ps_sin->nl ();
   *ps_sin << "return this->ptr_;";
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
@@ -958,7 +956,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "return tmp;";
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
@@ -969,7 +967,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "{";
   ps_sin->incr_indent (0); ps_sin->nl ();
 
-  *ps_sin << "return this->ptr_;";
+  *ps_sin << "return this->ptr_;"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
   *ps_sin << "}";
@@ -986,7 +984,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   ps_sin->nl ();
 
   *ps_sin << "ACE_INLINE"; ps_sin->nl ();
-  *ps_sin << this->struct_name_ << "_out::" << this->struct_name_ << "_out (::" << this->struct_name_ << " *&p)";
+  *ps_sin << this->struct_name_ << "_out::" << this->struct_name_ << "_out (::" << this->struct_name_ << " *&p)"; 
 
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << ": ptr_ (p)";
@@ -994,9 +992,9 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   *ps_sin << "{";
   ps_sin->incr_indent (0); ps_sin->nl ();
-
+  
   *ps_sin << "this->ptr_ = 0;";
-
+  
   ps_sin->decr_indent (0); ps_sin->nl ();
   *ps_sin << "}";
 
@@ -1004,7 +1002,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   ps_sin->nl ();
 
   *ps_sin << "ACE_INLINE"; ps_sin->nl ();
-  *ps_sin << this->struct_name_ << "_out::" << this->struct_name_ << "_out (" << this->struct_name_ << "_var &p) // constructor from _var";
+  *ps_sin << this->struct_name_ << "_out::" << this->struct_name_ << "_out (" << this->struct_name_ << "_var &p) // constructor from _var"; 
 
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << ": ptr_ (p.out ())";
@@ -1014,11 +1012,11 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   ps_sin->incr_indent (0);ps_sin->nl ();
 
   *ps_sin << "delete this->ptr_;"; ps_sin->nl ();
-  *ps_sin << "this->ptr_ = 0;";
+  *ps_sin << "this->ptr_ = 0;"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
   *ps_sin << "}";
-
+  
   ps_sin->nl ();
   ps_sin->nl ();
 
@@ -1040,7 +1038,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   ps_sin->incr_indent (0);ps_sin->nl ();
 
   *ps_sin << "this->ptr_ = ACE_const_cast (" << this->struct_name_ << "_out&, p).ptr_;"; ps_sin->nl ();
-  *ps_sin << "return *this;";
+  *ps_sin << "return *this;"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
   *ps_sin << "}";
@@ -1050,18 +1048,18 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   *ps_sin << "ACE_INLINE " << this->struct_name_ << "_out &"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_out::operator= (" << this->struct_name_ << " *p)"; ps_sin->nl ();
-  *ps_sin << "{";
+  *ps_sin << "{"; 
 
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << "this->ptr_ = p;"; ps_sin->nl ();
   *ps_sin << "return *this;";
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
-
+ 
   *ps_sin << "ACE_INLINE"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_out::operator ::" << this->struct_name_ << " *&() // cast"; ps_sin->nl ();
   *ps_sin << "{";
@@ -1072,18 +1070,18 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   ps_sin->nl ();
   ps_sin->nl ();
-
+ 
   *ps_sin << "ACE_INLINE ::" << this->struct_name_ << " *&"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_out::ptr (void) // ptr"; ps_sin->nl ();
   *ps_sin << "{";
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << "return this->ptr_;";
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "}";
+  *ps_sin << "}"; 
 
   ps_sin->nl ();
   ps_sin->nl ();
-
+ 
   *ps_sin << "ACE_INLINE ::" << this->struct_name_ << " *"; ps_sin->nl ();
   *ps_sin << this->struct_name_ << "_out::operator-> (void)"; ps_sin->nl ();
   *ps_sin << "{";
@@ -1094,38 +1092,38 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   ps_sin->nl ();
   ps_sin->nl ();
-
+ 
   *ps_sin << "ACE_INLINE CORBA::Boolean operator<< "
           << "(TAO_OutputCDR &strm, const " << this->struct_name_ << " &_tao_aggregate)";
   ps_sin->nl ();
   *ps_sin << "{";
 
   ps_sin->incr_indent (0); ps_sin->nl ();
-
+  
   *ps_sin << "if (";
   ps_sin->incr_indent (0); ps_sin->nl ();
 
   *ps_sin << "(strm << _tao_aggregate.name.in ()) &&"; ps_sin->nl ();
-  *ps_sin << "(strm << _tao_aggregate.obj_ref.in ())";
+  *ps_sin << "(strm << _tao_aggregate.obj_ref.in ())"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
   *ps_sin << ")";
 
   ps_sin->incr_indent (0); ps_sin->nl ();
-  *ps_sin << "return 1;";
+  *ps_sin << "return 1;"; 
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << "else";
+  *ps_sin << "else"; 
 
   ps_sin->incr_indent (0); ps_sin->nl ();
-  *ps_sin << "return 0;";
+  *ps_sin << "return 0;"; 
 
 
-  ps_sin->decr_indent (0);
+  ps_sin->decr_indent (0); 
   ps_sin->decr_indent (0);ps_sin->nl ();
   *ps_sin << "}";
 
-  ps_sin->nl ();
+  ps_sin->nl (); 
   ps_sin->nl ();
 
   *ps_sin << "ACE_INLINE CORBA::Boolean operator>> "
@@ -1142,21 +1140,21 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
   *ps_sin << "(strm >> _tao_aggregate.obj_ref.out ())";
 
   ps_sin->decr_indent (0); ps_sin->nl ();
-  *ps_sin << ")";
+  *ps_sin << ")"; 
 
   ps_sin->incr_indent (0); ps_sin->nl ();
   *ps_sin << "return 1;";
 
   ps_sin->decr_indent (0); ps_sin->nl ();
   *ps_sin << "else";
-
+  
   ps_sin->incr_indent (0); ps_sin->nl ();
-  *ps_sin << "return 0;";
+  *ps_sin << "return 0;"; 
 
   ps_sin->decr_indent (0);
   ps_sin->decr_indent (0);
   ps_sin->nl ();
-
+ 
   *ps_sin << "}";
 
   ps_sin->nl ();

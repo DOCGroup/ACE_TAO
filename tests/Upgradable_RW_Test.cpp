@@ -27,7 +27,7 @@ ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
-static int n_iterations = 50;
+static size_t n_iterations = 50;
 
 // Maximum string length used
 static const size_t MAX_STRING_SIZE = 200;
@@ -36,10 +36,10 @@ static const size_t MAX_STRING_SIZE = 200;
 // #define RW_MUTEX 1
 
 // Default number of readers.
-static u_int n_readers = 10;
+static size_t n_readers = 10;
 
 // Default number of writers.
-static u_int n_writers = 0;
+static size_t n_writers = 0;
 
 // Number of entries in the hash map
 static u_int n_entries = 10;
@@ -161,7 +161,7 @@ Reader_Task::svc (void)
   // We start an ACE_Profile_Timer here...
   timer.start ();
 
-  for (int iterations = 1;
+  for (size_t iterations = 1;
        iterations <= n_iterations;
        iterations++)
     {
@@ -234,7 +234,7 @@ Writer_Task::svc (void)
   // We start an ACE_Profile_Timer here...
   timer.start ();
 
-  for (int iterations = 1;
+  for (size_t iterations = 1;
        iterations <= n_iterations;
        iterations++)
     {

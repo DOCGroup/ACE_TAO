@@ -113,6 +113,4 @@ main (int argc, char *argv[])
 
   amh_server.register_servant (&servant);
   amh_server.start_threads ();
-
-  return 1;
 }

@@ -7,12 +7,10 @@ DIRS = \
 	Excessive_Object_Deactivations \
 	Etherealization \
         POA_Destruction \
-        Default_Servant \
         Identity \
         Non_Servant_Upcalls \
         Single_Threaded_POA \
 	Persistent_ID \
-	Policies \
         wait_for_completion 
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

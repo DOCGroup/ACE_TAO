@@ -4528,10 +4528,6 @@ public:
   static int atoi (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
-#if defined (atop)
-#undef atop
-#endif /* atop */
-
   static void *atop (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
@@ -4559,7 +4555,7 @@ public:
                              ACE_TCHAR *&buf,
                              int substitute_env_args = 1);
   static int string_to_argv (ACE_TCHAR *buf,
-                             int &argc,
+                             size_t &argc,
                              ACE_TCHAR **&argv,
                              int substitute_env_args = 1);
   static long sysconf (int);
@@ -4703,15 +4699,6 @@ public:
                        size_t size,
                        size_t nelems,
                        FILE *fp);
-
-  static int fgetc (FILE* fp);
-  static void clearerr (FILE* fp);
-
-#if defined (ACE_HAS_WCHAR)
-  static wint_t fgetwc (FILE* fp);
-  static wint_t ungetwc (wint_t c, FILE* fp);
-#endif /* ACE_HAS_WCHAR */
-
   static int fseek (FILE *fp,
                     long offset,
                     int ptrname);
@@ -4798,6 +4785,13 @@ public:
   static void abort (void);
   static pid_t fork (void);
 
+  //@{
+  /// Forks and exec's a process in a manner that works on Solaris and
+  /// NT.  argv[0] must be the full path name to the executable.
+  static pid_t fork (const ACE_TCHAR *program_name);
+  static pid_t fork_exec (ACE_TCHAR *argv[]);
+  //@}
+
   static int getpagesize (void);
   static int allocation_granularity (void);
 
@@ -4813,13 +4807,6 @@ public:
   static int setreuid (uid_t ruid, uid_t euid);
   static int setregid (gid_t rgid, gid_t egid);
   static int system (const ACE_TCHAR *s);
-  //@}
-
-  //@{
-  /// Forks and exec's a process in a manner that works on Solaris and
-  /// NT.  argv[0] must be the full path name to the executable.
-  static pid_t fork (const ACE_TCHAR *program_name);
-  static pid_t fork_exec (ACE_TCHAR *argv[]);
   //@}
 
   /**

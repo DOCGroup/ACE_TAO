@@ -18,7 +18,7 @@ TAO_LB_Random::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup ("Random");
 }
-
+    
 CosLoadBalancing::Properties *
 TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -35,7 +35,7 @@ TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
 
   return props;
 }
-
+    
 void
 TAO_LB_Random::push_loads (
     const PortableGroup::Location & /* the_location */,
@@ -46,7 +46,7 @@ TAO_LB_Random::push_loads (
 {
   ACE_THROW (CosLoadBalancing::StrategyNotAdaptive ());
 }
-
+    
 CORBA::Object_ptr
 TAO_LB_Random::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -81,22 +81,11 @@ TAO_LB_Random::next_member (
   //       is supposed to have a larger period than rand(), in
   //       addition to the fact that the lower order bits should be as
   //       random as the higher order bits.
-
-  const CORBA::Float flen = len;  // Prevent integer arithmetic
-                                  // overflow.
   const CORBA::ULong i =
     ACE_static_cast (CORBA::ULong,
-                     flen * ACE_OS::rand () / (RAND_MAX + 1.0));
+                     (len * ACE_OS::rand () / (RAND_MAX + 1.0)));
 
   ACE_ASSERT (i < len);
-
-//   ACE_DEBUG ((LM_DEBUG,
-//               "** Len = %u\t"
-//               "Location # %u\t"
-//               "Loc Name = \"%s\"\n",
-//               len,
-//               i,
-//               locations[i][0].id.in ()));
 
   return load_manager->get_member_ref (object_group,
                                        locations[i]

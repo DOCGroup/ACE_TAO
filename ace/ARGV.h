@@ -88,7 +88,7 @@ public:
   ACE_TCHAR **argv (void);
 
   /// Returns <argc>.
-  int argc (void) const;
+  size_t argc (void) const;
 
   /// Returns the <buf>.  Caller should not delete this memory since
   /// the <ARGV> destructor will delete it.
@@ -147,7 +147,7 @@ private:
   int state_;
 
   /// Number of arguments in the ARGV array.
-  int argc_;
+  size_t argc_;
 
   /// The array of string arguments.
   ACE_TCHAR **argv_;

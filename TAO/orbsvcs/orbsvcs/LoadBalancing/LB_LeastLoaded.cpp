@@ -50,7 +50,7 @@ TAO_LB_LeastLoaded::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup ("LeastLoaded");
 }
-
+    
 CosLoadBalancing::Properties *
 TAO_LB_LeastLoaded::get_properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -67,7 +67,7 @@ TAO_LB_LeastLoaded::get_properties (ACE_ENV_SINGLE_ARG_DECL)
 
   return props;
 }
-
+    
 void
 TAO_LB_LeastLoaded::push_loads (
     const PortableGroup::Location & the_location,
@@ -142,7 +142,7 @@ TAO_LB_LeastLoaded::push_loads (
   else
     {
       load.id = new_load.id;
-      load.value = this->effective_load (0, new_load.value);
+      load.value = this->effective_load (0, new_load.value);      
     }
 }
 
@@ -173,7 +173,8 @@ TAO_LB_LeastLoaded::next_member (
 
   PortableGroup::Location location;
   CORBA::Boolean found_location =
-    this->get_location (load_manager,
+    this->get_location (object_group,
+                        load_manager,
                         locations.in (),
                         location
                         ACE_ENV_ARG_PARAMETER);
@@ -195,7 +196,8 @@ TAO_LB_LeastLoaded::next_member (
 
 CORBA::Boolean
 TAO_LB_LeastLoaded::get_location (
-  CosLoadBalancing::LoadManager_ptr load_manager,
+  PortableGroup::ObjectGroup_ptr object_group,
+  const CosLoadBalancing::LoadManager_ptr load_manager,
   const PortableGroup::Locations & locations,
   PortableGroup::Location & location
   ACE_ENV_ARG_DECL)
@@ -242,14 +244,16 @@ TAO_LB_LeastLoaded::get_location (
           // throughput since the LoadAlert object need not be alerted
           // synchronously.  In particular, the load alert can and
           // should be performed in parallel to the member selection.
-          load_manager->enable_alert (loc
+          load_manager->enable_alert (object_group,
+                                      loc
                                       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
       else if (load.value <= this->critical_threshold_)
         {
           // The location is not overloaded
-          load_manager->disable_alert (loc
+          load_manager->disable_alert (object_group,
+                                       loc
                                        ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }

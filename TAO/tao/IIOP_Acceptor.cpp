@@ -1,4 +1,3 @@
-
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
@@ -49,7 +48,7 @@ template class TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTO
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
-  : TAO_Acceptor (IOP::TAG_INTERNET_IOP),
+  : TAO_Acceptor (TAO_TAG_IIOP_PROFILE),
     addrs_ (0),
     port_span_ (1),
     hosts_ (0),
@@ -171,7 +170,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
-      if (pfile->tag () == IOP::TAG_INTERNET_IOP)
+      if (pfile->tag () == TAO_TAG_IIOP_PROFILE)
         {
           iiop_profile = ACE_dynamic_cast (TAO_IIOP_Profile *,
                                            pfile);
@@ -953,7 +952,6 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
   int send_buffer_size = this->orb_core_->orb_params ()->sock_sndbuf_size ();
   int recv_buffer_size = this->orb_core_->orb_params ()->sock_rcvbuf_size ();
   int no_delay = this->orb_core_->orb_params ()->nodelay ();
-  int enable_network_priority = 0;
 
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -967,7 +965,6 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
         tph->call_server_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
-					 enable_network_priority,
                                          protocol_type);
 
       if (hook_return == -1)
@@ -980,9 +977,6 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
     recv_buffer_size;
   this->tcp_properties_.no_delay =
     no_delay;
- this->tcp_properties_.enable_network_priority  =
-   enable_network_priority;
-
 
   // @@ NOTE.  RTCORBA treats a combination of transport+messaging
   // as a single protocol.  Keep this in mind for when we adopt

@@ -60,7 +60,7 @@ public:
   //@{
   /**
    * Implement the ACE_RMCast_Proxy methods, in this case we use the
-   * @var io_udp_ object to send the data, using the address of our
+   * \param io_udp_ object to send the data, using the address of our
    * remote peer.
    */
   virtual int reply_data (ACE_RMCast::Data &);

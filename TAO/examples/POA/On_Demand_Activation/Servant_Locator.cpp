@@ -9,7 +9,7 @@
 //     Servant_Locator.cpp
 //
 // = DESCRIPTION
-//     Implementation of ServantLocator class , used with a POA
+//     Implementation of MyFooServantLocator class , used with a POA
 //     having a NON_RETAIN policy.
 //
 // = AUTHOR
@@ -18,11 +18,11 @@
 // ============================================================================
 
 #include "Servant_Locator.h"
-#include "test_i.h"
+#include "MyFooServant.h"
 
 ACE_RCSID(On_Demand_Activation, Servant_Locator, "$Id$")
 
-ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
+MyFooServantLocator::MyFooServantLocator (CORBA::ORB_ptr orb)
   : counter_ (0),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -30,27 +30,27 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
 
 
 PortableServer::Servant
-ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
-                           PortableServer::POA_ptr poa,
-                           const char * /* operation */,
-                           PortableServer::ServantLocator::Cookie &cookie
-                           ACE_ENV_ARG_DECL)
+MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
+                                PortableServer::POA_ptr poa,
+                                const char * /* operation */,
+                                PortableServer::ServantLocator::Cookie &cookie
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
   // Convert ObjectID to String.
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
-  // If ObjectID string has a test substring, create and return a
-  // test_i.
+  // If ObjectID string has a Foo Substring create and return a
+  // MyFooServant.
 
-  if (ACE_OS::strstr (s.in (), "test") != 0)
+  if (ACE_OS::strstr (s.in (), "Foo") != 0)
     {
       PortableServer::Servant servant =
-        new test_i (this->orb_.in (), poa);
+        new MyFooServant (this->orb_.in (), poa, ++this->counter_);
 
       // Return the servant as the cookie , used as a check when
-      // postinvoke is called on this ServantLocator.
+      // postinvoke is called on this MyFooServantLocator.
 
       cookie = servant;
       return servant;
@@ -62,12 +62,12 @@ ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
 }
 
 void
-ServantLocator::postinvoke (const PortableServer::ObjectId & /* oid */,
-                            PortableServer::POA_ptr /* poa */,
-                            const char * /* operation */,
-                            PortableServer::ServantLocator::Cookie cookie,
-                            PortableServer::Servant servant
-                            ACE_ENV_ARG_DECL_NOT_USED)
+MyFooServantLocator::postinvoke (const PortableServer::ObjectId & /* oid */,
+                                 PortableServer::POA_ptr /* poa */,
+                                 const char * /* operation */,
+                                 PortableServer::ServantLocator::Cookie cookie,
+                                 PortableServer::Servant servant
+                                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the passed servant with the cookie.

@@ -604,37 +604,44 @@ IDL_GlobalData::n_included_idl_files (size_t n)
 void
 IDL_GlobalData::validate_included_idl_files (void)
 {
-  // Flag to make sure we don't repeat things.
+  // Flag to make sure we dont repeat things.
   static int already_done = 0;
 
   if (already_done == 1)
-    {
-      return;
-    }
+    return;
 
   already_done = 1;
 
   // New number of included_idl_files.
   size_t newj = 0;
 
-  size_t n_pre_preproc_includes = idl_global->n_included_idl_files ();
-  char **pre_preproc_includes = idl_global->included_idl_files ();
-  size_t n_post_preproc_includes = idl_global->n_include_file_names ();
-  UTL_String **post_preproc_includes = idl_global->include_file_names ();
-
-  for (size_t j = 0; j < n_pre_preproc_includes; ++j)
+  for (size_t j = 0;
+       j < idl_global->n_included_idl_files ();
+       j++)
     {
+      // Get the base part.
+      char *base_part = ACE_OS::strrchr (idl_global->included_idl_files ()[j],
+                                         '/');
+
+      // If no / then take the whole name. We dont need the /
+      // anyway.
+      if (base_part == 0)
+        base_part = idl_global->included_idl_files ()[j];
+      else
+        base_part++;
+
       // Check this name with the names list that we got from the
       // preprocessor.
       size_t valid_file = 0;
-
-      for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
+      for (size_t ni = 0;
+           ni < idl_global->n_include_file_names ();
+           ni++)
         {
-          if (ACE_OS::strcmp (post_preproc_includes[ni]->get_string (), 
-                              pre_preproc_includes[j]) 
-               == 0)
+          char *file_name = idl_global->include_file_names ()[ni]->get_string ();
+
+          if (ACE_OS::strstr (file_name, base_part) != 0)
             {
-             // This file name is valid.
+              // This file name is valid.
               valid_file = 1;
               break;
             }
@@ -643,8 +650,8 @@ IDL_GlobalData::validate_included_idl_files (void)
       // Remove the file, if it is not valid.
       if (valid_file == 0)
         {
-          delete pre_preproc_includes[j];
-          pre_preproc_includes[j] = 0;
+          delete idl_global->included_idl_files ()[j];
+          idl_global->included_idl_files ()[j] = 0;
         }
       else
         {
@@ -654,11 +661,11 @@ IDL_GlobalData::validate_included_idl_files (void)
           if (j != newj)
             {
               // Move to the new index position.
-              pre_preproc_includes[newj] =
-                pre_preproc_includes[j];
+              idl_global->included_idl_files ()[newj] =
+                idl_global->included_idl_files ()[j];
 
               // Make old position 0.
-              pre_preproc_includes[j] = 0;
+              idl_global->included_idl_files ()[j] = 0;
             }
 
           // Increment the new index.
@@ -686,9 +693,7 @@ IDL_GlobalData::parse_state()
  * Convert a PredefinedType to an ExprType
  */
 AST_Expression::ExprType
-IDL_GlobalData::PredefinedTypeToExprType (
-    AST_PredefinedType::PredefinedType pt
-  )
+IDL_GlobalData::PredefinedTypeToExprType(AST_PredefinedType::PredefinedType pt)
 {
   switch (pt) {
   case AST_PredefinedType::PT_long:
@@ -1016,86 +1021,3 @@ IDL_GlobalData::string_to_scoped_name (char *s)
 
   return retval;
 }
-
-char *
-IDL_GlobalData::stripped_preproc_include (const char *name)
-{
-  // Some preprocessors prepend "./" to filenames in the
-  // working directory, some others prepend ".\". If either
-  // of these are here, we want to strip them. Since we also
-  // know we're in the working directory, we can skip the
-  // command line prefix iteration.
-  if (name[0] == '.')
-    {
-      if (name[1] == '\\' || name[1] == '/')
-        {
-          return (char *)name + 2;
-        }
-    }
-
-  ssize_t cursor = this->idl_flags_.find ("-I", 0);
-  ACE_CString c_name (name, 0, 0);
-  ssize_t start = 0;
-  ssize_t end = 0;
-  char *candidate = 0;
-
-  while (cursor != ACE_SString::npos)
-    {
-      // Skip over the "-I".
-      start = cursor + 2;
-
-      // If the "-I" is followed by a space. skip that too.
-      if (this->idl_flags_[start] == ' ')
-        {
-          ++start;
-        }
-
-      // idl_flags_ uses ' ' as a separator.
-      end = this->idl_flags_.find (' ', start);
-
-      // If it's the last one, there won't be a space at the end.
-      if (end == ACE_SString::npos)
-        {
-          end = this->idl_flags_.length ();
-        }
-
-      // Set the cursor for the next iteration, if any.
-      cursor = this->idl_flags_.find ("-I", end);
-      // If this prefix is found at the beginning of the name, strip it
-      // and return it.
-      if (c_name.find (this->idl_flags_.substr (start, end - start)) == 0)
-        {
-          // If the prefix ends in / or \, we don't need to strip the one
-          // that *would* have been added for concatenation...
-          char prefix_cap = this->idl_flags_[end - 1];
-          size_t skip_slash = (prefix_cap != '\\' && prefix_cap != '/');
-          char *rep = c_name.substr (end - start + skip_slash).rep ();
-
-          // ...unless it's the SunCC preprocessor, which adds a / for
-          // concatentation no matter what, so we check for it.
-          if (rep[0] == '/')
-            {
-              ++rep;
-            }
-
-          // If there's more than one match in the list, we want the 
-          // longest one.
-          if (candidate == 0
-              || ACE_OS::strlen (rep) < ACE_OS::strlen (candidate))
-            {
-              candidate = rep;
-            }
-        }
-    }
-
-  // If no prefix matches, just return the name unchanged.
-  if (candidate != 0)
-    {
-      return candidate;
-    }
-  else
-    {
-      return (char *)name;
-    }
-}
-

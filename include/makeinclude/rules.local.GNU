@@ -208,7 +208,7 @@ clean.local:
 	-$(RM) -r SunWS_cache ir.out core.*
 
 realclean.local: clean.local
-	-$(RM) $(BIN:%=%$(EXEEXT)) $(BIN:%=%_debug$(EXEEXT)) $(BIN:%=%_profile$(EXEEXT)) $(BIN:%=%_optimize$(EXEEXT)) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%.*) $(SHLIB:%.so=%.a) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2:%=%$(EXEEXT)) $(BIN2:%=%_debug$(EXEEXT)) $(BIN2:%=%_profile$(EXEEXT)) $(BIN2:%=%_optimize$(EXEEXT)) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
+	-$(RM) $(BIN:%=%$(EXEEXT)) $(BIN:%=%_debug$(EXEEXT)) $(BIN:%=%_profile$(EXEEXT)) $(BIN:%=%_optimize$(EXEEXT)) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%$(SOVERSION)) $(SHLIB:%.so=%.a) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2:%=%$(EXEEXT)) $(BIN2:%=%_debug$(EXEEXT)) $(BIN2:%=%_profile$(EXEEXT)) $(BIN2:%=%_optimize$(EXEEXT)) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
 
 #----------------------------------------------------------------------------
 #       Dependency generation target
@@ -263,7 +263,7 @@ endif
 depend.local: $(MAKEFILE)
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
-	SOEXT=$(SOEXT) VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" $(ACE_ROOT)/bin/g++dep -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
+	SOEXT=$(SOEXT) VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" $(ACE_ROOT)/bin/g++dep -A -f $(DEPENDENCY_FILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "Makefile dependencies unchanged." ;\
 	else \

@@ -43,16 +43,24 @@ if (PerlACE::waitforfile_timed ($pongior, 20) == -1) {
 
 print STDERR "Starting Control\n";
 
-$CTRL->Spawn();
-
-$PING->WaitKill(100);
-
-$PONG->WaitKill(100);
-
-$control = $CTRL->TerminateWaitKill (5);
+$control = $CTRL->SpawnWaitKill (200);
 
 if ($control != 0) {
     print STDERR "ERROR: control returned $control\n";
+    $status = 1;
+}
+
+$pi = $PING->TerminateWaitKill (5);
+
+if ($pi != 0) {
+    print STDERR "ERROR: ping returned $pi\n";
+    $status = 1;
+}
+
+$po = $PONG->TerminateWaitKill (5);
+
+if ($po != 0) {
+    print STDERR "ERROR: pong returned $po\n";
     $status = 1;
 }
 

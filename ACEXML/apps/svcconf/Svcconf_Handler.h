@@ -299,8 +299,6 @@ private:
   ACE_Parsed_Info parsed_info_;
 
   ACE_Parsed_Info stream_info_;
-
-  ACEXML_Locator* locator_;
 };
 
 #if defined (__ACEXML_INLINE__)

@@ -24,7 +24,7 @@
 
 
 /**
- * @class TAO_Service_Context
+ * @class Service_Context.h
  *
  * @brief Helper class for managing the service context list
  *  information.

@@ -140,12 +140,12 @@ public:
   int perform_call (TAO_Transport_Descriptor_Interface &desc
                     ACE_ENV_ARG_DECL);
 
-  /// Dynamically allocate inconsistent_policies_ PolicyList.
+  /// Dynamically allocate \param inconsistent_policies_ PolicyList.
   void init_inconsistent_policies (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Return PolicyList stored in inconsistent_policies_ and give up its
-  /// ownership.  User must deallocate memory.
+  /// Return PolicyList stored in \param inconsistent_policies_ and
+  /// give up its ownership.  User must deallocate memory.
   CORBA::PolicyList *get_inconsistent_policies (void);
 
   /**
@@ -206,7 +206,7 @@ protected:
    * Returns TAO_INVOKE_RESTART if the write call failed and the
    * request must be re-attempted.
    *
-   * @param write_semantics If set invoke() does not return until the
+   * @param is_synchronous If set invoke() does not return until the
    *        message is completely delivered to the underlying
    *        transport mechanism, or an error is detected.
    *
@@ -214,7 +214,7 @@ protected:
    * that the server closed the connection simply to release
    * resources.
    */
-  int invoke (CORBA::Boolean write_semantics
+  int invoke (CORBA::Boolean is_synchronous
               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

@@ -91,8 +91,11 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/TimeC.o .obj/TimeC.so .shobj/TimeC.o .shobj/TimeC.so: TimeC.cpp TimeC.h $(TAO_ROOT)/tao/corba.h \
+.obj/TimeC.o .obj/TimeC.so .shobj/TimeC.o .shobj/TimeC.so: TimeC.cpp TimeC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -271,8 +274,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TimeC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TimeC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -389,6 +392,8 @@ realclean: clean
 .obj/TimeS.o .obj/TimeS.so .shobj/TimeS.o .shobj/TimeS.so: TimeS.cpp TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -567,7 +572,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TimeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TimeC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -585,7 +591,9 @@ realclean: clean
  TimeS_T.h TimeS_T.i TimeS_T.cpp TimeS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -727,6 +735,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -967,18 +977,22 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ ../Simple_util.cpp \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
- $(TAO_ROOT)/tao/debug.h TimeC.h TimeC.i
+ $(TAO_ROOT)/tao/debug.h TimeC.h \
+ TimeC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1219,17 +1233,20 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ ../Simple_util.cpp \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
- $(TAO_ROOT)/tao/debug.h Time_i.h TimeS.h TimeC.h \
- TimeC.i TimeS_T.h TimeS_T.i TimeS_T.cpp TimeS.i
+ $(TAO_ROOT)/tao/debug.h Time_i.h \
+ TimeS.h TimeC.h TimeC.i TimeS_T.h TimeS_T.i TimeS_T.cpp TimeS.i
 
 .obj/Time_i.o .obj/Time_i.so .shobj/Time_i.o .shobj/Time_i.so: Time_i.cpp Time_i.h TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1408,7 +1425,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TimeC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TimeC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1430,6 +1448,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1670,18 +1690,22 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ ../Simple_util.cpp \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
- $(TAO_ROOT)/tao/debug.h TimeC.h TimeC.i
+ $(TAO_ROOT)/tao/debug.h TimeC.h \
+ TimeC.i
 
 .obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1922,7 +1946,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ ../Simple_util.cpp \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \

@@ -93,11 +93,11 @@ int
 TAO_CEC_Reactive_ConsumerControl::activate (void)
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-  timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+  long id = this->reactor_->schedule_timer (&this->adapter_,
                                             0,
                                             this->rate_,
                                             this->rate_);
-  if (timer_id_ == -1)
+  if (id == -1)
     return -1;
 
   ACE_TRY_NEW_ENV
@@ -141,11 +141,9 @@ TAO_CEC_Reactive_ConsumerControl::activate (void)
 int
 TAO_CEC_Reactive_ConsumerControl::shutdown (void)
 {
-  int r = 0;
-
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-  r = this->reactor_->cancel_timer (timer_id_);
-#endif /* TAO_HAS_CORBA_MESSAGING */
+  int r =
+    this->reactor_->remove_handler (&this->adapter_,
+                                    ACE_Event_Handler::DONT_CALL);
   this->adapter_.reactor (0);
   return r;
 }

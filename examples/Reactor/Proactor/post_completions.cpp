@@ -83,7 +83,7 @@ public:
     {}
   // Destructor.
 
-  void complete (size_t,
+  void complete (u_long,
                  int success,
                  const void *completion_key,
                  u_long error)

@@ -21,7 +21,7 @@
 /**
  * @class ACE_POSIX_Wakeup_Completion
  *
- * This result object is used by the <end_event_loop> of the
+ * This is result object is used by the <end_event_loop> of the
  * ACE_Proactor interface to wake up all the threads blocking
  * for completions.
  */
@@ -40,7 +40,7 @@ public:
 
 
   /// This method calls the <handler>'s <handle_wakeup> method.
-  virtual void complete (size_t bytes_transferred = 0,
+  virtual void complete (u_long bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
                          u_long error = 0);
@@ -137,7 +137,7 @@ ACE_Asynch_Read_Stream_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                       ACE_HANDLE handle,
                                                       ACE_Message_Block &message_block,
-                                                      size_t bytes_to_read,
+                                                      u_long bytes_to_read,
                                                       const void* act,
                                                       ACE_HANDLE event,
                                                       int priority,
@@ -161,7 +161,7 @@ ACE_Asynch_Write_Stream_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                        ACE_HANDLE handle,
                                                        ACE_Message_Block &message_block,
-                                                       size_t bytes_to_write,
+                                                       u_long bytes_to_write,
                                                        const void* act,
                                                        ACE_HANDLE event,
                                                        int priority,
@@ -185,7 +185,7 @@ ACE_Asynch_Read_File_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                                     ACE_HANDLE handle,
                                                     ACE_Message_Block &message_block,
-                                                    size_t bytes_to_read,
+                                                    u_long bytes_to_read,
                                                     const void* act,
                                                     u_long offset,
                                                     u_long offset_high,
@@ -213,7 +213,7 @@ ACE_Asynch_Write_File_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                      ACE_HANDLE handle,
                                                      ACE_Message_Block &message_block,
-                                                     size_t bytes_to_write,
+                                                     u_long bytes_to_write,
                                                      const void* act,
                                                      u_long offset,
                                                      u_long offset_high,
@@ -298,7 +298,7 @@ ACE_POSIX_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                                  ACE_HANDLE listen_handle,
                                                  ACE_HANDLE accept_handle,
                                                  ACE_Message_Block &message_block,
-                                                 size_t bytes_to_read,
+                                                 u_long bytes_to_read,
                                                  const void* act,
                                                  ACE_HANDLE event,
                                                  int priority,
@@ -344,10 +344,10 @@ ACE_POSIX_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                         ACE_HANDLE socket,
                                                         ACE_HANDLE file,
                                                         ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                        size_t bytes_to_write,
+                                                        u_long bytes_to_write,
                                                         u_long offset,
                                                         u_long offset_high,
-                                                        size_t bytes_per_send,
+                                                        u_long bytes_per_send,
                                                         u_long flags,
                                                         const void *act,
                                                         ACE_HANDLE event,
@@ -428,7 +428,7 @@ ACE_POSIX_Proactor::handle_close (ACE_HANDLE handle,
 
 void
 ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-                                               size_t bytes_transferred,
+                                               u_long bytes_transferred,
                                                const void */* completion_key*/,
                                                u_long error)
 {
@@ -452,12 +452,13 @@ ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
 {
   ACE_POSIX_Wakeup_Completion *wakeup_completion = 0;
 
-  for (int ci = 0; ci < how_many; ci++)
+  for (ssize_t ci = 0; ci < how_many; ci++)
     {
       ACE_NEW_RETURN (wakeup_completion,
                       ACE_POSIX_Wakeup_Completion (this->wakeup_handler_),
                       -1);
-      if (this->post_completion (wakeup_completion) == -1)
+
+      if (wakeup_completion->post_completion (this) == -1)
         return -1;
     }
 
@@ -735,17 +736,19 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
   if (aiocb_list_ == 0)  // already deleted
     return 0;
 
-  size_t ai;
+  // try to cancel all uncomlpeted operarion
+  // POSIX systems may have hidden system threads
+  // that still can work with our aiocb's!
+  for (size_t ai = 0; ai < aiocb_list_max_size_; ai++)
+    {
+      if (this->aiocb_list_[ai] != 0)  // active operation
+        this->cancel_aiocb (result_list_[ai]);
+    }
 
-  // Try to cancel all uncomlpeted operarion POSIX systems may have
-  // hidden system threads that still can work with our aiocb's!
-  for (ai = 0; ai < aiocb_list_max_size_; ai++)
-    if (this->aiocb_list_[ai] != 0)  // active operation
-      this->cancel_aiocb (result_list_[ai]);
 
   int num_pending = 0;
 
-  for (ai = 0; ai < aiocb_list_max_size_; ai++)
+  for (size_t ai = 0; ai < aiocb_list_max_size_; ai++)
     {
       if (this->aiocb_list_[ai] == 0 ) //  not active operation
         continue;
@@ -964,7 +967,10 @@ ACE_POSIX_AIOCB_Proactor::putq_result (ACE_POSIX_Asynch_Result *result)
                        "%N:%l:ACE_POSIX_AIOCB_Proactor::putq_result failed\n"),
                       -1);
 
-  this->notify_completion (sig_num);
+  // let try not to overflow signal queue or notification pipe
+
+  if (this->result_queue_.size () == 1)
+    this->notify_completion (sig_num);
 
   return 0;
 }
@@ -1280,7 +1286,7 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
 void
 ACE_POSIX_AIOCB_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-                                                     size_t bytes_transferred,
+                                                     u_long bytes_transferred,
                                                      const void *completion_key,
                                                      u_long error)
 {
@@ -1735,6 +1741,14 @@ ACE_POSIX_SIG_Proactor::notify_completion (int sig_num)
   value.sival_int = -1;
 #endif /* __FreeBSD__ */
 
+  // Solaris 8 can "forget" to delivery
+  // two or more signals queued immediately.
+  // Just comment the following "if" statement
+  // and try this->post_completion(2)
+
+  if (os_id_ == OS_SUN_58 && result_queue_.size() > 1)
+    return 0;
+
   // Queue the signal.
   if (sigqueue (pid, sig_num, value) == 0)
     return 0;
@@ -2024,9 +2038,9 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
 
         // Call the application code.
         this->application_specific_code (asynch_result,
-                                         return_status, // Bytes transferred.
-                                         0,             // No completion key.
-                                         error_status); // Error
+                                     return_status, // Bytes transferred.
+                                     0,             // No completion key.
+                                     error_status); // Error
       }
 
   // process post_completed results
@@ -2035,9 +2049,9 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
 
   // Uncomment this  if you want to test
   // and research the behavior of you system
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) NumAIO=%d NumQueue=%d\n",
-              ret_aio, ret_que));
+  // ACE_DEBUG ((LM_DEBUG,
+  //            "(%t) NumAIO=%d NumQueue=%d\n",
+  //             ret_aio, ret_que));
 
   return ret_aio + ret_que > 0 ? 1 : 0;
 }
@@ -2057,7 +2071,7 @@ ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer (ACE_Handler &handler,
 }
 
 void
-ACE_POSIX_Asynch_Timer::complete (size_t       /* bytes_transferred */,
+ACE_POSIX_Asynch_Timer::complete (u_long       /* bytes_transferred */,
                                   int          /* success */,
                                   const void * /* completion_key */,
                                   u_long       /* error */)
@@ -2082,7 +2096,7 @@ ACE_POSIX_Wakeup_Completion::~ACE_POSIX_Wakeup_Completion (void)
 }
 
 void
-ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
+ACE_POSIX_Wakeup_Completion::complete (u_long       /* bytes_transferred */,
                                        int          /* success */,
                                        const void * /* completion_key */,
                                        u_long       /*  error */)

@@ -210,9 +210,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
 					   reply_params);
 
   // Send the message.
-  int result = this->transport_->send_message (*this->outgoing_,
-                                               0,
-                                               TAO_Transport::TAO_REPLY);
+  int result = this->transport_->send_message (*this->outgoing_);
 
   if (result == -1)
     {
@@ -232,9 +230,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
 void
 TAO_ServerRequest::tao_send_reply (void)
 {
-  int result = this->transport_->send_message (*this->outgoing_,
-                                               0,
-                                               TAO_Transport::TAO_REPLY);
+  int result = this->transport_->send_message (*this->outgoing_);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -314,9 +310,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 	}
 
       // Send the message
-      if (this->transport_->send_message (*this->outgoing_,
-                                          0,
-                                          TAO_Transport::TAO_REPLY) == -1)
+      if (this->transport_->send_message (*this->outgoing_) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR,
 		      ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")

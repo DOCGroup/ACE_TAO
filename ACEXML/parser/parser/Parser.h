@@ -78,31 +78,11 @@ public:
     //                       ACEXML_SAXNotSupportedException))
     ;
 
-  /**
-   * Activating or deactivating a feature.
-   */
-  virtual void setFeature (const ACEXML_Char *name,
-                           int boolean_value,
-                           ACEXML_Env &xmlenv)
-    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-    //                       ACEXML_SAXNotSupportedException))
-    ;
-
   /*
    * Look up the value of a property.
    */
   virtual void * getProperty (const ACEXML_Char *name,
                               ACEXML_Env &xmlenv)
-    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-    //                       ACEXML_SAXNotSupportedException))
-    ;
-
-  /*
-   * Set the value of a property.
-   */
-  virtual void setProperty (const ACEXML_Char *name,
-                            void *value,
-                            ACEXML_Env &xmlenv)
     //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
     //                       ACEXML_SAXNotSupportedException))
     ;
@@ -120,6 +100,7 @@ public:
    */
   virtual void parse (const ACEXML_Char *systemId,
                       ACEXML_Env &xmlenv)
+    // @@ throw IOException???
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
@@ -143,6 +124,26 @@ public:
    */
   virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
 
+  /**
+   * Activating or deactivating a feature.
+   */
+  virtual void setFeature (const ACEXML_Char *name,
+                           int boolean_value,
+                           ACEXML_Env &xmlenv)
+    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+    //                       ACEXML_SAXNotSupportedException))
+    ;
+
+  /*
+   * Set the value of a property.
+   */
+  virtual void setProperty (const ACEXML_Char *name,
+                            void *value,
+                            ACEXML_Env &xmlenv)
+    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+    //                       ACEXML_SAXNotSupportedException))
+    ;
+
   // *** Helper functions for parsing XML
 
   /**
@@ -154,9 +155,9 @@ public:
    * whitespace after proper conversion.  Null if there's no
    * whitespace found.
    *
-   * @return The first none-white space characters (which will be
+   * @retval The first none-white space characters (which will be
    * consumed from the CharStream.)  If no whitespace is found, it
-   * returns 0.
+   * will return 0.
    *
    * @sa skip_whitespace_count
    */
@@ -172,7 +173,7 @@ public:
    *        skip_whitespace_count stores the first non-whitespace
    *        character it sees (character is not removed from the stream.)
    *
-   * @return The number of whitespace characters consumed.
+   * @retval The number of whitespace characters consumed.
    *
    * @sa skip_whitespace
    */
@@ -239,7 +240,7 @@ public:
    * character from the input CharStream, otherwise, read_name
    * will use this->get() to acquire the initial character.
    *
-   * @return A pointer to the string in the obstack, 0 if it's not
+   * @retval A pointer to the string in the obstack, 0 if it's not
    * a valid name.
    */
   ACEXML_Char *read_name (ACEXML_Char ch = 0);
@@ -278,7 +279,8 @@ public:
    * Parse a character reference, i.e., "&#x20;" or "&#30;".   The first
    * character encountered should be the '#' char.
    *
-   * @param buf points to a character buffer for the result.
+   * @param buf points to a character buffer for
+   * the result.
    * @param len specifies the capacities of the buffer.
    *
    * @retval 0 on success and -1 otherwise.
@@ -289,7 +291,7 @@ public:
    * Parse an entity reference, i.e., "&amp;".  The first character
    * encountered should be the character following '&'.
    *
-   * @return A pointer to the resolved const ACEXML_String if success
+   * @retval A pointer to the resolved const ACEXML_String if success
    * (previously defined), 0 otherwise.
    */
   const ACEXML_String *parse_reference (void);
@@ -298,8 +300,7 @@ public:
    * Parse a CDATA section.  The first character should always be the first
    * '[' in CDATA definition.
    *
-   * @retval 0 on success.
-   * @retval -1 if fail.
+   * @retval 0 on success, -1 otherwise.
    */
   int parse_cdata (ACEXML_Env &xmlenv);
 
@@ -357,9 +358,9 @@ public:
    * When the function finishes parsing, the input stream points
    * at the first non-whitespace character.
    *
-   * @param publicId returns the unquoted publicId read.  If none
+   * @param publicID returns the unquoted publicID read.  If none
    *        is available, it will be reset to 0.
-   * @param systemId returns the unquoted systemId read.  If none
+   * @param systemID returns the unquoted systemID read.  If none
    *        is available, it will be reset to 0.
    *
    * @retval 0 on success, -1 otherwise.
@@ -415,7 +416,7 @@ protected:
    */
 
   /**
-   * @var simple_parsing_feature_
+   * @var simple_parsing_name_
    *
    * This constant string defines the name of "simple XML parsing"
    * feature.  When this feature is enabled, ACEXML parser is allowed
@@ -451,37 +452,21 @@ private:
    * Dispatch errors to ErrorHandler.
    *
    */
-  void report_error (const ACEXML_Char* message, ACEXML_Env& xmlenv);
+  void report_error (ACEXML_SAXParseException& exception, ACEXML_Env& xmlenv);
 
   /**
    * Dispatch warnings to ErrorHandler.
    *
    */
-  void report_warning (const ACEXML_Char* message, ACEXML_Env& xmlenv);
+  void report_warning (ACEXML_SAXParseException& exception,
+                       ACEXML_Env& xmlenv);
 
   /**
    * Dispatch fatal errors to ErrorHandler.
    *
    */
-  void report_fatal_error (const ACEXML_Char* message, ACEXML_Env& xmlenv);
-
-  /**
-   * Dispatch prefix mapping calls to the ContentHandler.
-   *
-   * @param prefix Namespace prefix
-   * @param uri Namespace URI
-   * @param name Local name
-   * @param start 1 => startPrefixMapping 0 => endPrefixMapping
-   */
-  void report_prefix_mapping (const ACEXML_Char* prefix,
-                              const ACEXML_Char* uri,
-                              const ACEXML_Char* name,
-                              int start,
+  void report_fatal_error (ACEXML_SAXParseException& exception,
                            ACEXML_Env& xmlenv);
-  /**
-   *  Parse a keyword.
-   */
-  int parse_token (const ACEXML_Char* keyword);
 
   /// Keeping track of the handlers. We do not manage the memory for
   /// handlers.

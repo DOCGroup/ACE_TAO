@@ -6,6 +6,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Flows_T.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -47,6 +48,7 @@ protected:
 };
 
 typedef TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> ENDPOINT_STRATEGY;
+typedef TAO_FDev <FTP_Client_Producer,TAO_FlowConsumer> FTP_Client_FDev;
 
 class Client
 {
@@ -55,14 +57,18 @@ public:
   int init (int argc, char **argv);
   int run (void);
   FILE *file (void);
-  const char *flowname (void);
+  char *flowname (void);
   TAO_StreamCtrl* streamctrl (void);
   AVStreams::protocolSpec protocols (void);
   const char *format (void);
   const char *address (void);
 private:
   int parse_args (int argc, char **argv);
+  int bind_to_server (void);
   ENDPOINT_STRATEGY endpoint_strategy_;
+  AVStreams::MMDevice_var server_mmdevice_;
+  TAO_MMDevice client_mmdevice_;
+  FTP_Client_FDev *fdev_;
   TAO_StreamCtrl streamctrl_;
   // Video stream controller
 
@@ -71,16 +77,13 @@ private:
   const char *filename_;
   const char *address_;
 
+  TAO_Naming_Client my_naming_client_;
   FILE *fp_;
   char *protocol_;
-  ACE_CString flowname_;
+  char *flowname_;
   int use_sfp_;
   CORBA::ORB_var orb_;
   PortableServer::POA_ptr poa_;
-  TAO_StreamEndPoint_A *streamendpoint_a_;
-  AVStreams::StreamEndPoint_A_var sep_a_;
-  FTP_Client_Producer *fep_a_;
-  AVStreams::FlowProducer_var fep_a_obj_;
 };
 
 typedef ACE_Singleton<Client,ACE_Null_Mutex> CLIENT;

@@ -192,24 +192,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosLoadBalancing"=.\orbsvcs\orbsvcs\CosLoadBalancing.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name PortableGroup
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Messaging
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "CosNaming"=.\orbsvcs\orbsvcs\CosNaming.dsp - Package Owner=<4>
 
 Package=<5>
@@ -657,7 +639,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LoadManager"=.\orbsvcs\LoadBalancer\LoadManager.dsp - Package Owner=<4>
+Project: "LoadBalancing"=.\orbsvcs\orbsvcs\LoadBalancing.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -666,22 +648,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name CosLoadBalancing
+    Project_Dep_Name TAO DLL
     End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "LoadMonitor"=.\orbsvcs\LoadBalancer\LoadMonitor.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
     Begin Project Dependency
-    Project_Dep_Name CosLoadBalancing
+    Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
 }}}
 

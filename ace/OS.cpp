@@ -550,12 +550,10 @@ ACE_OS::uname (ACE_utsname *name)
           else if (sinfo.wProcessorLevel == 20)
             ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("620"));
           break;
-#     if defined PROCESSOR_ARCHITECTURE_IA64
         case PROCESSOR_ARCHITECTURE_IA64:
           ACE_OS_String::strcpy (processor, ACE_LIB_TEXT ("Itanium"));
           ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"), sinfo.wProcessorLevel);
           break;
-#     endif
         case PROCESSOR_ARCHITECTURE_UNKNOWN:
         default:
           // @@ We could provide WinCE specific info here.  But let's
@@ -1898,12 +1896,13 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
       // using the key.
       ACE_TSS_Info &info = this->table_ [key_index];
 
-      // Don't bother to test/clear the in "use bit" if the program is
-      // shutting down.  Doing so will cause a new ACE_TSS object to be
+      // Don't bother to check <in_use_> if the program is shutting
+      // down.  Doing so will cause a new ACE_TSS object getting
       // created again.
-      if (!ACE_OS_Object_Manager::shutting_down ())
-        tss_keys ()->test_and_clear (info.key_);
-      info.key_in_use (0);
+      if (!ACE_OS_Object_Manager::shutting_down ()
+          && ! tss_keys ()->test_and_clear (info.key_))
+        --info.thread_count_;
+
       info.key_ = ACE_OS::NULL_key;
       info.destructor_ = 0;
       return 0;
@@ -1931,7 +1930,7 @@ ACE_TSS_Cleanup::detach (void *inst)
       if (key_info->tss_obj_ == inst)
         {
           key_info->tss_obj_ = 0;
-          ref_cnt = --key_info->thread_count_;
+          ref_cnt = key_info->thread_count_;
           success = 1;
           break;
         }
@@ -1971,7 +1970,7 @@ ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
       // Retrieve the key's ACE_TSS_Info and increment its thread_count_.
       ACE_KEY_INDEX (key_index, key);
       ACE_TSS_Info &key_info = this->table_ [key_index];
-      if (!key_info.key_in_use ())
+      if (key_info.thread_count_ == -1)
         key_info.key_in_use (1);
       else
         ++key_info.thread_count_;
@@ -3787,7 +3786,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
 
 int
 ACE_OS::string_to_argv (ACE_TCHAR *buf,
-                        int &argc,
+                        size_t &argc,
                         ACE_TCHAR **&argv,
                         int substitute_env_args)
 {
@@ -3855,7 +3854,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
   ACE_TCHAR *ptr = buf;
 
-  for (int i = 0; i < argc; i++)
+  for (size_t i = 0; i < argc; i++)
     {
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*ptr))

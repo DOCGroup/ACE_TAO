@@ -1,6 +1,7 @@
 #include "ace/Time_Value.h"
 #include "ace/Basic_Types.h"
 
+
 ACE_RCSID (ace,
            Time_Value,
            "$Id$")
@@ -115,7 +116,6 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   // Convert remainder to microseconds;
   this->tv_.tv_usec = (long) ((_100ns.QuadPart % (10000 * 1000)) / 10);
 #endif // ACE_LACKS_LONGLONG_T
-  this->normalize ();
 }
 
 // Returns the value of the object as a Win32 FILETIME.

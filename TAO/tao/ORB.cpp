@@ -52,6 +52,22 @@ ACE_RCSID (tao,
 #include "ace/Reactor.h"
 #include "ace/Argv_Type_Converter.h"
 
+#if defined (ACE_HAS_EXCEPTIONS)
+# if defined (ACE_MVS)
+#   include /**/ <unexpect.h>
+# else
+#  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#   include /**/ <exception>
+#   if !defined (_MSC_VER) \
+     && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
+     &&         (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+using std::set_unexpected;
+#   endif /* !_MSC_VER */
+#  else
+#   include /**/ <exception.h>
+#  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+# endif /* ACE_MVS */
+#endif /* ACE_HAS_EXCEPTIONS */
 
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
@@ -174,14 +190,12 @@ void
 CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion
                      ACE_ENV_ARG_DECL)
 {
-  // We cannot lock the exceptions here. We need to propogate
-  // BAD_INV_ORDER  exceptions if needed to the caller. Locking
-  // exceptions down would render us non-compliant with the spec.
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->orb_core ()->shutdown (wait_for_completion
                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -203,8 +217,8 @@ CORBA_ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orb_core ()->orbid ())));
+                  ACE_LIB_TEXT("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR(this->orb_core ()->orbid ())));
     }
 
   this->orb_core ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -998,8 +1012,8 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
            port = default_service_port[mcast_service_id];
        }
 
-     // Set the port value in ORB_Params: modify the default mcast
-     // value.
+     /// Set the port value in ORB_Params: modify the default mcast
+     /// value.
      const char prefix[] = "mcast://:";
 
      char port_char[256];
@@ -1029,7 +1043,7 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
 
       if ((ACE_OS::strncmp (default_init_ref.in (),
                             mcast_prefix,
-                            sizeof mcast_prefix - 1) == 0))
+                            sizeof mcast_prefix -1) == 0))
       {
          this->orb_core_->orb_params ()->default_init_ref (def_init_ref.in ());
       }
@@ -1096,20 +1110,20 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   // -----------------------------------------------------------------
 
-  // Check ORBInitRef options.
+  /// Check ORBInitRef options.
   ACE_CString ior;
   ACE_CString object_id ((const char *) name);
 
-  // Is the service name in the IOR Table.
+  /// Is the service name in the IOR Table.
   if (this->orb_core_->init_ref_map ()->find (object_id, ior) == 0)
     return this->string_to_object (ior.c_str ()
                                    ACE_ENV_ARG_PARAMETER);
 
-  // May be trying the explicitly specified services and the well
-  // known services should be tried first before falling on to default
-  // services.
+  /// May be trying the explicitly specified services and the well
+  /// known services should be tried first before falling on to default
+  /// services.
 
-  // Set the timeout value.
+  /// Set the timeout value.
   this->set_timeout (timeout);
 
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
@@ -1220,23 +1234,16 @@ CORBA_ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
   else
     CORBA::ORB::orb_init_count_++;
 
+#if defined(ACE_HAS_EXCEPTIONS)
+  set_unexpected (CORBA_ORB::_tao_unexpected_exception);
+#endif /* ACE_HAS_EXCEPTIONS */
+
   // initialize the system TypeCodes
   TAO_TypeCodes::init ();
 
   // initialize the system exceptions
   TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
-#if defined (ACE_HAS_EXCEPTIONS)
-  // This must be done after the system TypeCodes and Exceptions have
-  // been initialized.  An unexpected exception will cause TAO's
-  // unexpected exception handler to be called.  That handler
-  // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
-  // course requires the TypeCode constants and system exceptions to
-  // have been initialized.
-  TAO_Singleton_Manager::instance ()->_set_unexpected (
-    CORBA_ORB::_tao_unexpected_exception);
-#endif /* ACE_HAS_EXCEPTIONS */
 
   // Verify some of the basic implementation requirements.  This test
   // gets optimized away by a decent compiler (or else the rest of the
@@ -1297,7 +1304,7 @@ CORBA_ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var pi_initializer;
 
-  // Register the PICurrent ORBInitializer.
+  /// Register the PICurrent ORBInitializer.
   ACE_NEW_THROW_EX (temp_pi_initializer,
                     TAO_PICurrent_ORBInitializer,
                     CORBA::NO_MEMORY (
@@ -1458,7 +1465,7 @@ CORBA::ORB_init (int &argc,
           // @@ Does the BAD_INV_ORDER exception apply here?
           //       -Ossama
 
-          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 4,
+          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 4,
                                                   CORBA::COMPLETED_NO),
                             CORBA::ORB::_nil ());
         }
@@ -1583,7 +1590,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj
   if (!CORBA::is_nil (obj) && obj->_is_local ())
     // @@ The CCM spec says one minor code, and the CORBA spec says
     //    another.  Which is the correct one?
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 4,
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_OMG_VMCID | 4,
                                       CORBA::COMPLETED_NO),
                       0);
 
@@ -1767,7 +1774,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Attempt to obtain the policy from the policy factory registry.
+  /// Attempt to obtain the policy from the policy factory registry.
   return
     this->orb_core_->policy_factory_registry ()->create_policy (
       type,

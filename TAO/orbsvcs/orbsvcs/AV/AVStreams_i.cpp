@@ -89,11 +89,11 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec
               {
                 char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
                 ACE_CString flow_name_key (flowname);
-		AVStreams::FlowConnection_var flow_connection_entry;
+                FlowConnection_Map::ENTRY *flow_connection_entry = 0;
                 if (this->flow_connection_map_.find (flow_name_key,
                                                      flow_connection_entry) == 0)
                   {
-                    flow_connection_entry->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
+                    flow_connection_entry->int_id_->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
                     ACE_TRY_CHECK;
                   }
               }
@@ -101,7 +101,7 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec
             {
               // call stop on all the flows.
               FlowConnection_Map_Iterator iterator (this->flow_connection_map_);
-	      FlowConnection_Map_Entry *entry;
+              FlowConnection_Map_Entry *entry = 0;
               for (;iterator.next (entry) !=  0;iterator.advance ())
                 {
                   entry->int_id_->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -272,15 +272,11 @@ TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name
                      AVStreams::notSupported))
 {
   ACE_CString flow_name_key (flow_name);
-  AVStreams::FlowConnection_var flow_connection_entry;
-
-  if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0){
-    return flow_connection_entry._retn();
-  }
-  else{
-    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %s\n", flow_name ));
+  FlowConnection_Map::ENTRY *flow_connection_entry = 0;
+  if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0)
+    return AVStreams::FlowConnection::_duplicate (flow_connection_entry->int_id_);
+  else
     ACE_THROW_RETURN (AVStreams::noSuchFlow (), CORBA::Object::_nil ());
-  }
 }
 
 // Sets the flow connection.
@@ -292,7 +288,7 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
                    AVStreams::noSuchFlow,
                    AVStreams::notSupported))
 {
-  AVStreams::FlowConnection_var flow_connection;
+  AVStreams::FlowConnection_ptr flow_connection = AVStreams::FlowConnection::_nil ();
   ACE_TRY
     {
       flow_connection = AVStreams::FlowConnection::_narrow (flow_connection_obj ACE_ENV_ARG_PARAMETER);
@@ -310,14 +306,15 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
   this->flows_ [this->flow_count_++] = CORBA::string_dup (flow_name);
   ACE_CString flow_name_key (flow_name);
   if (this->flow_connection_map_.bind (flow_name_key, flow_connection) != 0)
-  {
-    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %s\n", flow_name ));
     ACE_THROW (AVStreams::noSuchFlow ());// is this right?
-  }
 }
 
 TAO_Basic_StreamCtrl::~TAO_Basic_StreamCtrl (void)
 {
+  FlowConnection_Map_Iterator iterator (this->flow_connection_map_);
+  FlowConnection_Map_Entry *entry = 0;
+  for (;iterator.next (entry) != 0;iterator.advance ())
+    CORBA::release (entry->int_id_);
 }
 
 // ----------------------------------------------------------------------
@@ -918,37 +915,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
       if (!CORBA::is_nil (a_party) && !CORBA::is_nil (b_party))
         {
-          // Check to see if the MMDevice contains FDev objects
-          // If it contains FDev objects, then we are using the
-          // Full profile, and we want to call bind() instead
-          // of connect() on the the streamctrl
-          if( a_party->is_property_defined("Flows") &&
-              b_party->is_property_defined("Flows") ) 
-	  {
-              if (TAO_debug_level > 0) {
-		ACE_DEBUG ((LM_DEBUG, "(%N,%l) Full profile, invoking bind()\n"));
-	      }
-
-              // It is full profile
-              // we have feps in the sep then dont call connect 
-	      // instead call bind on the streamctrl.
-              this->bind (this->sep_a_.in (),
-                          this->sep_b_.in (),
-                          the_qos,
-                          the_flows
-                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-
-
-	  }
-	  // This is the light profile, call connect()
-	  else  if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))
-          {
-              if (TAO_debug_level > 0) {
-		ACE_DEBUG ((LM_DEBUG, "(%N,%l) Light profile, invoking connect()\n"));
-	      }
-
+          if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))
+            {
               // Tell the 2 VDev's about one another
               this->vdev_a_->set_peer (this->streamctrl_.in (),
                                        this->vdev_b_.in (),
@@ -975,7 +943,18 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               ACE_TRY_CHECK;
               if (result == 0)
                 ACE_ERROR_RETURN ((LM_ERROR, "sep_a->connect (sep_b) failed\n"), 0);
-	  }
+            }
+          else
+            {
+              // Its full profile
+              // we have feps in the sep then dont call connect instead call bind on the streamctrl.
+              this->bind (this->sep_a_.in (),
+                          this->sep_b_.in (),
+                          the_qos,
+                          the_flows
+                          ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
     }
   ACE_CATCHANY
@@ -1007,8 +986,8 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
   int result = 0;
   ACE_TRY
     {
-      if (CORBA::is_nil (sep_a_.in() ) ||
-          CORBA::is_nil (sep_b_.in() ))
+      if (CORBA::is_nil (sep_a) ||
+          CORBA::is_nil (sep_b))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) TAO_StreamCtrl::bind:"
                            "a_party or b_party null!"),
@@ -1017,12 +996,12 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       // Define each other as their peers.
       CORBA::Any sep_any;
       sep_any <<= sep_b;
-      sep_a_->define_property ("PeerAdapter",
+      sep_a->define_property ("PeerAdapter",
                               sep_any
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       sep_any <<= sep_a;
-      sep_b_->define_property ("PeerAdapter",
+      sep_b->define_property ("PeerAdapter",
                               sep_any
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -1031,12 +1010,12 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       // the flows spec is empty and hence we do a exhaustive match.
       AVStreams::flowSpec a_flows, b_flows;
       CORBA::Any_var flows_any;
-      flows_any = sep_a_->get_property_value ("Flows" ACE_ENV_ARG_PARAMETER);
+      flows_any = sep_a->get_property_value ("Flows" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       AVStreams::flowSpec *temp_flows;
       flows_any.in () >>= temp_flows;
       a_flows = *temp_flows;
-      flows_any = sep_b_->get_property_value ("Flows" ACE_ENV_ARG_PARAMETER);
+      flows_any = sep_b->get_property_value ("Flows" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       flows_any.in () >>= temp_flows;
       b_flows = *temp_flows;
@@ -1054,17 +1033,17 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
           const char *flowname = a_flows[i];
           // get the flowendpoint references.
           CORBA::Object_var fep_obj =
-            sep_a_->get_fep (flowname
+            sep_a->get_fep (flowname
                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          AVStreams::FlowEndPoint_var fep =
+          AVStreams::FlowEndPoint_ptr fep =
             AVStreams::FlowEndPoint::_narrow (fep_obj.in ()
                                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_CString fep_key (flowname);
           result = a_fep_map->bind (fep_key, fep);
           if (result == -1)
-            if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s\n", flowname));
+            if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s", flowname));
         }
       // get the flowendpoints for streamendpoint_b
       for (i=0;i<b_flows.length ();i++)
@@ -1075,14 +1054,14 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
             sep_b->get_fep (flowname
                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          AVStreams::FlowEndPoint_var fep =
+          AVStreams::FlowEndPoint_ptr fep =
             AVStreams::FlowEndPoint::_narrow (fep_obj.in ()
                                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_CString fep_key (flowname);
           result = b_fep_map->bind (fep_key, fep);
           if (result == -1)
-            if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s\n", flowname));
+            if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s", flowname));
         }
       FlowEndPoint_Map *map_a = 0, *map_b = 0;
       if (flow_spec.length () == 0)
@@ -1107,22 +1086,22 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                               0);
               entry->parse (flow_spec[i].in ());
               ACE_CString fep_key (entry->flowname ());
-              AVStreams::FlowEndPoint_var fep;
+              AVStreams::FlowEndPoint_ptr fep;
               result = a_fep_map->find (fep_key, fep);
               if (result == -1)
-                ACE_ERROR_RETURN ((LM_ERROR, "Fep not found on A side for flowname: %s\n", flow_spec[i].in ()), 0);
+                ACE_ERROR_RETURN ((LM_ERROR, "Fep not found on A side for flowname: %s", flow_spec[i].in ()), 0);
 
               result = spec_fep_map_a->bind (fep_key, fep);
               if (result == -1)
-                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i].in ()));
+                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Bind failed for %s", flow_spec[i].in ()));
 
               result = b_fep_map->find (fep_key, fep);
               if (result == -1)
-                ACE_ERROR_RETURN ((LM_ERROR, "Fep not found on B side for flowname: %s\n", flow_spec[i].in ()), 0);
+                ACE_ERROR_RETURN ((LM_ERROR, "Fep not found on B side for flowname: %s", flow_spec[i].in ()), 0);
 
               result = spec_fep_map_b->bind (fep_key, fep);
               if (result == -1)
-                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i].in ()));
+                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Bind failed for %s", flow_spec[i].in ()));
             }
           map_a = spec_fep_map_a;
           map_b = spec_fep_map_b;
@@ -1139,7 +1118,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
           for (;a_feps_iterator.next (a_feps_entry) != 0;
                a_feps_iterator.advance ())
             {
-              AVStreams::FlowEndPoint_var fep_a = a_feps_entry->int_id_;
+              AVStreams::FlowEndPoint_ptr fep_a = a_feps_entry->int_id_;
               AVStreams::FlowEndPoint_var connected_to =
                 fep_a->get_connected_fep (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK_EX (flow_connect);
@@ -1154,7 +1133,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
               for (;b_feps_iterator.next (b_feps_entry) != 0;
                    b_feps_iterator.advance ())
                 {
-                  AVStreams::FlowEndPoint_var fep_b = b_feps_entry->int_id_;
+                  AVStreams::FlowEndPoint_ptr fep_b = b_feps_entry->int_id_;
                   AVStreams::FlowConnection_var flow_connection;
 
                   AVStreams::FlowEndPoint_var connected_to =
@@ -1167,7 +1146,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       continue;
                     }
 
-                  if (fep_a->is_fep_compatible (fep_b.in()
+                  if (fep_a->is_fep_compatible (fep_b
                                                 ACE_ENV_ARG_PARAMETER) == 1)
                     {
                       ACE_TRY_CHECK_EX (flow_connect);
@@ -1175,7 +1154,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       // can use either of them.
                       CORBA::Object_var flow_connection_obj;
                       CORBA::Any_var flowname_any =
-                        fep_a->get_property_value ("FlowName"
+                        fep_a->get_property_value ("Flow"
                                                    ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK_EX (flow_connect);
                       const char *flowname = 0;
@@ -1219,11 +1198,11 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       ACE_TRY_EX (producer_check)
                         {
                           producer =
-                            AVStreams::FlowProducer::_narrow (fep_a.in()
+                            AVStreams::FlowProducer::_narrow (fep_a
                                                               ACE_ENV_ARG_PARAMETER);
                           ACE_TRY_CHECK_EX (producer_check);
                           consumer =
-                            AVStreams::FlowConsumer::_narrow (fep_b.in()
+                            AVStreams::FlowConsumer::_narrow (fep_b
                                                               ACE_ENV_ARG_PARAMETER);
                           ACE_TRY_CHECK_EX (producer_check);
 
@@ -1232,11 +1211,11 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                           if (CORBA::is_nil (producer.in ()))
                             {
                               producer =
-                                AVStreams::FlowProducer::_narrow (fep_b.in()
+                                AVStreams::FlowProducer::_narrow (fep_b
                                                                   ACE_ENV_ARG_PARAMETER);
                               ACE_TRY_CHECK_EX (producer_check);
                               consumer =
-                                AVStreams::FlowConsumer::_narrow (fep_a.in()
+                                AVStreams::FlowConsumer::_narrow (fep_a
                                                                   ACE_ENV_ARG_PARAMETER);
                               ACE_TRY_CHECK_EX (producer_check);
                             }
@@ -2464,9 +2443,9 @@ TAO_StreamEndPoint::get_fep (const char *flow_name
                    AVStreams::noSuchFlow))
 {
   ACE_CString fep_name_key (flow_name);
-  AVStreams::FlowEndPoint_var fep_entry;
+  FlowEndPoint_Map::ENTRY *fep_entry = 0;
   if (this->fep_map_.find (fep_name_key, fep_entry) == 0)
-    return fep_entry._retn();
+    return fep_entry->int_id_;
   return 0;
 }
 
@@ -2477,19 +2456,21 @@ TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep
                      AVStreams::notSupported,
                      AVStreams::streamOpFailed))
 {
-  ACE_CString flow_name;
+  char* tmp;
+  ACE_NEW_RETURN (tmp,
+                  char[64],
+                  0);
+  CORBA::String_var flow_name = tmp;
 
   ACE_TRY
     {
       // exception implies the flow name is not defined and is system
       // generated.
-      flow_name = "flow";
-      char tmp[255];
-      ACE_OS::sprintf (tmp, "%u", this->flow_num_++);
-      flow_name += tmp;
-
+      ACE_OS::sprintf (tmp,
+                       "flow%d",
+                       this->flow_num_++);
       CORBA::Any flowname_any;
-      flowname_any <<= flow_name.c_str ();
+      flowname_any <<= flow_name.in ();
       fep->define_property ("Flow",
                             flowname_any
                             ACE_ENV_ARG_PARAMETER);
@@ -2502,7 +2483,7 @@ TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep
       return 0;
     }
   ACE_ENDTRY;
-  return ACE_OS::strdup( flow_name.c_str () );
+  return flow_name._retn ();
 }
 
 char*
@@ -2591,7 +2572,7 @@ TAO_StreamEndPoint::remove_fep (const char *flow_name
   ACE_TRY
     {
       ACE_CString fep_name_key (flow_name);
-      AVStreams::FlowEndPoint_var fep_entry;
+      AVStreams::FlowEndPoint_ptr fep_entry = 0;
       // Remove the fep from the hash table.
       if (this->fep_map_.unbind (fep_name_key, fep_entry)!= 0)
         ACE_THROW (AVStreams::streamOpFailed ());
@@ -2751,8 +2732,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                           0);
           forward_entry->parse (flow_spec[i]);
           ACE_CString mcast_key (forward_entry->flowname ());
-          AVStreams::FlowEndPoint_var flow_endpoint;
-
+          AVStreams::FlowEndPoint_ptr flow_endpoint = AVStreams::FlowEndPoint::_nil ();
           // @@Naga: There is a problem in the full profile case for multiconnect. Since
           // multiconnect on sep_a is called everytime a sink is added and if called for
           // the same flow twice, the following code will just call add producer on the flow connection.
@@ -2768,11 +2748,9 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                   AVStreams::QoS flow_qos;
                   result = qos.get_flow_qos (forward_entry->flowname (), flow_qos);
                   if (result < 0)
-                    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "QoS not found for %s\n", forward_entry->flowname ()));
+                    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "QoS not found for %s", forward_entry->flowname ()));
                   // Narrow it to FlowProducer.
-                  AVStreams::FlowProducer_var producer;
-		  producer = AVStreams::FlowProducer::_narrow (flow_endpoint.in() ACE_ENV_ARG_PARAMETER);
-		  //   
+                  AVStreams::FlowProducer_var producer = AVStreams::FlowProducer::_narrow (flow_endpoint ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK_EX (narrow);
                   // Else narrow succeeeded.
                   if (!CORBA::is_nil (producer.in ()))
@@ -2992,7 +2970,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
           forward_entry->parse (flow_spec[i]);
           ACE_CString mcast_key (forward_entry->flowname ());
           AVStreams::FlowEndPoint_var flow_endpoint;
-          if (this->fep_map_.find (mcast_key, flow_endpoint ) == 0)
+          if (this->fep_map_.find (mcast_key, flow_endpoint.out ()) == 0)
             {
               AVStreams::FlowConsumer_var consumer;
               ACE_TRY_EX (narrow)
@@ -3451,6 +3429,8 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
       ACE_TRY_CHECK;
       if (this->fdev_map_.current_size () > 0)
         {
+          // first set the vdev to be a nil pointer.
+          the_vdev = AVStreams::VDev::_nil ();
           TAO_AV_QoS qos (the_qos);
           // create flowendpoints from the FDevs.
           for (u_int i=0;i<flow_spec.length ();i++)
@@ -3458,16 +3438,14 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
               TAO_Forward_FlowSpec_Entry forward_entry;
               forward_entry.parse (flow_spec[i]);
               ACE_CString flow_key (forward_entry.flowname ());
-              AVStreams::FDev_var flow_dev;
-              AVStreams::FlowConnection_var flowconnection;
+              AVStreams::FDev_ptr flow_dev;
+              AVStreams::FlowConnection_var flowconnection = AVStreams::FlowConnection::_nil ();
               ACE_TRY_EX (flowconnection)
                 {
                   // Get the flowconnection for this flow.
-                  //static int blah = 0; if(blah == 1){blah=0; abort();}else{blah=1;}
                   CORBA::Object_var flowconnection_obj =
                     streamctrl->get_flow_connection (forward_entry.flowname () ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK_EX (flowconnection);
-			printf("successfully called get_flow_connection\n");
                   if (!CORBA::is_nil (flowconnection_obj.in ()))
                     {
                       flowconnection = AVStreams::FlowConnection::_narrow (flowconnection_obj.in ()
@@ -3475,22 +3453,9 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                       ACE_TRY_CHECK_EX (flowconnection);
                     }
                 }
-	      ACE_CATCH(AVStreams::noSuchFlow, nsf) 
-	        {
-                          TAO_FlowConnection *flowConnection;
-                          ACE_NEW_RETURN (flowConnection,
-                                          TAO_FlowConnection,
-                                          0);
-                          flowconnection = flowConnection->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-                          ACE_TRY_CHECK;
-                          streamctrl->set_flow_connection (forward_entry.flowname(),
-                                                     flowconnection.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-                          ACE_TRY_CHECK;
-	        }
               ACE_CATCHANY
                 {
-                  //if (TAO_debug_level >= 0)
+                  if (TAO_debug_level > 0)
                     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_MMDevice::create_a::get_flow_connection");
                 }
               ACE_ENDTRY;
@@ -3498,14 +3463,14 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
 
               int result = this->fdev_map_.find (flow_key, flow_dev);
               if (result < 0)
-                ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) fdev_map::find failed\n"), 0);
+                ACE_ERROR_RETURN ((LM_ERROR, "fdev_map::find failed\n"), 0);
 
               CORBA::String_var named_fdev;
               AVStreams::FlowEndPoint_var flow_endpoint;
               AVStreams::QoS flow_qos;
               result = qos.get_flow_qos (forward_entry.flowname (), flow_qos);
               if (result < 0)
-                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "(%N,%l) get_flow_qos failed for %s\n", forward_entry.flowname ()));
+                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "get_flow_qos failed for %s\n", forward_entry.flowname ()));
               switch (forward_entry.direction ())
                 {
                 case TAO_FlowSpec_Entry::TAO_AV_DIR_IN:
@@ -3758,10 +3723,10 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj
 
   // Add it to the sequence of flowNames supported.
   // put the flowname and the fdev in a hashtable.
-  ACE_CString fdev_name_key ( flow_name.in () );
+  ACE_CString fdev_name_key (CORBA::string_dup (flow_name.in ()));
 
 
-  if ( (this->fdev_map_.bind (fdev_name_key, fdev )) != 0)
+  if (this->fdev_map_.bind (fdev_name_key, AVStreams::FDev::_duplicate (fdev.in ())) != 0)
     ACE_THROW_RETURN (AVStreams::streamOpFailed (), 0);
   // increment the flow count.
   this->flow_count_++;
@@ -3797,9 +3762,9 @@ TAO_MMDevice::get_fdev (const char *flow_name
 {
 
   ACE_CString fdev_name_key (flow_name);
-  AVStreams::FDev_var fdev_entry;
+  FDev_Map::ENTRY *fdev_entry = 0;
   if (this->fdev_map_.find (fdev_name_key, fdev_entry) == 0)
-    return fdev_entry._retn() ;
+    return AVStreams::FDev::_duplicate (fdev_entry->int_id_);
   return 0;
 }
 
@@ -3815,10 +3780,13 @@ TAO_MMDevice::remove_fdev (const char *flow_name
   ACE_TRY
     {
       ACE_CString fdev_name_key (flow_name);
-      AVStreams::FDev_var fdev_entry;
+      AVStreams::FDev_ptr fdev_entry = AVStreams::FDev::_nil ();
       // Remove the fep from the hash table.
       if (this->fdev_map_.unbind (fdev_name_key, fdev_entry)!= 0)
         ACE_THROW (AVStreams::streamOpFailed ());
+
+      if (!CORBA::is_nil (fdev_entry))
+        CORBA::release (fdev_entry);
 
       AVStreams::flowSpec new_flows (this->flows_.length ());
       for (u_int i=0, j=0 ; i <this->flows_.length (); i++)
@@ -3845,6 +3813,10 @@ TAO_MMDevice::remove_fdev (const char *flow_name
 TAO_MMDevice::~TAO_MMDevice (void)
 {
   delete this->stream_ctrl_;
+  FDev_Map_Iterator iterator (fdev_map_);
+  FDev_Map_Entry *entry = 0;
+  for (;iterator.next (entry) != 0; iterator.advance ())
+    CORBA::release (entry->int_id_);
 }
 
 //------------------------------------------------------------------
@@ -4427,7 +4399,7 @@ TAO_FlowEndPoint::open (const char *flowname,
     {
       CORBA::Any flowname_any;
       flowname_any <<= flowname;
-      this->define_property ("FlowName",
+      this->define_property ("Flow",
                              flowname_any
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -5282,46 +5254,46 @@ TAO_Tokenizer::operator [] (size_t index) const
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 
-template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FDev_var>;
-template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FlowConnection_var>;
-template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FlowEndPoint_var>;
+template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FDev_ptr>;
+template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FlowConnection_ptr>;
+template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FlowEndPoint_ptr>;
 template class ACE_Hash_Map_Entry<ACE_CString, TAO_FlowSpec_Entry *>;
 template class ACE_Hash_Map_Entry<ACE_CString, TAO_AV_Flow_Handler *>;
 
-template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FDev_var, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FDev_ptr, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_CString, TAO_FlowSpec_Entry *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FlowConnection_var, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FDev_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FDev_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FDev_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, AVStreams::FDev_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FDev_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FDev_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, AVStreams::FDev_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FDev_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowConnection_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_AV_Flow_Handler *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FlowConnection_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowConnection_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, AVStreams::FlowConnection_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
 template class ACE_Hash_Map_Entry<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry>;
 template class ACE_Hash_Map_Manager<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry,ACE_Null_Mutex>;
@@ -5419,26 +5391,26 @@ template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FDev_var>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FDev_ptr>
 #pragma instantaite ACE_Hash_Map_Entry<ACE_CString, TAO_FlowSpec_Entry *>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FDev_var,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_FlowSpec_Entry *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FDev_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FDev_var,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FDev_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FDev_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FDev_var,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FDev_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FDev_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_FlowSpec_Entry *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FlowConnection_var>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FlowConnection_var,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowConnection_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FlowConnection_var,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowConnection_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowConnection_var,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FlowConnection_ptr>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowConnection_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString,TAO_AV_Flow_Handler*>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
@@ -5450,14 +5422,14 @@ template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_AV_Flow_Handler*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FlowEndPoint_var>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,AVStreams::FlowEndPoint_ptr>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::FlowEndPoint_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Entry<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry>
 #pragma instantiate ACE_Hash_Map_Manager<MMDevice_Map_Hash_Key,TAO_StreamCtrl::MMDevice_Map_Entry,ACE_Null_Mutex>

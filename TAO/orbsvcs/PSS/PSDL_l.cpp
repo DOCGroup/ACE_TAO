@@ -25,8 +25,6 @@
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
 
-#include "ace/OS.h"
-
 #include <stdio.h>
 #include <errno.h>
 

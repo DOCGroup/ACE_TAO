@@ -86,7 +86,7 @@ static int loglevel = 0; // 0 full , 1 only errors
 
 static const size_t MIN_TIME = 1;    // min 1 sec
 static const size_t MAX_TIME = 3600; // max 1 hour
-static u_int seconds = 2;  // default time to run - 2 seconds
+static size_t seconds = 2;  // default time to run - 2 seconds
 
 static ACE_TCHAR complete_message[] =
   ACE_TEXT ("GET / HTTP/1.1\r\n")
@@ -165,7 +165,7 @@ public:
 
   virtual int svc (void);
 
-  int start (int num_threads,
+  int start (size_t num_threads,
              ProactorType type_proactor,
              size_t max_op );
   int stop  (void);
@@ -259,8 +259,8 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
   ACE_NEW_RETURN (this->proactor_,
                   ACE_Proactor (proactor_impl, 1 ), 
                   -1);
-  // Set new singleton and delete it in close_singleton()
-  ACE_Proactor::instance (this->proactor_, 1);
+
+  ACE_Proactor::instance (this->proactor_);
   return 0;
 }
 
@@ -275,14 +275,15 @@ MyTask::delete_proactor (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Delete Proactor\n")));
 
-  ACE_Proactor::close_singleton ();
+  ACE_Proactor::instance ((ACE_Proactor *) 0);
+  delete this->proactor_;
   this->proactor_ = 0;
 
   return 0;
 }
 
 int
-MyTask::start (int num_threads,
+MyTask::start (size_t num_threads,
                ProactorType type_proactor,
                size_t max_op)
 {
@@ -323,6 +324,12 @@ MyTask::stop ()
                 ACE_TEXT ("%p.\n"),
                 ACE_TEXT ("unable to stop thread pool")));
 
+  // Right choice - to delete proactor in destuctor
+  //if (this->delete_proactor () == -1)
+  //  ACE_ERROR ((LM_ERROR,
+  //              ACE_TEXT ("%p.\n"),
+  //              ACE_TEXT ("unable to delete proactor")));
+
   return 0;
 }
 
@@ -355,8 +362,8 @@ public:
   Receiver  (Acceptor *acceptor = 0, int index = -1);
   ~Receiver (void);
 
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_snd (void) { return this->total_snd_; }
+  long get_total_rcv (void) { return this->total_rcv_; }
   long get_total_w   (void) { return this->total_w_; }
   long get_total_r   (void) { return this->total_r_; }
 
@@ -393,8 +400,8 @@ private:
 
   long io_count_;
   int flg_cancel_;
-  size_t total_snd_;
-  size_t total_rcv_;
+  long total_snd_;
+  long total_rcv_;
   long total_w_;
   long total_r_;
 };
@@ -404,8 +411,8 @@ class Acceptor : public ACE_Asynch_Acceptor<Receiver>
   friend class Receiver;
 public:
   int get_number_sessions (void) { return this->sessions_; }
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_snd (void) { return this->total_snd_; }
+  long get_total_rcv (void) { return this->total_rcv_; }
   long get_total_w   (void) { return this->total_w_; }
   long get_total_r   (void) { return this->total_r_; }
 
@@ -425,8 +432,8 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   int sessions_;
   Receiver *list_receivers_[MAX_RECEIVERS];
-  size_t total_snd_;
-  size_t total_rcv_;
+  long total_snd_;
+  long total_rcv_;
   long total_w_;
   long total_r_;
 };
@@ -516,13 +523,13 @@ Acceptor::on_delete_receiver (Receiver & rcvr)
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
-                   rcvr.get_total_snd (),
-                   rcvr.get_total_w ());
+  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
+                    rcvr.get_total_snd(),
+                    rcvr.get_total_w() );
 
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
-                   rcvr.get_total_rcv (),
-                   rcvr.get_total_r ());
+  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
+                    rcvr.get_total_rcv(),
+                    rcvr.get_total_r() );
   
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Receiver::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
@@ -708,17 +715,17 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %@\n"),
+                    ACE_TEXT ("%s = %u\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    (u_long) result.act ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
                     result.success ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %@\n"),
+                    ACE_TEXT ("%s = %u\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    (u_long) result.completion_key ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("error"),
@@ -785,17 +792,17 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %@\n"),
+                    ACE_TEXT ("%s = %u\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    (u_long) result.act ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
                     result.success ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %@\n"),
+                    ACE_TEXT ("%s = %u\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    (u_long) result.completion_key ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("error"),
@@ -843,8 +850,8 @@ public:
   Sender  (Connector *connector = 0, int index = -1);
   ~Sender (void);
 
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_snd (void) { return this->total_snd_; }
+  long get_total_rcv (void) { return this->total_rcv_; }
   long get_total_w   (void) { return this->total_w_; }
   long get_total_r   (void) { return this->total_r_; }
 
@@ -870,8 +877,8 @@ private:
 
   long io_count_;
   int flg_cancel_;
-  size_t total_snd_;
-  size_t total_rcv_;
+  long total_snd_;
+  long total_rcv_;
   long total_w_;
   long total_r_;
 };
@@ -881,8 +888,8 @@ class Connector : public ACE_Asynch_Connector<Sender>
   friend class Sender;
 public:
   int get_number_sessions (void) { return this->sessions_; }
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_snd (void) { return this->total_snd_; }
+  long get_total_rcv (void) { return this->total_rcv_; }
   long get_total_w   (void) { return this->total_w_; }
   long get_total_r   (void) { return this->total_r_; }
 
@@ -903,8 +910,8 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   int sessions_;
   Sender *list_senders_[MAX_SENDERS];
-  size_t total_snd_;
-  size_t total_rcv_;
+  long total_snd_;
+  long total_rcv_;
   long total_w_;
   long total_r_;
 };
@@ -992,13 +999,13 @@ Connector::on_delete_sender (Sender &sndr)
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
-                   sndr.get_total_snd (),
-                   sndr.get_total_w ());
+  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
+                    sndr.get_total_snd(),
+                    sndr.get_total_w() );
 
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
-                   sndr.get_total_rcv (),
-                   sndr.get_total_r ());
+  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
+                    sndr.get_total_rcv(),
+                    sndr.get_total_r() );
   
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sender::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
@@ -1331,17 +1338,17 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %@\n"),
+                    ACE_TEXT ("%s = %u\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                  (u_long) result.act ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
                     result.success ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %@\n"),
+                    ACE_TEXT ("%s = %u\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    (u_long) result.completion_key ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("error"),
@@ -1443,17 +1450,17 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %@\n"),
+                    ACE_TEXT ("%s = %u\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    (u_long) result.act ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
                     result.success ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %@\n"),
+                    ACE_TEXT ("%s = %u\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    (u_long) result.completion_key ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("error"),
@@ -1745,31 +1752,33 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
-                   connector.get_total_snd (),
-                   connector.get_total_w ());
+  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
+                    connector.get_total_snd(),
+                    connector.get_total_w() );
 
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
-                   connector.get_total_rcv (),
-                   connector.get_total_r ());
-
+  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
+                    connector.get_total_rcv(),
+                    connector.get_total_r() );
+  
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Connector/Senders  total bytes: snd=%s rcv=%s\n"),
               bufs,
-              bufr));
+              bufr
+            ));
 
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
-                   acceptor.get_total_snd (),
-                   acceptor.get_total_w ());
+  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
+                    acceptor.get_total_snd(),
+                    acceptor.get_total_w() );
 
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
-                   acceptor.get_total_rcv (),
-                   acceptor.get_total_r ());
+  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
+                    acceptor.get_total_rcv(),
+                    acceptor.get_total_r() );
   
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Acceptor/Receivers total bytes: snd=%s rcv=%s\n"),
               bufs,
-              bufr));
+              bufr
+            ));
 
   ACE_END_TEST;
 

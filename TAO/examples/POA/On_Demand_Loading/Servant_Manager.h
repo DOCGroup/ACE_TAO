@@ -47,7 +47,8 @@ class ServantManager_i
 public:
    typedef PortableServer::Servant
            (*SERVANT_FACTORY) (CORBA::ORB_ptr orb,
-                               PortableServer::POA_ptr poa);
+                               PortableServer::POA_ptr poa,
+                               CORBA::Long value);
   // This typedef is used to typecast the void* obtained when finding
   // a symbol in the DLL.
 
@@ -67,7 +68,8 @@ public:
   // who calls it and why?
 
   PortableServer::Servant obtain_servant (const char *str,
-                                          PortableServer::POA_ptr poa);
+                                          PortableServer::POA_ptr poa,
+                                          long value);
   // Obtains a servant on activation by linking and loading the
   // appropriate DLL and creating the servant object.  The <str>
   // argument is the ObjectId that contains the servant DLL name and

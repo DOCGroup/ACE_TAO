@@ -119,8 +119,7 @@ public:
    * POA while performing an upcall).
    */
   void close (int wait_for_completion
-              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+              ACE_ENV_ARG_DECL);
 
   /**
    * Verify if the close() call can be invoked in the current
@@ -128,8 +127,7 @@ public:
    * Raise the right exception if not.
    */
   void check_close (int wait_for_completion
-                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+                    ACE_ENV_ARG_DECL);
 
   /// Insert a new adapter into the registry.
   void insert (TAO_Adapter *adapter

@@ -6,17 +6,19 @@ Generic Servant:
 File Name
 ---------
 
-test.idl                 test idl interface
-test_i.h                 Servant definition for the test interface
-test_i.cpp               Servant implementation for the test interface
-client.cpp               A test client
+Foo.idl                 Simple Foo idl interface
+MyFooServant.h          Servant definition  for the Foo interface
+MyFooServant.cpp        Servant implementation for the FOO interface
+client.cpp              A simple Foo client
 
 Typing
 
-% make
+% Make
 
-creates an executable client and server library.
+ creates an executable client and server library libserver.a.
 
 To run the client, type 
 
-% client -k file://ior
+% client -k IOR
+
+where IOR can be got from the server output.

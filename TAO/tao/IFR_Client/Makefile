@@ -54,7 +54,10 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/IFR_BaseC.o .obj/IFR_BaseC.so .shobj/IFR_BaseC.o .shobj/IFR_BaseC.so: IFR_BaseC.cpp IFR_BaseC.h \
- $(ACE_ROOT)/ace/pre.h ifr_client_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -83,7 +86,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -332,7 +336,10 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/IFR_BasicC.o .obj/IFR_BasicC.so .shobj/IFR_BasicC.o .shobj/IFR_BasicC.so: IFR_BasicC.cpp IFR_BasicC.h \
- $(ACE_ROOT)/ace/pre.h IFR_BaseC.h ifr_client_export.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BaseC.h \
+ ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -361,7 +368,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -459,7 +467,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Any.i IFR_BaseC.i IFR_BasicC.i \
+ $(TAO_ROOT)/tao/Any.i IFR_BaseC.i \
+ IFR_BasicC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/PolicyC.h \
@@ -610,7 +619,10 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/IFR_ExtendedC.o .obj/IFR_ExtendedC.so .shobj/IFR_ExtendedC.o .shobj/IFR_ExtendedC.so: IFR_ExtendedC.cpp IFR_ExtendedC.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicC.h IFR_BaseC.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicC.h \
+ IFR_BaseC.h ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -639,7 +651,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -737,8 +750,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Any.i IFR_BaseC.i IFR_BasicC.i \
- IFR_ExtendedC.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Any.i IFR_BaseC.i \
+ IFR_BasicC.i IFR_ExtendedC.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -888,11 +902,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/IFR_ComponentsC.o .obj/IFR_ComponentsC.so .shobj/IFR_ComponentsC.o .shobj/IFR_ComponentsC.so: IFR_ComponentsC.cpp IFR_ComponentsC.h \
- $(ACE_ROOT)/ace/pre.h ifr_client_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl IFR_ExtendedC.h \
- IFR_BasicC.h IFR_BaseC.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ IFR_ExtendedC.h IFR_BasicC.h IFR_BaseC.h \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -918,7 +935,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1016,8 +1034,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Any.i IFR_BaseC.i IFR_BasicC.i \
- IFR_ExtendedC.i IFR_ComponentsC.i \
+ $(TAO_ROOT)/tao/Any.i IFR_BaseC.i \
+ IFR_BasicC.i IFR_ExtendedC.i IFR_ComponentsC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/PolicyC.h \
@@ -1168,10 +1186,13 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/IFR_Client_Adapter_Impl.o .obj/IFR_Client_Adapter_Impl.so .shobj/IFR_Client_Adapter_Impl.o .shobj/IFR_Client_Adapter_Impl.so: IFR_Client_Adapter_Impl.cpp \
- IFR_Client_Adapter_Impl.h $(ACE_ROOT)/ace/pre.h \
+ IFR_Client_Adapter_Impl.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1197,7 +1218,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1215,7 +1237,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i ifr_client_export.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ ifr_client_export.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1229,7 +1252,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -1296,8 +1320,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h IFR_ExtendedC.h \
- IFR_BasicC.h IFR_BaseC.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ IFR_ExtendedC.h IFR_BasicC.h IFR_BaseC.h \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object.h \
@@ -1322,8 +1346,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Any.i IFR_BaseC.i IFR_BasicC.i \
- IFR_ExtendedC.i $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Any.i IFR_BaseC.i \
+ IFR_BasicC.i IFR_ExtendedC.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \

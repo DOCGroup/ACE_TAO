@@ -47,12 +47,8 @@ public:
   /// Constructor
   /**
    * @param contents The message block chain that must be sent.
-   *
-   * @param alloc The allocator that is used to allocate objects of
-   *        this type.
    */
-  TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
-                            ACE_Allocator *alloc = 0);
+  TAO_Synch_Queued_Message (const ACE_Message_Block *contents);
 
   /// Destructor
   virtual ~TAO_Synch_Queued_Message (void);
@@ -66,7 +62,6 @@ public:
   virtual int all_data_sent (void) const;
   virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const;
   virtual void bytes_transferred (size_t &byte_count);
-  virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
   virtual void destroy (void);
   //@}
 

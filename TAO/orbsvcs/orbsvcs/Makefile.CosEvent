@@ -124,7 +124,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -331,8 +332,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
- CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i
 
 .obj/CEC_ConsumerControl.o .obj/CEC_ConsumerControl.so .shobj/CEC_ConsumerControl.o .shobj/CEC_ConsumerControl.so: CosEvent/CEC_ConsumerControl.cpp \
  CosEvent/CEC_ConsumerControl.h $(ACE_ROOT)/ace/pre.h \
@@ -365,7 +367,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -549,7 +552,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -763,7 +767,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -919,7 +924,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
@@ -1016,7 +1022,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1172,7 +1179,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -1211,7 +1219,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1393,14 +1402,15 @@ realclean: clean
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
  CosEvent/CEC_ProxyPushConsumer.i CosEvent/CEC_EventChannel.h \
- CosEvent/CEC_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ CosEvent/CEC_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
- CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
- CosEvent/CEC_ConsumerAdmin.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i CosEvent/CEC_ConsumerAdmin.h \
  ESF/ESF_Proxy_Admin.h \
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
@@ -1455,7 +1465,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1642,9 +1653,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
- CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
- CosEvent/CEC_ConsumerAdmin.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i CosEvent/CEC_ConsumerAdmin.h \
  ESF/ESF_Proxy_Admin.h \
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
@@ -1700,7 +1711,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1885,9 +1897,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
- CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
- CosEvent/CEC_ConsumerControl.h CosEvent/CEC_ConsumerControl.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i CosEvent/CEC_ConsumerControl.h \
+ CosEvent/CEC_ConsumerControl.i \
  ESF/ESF_RefCount_Guard.h \
  ESF/ESF_RefCount_Guard.i \
  ESF/ESF_RefCount_Guard.cpp \
@@ -1928,7 +1941,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2112,16 +2126,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Notification_Strategy.h \
  $(ACE_ROOT)/ace/Notification_Strategy.inl \
- $(ACE_ROOT)/ace/Message_Queue.i CosEvent/event_export.h \
- CosEvent/CEC_ProxyPullSupplier.i CosEvent/CEC_Dispatching.h \
- CosEvent/CEC_Dispatching.i CosEvent/CEC_EventChannel.h \
- CosEvent/CEC_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ CosEvent/event_export.h CosEvent/CEC_ProxyPullSupplier.i \
+ CosEvent/CEC_Dispatching.h CosEvent/CEC_Dispatching.i \
+ CosEvent/CEC_EventChannel.h CosEvent/CEC_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
- CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i
 
 .obj/CEC_SupplierAdmin.o .obj/CEC_SupplierAdmin.so .shobj/CEC_SupplierAdmin.o .shobj/CEC_SupplierAdmin.so: CosEvent/CEC_SupplierAdmin.cpp \
  CosEvent/CEC_SupplierAdmin.h $(ACE_ROOT)/ace/pre.h \
@@ -2156,7 +2172,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2354,8 +2371,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
- CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i
 
 .obj/CEC_SupplierControl.o .obj/CEC_SupplierControl.so .shobj/CEC_SupplierControl.o .shobj/CEC_SupplierControl.so: CosEvent/CEC_SupplierControl.cpp \
  CosEvent/CEC_SupplierControl.h $(ACE_ROOT)/ace/pre.h \
@@ -2388,7 +2406,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2570,7 +2589,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -2834,7 +2854,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3098,7 +3119,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3260,7 +3282,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
@@ -3442,7 +3465,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3604,7 +3628,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
@@ -3788,7 +3813,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3978,9 +4004,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
- CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
- CosEvent/CEC_SupplierAdmin.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i CosEvent/CEC_SupplierAdmin.h \
  ESF/ESF_Proxy_Admin.h \
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
@@ -4132,7 +4158,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4288,8 +4315,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i CosEvent/CEC_Factory.i \
- CosEvent/CEC_Defaults.h $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/XML_Svc_Conf.h \
@@ -4477,7 +4505,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4739,7 +4768,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4909,7 +4939,9 @@ realclean: clean
  CosEventCommS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -5077,7 +5109,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5249,7 +5282,9 @@ realclean: clean
  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -5416,7 +5451,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5712,7 +5748,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \

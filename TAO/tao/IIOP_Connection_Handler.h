@@ -42,8 +42,6 @@ class TAO_Pluggable_Messaging;
  *
  */
 
-#define IPDSFIELD_DSCP_DEFAULT  0x00
-
 class TAO_Export TAO_IIOP_Properties
 {
 
@@ -51,7 +49,6 @@ public:
   int send_buffer_size;
   int recv_buffer_size;
   int no_delay;
-  int enable_network_priority;
 };
 
 
@@ -125,21 +122,6 @@ public:
   /// Process the <listen_list>
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
 
-    ///Check if network priority needs to be enabled
-  int enable_network_priority (void);
-
-  ///Set the Diff-Serv codepoint if the Policy dicates the setting of Network Priority
-  int set_dscp_codepoint (void);
-
-  int set_dscp_codepoint (int tos);
-
-  ///Update the tcp properties of the hanlder to the most recent 
-  ///properties set after the last invocation
-  virtual void update_protocol_properties (int send_buffer_size,
-					   int recv_buffer_size,
-					   int no_delay,
-					   int enable_network_priority);
-
 protected:
 
   /// = Event Handler overloads
@@ -157,8 +139,7 @@ protected:
 
 private:
   /// TCP configuration for this connection.
-  TAO_IIOP_Properties tcp_properties_;
-  int dscp_codepoint_;
+  TAO_IIOP_Properties *tcp_properties_;
 };
 
 

@@ -38,7 +38,7 @@
  */
 module CosLoadBalancing
 {
-  const IOP::ServiceId LOAD_MANAGED = 123456;  // @todo TBA by OMG
+  const IOP::ServiceId LB_GROUP_REF = 123456;  // @todo TBA by OMG
 
   typedef PortableGroup::Location Location;
   typedef PortableGroup::Properties Properties;
@@ -119,7 +119,7 @@ module CosLoadBalancing
   {
     // Forward requests back to the load manager via the object group
     // reference.
-    void enable_alert ();
+    void enable_alert (in Object object_group);
 
     // Stop forwarding requests, and begin accepting them again.
     void disable_alert ();
@@ -147,35 +147,45 @@ module CosLoadBalancing
 
     // Return the raw loads at the given location, as opposed to the
     // potentially different effective loads returned by the
-    // Strategy::get_loads() method.
+    // Strategy::get_loads() method. 
     LoadList get_loads (in PortableGroup::Location the_location)
       raises (LocationNotFound);
 
     // Inform member at given location of load alert condition.
-    void enable_alert (in PortableGroup::Location the_location)
-      raises (LoadAlertNotFound);
+    void enable_alert (in PortableGroup::ObjectGroup object_group,
+                       in PortableGroup::Location the_location)
+      raises (PortableGroup::ObjectGroupNotFound,
+              LoadAlertNotFound);
 
     // Inform member at given location that load alert condition has
     // passed.
-    void disable_alert (in PortableGroup::Location the_location)
-      raises (LoadAlertNotFound);
+    void disable_alert (in PortableGroup::ObjectGroup object_group,
+                        in PortableGroup::Location the_location)
+      raises (PortableGroup::ObjectGroupNotFound,
+              LoadAlertNotFound);
 
     // Register a LoadAlert object for the member at the given
     // location.
-    void register_load_alert (in PortableGroup::Location the_location,
+    void register_load_alert (in PortableGroup::ObjectGroup object_group,
+                              in PortableGroup::Location the_location,
                               in LoadAlert load_alert)
-      raises (LoadAlertAlreadyPresent,
+      raises (PortableGroup::ObjectGroupNotFound,
+              LoadAlertAlreadyPresent,
               LoadAlertNotAdded);
 
     // Retrieve the LoadAlert object for the member at the given
     // location.
-    LoadAlert get_load_alert (in PortableGroup::Location the_location)
-      raises (LoadAlertNotFound);
+    LoadAlert get_load_alert (in PortableGroup::ObjectGroup object_group,
+                              in PortableGroup::Location the_location)
+      raises (PortableGroup::ObjectGroupNotFound,
+              LoadAlertNotFound);
 
     // Remove (de-register) the LoadAlert object for the member at the
     // given location.
-    void remove_load_alert (in PortableGroup::Location the_location)
-      raises (LoadAlertNotFound);
+    void remove_load_alert (in PortableGroup::ObjectGroup object_group,
+                            in PortableGroup::Location the_location)
+      raises (PortableGroup::ObjectGroupNotFound,
+              LoadAlertNotFound);
 
     // The following load monitor methods are only used for the PULL
     // load monitoring style.

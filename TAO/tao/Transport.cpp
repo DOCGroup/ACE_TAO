@@ -144,7 +144,10 @@ TAO_Transport::~TAO_Transport (void)
   // Avoid making the call if we can.  This may be redundant, unless
   // someone called handle_close() on the connection handler from
   // outside the TAO_Transport.
-  this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+  if (this->cache_map_entry_ != 0)
+    {
+      this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+    }
 }
 
 
@@ -366,13 +369,19 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 void
 TAO_Transport::purge_entry (void)
 {
-  (void) this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+  if (this->cache_map_entry_ != 0)
+    {
+      (void) this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+    }
 }
 
 int
 TAO_Transport::make_idle (void)
 {
-  return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
+  if (this->cache_map_entry_ != 0)
+    {
+      return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
+    }
 
   return -1;
 }
@@ -470,7 +479,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 
 int
 TAO_Transport::send_message_shared (TAO_Stub *stub,
-                                    int message_semantics,
+                                    int is_synchronous,
                                     const ACE_Message_Block *message_block,
                                     ACE_Time_Value *max_wait_time)
 {
@@ -481,7 +490,7 @@ TAO_Transport::send_message_shared (TAO_Stub *stub,
     if (this->check_event_handler_i ("Transport::send_message_shared") == -1)
       return -1;
 
-    r = this->send_message_shared_i (stub, message_semantics,
+    r = this->send_message_shared_i (stub, is_synchronous,
                                      message_block, max_wait_time);
   }
   if (r == -1)
@@ -502,18 +511,34 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
 
   synch_message.push_back (this->head_, this->tail_);
 
-  int n =
-    this->send_synch_message_helper_i (synch_message,
-                                       max_wait_time);
+  int n = this->drain_queue_i ();
+  if (n == -1)
+    {
+      synch_message.remove_from_list (this->head_, this->tail_);
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
+      return -1; // Error while sending...
+    }
+  else if (n == 1)
+    {
+      ACE_ASSERT (synch_message.all_data_sent ());
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
+      return 1;  // Empty queue, message was sent..
+    }
 
-  if (n == -1 ||
-      n == 1)
-    return n;
+  ACE_ASSERT (n == 0); // Some data sent, but data remains.
 
-  ACE_ASSERT (n == 0);
+  if (synch_message.all_data_sent ())
+    {
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
+      return 1;
+    }
 
   // @todo: Check for timeouts!
   // if (max_wait_time != 0 && errno == ETIME) return -1;
+
   TAO_Flushing_Strategy *flushing_strategy =
     this->orb_core ()->flushing_strategy ();
   (void) flushing_strategy->schedule_output (this);
@@ -583,87 +608,6 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
 }
 
 
-int
-TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
-                                     ACE_Time_Value *max_wait_time)
-{
-  // Dont clone now.. We could be sent in one shot!
-  TAO_Synch_Queued_Message synch_message (mb);
-
-  synch_message.push_back (this->head_,
-                           this->tail_);
-
-  int n =
-    this->send_synch_message_helper_i (synch_message,
-                                       max_wait_time);
-
-  if (n == -1 ||
-      n == 1)
-    return n;
-
-  ACE_ASSERT (n == 0);
-
-  if (TAO_debug_level > 3)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::send_reply_message_i, "
-                  "preparing to add to queue before leaving \n",
-                  this->id ()));
-    }
-
-  // Till this point we shouldnt have any copying and that is the
-  // point anyway. Now, remove the node from the list
-  synch_message.remove_from_list (this->head_,
-                                  this->tail_);
-
-  // Clone the node that we have.
-  TAO_Queued_Message *msg =
-    synch_message.clone (this->orb_core_->transport_message_buffer_allocator ());
-
-  // Stick it in the queue
-  msg->push_back (this->head_,
-                  this->tail_);
-
-  TAO_Flushing_Strategy *flushing_strategy =
-    this->orb_core ()->flushing_strategy ();
-
-  (void) flushing_strategy->schedule_output (this);
-
-  return 1;
-}
-
-int
-TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_message,
-                                            ACE_Time_Value * /*max_wait_time*/)
-{
-  // @@todo: Need to send timeouts for writing..
-  int n = this->drain_queue_i ();
-  if (n == -1)
-    {
-      synch_message.remove_from_list (this->head_, this->tail_);
-      ACE_ASSERT (synch_message.next () == 0);
-      ACE_ASSERT (synch_message.prev () == 0);
-      return -1; // Error while sending...
-    }
-  else if (n == 1)
-    {
-      ACE_ASSERT (synch_message.all_data_sent ());
-      ACE_ASSERT (synch_message.next () == 0);
-      ACE_ASSERT (synch_message.prev () == 0);
-      return 1;  // Empty queue, message was sent..
-    }
-
-  ACE_ASSERT (n == 0); // Some data sent, but data remains.
-
-  if (synch_message.all_data_sent ())
-    {
-      ACE_ASSERT (synch_message.next () == 0);
-      ACE_ASSERT (synch_message.prev () == 0);
-      return 1;
-    }
-
-  return 0;
-}
 
 
 void
@@ -686,7 +630,7 @@ TAO_Transport::close_connection_shared (int disable_purge,
                                         ACE_Event_Handler * eh)
 {
   // Purge the entry
-  if (!disable_purge)
+  if (!disable_purge && this->cache_map_entry_ != 0)
     {
       this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
     }
@@ -715,11 +659,18 @@ TAO_Transport::close_connection_shared (int disable_purge,
   this->send_connection_closed_notifications ();
 }
 
+
+
+
+
+
 int
 TAO_Transport::queue_is_empty_i (void)
 {
   return (this->head_ == 0);
 }
+
+
 
 
 int
@@ -1090,21 +1041,15 @@ TAO_Transport::send_connection_closed_notifications (void)
 
 int
 TAO_Transport::send_message_shared_i (TAO_Stub *stub,
-                                      int message_semantics,
+                                      int is_synchronous,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
-  if (message_semantics == TAO_Transport::TAO_TWOWAY_REQUEST)
+  if (is_synchronous)
     {
       return this->send_synchronous_message_i (message_block,
                                                max_wait_time);
     }
-  else if (message_semantics == TAO_Transport::TAO_REPLY)
-    {
-      return this->send_reply_message_i (message_block,
-                                         max_wait_time);
-    }
-
 
   // Let's figure out if the message should be queued without trying
   // to send first:
@@ -1653,30 +1598,11 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
   // If the queue did not have a complete message put this piece of
   // message in the queue. We kow it did not have a complete
   // message. That is why we are here.
-  size_t n =
-    this->incoming_message_queue_.copy_tail (incoming);
-
-  if (TAO_debug_level > 6)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) TAO_Transport[%d]::consolidate_message_queue",
-                  "copied [%d] bytes to the tail \n",
-                  this->id (),
-                  n));
-    }
+  size_t n = this->incoming_message_queue_.copy_tail (incoming);
 
   // Update the missing data...
-  missing_data =
-    this->incoming_message_queue_.missing_data_tail ();
+  missing_data = this->incoming_message_queue_.missing_data_tail ();
 
-  if (TAO_debug_level > 6)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) TAO_Transport[%d]::consolidate_message_queue",
-                  "missing [%d] bytes in the tail messahe \n",
-                  this->id (),
-                  missing_data));
-    }
 
   // Move the read pointer of the <incoming> message block to the end
   // of the copied message  and process the remaining portion...
@@ -1747,24 +1673,12 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
       TAO_Queued_Data *qd =
         this->incoming_message_queue_.dequeue_tail ();
 
-      if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) TAO_Transport[%d]::consolidate_message_queue",
-                    " trying recv, again \n",
-                    this->id ()));
-
       // Try to do a read again. If we have some luck it would be
       // great..
       ssize_t n = this->recv (qd->msg_block_->wr_ptr (),
                               missing_data,
                               max_wait_time);
 
-      if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) TAO_Transport[%d]::consolidate_message_queue",
-                    " recv retval [%d] \n",
-                    this->id (),
-                    n));
       // Error...
       if (n < 0)
         return n;

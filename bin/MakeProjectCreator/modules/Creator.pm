@@ -151,12 +151,6 @@ sub parse_known {
             push(@parents, $parent);
           }
         }
-        if (!defined $parents[0]) {
-          ## The : was used, but no parents followed.  This
-          ## is an error.
-          $errorString = "ERROR: No parents listed";
-          $status = 0;
-        }
         $parents = \@parents;
       }
       push(@values, $type, $name, $parents);

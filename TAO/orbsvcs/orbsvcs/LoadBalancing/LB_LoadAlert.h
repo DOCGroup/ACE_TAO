@@ -26,7 +26,8 @@
 
 
 class TAO_LoadBalancing_Export TAO_LB_LoadAlert
-  : public virtual POA_CosLoadBalancing::LoadAlert
+  : public virtual POA_CosLoadBalancing::LoadAlert,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
 
@@ -42,7 +43,8 @@ public:
 
   /// Forward requests back to the load manager via the object group
   /// reference.
-  virtual void enable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void enable_alert (CORBA::Object object_group
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Stop forwarding requests, and begin accepting them again.
@@ -55,21 +57,26 @@ public:
   /// by the LoadManager.
   CORBA::Boolean alerted (void) const;
 
-protected:
+  CORBA::Object_ptr forward (void);
 
+protected:
 
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  //~TAO_LB_LoadAlert (void);
+  ~TAO_LB_LoadAlert (void);
 
 private:
 
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager?
   CORBA::Boolean alerted_;
+
+  /// Reference to the object which clients will be forwarded to if an
+  /// "alert" condition exists.
+  CORBA::Object_var forward_;
 
 };
 

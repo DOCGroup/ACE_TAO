@@ -1,4 +1,4 @@
-project : orbsvcsexe, core {
+project : orbsvcsexe {
   depends += CosNaming Svc_Utils IORTable PortableServer
   exename  = Naming_Service
   libs    += TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
@@ -9,7 +9,7 @@ project : orbsvcsexe, core {
   }
 }
 
-project(NT_Naming_Service) : orbsvcsexe, core {
+project(NT_Naming_Service) : orbsvcsexe {
   depends += CosNaming Svc_Utils IORTable PortableServer
   exename  = NT_Naming_Service
   libs    += TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer

@@ -93,20 +93,6 @@ TAO_PSDL_String::operator= (const ACE_CString & rhs)
     this->length_ = 0;
 }
 
-int
-TAO_PSDL_String::operator== (const TAO_PSDL_String &rhs) const
-{
-  return (ACE_OS::strcmp (buffer_, rhs.buffer_) == 0);
-
-}
-
-int
-TAO_PSDL_String::operator!= (const TAO_PSDL_String &rhs) const
-{
-  return (ACE_OS::strcmp (buffer_, rhs.buffer_) != 0);
-
-}
-
 u_long
 TAO_PSDL_String::hash (void) const
 {
@@ -117,7 +103,7 @@ TAO_PSDL_String::hash (void) const
 // (caller owns storage of return values)
 TAO_PSDL_String::operator ACE_CString *() const
 {
-  ACE_CString *str = 0;
+  ACE_CString *str;
 
   char * dest = str->rep ();
   const char * src = this->buffer_;
@@ -129,7 +115,7 @@ TAO_PSDL_String::operator ACE_CString *() const
 
 TAO_PSDL_String::operator ACE_CString *()
 {
-  ACE_CString *str = 0;
+  ACE_CString *str;
 
   char * dest = str->rep ();
   const char * src = this->buffer_;

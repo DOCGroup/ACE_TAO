@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./tests/RTCORBA/Linear_Priority/svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  Regular test -->
- <static id="RT_ORB_Loader" params="-ORBPriorityMapping linear"/>
- <!--  For testing of RT threads -->
- <!--  static RT_ORB_Loader "-ORBPriorityMapping linear -ORBSchedPolicy SCHED_RR -ORBScopePolicy SYSTEM" -->
-</ACE_Svc_Conf>

@@ -30,7 +30,7 @@
 
 #else	/* ! __cplusplus */
 
-#ifdef __STDC__
+#if __STDC__
 
 #define TAO_YY_USE_PROTOS
 #define TAO_YY_USE_CONST
@@ -790,7 +790,7 @@ static char *tao_yy_last_accepting_cpos;
 char tao_yytext[TAO_YYLMAX];
 char *tao_yytext_ptr;
 #define INITIAL 0
-/*  $Id: idl.ll,v 1.68 2002/07/23 02:51:14 parsons Exp $
+/*  $Id: idl.ll,v 1.67 2002/07/01 13:49:22 parsons Exp $
 
 COPYRIGHT
 
@@ -967,7 +967,7 @@ static int input TAO_YY_PROTO(( void ));
 #endif
 #endif
 
-#ifdef TAO_YY_STACK_USED
+#if TAO_YY_STACK_USED
 static int tao_yy_start_stack_ptr = 0;
 static int tao_yy_start_stack_depth = 0;
 static int *tao_yy_start_stack = 0;
@@ -990,7 +990,7 @@ static int tao_yy_top_state TAO_YY_PROTO(( void ));
 #ifdef TAO_YY_MALLOC_DECL
 TAO_YY_MALLOC_DECL
 #else
-#ifdef __STDC__
+#if __STDC__
 #ifndef __cplusplus
 #endif
 #else
@@ -1597,21 +1597,21 @@ TAO_YY_RULE_SETUP
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_tao_yytext);
 		}
-        break;
+   break;
 case 87:
 case 88:
 TAO_YY_RULE_SETUP
 {/* ignore file */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-	break;
+	TAO_YY_BREAK
 case 89:
 case 90:
 TAO_YY_RULE_SETUP
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
-	break;
+	TAO_YY_BREAK
 case 91:
 case 92:
 TAO_YY_RULE_SETUP
@@ -1647,7 +1647,7 @@ TAO_YY_RULE_SETUP
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-        break;
+	break;
 case 100:
 TAO_YY_RULE_SETUP
 {
@@ -2269,10 +2269,10 @@ FILE *file;
 	b->tao_yy_input_file = file;
 	b->tao_yy_fill_buffer = 1;
 
-#ifdef TAO_YY_ALWAYS_INTERACTIVE
+#if TAO_YY_ALWAYS_INTERACTIVE
 	b->tao_yy_is_interactive = 1;
 #else
-#ifdef TAO_YY_NEVER_INTERACTIVE
+#if TAO_YY_NEVER_INTERACTIVE
 	b->tao_yy_is_interactive = 0;
 #else
 	b->tao_yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
@@ -2563,7 +2563,7 @@ void *ptr;
 	free( ptr );
 	}
 
-#ifdef TAO_YY_MAIN
+#if TAO_YY_MAIN
 int main()
 	{
 	tao_yylex();
@@ -2698,16 +2698,11 @@ idl_parse_line_and_file (char *buf)
 
   idl_global->set_in_main_file (in_main_file);
 
-  // Strip off any command line -I prefix that may have been added
-  // by the preprocessor.
+  // If it's an import file store the stripped name for the BE to use
   if (!(idl_global->in_main_file ()) && idl_global->import ()) 
     {
-      ACE_NEW (
-          nm,
-          UTL_String (
-              idl_global->stripped_preproc_include (fname->get_string ())
-            )
-        );
+      ACE_NEW (nm,
+               UTL_String (stripped_name (fname)));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);

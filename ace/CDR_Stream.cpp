@@ -834,7 +834,7 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
 }
 
 ACE_CDR::Boolean
-ACE_InputCDR::read_string (ACE_CDR::Char *&x)
+ACE_InputCDR::read_string (char *&x)
 {
   // @@ This is a slight violation of "Optimize for the common case",
   // i.e. normally the translator will be 0, but OTOH the code is

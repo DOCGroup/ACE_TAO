@@ -57,15 +57,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   /// Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
   PortableServer::ThreadPolicyValue value_;
@@ -93,15 +88,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   /// Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
   PortableServer::LifespanPolicyValue value_;
@@ -127,15 +117,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   /// Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
   PortableServer::IdUniquenessPolicyValue value_;
@@ -161,15 +146,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   /// Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
   PortableServer::IdAssignmentPolicyValue value_;
@@ -197,15 +177,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   /// Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
   PortableServer::ImplicitActivationPolicyValue value_;
@@ -231,15 +206,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   /// Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
   PortableServer::ServantRetentionPolicyValue value_;
@@ -265,15 +235,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   /// Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
   PortableServer::RequestProcessingPolicyValue value_;

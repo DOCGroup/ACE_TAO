@@ -507,16 +507,11 @@ idl_parse_line_and_file (char *buf)
 
   idl_global->set_in_main_file (in_main_file);
 
-  // Strip off any command line -I prefix that may have been added
-  // by the preprocessor.
+  // If it's an import file store the stripped name for the BE to use
   if (!(idl_global->in_main_file ()) && idl_global->import ()) 
     {
-      ACE_NEW (
-          nm,
-          UTL_String (
-              idl_global->stripped_preproc_include (fname->get_string ())
-            )
-        );
+      ACE_NEW (nm,
+               UTL_String (stripped_name (fname)));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);

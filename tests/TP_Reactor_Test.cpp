@@ -75,7 +75,7 @@ static int both = 0;
 static const ACE_TCHAR *host = 0;
 
 // number of Senders instances
-static int senders = 1;
+static size_t senders = 1;
 
 // duplex mode: == 0 half-duplex
 //              != 0 full duplex
@@ -92,7 +92,7 @@ static int loglevel = 1; // 0 full , 1 only errors
 
 static const size_t MIN_TIME = 1;    // min 1 sec
 static const size_t MAX_TIME = 3600; // max 1 hour
-static u_int seconds = 2;  // default time to run - 2 seconds
+static size_t seconds = 2;  // default time to run - 2 seconds
 
 static char data[] =
   "GET / HTTP/1.1\r\n"
@@ -133,7 +133,7 @@ public:
 
   virtual int svc (void);
 
-  int start (int num_threads);
+  int start (size_t num_threads);
   int stop (void);
 
 private:
@@ -193,7 +193,7 @@ MyTask::delete_reactor (void)
 }
 
 int
-MyTask::start (int num_threads)
+MyTask::start (size_t num_threads)
 {
   if (this->create_reactor () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -295,7 +295,7 @@ Acceptor::on_new_receiver (Receiver &rcvr)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
   this->sessions_++;
-  this->list_receivers_[rcvr.index_] = & rcvr;
+  this->list_receivers_[ rcvr.index_] = & rcvr;
   ACE_DEBUG ((LM_DEBUG,
               "Receiver::CTOR sessions_=%d\n",
               this->sessions_));
@@ -371,7 +371,7 @@ Acceptor::make_svc_handler (Receiver *&sh)
 
 // *************************************************************
 
-Receiver::Receiver (Acceptor * acceptor, size_t index)
+Receiver::Receiver (Acceptor * acceptor, int index)
   : acceptor_ (acceptor),
     index_ (index),
     flg_mask_ (ACE_Event_Handler::NULL_MASK),
@@ -565,7 +565,7 @@ Receiver::handle_output (ACE_HANDLE h)
 
   int     err = 0;
   ssize_t res = 0;
-  size_t  bytes = 0;
+  int     bytes = 0;
 
   int     qcount = this->getq (mb, &tv);
 
@@ -750,7 +750,7 @@ Connector::make_svc_handler (Sender * & sh)
 
 // *************************************************************
 
-Sender::Sender (Connector* connector, size_t index)
+Sender::Sender (Connector* connector, int index)
   : connector_ (connector),
     index_ (index),
     flg_mask_ (ACE_Event_Handler::NULL_MASK),
@@ -822,7 +822,7 @@ Sender::initiate_write (void)
 {
   if ( this->msg_queue ()->message_count () < 20) // flow control
     {
-      size_t nbytes = ACE_OS_String::strlen (send_buf_);
+      int nbytes = ACE_OS::strlen (send_buf_);
 
       ACE_Message_Block *mb = 0;
       ACE_NEW_RETURN (mb,
@@ -964,7 +964,7 @@ Sender::handle_output (ACE_HANDLE h)
 
   int     err=0;
   ssize_t res=0;
-  size_t  bytes=0;
+  int     bytes=0;
 
   int     qcount = this->getq (mb , & tv);
 
@@ -1097,7 +1097,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 's':     // number of senders
           senders = ACE_OS::atoi (get_opt.optarg);
-          if (size_t (senders) > MAX_SENDERS)
+          if (senders > MAX_SENDERS)
             senders = MAX_SENDERS;
           break;
         case 'u':

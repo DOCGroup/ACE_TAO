@@ -419,15 +419,13 @@ ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
   if (s == 0)
     return 0;
   int l_sub = ACE_OS_String::strlen (s);
-  if (s + l_sub < *lasts + l_org)
-    *lasts = s + l_sub + 1;
-  else
-    *lasts = s + l_sub;
+  *lasts = s + l_sub;
+  if (l_sub != l_org)
+    *lasts += 1;
   return s ;
 }
-#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
-# if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOK)
+# if defined (ACE_HAS_WCHAR)
 wchar_t*
 ACE_OS_String::strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts)
 {
@@ -442,13 +440,13 @@ ACE_OS_String::strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, AC
   if (s == 0)
     return 0;
   int l_sub = ACE_OS_String::strlen (s);
-  if (s + l_sub < *lasts + l_org)
-    *lasts = s + l_sub + 1;
-  else
-    *lasts = s + l_sub;
+  *lasts = s + l_sub;
+  if (l_sub != l_org)
+    *lasts += 1;
   return s ;
 }
-# endif  /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOK */
+# endif  // ACE_HAS_WCHAR
+#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
 #if !defined (ACE_HAS_MEMCHR)
 const void *
@@ -967,18 +965,18 @@ ACE_OS_String::strtoul_emulation (const char *nptr,
   /*
    * See strtol for comments as to the logic used.
    */
-  do
+  do 
     c = *s++;
   while (isspace(c));
-  if (c == '-')
+  if (c == '-') 
     {
       neg = 1;
       c = *s++;
-    }
+    } 
   else if (c == '+')
     c = *s++;
   if ((base == 0 || base == 16) &&
-      c == '0' && (*s == 'x' || *s == 'X'))
+      c == '0' && (*s == 'x' || *s == 'X')) 
     {
       c = s[1];
       s += 2;
@@ -989,7 +987,7 @@ ACE_OS_String::strtoul_emulation (const char *nptr,
   cutoff = (unsigned long) ULONG_MAX / (unsigned long) base;
   cutlim = (unsigned long) ULONG_MAX % (unsigned long) base;
 
-  for (acc = 0, any = 0;; c = *s++)
+  for (acc = 0, any = 0;; c = *s++) 
     {
       if (isdigit(c))
         c -= '0';
@@ -1001,14 +999,14 @@ ACE_OS_String::strtoul_emulation (const char *nptr,
         break;
       if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
         any = -1;
-      else
+      else 
         {
           any = 1;
           acc *= base;
           acc += c;
         }
     }
-  if (any < 0)
+  if (any < 0) 
     {
       acc = ULONG_MAX;
       errno = ERANGE;

@@ -48,6 +48,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Servant_Activator.o .obj/Servant_Activator.so .shobj/Servant_Activator.o .shobj/Servant_Activator.so: Servant_Activator.cpp Servant_Activator.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -231,9 +233,9 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- ../Generic_Servant/test_i.h ../Generic_Servant/testS.h \
- ../Generic_Servant/testC.h ../Generic_Servant/generic_servant_export.h \
- ../Generic_Servant/testC.i \
+ ../Generic_Servant/MyFooServant.h ../Generic_Servant/FooS.h \
+ ../Generic_Servant/FooC.h ../Generic_Servant/generic_servant_export.h \
+ ../Generic_Servant/FooC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -244,12 +246,14 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- ../Generic_Servant/testS_T.h ../Generic_Servant/testS_T.i \
- ../Generic_Servant/testS_T.cpp ../Generic_Servant/testS.i
+ ../Generic_Servant/FooS_T.h ../Generic_Servant/FooS_T.i \
+ ../Generic_Servant/FooS_T.cpp ../Generic_Servant/FooS.i
 
 .obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: Servant_Locator.cpp Servant_Locator.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -433,9 +437,9 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- ../Generic_Servant/test_i.h ../Generic_Servant/testS.h \
- ../Generic_Servant/testC.h ../Generic_Servant/generic_servant_export.h \
- ../Generic_Servant/testC.i \
+ ../Generic_Servant/MyFooServant.h ../Generic_Servant/FooS.h \
+ ../Generic_Servant/FooC.h ../Generic_Servant/generic_servant_export.h \
+ ../Generic_Servant/FooC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -446,11 +450,14 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- ../Generic_Servant/testS_T.h ../Generic_Servant/testS_T.i \
- ../Generic_Servant/testS_T.cpp ../Generic_Servant/testS.i
+ ../Generic_Servant/FooS_T.h ../Generic_Servant/FooS_T.i \
+ ../Generic_Servant/FooS_T.cpp ../Generic_Servant/FooS.i
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/streams.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -552,7 +559,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.i Servant_Activator.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ Servant_Activator.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \

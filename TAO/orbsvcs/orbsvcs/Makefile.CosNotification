@@ -154,7 +154,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -408,7 +409,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_QoSAdmin_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_QoSAdmin_i.h \
  TimeBaseC.h \
  svc_utils_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -467,7 +469,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -714,7 +717,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyChannelAdminS_T.i \
  CosNotifyChannelAdminS_T.cpp \
  CosNotifyChannelAdminS.i \
- Notify/Notify_ID_Pool_T.h $(ACE_ROOT)/ace/Containers_T.h \
+ Notify/Notify_ID_Pool_T.h \
+ $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Array_Base.h \
@@ -749,7 +753,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_ConsumerAdmin_i.h Notify/Notify_Listeners.h \
  Notify/Notify_Event_Manager.h Notify/Notify_Event_Manager.i \
  Notify/Notify_Event_Map.h Notify/Notify_Event_Map.i \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -820,7 +825,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1026,7 +1032,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyChannelAdminS_T.i \
  CosNotifyChannelAdminS_T.cpp \
  CosNotifyChannelAdminS.i \
- Notify/Notify_ID_Pool_T.h $(ACE_ROOT)/ace/Containers_T.h \
+ Notify/Notify_ID_Pool_T.h \
+ $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Array_Base.h \
@@ -1056,7 +1063,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.i \
  Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
  Notify/Notify_FilterAdmin_i.h Notify/Notify_Event.h \
- Notify/Notify_Event.i $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Notify/Notify_Event.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1087,8 +1095,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Listeners.h \
- Notify/Notify_Collection.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Listeners.h Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -1099,7 +1107,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Proxy_T.h Notify/Notify_Proxy_T.cpp \
  Notify/Notify_Event_Manager.h Notify/Notify_Event_Manager.i \
  Notify/Notify_Event_Map.h Notify/Notify_Event_Map.i \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -1177,7 +1186,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1383,7 +1393,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyChannelAdminS_T.i \
  CosNotifyChannelAdminS_T.cpp \
  CosNotifyChannelAdminS.i \
- Notify/Notify_ID_Pool_T.h $(ACE_ROOT)/ace/Containers_T.h \
+ Notify/Notify_ID_Pool_T.h \
+ $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Array_Base.h \
@@ -1413,7 +1424,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  TimeBaseC.i \
  Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
  Notify/Notify_FilterAdmin_i.h Notify/Notify_Event.h \
- Notify/Notify_Event.i $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Notify/Notify_Event.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1457,7 +1469,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -1500,9 +1513,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_EventChannel_i.h Notify/Notify_POA_Factory.h
 
 .obj/Notify_ProxyPushSupplier_i.o .obj/Notify_ProxyPushSupplier_i.so .shobj/Notify_ProxyPushSupplier_i.o .shobj/Notify_ProxyPushSupplier_i.so: Notify/Notify_ProxyPushSupplier_i.cpp \
- Notify/Notify_ProxyPushSupplier_i.h $(ACE_ROOT)/ace/pre.h \
- Notify/Notify_ProxySupplier_T.h Notify/Notify_Proxy_T.h \
- $(ACE_ROOT)/ace/Containers_T.h \
+ Notify/Notify_ProxyPushSupplier_i.h \
+ $(ACE_ROOT)/ace/pre.h Notify/Notify_ProxySupplier_T.h \
+ Notify/Notify_Proxy_T.h $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1532,7 +1545,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1801,9 +1815,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Listeners.h \
- Notify/Notify_Proxy_T.cpp Notify/Notify_Event_Manager.h \
- Notify/Notify_Collection.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
+ Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -1812,7 +1826,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -1887,7 +1902,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2156,9 +2172,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Listeners.h \
- Notify/Notify_Proxy_T.cpp Notify/Notify_Event_Manager.h \
- Notify/Notify_Collection.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
+ Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -2167,7 +2183,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -2241,7 +2258,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2510,9 +2528,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Listeners.h \
- Notify/Notify_Proxy_T.cpp Notify/Notify_Event_Manager.h \
- Notify/Notify_Collection.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
+ Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -2521,7 +2539,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -2591,7 +2610,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -2616,9 +2637,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i
 
 .obj/Notify_ProxyPushConsumer_i.o .obj/Notify_ProxyPushConsumer_i.so .shobj/Notify_ProxyPushConsumer_i.o .shobj/Notify_ProxyPushConsumer_i.so: Notify/Notify_ProxyPushConsumer_i.cpp \
- Notify/Notify_ProxyPushConsumer_i.h $(ACE_ROOT)/ace/pre.h \
- Notify/Notify_ProxyConsumer_T.h Notify/Notify_Proxy_T.h \
- $(ACE_ROOT)/ace/Containers_T.h \
+ Notify/Notify_ProxyPushConsumer_i.h \
+ $(ACE_ROOT)/ace/pre.h Notify/Notify_ProxyConsumer_T.h \
+ Notify/Notify_Proxy_T.h $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2648,7 +2669,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2917,9 +2939,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Listeners.h \
- Notify/Notify_Proxy_T.cpp Notify/Notify_Event_Manager.h \
- Notify/Notify_Collection.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
+ Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -2928,7 +2950,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -3003,7 +3026,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3272,9 +3296,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Listeners.h \
- Notify/Notify_Proxy_T.cpp Notify/Notify_Event_Manager.h \
- Notify/Notify_Collection.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
+ Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -3283,7 +3307,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -3357,7 +3382,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3626,9 +3652,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Listeners.h \
- Notify/Notify_Proxy_T.cpp Notify/Notify_Event_Manager.h \
- Notify/Notify_Collection.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
+ Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
  ESF/ESF_Worker.h \
  ESF/ESF_Worker.i \
  ESF/ESF_Worker.cpp \
@@ -3637,7 +3663,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -3704,7 +3731,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -3991,7 +4019,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -4009,7 +4038,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -4302,7 +4332,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4499,7 +4530,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ETCL/etcl_export.h \
  ETCL/ETCL_Constraint.h \
  ETCL/ETCL_Constraint.inl \
- Notify/Notify_ID_Pool_T.h $(ACE_ROOT)/ace/Containers_T.h \
+ Notify/Notify_ID_Pool_T.h \
+ $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Array_Base.h \
@@ -4586,7 +4618,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4773,7 +4806,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -4791,7 +4825,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -4992,7 +5027,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ETCL/ETCL_Constraint_Visitor.h
 
 .obj/Notify_Constraint_Visitors.o .obj/Notify_Constraint_Visitors.so .shobj/Notify_Constraint_Visitors.o .shobj/Notify_Constraint_Visitors.so: Notify/Notify_Constraint_Visitors.cpp \
- Notify/Notify_Constraint_Visitors.h $(ACE_ROOT)/ace/pre.h \
+ Notify/Notify_Constraint_Visitors.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5000,7 +5036,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -5020,7 +5057,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -5265,7 +5303,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5478,7 +5517,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5658,7 +5698,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterC.i \
  Notify/Notify_Event.i \
  Notify/notify_export.h Notify/Notify_QoSAdmin_i.h \
- Notify/Notify_QoSAdmin_i.inl $(TAO_ROOT)/tao/debug.h
+ Notify/Notify_QoSAdmin_i.inl \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/Notify_Collection.o .obj/Notify_Collection.so .shobj/Notify_Collection.o .shobj/Notify_Collection.so: Notify/Notify_Collection.cpp \
  Notify/Notify_Collection.h $(ACE_ROOT)/ace/pre.h \
@@ -5691,7 +5732,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5907,7 +5949,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6126,7 +6169,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Event_Map.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Event_Map.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -6134,8 +6178,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp Notify/Notify_Factory.h \
- Notify/Notify_Event_Manager_Objects_Factory.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ Notify/Notify_Factory.h Notify/Notify_Event_Manager_Objects_Factory.h \
  Notify/Notify_Collection_Factory.h
 
 .obj/Notify_Event_Manager.o .obj/Notify_Event_Manager.so .shobj/Notify_Event_Manager.o .shobj/Notify_Event_Manager.so: Notify/Notify_Event_Manager.cpp \
@@ -6169,7 +6213,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6390,7 +6435,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Event_Map.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Event_Map.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -6399,7 +6445,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -6518,7 +6565,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6780,7 +6828,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Event_Map.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Event_Map.i \
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
@@ -6820,7 +6869,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -7081,7 +7131,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7311,7 +7362,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Stream.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp
 
@@ -7346,7 +7398,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7566,7 +7619,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h Notify/Notify_Event_Map.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ Notify/Notify_Event_Map.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -7575,7 +7629,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -7645,7 +7700,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7908,7 +7964,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8092,7 +8149,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
  Notify/Notify_Event.i Notify/Notify_Listeners.h \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -8168,7 +8226,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8367,8 +8426,12 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
+ Notify/Notify_Factory.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -8376,8 +8439,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS_String.inl \
  $(ACE_ROOT)/ace/OS_Memory.h \
  $(ACE_ROOT)/ace/OS_Memory.inl \
@@ -8389,17 +8450,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i Notify/Notify_Factory.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8456,6 +8508,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Malloc_T.i \
  $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Mem_Map.h \
@@ -8550,6 +8604,12 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Notify/notify_export.h Notify/Notify_Default_CO_Factory.h \
  Notify/Notify_Channel_Objects_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/DLL.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
@@ -8619,7 +8679,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
 .obj/Notify_Default_CO_Factory.o .obj/Notify_Default_CO_Factory.so .shobj/Notify_Default_CO_Factory.o .shobj/Notify_Default_CO_Factory.so: Notify/Notify_Default_CO_Factory.cpp \
- Notify/Notify_Default_CO_Factory.h $(ACE_ROOT)/ace/pre.h \
+ Notify/Notify_Default_CO_Factory.h \
+ $(ACE_ROOT)/ace/pre.h \
  Notify/Notify_Channel_Objects_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -8647,7 +8708,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -8806,7 +8868,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Notify/notify_export.h $(ACE_ROOT)/ace/Service_Config.h \
+ Notify/notify_export.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/XML_Svc_Conf.h \
@@ -8931,7 +8994,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -8980,8 +9044,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_ProxyPushConsumer_i.h
 
 .obj/Notify_Default_POA_Factory.o .obj/Notify_Default_POA_Factory.so .shobj/Notify_Default_POA_Factory.o .shobj/Notify_Default_POA_Factory.so: Notify/Notify_Default_POA_Factory.cpp \
- Notify/Notify_Default_POA_Factory.h $(ACE_ROOT)/ace/pre.h \
- Notify/Notify_POA_Factory.h \
+ Notify/Notify_Default_POA_Factory.h \
+ $(ACE_ROOT)/ace/pre.h Notify/Notify_POA_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -9008,7 +9072,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -9028,7 +9093,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -9220,7 +9286,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -9453,7 +9520,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Factory.h
 
 .obj/Notify_Default_EMO_Factory.o .obj/Notify_Default_EMO_Factory.so .shobj/Notify_Default_EMO_Factory.o .shobj/Notify_Default_EMO_Factory.so: Notify/Notify_Default_EMO_Factory.cpp \
- Notify/Notify_Default_EMO_Factory.h $(ACE_ROOT)/ace/pre.h \
+ Notify/Notify_Default_EMO_Factory.h \
+ $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9481,7 +9549,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -9710,7 +9779,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Notify/Notify_Event_Map.i $(ACE_ROOT)/ace/Containers_T.h \
+ Notify/Notify_Event_Map.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Array_Base.h \
@@ -9721,7 +9791,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
  ESF/ESF_Proxy_Collection.cpp \
- Notify/Notify_Event_Processor.h $(ACE_ROOT)/ace/Module.h \
+ Notify/Notify_Event_Processor.h \
+ $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -9788,7 +9859,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9949,7 +10021,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Signal_Property_T.cpp Notify/Notify_AdminProperties.i
 
 .obj/Notify_Buffering_Strategy.o .obj/Notify_Buffering_Strategy.so .shobj/Notify_Buffering_Strategy.o .shobj/Notify_Buffering_Strategy.so: Notify/Notify_Buffering_Strategy.cpp \
- Notify/Notify_Buffering_Strategy.h $(ACE_ROOT)/ace/pre.h \
+ Notify/Notify_Buffering_Strategy.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -9978,7 +10051,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10164,8 +10238,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Notification_Strategy.h \
  $(ACE_ROOT)/ace/Notification_Strategy.inl \
- $(ACE_ROOT)/ace/Message_Queue.i Notify/Notify_Command.h \
- Notify/Notify_Command.i Notify/Notify_Event.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ Notify/Notify_Command.h Notify/Notify_Command.i Notify/Notify_Event.h \
  CosNotifyFilterC.h \
  CosNotifyCommC.h \
  CosEventCommC.h \
@@ -10204,7 +10278,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -10295,7 +10370,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- Notify/Notify_Worker_Task.h $(TAO_ROOT)/tao/corba.h \
+ Notify/Notify_Worker_Task.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -10465,7 +10541,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10680,7 +10757,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10863,7 +10941,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11033,7 +11112,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -11201,7 +11282,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11384,7 +11466,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyChannelAdminS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -11551,7 +11635,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11725,7 +11810,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -11863,8 +11950,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/CosNotifyFilterS.o .obj/CosNotifyFilterS.so .shobj/CosNotifyFilterS.o .shobj/CosNotifyFilterS.so: CosNotifyFilterS.cpp CosNotifyFilterS.h \
- $(ACE_ROOT)/ace/pre.h CosNotifyCommS.h CosNotificationS.h \
- CosNotificationC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h CosNotifyCommS.h \
+ CosNotificationS.h CosNotificationC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11892,7 +11980,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -12068,7 +12157,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp CosNotifyFilterS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -12235,7 +12326,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -12405,7 +12497,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosEventCommS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -12573,7 +12667,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -12745,7 +12840,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -12912,7 +13009,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -13208,7 +13306,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -13507,7 +13606,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -13804,7 +13904,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -14102,7 +14203,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -14398,7 +14500,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \

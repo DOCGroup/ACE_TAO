@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file FT_Invocation_Endpoint_Selectors.h
+ *  @file   Invocation_Endpoint_Selectors.h
  *
  *  $Id$
  *

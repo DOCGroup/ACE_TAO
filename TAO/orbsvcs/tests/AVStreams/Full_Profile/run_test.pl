@@ -18,7 +18,6 @@ $testfile = PerlACE::LocalFile ("test");
 $makefile = PerlACE::LocalFile ("Makefile");
 
 unlink $nsior;
-unlink $testfile;
 
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
 $SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $testfile");

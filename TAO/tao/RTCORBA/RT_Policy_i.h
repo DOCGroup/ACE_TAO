@@ -64,37 +64,32 @@ public:
    */
   RTCORBA::PriorityModel get_priority_model (void);
 
-  RTCORBA::PriorityModel priority_model (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTCORBA::PriorityModel priority_model (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  RTCORBA::Priority server_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTCORBA::Priority server_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of the object state.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
 
@@ -134,28 +129,23 @@ public:
   /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
 
-  RTCORBA::ThreadpoolId threadpool (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTCORBA::ThreadpoolId threadpool (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
 
@@ -191,25 +181,17 @@ public:
   /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
-
-  // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
 protected:
 
@@ -241,7 +223,8 @@ public:
   TAO_PriorityBandedConnectionPolicy (const RTCORBA::PriorityBands &bands);
 
   /// Copy constructor.
-  TAO_PriorityBandedConnectionPolicy (const TAO_PriorityBandedConnectionPolicy &rhs);
+  TAO_PriorityBandedConnectionPolicy (const
+                                      TAO_PriorityBandedConnectionPolicy &rhs);
 
   /**
    * Accessor to the underlying priority bands of the policy (does not
@@ -250,34 +233,30 @@ public:
    */
   RTCORBA::PriorityBands &priority_bands_rep (void);
 
-  RTCORBA::PriorityBands *priority_bands (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTCORBA::PriorityBands * priority_bands
+                                    (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of the current object.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
 
@@ -324,36 +303,30 @@ public:
    */
   RTCORBA::ProtocolList & protocols_rep (void);
 
-  RTCORBA::ProtocolList *protocols
-  (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTCORBA::ProtocolList * protocols
+                                     (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static int hook (TAO_ORB_Core *orb_core,
                    int &send_buffer_size,
                    int &recv_buffer_size,
                    int &no_delay,
-                   int &enable_network_priority,
                    const char *protocol_type);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
 
@@ -395,44 +368,38 @@ public:
    */
   RTCORBA::ProtocolList & protocols_rep (void);
 
-  RTCORBA::ProtocolList *protocols
-  (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTCORBA::ProtocolList * protocols
+                                   (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static int hook (TAO_ORB_Core *orb_core,
                    int &send_buffer_size,
                    int &recv_buffer_size,
                    int &no_delay,
-                   int &enable_network_priority,
                    const char* protocol_type);
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = CDR Encoder/Decoder.
 
   /// This method writes a CDR representation of the current object.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
-
-  /// Helper method for the implementation of
-  /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
 
@@ -471,57 +438,49 @@ public:
                       ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                       CORBA::Boolean keep_alive = 1,
                       CORBA::Boolean dont_route = 0,
-                      CORBA::Boolean no_delay = 1,
-                      CORBA::Boolean enable_network_priority = 0);
+                      CORBA::Boolean no_delay = 1);
 
-  CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
+  virtual void send_buffer_size (CORBA::Long send_buffer_size
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void recv_buffer_size (CORBA::Long recv_buffer_size
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Boolean keep_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void keep_alive (CORBA::Boolean keep_alive
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Boolean dont_route (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void dont_route (CORBA::Boolean dont_route
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Boolean no_delay (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void no_delay (CORBA::Boolean no_delay
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Boolean keep_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void keep_alive (CORBA::Boolean keep_alive
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Boolean dont_route (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void dont_route (CORBA::Boolean dont_route
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Boolean no_delay (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void no_delay (CORBA::Boolean no_delay
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   /// This method writes a CDR representation of TCPProtocolProperties.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-
-  CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void enable_network_priority (CORBA::Boolean enable
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 protected:
 
@@ -537,7 +496,6 @@ private:
   CORBA::Boolean keep_alive_;
   CORBA::Boolean dont_route_;
   CORBA::Boolean no_delay_;
-  CORBA::Boolean enable_network_priority_;
 };
 
 //*************************************************************************
@@ -557,21 +515,23 @@ class TAO_RTCORBA_Export TAO_Unix_Domain_Properties
 public:
 
   /// Constructor
-  TAO_Unix_Domain_Properties (CORBA::Long send_buffer_size = ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                              CORBA::Long recv_buffer_size = ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
+  TAO_Unix_Domain_Properties (CORBA::Long send_buffer_size =
+                              ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
+                              CORBA::Long recv_buffer_size =
+                              ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
 
-  CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_buffer_size (CORBA::Long send_buffer_size
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void recv_buffer_size (CORBA::Long recv_buffer_size
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -582,7 +542,7 @@ public:
    * according to the order of declaration (i.e. first is encoded
    * send_buffer_size and then recv_buffer_size).
    */
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 
   /**
    * This method reads an instance of UnixDomainProperties from
@@ -591,7 +551,7 @@ public:
    * RT CORBA Spec. The current implementation expect the field
    * according to the order of declaration.
    */
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 protected:
 
@@ -626,25 +586,26 @@ public:
 
   // = IDL interface methods.
 
-  CORBA::Long preallocate_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long preallocate_buffer_size
+                                   (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void preallocate_buffer_size (CORBA::Long preallocate_buffer_size
+                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char *mmap_filename (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * mmap_filename (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void mmap_filename (const char *mmap_filename
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void mmap_filename (const char * mmap_filename
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char *mmap_lockname (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * mmap_lockname (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void mmap_lockname (const char *mmap_lockname
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void mmap_lockname (const char * mmap_lockname
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -654,7 +615,7 @@ public:
    * RT CORBA Spec. The current implementation encodes the field
    * according to the order of declaration.
    */
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 
   /**
    * This method reads an instance of SMEMProperties from
@@ -663,7 +624,7 @@ public:
    * RT CORBA Spec. The current implementation expect the field
    * according to the order of declaration.
    */
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 protected:
 
@@ -688,8 +649,10 @@ class TAO_RTCORBA_Export TAO_GIOP_Properties
 public:
 
   // = CDR encoding methods
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 protected:
 
@@ -714,7 +677,8 @@ public:
    * properties: one describes the transport protocol and the other
    * describes the ORB messaging protocol.
    */
-  static RTCORBA::ProtocolProperties *create_transport_protocol_property (IOP::ProfileId id);
+  static RTCORBA::ProtocolProperties*
+  create_transport_protocol_property (IOP::ProfileId id);
 
   /**
    * Creates the proper orb ProtocolProperties subclass for
@@ -723,7 +687,8 @@ public:
    * properties: one describes the transport protocol and the other
    * describes the ORB messaging protocol.
    */
-  static RTCORBA::ProtocolProperties*create_orb_protocol_property (IOP::ProfileId id);
+  static RTCORBA::ProtocolProperties*
+  create_orb_protocol_property (IOP::ProfileId id);
 
 protected:
   TAO_Protocol_Properties_Factory (void);

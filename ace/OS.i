@@ -834,9 +834,9 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
-#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && !defined(ACE_USES_WCHAR)) || defined (__IBMCPP__)))
+#elif (defined (__BORLANDC__) && !defined(ACE_USES_WCHAR)) || (defined (ACE_WIN32) && defined (__IBMCPP__))
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
-#elif defined(ACE_WIN32) && defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wtempnam ((wchar_t*) dir, (wchar_t*) pfx), wchar_t *, 0);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
@@ -2860,10 +2860,10 @@ ACE_OS::mmap (void *addr,
   char name [128];
   sprintf (name, "%d", file_handle);
 
-  // Assumes that this was called by ACE_Mem_Map, so &file_mapping !=
-  // 0.  Otherwise, we don't support the incomplete LynxOS mmap
-  // implementation.  We do support it by creating a hidden shared
-  // memory object, and using that for the mapping.
+  // Assumes that this was called by ACE_Mem_Map, so &file_mapping != 0.
+  // Otherwise, we don't support the incomplete LynxOS mmap implementation.
+  // We do support it by creating a hidden shared memory object, and using
+  // that for the mapping.
   int shm_handle;
   if (! file_mapping)
     file_mapping = &shm_handle;
@@ -8471,9 +8471,6 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
-// Magic number declaration and definition for ctime and ctime_r ()
-static int ctime_buf_size = 26;
-
 ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime (const time_t *t)
 {
@@ -8483,10 +8480,8 @@ ACE_OS::ctime (const time_t *t)
 #elif defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   return "ctime-return";
 #elif defined (ACE_HAS_WINCE)
-  static ACE_TCHAR buf [ctime_buf_size];
-  return ACE_OS::ctime_r (t,
-                          buf,
-                          ctime_buf_size);
+  static ACE_TCHAR buf[26];              // 26 is a "magic number" ;)
+  return ACE_OS::ctime_r (t, buf, 26);
 #elif defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
 #else
@@ -8498,20 +8493,19 @@ ACE_OS::ctime (const time_t *t)
 ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 {
-ACE_OS_TRACE ("ACE_OS::ctime_r");
-
+  ACE_OS_TRACE ("ACE_OS::ctime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
-  ACE_TCHAR *result ;
-  ACE_TCHAR result_buf[ctime_buf_size];
-
+  ACE_TCHAR *result;
 #      if defined (DIGITAL_UNIX)
-  ACE_OSCALL (::_Pctime_r (t, result_buf), ACE_TCHAR *, 0, result);
+  ACE_OSCALL (::_Pctime_r (t, buf), ACE_TCHAR *, 0, result);
 #      else /* DIGITAL_UNIX */
-  ACE_OSCALL (::ctime_r (t, result_buf), ACE_TCHAR *, 0, result);
+  ACE_OSCALL (::ctime_r (t, buf), ACE_TCHAR *, 0, result);
 #      endif /* DIGITAL_UNIX */
   if (result != 0)
-    ACE_OS::strsncpy (buf, result, buflen);
+    // This needs to be <ACE_OS::strncpy> rather than
+    // <ACE_OS::strsncpy> to avoid problems on certain platforms.
+    ACE_OS::strncpy (buf, result, buflen);
   return buf;
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
@@ -8523,8 +8517,8 @@ ACE_OS_TRACE ("ACE_OS::ctime_r");
 
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #else /* ACE_HAS_REENTRANT_FUNCTIONS */
-#   if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-    ACE_OS::strsncpy(buf, "ctime-return", buflen);
+#   if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+    ACE_OS::strsncpy (buf, "ctime-return", buflen);
     return buf;
 #   else /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
 
@@ -8532,10 +8526,12 @@ ACE_OS_TRACE ("ACE_OS::ctime_r");
 #     if defined (ACE_USES_WCHAR)
   ACE_OSCALL (::_wctime (t), wchar_t *, 0, result);
 #     else /* ACE_WIN32 */
-ACE_OSCALL (::ctime (t), char *, 0, result);
+  ACE_OSCALL (::ctime (t), char *, 0, result);
 #     endif /* ACE_WIN32 */
   if (result != 0)
-    ACE_OS::strsncpy (buf, result, buflen);
+    // This needs to be <ACE_OS::strncpy> rather than
+    // <ACE_OS::strsncpy> to avoid problems on certain platforms.
+    ACE_OS::strncpy (buf, result, buflen);
   return buf;
 #   endif /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
@@ -9750,34 +9746,6 @@ ACE_OS::fsetpos (FILE* fp, fpos_t* pos)
 {
   ACE_OSCALL_RETURN (::fsetpos (fp, pos), int, -1);
 }
-
-ACE_INLINE int
-ACE_OS::fgetc (FILE* fp)
-{
-  ACE_OSCALL_RETURN (::fgetc (fp), int, -1);
-}
-
-ACE_INLINE void
-ACE_OS::clearerr (FILE* fp)
-{
-  ::clearerr(fp);
-}
-
-#if defined (ACE_HAS_WCHAR)
-
-ACE_INLINE wint_t
-ACE_OS::fgetwc (FILE* fp)
-{
-  ACE_OSCALL_RETURN (::fgetwc (fp), wint_t, WEOF);
-}
-
-ACE_INLINE wint_t
-ACE_OS::ungetwc (wint_t c, FILE* fp)
-{
-  ACE_OSCALL_RETURN (::ungetwc (c, fp), wint_t, WEOF);
-}
-
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE pid_t
 ACE_OS::waitpid (pid_t pid,

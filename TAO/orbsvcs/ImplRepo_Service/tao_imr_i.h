@@ -20,7 +20,10 @@
 #include "tao/PortableServer/ImplRepoC.h"
 #include "tao/corba.h"
 
-// Forward Declaration
+/**
+ * @class TAO_IMR_Op;
+ Forward Declaration
+ */
 class TAO_IMR_Op;
 
 /**
@@ -53,7 +56,7 @@ private:
   /// # of arguments on the command line.
   int argc_;
 
-  /// Arguments from command line.
+  /// arguments from command line.
   ACE_TCHAR **argv_;
 
   /// Remember our orb.

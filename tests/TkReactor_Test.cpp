@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -24,9 +27,7 @@
 
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           TkReactor_Test,
-           "$Id$")
+ACE_RCSID(tests, TkReactor_Test, "$Id$")
 
 #if !defined (ACE_HAS_TK)
 
@@ -156,7 +157,7 @@ inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
            count1++,
            count2,
            count3);
-
+  char command [BUFSIZ];
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   // eval (command);
   char *varValue = Tcl_SetVar (interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
@@ -180,6 +181,7 @@ inc_tmo (ClientData client_data)
            count2++,
            count3);
 
+  char command [BUFSIZ];
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   //  eval (command);
   char *varValue = Tcl_SetVar (tcl_interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
@@ -203,7 +205,7 @@ public:
              count1,
              count2,
              count3++);
-
+    char command [BUFSIZ];
     //    sprintf (command,"set %s %s",(char *)arg,new_string);
     //    eval (command);
     char *varValue = Tcl_SetVar (tcl_interp,(char *)arg,new_string,TCL_LEAVE_ERR_MSG);
@@ -263,7 +265,7 @@ init (Tcl_Interp *interp)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("TkReactor_Test"));
 
@@ -281,8 +283,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR, "Tk_Reactor_Test: %s\n", tcl_interp->result),1);
     }
 
-  char tcl_cmd[] = "source TkReactor_Test.tcl";
-  if (Tcl_Eval (tcl_interp, tcl_cmd) != TCL_OK) {
+  if (Tcl_Eval (tcl_interp, "source TkReactor_Test.tcl") != TCL_OK) {
     cerr << "error: " << tcl_interp->result << "\n";
     exit (1);
   }

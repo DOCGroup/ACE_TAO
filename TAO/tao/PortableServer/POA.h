@@ -134,6 +134,7 @@ public:
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
+  friend class TAO_ObjectReferenceFactory;
   friend class TAO_ObjectReferenceTemplate;
 
   typedef ACE_CString String;
@@ -491,8 +492,6 @@ public:
 
   virtual void *thread_pool (void) const;
 
-  CORBA::Policy *server_protocol (void);
-
 protected:
 
   const ACE_CString &name (void) const;
@@ -713,13 +712,6 @@ protected:
                                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
-
-  PortableServer::Servant reference_to_servant_i (CORBA::Object_ptr reference
-                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ObjectNotActive,
-                     PortableServer::POA::WrongAdapter,
                      PortableServer::POA::WrongPolicy));
 
   PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid

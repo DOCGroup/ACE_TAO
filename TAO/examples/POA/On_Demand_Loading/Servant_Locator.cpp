@@ -44,12 +44,13 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
   CORBA::String_var s =
     PortableServer::ObjectId_to_string (oid);
 
-  // If ObjectID string has a test substring create and return a
-  // test_i.
+  // If ObjectID string has a Foo Substring create and return a
+  // MyFooServant.
 
   PortableServer::Servant servant =
     this->servant_manager_.obtain_servant (s.in (),
-                                           poa);
+                                           poa,
+                                           27);
   if (servant != 0)
     {
       // Return the servant as the cookie , used as a check when

@@ -158,7 +158,7 @@ private:
 };
 
 /**
- * @class CORBA_AbstractBase_out
+ * @class CORBA_AbstractBase_var
  *
  * @brief _out class for AbstractBase
  */

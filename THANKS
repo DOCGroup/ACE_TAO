@@ -210,7 +210,7 @@ Phil Logan <phill@in.ot.com.au>
 John Cosby <John.D.Cosby@cpmx.saic.com>
 Wayne Vucenic <wvucenic@netgate.net>
 Harry Gunnarsson <hg@carmenta.se>
-James CE Johnson <JamesJohnson@tragus.org>
+James CE Johnson <jcej@lads.com>
 Samuel_Bercovici <Samuel_Bercovici_at_EFT__AD2@mail.icomverse.com>
 Per Andersson <Per.Andersson@hfera.ericsson.se>
 Anthony McConnell <Tonym@datel.demon.co.uk>
@@ -564,7 +564,7 @@ David Hooker <DHooker@uniview.net>
 Christian.Destor <Christian.Destor@alcatel.fr>
 Andrew Hobson <ahobson@eng.mindspring.net>
 Andre Folkers <folkers@informatik.mu-leubeck.de>
-Torsten Kuepper <torsten.kuepper@nokia.com>
+Torsten Kuepper <kuepper2@uni-wuppertal.de>
 Hao Ruan <hruan@lucent.com>
 Alexander Davidovich <sasha@ms.com>
 Cristian Ferretti <cristian_ferretti@yahoo.com>
@@ -1333,7 +1333,7 @@ Mahesh Varadarajan <mahesh.varadarajan@divatv.com>
 Olof Lindfors <olof.lindfors@protegrity.com>
 Tom Wagner <TomW@CoManage.net>
 Kyle Brost <Kyle.Brost@quest.com>
-Vincent Nicolas <Vincent.Nicolas@Radiometer.dk>
+Nicolas Vincent <Vincent.Nicolas@Radiometer.dk>
 Jonathan Wackley <jwackley@mountaincable.com>
 Jan Kalin <jan.kalin@zag.si>
 Andreas Huggel <huggel_andreas@isoftel.com>
@@ -1547,32 +1547,8 @@ Ruslan Zasukhin <sunshine@public.kherson.ua>
 Colin Weaver <colin.weaver@invensys.com>
 Kew Whitney <Whitney.Kew@Invensys.com>
 Sean Ogle <sean.ogle@syslog.at>
+Marvin Wolfthal <maw@weichi.com>
 Tim Bradley <bradley_t@ociweb.com>
-Denginere <denginere@hotmail.com>
-Kier Schmitt <SchmittKC@kpt.nuwc.navy.mil>
-George Varsamis <gv@prismtechnologies.com>
-Alan Tanga <stang1@lucent.com>
-Bertin Colpron <BColpron@interstarinc.com>
-Jeff Wilson <wilsonj@cs.ecs.baylor.edu>
-Dmitry Khrapov <yavannadil@yahoo.com>
-Francois <francois@vibes.net>
-Laxmikant Bopalkar <LBopalkar@protrader.com>
-Steven Gardner <sjgardn@sandia.gov>
-Ronald Berger <ronald.berger@wpafb.af.mil>
-Jeremy Altavilla <jeremya@artifact-entertainment.com>
-Brian Appel <bappel@integ.com>
-Lan Zhineng <lanzn@huawei.com>
-Leen Van Kampen <leen.van.kampen@nl.vanderlande.com>
-James Beale <JAMES.H.BEALE@saic.com>
-Mark Xu <ltxd@371.net>
-Umberto Mascia <u.mascia@pxl.it>
-Marcel Loose <loose@astron.nl>
-Christian Klutz <cklutz@gmx.net>
-Ville Lehtiniemi <guderian@ees2.oulu.fi>
-Chumsu Kim <chskim@add.re.kr>
-Schone Mullerin <smullerin@deutsches.lieder.net>
-Cemal Yimaz <cyilmaz@cs.umd.edu>
-Newton Aird <naird@ix.netcom.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

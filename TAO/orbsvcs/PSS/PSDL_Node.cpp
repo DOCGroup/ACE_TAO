@@ -4851,9 +4851,8 @@ TAO_PSDL_Literal::TAO_PSDL_Literal (const char *char_value)
 
 TAO_PSDL_Literal::~TAO_PSDL_Literal (void)
 {
-  // We cannot delete this since it is a constant
-  /*if (this->char_value_ != 0)
-    delete this->char_value_; */
+  if (this->char_value_ != 0)
+    delete this->char_value_;
 }
 
 /// Get the value

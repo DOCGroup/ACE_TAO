@@ -1,4 +1,3 @@
-
 // This may look like C, but it's really -*- C++ -*-
 // -*- C++ -*-
 // ===================================================================
@@ -28,13 +27,13 @@
 #include "ace/Svc_Handler.h"
 #include "tao/IIOPC.h"
 
+
 // Forward decls.
 class TAO_IIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
-class TAO_Adapter;
 
 // Service Handler for this transport
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -75,6 +74,7 @@ protected:
   //@{
 
   virtual ACE_Event_Handler * event_handler_i (void);
+  virtual TAO_Connection_Handler * connection_handler_i (void);
   virtual ACE_Event_Handler * invalidate_event_handler_i (void);
 
   /// Access the underlying messaging object
@@ -90,11 +90,6 @@ protected:
 
   virtual int register_handler_i (void);
 
-  virtual int send_message_shared (TAO_Stub *stub,
-					               int message_semantics,
-							       const ACE_Message_Block *message_block,
-								   ACE_Time_Value *max_wait_time);
-
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful
@@ -102,16 +97,13 @@ public:
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
-                            int message_semantics,
+                            int twoway,
                             ACE_Time_Value *max_wait_time);
 
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
+                            int twoway = 1,
                             ACE_Time_Value *max_time_wait = 0);
-
-  /*virtual int send_reply (TAO_OutputCDR &stream,
-			  TAO_Adapter *poa = 0);*/
 
   virtual int generate_request_header (TAO_Operation_Details &opdetails,
                                        TAO_Target_Specification &spec,
@@ -121,8 +113,6 @@ public:
                               CORBA::Octet minor);
 
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
-
-  virtual TAO_Connection_Handler * connection_handler_i (void);
 
   //@}
 

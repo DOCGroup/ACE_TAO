@@ -175,7 +175,7 @@ Consumer::svc (void)
       if (result == -1)
         break;
 
-      size_t length = mb->length ();
+      int length = mb->length ();
 
       if (length > 0)
         {

@@ -4,7 +4,6 @@
 
 DIRS = \
 	orbsvcs \
-        PSS \
 	CosEvent_Service \
 	Event_Service \
 	IFR_Service \

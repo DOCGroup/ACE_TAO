@@ -40,8 +40,8 @@ ENABLED_SECTIONS      =
 #---------------------------------------------------------------------------
 
 QUIET                 = YES
-WARNINGS              = YES
-WARN_IF_UNDOCUMENTED  = YES
+WARNINGS              = NO
+WARN_IF_UNDOCUMENTED  = NO
 WARN_FORMAT           = "$file:$line: $text"
 
 #---------------------------------------------------------------------------
@@ -159,7 +159,7 @@ INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
-DOT_PATH              =
+DOT_PATH              = /usr/local/bin
 MAX_DOT_GRAPH_WIDTH   = 1024
 MAX_DOT_GRAPH_HEIGHT  = 1024
 
@@ -199,7 +199,7 @@ DOC_ABSPATH           = /project/doctmp/Doxygen/Current
 BIN_ABSPATH           = /usr/bin
 
 # The EXT_DOC_PATHS tag can be used to specify one or more paths to
-# documentation generated for other projects. This allows doxysearch to search
-# the documentation for these projects as well.
+# documentation generated for other projects. This allows doxysearch to search 
+# the documentation for these projects as well. 
 
 EXT_DOC_PATHS         = html/ace

@@ -30,19 +30,15 @@ ACE_RCSID(tests, Get_Opt_Test, "$Id$")
  * It returns 0 for success and 1 for error so we can keep track of the
  * total error count.
  */
-
-static const ACE_TString empty (ACE_TEXT (""));
-
 static int
 parse_args (int test_number,
             int ordering,
             const ACE_TCHAR *test_args,
             int skip_argv0 = 1,
-            int report_errors = 1,
-            const ACE_TString &opt_prefix = empty)
+            int report_errors = 1)
 {
   ACE_TString test;
-  ACE_TString optstring (opt_prefix);
+  ACE_TString optstring;
 
   // Test the skip_argv0 for the first test only.
   if (skip_argv0 > 0)
@@ -169,11 +165,6 @@ parse_args (int test_number,
           break;
         case ':':
           // This means an option requiring an argument didn't have one.
-          ACE_DEBUG ((LM_INFO,
-                      ACE_TEXT ("   Option '%c' requires an argument but ")
-                      ACE_TEXT ("none was supplied\n"),
-                      get_opt.opt_opt ()));
-          break;
         case '?':
           // An unrecognized option.
         default:
@@ -186,7 +177,7 @@ parse_args (int test_number,
     }
 
   // Print out the rest of the arguments left in the command line (if any).
-  int index = 0;
+  size_t index = 0;
   for (index = get_opt.opt_ind (); index < args.argc (); index++)
     ACE_DEBUG ((LM_INFO, "   Found non-option argument \"%s\"\n",
                 args.argv ()[index]));
@@ -281,8 +272,7 @@ run_test (int& test_number, int ordering)
   retval += parse_args (test_number++, ordering, ACE_TEXT ("-X"), 1, report_errors);
 
   // Short option with missing required arg.
-  ACE_TString report_missing (ACE_TEXT (":"));
-  retval += parse_args (test_number++, ordering, ACE_TEXT ("-r"), 1, report_errors, report_missing);
+  retval += parse_args (test_number++, ordering, ACE_TEXT ("-r"), 1, report_errors);
 
   // Short option with missing required arg with trailing "--".
   // This reads "--" as the arg, but should it?

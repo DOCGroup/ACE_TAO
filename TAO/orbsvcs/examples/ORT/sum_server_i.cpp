@@ -16,5 +16,6 @@ sum_server_i::add_variables (CORBA::Long a,
                              ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  cout << __FILE__ << __LINE__ << endl;
   return a+b;
 }

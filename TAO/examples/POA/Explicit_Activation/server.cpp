@@ -9,15 +9,21 @@
 //    server.cpp
 //
 // = DESCRIPTION
-//    Explicit creation of servants.
+//    In this example,
+//     - A new POA (firstPOA) is created, and the different functions
+//       for the explicit activation of objects are demonstrated.
+//     - The Foo application class objects (defined in
+//       ./../Generic_Servant/MyFooServant) are used as sample objects.
 //
 // = AUTHOR
 //    Irfan Pyarali
 //
 // ================================================================
 
+#include "ace/streams.h"
 #include "ace/Get_Opt.h"
-#include "test_i.h"
+#include "tao/Timeprobe.h"
+#include "MyFooServant.h"
 
 ACE_RCSID(Explicit_Activation, server, "$Id$")
 
@@ -123,11 +129,10 @@ main (int argc, char **argv)
   ACE_TRY
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            0
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
@@ -209,44 +214,44 @@ main (int argc, char **argv)
           ACE_TRY_CHECK;
         }
 
-      // Create two Objects of Class test_i (defined in
-      // ./../GenericServant/test_i.h) Create one object at RootPOA
+      // Create two Objects of Class MyFooServant (defined in
+      // ./../GenericServant/MyFooServant.h) Create one object at RootPOA
       // and the other at firstPOA.
-      test_i first_servant (orb.in (),
-                            root_poa.in ());
-      test_i second_servant (orb.in (),
-                             first_poa.in ());
+      MyFooServant first_foo_impl (orb.in (),
+                                   root_poa.in (),
+                                   27);
+      MyFooServant second_foo_impl (orb.in (),
+                                    first_poa.in (),
+                                    28);
 
-      // Do "activate_object" to activate the first_servant object.  It
+      // Do "activate_object" to activate the first_foo_impl object.  It
       // returns ObjectId for that object.  Operation Used :
       //  ObjectId activate_object(in Servant p_servant)
       //    raises (ServantAlreadyActive, WrongPolicy);
       PortableServer::ObjectId_var first_oid =
-        root_poa->activate_object (&first_servant
+        root_poa->activate_object (&first_foo_impl
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Get Object Reference for the first_servant object.
-      test_var first_test =
-        first_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Get Object Reference for the first_foo_impl object.
+      Foo_var first_foo = first_foo_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Get ObjectId for object secondtest and use that ObjectId to
-      // activate the second_servant object.
+      // Get ObjectId for object secondFoo and use that ObjectId to
+      // activate the second_foo_impl object.
       // Operation Used :
       //  void activate_object_with_id(in ObjectId oid, in Servant p_servant)
       //       raises (ObjectAlreadyActive, ServantAlreadyActive, WrongPolicy);
       PortableServer::ObjectId_var second_oid =
-        PortableServer::string_to_ObjectId ("second test");
+        PortableServer::string_to_ObjectId ("secondFoo");
 
       first_poa->activate_object_with_id (second_oid.in (),
-                                          &second_servant
+                                          &second_foo_impl
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Get Object reference for second_servant object.
-      test_var second_test =
-        second_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Get Object reference for second_foo_impl object.
+      Foo_var second_foo = second_foo_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get ObjectId for the string thirdPOA Create the object reference
@@ -256,32 +261,32 @@ main (int argc, char **argv)
       // specified Object Id and interface repository Id values.
       /*
         PortableServer::ObjectId_var third_oid =
-        PortableServer::string_to_ObjectId ("thirdtest");
+        PortableServer::string_to_ObjectId ("thirdFoo");
       */
 
       // This will test how the POA handles a user given ID
       PortableServer::ObjectId_var third_oid =
-        PortableServer::string_to_ObjectId ("third test");
+        PortableServer::string_to_ObjectId ("third Foo");
 
       third_oid[5] = (CORBA::Octet) '\0';
 
-      CORBA::Object_var third_test =
+      CORBA::Object_var third_foo =
         second_poa->create_reference_with_id (third_oid.in (),
-                                              "IDL:test:1.0"
+                                              "IDL:Foo:1.0"
                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var first_ior =
-        orb->object_to_string (first_test.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (first_foo.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var second_ior =
-        orb->object_to_string (second_test.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (second_foo.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var third_ior =
-        orb->object_to_string (third_test.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (third_foo.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -290,18 +295,16 @@ main (int argc, char **argv)
                   second_ior.in (),
                   third_ior.in ()));
 
-      int write_result =
-        write_iors_to_file (first_ior.in (),
-                            second_ior.in (),
-                            third_ior.in ());
+      int write_result = write_iors_to_file (first_ior.in (),
+                                             second_ior.in (),
+                                             third_ior.in ());
       if (write_result != 0)
         return write_result;
 
       // Activate third servant using its ObjectID.
-      test_i third_servant (orb.in (),
-                            second_poa.in ());
+      MyFooServant third_foo_impl (orb.in (), second_poa.in (), 29);
       second_poa->activate_object_with_id (third_oid.in (),
-                                           &third_servant
+                                           &third_foo_impl
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -310,6 +313,8 @@ main (int argc, char **argv)
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_TIMEPROBE_PRINT;
     }
   ACE_CATCHANY
     {

@@ -1,17 +1,15 @@
-#include "IIOP_Factory.h"
-#include "IIOP_Acceptor.h"
-#include "IIOP_Connector.h"
+// $Id$
 
-#include "IOPC.h"
+#include "tao/IIOP_Factory.h"
+#include "tao/IIOP_Acceptor.h"
+#include "tao/IIOP_Connector.h"
 
-ACE_RCSID (tao,
-           IIOP_Factory,
-           "$Id$")
+ACE_RCSID(tao, IIOP_Factory, "$Id$")
 
 static const char prefix_[] = "iiop";
 
 TAO_IIOP_Protocol_Factory::TAO_IIOP_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
+  :  TAO_Protocol_Factory (TAO_TAG_IIOP_PROFILE),
      major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR)
 {

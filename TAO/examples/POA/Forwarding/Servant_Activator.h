@@ -9,7 +9,7 @@
 //     Servant_Activator.h
 //
 // = DESCRIPTION
-//     Defines a ServantActivator class, used with a POA having a
+//     Defines a MyFooServantActivator class, used with a POA having a
 //     RETAIN policy
 //
 // = AUTHOR
@@ -24,14 +24,14 @@
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 
-class ServantActivator : public PortableServer::ServantActivator
+class MyFooServantActivator : public PortableServer::ServantActivator
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and
   //   RETAIN policy.
 public:
-  ServantActivator (CORBA::ORB_ptr orb,
-                    CORBA::Object_ptr forward_to);
+  MyFooServantActivator (CORBA::ORB_ptr orb,
+                         CORBA::Object_ptr forward_to);
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId & oid,
                                              PortableServer::POA_ptr adapter

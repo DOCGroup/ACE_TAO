@@ -17,7 +17,6 @@ else {
 @ace_dirs = ("$ACE_ROOT\\ace",
              "$ACE_ROOT\\ACEXML\\common",
              "$ACE_ROOT\\ACEXML\\parser",
-             "$ACE_ROOT\\ACEXML\\apps",
              "$ACE_ROOT\\ACEXML\\tests",
              "$ACE_ROOT\\ACEXML\\examples",
              "$ACE_ROOT\\apps",
@@ -163,7 +162,6 @@ sub Build_Core ()
                       $ACE_ROOT."\\TAO\\tao\\DynamicAny\\TAO_DynamicAny_Static.dsp",
                       $ACE_ROOT."\\TAO\\tao\\IORManipulation\\TAO_IORManip_Static.dsp",
                       $ACE_ROOT."\\TAO\\tao\\IORTable\\TAO_IORTable_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\Messaging\\TAO_Messaging_Static.dsp",
                       $ACE_ROOT."\\TAO\\tao\\Strategies\\TAO_Strategies_Static.dsp",
                       $ACE_ROOT."\\TAO\\tao\\RTCORBA\\TAO_RTCORBA_Static.dsp",
                       $ACE_ROOT."\\TAO\\tao\\RTPortableServer\\TAO_RTPortableServer_Static.dsp",
@@ -182,8 +180,7 @@ sub Build_Core ()
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTime_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsLogAdmin_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNotification_Static.dsp",
-		      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\PortableGroup_Static.dsp",
-		      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLoadBalancing_Static.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\LoadBalancing_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Server_static.dsp");
 
         foreach $c (@core_list) {

@@ -13,11 +13,11 @@
 <h3>
 Release Information for The ACE ORB (TAO)</h3></center>
 This document contains information on the following topics related to the <a href="../../VERSION">current
-release</a> of <a href="http:Imp//www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
+release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 
 <TABLE cellpadding=10 cellspacing=0 border=0>
 
-<TD valign="top">
+<TD>
 <ul>
 <li>
 <a href="#idl">IDL Compiler</a></li>
@@ -61,48 +61,45 @@ release</a> of <a href="http:Imp//www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="OBV.html">Object-by-Value</a></li>
 
-<li>
-<a href="PSS.html">Persistent State Service</a></li>
+<li><a href="#CORBA-conformance">CORBA Standards Conformance</a></li>
 
 </UL>
 </TD>
-<TD valign="top">
+<TD>
 <UL>
 
 <li>
-<a href="#nservices">Naming Service </a>
+<a href="#nservices">CORBA Naming Service </a>
 
 <li>
-<a href="#tservices">Trading Service</a></li>
+<a href="#tservices">CORBA Trading Service</a></li>
 
 <li>
-<a href="#pservices">Property Service</a></li>
+<a href="#pservices">CORBA Property Service</a></li>
 
 <li>
-<a href="#cservices">Concurrency Service</a></li>
+<a href="#cservices">CORBA Concurrency Service</a></li>
 
 <li>
-<a href="#av">Audio/Video Streaming Service</a></li>
+<a href="#av">CORBA Audio/Video Streaming Service</a></li>
 
 <li>
-<a href="#ts">Time Service</a></li>
+<a href="#ts">CORBA Time Service</a></li>
 
 <li>
-<a href="#ec">Event Service</a></li>
+<a href="#ec">CORBA Event Service</a></li>
 
 <li>
-<a href="#log">Telecom Log Service</a></li>
+<a href="#log">CORBA Telecom Log Service</a></li>
 
 <li>
-<a href="#notify">Notification Service</a></li>
+<a href="#notify">CORBA Notification Service</a></li>
 
 <li>
-<a href="#security">Security Service</a></li>
+<a href="#security">CORBA Security Service</a></li>
 
 <li>
 <a href="#miop">Multicast InterORB Protocol (MIOP)</a></li>
-
-<li><a href="#loadbalancer">Load Balancer</a></li>
 
 <li>
 <a href="ec.html">TAO's Real-time Event Service</a></li>
@@ -113,18 +110,15 @@ release</a> of <a href="http:Imp//www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="#logging">TAO's Logging Service</a></li>
 
-</UL>
-</TD>
-<TD valign="top">
-<UL>
-
-<li><!-- <a href="../../CIAO/docs/releasenotes.html"> -->
-    <a href="http://www.cs.wustl.edu/~nanbor/projects/CIAO-src/docs/releasenotes.html">CORBA Component Model (CIAO) </a>
-
-<li><a href="#CORBA-conformance">CORBA Standards Conformance</a></li>
+<li><a href="#loadbalancer">TAO's Load Balancer</a></li>
 
 <li>
 <a href="#fault_tolerance">TAO's support for FT services </a></li>
+
+</UL>
+</TD>
+<TD>
+<UL>
 
 <li>
 <a href="#apps">Regression Tests</a></li>
@@ -159,7 +153,7 @@ A complete list of all modifications to TAO is available in the <a href="../../C
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:parsons@cs.wustl.edu">
 Jeff Parsons</a>
-<p>Current status: (As of July 29, 2002.)
+<p>Current status: (As of December 7, 2001.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -512,7 +506,7 @@ const char *foo = ......<br><br>
 
 occurs in the source code. The variable foo is sometimes not allocated or assigned
 properly, and if foo is part of generated code, it will then display as garbage or
-as an empty string (or substring). Two workarounds have been found. One is to
+as an empty string (or substring). Two workarounds have been found. One is to 
 change the declaration of foo to be<br><br>
 
 static const char *foo = ....<br><br>
@@ -523,7 +517,7 @@ setting to 'Minimize Size'. Reportedly the problem has been fixed in MSVC versio
 7.0.
 </li>
 <li>
-In conditional #includes, where there is an inclusion for either value of the
+In conditional #includes, where there is an inclusion for either value of the 
 condition, and where the non-included base filename is a substring of the included
 one, both files will be included.
 </li>
@@ -1300,13 +1294,14 @@ Implementation of the Concurrency Service with transactions</li>
 </ul><P>
 <hr WIDTH="100%">
 <h3><a NAME="av"></a>CORBA Audio/Video Streaming Service</h3>
-Point of contact: <a href="mailto:yamuna@oomworks.com">Yamuna Krishnamurthy</a>
+Point of contact: <a href="mailto:yamuna@cs.wustl.edu">Yamuna Krishnamurthy</a>
 <p>This is an implementation of the OMG spec addressing the <a
 href="http://www.omg.org/technology/documents/formal/audio.htm">Control
-and Management of Audio/Video Streams</a>.  For more documentation on
-TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~schmidt/av.html">here</A>.
+and Management of Audio/Video Streams</a>.For more documentation on
+TAO's A/V Service please have a look <A
+HREF="http://www.cs.wustl.edu/~schmidt/av.html">here</A>.
 
-<p><h4>Current Status:</h4> (as of July 30 2002)
+<p><h4>Current Status:</h4> (as of Sep 1st 1999)
 <p>
 <ul>
   <li>
@@ -1327,21 +1322,36 @@ TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~schmidt/a
       </A> for more documentation about the implementation.
   </li>
   <li>
-      QoS_UDP pluggable protocol added which implements RSVP QoS support
-      for UDP streams.
+      A Videoconferencing application based on Vic, a MBONE tool, has
+      been implemented using the AV components. Please contact <A
+      HREF="mailto:yamuna@cs.wustl.edu">Yamuna</a> or <A
+      HREF="mailto:naga@cs.wustl.edu">Naga</A> if you're interested.
   </li>
   <li>
-      Diffserv support added to the UDP pluggable protocol by <a href="mailto:crodrigu@bbn.com">Craig Rodrigues</a>.
+      An MPEG-1 application which streams mpeg-1 video and mpeg-1 audio
+      separately has been developed using the service. The client side
+      of the mpeg player requires X windows support.Its available in
+      the release at $TAO_ROOT/orbsvcs/tests/AVStreams/mpeg/source.
   </li>
   <li>
-      RTP/UDP support enhancements and RTCP control protocol support added by
-      <a href="mailto:rruff@scires.com">Rob Ruff</a>.
+      An Integrated Video-on-demand application has been developed
+      using the Trading Service and the A/V Service. The demo uses a
+      Java FrontEnd and JNI to talk to the TAO C++ trader client. The
+      demo is available in the release at
+      $TAO_ROOT/orbsvcs/tests/AVStreams/server_discovery.
   </li>
 </ul>
 <p>Work in progress:
 <ul>
   <li>
-    Integration with <a href="http://www.dist-systems.bbn.com/projects/AIRES/UAV/">BBN UAV software.</a>
+      Adding more features to the VideoConferencing application
+      eg. porting vat, the audio counterpart of vic to use AV components.
+  </li>
+  <li>
+      Adding ATM AAL5 protocol support.
+  </li>
+  <li>
+      Adding QoS implementation.
   </li>
 </ul>
 
@@ -1523,16 +1533,11 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
 <hr WIDTH="100%">
 <h3><a NAME="notify"></a>CORBA Notification Service </h3>
 
-<h4> Last updated:Sat Jul 27 07:24:51 CDT 2002 </h4>
+<h4> Last updated:Mon Dec 20 06:38:42 CDT 2001 </h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 <p>
-Work is underway to implement the TAO Real-Time Notification
-Service. This is an extension to TAO's CORBA Notification Service with
-Real-Time CORBA support.
-
-The current <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
-Notification Service </a> implementation (first released in TAO 1.2.2
-) consists of the following
+Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf"> Notification Service </a>.
+The implementation released in TAO 1.2.2 consists of the following
 (see the associated README's for more information):
 <ul>
         <li>
@@ -1556,7 +1561,9 @@ Notification Service </a> implementation (first released in TAO 1.2.2
         </li>
 
         <li>
-            Feature tests are under <tt>$TAO_ROOT/orbsvcs/tests/Notify/</tt>
+            There is on-going work to add tests in
+            <tt>$TAO_ROOT/orbsvcs/tests/Notify/
+            </tt>
         </li>
 </ul>
 
@@ -1607,8 +1614,9 @@ Notification Service </a> implementation (first released in TAO 1.2.2
   <li>
       A runnning theme in this project is to isolate the patterns identified
       in the implementation of the <a href="ec.html"> RTEC </a> and reuse them.
-      A  collection of C++ template classes that capture these patterns is being used in this
-      implementation. These templates are the Event Service Framework <tt>TAO/orbsvcs/orbsvcs/ESF</tt>.
+      We hope to come up with a collection of C++ template classes that
+      capture these patterns so that they might be used in other similar
+      event communication senarios.
   </li>
 
   <li>
@@ -1703,7 +1711,7 @@ The TODO list runs like this:
 Point of contact: <A HREF="mailto:ossama@uci.edu">Ossama Othman</A>
 
 <P>
-Additional information is available
+For up-to-date information, see the project web site
 <A HREF="http://doc.ece.uci.edu/TAO/Security/">here</A>.
 
 <P>
@@ -1733,7 +1741,7 @@ Implemented Features:
         security mechanism.
       </LI>
           <LI>
-            The <CODE>SecurityLevel2::QOPPolicy</CODE> policy has been
+            The <CODE>Security::QOPPolicy</CODE> policy has been
             implemented.  This policy is used to set the desired
             invocation Quality-of-Protection (QoP).  It can be created
             using <CODE>ORB::create_policy()</CODE>, and used in
@@ -1749,34 +1757,6 @@ Implemented Features:
             TAO's SSLIOP pluggable protocol implementation is now
             thread-safe.
           </LI>
-          <LI>
-            The <CODE>SecurityLevel2::EstablishTrustPolicy</CODE>
-	    policy has been implemented.  This policy is used to set
-	    the desired
-            invocation level of establishment of trust.  It can be created
-            using <CODE>ORB::create_policy()</CODE>, and used in
-            conjunction with the standard policy manipulation CORBA
-            features (e.g. <CODE>PolicyManager</CODE>,
-            <CODE>PolicyCurrent</CODE>), meaning that this policy can
-            be set on a per-ORB, per-thread or per-object basis.
-            <P>
-              This policy makes it possible to, for example, make
-              authenticated and non-authenticated invocations within
-              the same client process.
-          </LI>
-
-      </LI>
-      <LI>
-        Implemented
-        <CODE>SecurityLevel2::PrincipalAuthenticator</CODE> support
-	for SSLIOP.  In particular, a SSLIOP-specific
-	<CODE>SecurityReplaceable::Vault</CODE> implementation is now
-	available.
-      </LI>
-      <LI>
-        Initial SSLIOP-specific <CODE>Credentials</CODE>
-	implementation is complete.
-      </LI>
     </UL>
   </LI>
 </UL>
@@ -1790,7 +1770,7 @@ Current Status:
     development.
   </LI>
       <LI>
-        Began implementation of the interfaces in the
+        Begin implementation of the interfaces in the
         <CODE>SecurityReplaceable</CODE> IDL module.  They provide the
         ability to replace key security components in the ORB with
         another implementation with ease.  Thus, the security
@@ -1803,7 +1783,7 @@ Schedule:
 <UL>
 
       <LI>
-        <FONT COLOR=BLUE>October 2002</FONT><BR>
+        <FONT COLOR=BLUE>April 2002</FONT><BR>
         <UL>
           <LI>
             Begin implementation of the Common Secure Interoperability
@@ -1813,9 +1793,17 @@ Schedule:
         </UL>
       </LI>
 
-<!--
   <LI>
-    <FONT COLOR=BLUE>November 2002</FONT>
+    <FONT COLOR=BLUE>September 2002</FONT><BR>
+    <UL>
+      <LI>
+        SSLIOP performance enhancements.
+      </LI>
+    </UL>
+  </LI>
+
+  <LI>
+    <FONT COLOR=BLUE>October 2002</FONT>
     <UL>
       <LI>
         Request authentication via
@@ -1842,49 +1830,26 @@ Schedule:
       </LI>
     </UL
   </LI>
--->
 
   <LI>
     <FONT COLOR=BLUE>November 2002</FONT><BR>
     <UL>
       <LI>
-        Begin implementation of the <I>Authentication Token Layer
-        Attribute Service (ATLAS)</I> specification for TAO.
+        Begin implementation of a <CODE>DomainManager</CODE> and/or
+        <I>Domain Membership</I> specification for TAO.
+        This is needed to support security domains.
       </LI>
     </UL>
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>December 2002</FONT><BR>
+    <FONT COLOR=BLUE>December 2002</FONT>
     <UL>
       <LI>
-        Begin implementation of the <I>Resource Access Decision (RAD)
-	Facility</I> specification for TAO.
+        Begin work on the CORBA Non-Repudiation Service.
       </LI>
     </UL>
   </LI>
-
-
-  <LI>
-    <FONT COLOR=BLUE>February 2003</FONT><BR>
-    <UL>
-      <LI>
-        Begin implementation of the <I>Security Domain Membership
-        Management (SDMM)</I> specification for TAO.
-        It is needed to support security domains.
-      </LI>
-    </UL>
-  </LI>
-
-  <LI>
-    <FONT COLOR=BLUE>April 2003</FONT><BR>
-    <UL>
-      <LI>
-        SSLIOP and SECIOP performance enhancements.
-      </LI>
-    </UL>
-  </LI>
-
 
 </UL>
 
@@ -1967,73 +1932,81 @@ Point of contact: <a href="mailto:bala@cs.wustl.edu">Balachandran Natarajan</a>
 <h4>Current Status:</h4>
 <p>TAO supports the ORB level requirements to achieve Fault Tolerance
 for CORBA Objects. The details of the ORB level support is described
-in the FT chapter of the
-<a href="http://www.omg.org/cgi-bin/doc?formal/02-06-01">
-CORBA 3.0 specification</a>.  Specifically TAO implements the sections
-23.2.2, 23.2.3, 23.2.6 thru 23.2.8 of the document.
+in the  <a href="http://cgi.omg.org/cgi-bin/doc?ptc/00-04-04"> FT spec
+</a>. Specifically TAO
+implements the sections 27.2.2, 27.2.3, 27.2.6 thru 27.2.8 of the
+document.
 
 <h4>Future Work:</h4>
 <ul>
-<li> Implement 23.2.9 of the document.</li>
+<li> Implement 27.2.9 of the document.</li>
 </ul>
 <hr>
 
-<h3><a NAME="loadbalancer"></a>Load Balancer</h3>
+<h3><a NAME="loadbalancer"></a>TAO's Load Balancer</h3>
 
 <p>
 Point of contact: <a href="mailto:ossama@uci.edu">Ossama Othman</a>
 
 <h4>Current Status:</h4>
-<p>TAO's
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/load_balancing.pdf">
-Load Balancer</a> currently implements the latest revision of the
-OMG <I>Load Balancing and Monitoring</I> specification.
-<p>
-It provides many features and advantages over the previous
-non-standards based prototype.  Those features and advantages include:
+<p>TAO's <A HREF="http://www.cs.wustl.edu/~schmidt/PDF/load_balancing.pdf">Load Balancer</a> currently implements the following load
+balancing algorithms:
 <ul>
- <li>Multiple object group support</li>
- <li>Extensible load balancing strategies through IDL interfaces</li>
- <li>Extensible load monitoring</li>
- <li>Both "push" and "pull" style monitoring are supported</li>
- <li>Support for infrastructure and application controlled object
-	    group membership</li>
- <li>Improved server-side transparency</li>
+<li><FONT COLOR=BLUE>Round Robin</FONT>
+  <ul>
+  <li>Simply forwards requests to the next registered replica in a
+      circular list.</li>
+  </ul>
+</li>
+<li><FONT COLOR=BLUE>Minimum Dispersion</FONT>
+  <ul>
+  <li>Basically tries to keep the load on each registered replica
+      close to the average.  If the load on a given server is much
+      higher than the average load it is deemed too loaded, at which
+      point the load balancer informs the replica of this condition,
+      which in turn causes it to stop accepting requests until its
+      load is close to the average.</li>
+  </ul>
+</li>
 </ul>
-
-The current <I>Load Balancing and Monitoring</I> specification defines
-three built-in load balancing strategies.  They are:
-<ol>
- <li><CODE>RoundRobin</CODE> <FONT COLOR=BLUE>(non-adaptive)</FONT></li>
- <li><CODE>Random</CODE> <FONT COLOR=BLUE>(non-adaptive)</FONT></li>
- <li><CODE>LeastLoaded</CODE> <FONT COLOR=BLUE>(adaptive)</FONT></li>
-</ol>
-
-TAO currently implements the <CODE>Random</CODE> load balancing strategy.
 
 <h4>Known Issues:</h4>
 <ul>
-<li><CODE>RoundRobin</CODE> and <CODE>LeastLoaded</CODE> load
-    balancing strategies are currently unimplemented.</li>
-<li>New group members are not automatically created if possible and
-    when necessary.  This is only a problem for the <I>infrastructure
-    controlled</I> object group membership style.</li>
-<li><em>Adaptive</em> load balancing is currently not working.  In
-     particular, the load shedding mechanism needs work.
-</li>
+<li>Factory must be implemented to allow applications to create load
+balancers at run-time, rather than at application start up time.</li>
 </ul>
 
 <h4>Recent Work:</h4>
 <ul>
-<li>It's all recent.  :-)</li>
+<li>Replaced use of DSI for forwarding requests in favor of a
+    ServantLocator.  The ServantLocator implementation provides a more
+    robust way of forwarding requests.  The DSI implementation was a
+    bit of a hack since ForwardRequest exceptions are only supposed to
+    be thrown from ServantManagers, such as ServantLocators.</li>
+<li>All code is now thread-safe and exception-safe.</li>
 </ul>
 
 <h4>Future Work:</h4>
 <ul>
-<li>Implement <CODE>RoundRobin</CODE> and <CODE>LeastLoaded</CODE>
-    load balancing strategies</li>
-<li>Implement cooperative (distributed) load balancing support</li>
-<li>Integrate multicast support</li>
+<li>Implement a load balancing algorithm strategy factory.</li>
+<li>Implement load balancing via Interceptors.</li>
+<li>Implement cooperative load balancing support.</li>
+<li>Implement additional load balancing strategies:
+  <ul>
+  <li>load based on power consumption</li>
+  <li>load based on the number of requests currently serviced
+      (maybe)</li>
+  <li>adaptive load balancing strategy that utilizes load history to
+      attempt to predict future load conditions</li>
+  </ul>
+</li>
+<li>Active load balancing:
+  <ul>
+  <li>Actively poll replicas for current load, as opposed to the
+      currently implemented passive load balancing where the load
+      balancer listens for load reports from the replicas.
+  </ul>
+</li>
 </ul>
 
 <hr>
@@ -2278,15 +2251,15 @@ Points of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Arulanthu</a>
 <p>Status:
 <ul>
 
-We've implemented the callback model of the
-<A HREF="http://www.omg.org/cgi-bin/doc?formal/01-12-60">CORBA Messaging
+We've implemented the callback model of the <A
+HREF="http://www.cs.wustl.edu/~schmidt/CORBA-docs/98-05-05.pdf.gz">Messaging
 specification</a>.  To activate the AMI for TAO and the TAO IDL
-compiler define <CODE>TAO_HAS_CORBA_MESSAGING</CODE>>,
+compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt>,
 <tt>TAO_HAS_AMI_CALLBACK</tt> in your config.h file.  The TAO IDL
-compiler can generate the AMI "callback" stubs, ReplyHandler und reply
-stubs using the <CODE>-GC</CODE> switch.
+compiler can generate the AMI stubs, ReplyHandler und reply stubs
+using the -GC switch.
 <p>
-For an example see <tt>$TAO_ROOT/tests/AMI</tt> and <tt>$TAO_ROOT/examples/AMI</tt>.
+For an example see <tt>$TAO_ROOT\tests\AMI</tt> and <tt>$TAO_ROOT\examples\AMI</tt>.
 
 </ul>
 

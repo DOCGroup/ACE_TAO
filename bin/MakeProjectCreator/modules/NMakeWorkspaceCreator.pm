@@ -45,14 +45,16 @@ sub pre_workspace {
 }
 
 
-sub write_project_targets {
+sub write_comps {
   my($self)     = shift;
   my($fh)       = shift;
-  my($target)   = shift;
-  my($list)     = shift;
+  my($projects) = $self->get_projects();
+  my($pjs)      = $self->get_project_info();
+  my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
 
-  foreach my $project (@$list) {
+  print $fh "ALL:$crlf";
+  foreach my $project (@list) {
     my($dir)    = dirname($project);
     my($chdir)  = 0;
     my($back)   = 1;
@@ -69,27 +71,12 @@ sub write_project_targets {
       }
     }
 
+    ## These commands will work.  In practicality, only the
+    ## default configuration can be built at the top level.
     print $fh ($chdir ? "\tcd $dir$crlf" : "") .
-              "\t\$(MAKE) /f " . basename($project) . " $target$crlf" .
+              "\t\$(MAKE) /f " . basename($project) . " CFG=\"\$(CFG)\"$crlf" .
               ($chdir ? "\tcd " . ("../" x $back) . $crlf : "");
   }
-}
-
-
-sub write_comps {
-  my($self)     = shift;
-  my($fh)       = shift;
-  my($projects) = $self->get_projects();
-  my($pjs)      = $self->get_project_info();
-  my(@list)     = $self->sort_dependencies($projects, $pjs);
-  my($crlf)     = $self->crlf();
-
-  print $fh "ALL:$crlf";
-  $self->write_project_targets($fh, "CFG=\"\$(CFG)\"", \@list);
-
-  print $fh "$crlf" .
-            "CLEAN\tREALCLEAN:$crlf";
-  $self->write_project_targets($fh, "CLEAN", \@list);
 }
 
 

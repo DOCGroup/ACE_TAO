@@ -660,8 +660,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_LIB_TEXT("-ORBResources"))))
         {
           ACE_DEBUG ((LM_WARNING,
-                      ACE_LIB_TEXT ("\"-ORBResources\" has been ")
-                      ACE_LIB_TEXT ("deprecated.\n")));
+                      ACE_LIB_TEXT ("This option has been deprecated\n")));
 
           arg_shifter.consume_arg ();
         }
@@ -1764,35 +1763,21 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (())
 {
-  ACE_TRY
+  ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+
+  if (this->has_shutdown () == 0)
     {
-      {
-        ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
-
-        if (this->has_shutdown () != 0)
-          return;
-
-        // Check if we are on the right state, i.e. do not accept
-        // shutdowns with the 'wait_for_completion' flag set in the middle
-        // of an upcall (because those deadlock).
-        this->adapter_registry_.check_close (wait_for_completion
-                                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        // Set the 'has_shutdown' flag, so any further attempt to shutdown
-        // becomes a noop.
-        this->has_shutdown_ = 1;
-
-        // need to release the mutex, because some of the shutdown
-        // operations invoke application code, that could (and in practice
-        // does!) callback into ORB Core code.
-      }
+      this->adapter_registry_.check_close (wait_for_completion
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       this->adapter_registry_.close (wait_for_completion
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
+
+      // Set the shutdown flag
+      this->has_shutdown_ = 1;
 
       // Shutdown reactor.
       this->thread_lane_resources_manager ().shutdown_reactor ();
@@ -1809,7 +1794,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
 
       // Invoke Interceptor::destroy() on all registered interceptors.
       this->destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       // Explicitly destroy the object reference table since it
       // contains references to objects, which themselves may contain
@@ -1820,16 +1805,6 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       this->pi_current_ = 0;  // For the sake of consistency.
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
-  ACE_CATCHALL
-    {
-      // Do not allow exceptions to escape.. So catch all the
-      // exceptions.
-      // @@ Not sure what to print here for the users..
-
-    }
-  ACE_ENDTRY;
-
-  return;
 }
 
 void
@@ -1865,95 +1840,81 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC (())
 {
   size_t len = 0;   // The length of the interceptor array.
   size_t ilen = 0;  // The incremental length of the interceptor array.
 
-  ACE_TRY
-    {
 #if TAO_HAS_INTERCEPTORS == 1
-      TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
-        this->client_request_interceptors_.interceptors ();
+  TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
+    this->client_request_interceptors_.interceptors ();
 
-      len = client_interceptors.size ();
-      ilen = len;
-      for (size_t i = 0; i < len; ++i)
-        {
-          // Destroy the interceptors in reverse order in case the array
-          // list is only partially destroyed and another invocation
-          // occurs afterwards.
-          --ilen;
+  len = client_interceptors.size ();
+  ilen = len;
+  for (size_t i = 0; i < len; ++i)
+    {
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
 
-          client_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+      client_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
 
-          // Since Interceptor::destroy() can throw an exception, decrease
-          // the size of the interceptor array incrementally since some
-          // interceptors may not have been destroyed yet.  Note that this
-          // size reduction is fast since no memory is actually
-          // deallocated.
-          client_interceptors.size (ilen);
-        }
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      client_interceptors.size (ilen);
+    }
 
-      TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
-        this->server_request_interceptors_.interceptors ();
+  TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
+    this->server_request_interceptors_.interceptors ();
 
-      len = server_interceptors.size ();
-      ilen = len;
-      for (size_t j = 0; j < len; ++j)
-        {
-          // Destroy the interceptors in reverse order in case the array
-          // list is only partially destroyed and another invocation
-          // occurs afterwards.
-          --ilen;
+  len = server_interceptors.size ();
+  ilen = len;
+  for (size_t j = 0; j < len; ++j)
+    {
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
 
-          server_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+      server_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
 
-          // Since Interceptor::destroy() can throw an exception, decrease
-          // the size of the interceptor array incrementally since some
-          // interceptors may not have been destroyed yet.  Note that this
-          // size reduction is fast since no memory is actually
-          // deallocated.
-          server_interceptors.size (ilen);
-        }
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      server_interceptors.size (ilen);
+    }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-      TAO_IORInterceptor_List::TYPE &ior_interceptors =
-        this->ior_interceptors_.interceptors ();
+  TAO_IORInterceptor_List::TYPE &ior_interceptors =
+    this->ior_interceptors_.interceptors ();
 
-      len = ior_interceptors.size ();
-      ilen = len;
-      for (size_t k = 0; k < len; ++k)
-        {
-          // Destroy the interceptors in reverse order in case the array
-          // list is only partially destroyed and another invocation
-          // occurs afterwards.
-          --ilen;
-
-          ior_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          // Since Interceptor::destroy() can throw an exception, decrease
-          // the size of the interceptor array incrementally since some
-          // interceptors may not have been destroyed yet.  Note that this
-          // size reduction is fast since no memory is actually
-          // deallocated.
-          ior_interceptors.size (ilen);
-        }
-    }
-  ACE_CATCHALL
+  len = ior_interceptors.size ();
+  ilen = len;
+  for (size_t k = 0; k < len; ++k)
     {
-      // .. catch all the exceptions..
-      if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("(%P|%t) Exception in TAO_ORB_Core::destroy_interceptors () \n")));
-    }
-  ACE_ENDTRY;
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
 
-  return;
+      ior_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      ior_interceptors.size (ilen);
+    }
 }
 
 TAO_Thread_Lane_Resources &
@@ -2185,22 +2146,49 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // ****************************************************************
+
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator (void)
 {
-  return this->lane_resources ().input_cdr_dblock_allocator ();
+  if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
+        this->orb_resources_.input_cdr_dblock_allocator_ =
+          this->resource_factory ()->input_cdr_dblock_allocator ();
+    }
+  return this->orb_resources_.input_cdr_dblock_allocator_;
 }
+
 
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
-  return this->lane_resources ().input_cdr_buffer_allocator ();
+  if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
+        this->orb_resources_.input_cdr_buffer_allocator_ =
+          this->resource_factory ()->input_cdr_buffer_allocator ();
+    }
+  return this->orb_resources_.input_cdr_buffer_allocator_;
 }
+
 
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_msgblock_allocator (void)
 {
-  return this->lane_resources ().input_cdr_msgblock_allocator ();
+  if (this->orb_resources_.input_cdr_msgblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.input_cdr_msgblock_allocator_ == 0)
+        this->orb_resources_.input_cdr_msgblock_allocator_ =
+          this->resource_factory ()->input_cdr_msgblock_allocator ();
+    }
+  return this->orb_resources_.input_cdr_msgblock_allocator_;
 }
 
 ACE_Allocator*
@@ -2262,10 +2250,18 @@ TAO_ORB_Core::output_cdr_msgblock_allocator (void)
 }
 
 
-ACE_Allocator *
+ACE_Allocator*
 TAO_ORB_Core::transport_message_buffer_allocator (void)
 {
-  return this->lane_resources ().transport_message_buffer_allocator ();
+  if (this->orb_resources_.transport_message_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.transport_message_buffer_allocator_ == 0)
+        this->orb_resources_.transport_message_buffer_allocator_ =
+          this->resource_factory ()->input_cdr_dblock_allocator ();
+    }
+  return this->orb_resources_.transport_message_buffer_allocator_;
 }
 
 
@@ -2660,6 +2656,10 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
   : output_cdr_dblock_allocator_ (0),
     output_cdr_buffer_allocator_ (0),
     output_cdr_msgblock_allocator_ (0),
+    input_cdr_dblock_allocator_ (0),
+    input_cdr_buffer_allocator_ (0),
+    input_cdr_msgblock_allocator_ (0),
+    transport_message_buffer_allocator_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
     lane_ (0),
@@ -2689,6 +2689,22 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
   if (this->output_cdr_msgblock_allocator_ != 0)
     this->output_cdr_msgblock_allocator_->remove ();
   delete this->output_cdr_msgblock_allocator_;
+
+  if (this->input_cdr_dblock_allocator_ != 0)
+    this->input_cdr_dblock_allocator_->remove ();
+  delete this->input_cdr_dblock_allocator_;
+
+  if (this->input_cdr_buffer_allocator_ != 0)
+    this->input_cdr_buffer_allocator_->remove ();
+  delete this->input_cdr_buffer_allocator_;
+
+    if (this->input_cdr_msgblock_allocator_ != 0)
+    this->input_cdr_msgblock_allocator_->remove ();
+  delete this->input_cdr_msgblock_allocator_;
+
+  if (this->transport_message_buffer_allocator_ != 0)
+    this->transport_message_buffer_allocator_->remove ();
+  delete this->transport_message_buffer_allocator_;
 
 #if TAO_HAS_INTERCEPTORS == 1
   CORBA::release (this->client_request_info_);

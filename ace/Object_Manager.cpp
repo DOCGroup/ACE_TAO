@@ -249,16 +249,12 @@ ACE_Object_Manager::init (void)
 #     endif /* ! ACE_LACKS_ACE_SVCCONF */
 
           // Open the main thread's ACE_Log_Msg.
-          if (NULL == ACE_LOG_MSG)
-            return -1;
+          (void) ACE_LOG_MSG;
         }
 
       // Finally, indicate that the ACE_Object_Manager instance has
       // been initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZED;
-
-      // Allow tracing again (useful if user does init/fini/init)
-      ACE_Trace::start_tracing ();
 
       return 0;
     } else {

@@ -127,7 +127,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
               if (ACE_OS::strcmp (mp->name (), active_info->name ()) != 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
+                              ACE_LIB_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
                               active_info->name (),
                               mp->name ()));
                   mp->name (active_info->name ());
@@ -253,10 +253,10 @@ ACEXML_Svcconf_Handler::processingInstruction (const ACEXML_Char *,
 }
 
 void
-ACEXML_Svcconf_Handler::setDocumentLocator (ACEXML_Locator* locator,
+ACEXML_Svcconf_Handler::setDocumentLocator (ACEXML_Locator *,
                                             ACEXML_Env &)
 {
-  this->locator_ = locator;
+  // no-op
 }
 
 void
@@ -485,7 +485,7 @@ ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException& ex,
                                ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->getSystemId(),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -496,7 +496,7 @@ ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException& ex,
                                     ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->getSystemId(),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -507,7 +507,7 @@ ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex,
                                  ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->getSystemId(),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();

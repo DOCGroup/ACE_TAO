@@ -1,5 +1,4 @@
 // $Id$
-
 // ============================================================================
 //
 // = FILENAME
@@ -40,7 +39,6 @@
 // =====================================================================
 
 #include "ace/Message_Block.h"
-#include "ace/Log_Msg.h"
 
 static ACE_HANDLE file_handle = ACE_INVALID_HANDLE;
 static ACE_Message_Block mb1 (BUFSIZ + 1);

@@ -182,9 +182,11 @@ ACE_Future_Rep<T>::set (const T &r,
           ACE_TYPENAME OBSERVER_COLLECTION::iterator end =
             this->observer_collection_.end ();
 
-          while (iterator != end)
+          for (;
+               iterator != end;
+               ++iterator)
             {
-              OBSERVER *observer = *iterator++;
+              OBSERVER *observer = *iterator;
               observer->update (caller);
             }
 
@@ -234,7 +236,9 @@ ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
 
   // If the value is already produced, then notify observer
   if (this->value_ == 0)
-    result = this->observer_collection_.insert (observer);
+    {
+      result = this->observer_collection_.insert (observer);
+    }
   else
       observer->update (caller);
 

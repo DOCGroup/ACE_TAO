@@ -33,18 +33,18 @@ static const int NUM_LINES = 15;
 static void
 reverse_file (ACE_HANDLE file_handle,
               char *array,
-              size_t size)
+              int size)
 {
   int count = 0;
   // LynxOS 3.0.0/PowerPC needs the volatile qualifier, with -O2
   // optimization enabled and without ACE_HAS_INLINE.
-  volatile size_t i = size;
+  volatile int i = size;
   --i;
 
   if (array[i] == '\0')
     array[i] = '\n';
 
-  while (i-- > 0)
+  while (--i >= 0)
     {
       if (array[i] == '\n')
         {

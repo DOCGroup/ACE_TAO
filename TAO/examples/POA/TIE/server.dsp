@@ -91,15 +91,15 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\test_i.cpp
+SOURCE=.\Foo_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\testC.cpp
+SOURCE=.\FooC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\testS.cpp
+SOURCE=.\FooS.cpp
 # End Source File
 # Begin Source File
 
@@ -111,19 +111,19 @@ SOURCE=.\server.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\test_i.h
+SOURCE=.\Foo_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\testC.h
+SOURCE=.\FooC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\testS.h
+SOURCE=.\FooS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\testS_T.h
+SOURCE=.\FooS_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -131,14 +131,14 @@ SOURCE=.\testS_T.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\test.idl
+SOURCE=.\Foo.idl
 
 !IF  "$(CFG)" == "POA TIE Server - Win32 Release"
 
 USERDEP__FOO_I="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\test.idl
-InputName=test
+InputPath=.\Foo.idl
+InputName=Foo
 
 BuildCmds= \
 	..\..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
@@ -176,8 +176,8 @@ BuildCmds= \
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\test.idl
-InputName=test
+InputPath=.\Foo.idl
+InputName=Foo
 
 BuildCmds= \
 	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl

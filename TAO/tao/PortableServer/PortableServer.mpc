@@ -1,7 +1,6 @@
-project : taolib, core {
-  sharedname  = TAO_PortableServer
-  libs       += TAO
-  dllflags    = TAO_PORTABLESERVER_BUILD_DLL
-  libout      = ..
-  include_dir = tao/PortableServer
+project : taolib {
+  sharedname = TAO_PortableServer
+  libs      += TAO
+  dllflags   = TAO_PORTABLESERVER_BUILD_DLL
+  libout     = ..
 }

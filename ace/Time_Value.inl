@@ -27,7 +27,6 @@ ACE_Time_Value::set (long sec, long usec)
   // ACE_OS_TRACE ("ACE_Time_Value::set");
   this->tv_.tv_sec = sec;
   this->tv_.tv_usec = usec;
-  this->normalize ();
 }
 
 ACE_INLINE void
@@ -72,7 +71,7 @@ ACE_Time_Value::set (const timeval &tv)
 }
 
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (const struct timeval &tv)
+ACE_Time_Value::ACE_Time_Value (const timeval &tv)
   // : tv_ ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
@@ -85,6 +84,8 @@ ACE_Time_Value::ACE_Time_Value (void)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (0, 0);
+
+  // Don't need to normalize time value of (0, 0).
 }
 
 ACE_INLINE
@@ -92,6 +93,7 @@ ACE_Time_Value::ACE_Time_Value (long sec, long usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (sec, usec);
+  this->normalize ();
 }
 
 // Returns number of seconds.
@@ -168,7 +170,7 @@ ACE_Time_Value::operator *= (double d)
   time *= d;
   this->sec ((long)(time / ACE_ONE_SECOND_IN_USECS));
   this->usec (((long)time) % ACE_ONE_SECOND_IN_USECS);
-  this->normalize ();
+
   return *this;
 }
 

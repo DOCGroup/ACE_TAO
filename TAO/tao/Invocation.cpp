@@ -370,7 +370,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
 
 // Send request.
 int
-TAO_GIOP_Invocation::invoke (CORBA::Boolean write_semantics
+TAO_GIOP_Invocation::invoke (CORBA::Boolean is_synchronous
                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -386,7 +386,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean write_semantics
     this->transport_->send_request (this->stub_,
                                     this->orb_core_,
                                     this->out_stream_,
-                                    write_semantics,
+                                    is_synchronous,
                                     this->max_wait_time_);
 
   //
@@ -589,8 +589,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
     }
 
   // Just send the request, without trying to wait for the reply.
-  int retval = TAO_GIOP_Invocation::invoke (TAO_Transport::TAO_TWOWAY_REQUEST
-                                            ACE_ENV_ARG_PARAMETER);
+  int retval = TAO_GIOP_Invocation::invoke (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)
@@ -963,12 +962,12 @@ TAO_GIOP_Oneway_Invocation::invoke (ACE_ENV_SINGLE_ARG_DECL)
       || this->sync_scope_ == TAO::SYNC_EAGER_BUFFERING
       || this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
     {
-      return TAO_GIOP_Invocation::invoke (TAO_Transport::TAO_ONEWAY_REQUEST
+      return TAO_GIOP_Invocation::invoke (0
                                           ACE_ENV_ARG_PARAMETER);
     }
   if (this->sync_scope_ == Messaging::SYNC_WITH_TRANSPORT)
     {
-      return TAO_GIOP_Invocation::invoke (TAO_Transport::TAO_TWOWAY_REQUEST
+      return TAO_GIOP_Invocation::invoke (1
                                           ACE_ENV_ARG_PARAMETER);
     }
 

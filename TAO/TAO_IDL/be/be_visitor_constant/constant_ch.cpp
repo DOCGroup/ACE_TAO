@@ -54,12 +54,8 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // If we are defined in the outermost scope, then the value is assigned
   // to us here itself, else it will be in the *.cpp file.
 
-//  if (be_global->gen_inline_constants ())
-  if (! node->is_nested ()
-      || node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+  if (be_global->gen_inline_constants ())
     {
-      *os << "const ";
-
       if (node->et () == AST_Expression::EV_enum)
         {
           *os << node->enum_full_name ();
@@ -69,13 +65,27 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
           *os << node->exprtype_to_string ();
         }
 
-      *os << " " << node->local_name () << " = "
+      *os << " const "
+          << node->local_name () << " = "
           << node->constant_value ();
     }
-  // We are nested inside an interface or a valuetype.
+  // Is our enclosing scope a module? We need this check because for
+  // platforms that support namespaces, the constant must be declared
+  // extern.
   else 
     {
-      *os << "static const ";
+      AST_Decl::NodeType nt = node->defined_in ()->scope_node_type ();
+
+      if (node->is_nested () && nt == AST_Decl::NT_module)
+        {
+          *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+        }
+      else
+        {
+          *os << "static ";
+        }
+
+      *os << "const ";
 
       if (node->et () == AST_Expression::EV_enum)
         {

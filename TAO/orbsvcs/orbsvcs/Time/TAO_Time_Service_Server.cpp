@@ -47,17 +47,15 @@ TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULongLong TAO_Time_Base_Offset = ACE_UINT64_LITERAL(0x2D8539C80);
 #endif
 
-  ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
-
   // Return the local time of the system as a UTO.
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO ((TAO_Time_Base_Offset +
                               ACE_static_cast(CORBA::ULongLong,
-                                              timeofday.sec ())) *
+                                              ACE_OS::gettimeofday ().sec ())) *
                              ACE_static_cast(ACE_UINT32,
                                              10000000) +
                              ACE_static_cast(CORBA::ULongLong,
-                                             timeofday ().usec () * 10),
+                                             ACE_OS::gettimeofday ().usec () * 10),
                              0,
                              0),
                     CORBA::NO_MEMORY ());

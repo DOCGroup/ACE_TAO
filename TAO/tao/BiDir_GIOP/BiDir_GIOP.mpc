@@ -1,7 +1,6 @@
-project : taolib, core {
-  sharedname  = TAO_BiDirGIOP
-  libs       += TAO
-  dllflags    = TAO_BIDIRGIOP_BUILD_DLL
-  libout      = ..
-  include_dir = tao/BiDir_GIOP
+project : taolib {
+  sharedname = TAO_BiDirGIOP
+  libs      += TAO
+  dllflags   = TAO_BIDIRGIOP_BUILD_DLL
+  libout     = ..
 }

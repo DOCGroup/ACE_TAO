@@ -9,7 +9,7 @@
 //     Servant_Locator.cpp
 //
 // = DESCRIPTION
-//     Implementation of ServantLocator class, used with a POA
+//     Implementation of ServantLocator_i class, used with a POA
 //     having a NON_RETAIN policy.
 //
 // = AUTHOR
@@ -26,10 +26,10 @@ ACE_RCSID(Loader, Servant_Locator, "$Id$")
 // is used for obtaining the servant. The garbage_collection_function
 // is used to kill the servant.
 
-ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
-                                const char *dllname,
-                                const char *factory_function,
-                                const char *garbage_collection_function)
+ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb,
+                                    const char *dllname,
+                                    const char *factory_function,
+                                    const char *garbage_collection_function)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
   // The dll is opened using the dllname passed.
@@ -45,16 +45,20 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
   // Cannot go from void* to function pointer directly. Cast the void*
   // to long first.
   //
-  void *symbol = this->dll_.symbol (factory_function);
+  char *function_name = ACE::ldname (factory_function);
+  void *symbol = this->dll_.symbol (function_name);
   long function = ACE_reinterpret_cast (long, symbol);
+  delete [] function_name;
 
   servant_supplier_ =
     ACE_reinterpret_cast (SERVANT_FACTORY, function);
 
   // Obtain the symbol for the function which will destroy the
   // servant.
-  symbol = this->dll_.symbol (garbage_collection_function);
+  function_name = ACE::ldname (garbage_collection_function);
+  symbol = this->dll_.symbol (function_name);
   function = ACE_reinterpret_cast (long, symbol);
+  delete [] function_name;
 
   servant_garbage_collector_ =
     ACE_reinterpret_cast (SERVANT_GARBAGE_COLLECTOR, function);
@@ -63,11 +67,11 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
-ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
-                           PortableServer::POA_ptr poa,
-                           const char * /* operation */,
-                           PortableServer::ServantLocator::Cookie &cookie
-                           ACE_ENV_ARG_DECL)
+ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
+                             PortableServer::POA_ptr poa,
+                             const char * /* operation */,
+                             PortableServer::ServantLocator::Cookie &cookie
+                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -78,7 +82,7 @@ ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   if (servant != 0)
     {
       // Return the servant as the cookie , used as a check when
-      // postinvoke is called on this ServantLocator.
+      // postinvoke is called on this ServantLocator_i.
 
       cookie = servant;
       return servant;
@@ -93,12 +97,12 @@ ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
 // postinvoke method.
 
 void
-ServantLocator::postinvoke (const PortableServer::ObjectId &oid,
-                            PortableServer::POA_ptr poa ,
-                            const char * /* operation */,
-                            PortableServer::ServantLocator::Cookie cookie,
-                            PortableServer::Servant servant
-                            ACE_ENV_ARG_DECL_NOT_USED)
+ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
+                              PortableServer::POA_ptr poa ,
+                              const char * /* operation */,
+                              PortableServer::ServantLocator::Cookie cookie,
+                              PortableServer::Servant servant
+                              ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the passed servant with the cookie.

@@ -20,29 +20,32 @@
 // ================================================================
 
 #include "ace/Get_Opt.h"
-#include "test_i.h"
+#include "MyFooServant.h"
 
 ACE_RCSID(Reference_Counted_Servant, server, "$Id$")
 
-  // This is to remove "inherits via dominance" warnings from MSVC.
-  // MSVC is being a little too paranoid.
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-  class reference_counted_test_i : public virtual PortableServer::RefCountServantBase,
-                                   public virtual test_i
-  {
-  public:
-    reference_counted_test_i (CORBA::ORB_ptr orb,
-                              PortableServer::POA_ptr poa);
-    // Constructor - takes a POA and a value parameter
-  };
+class Reference_Counted_Foo : public virtual PortableServer::RefCountServantBase,
+                              public virtual MyFooServant
+{
+public:
+  Reference_Counted_Foo (CORBA::ORB_ptr orb,
+                         PortableServer::POA_ptr poa,
+                         CORBA::Long value);
+  // Constructor - takes a POA and a value parameter
+};
 
-reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,
-                                                    PortableServer::POA_ptr poa)
-  : test_i (orb,
-            poa)
+Reference_Counted_Foo::Reference_Counted_Foo (CORBA::ORB_ptr orb,
+                                              PortableServer::POA_ptr poa,
+                                              CORBA::Long value)
+  : MyFooServant (orb,
+                  poa,
+                  value)
 {
 }
 
@@ -138,23 +141,24 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Create a servant.
-      reference_counted_test_i *servant = 0;
-      ACE_NEW_RETURN (servant,
-                      reference_counted_test_i (orb.in (),
-                                                root_poa.in ()),
+      Reference_Counted_Foo *foo_impl = 0;
+      ACE_NEW_RETURN (foo_impl,
+                      Reference_Counted_Foo (orb.in (),
+                                             root_poa.in (),
+                                             27),
                       -1);
 
-      // Get Object Reference for the servant object.
-      test_var test = servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Get Object Reference for the foo_impl object.
+      Foo_var foo = foo_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // This means that the ownership of <servant> now belongs to
+      // This means that the ownership of <foo_impl> now belongs to
       // the POA.
-      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      foo_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
-      CORBA::String_var ior = orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior = orb->object_to_string (foo.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

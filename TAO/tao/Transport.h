@@ -39,7 +39,6 @@ class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
 
 class TAO_Queued_Message;
-class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
 
 
@@ -445,6 +444,8 @@ protected:
    * will reduce footprint and simplify the process of implementing a
    * pluggable protocol.
    */
+  // @@ this is broken once we add the lock b/c it returns the thing
+  // we're trying to lock down! (CJC)
   virtual ACE_Event_Handler * event_handler_i (void) = 0;
 
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
@@ -557,15 +558,6 @@ public:
                               int block = 0);
 
 
-  enum
-    {
-      TAO_ONEWAY_REQUEST = 0,
-      TAO_TWOWAY_REQUEST = 1,
-      TAO_REPLY
-    };
-
-
-
   /// Prepare the waiting and demuxing strategy to receive a reply for
   /// a new request.
   /**
@@ -595,7 +587,7 @@ public:
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
-                            int message_semantics,
+                            int is_synchronous,
                             ACE_Time_Value *max_time_wait) = 0;
 
 
@@ -609,32 +601,11 @@ public:
    * header can finally be set to the proper value.
    *
    */
+  // @@ lockme
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
+                            int is_synchronous = 1,
                             ACE_Time_Value *max_time_wait = 0) = 0;
-
-
-  /// Sent the contents of <message_block>
-  /**
-   * @param stub The object reference used for this operation, useful
-   *             to obtain the current policies.
-   * @param message_semantics If this is set to TAO_TWO_REQUEST
-   *        this method will block until the operation is completely
-   *        written on the wire. If it is set to other values this
-   *        operation could return.
-   * @param message_block The CDR encapsulation of the GIOP message
-   *             that must be sent.  The message may consist of
-   *             multiple Message Blocks chained through the cont()
-   *             field.
-   * @param max_wait_time The maximum time that the operation can
-   *             block, used in the implementation of timeouts.
-   */
-  virtual int send_message_shared (TAO_Stub *stub,
-					               int message_semantics,
-							       const ACE_Message_Block *message_block,
-								   ACE_Time_Value *max_wait_time);
-
 
 protected:
   /// Register the handler with the reactor.
@@ -647,6 +618,7 @@ protected:
    * thread-per-connection mode.  In that case putting the connection
    * in the Reactor would produce unpredictable results anyway.
    */
+  // @@ lockme
   virtual int register_handler_i (void) = 0;
 
   /// Called by the handle_input_i  (). This method is used to parse
@@ -705,19 +677,6 @@ protected:
   /// Make a queued data from the <incoming> message block
   TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
 
-    /// Implement send_message_shared() assuming the handler_lock_ is
-  /// held.
-  int send_message_shared_i (TAO_Stub *stub,
-                             int message_semantics,
-                             const ACE_Message_Block *message_block,
-                             ACE_Time_Value *max_wait_time);
-
-  /// Check if the underlying event handler is still valid.
-  /**
-   * @return Returns -1 if not, 0 if it is.
-   */
-  int check_event_handler_i (const char *caller);
-
 public:
 
 
@@ -728,7 +687,23 @@ public:
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = 0);
 
-
+  /// Sent the contents of <message_block>
+  /**
+   * @param stub The object reference used for this operation, useful
+   *             to obtain the current policies.
+   * @param is_synchronous If set this method will block until the
+   *             operation is completely written on the wire
+   * @param message_block The CDR encapsulation of the GIOP message
+   *             that must be sent.  The message may consist of
+   *             multiple Message Blocks chained through the cont()
+   *             field.
+   * @param max_wait_time The maximum time that the operation can
+   *             block, used in the implementation of timeouts.
+   */
+  int send_message_shared (TAO_Stub *stub,
+                           int is_synchronous,
+                           const ACE_Message_Block *message_block,
+                           ACE_Time_Value *max_wait_time);
 
   /// Send a message block chain, assuming the lock is held
   int send_message_block_chain_i (const ACE_Message_Block *message_block,
@@ -827,17 +802,6 @@ private:
   int send_synchronous_message_i (const ACE_Message_Block *message_block,
                                   ACE_Time_Value *max_wait_time);
 
-  /// Send a reply message, i.e. do not block until the message is on
-  /// the wire, but just return after adding them  to the queue.
-  int send_reply_message_i (const ACE_Message_Block *message_block,
-                            ACE_Time_Value *max_wait_time);
-
-  /// A helper method used by <send_synchronous_message_i> and
-  /// <send_reply_message_i>. Reusable code that could be used by both
-  /// the methods.
-  int send_synch_message_helper_i (TAO_Synch_Queued_Message &s,
-                                   ACE_Time_Value *max_wait_time);
-
   /// Check if the flush timer is still pending
   int flush_timer_pending (void) const;
 
@@ -845,7 +809,12 @@ private:
   /// not pending
   void reset_flush_timer (void);
 
-  
+  /// Check if the underlying event handler is still valid.
+  /**
+   * @return Returns -1 if not, 0 if it is.
+   */
+  int check_event_handler_i (const char *caller);
+
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
@@ -869,6 +838,13 @@ private:
   /// connection is closed.
   void send_connection_closed_notifications (void);
 
+  /// Implement send_message_shared() assuming the handler_lock_ is
+  /// held.
+  int send_message_shared_i (TAO_Stub *stub,
+                             int is_synchronous,
+                             const ACE_Message_Block *message_block,
+                             ACE_Time_Value *max_wait_time);
+
   /// Implement close_connection() assuming the handler_lock_ is held.
   void close_connection_i (void);
 
@@ -890,7 +866,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
 
 protected:
-
   /// IOP protocol tag.
   CORBA::ULong tag_;
 

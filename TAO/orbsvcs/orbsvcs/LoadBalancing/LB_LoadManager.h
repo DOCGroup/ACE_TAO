@@ -71,39 +71,49 @@ public:
                      CosLoadBalancing::LocationNotFound));
 
   /// Inform member at given location of load alert condition.
-  virtual void enable_alert (const PortableGroup::Location & the_location
+  virtual void enable_alert (PortableGroup::ObjectGroup_ptr object_group,
+                             const PortableGroup::Location & the_location
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CosLoadBalancing::LoadAlertNotFound));
+    ACE_THROW_SPEC ((PortableGroup::ObjectGroupNotFound,
+                     CosLoadBalancing::LoadAlertNotFound));
 
   /// Inform member at given location that load alert condition has
   /// passed.
-  virtual void disable_alert (const PortableGroup::Location & the_location
+  virtual void disable_alert (PortableGroup::ObjectGroup_ptr object_group,
+                              const PortableGroup::Location & the_location
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CosLoadBalancing::LoadAlertNotFound));
+    ACE_THROW_SPEC ((PortableGroup::ObjectGroupNotFound,
+                     CosLoadBalancing::LoadAlertNotFound));
 
   /// Register a LoadAlert object for the member at the given
   /// location.
   virtual void register_load_alert (
+      PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
       CosLoadBalancing::LoadAlert_ptr load_alert
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound,
                      CosLoadBalancing::LoadAlertAlreadyPresent,
                      CosLoadBalancing::LoadAlertNotAdded));
 
   /// Retrieve the LoadAlert object for the member at the given
   /// location.
   virtual CosLoadBalancing::LoadAlert_ptr get_load_alert (
+      PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound,
                      CosLoadBalancing::LoadAlertNotFound));
 
   /// Remove (de-register) the LoadAlert object for the member at the
   /// given location.
-  virtual void remove_load_alert (const PortableGroup::Location & the_location
+  virtual void remove_load_alert (PortableGroup::ObjectGroup_ptr object_group,
+                                  const PortableGroup::Location & the_location
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound,
                      CosLoadBalancing::LoadAlertNotFound));
 
   /// Register a load monitor with the load balancer.
@@ -358,7 +368,6 @@ public:
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the MemberLocator).
   void init (ACE_Reactor * reactor,
-             CORBA::ORB_ptr orb,
              PortableServer::POA_ptr root_poa
              ACE_ENV_ARG_DECL);
 
@@ -368,7 +377,7 @@ protected:
   /**
    * Destructor is protected to enforce correct memory management
    * through reference counting.
-   */
+   */ 
   ~TAO_LB_LoadManager (void);
 
 private:
@@ -394,9 +403,7 @@ private:
 
   /// Return a reference to the built-in load balancing strategy named
   /// "strategy."
-  CosLoadBalancing::Strategy_ptr built_in_strategy (
-    CosLoadBalancing::StrategyInfo * info
-    ACE_ENV_ARG_DECL);
+  CosLoadBalancing::Strategy_ptr built_in_strategy (const char * strategy);
 
   /// Check validity of Strategy or CustomStrategy property.
   /**
@@ -410,7 +417,7 @@ private:
   /// Initialize the built-in LeastLoaded Strategy with the given
   /// LeastLoaded properties.
   void init_least_loaded (const PortableGroup::Properties & props
-                          ACE_ENV_ARG_DECL);
+                        ACE_ENV_ARG_DECL);
 
   /// Utility method to extract a CORBA::Float value from the given
   /// property.
