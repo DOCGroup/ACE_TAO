@@ -292,7 +292,7 @@ typedef unsigned __int64 ACE_UINT64;
         // If we are making a release, and the user has not specified
         // inline directives, we will default to inline
         #if ! defined (__ACE_INLINE__)
-                #define __ACE_INLINE__
+                #define __ACE_INLINE__ 1
         #endif /* __ACE_INLINE__ */
 #endif
 
