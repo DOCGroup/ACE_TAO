@@ -51,9 +51,12 @@
 	    <P>System exceptions are even easier, we always know how
 	      to create them.
 	    </P>
+	    <BR>[STATUS] SII is working OK, we still need to complete
+	    the support for DII.
 	  </LI>
 
-	  <LI>Add the _raise() method to the exceptions...
+	  <LI>Add the _raise() method to the exceptions.
+	    <BR>[DONE]
 	  </LI>
 
 	  <LI>On the server side: catch any CORBA exceptions thrown by
@@ -61,27 +64,41 @@
 	    proper <CODE>Reply</CODE> to the client side.
 	    In the case of another C++ exception should we do
 	    something?
+	    <BR>[DONE]
 	  </LI>
 
 	  <LI>On the client side, after creating the exception with
 	    the right dynamic type we must invoke
 	    <CODE>_raise()</CODE> on it.
+	    <BR>[DONE]
 	  </LI>
 
-	  <LI>Support the alternative mapping with an environment
-	    variable, but with a default value (that <B>must</B> be
-	    obtained from TSS).
+	  <LI>Provide a TSS default value for the CORBA_Environment,
+	    all the methods in the ORB library should use this
+	    default.
 	  </LI>
 
-	  <LI>Support the standard mapping, without the environment
-	    variable.
-	    <BR>Add throw specs to the required methods (the stub,
-	    skeleton, colocated classes, _tie classes, the
-	    implementations in tests and examples, uf).
-	    <BR>Should throw specs show up on the method
-	    <EM>definition</EM>?
+	  <LI>The IDL compiler should be able to generate the
+	    alternative mapping, but with the TSS default for the env
+	    argument.
+	  </LI>
+
+	  <LI>The IDL compiler should generate the standard mapping,
+	    without the environment argument.
 	  </LI>
 	  
+	  <LI>In general we will need to complete and debug the
+	    <CODE>TAO_TRY</CODE> macros;
+	    they have limitations when dealing with the
+	    alternative mapping, but are very useful.
+	    <BR>[STATUS] This seems to be OK now, the code seems to
+	    compile and work correctly now.
+	  </LI>
+
+	  <LI>We need to test the ORB for resource leaking in the
+	    presence of exceptions.
+	  </LI>
+
 	  <LI>We <EM>could</EM> write portable server side code with
 	    any of the mappings above if we use a macro for the env
 	    argument, but the results are ugly:
@@ -97,18 +114,9 @@ class Foo {
                TAO_THROW_SPEC ((CORBA::SystemException));
 };
 	    </PRE>
-	    note the missing comman before the TAO_ENV_ARG parameter.
+	    note the missing comma before the TAO_ENV_ARG parameter.
 	  </LI>
 
-	  <LI>In general we will need to complete and debug the
-	    <CODE>TAO_TRY</CODE> macros;
-	    accepting their limitations when dealing with the
-	    alternative mapping, they are still useful;
-	    but we need some macro to encapsulate a common use of
-	    the CORBA::Environment argument: checking if it contains an
-	    exception and then returning and more flexibility wrt the
-	    argument name.
-	  </LI>
 	</UL>
 	<BR>[STATUS] Carlos is working on this.
 
