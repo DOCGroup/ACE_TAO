@@ -53,7 +53,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 
     <P> Current status: (As of January 7th, 1998.)
     <UL>
-      <LI> Support for the "native" keyword added </LI>
+      <LI> Support for the "native" keyword added. </LI>
 
       <LI> Introduced tests for object references to TAO. Still
           incomplete. </LI>
@@ -172,6 +172,11 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 
       Future work:
       <UL>
+
+      <LI>Need to relocate the various libraries used by the IDL
+      compiler out of the ACE directory.  Having them here can cause
+      problems when working with multiple versions of TAO and a single
+      version of ACE.</li>
 
 	<LI>Improve IDL compiler to generate compiled form of stubs/skeletons.</LI>
 
