@@ -21,7 +21,7 @@ dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 dnl miscellaneous macros
 
 
-dnl add compiler flags to the CXXFLAGS and CFLAGS variables when doing an
+dnl Add compiler flags to the CXXFLAGS and CFLAGS variables when doing an
 dnl AC_TRY_COMPILE (not ACE_TRY_COMPILE).
 dnl Use this macro when adding include directories to the compiler flags,
 dnl for example.
