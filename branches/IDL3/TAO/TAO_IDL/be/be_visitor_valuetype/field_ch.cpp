@@ -426,14 +426,14 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_any:
       // Set method.
       *os << pre_op () << "void " << ub->local_name () << " ("
-          << bt->name () << ")"
+          << bt->name () << " &)"
           << post_op () << be_nl;
       // Get method (read-only).
-      *os << pre_op () << "const " << bt->name () << " "
+      *os << pre_op () << "const " << bt->name () << " &"
           << ub->local_name () << " (void) const"
           << post_op () << be_nl << be_nl;
       // Get method (read/write).
-      *os << pre_op () << bt->name () << " "
+      *os << pre_op () << bt->name () << " &"
           << ub->local_name () << " (void)"
           << post_op () << be_nl << be_nl;
       break;

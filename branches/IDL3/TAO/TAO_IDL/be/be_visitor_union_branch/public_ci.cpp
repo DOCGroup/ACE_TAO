@@ -695,6 +695,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
     {
       *os << "_ptr";
     }
+  else if (pt == AST_PredefinedType::PT_any)
+    {
+      *os << " &";
+    }
 
   *os << " val)" << be_nl
       << "{" << be_idt_nl
@@ -788,7 +792,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
     case AST_PredefinedType::PT_any:
       // Get method with read-only access.
       *os << "// retrieve the member" << be_nl
-          << "ACE_INLINE const " << bt->name () << be_nl
+          << "ACE_INLINE const " << bt->name () << " &" << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl
@@ -797,7 +801,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
 
       // Get method with read/write access
       *os << "// retrieve the member" << be_nl
-          << "ACE_INLINE " << bt->name () << be_nl
+          << "ACE_INLINE " << bt->name () << " &" << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void)" << be_nl
           << "{" << be_idt_nl
