@@ -12,6 +12,7 @@
 #include "tao/Timeprobe.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Messaging_Policy_i.h"
+#include "tao/UIOP_Endpoint.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Connect.i"
