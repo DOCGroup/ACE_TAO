@@ -3,7 +3,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
-#include "ace/ARGV.h"
 #include "ace/Arg_Shifter.h"
 
 #include "TAO_Internal.h"
@@ -17,10 +16,13 @@
 #include "CORBALOC_Parser.h"
 #include "FILE_Parser.h"
 #include "DLL_Parser.h"
+#include "StringSeqC.h"
 
 #include "Object_Loader.h"
 
-ACE_RCSID(tao, TAO_Internal, "$Id$")
+ACE_RCSID (tao,
+           TAO_Internal,
+           "$Id$")
 
 int TAO_Internal::service_open_count_ = 0;
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
@@ -40,7 +42,7 @@ TAO_Internal::open_services (int &argc, char **argv)
 {
   // Construct an argument vector specific to the Service
   // Configurator.
-  ACE_ARGV svc_config_argv;
+  CORBA::StringSeq svc_config_argv;
 
   // Be certain to copy the program name so that service configurator
   // has something to skip!
@@ -48,7 +50,9 @@ TAO_Internal::open_services (int &argc, char **argv)
   if (argc > 0 && argv != 0)
     argv0 = argv[0];
 
-  svc_config_argv.add (argv0);
+  CORBA::ULong len = 0;
+  svc_config_argv.length (1);
+  svc_config_argv[0] = argv0;
 
   // Should we skip the <ACE_Service_Config::open> method, e.g., if we
   // already being configured by the ACE Service Configurator.
@@ -74,7 +78,11 @@ TAO_Internal::open_services (int &argc, char **argv)
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBDaemon") == 0)
         {
           // Be a daemon
-          svc_config_argv.add ("-b");
+
+          len = svc_config_argv.length ();
+          svc_config_argv.length (len + 1);
+
+          svc_config_argv[len] = "-b";
 
           arg_shifter.consume_arg ();
         }
@@ -84,13 +92,15 @@ TAO_Internal::open_services (int &argc, char **argv)
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBSvcConfDirective")))
         {
+          len = svc_config_argv.length ();
+          svc_config_argv.length (len + 2);  // 2 arguments to add
+
           // This is used to pass arguments to the Service
           // Configurator using the "command line" to provide
           // configuration information rather than using a svc.conf
           // file.  Pass the "-S" to the service configurator.
-          svc_config_argv.add ("-S");
-
-          svc_config_argv.add (current_arg);
+          svc_config_argv[len] = "-S";
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg ();
         }
@@ -109,21 +119,23 @@ TAO_Internal::open_services (int &argc, char **argv)
               // is set to ENOENT for some reason.
               errno = EINVAL;
 
-              ACE_ERROR_RETURN ((LM_ERROR, 
+              ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Service Configurator ")
-                                 ACE_TEXT ("unable to open file %s\n"), 
+                                 ACE_TEXT ("unable to open file %s\n"),
                                            current_arg),
                                 -1);
-                          
+
             }
           else
             {
               ACE_OS::fclose (conf_file);
             }
 
-          svc_config_argv.add ("-f");
+          len = svc_config_argv.length ();
+          svc_config_argv.length (len + 2);  // 2 arguments to add
 
-          svc_config_argv.add (current_arg);
+          svc_config_argv[len] = "-f";
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg();
         }
@@ -136,9 +148,9 @@ TAO_Internal::open_services (int &argc, char **argv)
         arg_shifter.ignore_arg ();
     }
 
-  int svc_config_argc = svc_config_argv.argc ();
+  int svc_config_argc = svc_config_argv.length ();
   return TAO_Internal::open_services_i (svc_config_argc,
-                                        svc_config_argv.argv (),
+                                        svc_config_argv.get_buffer (),
                                         0,  // @@ What about this argument?
                                         skip_service_config_open);
 }

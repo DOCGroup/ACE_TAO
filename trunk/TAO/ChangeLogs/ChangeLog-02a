@@ -1,3 +1,17 @@
+Thu May 17 16:23:40 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Internal.cpp (open_services):
+
+	  Use a CORBA::StringSeq to contain the argument vector for the
+	  Service Configurator instead of an ACE_ARGV to get around some
+	  unwanted side effects caused by the latter.  With this change,
+	  redundant/nested quotes around "-ORBSvcConf..." ORB options is
+	  no longer needed.
+
+	* tao/LRU_Connection_Purging_Strategy.cpp (update_item_i):
+
+	  Fixed unused argument warning.
+
 Thu May 17 15:53:26 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.h (TAO_ORB_Core): 
