@@ -1,3 +1,15 @@
+Wed Oct 27 13:54:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynAnyC.h:
+	  Put in some missing TAO_EXPORT macros.
+
+	* tao/Typecode.cpp:
+	  Added to the checks for recursive unions and structs
+	  in private_equal_*. The existing code was not 
+	  catching some cases. Thanks to Lothar Werzinger
+	  <werzinger.lothar@krones.de> for the test example
+	  that turned this up.
+
 Mon Oct 25 08:14:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/Messaging_Policy_i.cpp (TAO_Sync_Scope_Policy and
