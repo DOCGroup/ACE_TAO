@@ -178,3 +178,13 @@ main (int argc, char *argv[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Hash_Map_Manager<KEY, unsigned int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<KEY, unsigned int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<KEY, unsigned int>;
+template class ACE_Map_Manager<KEY, unsigned int, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<KEY, unsigned int, ACE_Null_Mutex>;
+template class ACE_Map_Reverse_Iterator<KEY, unsigned int, ACE_Null_Mutex>;
+template class ACE_Map_Entry<KEY, unsigned int>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
