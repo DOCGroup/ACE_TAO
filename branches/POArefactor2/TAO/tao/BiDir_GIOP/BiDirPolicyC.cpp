@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:301
 
 
 #include "BiDirGIOP.h"
@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "BiDirPolicyC.i"
+#include "BiDirPolicyC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -91,7 +91,7 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*BiDirPolicy__TAO_BidirectionalPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -112,10 +112,10 @@ BiDirPolicy::BidirectionalPolicy::_narrow (
     {
       return BidirectionalPolicy::_nil ();
     }
-
+  
   BidirectionalPolicy_ptr proxy =
     dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
-
+  
   return BidirectionalPolicy::_duplicate (proxy);
 }
 
@@ -129,10 +129,10 @@ BiDirPolicy::BidirectionalPolicy::_unchecked_narrow (
     {
       return BidirectionalPolicy::_nil ();
     }
-
+  
   BidirectionalPolicy_ptr proxy =
     dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
-
+  
   return BidirectionalPolicy::_duplicate (proxy);
 }
 
@@ -143,7 +143,7 @@ BiDirPolicy::BidirectionalPolicy::_duplicate (BidirectionalPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -192,7 +192,7 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -205,7 +205,7 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         BiDirPolicy::BidirectionalPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         BiDirPolicy::BidirectionalPolicy
@@ -222,10 +222,10 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         BiDirPolicy::BidirectionalPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         BiDirPolicy::BidirectionalPolicy
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

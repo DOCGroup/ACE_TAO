@@ -1,3 +1,8 @@
+Tue Nov  9 15:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDIR_GIOP/*:
+          Regenerated IDL, updated diffs, removed msc_ver >= 1200 checks
+
 Tue Nov  9 14:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Default_Servant/Default_Servant.cpp:
