@@ -210,6 +210,9 @@ TAO_NS_Periodic_Supplier::handle_svc (ACE_ENV_SINGLE_ARG_DECL)
   buffer <<= this->iter_;
   zeroth_event.opt_header ("MaxCount", buffer);
 
+  buffer <<= this->load_;
+  zeroth_event.opt_header ("Load", buffer);
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event 0th event\n"));
 

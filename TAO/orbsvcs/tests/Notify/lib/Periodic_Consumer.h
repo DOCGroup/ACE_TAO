@@ -86,6 +86,9 @@ protected:
   /// A filter might not allow some events to through. we can tell the consumer what to expect.
   int max_count_;
 
+  /// The Load
+  CORBA::ULong load_;
+
   /// Stats house keeping
   Task_Stats stats_;
 

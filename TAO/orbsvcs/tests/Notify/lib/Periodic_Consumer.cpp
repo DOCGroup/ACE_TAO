@@ -15,7 +15,7 @@
 ACE_RCSID(RT_Notify, TAO_NS_Periodic_Consumer, "$id$")
 
 TAO_NS_Periodic_Consumer::TAO_NS_Periodic_Consumer (void)
-  :count_ (-1), max_count_ (-1), client_ (0), check_priority_ (0)
+  :count_ (-1), max_count_ (-1), load_ (0), client_ (0), check_priority_ (0)
 {
 }
 
@@ -125,7 +125,7 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
   ACE_CHECK;
 
   const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
-  
+
   if (this->count_ == -1)
     {
       if (TAO_debug_level > 0)
@@ -149,6 +149,13 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG, "(%P, %t) Setting Maxcount = %d\n", this->max_count_));
+            }
+          else if (ACE_OS::strcmp (prop_seq[i].name.in (), "Load") == 0)
+            {
+              prop_seq[i].value >>= this->load_;
+
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG, "(%P, %t) Setting Load = %d\n", this->load_));
             }
         }
 
@@ -238,6 +245,16 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
   now = ACE_OS::gethrtime ();
 
   stats_.sample (send_time_hrtime, now);
+
+  // Eat CPU
+  static CORBA::ULong prime_number = 9619;
+
+  for (; this->load_ != 0; this->load_--)
+    ACE::is_prime (prime_number,
+                   2,
+                   prime_number / 2);
+
+  // ---
 
   if (++this->count_ >= this->max_count_ )
     {

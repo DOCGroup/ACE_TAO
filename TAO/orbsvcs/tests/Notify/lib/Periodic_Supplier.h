@@ -105,7 +105,7 @@ protected:
   int iter_;
 
   /// A load factor supplied to each Job.
-  int load_;
+  CORBA::ULong load_;
 
   /// Stats house keeping
   Task_Stats stats_;
