@@ -109,7 +109,7 @@ Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
 
 	  (next_member):
 
-	  Implemented this method.
+	  Implemented this method.  [Bug 1293]
 
 	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing (CPP_SRCS):
 
