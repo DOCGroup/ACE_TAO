@@ -1,3 +1,10 @@
+Wed Jun  9 16:58:47 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: Added the
+ 	  explicit template specialization macro,
+ 	  ACE_TEMPLATE_SPECIALIZATION, to make SunC++ 5.0 happy.  Thanks
+ 	  to Carlos for explaining how to add this.
+
 Wed Jun 09 16:42:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp (compute_scheduling):
