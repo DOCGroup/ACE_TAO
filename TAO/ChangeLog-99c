@@ -1,3 +1,16 @@
+Mon Sep 20 19:11:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/encode.cpp:
+	  The fix in the calculation of align_offset, in
+	  TAO_Marshal_Struct, sent in for Borland C Builder,
+	  now that I have copied it right, seems to work for
+	  MSVC, SunOS/EGCS and SunOS/SunCC. This check-in
+	  will test if it works for all our other platforms.
+	  Thanks again to Thanks to Christopher Kohlhoff 
+	  <chris@kohlhoff.com> for sending in this fix.
+
 Mon Sep 20 15:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
