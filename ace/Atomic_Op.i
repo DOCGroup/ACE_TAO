@@ -55,7 +55,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-- (int)
   return this->value_--;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE &i) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator==");
@@ -63,7 +63,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE &i) const
   return this->value_ == i;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE &i) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>=");
@@ -71,7 +71,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE &i) const
   return this->value_ >= i;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator> (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>");
@@ -79,7 +79,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator> (const TYPE &rhs) const
   return this->value_ > rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<= (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<=");
@@ -87,7 +87,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<= (const TYPE &rhs) const
   return this->value_ <= rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator< (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<");
