@@ -4,6 +4,10 @@ Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
           calculation of useconds to avoid MSVC++ warning about narrowing.
           Thanks to Nanbor for reporting this.
 
+        * ace/OS.i (gethrtime): commented out high-res tick counter on Linux
+          because it doesn't seem to work properly.  Use ::gettimeofday ()
+          instead.
+
         * tests/Basic_Types_Test.cpp (main): replaced #ifdef VXWORKS && ghs
           with !ifdef ACE_HAS_WCHAR_TYPEDEFS_CHAR.
 
