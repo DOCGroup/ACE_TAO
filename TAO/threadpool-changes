@@ -131,6 +131,27 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  time.  It correct thing to do would be to merge the ORB level
 	  policies with the user provided policies when a POA is being
 	  created.
+          
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp (create):
+          No need to setup the POA Extension Initializer.  Setup the
+          servant dispatcher and the policy validator on the Object
+          Adapter after creating it.
+
+        * tao/RTPortableServer/RT_POA_Initializer.cpp:
+
+          Renamed TAO_RT_POA_Initializer::init() to
+          TAO_RTPortableServer_Initializer::TAO_RTPortableServer_Initializer().
+
+        * tao/RTPortableServer/RT_POA.h:
+
+          Include RTPortableServerC.h instead of RTPortableServer.h.
+
+        * tao/RTPortableServer/Makefile:
+        * tao/RTPortableServer/Makefile.bor:
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp:
+        * tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
+
+          Removed RT_POA_Initializer.
 
 	* tao/RTCORBA/Thread_Pool.cpp:
 
@@ -165,6 +186,9 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  protocols that the ORB knows about in the default server
 	  protocol policy; only include protocols that the user has
 	  opened.
+
+	* tao/RTCORBA/RT_Protocols_Hooks.h: Removed
+          ACE_STATIC_SVC_REQUIRE directive since it is not needed.
 
 	* tao/RTCORBA/RT_ORB_Loader.cpp: 
 
@@ -208,11 +232,18 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    TAO_RT_Protocols_Hooks into the service configurator - it
 	    is already done in TAO_RT_ORBInitializer::pre_init.
 
-          - <TAO_RTCORBA_initializer>: Moved the static instance from
-            the header file to the source file.  Otherwise there would
-            be many, many instances of <TAO_RTCORBA_initializer>, one
-            of each source file including RTCORBA.h.
+        * tao/RTCORBA/RT_Current.h:
+        * tao/RTCORBA/RT_Mutex.h:
+        * tao/RTCORBA/RT_ORB.h:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_Policy_i.h:
+        * tao/RTCORBA/Thread_Pool.h
+        * tao/RTPortableServer/RTPortableServerC.h
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.h:
 
+          Include RTCORBA.h instead of RTCORBAC.h.
+        
 	* tao/RTCORBA/Makefile.bor: 
 	* tao/RTCORBA/Makefile: 
 	* tao/RTCORBA/TAO_RTCORBA.dsp: 
@@ -269,6 +300,21 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
          - (shutdown): Added missing ACE_CHECKs.
 
          - (reactor): Removed acceptor based reactor selection.
+
+         - (poa_extension_initializer): Removed since it was no longer
+           needed.
+
+         - (resource_factory_from_service_config_,
+            client_factory_from_service_config_, 
+            server_factory_from_service_config_):
+
+            Removed since it was no longer needed.
+
+         - (resource_factory_, stub_factory_,
+            endpoint_selector_factory_, protocols_hooks_,
+            client_factory_, server_factory_):
+
+            Simplified the creation of these factories.
 
          - (TAO_ORB_Core_TSS_Resources): Removed <transport_cache_>,
            <reactor_registry_>, and <reactor_registry_cookie_t>; added
@@ -433,6 +479,7 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	    Reactor_Registry
 	    Single_Reactor
+            POA_Extension_Initializer
 	    TimeBaseS
 	    CONV_FRAMES
 	    Connector_Impl
@@ -453,6 +500,12 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    Thread_Lane_Resources 
 	    Thread_Lane_Resources_Manager 
 	    Default_Thread_Lane_Resources_Manager
+
+	  - Removed these files:
+
+	    Reactor_Registry
+	    Single_Reactor
+            POA_Extension_Initializer
 
 	  - Removed the following *S_T.* files.  Since the *S.* are
 	    not needed, these will also not be needed:
@@ -498,6 +551,9 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - Before a POA is created (including the RootPOA), any
             relevant policies at the ORB level should be merged with
             the policies passed to create_POA() by the user.
+            
+          - No need to access the POA Initializer.
+            TAO_RT_Object_Adapter_Factory will set things up for us.
 
 	* tao/PortableServer/POA_Cached_Policies.cpp
 	  (TAO_POA_Cached_Policies): Changed the default value of
@@ -709,7 +765,46 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tests/RTCORBA/Makefile: 
 	* tests/RTCORBA/Makefile.bor: 
 
-	  Added new tests ORB_init and Policy_Combinations.
+	  Added new tests ORB_init, Policy_Combinations, and
+	  Linear_Priority.
+
+        * tests/RTCORBA/Banded_Connections/Makefile:
+        * tests/RTCORBA/Banded_Connections/client.bor:
+        * tests/RTCORBA/Banded_Connections/client.dsp:
+        * tests/RTCORBA/Banded_Connections/server.bor:
+        * tests/RTCORBA/Banded_Connections/server.dsp:
+        * tests/RTCORBA/Client_Propagated/Makefile:
+        * tests/RTCORBA/Client_Propagated/client.bor:
+        * tests/RTCORBA/Client_Propagated/client.dsp:
+        * tests/RTCORBA/Client_Propagated/server.bor:
+        * tests/RTCORBA/Client_Propagated/server.dsp:
+        * tests/RTCORBA/Linear_Priority/client.dsp:
+        * tests/RTCORBA/Linear_Priority/server.dsp:
+        * tests/RTCORBA/Policy_Combinations/client.dsp:
+        * tests/RTCORBA/Policy_Combinations/server.dsp:
+        * tests/RTCORBA/Private_Connection/client.dsp:
+        * tests/RTCORBA/Private_Connection/server.dsp:
+        * tests/RTCORBA/Client_Propagated/Makefile:
+        * tests/RTCORBA/Client_Propagated/client.bor:
+        * tests/RTCORBA/Client_Propagated/client.dsp:
+        * tests/RTCORBA/Client_Propagated/server.bor:
+        * tests/RTCORBA/Client_Propagated/server.dsp:
+
+          Removed Strategies library since it is not needed.
+
+        * tests/RTCORBA/Client_Protocol/client.bor:
+        * tests/RTCORBA/Client_Protocol/client.dsp:
+        * tests/RTCORBA/Explicit_Binding/client.bor:
+        * tests/RTCORBA/Explicit_Binding/client.dsp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.bor:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp:
+        * tests/RTCORBA/Private_Connection/client.bor:
+        * tests/RTCORBA/RTMutex/server.dsp:
+        * tests/RTCORBA/Server_Protocol/client.bor:
+        * tests/RTCORBA/Server_Protocol/client.dsp:
+
+          Removed PortableServer and RTPortableServer libraries since
+          they are not needed.
 
 	* docs/rtcorba/features.html:
 	* docs/rtcorba/status.html:
