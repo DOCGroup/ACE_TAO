@@ -17,13 +17,12 @@ CFG=Nestea Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Nestea Client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Nestea Client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Nestea Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Nestea Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -103,10 +102,6 @@ SOURCE=.\nestea_client_i.cpp
 # Begin Source File
 
 SOURCE=.\NesteaC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\NesteaS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"

@@ -1,3 +1,19 @@
+Fri Sep 01 16:15:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/PortableServer/Collocated_Object.cpp:
+	  Fixed implementation of TAO_Collocated_Object::_is_a(), try
+	  using the hint before testing the servant.
+
+        * TAOACE_Static.dsw:
+	  Include the new static projects into this workspace, update some
+	  dependencies.
+
+        * orbsvcs/tests/ImplRepo/airplane_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_client.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+	  Add missing TAO_PortableServer library to these project files
+
 Fri Sep  1 16:01:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:

@@ -46,6 +46,11 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id,
   if (!this->_is_collocated ())
     return this->CORBA_Object::_is_a (logical_type_id, ACE_TRY_ENV);
 
+  if (this->_stubobj ()->type_id.in () != 0
+      && ACE_OS::strcmp (logical_type_id,
+                         this->_stubobj ()->type_id.in ()) == 0)
+    return 1;
+
   TAO_Stub *stub = this->_stubobj ();
   // Which collocation strategy should we use?
   if (stub != 0 &&

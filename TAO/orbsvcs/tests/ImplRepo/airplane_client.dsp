@@ -17,13 +17,12 @@ CFG=Airplane Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Airplane Client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Airplane Client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Airplane Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Airplane Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -103,10 +102,6 @@ SOURCE=.\airplane_client_i.cpp
 # Begin Source File
 
 SOURCE=.\AirplaneC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AirplaneS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
