@@ -138,21 +138,21 @@ public:
  * <ACE_Allocator> with a persistable memory pool.
  *
  * <b> Requirements and Performance Characteristics</b>
- *   - Internal Structure
+ *   - Internal Structure:
  *       Binary tree
  *   - Duplicates allowed?
  *       No
  *   - Random access allowed?
  *       No
- *   - Search speed
+ *   - Search speed:
  *       Log(n)
- *   - Insert/replace speed
+ *   - Insert/replace speed:
  *       Log(n)
  *   - Iterator still valid after change to container?
- *       Yes
+ *       Yes, except if the iterated-over element is removed.
  *   - Frees memory for removed elements?
  *       Yes
- *   - Items inserted by
+ *   - Items inserted by:
  *       Value
  *   - Requirements for contained type
  *       -# Default constructor
