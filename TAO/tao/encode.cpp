@@ -1191,14 +1191,21 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CDR *stream = (CDR *) context;
 
   if (env.exception () == 0)
     {
-      CDR *stream = (CDR *) context;
       CORBA::TypeCode_ptr param;
       CORBA::Long size, alignment;
 
+      // first encode the RepositoryID which we can grab from the typecode pointer
+      continue_encoding = stream->put_string (tc->id (env));
+
       data = (char *) data + sizeof (CORBA::Exception);
+      // @@ (ASG) The reason this is done is because we want to skip the size
+      // of the the base class and its private data members (type_ and
+      // refcount_). After skipping these data members, we will have the data
+      // members of the derived class which must be encoded.
 
       int member_count = tc->member_count (env);
 
