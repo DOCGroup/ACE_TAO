@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*iterator) : aceexe, win32registry {
+project(*iterator) : aceexe, winregistry {
   exename = iterator
 
   Source_Files {
     test_registry_iterator.cpp
   }
 }
-project(*update) : aceexe, win32registry {
+project(*update) : aceexe, winregistry {
   exename = update
 
   Source_Files {
