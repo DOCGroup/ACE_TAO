@@ -53,6 +53,28 @@ sub new {
 }
 
 
+sub collect_line {
+  my($self)        = shift;
+  my($fh)          = shift;
+  my($lref)        = shift;
+  my($line)        = shift;
+  my($status)      = 1;
+  my($errorString) = '';   
+      
+  $$lref .= $self->strip_line($line);
+
+  if ($$lref =~ /\\$/) {
+    $$lref =~ s/\\$/ /;
+  }
+  else {
+    ($status, $errorString) = $self->parse_line($fh, $$lref);
+    $$lref = "";
+  }
+
+  return $status, $errorString;
+}
+
+
 sub generate_default_input {
   my($self) = shift;
   $self->parse_line(undef, "$self->{'grammar_type'} {");
@@ -390,42 +412,6 @@ sub read_global_configuration {
   #my($self)  = shift;
   #my($input) = shift;
   return 1;
-}
-
-
-sub read_file {
-  my($self)        = shift;
-  my($input)       = shift;
-  my($ih)          = new FileHandle();
-  my($status)      = 1;
-  my($errorString) = '';
-
-  $self->{'line_number'} = 0;
-  my($line) = "";
-  if (open($ih, $input)) {
-    while(<$ih>) {
-      $line .= $self->strip_line($_);
-
-      if ($line =~ /\\$/) {
-        $line =~ s/\\$/ /;
-      }
-      else {
-        ($status, $errorString) = $self->parse_line($ih, $line);
-        $line = "";
-
-        if (!$status) {
-          last;
-        }
-      }
-    }
-    close($ih);
-  }
-  else {
-    $errorString = 'ERROR: Unable to open for reading';
-    $status = 0;
-  }
-
-  return $status, $errorString;
 }
 
 
