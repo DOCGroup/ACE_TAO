@@ -27,6 +27,10 @@ Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a>
 <a name="current"><h3>Current status:</h3></a>
 
 <ul>
+  <li><p>Trying to figure out a better <em>resource</em> management
+      scheme.  <em>Resouces</em> here include ORB, POA, connections,
+      profiles.... that provide services for CORBA invocations.</p>
+  </li>
 </ul>
 <a href="#toc">Back to TOC</a>
 
@@ -34,6 +38,34 @@ Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a>
 <a name="issues"><h3>Known issues:</h3></a>
 
 <ul>
+  <li><p>Since collocated objects run in the client thread's context,
+      calling <code>CORBA::ORB::shutdown()</code> does <em>not</em>
+      actually close down the target ORB but instead on the client
+      side ORB.  This issue will be addressed in the new ORB Core
+      architecture.</p>
+
+      <p>Also, since the collocated invocations circumvent POA
+      completely, POA Current won't get set up, LOCATION_FORWARD will
+      not work, race condition may occur when several threads invoke
+      operations on an objects registered with POAs with SINGLE_THREAD
+      policy, operation invocations will still get thru even the POA
+      is in holding state, or invoking operations on a servant that
+      has already been deactivated.</p>
+  </li>
+
+  <li><p>When using the thread-per-connection concurrency model, if
+      some client leave the socket connection open without sending any
+      request, the server will crash on NT.  This is because we are
+      doing a blocking recv when a server connection handler acts as
+      an active object, and the recv won't break out until the process
+      gets kill by the OS.  This is especially a problem on NT becuase
+      on shutdown, NT close down the socket service, which cause the
+      blocking recv to unblock at which point, these threads try to
+      access the already destroyed ORB resources.  A temporary
+      workaround is to close the sockets when the ORB is shutting
+      down.  But this is not portable and only works on NT.</p>
+  </li>
+
   <li><p>Some CORBA objects need to have access to the ORB. We tend to
       use <code>TAO_ORB_Core_instance()->orb()</code> to fetch the
       right ORB the object is using. This is most often true when
@@ -77,7 +109,7 @@ Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a>
 <a name="ongoing"><h3>Ongoing Work:</h3></a>
 
 <ul>
-  <li>ORB Core overhaul.
+  <li><p>ORB Core overhaul.</p>
   </li>
 
   <li><p>Identify/fix the problems in multithreaded client with TSS
@@ -93,6 +125,13 @@ Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a>
 
 <!-- ============================================================ -->
 <a name="rework"><h3>Rework Notes:</h3></a>
+
+Here are some thoughts/points of concern that we have regarding the
+new ORB Core structure.
+
+<ul>
+  <li>
+</ul>
 <a href="#toc">Back to TOC</a>
 
 <!-- ============================================================ -->
@@ -172,6 +211,9 @@ Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a>
 <!-- ============================================================ -->
 <a name="completed"><h3>Completed Work:</h3></a>
 
+<!-- ************************************************************ -->
+<!-- Please make sure you append new items at the end of the list -->
+<!-- ************************************************************ -->
 <ul>
   <li><p>Provides dynamically linked wholesale assignment of ORB
       strategies for communication, concurrency, demultiplexing,
@@ -355,6 +397,12 @@ Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a>
       svc.conf entries.  See <a
       href="../configurations.html#programming">Configuration
       Document</a> for details.</p>
+  </li>
+
+  <li><p>TAO now understands <a
+      href="index.html#nservices">Interoperable Naming Service</a>'s
+      <code>iioploc://</code> and <code>iiopname://</code>
+      formats.</p>
   </li>
 </ul>
 <a href="#toc">Back to TOC</a>
