@@ -115,11 +115,10 @@ DRV_prep_be_arg (char *s,
   const char arg_pch_include[] = "pch_include=";
   const char arg_pre_include[] = "pre_include=";
   const char arg_post_include[] = "post_include=";
-#ifdef IDL_HAS_VALUETYPE
   const char obv_opt_accessor[] = "obv_opt_accessor";
-#endif /* IDL_HAS_VALUETYPE */
 
   char* last = 0;
+
   for (char* arg = ACE_OS::strtok_r (s, ",", &last);
        arg != 0;
        arg = ACE_OS::strtok_r (0, ",", &last))
@@ -170,12 +169,10 @@ DRV_prep_be_arg (char *s,
           char* val = arg + sizeof (arg_post_include) - 1;
           be_global->post_include (val);
         }
-#  ifdef IDL_HAS_VALUETYPE
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
           be_global->obv_opt_accessor (1);
         }
-#  endif /* IDL_HAS_VALUETYPE */
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -253,13 +250,11 @@ DRV_usage (void)
       ACE_TEXT (" -Gt\t\t\tenable optimized TypeCode support")
       ACE_TEXT (" (unopt by default)\n")
     ));
-#ifdef IDL_HAS_VALUETYPE
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Gv\t\t\tenable OBV (Valuetype) support")
       ACE_TEXT (" (disabled by default)\n")
     ));
-#endif /* IDL_HAS_VALUETYPE */
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n")
@@ -391,13 +386,11 @@ DRV_usage (void)
       ACE_TEXT (" -Sd\t\t\tsuppress generating Direct collocated")
       ACE_TEXT (" stubs (disable by default)\n")
     ));
-#ifdef IDL_HAS_VALUETYPE
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Sv\t\t\tdisable OBV (Valuetype) support")
       ACE_TEXT (" (disabled by default)\n")
     ));
-#endif /* IDL_HAS_VALUETYPE */
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -t\t\t\tTemporary directory to be used")
@@ -1064,19 +1057,8 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 'v')
                 {
-#ifdef IDL_HAS_VALUETYPE
                   // enable OBV (Valuetype) support
                   idl_global->obv_support (1);
-#else /* IDL_HAS_VALUETYPE */
-                  {
-                    ACE_ERROR ((
-                        LM_ERROR,
-                        ACE_TEXT ("IDL: -Gv (Valuetype) not compiled in\n")
-                      ));
-
-                    ACE_OS::exit (99);
-                  }
-#endif /* IDL_HAS_VALUETYPE */
                 }
               else if (av[i][2] == 'I')
                 {

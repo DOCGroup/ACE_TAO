@@ -46,6 +46,7 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
 
   // retrieve the type
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -86,6 +87,7 @@ int be_visitor_args_arglist::visit_array (be_array *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -105,6 +107,7 @@ int be_visitor_args_arglist::visit_enum (be_enum *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -124,6 +127,7 @@ int be_visitor_args_arglist::visit_interface (be_interface *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -143,6 +147,7 @@ int be_visitor_args_arglist::visit_interface_fwd (be_interface_fwd *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -255,6 +260,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -312,6 +318,7 @@ int be_visitor_args_arglist::visit_structure (be_structure *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -331,12 +338,14 @@ int be_visitor_args_arglist::visit_union (be_union *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
 int be_visitor_args_arglist::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -345,12 +354,11 @@ int be_visitor_args_arglist::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }
 
-
-#ifdef IDL_HAS_VALUETYPE
 
 int be_visitor_args_arglist::visit_valuetype (be_valuetype *node)
 {
@@ -368,6 +376,7 @@ int be_visitor_args_arglist::visit_valuetype (be_valuetype *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -387,7 +396,7 @@ int be_visitor_args_arglist::visit_valuetype_fwd (be_valuetype_fwd *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
-#endif /* IDL_HAS_VALUETYPE */

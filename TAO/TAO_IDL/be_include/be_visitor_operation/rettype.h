@@ -76,11 +76,11 @@ public:
   int visit_union (be_union *node);
   // visit a union node
 
-# ifdef IDL_HAS_VALUETYPE
   int visit_valuetype (be_valuetype *node);
-  int visit_valuetype_fwd (be_valuetype_fwd *node);
-# endif /* IDL_HAS_VALUETYPE */
+  // visit a valuetype node
 
+  int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit a forward declared valuetype node
 };
 
 #endif /* _BE_VISITOR_OPERATION_RETTYPE_H_ */

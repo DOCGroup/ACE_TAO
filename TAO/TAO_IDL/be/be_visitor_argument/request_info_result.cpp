@@ -121,8 +121,6 @@ int be_visitor_args_request_info_result::visit_interface_fwd (be_interface_fwd *
 
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 int be_visitor_args_request_info_result::visit_valuetype (be_valuetype *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -144,8 +142,6 @@ int be_visitor_args_request_info_result::visit_valuetype_fwd (be_valuetype_fwd *
   return 0;
 
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_args_request_info_result::visit_predefined_type (be_predefined_type *node)

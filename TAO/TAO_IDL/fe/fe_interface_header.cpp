@@ -521,8 +521,6 @@ FE_Abstract_InterfaceHeader::is_abstract (void)
   return 1;
 }
 
-// #ifdef IDL_HAS_VALUETYPE
-
 // FE_obv_header
 
 FE_obv_header::FE_obv_header (UTL_ScopedName *n,
@@ -593,4 +591,3 @@ FE_obv_header::n_concrete (void)
   return this->n_concrete_;
 }
 
-// #endif /* IDL_HAS_VALUETYPE */

@@ -246,69 +246,70 @@ public:
   // <tao_idl> is called.
 
   virtual void any_support (idl_bool);
-  // enable suppressing any support    ?T.Kuepper: suppressed?
+  // Set any support.
 
   virtual idl_bool any_support (void);
-  // check if Any support is suppressed  ? enabled ?
+  // Check Any support.
 
   virtual void tc_support (idl_bool);
-  // enable suppressing TypeCode support
+  // Set TypeCode support.
 
   virtual idl_bool tc_support (void);
-  // check if TypeCode support is suppressed
+  // Check TypeCode support
 
-#ifdef IDL_HAS_VALUETYPE
   virtual void obv_opt_accessor (idl_bool);
+  // Set optimized valuetype member accessor generation.
+
   virtual idl_bool obv_opt_accessor (void);
-#endif /* IDL_HAS_VALUETYPE */
+  // Check optimized valuetype member accessor generation.
 
   virtual void gen_impl_files (idl_bool);
-  //enable generation of implementation files
+  // Set generation of implementation files.
 
   virtual idl_bool gen_impl_files (void);
-  // check if we want to generate implementation files
+  // Check if we want to generate implementation files.
 
   virtual void gen_copy_ctor (idl_bool);
-  //enable generation of copy constructor
+  // Set generation of copy constructor.
 
   virtual idl_bool gen_copy_ctor (void);
-  //check if we want to generate the copy constructor
+  // Check if we want to generate the copy constructor.
 
   virtual void gen_assign_op (idl_bool);
-  //enable the generation of the assignment operator
+  // Set the generation of the assignment operator.
 
   virtual idl_bool gen_assign_op (void);
-  //check if we want to generate the assignment operator
+  // Check if we want to generate the assignment operator.
 
   virtual void gen_thru_poa_collocation (idl_bool);
-  // set whether we want to generate Thru_POA collocation stubs.
+  // Set whether we want to generate Thru_POA collocation stubs.
 
   virtual idl_bool gen_thru_poa_collocation (void);
-  // check if we want to generate Thru_POA collocation stubs.
+  // Check if we want to generate Thru_POA collocation stubs.
 
   virtual void gen_direct_collocation (idl_bool);
-  // set whether we want to generate Direct collocation stubs.
+  // Set whether we want to generate Direct collocation stubs.
 
   virtual idl_bool gen_direct_collocation (void);
-  // check if we want to generate Direct collocation stubs.
+  // Check if we want to generate Direct collocation stubs.
 
   virtual void exception_support (idl_bool);
-  // enable real C++ exceptions
+  // Set real C++ exception support.
 
   virtual idl_bool exception_support (void);
-  // check if real C++ exception support is to be enabled
+  // Check if real C++ exception support is enabled.
 
   virtual void use_raw_throw (idl_bool);
-  // enable replacement of 'ACE_THROW_SPEC' with 'throw'.
+  // Set replacement of 'ACE_THROW_SPEC' with 'throw'.
 
   virtual idl_bool use_raw_throw (void);
-  // check if raw 'throw' generation option is set.
+  // Check if raw 'throw' generation option is set.
 
   virtual void opt_tc (idl_bool);
-  // enable optimized typecodes
+  // Set optimized typecodes.
 
   virtual idl_bool opt_tc (void);
-  // check if TypeCodes need be optimized
+  // Check if TypeCodes are optimized.
 
   virtual void ami_call_back (idl_bool value);
   // To enable or disable AMI call back feature of the Messaging
@@ -324,7 +325,7 @@ public:
   // Return the flag.
 
   virtual void gen_tie_classes (idl_bool value);
-  // Toggle the generation of tie classes and files.
+  // Set the generation of tie classes and files.
 
   virtual idl_bool gen_tie_classes (void);
   // Return the flag.

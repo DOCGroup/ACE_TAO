@@ -87,8 +87,6 @@ visit_interface_fwd (be_interface_fwd *)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 int
 be_visitor_operation_rettype_assign_ss::visit_valuetype (be_valuetype *)
 {
@@ -111,8 +109,6 @@ visit_valuetype_fwd (be_valuetype_fwd *)
 
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_operation_rettype_assign_ss::

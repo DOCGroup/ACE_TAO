@@ -831,12 +831,11 @@ inline char *__tao_yytext()
 
 static int scan_obv_token (int token)
 {
-#ifdef IDL_HAS_VALUETYPE
     if (idl_global->obv_support ())
       {
         return token;
       }
-#endif /* IDL_HAS_VALUETYPE */
+
     TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
     const TAO_IDL_CPP_Keyword_Entry *entry =
       cpp_key_tbl.lookup (ace_tao_yytext,

@@ -159,8 +159,6 @@ public:
   // See if we are a local interface.
 };
 
-// #ifdef IDL_HAS_VALUETYPE
-
 class FE_obv_header : public FE_InterfaceHeader
 {
 public:
@@ -183,7 +181,5 @@ public:
   idl_bool truncatable_;  /* currently 0, ignored */
   long n_concrete_;
 };
-
-// #endif /* IDL_HAS_VALUETYPE */
 
 #endif           // _FE_INTERFACE_HEADER_FE_INTERFACE_HH
