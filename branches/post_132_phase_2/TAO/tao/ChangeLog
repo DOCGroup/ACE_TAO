@@ -1,3 +1,57 @@
+Mon Mar 03 14:07:10 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IOP_Codec.pidl:
+	* tao/IOP_IOR.pidl: New files. 
+	
+	* tao/IOP.pidl: Split the IOP.pidl into two pidl files. 
+
+	* tao/IOPC.cpp
+	* tao/IOPC.h:
+	* tao/IOPC.i: New generated files. 
+	
+	* tao/Buffering_Constraint_Policy.cpp: Initialized the base
+	  classes properly. 
+	
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Incomplete changes to initialize the CORBA
+	  object. 
+
+	* tao/Object.cpp:
+	* tao/Object.h:
+	* tao/Object.i: Added partial support for delayed creation of
+	  CORBA::Objects. This included adding a new static method
+	  tao_object_initialize (). The extraction operator will extract
+	  out to a IOP::IOR if lazy evaluation is used. Removing
+	  _object_key () since it serves very less purpose in this object
+	  but for just accessing the Stub to get the key. The lazy
+	  evaulation would be happy with this scenario!
+	
+	* tao/Resource_Factory.cpp:
+	* tao/Resource_Factory.h: Added the follwoing virtual methods
+	  - create_corba_object_lock (), which creates a SYNCH_MUTEX or a
+	    NULL_MUTEX as the case may be for CORBA::Object. 
+	  - resource_usage_strategy (), a strategy for advising whether
+	    the resources are used actively or lazily within the ORB. This
+	    strategy is not useful through out the ORB right away. There
+	    is atleast one place where this might be used now and it is in
+	    CORBA::Object. The >> of a CORBA::Object from a TAO_InputCDR
+	    will use this strategy.
+
+	* tao/default_resource.cpp:
+	* tao/default_resource.h: Concrete implementations for the above
+	  pure virtual methods within the default factory.
+	
+	* tao/TAO.dsp: Added new files in to the project files. 
+	
+	* tao/PortableServer/Collocated_Object.cpp:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp: Use the stub
+	  object on the CORBA::Object to access the ObjectKey instead of
+	  calling _object_key (). The  method _object_key () is going to
+	  be removed.
+
 Sat Feb 22 22:30:25 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* Merged with the main trunk.

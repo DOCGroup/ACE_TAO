@@ -29,11 +29,13 @@
 
 #include "tao/Policy_ForwardC.h"
 #include "ace/Synch.h"
+#include "tao/IOP_IORC.h"
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_Object_Proxy_Broker;
 class TAO_ObjectKey;
+class TAO_ORB_Core;
 
 namespace CORBA
 {
@@ -74,6 +76,9 @@ namespace CORBA
 
     /// Uninlined part of the now-inlined CORBA::is_nil().
     static CORBA::Boolean is_nil_i (CORBA::Object_ptr obj);
+
+    /// Helper function for reading contents of an IOR
+    static void tao_object_initialize (Object *);
 
     // These calls correspond to over-the-wire operations, or at least
     // do so in many common cases.  The normal implementation assumes a
@@ -202,7 +207,7 @@ namespace CORBA
      * If there's no in-use profile, then the program will
      * probably crash.  This method does not create a new copy.
      */
-    virtual const TAO_ObjectKey &_object_key (void);
+    // virtual const TAO_ObjectKey &_object_key (void);
 
     /// Downcasting this object pointer to some other derived class.
     /// This QueryInterface stuff only work for local object.
@@ -229,9 +234,13 @@ namespace CORBA
     //@}
 
     /// Constructor
-    Object (TAO_Stub *p = 0,
+    Object (TAO_Stub *p,
             CORBA::Boolean collocated = 0,
-            TAO_Abstract_ServantBase *servant = 0);
+            TAO_Abstract_ServantBase *servant = 0,
+            TAO_ORB_Core *orb_core = 0);
+
+    Object (const IOP::IOR_var &ior,
+            TAO_ORB_Core *orb_core = 0);
 
     /// Get the underlying stub object.
     virtual TAO_Stub *_stubobj (void) const;
@@ -245,7 +254,7 @@ namespace CORBA
   protected:
 
     /// Initializing a local object.
-    Object (int dummy);
+    Object (int dummy = 0);
 
   private:
 
@@ -271,6 +280,16 @@ namespace CORBA
 
   private:
 
+    /// Flag to indicate whether the IOP::IOR has been evaluated fully.
+    Boolean is_evaluated_;
+
+    /// If the IOR hasnt been evaluated fully, then the contents of
+    /// the IOR that we received  should be in here!
+    IOP::IOR_var ior_;
+
+    /// Cached pointer of our ORB_Core
+    TAO_ORB_Core *orb_core_;
+
     /**
      * Pointer to the protocol-specific "object" containing important
      * profiling information regarding this proxy.
@@ -288,12 +307,8 @@ namespace CORBA
      * reason for this is that locality-constrained objects that do
      * not require reference counting (the default) may be
      * instantiated in the critical path.
-     *
-     * @note This assumes that unconstrained objects will not be
-     *       instantiated in the critical path.
      */
-    TAO_SYNCH_MUTEX * refcount_lock_;
-
+    ACE_Lock * refcount_lock_;
   };
 
   /**

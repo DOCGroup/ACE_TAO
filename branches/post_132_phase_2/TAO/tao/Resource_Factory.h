@@ -113,18 +113,20 @@ public:
     NOOP
   };
 
+  enum Resource_Usage
+    {
+      /// Use resources in an eager fashion
+      TAO_EAGER,
+
+      /// Use resources in a lazy manner
+      TAO_LAZY
+    };
+
   // = Initialization and termination methods.
   TAO_Resource_Factory (void);
   virtual ~TAO_Resource_Factory (void);
 
   // = Resource Retrieval
-
-#if 0
-  /// @@ todo: Need to go at a later date!
-  /// @@ Backwards compatibility, return 1 if the ORB core should use
-  ///    TSS resources
-  virtual int use_tss_resources (void) const;
-#endif /*if 0*/
 
   /// @@ Backwards compatibility, return 1 if the ORB core should use
   ///    Locked_Data_Blocks
@@ -188,13 +190,15 @@ public:
                                 int &number_of_names);
 
   /// Creates the lock for the lock needed in the Cache Map
-  /// @@todo: This method needs to go away as it doesnt make much
-  /// sense now.
+  /// @deprecated:
   virtual ACE_Lock *create_cached_connection_lock (void);
 
   /// Should the transport cache have a lock or not? Return 1 if the
   /// transport cache needs to be locked  else return 0
   virtual int locked_transport_cache (void);
+
+  /// Creates the lock for the CORBA Object
+  virtual ACE_Lock *create_corba_object_lock (void);
 
   /// Creates the flushing strategy.  The new instance is owned by the
   /// caller.
@@ -212,6 +216,9 @@ public:
   /// factory.  This should result in proper error reporting if the
   /// user attempts to set options on an unused factory.
   virtual void disable_factory (void) = 0;
+
+  /// Return the resource usage strategy.
+  virtual TAO_Resource_Factory::Resource_Usage resource_usage_strategy (void) const = 0;
 
 protected:
   /**

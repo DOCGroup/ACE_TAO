@@ -6,6 +6,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
+#include "tao/Profile.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Collocated_Object.i"
@@ -62,7 +63,7 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
         );
 
       CORBA::Object_var forward_to;
-      servant_upcall.prepare_for_upcall (this->_object_key (),
+      servant_upcall.prepare_for_upcall (stub->profile_in_use ()->object_key (),
                                          "_is_a",
                                          forward_to.out ()
                                          ACE_ENV_ARG_PARAMETER);
@@ -132,7 +133,7 @@ TAO_Collocated_Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
             );
 
           CORBA::Object_var forward_to;
-          servant_upcall.prepare_for_upcall (this->_object_key (),
+          servant_upcall.prepare_for_upcall (stub->profile_in_use ()->object_key (),
                                              "_non_existent",
                                              forward_to.out ()
                                              ACE_ENV_ARG_PARAMETER);
@@ -184,7 +185,7 @@ TAO_Collocated_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
             );
 
       CORBA::Object_var forward_to;
-      servant_upcall.prepare_for_upcall (this->_object_key (),
+      servant_upcall.prepare_for_upcall (stub->profile_in_use ()->object_key (),
                                          "_component",
                                          forward_to.out ()
                                          ACE_ENV_ARG_PARAMETER);
