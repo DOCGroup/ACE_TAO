@@ -814,7 +814,7 @@ cpu_info_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("This system has %d processors online\n"),
-                  number_processors));
+                  number_processors_online));
     }
 
   return 0;
