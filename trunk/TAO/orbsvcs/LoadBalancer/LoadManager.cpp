@@ -6,6 +6,10 @@
 
 #include "ace/Get_Opt.h"
 
+#if defined (linux) && defined (ACE_HAS_THREADS)
+# include "ace/Signal.h"
+#endif /* linux && ACE_HAS_THREADS */
+
 
 ACE_RCSID (LoadBalancer,
            LoadBalancer,
@@ -72,6 +76,41 @@ parse_args (int argc,
     }
 }
 
+#if defined (linux) && defined (ACE_HAS_THREADS)
+// Only the main thread can handle signals in Linux.  Run the
+// LoadManager in thread other than main().
+extern "C"
+void *
+TAO_LB_run_load_manager (void * orb_arg)
+{
+  CORBA::ORB_ptr orb = ACE_static_cast (CORBA::ORB_ptr, orb_arg);
+
+  // Only the main thread should handle signals.
+  //
+  // @@ This is probably unnecessary since no signals should be
+  //    delivered to this thread on Linux.
+  ACE_Sig_Guard signal_guard;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "TAO Load Manager");
+
+      return ACE_reinterpret_cast (void *, -1);
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (ACE_reinterpret_cast (void *, -1));
+
+  return 0;
+}
+#endif  /* linux && ACE_HAS_THREADS */
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -115,14 +154,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     default_strategy
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      // Activate/register the signal handler that (attempts) to
-      // ensure graceful shutdown of the LoadManager so that remote
-      // resources created by the LoadManager can be cleaned up.
-      TAO_LB_Signal_Handler signal_handler (orb.in (), root_poa.in ());
-
-      if (signal_handler.activate () != 0)
-        return -1;
 
       TAO_LB_LoadManager * lm;
       ACE_NEW_THROW_EX (lm,
@@ -188,8 +219,48 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (lm_ior, "%s", str.in ());
       ACE_OS::fclose (lm_ior);
 
+#if defined (linux) && defined (ACE_HAS_THREADS)
+      if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_manager,
+                                                  orb.in ()) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR:  Unable to spawn TAO LoadManager's "
+                             "ORB thread.\n"),
+                            -1);
+        }
+
+      ACE_Sig_Set sigset;
+      sigset.sig_add (SIGINT);
+      sigset.sig_add (SIGTERM);
+
+      int signum = -1;
+
+      // Block waiting for the registered signals.
+      if (ACE_OS::sigwait (sigset, &signum) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) %p\n",
+                             "ERROR waiting on signal"),
+                            -1);
+        }
+
+      ACE_ASSERT (signum == SIGINT || signum == SIGTERM);
+#else
+      // Activate/register the signal handler that (attempts) to
+      // ensure graceful shutdown of the LoadManager so that remote
+      // resources created by the LoadManager can be cleaned up.
+      TAO_LB_Signal_Handler signal_handler (orb.in (), root_poa.in ());
+
+      if (signal_handler.activate () != 0)
+        return -1;
+
+      // @@ There is a subtle race condition here.  If the signal
+      //    handler thread shuts down the ORB before it is run, the
+      //    below call to ORB::run() will throw a CORBA::BAD_INV_ORDER
+      //    exception.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+#endif  /* linux && ACE_HAS_THREADS */
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
