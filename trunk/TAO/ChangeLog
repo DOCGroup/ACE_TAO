@@ -1,5 +1,10 @@
 Sun Jan 30 19:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp:
+	* examples/Content_Server/AMI_Observer/Callback_i.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+	* examples/Content_Server/SMI_Iterator/client.cpp:
 	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 	* orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp:
@@ -7,6 +12,23 @@ Sun Jan 30 19:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/IFRService/ModuleDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/RecursDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/RecursDef_i.h:
+	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+	* orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+	* orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.h:
+	* orbsvcs/tests/FT_App/StubBatchConsumer.h:
+	* orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
+	* orbsvcs/tests/FT_App/StubFaultConsumer.h:
+	* orbsvcs/tests/FT_App/StubFaultNotifier.h:
+	* orbsvcs/tests/FtRtEvent/consumer.cpp:
+	* orbsvcs/tests/FtRtEvent/supplier.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	* performance-tests/Sequence_Latency/AMI/client.cpp:
+	* tests/Abstract_Interface/test_i.cpp:
+	* tests/Bug_1482_Regression/Hello.cpp:
+	* tests/DynAny_Test/test_dynenum.cpp:
+	* tests/DynAny_Test/test_dynsequence.cpp:
+	* tests/DynAny_Test/test_dynstruct.cpp:
+	* tests/DynAny_Test/test_dynunion.cpp:
 
 	  Added missing header include directives that are necessary due
 	  to inter-header dependency reductions in ACE.

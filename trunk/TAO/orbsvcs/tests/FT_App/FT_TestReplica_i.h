@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
+
 #include "FT_TestReplicaS.h"
 
 ////////////////////

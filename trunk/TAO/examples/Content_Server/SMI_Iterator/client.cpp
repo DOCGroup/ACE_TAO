@@ -8,9 +8,11 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Web_ServerC.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID (SMI_Iterator, 
-           client, 
+
+ACE_RCSID (SMI_Iterator,
+           client,
            "$Id$")
 
 

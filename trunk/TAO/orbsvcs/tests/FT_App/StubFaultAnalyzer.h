@@ -16,6 +16,7 @@
 #include <orbsvcs/FT_FaultDetectorFactoryC.h>
 
 #include "ace/Vector_T.h"
+#include "ace/SString.h"
 
 //////////////////////
 // Forward references

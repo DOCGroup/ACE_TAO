@@ -13,6 +13,9 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include <orbsvcs/FT_NotifierC.h>
 
+#include "ace/SString.h"
+
+
 //////////////////////
 // Forward references
 
