@@ -6,15 +6,24 @@ ACE_RCSID(Time, Time_i, "$Id$")
 
 // Constructor
 
-Time_i::Time_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
+Time_i::Time_i (void)
 {
+  // no-op
 }
 
 // Destructor
 
 Time_i::~Time_i (void)
 {
+  // no-op
+}
+
+// Set the ORB pointer.
+
+void
+Time_i::orb (CORBA::ORB_ptr o)
+{
+  this->orb_ = CORBA::ORB::_duplicate (o);
 }
 
 // Return the current date/time on the server.
@@ -33,6 +42,7 @@ void Time_i::shutdown (CORBA::Environment &)
               "%s\n",
               "Time_i is shutting down"));
 
+  // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
 }
 

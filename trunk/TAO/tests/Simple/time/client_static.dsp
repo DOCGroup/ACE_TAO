@@ -99,7 +99,7 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_i.cpp
+SOURCE=.\Client_i.cpp
 # End Source File
 # Begin Source File
 
@@ -115,7 +115,7 @@ SOURCE=.\TimeS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\client_i.h
+SOURCE=.\Client_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

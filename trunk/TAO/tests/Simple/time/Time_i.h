@@ -10,7 +10,7 @@
 //    Time_i.h
 //
 // = DESCRIPTION
-//    This class implements the Time interface.
+//    This class implements the Time IDL interface.
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -33,7 +33,7 @@ class Time_i: public POA_Time
   //    shuts down the server.  
 public:
   // = Initialization and termination methods.
-  Time_i (CORBA::ORB_ptr orb);
+  Time_i (void);
   // Constructor
 
   ~Time_i (void);
@@ -45,9 +45,12 @@ public:
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown the server.
 
+  void orb (CORBA::ORB_ptr o);
+  // Set the ORB pointer.
+
 private:
   CORBA::ORB_var orb_;
-  // ORB pointer
+  // ORB pointer.
 };
 
 #endif /* TIME_I_H */

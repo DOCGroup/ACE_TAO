@@ -1,15 +1,19 @@
 // $Id$
 
-#include "server_i.h"
+#include "Server_i.h"
 
 ACE_RCSID(Time, server, "$Id$")
+
+// This is the main driver program for the time and date server.
 
 int
 main (int argc, char *argv[])
 {
-  server_i server;
+  Server_i server;
 
-  ACE_DEBUG ((LM_DEBUG, "\n\ttime and date server\n\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "\n\ttime and date server\n\n"));
+
   TAO_TRY
     {
       if (server.init (argc, argv, TAO_TRY_ENV) == -1)
@@ -33,5 +37,6 @@ main (int argc, char *argv[])
       return -1;
     }
   TAO_ENDTRY;
+
   return 0;
 }

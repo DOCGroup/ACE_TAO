@@ -403,7 +403,7 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_SERVE=\
-	".\server_impl.h"\
+	".\Server_impl.h"\
 	".\Time_impl.h"\
 	".\TimeC.h"\
 	".\TimeC.i"\
@@ -421,7 +421,7 @@ NODEP_CPP_SERVE=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_i.cpp
+SOURCE=.\Server_i.cpp
 
 !IF  "$(CFG)" == "Simple Time Server - Win32 Release"
 
@@ -977,7 +977,7 @@ NODEP_CPP_TIMES=\
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\server_i.h
+SOURCE=.\Server_i.h
 # End Source File
 # Begin Source File
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "client_i.h"
+#include "Client_i.h"
 
 ACE_RCSID(Time, client, "$Id$")
 
@@ -9,7 +9,7 @@ ACE_RCSID(Time, client, "$Id$")
 int
 main (int argc, char **argv)
 {
-  client_i client;
+  Client_i client;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\ttime and date test\n\n"));

@@ -1,13 +1,13 @@
 // $Id$
 
-#include "client_i.h"
+#include "Client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-ACE_RCSID(Time, client_i, "$Id$")
+ACE_RCSID(Time, Client_i, "$Id$")
 
 // Constructor.
-client_i::client_i (void)
+Client_i::Client_i (void)
   : ior_ (0),
     loop_count_ (10),
     shutdown_ (0),
@@ -18,7 +18,7 @@ client_i::client_i (void)
 // Reads the Server factory ior from a file
 
 int
-client_i::read_ior (char *filename)
+Client_i::read_ior (char *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -48,7 +48,7 @@ client_i::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-client_i::parse_args (void)
+Client_i::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "dn:f:xk:");
   int c;
@@ -98,7 +98,7 @@ client_i::parse_args (void)
 // Compute the time on a server.
 
 void
-client_i::time (void)
+Client_i::time (void)
 {
   // Make the RMI.
   CORBA::Long timedate = this->server_->time (this->env_);
@@ -119,7 +119,7 @@ client_i::time (void)
 // Execute client example code.
 
 int
-client_i::run (void)
+Client_i::run (void)
 {
   u_int i;
 
@@ -135,13 +135,13 @@ client_i::run (void)
   return 0;
 }
 
-client_i::~client_i (void)
+Client_i::~Client_i (void)
 {
   ACE_OS::free (this->ior_);
 }
 
 int
-client_i::init (int argc, char **argv)
+Client_i::init (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -184,7 +184,7 @@ client_i::init (int argc, char **argv)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("client_i::init");
+      TAO_TRY_ENV.print_exception ("Client_i::init");
       return -1;
     }
   TAO_ENDTRY;
