@@ -321,8 +321,6 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 }
 
 
-
-
 void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority p_priority,
                                                    RtecScheduler::OS_Priority& priority,
 				                   RtecScheduler::Dispatching_Type & d_type,
