@@ -10,7 +10,7 @@
 char *config_filename = 0;
 char *cads_filename = 0;
 char *cad_filename = 0;
-char *installation_file = "CIAO_Installation_Data.ini";
+const char *installation_file = "CIAO_Installation_Data.ini";
 
 CIAO::Static_Config::Static_Config_Info static_config_info;
 

@@ -4,7 +4,7 @@
 
 Segment_Timer segment_timers[MAX_TIMERS];
 
-char* Static_Config_Timer_Descriptions[] =
+const char* Static_Config_Timer_Descriptions[] =
   {
     "Create Home",
     "Create Container",
