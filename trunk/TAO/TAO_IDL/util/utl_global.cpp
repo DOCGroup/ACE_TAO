@@ -493,7 +493,7 @@ be_change_idl_file_extension (String* idl_file,
   const char* string = idl_file->get_string ();
 
   // get the base part of the filename
-  char* base = ACE_OS::strstr (string, ".idl");
+  const char *base = ACE_OS::strstr (string, ".idl");
 
   if (base == 0)
     return 0;

@@ -148,10 +148,9 @@ TAO_CodeGen::client_header (const char *fname)
     {
       // now generate the #if !defined clause
       static char macro_name [NAMEBUFSIZE];
-      char *suffix;
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      suffix = ACE_OS::strstr (fname, ".h");
+      const char *suffix = ACE_OS::strstr (fname, ".h");
       if (suffix == 0)
 	return -1; // bad file name
       else
@@ -159,12 +158,9 @@ TAO_CodeGen::client_header (const char *fname)
           ACE_OS::sprintf (macro_name, "_TAO_IDL_");
           // convert letters in fname to upcase
           for (int i=0; i < (suffix - fname); i++)
-            {
-              if (isalpha (fname [i]))
-                {
-                  macro_name[i+9] = toupper (fname [i]);
-                }
-            }
+            if (isalpha (fname [i]))
+              macro_name[i+9] = toupper (fname [i]);
+
           ACE_OS::strcat (macro_name, "_H_");
 
           this->client_header_->print ("#if !defined (%s)\n", macro_name);
@@ -281,10 +277,9 @@ TAO_CodeGen::server_header (const char *fname)
     {
       // now generate the #if !defined clause
       static char macro_name [NAMEBUFSIZE];
-      char *suffix;
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      suffix = ACE_OS::strstr (fname, ".h");
+      const char *suffix = ACE_OS::strstr (fname, ".h");
       if (suffix == 0)
 	return -1; // bad file name
       else

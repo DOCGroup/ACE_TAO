@@ -1,3 +1,11 @@
+Mon Nov 17 11:52:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (server_header),
+	  TAO_IDL/util/utl_global.cpp (be_change_idl_file_extension):
+ 	  Updated several methods to ensure const correctness for the
+ 	  updated ACE_OS::str*() methods.  Thanks to David Levine for
+ 	  reporting this.
+
 Mon Nov 17 02:40:14 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.32, released Mon Nov 17 02:40:14 1997.
