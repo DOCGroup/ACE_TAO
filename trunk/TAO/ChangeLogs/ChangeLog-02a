@@ -1,3 +1,11 @@
+Thu Sep 21 10:11:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+
+	  Changed a couple of ACE_THROWs to ACE_THROW_RETURN,
+	  because they occurred inside a function returning
+	  an int.
+
 Wed Sep 20 16:54:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
