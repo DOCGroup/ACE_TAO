@@ -12,8 +12,8 @@
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
-ACE_RCSID (supplier,
-           supplier.cpp,
+ACE_RCSID (FtRtEvent,
+           supplier,
            "$Id$")
 
 
