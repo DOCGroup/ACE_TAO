@@ -1,3 +1,10 @@
+Sat Jan 26 13:57:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * XML/common/Makefile.bor:
+          Added first BCB makefile for the new XML library. Another few
+          must be created before the XML parser is completely build with
+          BCB
+
 Fri Jan 25 19:58:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Process_Manager.cpp (wait(pid_t, const ACE_Time_Value &,
