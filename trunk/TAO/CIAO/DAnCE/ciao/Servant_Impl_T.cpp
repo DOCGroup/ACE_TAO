@@ -48,67 +48,7 @@ namespace CIAO
     this->context_->_remove_ref ();
   }
 
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename EXEC_VAR,
-            typename CONTEXT>
-  ::Components::FacetDescriptions *
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_all_facets (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    ::Components::FacetDescriptions *tmp = 0;
-    ACE_NEW_RETURN (tmp,
-                    ::Components::FacetDescriptions,
-                    0);
-
-    ::Components::FacetDescriptions_var retval = tmp;
-
-    retval->length (this->facet_table_.current_size ());
-    CORBA::ULong i = 0;
-
-    for (FacetTable::iterator iter = this->facet_table_.begin ();
-         iter != this->facet_table_.end ();
-         ++iter, ++i)
-      {
-        FacetTable::ENTRY & entry = *iter;
-        retval[i] = entry.int_id_;
-      }
-
-    return retval._retn ();
-  }
-
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename EXEC_VAR,
-            typename CONTEXT>
-  ::Components::ConsumerDescriptions *
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_all_consumers (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    ::Components::ConsumerDescriptions *tmp = 0;
-    ACE_NEW_RETURN (tmp,
-                    ::Components::ConsumerDescriptions,
-                    0);
-
-    ::Components::ConsumerDescriptions_var retval = tmp;
-
-    retval->length (this->consumer_table_.current_size ());
-    CORBA::ULong i = 0;
-
-    for (ConsumerTable::iterator iter = this->consumer_table_.begin ();
-         iter != this->consumer_table_.end ();
-         ++iter, ++i)
-      {
-        ConsumerTable::ENTRY & entry = *iter;
-        retval[i] = entry.int_id_;
-      }
-
-    return retval._retn ();
-  }
+  // Operations for CCMObject interface.
 
   template <typename BASE_SKEL,
             typename EXEC,
@@ -155,67 +95,6 @@ namespace CIAO
             typename EXEC,
             typename EXEC_VAR,
             typename CONTEXT>
-  ::Components::PrimaryKeyBase *
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_primary_key (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     ::Components::NoKeyAvailable))
-  {
-    ACE_THROW_RETURN (::Components::NoKeyAvailable (), 0);
-
-    return 0;
-  }
-
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename EXEC_VAR,
-            typename CONTEXT>
-  ::Components::ComponentPortDescription *
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_all_ports (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    OBV_Components::ComponentPortDescription *cps = 0;
-    ACE_NEW_RETURN (cps,
-                    OBV_Components::ComponentPortDescription,
-                    0);
-    ::Components::ComponentPortDescription_var retv = cps;
-
-    ::Components::FacetDescriptions_var facets_desc =
-      this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    ::Components::ReceptacleDescriptions_var receptacle_desc =
-      this->get_all_receptacles (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    ::Components::ConsumerDescriptions_var consumer_desc =
-      this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    ::Components::EmitterDescriptions_var emitter_desc =
-      this->get_all_emitters (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    ::Components::PublisherDescriptions_var publisher_desc =
-      this->get_all_publishers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    retv->facets (facets_desc.in ());
-    retv->receptacles (receptacle_desc.in ());
-    retv->consumers (consumer_desc.in ());
-    retv->emitters (emitter_desc.in ());
-    retv->publishers (publisher_desc.in ());
-
-    return retv._retn ();
-  }
-
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename EXEC_VAR,
-            typename CONTEXT>
   CORBA::Object_ptr
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::_get_component (
       ACE_ENV_SINGLE_ARG_DECL
@@ -250,7 +129,7 @@ namespace CIAO
                       ::CORBA::Object::_nil ());
   }
 
-    // CIAO-specific operations.
+  // CIAO-specific operations.
 
   template <typename BASE_SKEL,
             typename EXEC,
