@@ -99,7 +99,6 @@ Latency_Query_Client::run (void)
     {
       for (int j = 0; j < 100; ++j)
         {
-          ACE_hrtime_t start = 0;
           dk = this->tdef_->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 
           if (dk != CORBA::dk_Alias)
@@ -113,7 +112,7 @@ Latency_Query_Client::run (void)
       ACE_Sample_History history (this->iterations_);
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
 
-      for (int i = 0; i < this->iterations_; ++i)
+      for (CORBA::ULong i = 0; i < this->iterations_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
@@ -160,6 +159,7 @@ Latency_Query_Client::run (void)
   return 0;
 }
 
+int
 Latency_Query_Client::parse_args (int argc,
                                   char *argv[])
 {
