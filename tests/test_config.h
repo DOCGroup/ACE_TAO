@@ -193,7 +193,7 @@ ACE_Test_Output::close (void)
   this->output_file_.close (); 
 }
 
-static void
+void
 randomize (int array[], size_t size)
 {
   size_t i;
