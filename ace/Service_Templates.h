@@ -1,4 +1,14 @@
-// $Id$
+
+//=============================================================================
+/**
+ *  @file   Service_Templates.h
+ *
+ *  $Id$
+ *
+ *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_SERVICE_TEMPLATES_H
 #define ACE_SERVICE_TEMPLATES_H

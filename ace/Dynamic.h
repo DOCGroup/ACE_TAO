@@ -1,18 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Dynamic.h
-//
-// = AUTHOR
-//    Doug Schmidt and Irfan Pyrarli.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dynamic.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ *  @author Irfan Pyarali.
+ */
+//=============================================================================
+
 
 #ifndef ACE_DYNAMIC_H
 #define ACE_DYNAMIC_H
@@ -27,40 +25,46 @@
 #include "ace/Synch_T.h"
 #include "ace/Singleton.h"
 
+/**
+ * @class ACE_Dynamic
+ *
+ * @brief Checks to see if an object was dynamically allocated.
+ *
+ * This class holds the pointer in a thread-safe manner between
+ * the call to operator new and the call to the constructor.
+ */
 class ACE_Export ACE_Dynamic
 {
-  // = TITLE
-  //     Checks to see if an object was dynamically allocated.
-  //
-  // = DESCRIPTION
-  //     This class holds the pointer in a thread-safe manner between
-  //     the call to operator new and the call to the constructor.
 public:
   // = Initialization and termination method.
+  /// Constructor.
   ACE_Dynamic (void);
-  // Constructor.
 
+  /// Destructor.
   ~ACE_Dynamic (void);
-  // Destructor.
 
+  /**
+   * Sets a flag that indicates that the object was dynamically
+   * created. This method is usually called in operator new and then
+   * checked and reset in the constructor.
+   */
   void set (void);
-  // Sets a flag that indicates that the object was dynamically
-  // created. This method is usually called in operator new and then
-  // checked and reset in the constructor.
 
+  /// 1 if we were allocated dynamically, else 0.
   int is_dynamic (void);
-  // 1 if we were allocated dynamically, else 0.
 
+  /// Resets state flag.
   void reset (void);
-  // Resets state flag.
 
   static ACE_Dynamic *instance (void);
 
 private:
+  /**
+   * Flag that indicates that the object was dynamically created. This
+   * method is usually called in operator new and then checked and
+   * reset in the constructor.
+   */
   int is_dynamic_;
-  // Flag that indicates that the object was dynamically created. This
-  // method is usually called in operator new and then checked and
-  // reset in the constructor.
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Shared_Object.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Shared_Object.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SHARED_OBJECT_H
 #define ACE_SHARED_OBJECT_H
@@ -25,22 +22,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Shared_Object
+ *
+ * @brief Provide the abstract base class used to access dynamic
+ * linking facilities.
+ */
 class ACE_Export ACE_Shared_Object
 {
-  // = TITLE
-  //     Provide the abstract base class used to access dynamic
-  //     linking facilities.
 public:
   ACE_Shared_Object (void);
 
+  /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Initializes object when dynamic linking occurs.
 
+  /// Terminates object when dynamic unlinking occurs.
   virtual int fini (void);
-  // Terminates object when dynamic unlinking occurs.
 
+  /// Returns information on active object.
   virtual int info (ACE_TCHAR **info_string, size_t length = 0) const;
-  // Returns information on active object.
 
   virtual ~ACE_Shared_Object (void);
 };

@@ -1,22 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Array.h
-//
-// = DESCRIPTION
-//    NOTE: this file has been deprecated and will soon go away.  You
-//    should directly include "Containers_T.h" instead.
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Array.h
+ *
+ *  $Id$
+ *
+ *  NOTE: this file has been deprecated and will soon go away.  You
+ *  should directly include "Containers_T.h" instead.
+ *
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_ARRAY_H
 #define ACE_ARRAY_H

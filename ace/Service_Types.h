@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Service_Types.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Service_Types.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SERVICE_TYPE_H
 #define ACE_SERVICE_TYPE_H
@@ -26,19 +23,21 @@
 
 #include "ace/Synch.h"
 
+/**
+ * @class ACE_Service_Type_Impl
+ *
+ * @brief The abstract base class of the hierarchy that defines the
+ * contents of the <ACE_Service_Repository>.  The subclasses of
+ * this class allow the configuration of <ACE_Service_Objects>,
+ * <ACE_Modules>, and <ACE_Streams>.
+ *
+ * This class provides the root of the implementation hierarchy
+ * of the "Bridge" pattern.  It maintains a pointer to the
+ * appropriate type of service implementation, i.e.,
+ * <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
+ */
 class ACE_Export ACE_Service_Type_Impl
 {
-  // = TITLE
-  //     The abstract base class of the hierarchy that defines the
-  //     contents of the <ACE_Service_Repository>.  The subclasses of
-  //     this class allow the configuration of <ACE_Service_Objects>,
-  //     <ACE_Modules>, and <ACE_Streams>.
-  //
-  // = DESCRIPTION
-  //     This class provides the root of the implementation hierarchy
-  //     of the "Bridge" pattern.  It maintains a pointer to the
-  //     appropriate type of service implementation, i.e.,
-  //     <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
 public:
   // = Initialization and termination methods.
   ACE_Service_Type_Impl (void *object,
@@ -54,41 +53,44 @@ public:
   virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const = 0;
 
+  /// The pointer to the service.
   void *object (void) const;
-  // The pointer to the service.
 
+  /// Get the name of the service.
   const ACE_TCHAR *name (void) const;
-  // Get the name of the service.
 
+  /// Set the name of the service.
   void name (const ACE_TCHAR *);
-  // Set the name of the service.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Name of the service.
   const ACE_TCHAR *name_;
-  // Name of the service.
 
+  /// Pointer to object that implements the service.  This actually
+  /// points to an <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
   void *obj_;
-  // Pointer to object that implements the service.  This actually
-  // points to an <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
 
+  /// Destroy function to deallocate obj_.
   ACE_Service_Object_Exterminator gobbler_;
-  // Destroy function to deallocate obj_.
 
+  /// Flags that control serivce behavior (particularly deletion).
   u_int flags_;
-  // Flags that control serivce behavior (particularly deletion).
 };
 
+/**
+ * @class ACE_Service_Object_Type
+ *
+ * @brief Define the methods for handling the configuration of
+ * <ACE_Service_Objects>.
+ */
 class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
 {
-  // = TITLE
-  //     Define the methods for handling the configuration of
-  //     <ACE_Service_Objects>.
 public:
   // = Initialization method.
   ACE_Service_Object_Type (void *so,
@@ -106,11 +108,14 @@ public:
   virtual int info (ACE_TCHAR **str, size_t len) const;
 };
 
+/**
+ * @class ACE_Module_Type
+ *
+ * @brief Define the methods for handling the configuration of
+ * <ACE_Modules>.
+ */
 class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
 {
-  // = TITLE
-  //     Define the methods for handling the configuration of
-  //     <ACE_Modules>.
 public:
   // = Initialization method.
   ACE_Module_Type (void *m, // Really an <ACE_Module> *.
@@ -130,22 +135,25 @@ public:
   ACE_Module_Type *link (void) const;
   void link (ACE_Module_Type *);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Pointer to the next <ACE_Module_Type> in an <ACE_Stream_Type>.
   ACE_Module_Type *link_;
-  // Pointer to the next <ACE_Module_Type> in an <ACE_Stream_Type>.
 };
 
+/**
+ * @class ACE_Stream_Type
+ *
+ * @brief Define the methods for handling the configuration of
+ * <ACE_Streams>.
+ */
 class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 {
-  // = TITLE
-  //     Define the methods for handling the configuration of
-  //     <ACE_Streams>.
 public:
   // = Initialization method.
   ACE_Stream_Type (void *s, // Really an <ACE_Stream> *.
@@ -161,24 +169,24 @@ public:
   virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
+  /// Add a new <ACE_Module> to the top of the <ACE_Stream>.
   int push (ACE_Module_Type *new_module);
-  // Add a new <ACE_Module> to the top of the <ACE_Stream>.
 
+  /// Search for <module> and remove it from the <ACE_Stream>.
   int remove (ACE_Module_Type *module);
-  // Search for <module> and remove it from the <ACE_Stream>.
 
+  /// Locate the <ACE_Module> with <mod_name>.
   ACE_Module_Type *find (const ACE_TCHAR *mod_name) const;
-  // Locate the <ACE_Module> with <mod_name>.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Pointer to the head of the <ACE_Module> list.
   ACE_Module_Type *head_;
-  // Pointer to the head of the <ACE_Module> list.
 };
 
 #if defined (__ACE_INLINE__)

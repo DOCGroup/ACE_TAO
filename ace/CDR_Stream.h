@@ -1,37 +1,36 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ace
-//
-// = FILENAME
-//   CDR_Stream.h
-//
-// = DESCRIPTION
-//   ACE Common Data Representation (CDR) marshaling and demarshaling
-//   classes.
-//
-//   This implementation was inspired in the CDR class in SunSoft's
-//   IIOP engine, but has a completely different implementation and a
-//   different interface too.
-//
-//   The current implementation assumes that the host has 1-byte,
-//   2-byte and 4-byte integral types, and that it has single
-//   precision and double precision IEEE floats.
-//   Those assumptions are pretty good these days, with Crays beign
-//   the only known exception.
-//
-// = AUTHORS
-//   Aniruddha Gokhale <gokhale@cs.wustl.edu> and Carlos O'Ryan
-//   <coryan@cs.wustl.edu> for the original implementation in TAO.
-//   ACE version by Jeff Parsons <parsons@cs.wustl.edu>
-//   and Istvan Buki <istvan.buki@euronet.be>.
-//   Codeset translation by Jim Rogers (jrogers@viasoft.com) and
-//   Carlos O'Ryan <coryan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CDR_Stream.h
+ *
+ *  $Id$
+ *
+ * ACE Common Data Representation (CDR) marshaling and demarshaling
+ * classes.
+ *
+ * This implementation was inspired in the CDR class in SunSoft's
+ * IIOP engine, but has a completely different implementation and a
+ * different interface too.
+ *
+ * The current implementation assumes that the host has 1-byte,
+ * 2-byte and 4-byte integral types, and that it has single
+ * precision and double precision IEEE floats.
+ * Those assumptions are pretty good these days, with Crays beign
+ * the only known exception.
+ *
+ *
+ *  @author TAO version by
+ *  @author Aniruddha Gokhale <gokhale@cs.wustl.edu>
+ *  @author Carlos O'Ryan<coryan@cs.wustl.edu>
+ *  @author ACE version by
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ *  @author Istvan Buki <istvan.buki@euronet.be>
+ *  @author Codeset translation by
+ *  @author Jim Rogers <jrogers@viasoft.com>
+ */
+//=============================================================================
+
 
 #ifndef ACE_CDR_STREAM_H
 #define ACE_CDR_STREAM_H
@@ -52,37 +51,42 @@ class ACE_CString;
 
 class ACE_InputCDR;
 
+/**
+ * @class ACE_OutputCDR
+ *
+ * @brief A CDR stream for writing, i.e. for marshalling.
+ *
+ * This class is based on the the CORBA spec for Java (98-02-29),
+ * java class omg.org.CORBA.portable.OutputStream.  It diverts in
+ * a few ways:
+ * + Operations taking arrays don't have offsets, because in C++
+ *   it is easier to describe an array starting from x+offset.
+ * + Operations return an error status, because exceptions are
+ *   not widely available in C++ (yet).
+ */
 class ACE_Export ACE_OutputCDR
 {
-  // = TITLE
-  //   A CDR stream for writing, i.e. for marshalling.
-  //
-  // = DESCRIPTION
-  //   This class is based on the the CORBA spec for Java (98-02-29),
-  //   java class omg.org.CORBA.portable.OutputStream.  It diverts in
-  //   a few ways:
-  //     + Operations taking arrays don't have offsets, because in C++
-  //       it is easier to describe an array starting from x+offset.
-  //     + Operations return an error status, because exceptions are
-  //       not widely available in C++ (yet).
-  //
 public:
+  /**
+   * The Codeset translators need access to some private members to
+   * efficiently marshal arrays
+   * For reading from an output CDR stream.
+   */
   friend class ACE_Char_Codeset_Translator;
   friend class ACE_WChar_Codeset_Translator;
-  // The Codeset translators need access to some private members to
-  // efficiently marshal arrays
   friend class ACE_InputCDR;
-  // For reading from an output CDR stream.
 
+  /// Default constructor, allocates <size> bytes in the internal
+  /// buffer, if <size> == 0 it allocates the default size.
   ACE_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
                  size_t memcpy_tradeoff =
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
-  // Default constructor, allocates <size> bytes in the internal
-  // buffer, if <size> == 0 it allocates the default size.
 
+  /// Build a CDR stream with an initial buffer, it will *not* remove
+  /// <data>, since it did not allocated it.
   ACE_OutputCDR (char *data,
                  size_t size,
                  int byte_order = ACE_CDR_BYTE_ORDER,
@@ -90,22 +94,22 @@ public:
                  ACE_Allocator* data_block_allocator = 0,
                  size_t memcpy_tradeoff=
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
-  // Build a CDR stream with an initial buffer, it will *not* remove
-  // <data>, since it did not allocated it.
 
+  /// Build a CDR stream with an initial Message_Block chain, it will
+  /// *not* remove <data>, since it did not allocate it.
   ACE_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  size_t memcpy_tradeoff=
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
-  // Build a CDR stream with an initial Message_Block chain, it will
-  // *not* remove <data>, since it did not allocate it.
 
+  /// destructor
   ~ACE_OutputCDR (void);
-  // destructor
 
-  // = Special types.
-  // These are needed for insertion and extraction of booleans,
-  // octets, chars, and bounded strings.
+  /**
+   * Disambiguate overload when inserting booleans, octets, chars, and
+   * bounded strings. 
+   */
+  //@{ @name Helper classes
 
   struct ACE_Export from_boolean
   {
@@ -150,9 +154,10 @@ public:
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;
   };
+  //@}
 
-  // = We have one method per basic IDL type....
-  // They return 0 on failure and 1 on success.
+  // Return 0 on failure and 1 on success.
+  //@{ @name Write operations
   ACE_CDR::Boolean write_boolean (ACE_CDR::Boolean x);
   ACE_CDR::Boolean write_char (ACE_CDR::Char x);
   ACE_CDR::Boolean write_wchar (ACE_CDR::WChar x);
@@ -167,7 +172,7 @@ public:
   ACE_CDR::Boolean write_double (const ACE_CDR::Double &x);
   ACE_CDR::Boolean write_longdouble (const ACE_CDR::LongDouble &x);
 
-  // = For string we offer methods that accept a precomputed length.
+  /// For string we offer methods that accept a precomputed length.
   ACE_CDR::Boolean write_string (const ACE_CDR::Char *x);
   ACE_CDR::Boolean write_string (ACE_CDR::ULong len,
                                  const ACE_CDR::Char *x);
@@ -175,10 +180,12 @@ public:
   ACE_CDR::Boolean write_wstring (const ACE_CDR::WChar *x);
   ACE_CDR::Boolean write_wstring (ACE_CDR::ULong length,
                                   const ACE_CDR::WChar *x);
+  //@}
 
-  // = We add one method to write arrays of basic IDL types.
-  // Note: the portion written starts at <x> and ends at <x + length>.
-  // The length is *NOT* stored into the CDR stream.
+  /// Note: the portion written starts at <x> and ends
+  ///       at <x + length>. 
+  /// The length is *NOT* stored into the CDR stream.
+  //@{ @name Array write operations
   ACE_CDR::Boolean write_boolean_array (const ACE_CDR::Boolean *x,
                                         ACE_CDR::ULong length);
   ACE_CDR::Boolean write_char_array (const ACE_CDR::Char *x,
@@ -206,12 +213,15 @@ public:
   ACE_CDR::Boolean write_longdouble_array (const ACE_CDR::LongDouble* x,
                                            ACE_CDR::ULong length);
 
+  /// Write an octet array contained inside a MB, this can be optimized
+  /// to minimize copies.
   ACE_CDR::Boolean write_octet_array_mb (const ACE_Message_Block* mb);
-  // Write an octet array contained inside a MB, this can be optimized
-  // to minimize copies.
+  //@}
 
-  // = We have one method per basic IDL type....
-  // They return 0 on failure and 1 on success.
+  /**
+   * Return 0 on failure and 1 on success.
+   */
+  //@{ @name Append contents of own CDR stream to another
   ACE_CDR::Boolean append_boolean (ACE_InputCDR &);
   ACE_CDR::Boolean append_char (ACE_InputCDR &);
   ACE_CDR::Boolean append_wchar (ACE_InputCDR &);
@@ -228,55 +238,64 @@ public:
 
   ACE_CDR::Boolean append_wstring (ACE_InputCDR &);
   ACE_CDR::Boolean append_string (ACE_InputCDR &);
+  //@}
 
+  /// Returns 0 if an error has ocurred, the only expected error is to
+  /// run out of memory.
   int good_bit (void) const;
-  // Returns 0 if an error has ocurred, the only expected error is to
-  // run out of memory.
 
+  /// Reuse the CDR stream to write on the old buffer.
   void reset (void);
-  // Reuse the CDR stream to write on the old buffer.
 
+  /// Add the length of each message block in the chain.
   size_t total_length (void) const;
-  // Add the length of each message block in the chain.
 
+  /**
+   * Return the start of the message block chain for this CDR stream.
+   * NOTE: The complete CDR stream is represented by a chain of
+   * message blocks.
+   */
   const ACE_Message_Block *begin (void) const;
-  // Return the start of the message block chain for this CDR stream.
-  // NOTE: The complete CDR stream is represented by a chain of
-  // message blocks.
 
+  /// Return the last message in the chain that is is use.
   const ACE_Message_Block *end (void) const;
-  // Return the last message in the chain that is is use.
 
+  /// Return the <current_> message block in chain.
   const ACE_Message_Block *current (void) const;
-  // Return the <current_> message block in chain.
 
+  /// Access the underlying buffer (read only).
   const char *buffer (void) const;
-  // Access the underlying buffer (read only).
 
+  /**
+   * Return the start and size of the internal buffer.  NOTE: This
+   * methods only return information about the first block in the
+   * chain.
+   */
   size_t length (void) const;
-  // Return the start and size of the internal buffer.  NOTE: This
-  // methods only return information about the first block in the
-  // chain.
 
+  /**
+   * Utility function to allow the user more flexibility.
+   * Pads the stream up to the nearest <alignment>-byte boundary.
+   * Argument MUST be a power of 2.
+   * Returns 0 on success and -1 on failure.
+   */
   int align_write_ptr (size_t alignment);
-  // Utility function to allow the user more flexibility.
-  // Pads the stream up to the nearest <alignment>-byte boundary.
-  // Argument MUST be a power of 2.
-  // Returns 0 on success and -1 on failure.
 
+  /// Access the codeset translators. They can be nil!
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
-  // Access the codeset translators. They can be nil!
 
+  /**
+   * Return alignment of the wr_ptr(), with respect to the start of
+   * the CDR stream.  This is not the same as the alignment of
+   * current->wr_ptr()!
+   */
   size_t current_alignment (void) const;
-  // Return alignment of the wr_ptr(), with respect to the start of
-  // the CDR stream.  This is not the same as the alignment of
-  // current->wr_ptr()!
 
 private:
+  /// disallow copying...
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
   ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);
-  // disallow copying...
 
   ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
@@ -284,171 +303,189 @@ private:
   ACE_CDR::Boolean write_8 (const ACE_CDR::ULongLong *x);
   ACE_CDR::Boolean write_16 (const ACE_CDR::LongDouble *x);
 
+  /**
+   * write an array of <length> elements, each of <size> bytes and the
+   * start aligned at a multiple of <align>. The elements are assumed
+   * to be packed with the right alignment restrictions.  It is mostly
+   * designed for buffers of the basic types.
+   *
+   * This operation uses <memcpy>; as explained above it is expected
+   * that using assignment is faster that <memcpy> for one element,
+   * but for several elements <memcpy> should be more efficient, it
+   * could be interesting to find the break even point and optimize
+   * for that case, but that would be too platform dependent.
+   */
   ACE_CDR::Boolean write_array (const void *x,
                                 size_t size,
                                 size_t align,
                                 ACE_CDR::ULong length);
-  // write an array of <length> elements, each of <size> bytes and the
-  // start aligned at a multiple of <align>. The elements are assumed
-  // to be packed with the right alignment restrictions.  It is mostly
-  // designed for buffers of the basic types.
-  //
-  // This operation uses <memcpy>; as explained above it is expected
-  // that using assignment is faster that <memcpy> for one element,
-  // but for several elements <memcpy> should be more efficient, it
-  // could be interesting to find the break even point and optimize
-  // for that case, but that would be too platform dependent.
 
+  /**
+   * Returns (in <buf>) the next position in the buffer aligned to
+   * <size>, it advances the Message_Block wr_ptr past the data
+   * (i.e. <buf> + <size>). If necessary it grows the Message_Block
+   * buffer.  Sets the good_bit to 0 and returns a -1 on failure.
+   */
   int adjust (size_t size,
               char *&buf);
-  // Returns (in <buf>) the next position in the buffer aligned to
-  // <size>, it advances the Message_Block wr_ptr past the data
-  // (i.e. <buf> + <size>). If necessary it grows the Message_Block
-  // buffer.  Sets the good_bit to 0 and returns a -1 on failure.
 
+  /// As above, but now the size and alignment requirements may be
+  /// different.
   int adjust (size_t size,
               size_t align,
               char *&buf);
-  // As above, but now the size and alignment requirements may be
-  // different.
 
+  /**
+   * Grow the CDR stream. When it returns <buf> contains a pointer to
+   * memory in the CDR stream, with at least <size> bytes ahead of it
+   * and aligned to an <align> boundary. It moved the <wr_ptr> to <buf
+   * + size>.
+   */
   int grow_and_adjust (size_t size,
                        size_t align,
                        char *&buf);
-  // Grow the CDR stream. When it returns <buf> contains a pointer to
-  // memory in the CDR stream, with at least <size> bytes ahead of it
-  // and aligned to an <align> boundary. It moved the <wr_ptr> to <buf
-  // + size>.
 
+  /// If non-zero then this stream is writing in non-native byte order,
+  /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
   int do_byte_swap (void) const;
-  // If non-zero then this stream is writing in non-native byte order,
-  // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
 
 private:
+  /// The start of the chain of message blocks.
   ACE_Message_Block start_;
-  // The start of the chain of message blocks.
 
+  /// The current block in the chain were we are writing.
   ACE_Message_Block *current_;
-  // The current block in the chain were we are writing.
 
+  /**
+   * Is the current block writable.  When we steal a buffer from the
+   * user and just chain it into the message block we are not supposed
+   * to write on it, even if it is past the start and end of the
+   * buffer.
+   */
   int current_is_writable_;
-  // Is the current block writable.  When we steal a buffer from the
-  // user and just chain it into the message block we are not supposed
-  // to write on it, even if it is past the start and end of the
-  // buffer.
 
+  /**
+   * The current alignment as measured from the start of the buffer.
+   * Usually this coincides with the alignment of the buffer in
+   * memory, but, when we chain another buffer this "quasi invariant"
+   * is broken.
+   * The current_alignment is used to readjust the buffer following
+   * the stolen message block.
+   */
   size_t current_alignment_;
-  // The current alignment as measured from the start of the buffer.
-  // Usually this coincides with the alignment of the buffer in
-  // memory, but, when we chain another buffer this "quasi invariant"
-  // is broken.
-  // The current_alignment is used to readjust the buffer following
-  // the stolen message block.
 
+  /**
+   * If not zero swap bytes at writing so the created CDR stream byte
+   * order does *not* match the machine byte order.  The motivation
+   * for such a beast is that in some setting a few (fast) machines
+   * can be serving hundreds of slow machines with the opposite byte
+   * order, so it makes sense (as a load balancing device) to put the
+   * responsability in the writers.  THIS IS NOT A STANDARD IN CORBA,
+   * USE AT YOUR OWN RISK
+   */
   int do_byte_swap_;
-  // If not zero swap bytes at writing so the created CDR stream byte
-  // order does *not* match the machine byte order.  The motivation
-  // for such a beast is that in some setting a few (fast) machines
-  // can be serving hundreds of slow machines with the opposite byte
-  // order, so it makes sense (as a load balancing device) to put the
-  // responsability in the writers.  THIS IS NOT A STANDARD IN CORBA,
-  // USE AT YOUR OWN RISK
 
+  /// Set to 0 when an error ocurrs.
   int good_bit_;
-  // Set to 0 when an error ocurrs.
 
+  /// Break-even point for copying.
   size_t memcpy_tradeoff_;
-  // Break-even point for copying.
 
 protected:
+  /// If not nil, invoke for translation of character and string data.
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
-  // If not nil, invoke for translation of character and string data.
 };
 
 // ****************************************************************
 
+/**
+ * @class ACE_InputCDR
+ *
+ * @brief A CDR stream for reading, i.e. for demarshalling.
+ *
+ * This class is based on the the CORBA spec for Java (98-02-29),
+ * java class omg.org.CORBA.portable.InputStream.  It diverts in a
+ * few ways:
+ * + Operations to retrieve basic types take parameters by
+ * reference.
+ * + Operations taking arrays don't have offsets, because in C++
+ * it is easier to describe an array starting from x+offset.
+ * + Operations return an error status, because exceptions are
+ * not widely available in C++ (yet).
+ */
 class ACE_Export ACE_InputCDR
 {
-  // = TITLE
-  //   A CDR stream for reading, i.e. for demarshalling.
-  //
-  // = DESCRIPTION
-  //   This class is based on the the CORBA spec for Java (98-02-29),
-  //   java class omg.org.CORBA.portable.InputStream.  It diverts in a
-  //   few ways:
-  //     + Operations to retrieve basic types take parameters by
-  //       reference.
-  //     + Operations taking arrays don't have offsets, because in C++
-  //       it is easier to describe an array starting from x+offset.
-  //     + Operations return an error status, because exceptions are
-  //       not widely available in C++ (yet).
-  //
 public:
+  /// The translator need privileged access to efficiently demarshal
+  /// arrays and the such
   friend class ACE_Char_Codeset_Translator;
   friend class ACE_WChar_Codeset_Translator;
-  // The translator need privileged access to efficiently demarshal
-  // arrays and the such
 
+  /**
+   * Create an input stream from an arbitrary buffer, care must be
+   * exercised wrt alignment, because this contructor will *not* work
+   * if the buffer is unproperly aligned.
+   */
   ACE_InputCDR (const char *buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER);
-  // Create an input stream from an arbitrary buffer, care must be
-  // exercised wrt alignment, because this contructor will *not* work
-  // if the buffer is unproperly aligned.
 
+  /// Create an empty input stream. The caller is responsible for
+  /// putting the right data and providing the right alignment.
   ACE_InputCDR (size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER);
-  // Create an empty input stream. The caller is responsible for
-  // putting the right data and providing the right alignment.
 
+  /// Create an input stream from an ACE_Message_Block
   ACE_InputCDR (const ACE_Message_Block *data,
                 int byte_order = ACE_CDR_BYTE_ORDER);
-  // Create an input stream from an ACE_Message_Block
 
+  /// Create an input stream from an ACE_Data_Block
   ACE_InputCDR (ACE_Data_Block *data,
                 int byte_order = ACE_CDR_BYTE_ORDER);
-  // Create an input stream from an ACE_Data_Block
 
+  /**
+   * These make a copy of the current stream state, but do not copy
+   * the internal buffer, so the same stream can be read multiple
+   * times efficiently.
+   */
   ACE_InputCDR (const ACE_InputCDR& rhs);
   ACE_InputCDR& operator= (const ACE_InputCDR& rhs);
-  // These make a copy of the current stream state, but do not copy
-  // the internal buffer, so the same stream can be read multiple
-  // times efficiently.
 
+  /// When interpreting indirected TypeCodes it is useful to make a
+  /// "copy" of the stream starting in the new position.
   ACE_InputCDR (const ACE_InputCDR& rhs,
                 size_t size,
                 ACE_CDR::Long offset);
-  // When interpreting indirected TypeCodes it is useful to make a
-  // "copy" of the stream starting in the new position.
 
+  /// This creates an encapsulated stream, the first byte must be (per
+  /// the spec) the byte order of the encapsulation.
   ACE_InputCDR (const ACE_InputCDR& rhs,
                 size_t size);
-  // This creates an encapsulated stream, the first byte must be (per
-  // the spec) the byte order of the encapsulation.
 
+  /// Create an input CDR from an output CDR.
   ACE_InputCDR (const ACE_OutputCDR& rhs,
                 ACE_Allocator* buffer_allocator = 0,
                 ACE_Allocator* data_block_allocator = 0);
-  // Create an input CDR from an output CDR.
 
+  /// Helper class to transfer the contents from one input CDR to
+  /// another without requiring any extra memory allocations, data
+  /// copies or too many temporaries.
   struct ACE_Export Transfer_Contents
   {
-    // Helper class to transfer the contents from one input CDR to
-    // another without requiring any extra memory allocations, data
-    // copies or too many temporaries.
     Transfer_Contents (ACE_InputCDR &rhs);
 
     ACE_InputCDR &rhs_;
   };
+  /// Transfer the contents from <rhs> to a new CDR
   ACE_InputCDR (Transfer_Contents rhs);
-  // Transfer the contents from <rhs> to a new CDR
 
+  /// Destructor
   ~ACE_InputCDR (void);
-  // Destructor
 
-  // = Special types.
-  // These extract octets, chars, booleans, and bounded strings
+  /// Disambiguate overloading when extracting octets, chars,
+  /// booleans, and bounded strings 
+  //@{ @name Helper classes
 
   struct ACE_Export to_boolean
   {
@@ -489,9 +526,12 @@ public:
     ACE_CDR::WChar *&val_;
     ACE_CDR::ULong bound_;
   };
+  //@}
 
-  // = We have one method per basic IDL type....
-  // They return 0 on failure and 1 on success.
+  /**
+   * Return 0 on failure and 1 on success.
+   */
+  //@{ @name Read basic IDL types
   ACE_CDR::Boolean read_boolean (ACE_CDR::Boolean& x);
   ACE_CDR::Boolean read_char (ACE_CDR::Char &x);
   ACE_CDR::Boolean read_wchar (ACE_CDR::WChar& x);
@@ -509,11 +549,14 @@ public:
   ACE_CDR::Boolean read_string (ACE_CDR::Char *&x);
   ACE_CDR::Boolean read_string (ACE_CString &x);
   ACE_CDR::Boolean read_wstring (ACE_CDR::WChar*& x);
+  //@}
 
-  // = One method for each basic type...
-  // The buffer <x> must be large enough to contain <length>
-  // elements.
-  // They return -1 on failure and 0 on success.
+  /**
+   * The buffer <x> must be large enough to contain <length>
+   * elements.
+   * Return -1 on failure and 0 on success.
+   */
+  //@{ @name Read basic IDL types arrays
   ACE_CDR::Boolean read_boolean_array (ACE_CDR::Boolean* x,
                                        ACE_CDR::ULong length);
   ACE_CDR::Boolean read_char_array (ACE_CDR::Char *x,
@@ -540,9 +583,12 @@ public:
                                       ACE_CDR::ULong length);
   ACE_CDR::Boolean read_longdouble_array (ACE_CDR::LongDouble* x,
                                           ACE_CDR::ULong length);
+  //@}
 
-  // = We have one method per basic IDL type....
-  // They return 0 on failure and 1 on success.
+  /**
+   * Return 0 on failure and 1 on success.
+   */
+  //@{ @name Skip elements
   ACE_CDR::Boolean skip_boolean (void);
   ACE_CDR::Boolean skip_char (void);
   ACE_CDR::Boolean skip_wchar (void);
@@ -556,93 +602,104 @@ public:
   ACE_CDR::Boolean skip_float (void);
   ACE_CDR::Boolean skip_double (void);
   ACE_CDR::Boolean skip_longdouble (void);
+  //@}
 
+  /**
+   * The next field must be a string, this method skips it. It is
+   * useful in parsing a TypeCode.
+   * Return 0 on failure and 1 on success.
+   */
   ACE_CDR::Boolean skip_wstring (void);
   ACE_CDR::Boolean skip_string (void);
-  // The next field must be a string, this method skips it. It is
-  // useful in parsing a TypeCode.
-  // Return 0 on failure and 1 on success.
 
+  /// Skip <n> bytes in the CDR stream.
+  /// Return 0 on failure and 1 on success.
   ACE_CDR::Boolean skip_bytes (size_t n);
-  // Skip <n> bytes in the CDR stream.
-  // Return 0 on failure and 1 on success.
 
+  /// returns zero if a problem has been detected.
   int good_bit (void) const;
-  // returns zero if a problem has been detected.
 
+  /**
+   * Return the start of the message block chain for this CDR stream.
+   * NOTE: In the current implementation the chain has length 1, but
+   * we are planning to change that.
+   */
   const ACE_Message_Block* start (void) const;
-  // Return the start of the message block chain for this CDR stream.
-  // NOTE: In the current implementation the chain has length 1, but
-  // we are planning to change that.
 
   // = The following functions are useful to read the contents of the
   //   CDR stream from a socket or file.
 
+  /**
+   * Grow the internal buffer, reset <rd_ptr> to the first byte in the
+   * new buffer that is properly aligned, and set <wr_ptr> to <rd_ptr>
+   * + newsize
+   */
   int grow (size_t newsize);
-  // Grow the internal buffer, reset <rd_ptr> to the first byte in the
-  // new buffer that is properly aligned, and set <wr_ptr> to <rd_ptr>
-  // + newsize
 
+  /**
+   * After reading and partially parsing the contents the user can
+   * detect a change in the byte order, this method will let him
+   * change it.
+   */
   void reset_byte_order (int byte_order);
-  // After reading and partially parsing the contents the user can
-  // detect a change in the byte order, this method will let him
-  // change it.
 
+  /// Re-initialize the CDR stream, copying the contents of the chain
+  /// of message_blocks starting from <data>.
   void reset (const ACE_Message_Block *data,
               int byte_order);
-  // Re-initialize the CDR stream, copying the contents of the chain
-  // of message_blocks starting from <data>.
 
+  /// Steal the contents from the currect CDR.
   ACE_Message_Block *steal_contents (void);
-  // Steal the contents from the currect CDR.
 
+  /// Steal the contents of <cdr> and make a shallow copy into this
+  /// stream.
   void steal_from (ACE_InputCDR &cdr);
-  // Steal the contents of <cdr> and make a shallow copy into this
-  // stream.
 
+  /// Re-initialize the CDR stream, forgetting about the old contents
+  /// of the stream and allocating a new buffer (from the allocators).
   void reset_contents (void);
-  // Re-initialize the CDR stream, forgetting about the old contents
-  // of the stream and allocating a new buffer (from the allocators).
 
+  /// Returns the current position for the rd_ptr....
   char* rd_ptr (void);
-  // Returns the current position for the rd_ptr....
 
+  /// Return how many bytes are left in the stream.
   size_t length (void) const;
-  // Return how many bytes are left in the stream.
 
+  /**
+   * Utility function to allow the user more flexibility.
+   * Skips up to the nearest <alignment>-byte boundary.
+   * Argument MUST be a power of 2.
+   * Returns 0 on success and -1 on failure.
+   */
   int align_read_ptr (size_t alignment);
-  // Utility function to allow the user more flexibility.
-  // Skips up to the nearest <alignment>-byte boundary.
-  // Argument MUST be a power of 2.
-  // Returns 0 on success and -1 on failure.
 
+  /// If non-zero then this stream is writing in non-native byte order,
+  /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
   int do_byte_swap (void) const;
-  // If non-zero then this stream is writing in non-native byte order,
-  // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
 
+  /// If <do_byte_swap> returns 1, this returns ACE_CDR_BYTE_ORDER else
+  /// it returns ~ACE_CDR_BYTE_ORDER.
   int byte_order (void) const;
-  // If <do_byte_swap> returns 1, this returns ACE_CDR_BYTE_ORDER else
-  // it returns ~ACE_CDR_BYTE_ORDER.
 
+  /// Access the codeset translators. They can be nil!
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
-  // Access the codeset translators. They can be nil!
 
 protected:
+  /// The start of the chain of message blocks, even though in the
+  /// current version the chain always has length 1.
   ACE_Message_Block start_;
-  // The start of the chain of message blocks, even though in the
-  // current version the chain always has length 1.
 
+  /// The CDR stream byte order does not match the one on the machine,
+  /// swapping is needed while reading.
   int do_byte_swap_;
-  // The CDR stream byte order does not match the one on the machine,
-  // swapping is needed while reading.
 
+  /// set to 0 when an error occurs.
   int good_bit_;
-  // set to 0 when an error occurs.
 
+  /// If not nil, invoke for translation of character and string data.
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
-  // If not nil, invoke for translation of character and string data.
 
 private:
   ACE_CDR::Boolean read_1 (ACE_CDR::Octet *x);
@@ -658,141 +715,151 @@ private:
   // alignment requirements of CDR streams and implement the
   // operations using asignment.
 
+  /**
+   * Read an array of <length> elements, each of <size> bytes and the
+   * start aligned at a multiple of <align>. The elements are assumed
+   * to be packed with the right alignment restrictions.  It is mostly
+   * designed for buffers of the basic types.
+   *
+   * This operation uses <memcpy>; as explained above it is expected
+   * that using assignment is faster that <memcpy> for one element,
+   * but for several elements <memcpy> should be more efficient, it
+   * could be interesting to find the break even point and optimize
+   * for that case, but that would be too platform dependent.
+   */
   ACE_CDR::Boolean read_array (void* x,
                                size_t size,
                                size_t align,
                                ACE_CDR::ULong length);
-  // Read an array of <length> elements, each of <size> bytes and the
-  // start aligned at a multiple of <align>. The elements are assumed
-  // to be packed with the right alignment restrictions.  It is mostly
-  // designed for buffers of the basic types.
-  //
-  // This operation uses <memcpy>; as explained above it is expected
-  // that using assignment is faster that <memcpy> for one element,
-  // but for several elements <memcpy> should be more efficient, it
-  // could be interesting to find the break even point and optimize
-  // for that case, but that would be too platform dependent.
 
+  /// Move the rd_ptr ahead by <offset> bytes.
   void rd_ptr (size_t offset);
-  // Move the rd_ptr ahead by <offset> bytes.
 
+  /// Points to the continuation field of the current message block.
   char* end (void);
-  // Points to the continuation field of the current message block.
 
+  /**
+   * Returns (in <buf>) the next position in the buffer aligned to
+   * <size>, it advances the Message_Block rd_ptr past the data
+   * (i.e. <buf> + <size>).  Sets the good_bit to 0 and returns a -1
+   * on failure.
+   */
   int adjust (size_t size,
               char *&buf);
-  // Returns (in <buf>) the next position in the buffer aligned to
-  // <size>, it advances the Message_Block rd_ptr past the data
-  // (i.e. <buf> + <size>).  Sets the good_bit to 0 and returns a -1
-  // on failure.
 
+  /// As above, but now the size and alignment requirements may be
+  /// different.
   int adjust (size_t size,
               size_t align,
               char *&buf);
-  // As above, but now the size and alignment requirements may be
-  // different.
 };
 
 // ****************************************************************
 
+/**
+ * @class ACE_Char_Codeset_Translator
+ *
+ * @brief Codeset translation routines common to both Output and Input
+ * CDR streams.
+ *
+ * This class is a base class for defining codeset translation
+ * routines to handle the character set translations required by
+ * both CDR Input streams and CDR Output streams.
+ */
 class ACE_Export ACE_Char_Codeset_Translator
 {
-  // = TITLE
-  //   Codeset translation routines common to both Output and Input
-  //   CDR streams.
-  //
-  // = DESCRIPTION
-  //   This class is a base class for defining codeset translation
-  //   routines to handle the character set translations required by
-  //   both CDR Input streams and CDR Output streams.
-  //
 public:
+  /// Read a single character from the stream, converting from the
+  /// stream codeset to the native codeset
   virtual ACE_CDR::Boolean read_char (ACE_InputCDR&,
                                       ACE_CDR::Char&) = 0;
-  // Read a single character from the stream, converting from the
-  // stream codeset to the native codeset
 
+  /// Read a string from the stream, including the length, converting
+  /// the characters from the stream codeset to the native codeset
   virtual ACE_CDR::Boolean read_string (ACE_InputCDR&,
                                         ACE_CDR::Char *&) = 0;
-  // Read a string from the stream, including the length, converting
-  // the characters from the stream codeset to the native codeset
 
+  /// Read an array of characters from the stream, converting the
+  /// characters from the stream codeset to the native codeset.
   virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR&,
                                             ACE_CDR::Char*,
                                             ACE_CDR::ULong) = 0;
-  // Read an array of characters from the stream, converting the
-  // characters from the stream codeset to the native codeset.
 
+  /// Write a single character to the stream, converting from the
+  /// native codeset to the stream codeset
   virtual ACE_CDR::Boolean write_char (ACE_OutputCDR&,
                                        ACE_CDR::Char) = 0;
-  // Write a single character to the stream, converting from the
-  // native codeset to the stream codeset
 
+  /// Write a string to the stream, including the length, converting
+  /// from the native codeset to the stream codeset
   virtual ACE_CDR::Boolean write_string (ACE_OutputCDR&,
                                          ACE_CDR::ULong,
                                          const ACE_CDR::Char*) = 0;
-  // Write a string to the stream, including the length, converting
-  // from the native codeset to the stream codeset
 
+  /// Write an array of characters to the stream, converting from the
+  /// native codeset to the stream codeset
   virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR&,
                                              const ACE_CDR::Char*,
                                              ACE_CDR::ULong) = 0;
-  // Write an array of characters to the stream, converting from the
-  // native codeset to the stream codeset
 
 protected:
+  /// Children have access to low-level routines because they cannot
+  /// use read_char or something similar (it would recurse).
   ACE_CDR::Boolean read_1 (ACE_InputCDR& input,
                            ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_1 (ACE_OutputCDR& output,
                             const ACE_CDR::Octet *x);
-  // Children have access to low-level routines because they cannot
-  // use read_char or something similar (it would recurse).
 
+  /// Efficiently read <length> elements of size <size> each from
+  /// <input> into <x>; the data must be aligned to <align>.
   ACE_CDR::Boolean read_array (ACE_InputCDR& input,
                                void* x,
                                size_t size,
                                size_t align,
                                ACE_CDR::ULong length);
-  // Efficiently read <length> elements of size <size> each from
-  // <input> into <x>; the data must be aligned to <align>.
 
+  /**
+   * Efficiently write <length> elements of size <size> from <x> into
+   * <output>. Before inserting the elements enough padding is added
+   * to ensure that the elements will be aligned to <align> in the
+   * stream.
+   */
   ACE_CDR::Boolean write_array (ACE_OutputCDR& output,
                                 const void *x,
                                 size_t size,
                                 size_t align,
                                 ACE_CDR::ULong length);
-  // Efficiently write <length> elements of size <size> from <x> into
-  // <output>. Before inserting the elements enough padding is added
-  // to ensure that the elements will be aligned to <align> in the
-  // stream.
 
+  /**
+   * Exposes the stream implementation of <adjust>, this is useful in
+   * many cases to minimize memory allocations during marshaling.
+   * On success <buf> will contain a contiguous area in the CDR stream
+   * that can hold <size> bytes aligned to <align>.
+   * Results
+   */
   int adjust (ACE_OutputCDR& out,
               size_t size,
               size_t align,
               char *&buf);
-  // Exposes the stream implementation of <adjust>, this is useful in
-  // many cases to minimize memory allocations during marshaling.
-  // On success <buf> will contain a contiguous area in the CDR stream
-  // that can hold <size> bytes aligned to <align>.
-  // Results
 
+  /// Used by derived classes to set errors in the CDR stream.
   void good_bit (ACE_OutputCDR& out, int bit);
-  // Used by derived classes to set errors in the CDR stream.
 };
 
 // ****************************************************************
 
+/**
+ * @class ACE_WChar_Codeset_Translator
+ *
+ * @brief Codeset translation routines common to both Output and Input
+ * CDR streams.
+ *
+ * This class is a base class for defining codeset translation
+ * routines to handle the character set translations required by
+ * both CDR Input streams and CDR Output streams.
+ */
 class ACE_Export ACE_WChar_Codeset_Translator
 {
-  // = TITLE
-  //   Codeset translation routines common to both Output and Input
-  //   CDR streams.
-  //
-  // = DESCRIPTION
-  //   This class is a base class for defining codeset translation
-  //   routines to handle the character set translations required by
-  //   both CDR Input streams and CDR Output streams.
-  //
 public:
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR&,
                                        ACE_CDR::WChar&) = 0;
@@ -811,6 +878,8 @@ public:
                                               ACE_CDR::ULong) = 0;
 
 protected:
+  /// Children have access to low-level routines because they cannot
+  /// use read_char or something similar (it would recurse).
   ACE_CDR::Boolean read_1 (ACE_InputCDR& input,
                            ACE_CDR::Octet *x);
   ACE_CDR::Boolean read_2 (ACE_InputCDR& input,
@@ -823,39 +892,41 @@ protected:
                             const ACE_CDR::UShort *x);
   ACE_CDR::Boolean write_4 (ACE_OutputCDR& output,
                             const ACE_CDR::ULong *x);
-  // Children have access to low-level routines because they cannot
-  // use read_char or something similar (it would recurse).
 
+  /// Efficiently read <length> elements of size <size> each from
+  /// <input> into <x>; the data must be aligned to <align>.
   ACE_CDR::Boolean read_array (ACE_InputCDR& input,
                                void* x,
                                size_t size,
                                size_t align,
                                ACE_CDR::ULong length);
-  // Efficiently read <length> elements of size <size> each from
-  // <input> into <x>; the data must be aligned to <align>.
 
+  /**
+   * Efficiently write <length> elements of size <size> from <x> into
+   * <output>. Before inserting the elements enough padding is added
+   * to ensure that the elements will be aligned to <align> in the
+   * stream.
+   */
   ACE_CDR::Boolean write_array (ACE_OutputCDR& output,
                                 const void *x,
                                 size_t size,
                                 size_t align,
                                 ACE_CDR::ULong length);
-  // Efficiently write <length> elements of size <size> from <x> into
-  // <output>. Before inserting the elements enough padding is added
-  // to ensure that the elements will be aligned to <align> in the
-  // stream.
 
+  /**
+   * Exposes the stream implementation of <adjust>, this is useful in
+   * many cases to minimize memory allocations during marshaling.
+   * On success <buf> will contain a contiguous area in the CDR stream
+   * that can hold <size> bytes aligned to <align>.
+   * Results
+   */
   int adjust (ACE_OutputCDR& out,
               size_t size,
               size_t align,
               char *&buf);
-  // Exposes the stream implementation of <adjust>, this is useful in
-  // many cases to minimize memory allocations during marshaling.
-  // On success <buf> will contain a contiguous area in the CDR stream
-  // that can hold <size> bytes aligned to <align>.
-  // Results
 
+  /// Used by derived classes to set errors in the CDR stream.
   void good_bit (ACE_OutputCDR& out, int bit);
-  // Used by derived classes to set errors in the CDR stream.
 };
 
 // @@ These operators should not be inlined since they force SString.h

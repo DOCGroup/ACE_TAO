@@ -1,20 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    WIN_Proactor.h
-//
-// = AUTHOR
-//    Irfan Pyarali (irfan@cs.wustl.edu),
-//    Tim Harrison (harrison@cs.wustl.edu) and
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    WIN_Proactor.h
+ *
+ *  $Id$
+ *
+ *  @author Irfan Pyarali (irfan@cs.wustl.edu)
+ *  @author Tim Harrison (harrison@cs.wustl.edu)
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_WIN32_PROACTOR_H
 #define ACE_WIN32_PROACTOR_H
@@ -33,64 +30,72 @@
 class ACE_WIN32_Asynch_Result;
 class ACE_WIN32_Proactor_Timer_Handler;
 
+/**
+ * @class ACE_WIN32_Proactor
+ *
+ * @brief A manager for asynchronous event demultiplexing.
+ *
+ * See the Proactor pattern description at
+ * http://www.cs.wustl.edu/~schmidt/proactor.ps.gz for more
+ * details.
+ */
 class ACE_Export ACE_WIN32_Proactor : public ACE_Proactor_Impl
 {
-  // = TITLE
-  //     A manager for asynchronous event demultiplexing.
-  //
-  // = DESCRIPTION
-  //     See the Proactor pattern description at
-  //     http://www.cs.wustl.edu/~schmidt/proactor.ps.gz for more
-  //     details.
 public:
+  /// A do nothing constructor.
   ACE_WIN32_Proactor (size_t number_of_threads = 0,
                       int used_with_reactor_event_loop = 0);
-  // A do nothing constructor.
 
+  /// Virtual destruction.
   virtual ~ACE_WIN32_Proactor (void);
-  // Virtual destruction.
 
+  /// Close the IO completion port.
   virtual int close (void);
-  // Close the IO completion port.
 
+  /// This method adds the <handle> to the I/O completion port. This
+  /// function is a no-op function for Unix systems.
   virtual int register_handle (ACE_HANDLE handle,
 			       const void *completion_key);
-  // This method adds the <handle> to the I/O completion port. This
-  // function is a no-op function for Unix systems.
 
+  /**
+   * Dispatch a single set of events.  If <wait_time> elapses before
+   * any events occur, return 0.  Return 1 on success i.e., when a
+   * completion is dispatched, non-zero (-1) on errors and errno is
+   * set accordingly.
+   */
   virtual int handle_events (ACE_Time_Value &wait_time);
-  // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return 0.  Return 1 on success i.e., when a
-  // completion is dispatched, non-zero (-1) on errors and errno is
-  // set accordingly. 
 
+  /**
+   * Block indefinitely until at least one event is dispatched.
+   * Dispatch a single set of events.  If <wait_time> elapses before
+   * any events occur, return 0.  Return 1 on success i.e., when a
+   * completion is dispatched, non-zero (-1) on errors and errno is
+   * set accordingly.
+   */
   virtual int handle_events (void);
-  // Block indefinitely until at least one event is dispatched.
-  // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return 0.  Return 1 on success i.e., when a
-  // completion is dispatched, non-zero (-1) on errors and errno is
-  // set accordingly. 
 
+  /**
+   * Post a result to the completion port of the Proactor.  If errors
+   * occur, the result will be deleted by this method.  If successful,
+   * the result will be deleted by the Proactor when the result is
+   * removed from the completion port.  Therefore, the result should
+   * have been dynamically allocated and should be orphaned by the
+   * user once this method is called.
+   */
   virtual int post_completion (ACE_WIN32_Asynch_Result *result);
-  // Post a result to the completion port of the Proactor.  If errors
-  // occur, the result will be deleted by this method.  If successful,
-  // the result will be deleted by the Proactor when the result is
-  // removed from the completion port.  Therefore, the result should
-  // have been dynamically allocated and should be orphaned by the
-  // user once this method is called.
 
+  /// Add wakeup dispatch threads (reinit).
   int wake_up_dispatch_threads (void);
-  // Add wakeup dispatch threads (reinit).
 
+  /// Close all dispatch threads.
   int close_dispatch_threads (int wait);
-  // Close all dispatch threads.
 
+  /// Number of thread used as a parameter to CreatIoCompletionPort.
   size_t number_of_threads (void) const;
   void number_of_threads (size_t threads);
-  // Number of thread used as a parameter to CreatIoCompletionPort.
 
+  /// Get the event handle.
   virtual ACE_HANDLE get_handle (void) const;
-  // Get the event handle.
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
 
@@ -170,93 +175,100 @@ public:
                                                                                     ACE_HANDLE event,
                                                                                     int priority,
                                                                                     int signal_number = 0);
-  
+
+  /// Create a timer result object which can be used with the Timer
+  /// mechanism of the Proactor.
   virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
                                                        const void *act,
                                                        const ACE_Time_Value &tv,
                                                        ACE_HANDLE event,
                                                        int priority,
                                                        int signal_number = 0);
-  // Create a timer result object which can be used with the Timer
-  // mechanism of the Proactor. 
 
 protected:
+  /// Called when object is signaled by OS (either via UNIX signals or
+  /// when a Win32 object becomes signaled).
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  // Called when object is signaled by OS (either via UNIX signals or
-  // when a Win32 object becomes signaled).
 
+  /// Called when object is removed from the ACE_Reactor.
   virtual int handle_close (ACE_HANDLE handle,
 			    ACE_Reactor_Mask close_mask);
-  // Called when object is removed from the ACE_Reactor.
 
+  /**
+   * Dispatch a single set of events.  If <milli_seconds> elapses
+   * before any events occur, return 0. Return 1 if a completion is
+   * dispatched. Return -1 on errors.
+   */
   virtual int handle_events (unsigned long milli_seconds);
-  // Dispatch a single set of events.  If <milli_seconds> elapses
-  // before any events occur, return 0. Return 1 if a completion is
-  // dispatched. Return -1 on errors.  
 
+  /// Protect against structured exceptions caused by user code when
+  /// dispatching handles.
   void application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
 				  int success,
 				  const void *completion_key,
 				  u_long error);
-  // Protect against structured exceptions caused by user code when
-  // dispatching handles.
 
+  /**
+   * Post <how_many> completions to the completion port so that all
+   * threads can wake up. This is used in conjunction with the
+   * <run_event_loop>.
+   */
   virtual int post_wakeup_completions (int how_many);
-  // Post <how_many> completions to the completion port so that all
-  // threads can wake up. This is used in conjunction with the
-  // <run_event_loop>. 
 
+  /// Handle for the completion port. Unix doesnt have completion
+  /// ports.
   ACE_HANDLE completion_port_;
-  // Handle for the completion port. Unix doesnt have completion
-  // ports.
 
+  /// This number is passed to the <CreatIOCompletionPort> system
+  /// call.
   size_t number_of_threads_;
-  // This number is passed to the <CreatIOCompletionPort> system
-  // call.
 
+  /// This event is used in conjunction with Reactor when we try to
+  /// integrate the event loops of Reactor and the Proactor.
   ACE_Auto_Event event_;
-  // This event is used in conjunction with Reactor when we try to
-  // integrate the event loops of Reactor and the Proactor.
 
+  /// Flag that indicates whether we are used in conjunction with
+  /// Reactor.
   int used_with_reactor_event_loop_;
-  // Flag that indicates whether we are used in conjunction with
-  // Reactor.
-  
+
+  /// Handler to handle the wakeups. This works in conjunction with the
+  /// <ACE_Proactor::run_event_loop>.
   ACE_Handler wakeup_handler_;
-  // Handler to handle the wakeups. This works in conjunction with the
-  // <ACE_Proactor::run_event_loop>. 
 };
 
+/**
+ * @class ACE_WIN32_Asynch_Timer
+ *
+ * @brief This class is posted to the completion port when a timer
+ * expires. When the complete method of this object is
+ * called, the <handler>'s handle_timeout method will be
+ * called.
+ */
 class ACE_Export ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
 {
-  // = TITLE
-  //     This class is posted to the completion port when a timer
-  //     expires. When the complete method of this object is
-  //     called, the <handler>'s handle_timeout method will be
-  //     called.
 
+  /// The factory method for this class is with the POSIX_Proactor
+  /// class.
   friend class ACE_WIN32_Proactor;
-  // The factory method for this class is with the POSIX_Proactor
-  // class.
- 
+
 protected:
+  /// Constructor.
   ACE_WIN32_Asynch_Timer (ACE_Handler &handler,
                           const void *act,
                           const ACE_Time_Value &tv,
                           ACE_HANDLE event = ACE_INVALID_HANDLE,
                           int priority = 0,
                           int signal_number = 0);
-  // Constructor.
-  
+
+  /// This method calls the <handler>'s handle_timeout method.
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error = 0);
-  // This method calls the <handler>'s handle_timeout method.
 
+  /// Time value requested by caller
   ACE_Time_Value time_;
-  // Time value requested by caller
 };
 
 #endif /* ACE_WIN32 */

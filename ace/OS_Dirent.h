@@ -1,20 +1,17 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ace
-//
-// = FILENAME
-//   OS_Dirent.h
-//
-// = AUTHOR
-//   (Originally in OS.h)
-//   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
-//   <stophph@diku.dk>, and a cast of thousands...
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   OS_Dirent.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Jesper S. M|ller<stophph@diku.dk>
+ *  @author and a cast of thousands...
+ */
+//=============================================================================
+
 
 #ifndef ACE_OS_DIRENT_H
 #define ACE_OS_DIRENT_H
@@ -78,11 +75,13 @@ typedef XDIR DIR;
 # undef rewinddir
 #endif /* rewinddir */
 
+/**
+ * @class ACE_OS_Dirent
+ *
+ * @brief This class is a wrapper for the dirent.h operations
+ *
+ */
 class ACE_OS_Export ACE_OS_Dirent
-  // = TITLE
-  //     This class is a wrapper for the dirent.h operations
-  //
-  // = DESCRIPTION
 {
 public:
   static DIR *opendir (const ACE_TCHAR *filename);

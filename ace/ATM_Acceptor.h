@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    ATM_Acceptor.h
-//
-// = AUTHOR
-//    Joe Hoffert
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ATM_Acceptor.h
+ *
+ *  $Id$
+ *
+ *  @author Joe Hoffert
+ */
+//=============================================================================
+
 
 #ifndef ACE_ATM_ACCEPTOR_H
 #define ACE_ATM_ACCEPTOR_H
@@ -41,34 +38,36 @@ typedef ACE_SOCK_Acceptor ATM_Acceptor;
 typedef ACE_TLI_Acceptor ATM_Acceptor;
 #endif // ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM
 
+/**
+ * @class ACE_ATM_Acceptor
+ *
+ * @brief Defines the member functions for ACE_ATM_Acceptor abstraction.
+ *
+ * This class wraps up the ACE_SOCK_Acceptor and ACE_TLI_Acceptor
+ * to make the mechanism for the ATM protocol transparent.
+ */
 class ACE_Export ACE_ATM_Acceptor
 {
-  // = TITLE
-  //     Defines the member functions for ACE_ATM_Acceptor abstraction.
-  //
-  // = DESCRIPTION
-  //     This class wraps up the ACE_SOCK_Acceptor and ACE_TLI_Acceptor
-  //     to make the mechanism for the ATM protocol transparent.
 
 public:
   // = Initialization and termination methods.
+  /// Default constructor.
   ACE_ATM_Acceptor (void);
-  // Default constructor.
 
   ~ACE_ATM_Acceptor ();
 
+  /// Initiate a passive mode connection.
   ACE_ATM_Acceptor (const ACE_Addr &remote_sap,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     ACE_ATM_Params params = ACE_ATM_Params());
-  // Initiate a passive mode connection.
 
+  /// Initiate a passive mode socket.
   ACE_HANDLE open (const ACE_Addr &remote_sap,
                    int backlog = ACE_DEFAULT_BACKLOG,
                    ACE_ATM_Params params = ACE_ATM_Params());
-  // Initiate a passive mode socket.
 
+  /// Close down the acceptor and release resources.
   int close (void);
-  // Close down the acceptor and release resources.
 
   // = Passive connection acceptance method.
 
@@ -84,18 +83,18 @@ public:
   // block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
   // means "restart if interrupted."
 
+  /// Get the local address currently listening on
   int get_local_addr( ACE_ATM_Addr &local_addr );
-  // Get the local address currently listening on
 
   // = Meta-type info
   typedef ACE_ATM_Addr PEER_ADDR;
   typedef ACE_ATM_Stream PEER_STREAM;
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
   ATM_Acceptor acceptor_;
@@ -108,4 +107,3 @@ private:
 #endif /* ACE_HAS_ATM */
 #include "ace/post.h"
 #endif /* ACE_ATM_ACCEPTOR_H */
-

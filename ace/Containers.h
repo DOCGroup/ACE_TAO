@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Containers.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Containers.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_CONTAINERS_H
 #define ACE_CONTAINERS_H
@@ -35,11 +32,14 @@ class ACE_Double_Linked_List_Iterator;
 template <class T>
 class ACE_Double_Linked_List_Reverse_Iterator;
 
+/**
+ * @class ACE_DLList_Node
+ *
+ * @brief Base implementation of element in a DL list.  Needed for
+ * ACE_Double_Linked_List.
+ */
 class ACE_Export ACE_DLList_Node
 {
-  // = TITLE
-  //     Base implementation of element in a DL list.  Needed for
-  //     ACE_Double_Linked_List.
 public:
   friend class ACE_Double_Linked_List<ACE_DLList_Node>;
   friend class ACE_Double_Linked_List_Iterator_Base<ACE_DLList_Node>;
@@ -51,8 +51,8 @@ public:
                    ACE_DLList_Node *p = 0);
   ~ACE_DLList_Node (void);
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
   void *item_;
 

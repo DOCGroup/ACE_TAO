@@ -1,22 +1,21 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE
-//
-// = FILENAME
-//    Name_Request_Reply.h
-//
-// = DESCRIPTION
-//     Define the format used to exchange messages between the
-//     ACE_Name Server and its clients.
-//
-// = AUTHOR
-//    Gerhard Lenzer, Douglas C. Schmidt, and Prashant Jain
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Name_Request_Reply.h
+ *
+ *  $Id$
+ *
+ *   Define the format used to exchange messages between the
+ *   ACE_Name Server and its clients.
+ *
+ *
+ *  @author Gerhard Lenzer
+ *  @author Douglas C. Schmidt
+ *  @author and Prashant Jain
+ */
+//=============================================================================
+
 
 #ifndef ACE_NAME_REQUEST_REPLY_H
 #define ACE_NAME_REQUEST_REPLY_H
@@ -30,18 +29,20 @@
 
 #include "ace/SString.h"
 
+/**
+ * @class ACE_Name_Request
+ *
+ * @brief Message format for delivering requests to the ACE_Name Server.
+ *
+ * This class is implemented to minimize data copying.  In
+ * particular, all marshaling is done in situ...
+ */
 class ACE_Export ACE_Name_Request
 {
-  // = TITLE
-  //     Message format for delivering requests to the ACE_Name Server.
-  //
-  // = DESCRIPTION
-  //     This class is implemented to minimize data copying.  In
-  //     particular, all marshaling is done in situ...
 public:
+  /// Request message types.
   enum Constants
   {
-    // Request message types.
     BIND = 01,
     REBIND = 02,
     RESOLVE = 03,
@@ -56,16 +57,19 @@ public:
     MAX_LIST = 3,
 
     // Mask for bitwise operation used for table lookup
-    OP_TABLE_MASK = 07,     // Mask for lookup of operation
-    LIST_OP_MASK = 030,     // Mask for lookup of list_operation
+    /// Mask for lookup of operation
+    OP_TABLE_MASK = 07,
+    /// Mask for lookup of list_operation
+    LIST_OP_MASK = 030,
 
-    // Class-specific constant values.
+    /// Class-specific constant values.
     MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
+  /// Default constructor.
   ACE_Name_Request (void);
-  // Default constructor.
 
+  /// Create a <ACE_Name_Request> message.
   ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
                     const ACE_USHORT16 name[], //
                     const size_t name_length,
@@ -74,11 +78,10 @@ public:
                     const char type[],
                     const size_t type_length,
                     ACE_Time_Value *timeout = 0); // Max time willing to wait for request.
-  // Create a <ACE_Name_Request> message.
 
+  /// Initialize length_ in order to ensure correct byte ordering
+  /// before a request is sent.
   void init (void);
-  // Initialize length_ in order to ensure correct byte ordering
-  // before a request is sent.
 
   // = Set/get the length of the encoded/decoded message.
   ACE_UINT32 length (void) const;
@@ -120,14 +123,14 @@ public:
   ACE_UINT32 type_len (void) const;
   void type_len (ACE_UINT32);
 
+  /// Encode the message before transmission.
   int encode (void *&);
-  // Encode the message before transmission.
 
+  /// Decode message after reception.
   int decode (void);
-  // Decode message after reception.
 
+  /// Print out the values of the message for debugging purposes.
   void dump (void) const;
-  // Print out the values of the message for debugging purposes.
 
 private:
   // = The 5 fields in the <Transfer> struct are transmitted to the server.
@@ -167,27 +170,29 @@ private:
     // followed by the <type_>.
   };
 
+  /// Transfer buffer.
   Transfer transfer_;
-  // Transfer buffer.
 
+  /// Pointer to the beginning of the name in this->data_.
   ACE_USHORT16 *name_;
-  // Pointer to the beginning of the name in this->data_.
 
+  /// Pointer to the beginning of the value in this->data_;
   ACE_USHORT16 *value_;
-  // Pointer to the beginning of the value in this->data_;
 
+  /// Pointer to the beginning of the type in this->data_;
   char *type_;
-  // Pointer to the beginning of the type in this->data_;
 };
 
+/**
+ * @class ACE_Name_Reply
+ *
+ * @brief Message format for delivering replies from the ACE_Name Server.
+ *
+ * This class is implemented to minimize data copying.  In
+ * particular, all marshaling is done in situ...
+ */
 class ACE_Export ACE_Name_Reply
 {
-  // = TITLE
-  //     Message format for delivering replies from the ACE_Name Server.
-  //
-  // = DESCRIPTION
-  //     This class is implemented to minimize data copying.  In
-  //     particular, all marshaling is done in situ...
 public:
   enum Constants
   {
@@ -195,15 +200,15 @@ public:
     MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
+  /// Default constructor.
   ACE_Name_Reply (void);
-  // Default constructor.
 
+  /// Create a <ACE_Name_Reply> message.
   ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err); // Type of reply.
-  // Create a <ACE_Name_Reply> message.
 
+  /// Initialize length_ in order to ensure correct byte ordering
+  /// before a reply is sent.
   void init (void);
-  // Initialize length_ in order to ensure correct byte ordering
-  // before a reply is sent.
 
   // = Set/get the length of the encoded/decoded message.
   ACE_UINT32 length (void) const;
@@ -221,14 +226,14 @@ public:
   ACE_UINT32 errnum (void) const;
   void errnum (ACE_UINT32);
 
+  /// Encode the message before transfer.
   int encode (void *&);
-  // Encode the message before transfer.
 
+  /// Decode a message after reception.
   int decode (void);
-  // Decode a message after reception.
 
+  /// Print out the values of the message for debugging purposes.
   void dump (void) const;
-  // Print out the values of the message for debugging purposes.
 
 private:
   // = The 3 fields in the <Transfer> struct are transmitted to the server.
@@ -247,8 +252,8 @@ private:
     // waiting for the name).
   };
 
+  /// Transfer buffer.
   Transfer transfer_;
-  // Transfer buffer.
 };
 
 #include "ace/post.h"

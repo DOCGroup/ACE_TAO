@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    SOCK_Dgram_Mcast_QoS.h
-//
-// = AUTHORS
-//    Vishal Kachroo <vishal@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SOCK_Dgram_Mcast_QoS.h
+ *
+ *  $Id$
+ *
+ *  @author Vishal Kachroo <vishal@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_SOCK_DGRAM_MCAST_QOS_H
 #define ACE_SOCK_DGRAM_MCAST_QOS_H
@@ -25,11 +22,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_SOCK_Dgram_Mcast_QoS
+ *
+ * @brief Defines the member functions for the ACE QoS enabled socket
+ * wrapper for UDP/IP multicast.
+ */
 class ACE_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
 {
-  // = TITLE
-  //     Defines the member functions for the ACE QoS enabled socket 
-  //     wrapper for UDP/IP multicast.
 
 public:
   // = Initialization routines.
@@ -40,10 +40,31 @@ public:
   // If you just want to send (and not listen) to a multicast group,
   // use <ACE_SOCK_Dgram> or <ACE_SOCK_CODgram> instead.
 
+  /// Default dtor.
   ~ACE_SOCK_Dgram_Mcast_QoS (void);
-  // Default dtor.
 
   // = Multicast group management routines.
+  /**
+   * This is a QoS-enabled method for joining a multicast group, which
+   * passes <qos_params> via <ACE_OS::join_leaf>.  The network
+   * interface device driver is instructed to accept datagrams with
+   * <mcast_addr> multicast addresses.  If the socket has already been
+   * opened, <subscribe> closes the socket and opens a new socket
+   * bound to the <mcast_addr>. The session object specifies the QoS
+   * session that the socket wants to subscribe to. A socket may
+   * subscribe to multiple QoS sessions by calling this method multiple
+   * times with different session objects.
+   *
+   * The <net_if> interface is hardware specific, e.g., use "netstat
+   * -i" to find whether your interface is, such as "le0" or something
+   * else.  If net_if == 0, <subscribe> uses the default mcast
+   * interface.  Returns: -1 if the call fails.
+   *
+   * Note that some platforms, such as pSoS, support only number, not
+   * names, for network interfaces.  For these platforms, just give
+   * these numbers in alphanumeric form and <subscribe> will convert
+   * them into numbers via <ACE_OS::atoi>.
+   */
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  const ACE_QoS_Params &qos_params,
                  int reuse_addr = 1,
@@ -54,28 +75,11 @@ public:
                  ACE_SOCK_GROUP g = 0,
                  u_long flags = 0,
                  ACE_QoS_Session *qos_session = 0);
-  // This is a QoS-enabled method for joining a multicast group, which
-  // passes <qos_params> via <ACE_OS::join_leaf>.  The network
-  // interface device driver is instructed to accept datagrams with
-  // <mcast_addr> multicast addresses.  If the socket has already been
-  // opened, <subscribe> closes the socket and opens a new socket
-  // bound to the <mcast_addr>. The session object specifies the QoS 
-  // session that the socket wants to subscribe to. A socket may 
-  // subscribe to multiple QoS sessions by calling this method multiple
-  // times with different session objects.
-  //
-  // The <net_if> interface is hardware specific, e.g., use "netstat
-  // -i" to find whether your interface is, such as "le0" or something
-  // else.  If net_if == 0, <subscribe> uses the default mcast
-  // interface.  Returns: -1 if the call fails.
-  // 
-  // Note that some platforms, such as pSoS, support only number, not
-  // names, for network interfaces.  For these platforms, just give
-  // these numbers in alphanumeric form and <subscribe> will convert
-  // them into numbers via <ACE_OS::atoi>.
 
   // = Data transfer routines.
 
+  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
+  /// I/O (uses <WSASentTo>).  Returns 0 on success.
   ssize_t send (const iovec buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_sent,
@@ -83,26 +87,25 @@ public:
                 const ACE_Addr &addr,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
-  // Send <buffer_count> worth of <buffers> to <addr> using overlapped
-  // I/O (uses <WSASentTo>).  Returns 0 on success.
 
+  /// Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
                 int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
-  // Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
 
+  /// Returns the QoS manager for this socket.
   ACE_QoS_Manager qos_manager (void);
-  // Returns the QoS manager for this socket.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
   // = Disable public <open> method to ensure class used properly.
 
+  /// Not publically visible.
   int open (const ACE_Addr &mcast_addr,
             const ACE_QoS_Params &qos_params,
             int protocol_family = PF_INET,
@@ -111,8 +114,8 @@ private:
             ACE_SOCK_GROUP g = 0,
             u_long flags = 0,
             int reuse_addr = 0);
-  // Not publically visible.
 
+  /// Subscribe to the multicast interface using QoS-enabled semantics.
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                      const ACE_QoS_Params &qos_params,
                      const ACE_TCHAR *net_if,
@@ -120,10 +123,9 @@ private:
                      int protocol,
                      int reuse_addr,
                      ACE_Protocol_Info *protocolinfo);
-  // Subscribe to the multicast interface using QoS-enabled semantics.
 
+  /// Manages the QoS sessions that this socket subscribes to.
   ACE_QoS_Manager qos_manager_;
-  // Manages the QoS sessions that this socket subscribes to.
 
 };
 
@@ -133,5 +135,3 @@ private:
 
 #include "ace/post.h"
 #endif /* ACE_SOCK_DGRAM_MCAST_QOS_H */
-
-

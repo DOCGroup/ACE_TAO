@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    TLI.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TLI.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_TLI_H
 #define ACE_TLI_H
@@ -43,26 +40,29 @@
 #define ACE_XTI_ATM_DEVICE "/dev/xtisvc0"
 #endif
 
+/**
+ * @class ACE_TLI
+ *
+ * @brief Defines the member functions for the base class of the
+ * ACE_TLI  abstraction.
+ */
 class ACE_Export ACE_TLI : public ACE_IPC_SAP
 {
-  // = TITLE
-  //     Defines the member functions for the base class of the
-  //     ACE_TLI  abstraction.
 public:
   // = Initialization and termination methods.
+  /// Initialize a TLI endpoint.
   ACE_HANDLE open (const char device[],
                    int oflag = O_RDWR,
                    struct t_info *info = 0);
-  // Initialize a TLI endpoint.
 
+  /// Close a TLI endpoint and release resources.
   int close (void);
-  // Close a TLI endpoint and release resources.
 
+  /// Set underlying protocol options.
   int set_option (int level, int option, void *optval, int optlen);
-  // Set underlying protocol options.
 
+  /// Get underlying protocol options.
   int get_option (int level, int option, void *optval, int &optlen);
-  // Get underlying protocol options.
 
   // = Calls to underlying TLI operations.
   int look (void) const;
@@ -71,24 +71,24 @@ public:
   int sndrel (void) const;
   int rcvrel (void) const;
 
+  /// Return our local endpoint address.
   int get_local_addr (ACE_Addr &) const;
-  // Return our local endpoint address.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
   // = Ensure we are an abstract class.
+  /// Default constructor.
+  /// Destructor.
   ACE_TLI (void);
-  // Default constructor.
   ~ACE_TLI (void);
-  // Destructor.
 
+  /// Initialize a TLI endpoint.
   ACE_TLI (const char device[], int oflag = O_RDWR, struct t_info *info = 0);
-  // Initialize a TLI endpoint.
 
 private:
 #if defined (ACE_HAS_SVR4_TLI)

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    DEV.h
-//
-// = AUTHOR
-//    Gerhard Lenzer
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DEV.h
+ *
+ *  $Id$
+ *
+ *  @author Gerhard Lenzer
+ */
+//=============================================================================
+
 
 #ifndef ACE_DEV_H
 #define ACE_DEV_H
@@ -39,29 +36,34 @@
 #define ACE_DEV_STREAM ACE_DEV_Stream, ACE_DEV_Addr
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
+/**
+ * @class ACE_DEV
+ *
+ * @brief Defines the member functions for the base class of the
+ * ACE_DEV abstraction.
+ */
 class ACE_Export ACE_DEV : public ACE_IO_SAP
 {
-  // = TITLE
-  //     Defines the member functions for the base class of the
-  //     ACE_DEV abstraction.
 public:
+  /// Close down the DEVICE
   int close (void);
-  // Close down the DEVICE
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
+  /**
+   * Disable signal <signum>
+   * This is here to prevent Win32 from
+   * disabling SPIPE using socket calls
+   */
   int disable (int signum) const ;
-  // Disable signal <signum>
-  // This is here to prevent Win32 from
-  // disabling SPIPE using socket calls
 
 protected:
+  /// Ensure that this class is an abstract base class
   ACE_DEV (void);
-  // Ensure that this class is an abstract base class
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

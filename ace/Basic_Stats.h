@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Basic_Stats.h
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Basic_Stats.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_BASIC_STATS_H
 #define ACE_BASIC_STATS_H
@@ -65,14 +62,19 @@ private:
 
   /// The minimum value
   ACE_UINT64 min_;
+
   /// The number of the sample that had the minimum value
   ACE_UINT32 min_at_;
+
   /// The maximum value
   ACE_UINT64 max_;
+
   /// The number of the sample that had the maximum value
   ACE_UINT32 max_at_;
+
   /// The sum of all the values
   ACE_UINT64 sum_;
+  
   /// The sum of the square of all the values
   ACE_UINT64 sum2_;
 };

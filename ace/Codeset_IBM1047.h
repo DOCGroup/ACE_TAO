@@ -1,22 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Codeset_IBM1047.cpp
-//
-// = DESCRIPTION
-//    Declares the arrays required to convert between ISO8859 (aka
-//    Latin/1) and IBM1047 (aka EBCDIC).
-//
-// = AUTHOR
-//   Jim Rogers (jrogers@viasoft.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Codeset_IBM1047.cpp
+ *
+ *  $Id$
+ *
+ *  Declares the arrays required to convert between ISO8859 (aka
+ *  Latin/1) and IBM1047 (aka EBCDIC).
+ *
+ *
+ *  @author Jim Rogers (jrogers@viasoft.com)
+ */
+//=============================================================================
+
 
 #ifndef ACE_CODESET_IMB1047_H
 #define ACE_CODESET_IMB1047_H
@@ -37,23 +34,23 @@ extern ACE_Export char ACE_from_IBM1047[257];
 
 // ****************************************************************
 
+/**
+ * @class ACE_IBM1047_ISO8859
+ *
+ * @brief Codeset translation specialization.
+ *
+ * This class performs the codeset translation:
+ *   - Native:        IBM_1047 (i.e. EBCDIC)
+ *   - Stream:        ISO-8859 (i.e. Latin/1)
+ */
 class ACE_Export ACE_IBM1047_ISO8859 : public ACE_Char_Codeset_Translator
 {
-  // = TITLE
-  //     Codeset translation specialization.
-  //
-  // = DESCRIPTION
-  //     This class performs the codeset translation:
-  //
-  //     Native:        IBM_1047 (i.e. EBCDIC)
-  //     Stream:        ISO-8859 (i.e. Latin/1)
-  //
 public:
+  /// A do nothing constructor.
   ACE_IBM1047_ISO8859 (void);
-  // A do nothing constructor.
 
+  /// Virtual destruction
   virtual ~ACE_IBM1047_ISO8859 (void);
-  // Virtual destruction
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
@@ -73,23 +70,23 @@ public:
                                              ACE_CDR::ULong);
 };
 
+/**
+ * @class ACE_ISO8859_IBM1047
+ *
+ * @brief Codeset translation specialization.
+ *
+ * This class performs the codeset translation:
+ *   - Native:        ISO-8859 (i.e. Latin/1)
+ *   - Stream:        IBM-1047 (i.e. EBCDIC)
+ */
 class ACE_Export ACE_ISO8859_IBM1047 : public ACE_Char_Codeset_Translator
 {
-  // = TITLE
-  //     Codeset translation specialization.
-  //
-  // = DESCRIPTION
-  //     This class performs the codeset translation:
-  //
-  //     Native:        ISO-8859 (i.e. Latin/1)
-  //     Stream:        IBM-1047 (i.e. EBCDIC)
-  //
 public:
+  /// A do nothing constructor.
   ACE_ISO8859_IBM1047 (void);
-  // A do nothing constructor.
 
+  /// Virtual destruction
   virtual ~ACE_ISO8859_IBM1047 (void);
-  // Virtual destruction
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,

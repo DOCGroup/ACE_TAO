@@ -1,19 +1,16 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    IOStream.h
-//
-// = AUTHOR
-//    James CE Johnson <jcej@lads.com> and Jim Crossley <jim@lads.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IOStream.h
+ *
+ *  $Id$
+ *
+ *  @author James CE Johnson <jcej@lads.com>
+ *  @author Jim Crossley <jim@lads.com>
+ */
+//=============================================================================
+
 
 #ifndef ACE_IOSTREAM_H
 #define ACE_IOSTREAM_H
@@ -81,139 +78,137 @@ public:
 
 #endif /* ACE_HAS_STRING_CLASS */
 
+/**
+ * @class ACE_Streambuf
+ *
+ * @brief Create your custom streambuf by providing and ACE_*_Stream
+ * object to this template.  I have tested it with
+ * ACE_SOCK_Stream and it should work fine for others as well.
+ *
+ * For any iostream object, the real work is done by the
+ * underlying streambuf class.  That is what we create here.
+ * A streambuf has an internal buffer area into which data is
+ * read and written as the iostream requests and provides data.
+ * At some point during the read process, the iostream will
+ * realize that the streambuf has no more data.  The underflow
+ * function of the streambuf is then called.
+ * Likewise, during the write process, the iostream will
+ * eventually notice that the streabuf's buffer has become full
+ * and will invoke the overflow function.
+ * The empty/full state of the read/write "buffers" are
+ * controled by two sets pointers.  One set is dedicated to
+ * read, the other to write.  These pointers, in turn, reference
+ * a common buffer that is to be shared by both read and write
+ * operations.  It is this common buffer to which data is
+ * written and from which it is read.
+ * The common buffer is used by functions of the streambuf as
+ * well as the iostream.  Because of this and the fact that it
+ * is "shared" by both read and write operators, there is a
+ * danger of data corruption if read and write operations are
+ * allowed to take place "at the same time".
+ * To prevent data corruption, we manipulate the read and write
+ * pointer sets so that the streambuf is in either a read-mode
+ * or write-mode at all times and can never be in both modes at
+ * the same time.
+ * In the constructor: set the read and write sets to NULL This
+ * causes the underflow or overflow operators to be invoked at
+ * the first IO activity of the iostream.
+ * In the underflow function we arrange for the common buffer to
+ * reference our read buffer and for the write pointer set to be
+ * disabled.  If a write operation is performed by the iostream
+ * this will cause the overflow function to be invoked.
+ * In the overflow function we arrange for the common buffer to
+ * reference our write buffer and for the read pointer set to be
+ * disabled.  This causes the underflow function to be invoked
+ * when the iostream "changes our mode".
+ * The overflow function will also invoke the send_n function to
+ * flush the buffered data to our peer.  Similarly, the sync and
+ * syncout functions will cause send_n to be invoked to send the
+ * data.
+ * Since socket's and the like do not support seeking, there can
+ * be no method for "syncing" the input.  However, since we
+ * maintain separate read/write buffers, no data is lost by
+ * "syncing" the input.  It simply remains buffered.
+ */
 class ACE_Export ACE_Streambuf : public streambuf
 {
-  // = TITLE
-  //     Create your custom streambuf by providing and ACE_*_Stream
-  //     object to this template.  I have tested it with
-  //     ACE_SOCK_Stream and it should work fine for others as well.
-  //
-  // = DESCRIPTION
-  //     For any iostream object, the real work is done by the
-  //     underlying streambuf class.  That is what we create here.
-  //
-  //     A streambuf has an internal buffer area into which data is
-  //     read and written as the iostream requests and provides data.
-  //     At some point during the read process, the iostream will
-  //     realize that the streambuf has no more data.  The underflow
-  //     function of the streambuf is then called.
-  //
-  //     Likewise, during the write process, the iostream will
-  //     eventually notice that the streabuf's buffer has become full
-  //     and will invoke the overflow function.
-  //
-  //     The empty/full state of the read/write "buffers" are
-  //     controled by two sets pointers.  One set is dedicated to
-  //     read, the other to write.  These pointers, in turn, reference
-  //     a common buffer that is to be shared by both read and write
-  //     operations.  It is this common buffer to which data is
-  //     written and from which it is read.
-  //
-  //     The common buffer is used by functions of the streambuf as
-  //     well as the iostream.  Because of this and the fact that it
-  //     is "shared" by both read and write operators, there is a
-  //     danger of data corruption if read and write operations are
-  //     allowed to take place "at the same time".
-  //
-  //     To prevent data corruption, we manipulate the read and write
-  //     pointer sets so that the streambuf is in either a read-mode
-  //     or write-mode at all times and can never be in both modes at
-  //     the same time.
-  //
-  //     In the constructor: set the read and write sets to NULL This
-  //     causes the underflow or overflow operators to be invoked at
-  //     the first IO activity of the iostream.
-  //
-  //     In the underflow function we arrange for the common buffer to
-  //     reference our read buffer and for the write pointer set to be
-  //     disabled.  If a write operation is performed by the iostream
-  //     this will cause the overflow function to be invoked.
-  //
-  //     In the overflow function we arrange for the common buffer to
-  //     reference our write buffer and for the read pointer set to be
-  //     disabled.  This causes the underflow function to be invoked
-  //     when the iostream "changes our mode".
-  //
-  //     The overflow function will also invoke the send_n function to
-  //     flush the buffered data to our peer.  Similarly, the sync and
-  //     syncout functions will cause send_n to be invoked to send the
-  //     data.
-  //
-  //     Since socket's and the like do not support seeking, there can
-  //     be no method for "syncing" the input.  However, since we
-  //     maintain separate read/write buffers, no data is lost by
-  //     "syncing" the input.  It simply remains buffered.
 public:
 
+  /**
+   * If the default allocation strategey were used the common buffer
+   * would be deleted when the object destructs.  Since we are
+   * providing separate read/write buffers, it is up to us to manage
+   * their memory.
+   */
   virtual ~ACE_Streambuf (void);
-  // If the default allocation strategey were used the common buffer
-  // would be deleted when the object destructs.  Since we are
-  // providing separate read/write buffers, it is up to us to manage
-  // their memory.
 
+  /// Get the current Time_Value pointer and provide a new one.
   ACE_Time_Value *recv_timeout (ACE_Time_Value *tv = NULL);
-  // Get the current Time_Value pointer and provide a new one.
 
+  /**
+   * Use this to allocate a new/different buffer for put operations.
+   * If you do not provide a buffer pointer, one will be allocated.
+   * That is the preferred method.  If you do provide a buffer, the
+   * size must match that being used by the get buffer.  If
+   * successful, you will receive a pointer to the current put buffer.
+   * It is your responsibility to delete this memory when you are done
+   * with it.
+   */
   char *reset_put_buffer (char *newBuffer = NULL,
                           u_int _streambuf_size = 0,
                           u_int _pptr = 0 );
-  // Use this to allocate a new/different buffer for put operations.
-  // If you do not provide a buffer pointer, one will be allocated.
-  // That is the preferred method.  If you do provide a buffer, the
-  // size must match that being used by the get buffer.  If
-  // successful, you will receive a pointer to the current put buffer.
-  // It is your responsibility to delete this memory when you are done
-  // with it.
 
+  /// Return the number of bytes to be 'put' onto the stream media.
+  ///    pbase + put_avail = pptr
   u_int put_avail (void);
-  // Return the number of bytes to be 'put' onto the stream media.
-  //    pbase + put_avail = pptr
 
+  /**
+   * Use this to allocate a new/different buffer for get operations.
+   * If you do not provide a buffer pointer, one will be allocated.
+   * That is the preferred method.  If you do provide a buffer, the
+   * size must match that being used by the put buffer.  If
+   * successful, you will receive a pointer to the current get buffer.
+   * It is your responsibility to delete this memory when you are done
+   * with it.
+   */
   char *reset_get_buffer (char *newBuffer = NULL,
                           u_int _streambuf_size = 0,
                           u_int _gptr = 0,
                           u_int _egptr = 0);
-  // Use this to allocate a new/different buffer for get operations.
-  // If you do not provide a buffer pointer, one will be allocated.
-  // That is the preferred method.  If you do provide a buffer, the
-  // size must match that being used by the put buffer.  If
-  // successful, you will receive a pointer to the current get buffer.
-  // It is your responsibility to delete this memory when you are done
-  // with it.
 
+  /// Return the number of bytes not yet gotten.  eback + get_waiting =
+  /// gptr
   u_int get_waiting (void);
-  // Return the number of bytes not yet gotten.  eback + get_waiting =
-  // gptr
 
+  /// Return the number of bytes in the get area (includes some already
+  /// gotten); eback + get_avail = egptr
   u_int get_avail (void);
-  // Return the number of bytes in the get area (includes some already
-  // gotten); eback + get_avail = egptr
 
+  /// Query the streambuf for the size of its buffers.
   u_int streambuf_size (void);
-  // Query the streambuf for the size of its buffers.
 
+  /// Did we take an error because of an IO operation timeout?  Note:
+  /// Invoking this resets the flag.
   u_char timeout (void);
-  // Did we take an error because of an IO operation timeout?  Note:
-  // Invoking this resets the flag.
 
 protected:
   ACE_Streambuf (u_int streambuf_size,
                  int io_mode);
 
+  /// Sync both input and output. See syncin/syncout below for
+  /// descriptions.
   virtual int sync (void);
-  // Sync both input and output. See syncin/syncout below for
-  // descriptions.
 
   // = Signatures for the underflow/overflow discussed above.
   virtual int underflow (void);
 
+  /// The overflow function receives the character which caused the
+  /// overflow.
   virtual int overflow (int = EOF);
-  // The overflow function receives the character which caused the
-  // overflow.
 
+  /// Resets the <base> pointer and streambuf mode.  This is used
+  /// internally when get/put buffers are allocatd.
   void reset_base (void);
-  // Resets the <base> pointer and streambuf mode.  This is used
-  // internally when get/put buffers are allocatd.
 
 protected:
   // = Two pointer sets for manipulating the read/write areas.
@@ -231,50 +226,62 @@ protected:
   const u_char get_mode_;
   const u_char put_mode_;
 
+  /// mode tells us if we're working for an istream, ostream, or
+  /// iostream.
   int mode_;
-  // mode tells us if we're working for an istream, ostream, or
-  // iostream.
 
+  /// This defines the size of the input and output buffers.  It can be
+  /// set by the object constructor.
   const u_int streambuf_size_;
-  // This defines the size of the input and output buffers.  It can be
-  // set by the object constructor.
 
+  /// Did we take an error because of an IO operation timeout?
   u_char timeout_;
-  // Did we take an error because of an IO operation timeout?
 
+  /// We want to allow the user to provide Time_Value pointers to
+  /// prevent infinite blocking while waiting to receive data.
   ACE_Time_Value recv_timeout_value_;
   ACE_Time_Value *recv_timeout_;
-  // We want to allow the user to provide Time_Value pointers to
-  // prevent infinite blocking while waiting to receive data.
 
+  /**
+   * syncin is called when the input needs to be synced with the
+   * source file.  In a filebuf, this results in the <seek> system
+   * call being used.  We can't do that on socket-like connections, so
+   * this does basically nothing.  That's safe because we have a
+   * separate read buffer to maintain the already-read data.  In a
+   * filebuf, the single common buffer is used forcing the <seek>
+   * call.
+   */
   int syncin (void);
-  // syncin is called when the input needs to be synced with the
-  // source file.  In a filebuf, this results in the <seek> system
-  // call being used.  We can't do that on socket-like connections, so
-  // this does basically nothing.  That's safe because we have a
-  // separate read buffer to maintain the already-read data.  In a
-  // filebuf, the single common buffer is used forcing the <seek>
-  // call.
 
+  /// syncout is called when the output needs to be flushed.  This is
+  /// easily done by calling the peer's send_n function.
   int syncout (void);
-  // syncout is called when the output needs to be flushed.  This is
-  // easily done by calling the peer's send_n function.
 
+  /// flushbuf is the worker of syncout.  It is a separate function
+  /// because it gets used sometimes in different context.
   int flushbuf (void);
-  // flushbuf is the worker of syncout.  It is a separate function
-  // because it gets used sometimes in different context.
 
+  /**
+   * fillbuf is called in a couple of places.  This is the worker of
+   * underflow.  It will attempt to fill the read buffer from the
+   * peer.
+   */
   int fillbuf (void);
-  // fillbuf is called in a couple of places.  This is the worker of
-  // underflow.  It will attempt to fill the read buffer from the
-  // peer.
 
+  /**
+   * Used by fillbuf and others to get exactly one byte from the peer.
+   * recv_n is used to be sure we block until something is available.
+   * It is virtual because we really need to override it for
+   * datagram-derived objects.
+   */
   virtual int get_one_byte (void);
-  // Used by fillbuf and others to get exactly one byte from the peer.
-  // recv_n is used to be sure we block until something is available.
-  // It is virtual because we really need to override it for
-  // datagram-derived objects.
 
+  /**
+   * Stream connections and "unconnected connections" (ie --
+   * datagrams) need to work just a little differently.  We derive
+   * custom Streambuf objects for them and provide these functions at
+   * that time.
+   */
   virtual ssize_t send (char *buf,
                         ssize_t len) = 0;
   virtual ssize_t recv (char *buf,
@@ -288,10 +295,6 @@ protected:
                           ssize_t len,
                           int flags = 0,
                           ACE_Time_Value *tv = NULL) = 0;
-  // Stream connections and "unconnected connections" (ie --
-  // datagrams) need to work just a little differently.  We derive
-  // custom Streambuf objects for them and provide these functions at
-  // that time.
 
   virtual ACE_HANDLE get_handle (void);
 

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//     ACE_Memory_Pool.h
-//
-// = AUTHOR
-//    Doug Schmidt and Prashant Jain
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     ACE_Memory_Pool.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt and Prashant Jain
+ */
+//=============================================================================
+
 
 #ifndef ACE_MEMORY_POOL_H
 #define ACE_MEMORY_POOL_H
@@ -32,84 +29,95 @@
 #endif /* !ACE_WIN32 */
 
 #if !defined (ACE_LACKS_SBRK)
+/**
+ * @class ACE_Sbrk_Memory_Pool_Options
+ *
+ * @brief Helper class for Sbrk Memory Pool constructor options.
+ *
+ * This should be a nested class, but that breaks too many
+ * compilers.
+ */
 class ACE_Export ACE_Sbrk_Memory_Pool_Options
 {
-  // = TITLE
-  //     Helper class for Sbrk Memory Pool constructor options.
-  //
-  // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many
-  //     compilers.
 };
 
+/**
+ * @class ACE_Sbrk_Memory_Pool
+ *
+ * @brief Make a memory pool that is based on <sbrk(2)>.
+ */
 class ACE_Export ACE_Sbrk_Memory_Pool
 {
-  // = TITLE
-  //     Make a memory pool that is based on <sbrk(2)>.
 public:
   typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
 
+  /// Initialize the pool.
   ACE_Sbrk_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);
-  // Initialize the pool.
 
   virtual ~ACE_Sbrk_Memory_Pool (void);
 
   // = Implementor operations.
+  /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
                               size_t &rounded_bytes,
                               int &first_time);
-  // Ask system for initial chunk of local memory.
 
+  /// Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
+  /// the actual number of bytes allocated.
   virtual void *acquire (size_t nbytes,
                          size_t &rounded_bytes);
-  // Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
-  // the actual number of bytes allocated.
 
+  /// Instruct the memory pool to release all of its resources.
   virtual int release (void);
-  // Instruct the memory pool to release all of its resources.
 
+  /**
+   * Sync <len> bytes of the memory region to the backing store
+   * starting at <this->base_addr_>.  If <len> == -1 then sync the
+   * whole region.
+   */
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
-  // Sync <len> bytes of the memory region to the backing store
-  // starting at <this->base_addr_>.  If <len> == -1 then sync the
-  // whole region.
 
+  /// Sync <len> bytes of the memory region to the backing store
+  /// starting at <addr_>.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  // Sync <len> bytes of the memory region to the backing store
-  // starting at <addr_>.
 
+  /**
+   * Change the protection of the pages of the mapped region to <prot>
+   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * then change protection of all pages in the mapped region.
+   */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
-  // Change the protection of the pages of the mapped region to <prot>
-  // starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
-  // then change protection of all pages in the mapped region.
 
+  /// Change the protection of the pages of the mapped region to <prot>
+  /// starting at <addr> up to <len> bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
-  // Change the protection of the pages of the mapped region to <prot>
-  // starting at <addr> up to <len> bytes.
 
+  /// Dump the state of an object.
   virtual void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Implement the algorithm for rounding up the request to an
+  /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
-  // Implement the algorithm for rounding up the request to an
-  // appropriate chunksize.
 };
 #endif /* !ACE_LACKS_SBRK */
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 
+/**
+ * @class ACE_Shared_Memory_Pool_Options
+ *
+ * @brief Helper class for Shared Memory Pool constructor options.
+ *
+ * This should be a nested class, but that breaks too many
+ * compilers.
+ */
 class ACE_Export ACE_Shared_Memory_Pool_Options
 {
-  // = TITLE
-  //     Helper class for Shared Memory Pool constructor options.
-  //
-  // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many
-  //     compilers.
 public:
   // = Initialization method.
   ACE_Shared_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
@@ -118,84 +126,93 @@ public:
                                   off_t minimum_bytes = 0,
                                   size_t segment_size = ACE_DEFAULT_SEGMENT_SIZE);
 
+  /// Base address of the memory-mapped backing store.
   const char *base_addr_;
-  // Base address of the memory-mapped backing store.
 
+  /// Number of shared memory segments to allocate.
   size_t max_segments_;
-  // Number of shared memory segments to allocate.
 
+  /// What the minimum bytes of the initial segment should be.
   off_t minimum_bytes_;
-  // What the minimum bytes of the initial segment should be.
 
+  /// File permissions to use when creating/opening a segment.
   size_t file_perms_;
-  // File permissions to use when creating/opening a segment.
 
+  /// Shared memory segment size.
   size_t segment_size_;
-  // Shared memory segment size.
 };
 
+/**
+ * @class ACE_Shared_Memory_Pool
+ *
+ * @brief Make a memory pool that is based on System V shared memory
+ * (shmget(2) etc.).  This implementation allows memory to be
+ * shared between processes.
+ */
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
 {
-  // = TITLE
-  //     Make a memory pool that is based on System V shared memory
-  //     (shmget(2) etc.).  This implementation allows memory to be
-  //     shared between processes.
 public:
   typedef ACE_Shared_Memory_Pool_Options OPTIONS;
 
+  /// Initialize the pool.
   ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                           const OPTIONS *options = 0);
-  // Initialize the pool.
 
   virtual ~ACE_Shared_Memory_Pool (void);
 
+  /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
                               size_t &rounded_bytes,
                               int &first_time);
-  // Ask system for initial chunk of local memory.
 
+  /**
+   * Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
+   * the actual number of bytes allocated.  Also acquires an internal
+   * semaphore that ensures proper serialization of Memory_Pool
+   * initialization across processes.
+   */
   virtual void *acquire (size_t nbytes,
                          size_t &rounded_bytes);
-  // Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
-  // the actual number of bytes allocated.  Also acquires an internal
-  // semaphore that ensures proper serialization of Memory_Pool
-  // initialization across processes.
 
+  /// Instruct the memory pool to release all of its resources.
   virtual int release (void);
-  // Instruct the memory pool to release all of its resources.
 
+  /// Sync the memory region to the backing store starting at
+  /// <this->base_addr_>.
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
-  // Sync the memory region to the backing store starting at
-  // <this->base_addr_>.
 
+  /// Sync the memory region to the backing store starting at <addr_>.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  // Sync the memory region to the backing store starting at <addr_>.
 
+  /**
+   * Change the protection of the pages of the mapped region to <prot>
+   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * then change protection of all pages in the mapped region.
+   */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
-  // Change the protection of the pages of the mapped region to <prot>
-  // starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
-  // then change protection of all pages in the mapped region.
 
+  /// Change the protection of the pages of the mapped region to <prot>
+  /// starting at <addr> up to <len> bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
-  // Change the protection of the pages of the mapped region to <prot>
-  // starting at <addr> up to <len> bytes.
 
+  /// Dump the state of an object.
   virtual void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Implement the algorithm for rounding up the request to an
+  /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
-  // Implement the algorithm for rounding up the request to an
-  // appropriate chunksize.
 
+  /**
+   * Commits a new shared memory segment if necessary after an
+   * <acquire> or a signal.  <offset> is set to the new offset into
+   * the backing store.
+   */
   virtual int commit_backing_store_name (size_t rounded_bytes,
                                     off_t &offset);
-  // Commits a new shared memory segment if necessary after an
-  // <acquire> or a signal.  <offset> is set to the new offset into
-  // the backing store.
 
   // = Keeps track of all the segments being used.
   struct SHM_TABLE
@@ -210,122 +227,137 @@ protected:
     // Is the segment currently used.;
   };
 
+  /**
+   * Base address of the shared memory segment.  If this has the value
+   * of 0 then the OS is free to select any address, otherwise this
+   * value is what the OS must try to use to map the shared memory
+   * segment.
+   */
   void *base_addr_;
-  // Base address of the shared memory segment.  If this has the value
-  // of 0 then the OS is free to select any address, otherwise this
-  // value is what the OS must try to use to map the shared memory
-  // segment.
 
+  /// File permissions to use when creating/opening a segment.
   size_t file_perms_;
-  // File permissions to use when creating/opening a segment.
 
+  /// Number of shared memory segments in the <SHM_TABLE> table.
   size_t max_segments_;
-  // Number of shared memory segments in the <SHM_TABLE> table.
 
+  /// What the minimim bytes of the initial segment should be.
   off_t minimum_bytes_;
-  // What the minimim bytes of the initial segment should be.
 
+  /// Shared memory segment size.
   size_t segment_size_;
-  // Shared memory segment size.
 
+  /// Base shared memory key for the segment.
   key_t base_shm_key_;
-  // Base shared memory key for the segment.
 
+  /// find the segment that contains the searchPtr
   virtual int find_seg (const void *const searchPtr,
                         off_t &offset,
                         size_t &counter);
-  // find the segment that contains the searchPtr
 
+  /// Determine how much memory is currently in use.
   virtual int in_use (off_t &offset,
                       size_t &counter);
-  // Determine how much memory is currently in use.
 
+  /// Handles SIGSEGV.
   ACE_Sig_Handler signal_handler_;
-  // Handles SIGSEGV.
 
+  /// Handle SIGSEGV and SIGBUS signals to remap shared memory
+  /// properly.
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Handle SIGSEGV and SIGBUS signals to remap shared memory
-  // properly.
 };
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
+/**
+ * @class ACE_Local_Memory_Pool_Options
+ *
+ * @brief Helper class for Local Memory Pool constructor options.
+ *
+ * This should be a nested class, but that breaks too many
+ * compilers.
+ */
 class ACE_Export ACE_Local_Memory_Pool_Options
 {
-  // = TITLE
-  //     Helper class for Local Memory Pool constructor options.
-  //
-  // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many
-  //     compilers.
 };
 
+/**
+ * @class ACE_Local_Memory_Pool
+ *
+ * @brief Make a memory pool that is based on C++ new/delete.  This is
+ * useful for integrating existing components that use new/delete
+ * into the ACE Malloc scheme...
+ */
 class ACE_Export ACE_Local_Memory_Pool
 {
-  // = TITLE
-  //   Make a memory pool that is based on C++ new/delete.  This is
-  //   useful for integrating existing components that use new/delete
-  //   into the ACE Malloc scheme...
 public:
   typedef ACE_Local_Memory_Pool_Options OPTIONS;
 
+  /// Initialize the pool.
   ACE_Local_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                          const OPTIONS *options = 0);
-  // Initialize the pool.
 
   virtual ~ACE_Local_Memory_Pool (void);
 
+  /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
                               size_t &rounded_bytes,
                               int &first_time);
-  // Ask system for initial chunk of local memory.
 
+  /// Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
+  /// the actual number of bytes allocated.
   virtual void *acquire (size_t nbytes,
                          size_t &rounded_bytes);
-  // Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
-  // the actual number of bytes allocated.
 
+  /// Instruct the memory pool to release all of its resources.
   virtual int release (void);
-  // Instruct the memory pool to release all of its resources.
 
+  /**
+   * Sync <len> bytes of the memory region to the backing store
+   * starting at <this->base_addr_>.  If <len> == -1 then sync the
+   * whole region.
+   */
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
-  // Sync <len> bytes of the memory region to the backing store
-  // starting at <this->base_addr_>.  If <len> == -1 then sync the
-  // whole region.
 
+  /// Sync <len> bytes of the memory region to the backing store
+  /// starting at <addr_>.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  // Sync <len> bytes of the memory region to the backing store
-  // starting at <addr_>.
 
+  /**
+   * Change the protection of the pages of the mapped region to <prot>
+   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * then change protection of all pages in the mapped region.
+   */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
-  // Change the protection of the pages of the mapped region to <prot>
-  // starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
-  // then change protection of all pages in the mapped region.
 
+  /// Change the protection of the pages of the mapped region to <prot>
+  /// starting at <addr> up to <len> bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
-  // Change the protection of the pages of the mapped region to <prot>
-  // starting at <addr> up to <len> bytes.
 
 #if defined (ACE_WIN32)
+  /**
+   * Win32 Structural exception selector.  The return value decides
+   * how to handle memory pool related structural exceptions.  Returns
+   * 1, 0, or , -1.
+   */
   virtual int seh_selector (void *);
-  // Win32 Structural exception selector.  The return value decides
-  // how to handle memory pool related structural exceptions.  Returns
-  // 1, 0, or , -1.
 #endif /* ACE_WIN32 */
 
+  /**
+   * Try to extend the virtual address space so that <addr> is now
+   * covered by the address mapping.  Always returns 0 since we can't
+   * remap a local memory pool.
+   */
   virtual int remap (void *addr);
-  // Try to extend the virtual address space so that <addr> is now
-  // covered by the address mapping.  Always returns 0 since we can't
-  // remap a local memory pool.
 
+  /// Dump the state of an object.
   virtual void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// List of memory that we have allocated.
   ACE_Unbounded_Set<char *> allocated_chunks_;
-  // List of memory that we have allocated.
 
   virtual size_t round_up (size_t nbytes);
 
@@ -333,14 +365,16 @@ protected:
   // appropriate chunksize.
 };
 
+/**
+ * @class ACE_MMAP_Memory_Pool_Options
+ *
+ * @brief Helper class for MMAP Memory Pool constructor options.
+ *
+ * This should be a nested class, but that breaks too many
+ * compilers.
+ */
 class ACE_Export ACE_MMAP_Memory_Pool_Options
 {
-  // = TITLE
-  //     Helper class for MMAP Memory Pool constructor options.
-  //
-  // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many
-  //     compilers.
 public:
   // = Initialization method.
   ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
@@ -351,105 +385,118 @@ public:
                                 int guess_on_fault = 1,
                                 LPSECURITY_ATTRIBUTES sa = 0);
 
+  /// Base address of the memory-mapped backing store.
   const void *base_addr_;
-  // Base address of the memory-mapped backing store.
 
+  /// Must we use the <base_addr_> or can we let mmap(2) select it?
   int use_fixed_addr_;
-  // Must we use the <base_addr_> or can we let mmap(2) select it?
 
+  /// Should each page be written eagerly to avoid surprises later
+  /// on?
   int write_each_page_;
-  // Should each page be written eagerly to avoid surprises later
-  // on?
 
+  /// What the minimim bytes of the initial segment should be.
   off_t minimum_bytes_;
-  // What the minimim bytes of the initial segment should be.
 
+  /// Any special flags that need to be used for <mmap>.
   u_int flags_;
-  // Any special flags that need to be used for <mmap>.
 
+  /**
+   * Try to remap without knowing the faulting address.  This
+   * parameter is ignored on platforms that know the faulting address
+   * (UNIX with SI_ADDR and Win32).
+   */
   int guess_on_fault_;
-  // Try to remap without knowing the faulting address.  This
-  // parameter is ignored on platforms that know the faulting address
-  // (UNIX with SI_ADDR and Win32).
 
+  /// Pointer to a security attributes object.  Only used on NT.
   LPSECURITY_ATTRIBUTES sa_;
-  // Pointer to a security attributes object.  Only used on NT.
 
 };
 
+/**
+ * @class ACE_MMAP_Memory_Pool
+ *
+ * @brief Make a memory pool that is based on <mmap(2)>.  This
+ * implementation allows memory to be shared between processes.
+ */
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
 {
-  // = TITLE
-  //     Make a memory pool that is based on <mmap(2)>.  This
-  //     implementation allows memory to be shared between processes.
 public:
   typedef ACE_MMAP_Memory_Pool_Options OPTIONS;
 
   // = Initialization and termination methods.
 
+  /// Initialize the pool.
   ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);
-  // Initialize the pool.
 
   virtual ~ACE_MMAP_Memory_Pool (void);
 
+  /// Ask system for initial chunk of shared memory.
   virtual void *init_acquire (size_t nbytes,
                               size_t &rounded_bytes,
                               int &first_time);
-  // Ask system for initial chunk of shared memory.
 
+  /**
+   * Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
+   * is the actual number of bytes allocated.  Also acquires an
+   * internal semaphore that ensures proper serialization of
+   * <ACE_MMAP_Memory_Pool> initialization across processes.
+   */
   virtual void *acquire (size_t nbytes,
                          size_t &rounded_bytes);
-  // Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
-  // is the actual number of bytes allocated.  Also acquires an
-  // internal semaphore that ensures proper serialization of
-  // <ACE_MMAP_Memory_Pool> initialization across processes.
 
+  /// Instruct the memory pool to release all of its resources.
   virtual int release (void);
-  // Instruct the memory pool to release all of its resources.
 
+  /// Sync the memory region to the backing store starting at
+  /// <this->base_addr_>.
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
-  // Sync the memory region to the backing store starting at
-  // <this->base_addr_>.
 
+  /// Sync the memory region to the backing store starting at <addr_>.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  // Sync the memory region to the backing store starting at <addr_>.
 
+  /**
+   * Change the protection of the pages of the mapped region to <prot>
+   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * then change protection of all pages in the mapped region.
+   */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
-  // Change the protection of the pages of the mapped region to <prot>
-  // starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
-  // then change protection of all pages in the mapped region.
 
+  /// Change the protection of the pages of the mapped region to <prot>
+  /// starting at <addr> up to <len> bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
-  // Change the protection of the pages of the mapped region to <prot>
-  // starting at <addr> up to <len> bytes.
 
 #if defined (ACE_WIN32)
+  /**
+   * Win32 Structural exception selector.  The return value decides
+   * how to handle memory pool related structural exceptions.  Returns
+   * 1, 0, or , -1.
+   */
   virtual int seh_selector (void *);
-  // Win32 Structural exception selector.  The return value decides
-  // how to handle memory pool related structural exceptions.  Returns
-  // 1, 0, or , -1.
 #endif /* ACE_WIN32 */
 
+  /**
+   * Try to extend the virtual address space so that <addr> is now
+   * covered by the address mapping.  The method succeeds and returns
+   * 0 if the backing store has adequate memory to cover this address.
+   * Otherwise, it returns -1.  This method is typically called by a
+   * UNIX signal handler for SIGSEGV or a Win32 structured exception
+   * when another process has grown the backing store (and its
+   * mapping) and our process now incurs a fault because our mapping
+   * isn't in range (yet).
+   */
   virtual int remap (void *addr);
-  // Try to extend the virtual address space so that <addr> is now
-  // covered by the address mapping.  The method succeeds and returns
-  // 0 if the backing store has adequate memory to cover this address.
-  // Otherwise, it returns -1.  This method is typically called by a
-  // UNIX signal handler for SIGSEGV or a Win32 structured exception
-  // when another process has grown the backing store (and its
-  // mapping) and our process now incurs a fault because our mapping
-  // isn't in range (yet).
 
 
+  /// Return the base address of this memory pool.
   virtual void *base_addr (void) const;
-  // Return the base address of this memory pool.
 
+  /// Dump the state of an object.
   virtual void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
   // = Implement the algorithm for rounding up the request to an
@@ -457,147 +504,162 @@ protected:
 
   virtual size_t round_up (size_t nbytes);
 
+  /// Compute the new <map_size> of the backing store and commit the
+  /// memory.
   virtual int commit_backing_store_name (size_t rounded_bytes,
                                          off_t &map_size);
-  // Compute the new <map_size> of the backing store and commit the
-  // memory.
 
+  /// Memory map the file up to <map_size> bytes.
   virtual int map_file (off_t map_size);
-  // Memory map the file up to <map_size> bytes.
 
+  /// Handle SIGSEGV and SIGBUS signals to remap shared memory
+  /// properly.
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Handle SIGSEGV and SIGBUS signals to remap shared memory
-  // properly.
 
+  /// Handles SIGSEGV.
   ACE_Sig_Handler signal_handler_;
-  // Handles SIGSEGV.
 
+  /// Memory-mapping object.
   ACE_Mem_Map mmap_;
-  // Memory-mapping object.
 
+  /**
+   * Base of mapped region.  If this has the value of 0 then the OS is
+   * free to select any address to map the file, otherwise this value
+   * is what the OS must try to use to mmap the file.
+   */
   void *base_addr_;
-  // Base of mapped region.  If this has the value of 0 then the OS is
-  // free to select any address to map the file, otherwise this value
-  // is what the OS must try to use to mmap the file.
 
+  /// Flags passed into <ACE_OS::mmap>.
   int flags_;
-  // Flags passed into <ACE_OS::mmap>.
 
+  /// Should we write a byte to each page to forceably allocate memory
+  /// for this backing store?
   int write_each_page_;
-  // Should we write a byte to each page to forceably allocate memory
-  // for this backing store?
 
+  /// What the minimum bytes of the initial segment should be.
   off_t minimum_bytes_;
-  // What the minimum bytes of the initial segment should be.
 
+  /// Name of the backing store where the shared memory pool is kept.
   ACE_TCHAR backing_store_name_[MAXPATHLEN + 1];
-  // Name of the backing store where the shared memory pool is kept.
 
+  /**
+   * Try to remap without knowing the faulting address.  This
+   * parameter is ignored on platforms that know the faulting address
+   * (UNIX with SI_ADDR and Win32).
+   */
   int guess_on_fault_;
-  // Try to remap without knowing the faulting address.  This
-  // parameter is ignored on platforms that know the faulting address
-  // (UNIX with SI_ADDR and Win32).
 
+  /// Security attributes object, only used on NT.
   LPSECURITY_ATTRIBUTES sa_;
-  // Security attributes object, only used on NT.
 
 };
 
+/**
+ * @class ACE_Lite_MMAP_Memory_Pool
+ *
+ * @brief Make a ``lighter-weight'' memory pool based <ACE_Mem_Map>.
+ *
+ * This implementation allows memory to be shared between
+ * processes.  However, unlike the <ACE_MMAP_Memory_Pool>
+ * the <sync> methods are no-ops, which means that we don't pay
+ * for the price of flushing the memory to the backing store on
+ * every update.  Naturally, this trades off increased
+ * performance for less reliability if the machine crashes.
+ */
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
-  // = TITLE
-  //     Make a ``lighter-weight'' memory pool based <ACE_Mem_Map>.
-  //
-  // = DESCRIPTION
-  //     This implementation allows memory to be shared between
-  //     processes.  However, unlike the <ACE_MMAP_Memory_Pool>
-  //     the <sync> methods are no-ops, which means that we don't pay
-  //     for the price of flushing the memory to the backing store on
-  //     every update.  Naturally, this trades off increased
-  //     performance for less reliability if the machine crashes.
 public:
   // = Initialization and termination methods.
 
+  /// Initialize the pool.
   ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                              const OPTIONS *options = 0);
-  // Initialize the pool.
 
   virtual ~ACE_Lite_MMAP_Memory_Pool (void);
 
+  /// Overwrite the default sync behavior with no-op
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
-  // Overwrite the default sync behavior with no-op
 
+  /// Overwrite the default sync behavior with no-op
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  // Overwrite the default sync behavior with no-op
 };
 
 #if defined (ACE_WIN32)
 
+/**
+ * @class ACE_Pagefile_Memory_Pool_Options
+ *
+ * @brief Helper class for Pagefile Memory Pool constructor options.
+ *
+ * This should be a nested class, but that breaks too many
+ * compilers.
+ */
 class ACE_Export ACE_Pagefile_Memory_Pool_Options
 {
-  // = TITLE
-  //     Helper class for Pagefile Memory Pool constructor options.
-  //
-  // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many
-  //     compilers.
 public:
   // Initialization method.
   ACE_Pagefile_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_PAGEFILE_POOL_BASE,
                                     size_t max_size = ACE_DEFAULT_PAGEFILE_POOL_SIZE);
 
+  /// Base address of the memory-mapped backing store.
   void *base_addr_;
-  // Base address of the memory-mapped backing store.
 
+  /// Maximum size the pool may grow.
   size_t max_size_;
-  // Maximum size the pool may grow.
 };
 
+/**
+ * @class ACE_Pagefile_Memory_Pool
+ *
+ * @brief Make a memory pool that is based on "anonymous" memory
+ * regions allocated from the Win32 page file.
+ */
 class ACE_Export ACE_Pagefile_Memory_Pool
 {
-  // = TITLE
-  //     Make a memory pool that is based on "anonymous" memory
-  //     regions allocated from the Win32 page file.
 public:
   typedef ACE_Pagefile_Memory_Pool_Options OPTIONS;
 
+  /// Initialize the pool.
   ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                             const OPTIONS *options = 0);
-  // Initialize the pool.
 
+  /// Ask system for initial chunk of shared memory.
   void *init_acquire (size_t nbytes,
                       size_t &rounded_bytes,
                       int &first_time);
-  // Ask system for initial chunk of shared memory.
 
+  /// Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
+  /// is the actual number of bytes allocated.
   void *acquire (size_t nbytes,
                  size_t &rounded_bytes);
-  // Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
-  // is the actual number of bytes allocated.
 
+  /// Instruct the memory pool to release all of its resources.
   int release (void);
-  // Instruct the memory pool to release all of its resources.
 
+  /**
+   * Win32 Structural exception selector.  The return value decides
+   * how to handle memory pool related structural exceptions.  Returns
+   * 1, 0, or , -1.
+   */
   virtual int seh_selector (void *);
-  // Win32 Structural exception selector.  The return value decides
-  // how to handle memory pool related structural exceptions.  Returns
-  // 1, 0, or , -1.
 
+  /**
+   * Try to extend the virtual address space so that <addr> is now
+   * covered by the address mapping.  The method succeeds and returns
+   * 0 if the backing store has adequate memory to cover this address.
+   * Otherwise, it returns -1.  This method is typically called by an
+   * exception handler for a Win32 structured exception when another
+   * process has grown the backing store (and its mapping) and our
+   * process now incurs a fault because our mapping isn't in range
+   * (yet).
+   */
   int remap (void *addr);
-  // Try to extend the virtual address space so that <addr> is now
-  // covered by the address mapping.  The method succeeds and returns
-  // 0 if the backing store has adequate memory to cover this address.
-  // Otherwise, it returns -1.  This method is typically called by an
-  // exception handler for a Win32 structured exception when another
-  // process has grown the backing store (and its mapping) and our
-  // process now incurs a fault because our mapping isn't in range
-  // (yet).
 
+  /// Round up to system page size.
   size_t round_to_page_size (size_t nbytes);
-  // Round up to system page size.
 
+  /// Round up to the chunk size required by the operation system
   size_t round_to_chunk_size (size_t nbytes);
-  // Round up to the chunk size required by the operation system
 
   // = Don't need this methods here ...
   int sync (ssize_t = -1, int = MS_SYNC);
@@ -608,43 +670,51 @@ public:
 
 protected:
 
+  /**
+   * Map portions or the entire pool into the local virtual address
+   * space.  To do this, we compute the new <file_offset> of the
+   * backing store and commit the memory.
+   */
   int map (int &firstTime, int appendBytes = 0);
-  // Map portions or the entire pool into the local virtual address
-  // space.  To do this, we compute the new <file_offset> of the
-  // backing store and commit the memory.
 
+  /// Release the mapping.
   int unmap (void);
-  // Release the mapping.
 
 private:
 
+  /**
+   * @class Control_Block
+   *
+   * @brief Attributes that are meaningful in local storage only.
+   */
   class Control_Block
   {
-    // = TITLE
-    //   Attributes that are meaningful in local storage only.
   public:
+    /// required base address
     void *req_base_;
-    // required base address
 
+    /// Base address returned from system call
     void *mapped_base_;
-    // Base address returned from system call
 
+    /**
+     * @class Shared_Control_Block
+     *
+     * @brief Pool statistics
+     */
     class Shared_Control_Block
     {
-      // = TITLE
-      //   Pool statistics
     public:
+      /// Maximum size the pool may grow
       size_t max_size_;
-      // Maximum size the pool may grow
 
+      /// Size of mapped shared memory segment
       int mapped_size_;
-      // Size of mapped shared memory segment
 
+      /// Offset to mapped but not yet acquired address space
       int free_offset_;
-      // Offset to mapped but not yet acquired address space
 
+      /// Size of mapped but not yet acquired address space
       int free_size_;
-      // Size of mapped but not yet acquired address space
     };
 
     Shared_Control_Block sh_;
@@ -654,20 +724,20 @@ private:
   // free to select any address to map the file, otherwise this value
   // is what the OS must try to use to mmap the file.
 
+  /// Description of what our process mapped.
   Control_Block local_cb_;
-  // Description of what our process mapped.
 
+  /// Shared memory pool statistics.
   Control_Block *shared_cb_;
-  // Shared memory pool statistics.
 
+  /// File mapping handle.
   ACE_HANDLE object_handle_;
-  // File mapping handle.
 
+  /// System page size.
   size_t page_size_;
-  // System page size.
 
+  /// Name of the backing store where the shared memory pool is kept.
   ACE_TCHAR backing_store_name_[MAXPATHLEN];
-  // Name of the backing store where the shared memory pool is kept.
 };
 
 #endif /* ACE_WIN32 */

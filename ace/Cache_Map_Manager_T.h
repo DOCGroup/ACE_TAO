@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Cache_Map_Manager.h
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cache_Map_Manager.h
+ *
+ *  $Id$
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CACHE_MAP_MANAGER_T_H
 #define CACHE_MAP_MANAGER_T_H
@@ -53,23 +50,24 @@ class ACE_Cache_Map_Reverse_Iterator;
 // For linkers that cant grok long names.
 #define ACE_Cache_Map_Manager ACMM
 
+/**
+ * @class ACE_Cache_Map_Manager
+ *
+ * @brief Defines a abstraction that will purge entries from a map.
+ *
+ * The <ACE_Cache_Map_Manager> will manage the map it contains
+ * and provide purging on demand from the map. The strategy for
+ * caching is decided by the user and provided to the Cache
+ * Manager.  The Cache Manager acts as a agent and communicates
+ * between the Map and the Strategy for purging entries from the
+ * map.
+ * No locking mechanism provided since locking at this level
+ * isn't efficient.  Locking has to be provided by the
+ * application.
+ */
 template <ACE_T1>
 class ACE_Cache_Map_Manager
 {
-  // = TITLE
-  //     Defines a abstraction that will purge entries from a map.
-  //
-  // = DESCRIPTION
-  //     The <ACE_Cache_Map_Manager> will manage the map it contains
-  //     and provide purging on demand from the map. The strategy for
-  //     caching is decided by the user and provided to the Cache
-  //     Manager.  The Cache Manager acts as a agent and communicates
-  //     between the Map and the Strategy for purging entries from the
-  //     map.
-  //
-  //     No locking mechanism provided since locking at this level
-  //     isn't efficient.  Locking has to be provided by the
-  //     application.
 public:
 
   // = Traits.
@@ -100,134 +98,150 @@ public:
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
+  /**
+   * The actual value mapped to the key in the map. The <attributes>
+   * are used by the strategy and is transparent to the user of this
+   * class.
+   */
   typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
-  // The actual value mapped to the key in the map. The <attributes>
-  // are used by the strategy and is transparent to the user of this
-  // class.
 
   // = Initialization and termination methods.
 
+  /// Initialize a <Cache_Map_Manager> with <caching_strategy> and
+  /// <size> entries.
   ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_strategy,
                          size_t size = ACE_DEFAULT_MAP_SIZE,
                          ACE_Allocator *alloc = 0);
-  // Initialize a <Cache_Map_Manager> with <caching_strategy> and
-  // <size> entries.
 
+  /// Close down a <Cache_Map_Manager> and release dynamically allocated
+  /// resources.
   virtual ~ACE_Cache_Map_Manager (void);
-  // Close down a <Cache_Map_Manager> and release dynamically allocated
-  // resources.
 
+  /// Initialize a cache with size <length>.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = 0);
-  // Initialize a cache with size <length>.
 
+  /// Close down a cache and release dynamically allocated resources.
   int close (void);
-  // Close down a cache and release dynamically allocated resources.
 
+  /**
+   * Associate <key> with <value>.  If <key> is already in the MAP
+   * then the ENTRY is not changed.  Returns 0 if a new entry is bound
+   * successfully, returns 1 if an attempt is made to bind an existing
+   * entry, and returns -1 if failures occur.
+   */
   int bind (const KEY &key,
             const VALUE &value);
-  // Associate <key> with <value>.  If <key> is already in the MAP
-  // then the ENTRY is not changed.  Returns 0 if a new entry is bound
-  // successfully, returns 1 if an attempt is made to bind an existing
-  // entry, and returns -1 if failures occur.
 
+  /**
+   * Lookup entry<key,value> in the cache. If it is not found, returns -1.
+   * If the <key> is located in the MAP object, the CACHING_STRATEGY is
+   * notified of it via notify_find (int result, ATTRIBUTES &attribute).
+   * If notify_find also returns 0 (success), then this function returns
+   * 0 (success) and sets the cached value in <value>.
+   */
   int find (const KEY &key,
             VALUE &value);
-  // Lookup entry<key,value> in the cache. If it is not found, returns -1.
-  // If the <key> is located in the MAP object, the CACHING_STRATEGY is
-  // notified of it via notify_find (int result, ATTRIBUTES &attribute).
-  // If notify_find also returns 0 (success), then this function returns
-  // 0 (success) and sets the cached value in <value>.
 
+  /**
+   * Lookup entry<key,value> in the cache. If it is not found, returns -1.
+   * If the <key> is located in the MAP object, the CACHING_STRATEGY is
+   * notified of it via notify_find (int result, ATTRIBUTES &attribute).
+   * If notify_find also returns 0 (success), then this function returns
+   * 0 (success).
+   */
   int find (const KEY &key);
-  // Lookup entry<key,value> in the cache. If it is not found, returns -1.
-  // If the <key> is located in the MAP object, the CACHING_STRATEGY is
-  // notified of it via notify_find (int result, ATTRIBUTES &attribute).
-  // If notify_find also returns 0 (success), then this function returns
-  // 0 (success).
 
+  /**
+   * Reassociate the <key> with <value>. If the <key> already exists
+   * in the cache then returns 1, on a new bind returns 0 and returns
+   * -1 in case of any failures.
+   */
   int rebind (const KEY &key,
               const VALUE &value);
-  // Reassociate the <key> with <value>. If the <key> already exists
-  // in the cache then returns 1, on a new bind returns 0 and returns
-  // -1 in case of any failures.
 
+  /**
+   * Reassociate <key> with <value>, storing the old value into the
+   * "out" parameter <old_value>.  The function fails if <key> is not
+   * in the cache for caches that do not allow user specified keys.
+   * However, for caches that allow user specified keys, if the key is
+   * not in the cache, a new <key>/<value> association is created.
+   */
   int rebind (const KEY &key,
               const VALUE &value,
               VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old value into the
-  // "out" parameter <old_value>.  The function fails if <key> is not
-  // in the cache for caches that do not allow user specified keys.
-  // However, for caches that allow user specified keys, if the key is
-  // not in the cache, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old key and value
+   * into the "out" parameters <old_key> and <old_value>.  The
+   * function fails if <key> is not in the cache for caches that do
+   * not allow user specified keys.  However, for caches that allow
+   * user specified keys, if the key is not in the cache, a new
+   * <key>/<value> association is created.
+   */
   int rebind (const KEY &key,
               const VALUE &value,
               KEY &old_key,
               VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old key and value
-  // into the "out" parameters <old_key> and <old_value>.  The
-  // function fails if <key> is not in the cache for caches that do
-  // not allow user specified keys.  However, for caches that allow
-  // user specified keys, if the key is not in the cache, a new
-  // <key>/<value> association is created.
 
+  /**
+   * Associate <key> with <value> if and only if <key> is not in the
+   * cache.  If <key> is already in the cache, then the <value>
+   * parameter is overwritten with the existing value in the
+   * cache. Returns 0 if a new <key>/<value> association is created.
+   * Returns 1 if an attempt is made to bind an existing entry.  This
+   * function fails for maps that do not allow user specified keys.
+   */
   int trybind (const KEY &key,
                VALUE &value);
-  // Associate <key> with <value> if and only if <key> is not in the
-  // cache.  If <key> is already in the cache, then the <value>
-  // parameter is overwritten with the existing value in the
-  // cache. Returns 0 if a new <key>/<value> association is created.
-  // Returns 1 if an attempt is made to bind an existing entry.  This
-  // function fails for maps that do not allow user specified keys.
 
+  /// Remove <key> from the cache.
   int unbind (const KEY &key);
-  // Remove <key> from the cache.
 
+  /// Remove <key> from the cache, and return the <value> associated with
+  /// <key>.
   int unbind (const KEY &key,
               VALUE &value);
-  // Remove <key> from the cache, and return the <value> associated with
-  // <key>.
 
+  /// Remove entries from the cache depending upon the strategy.
   int purge (void);
-  // Remove entries from the cache depending upon the strategy.
 
+  /// Return the current size of the cache.
   size_t current_size (void) const;
-  // Return the current size of the cache.
 
+  /// Return the total size of the cache.
   size_t total_size (void) const;
-  // Return the total size of the cache.
 
+  /// Dumps the state of the object.
   void dump (void) const;
-  // Dumps the state of the object.
 
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 
   // = STL styled iterator factory functions.
 
+  /// Return forward iterator.
   ITERATOR begin (void);
   ITERATOR end (void);
-  // Return forward iterator.
 
+  /// Return reverse iterator.
   REVERSE_ITERATOR rbegin (void);
   REVERSE_ITERATOR rend (void);
-  // Return reverse iterator.
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
+  /// The map managed by the Cache_Map_Manager.
   MAP &map (void);
-  // The map managed by the Cache_Map_Manager.
 
+  /// The caching strategy used on the cache.
   CACHING_STRATEGY &caching_strategy (void);
-  // The caching strategy used on the cache.
 
 protected:
 
+  /// The underlying map which needs to be cached.
   MAP map_;
-  // The underlying map which needs to be cached.
 
+  /// The strategy to be followed for caching entries in the map.
   CACHING_STRATEGY &caching_strategy_;
-  // The strategy to be followed for caching entries in the map.
 
 private:
 
@@ -239,151 +253,155 @@ private:
 
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 
+/**
+ * @class ACE_Cache_Map_Iterator
+ *
+ * @brief Defines a iterator for the Cache_Map_Manager.
+ *
+ * Implementation to be provided by the iterator of the map
+ * managed by the ACE_Cache_Map_Manager.
+ */
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator
 {
-  // = TITLE
-  //     Defines a iterator for the Cache_Map_Manager.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by the iterator of the map
-  //     managed by the ACE_Cache_Map_Manager.
 
 public:
 
   // = Traits.
+  /// The actual value mapped to the key in the cache. The <attributes>
+  /// are used by the strategy and is transperant to the cache user.
   typedef ACE_Reference_Pair<KEY, VALUE>
           value_type;
   typedef ACE_Pair <VALUE, ATTRIBUTES>
           CACHE_VALUE;
-  // The actual value mapped to the key in the cache. The <attributes>
-  // are used by the strategy and is transperant to the cache user.
 
   // = Initialisation and termination methods.
 
   ACE_Cache_Map_Iterator (const IMPLEMENTATION &iterator_impl);
 
+  /// Copy constructor.
   ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
-  // Copy constructor.
 
   virtual ~ACE_Cache_Map_Iterator (void);
 
   // = Iteration methods.
 
+  /// assignment operator.
   ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION,
                           CACHING_STRATEGY, ATTRIBUTES> &operator=
       (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
                                     CACHING_STRATEGY, ATTRIBUTES> &rhs);
-  // assignment operator.
 
+  /// Comparision operators.
   int operator== (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
   int operator!= (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
-  // Comparision operators.
 
+  /// Returns a reference to the internal element <this> is pointing
+  /// to.
   ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
-  // Returns a reference to the internal element <this> is pointing
-  // to.
 
   // = STL styled iteration, compare, and reference functions.
 
+  /// Prefix advance
   ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ (void);
-  // Prefix advance
 
+  /// Postfix advance.
   ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator++ (int);
-  // Postfix advance.
 
+  /// Prefix reverse.
   ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- (void);
-  // Prefix reverse.
 
+  /// Postfix reverse.
   ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
-  // Postfix reverse.
 
+  /// Returns the iterator of the internal map in the custody of the
+  /// Cache_Map_Manager.
   IMPLEMENTATION &iterator_implementation (void);
-  // Returns the iterator of the internal map in the custody of the
-  // Cache_Map_Manager.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// The actual iterator which iterates internally on the map
+  /// belonging to the Cache_Map_Manager.
   IMPLEMENTATION iterator_implementation_;
-  // The actual iterator which iterates internally on the map
-  // belonging to the Cache_Map_Manager.
 };
 
+/**
+ * @class ACE_Cache_Map_Reverse_Iterator
+ *
+ * @brief Defines a reverse iterator for the Cache_Map_Manager.
+ *
+ * Implementation to be provided by the reverse iterator of the map
+ * managed by thr Cache_Map_manager.
+ */
 template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Reverse_Iterator
 {
-  // = TITLE
-  //     Defines a reverse iterator for the Cache_Map_Manager.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by the reverse iterator of the map
-  //     managed by thr Cache_Map_manager.
 public:
 
   // = Traits.
+  /// The actual value mapped to the key in the cache. The <attributes>
+  /// are used by the strategy and is transperant to the cache user.
   typedef ACE_Reference_Pair<KEY, VALUE> value_type;
   typedef ACE_Pair <VALUE, ATTRIBUTES> CACHE_VALUE;
-  // The actual value mapped to the key in the cache. The <attributes>
-  // are used by the strategy and is transperant to the cache user.
 
   // = Initialisation and termination methods.
 
   ACE_Cache_Map_Reverse_Iterator (const REVERSE_IMPLEMENTATION &iterator_impl);
 
+  /// Copy constructor.
   ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
-  // Copy constructor.
 
   ~ACE_Cache_Map_Reverse_Iterator (void);
 
   // = Iteration methods.
 
+  /// Assignment operator.
   ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION,
                                   CACHING_STRATEGY, ATTRIBUTES> &operator=
      (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,
                                            CACHING_STRATEGY, ATTRIBUTES> &rhs);
-  // Assignment operator.
 
+  /// Comparision operators.
   int operator== (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
   int operator!= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
-  // Comparision operators.
 
+  /// Returns a reference to the internal element <this> is pointing
+  /// to.
   ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
-  // Returns a reference to the internal element <this> is pointing
-  // to.
 
   // = STL styled iteration, compare, and reference functions.
 
+  /// Prefix advance
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ (void);
-  // Prefix advance
 
+  /// Postfix advance.
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator++ (int);
-  // Postfix advance.
 
+  /// Prefix reverse.
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- (void);
-  // Prefix reverse.
 
+  /// Postfix reverse.
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
-  // Postfix reverse.
 
+  /// Returns the iterator of the internal map in the custody of the
+  /// Cache_Map_Manager.
   REVERSE_IMPLEMENTATION &iterator_implementation (void);
-  // Returns the iterator of the internal map in the custody of the
-  // Cache_Map_Manager.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// The actual iterator which iterates internally on the map
+  /// belonging to the Cache_Map_Manager.
   REVERSE_IMPLEMENTATION reverse_iterator_implementation_;
-  // The actual iterator which iterates internally on the map
-  // belonging to the Cache_Map_Manager.
 };
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */

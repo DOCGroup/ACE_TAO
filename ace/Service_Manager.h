@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Service_Manager.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Service_Manager.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SERVICE_MANAGER_H
 #define ACE_SERVICE_MANAGER_H
@@ -29,35 +26,37 @@
 #include "ace/INET_Addr.h"
 #include "ace/Service_Object.h"
 
+/**
+ * @class ACE_Service_Manager
+ *
+ * @brief Provide a standard ACE service for managing all the services
+ * configured in an <ACE_Service_Repository>.
+ *
+ * This implementation is very simple.  It just handles each
+ * client request one at a time.  Each request is associated
+ * with a new connection, which is closed when the request is
+ * processed.  In addition, you must be using the singleton
+ * <ACE_Reactor::instance> in order to trigger reconfigurations.
+ * This scheme can certainly be improved.
+ */
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
-  // = TITLE
-  //     Provide a standard ACE service for managing all the services
-  //     configured in an <ACE_Service_Repository>.
-  //
-  // = DESCRIPTION
-  //     This implementation is very simple.  It just handles each
-  //     client request one at a time.  Each request is associated
-  //     with a new connection, which is closed when the request is
-  //     processed.  In addition, you must be using the singleton
-  //     <ACE_Reactor::instance> in order to trigger reconfigurations.
-  //     This scheme can certainly be improved.
 public:
   // = Initialization and termination hooks.
+  /// Constructor.
   ACE_Service_Manager (void);
-  // Constructor.
 
+  /// Destructor.
   ~ACE_Service_Manager (void);
-  // Destructor.
 
 protected:
   // = Perform the various meta-services.
+  /// Trigger a remote reconfiguration of the Service Configurator.
   virtual int reconfigure_services (void);
-  // Trigger a remote reconfiguration of the Service Configurator.
 
+  /// Determine all the services offered by this daemon and return the
+  /// information back to the client.
   virtual int list_services (void);
-  // Determine all the services offered by this daemon and return the
-  // information back to the client.
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);
@@ -68,11 +67,11 @@ protected:
   virtual int suspend (void);
   virtual int resume (void);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
   int open (const ACE_INET_Addr &sia);
@@ -83,21 +82,21 @@ private:
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 
+  /// Connection to the client (we only support one client connection
+  /// at a time).
   ACE_SOCK_Stream client_stream_;
-  // Connection to the client (we only support one client connection
-  // at a time).
 
+  /// Acceptor instance.
   ACE_SOCK_Acceptor acceptor_;
-  // Acceptor instance.
 
+  /// Keep track of the debugging level.
   int debug_;
-  // Keep track of the debugging level.
 
+  /// The signal used to trigger reconfiguration.
   int signum_;
-  // The signal used to trigger reconfiguration.
 
+  /// Default port for the Acceptor to listen on.
   static u_short DEFAULT_PORT_;
-  // Default port for the Acceptor to listen on.
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,18 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    UNIX_Addr.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UNIX_Addr.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_UNIX_ADDR_H
 #define ACE_UNIX_ADDR_H
@@ -28,66 +25,69 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+/**
+ * @class ACE_UNIX_Addr
+ *
+ * @brief Defines the ``UNIX domain address family'' address format.
+ */
 class ACE_Export ACE_UNIX_Addr : public ACE_Addr
 {
-  // = TITLE
-  //    Defines the ``UNIX domain address family'' address format.
 public:
   // = Initialization methods.
+  /// Default constructor.
   ACE_UNIX_Addr (void);
-  // Default constructor.
 
+  /// Copy constructor.
   ACE_UNIX_Addr (const ACE_UNIX_Addr &sa);
-  // Copy constructor.
 
+  /// Creates an ACE_UNIX_Addr from a string.
   ACE_UNIX_Addr (const char rendezvous_point[]);
-  // Creates an ACE_UNIX_Addr from a string.
 
+  /// Creates an ACE_INET_Addr from a sockaddr_un structure.
   ACE_UNIX_Addr (const sockaddr_un *, int len);
-  // Creates an ACE_INET_Addr from a sockaddr_un structure.
 
+  /// Creates an ACE_UNIX_Addr from another <ACE_UNIX_Addr>.
   int set (const ACE_UNIX_Addr &sa);
-  // Creates an ACE_UNIX_Addr from another <ACE_UNIX_Addr>.
 
+  /// Creates an ACE_UNIX_Addr from a string.
   int set (const char rendezvous_point[]);
-  // Creates an ACE_UNIX_Addr from a string.
 
+  /// Creates an ACE_UNIX_Addr from a sockaddr_un structure.
   int set (const sockaddr_un *, int len);
-  // Creates an ACE_UNIX_Addr from a sockaddr_un structure.
 
+  /// Return a pointer to the underlying network address.
   virtual void *get_addr (void) const;
-  // Return a pointer to the underlying network address.
 
+  /// Set a pointer to the underlying network address.
   virtual void set_addr (void *addr, int len);
-  // Set a pointer to the underlying network address.
 
+  /// Transform the current address into string format.
   virtual int addr_to_string (char addr[], size_t) const;
-  // Transform the current address into string format.
 
+  /// Transform the string into the current addressing format.
   virtual int string_to_addr (const char addr[]);
-  // Transform the string into the current addressing format.
 
+  /// Compare two addresses for equality.
   int operator == (const ACE_UNIX_Addr &SAP) const;
-  // Compare two addresses for equality.
 
+  /// Compare two addresses for inequality.
   int  operator != (const ACE_UNIX_Addr &SAP) const;
-  // Compare two addresses for inequality.
 
+  /// Return the path name of the underlying rendezvous point.
   const char *get_path_name (void) const;
-  // Return the path name of the underlying rendezvous point.
 
+  /// Computes and returns hash value.
   virtual u_long hash (void) const;
-  // Computes and returns hash value.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Underlying socket address.
   sockaddr_un unix_addr_;
-  // Underlying socket address.
 };
 
 #if defined (__ACE_INLINE__)

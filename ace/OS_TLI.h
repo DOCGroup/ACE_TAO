@@ -1,20 +1,17 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ace
-//
-// = FILENAME
-//   OS_TLI.h
-//
-// = AUTHOR
-//   (Originally in OS.h)
-//   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
-//   <stophph@diku.dk>, and a cast of thousands...
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   OS_TLI.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Jesper S. M|ller<stophph@diku.dk>
+ *  @author and a cast of thousands...
+ */
+//=============================================================================
+
 
 #ifndef ACE_OS_TLI_H
 #define ACE_OS_TLI_H
@@ -122,11 +119,13 @@ extern "C" int _xti_error(char *);
 #   endif /* UNIXWARE */
 # endif /* ACE_REDEFINES_XTI_FUNCTIONS */
 
+/**
+ * @class ACE_OS_TLI
+ *
+ * @brief This class is a wrapper for the TLI operations
+ *
+ */
 class ACE_OS_Export ACE_OS_TLI
-  // = TITLE
-  //     This class is a wrapper for the TLI operations
-  //
-  // = DESCRIPTION
 {
 public:
   // = A set of wrappers for TLI.

@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Typed_SV_Message_Queue.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Typed_SV_Message_Queue.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_TYPED_MESSAGE_QUEUE_H
 #define ACE_TYPED_MESSAGE_QUEUE_H
@@ -27,11 +24,14 @@
 
 #include "ace/Typed_SV_Message.h"
 
+/**
+ * @class ACE_Typed_SV_Message_Queue
+ *
+ * @brief Defines the header file for the C++ wrapper for message queues.
+ */
 template <class T>
 class ACE_Typed_SV_Message_Queue
 {
-  // = TITLE
-  //    Defines the header file for the C++ wrapper for message queues.
 public:
   enum
   {
@@ -56,17 +56,17 @@ public:
   int send (const ACE_Typed_SV_Message<T> &mb, int mflags = 0);
   int recv (ACE_Typed_SV_Message<T> &mb, int mflags = 0);
 
+  /// Return the id of the underlying <ACE_SV_Message_Queue>.
   int get_id (void) const;
-  // Return the id of the underlying <ACE_SV_Message_Queue>.
 
+  /// Control the underlying message queue.
   int control (int option, void *arg = 0);
-  // Control the underlying message queue.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
   ACE_SV_Message_Queue message_queue_;

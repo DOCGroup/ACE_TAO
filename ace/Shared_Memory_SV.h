@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Shared_Memory_SV.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Shared_Memory_SV.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SHARED_MALLOC_SV_H
 #define ACE_SHARED_MALLOC_SV_H
@@ -26,15 +23,17 @@
 
 #include "ace/SV_Shared_Memory.h"
 
+/**
+ * @class ACE_Shared_Memory_SV
+ *
+ * @brief Shared memory wrapper based on System V shared memory.
+ *
+ * This class provides a very simple-minded shared memory
+ * manager.  For more a powerful memory allocator please see
+ * <ACE_Malloc>.
+ */
 class ACE_Export ACE_Shared_Memory_SV : public ACE_Shared_Memory
 {
-  // = TITLE
-  //     Shared memory wrapper based on System V shared memory.
-  //
-  // = DESCRIPTION
-  //     This class provides a very simple-minded shared memory
-  //     manager.  For more a powerful memory allocator please see
-  //     <ACE_Malloc>.  
 public:
   enum
     {
@@ -58,36 +57,36 @@ public:
             void *addr = 0,
             int flags = 0);
 
+  /// Close down the shared memory segment.
   virtual int close (void);
-  // Close down the shared memory segment.
 
+  /// Remove the underlying shared memory segment.
   virtual int remove (void);
-  // Remove the underlying shared memory segment.
 
   // = Allocation and deallocation methods.
+  /// Create a new chuck of memory containing <size> bytes.
   virtual void *malloc (size_t = 0);
-  // Create a new chuck of memory containing <size> bytes.
 
+  /// Free a chuck of memory allocated by <ACE_Shared_Memory_SV::malloc>.
   virtual int free (void *p);
-  // Free a chuck of memory allocated by <ACE_Shared_Memory_SV::malloc>.
 
+  /// Return the size of the shared memory segment.
   virtual int get_segment_size (void) const;
-  // Return the size of the shared memory segment.
 
+  /// Return the ID of the shared memory segment (i.e., a System V
+  /// shared memory internal id).
   virtual ACE_HANDLE get_id (void) const;
-  // Return the ID of the shared memory segment (i.e., a System V
-  // shared memory internal id).
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+   /// This version is implemented with System V shared memory
+   /// segments.
    ACE_SV_Shared_Memory shared_memory_;
-   // This version is implemented with System V shared memory
-   // segments.
 };
 
 #if defined (__ACE_INLINE__)

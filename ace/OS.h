@@ -1,19 +1,17 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ace
-//
-// = FILENAME
-//   OS.h
-//
-// = AUTHOR
-//   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
-//   <stophph@diku.dk>, and a cast of thousands...
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   OS.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Jesper S. M|ller<stophph@diku.dk>
+ *  @author and a cast of thousands...
+ */
+//=============================================================================
+
 
 #ifndef ACE_OS_H
 #define ACE_OS_H
@@ -31,26 +29,26 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_TLI.h"
 
-// States of a recyclable object.
+/// States of a recyclable object.
 enum ACE_Recyclable_State
 {
+  /// Idle and can be purged.
   ACE_RECYCLABLE_IDLE_AND_PURGABLE,
-  // Idle and can be purged.
 
+  /// Idle but cannot be purged.
   ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE,
-  // Idle but cannot be purged.
 
+  /// Can be purged, but is not idle (mostly for debugging).
   ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE,
-  // Can be purged, but is not idle (mostly for debugging).
 
+  /// Busy (i.e., cannot be recycled or purged).
   ACE_RECYCLABLE_BUSY,
-  // Busy (i.e., cannot be recycled or purged).
 
+  /// Closed.
   ACE_RECYCLABLE_CLOSED,
-  // Closed.
 
+  /// Unknown state.
   ACE_RECYCLABLE_UNKNOWN
-  // Unknown state.
 };
 
 #if !defined (ACE_DEFAULT_PAGEFILE_POOL_BASE)
@@ -873,28 +871,28 @@ typedef struct timespec
 class ACE_Export ACE_PSOS_Time_t
 {
 public:
+    /// default ctor: date, time, and ticks all zeroed.
   ACE_PSOS_Time_t (void);
-    // default ctor: date, time, and ticks all zeroed.
 
+    /// ctor from a timespec_t
   ACE_PSOS_Time_t (const timespec_t& t);
-    // ctor from a timespec_t
 
+    /// type cast operator (to a timespec_t)
   operator timespec_t ();
-    // type cast operator (to a timespec_t)
 
+    /// static member function to get current system time
   static u_long get_system_time (ACE_PSOS_Time_t& t);
-    // static member function to get current system time
 
+    /// static member function to set current system time
   static u_long set_system_time (const ACE_PSOS_Time_t& t);
-    // static member function to set current system time
 
 #   if defined (ACE_PSOSIM)
+    /// static member function to initialize system time, using UNIX calls
   static u_long init_simulator_time (void);
-    // static member function to initialize system time, using UNIX calls
 #   endif /* ACE_PSOSIM */
 
+    /// max number of ticks supported in a single system call
   static const u_long max_ticks;
-    // max number of ticks supported in a single system call
 private:
   // = Constants for prying info out of the pSOS time encoding.
   static const u_long year_mask;
@@ -916,14 +914,14 @@ private:
   static const u_long err_illtime;  // time out of range
   static const u_long err_illticks; // ticks out of range
 
+  /// date : year in bits 31-16, month in bits 15-8, day in bits 7-0
    u_long date_;
-  // date : year in bits 31-16, month in bits 15-8, day in bits 7-0
 
+  /// time : hour in bits 31-16, minutes in bits 15-8, seconds in bits 7-0
   u_long time_;
-  // time : hour in bits 31-16, minutes in bits 15-8, seconds in bits 7-0
 
+  /// ticks: number of system clock ticks (KC_TICKS2SEC-1 max)
   u_long ticks_;
-  // ticks: number of system clock ticks (KC_TICKS2SEC-1 max)
 } ;
 #endif /* ACE_PSOS_HAS_TIME */
 
@@ -1054,201 +1052,207 @@ ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
 
 // -------------------------------------------------------------------
 
+/**
+ * @class ACE_Time_Value
+ *
+ * @brief Operations on "timeval" structures.
+ *
+ * This class centralizes all the time related processing in
+ * ACE.  These timers are typically used in conjunction with OS
+ * mechanisms like <select>, <poll>, or <cond_timedwait>.
+ * <ACE_Time_Value> makes the use of these mechanisms portable
+ * across OS platforms,
+ */
 class ACE_Export ACE_Time_Value
 {
-  // = TITLE
-  //     Operations on "timeval" structures.
-  //
-  // = DESCRIPTION
-  //     This class centralizes all the time related processing in
-  //     ACE.  These timers are typically used in conjunction with OS
-  //     mechanisms like <select>, <poll>, or <cond_timedwait>.
-  //     <ACE_Time_Value> makes the use of these mechanisms portable
-  //     across OS platforms,
 public:
   // = Useful constants.
 
+  /// Constant "0".
   static const ACE_Time_Value zero;
-  // Constant "0".
 
+  /**
+   * Constant for maximum time representable.  Note that this time is
+   * not intended for use with <select> or other calls that may have
+   * *their own* implementation-specific maximum time representations.
+   * Its primary use is in time computations such as those used by the
+   * dynamic subpriority strategies in the <ACE_Dynamic_Message_Queue>
+   * class.
+   */
   static const ACE_Time_Value max_time;
-  // Constant for maximum time representable.  Note that this time is
-  // not intended for use with <select> or other calls that may have
-  // *their own* implementation-specific maximum time representations.
-  // Its primary use is in time computations such as those used by the
-  // dynamic subpriority strategies in the <ACE_Dynamic_Message_Queue>
-  // class.
 
   // = Initialization methods.
 
+  /// Default Constructor.
   ACE_Time_Value (void);
-  // Default Constructor.
 
+  /// Constructor.
   ACE_Time_Value (long sec, long usec = 0);
-  // Constructor.
 
   // = Methods for converting to/from various time formats.
+  /// Construct the <ACE_Time_Value> from a <timeval>.
   ACE_Time_Value (const struct timeval &t);
-  // Construct the <ACE_Time_Value> from a <timeval>.
 
+  ///  Initializes the <ACE_Time_Value> object from a <timespec_t>.
   ACE_Time_Value (const timespec_t &t);
-  //  Initializes the <ACE_Time_Value> object from a <timespec_t>.
 
+  /// Copy constructor.
   ACE_Time_Value (const ACE_Time_Value &tv);
-  // Copy constructor.
 
 # if defined (ACE_WIN32)
+  ///  Initializes the ACE_Time_Value object from a Win32 FILETIME
   ACE_Time_Value (const FILETIME &ft);
-  //  Initializes the ACE_Time_Value object from a Win32 FILETIME
 # endif /* ACE_WIN32 */
 
+  /// Construct a <Time_Value> from two <long>s.
   void set (long sec, long usec);
-  // Construct a <Time_Value> from two <long>s.
 
+  /// Construct a <Time_Value> from a <double>, which is assumed to be
+  /// in second format, with any remainder treated as microseconds.
   void set (double d);
-  // Construct a <Time_Value> from a <double>, which is assumed to be
-  // in second format, with any remainder treated as microseconds.
 
+  /// Construct a <Time_Value> from a <timeval>.
   void set (const timeval &t);
-  // Construct a <Time_Value> from a <timeval>.
 
+  /// Initializes the <Time_Value> object from a <timespec_t>.
   void set (const timespec_t &t);
-  // Initializes the <Time_Value> object from a <timespec_t>.
 
 # if defined (ACE_WIN32)
+  ///  Initializes the <Time_Value> object from a <timespec_t>.
   void set (const FILETIME &ft);
-  //  Initializes the <Time_Value> object from a <timespec_t>.
 # endif /* ACE_WIN32 */
 
+  /// Converts from <Time_Value> format into milli-seconds format.
   long msec (void) const;
-  // Converts from <Time_Value> format into milli-seconds format.
 
+  /// Converts from milli-seconds format into <Time_Value> format.
   void msec (long);
-  // Converts from milli-seconds format into <Time_Value> format.
 
+  /// Returns the value of the object as a <timespec_t>.
   operator timespec_t () const;
-  // Returns the value of the object as a <timespec_t>.
 
+  /// Returns the value of the object as a <timeval>.
   operator timeval () const;
-  // Returns the value of the object as a <timeval>.
 
+  /// Returns a pointer to the object as a <timeval>.
   operator const timeval *() const;
-  // Returns a pointer to the object as a <timeval>.
 
 # if defined (ACE_WIN32)
+  /// Returns the value of the object as a Win32 FILETIME.
   operator FILETIME () const;
-  // Returns the value of the object as a Win32 FILETIME.
 # endif /* ACE_WIN32 */
 
   // = The following are accessor/mutator methods.
 
+  /// Get seconds.
   long sec (void) const;
-  // Get seconds.
 
+  /// Set seconds.
   void sec (long sec);
-  // Set seconds.
 
+  /// Get microseconds.
   long usec (void) const;
-  // Get microseconds.
 
+  /// Set microseconds.
   void usec (long usec);
-  // Set microseconds.
 
   // = The following arithmetic methods operate on <Time_Value>s.
 
+  /// Add <tv> to this.
   void operator += (const ACE_Time_Value &tv);
-  // Add <tv> to this.
 
+  /// Subtract <tv> to this.
   void operator -= (const ACE_Time_Value &tv);
-  // Subtract <tv> to this.
 
+  /// Multiply the time value by the <d> factor, which must be >= 0.
   ACE_Time_Value &operator *= (double d);
-  // Multiply the time value by the <d> factor, which must be >= 0.
 
+  /// Adds two ACE_Time_Value objects together, returns the sum.
   friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);
-  // Adds two ACE_Time_Value objects together, returns the sum.
 
+  /// Subtracts two ACE_Time_Value objects, returns the difference.
   friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);
-  // Subtracts two ACE_Time_Value objects, returns the difference.
 
+  /// True if tv1 < tv2.
   friend ACE_Export int operator < (const ACE_Time_Value &tv1,
                                     const ACE_Time_Value &tv2);
-  // True if tv1 < tv2.
 
+  /// True if tv1 > tv2.
   friend ACE_Export int operator > (const ACE_Time_Value &tv1,
                                     const ACE_Time_Value &tv2);
-  // True if tv1 > tv2.
 
+  /// True if tv1 <= tv2.
   friend ACE_Export int operator <= (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
-  // True if tv1 <= tv2.
 
+  /// True if tv1 >= tv2.
   friend ACE_Export int operator >= (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
-  // True if tv1 >= tv2.
 
+  /// True if tv1 == tv2.
   friend ACE_Export int operator == (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
-  // True if tv1 == tv2.
 
+  /// True if tv1 != tv2.
   friend ACE_Export int operator != (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
-  // True if tv1 != tv2.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
 # if defined (ACE_WIN32)
+  /// Const time difference between FILETIME and POSIX time.
   static const DWORDLONG FILETIME_to_timval_skew;
-  // Const time difference between FILETIME and POSIX time.
 # endif /* ACE_WIN32 */
 
 private:
+  /// Put the timevalue into a canonical form.
   void normalize (void);
-  // Put the timevalue into a canonical form.
 
+  /// Store the values as a <timeval>.
   timeval tv_;
-  // Store the values as a <timeval>.
 };
 
+/**
+ * @class ACE_Countdown_Time
+ *
+ * @brief Keeps track of the amount of elapsed time.
+ *
+ * This class has a side-effect on the <max_wait_time> -- every
+ * time the <stop> method is called the <max_wait_time> is
+ * updated.
+ */
 class ACE_Export ACE_Countdown_Time
 {
-  // = TITLE
-  //     Keeps track of the amount of elapsed time.
-  //
-  // = DESCRIPTION
-  //     This class has a side-effect on the <max_wait_time> -- every
-  //     time the <stop> method is called the <max_wait_time> is
-  //     updated.
 public:
   // = Initialization and termination methods.
+  /// Cache the <max_wait_time> and call <start>.
   ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
-  // Cache the <max_wait_time> and call <start>.
 
+  /// Call <stop>.
   ~ACE_Countdown_Time (void);
-  // Call <stop>.
 
+  /// Cache the current time and enter a start state.
   int start (void);
-  // Cache the current time and enter a start state.
 
+  /// Subtract the elapsed time from max_wait_time_ and enter a stopped
+  /// state.
   int stop (void);
-  // Subtract the elapsed time from max_wait_time_ and enter a stopped
-  // state.
 
+  /// Calls stop and then start.  max_wait_time_ is modified by the
+  /// call to stop.
   int update (void);
-  // Calls stop and then start.  max_wait_time_ is modified by the
-  // call to stop.
 
 private:  ACE_Time_Value *max_wait_time_;
   // Maximum time we were willing to wait.
 
+  /// Beginning of the start time.
   ACE_Time_Value start_time_;
-  // Beginning of the start time.
 
+  /// Keeps track of whether we've already been stopped.
   int stopped_;
-  // Keeps track of whether we've already been stopped.
 };
 
 # if defined (ACE_HAS_USING_KEYWORD)
@@ -2011,25 +2015,28 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 
 #     if !defined (ACE_HAS_STHREADS)
 #       if !defined (ACE_HAS_POSIX_SEM)
+/**
+ * @class ACE_sema_t
+ *
+ * @brief This is used to implement semaphores for platforms that support
+ * POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
+ * it's a different type than the POSIX <sem_t>.
+ */
 class ACE_Export ACE_sema_t
 {
-  // = TITLE
-  //   This is used to implement semaphores for platforms that support
-  //   POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
-  //   it's a different type than the POSIX <sem_t>.
 friend class ACE_OS;
 protected:
+  /// Serialize access to internal state.
   ACE_mutex_t lock_;
-  // Serialize access to internal state.
 
+  /// Block until there are no waiters.
   ACE_cond_t count_nonzero_;
-  // Block until there are no waiters.
 
+  /// Count of the semaphore.
   u_long count_;
-  // Count of the semaphore.
 
+  /// Number of threads that have called <ACE_OS::sema_wait>.
   u_long waiters_;
-  // Number of threads that have called <ACE_OS::sema_wait>.
 };
 #       endif /* !ACE_HAS_POSIX_SEM */
 
@@ -2268,19 +2275,22 @@ typedef HANDLE ACE_event_t;
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
 typedef HANDLE ACE_sema_t;
 #     else
+/**
+ * @class ACE_sema_t
+ *
+ * @brief Semaphore simulation for Windows CE.
+ */
 class ACE_Export ACE_sema_t
 {
-  // = TITLE
-  // Semaphore simulation for Windows CE.
 public:
+  /// Serializes access to <count_>.
   ACE_thread_mutex_t lock_;
-  // Serializes access to <count_>.
 
+  /// This event is signaled whenever the count becomes non-zero.
   ACE_event_t count_nonzero_;
-  // This event is signaled whenever the count becomes non-zero.
 
+  /// Current count of the semaphore.
   u_int count_;
-  // Current count of the semaphore.
 };
 
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
@@ -2307,48 +2317,54 @@ public:
 #   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
 
 #   if defined (ACE_LACKS_COND_T)
+/**
+ * @class ACE_cond_t
+ *
+ * @brief This structure is used to implement condition variables on
+ * platforms that lack it natively, such as VxWorks, pSoS, and
+ * Win32.
+ *
+ * At the current time, this stuff only works for threads
+ * within the same process.
+ */
 class ACE_Export ACE_cond_t
 {
-  // = TITLE
-  //     This structure is used to implement condition variables on
-  //     platforms that lack it natively, such as VxWorks, pSoS, and
-  //     Win32.
-  //
-  // = DESCRIPTION
-  //     At the current time, this stuff only works for threads
-  //     within the same process.
 public:
   friend class ACE_OS;
 
+  /// Returns the number of waiters.
   long waiters (void) const;
-  // Returns the number of waiters.
 
 protected:
+  /// Number of waiting threads.
   long waiters_;
-  // Number of waiting threads.
 
+  /// Serialize access to the waiters count.
   ACE_thread_mutex_t waiters_lock_;
-  // Serialize access to the waiters count.
 
+  /// Queue up threads waiting for the condition to become signaled.
   ACE_sema_t sema_;
-  // Queue up threads waiting for the condition to become signaled.
 
 #     if defined (VXWORKS) || defined (ACE_PSOS)
+  /**
+   * A semaphore used by the broadcast/signal thread to wait for all
+   * the waiting thread(s) to wake up and be released from the
+   * semaphore.
+   */
   ACE_sema_t waiters_done_;
-  // A semaphore used by the broadcast/signal thread to wait for all
-  // the waiting thread(s) to wake up and be released from the
-  // semaphore.
 #     elif defined (ACE_WIN32)
+  /**
+   * An auto reset event used by the broadcast/signal thread to wait
+   * for the waiting thread(s) to wake up and get a chance at the
+   * semaphore.
+   */
   HANDLE waiters_done_;
-  // An auto reset event used by the broadcast/signal thread to wait
-  // for the waiting thread(s) to wake up and get a chance at the
-  // semaphore.
 #     else
 #       error "Please implement this feature or check your config.h file!"
 #     endif /* VXWORKS || ACE_PSOS */
 
+  /// Keeps track of whether we were broadcasting or just signaling.
   size_t was_broadcast_;
-  // Keeps track of whether we were broadcasting or just signaling.
 };
 
 struct ACE_Export ACE_condattr_t
@@ -2367,15 +2383,18 @@ struct ACE_Export ACE_mutexattr_t
 #   endif /* ACE_LACKS_COND_T */
 
 #   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+
+/**
+ * @class ACE_rwlock_t
+ *
+ * @brief This is used to implement readers/writer locks on NT,
+ *     VxWorks, and POSIX pthreads.
+ *
+ *     At the current time, this stuff only works for threads
+ *     within the same process.
+ */
 struct ACE_Export ACE_rwlock_t
 {
-  // = TITLE
-  //     This is used to implement readers/writer locks on NT,
-  //     VxWorks, and POSIX pthreads.
-  //
-  // = DESCRIPTION
-  //     At the current time, this stuff only works for threads
-  //     within the same process.
 protected:
   friend class ACE_OS;
 
@@ -2443,29 +2462,31 @@ typedef rwlock_t ACE_rwlock_t;
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
 typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
 #else
+/**
+ * @class ACE_recursive_thread_mutex_t
+ *
+ * @brief Implement a thin C++ wrapper that allows nested acquisition
+ * and release of a mutex that occurs in the same thread.
+ *
+ * This implementation is based on an algorithm sketched by Dave
+ * Butenhof <butenhof@zko.dec.com>.  Naturally, I take the
+ * credit for any mistakes ;-)
+ */
 class ACE_recursive_thread_mutex_t
 {
-  // = TITLE
-  //     Implement a thin C++ wrapper that allows nested acquisition
-  //     and release of a mutex that occurs in the same thread.
-  //
-  // = DESCRIPTION
-  //     This implementation is based on an algorithm sketched by Dave
-  //     Butenhof <butenhof@zko.dec.com>.  Naturally, I take the
-  //     credit for any mistakes ;-)
 public:
+  /// Guards the state of the nesting level and thread id.
   ACE_thread_mutex_t nesting_mutex_;
-  // Guards the state of the nesting level and thread id.
 
+  /// This condition variable suspends other waiting threads until the
+  /// mutex is available.
   ACE_cond_t lock_available_;
-  // This condition variable suspends other waiting threads until the
-  // mutex is available.
 
+  /// Current nesting level of the recursion.
   int nesting_level_;
-  // Current nesting level of the recursion.
 
+  /// Current owner of the lock.
   ACE_thread_t owner_id_;
-  // Current owner of the lock.
 };
 #endif /* ACE_WIN32 */
 
@@ -2567,20 +2588,20 @@ class ACE_Export ACE_event_t
 
 protected:
 
+  /// Protect critical section.
   ACE_mutex_t lock_;
-  // Protect critical section.
 
+  /// Keeps track of waiters.
   ACE_cond_t condition_;
-  // Keeps track of waiters.
 
+  /// Specifies if this is an auto- or manual-reset event.
   int manual_reset_;
-  // Specifies if this is an auto- or manual-reset event.
 
+  /// "True" if signaled.
   int is_signaled_;
-  // "True" if signaled.
 
+  /// Number of waiting threads.
   u_long waiting_threads_;
-  // Number of waiting threads.
 };
 
 # endif /* ACE_PSOS */
@@ -3315,20 +3336,20 @@ class ACE_Export ACE_event_t
 {
   friend class ACE_OS;
 protected:
+  /// Protect critical section.
   ACE_mutex_t lock_;
-  // Protect critical section.
 
+  /// Keeps track of waiters.
   ACE_cond_t condition_;
-  // Keeps track of waiters.
 
+  /// Specifies if this is an auto- or manual-reset event.
   int manual_reset_;
-  // Specifies if this is an auto- or manual-reset event.
 
+  /// "True" if signaled.
   int is_signaled_;
-  // "True" if signaled.
 
+  /// Number of waiting threads.
   u_long waiting_threads_;
-  // Number of waiting threads.
 };
 
 struct ACE_OVERLAPPED
@@ -4273,10 +4294,13 @@ typedef int ucontext_t;
 #   include /**/ <tli/timod.h>
 # endif /* ACE_HAS_TIMOD_H */
 
+/**
+ * @class ACE_Thread_ID
+ *
+ * @brief Defines a platform-independent thread ID.
+ */
 class ACE_Export ACE_Thread_ID
 {
-  // = TITLE
-  //     Defines a platform-independent thread ID.
 public:
   // = Initialization method.
   ACE_Thread_ID (ACE_thread_t, ACE_hthread_t);
@@ -4295,11 +4319,11 @@ public:
   int operator!= (const ACE_Thread_ID &) const;
 
 private:
+  /// Identify the thread.
   ACE_thread_t thread_id_;
-  // Identify the thread.
 
+  /// Handle to the thread (typically used to "wait" on Win32).
   ACE_hthread_t thread_handle_;
-  // Handle to the thread (typically used to "wait" on Win32).
 };
 
 // Type of the extended signal handler.
@@ -4352,17 +4376,20 @@ struct strbuf
 };
 # endif /* ACE_HAS_STRBUF_T */
 
+/**
+ * @class ACE_Str_Buf
+ *
+ * @brief Simple wrapper for STREAM pipes strbuf.
+ */
 class ACE_Export ACE_Str_Buf : public strbuf
 {
-  // = TITLE
-  //     Simple wrapper for STREAM pipes strbuf.
 public:
   // = Initialization method
+  /// Constructor.
   ACE_Str_Buf (void *b = 0, int l = 0, int max = 0);
-  // Constructor.
 
+  /// Constructor.
   ACE_Str_Buf (strbuf &);
-  // Constructor.
 };
 
 # if defined (ACE_HAS_BROKEN_BITSHIFT)
@@ -4396,81 +4423,91 @@ int ACE_SEH_Default_Exception_Selector (void *);
 int ACE_SEH_Default_Exception_Handler (void *);
 # endif /* ACE_WIN32 */
 
+/**
+ * @class ACE_Cleanup
+ *
+ * @brief Base class for objects that are cleaned by ACE_Object_Manager.
+ */
 class ACE_Export ACE_Cleanup
 {
-  // = TITLE
-  //    Base class for objects that are cleaned by ACE_Object_Manager.
 public:
+  /// No-op constructor.
   ACE_Cleanup (void);
-  // No-op constructor.
 
+  /// Destructor.
   virtual ~ACE_Cleanup (void);
-  // Destructor.
 
+  /// Cleanup method that, by default, simply deletes itself.
   virtual void cleanup (void *param = 0);
-  // Cleanup method that, by default, simply deletes itself.
 };
 
 // Adapter for cleanup, used by ACE_Object_Manager.
 extern "C" ACE_Export
 void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
 
+/**
+ * @class ACE_Cleanup_Info
+ *
+ * @brief Hold cleanup information for thread/process
+ */
 class ACE_Export ACE_Cleanup_Info
 {
-  // = TITLE
-  //     Hold cleanup information for thread/process
 public:
+  /// Default constructor.
   ACE_Cleanup_Info (void);
-  // Default constructor.
 
+  /// Equality operator.
   int operator== (const ACE_Cleanup_Info &o) const;
-  // Equality operator.
 
+  /// Inequality operator.
   int operator!= (const ACE_Cleanup_Info &o) const;
-  // Inequality operator.
 
+  /// Point to object that gets passed into the <cleanup_hook_>.
   void *object_;
-  // Point to object that gets passed into the <cleanup_hook_>.
 
+  /// Cleanup hook that gets called back.
   ACE_CLEANUP_FUNC cleanup_hook_;
-  // Cleanup hook that gets called back.
 
+  /// Parameter passed to the <cleanup_hook_>.
   void *param_;
-  // Parameter passed to the <cleanup_hook_>.
 };
 
 class ACE_Cleanup_Info_Node;
 
+/**
+ * @class ACE_OS_Exit_Info
+ *
+ * @brief Hold Object Manager cleanup (exit) information.
+ *
+ * For internal use by the ACE library, only.
+ */
 class ACE_Export ACE_OS_Exit_Info
 {
-  // = TITLE
-  //     Hold Object Manager cleanup (exit) information.
-  //
-  // = DESCRIPTION
-  //     For internal use by the ACE library, only.
 public:
+  /// Default constructor.
   ACE_OS_Exit_Info (void);
-  // Default constructor.
 
+  /// Destructor.
   ~ACE_OS_Exit_Info (void);
-  // Destructor.
 
+  /// Use to register a cleanup hook.
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
-  // Use to register a cleanup hook.
 
+  /// Look for a registered cleanup hook object.  Returns 1 if already
+  /// registered, 0 if not.
   int find (void *object);
-  // Look for a registered cleanup hook object.  Returns 1 if already
-  // registered, 0 if not.
 
+  /// Call all registered cleanup hooks, in reverse order of
+  /// registration.
   void call_hooks ();
-  // Call all registered cleanup hooks, in reverse order of
-  // registration.
 
 private:
+  /**
+   * Keeps track of all registered objects.  The last node is only
+   * used to terminate the list (it doesn't contain a valid
+   * ACE_Cleanup_Info).
+   */
   ACE_Cleanup_Info_Node *registered_objects_;
-  // Keeps track of all registered objects.  The last node is only
-  // used to terminate the list (it doesn't contain a valid
-  // ACE_Cleanup_Info).
 };
 
 class ACE_Base_Thread_Adapter;
@@ -4587,19 +4624,23 @@ struct ACE_Protocol_Info
 
 #endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 
+/**
+ * @class ACE_Flow_Spec
+ *
+ * @brief Wrapper class that defines the flow spec QoS information,
+ *    which is used by IntServ (RSVP) and DiffServ.
+ */
 class ACE_Export ACE_Flow_Spec
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   : public FLOWSPEC
 #endif /* ACE_HAS_WINSOCK2 */
 {
-  // = TITLE
-  //   Wrapper class that defines the flow spec QoS information, which
-  //   is used by IntServ (RSVP) and DiffServ.
 public:
   // = Initialization methods.
+  /// Default constructor.
   ACE_Flow_Spec (void);
-  // Default constructor.
 
+  /// Constructor that initializes all the fields.
   ACE_Flow_Spec (u_long token_rate,
                  u_long token_bucket_size,
                  u_long peak_bandwidth,
@@ -4610,7 +4651,6 @@ public:
                  u_long minimum_policed_size,
                  int ttl,
                  int priority);
-  // Constructor that initializes all the fields.
 
   // = Get/set the token rate in bytes/sec.
   u_long token_rate (void) const;
@@ -4670,15 +4710,17 @@ private:
           defined (ACE_HAS_WINSOCK2_GQOS) */
 };
 
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-class ACE_Export ACE_QoS : public QOS
-#else
+/**
+ * @class ACE_QoS
+ *
+ * @brief Wrapper class that holds the sender and receiver flow spec 
+ *     information, which is used by IntServ (RSVP) and DiffServ.
+ */
 class ACE_Export ACE_QoS
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+  : public QOS
 #endif /* ACE_HAS_WINSOCK2 */
 {
-  // = TITLE
-  //   Wrapper class that holds the sender and receiver flow spec
-  //   information, which is used by IntServ (RSVP) and DiffServ.
 public:
   // = Get/set the flow spec for data sending.
   ACE_Flow_Spec sending_flowspec (void) const;
@@ -4702,26 +4744,31 @@ private:
 
 };
 
+/**
+ * @class ACE_QoS_Params
+ *
+ * @brief Wrapper class that simplifies the information passed to the QoS
+ * enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
+ */
 class ACE_Export ACE_QoS_Params
 {
-  // = TITLE
-  //   Wrapper class that simplifies the information passed to the QoS
-  //   enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
 public:
+  /**
+   * Initialize the data members.  The <caller_data> is a pointer to
+   * the user data that is to be transferred to the peer during
+   * connection establishment.  The <callee_data> is a pointer to the
+   * user data that is to be transferred back from the peer during
+   * connection establishment.  The_<socket_qos> is a pointer to the
+   * flow specifications for the socket, one for each direction.  The
+   * <group_socket_qos> is a pointer to the flow speicfications for
+   * the socket group, if applicable.  The_<flags> indicate if we're a
+   * sender, receiver, or both.
+   */
   ACE_QoS_Params (iovec *caller_data = 0,
                   iovec *callee_data = 0,
                   ACE_QoS *socket_qos = 0,
                   ACE_QoS *group_socket_qos = 0,
                   u_long flags = 0);
-  // Initialize the data members.  The <caller_data> is a pointer to
-  // the user data that is to be transferred to the peer during
-  // connection establishment.  The <callee_data> is a pointer to the
-  // user data that is to be transferred back from the peer during
-  // connection establishment.  The_<socket_qos> is a pointer to the
-  // flow specifications for the socket, one for each direction.  The
-  // <group_socket_qos> is a pointer to the flow speicfications for
-  // the socket group, if applicable.  The_<flags> indicate if we're a
-  // sender, receiver, or both.
 
   // = Get/set caller data.
   iovec *caller_data (void) const;
@@ -4744,24 +4791,24 @@ public:
   void flags (u_long);
 
 private:
+  /// A pointer to the user data that is to be transferred to the peer
+  /// during connection establishment.
   iovec *caller_data_;
-  // A pointer to the user data that is to be transferred to the peer
-  // during connection establishment.
 
+  /// A pointer to the user data that is to be transferred back from
+  /// the peer during connection establishment.
   iovec *callee_data_;
-  // A pointer to the user data that is to be transferred back from
-  // the peer during connection establishment.
 
+  /// A pointer to the flow speicfications for the socket, one for each
+  /// direction.
   ACE_QoS *socket_qos_;
-  // A pointer to the flow speicfications for the socket, one for each
-  // direction.
 
+  /// A pointer to the flow speicfications for the socket group, if
+  /// applicable.
   ACE_QoS *group_socket_qos_;
-  // A pointer to the flow speicfications for the socket group, if
-  // applicable.
 
+  /// Flags that indicate if we're a sender, receiver, or both.
   u_long flags_;
-  // Flags that indicate if we're a sender, receiver, or both.
 };
 
 // Callback function that's used by the QoS-enabled <ACE_OS::accept>
@@ -4786,22 +4833,27 @@ typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
                                                 u_long flags);
 #endif /* ACE_HAS_WINSOCK2 != 0 */
 
+/**
+ * @class ACE_Accept_QoS_Params
+ *
+ * @brief Wrapper class that simplifies the information passed to the QoS
+ * enabled <ACE_OS::accept> method.
+ */
 class ACE_Export ACE_Accept_QoS_Params
 {
-  // = TITLE
-  //   Wrapper class that simplifies the information passed to the QoS
-  //   enabled <ACE_OS::accept> method.
 public:
+  /**
+   * Initialize the data members.  The <qos_condition_callback> is the
+   * address of an optional, application-supplied condition function
+   * that will make an accept/reject decision based on the caller
+   * information pass in as parameters, and optionally create or join
+   * a socket group by assinging an appropriate value to the result
+   * parameter <g> of this function.  The <callback_data> data is
+   * passed back to the application as a condition function parameter,
+   * i.e., it is an Asynchronous Completion Token (ACT).
+   */
   ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = 0,
                          u_long callback_data = 0);
-  // Initialize the data members.  The <qos_condition_callback> is the
-  // address of an optional, application-supplied condition function
-  // that will make an accept/reject decision based on the caller
-  // information pass in as parameters, and optionally create or join
-  // a socket group by assinging an appropriate value to the result
-  // parameter <g> of this function.  The <callback_data> data is
-  // passed back to the application as a condition function parameter,
-  // i.e., it is an Asynchronous Completion Token (ACT).
 
   // = Get/set QoS condition callback.
   ACE_QOS_CONDITION_FUNC qos_condition_callback (void) const;
@@ -4812,40 +4864,46 @@ public:
   void callback_data (u_long cd);
 
 private:
+  /**
+   * This is the address of an optional, application-supplied
+   * condition function that will make an accept/reject decision based
+   * on the caller information pass in as parameters, and optionally
+   * create or join a socket group by assinging an appropriate value
+   * to the result parameter <g> of this function.
+   */
   ACE_QOS_CONDITION_FUNC qos_condition_callback_;
-  // This is the address of an optional, application-supplied
-  // condition function that will make an accept/reject decision based
-  // on the caller information pass in as parameters, and optionally
-  // create or join a socket group by assinging an appropriate value
-  // to the result parameter <g> of this function.
 
+  /**
+   * This data is passed back to the application as a condition
+   * function parameter, i.e., it is an Asynchronous Completion Token
+   * (ACT).
+   */
   u_long callback_data_;
-  // This data is passed back to the application as a condition
-  // function parameter, i.e., it is an Asynchronous Completion Token
-  // (ACT).
 };
 
+/**
+ * @class ACE_OS
+ *
+ * @brief This class defines an OS independent programming API that
+ *     shields developers from nonportable aspects of writing
+ *     efficient system programs on Win32, POSIX and other versions
+ *     of UNIX, and various real-time operating systems.
+ *
+ * This class encapsulates the differences between various OS
+ * platforms.  When porting ACE to a new platform, this class is
+ * the place to focus on.  Once this file is ported to a new
+ * platform, pretty much everything else comes for "free."  See
+ * <www.cs.wustl.edu/~schmidt/ACE_wrappers/etc/ACE-porting.html>
+ * for instructions on porting ACE.  Please see the README file
+ * in this directory for complete information on the meaning of
+ * the various macros.
+ */
 class ACE_Export ACE_OS
   : public ACE_OS_Dirent,
     public ACE_OS_String,
     public ACE_OS_Memory,
     public ACE_OS_TLI
 {
-  // = TITLE
-  //     This class defines an OS independent programming API that
-  //     shields developers from nonportable aspects of writing
-  //     efficient system programs on Win32, POSIX and other versions
-  //     of UNIX, and various real-time operating systems.
-  //
-  // = DESCRIPTION
-  //     This class encapsulates the differences between various OS
-  //     platforms.  When porting ACE to a new platform, this class is
-  //     the place to focus on.  Once this file is ported to a new
-  //     platform, pretty much everything else comes for "free."  See
-  //     <www.cs.wustl.edu/~schmidt/ACE_wrappers/etc/ACE-porting.html>
-  //     for instructions on porting ACE.  Please see the README file
-  //     in this directory for complete information on the meaning of
-  //     the various macros.
 
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
 public:
@@ -4869,13 +4927,16 @@ public:
     };
 # endif /* ! CHORUS */
 
+  /**
+   * @class ace_flock_t
+   *
+   * @brief OS file locking structure.
+   */
   class ace_flock_t
   {
-    // = TITLE
-    //     OS file locking structure.
   public:
+  /// Dump state of the object.
     void dump (void) const;
-  // Dump state of the object.
 
 # if defined (ACE_WIN32)
     ACE_OVERLAPPED overlapped_;
@@ -4883,16 +4944,16 @@ public:
     struct flock lock_;
 # endif /* ACE_WIN32 */
 
+    /// Name of this filelock.
     const ACE_TCHAR *lockname_;
-    // Name of this filelock.
 
+    /// Handle to the underlying file.
     ACE_HANDLE handle_;
-    // Handle to the underlying file.
 
 # if defined (CHORUS)
+    /// This is the mutex that's stored in shared memory.  It can only
+    /// be destroyed by the actor that initialized it.
     ACE_mutex_t *process_lock_;
-    // This is the mutex that's stored in shared memory.  It can only
-    // be destroyed by the actor that initialized it.
 # endif /* CHORUS */
   };
 
@@ -4901,8 +4962,8 @@ public:
   static LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
 
   // = Win32 OS version determination function.
+  /// Return the win32 OSVERSIONINFO structure.
   static const OSVERSIONINFO &get_win32_versioninfo (void);
-  // Return the win32 OSVERSIONINFO structure.
 
 # endif /* ACE_WIN32 */
 
@@ -4913,11 +4974,11 @@ public:
   static int atoi (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
+  /// This method computes the largest integral value not greater than x.
   static double floor (double x);
-  // This method computes the largest integral value not greater than x.
 
+  /// This method computes the smallest integral value not less than x.
   static double ceil (double x);
-  // This method computes the smallest integral value not less than x.
 
   static char *getenv (const char *symbol);
 # if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
@@ -4940,7 +5001,7 @@ public:
                              int substitute_env_args = 1);
   static long sysconf (int);
 
-  // = A set of wrappers for condition variables.
+  //@{ @name A set of wrappers for condition variables.
   static int condattr_init (ACE_condattr_t &attributes,
                             int type = ACE_DEFAULT_SYNCH_TYPE);
   static int condattr_destroy (ACE_condattr_t &attributes);
@@ -4967,8 +5028,9 @@ public:
   static int cond_wait (ACE_cond_t *cv,
                         ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
+  //@}
 
-  // = A set of wrappers for determining config info.
+  //@{ @name Wrappers to obtain the current user id
   static char *cuserid (char *user,
                         size_t maxlen = ACE_MAX_USERID);
 
@@ -4976,7 +5038,9 @@ public:
   static wchar_t *cuserid (wchar_t *user,
                            size_t maxlen = ACE_MAX_USERID);
 # endif /* ACE_HAS_WCHAR */
+  //@}
 
+  //@{ @name Wrappers to obtain configuration info
   static int uname (struct utsname *name);
   static long sysinfo (int cmd,
                        char *buf,
@@ -4989,8 +5053,9 @@ public:
   static int hostname (wchar_t *name,
                        size_t maxnamelen);
 #endif /* ACE_HAS_WCHAR */
+  //@}
 
-  // = A set of wrappers for explicit dynamic linking.
+  //@{ @name A set of wrappers for explicit dynamic linking.
   static int dlclose (ACE_SHLIB_HANDLE handle);
 
   static ACE_TCHAR *dlerror (void);
@@ -4998,8 +5063,9 @@ public:
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static void *dlsym (ACE_SHLIB_HANDLE handle,
                       const ACE_TCHAR *symbol);
+  //@}
 
-  // = A set of wrappers for stdio file operations.
+  //{@ @name A set of wrappers for stdio file operations.
   static int last_error (void);
   static void last_error (int);
   static int set_errno_to_last_error (void);
@@ -5067,8 +5133,9 @@ public:
                         size_t nitems,
                         FILE *fp);
   static void rewind (FILE *fp);
+  //@}
 
-  // = Wrappers for searching and sorting.
+  //@{ @name Wrappers for searching and sorting.
   static void *bsearch (const void *key,
                         const void *base,
                         size_t nel,
@@ -5078,8 +5145,9 @@ public:
                      size_t nel,
                      size_t width,
                      ACE_COMPARE_FUNC);
+  //@}
 
-  // = A set of wrappers for file locks.
+  //@{ @name A set of wrappers for file locks.
   static int flock_init (ACE_OS::ace_flock_t *lock,
                          int flags = 0,
                          const ACE_TCHAR *name = 0,
@@ -5112,8 +5180,9 @@ public:
                            short whence = 0,
                            off_t start = 0,
                            off_t len = 0);
+  //@}
 
-  // = A set of wrappers for low-level process operations.
+  //@{ @name A set of wrappers for low-level process operations.
   static int atexit (ACE_EXIT_HOOK func);
   static int execl (const char *path,
                     const char *arg0, ...);
@@ -5132,10 +5201,13 @@ public:
   static void exit (int status = 0);
   static void abort (void);
   static pid_t fork (void);
+
+  //@{
+  /// Forks and exec's a process in a manner that works on Solaris and
+  /// NT.  argv[0] must be the full path name to the executable.
   static pid_t fork (const ACE_TCHAR *program_name);
   static pid_t fork_exec (ACE_TCHAR *argv[]);
-  // Forks and exec's a process in a manner that works on Solaris and
-  // NT.  argv[0] must be the full path name to the executable.
+  //@}
 
   static int getpagesize (void);
   static int allocation_granularity (void);
@@ -5152,32 +5224,40 @@ public:
   static int setreuid (uid_t ruid, uid_t euid);
   static int setregid (gid_t rgid, gid_t egid);
   static int system (const ACE_TCHAR *s);
+  //@}
+
+  /**
+   * Calls <::waitpid> on UNIX/POSIX platforms and <::await> on
+   * Chorus.  Does not work on Vxworks, or pSoS.
+   * On Win32, <pid> is ignored if the <handle> is not equal to 0.
+   * Passing the process <handle> is prefer on Win32 because using
+   * <pid> to wait on the project doesn't always work correctly
+   * if the waited process has already terminated.
+   */
   static pid_t waitpid (pid_t pid,
                         ACE_exitcode *status = 0,
                         int wait_options = 0,
                         ACE_HANDLE handle = 0);
-  // Calls <::waitpid> on UNIX/POSIX platforms and <::await> on
-  // Chorus.  Does not work on Vxworks, or pSoS.
-  // On Win32, <pid> is ignored if the <handle> is not equal to 0.
-  // Passing the process <handle> is prefer on Win32 because using
-  // <pid> to wait on the project doesn't always work correctly
-  // if the waited process has already terminated.
+
+  /**
+   * Calls <::WaitForSingleObject> on Win32 and <ACE::waitpid>
+   * otherwise.  Returns the passed in <pid_t> on success and -1 on
+   * failure.
+   * On Win32, <pid> is ignored if the <handle> is not equal to 0.
+   * Passing the process <handle> is prefer on Win32 because using
+   * <pid> to wait on the project doesn't always work correctly
+   * if the waited process has already terminated.
+   */
   static pid_t wait (pid_t pid,
                      ACE_exitcode *status,
                      int wait_options = 0,
                      ACE_HANDLE handle = 0);
-  // Calls <::WaitForSingleObject> on Win32 and <ACE::waitpid>
-  // otherwise.  Returns the passed in <pid_t> on success and -1 on
-  // failure.
-  // On Win32, <pid> is ignored if the <handle> is not equal to 0.
-  // Passing the process <handle> is prefer on Win32 because using
-  // <pid> to wait on the project doesn't always work correctly
-  // if the waited process has already terminated.
-  static pid_t wait (int * = 0);
-  // Calls OS <::wait> function, so it's only portable to UNIX/POSIX
-  // platforms.
 
-  // = A set of wrappers for timers and resource stats.
+  /// Calls OS <::wait> function, so it's only portable to UNIX/POSIX
+  /// platforms.
+  static pid_t wait (int * = 0);
+
+  //@{ @name A set of wrappers for timers and resource stats.
   static u_int alarm (u_int secs);
   static u_int ualarm (u_int usecs,
                        u_int interval = 0);
@@ -5213,8 +5293,9 @@ public:
 #   define ACE_DIFFTIME(t1, t0) difftime(t1,t0)
 #   undef difftime
 # endif /* difftime */
+  //@}
 
-  // = A set of wrappers for operations on time.
+  //@{ @name A set of wrappers for operations on time.
 # if !defined (ACE_HAS_WINCE)
   static time_t mktime (struct tm *timeptr);
 # endif /* !ACE_HAS_WINCE */
@@ -5241,8 +5322,9 @@ public:
                           size_t maxsize,
                           const char *format,
                           const struct tm *timeptr);
+  //@}
 
-  // = A set of wrappers for System V message queues.
+  //@{ @name A set of wrappers for System V message queues.
   static int msgctl (int msqid,
                      int cmd,
                      struct msqid_ds *);
@@ -5257,8 +5339,9 @@ public:
                      const void *buf,
                      size_t len,
                      int flags);
+  //@}
 
-  // = A set of wrappers for memory mapped files.
+  //@{ @name A set of wrappers for memory mapped files.
   static int madvise (caddr_t addr,
                       size_t len,
                       int advice);
@@ -5278,8 +5361,9 @@ public:
                     int sync);
   static int munmap (void *addr,
                      size_t len);
+  //@}
 
-  // = A set of wrappers for recursive mutex locks.
+  //@{ @name A set of wrappers for recursive mutex locks.
   static int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
                                    const ACE_TCHAR *name = 0,
                                    ACE_mutexattr_t *arg = 0,
@@ -5288,32 +5372,38 @@ public:
   static int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
   static int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
   static int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
+  //@}
 
-  // = A set of wrappers for mutex locks.
+  //@{ @name A set of wrappers for mutex locks.
   static int mutex_init (ACE_mutex_t *m,
                          int type = ACE_DEFAULT_SYNCH_TYPE,
                          const ACE_TCHAR *name = 0,
                          ACE_mutexattr_t *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
   static int mutex_destroy (ACE_mutex_t *m);
+
+  /// Win32 note: Abandoned mutexes are not treated differently. 0 is
+  /// returned since the calling thread does get the ownership. 
   static int mutex_lock (ACE_mutex_t *m);
-  // Win32 note: Abandoned mutexes are not treated differently. 0 is
-  // returned since the calling thread does get the ownership.
+
+  /// This method is only implemented for Win32.  For abandoned
+  /// mutexes, <abandoned> is set to 1 and 0 is returned.
   static int mutex_lock (ACE_mutex_t *m,
                          int &abandoned);
-  // This method is only implemented for Win32.  For abandoned
-  // mutexes, <abandoned> is set to 1 and 0 is returned.
+
+  /// Win32 note: Abandoned mutexes are not treated differently. 0 is
+  /// returned since the calling thread does get the ownership.
   static int mutex_trylock (ACE_mutex_t *m);
-  // Win32 note: Abandoned mutexes are not treated differently. 0 is
-  // returned since the calling thread does get the ownership.
+
+  /// This method is only implemented for Win32.  For abandoned
+  /// mutexes, <abandoned> is set to 1 and 0 is returned.
   static int mutex_trylock (ACE_mutex_t *m,
                             int &abandoned);
-  // This method is only implemented for Win32.  For abandoned
-  // mutexes, <abandoned> is set to 1 and 0 is returned.
-  static int mutex_unlock (ACE_mutex_t *m);
 
-  // = A set of wrappers for mutex locks that only work within a
-  // single process.
+  static int mutex_unlock (ACE_mutex_t *m);
+  //@}
+
+  //@{ @name A set of wrappers for mutex locks that only work within a single process.
   static int thread_mutex_init (ACE_thread_mutex_t *m,
                                 int type = ACE_DEFAULT_SYNCH_TYPE,
                                 const ACE_TCHAR *name = 0,
@@ -5322,8 +5412,9 @@ public:
   static int thread_mutex_lock (ACE_thread_mutex_t *m);
   static int thread_mutex_trylock (ACE_thread_mutex_t *m);
   static int thread_mutex_unlock (ACE_thread_mutex_t *m);
+  //@}
 
-  // = A set of wrappers for low-level file operations.
+  //@{ @name A set of wrappers for low-level file operations.
   static int access (const char *path, int amode);
 #if defined (ACE_HAS_WCHAR)
   static int access (const wchar_t *path, int amode);
@@ -5349,10 +5440,13 @@ public:
                       *data,
                       int *band,
                       int *flags);
+
+  /// UNIX-style <ioctl>.
   static int ioctl (ACE_HANDLE handle,
                     int cmd,
                     void * = 0);
-  // UNIX-style <ioctl>.
+
+  /// QoS-enabled <ioctl>.
   static int ioctl (ACE_HANDLE socket,
                     u_long io_control_code,
                     void *in_buffer_p,
@@ -5362,7 +5456,9 @@ public:
                     u_long *bytes_returned,
                     ACE_OVERLAPPED *overlapped,
                     ACE_OVERLAPPED_COMPLETION_FUNC func);
-  // QoS-enabled <ioctl>.
+
+  /// QoS-enabled <ioctl> when the I/O control code is either
+  /// SIO_SET_QOS or SIO_GET_QOS.
   static int ioctl (ACE_HANDLE socket,
                     u_long io_control_code,
                     ACE_QoS &ace_qos,
@@ -5371,8 +5467,7 @@ public:
                     u_long buffer = 0,
                     ACE_OVERLAPPED *overlapped = 0,
                     ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
-  // QoS-enabled <ioctl> when the I/O control code is either SIO_SET_QOS
-  // or SIO_GET_QOS.
+
   static int isastream (ACE_HANDLE handle);
   static int isatty (int handle);
 #if defined (ACE_WIN32)
@@ -5410,16 +5505,19 @@ public:
                        void *buf,
                        size_t len,
                        ACE_OVERLAPPED *);
+  /**
+   * Receive <len> bytes into <buf> from <handle> (uses the
+   * <ACE_OS::read> call, which uses the <read> system call on UNIX
+   * and the <ReadFile> call on Win32). If errors occur, -1 is
+   * returned.  If EOF occurs, 0 is returned.  Whatever data has been
+   * transmitted will be returned to the caller through
+   * <bytes_transferred>.
+   */
   static ssize_t read_n (ACE_HANDLE handle,
                          void *buf,
                          size_t len,
                          size_t *bytes_transferred = 0);
-  // Receive <len> bytes into <buf> from <handle> (uses the
-  // <ACE_OS::read> call, which uses the <read> system call on UNIX
-  // and the <ReadFile> call on Win32). If errors occur, -1 is
-  // returned.  If EOF occurs, 0 is returned.  Whatever data has been
-  // transmitted will be returned to the caller through
-  // <bytes_transferred>.
+
   static int readlink (const char *path,
                        char *buf,
                        size_t bufsiz);
@@ -5440,15 +5538,19 @@ public:
                         const void *buf,
                         size_t nbyte,
                         ACE_OVERLAPPED *);
+
+  /**
+   * Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
+   * calls, which is uses the <write> system call on UNIX and the
+   * <WriteFile> call on Win32).  If errors occur, -1 is returned.  If
+   * EOF occurs, 0 is returned.  Whatever data has been transmitted
+   * will be returned to the caller through <bytes_transferred>.
+   */
   static ssize_t write_n (ACE_HANDLE handle,
                           const void *buf,
                           size_t len,
                           size_t *bytes_transferred = 0);
-  // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
-  // calls, which is uses the <write> system call on UNIX and the
-  // <WriteFile> call on Win32).  If errors occur, -1 is returned.  If
-  // EOF occurs, 0 is returned.  Whatever data has been transmitted
-  // will be returned to the caller through <bytes_transferred>.
+
   static ssize_t pwrite (ACE_HANDLE handle,
                          const void *buf,
                          size_t nbyte,
@@ -5465,8 +5567,9 @@ public:
   static ssize_t sendv (ACE_HANDLE handle,
                         const iovec *iov,
                         int iovcnt);
+  //@}
 
-  // = A set of wrappers for event demultiplexing and IPC.
+  //@{ @name A set of wrappers for event demultiplexing and IPC.
   static int select (int width,
                      fd_set *rfds,
                      fd_set *wfds,
@@ -5490,8 +5593,9 @@ public:
                               int perms = 0,
                               LPSECURITY_ATTRIBUTES sa = 0);
   static int shm_unlink (const ACE_TCHAR *path);
+  //@}
 
-  // = A set of wrappers for directory operations.
+  //@{ @name A set of wrappers for directory operations.
   static mode_t umask (mode_t cmask);
   static int chdir (const char *path);
 
@@ -5511,13 +5615,15 @@ public:
   static int unlink (const ACE_TCHAR *path);
   static ACE_TCHAR *tempnam (const ACE_TCHAR *dir = 0,
                              const ACE_TCHAR *pfx = 0);
+  //@}
 
-  // = A set of wrappers for random number operations.
+  //@{ @name A set of wrappers for random number operations.
   static int rand (void);
   static int rand_r (ACE_RANDR_TYPE &seed);
   static void srand (u_int seed);
+  //@}
 
-  // = A set of wrappers for readers/writer locks.
+  //@{ @name A set of wrappers for readers/writer locks.
   static int rwlock_init (ACE_rwlock_t *rw,
                           int type = ACE_DEFAULT_SYNCH_TYPE,
                           const ACE_TCHAR *name = 0,
@@ -5529,8 +5635,9 @@ public:
   static int rw_trywrlock (ACE_rwlock_t *rw);
   static int rw_trywrlock_upgrade (ACE_rwlock_t *rw);
   static int rw_unlock (ACE_rwlock_t *rw);
+  //@}
 
-  // = A set of wrappers for auto-reset and manuaevents.
+  //@{ @name A set of wrappers for auto-reset and manuaevents.
   static int event_init (ACE_event_t *event,
                          int manual_reset = 0,
                          int initial_state = 0,
@@ -5545,8 +5652,9 @@ public:
   static int event_signal (ACE_event_t *event);
   static int event_pulse (ACE_event_t *event);
   static int event_reset (ACE_event_t *event);
+  //@}
 
-  // = A set of wrappers for semaphores.
+  //@{ @name A set of wrappers for semaphores.
   static int sema_destroy (ACE_sema_t *s);
   static int sema_init (ACE_sema_t *s,
                         u_int count,
@@ -5562,8 +5670,9 @@ public:
   static int sema_wait (ACE_sema_t *s);
   static int sema_wait (ACE_sema_t *s,
                         ACE_Time_Value &tv);
+  //@}
 
-  // = A set of wrappers for System V semaphores.
+  //@{ @name A set of wrappers for System V semaphores.
   static int semctl (int int_id,
                      int semnum,
                      int cmd,
@@ -5574,13 +5683,15 @@ public:
   static int semop (int int_id,
                     struct sembuf *sops,
                     size_t nsops);
+  //@}
 
-  // = Thread scheduler interface.
+  //@{ @name Thread scheduler interface.
+  /// Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
+  /// set the parameters on the calling thread.
   static int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
-  // Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
-  // set the parameters on the calling thread.
+  //@}
 
-  // = A set of wrappers for System V shared memory.
+  //@{ @name A set of wrappers for System V shared memory.
   static void *shmat (int int_id,
                       void *shmaddr,
                       int shmflg);
@@ -5591,8 +5702,9 @@ public:
   static int shmget (key_t key,
                      int size,
                      int flags);
+  ///@}
 
-  // = A set of wrappers for Signals.
+  //@{ @name A set of wrappers for Signals.
   static int kill (pid_t pid,
                    int signum);
   static int sigaction (int signum,
@@ -5616,33 +5728,40 @@ public:
   static int pthread_sigmask (int how,
                               const sigset_t *nsp,
                               sigset_t *osp);
+  //@}
 
-  // = A set of wrappers for sockets.
+  //@{ @name A set of wrappers for sockets.
+  /// BSD-style <accept> (no QoS).
   static ACE_HANDLE accept (ACE_HANDLE handle,
                             struct sockaddr *addr,
                             int *addrlen);
-  // BSD-style <accept> (no QoS).
+
+  /**
+   * QoS-enabled <accept>, which passes <qos_params> to <accept>.  If
+   * the OS platform doesn't support QoS-enabled <accept> then the
+   * <qos_params> are ignored and the BSD-style <accept> is called.
+   */
   static ACE_HANDLE accept (ACE_HANDLE handle,
                             struct sockaddr *addr,
                             int *addrlen,
                             const ACE_Accept_QoS_Params &qos_params);
-  // QoS-enabled <accept>, which passes <qos_params> to <accept>.  If
-  // the OS platform doesn't support QoS-enabled <accept> then the
-  // <qos_params> are ignored and the BSD-style <accept> is called.
-  static int bind (ACE_HANDLE s,
-                   struct sockaddr *name,
-                   int namelen);
+  /// BSD-style <connect> (no QoS).
   static int connect (ACE_HANDLE handle,
                       struct sockaddr *addr,
                       int addrlen);
-  // BSD-style <connect> (no QoS).
+  /**
+   * QoS-enabled <connect>, which passes <qos_params> to <connect>.
+   * If the OS platform doesn't support QoS-enabled <connect> then the
+   * <qos_params> are ignored and the BSD-style <connect> is called.
+   */
   static int connect (ACE_HANDLE handle,
                       const sockaddr *addr,
                       int addrlen,
                       const ACE_QoS_Params &qos_params);
-  // QoS-enabled <connect>, which passes <qos_params> to <connect>.
-  // If the OS platform doesn't support QoS-enabled <connect> then the
-  // <qos_params> are ignored and the BSD-style <connect> is called.
+
+  static int bind (ACE_HANDLE s,
+                   struct sockaddr *name,
+                   int namelen);
 
   static int closesocket (ACE_HANDLE s);
   static struct hostent *gethostbyaddr (const char *addr,
@@ -5696,16 +5815,16 @@ public:
   static int inet_pton (int family,
                         const char *strptr,
                         void *addrptr);
+  /// Retrieve information about available transport protocols
+  /// installed on the local machine.
   static int enum_protocols (int *protocols,
                              ACE_Protocol_Info *protocol_buffer,
                              u_long *buffer_length);
-  // Retrieve information about available transport protocols
-  // installed on the local machine.
+  /// Joins a leaf node into a QoS-enabled multi-point session.
   static ACE_HANDLE join_leaf (ACE_HANDLE socket,
                                const sockaddr *name,
                                int namelen,
                                const ACE_QoS_Params &qos_params);
-  // Joins a leaf node into a QoS-enabled multi-point session.
   static int listen (ACE_HANDLE handle,
                      int backlog);
   static int recv (ACE_HANDLE handle,
@@ -5746,41 +5865,45 @@ public:
                      int addrlen,
                      ACE_OVERLAPPED *overlapped,
                      ACE_OVERLAPPED_COMPLETION_FUNC func);
+
+  /// QoS-enabled <ioctl> wrapper.
   static int setsockopt (ACE_HANDLE handle,
                          int level,
                          int optname,
                          const char *optval,
                          int optlen);
-  // QoS-enabled <ioctl> wrapper.
   static int shutdown (ACE_HANDLE handle,
                        int how);
+
+  /// Create a BSD-style socket (no QoS).
   static ACE_HANDLE socket (int protocol_family,
                             int type,
                             int proto);
 
-  // Create a BSD-style socket (no QoS).
+  /// Create a QoS-enabled socket.  If the OS platform doesn't support
+  /// QoS-enabled <socket> then the BSD-style <socket> is called.
   static ACE_HANDLE socket (int protocol_family,
                             int type,
                             int proto,
                             ACE_Protocol_Info *protocolinfo,
                             ACE_SOCK_GROUP g,
                             u_long flags);
-  // Create a QoS-enabled socket.  If the OS platform doesn't support
-  // QoS-enabled <socket> then the BSD-style <socket> is called.
 
   static int socketpair (int domain,
                          int type,
                          int protocol,
                          ACE_HANDLE sv[2]);
+
+  /// Initialize WinSock before first use (e.g., when a DLL is first
+  /// loaded or the first use of a socket() call.
   static int socket_init (int version_high = 1,
                           int version_low = 1);
-  // Initialize WinSock before first use (e.g., when a DLL is first
-  // loaded or the first use of a socket() call.
 
+  /// Finalize WinSock after last use (e.g., when a DLL is unloaded).
   static int socket_fini (void);
-  // Finalize WinSock after last use (e.g., when a DLL is unloaded).
+  //@}
 
-  // = A set of wrappers for password routines.
+  //@{ @name A set of wrappers for password routines.
   static void setpwent (void);
   static void endpwent (void);
   static struct passwd *getpwent (void);
@@ -5789,14 +5912,17 @@ public:
                                     struct passwd *pwent,
                                     char *buffer,
                                     int buflen);
+  //@}
 
-  // = A set of wrappers for regular expressions.
+  //@{ @name A set of wrappers for regular expressions.
   static char *compile (const char *instring,
                         char *expbuf,
                         char *endbuf);
   static int step (const char *str,
                    char *expbuf);
+  //@}
 
+  //@{ @name Wide-character strings
   // @@ UNICODE: (brunsch) Can this be handled better?
   // The following WChar typedef and functions are used by TAO.  TAO
   // does not use wchar_t because the size of wchar_t is
@@ -5811,9 +5937,10 @@ public:
   static int wsncmp (const WChar *,
                      const WChar *,
                      size_t len);
+  //@}
 
 # if 0
-  // = A set of wrappers for threads (these are portable since they use the ACE_Thread_ID).
+  //@{ @name A set of wrappers for threads (these are portable since they use the ACE_Thread_ID).
   static int thr_continue (const ACE_Thread_ID &thread);
   static int thr_create (ACE_THR_FUNC,
                          void *args,
@@ -5835,13 +5962,44 @@ public:
   static int thr_setprio (const ACE_Sched_Priority prio);
   static int thr_suspend (ACE_Thread_ID target_thread);
   static int thr_cancel (ACE_Thread_ID t_id);
+  //@}
 # endif /* 0 */
 
-  // = A set of wrappers for threads
+  //@{ @name A set of wrappers for threads
 
   // These are non-portable since they use ACE_thread_t and
   // ACE_hthread_t and will go away in a future release.
   static int thr_continue (ACE_hthread_t target_thread);
+
+  /*
+   * Creates a new thread having <flags> attributes and running <func>
+   * with <args> (if <thread_adapter> is non-0 then <func> and <args>
+   * are ignored and are obtained from <thread_adapter>).  <thr_id>
+   * and <t_handle> are set to the thread's ID and handle (?),
+   * respectively.  The thread runs at <priority> priority (see
+   * below).
+   *
+   * The <flags> are a bitwise-OR of the following:
+   * = BEGIN<INDENT>
+   * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
+   * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
+   * THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
+   * THR_SCHED_RR, THR_SCHED_DEFAULT
+   * = END<INDENT>
+   *
+   * By default, or if <priority> is set to
+   * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
+   * the given scheduling policy (specified in <flags}>, e.g.,
+   * <THR_SCHED_DEFAULT>) is used.  This value is calculated
+   * dynamically, and is the median value between the minimum and
+   * maximum priority values for the given policy.  If an explicit
+   * value is given, it is used.  Note that actual priority values are
+   * EXTREMEMLY implementation-dependent, and are probably best
+   * avoided.
+   *
+   * Note that <thread_adapter> is always deleted by <thr_create>,
+   * therefore it must be allocated with global operator new.
+   */
   static int thr_create (ACE_THR_FUNC func,
                          void *args,
                          long flags,
@@ -5851,33 +6009,6 @@ public:
                          void *stack = 0,
                          size_t stacksize = 0,
                          ACE_Base_Thread_Adapter *thread_adapter = 0);
-  // Creates a new thread having <flags> attributes and running <func>
-  // with <args> (if <thread_adapter> is non-0 then <func> and <args>
-  // are ignored and are obtained from <thread_adapter>).  <thr_id>
-  // and <t_handle> are set to the thread's ID and handle (?),
-  // respectively.  The thread runs at <priority> priority (see
-  // below).
-  //
-  // The <flags> are a bitwise-OR of the following:
-  // = BEGIN<INDENT>
-  // THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
-  // THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
-  // THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
-  // THR_SCHED_RR, THR_SCHED_DEFAULT
-  // = END<INDENT>
-  //
-  // By default, or if <priority> is set to
-  // ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
-  // the given scheduling policy (specified in <flags}>, e.g.,
-  // <THR_SCHED_DEFAULT>) is used.  This value is calculated
-  // dynamically, and is the median value between the minimum and
-  // maximum priority values for the given policy.  If an explicit
-  // value is given, it is used.  Note that actual priority values are
-  // EXTREMEMLY implementation-dependent, and are probably best
-  // avoided.
-  //
-  // Note that <thread_adapter> is always deleted by <thr_create>,
-  // therefore it must be allocated with global operator new.
 
   static int thr_getprio (ACE_hthread_t thr_id,
                           int &prio);
@@ -5955,62 +6086,70 @@ public:
   static void thr_testcancel (void);
   static void thr_yield (void);
 
+  /**
+   * This method uses process id and object pointer to come up with a
+   * machine wide unique name.  The process ID will provide uniqueness
+   * between processes on the same machine. The "this" pointer of the
+   * <object> will provide uniqueness between other "live" objects in
+   * the same process. The uniqueness of this name is therefore only
+   * valid for the life of <object>.
+   */
   static void unique_name (const void *object,
                            ACE_TCHAR *name,
                            size_t length);
-  // This method uses process id and object pointer to come up with a
-  // machine wide unique name.  The process ID will provide uniqueness
-  // between processes on the same machine. The "this" pointer of the
-  // <object> will provide uniqueness between other "live" objects in
-  // the same process. The uniqueness of this name is therefore only
-  // valid for the life of <object>.
 
+  /// This is necessary to deal with POSIX pthreads and their use of
+  /// structures for thread ids.
   static ACE_thread_t NULL_thread;
-  // This is necessary to deal with POSIX pthreads and their use of
-  // structures for thread ids.
 
+  /// This is necessary to deal with POSIX pthreads and their use of
+  /// structures for thread handles.
   static ACE_hthread_t NULL_hthread;
-  // This is necessary to deal with POSIX pthreads and their use of
-  // structures for thread handles.
 
+  /// This is necessary to deal with POSIX pthreads and their use of
+  /// structures for TSS keys.
   static ACE_thread_key_t NULL_key;
-  // This is necessary to deal with POSIX pthreads and their use of
-  // structures for TSS keys.
 
 # if defined (CHORUS)
+  /// This is used to map an actor's id into a KnCap for killing and
+  /// waiting actors.
   static KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
-  // This is used to map an actor's id into a KnCap for killing and
-  // waiting actors.
 # endif /* CHORUS */
+  //@}
 
 # if defined (ACE_WIN32)
+  /// Keeps track of whether we've already initialized WinSock...
   static int socket_initialized_;
-  // Keeps track of whether we've already initialized WinSock...
 # endif /* ACE_WIN32 */
 
+  /// Handle asynchronous thread cancellation cleanup.
   static void mutex_lock_cleanup (void *mutex);
-  // Handle asynchronous thread cancellation cleanup.
 
+  /**
+   * Call TSS destructors for the current thread.  If the current
+   * thread is the main thread, then the argument must be 1.
+   * For private use of ACE_Object_Manager and ACE_Thread_Adapter only.
+   */
   static void cleanup_tss (const u_int main_thread);
-  // Call TSS destructors for the current thread.  If the current
-  // thread is the main thread, then the argument must be 1.
-  // For private use of ACE_Object_Manager and ACE_Thread_Adapter only.
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   static int netdb_acquire (void);
   static int netdb_release (void);
 # endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
+  /// Find the schedling class ID that corresponds to the class name.
   static int scheduling_class (const char *class_name, ACE_id_t &);
-  // Find the schedling class ID that corresponds to the class name.
 
+  /// Friendly interface to <priocntl>(2).
   static int set_scheduling_params (const ACE_Sched_Params &,
                                     ACE_id_t id = ACE_SELF);
-  // Friendly interface to <priocntl>(2).
 
-  // Can't call the following priocntl, because that's a macro on Solaris.
+  /// Low-level interface to <priocntl>(2).
+  /**
+   * Can't call the following priocntl, because that's a macro on
+   * Solaris.
+   */
   static int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
-  // Low-level interface to <priocntl>(2).
 
 #if defined (ACE_HAS_STRPTIME)
   static char *strptime (char *buf,
@@ -6024,38 +6163,40 @@ public:
 #endif /* ACE_HAS_STRPTIME */
 
 private:
+  /// Function that is called by <ACE_OS::exit>, if non-null.
   static ACE_EXIT_HOOK exit_hook_;
-  // Function that is called by <ACE_OS::exit>, if non-null.
 
+  /// For use by ACE_Object_Manager only, to register its exit hook..
   static ACE_EXIT_HOOK set_exit_hook (ACE_EXIT_HOOK hook);
-  // For use by ACE_Object_Manager only, to register its exit hook..
 
+  /// Allow the ACE_OS_Object_Manager to call set_exit_hook.
   friend class ACE_OS_Object_Manager;
-  // Allow the ACE_OS_Object_Manager to call set_exit_hook.
 
 # if defined (ACE_WIN32)
 #   if defined (ACE_HAS_WINCE)
+  /// Supporting data for ctime and ctime_r functions on WinCE.
   static const wchar_t *day_of_week_name[7];
   static const wchar_t *month_name[12];
-  // Supporting data for ctime and ctime_r functions on WinCE.
 #   endif /* ACE_HAS_WINCE */
 
+  /// Translate fopen's mode char to open's mode.  This helper function
+  /// is here to avoid maintaining several pieces of identical code.
   static void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
-  // Translate fopen's mode char to open's mode.  This helper function
-  // is here to avoid maintaining several pieces of identical code.
 
   static OSVERSIONINFO win32_versioninfo_;
 
 # endif /* ACE_WIN32 */
 };
 
+/**
+ * @class ACE_Object_Manager_Base
+ *
+ * @brief Base class for ACE_Object_Manager(s).
+ *
+ * Encapsulates the most useful ACE_Object_Manager data structures.
+ */
 class ACE_Export ACE_Object_Manager_Base
 {
-  // = TITLE
-  //     Base class for ACE_Object_Manager(s).
-  //
-  // = DESCRIPTION
-  //     Encapsulates the most useful ACE_Object_Manager data structures.
 # if (defined (ACE_PSOS) && defined (__DIAB))  || \
      (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
   // The Diab compiler got confused and complained about access rights
@@ -6065,22 +6206,26 @@ public:
 # else  /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
 protected:
 # endif /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
+  /// Default constructor.
   ACE_Object_Manager_Base (void);
-  // Default constructor.
 
+  /// Destructor.
   virtual ~ACE_Object_Manager_Base (void);
-  // Destructor.
 
 public:
+  /**
+   * Explicitly initialize.  Returns 0 on success, -1 on failure due
+   * to dynamic allocation failure (in which case errno is set to
+   * ENOMEM), or 1 if it had already been called.
+   */
   virtual int init (void) = 0;
-  // Explicitly initialize.  Returns 0 on success, -1 on failure due
-  // to dynamic allocation failure (in which case errno is set to
-  // ENOMEM), or 1 if it had already been called.
 
+  /**
+   * Explicitly destroy.  Returns 0 on success, -1 on failure because
+   * the number of fini () calls hasn't reached the number of init ()
+   * calls, or 1 if it had already been called.
+   */
   virtual int fini (void) = 0;
-  // Explicitly destroy.  Returns 0 on success, -1 on failure because
-  // the number of fini () calls hasn't reached the number of init ()
-  // calls, or 1 if it had already been called.
 
   enum Object_Manager_State
     {
@@ -6092,33 +6237,39 @@ public:
     };
 
 protected:
+  /**
+   * Returns 1 before ACE_Object_Manager_Base has been constructed.
+   * This flag can be used to determine if the program is constructing
+   * static objects.  If no static object spawns any threads, the
+   * program will be single-threaded when this flag returns 1.  (Note
+   * that the program still might construct some static objects when
+   * this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
+   * defined.)
+   */
   int starting_up_i (void);
-  // Returns 1 before ACE_Object_Manager_Base has been constructed.
-  // This flag can be used to determine if the program is constructing
-  // static objects.  If no static object spawns any threads, the
-  // program will be single-threaded when this flag returns 1.  (Note
-  // that the program still might construct some static objects when
-  // this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
-  // defined.)
 
+  /**
+   * Returns 1 after ACE_Object_Manager_Base has been destroyed.  This
+   * flag can be used to determine if the program is in the midst of
+   * destroying static objects.  (Note that the program might destroy
+   * some static objects before this flag can return 1, if
+   * ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
+   */
   int shutting_down_i (void);
-  // Returns 1 after ACE_Object_Manager_Base has been destroyed.  This
-  // flag can be used to determine if the program is in the midst of
-  // destroying static objects.  (Note that the program might destroy
-  // some static objects before this flag can return 1, if
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
 
+  /// State of the Object_Manager;
   Object_Manager_State object_manager_state_;
-  // State of the Object_Manager;
 
+  /**
+   * Flag indicating whether the ACE_Object_Manager was dynamically
+   * allocated by ACE.  (If is was dynamically allocated by the
+   * application, then the application is responsible for destroying
+   * it.)
+   */
   u_int dynamically_allocated_;
-  // Flag indicating whether the ACE_Object_Manager was dynamically
-  // allocated by ACE.  (If is was dynamically allocated by the
-  // application, then the application is responsible for destroying
-  // it.)
 
+  /// Link to next Object_Manager, for chaining.
   ACE_Object_Manager_Base *next_;
-  // Link to next Object_Manager, for chaining.
 private:
   // Disallow copying by not implementing the following . . .
   ACE_Object_Manager_Base (const ACE_Object_Manager_Base &);
@@ -6136,21 +6287,24 @@ class ACE_Log_Msg;
 class ACE_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
 {
 public:
+  /// Explicitly initialize.
   virtual int init (void);
-  // Explicitly initialize.
 
+  /// Explicitly destroy.
   virtual int fini (void);
-  // Explicitly destroy.
 
+  /**
+   * Returns 1 before the <ACE_OS_Object_Manager> has been
+   * constructed.  See <ACE_Object_Manager::starting_up> for more
+   * information.
+   */
   static int starting_up (void);
-  // Returns 1 before the <ACE_OS_Object_Manager> has been
-  // constructed.  See <ACE_Object_Manager::starting_up> for more
-  // information.
 
+  /// Returns 1 after the <ACE_OS_Object_Manager> has been destroyed.
+  /// See <ACE_Object_Manager::shutting_down> for more information.
   static int shutting_down (void);
-  // Returns 1 after the <ACE_OS_Object_Manager> has been destroyed.
-  // See <ACE_Object_Manager::shutting_down> for more information.
 
+  /// Unique identifiers for preallocated objects.
   enum Preallocated_Object
     {
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -6170,24 +6324,24 @@ public:
       ACE_OS_EMPTY_PREALLOCATED_OBJECT,
 # endif /* ACE_MT_SAFE */
 
-      ACE_OS_PREALLOCATED_OBJECTS  // This enum value must be last!
+      /// This enum value must be last!
+      ACE_OS_PREALLOCATED_OBJECTS
     };
-  // Unique identifiers for preallocated objects.
 
+  /// Accesses a default signal set used, for example, in
+  /// <ACE_Sig_Guard> methods.
   static sigset_t *default_mask (void);
-  // Accesses a default signal set used, for example, in
-  // <ACE_Sig_Guard> methods.
 
+  /// Returns the current thread hook for the process.
   static ACE_Thread_Hook *thread_hook (void);
-  // Returns the current thread hook for the process.
 
+  /// Returns the existing thread hook and assign a <new_thread_hook>.
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
-  // Returns the existing thread hook and assign a <new_thread_hook>.
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  /// Get/Set TSS exception action.
   static ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
   static ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
-  // Get/Set TSS exception action.
 
   static ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
   static ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
@@ -6199,44 +6353,45 @@ public:
   // They're public so that the <ACE_Object_Manager> can be
   // constructed/destructed in <main> with
   // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
+  /// Constructor.
   ACE_OS_Object_Manager (void);
-  // Constructor.
 
+  /// Destructor.
   ~ACE_OS_Object_Manager (void);
-  // Destructor.
 
 private:
+  /// Accessor to singleton instance.
   static ACE_OS_Object_Manager *instance (void);
-  // Accessor to singleton instance.
 
+  /// Singleton instance pointer.
   static ACE_OS_Object_Manager *instance_;
-  // Singleton instance pointer.
 
+  /// Table of preallocated objects.
   static void *preallocated_object[ACE_OS_PREALLOCATED_OBJECTS];
-  // Table of preallocated objects.
 
+  /// Default signal set used, for example, in ACE_Sig_Guard.
   sigset_t *default_mask_;
-  // Default signal set used, for example, in ACE_Sig_Guard.
 
+  /// Thread hook that's used by this process.
   ACE_Thread_Hook *thread_hook_;
-  // Thread hook that's used by this process.
 
+  /// For at_exit support.
   ACE_OS_Exit_Info exit_info_;
-  // For at_exit support.
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  /// These handlers determine how a thread handles win32 structured
+  /// exception.
   ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
   ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
-  // These handlers determine how a thread handles win32 structured
-  // exception.
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
+  /// For <ACE_OS::atexit> support.
   int at_exit (ACE_EXIT_HOOK func);
-  // For <ACE_OS::atexit> support.
 
+  /// For use by init () and fini (), to consolidate error reporting.
   static void print_error_message (u_int line_number, const ACE_TCHAR *message);
-  // For use by init () and fini (), to consolidate error reporting.
 
+  /// This class is for internal use by ACE_OS, etc., only.
   friend class ACE_OS;
   friend class ACE_Object_Manager;
   friend class ACE_OS_Object_Manager_Manager;
@@ -6244,7 +6399,6 @@ private:
   friend class ACE_TSS_Emulation;
   friend class ACE_Log_Msg;
   friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
-  // This class is for internal use by ACE_OS, etc., only.
 };
 
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
@@ -6305,70 +6459,74 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 #     define ACE_DEFAULT_THREAD_KEYS 64
 #   endif /* ! ACE_DEFAULT_THREAD_KEYS */
 
+/**
+ * @class ACE_TSS_Emulation
+ *
+ * @brief Thread-specific storage emulation.
+ *
+ * This provides a thread-specific storage implementation.
+ * It is intended for use on platforms that don't have a
+ * native TSS, or have a TSS with limitations such as the
+ * number of keys or lack of support for removing keys.
+ */
 class ACE_Export ACE_TSS_Emulation
 {
-  // = TITLE
-  //     Thread-specific storage emulation.
-  //
-  // = DESCRIPTION
-  //     This provides a thread-specific storage implementation.
-  //     It is intended for use on platforms that don't have a
-  //     native TSS, or have a TSS with limitations such as the
-  //     number of keys or lack of support for removing keys.
 public:
   typedef void (*ACE_TSS_DESTRUCTOR)(void *value) /* throw () */;
 
+  /// Maximum number of TSS keys allowed over the life of the program.
   enum { ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };
-  // Maximum number of TSS keys allowed over the life of the program.
 
+  /// Returns the total number of keys allocated so far.
   static u_int total_keys ();
-  // Returns the total number of keys allocated so far.
 
+  /// Sets the argument to the next available key.  Returns 0 on success,
+  /// -1 if no keys are available.
   static int next_key (ACE_thread_key_t &key);
-  // Sets the argument to the next available key.  Returns 0 on success,
-  // -1 if no keys are available.
 
+  /// Returns the exit hook associated with the key.  Does _not_ check
+  /// for a valid key.
   static ACE_TSS_DESTRUCTOR tss_destructor (const ACE_thread_key_t key);
-  // Returns the exit hook associated with the key.  Does _not_ check
-  // for a valid key.
 
+  /// Associates the TSS destructor with the key.  Does _not_ check
+  /// for a valid key.
   static void tss_destructor (const ACE_thread_key_t key,
                               ACE_TSS_DESTRUCTOR destructor);
-  // Associates the TSS destructor with the key.  Does _not_ check
-  // for a valid key.
 
+  /// Accesses the object referenced by key in the current thread's TSS array.
+  /// Does _not_ check for a valid key.
   static void *&ts_object (const ACE_thread_key_t key);
-  // Accesses the object referenced by key in the current thread's TSS array.
-  // Does _not_ check for a valid key.
 
+  /**
+   * Setup an array to be used for local TSS.  Returns the array
+   * address on success.  Returns 0 if local TSS had already been
+   * setup for this thread.  There is no corresponding tss_close ()
+   * because it is not needed.
+   * NOTE: tss_open () is called by ACE for threads that it spawns.
+   * If your application spawns threads without using ACE, and it uses
+   * ACE's TSS emulation, each of those threads should call tss_open
+   * ().  See the ace_thread_adapter () implementaiton for an example.
+   */
   static void *tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX]);
-  // Setup an array to be used for local TSS.  Returns the array
-  // address on success.  Returns 0 if local TSS had already been
-  // setup for this thread.  There is no corresponding tss_close ()
-  // because it is not needed.
-  // NOTE: tss_open () is called by ACE for threads that it spawns.
-  // If your application spawns threads without using ACE, and it uses
-  // ACE's TSS emulation, each of those threads should call tss_open
-  // ().  See the ace_thread_adapter () implementaiton for an example.
 
+  /// Shutdown TSS emulation.  For use only by ACE_OS::cleanup_tss ().
   static void tss_close ();
-  // Shutdown TSS emulation.  For use only by ACE_OS::cleanup_tss ().
 
 private:
   // Global TSS structures.
+  /// Always contains the value of the next key to be allocated.
   static u_int total_keys_;
-  // Always contains the value of the next key to be allocated.
 
+  /// Array of thread exit hooks (TSS destructors) that are called for each
+  /// key (that has one) when the thread exits.
   static ACE_TSS_DESTRUCTOR tss_destructor_ [ACE_TSS_THREAD_KEYS_MAX];
-  // Array of thread exit hooks (TSS destructors) that are called for each
-  // key (that has one) when the thread exits.
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  /// Location of current thread's TSS array.
   static void **tss_base (void* ts_storage[] = 0, u_int *ts_created = 0);
-  // Location of current thread's TSS array.
 #   else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
+  /// Location of current thread's TSS array.
   static void **&tss_base ();
-  // Location of current thread's TSS array.
 #   endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -6393,108 +6551,114 @@ private:
 // declarations from OS.cpp so they are visible to the single
 // file of template instantiations.
 # if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+/**
+ * @class ACE_TSS_Ref
+ *
+ * @brief "Reference count" for thread-specific storage keys.
+ *
+ * Since the <ACE_Unbounded_Stack> doesn't allow duplicates, the
+ * "reference count" is the identify of the thread_id.
+ */
 class ACE_TSS_Ref
 {
-  // = TITLE
-  //     "Reference count" for thread-specific storage keys.
-  //
-  // = DESCRIPTION
-  //     Since the <ACE_Unbounded_Stack> doesn't allow duplicates, the
-  //     "reference count" is the identify of the thread_id.
 public:
+  /// Constructor
   ACE_TSS_Ref (ACE_thread_t id);
-  // Constructor
 
+  /// Default constructor
   ACE_TSS_Ref (void);
-  // Default constructor
 
+  /// Check for equality.
   int operator== (const ACE_TSS_Ref &) const;
-  // Check for equality.
 
+  /// Check for inequality.
   int operator!= (const ACE_TSS_Ref &) const;
-  // Check for inequality.
 
 // private:
 
+  /// ID of thread using a specific key.
   ACE_thread_t tid_;
-  // ID of thread using a specific key.
 };
 
+/**
+ * @class ACE_TSS_Info
+ *
+ * @brief Thread Specific Key management.
+ *
+ * This class maps a key to a "destructor."
+ */
 class ACE_TSS_Info
 {
-  // = TITLE
-  //     Thread Specific Key management.
-  //
-  // = DESCRIPTION
-  //     This class maps a key to a "destructor."
 public:
+  /// Constructor
   ACE_TSS_Info (ACE_thread_key_t key,
                 void (*dest)(void *) = 0,
                 void *tss_inst = 0);
-  // Constructor
 
+  /// Default constructor
   ACE_TSS_Info (void);
-  // Default constructor
 
+  /// Returns 1 if the key is in use, 0 if not.
   int key_in_use (void) const { return thread_count_ != -1; }
-  // Returns 1 if the key is in use, 0 if not.
 
+  /// Mark the key as being in use if the flag is non-zero, or
+  /// not in use if the flag is 0.
   void key_in_use (int flag) { thread_count_ = flag == 0  ?  -1  :  1; }
-  // Mark the key as being in use if the flag is non-zero, or
-  // not in use if the flag is 0.
 
+  /// Check for equality.
   int operator== (const ACE_TSS_Info &) const;
-  // Check for equality.
 
+  /// Check for inequality.
   int operator!= (const ACE_TSS_Info &) const;
-  // Check for inequality.
 
+  /// Dump the state.
   void dump (void);
-  // Dump the state.
 
 private:
+  /// Key to the thread-specific storage item.
   ACE_thread_key_t key_;
-  // Key to the thread-specific storage item.
 
+  /// "Destructor" that gets called when the item is finally released.
   void (*destructor_)(void *);
-  // "Destructor" that gets called when the item is finally released.
 
+  /// Pointer to ACE_TSS<xxx> instance that has/will allocate the key.
   void *tss_obj_;
-  // Pointer to ACE_TSS<xxx> instance that has/will allocate the key.
 
+  /// Count of threads that are using this key.  Contains -1 when the
+  /// key is not in use.
   int thread_count_;
-  // Count of threads that are using this key.  Contains -1 when the
-  // key is not in use.
 
   friend class ACE_TSS_Cleanup;
 };
 
+/**
+ * @class ACE_TSS_Keys
+ *
+ * @brief Collection of in-use flags for a thread's TSS keys.
+ * For internal use only by ACE_TSS_Cleanup; it is public because
+ * some compilers can't use nested classes for template instantiation
+ * parameters.
+ *
+ * Wrapper around array of whether each key is in use.  A simple
+ * typedef doesn't work with Sun C++ 4.2.
+ */
 class ACE_TSS_Keys
 {
-  // = TITLE
-  //     Collection of in-use flags for a thread's TSS keys.
-  //     For internal use only by ACE_TSS_Cleanup; it is public because
-  //     some compilers can't use nested classes for template instantiation
-  //     parameters.
-  //
-  // = DESCRIPTION
-  //     Wrapper around array of whether each key is in use.  A simple
-  //     typedef doesn't work with Sun C++ 4.2.
 public:
+  /// Default constructor, to initialize all bits to zero (unused).
   ACE_TSS_Keys (void);
-  // Default constructor, to initialize all bits to zero (unused).
 
+  /// Mark the specified key as being in use, if it was not already so marked.
+  /// Returns 1 if the had already been marked, 0 if not.
   int test_and_set (const ACE_thread_key_t key);
-  // Mark the specified key as being in use, if it was not already so marked.
-  // Returns 1 if the had already been marked, 0 if not.
 
+  /// Mark the specified key as not being in use, if it was not already so
+  /// cleared.  Returns 1 if the had already been cleared, 0 if not.
   int test_and_clear (const ACE_thread_key_t key);
-  // Mark the specified key as not being in use, if it was not already so
-  // cleared.  Returns 1 if the had already been cleared, 0 if not.
 
 private:
+  /// For a given key, find the word and bit number that represent it.
   static void find (const u_int key, u_int &word, u_int &bit);
-  // For a given key, find the word and bit number that represent it.
 
   enum
     {
@@ -6508,9 +6672,9 @@ private:
       ACE_WORDS = (ACE_DEFAULT_THREAD_KEYS - 1) / ACE_BITS_PER_WORD + 1
     };
 
+  /// Bit flag collection.  A bit value of 1 indicates that the key is in
+  /// use by this thread.
   u_long key_bit_words_[ACE_WORDS];
-  // Bit flag collection.  A bit value of 1 indicates that the key is in
-  // use by this thread.
 };
 
 # endif /* defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) */
@@ -6931,13 +7095,16 @@ ace_main_i
 
 # if defined (ACE_HAS_WINCE)
 #   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+/**
+ * @class ACE_CE_Errno
+ Some versions of CE don't support <errno> and some versions'
+ * implementations are busted.  So we implement our own.
+ * Our implementation takes up one Tls key, however, it does not
+ * allocate memory fromt the heap so there's no problem with cleanin
+ * up the errno when a thread exit.
+ */
 class ACE_Export ACE_CE_Errno
 {
-  // Some versions of CE don't support <errno> and some versions'
-  // implementations are busted.  So we implement our own.
-  // Our implementation takes up one Tls key, however, it does not
-  // allocate memory fromt the heap so there's no problem with cleanin
-  // up the errno when a thread exit.
 public:
   ACE_CE_Errno () {}
   static void init ();
@@ -6955,72 +7122,74 @@ private:
 #     define errno (* (ACE_CE_Errno::instance ()))
 #   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
+/**
+ * @class ACE_CE_Bridge
+ *
+ * @brief This class bridges between ACE's default text output windows
+ * and the original ACE program.
+ *
+ * As there is no such thing as text-based programs on Windows
+ * CE.  We need to create a windows to read the command prompt
+ * and bridge the output windows with the original ACE program
+ * entry point.  You'll need to link your program with
+ * "ace-windows.lib" for this to work.  You can refer to
+ * $ACE_ROOT/WindowsCE/Main for how I use a dialog box to run
+ * the original ACE programs.  This is certainly not the only
+ * way to use ACE in Windows programs.
+ */
 class ACE_Export ACE_CE_Bridge
 {
-  // = TITLE
-  //     This class bridges between ACE's default text output windows
-  //     and the original ACE program.
-  //
-  // = DESCRIPTION
-  //     As there is no such thing as text-based programs on Windows
-  //     CE.  We need to create a windows to read the command prompt
-  //     and bridge the output windows with the original ACE program
-  //     entry point.  You'll need to link your program with
-  //     "ace-windows.lib" for this to work.  You can refer to
-  //     $ACE_ROOT/WindowsCE/Main for how I use a dialog box to run
-  //     the original ACE programs.  This is certainly not the only
-  //     way to use ACE in Windows programs.
 public:
+  /// Default ctor.
   ACE_CE_Bridge (void);
-  // Default ctor.
 
+  /// Construct and set the default windows.
   ACE_CE_Bridge (HWND, int notification, int idc);
-  // Construct and set the default windows.
 
+  /// Default dtor.
   ~ACE_CE_Bridge (void);
-  // Default dtor.
 
+  /// Specify which window to use.
   void set_window (HWND, int notification, int idc);
-  // Specify which window to use.
 
+  /// Set the default window.
   void set_self_default (void);
-  // Set the default window.
 
+  /// Access functions.
   int notification (void);
   int idc (void);
   HWND window (void);
-  // Access functions.
 
+  /// Get the reference of default ACE_CE_BRIDGE.
   static ACE_CE_Bridge *get_default_winbridge (void);
-  // Get the reference of default ACE_CE_BRIDGE.
 
+  /// Write a string to windows.
   int write_msg (const ACE_TCHAR *str);
-  // Write a string to windows.
 
 #if 0
+  /// Write a CString to windows.  Notice that the CString object will
+  /// be freed by windows.
   int write_msg (CString *cs);
-  // Write a CString to windows.  Notice that the CString object will
-  // be freed by windows.
 #endif /* 0 */
 private:
   // @@ We should use a allocator here.
 
+  /// A pointer to the window that knows how to
+  /// handle ACE related messages.
   HWND text_output_;
-  // A pointer to the window that knows how to
-  // handle ACE related messages.
 
+  /// Notification of the window that receives WM_COMMAND when
+  /// outputing strings.
   int notification_;
-  // Notification of the window that receives WM_COMMAND when
-  // outputing strings.
 
+  /// IDC code of the window that receives WM_COMMAND when
+  /// outputing strings.
   int idc_;
-  // IDC code of the window that receives WM_COMMAND when
-  // outputing strings.
 
   ACE_TCHAR *cmdline_;
 
+  /// A pointer to the default ACE_CE_BRIDGE obj.
   static ACE_CE_Bridge *default_text_bridge_;
-  // A pointer to the default ACE_CE_BRIDGE obj.
 };
 
 # endif /* ACE_HAS_WINCE */
@@ -7031,56 +7200,54 @@ private:
 #  define ACE_ERRNO_TYPE int
 #endif /* ACE_HAS_WINCE */
 
+/**
+ * @class ACE_Errno_Guard
+ *
+ * @brief Provides a wrapper to improve performance when thread-specific
+ * errno must be saved and restored in a block of code.
+ *
+ * The typical use-case for this is the following:
+ * int error = errno;
+ * call_some_function_that_might_change_errno ();
+ * errno = error;
+ * This can be replaced with
+ * {
+ * ACE_Errno_Guard guard (errno);
+ * call_some_function_that_might_change_errno ();
+ * }
+ * This implementation is more elegant and more efficient since it
+ * avoids an unnecessary second access to thread-specific storage
+ * by caching a pointer to the value of errno in TSS.
+ */
 class ACE_Export ACE_Errno_Guard
 {
-  // = TITLE
-  //   Provides a wrapper to improve performance when thread-specific
-  //   errno must be saved and restored in a block of code.
-  //
-  // = DESCRIPTION
-  //   The typical use-case for this is the following:
-  //
-  //   int error = errno;
-  //   call_some_function_that_might_change_errno ();
-  //   errno = error;
-  //
-  //   This can be replaced with
-  //
-  //   {
-  //     ACE_Errno_Guard guard (errno);
-  //     call_some_function_that_might_change_errno ();
-  //   }
-  //
-  //   This implementation is more elegant and more efficient since it
-  //   avoids an unnecessary second access to thread-specific storage
-  //   by caching a pointer to the value of errno in TSS.
 public:
   // = Initialization and termination methods.
+  ///  Stash the value of <error> into <error_> and initialize the
+  ///  <errno_ptr_> to the address of <errno_ref>.
   ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
                    int error);
-  //  Stash the value of <error> into <error_> and initialize the
-  //  <errno_ptr_> to the address of <errno_ref>.
 
+  ///  Stash the value of <errno> into <error_> and initialize the
+  ///  <errno_ptr_> to the address of <errno_ref>.
   ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref);
-  //  Stash the value of <errno> into <error_> and initialize the
-  //  <errno_ptr_> to the address of <errno_ref>.
 
+  /// Reset the value of <errno> to <error>.
   ~ACE_Errno_Guard (void);
-  // Reset the value of <errno> to <error>.
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+  /// Assign <errno_ref> to <error_>.
   int operator= (const ACE_ERRNO_TYPE &errno_ref);
-  // Assign <errno_ref> to <error_>.
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
+  /// Assign <error> to <error_>.
   int operator= (int error);
-  // Assign <error> to <error_>.
 
+  /// Compare <error> with <error_> for equality.
   int operator== (int error);
-  // Compare <error> with <error_> for equality.
 
+  /// Compare <error> with <error_> for inequality.
   int operator!= (int error);
-  // Compare <error> with <error_> for inequality.
 
 private:
 #if defined (ACE_MT_SAFE)

@@ -1,37 +1,30 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Functor_T.h
-//
-// = DESCRIPTION
-//     Templatized classes for implementing function objects that are
-//     used in various places in ACE.  There are currently two major
-//     categories of function objects in ACE: GOF Command Pattern
-//     objects, and STL-style functors for comparison of container
-//     elements.  The command objects are invoked via an <execute>
-//     method, while the STL-style functors are invoked via an
-//     <operator()> method.
-//
-// = AUTHOR
-//     Chris Gill <cdgill@cs.wustl.edu>
-//
-//     Based on Command Pattern implementations originally done by
-//
-//     Carlos O'Ryan <coryan@cs.wustl.edu>,
-//     Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
-//     Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//
-//     and on STL-style functor implementations originally done by
-//
-//     Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Functor_T.h
+ *
+ *  $Id$
+ *
+ *   Templatized classes for implementing function objects that are
+ *   used in various places in ACE.  There are currently two major
+ *   categories of function objects in ACE: GOF Command Pattern
+ *   objects, and STL-style functors for comparison of container
+ *   elements.  The command objects are invoked via an <execute>
+ *   method, while the STL-style functors are invoked via an
+ *   <operator()> method.
+ *
+ *
+ *  @author Chris Gill <cdgill@cs.wustl.edu>
+ *  @author Based on Command Pattern implementations originally done by
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author and on STL-style functor implementations originally done by
+ *  @author Irfan Pyarali  <irfan@cs.wustl.edu> 
+ */
+//=============================================================================
+
 
 #ifndef ACE_FUNCTOR_T_H
 #define ACE_FUNCTOR_T_H
@@ -47,85 +40,99 @@
 // GOF Command Pattern Templates //
 ///////////////////////////////////
 
+/**
+ * @class ACE_Command_Callback
+ *
+ * @brief Defines a class template that allows us to invoke a GOF
+ * command style callback to an object without knowing anything
+ * about the object except its type.
+ *
+ * This class declares an interface to execute operations,
+ * binding a RECEIVER object with an ACTION.  The RECEIVER knows
+ * how to implement the operation.  A class can invoke operations
+ * without knowing anything about it, or how it was implemented.
+ */
 template <class RECEIVER, class ACTION>
 class ACE_Command_Callback : public ACE_Command_Base
 {
-  // = TITLE
-  //    Defines a class template that allows us to invoke a GOF
-  //    command style callback to an object without knowing anything
-  //    about the object except its type.
-  //
-  // = DESCRIPTION
-  //    This class declares an interface to execute operations,
-  //    binding a RECEIVER object with an ACTION.  The RECEIVER knows
-  //    how to implement the operation.  A class can invoke operations
-  //    without knowing anything about it, or how it was implemented.
 public:
+  /// Constructor: sets the <receiver_> of the Command to recvr, and the
+  /// <action_> of the Command to <action>.
   ACE_Command_Callback (RECEIVER &recvr, ACTION action);
-  // Constructor: sets the <receiver_> of the Command to recvr, and the
-  // <action_> of the Command to <action>.
 
+  /// Virtual destructor.
   virtual ~ACE_Command_Callback (void);
-  // Virtual destructor.
 
+  /// Invokes the method <action_> from the object <receiver_>.
   virtual int execute (void *arg = 0);
-  // Invokes the method <action_> from the object <receiver_>.
 
 private:
+  /// Object where the method resides.
   RECEIVER &receiver_;
-  // Object where the method resides.
 
+  /// Method that is going to be invoked.
   ACTION action_;
-  // Method that is going to be invoked.
 };
 
 /////////////////////////////////
 // STL-style Functor Templates //
 /////////////////////////////////
 
+/**
+ * @class ACE_Hash
+ *
+ * @brief Function object for hashing
+ */
 template <class TYPE>
 class ACE_Hash
 {
-  // = TITLE
-  //     Function object for hashing
 public:
+  /// Simply calls t.hash ()
   u_long operator () (const TYPE &t) const;
-  // Simply calls t.hash ()
 };
 
+/**
+ * @class ACE_Pointer_Hash
+ *
+ * @brief Function object for hashing pointers
+ */
 template <class TYPE>
 class ACE_Pointer_Hash
 {
-  // = TITLE
-  //     Function object for hashing pointers
 public:
+  /// Simply returns t.
   u_long operator () (TYPE t) const;
-  // Simply returns t.
 };
 
+/**
+ * @class ACE_Equal_To
+ *
+ * @brief Function object for comparing two objects of
+ * the given type for equality.
+ */
 template <class TYPE>
 class ACE_Equal_To
 {
-  // = TITLE
-  //     Function object for comparing two objects of
-  //     the given type for equality.
 public:
+  /// Simply calls operator==
   int operator () (const TYPE &lhs,
                    const TYPE &rhs) const;
-  // Simply calls operator==
 };
 
+/**
+ * @class ACE_Less_Than
+ *
+ * @brief Function object for determining whether the first object of
+ * the given type is less than the second object of the same
+ * type.
+ */
 template <class TYPE>
 class ACE_Less_Than
 {
-  // = TITLE
-  //     Function object for determining whether the first object of
-  //     the given type is less than the second object of the same
-  //     type.
 public:
+  /// Simply calls operator<
   int operator () (const TYPE &lhs,
                    const TYPE &rhs) const;
-  // Simply calls operator<
 };
 
 #if defined (__ACE_INLINE__)

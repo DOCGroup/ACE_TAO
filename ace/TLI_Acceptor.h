@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    TLI_Acceptor.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TLI_Acceptor.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_TLI_ACCEPTOR_H
 #define ACE_TLI_ACCEPTOR_H
@@ -32,44 +29,51 @@
 // Forward reference...
 class ACE_TLI_Request_Queue;
 
+/**
+ * @class ACE_TLI_Acceptor
+ *
+ * @brief Defines the member functions for ACE_TLI_Acceptor abstraction.
+ *
+ * This class implements the algorithm described in Steve Rago's
+ * book on System V UNIX network programming.  It basically
+ * makes TLI look like the C++ SOCK_SAP socket wrappers with
+ * respect to establishing passive-mode listener endpoints.
+ */
 class ACE_Export ACE_TLI_Acceptor : public ACE_TLI
 {
-  // = TITLE
-  //     Defines the member functions for ACE_TLI_Acceptor abstraction.
-  //
-  // = DESCRIPTION
-  //     This class implements the algorithm described in Steve Rago's
-  //     book on System V UNIX network programming.  It basically
-  //     makes TLI look like the C++ SOCK_SAP socket wrappers with
-  //     respect to establishing passive-mode listener endpoints.
 public:
   friend class ACE_Request_Queue;
 
   // = Initialization and termination methods.
+  /// Default constructor.
   ACE_TLI_Acceptor (void);
-  // Default constructor.
 
+  /// Initiate a passive mode socket.
   ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
                     int reuse_addr = 0,
                     int oflag = O_RDWR,
                     struct t_info *info = 0,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     const char device[] = ACE_TLI_TCP_DEVICE);
-  // Initiate a passive mode socket.
 
+  /// Initiate a passive mode socket.
   ACE_HANDLE open (const ACE_Addr &remote_sap,
                    int reuse_addr = 0,
                    int oflag = O_RDWR,
                    struct t_info *info = 0,
                    int backlog = ACE_DEFAULT_BACKLOG,
                    const char device[] = ACE_TLI_TCP_DEVICE);
-  // Initiate a passive mode socket.
 
+  /// Close down the acceptor and release resources.
   int close (void);
-  // Close down the acceptor and release resources.
 
   // = Passive connection acceptance method.
 
+  /**
+   * Accept a new data transfer connection.  A <timeout> of 0 means
+   * block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
+   * means "restart if interrupted."
+   */
   int accept (ACE_TLI_Stream &new_tli_sap,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
@@ -78,38 +82,35 @@ public:
               int rwflag = 1,
               netbuf *udata = 0,
               netbuf *opt = 0);
-  // Accept a new data transfer connection.  A <timeout> of 0 means
-  // block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
-  // means "restart if interrupted."
 
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
   typedef ACE_TLI_Stream PEER_STREAM;
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Network "device" we are using.
   const char *device_;
-  // Network "device" we are using.
 
+  /// Number of connections to queue.
   int backlog_;
-  // Number of connections to queue.
 
+  /// Are we using "tirdwr" mod?
   int rwflag_;
-  // Are we using "tirdwr" mod?
 
+  /// Handle TLI accept insanity...
   int handle_async_event (int restart, int rwflag);
-  // Handle TLI accept insanity...
 
+  /// Used for queueing up pending requests.
   ACE_TLI_Request_Queue *queue_;
-  // Used for queueing up pending requests.
 
+  /// Used for handling disconnects
   struct t_discon *disp_;
-  // Used for handling disconnects
 };
 
 #endif /* ACE_HAS_TLI */

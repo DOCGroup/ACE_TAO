@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Service_Object.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Service_Object.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SERVICE_OBJECT_H
 #define ACE_SERVICE_OBJECT_H
@@ -27,51 +24,55 @@
 #include "ace/Event_Handler.h"
 
 #define ACE_Component ACE_Service_Object
+/**
+ * @class ACE_Service_Object
+ *
+ * @brief Provide the abstract base class common to all service
+ * implementations.
+ *
+ * Classes that inherit from <ACE_Service_Objects> are capable
+ * of being registered with the <ACE_Reactor> (due to the
+ * <ACE_Event_Handler>, as well as being dynamically linked by
+ * the <ACE_Service_Config> (due to the <ACE_Shared_Object>).
+ */
 class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Shared_Object
 {
-  // = TITLE
-  //     Provide the abstract base class common to all service
-  //     implementations.
-  //
-  // = DESCRIPTION
-  //     Classes that inherit from <ACE_Service_Objects> are capable
-  //     of being registered with the <ACE_Reactor> (due to the
-  //     <ACE_Event_Handler>, as well as being dynamically linked by
-  //     the <ACE_Service_Config> (due to the <ACE_Shared_Object>).
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   ACE_Service_Object (ACE_Reactor * = 0);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Service_Object (void);
-  // Destructor.
 
+    /// Temporarily disable a service without removing it completely.
   virtual int suspend (void);
-    // Temporarily disable a service without removing it completely.
 
+    /// Re-enable a previously suspended service.
   virtual int resume (void);
-    // Re-enable a previously suspended service.
 };
 
 // Forward decl.
 class ACE_Service_Type_Impl;
 
+/**
+ * @class ACE_Service_Type
+ *
+ * @brief Keeps track of information related to the various
+ * <ACE_Service_Type_Impl> subclasses.
+ *
+ * This class acts as the interface of the "Bridge" pattern.
+ */
 class ACE_Export ACE_Service_Type
 {
-  // = TITLE
-  //      Keeps track of information related to the various
-  //      <ACE_Service_Type_Impl> subclasses.
-  //
-  // = DESCRIPTION
-  //      This class acts as the interface of the "Bridge" pattern.
 public:
   enum
   {
+    /// Delete the payload object.
     DELETE_OBJ = 1,
-    // Delete the payload object.
 
+    /// Delete the enclosing object.
     DELETE_THIS = 2
-    // Delete the enclosing object.
   };
 
   // = Initialization and termination methods.
@@ -96,62 +97,64 @@ public:
   int  active (void) const;
   void active (int);
 
+  /// Calls <fini> on <type_>
   void fini (void);
-  // Calls <fini> on <type_>
 
+  /// Check if the service has been fini'ed.
   int fini_called (void) const;
-  // Check if the service has been fini'ed.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Humanly readible name of svc.
   const ACE_TCHAR *name_;
-  // Humanly readible name of svc.
 
+  /// Pointer to C++ object that implements the svc.
   const ACE_Service_Type_Impl *type_;
-  // Pointer to C++ object that implements the svc.
 
+  /// Handle to shared object file (non-zero if dynamically linked).
   ACE_SHLIB_HANDLE handle_;
-  // Handle to shared object file (non-zero if dynamically linked).
 
+  /// 1 if svc is currently active, otherwise 0.
   int active_;
-  // 1 if svc is currently active, otherwise 0.
 
+  /// 1 if <fini> on <type_> has already been called, otherwise 0.
   int fini_already_called_;
-  // 1 if <fini> on <type_> has already been called, otherwise 0.
 };
 
+/**
+ * @class ACE_Service_Object_Ptr
+ *
+ * @brief This is a smart pointer that holds onto the associated
+ * <ACE_Service_Object> * until the current scope is left, at
+ * which point the object's <fini> hook is called and the
+ * service_object_ gets deleted.
+ *
+ * This class is similar to the Standard C++ Library class
+ * <auto_ptr>.  It is used in conjunction with statically linked
+ * <ACE_Service_Objects>, as shown in the
+ * ./netsvcs/server/main.cpp example.
+ */
 class ACE_Export ACE_Service_Object_Ptr
 {
-  // = TITLE
-  //     This is a smart pointer that holds onto the associated
-  //     <ACE_Service_Object> * until the current scope is left, at
-  //     which point the object's <fini> hook is called and the
-  //     service_object_ gets deleted.
-  //
-  // = DESCRIPTION
-  //     This class is similar to the Standard C++ Library class
-  //     <auto_ptr>.  It is used in conjunction with statically linked
-  //     <ACE_Service_Objects>, as shown in the
-  //     ./netsvcs/server/main.cpp example.
 public:
   // = Initialization and termination methods.
+  /// Acquire ownership of the <so>.
   ACE_Service_Object_Ptr (ACE_Service_Object *so);
-  // Acquire ownership of the <so>.
 
+  /// Release the held <ACE_Service_Object> by calling its <fini> hook.
   ~ACE_Service_Object_Ptr (void);
-  // Release the held <ACE_Service_Object> by calling its <fini> hook.
 
+  /// Smart pointer to access the underlying <ACE_Service_Object>.
   ACE_Service_Object *operator-> ();
-  // Smart pointer to access the underlying <ACE_Service_Object>.
 
 private:
+  /// Holds the service object until we're done.
   ACE_Service_Object *service_object_;
-  // Holds the service object until we're done.
 };
 
 #if defined (__ACE_INLINE__)

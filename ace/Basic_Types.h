@@ -1,49 +1,46 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE
-//
-// = FILENAME
-//    Basic_Types.h
-//
-// = AUTHORS
-//    David L. Levine
-//
-// = DESCRIPTION
-//    #defines the list of preprocessor macros below.  The config.h file can
-//    pre-define any of these to short-cut the definitions.  This is usually
-//    only necessary if the preprocessor does all of its math using integers.
-//
-//    Sizes of built-in types:
-//      ACE_SIZEOF_CHAR
-//      ACE_SIZEOF_WCHAR
-//      ACE_SIZEOF_SHORT
-//      ACE_SIZEOF_INT
-//      ACE_SIZEOF_LONG
-//      ACE_SIZEOF_LONG_LONG
-//      ACE_SIZEOF_VOID_P
-//      ACE_SIZEOF_FLOAT
-//      ACE_SIZEOF_DOUBLE
-//      ACE_SIZEOF_LONG_DOUBLE
-//
-//    Wrappers for built-in types of specific sizes:
-//      ACE_USHORT16 /* For backward compatibility.  Use ACE_UINT16 instead. */
-//      ACE_INT16
-//      ACE_UINT16
-//      ACE_INT32
-//      ACE_UINT32
-//      ACE_UINT64
-//    (Note: ACE_INT64 is not defined, because there is no ACE_LongLong for
-//     platforms that don't have a native 8-byte integer type.)
-//
-//    Byte-order (endian-ness) determination:
-//      ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Basic_Types.h
+ *
+ *  $Id$
+ *
+ *  @author David L. Levine
+ *
+ *  #defines the list of preprocessor macros below.  The config.h file can
+ *  pre-define any of these to short-cut the definitions.  This is usually
+ *  only necessary if the preprocessor does all of its math using integers.
+ *
+ *  Sizes of built-in types:
+ *    - ACE_SIZEOF_CHAR
+ *    - ACE_SIZEOF_WCHAR
+ *    - ACE_SIZEOF_SHORT
+ *    - ACE_SIZEOF_INT
+ *    - ACE_SIZEOF_LONG
+ *    - ACE_SIZEOF_LONG_LONG
+ *    - ACE_SIZEOF_VOID_P
+ *    - ACE_SIZEOF_FLOAT
+ *    - ACE_SIZEOF_DOUBLE
+ *    - ACE_SIZEOF_LONG_DOUBLE
+ *
+ *  Wrappers for built-in types of specific sizes:
+ *    - ACE_USHORT16 (For backward compatibility.  Use ACE_UINT16 instead.)
+ *    - ACE_INT16
+ *    - ACE_UINT16
+ *    - ACE_INT32
+ *    - ACE_UINT32
+ *    - ACE_UINT64
+ *  (Note: ACE_INT64 is not defined, because there is no ACE_LongLong for
+ *   platforms that don't have a native 8-byte integer type.)
+ *
+ *  Byte-order (endian-ness) determination:
+ *    ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef ACE_BASIC_TYPES_H
 # define ACE_BASIC_TYPES_H
@@ -260,19 +257,21 @@ typedef ACE_UINT16 ACE_USHORT16;
 
 // If the platform lacks a long long, define one.
 # if defined (ACE_LACKS_LONGLONG_T)
+/**
+ * @class ACE_U_LongLong
+ *
+ * @brief Unsigned long long for platforms that don't have one.
+ *
+ * Provide our own unsigned long long.  This is intended to be
+ * use with ACE_High_Res_Timer, so the division operator assumes
+ * that the quotient fits into a u_long.
+ * Please note that the constructor takes (optionally) two values.
+ * The high one contributes 0x100000000 times its value.  So,
+ * for example, (0, 2) is _not_ 20000000000, but instead
+ * 0x200000000.  To emphasize this, the default values are expressed
+ * in hex, and output () dumps the value in hex.
+ */
   class ACE_Export ACE_U_LongLong
-  // = TITLE
-  //     Unsigned long long for platforms that don't have one.
-  //
-  // = DESCRIPTION
-  //     Provide our own unsigned long long.  This is intended to be
-  //     use with ACE_High_Res_Timer, so the division operator assumes
-  //     that the quotient fits into a u_long.
-  //     Please note that the constructor takes (optionally) two values.
-  //     The high one contributes 0x100000000 times its value.  So,
-  //     for example, (0, 2) is _not_ 20000000000, but instead
-  //     0x200000000.  To emphasize this, the default values are expressed
-  //     in hex, and output () dumps the value in hex.
   {
   public:
     // = Initialization and termination methods.
@@ -347,8 +346,8 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   endif /* ACE_SIZEOF_INT != 4 */
 
     // = Helper methods.
+    /// Outputs the value to the FILE, in hex.
     void output (FILE * = stdout) const;
-    // Outputs the value to the FILE, in hex.
 
     ACE_UINT32 hi (void) const;
     ACE_UINT32 lo (void) const;
@@ -379,22 +378,23 @@ typedef ACE_UINT16 ACE_USHORT16;
     // order to minimize the extent of the data_ struct.  It's
     // only used here; the .i and .cpp files use the accessors.
 
+    /// Internal utility function to hide access through struct.
     const ACE_UINT32 &h_ () const { return data_.hi_; }
-    // Internal utility function to hide access through struct.
 
+    /// Internal utility function to hide access through struct.
     ACE_UINT32 &h_ () { return data_.hi_; }
-    // Internal utility function to hide access through struct.
 
+    /// Internal utility function to hide access through struct.
     const ACE_UINT32 &l_ () const { return data_.lo_; }
-    // Internal utility function to hide access through struct.
 
+    /// Internal utility function to hide access through struct.
     ACE_UINT32 &l_ () { return data_.lo_; }
-    // Internal utility function to hide access through struct.
 
     // NOTE:  the above four accessors are inlined here in
     // order to minimize the extent of the data_ struct.  It's
     // only used here; the .i and .cpp files use the accessors.
 
+    /// These functions are used to implement multiplication.
     ACE_UINT32 ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out);
     ACE_U_LongLong ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
                               ACE_UINT32 *c_out);
@@ -402,7 +402,6 @@ typedef ACE_UINT16 ACE_USHORT16;
                             ACE_UINT32 *carry);
     ACE_U_LongLong ull_mult (ACE_U_LongLong a, ACE_UINT32 b,
                              ACE_UINT32 *carry);
-    // These functions are used to implement multiplication.
   };
 
   typedef ACE_U_LongLong ACE_UINT64;

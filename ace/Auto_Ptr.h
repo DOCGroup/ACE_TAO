@@ -1,20 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Auto_Ptr.h
-//
-// = AUTHOR
-//    Doug Schmidt and Irfan Pyarali, based on code from Jack Reeves
-//    (jack@fx.com) and Dr. Harald M. Mueller
-//    (mueller@garwein.hai.siemens.co.at)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Auto_Ptr.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ *  @author and Irfan Pyarali
+ *  @author Jack Reeves (jack@fx.com)
+ *  @author Dr. Harald M. Mueller (mueller@garwein.hai.siemens.co.at)
+ */
+//=============================================================================
+
 
 #ifndef ACE_AUTO_PTR_H
 #define ACE_AUTO_PTR_H
@@ -26,12 +24,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Auto_Basic_Ptr
+ *
+ * @brief Implements the draft C++ standard auto_ptr abstraction.
+ * This class allows one to work on non-object (basic) types
+ */
 template <class X>
 class ACE_Auto_Basic_Ptr
 {
-  // = TITLE
-  //     Implements the draft C++ standard auto_ptr abstraction.
-  //     This class allows one to work on non-object (basic) types
 public:
   // = Initialization and termination methods
   ACE_EXPLICIT ACE_Auto_Basic_Ptr (X *p = 0) : p_ (p) {}
@@ -46,11 +47,11 @@ public:
   X *release (void);
   void reset (X *p = 0);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
   X *p_;
@@ -66,11 +67,14 @@ using std::auto_ptr;
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
+/**
+ * @class auto_ptr
+ *
+ * @brief Implements the draft C++ standard auto_ptr abstraction.
+ */
 template <class X>
 class auto_ptr : public ACE_Auto_Basic_Ptr <X>
 {
-  // = TITLE
-  //     Implements the draft C++ standard auto_ptr abstraction.
 public:
   // = Initialization and termination methods
   ACE_EXPLICIT auto_ptr (X *p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
@@ -80,14 +84,17 @@ public:
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
+/**
+ * @class ACE_Auto_Basic_Array_Ptr
+ *
+ * @brief Implements an extension to the draft C++ standard auto_ptr
+ * abstraction.  This class allows one to work on non-object
+ * (basic) types that must be treated as an array, e.g.,
+ * deallocated via "delete [] foo".
+ */
 template<class X>
 class ACE_Auto_Basic_Array_Ptr
 {
-  // = TITLE
-  //     Implements an extension to the draft C++ standard auto_ptr
-  //     abstraction.  This class allows one to work on non-object
-  //     (basic) types that must be treated as an array, e.g.,
-  //     deallocated via "delete [] foo".
 public:
   // = Initialization and termination methods.
   ACE_EXPLICIT ACE_Auto_Basic_Array_Ptr (X *p = 0) : p_ (p) {}
@@ -103,25 +110,28 @@ public:
   X *release (void);
   void reset (X *p = 0);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
   X *p_;
 };
 
+/**
+ * @class ACE_Auto_Array_Ptr
+ *
+ * @brief Implements an extension to the draft C++ standard auto_ptr
+ * abstraction.
+ */
 template<class X>
 class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
 {
-  // = TITLE
-  //     Implements an extension to the draft C++ standard auto_ptr
-  //     abstraction.
 public:
   // = Initialization and termination methods.
-  ACE_EXPLICIT ACE_Auto_Array_Ptr (X *p = 0) 
+  ACE_EXPLICIT ACE_Auto_Array_Ptr (X *p = 0)
     : ACE_Auto_Basic_Array_Ptr<X> (p) {}
 
   X *operator-> () const;

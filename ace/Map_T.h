@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Map_T.h
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Map_T.h
+ *
+ *  $Id$
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_MAP_T_H
 #define ACE_MAP_T_H
@@ -28,224 +25,237 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Noop_Key_Generator
+ *
+ * @brief Defines a noop key generator.
+ */
 template <class T>
 class ACE_Noop_Key_Generator
 {
-  // = TITLE
-  //     Defines a noop key generator.
 public:
 
+  /// Functor method: generates a new key.
   int operator () (T &);
-  // Functor method: generates a new key.
 };
 
+/**
+ * @class ACE_Incremental_Key_Generator
+ *
+ * @brief Defines a simple incremental key generator.
+ *
+ * Generates a new key of type T by incrementing current
+ * value. Requirements on T are:
+ * - Constructor that accepts 0 in the constructor.
+ * - Prefix increment.
+ * - Assignment.
+ * Note that a primitive types such as u_long, int, etc., are
+ * suitable for this class.
+ */
 template <class T>
 class ACE_Incremental_Key_Generator
 {
-  // = TITLE
-  //     Defines a simple incremental key generator.
-  //
-  // = DESCRIPTION
-  //     Generates a new key of type T by incrementing current
-  //     value. Requirements on T are:
-  //
-  //       - Constructor that accepts 0 in the constructor.
-  //       - Prefix increment.
-  //       - Assignment.
-  //
-  //     Note that a primitive types such as u_long, int, etc., are
-  //     suitable for this class.
 public:
 
+  /// Constructor.
   ACE_Incremental_Key_Generator (void);
-  // Constructor.
 
+  /// Functor method: generates a new key.
   int operator () (T &t);
-  // Functor method: generates a new key.
 
+  /// Returns the current value.
   T& current_value (void);
-  // Returns the current value.
 
 protected:
 
+  /// Current value.
   T t_;
-  // Current value.
 };
 
+/**
+ * @class ACE_Iterator_Impl
+ *
+ * @brief Defines a abstract iterator.
+ *
+ * Implementation to be provided by subclasses.
+ */
 template <class T>
 class ACE_Iterator_Impl
 {
-  // = TITLE
-  //     Defines a abstract iterator.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by subclasses.
 public:
 
+  /// Destructor.
   virtual ~ACE_Iterator_Impl (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Iterator_Impl<T> *clone (void) const = 0;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const = 0;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const = 0;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void) = 0;
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void) = 0;
-  // Reverse.
 };
 
+/**
+ * @class ACE_Reverse_Iterator_Impl
+ *
+ * @brief Defines a abstract reverse iterator.
+ *
+ * Implementation to be provided by subclasses.
+ */
 template <class T>
 class ACE_Reverse_Iterator_Impl
 {
-  // = TITLE
-  //     Defines a abstract reverse iterator.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by subclasses.
 public:
 
+  /// Destructor.
   virtual ~ACE_Reverse_Iterator_Impl (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const = 0;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const = 0;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const = 0;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void) = 0;
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void) = 0;
-  // Reverse.
 };
 
+/**
+ * @class ACE_Iterator
+ *
+ * @brief Defines the iterator interface.
+ *
+ * Implementation to be provided by forwarding.
+ */
 template <class T>
 class ACE_Iterator
 {
-  // = TITLE
-  //     Defines the iterator interface.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by forwarding.
 public:
 
   // = Traits.
   typedef T value_type;
   typedef ACE_Iterator_Impl<T> implementation;
 
+  /// Constructor.
   ACE_Iterator (ACE_Iterator_Impl<T> *impl);
-  // Constructor.
 
+  /// Copy constructor.
   ACE_Iterator (const ACE_Iterator<T> &rhs);
-  // Copy constructor.
 
+  /// Destructor.
   ~ACE_Iterator (void);
-  // Destructor.
 
+  /// Assignment operator.
   ACE_Iterator<T> &operator= (const ACE_Iterator<T> &rhs);
-  // Assignment operator.
 
+  /// Comparison operators.
   int operator== (const ACE_Iterator<T> &rhs) const;
   int operator!= (const ACE_Iterator<T> &rhs) const;
-  // Comparison operators.
 
+  /// Dereference operator.
   T operator *() const;
-  // Dereference operator.
 
+  /// Prefix advance.
   ACE_Iterator<T> &operator++ (void);
-  // Prefix advance.
 
+  /// Postfix advance.
   ACE_Iterator<T> operator++ (int);
-  // Postfix advance.
 
+  /// Prefix reverse.
   ACE_Iterator<T> &operator-- (void);
-  // Prefix reverse.
 
+  /// Postfix reverse.
   ACE_Iterator<T> operator-- (int);
-  // Postfix reverse.
 
+  /// Accessor to implementation object.
   ACE_Iterator_Impl<T> &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// Implementation pointer.
   ACE_Iterator_Impl<T> *implementation_;
-  // Implementation pointer.
 };
 
+/**
+ * @class ACE_Reverse_Iterator
+ *
+ * @brief Defines the reverse iterator interface.
+ *
+ * Implementation to be provided by forwarding.
+ */
 template <class T>
 class ACE_Reverse_Iterator
 {
-  // = TITLE
-  //     Defines the reverse iterator interface.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by forwarding.
 public:
 
   // = Traits.
   typedef T value_type;
   typedef ACE_Reverse_Iterator_Impl<T> implementation;
 
+  /// Constructor.
   ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl);
-  // Constructor.
 
+  /// Copy constructor.
   ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
-  // Copy constructor.
 
+  /// Destructor.
   ~ACE_Reverse_Iterator (void);
-  // Destructor.
 
+  /// Assignment operator.
   ACE_Reverse_Iterator<T> &operator= (const ACE_Reverse_Iterator<T> &rhs);
-  // Assignment operator.
 
+  /// Comparison operators.
   int operator== (const ACE_Reverse_Iterator<T> &rhs) const;
   int operator!= (const ACE_Reverse_Iterator<T> &rhs) const;
-  // Comparison operators.
 
+  /// Dereference operator.
   T operator *() const;
-  // Dereference operator.
 
+  /// Prefix advance.
   ACE_Reverse_Iterator<T> &operator++ (void);
-  // Prefix advance.
 
+  /// Postfix advance.
   ACE_Reverse_Iterator<T> operator++ (int);
-  // Postfix advance.
 
+  /// Prefix reverse.
   ACE_Reverse_Iterator<T> &operator-- (void);
-  // Prefix reverse.
 
+  /// Postfix reverse.
   ACE_Reverse_Iterator<T> operator-- (int);
-  // Postfix reverse.
 
+  /// Accessor to implementation object.
   ACE_Reverse_Iterator_Impl<T> &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// Implementation pointer.
   ACE_Reverse_Iterator_Impl<T> *implementation_;
-  // Implementation pointer.
 };
 
+/**
+ * @class ACE_Map
+ *
+ * @brief Defines a map interface.
+ *
+ * Implementation to be provided by subclasses.
+ */
 template <class KEY, class VALUE>
 class ACE_Map
 {
-  // = TITLE
-  //     Defines a map interface.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by subclasses.
 public:
 
   // = Traits.
@@ -264,136 +274,152 @@ public:
   typedef ACE_Reverse_Iterator_Impl<value_type> 
           reverse_iterator_implementation; 
 
+  /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map (void);
-  // Close down and release dynamically allocated resources.
 
+  /// Initialize a <Map> with size <length>.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0) = 0;
-  // Initialize a <Map> with size <length>.
 
+  /// Close down a <Map> and release dynamically allocated resources.
   virtual int close (void) = 0;
-  // Close down a <Map> and release dynamically allocated resources.
 
+  /**
+   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * map then no changes are made and 1 is returned.  Returns 0 on a
+   * successful addition.  This function fails for maps that do not
+   * allow user specified keys. <key> is an "in" parameter.
+   */
   virtual int bind (const KEY &key,
                     const VALUE &value) = 0;
-  // Add <key>/<value> pair to the map.  If <key> is already in the
-  // map then no changes are made and 1 is returned.  Returns 0 on a
-  // successful addition.  This function fails for maps that do not
-  // allow user specified keys. <key> is an "in" parameter.
 
+  /**
+   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * and maybe modified/extended by the map to add additional
+   * information.  To recover original key, call the <recover_key>
+   * method.
+   */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key) = 0;
-  // Add <key>/<value> pair to the map.  <key> is an "inout" parameter
-  // and maybe modified/extended by the map to add additional
-  // information.  To recover original key, call the <recover_key>
-  // method.
 
+  /**
+   * Add <value> to the map, and the corresponding key produced by the
+   * Map is returned through <key> which is an "out" parameter.  For
+   * maps that do not naturally produce keys, the map adapters will
+   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * users are responsible for not jeopardizing this key production
+   * scheme by using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value,
                                KEY &key) = 0;
-  // Add <value> to the map, and the corresponding key produced by the
-  // Map is returned through <key> which is an "out" parameter.  For
-  // maps that do not naturally produce keys, the map adapters will
-  // use the <KEY_GENERATOR> class to produce a key.  However, the
-  // users are responsible for not jeopardizing this key production
-  // scheme by using user specified keys with keys produced by the key
-  // generator.
 
+  /**
+   * Add <value> to the map.  The user does not care about the
+   * corresponding key produced by the Map. For maps that do not
+   * naturally produce keys, the map adapters will use the
+   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * responsible for not jeopardizing this key production scheme by
+   * using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value) = 0;
-  // Add <value> to the map.  The user does not care about the
-  // corresponding key produced by the Map. For maps that do not
-  // naturally produce keys, the map adapters will use the
-  // <KEY_GENERATOR> class to produce a key.  However, the users are
-  // responsible for not jeopardizing this key production scheme by
-  // using user specified keys with keys produced by the key
-  // generator.
 
+  /// Recovers the original key potentially modified by the map during
+  /// <bind_modify_key>.
   virtual int recover_key (const KEY &modified_key,
                            KEY &original_key) = 0;
-  // Recovers the original key potentially modified by the map during
-  // <bind_modify_key>.
 
+  /**
+   * Reassociate <key> with <value>. The function fails if <key> is
+   * not in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value) = 0;
-  // Reassociate <key> with <value>. The function fails if <key> is
-  // not in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old value into the
+   * "out" parameter <old_value>.  The function fails if <key> is not
+   * in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value) = 0;
-  // Reassociate <key> with <value>, storing the old value into the
-  // "out" parameter <old_value>.  The function fails if <key> is not
-  // in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old key and value
+   * into the "out" parameters <old_key> and <old_value>.  The
+   * function fails if <key> is not in the map for maps that do not
+   * allow user specified keys.  However, for maps that allow user
+   * specified keys, if the key is not in the map, a new <key>/<value>
+   * association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       KEY &old_key,
                       VALUE &old_value) = 0;
-  // Reassociate <key> with <value>, storing the old key and value
-  // into the "out" parameters <old_key> and <old_value>.  The
-  // function fails if <key> is not in the map for maps that do not
-  // allow user specified keys.  However, for maps that allow user
-  // specified keys, if the key is not in the map, a new <key>/<value>
-  // association is created.
 
+  /**
+   * Associate <key> with <value> if and only if <key> is not in the
+   * map.  If <key> is already in the map, then the <value> parameter
+   * is overwritten with the existing value in the map. Returns 0 if a
+   * new <key>/<value> association is created.  Returns 1 if an
+   * attempt is made to bind an existing entry.  This function fails
+   * for maps that do not allow user specified keys.
+   */
   virtual int trybind (const KEY &key,
                        VALUE &value) = 0;
-  // Associate <key> with <value> if and only if <key> is not in the
-  // map.  If <key> is already in the map, then the <value> parameter
-  // is overwritten with the existing value in the map. Returns 0 if a
-  // new <key>/<value> association is created.  Returns 1 if an
-  // attempt is made to bind an existing entry.  This function fails
-  // for maps that do not allow user specified keys.
 
+  /// Locate <value> associated with <key>.
   virtual int find (const KEY &key,
                     VALUE &value) = 0;
-  // Locate <value> associated with <key>.
 
+  /// Is <key> in the map?
   virtual int find (const KEY &key) = 0;
-  // Is <key> in the map?
 
+  /// Remove <key> from the map.
   virtual int unbind (const KEY &key) = 0;
-  // Remove <key> from the map.
 
+  /// Remove <key> from the map, and return the <value> associated with
+  /// <key>.
   virtual int unbind (const KEY &key,
                       VALUE &value) = 0;
-  // Remove <key> from the map, and return the <value> associated with
-  // <key>.
 
+  /// Return the current size of the map.
   virtual size_t current_size (void) const = 0;
-  // Return the current size of the map.
 
+  /// Return the total size of the map.
   virtual size_t total_size (void) const = 0;
-  // Return the total size of the map.
 
+  /// Dump the state of an object.
   virtual void dump (void) const = 0;
-  // Dump the state of an object.
 
   // = STL styled iterator factory functions.
 
+  /// Return forward iterator.
   iterator begin (void);
   iterator end (void);
-  // Return forward iterator.
 
+  /// Return reverse iterator.
   reverse_iterator rbegin (void);
   reverse_iterator rend (void);
-  // Return reverse iterator.
 
 protected:
 
   // = Protected no-op constructor.
   ACE_Map (void);
 
+  /// Return forward iterator.
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void) = 0;
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void) = 0;
-  // Return forward iterator.
 
+  /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void) = 0;
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void) = 0;
-  // Return reverse iterator.
 
 private:
 
@@ -402,102 +428,108 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Map (const ACE_Map<KEY, VALUE> &))
 };
 
+/**
+ * @class ACE_Map_Impl_Iterator_Adapter
+ *
+ * @brief Defines a iterator implementation for the Map_Impl class.
+ *
+ * Implementation to be provided by <IMPLEMENTATION>.
+ */
 template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
-  // = TITLE
-  //     Defines a iterator implementation for the Map_Impl class.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by <IMPLEMENTATION>.
 public:
 
   // = Traits.
   typedef IMPLEMENTATION 
           implementation;
 
+  /// Constructor.
   ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Map_Impl_Iterator_Adapter (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Iterator_Impl<T> *clone (void) const;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void);
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void);
-  // Reverse.
 
+  /// Accessor to implementation object.
   IMPLEMENTATION &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
-  // All implementation details are forwarded to this class.
 };
 
+/**
+ * @class ACE_Map_Impl_Reverse_Iterator_Adapter
+ *
+ * @brief Defines a reverse iterator implementation for the Map_Impl class.
+ *
+ * Implementation to be provided by IMPLEMENTATION.
+ */
 template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
-  // = TITLE
-  //     Defines a reverse iterator implementation for the Map_Impl class.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by IMPLEMENTATION.
 public:
 
   // = Traits.
   typedef IMPLEMENTATION
           implementation;
 
+  /// Constructor.
   ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Map_Impl_Reverse_Iterator_Adapter (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void);
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void);
-  // Reverse.
 
+  /// Accessor to implementation object.
   IMPLEMENTATION &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
-  // All implementation details are forwarded to this class.
 };
 
+/**
+ * @class ACE_Map_Impl
+ *
+ * @brief Defines a map implementation.
+ *
+ * Implementation to be provided by <IMPLEMENTATION>.
+ */
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY>
 class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 {
-  // = TITLE
-  //     Defines a map implementation.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by <IMPLEMENTATION>.
 public:
 
   // = Traits.
@@ -510,139 +542,155 @@ public:
           implementation;
 
   // = Initialization and termination methods.
+  /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Map_Impl (ACE_Allocator *alloc = 0);
-  // Initialize with the <ACE_DEFAULT_MAP_SIZE>.
 
+  /// Initialize with <size> entries.  The <size> parameter is ignore
+  /// by maps for which an initialize size does not make sense.
   ACE_Map_Impl (size_t size,
                 ACE_Allocator *alloc = 0);
-  // Initialize with <size> entries.  The <size> parameter is ignore
-  // by maps for which an initialize size does not make sense.
 
+  /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Impl (void);
-  // Close down and release dynamically allocated resources.
 
+  /// Initialize a <Map> with size <length>.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
-  // Initialize a <Map> with size <length>.
 
+  /// Close down a <Map> and release dynamically allocated resources.
   virtual int close (void);
-  // Close down a <Map> and release dynamically allocated resources.
 
+  /**
+   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * map then no changes are made and 1 is returned.  Returns 0 on a
+   * successful addition.  This function fails for maps that do not
+   * allow user specified keys. <key> is an "in" parameter.
+   */
   virtual int bind (const KEY &key,
                     const VALUE &value);
-  // Add <key>/<value> pair to the map.  If <key> is already in the
-  // map then no changes are made and 1 is returned.  Returns 0 on a
-  // successful addition.  This function fails for maps that do not
-  // allow user specified keys. <key> is an "in" parameter.
 
+  /**
+   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * and maybe modified/extended by the map to add additional
+   * information.  To recover original key, call the <recover_key>
+   * method.
+   */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key);
-  // Add <key>/<value> pair to the map.  <key> is an "inout" parameter
-  // and maybe modified/extended by the map to add additional
-  // information.  To recover original key, call the <recover_key>
-  // method.
 
+  /**
+   * Add <value> to the map, and the corresponding key produced by the
+   * Map is returned through <key> which is an "out" parameter.  For
+   * maps that do not naturally produce keys, the map adapters will
+   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * users are responsible for not jeopardizing this key production
+   * scheme by using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value,
                                KEY &key);
-  // Add <value> to the map, and the corresponding key produced by the
-  // Map is returned through <key> which is an "out" parameter.  For
-  // maps that do not naturally produce keys, the map adapters will
-  // use the <KEY_GENERATOR> class to produce a key.  However, the
-  // users are responsible for not jeopardizing this key production
-  // scheme by using user specified keys with keys produced by the key
-  // generator.
 
+  /**
+   * Add <value> to the map.  The user does not care about the
+   * corresponding key produced by the Map. For maps that do not
+   * naturally produce keys, the map adapters will use the
+   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * responsible for not jeopardizing this key production scheme by
+   * using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value);
-  // Add <value> to the map.  The user does not care about the
-  // corresponding key produced by the Map. For maps that do not
-  // naturally produce keys, the map adapters will use the
-  // <KEY_GENERATOR> class to produce a key.  However, the users are
-  // responsible for not jeopardizing this key production scheme by
-  // using user specified keys with keys produced by the key
-  // generator.
 
+  /// Recovers the original key potentially modified by the map during
+  /// <bind_modify_key>.
   virtual int recover_key (const KEY &modified_key,
                            KEY &original_key);
-  // Recovers the original key potentially modified by the map during
-  // <bind_modify_key>.
 
+  /**
+   * Reassociate <key> with <value>. The function fails if <key> is
+   * not in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value);
-  // Reassociate <key> with <value>. The function fails if <key> is
-  // not in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old value into the
+   * "out" parameter <old_value>.  The function fails if <key> is not
+   * in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old value into the
-  // "out" parameter <old_value>.  The function fails if <key> is not
-  // in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old key and value
+   * into the "out" parameters <old_key> and <old_value>.  The
+   * function fails if <key> is not in the map for maps that do not
+   * allow user specified keys.  However, for maps that allow user
+   * specified keys, if the key is not in the map, a new <key>/<value>
+   * association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       KEY &old_key,
                       VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old key and value
-  // into the "out" parameters <old_key> and <old_value>.  The
-  // function fails if <key> is not in the map for maps that do not
-  // allow user specified keys.  However, for maps that allow user
-  // specified keys, if the key is not in the map, a new <key>/<value>
-  // association is created.
 
+  /**
+   * Associate <key> with <value> if and only if <key> is not in the
+   * map.  If <key> is already in the map, then the <value> parameter
+   * is overwritten with the existing value in the map. Returns 0 if a
+   * new <key>/<value> association is created.  Returns 1 if an
+   * attempt is made to bind an existing entry.  This function fails
+   * for maps that do not allow user specified keys.
+   */
   virtual int trybind (const KEY &key,
                        VALUE &value);
-  // Associate <key> with <value> if and only if <key> is not in the
-  // map.  If <key> is already in the map, then the <value> parameter
-  // is overwritten with the existing value in the map. Returns 0 if a
-  // new <key>/<value> association is created.  Returns 1 if an
-  // attempt is made to bind an existing entry.  This function fails
-  // for maps that do not allow user specified keys.
 
+  /// Locate <value> associated with <key>.
   virtual int find (const KEY &key,
                     VALUE &value);
-  // Locate <value> associated with <key>.
 
+  /// Is <key> in the map?
   virtual int find (const KEY &key);
-  // Is <key> in the map?
 
+  /// Remove <key> from the map.
   virtual int unbind (const KEY &key);
-  // Remove <key> from the map.
 
+  /// Remove <key> from the map, and return the <value> associated with
+  /// <key>.
   virtual int unbind (const KEY &key,
                       VALUE &value);
-  // Remove <key> from the map, and return the <value> associated with
-  // <key>.
 
+  /// Return the current size of the map.
   virtual size_t current_size (void) const;
-  // Return the current size of the map.
 
+  /// Return the total size of the map.
   virtual size_t total_size (void) const;
-  // Return the total size of the map.
 
+  /// Dump the state of an object.
   virtual void dump (void) const;
-  // Dump the state of an object.
 
+  /// Accessor to implementation object.
   IMPLEMENTATION &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
-  // All implementation details are forwarded to this class.
 
   // = STL styled iterator factory functions.
 
+  /// Return forward iterator.
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
-  // Return forward iterator.
 
+  /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
-  // Return reverse iterator.
 
 private:
 
@@ -651,102 +699,108 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Map_Impl (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &))
 };
 
+/**
+ * @class ACE_Active_Map_Manager_Iterator_Adapter
+ *
+ * @brief Defines a iterator implementation for the Active_Map_Manager_Adapter.
+ *
+ * Implementation to be provided by ACE_Active_Map_Manager::iterator.
+ */
 template <class T, class VALUE>
 class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
-  // = TITLE
-  //     Defines a iterator implementation for the Active_Map_Manager_Adapter.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by ACE_Active_Map_Manager::iterator.
 public:
 
   // = Traits.
   typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::iterator 
           implementation;
 
+  /// Constructor.
   ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Active_Map_Manager_Iterator_Adapter (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Iterator_Impl<T> *clone (void) const;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void);
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void);
-  // Reverse.
 
+  /// Accessor to implementation object.
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
 };
 
+/**
+ * @class ACE_Active_Map_Manager_Reverse_Iterator_Adapter
+ *
+ * @brief Defines a reverse iterator implementation for the Active_Map_Manager_Adapter.
+ *
+ * Implementation to be provided by ACE_Active_Map_Manager::reverse_iterator.
+ */
 template <class T, class VALUE>
 class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
-  // = TITLE
-  //     Defines a reverse iterator implementation for the Active_Map_Manager_Adapter.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by ACE_Active_Map_Manager::reverse_iterator.
 public:
 
   // = Traits.
   typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::reverse_iterator 
           implementation;
 
+  /// Constructor.
   ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Active_Map_Manager_Reverse_Iterator_Adapter (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void);
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void);
-  // Reverse.
 
+  /// Accessor to implementation object.
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
 };
 
+/**
+ * @class ACE_Active_Map_Manager_Adapter
+ *
+ * @brief Defines a map implementation.
+ *
+ * Implementation to be provided by <ACE_Active_Map_Manager>.
+ */
 template <class KEY, class VALUE, class KEY_ADAPTER>
 class ACE_Active_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 {
-  // = TITLE
-  //     Defines a map implementation.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by <ACE_Active_Map_Manager>.
 public:
 
   // = Traits.
@@ -760,153 +814,169 @@ public:
           implementation;
 
   // = Initialization and termination methods.
+  /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
-  // Initialize with the <ACE_DEFAULT_MAP_SIZE>.
 
+  /// Initialize with <size> entries.  The <size> parameter is ignore
+  /// by maps for which an initialize size does not make sense.
   ACE_Active_Map_Manager_Adapter (size_t size,
                                   ACE_Allocator *alloc = 0);
-  // Initialize with <size> entries.  The <size> parameter is ignore
-  // by maps for which an initialize size does not make sense.
 
+  /// Close down and release dynamically allocated resources.
   virtual ~ACE_Active_Map_Manager_Adapter (void);
-  // Close down and release dynamically allocated resources.
 
+  /// Initialize a <Map> with size <length>.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
-  // Initialize a <Map> with size <length>.
 
+  /// Close down a <Map> and release dynamically allocated resources.
   virtual int close (void);
-  // Close down a <Map> and release dynamically allocated resources.
 
+  /**
+   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * map then no changes are made and 1 is returned.  Returns 0 on a
+   * successful addition.  This function fails for maps that do not
+   * allow user specified keys. <key> is an "in" parameter.
+   */
   virtual int bind (const KEY &key,
                     const VALUE &value);
-  // Add <key>/<value> pair to the map.  If <key> is already in the
-  // map then no changes are made and 1 is returned.  Returns 0 on a
-  // successful addition.  This function fails for maps that do not
-  // allow user specified keys. <key> is an "in" parameter.
 
+  /**
+   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * and maybe modified/extended by the map to add additional
+   * information.  To recover original key, call the <recover_key>
+   * method.
+   */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key);
-  // Add <key>/<value> pair to the map.  <key> is an "inout" parameter
-  // and maybe modified/extended by the map to add additional
-  // information.  To recover original key, call the <recover_key>
-  // method.
 
+  /**
+   * Add <value> to the map, and the corresponding key produced by the
+   * Map is returned through <key> which is an "out" parameter.  For
+   * maps that do not naturally produce keys, the map adapters will
+   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * users are responsible for not jeopardizing this key production
+   * scheme by using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value,
                                KEY &key);
-  // Add <value> to the map, and the corresponding key produced by the
-  // Map is returned through <key> which is an "out" parameter.  For
-  // maps that do not naturally produce keys, the map adapters will
-  // use the <KEY_GENERATOR> class to produce a key.  However, the
-  // users are responsible for not jeopardizing this key production
-  // scheme by using user specified keys with keys produced by the key
-  // generator.
 
+  /**
+   * Add <value> to the map.  The user does not care about the
+   * corresponding key produced by the Map. For maps that do not
+   * naturally produce keys, the map adapters will use the
+   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * responsible for not jeopardizing this key production scheme by
+   * using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value);
-  // Add <value> to the map.  The user does not care about the
-  // corresponding key produced by the Map. For maps that do not
-  // naturally produce keys, the map adapters will use the
-  // <KEY_GENERATOR> class to produce a key.  However, the users are
-  // responsible for not jeopardizing this key production scheme by
-  // using user specified keys with keys produced by the key
-  // generator.
 
+  /// Recovers the original key potentially modified by the map during
+  /// <bind_modify_key>.
   virtual int recover_key (const KEY &modified_key,
                            KEY &original_key);
-  // Recovers the original key potentially modified by the map during
-  // <bind_modify_key>.
 
+  /**
+   * Reassociate <key> with <value>. The function fails if <key> is
+   * not in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value);
-  // Reassociate <key> with <value>. The function fails if <key> is
-  // not in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old value into the
+   * "out" parameter <old_value>.  The function fails if <key> is not
+   * in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old value into the
-  // "out" parameter <old_value>.  The function fails if <key> is not
-  // in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old key and value
+   * into the "out" parameters <old_key> and <old_value>.  The
+   * function fails if <key> is not in the map for maps that do not
+   * allow user specified keys.  However, for maps that allow user
+   * specified keys, if the key is not in the map, a new <key>/<value>
+   * association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       KEY &old_key,
                       VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old key and value
-  // into the "out" parameters <old_key> and <old_value>.  The
-  // function fails if <key> is not in the map for maps that do not
-  // allow user specified keys.  However, for maps that allow user
-  // specified keys, if the key is not in the map, a new <key>/<value>
-  // association is created.
 
+  /**
+   * Associate <key> with <value> if and only if <key> is not in the
+   * map.  If <key> is already in the map, then the <value> parameter
+   * is overwritten with the existing value in the map. Returns 0 if a
+   * new <key>/<value> association is created.  Returns 1 if an
+   * attempt is made to bind an existing entry.  This function fails
+   * for maps that do not allow user specified keys.
+   */
   virtual int trybind (const KEY &key,
                        VALUE &value);
-  // Associate <key> with <value> if and only if <key> is not in the
-  // map.  If <key> is already in the map, then the <value> parameter
-  // is overwritten with the existing value in the map. Returns 0 if a
-  // new <key>/<value> association is created.  Returns 1 if an
-  // attempt is made to bind an existing entry.  This function fails
-  // for maps that do not allow user specified keys.
 
+  /// Locate <value> associated with <key>.
   virtual int find (const KEY &key,
                     VALUE &value);
-  // Locate <value> associated with <key>.
 
+  /// Is <key> in the map?
   virtual int find (const KEY &key);
-  // Is <key> in the map?
 
+  /// Remove <key> from the map.
   virtual int unbind (const KEY &key);
-  // Remove <key> from the map.
 
+  /// Remove <key> from the map, and return the <value> associated with
+  /// <key>.
   virtual int unbind (const KEY &key,
                       VALUE &value);
-  // Remove <key> from the map, and return the <value> associated with
-  // <key>.
 
+  /// Return the current size of the map.
   virtual size_t current_size (void) const;
-  // Return the current size of the map.
 
+  /// Return the total size of the map.
   virtual size_t total_size (void) const;
-  // Return the total size of the map.
 
+  /// Dump the state of an object.
   virtual void dump (void) const;
-  // Dump the state of an object.
 
+  /// Accessor to implementation object.
   ACE_Active_Map_Manager<ACE_Pair<KEY, VALUE> > &impl (void);
-  // Accessor to implementation object.
 
+  /// Accessor to key adapter.
   KEY_ADAPTER &key_adapter (void);
-  // Accessor to key adapter.
 
 protected:
 
+  /// Find helper.
   virtual int find (const KEY &key,
                     expanded_value *&internal_value);
-  // Find helper.
 
+  /// Unbind helper.
   virtual int unbind (const KEY &key,
                       expanded_value *&internal_value);
-  // Unbind helper.
 
+  /// All implementation details are forwarded to this class.
   ACE_Active_Map_Manager<ACE_Pair<KEY, VALUE> > implementation_;
-  // All implementation details are forwarded to this class.
 
+  /// Adapts between the user key and the Active_Map_Manager_Key.
   KEY_ADAPTER key_adapter_;
-  // Adapts between the user key and the Active_Map_Manager_Key.
 
   // = STL styled iterator factory functions.
 
+  /// Return forward iterator.
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
-  // Return forward iterator.
 
+  /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
-  // Return reverse iterator.
 
 private:
 
@@ -915,102 +985,108 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Active_Map_Manager_Adapter (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &))
 };
 
+/**
+ * @class ACE_Hash_Map_Manager_Ex_Iterator_Adapter
+ *
+ * @brief Defines a iterator implementation for the Hash_Map_Manager_Adapter.
+ *
+ * Implementation to be provided by ACE_Hash_Map_Manager_Ex::iterator.
+ */
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
-  // = TITLE
-  //     Defines a iterator implementation for the Hash_Map_Manager_Adapter.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by ACE_Hash_Map_Manager_Ex::iterator.
 public:
 
   // = Traits.
   typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator 
           implementation;
 
+  /// Constructor.
   ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Hash_Map_Manager_Ex_Iterator_Adapter (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Iterator_Impl<T> *clone (void) const;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void);
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void);
-  // Reverse.
 
+  /// Accessor to implementation object.
   ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
 };
 
+/**
+ * @class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter
+ *
+ * @brief Defines a reverse iterator implementation for the Hash_Map_Manager_Adapter.
+ *
+ * Implementation to be provided by ACE_Hash_Map_Manager_Ex::reverse_iterator.
+ */
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
-  // = TITLE
-  //     Defines a reverse iterator implementation for the Hash_Map_Manager_Adapter.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by ACE_Hash_Map_Manager_Ex::reverse_iterator.
 public:
 
   // = Traits.
   typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator 
           implementation;
 
+  /// Constructor.
   ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void);
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void);
-  // Reverse.
 
+  /// Accessor to implementation object.
   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
 };
 
+/**
+ * @class ACE_Hash_Map_Manager_Ex_Adapter
+ *
+ * @brief Defines a map implementation.
+ *
+ * Implementation to be provided by <ACE_Hash_Map_Manager_Ex>.
+ */
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR>
 class ACE_Hash_Map_Manager_Ex_Adapter : public ACE_Map<KEY, VALUE>
 {
-  // = TITLE
-  //     Defines a map implementation.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by <ACE_Hash_Map_Manager_Ex>.
 public:
 
   // = Traits.
@@ -1022,145 +1098,161 @@ public:
           implementation;
 
   // = Initialization and termination methods.
+  /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = 0);
-  // Initialize with the <ACE_DEFAULT_MAP_SIZE>.
 
+  /// Initialize with <size> entries.  The <size> parameter is ignore
+  /// by maps for which an initialize size does not make sense.
   ACE_Hash_Map_Manager_Ex_Adapter (size_t size,
                                    ACE_Allocator *alloc = 0);
-  // Initialize with <size> entries.  The <size> parameter is ignore
-  // by maps for which an initialize size does not make sense.
 
+  /// Close down and release dynamically allocated resources.
   virtual ~ACE_Hash_Map_Manager_Ex_Adapter (void);
-  // Close down and release dynamically allocated resources.
 
+  /// Initialize a <Map> with size <length>.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
-  // Initialize a <Map> with size <length>.
 
+  /// Close down a <Map> and release dynamically allocated resources.
   virtual int close (void);
-  // Close down a <Map> and release dynamically allocated resources.
 
+  /**
+   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * map then no changes are made and 1 is returned.  Returns 0 on a
+   * successful addition.  This function fails for maps that do not
+   * allow user specified keys. <key> is an "in" parameter.
+   */
   virtual int bind (const KEY &key,
                     const VALUE &value);
-  // Add <key>/<value> pair to the map.  If <key> is already in the
-  // map then no changes are made and 1 is returned.  Returns 0 on a
-  // successful addition.  This function fails for maps that do not
-  // allow user specified keys. <key> is an "in" parameter.
 
+  /**
+   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * and maybe modified/extended by the map to add additional
+   * information.  To recover original key, call the <recover_key>
+   * method.
+   */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key);
-  // Add <key>/<value> pair to the map.  <key> is an "inout" parameter
-  // and maybe modified/extended by the map to add additional
-  // information.  To recover original key, call the <recover_key>
-  // method.
 
+  /**
+   * Add <value> to the map, and the corresponding key produced by the
+   * Map is returned through <key> which is an "out" parameter.  For
+   * maps that do not naturally produce keys, the map adapters will
+   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * users are responsible for not jeopardizing this key production
+   * scheme by using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value,
                                KEY &key);
-  // Add <value> to the map, and the corresponding key produced by the
-  // Map is returned through <key> which is an "out" parameter.  For
-  // maps that do not naturally produce keys, the map adapters will
-  // use the <KEY_GENERATOR> class to produce a key.  However, the
-  // users are responsible for not jeopardizing this key production
-  // scheme by using user specified keys with keys produced by the key
-  // generator.
 
+  /**
+   * Add <value> to the map.  The user does not care about the
+   * corresponding key produced by the Map. For maps that do not
+   * naturally produce keys, the map adapters will use the
+   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * responsible for not jeopardizing this key production scheme by
+   * using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value);
-  // Add <value> to the map.  The user does not care about the
-  // corresponding key produced by the Map. For maps that do not
-  // naturally produce keys, the map adapters will use the
-  // <KEY_GENERATOR> class to produce a key.  However, the users are
-  // responsible for not jeopardizing this key production scheme by
-  // using user specified keys with keys produced by the key
-  // generator.
 
+  /// Recovers the original key potentially modified by the map during
+  /// <bind_modify_key>.
   virtual int recover_key (const KEY &modified_key,
                            KEY &original_key);
-  // Recovers the original key potentially modified by the map during
-  // <bind_modify_key>.
 
+  /**
+   * Reassociate <key> with <value>. The function fails if <key> is
+   * not in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value);
-  // Reassociate <key> with <value>. The function fails if <key> is
-  // not in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old value into the
+   * "out" parameter <old_value>.  The function fails if <key> is not
+   * in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old value into the
-  // "out" parameter <old_value>.  The function fails if <key> is not
-  // in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old key and value
+   * into the "out" parameters <old_key> and <old_value>.  The
+   * function fails if <key> is not in the map for maps that do not
+   * allow user specified keys.  However, for maps that allow user
+   * specified keys, if the key is not in the map, a new <key>/<value>
+   * association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       KEY &old_key,
                       VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old key and value
-  // into the "out" parameters <old_key> and <old_value>.  The
-  // function fails if <key> is not in the map for maps that do not
-  // allow user specified keys.  However, for maps that allow user
-  // specified keys, if the key is not in the map, a new <key>/<value>
-  // association is created.
 
+  /**
+   * Associate <key> with <value> if and only if <key> is not in the
+   * map.  If <key> is already in the map, then the <value> parameter
+   * is overwritten with the existing value in the map. Returns 0 if a
+   * new <key>/<value> association is created.  Returns 1 if an
+   * attempt is made to bind an existing entry.  This function fails
+   * for maps that do not allow user specified keys.
+   */
   virtual int trybind (const KEY &key,
                        VALUE &value);
-  // Associate <key> with <value> if and only if <key> is not in the
-  // map.  If <key> is already in the map, then the <value> parameter
-  // is overwritten with the existing value in the map. Returns 0 if a
-  // new <key>/<value> association is created.  Returns 1 if an
-  // attempt is made to bind an existing entry.  This function fails
-  // for maps that do not allow user specified keys.
 
+  /// Locate <value> associated with <key>.
   virtual int find (const KEY &key,
                     VALUE &value);
-  // Locate <value> associated with <key>.
 
+  /// Is <key> in the map?
   virtual int find (const KEY &key);
-  // Is <key> in the map?
 
+  /// Remove <key> from the map.
   virtual int unbind (const KEY &key);
-  // Remove <key> from the map.
 
+  /// Remove <key> from the map, and return the <value> associated with
+  /// <key>.
   virtual int unbind (const KEY &key,
                       VALUE &value);
-  // Remove <key> from the map, and return the <value> associated with
-  // <key>.
 
+  /// Return the current size of the map.
   virtual size_t current_size (void) const;
-  // Return the current size of the map.
 
+  /// Return the total size of the map.
   virtual size_t total_size (void) const;
-  // Return the total size of the map.
 
+  /// Dump the state of an object.
   virtual void dump (void) const;
-  // Dump the state of an object.
 
+  /// Accessor to implementation object.
   ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
-  // Accessor to implementation object.
 
+  /// Accessor to key generator.
   KEY_GENERATOR &key_generator (void);
-  // Accessor to key generator.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
 
+  /// Functor class used for generating key.
   KEY_GENERATOR key_generator_;
-  // Functor class used for generating key.
 
   // = STL styled iterator factory functions.
 
+  /// Return forward iterator.
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
-  // Return forward iterator.
 
+  /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
-  // Return reverse iterator.
 
 private:
 
@@ -1169,102 +1261,108 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Hash_Map_Manager_Ex_Adapter (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &))
 };
 
+/**
+ * @class ACE_Map_Manager_Iterator_Adapter
+ *
+ * @brief Defines a iterator implementation for the Map_Manager_Adapter.
+ *
+ * Implementation to be provided by ACE_Map_Manager::iterator.
+ */
 template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
-  // = TITLE
-  //     Defines a iterator implementation for the Map_Manager_Adapter.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by ACE_Map_Manager::iterator.
 public:
 
   // = Traits.
   typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator 
           implementation;
 
+  /// Constructor.
   ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Map_Manager_Iterator_Adapter (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Iterator_Impl<T> *clone (void) const;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void);
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void);
-  // Reverse.
 
+  /// Accessor to implementation object.
   ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
 };
 
+/**
+ * @class ACE_Map_Manager_Reverse_Iterator_Adapter
+ *
+ * @brief Defines a reverse iterator implementation for the Map Manager.
+ *
+ * Implementation to be provided by ACE_Map_Manager::reverse_iterator.
+ */
 template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
-  // = TITLE
-  //     Defines a reverse iterator implementation for the Map Manager.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by ACE_Map_Manager::reverse_iterator.
 public:
 
   // = Traits.
   typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator 
           implementation;
 
+  /// Constructor.
   ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Map_Manager_Reverse_Iterator_Adapter (void);
-  // Destructor.
 
+  /// Clone.
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
-  // Clone.
 
+  /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
-  // Comparison.
 
+  /// Dereference.
   virtual T dereference (void) const;
-  // Dereference.
 
+  /// Advance.
   virtual void plus_plus (void);
-  // Advance.
 
+  /// Reverse.
   virtual void minus_minus (void);
-  // Reverse.
 
+  /// Accessor to implementation object.
   ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl (void);
-  // Accessor to implementation object.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
 };
 
+/**
+ * @class ACE_Map_Manager_Adapter
+ *
+ * @brief Defines a map implementation.
+ *
+ * Implementation to be provided by <ACE_Map_Manager>.
+ */
 template <class KEY, class VALUE, class KEY_GENERATOR>
 class ACE_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 {
-  // = TITLE
-  //     Defines a map implementation.
-  //
-  // = DESCRIPTION
-  //     Implementation to be provided by <ACE_Map_Manager>.
 public:
 
   // = Traits.
@@ -1276,145 +1374,161 @@ public:
           implementation;
 
   // = Initialization and termination methods.
+  /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
-  // Initialize with the <ACE_DEFAULT_MAP_SIZE>.
 
+  /// Initialize with <size> entries.  The <size> parameter is ignore
+  /// by maps for which an initialize size does not make sense.
   ACE_Map_Manager_Adapter (size_t size,
                            ACE_Allocator *alloc = 0);
-  // Initialize with <size> entries.  The <size> parameter is ignore
-  // by maps for which an initialize size does not make sense.
 
+  /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Manager_Adapter (void);
-  // Close down and release dynamically allocated resources.
 
+  /// Initialize a <Map> with size <length>.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
-  // Initialize a <Map> with size <length>.
 
+  /// Close down a <Map> and release dynamically allocated resources.
   virtual int close (void);
-  // Close down a <Map> and release dynamically allocated resources.
 
+  /**
+   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * map then no changes are made and 1 is returned.  Returns 0 on a
+   * successful addition.  This function fails for maps that do not
+   * allow user specified keys. <key> is an "in" parameter.
+   */
   virtual int bind (const KEY &key,
                     const VALUE &value);
-  // Add <key>/<value> pair to the map.  If <key> is already in the
-  // map then no changes are made and 1 is returned.  Returns 0 on a
-  // successful addition.  This function fails for maps that do not
-  // allow user specified keys. <key> is an "in" parameter.
 
+  /**
+   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * and maybe modified/extended by the map to add additional
+   * information.  To recover original key, call the <recover_key>
+   * method.
+   */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key);
-  // Add <key>/<value> pair to the map.  <key> is an "inout" parameter
-  // and maybe modified/extended by the map to add additional
-  // information.  To recover original key, call the <recover_key>
-  // method.
 
+  /**
+   * Add <value> to the map, and the corresponding key produced by the
+   * Map is returned through <key> which is an "out" parameter.  For
+   * maps that do not naturally produce keys, the map adapters will
+   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * users are responsible for not jeopardizing this key production
+   * scheme by using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value,
                                KEY &key);
-  // Add <value> to the map, and the corresponding key produced by the
-  // Map is returned through <key> which is an "out" parameter.  For
-  // maps that do not naturally produce keys, the map adapters will
-  // use the <KEY_GENERATOR> class to produce a key.  However, the
-  // users are responsible for not jeopardizing this key production
-  // scheme by using user specified keys with keys produced by the key
-  // generator.
 
+  /**
+   * Add <value> to the map.  The user does not care about the
+   * corresponding key produced by the Map. For maps that do not
+   * naturally produce keys, the map adapters will use the
+   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * responsible for not jeopardizing this key production scheme by
+   * using user specified keys with keys produced by the key
+   * generator.
+   */
   virtual int bind_create_key (const VALUE &value);
-  // Add <value> to the map.  The user does not care about the
-  // corresponding key produced by the Map. For maps that do not
-  // naturally produce keys, the map adapters will use the
-  // <KEY_GENERATOR> class to produce a key.  However, the users are
-  // responsible for not jeopardizing this key production scheme by
-  // using user specified keys with keys produced by the key
-  // generator.
 
+  /// Recovers the original key potentially modified by the map during
+  /// <bind_modify_key>.
   virtual int recover_key (const KEY &modified_key,
                            KEY &original_key);
-  // Recovers the original key potentially modified by the map during
-  // <bind_modify_key>.
 
+  /**
+   * Reassociate <key> with <value>. The function fails if <key> is
+   * not in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value);
-  // Reassociate <key> with <value>. The function fails if <key> is
-  // not in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old value into the
+   * "out" parameter <old_value>.  The function fails if <key> is not
+   * in the map for maps that do not allow user specified keys.
+   * However, for maps that allow user specified keys, if the key is
+   * not in the map, a new <key>/<value> association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old value into the
-  // "out" parameter <old_value>.  The function fails if <key> is not
-  // in the map for maps that do not allow user specified keys.
-  // However, for maps that allow user specified keys, if the key is
-  // not in the map, a new <key>/<value> association is created.
 
+  /**
+   * Reassociate <key> with <value>, storing the old key and value
+   * into the "out" parameters <old_key> and <old_value>.  The
+   * function fails if <key> is not in the map for maps that do not
+   * allow user specified keys.  However, for maps that allow user
+   * specified keys, if the key is not in the map, a new <key>/<value>
+   * association is created.
+   */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       KEY &old_key,
                       VALUE &old_value);
-  // Reassociate <key> with <value>, storing the old key and value
-  // into the "out" parameters <old_key> and <old_value>.  The
-  // function fails if <key> is not in the map for maps that do not
-  // allow user specified keys.  However, for maps that allow user
-  // specified keys, if the key is not in the map, a new <key>/<value>
-  // association is created.
 
+  /**
+   * Associate <key> with <value> if and only if <key> is not in the
+   * map.  If <key> is already in the map, then the <value> parameter
+   * is overwritten with the existing value in the map. Returns 0 if a
+   * new <key>/<value> association is created.  Returns 1 if an
+   * attempt is made to bind an existing entry.  This function fails
+   * for maps that do not allow user specified keys.
+   */
   virtual int trybind (const KEY &key,
                        VALUE &value);
-  // Associate <key> with <value> if and only if <key> is not in the
-  // map.  If <key> is already in the map, then the <value> parameter
-  // is overwritten with the existing value in the map. Returns 0 if a
-  // new <key>/<value> association is created.  Returns 1 if an
-  // attempt is made to bind an existing entry.  This function fails
-  // for maps that do not allow user specified keys.
 
+  /// Locate <value> associated with <key>.
   virtual int find (const KEY &key,
                     VALUE &value);
-  // Locate <value> associated with <key>.
 
+  /// Is <key> in the map?
   virtual int find (const KEY &key);
-  // Is <key> in the map?
 
+  /// Remove <key> from the map.
   virtual int unbind (const KEY &key);
-  // Remove <key> from the map.
 
+  /// Remove <key> from the map, and return the <value> associated with
+  /// <key>.
   virtual int unbind (const KEY &key,
                       VALUE &value);
-  // Remove <key> from the map, and return the <value> associated with
-  // <key>.
 
+  /// Return the current size of the map.
   virtual size_t current_size (void) const;
-  // Return the current size of the map.
 
+  /// Return the total size of the map.
   virtual size_t total_size (void) const;
-  // Return the total size of the map.
 
+  /// Dump the state of an object.
   virtual void dump (void) const;
-  // Dump the state of an object.
 
+  /// Accessor to implementation object.
   ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> &impl (void);
-  // Accessor to implementation object.
 
+  /// Accessor to key generator.
   KEY_GENERATOR &key_generator (void);
-  // Accessor to key generator.
 
 protected:
 
+  /// All implementation details are forwarded to this class.
   ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
 
+  /// Functor class used for generating key.
   KEY_GENERATOR key_generator_;
-  // Functor class used for generating key.
 
   // = STL styled iterator factory functions.
 
+  /// Return forward iterator.
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
-  // Return forward iterator.
 
+  /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
-  // Return reverse iterator.
 
 private:
 

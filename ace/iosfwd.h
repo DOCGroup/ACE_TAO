@@ -1,28 +1,26 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    iosfwd.h
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// = DESCRIPTION
-//    This file contains the portability ugliness for the Standard C++
-//    Library.  As implementations of the "standard" emerge, this file
-//    will need to be updated.
-//
-//    This files deals with forward declaration for the stream
-//    classes.  Remember that since the new Standard C++ Library code
-//    for streams uses templates, simple forward declaration will not
-//    work.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    iosfwd.h
+ *
+ *  $Id$
+ *
+ *  @author Irfan Pyarali
+ *
+ *  This file contains the portability ugliness for the Standard C++
+ *  Library.  As implementations of the "standard" emerge, this file
+ *  will need to be updated.
+ *
+ *  This files deals with forward declaration for the stream
+ *  classes.  Remember that since the new Standard C++ Library code
+ *  for streams uses templates, simple forward declaration will not
+ *  work.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef ACE_IOSFWD_H
 #define ACE_IOSFWD_H

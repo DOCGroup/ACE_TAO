@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    SV_Shared_Memory.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SV_Shared_Memory.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SV_SHARED_MEMORY_H
 #define ACE_SV_SHARED_MEMORY_H
@@ -25,10 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_SV_Shared_Memory
+ *
+ * @brief This is a wrapper for System V shared memory.
+ */
 class ACE_Export ACE_SV_Shared_Memory
 {
-  // = TITLE
-  //     This is a wrapper for System V shared memory.
 public:
   enum
   {
@@ -60,49 +60,50 @@ public:
                         void *virtual_addr = 0,
                         int flags = 0);
 
+  /// Attach this shared memory segment.
   int  attach (void *virtual_addr = 0,
                int flags =0);
-  // Attach this shared memory segment.
 
+  /// Detach this shared memory segment.
   int  detach (void);
-  // Detach this shared memory segment.
 
+  /// Remove this shared memory segment.
   int  remove (void);
-  // Remove this shared memory segment.
 
+  /// Forward to underlying System V <shmctl>.
   int  control (int cmd, void *buf);
-  // Forward to underlying System V <shmctl>.
 
   // = Segment-related info.
   void *get_segment_ptr (void) const;
   int  get_segment_size (void) const;
 
+  /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
   ACE_HANDLE get_id (void) const;
-  // Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
   enum
   {
-    ALIGN_WORDB = 8   // Most restrictive alignment.
+    /// Most restrictive alignment.
+    ALIGN_WORDB = 8
   };
 
+  /// Internal identifier.
   ACE_HANDLE internal_id_;
-  // Internal identifier.
 
+  /// Size of the mapped segment.
   int size_;
-  // Size of the mapped segment.
 
+  /// Pointer to the beginning of the segment.
   void *segment_ptr_;
-  // Pointer to the beginning of the segment.
 
+  /// Round up to an appropriate page size.
   int round_up (size_t len);
-  // Round up to an appropriate page size.
 };
 
 #if defined (__ACE_INLINE__)

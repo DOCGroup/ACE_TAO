@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Typed_SV_Message.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Typed_SV_Message.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_TYPED_SV_MESSAGE_H
 #define ACE_TYPED_SV_MESSAGE_H
@@ -25,12 +22,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Typed_SV_Message
+ *
+ * @brief Defines the header file for the C++ wrapper for System V
+ * message queues.
+ */
 template <class T>
 class ACE_Typed_SV_Message
 {
-  // = TITLE
-  //     Defines the header file for the C++ wrapper for System V
-  //     message queues.
 public:
   // = Initialization and termination methods.
   ACE_Typed_SV_Message (long type = 0,
@@ -58,24 +58,24 @@ public:
   T &data (void);
   void data (const T &data);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Type of message.
   long type_;
-  // Type of message.
 
+  /// Length of this message.
   int length_;
-  // Length of this message.
 
+  /// Maximum length of any message.
   int max_;
-  // Maximum length of any message.
 
+  /// Data stored in a message.
   T data_;
-  // Data stored in a message.
 };
 
 #if defined (__ACE_INLINE__)

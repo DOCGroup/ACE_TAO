@@ -1,23 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    IOStream_T.h
-//
-// = AUTHOR
-//    James CE Johnson <jcej@lads.com> and Jim Crossley <jim@lads.com>
-//
-// = NOTE
-//    This file should not be #included directly by application code.
-//    Instead, it should #include "ace/IOStream.h".  That's because
-//    we only put some conditional compilations in that file.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IOStream_T.h
+ *
+ *  $Id$
+ *
+ *  @author James CE Johnson <jcej@lads.com>
+ *  @author Jim Crossley <jim@lads.com>
+ *
+ * This file should not be #included directly by application
+ * code. Instead, it should #include "ace/IOStream.h".  That's because
+ * we only put some conditional compilations in that file. 
+ */
+//=============================================================================
+
 
 #ifndef ACE_IOSTREAM_T_H
 #define ACE_IOSTREAM_T_H
@@ -43,13 +40,15 @@ template <class STREAM>
 class ACE_Streambuf_T : public ACE_Streambuf
 {
 public:
+  /**
+   * We will be given a STREAM by the iostream object which creates
+   * us.  See the ACE_IOStream template for how that works.  Like
+   * other streambuf objects, we can be input-only, output-only or
+   * both.
+   */
   ACE_Streambuf_T (STREAM *peer,
                    u_int streambuf_size = ACE_STREAMBUF_SIZE,
                    int io_mode = ios::in | ios::out);
-  // We will be given a STREAM by the iostream object which creates
-  // us.  See the ACE_IOStream template for how that works.  Like
-  // other streambuf objects, we can be input-only, output-only or
-  // both.
 
   virtual ssize_t send (char *buf, ssize_t len);
 
@@ -70,78 +69,82 @@ public:
 protected:
   virtual ACE_HANDLE get_handle (void);
 
+  /// This will be our ACE_SOCK_Stream or similar object.
   STREAM *peer_;
-  // This will be our ACE_SOCK_Stream or similar object.
 };
 
+/**
+ * @class ACE_IOStream
+ *
+ * @brief A template adapter for creating an iostream-like object using
+ * an ACE IPC Stream for the actual I/O.  Iostreams use an
+ * underlying streambuf object for the IO interface.  The
+ * iostream class and derivatives provide you with a host of
+ * convenient operators that access the streambuf.
+ *
+ * We inherit all characteristics of iostream and your <STREAM>
+ * class.  When you create a new class from this template, you
+ * can use it anywhere you would have used your original
+ * <STREAM> class.
+ * To create an iostream for your favorite ACE IPC class (e.g.,
+ * <ACE_SOCK_Stream>), feed that class to this template's
+ * <STREAM> parameter, e.g.,
+ * typedef ACE_Svc_Handler<ACE_SOCK_iostream,
+ * ACE_INET_Addr, ACE_NULL_SYNCH>
+ * Service_Handler;
+ * Because the operators in the iostream class are not virtual,
+ * you cannot easily provide overloads in your custom
+ * ACE_IOStream classes.  To make these things work correctly,
+ * you need to overload ALL operators of the ACE_IOStream you
+ * create. I've attempted to do that here to make things easier
+ * for you but there are no guarantees.
+ * In the iostream.cpp file is an example of why it is necessary
+ * to overload all of the get/put operators when you want to
+ * customize only one or two.
+ */
 template <class STREAM>
 class ACE_IOStream : public iostream, public STREAM
 {
-  // = TITLE
-  //     A template adapter for creating an iostream-like object using
-  //     an ACE IPC Stream for the actual I/O.  Iostreams use an
-  //     underlying streambuf object for the IO interface.  The
-  //     iostream class and derivatives provide you with a host of
-  //     convenient operators that access the streambuf.
-  //
-  // = DESCRIPTION
-  //     We inherit all characteristics of iostream and your <STREAM>
-  //     class.  When you create a new class from this template, you
-  //     can use it anywhere you would have used your original
-  //     <STREAM> class.
-  //
-  //     To create an iostream for your favorite ACE IPC class (e.g.,
-  //     <ACE_SOCK_Stream>), feed that class to this template's
-  //     <STREAM> parameter, e.g.,
-  //
-  //     typedef ACE_Svc_Handler<ACE_SOCK_iostream,
-  //                             ACE_INET_Addr, ACE_NULL_SYNCH>
-  //             Service_Handler;
-  //
-  //     Because the operators in the iostream class are not virtual,
-  //     you cannot easily provide overloads in your custom
-  //     ACE_IOStream classes.  To make these things work correctly,
-  //     you need to overload ALL operators of the ACE_IOStream you
-  //     create. I've attempted to do that here to make things easier
-  //     for you but there are no guarantees.
-  //
-  //     In the iostream.cpp file is an example of why it is necessary
-  //     to overload all of the get/put operators when you want to
-  //     customize only one or two.
 public:
   // = Initialization and termination methods.
   ACE_IOStream (STREAM &stream,
                   u_int streambuf_size = ACE_STREAMBUF_SIZE);
 
+  /**
+   * The default constructor.  This will initiailze your STREAM and
+   * then setup the iostream baseclass to use a custom streambuf based
+   * on STREAM.
+   */
   ACE_IOStream (u_int streambuf_size = ACE_STREAMBUF_SIZE);
-  // The default constructor.  This will initiailze your STREAM and
-  // then setup the iostream baseclass to use a custom streambuf based
-  // on STREAM.
 
+  /// We have to get rid of the <streambuf_> ourselves since we gave it
+  /// to the <iostream> base class;
   virtual ~ACE_IOStream (void);
-  // We have to get rid of the <streambuf_> ourselves since we gave it
-  // to the <iostream> base class;
 
+  /// The only ambituity in the multiple inheritance is the <close>
+  /// function.
   virtual int close (void);
-  // The only ambituity in the multiple inheritance is the <close>
-  // function.
 
+  /**
+   * Returns 1 if we're at the end of the <STREAM>, i.e., if the
+   * connection has closed down or an error has occurred, else 0.
+   * Under the covers, <eof> calls the streambuf's <timeout> function
+   * which will reset the timeout flag.  As as result, you should save
+   * the return of <eof> and check it instead of calling <eof>
+   * successively.
+   */
   int eof (void) const;
-  // Returns 1 if we're at the end of the <STREAM>, i.e., if the
-  // connection has closed down or an error has occurred, else 0.
-  // Under the covers, <eof> calls the streambuf's <timeout> function
-  // which will reset the timeout flag.  As as result, you should save
-  // the return of <eof> and check it instead of calling <eof>
-  // successively.
 
 #if defined (ACE_HAS_STRING_CLASS)
+  /**
+   * A simple string operator.  The base <iostream> has them for char*
+   * but that isn't always the best thing for a <String>.  If we don't
+   * provide our own here, we may not get what we want.
+   */
   virtual ACE_IOStream<STREAM> &operator>> (ACE_IOStream_String &v);
-  // A simple string operator.  The base <iostream> has them for char*
-  // but that isn't always the best thing for a <String>.  If we don't
-  // provide our own here, we may not get what we want.
 
+  /// The converse of the <String::put> operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
-  // The converse of the <String::put> operator.
 
 #endif /* ACE_HAS_STRING_CLASS */
   // = Using the macros to provide get/set operators.
@@ -209,14 +212,14 @@ public:
   virtual void osfx (void)        {  iostream::osfx (); }
 #endif /* ACE_LACKS_IOSTREAM_FX */
 
+  /// Allow the programmer to provide a timeout for read operations.
+  /// Give it a pointer to NULL to block forever.
   ACE_IOStream<STREAM> & operator>> (ACE_Time_Value *&tv);
-  // Allow the programmer to provide a timeout for read operations.
-  // Give it a pointer to NULL to block forever.
 
 protected:
+  /// This is where all of the action takes place.  The streambuf_ is
+  /// the interface to the underlying STREAM.
   ACE_Streambuf_T<STREAM> *streambuf_;
-  // This is where all of the action takes place.  The streambuf_ is
-  // the interface to the underlying STREAM.
 
 private:
   // = Private methods.
@@ -232,20 +235,22 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ssize_t recv_n (...))
 };
 
+/**
+ * @class ACE_SOCK_Dgram_SC
+ *
+ * @brief "Dgram_SC" is short for "Datagram Self-Contained."
+ *
+ * Datagrams don't have the notion of a "peer".  Each send and
+ * receive on a datagram can go to a different peer if you want.
+ * If you're using datagrams for stream activity, you probably
+ * want 'em all to go to (and come from) the same place.  That's
+ * what this class is for.  Here, we keep an address object so
+ * that we can remember who last sent us data.  When we write
+ * back, we're then able to write back to that same address.
+ */
 template <class STREAM>
 class ACE_SOCK_Dgram_SC : public STREAM
 {
-  // = TITLE
-  //   "Dgram_SC" is short for "Datagram Self-Contained."
-  //
-  // = DESCRIPTION
-  //   Datagrams don't have the notion of a "peer".  Each send and
-  //   receive on a datagram can go to a different peer if you want.
-  //   If you're using datagrams for stream activity, you probably
-  //   want 'em all to go to (and come from) the same place.  That's
-  //   what this class is for.  Here, we keep an address object so
-  //   that we can remember who last sent us data.  When we write
-  //   back, we're then able to write back to that same address.
 public:
   ACE_SOCK_Dgram_SC (void);
   ACE_SOCK_Dgram_SC (STREAM &source,

@@ -42,9 +42,9 @@ class ACE_OS_Export ACE_OS_String
 public:
   /** @name Functions from <cstring>
    *
-   *  Included are the functions defined in <cstring> and their <cwchar> 
+   *  Included are the functions defined in <cstring> and their <cwchar>
    *  equivalents.
-   * 
+   *
    *  @todo To be complete, we should add strcoll, strerror, and strxfrm.
    */
   //@{
@@ -63,7 +63,7 @@ public:
 
   /// Moves one buffer to another.
   static void *memmove (void *t, const void *s, size_t len);
-  
+
   /// Fills a buffer with a character value.
   static void *memset (void *s, int c, size_t len);
 
@@ -75,7 +75,7 @@ public:
   static wchar_t *strcat (wchar_t *s, const wchar_t *t);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Finds the first occurance of a character in a string (const char 
+  /// Finds the first occurance of a character in a string (const char
   /// version).
   static const char *strchr (const char *s, int c);
 
@@ -85,7 +85,7 @@ public:
   static const wchar_t *strchr (const wchar_t *s, wint_t c);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Finds the first occurance of a character in a string (char version).     
+  /// Finds the first occurance of a character in a string (char version).
   static char *strchr (char *s, int c);
 
 #if defined (ACE_HAS_WCHAR)
@@ -95,7 +95,7 @@ public:
 
   /// Compares two strings (char version).
   static int strcmp (const char *s, const char *t);
-  
+
 #if defined (ACE_HAS_WCHAR)
   /// Compares two strings (wchar_t version).
   static int strcmp (const wchar_t *s, const wchar_t *t);
@@ -112,7 +112,7 @@ public:
   /// Searches for the first substring without any of the specified
   /// characters and returns the size of the substring (char version).
   static size_t strcspn (const char *s, const char *reject);
-  
+
 #if defined (ACE_HAS_WCHAR)
   /// Searches for the first substring without any of the specified
   /// characters and returns the size of the substring (wchar_t version).
@@ -137,7 +137,7 @@ public:
 
   /// Compares two arrays (char version).
   static int strncmp (const char *s, const char *t, size_t len);
-  
+
 #if defined (ACE_HAS_WCHAR)
   /// Compares two arrays (wchar_t version).
   static int strncmp (const wchar_t *s, const wchar_t *t, size_t len);
@@ -167,12 +167,12 @@ public:
   static wchar_t *strpbrk (wchar_t *s1, const wchar_t *s2);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Finds the last occurance of a character in a string (const char 
+  /// Finds the last occurance of a character in a string (const char
   /// version).
   static const char *strrchr (const char *s, int c);
 
 #if defined (ACE_HAS_WCHAR)
-  /// Finds the last occurance of a character in a string (const wchar_t 
+  /// Finds the last occurance of a character in a string (const wchar_t
   /// version).
   static const wchar_t *strrchr (const wchar_t *s, wint_t c);
 #endif /* ACE_HAS_WCHAR */
@@ -195,7 +195,7 @@ public:
   static size_t strspn (const wchar_t *s1, const wchar_t *s2);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Finds the first occurance of a substring in a string (const char 
+  /// Finds the first occurance of a substring in a string (const char
   /// version).
   static const char *strstr (const char *s, const char *t);
 
@@ -225,7 +225,7 @@ public:
 
   /** @name Functions from <cctype>
    *
-   *  Included are the functions defined in <cctype> and their <cwctype> 
+   *  Included are the functions defined in <cctype> and their <cwctype>
    *  equivalents.
    *
    *  Since they are often implemented as macros, we don't use the same name
@@ -255,7 +255,7 @@ public:
   //@}
 
   /** @name Non-standard functions
-   *  
+   *
    *  These functions aren't in the standard.
    *
    */
@@ -277,12 +277,12 @@ public:
   static int strcasecmp (const wchar_t *s, const wchar_t *t);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Finds the first occurance of a character in an array (const char 
+  /// Finds the first occurance of a character in an array (const char
   /// version).
   static const char *strnchr (const char *s, int c, size_t len);
 
 #if defined (ACE_HAS_WCHAR)
-  /// Finds the first occurance of a character in an array (const wchar_t 
+  /// Finds the first occurance of a character in an array (const wchar_t
   /// version).
   static const wchar_t *strnchr (const wchar_t *s, wint_t c, size_t len);
 #endif /* ACE_HAS_WCHAR */
@@ -313,15 +313,15 @@ public:
   static wchar_t *strecpy (wchar_t *s, const wchar_t *t);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Finds the first occurance of a substring in an array (const char 
+  /// Finds the first occurance of a substring in an array (const char
   /// version).
   static const char *strnstr (const char *s, const char *t, size_t len);
 
 #if defined (ACE_HAS_WCHAR)
-  /// Finds the first occurance of a substring in an array (const wchar_t 
+  /// Finds the first occurance of a substring in an array (const wchar_t
   /// version).
-  static const wchar_t *strnstr (const wchar_t *s, 
-                                 const wchar_t *t, 
+  static const wchar_t *strnstr (const wchar_t *s,
+                                 const wchar_t *t,
                                  size_t len);
 #endif /* ACE_HAS_WCHAR */
 
@@ -334,7 +334,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Returns a malloced duplicated string (char version).
-  static char *strdup (const char *s); 
+  static char *strdup (const char *s);
 
 #if defined (ACE_HAS_WCHAR)
   /// Returns a malloced duplicated string (wchar_t version).
@@ -408,25 +408,25 @@ private:
 #endif /* ACE_LACKS_STRCSPN */
 
 #if defined (ACE_LACKS_STRCHR)
-  /// Emulated strchr (char version) - Finds the first occurance of a 
+  /// Emulated strchr (char version) - Finds the first occurance of a
   /// character in a string.
   static char *strchr_emulation (char *s, int c);
 
-  /// Emulated strchr (const char version) - Finds the first occurance of a 
+  /// Emulated strchr (const char version) - Finds the first occurance of a
   /// character in a string.
   static const char *strchr_emulation (const char *s, int c);
 #endif /* ACE_LACKS_STRCHR */
 
 #if defined (ACE_LACKS_STRRCHR)
-  /// Emulated strrchr (char version) - Finds the last occurance of a 
+  /// Emulated strrchr (char version) - Finds the last occurance of a
   /// character in a string.
   static char *strrchr_emulation (char *s, int c);
 
-  /// Emulated strrchr (const char version) - Finds the last occurance of a 
+  /// Emulated strrchr (const char version) - Finds the last occurance of a
   /// character in a string.
   static const char *strrchr_emulation (const char *s, int c);
 #endif /* ACE_LACKS_STRRCHR */
-  
+
 #if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
   /// Emulated strtok_r.
   static char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
@@ -434,7 +434,7 @@ private:
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCAT)
   /// Emulated wcscat - Appends a string.
-  static wchar_t *wcscat_emulation (wchar_t *destination, 
+  static wchar_t *wcscat_emulation (wchar_t *destination,
                                     const wchar_t *source);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCAT */
 
@@ -450,13 +450,13 @@ private:
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCPY)
   /// Emulated wcscpy - Copies a string.
-  static wchar_t *wcscpy_emulation (wchar_t *destination, 
+  static wchar_t *wcscpy_emulation (wchar_t *destination,
                                     const wchar_t *source);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCPY */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSICMP)
   /// Emulated wcsicmp - Performs a case insensitive comparison of strings.
-  static int wcsicmp_emulation (const wchar_t *string1, 
+  static int wcsicmp_emulation (const wchar_t *string1,
                                 const wchar_t *string2);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSICMP */
 
@@ -467,36 +467,36 @@ private:
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCAT)
   /// Emulated wcscat - Appends a string.
-  static wchar_t *wcsncat_emulation (wchar_t *destination, 
+  static wchar_t *wcsncat_emulation (wchar_t *destination,
                                      const wchar_t *source,
                                      size_t count);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCAT */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCMP)
   /// Emulated wcsncmp - Compares two arrays.
-  static int wcsncmp_emulation (const wchar_t *string1, 
-                                const wchar_t *string2, 
+  static int wcsncmp_emulation (const wchar_t *string1,
+                                const wchar_t *string2,
                                 size_t len);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNCMP */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCPY)
   /// Emulated wcsncpy - Copies an array.
-  static wchar_t *wcsncpy_emulation (wchar_t *destination, 
-                                     const wchar_t *source, 
+  static wchar_t *wcsncpy_emulation (wchar_t *destination,
+                                     const wchar_t *source,
                                      size_t len);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNCPY */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNICMP)
   /// Emulated wcsnicmp - Performs a case insensitive comparison of two
   /// arrays
-  static int wcsnicmp_emulation (const wchar_t *string1, 
-                                 const wchar_t *string2, 
+  static int wcsnicmp_emulation (const wchar_t *string1,
+                                 const wchar_t *string2,
                                  size_t len);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNICMP */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSPBRK)
   /// Emulated wcspbrk - Searches for characters in a string.
-  static wchar_t *wcspbrk_emulation (const wchar_t *string, 
+  static wchar_t *wcspbrk_emulation (const wchar_t *string,
                                      const wchar_t *charset);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSPBRK */
 
@@ -512,24 +512,24 @@ private:
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCSPN)
   /// Emulated wcsspn.
-  static size_t wcscspn_emulation (const wchar_t *string, 
+  static size_t wcscspn_emulation (const wchar_t *string,
                                    const wchar_t *reject);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCSPN */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSSPN)
   /// Emulated wcsspn.
-  static size_t wcsspn_emulation (const wchar_t *string, 
+  static size_t wcsspn_emulation (const wchar_t *string,
                                   const wchar_t *charset);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSPN */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSSTR)
   /// Emulated wcsstr - Performs a case insensitive comparison of two strings.
-  static wchar_t *wcsstr_emulation (const wchar_t *string, 
+  static wchar_t *wcsstr_emulation (const wchar_t *string,
                                     const wchar_t *charset);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSTR */
 
   //@}
-};  
+};
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

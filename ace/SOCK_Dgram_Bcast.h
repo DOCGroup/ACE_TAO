@@ -1,17 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    SOCK_Dgram_Bcast.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SOCK_Dgram_Bcast.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SOCK_DGRAM_BCAST_H
 #define ACE_SOCK_DGRAM_BCAST_H
@@ -25,32 +23,38 @@
 
 #include "ace/SOCK_Dgram.h"
 
+/**
+ * @class ACE_Bcast_Node
+ *
+ * @brief Linked list of broadcast interfaces.
+ */
 class ACE_Export ACE_Bcast_Node
 {
-  // = TITLE
-  //   Linked list of broadcast interfaces.
 public:
-  ACE_Bcast_Node (ACE_INET_Addr &, 
+  /// Default dtor.
+  ACE_Bcast_Node (ACE_INET_Addr &,
                   ACE_Bcast_Node *);
   ~ACE_Bcast_Node (void);
-  // Default dtor.
 
+  /// Broadcast address for the interface.
   ACE_INET_Addr bcast_addr_;
-  // Broadcast address for the interface.
 
+  /// Pointer to the next interface in the chain.
   ACE_Bcast_Node *next_;
-  // Pointer to the next interface in the chain.
 };
 
+/**
+ * @class ACE_SOCK_Dgram_Bcast
+ *
+ * @brief Defines the member functions for the ACE_SOCK datagram
+ * abstraction.
+ */
 class ACE_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
 {
-  // = TITLE
-  //     Defines the member functions for the ACE_SOCK datagram
-  //     abstraction.
 public:
   // = Initialization and termination methods.
+  /// Default constructor.
   ACE_SOCK_Dgram_Bcast (void);
-  // Default constructor.
 
   ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
                         int protocol_family = PF_INET,
@@ -58,65 +62,67 @@ public:
                         int reuse_addr = 0,
                         const ACE_TCHAR *host_name = 0);
 
+  /// Default dtor.
   ~ACE_SOCK_Dgram_Bcast (void);
-  // Default dtor.
 
   // Initiate a connectionless datagram broadcast endpoint.
 
+  /// Initiate a connectionless datagram broadcast endpoint.
   int open (const ACE_Addr &local,
             int protocol_family = PF_INET,
             int protocol = 0,
             int reuse_addr = 0,
             const ACE_TCHAR *host_name = 0);
-  // Initiate a connectionless datagram broadcast endpoint.
 
+  /// Close up and release dynamically allocated resources.
   int close (void);
-  // Close up and release dynamically allocated resources.
 
+  /// Broadcast the datagram to every interface.  Returns the average
+  /// number of bytes sent.
   ssize_t send (const void *buf,
                 size_t n,
                 u_short portnum,
                 int flags = 0) const;
-  // Broadcast the datagram to every interface.  Returns the average
-  // number of bytes sent.
 
+  /// Broadcast the <iovec> datagrams to every interface.  Returns the
+  /// average number of bytes sent.
   ssize_t send (const iovec iov[],
                 size_t n,
                 u_short portnum,
                 int flags = 0) const;
-  // Broadcast the <iovec> datagrams to every interface.  Returns the
-  // average number of bytes sent.
 
+  /// Broadcast an N byte datagram to ADDR (note that addr must be
+  /// preassigned to the broadcast address of the subnet...).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
-  // Broadcast an N byte datagram to ADDR (note that addr must be
-  // preassigned to the broadcast address of the subnet...).
 
+  /**
+   * Broadcast an <iovec> of size <n> to <addr> as a datagram (note
+   * that addr must be preassigned to the broadcast address of the
+   * subnet...)
+   */
   ssize_t send (const iovec iov[],
                 size_t n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
-  // Broadcast an <iovec> of size <n> to <addr> as a datagram (note
-  // that addr must be preassigned to the broadcast address of the
-  // subnet...) */
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Make broadcast available for Datagram socket.
   int mk_broadcast (const ACE_TCHAR *host_name);
-  // Make broadcast available for Datagram socket.
 
+  /// Points to the head of the list of broadcast interfaces.
   ACE_Bcast_Node *if_list_;
-  // Points to the head of the list of broadcast interfaces.
 
+  /// Do not allow this function to percolate up to this interface...
   int get_remote_addr (ACE_Addr &) const;
-  // Do not allow this function to percolate up to this interface...
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

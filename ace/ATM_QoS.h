@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    ATM_QoS.h
-//
-// = AUTHOR
-//    Joe Hoffert
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ATM_QoS.h
+ *
+ *  $Id$
+ *
+ *  @author Joe Hoffert
+ */
+//=============================================================================
+
 
 #ifndef ACE_ATM_QoS_H
 #define ACE_ATM_QoS_H
@@ -39,15 +36,17 @@ typedef struct atm_qos ATM_QoS;
 typedef int ATM_QoS;
 #endif /* ACE_HAS_FORE_ATM_WS2 || ACE_HAS_FORE_ATM_XTI || ACE_HAS_LINUX_ATM */
 
+/**
+ * @class ACE_ATM_QoS
+ *
+ * @brief Define the QoS parameters for ATM
+ *
+ * This class wraps up QoS parameters for both ATM/XTI and
+ * ATM/WinSock2 to make the mechanism for the ATM protocol
+ * transparent.
+ */
 class ACE_Export ACE_ATM_QoS
 {
-  // = TITLE
-  //	Define the QoS parameters for ATM
-  //
-  // = DESCRIPTION
-  //     This class wraps up QoS parameters for both ATM/XTI and
-  //     ATM/WinSock2 to make the mechanism for the ATM protocol
-  //     transparent.
 public:
   // Constants used for ATM options
   static const long LINE_RATE;
@@ -57,39 +56,39 @@ public:
   static const int DEFAULT_PKT_SIZE;
 
   // = Initializattion and termination methods.
+  /// Default constructor.
   ACE_ATM_QoS(int = DEFAULT_PKT_SIZE);
-  // Default constructor.
 
+  /// Constructor with a CBR rate.
   ACE_ATM_QoS(int,
               int = DEFAULT_PKT_SIZE);
-  // Constructor with a CBR rate.
 
   ~ACE_ATM_QoS ();
 
+  /// Set the rate.
   void set_rate (ACE_HANDLE,
                  int,
                  int);
-  // Set the rate.
 
+  /// Set CBR rate in cells per second.
   void set_cbr_rate (int,
                      int = DEFAULT_PKT_SIZE);
-  // Set CBR rate in cells per second.
 
+  /// Get ATM_QoS struct.
   ATM_QoS get_qos (void);
-  // Get ATM_QoS struct.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Construct QoS options.
   char* construct_options(ACE_HANDLE,
                           int,
                           int,
                           long*);
-  // Construct QoS options.
 
 private:
   ATM_QoS qos_;
@@ -102,4 +101,3 @@ private:
 #endif /* ACE_HAS_ATM */
 #include "ace/post.h"
 #endif /* ACE_ATM_QoS_H */
-
