@@ -4,9 +4,9 @@ Mon Oct 05 15:23:04 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Oct  5 15:34:41 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/002/handler.h:  Added includes for INET_Addr.h,
-	SOCK_Stream.h and Reactor.h.  Susan Liebeskind pointed out that
-	AIX gets confused in processing templates if these aren't present.
+        * docs/tutorials/002/handler.h:  Added includes for INET_Addr.h,
+        SOCK_Stream.h and Reactor.h.  Susan Liebeskind pointed out that
+        AIX gets confused in processing templates if these aren't present.
 
 Mon Oct 05 10:02:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
