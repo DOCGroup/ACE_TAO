@@ -187,7 +187,7 @@ CORBA::ORB_init (int &argc,
   // Probably, but there's no object in which to scope it.
   int svc_config_argc = 0;
 #if 0 // XXASG : Code is broken. ACE_NEW returns, arg type conflict in argvec_shift
-  ACE_NEW (svc_config_argv, char *[argc + 1]);
+  ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], 0);
 
   // Be certain to copy the program name.
   // @@ I'm not sure that this convention makes sense.  Perhaps we

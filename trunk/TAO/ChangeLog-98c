@@ -1,3 +1,13 @@
+Sun Aug 10 10:58:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/client_factory: Moved the template specializations from the
+ 	*.cpp file into the *.i file in order to get this stuff to link
+ 	without multiply defined symbols.  Thanks to Brian Mendel for
+ 	giving me the idea to do this.
+
+	* tao/client_factory.cpp: Added a template specialization for
+ 	ACE_Hash_Addr.
+
 Sun Aug 10 08:56:20 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* CORBA_ to CORBA:: transformation complete. All the files in the
