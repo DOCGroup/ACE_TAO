@@ -1,3 +1,12 @@
+Tue Aug 27 15:56:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-sunos5.8-sunc++-5.4.h:
+	* include/makeinclude/platform_sunos5_sunc++5.4.GNU:
+
+	  Solaris 8 + SunC++ SPRO 5.4 platform configuration files.
+	  Thanks to Serge Kolgan <skolgan@objectsciences.com> for
+	  contributing these files.
+
 Tue Aug 27 17:25:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/WIN32_Proactor.{h cpp}: More u_long->size_t corrections.
