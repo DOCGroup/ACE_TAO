@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAOs.lib TAO_CosLoadBalancings.lib TAO_PortableGroups.lib TAO_Messagings.lib TAO_CosNamings.lib TAO_Svc_Utilss.lib TAO_PortableServers.lib aces.lib TAO_Valuetypes.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\portableserver" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
+# ADD LINK32 TAOs.lib TAO_CosLoadBalancings.lib TAO_IORInterceptors.lib TAO_PortableGroups.lib TAO_Messagings.lib TAO_CosNamings.lib TAO_Svc_Utilss.lib TAO_PortableServers.lib aces.lib TAO_Valuetypes.lib TAO_ObjRefTemplates.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\portableserver" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate"
 
 !ELSEIF  "$(CFG)" == "LoadMonitor_Static - Win32 Static Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOsd.lib acesd.lib TAO_CosLoadBalancingsd.lib TAO_PortableGroupsd.lib TAO_Messagingsd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib TAO_PortableServersd.lib TAO_Valuetypesd.lib user32.lib advapi32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\portableserver" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
+# ADD LINK32 TAOsd.lib acesd.lib TAO_ObjRefTemplatesd.lib TAO_CosLoadBalancingsd.lib TAO_PortableGroupsd.lib TAO_Messagingsd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib TAO_PortableServersd.lib TAO_Valuetypesd.lib TAO_IORInterceptorsd.lib user32.lib advapi32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\portableserver" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate"
 # SUBTRACT LINK32 /nodefaultlib
 
 !ENDIF 

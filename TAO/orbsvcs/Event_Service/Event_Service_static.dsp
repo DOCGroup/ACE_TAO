@@ -52,7 +52,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOs.lib aces.lib TAO_CosNamings.lib TAO_RTEvents.lib TAO_RTOLDEvents.lib TAO_RTScheds.lib /nologo /subsystem:console /machine:I386 /out:"..\orbsvcs,..\..\tao,..\..\..\ace"
-# ADD LINK32 TAOs.lib aces.lib TAO_PortableServers.lib TAO_Svc_Utilss.lib TAO_CosNamings.lib TAO_RTEvents.lib TAO_RTOLDEvents.lib TAO_RTScheds.lib user32.lib advapi32.lib TAO_Messagings.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\TAO\PORTABLESERVER" /libpath:"..\..\tao\Messaging"
+# ADD LINK32  TAO_ObjRefTemplates.lib TAO_Valuetypes.lib TAO_IORInterceptors.lib TAOs.lib aces.lib TAO_PortableServers.lib TAO_Svc_Utilss.lib TAO_CosNamings.lib TAO_RTEvents.lib TAO_RTOLDEvents.lib TAO_RTScheds.lib user32.lib advapi32.lib TAO_Messagings.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\TAO\PORTABLESERVER" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORInterceptor"
 
 !ELSEIF  "$(CFG)" == "Event_Service_static - Win32 Static Debug"
 
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOsd.lib acesd.lib TAO_CosNamingsd.lib TAO_RTEventsd.lib TAO_RTOLDEventsd.lib TAO_RTSchedsd.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\orbsvcs,..\..\tao,..\..\..\ace" /pdbtype:sept
-# ADD LINK32 TAOsd.lib acesd.lib TAO_PortableServersd.lib TAO_Svc_Utilssd.lib TAO_CosNamingsd.lib TAO_RTEventsd.lib TAO_RTOLDEventsd.lib TAO_RTSchedsd.lib user32.lib advapi32.lib TAO_Messagingsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\TAO\PORTABLESERVER" /libpath:"..\..\tao\Messaging"
+# ADD LINK32 TAO_ObjRefTemplatesd.lib TAO_Valuetypesd.lib TAO_IORInterceptorsd.lib TAOsd.lib acesd.lib TAO_PortableServersd.lib TAO_Svc_Utilssd.lib TAO_CosNamingsd.lib TAO_RTEventsd.lib TAO_RTOLDEventsd.lib TAO_RTSchedsd.lib user32.lib advapi32.lib TAO_Messagingsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\TAO\PORTABLESERVER" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORInterceptor"
 
 !ENDIF 
 

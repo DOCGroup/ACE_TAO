@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAOs.lib TAO_CosNamings.lib TAO_Svc_Utilss.lib TAO_PortableServers.lib TAO_IORTables.lib aces.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\portableserver" /libpath:"..\..\tao\iortable"
+# ADD LINK32 TAOs.lib TAO_CosNamings.lib TAO_Svc_Utilss.lib TAO_PortableServers.lib TAO_IORTables.lib aces.lib TAO_ObjRefTemplates.lib TAO_Valuetypes.lib TAO_IORInterceptors.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\portableserver" /libpath:"..\..\tao\iortable" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORInterceptor"
 
 !ELSEIF  "$(CFG)" == "Naming Service Static - Win32 Static Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOsd.lib acesd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib TAO_PortableServersd.lib TAO_IORTablesd.lib user32.lib advapi32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\portableserver" /libpath:"..\..\tao\iortable"
+# ADD LINK32 TAOsd.lib acesd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib TAO_PortableServersd.lib TAO_IORTablesd.lib TAO_ObjRefTemplatesd.lib TAO_Valuetypesd.lib TAO_IORInterceptorsd.lib user32.lib advapi32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\portableserver" /libpath:"..\..\tao\iortable" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORInterceptor"
 # SUBTRACT LINK32 /nodefaultlib
 
 !ENDIF 
