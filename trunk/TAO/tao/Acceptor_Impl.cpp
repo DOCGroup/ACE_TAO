@@ -133,11 +133,29 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (v
       // connection cache maintained by the connectors in the
       // connector registry.
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Purging connections from Connectors in Connector Registry...\n"));
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Purging connections from Connectors in Connector Registry of all ORBs...\n"));
+ 
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                                *ACE_Static_Object_Lock::instance (), 0));
 
-      return this->orb_core_->connector_registry ()->purge_connections ();
+      TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+      TAO_ORB_Table::Iterator end = table->end ();
+      for (TAO_ORB_Table::Iterator iterator = table->begin ();
+           iterator != end;
+           ++iterator)
+        {
+          TAO_ORB_Core *orb_core = (*iterator).int_id_;
+
+          int result = orb_core->connector_registry ()->purge_connections ();
+
+          if (result != 0)
+            return result;
+        }
+      
+      return 0;
     }
-
+  
   return -1;
 }
 
