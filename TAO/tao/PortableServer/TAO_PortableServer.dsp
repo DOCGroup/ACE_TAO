@@ -309,7 +309,7 @@ SOURCE=.\ThruPOA_Object_Proxy_Impl.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter "h;hpp;hxx;hm"
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.h
@@ -485,7 +485,7 @@ SOURCE=.\ThruPOA_Object_Proxy_Impl.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ".i"
+# PROP Default_Filter "i;inl"
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.i
@@ -509,6 +509,10 @@ SOURCE=.\ImplRepoS.i
 # Begin Source File
 
 SOURCE=.\ImplRepoS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IORInfo.inl
 # End Source File
 # Begin Source File
 
