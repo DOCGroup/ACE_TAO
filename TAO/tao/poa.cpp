@@ -2484,6 +2484,12 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   // const char *operation = req.operation ();
   const char *operation = req.op_name ();
 
+  // Setup for POA Current
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+  TAO_POA_Current current_context;
+  // Set the current context and remember the old one
+  TAO_POA_Current *previous_context = orb_core->poa_current (&current_context);
+
   PortableServer::Servant servant = this->locate_poa_and_servant_i (key,
                                                                     operation,
                                                                     id_out,
@@ -2493,12 +2499,13 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
     return;
 
   // Setup for upcall
-  TAO_POA_Current upcall_context (poa, key, id.in (), servant);
-  TAO_POA_Current *previous_context;
-  poa->pre_invoke (upcall_context,
-                   previous_context,
+  poa->pre_invoke (key,
+                   id.in (),
+		   servant,
+                   &current_context,
                    env);
-
+  
+  // Upcall
   servant->_dispatch (req,
                       context,
                       env);
@@ -2506,30 +2513,35 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   // Cleanup from upcall
   poa->post_invoke (servant,
                     operation,
-                    previous_context,
+                    &current_context,
                     env);
+  
+  // Reset old context
+  orb_core->poa_current (previous_context);
+
 }
 
 void
-TAO_POA::pre_invoke (TAO_POA_Current &upcall_context,
-                     TAO_POA_Current *&previous_context,
+TAO_POA::pre_invoke (const TAO_ObjectKey &key,
+                     const PortableServer::ObjectId &id,
+		     PortableServer::Servant servant,
+                     TAO_POA_Current *poa_current,
                      CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  previous_context = orb_core->poa_current (&upcall_context);
+  poa_current->POA_impl (this);
+  poa_current->object_key (key);
+  poa_current->object_id (id);
+  poa_current->servant (servant);
 }
 
 void
 TAO_POA::post_invoke (PortableServer::Servant servant,
                       const char *operation,
-                      TAO_POA_Current *previous_context,
+                      TAO_POA_Current *poa_current,
                       CORBA::Environment &env)
 {
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current *poa_current = orb_core->poa_current (previous_context);
-
   PortableServer::ServantLocator::Cookie cookie = poa_current->locator_cookie ();
 
   if (cookie != 0)
