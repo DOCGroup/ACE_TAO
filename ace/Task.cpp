@@ -11,14 +11,6 @@
 #include "ace/Task.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if (defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
-  // For template specializations at end of this file.
-  #include "ace/Dynamic.h"
-#endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
-#endif /* ACE_HAS_EXPLICT_TEMPLATE_INSTANTIATION */
-
-ACE_ALLOC_HOOK_DEFINE(ACE_Task)
 
 ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
   : thr_count_ (0),
