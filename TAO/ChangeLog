@@ -1,4 +1,10 @@
 
+Thu May 6 23:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* tests/Smart_Proxies/Smart_Proxies*.mpc: truncated to SP_*.mpc 
+        * tests/NestedUpcall/Triangle_Test/Traingle_Test.mpc:
+          truncated to TT.mpc
+
 Thu May 6 22:30:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* tests/RTCORBA/Profile_And_Endpoint_Selection/Profile_And_Endpoint_Selection.mpc:
