@@ -22,6 +22,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const
                                                   TAO_PriorityModelPolicy &rhs)
   : RTCORBA::PriorityModelPolicy (),
+    CORBA::LocalObject (),
     priority_model_ (rhs.priority_model_),
     server_priority_ (rhs.server_priority_)
 {
@@ -126,6 +127,7 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy
                                             &rhs)
   : RTCORBA::ThreadpoolPolicy (),
+    CORBA::LocalObject (),
     id_ (rhs.id_)
 {
 }
@@ -184,7 +186,8 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
 
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const
                                                            TAO_PrivateConnectionPolicy &)
-  : RTCORBA::PrivateConnectionPolicy ()
+  : RTCORBA::PrivateConnectionPolicy (),
+    CORBA::LocalObject ()
 {
 }
 
@@ -233,6 +236,7 @@ TAO_PrivateConnectionPolicy::_remove_ref (void)
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 (const RTCORBA::PriorityBands &bands)
   : RTCORBA::PriorityBandedConnectionPolicy (),
+    CORBA::LocalObject (),
     priority_bands_ (bands)
 {
 }
@@ -499,6 +503,7 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
                                                     TAO_ServerProtocolPolicy &rhs)
   : RTCORBA::ServerProtocolPolicy (),
+    CORBA::LocalObject (),
     protocols_ (rhs.protocols_)
 {
 }
@@ -569,6 +574,7 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
                                                     TAO_ClientProtocolPolicy &rhs)
   : RTCORBA::ClientProtocolPolicy (),
+    CORBA::LocalObject (),
     protocols_ (rhs.protocols_)
 {
 }
