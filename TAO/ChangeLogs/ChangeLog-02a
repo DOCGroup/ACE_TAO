@@ -1,3 +1,10 @@
+Fri Apr 26 17:15:07 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* docs/interfacerepo/index.html:
+	* docs/interfacerepo/tao_ifr.html: 
+	  Add documentation for getting reference to Interface Repository via
+	  Interoperable Naming.
+
 Fri Apr 26 10:07:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Client_Protocol/server.cpp:
