@@ -29,6 +29,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/Collocation_Strategy.h"
+#include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
 class TAO_ServerRequest;

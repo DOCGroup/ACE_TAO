@@ -20,30 +20,23 @@
 #define TAO_PG_OBJECT_GROUP_H_
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
-#include "PG_Property_Set.h"
-
-//////////////////////////////////
-// Classes declared in this header
-namespace TAO
-{
-  class PG_Object_Group;
-}
 
 /////////////////////////////////
 // Includes needed by this header
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "ace/Hash_Map_Manager_T.h"
+#include "PG_Property_Set.h"
 #include "PG_Location_Hash.h"
 #include "PG_Location_Equal_To.h"
 #include "PG_Object_Group_Manipulator.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/ACE.h"
 
 /////////////////////
 // Forward references
@@ -324,8 +317,7 @@ namespace TAO
     /**
      * Protect internal state.
      */
-    TAO_SYNCH_MUTEX internals_;
-    typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
+    mutable TAO_SYNCH_MUTEX internals_;
 
     CORBA::ORB_var orb_;
 

@@ -63,9 +63,6 @@ public:
   /// Constructor.
   Server_Request_Interceptor (void);
 
-  /// Destructor.
-  ~Server_Request_Interceptor (void);
-
   /// Set the references to which requests will be forwarded.
   virtual void forward_references (CORBA::Object_ptr obj1,
                                    CORBA::Object_ptr obj2
@@ -117,6 +114,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
   //@}
+
+protected:
+
+  /// Destructor.
+  ~Server_Request_Interceptor (void);
 
 private:
 

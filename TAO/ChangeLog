@@ -1,12 +1,107 @@
+Wed Apr 14 23:07:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Abstract_Servant_Base.h:
+	* tao/Adapter.h:
+	* tao/Any.h:
+
+	  Include "tao/CORBA_methods.h" before "tao/Pseudo_VarOut_T.h" to
+	  make sure CORBA::release() overrides are declared prior to
+	  parsing the TAO_Pseudo_{Var,Out}_T template.  Addresses g++ 3.4
+	  pre-release compile-time failures.
+
+	* tao/Adapter.cpp:
+	* tao/ORB_Core.h:
+	* tao/DynamicInterface/Request.h:
+	* tao/Valuetype/AbstractBase.h:
+
+	  Reordered includes to prevent TAO_Pseudo_{Var,Out}_T template
+	  from being parsed prior to declaring all types that could be
+	  potential template parameters.
+
+	* tao/CORBA_methods.h:
+
+	  Reverted change that added CORBA::ExceptionList related types
+	  and functions to this header due to inconsistent DLL linkage
+	  issues on MS Windows.
+
+	* tao/Pseudo_VarOut_T.h:
+
+	  Do not include "tao/CORBA_methods.h" in this header.  It
+	  introduced compilation issues in g++ 3.4 pre-release builds due
+	  to the fact some necessary types were declared after the
+	  TAO_Pseudo_{Var,Out}_T template was parsed, essentially making
+	  the type invisible to the template.  This is due to the fact
+	  that g++ 3.4.x performs name lookups and binding at template
+	  parsing time, not instantiation time.
+
+	* tao/default_environment.h:
+
+	  Include "tao/TAO_Export.h" to pull in TAO_Export macro
+	  definitions.
+
+	* tao/DynamicInterface/DII_CORBA_methods.h:
+
+	  Moved all DII related functions in the CORBA namespace
+	  (e.g. release()) to this new header.  This header makes it
+	  easier to declare CORBA::release() prototypes before the
+	  TAO_Pseudo_{Var,Out}_T templates are parsed.
+
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/ExceptionList.h:
+
+	  Moved all DII related functions in the CORBA namespace
+	  (e.g. release()) to the new DLL_CORBA_methods.h header.
+
+	  Include the new DII_CORBA_methods.h header before
+	  tao/Pseudo_VarOut_T.h to make sure the DII types and functions
+	  we care about are declared before the TAO_Pseudo_{Var,Out}_T
+	  templates are parsed.  Addresses g++ 3.4.x compile-time issues.
+
+	* tao/DynamicInterface/ExceptionList.inl:
+
+	  Nuked trailing whitespace.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h (internals_):
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h (internals_):
+
+	  Declared this mutex member as "mutable" so that performing a
+	  const_cast<> in const methods is unnecessary.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+
+	  Removed all const_cast<> mutex hacks in const methods.  They are
+	  no longer necessary since the mutex member (internals_) is now
+	  mutable.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+
+	  Removed "InternalGuard" typedef.  It is no longer used.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
+
+	  Replaced all ACE_Guard uses with the corresponding ACE_GUARD
+	  macro.  Addresses unused variable warnings.
+
+	* orbsvcs/tests/Security/Big_Request/client.cpp:
+
+	  Cosmetic changes.
+
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+	* tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.h:
+
+	  Made destructor protected to enforce proper memory management
+	  through reference counting.
+
 Wed Apr 14 17:48:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-        
+
           Fixed generation of TAO::Objref_Traits<>::tao_marshal() method
           to check for a null object reference.
-          
+
         * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
-        
+
           Removed file, visitor is no longer used.
 
 Wed Apr 14 12:39:37 2004  Chad Elliott  <elliott_c@ociweb.com>

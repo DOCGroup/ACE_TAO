@@ -69,7 +69,7 @@ TAO::PG_Properties_Support::set_type_properties (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-  InternalGuard guard(this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   TAO::PG_Property_Set * typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
@@ -93,7 +93,7 @@ TAO::PG_Properties_Support::get_type_properties (
   PortableGroup::Properties_var result;
   ACE_NEW_THROW_EX (result, PortableGroup::Properties(), CORBA::NO_MEMORY ());
 
-  InternalGuard guard(this->internals_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 0);
 
   TAO::PG_Property_Set * typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
@@ -115,7 +115,7 @@ TAO::PG_Properties_Support::remove_type_properties (
   // Reference counted pointers could be used to allow property sets
   // for unused typeids to be deleted.
 
-  InternalGuard guard(this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   TAO::PG_Property_Set * typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
@@ -131,7 +131,7 @@ TAO::PG_Properties_Support::find_typeid_properties (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  InternalGuard guard(this->internals_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 0);
 
   TAO::PG_Property_Set * typeid_properties = 0;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))

@@ -24,7 +24,6 @@
 
 #include "tao/Collocation_Strategy.h"
 #include "tao/params.h"
-#include "tao/Adapter.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PolicyFactory_Registry.h"
 #include "tao/Parser_Registry.h"
@@ -37,6 +36,7 @@
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/Object.h"
 #include "tao/Invocation_Utils.h"
+#include "tao/Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "Interceptor_List.h"
