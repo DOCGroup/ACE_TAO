@@ -1539,7 +1539,7 @@ TAO_POA::create_reference_i (const char *intf,
   // available. The generated Object Id value may be obtained by
   // invoking POA::reference_to_id with the created reference.
   PortableServer::ObjectId_var new_id = this->create_object_id ();
-  TAO::ObjectKey_var new_key = this->create_object_key (new_id.in ());
+  TAO_ObjectKey_var new_key = this->create_object_key (new_id.in ());
 
   // Ask the ORB to create you a reference
   return TAO_ORB_Core_instance ()->orb ()->key_to_object (new_key.in (), intf, env);
@@ -1574,7 +1574,7 @@ TAO_POA::create_reference_with_id (const PortableServer::ObjectId &oid,
   // requests on those references will cause the object to be
   // activated if necessary, or the default servant used, depending on
   // the applicable policies.
-  TAO::ObjectKey_var new_key = this->create_object_key (oid);
+  TAO_ObjectKey_var new_key = this->create_object_key (oid);
 
   // Ask the ORB to create you a reference
   return TAO_ORB_Core_instance ()->orb ()->key_to_object (new_key.in (), intf, env);
@@ -1691,7 +1691,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   // servant associated with that object in the Active Object Map.
   if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      TAO::ObjectKey_var key = reference->key (env);
+      TAO_ObjectKey_var key = reference->key (env);
 
       // If the object reference was not created by this POA, the
       // WrongAdapter exception is raised.
@@ -1756,7 +1756,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   // POA on which the operation is being performed.  If the object
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
-  TAO::ObjectKey_var key = reference->key (env);
+  TAO_ObjectKey_var key = reference->key (env);
   PortableServer::ObjectId_var id;
   TAO_POA::String poa_name;
   CORBA::Boolean persistent = CORBA::B_FALSE;
@@ -1897,7 +1897,7 @@ TAO_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
 }
 
 TAO_POA *
-TAO_POA::locate_poa_i (const TAO::ObjectKey &key,
+TAO_POA::locate_poa_i (const TAO_ObjectKey &key,
                        PortableServer::ObjectId_out id,
                        CORBA::Environment &env)
 {
@@ -1936,7 +1936,7 @@ TAO_POA::locate_poa_i (const TAO::ObjectKey &key,
 }
 
 int
-TAO_POA::locate_servant (const TAO::ObjectKey &key,
+TAO_POA::locate_servant (const TAO_ObjectKey &key,
                          CORBA::Environment &env)
 {
   // Lock access to the POAManager for the duration of this transaction
@@ -1946,7 +1946,7 @@ TAO_POA::locate_servant (const TAO::ObjectKey &key,
 }
 
 int
-TAO_POA::locate_servant_i (const TAO::ObjectKey &key,
+TAO_POA::locate_servant_i (const TAO_ObjectKey &key,
                            CORBA::Environment &env)
 {
   PortableServer::ObjectId_var id;
@@ -2008,7 +2008,7 @@ TAO_POA::locate_servant_i (const TAO::ObjectKey &key,
 }
 
 PortableServer::Servant
-TAO_POA::locate_poa_and_servant_i (const TAO::ObjectKey &key,
+TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
                                    const char *operation,
                                    PortableServer::ObjectId_out id,
                                    TAO_POA *&poa_impl,
@@ -2176,7 +2176,7 @@ TAO_POA::locate_poa_and_servant_i (const TAO::ObjectKey &key,
 }
 
 void
-TAO_POA::dispatch_servant (const TAO::ObjectKey &key,
+TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
                            CORBA::ServerRequest &req,
                            void *context,
                            CORBA::Environment &env)
@@ -2188,7 +2188,7 @@ TAO_POA::dispatch_servant (const TAO::ObjectKey &key,
 }
 
 void
-TAO_POA::dispatch_servant_i (const TAO::ObjectKey &key,
+TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                              CORBA::ServerRequest &req,
                              void *context,
                              CORBA::Environment &env)
@@ -2223,7 +2223,7 @@ TAO_POA::dispatch_servant_i (const TAO::ObjectKey &key,
 }
 
 void
-TAO_POA::pre_invoke (const TAO::ObjectKey &key,
+TAO_POA::pre_invoke (const TAO_ObjectKey &key,
                      const PortableServer::ObjectId &id,
 		     PortableServer::Servant servant,
                      CORBA::Environment &env)
@@ -2269,7 +2269,7 @@ TAO_POA::creation_time (void)
 }
 
 int
-TAO_POA::parse_key (const TAO::ObjectKey &key,
+TAO_POA::parse_key (const TAO_ObjectKey &key,
                     TAO_POA::String &poa_name,
                     PortableServer::ObjectId_out id,
                     CORBA::Boolean &persistent,
@@ -2422,7 +2422,7 @@ TAO_POA::create_object_id (void)
   return TAO_POA::string_to_ObjectId (id.c_str ());
 }
 
-TAO::ObjectKey *
+TAO_ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
   // Buffer for seconds
@@ -2455,7 +2455,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
     1;
 
   // Create the buffer for the key
-  CORBA::Octet *buffer = TAO::ObjectKey::allocbuf (buffer_size);
+  CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
 
   // Grab the id buffer
   const char *id_buffer = TAO_POA::ObjectId_to_const_string (id);
@@ -2475,7 +2475,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 
   // Create the key, giving the ownership of the buffer to the
   // sequence.
-  return new TAO::ObjectKey (buffer_size,
+  return new TAO_ObjectKey (buffer_size,
                              buffer_size,
                              buffer,
                              CORBA::B_TRUE);
@@ -2497,7 +2497,7 @@ TAO_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 }
 
 int
-TAO_POA::is_poa_generated_key (const TAO::ObjectKey &key)
+TAO_POA::is_poa_generated_key (const TAO_ObjectKey &key)
 {
   // Grab the buffer
   const char *id_buffer = TAO_POA::ObjectKey_to_const_string (key);
@@ -2609,7 +2609,7 @@ TAO_POA::ObjectId_to_const_string (const PortableServer::ObjectId &id)
 }
 
 const char *
-TAO_POA::ObjectKey_to_const_string (const TAO::ObjectKey &key)
+TAO_POA::ObjectKey_to_const_string (const TAO_ObjectKey &key)
 {
   // Grab the id buffer
   return (CORBA::String) &key[0];
@@ -3294,12 +3294,12 @@ TAO_POA_Current::object_id (void) const
 }
 
 void
-TAO_POA_Current::object_key (const TAO::ObjectKey &key)
+TAO_POA_Current::object_key (const TAO_ObjectKey &key)
 {
   this->object_key_ = &key;
 }
 
-const TAO::ObjectKey &
+const TAO_ObjectKey &
 TAO_POA_Current::object_key (void) const
 {
   return *this->object_key_;

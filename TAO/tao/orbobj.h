@@ -120,7 +120,7 @@ public:
 
   // = TAO-specific Extensions
 
-  CORBA_Object_ptr key_to_object (const TAO::ObjectKey &key,
+  CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA::Environment &env);
   // Convert key into an object reference.  Return Object_ptr as out

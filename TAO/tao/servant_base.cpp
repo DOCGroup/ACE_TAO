@@ -114,7 +114,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
       if (env.exception () != 0)
 	return 0;
 
-      TAO::ObjectKey_var object_key = object->key (env);
+      TAO_ObjectKey_var object_key = object->key (env);
       stub = new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
                               IIOP::Profile (orb_core->orb_params ()->addr (),
                                              object_key.in ()));
