@@ -1,3 +1,21 @@
+Thu Apr  5 10:16:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * examples/TypeCode_Creation/Makefile:
+
+          Excluded the create_*_tc functions from minimum CORBA
+          builds, and modified the example makefile accordingly.
+          Thanks to Carlos for finding the spec's reference to
+          these functions re minimum CORBA in a rather
+          unexpected location.
+
+        * tao/corbafwd.h:
+        * tao/IFR_TypeCodes.cpp:
+
+          Reverted change in previous entry. The typedef and typecode
+          for ContextIdentifier weren't missing after all.
+
 Thu Apr  5 09:31:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/corbafwd.h:
