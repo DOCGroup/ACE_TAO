@@ -33,41 +33,41 @@ namespace CIAO
       if (value.short_p ())
         {
           toconfig <<= 
-            CORBA::Short (static_cast <short &> (value.short_ ()));
+            CORBA::Short (static_cast < ::XMLSchema::short_ const & > (value.short_ ()));
           
           //  static_cast<CORBA::Short> (value.short_ ());
         }
       else if (value.ushort_p ())
         {
           toconfig <<=
-            CORBA::UShort (static_cast<unsigned short &> (value.ushort ()));
+            CORBA::UShort (static_cast< ::XMLSchema::unsignedShort const & > (value.ushort ()));
 
         }
       else if (value.long_p ())
         {
           toconfig <<=
-            CORBA::Long (static_cast <int &> (value.long_ ()));
+            CORBA::Long (static_cast < ::XMLSchema::int_ const& > (value.long_ ()));
 
         }
       else if (value.ulong_p ())
         {
           toconfig <<=
-            CORBA::ULong (static_cast <unsigned int &> (value.ulong ()));
+            CORBA::ULong (static_cast < ::XMLSchema::unsignedInt const& > (value.ulong ()));
         }
       else if (value.boolean_p ())
         {
           toconfig <<= 
-			  CORBA::Any::from_boolean (static_cast <bool &> (value.boolean ()));
+	    CORBA::Any::from_boolean (static_cast < ::XMLSchema::boolean const& > (value.boolean ()));
         }
       else if (value.double_p ())
         {
           toconfig <<= 
-            CORBA::Double (static_cast <double &> (value.double_ ()));
+            CORBA::Double (static_cast < ::XMLSchema::double_ const& > (value.double_ ()));
         }
       else if (value.float_p ())
         {
           toconfig <<= 
-            CORBA::Float (static_cast <float &> (value.float_ ()));
+            CORBA::Float (static_cast < ::XMLSchema::float_ const& > (value.float_ ()));
         }
       else if (value.string_p ())
         {
@@ -85,23 +85,13 @@ namespace CIAO
         }
       else if (value.longlong_p ())
         {
-#if defined (_MSC_VER) && _MSC_VER == 1200
-          toconfig <<= 
-            CORBA::LongLong (static_cast <ACE_INT64 &> (value.longlong ()));
-#else
-		  toconfig <<=	
-            CORBA::LongLong (static_cast <long long &> (value.longlong ()));
-#endif /*defined (_MSC_VER) && _MSC_VER == 1200 */
-        }
+          toconfig <<=
+            CORBA::LongLong (static_cast < ::XMLSchema::long_ const& > (value.longlong ()));
+	}
       else if (value.ulonglong_p ())
         {
-#if defined (_MSC_VER) && _MSC_VER == 1200
           toconfig <<=
-            CORBA::ULongLong (static_cast <ACE_UINT64 &> (value.ulonglong ()));
-#else
-		  toconfig <<=
-            CORBA::ULongLong (static_cast <unsigned long long &> (value.ulonglong ()));
-#endif /* defined (_MSC_VER) && _MSC_VER == 1200 */
+            CORBA::ULongLong (static_cast < ::XMLSchema::unsignedLong const& > (value.ulonglong ()));
         }
     }
 
