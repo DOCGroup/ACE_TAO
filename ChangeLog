@@ -1,3 +1,10 @@
+Wed Feb 12 00:00:12 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/OS.h:
+	* ace/OS.i (thr_setprio): Add a new default thr_policy parameter which
+	  allows us to explicitly set the policy in pthread_setschedparam().
+	  Introduced to eliminate a bug discovered in RT-CORBA implementation.
+
 Tue Feb 11 14:01:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* vc7_nightly.mwc: Added a temporary file specifying core nightly
