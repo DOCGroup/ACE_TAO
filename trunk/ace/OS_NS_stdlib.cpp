@@ -22,7 +22,7 @@ ACE_RCSID (ace,
 #endif /* ACE_LACKS_MKTEMP || ACE_LACKS_MKSTEMP || ACE_LACKS_REALPATH */
 
 #if defined (ACE_LACKS_MKSTEMP)
-#  include "ace/OS_fcntl.h"
+#  include "ace/OS_NS_fcntl.h"
 #  include "ace/OS_NS_sys_time.h"
 
 #  include <limits>
