@@ -1,3 +1,8 @@
+Sun Apr 22 15:03:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * pace/ctype.h:
+          Add missing #includes that were causing compilation warnings.
+
 Sat Apr 21 17:37:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * pace/win32/socket.inl:
