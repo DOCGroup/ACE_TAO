@@ -29,7 +29,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-static LPCTSTR usage = ASYS_TEXT ("usage: %s [-d]\n");
+static ASYS_TCHAR *usage = ASYS_TEXT ("usage: %s [-d]\n");
 
 #if defined (ACE_HAS_THREADS)
 
@@ -235,7 +235,7 @@ main (int argc, ASYS_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
 
   // Re-enable LM_DEBUG messages.
-  ACE_Log_Msg::instance ()->priority_mask 
+  ACE_Log_Msg::instance ()->priority_mask
     (ACE_Log_Msg::instance ()->priority_mask () | LM_DEBUG);
 
   ACE_END_TEST;
