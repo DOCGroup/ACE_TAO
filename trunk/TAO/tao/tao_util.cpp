@@ -28,7 +28,6 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
 // Initialize the ORB, using the supplied command line arguments.  the
 // poa_name is a user-supplied string that is used to name the POA
 // created.
-
 int
 TAO_ORB_Manager::init (int argc,
                        char **argv,
