@@ -12,7 +12,7 @@ ACE_RCSID(QOS, QoS_Util,"$Id$")
 
 // constructor.
 QoS_Util::QoS_Util (int argc,
-                    char *argv[])
+                    ACE_TCHAR *argv[])
   : argc_ (argc),
     argv_ (argv),
     source_port_ (SENDER_PORT),
@@ -36,7 +36,7 @@ QoS_Util::~QoS_Util (void)
 int
 QoS_Util::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "m:n:p:P:c");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("m:n:p:P:c"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -50,10 +50,10 @@ QoS_Util::parse_args (void)
         this->dest_addr_->set (get_opts.opt_arg ());
         break;
       case 'p': // protocol.
-        if (ACE_OS::strcasecmp (get_opts.opt_arg (), "tcp") == 0)
+        if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("tcp")) == 0)
           this->protocol_ = IPPROTO_TCP;
         else
-          if (ACE_OS::strcasecmp (get_opts.opt_arg (), "udp") == 0)
+          if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("udp")) == 0)
             this->protocol_ = IPPROTO_UDP;
           else
             ACE_DEBUG ((LM_DEBUG,
