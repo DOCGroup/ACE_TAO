@@ -1,3 +1,19 @@
+Tue Sep 24 15:29:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.h:
+        * tao/IFR_Client_Adapter.cpp:
+        * tao/IFR_Client_Adapter.h:
+        * tao/TypeCodeFactory_Adapter.cpp:
+        * tao/TypeCodeFactory_Adapter.h:
+
+          Made the methods in these classes pure virtual and 
+          eliminated the empty method bodies.
+
+        * tao/corbafwd.h:
+
+          Added 'tk_event' to the TCKind enum.
+
 Tue Sep 24 09:36:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO/orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
