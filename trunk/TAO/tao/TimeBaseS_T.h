@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:566
+// be\be_codegen.cpp:547
 
 #ifndef _TAO_IDL_ORIG_TIMEBASES_T_H_
 #define _TAO_IDL_ORIG_TIMEBASES_T_H_
@@ -34,9 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -44,17 +42,15 @@
 // TAO_IDL - Generated from 
 // be\be_visitor_root/root_sth.cpp:116
 
-#if defined (ACE_HAS_USING_KEYWORD)
 namespace POA_TimeBase
 {
 } // module TimeBase
-#endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1111
+// be\be_codegen.cpp:1096
 
 #if defined (__ACE_INLINE__)
-#include "TimeBaseS_T.i"
+#include "TimeBaseS_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
@@ -65,9 +61,10 @@ namespace POA_TimeBase
 #pragma implementation ("TimeBaseS_T.cpp")
 #endif /* defined REQUIRED PRAGMA */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
+
