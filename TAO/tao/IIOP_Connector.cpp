@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "ace/Auto_Ptr.h"
 #include "tao/IIOP_Connector.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/GIOP.h"
@@ -9,6 +8,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tao, IIOP_Connector, "$Id$")
 
@@ -257,7 +257,7 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
                       ACE_INET_Addr[num_connections],
                       -1);
 
-      ACE_Auto_Array_Ptr<ACE_INET_Addr> safe_remote_addrs (remote_addrs);
+      ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_remote_addrs (remote_addrs);
 
       ACE_NEW_RETURN (handlers,
                       TAO_IIOP_Client_Connection_Handler *[num_connections],
@@ -511,10 +511,8 @@ TAO_IIOP_Connector::make_caching_strategy (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class auto_ptr<ACE_INET_Addr>;
-template class ACE_Auto_Basic_Ptr<ACE_INET_Addr>;
-template class auto_ptr<TAO_IIOP_Client_Connection_Handler>;
-template class ACE_Auto_Basic_Ptr<TAO_IIOP_Client_Connection_Handler>;
+template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
+template class ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Client_Connection_Handler*>;
 template class auto_ptr<TAO_IIOP_Connect_Creation_Strategy>;
 template class ACE_Auto_Basic_Ptr<TAO_IIOP_Connect_Creation_Strategy>;
 
@@ -600,10 +598,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate auto_ptr<ACE_INET_Addr>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_INET_Addr>
-#pragma instantiate auto_ptr<TAO_IIOP_Client_Connection_Handler>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_IIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Client_Connection_Handler*>
 #pragma instantiate auto_ptr<TAO_IIOP_Connect_Creation_Strategy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_IIOP_Connect_Creation_Strategy>
 

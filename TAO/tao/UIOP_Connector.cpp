@@ -5,12 +5,12 @@
 
 #if defined (TAO_HAS_UIOP)
 
-#include "ace/Auto_Ptr.h"
 #include "tao/UIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tao, UIOP_Connector, "$Id$")
 
@@ -163,7 +163,7 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
       //    connector?  We (Fred and Carlos) thought about just
       //    setting the hint to 0, but that would not be thread-safe
       //    (other threads may be touching the same profile).
-      //    At this point (the day before 1.0) i'm reluctant to change 
+      //    At this point (the day before 1.0) i'm reluctant to change
       //    ACE, and this fix passes all the TAO tests (including the
       //    new ping/pong test in the tests/Faults directory).
       uiop_profile->reset_hint ();
@@ -231,13 +231,13 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
                       ACE_UNIX_Addr[num_connections],
                       -1);
 
-      auto_ptr<ACE_UNIX_Addr> safe_remote_addrs (remote_addrs);
+      ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr> safe_remote_addrs (remote_addrs);
 
       ACE_NEW_RETURN (handlers,
                       TAO_UIOP_Client_Connection_Handler *[num_connections],
                       -1);
 
-      auto_ptr<TAO_UIOP_Client_Connection_Handler *>
+      ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Client_Connection_Handler *>
         safe_handlers (handlers);
 
       ACE_NEW_RETURN (failures,
@@ -483,10 +483,8 @@ TAO_UIOP_Connector::make_caching_strategy (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class auto_ptr<ACE_UNIX_Addr>;
-template class ACE_Auto_Basic_Ptr<ACE_UNIX_Addr>;
-template class auto_ptr<TAO_UIOP_Client_Connection_Handler>;
-template class ACE_Auto_Basic_Ptr<TAO_UIOP_Client_Connection_Handler>;
+template class ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr>;
+template class ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Client_Connection_Handler*>;
 template class auto_ptr<TAO_UIOP_Connect_Creation_Strategy>;
 template class ACE_Auto_Basic_Ptr<TAO_UIOP_Connect_Creation_Strategy>;
 
@@ -572,10 +570,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate auto_ptr<ACE_UNIX_Addr>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_UNIX_Addr>
-#pragma instantiate auto_ptr<TAO_UIOP_Client_Connection_Handler>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_UIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Client_Connection_Handler*>
 #pragma instantiate auto_ptr<TAO_UIOP_Connect_Creation_Strategy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_UIOP_Connect_Creation_Strategy>
 
