@@ -1,3 +1,22 @@
+Fri Dec 17 06:45:19 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/IFR_Service/drv_args.cpp:
+        * orbsvcs/IFR_Service/drv_preproc.cpp:
+        * orbsvcs/IFR_Service/tao_idl.cpp:
+
+          Created IFR_Service counterparts to these files that only #include
+          the original from TAO_IDL.  This has been brought about due to the
+          differences between BE_GlobalData from the TAO_IDL_BE and the
+          TAO_IFR_BE.  VPATH, which was previously used, causes the object
+          files from these files to be taken from the TAO_IDL build which
+          do not work when tao_ifr is created from them.  See the comment in
+          each of these files for more detail.
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+
+          Removed the VPATH portion and changed to reference the new files
+          instead of the ones from TAO_IDL.
+
 Thu Dec 16 09:41:35 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Simple/time-date/svc.conf:
