@@ -2,51 +2,34 @@
 
 //=============================================================================
 /**
- *  @file    Element_Def_Builder.h
+ *  @file    Debug_Element_Builder.h
  *
  *  $Id$
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
-#ifndef _ACEXML_ELEMENT_DEF_BUILDER_H_
-#define _ACEXML_ELEMENT_DEF_BUILDER_H_
+#ifndef _ACEXML_DEBUG_ELEMENT_BUILDER_H_
+#define _ACEXML_DEBUG_ELEMENT_BUILDER_H_
 
-#include "ace/Auto_Ptr.h"
-#include "common/XML_Types.h"
-#include "common/Env.h"
+#include "common/Element_Def_Builder.h"
+#include "parser/debug_validator/Debug_DTD_Manager_Export.h"
+#include "parser/debug_validator/Element_Tree.h"
 
 /**
- * @ class ACEXML_Element_Def_Builder Element_Def_Builder.h "common/Element_Def_Builder.h"
+ * @ class ACEXML_Debug_Element_Builder Debug_Element_Builder.h "parser/debug_validator/Debug_Element_Builder.h"
  *
- * @ brief An abstract virtual class that defines the interface
- *         to define an element definition.
+ * This class prints out the element definition for debugging purpose.
  *
- * This class defines how to define an element definition after
- * parsing a DTD.
+ * @todo This class is not namespace-aware.
  */
-class ACEXML_Export ACEXML_Element_Def_Builder
+class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_Element_Builder
+  : public ACEXML_Element_Def_Builder
 {
 public:
+  ACEXML_Debug_Element_Builder ();
 
-  typedef auto_ptr<ACEXML_Element_Def_Builder> VAR;
-
-  typedef enum {
-    EMPTY,
-    ANY,
-    MIXED,
-    CHILDREN,
-    UNDEFINED
-  } CONTENT_TYPE;
-
-  typedef enum {
-    ONE,
-    ZERO_OR_MORE,
-    ONE_OR_MORE,
-    ONE_OR_ZERO
-  } CARDINALITY;
-
-  virtual ~ACEXML_Element_Def_Builder () = 0;
+  virtual ~ACEXML_Debug_Element_Builder ();
 
   /**
    * Define the name of the element.
@@ -58,7 +41,7 @@ public:
                               const ACEXML_Char *qName,
                               ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    = 0;
+    ;
 
   /**
    * Define the content type of the element.
@@ -68,7 +51,7 @@ public:
   virtual int setContentType (CONTENT_TYPE type,
                               ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    = 0;
+    ;
 
   /**
    * Insert one more element into Mixed definition.
@@ -78,12 +61,12 @@ public:
                                   const ACEXML_Char *qName,
                                   ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    = 0;
+    ;
 
   /**
    * Start a new group of children.
    */
-  virtual int startChildGroup () = 0;
+  virtual int startChildGroup ();
 
   /**
    * End a new group of children.
@@ -91,7 +74,7 @@ public:
    * @retval 0 on success.
    */
   virtual int endChildGroup (CARDINALITY card,
-                             ACEXML_Env &xmlenv) = 0;
+                             ACEXML_Env &xmlenv);
 
   /**
    * Set the type of current child group to Choice.
@@ -100,7 +83,7 @@ public:
    * already been set and this action conflicts with the previous
    * setting.
    */
-  virtual int setChoice () = 0;
+  virtual int setChoice ();
 
   /**
    * Set the type of current child group to Sequence.
@@ -109,7 +92,7 @@ public:
    * already been set and this action conflicts with the previous
    * setting.
    */
-  virtual int setSequence () = 0;
+  virtual int setSequence ();
 
   /**
    * Insert an new element into the current child group.
@@ -121,7 +104,15 @@ public:
                               const ACEXML_Char *qName,
                               ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    = 0;
+    ;
+private:
+  CONTENT_TYPE type_;
+
+  ACEXML_String element_;
+
+  ACEXML_Element_Tree_List_Node *root_;
+
+  ACEXML_Element_Tree_List_Stack active_list_;
 };
 
-#endif /* _ACEXML_ELEMENT_DEF_BUILDER_H_ */
+#endif /* _ACEXML_DEBUG_ELEMENT_BUILDER_H_ */

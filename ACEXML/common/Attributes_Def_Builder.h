@@ -27,6 +27,9 @@
 class ACEXML_Export ACEXML_Attribute_Def_Builder
 {
 public:
+
+  typedef auto_ptr<ACEXML_Attribute_Def_Builder> VAR;
+
   typedef enum {
     CDATA,
     ID,
@@ -96,6 +99,9 @@ public:
 class ACEXML_Export ACEXML_Attributes_Def_Builder
 {
 public:
+
+  typedef auto_ptr<ACEXML_Attributes_Def_Builder> VAR;
+
   virtual ~ACEXML_Attributes_Def_Builder () = 0;
 
   /**

@@ -92,6 +92,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\Attributes_Def_Builder.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AttributesImpl.cpp
 # End Source File
 # Begin Source File
@@ -101,6 +105,14 @@ SOURCE=.\CharStream.cpp
 # Begin Source File
 
 SOURCE=.\DefaultHandler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DTD_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Element_Def_Builder.cpp
 # End Source File
 # Begin Source File
 
@@ -136,6 +148,10 @@ SOURCE=.\Transcode.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Validator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\XMLFilterImpl.cpp
 # End Source File
 # End Group
@@ -149,6 +165,10 @@ SOURCE=.\ACEXML_Export.h
 # Begin Source File
 
 SOURCE=.\Attributes.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Attributes_Def_Builder.h
 # End Source File
 # Begin Source File
 
@@ -168,7 +188,15 @@ SOURCE=.\DefaultHandler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DTD_Manager.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DTDHandler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Element_Def_Builder.h
 # End Source File
 # Begin Source File
 
@@ -213,6 +241,10 @@ SOURCE=.\SAXExceptions.h
 # Begin Source File
 
 SOURCE=.\Transcode.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Validator.h
 # End Source File
 # Begin Source File
 
