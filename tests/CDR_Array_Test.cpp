@@ -746,6 +746,7 @@ struct LongHelper
     }
 };
 
+#if !defined (ACE_LACKS_LONGLONG_T)
 struct LongLongHelper
 {
   static const ACE_TCHAR* name ()
@@ -778,6 +779,7 @@ struct LongLongHelper
       return sizeof(ACE_CDR::LongLong);
     }
 };
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
 struct CharHelper
 {
@@ -937,10 +939,12 @@ main (int argc, ACE_TCHAR *argv[])
         CDR_Test<ACE_CDR::Float, FloatHelper>
           test (ftotal, niter, use_array);
       }
+#if !defined (ACE_LACKS_LONGLONG_T)
       {
         CDR_Test<ACE_CDR::LongLong, LongLongHelper>
           test (qtotal, niter, use_array);
       }
+#endif /* ! ACE_LACKS_LONGLONG_T */
       {
         CDR_Test<ACE_CDR::Long, LongHelper>
           test (wtotal, niter, use_array);
@@ -963,7 +967,9 @@ main (int argc, ACE_TCHAR *argv[])
 
 template class CDR_Test<ACE_CDR::Double, DoubleHelper>;
 template class CDR_Test<ACE_CDR::Float, FloatHelper>;
-template class CDR_Test<ACE_CDR::LongLong, LongLongHelper>;
+#if !defined (ACE_LACKS_LONGLONG_T)
+ template class CDR_Test<ACE_CDR::LongLong, LongLongHelper>;
+#endif /* ! ACE_LACKS_LONGLONG_T */
 template class CDR_Test<ACE_CDR::Long, LongHelper>;
 template class CDR_Test<ACE_CDR::Short, ShortHelper>;
 template class CDR_Test<ACE_CDR::Char, CharHelper>;
@@ -972,7 +978,9 @@ template class CDR_Test<ACE_CDR::Char, CharHelper>;
 
 #pragma instantiate CDR_Test<ACE_CDR::Double, DoubleHelper>
 #pragma instantiate CDR_Test<ACE_CDR::Float, FloatHelper>
-#pragma instantiate CDR_Test<ACE_CDR::LongLong, LongLongHelper>
+#if !defined (ACE_LACKS_LONGLONG_T)
+# pragma instantiate CDR_Test<ACE_CDR::LongLong, LongLongHelper>
+#endif /* ! ACE_LACKS_LONGLONG_T */
 #pragma instantiate CDR_Test<ACE_CDR::Long, LongHelper>
 #pragma instantiate CDR_Test<ACE_CDR::Short, ShortHelper>
 #pragma instantiate CDR_Test<ACE_CDR::Char, CharHelper>

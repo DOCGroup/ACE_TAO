@@ -1,3 +1,13 @@
+Wed Aug 09 10:10:45 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/CDR_Array_Test.cpp: disabled LongLong test if
+          the platform doesn't have native long long support.
+          ACE's long long emulation doesn't have sufficient
+          capability to support what the test needs.
+          Thanks to Peter Kroener <peter.kroener@icn.siemens.de>
+          for reporting this. [Bug 632]
+
+
 Tue Aug 08 10:35:04 2000  Rich Seibel <seibel_r@ociweb.com>
 
         * ace/config-sunos5.8.h: added.  We have compiled successfully
