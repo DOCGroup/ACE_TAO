@@ -24,12 +24,10 @@
 #include "tao/TAO_Export.h"
 #include "tao/Cache_Entries.h"
 
-#include "tao/Connection_Purging_Strategy.h"
-
 class TAO_ORB_Core;
 class ACE_Handle_Set;
 class TAO_Resource_Factory;
-
+class TAO_Connection_Purging_Strategy;
 
 typedef ACE_Unbounded_Set<ACE_Event_Handler*> TAO_EventHandlerSet;
 typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
@@ -38,41 +36,35 @@ typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
 /**
  * @class TAO_Transport_Cache_Manager
  *
- * @brief The Transport Cache Manager for TAO
+ * @brief The Transport Cache Manager for TAO.
+ *
+ * This class provides interfaces associating a TAO_Cache_ExtId and
+ * TAO_Cache_IntId. This class manages a ACE_Hash_Map_Manager class
+ * which is used as a container to Cache the connections. This class
+ * protects the entries with a lock. The map can be updated only by
+ * holding the lock.
+ *
+ * @note This class at present has an interface that may not be
+ *       needed. But, the interface has just been copied from the ACE
+ *       Hash Map Manager classes. The interface wold be pruned once I
+ *       get the purging stuff also in. Till then let the interface be
+ *       there as it is.
  */
 class TAO_Export TAO_Transport_Cache_Manager
 {
-
-  // = DESCRIPTION
-  //     This class provides interfaces associating a TAO_Cache_ExtId
-  //     & TAO_Cache_IntId. This class manages a ACE_Hash_Map_Manager
-  //     class which is used as a container to Cache the
-  //     connections. This class protects the entries with a lock. The
-  //     map can be updated only by holding the lock.
-
-  //     General Note: This class at present has an interface that may
-  //     not be needed. But, the interface has just been copied from
-  //     the ACE Hash Map Manager classes. The interface wold be
-  //     pruned once I get the purging stuff also in. Till then let
-  //     the interface be there as it is.
 public:
 
   // Some useful typedef's
-  typedef ACE_Hash_Map_Manager <TAO_Cache_ExtId,
-                                TAO_Cache_IntId,
-                                ACE_Null_Mutex>
-  HASH_MAP;
+  typedef ACE_Hash_Map_Manager_Ex <TAO_Cache_ExtId,
+                                   TAO_Cache_IntId,
+                                   ACE_Hash<TAO_Cache_ExtId>,
+                                   ACE_Equal_To<TAO_Cache_ExtId>,
+                                   ACE_Null_Mutex> HASH_MAP;
 
-  typedef ACE_Hash_Map_Iterator <TAO_Cache_ExtId,
-                                 TAO_Cache_IntId,
-                                 ACE_Null_Mutex>
-  HASH_MAP_ITER;
+  typedef HASH_MAP::iterator HASH_MAP_ITER;
 
   typedef ACE_Hash_Map_Entry <TAO_Cache_ExtId,
-                              TAO_Cache_IntId>
-  HASH_MAP_ENTRY;
-
-  // == Public methods
+                              TAO_Cache_IntId> HASH_MAP_ENTRY;
 
   /// Constructor
   TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core);
@@ -84,7 +76,6 @@ public:
   /// definition based on which caching can be done
   int cache_transport (TAO_Transport_Descriptor_Interface *prop,
                        TAO_Transport *transport);
-
 
   /// Check the Transport Cache to check whether the connection exists
   /// in the Cache and return the connection

@@ -13,6 +13,7 @@
 
 #ifndef TAO_BASE_CONNECTION_PROPERTY_H
 #define TAO_BASE_CONNECTION_PROPERTY_H
+
 #include "ace/pre.h"
 
 #include "tao/Transport_Descriptor_Interface.h"
@@ -20,6 +21,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Endpoint.h"
 
 /**
  * @class TAO_Base_Transport_Property
@@ -30,29 +33,23 @@
  * property class. This provides an implementation for the virtual
  * functions declared in TAO_Transport_Descriptor_Interface.
  */
-
-
-class TAO_Export TAO_Base_Transport_Property:
-  public TAO_Transport_Descriptor_Interface
+class TAO_Export TAO_Base_Transport_Property
+  : public TAO_Transport_Descriptor_Interface
 {
 public:
 
   /// Default constructor
   TAO_Base_Transport_Property (void);
 
-
   /// Constructor
   TAO_Base_Transport_Property (TAO_Endpoint *endpoint,
                                CORBA::Boolean flag = 0);
 
-  /// Dtor
+  /// Destructor
   virtual ~TAO_Base_Transport_Property (void);
 
-
   /// The copy constructor.
-  TAO_Base_Transport_Property (
-      const TAO_Base_Transport_Property &rhs);
-
+  TAO_Base_Transport_Property (const TAO_Base_Transport_Property &rhs);
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
@@ -64,6 +61,7 @@ public:
 
   /// Generate hash value for our class
   virtual u_long hash (void) const;
+
 };
 
 #if defined (__ACE_INLINE__)
