@@ -337,7 +337,7 @@ private:
   void throw_badboy (CORBA::Environment &ACE_TRY_ENV);
   // Called by test_exception. This will avoid the compiler
   // warning that test_exception is throwing an exception
-  // not in its THROW_SPEC, but still test TAO's 
+  // not in its THROW_SPEC, but still test TAO's
   // conversion of such an exception to UNKNOWN.
 };
 
