@@ -21,16 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Local Object
-#include "tao/LocalObject.h"
-
-#include "ace/Reverse_Lock_T.h"
-#include "ace/Condition_Thread_Mutex.h"
-
-#include "PS_CurrentC.h"
 #include "ServantLocatorC.h"
 
 #include "POA_Current_Impl.h"
+#include "Active_Object_Map.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -39,11 +33,8 @@
 
 // Forward declaration
 class TAO_POA;
-class TAO_POA_Manager;
-class TAO_Temporary_Creation_Time;
-class TAO_TSS_Resources;
-class TAO_Transport;
-class TAO_Servant_Dispatcher;
+class TAO_ServerRequest;
+class TAO_Object_Adapter;
 
 namespace TAO
 {

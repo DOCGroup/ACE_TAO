@@ -21,29 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Key_Adapters.h"
-#include "poa_macros.h"
-
-// Active Object Table
-#include "Active_Object_Map.h"
-
-#include "tao/Adapter.h"
-#include "tao/Server_Strategy_Factory.h"
-
-// Local Object
-#include "tao/LocalObject.h"
-
-#include "ace/Reverse_Lock_T.h"
-#include "ace/Condition_Thread_Mutex.h"
-
-// Policy Validators
-#include "Default_Policy_Validator.h"
-
-// Policy Set
-#include "POA_Policy_Set.h"
-
 #include "PS_CurrentC.h"
-#include "ServantLocatorC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -64,7 +42,6 @@ namespace TAO
 // Forward declaration
 class TAO_POA;
 class TAO_POA_Manager;
-class TAO_Temporary_Creation_Time;
 class TAO_TSS_Resources;
 class TAO_Transport;
 class TAO_Servant_Dispatcher;

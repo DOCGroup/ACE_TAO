@@ -24,9 +24,6 @@
 // Local Object
 #include "tao/LocalObject.h"
 
-#include "ace/Reverse_Lock_T.h"
-#include "ace/Condition_Thread_Mutex.h"
-
 #include "PS_CurrentC.h"
 
 #if defined(_MSC_VER)
