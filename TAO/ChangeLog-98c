@@ -1,3 +1,11 @@
+Wed Dec 23 11:07:46 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_type.cpp (nested_type_name):
+
+	  We had forgotten to insert a "::" in the computation of the
+	  nested type name. Thanks to Christian von Mueffling (email not
+	  known) for sending the bug report.
+
 Wed Dec 23 03:41:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/*.{h,cpp} (dii_req_invoke): Added a new mehtod
