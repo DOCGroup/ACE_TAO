@@ -1,14 +1,31 @@
+Mon May 01 02:06:02 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.cpp (avail_chunks): Changed to use do-while loop to
+	  go over all freelist when calculating the avail_chunks to make
+	  sure all nodes in the freelist are accounted for.  <freep_>
+	  doesn't always point to the anchoring Malloc_Header in the
+	  control block.  Thanks to Ivan Murphy
+	  <Ivan.Murphy@med.siemens.de> for reporting the problem.
+
+	  Also we must reduce the header size count by one when
+	  calculating the avail_chunks because each returning allocated
+	  memory chunk takes at least two Malloc_Header's.  This change
+	  made the result of <avail_chunks> more realistic.
+
+	* ace/Malloc.h: Added more documentation explaining how Malloc_T
+	  works.
+
 Sun Apr 30 23:20:00 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * ace/SString.h:
 
           SunCC 5 had problems with ACE_TString when it was typdefed,
-          but not when it was #defined.  
+          but not when it was #defined.
 
         * ace/ace_wchar.h:
 
           Noticed I was including tchar.h still, which is no longer
-          necessary since ACE's use of wchar_t is separate from 
+          necessary since ACE's use of wchar_t is separate from
           tchar.h's.
 
 Sat Apr 29 20:02:39 2000  Ossama Othman  <ossama@uci.edu>
@@ -127,7 +144,7 @@ Sat Apr 29 14:15:12 2000  Darrell Brunsch  <brunsch@uci.edu>
 
           Made the x86 emulation release configuration build correctly
           by ingoring default libraries.  Also cleaned this dsp, which
-          had an improvement of 98%.  
+          had an improvement of 98%.
 
 Sat Apr 29 13:20:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
