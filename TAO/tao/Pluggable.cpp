@@ -433,7 +433,7 @@ TAO_Connector::make_mprofile (const char *string,
 
 // Acceptor
 TAO_Acceptor::TAO_Acceptor (CORBA::ULong tag)
-  :  priority_ (0),
+  :  priority_ (-1),
      tag_ (tag)
 {
 }

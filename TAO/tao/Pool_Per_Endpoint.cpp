@@ -49,6 +49,8 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
       CORBA::Short native_priority;
       if (pm->to_native (corba_priority, native_priority) == 1)
         priority = native_priority;
+      else
+        ACE_THROW (CORBA::DATA_CONVERSION ());
 
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
