@@ -239,4 +239,6 @@ Proxy_Handler_Factory::make_proxy_handler (const Proxy_Config_Info &pci)
 template class ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
