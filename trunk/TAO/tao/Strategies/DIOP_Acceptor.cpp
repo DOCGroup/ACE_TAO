@@ -338,6 +338,8 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                   char *[this->endpoint_count_],
                   -1);
 
+  this->hosts_[0] = 0;
+
   if (this->hostname (orb_core,
                       addr,
                       this->hosts_[0],
@@ -567,6 +569,8 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (this->hosts_,
                   char *[this->endpoint_count_],
                   -1);
+
+  ACE_OS::memset (this->hosts_, 0, sizeof (char*) * this->endpoint_count_);
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
