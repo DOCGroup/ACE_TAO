@@ -37,7 +37,7 @@ endif
 # primitives in ACE. Do not attempt single threaded builds for the 
 # following
 ifeq ($(threads),1)
-DIRS += Active_Object \
+DIRS += Active_Objects \
 	Streams \
 	Threads \
 	ThreadManagement \
