@@ -942,7 +942,8 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ASSERT (!ACE_OS::strcmp (str.in (), members[i].name));
     }
 
-  CORBA::Contained::Description_var desc = svar->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Contained::Description_var desc = 
+    svar->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeDescription *td;
@@ -2317,9 +2318,9 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_TEXT ("operations::length: %d\n"),
                 length));
 
-  ACE_ASSERT (length == 4);
+  ACE_ASSERT (length == 1);
 
-  length = fifd->operations[3].contexts.length ();
+  length = fifd->operations[0].contexts.length ();
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
@@ -2331,7 +2332,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
 
   for (i = 0; i < length; i++)
     {
-      tmp = fifd->operations[3].contexts[i];
+      tmp = fifd->operations[0].contexts[i];
 
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
@@ -2343,7 +2344,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ASSERT (!ACE_OS::strcmp (tmp, contexts[i]));
     }
 
-  length = fifd->operations[3].exceptions.length ();
+  length = fifd->operations[0].exceptions.length ();
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
@@ -2355,7 +2356,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
 
   for (i = 0; i < length; i++)
     {
-      const char *tmp = fifd->operations[3].exceptions[i].name;
+      const char *tmp = fifd->operations[0].exceptions[i].name;
 
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
@@ -2456,7 +2457,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_TEXT ("\nInterfaceDef::contents::length: %d\n"),
                 length));
 
-  ACE_ASSERT (length == 6);
+  ACE_ASSERT (length == 3);
 
   for (i = 0; i < length; i++)
     {

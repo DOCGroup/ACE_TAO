@@ -743,7 +743,7 @@ TAO_Container_i::create_module_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ModuleDef::_nil ());
 
@@ -802,7 +802,7 @@ TAO_Container_i::create_constant_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ConstantDef::_nil ());
 
@@ -896,7 +896,7 @@ TAO_Container_i::create_struct_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::StructDef::_nil ());
 
@@ -1003,7 +1003,7 @@ TAO_Container_i::create_union_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::UnionDef::_nil ());
 
@@ -1120,7 +1120,7 @@ TAO_Container_i::create_enum_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::EnumDef::_nil ());
 
@@ -1210,7 +1210,7 @@ TAO_Container_i::create_alias_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::AliasDef::_nil ());
 
@@ -1274,7 +1274,7 @@ TAO_Container_i::create_interface_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
 
@@ -1378,7 +1378,7 @@ TAO_Container_i::create_value_i (
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
 
@@ -1592,7 +1592,7 @@ TAO_Container_i::create_value_box_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ValueBoxDef::_nil ());
 
@@ -1656,7 +1656,7 @@ TAO_Container_i::create_exception_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ExceptionDef::_nil ());
 
@@ -1744,7 +1744,7 @@ TAO_Container_i::create_native_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::NativeDef::_nil ());
 
@@ -1804,7 +1804,7 @@ TAO_Container_i::create_abstract_interface_i (
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::AbstractInterfaceDef::_nil ());
 
@@ -1890,7 +1890,7 @@ TAO_Container_i::create_local_interface_i (
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "defns\\"
+                                          "defns"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::LocalInterfaceDef::_nil ());
 

@@ -5,6 +5,8 @@ Fri Feb 21 19:38:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
         * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * tao/Any_T.cpp:
+        * tao/Any.cpp:
 
           Fixed bugs turned up from running IFR_Test.
 
@@ -12,6 +14,14 @@ Fri Feb 21 19:38:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Changed test checks because AttributeDef creation no longer
           automatically creates corresponding OperationDef(s).
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Sequence.h:
+        * tao/Synch_Queued_Message.cpp:
+        * tao/Thread_Lane_Resources.h:
+
+          Added an include file to each of these to get rid of
+          build errors.
 
 Thu Feb 20 15:48:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 

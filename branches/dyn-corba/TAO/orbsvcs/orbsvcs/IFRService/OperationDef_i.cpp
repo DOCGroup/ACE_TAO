@@ -413,13 +413,16 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
       // IR objects so they can't be destroyed one at a time. To
       // make a change one has to call the mutator version of this
       // function and make a completely new list.
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (index++);
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (index);
       while (this->repo_->config ()->get_string_value (contexts_key,
                                                        stringified,
                                                        context)
               == 0)
         {
           context_queue.enqueue_tail (context);
+          ++index;
+          char *stringified = 
+            TAO_IFR_Service_Utils::int_to_string (index);
         }
     }
 

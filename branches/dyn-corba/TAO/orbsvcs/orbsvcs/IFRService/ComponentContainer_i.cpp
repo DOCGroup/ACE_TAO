@@ -70,7 +70,7 @@ TAO_ComponentContainer_i::create_component_i (
         name,
         &TAO_ComponentContainer_i::same_as_tmp_name,
         version,
-        "defns\\"
+        "defns"
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK_RETURN (CORBA::ComponentDef::_nil ());
@@ -198,7 +198,7 @@ TAO_ComponentContainer_i::create_home_i (
         name,
         &TAO_ComponentContainer_i::same_as_tmp_name,
         version,
-        "defns\\"
+        "defns"
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
@@ -324,7 +324,7 @@ TAO_ComponentContainer_i::create_event_i (
         name,
         &TAO_ComponentContainer_i::same_as_tmp_name,
         version,
-        "defns\\"
+        "defns"
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
