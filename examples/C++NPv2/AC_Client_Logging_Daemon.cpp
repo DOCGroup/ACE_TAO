@@ -162,9 +162,9 @@ public:
   // Service Configurator hook methods.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini ();
-  virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;
-  virtual int suspend ();
-  virtual int resume ();
+  //virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;
+  //virtual int suspend ();
+  //virtual int resume ();
 };
 
 /******************************************************/
