@@ -40,6 +40,7 @@ SUBDIRS = \
 ## Additional flags to pass to `aclocal' when invoked by the generated
 ## Makefile.  In particular, add ACE's `m4' directory to the macro
 ## search path.
+ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
 
 ## If any of these files are modified, `configure' will be

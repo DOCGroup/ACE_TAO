@@ -1,3 +1,8 @@
+Tue Oct 28 17:07:19 2003  Steve Huston  <shuston@riverace.com>
+
+	* Makefile.am: Added definition of ACLOCAL so autoconf stuff gets
+	  rebuilt correctly when needed.
+
 Tue Oct 28 16:33:41 2003  Steve Huston  <shuston@riverace.com>
 
 	* m4/ace.m4: Added new option, --enable-stdcpplib, defaults to yes.
