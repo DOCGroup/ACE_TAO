@@ -137,7 +137,17 @@ receive_exception (TAO_ClientRequestInfo *ri,
 
       this->receive_exception (ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_RE_THROW;
+
+      PortableInterceptor::ReplyStatus status =
+        ri->reply_status (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Only re-throw the exception if it hasn't been transformed by
+      // the receive_exception() interception point (e.g. to a
+      // LOCATION_FORWARD).
+      if (status == PortableInterceptor::SYSTEM_EXCEPTION
+          || status == PortableInterceptor::USER_EXCEPTION)
+        ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;

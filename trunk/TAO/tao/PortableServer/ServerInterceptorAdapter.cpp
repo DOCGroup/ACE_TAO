@@ -13,6 +13,7 @@ ACE_RCSID (PortableServer,
 #endif /* __ACE_INLINE__ */
 
 #include "ServerRequestInfo.h"
+//#include "PICurrent.h"
 
 
 TAO_ServerRequestInterceptor_Adapter::
@@ -31,6 +32,15 @@ receive_request_service_contexts (
 
   ACE_TRY
     {
+#if 0
+      // Copy the request scope current (RSC) to the thread scope
+      // current (TSC) upon leaving this scope, i.e. just after the
+      // receive_request_service_contexts() completes.  A "guard" is
+      // used to make the copy also occur if an exception is thrown.
+      TAO_PICurrent_Guard pi_guard (ri->server_request (),
+                                    0 /* Copy RSC to TSC */);
+#endif  /* 0  */
+
       for (size_t i = 0 ; i < this->len_; ++i)
         {
           this->interceptors_[i]->receive_request_service_contexts (
@@ -195,7 +205,17 @@ send_exception (TAO_ServerRequestInfo *ri,
 
       this->send_exception (ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_RE_THROW;
+
+      PortableInterceptor::ReplyStatus status =
+        ri->reply_status (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Only re-throw the exception if it hasn't been transformed by
+      // the send_exception() interception point (e.g. to a
+      // LOCATION_FORWARD).
+      if (status == PortableInterceptor::SYSTEM_EXCEPTION
+          || status == PortableInterceptor::USER_EXCEPTION)
+        ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
