@@ -1,3 +1,10 @@
+Fri Oct 17 17:37:05 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTCosScheduling: 
+	* orbsvcs/orbsvcs/RTCosScheduling.mpc: Fixed dependency problem
+	  for RH71 Static build - Moved directory RTScheduling after
+	  RTSchedulingC(S).cpp in Source_Files section.
+	
 Fri Oct 17 21:17:03 UTC 2003 Kevin Bryan <bryank@cs.uri.edu>
     * orbsvcs/tests/RTCosScheduling/README
     * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client.dsp
