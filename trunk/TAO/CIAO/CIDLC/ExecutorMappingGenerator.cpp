@@ -993,19 +993,19 @@ namespace
     virtual void
     pre (InParameter&)
     {
-      os << "in ";
+      os << endl << "in ";
     }
 
     virtual void
     pre (OutParameter&)
     {
-      os << "out ";
+      os << endl << "out ";
     }
 
     virtual void
     pre (InOutParameter&)
     {
-      os << "inout ";
+      os << endl << "inout ";
     }
 
     virtual void

@@ -1,3 +1,12 @@
+Wed Nov  3 16:32:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        
+          Added generation of newline before each operation
+          parameter so each one will be on a separate line.
+          It was discovered that the VC 7.1 lexer truncates lines
+          longer than 1024 characters.
+
 Wed Nov  3 22:32:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIDLC/ServantSourceGenerator.cpp (namespace): 
