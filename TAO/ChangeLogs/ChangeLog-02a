@@ -1,8 +1,7 @@
-Sat Oct 07 15:05:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sat Oct 07 16:00:45 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Object.i:
-	* tao/Object.cpp: Moved CORBA::Object::is_nil to Object.i.  This
-	  function should be inlined when appropriate.
+	* tao/corbafwd.h: Changed CORBA::is_nil (CORBA::Object_ptr) to
+	  non-inlined.
 
 Sat Oct 07 14:00:27 2000 Balachandran Natarajan <bala@cs.wustl.edu>
 
