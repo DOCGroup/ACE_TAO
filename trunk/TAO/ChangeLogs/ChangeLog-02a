@@ -1,3 +1,11 @@
+Sat Aug 19 21:03:48 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/RT_Policy_i.h
+	* tao/Stub.cpp
+	* tests/Exposed_Policies/client.cpp:
+
+	  Comments/cosmetic updates.
+
 Sat Aug 19 19:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp
@@ -26,7 +34,7 @@ Sat Aug 19 16:40:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* docs/Smart_Proxies.html: Updated the documentation to remind
 	  users to build TAO/tao with smart_proxies=1 for a smart proxies
 	  enabled build.
-	
+
 Sat Aug 19 15:20:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Acceptors.cpp (process_client_locate):
