@@ -12,7 +12,10 @@
 //    be_visitor_ami_pre_proc.cpp
 //
 // = DESCRIPTION
-//    A visitor to generate the AMI implied IDL code.
+//    This visitor creates for AMI implied IDL constructs
+//    the appropriate AST (Abstract Syntax Tree) node,
+//    sets the corresponding interface or operation strategy
+//    on it and enteres the nodes into the AST.
 //
 // = AUTHOR
 //    Michael Kircher <Michael.Kircher@mchp.siemens.de>
@@ -41,85 +44,89 @@ be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc (void)
 int 
 be_visitor_ami_pre_proc::visit_module (be_module *node)
 {
-  ACE_UNUSED_ARG (node);
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_module\n"));
-  if (this->visit_scope (node) == -1)
+  if (!node->imported ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_pre_proc::"
-                         "visit_module - "
-                         "visit scope failed\n"),
-                        -1);
+      ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_module\n"));
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_ami_pre_proc::"
+                             "visit_module - "
+                             "visit scope failed\n"),
+                            -1);
+        }
     }
-
   return 0;
 }
 
 int
 be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_interface\n"));
-
-  AST_Module *module = AST_Module::narrow_from_scope (node->defined_in ());
-  if (!module)
-  { 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_pre_proc::"
-                         "visit_interface - "
-                         "module is null\n"),
-                        -1);
-    }
-
-  be_valuetype *excep_holder = this->create_exception_holder (node);
-
-  if (excep_holder)
+  if (!node->imported ())
     {
-      excep_holder->set_defined_in (node->defined_in ());
-      module->be_add_interface (excep_holder, node);
-      module->set_has_nested_valuetype ();
-      // Remember from whom we were cloned
-      excep_holder->original_interface (node);
-      // Set the strategy
-      be_interface_strategy *old_strategy = 
-        excep_holder->set_strategy (new be_interface_ami_exception_holder_strategy (excep_holder));
-      if (old_strategy)
-        delete old_strategy;
-    }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_pre_proc::"
-                         "visit_interface - "
-                         "creating the exception holder failed\n"),
-                        -1);
-    }
+      ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_interface\n"));
+
+      AST_Module *module = AST_Module::narrow_from_scope (node->defined_in ());
+      if (!module)
+      { 
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_ami_pre_proc::"
+                             "visit_interface - "
+                             "module is null\n"),
+                            -1);
+        }
+
+      be_valuetype *excep_holder = this->create_exception_holder (node);
+
+      if (excep_holder)
+        {
+          excep_holder->set_defined_in (node->defined_in ());
+          module->be_add_interface (excep_holder, node);
+          module->set_has_nested_valuetype ();
+          // Remember from whom we were cloned
+          excep_holder->original_interface (node);
+          // Set the strategy
+          be_interface_strategy *old_strategy = 
+            excep_holder->set_strategy (new be_interface_ami_exception_holder_strategy (excep_holder));
+          if (old_strategy)
+            delete old_strategy;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_ami_pre_proc::"
+                             "visit_interface - "
+                             "creating the exception holder failed\n"),
+                            -1);
+        }
 
 
-  be_interface *reply_handler = this->create_reply_handler (node,
-                                                            excep_holder);
-  if (reply_handler)
-    {
-      reply_handler->set_defined_in (node->defined_in ());
-      module->be_add_interface (reply_handler, node);
-      // Remember from whom we were cloned
-      reply_handler->original_interface (node);
-    }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_pre_proc::"
-                         "visit_interface - "
-                         "creating the reply handler failed\n"),
-                        -1);
-    }
+      be_interface *reply_handler = this->create_reply_handler (node,
+                                                                excep_holder);
+      if (reply_handler)
+        {
+          reply_handler->set_defined_in (node->defined_in ());
+          module->be_add_interface (reply_handler, node);
+          // Remember from whom we were cloned
+          reply_handler->original_interface (node);
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_ami_pre_proc::"
+                             "visit_interface - "
+                             "creating the reply handler failed\n"),
+                            -1);
+        }
 
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_pre_proc::"
-                         "visit_interface - "
-                         "visit scope failed\n"),
-                        -1);
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_ami_pre_proc::"
+                             "visit_interface - "
+                             "visit scope failed\n"),
+                            -1);
+        }
     }
 
   return 0;

@@ -52,62 +52,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Grab the stream.
       os = this->ctx_->stream ();
 
-#if 0
-      // Generate the AMI Reply Handler's forward declaration code, if
-      // the option is enabled, for this interface.
-
-      if (idl_global->ami_call_back () == I_TRUE)
-        {
-          be_interface_strategy *old_strategy =
-            node->set_strategy (new be_interface_ami_handler_strategy (node));
-
-          // generate the ifdefined macro for  the _ptr type
-          os->gen_ifdef_macro (node->flat_name (), "_ptr");
-
-
-          // the following two are required to be under the ifdef macro to avoid
-          // multiple declarations
-
-          os->indent (); // start with whatever indentation level we are at
-          // forward declaration
-          *os << "class " << node->local_name () << ";" << be_nl;
-          // generate the _ptr declaration
-          *os << "typedef " << node->local_name () << " *" << node->local_name ()
-              << "_ptr;" << be_nl;
-
-          os->gen_endif ();
-
-          // generate the ifdefined macro for the var type
-          os->gen_ifdef_macro (node->flat_name (), "_var");
-
-          // generate the _var declaration
-          if (node->gen_var_defn () == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface_ch::"
-                                 "visit_interface - "
-                                 "codegen for _var failed\n"), -1);
-            }
-          os->gen_endif ();
-
-          // generate the ifdef macro for the _out class
-          os->gen_ifdef_macro (node->flat_name (), "_out");
-
-          // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
-          if (node->gen_out_defn () == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface_ch::"
-                                 "visit_interface - "
-                                 "codegen for _out failed\n"), -1);
-            }
-          // generate the endif macro
-          os->gen_endif ();
-
-          delete node->set_strategy (old_strategy);
-        }
-#endif /* 0 */
-
       // == STEP 1:  generate the class name and class names we inherit ==
 
       // generate the ifdefined macro for  the _ptr type
