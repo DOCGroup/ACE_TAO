@@ -1,3 +1,17 @@
+Thu Oct 05 15:24:01 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao\DynamicAny\DynArray_i.h:
+	* tao\DynamicAny\DynSequence_i.h
+	* tao\DynamicAny\DynStruct_i.h
+	* tao\DynamicAny\DynUnion_i.h
+
+	  Added exception declaration in the throw clause to avoid
+	  warning on borland compilers.
+
+	* tao/PortableServer/Makefile.bor
+
+	  Added missing extension ".obj".
+
 Thu Oct  5 09:47:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO_Internal.cpp:
