@@ -1,3 +1,39 @@
+Mon Sep 27 17:04:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* Makefile.am:
+	* ace/Makefile.am:
+	* ace/QoS/Makefile.am:
+	* ace/RMCast/Makefile.am:
+	* ace/SSL/Makefile.am:
+	* ace/TMCast/Makefile.am:
+	* ACEXML/Makefile.am:
+	* ACEXML/common/Makefile.am:
+	* ACEXML/parser/Makefile.am:
+	* ACEXML/parser/parser/Makefile.am:
+	* ACEXML/examples/Makefile.am:
+	* ACEXML/examples/SAXPrint/Makefile.am:
+	* ACEXML/apps/Makefile.am:
+	* ACEXML/apps/svcconf/Makefile.am:
+	* ACEXML/tests/Makefile.am:
+	* apps/Makefile.am:
+	* apps/gperf/Makefile.am:
+	* apps/gperf/src/Makefile.am:
+	* apps/gperf/tests/Makefile.am:
+	* netsvcs/Makefile.am:
+	* netsvcs/lib/Makefile.am:
+	* netsvcs/clients/Makefile.am:
+	* netsvcs/clients/Logger/Makefile.am:
+	* netsvcs/clients/Naming/Makefile.am:
+	* netsvcs/clients/Naming/Client/Makefile.am:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+	* tests/Makefile.am:
+	* tests/SSL/Makefile.am:
+	* tests/RMCast/Makefile.am:
+	  MPC-generated automake files, tweaked to work correctly. The rest of
+	  the automake files will be checked in in the coming days. This set
+	  replaces older ones that pre-dated the MPC-usage effort and were
+	  largely out of date as they were.
+
 Mon Sep 27 14:10:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/wrapper_macros.GNU:

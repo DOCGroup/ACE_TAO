@@ -8,33 +8,28 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
-## Makefile.direct_logging.am 
-noinst_PROGRAMS = direct_logging
+ACE_ROOT = $(top_srcdir)
 
-direct_logging_CPPFLAGS = \
+## Makefile.SAXPrint.am 
+noinst_PROGRAMS = SAXPrint
+
+SAXPrint_CPPFLAGS = \
   -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(top_srcdir)
-
-direct_logging_SOURCES = \
-  direct_logging.cpp
-
-direct_logging_LDADD = \
- $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
-
-## Makefile.indirect_logging.am 
-noinst_PROGRAMS += indirect_logging
-
-indirect_logging_CPPFLAGS = \
-  -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT)/ACEXML/common
 
-indirect_logging_SOURCES = \
-  indirect_logging.cpp
+SAXPrint_SOURCES = \
+  Print_Handler.cpp \
+  SAXPrint_Handler.cpp \
+  main.cpp \
+  Print_Handler.h \
+  SAXPrint_Handler.h \
+  Print_Handler.i \
+  SAXPrint_Handler.i
 
-indirect_logging_LDADD = \
- $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
+SAXPrint_LDADD = \
+ $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/libACEXML.la $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

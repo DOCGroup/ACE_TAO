@@ -8,15 +8,13 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
-ACE_BUILDDIR = $(top_builddir)
-
 ## Makefile.Netsvcs_Dump_Restore_Lib.am 
 noinst_LTLIBRARIES = libDump_Restore.la
 
 libDump_Restore_la_CPPFLAGS = \
   -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(ACE_BUILDDIR) \
+  -I$(top_srcdir) \
   -DACE_BUILD_SVC_DLL
 
 libDump_Restore_la_SOURCES = \
@@ -34,14 +32,14 @@ noinst_PROGRAMS = main
 main_CPPFLAGS = \
   -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(ACE_BUILDDIR)
+  -I$(top_srcdir)
 
 main_SOURCES = \
   main.cpp \
   Dump_Restore.h
 
 main_LDADD = \
-  libDump_Restore.la $(top_builddir)/ace/libACE.la
+ libDump_Restore.la $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:
