@@ -400,7 +400,7 @@ sub transform_file_name {
   my($self) = shift;
   my($name) = shift;
 
-  $name =~ s/\s/_/g;
+  $name =~ s/[\s\-]/_/g;
   return $name;
 }
 
