@@ -1,3 +1,8 @@
+Wed Apr 21 08:12:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/driver/drv_args.cpp:
+          Added missing space to the usage message of -Gd
+
 Tue Apr 20 19:11:16 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h:
