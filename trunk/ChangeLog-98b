@@ -1,3 +1,7 @@
+Thu Sep  3 13:23:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Makefile (CONTROLLED_FILES): Added docs/ into CONTROLLED_FILES.
+
 Thu Sep 03 09:24:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Block.cpp: added ACE_Guard <ACE_Lock> instantiation.
