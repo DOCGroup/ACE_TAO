@@ -751,11 +751,7 @@ ACE_INLINE size_t
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fread");
-#if defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::fread ((char *) ptr, size, nelems, fp), int, 0);
-#else
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fread (ptr, size, nelems, fp), int, 0);
-#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
 ACE_INLINE FILE *
@@ -811,11 +807,7 @@ ACE_INLINE size_t
 ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fwrite");
-#if defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::fwrite ((const char *) ptr, size, nitems, fp), int, 0);
-#else
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp), int, 0);
-#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
 #if 0

@@ -294,10 +294,6 @@ extern int cma_sigwait  (sigset_t *);
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
-// Platform lacks POSIX prototypes for certain System V functions like
-// shared memory and message queues.
-#define ACE_LACKS_SOME_POSIX_PROTOTYPES
-
 // Platform supports the POSIX struct timespec type
 #define ACE_HAS_POSIX_TIME
 

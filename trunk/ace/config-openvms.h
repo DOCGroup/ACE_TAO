@@ -427,11 +427,6 @@
                                         /*Platform lacks
                                         pthread_attr_setsched()
                                         (e.g. MVS)*/
-#define ACE_LACKS_SOME_POSIX_PROTOTYPES 1
-                                        /*Platform lacks POSIX
-                                        prototypes for certain System
-                                        V functions like shared memory
-                                        and message queues.*/
 #define ACE_LACKS_SYSV_SHMEM 1
                                         /*Platform lacks System V shared
                                         memory (e.g., Win32 and

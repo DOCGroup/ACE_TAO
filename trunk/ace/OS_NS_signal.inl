@@ -248,11 +248,7 @@ ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
   ACE_UNUSED_ARG (osp);
   ACE_NOTSUP_RETURN (-1);
 #else
-# if defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::sigprocmask (how, (int*) nsp, osp), int, -1);
-# else
   ACE_OSCALL_RETURN (::sigprocmask (how, nsp, osp), int, -1);
-# endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
