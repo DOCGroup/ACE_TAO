@@ -672,6 +672,8 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Array_Base<ACE_TString>;
+template class ACE_Array_Iterator<ACE_TString>;
 template class auto_ptr<ACE_TString>;
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
@@ -679,7 +681,9 @@ template class auto_ptr<ACE_TString>;
 template class ACE_Auto_Basic_Ptr<ACE_TString>;
 #  endif  /* ACE_LACKS_AUTO_PTR */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr<ACE_TString>
+# pragma instantiate ACE_Array_Base<ACE_TString>
+# pragma instantiate ACE_Array_Iterator<ACE_TString>
+# pragma instantiate auto_ptr<ACE_TString>
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
