@@ -69,6 +69,10 @@ private:
   // Runs the extended tests (on more lock sets). Returns CC_SUCCESS
   // upon success CC_FAIL otherwise.
 
+  int check_extended_test_params(char *params);
+  // Checks the parameters given to the run_extended_tests() function.
+  // returns -1 if an error is found.
+
   CC_naming_service *naming_service_;
   // A pointer to the naming service used for this test.
 

@@ -119,12 +119,16 @@ CC_Client::run (void)
   if (this->run_basic_tests_ && success == CC_SUCCESS)
     {
       success = run_basic_tests ();
+      if(success==CC_FAIL)
+        ACE_DEBUG((LM_DEBUG, "Basic tests did not succeed\n"));
       tests_run = 1;
     }
 
   if (this->run_extended_tests_ && success == CC_SUCCESS)
     {
       success = run_extended_tests (this->extended_tests_params_);
+      if(success==CC_FAIL)
+        ACE_DEBUG((LM_DEBUG, "Extended tests did not succeed\n"));
       tests_run = 1;
     }
 
@@ -160,24 +164,93 @@ CC_Client::run_basic_tests (void)
                                  CosConcurrencyControl::intention_read);
   Test_Single_Lock_With_Mode t5 (naming_service_,
                                  CosConcurrencyControl::intention_write);
+  // This test should be run for several different lock mode, but
+  // since we do not support
+  Test_Release_Not_Held_Lock t6 (naming_service_,
+                                 CosConcurrencyControl::read);
   if (t1.run () == CC_SUCCESS &&
       t2.run () == CC_SUCCESS &&
       t3.run () == CC_SUCCESS &&
       t4.run () == CC_SUCCESS &&
-      t5.run () == CC_SUCCESS)
+      t5.run () == CC_SUCCESS &&
+      t6.run () == CC_SUCCESS )
     return CC_SUCCESS;
   else
     return CC_FAIL;
 }
 
 int
+CC_Client::check_extended_test_params(char *params)
+{
+  // Format (regexp): [0-9]+;.*;.*
+  int index = 0;
+  int no_of_params = 0;
+  char *cp = params; // pointer to walk along the string
+  enum {START, NUMBER, ARG, ERROR} state = START;
+
+  while(*cp!='\0')
+    {
+      switch(state)
+        {
+        case START:
+          if(isdigit(*cp))
+            state = NUMBER;
+          else
+            state = ERROR;
+          break;
+
+        case NUMBER:
+          if((*cp)==';')
+            {
+              state = ARG;
+              no_of_params++;
+            }
+          else
+            if(!isdigit(*cp))
+              state = ERROR;
+          break;
+
+        case ARG:
+          if((*cp)==';')
+            {
+              no_of_params++;
+            }
+          break;
+
+        case ERROR:
+          return -1;
+          break;
+
+        otherwise:
+          ACE_ERROR_RETURN((LM_ERROR,
+                            "CC_Client::check_extended_test_params\n"), -1);
+        }
+      cp++;
+    }
+  if (state==ERROR) // there was only one character given and it was wrong
+    return -1;
+  else
+    return no_of_params;
+}
+
+int
 CC_Client::run_extended_tests (char *params)
 {
   int success = CC_FAIL;
+  int no_of_args = 0;
 
   ACE_DEBUG ((LM_DEBUG,
               "Params: %s\n",
               params));
+
+  no_of_args = check_extended_test_params(params);
+  if(no_of_args==-1)
+    {
+      ACE_ERROR_RETURN((LM_ERROR,
+                        "Error in parameter string (%s). Format: '<test#>;<arg1>;<arg2>'\n", params), CC_FAIL);
+    }
+
+  ACE_DEBUG((LM_DEBUG, "Number of arguments: %i\n", no_of_args));
 
   char *cmd  = ACE_OS::strtok (params, ";");
   char *arg1 = ACE_OS::strtok (NULL, ";");
@@ -230,9 +303,18 @@ CC_Client::print_usage (void)
 int
 CC_Client::init_naming_service (void)
 {
-  ACE_NEW_RETURN (naming_service_,
-                  CC_naming_service (this->orb_),
-                  -1);
+  TAO_TRY
+    {
+      ACE_NEW_RETURN (naming_service_,
+                      CC_naming_service (this->orb_, TAO_TRY_ENV),
+                      -1);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      return -1;
+    }
+  TAO_ENDTRY;
   return 0;
 }
 
