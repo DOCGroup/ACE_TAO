@@ -1,3 +1,9 @@
+Sat Mar 17 10:26:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional_NestedUpcall/test_i.cpp (test_method):
+	  Changed connection_cache () as transport_cache (). This fixes
+	  some of the compile errors in g++.
+	
 Sat Mar 17 10:23:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional/test_i.cpp: Changed connection_cache () as
