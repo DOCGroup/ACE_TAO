@@ -27,27 +27,29 @@
 
 #include "BooleanSeqC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_BooleanSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f426f),
-  ACE_NTOHL (0x6f6c6561),
-  ACE_NTOHL (0x6e536571),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f426f), 
+  ACE_NTOHL (0x6f6c6561), 
+  ACE_NTOHL (0x6e536571), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/BooleanSeq:1.0
     11,
-  ACE_NTOHL (0x426f6f6c),
-  ACE_NTOHL (0x65616e53),
+  ACE_NTOHL (0x426f6f6c), 
+  ACE_NTOHL (0x65616e53), 
   ACE_NTOHL (0x65710000),  // name = BooleanSeq
     CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -63,7 +65,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_BooleanSeq (
     sizeof (_oc_CORBA_BooleanSeq),
     (char *) &_oc_CORBA_BooleanSeq,
     0,
-    sizeof (CORBA::BooleanSeq)
+    0
   );
 
 namespace CORBA
@@ -72,7 +74,7 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_BooleanSeq;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -109,8 +111,8 @@ CORBA::Boolean operator>>= (
     CORBA::BooleanSeq *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::BooleanSeq *&,
+  return _tao_any >>= const_cast<
+      const CORBA::BooleanSeq *&> (
       _tao_elem
     );
 }
@@ -130,8 +132,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -146,5 +146,4 @@ CORBA::Boolean operator>>= (
         CORBA::BooleanSeq \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
