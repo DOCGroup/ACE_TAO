@@ -120,6 +120,9 @@ static CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
+cat_shmiop_profile (TAO_InputCDR& cdr);
+
+static CORBA::Boolean
 cat_octet_seq (const char *object_name,
                TAO_InputCDR& stream);
 
@@ -251,6 +254,12 @@ catior (char* str,
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_uiop_profile (stream);
+            ACE_DEBUG ((LM_DEBUG, "%}"));
+          }
+        else if (tag == TAO_TAG_SHMEM_PROFILE)
+          {
+            ACE_DEBUG ((LM_DEBUG, "%{"));
+            continue_decoding = cat_shmiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
         else
@@ -605,7 +614,8 @@ cat_tagged_components (TAO_InputCDR& stream)
 }
 
 static CORBA::Boolean
-cat_iiop_profile (TAO_InputCDR& stream)
+cat_profile_helper (TAO_InputCDR& stream,
+                    const char *protocol)
 {
   // OK, we've got an IIOP profile.  It's going to be
   // encapsulated ProfileData.  Create a new decoding stream and
@@ -639,16 +649,18 @@ cat_iiop_profile (TAO_InputCDR& stream)
          && iiop_version_minor <= 1))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%I detected new v%d.%d IIOP profile",
+                  "%I detected new v%d.%d %s profile",
                   iiop_version_major,
-                  iiop_version_minor));
+                  iiop_version_minor,
+                  protocol));
       return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "IIOP Version:\t%d.%d\n",
               iiop_version_major,
-              iiop_version_minor));
+              iiop_version_minor,
+              protocol));
 
   // Get host and port.
   CORBA::UShort port_number;
@@ -677,6 +689,18 @@ cat_iiop_profile (TAO_InputCDR& stream)
     return 0;
 
   return 1;
+}
+
+static CORBA::Boolean
+cat_iiop_profile (TAO_InputCDR& stream)
+{
+  return cat_profile_helper (stream, "IIOP");
+}
+
+static CORBA::Boolean
+cat_shmiop_profile (TAO_InputCDR& stream)
+{
+  return cat_profile_helper (stream, "SHMIOP");
 }
 
 static CORBA::Boolean

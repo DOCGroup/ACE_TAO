@@ -29,42 +29,6 @@ TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
 }
 
 void
-TAO_CEC_ProxyPushSupplier::connected (TAO_CEC_ProxyPushConsumer*,
-                                      CORBA::Environment &)
-{
-}
-
-void
-TAO_CEC_ProxyPushSupplier::reconnected (TAO_CEC_ProxyPushConsumer*,
-                                        CORBA::Environment &)
-{
-}
-
-void
-TAO_CEC_ProxyPushSupplier::disconnected (TAO_CEC_ProxyPushConsumer*,
-                                         CORBA::Environment &)
-{
-}
-
-void
-TAO_CEC_ProxyPushSupplier::connected (TAO_CEC_ProxyPushSupplier*,
-                                      CORBA::Environment &)
-{
-}
-
-void
-TAO_CEC_ProxyPushSupplier::reconnected (TAO_CEC_ProxyPushSupplier*,
-                                        CORBA::Environment &)
-{
-}
-
-void
-TAO_CEC_ProxyPushSupplier::disconnected (TAO_CEC_ProxyPushSupplier*,
-                                         CORBA::Environment &)
-{
-}
-
-void
 TAO_CEC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   // Save the consumer we where connected to, we need to send a
