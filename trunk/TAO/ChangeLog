@@ -1,3 +1,11 @@
+Fri Jan  9 18:02:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/IDL_Test/enum_in_struct.idl:
+
+	  Fixed a duplicate enum declaration. This showed up only in the
+	  TRU64 builds. Thanks to Johnny for arranging an access to a TRU
+	  64 box to find this problem out.
+
 Fri Jan  9 13:31:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/Makefile.BE:

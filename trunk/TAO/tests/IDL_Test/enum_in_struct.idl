@@ -45,7 +45,7 @@ struct HoldsEnum
 
 struct decl_heavy_struct
 {
-  enum en 
+  enum str_en 
   {
     a, 
     b, 
