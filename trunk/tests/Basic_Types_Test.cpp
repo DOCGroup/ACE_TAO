@@ -68,9 +68,11 @@ main (int, char *[])
   errors += check ("ACE_SIZEOF_LONG_LONG: %u%s",
 #if defined (ACE_WIN32)
                    sizeof (unsigned __int64),
-#else /* ! ACE_WIN32 */
+#elif defined (ACE_LACKS_LONGLONG_T)
+                   sizeof (ACE_U_LongLong),
+#else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
                    sizeof (long long),
-#endif /* ! ACE_WIN32 */
+#endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
                    ACE_SIZEOF_LONG_LONG);
   errors += check ("ACE_SIZEOF_VOID_P: %u%s",
                    sizeof (void *), ACE_SIZEOF_VOID_P);
