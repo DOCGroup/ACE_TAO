@@ -1,3 +1,19 @@
+Sun Oct 22 17:09:26 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/MT_SOCK_Test.cpp:
+
+          Missed an ACE_ALPHABET in a previous checkin.  
+
+          And based on this part of the description in the file:
+
+          "Note that most of the connections will fail since 
+           we're overrunning the size of the listen queue for 
+           the acceptor-mode socket."
+
+          I changed the connection_failed ACE_ERROR_RETURN to an
+          ACE_DEBUG and return, so it will not show up as an error
+          via run_test.pl.
+
 Sun Oct 22 16:32:24 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.cpp:
