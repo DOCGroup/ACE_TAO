@@ -175,7 +175,4 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
-// Define this file to keep /usr/include/memory.h from being included.
-#include <cstring>
-
 #endif /* ACE_CONFIG_H */

@@ -104,8 +104,10 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 
 
 // Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
-#if !defined (ACE_HAS_GNU_CSTRING_H)
-
+#if defined (ACE_HAS_GNU_CSTRING_H)
+// Define this file to keep /usr/include/memory.h from being included.
+#include <cstring>
+#else
 #if defined (VXWORKS)
 #include <string.h>
 #else
