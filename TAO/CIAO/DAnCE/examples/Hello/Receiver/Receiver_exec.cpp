@@ -117,6 +117,7 @@ Receiver_Impl::Receiver_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "Receiver_Impl::Receiver_exec_i::ccm_passivate\n"));
+  /*
   CORBA::Object_var comp_object =
     this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -142,6 +143,7 @@ Receiver_Impl::Receiver_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       // ACE_DEBUG ((LM_DEBUG, "facet name is %s\n", facet_desc[i]->name ()));
     }
+  */
 }
 
 void

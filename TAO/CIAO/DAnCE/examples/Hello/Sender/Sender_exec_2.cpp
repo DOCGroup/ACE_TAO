@@ -44,7 +44,7 @@ Sender_Impl::Sender_exec_2_i::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Hello::TimeOut_var event = new OBV_Hello::TimeOut;
-  ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender 2 initiates the process.\n"));
   this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
 }
 
