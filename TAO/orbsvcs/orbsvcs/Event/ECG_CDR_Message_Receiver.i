@@ -13,12 +13,13 @@ TAO_ECG_CDR_Message_Receiver::Requests::Requests (void)
 // ****************************************************************
 
 ACE_INLINE
-TAO_ECG_CDR_Message_Receiver::TAO_ECG_CDR_Message_Receiver (void)
+TAO_ECG_CDR_Message_Receiver::TAO_ECG_CDR_Message_Receiver (CORBA::Boolean crc)
   : ignore_from_ ()
   , request_map_ ()
   /* , lock_ (0) */
   , max_requests_ (ECG_DEFAULT_MAX_FRAGMENTED_REQUESTS)
   , min_purge_count_ (ECG_DEFAULT_FRAGMENTED_REQUESTS_MIN_PURGE_COUNT)
+  , check_crc_ (crc)
 {
 //    ACE_NEW (this->lock_,
 //             ACE_Lock_Adapter<ACE_Null_Mutex>);
@@ -60,8 +61,3 @@ TAO_ECG_CDR_Message_Receiver::shutdown (void)
   TAO_ECG_Refcounted_Endpoint empty_endpoint;
   this->ignore_from_ = empty_endpoint;
 }
-
-
-
-
-

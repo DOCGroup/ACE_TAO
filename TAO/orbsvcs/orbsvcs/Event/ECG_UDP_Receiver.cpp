@@ -2,6 +2,7 @@
 
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Utilities.h"
+#include "CRC.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_UDP_Receiver.i"
@@ -207,6 +208,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
                       "to an event channel. Shutting down the Receiver."));
           this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
           return 0;
         }
 

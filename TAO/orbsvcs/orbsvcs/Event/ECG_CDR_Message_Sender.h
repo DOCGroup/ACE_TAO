@@ -81,7 +81,7 @@ public:
 
   /// Initialization and termination methods.
   //@{
-  TAO_ECG_CDR_Message_Sender (void);
+  TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = 0);
 
   /// Set the endpoint for sending messages.
   /**
@@ -169,6 +169,9 @@ private:
 
   /// The MTU for this sender...
   CORBA::ULong mtu_;
+
+  /// Should crc checksum be caluclated and sent?
+  CORBA::Boolean checksum_;
 };
 
 #if defined(__ACE_INLINE__)

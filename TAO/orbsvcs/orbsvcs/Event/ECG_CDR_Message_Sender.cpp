@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ECG_CDR_Message_Sender.h"
+#include "CRC.h"
+
 #include "tao/CDR.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
@@ -213,6 +215,34 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
   cdr.write_ulong (fragment_id);
   cdr.write_ulong (fragment_count);
   CORBA::Octet padding[4];
+
+
+  // MRH
+  if (checksum_)
+  {
+    // Compute CRC
+     iov[0].iov_base = cdr.begin ()->rd_ptr ();
+     iov[0].iov_len  = cdr.begin ()->length ();
+     unsigned int crc = 0;
+     unsigned char *crc_parts = (unsigned char *)(&crc);
+     if (iovcnt > 1)
+       {
+         crc = TAO_Event_CRC::compute_crc (iov, iovcnt);
+         crc = htonl (crc);
+       }
+     for (int cnt=0; cnt<4; ++cnt)
+       {
+         padding[cnt] = crc_parts[cnt];
+       }
+   }
+   else
+   {
+     for (int cnt=0; cnt<4; ++cnt)
+     {
+       padding[cnt] = 0;
+     }
+   }
+   //End MRH
   cdr.write_octet_array (padding, 4);
 
   iov[0].iov_base = cdr.begin ()->rd_ptr ();

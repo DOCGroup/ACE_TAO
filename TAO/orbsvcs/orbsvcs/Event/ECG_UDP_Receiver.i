@@ -53,22 +53,22 @@ execute (ACE_ENV_SINGLE_ARG_DECL)
 //***************************************************************************
 
 ACE_INLINE
-TAO_ECG_UDP_Receiver::TAO_ECG_UDP_Receiver (void)
+TAO_ECG_UDP_Receiver::TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc)
   : lcl_ec_ ()
   , addr_server_ ()
   , consumer_proxy_ ()
-  , cdr_receiver_ ()
+  , cdr_receiver_ (perform_crc)
   , handler_rptr_ ()
   , auto_proxy_disconnect_ ()
 {
 }
 
 ACE_INLINE TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
-TAO_ECG_UDP_Receiver::create (void)
+TAO_ECG_UDP_Receiver::create (CORBA::Boolean perform_crc)
 {
   TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> r;
   ACE_NEW_RETURN (r,
-                  TAO_ECG_UDP_Receiver,
+                  TAO_ECG_UDP_Receiver (perform_crc),
                   r);
   return r;
 }

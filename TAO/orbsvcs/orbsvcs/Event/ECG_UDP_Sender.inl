@@ -1,21 +1,21 @@
 // $Id$
 
 ACE_INLINE TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
-TAO_ECG_UDP_Sender::create (void)
+TAO_ECG_UDP_Sender::create (CORBA::Boolean crc)
 {
   TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> s;
   ACE_NEW_RETURN (s,
-                  TAO_ECG_UDP_Sender,
+                  TAO_ECG_UDP_Sender (crc),
                   s);
   return s;
 }
 
 ACE_INLINE
-TAO_ECG_UDP_Sender::TAO_ECG_UDP_Sender (void)
+TAO_ECG_UDP_Sender::TAO_ECG_UDP_Sender (CORBA::Boolean crc)
   : supplier_proxy_ ()
   , lcl_ec_ ()
   , addr_server_ ()
-  , cdr_sender_ ()
+  , cdr_sender_ (crc)
   , auto_proxy_disconnect_ ()
 {
 }
