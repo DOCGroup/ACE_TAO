@@ -8523,9 +8523,10 @@ Thu Jan 16 17:03:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
           on Linux.  Thanks to Marius Kjeldahl <mariusk@sn.no,
           marius@funcom.com> for his help with this. 
 
-        * ace: Merged in the IRIX support, mainly the missing netdb reentrant 
-          functions.  Thanks to Gonzalo Diethelm <gonzo@ing.puc.cl>
-          and Carlos O'Ryan <coryan@mat.puc.cl> for their help.
+        * ace: Merged in the IRIX support, mainly the missing netdb
+          reentrant functions.  Thanks to Gonzalo Diethelm
+          <gonzo@ing.puc.cl> and Carlos O'Ryan <coryan@mat.puc.cl> for
+          their help.
 
         * ace/Timer_{List,Heap,Queue}: Changed iterator() to iter() to
           avoid name clashes with STL (ugh).
