@@ -1,3 +1,8 @@
+Sat Feb 19 17:07:24 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
+
+	* docs/releasenotes/index.html (CosEC_Multiple): 
+	  updated release notes
+
 Sat Feb 19 14:23:38 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Any.h:
