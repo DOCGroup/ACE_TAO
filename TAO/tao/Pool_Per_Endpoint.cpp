@@ -37,7 +37,7 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
   TAO_Acceptor_Registry *ac =
     this->orb_->orb_core ()->acceptor_registry ();
 
-  for (TAO_AcceptorSetItor i = ac->begin (); i != ac->end (); ++i)
+  for (TAO_AcceptorSetIterator i = ac->begin (); i != ac->end (); ++i)
     {
       int priority =
         ACE_Sched_Params::priority_min (this->policy_);
