@@ -12,12 +12,8 @@ static const char *output_file_name = "output";
 int stats [BUFSIZ];
 int stats_index = 0;
 
-int frame_num = 0;
-
-int start = 0;
-
-ACE_Time_Value count_down_time (1);
-ACE_Countdown_Time count_down (&count_down_time);
+int start = 1;
+ACE_Time_Value start_time;
 
 double stats_avg ()
 {
@@ -42,7 +38,7 @@ void dump_stats (void)
     }
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (stats_file, "Average Frame Rate = %f frames/sec\n",stats_avg ());
+  ACE_OS::fprintf (stats_file, "Average Inter-Frame Arrival Time = %f msec\n",stats_avg ());
 
   for (int i = 0; i < stats_index; i++)
     ACE_OS::fprintf (stats_file, "%d\n",stats [i]);
@@ -83,23 +79,19 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               this->frame_count_++));
   
 
-  frame_num++;
-  if (start == 0 )
+
+  if (start)
     {
-      count_down.start ();
-      start++;
+      start_time = ACE_OS::gettimeofday ();
+      start = 0;
     }
   else 
     {
-      count_down.update ();
+      ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - start_time;
+      stats [stats_index++] = elapsed_time.msec ();
+      start_time = ACE_OS::gettimeofday ();
     }
 
-  if (count_down_time <= ACE_Time_Value::zero)
-    {
-      stats [stats_index++] = frame_num;
-      frame_num = 0;
-      count_down.restart ();
-    }
 
   while (frame != 0)
     {
