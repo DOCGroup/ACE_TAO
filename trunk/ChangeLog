@@ -1,36 +1,43 @@
+Tue Mar 16 06:22:40 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Reverting my change from Mon Mar 15 08:31:05 2004.  It has
+          undesirable effects in some situations.
+
 Mon Mar 15 18:26:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Proactor/HA_Proactive_Status.h: Add #include
-	  "ace/Asynch_IO.h" so AIX Visual Age C++ can find things at
-	  template instantiate time.
+        * examples/APG/Proactor/HA_Proactive_Status.h: Add #include
+          "ace/Asynch_IO.h" so AIX Visual Age C++ can find things at
+          template instantiate time.
 
 Mon Mar 15 15:42:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-aix5.1.h: Set this up for use with AIX 5.2 as well.
-	  AIX 5.2 has POSIX AIO, but it's not run-time enabled by default.
-	  So, allow the user to turn it on, but leave it off by default.
+        * ace/config-aix5.1.h: Set this up for use with AIX 5.2 as well.
+          AIX 5.2 has POSIX AIO, but it's not run-time enabled by default.
+          So, allow the user to turn it on, but leave it off by default.
 
-	* ace/Asynch_Connector.cpp: Added #include "ace/OS_NS_sys_socket.h" and
-	  "ace/OS_Memory.h" to pick up needed definitions on AIX when Visual
-	  Age C++ is instantiating templates.
+        * ace/Asynch_Connector.cpp: Added #include "ace/OS_NS_sys_socket.h" and
+          "ace/OS_Memory.h" to pick up needed definitions on AIX when Visual
+          Age C++ is instantiating templates.
 
-	* ace/POSIX_CB_Proactor.{h cpp}: Enabled use of the CB proactor on
-	  non-sgi, non-FreeBSD systems. AIX likes this proactor implementation.
-	  Also, fixed a mistaken timer setting where the number of desired
-	  milliseconds timeout was instead specified as number of seconds.
+        * ace/POSIX_CB_Proactor.{h cpp}: Enabled use of the CB proactor on
+          non-sgi, non-FreeBSD systems. AIX likes this proactor implementation.
+          Also, fixed a mistaken timer setting where the number of desired
+          milliseconds timeout was instead specified as number of seconds.
 
-	* tests/Proactor_Test.{cpp, h}:
-	* tests/Proactor_Test_IPV6.cpp: Moved the definitions of Sender
-	  and Receiver to a new file, Proactor_Test.h. This allows AIX Visual
-	  Age C++ to see the class definitions when instantiating templates.
-	  Removed the #ifdef __sgi around use of the CB proactor, as that
-	  is available and, indeed, works best, for AIX.
+        * tests/Proactor_Test.{cpp, h}:
+        * tests/Proactor_Test_IPV6.cpp: Moved the definitions of Sender
+          and Receiver to a new file, Proactor_Test.h. This allows AIX Visual
+          Age C++ to see the class definitions when instantiating templates.
+          Removed the #ifdef __sgi around use of the CB proactor, as that
+          is available and, indeed, works best, for AIX.
 
 Mon Mar 15 13:42:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/CDR_Stream.cpp:
-	  
-	  Fixed a typo. Thanks to Andreas Koehler for pointing this out. 
+        * ace/CDR_Stream.cpp:
+
+          Fixed a typo. Thanks to Andreas Koehler for pointing this out.
 
 Mon Mar 15 17:21:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
