@@ -1,3 +1,8 @@
+Wed Dec  3 12:18:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1636_Regression/client.cpp:
+          Fixed exception macro usage
+
 Wed Dec  3 10:54:39 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
