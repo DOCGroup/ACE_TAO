@@ -1,8 +1,12 @@
 Mon Feb  3 16:14:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_recursive_tc):
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
 
-          Added comments and cosmetic changes.   
+          Added comments and cosmetic changes to create_recursive_tc().
+	  Also changed update_map() to use the CDR stream's total 
+	  length to get the unaligned offset. Thanks to Matej
+	  Sekoranja <matej.sekoranza@ijs.si> for suggesting this
+	  last change.   
 
 Mon Feb  3 11:30:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
