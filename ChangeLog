@@ -1,3 +1,13 @@
+Mon Feb 14 21:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Global_Macros.h:
+          Added !ACE_LACKS_DEPRECATED_MACROS around ACE_CLASS_IS_NAMESPACE,
+          ACE_CORBA_1, ACE_CORBA_2, and ACE_CORBA_3. We have a build where
+          ACE_LACKS_DEPRECATED_MACROS is defined and we can so easily make
+          sure these deprecated macros are not used anymore in the ACE/TAO
+          code, our users can just use these macros until x.5.1 has been
+          released, then these macros are on the list to be removed.
+
 Mon Feb 14 23:08:52 2005  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
