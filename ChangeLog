@@ -1,3 +1,9 @@
+Thu Sep 07 14:30:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * bin/auto_compile_win32.pl: Added Portable Server to the project
+          lists in (DLL Debug/Release).  Thanks to Bruce McIntosh
+          <Bruce.McIntosh@australia.boeing.com> for reporting this
+
 Thu Sep 07 11:36:51 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Context.cpp (set_mode):
