@@ -78,10 +78,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID(driver, drv_preproc, "$Id$")
 
 #undef  MAX_ARGLIST
-#define MAX_ARGLIST     128
+#define MAX_ARGLIST 128
 
 static const char *arglist[MAX_ARGLIST];
 static long argcount = 0;
+
+// The ACE_Process_Options default size of 1024 is sometimes not enough.
+const unsigned long TAO_IDL_COMMAND_LINE_BUFFER_SIZE = 4 * 1024;
 
 // Push the new CPP location if we got a -Yp argument
 void
@@ -464,15 +467,22 @@ DRV_pre_proc (const char *myfile)
     }
 
   // We use ACE instead of the (low level) fork facilities, this also
-  // work on NT.
+  // works on NT.
   ACE_Process process;
-  ACE_Process_Options cpp_options;
+
+  // For complex builds, the default command line buffer size of 1024
+  // is sometimes not enough. We use 4096 here.
+  ACE_Process_Options cpp_options (1,       // Inherit environment.
+                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
+
   DRV_cpp_putarg (tmp_ifile);
   DRV_cpp_putarg (0); // Null terminate the arglist.
+
   cpp_options.command_line (arglist);
   
-  ACE_HANDLE fd = 
-    ACE_OS::open(tmp_file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+  ACE_HANDLE fd = ACE_OS::open (tmp_file, 
+                                O_WRONLY | O_CREAT | O_TRUNC, 
+                                0777);
 
   if (fd == ACE_INVALID_HANDLE)
     {

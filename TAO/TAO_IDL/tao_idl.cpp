@@ -269,8 +269,7 @@ DRV_drive (const char *s)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Dump of AST:\n")));
 
-      ACE_Log_Msg *log_msg = ACE_Log_Msg::instance ();
-      idl_global->root ()->dump (*log_msg->msg_ostream ());
+      idl_global->root ()->dump (*ACE_DEFAULT_LOG_STREAM);
     }
 
   // Call the main entry point for the BE.
