@@ -1,10 +1,21 @@
+Mon Jan  3 13:05:46 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/core.mpb:
+
+          Added a setting for the template variable 'install_headers' which
+          is currently only used by the automake project type. 
+          Coincidentally, I changed the case of INSTALL_THIS_TARGET to
+          lowercase.  I personally prefer lowercase and since MPC is case
+          insensitive with respect to variable names, it causes no harm to
+          the borland project type which also uses that template variable.
+
 Mon Jan  3 10:56:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/TMCast/Makefile.am:
-	* ace/TMCast/TMCast.mpc:
-	* bin/MakeProjectCreator/config/tmcast.mpb:
+        * ace/TMCast/Makefile.am:
+        * ace/TMCast/TMCast.mpc:
+        * bin/MakeProjectCreator/config/tmcast.mpb:
 
-	  Add ACE prefix to TMCast library name.
+          Add ACE prefix to TMCast library name.
 
 Mon Jan  3 14:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -17,9 +28,9 @@ Mon Jan  3 14:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jan  3 08:02:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* examples/TMCast/Member:
-	* TMCast/*: Changed the use of TMCast to ACE_TMCast.  Thanks to
-	  J.T. Conklin for pointing out the inconsistency.
+        * examples/TMCast/Member:
+        * TMCast/*: Changed the use of TMCast to ACE_TMCast.  Thanks to
+          J.T. Conklin for pointing out the inconsistency.
 
 Mon Jan  3 09:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -91,13 +102,13 @@ Sun Jan  2 09:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jan  1 22:53:41 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/generate_rel_manpages:
+        * bin/generate_rel_manpages:
 
-	  Fixed the doxygen revision number
+          Fixed the doxygen revision number
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Fixed a typo.
+          Fixed a typo.
 
 Sat Jan  1 18:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -381,15 +392,15 @@ Sat Jan  1 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jan  1 00:00:00 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* Happy New Year!!!
+        * Happy New Year!!!
 
 Fri Dec 31 15:23:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Service_Config.cpp:
-	* ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+        * ace/Service_Config.h:
 
-	  Added support for -p command line argument, which specifies
-	  a filename to write the process id.
+          Added support for -p command line argument, which specifies
+          a filename to write the process id.
 
 Thu Dec 30 13:21:37 2004  Chris Cleeland  <cleeland@ociweb.com>
 
