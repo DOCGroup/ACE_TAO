@@ -153,6 +153,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Bug_1576_Regression_Test"=.\Bug_1576_Regression_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Test_Output DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "CDR_Array_Test"=.\CDR_Array_Test.dsp - Package Owner=<4>
 
 Package=<5>
