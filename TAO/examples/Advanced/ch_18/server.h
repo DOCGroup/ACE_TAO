@@ -225,7 +225,7 @@ private:
     typedef map<CCS::AssetType, EvictorQueue::iterator>
                                         ActiveObjectMap;
 
-    static const unsigned int           MAX_EQ_SIZE = 100;
+    static const unsigned int           MAX_EQ_SIZE;// = 100;
     EvictorQueue                        m_eq;
     ActiveObjectMap                     m_aom;
 
