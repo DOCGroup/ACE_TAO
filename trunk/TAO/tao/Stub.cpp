@@ -352,8 +352,8 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::Octet flag =
-            ACE_static_cast (CORBA::Octet,
+          const CORBA::Octet flag =
+            ACE_static_cast (const CORBA::Octet,
                              TAO::SYNC_WITH_TARGET);
 
           call.prepare_header (flag,
@@ -617,8 +617,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::Octet flag =
-            ACE_static_cast (CORBA::Octet,
+          const CORBA::Octet flag =
+            ACE_static_cast (const CORBA::Octet,
                              TAO::SYNC_WITH_TARGET);
 
           call.prepare_header (flag,
