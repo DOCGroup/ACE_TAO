@@ -127,6 +127,9 @@ DRV_cpp_init()
   else
       cpp_loc = idl_global->cpp_location();
   DRV_cpp_putarg(cpp_loc);
+#if defined (ACE_WIN32)
+  DRV_cpp_putarg("-nologo");
+#endif /* ACE_WIN32 */
   DRV_cpp_putarg("-E");
   DRV_cpp_putarg("-DIDL");
   DRV_cpp_putarg("-I.");
