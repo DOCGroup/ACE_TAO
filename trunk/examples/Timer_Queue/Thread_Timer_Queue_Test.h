@@ -31,6 +31,7 @@
 
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
+#include "ace/svc_export.h"
 #include "Driver.h"
 
 // These typedefs ensure that we use the minimal amount of locking
@@ -97,7 +98,7 @@ private:
   // The thread timer queue test driver.
 };
 
-class Thread_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task, Input_Task::ACTION>
+class ACE_Svc_Export Thread_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task, Input_Task::ACTION>
 {
   // = TITLE
   //    Implements an example application that exercises
