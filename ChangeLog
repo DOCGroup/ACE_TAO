@@ -1,3 +1,12 @@
+Sun Apr  7 18:04:56 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * tests/test_config.h (randomize):
+
+          Wrapped the initialization of singleton_ within a
+          ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES guard. This should fix
+          the problems on FreeBSD and under RedHat static. Thanks to Craig
+          Rodrigues <crodrigu@bbn.com> for reporting this.
+
 Sun Apr  7 06:02:26 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU:
