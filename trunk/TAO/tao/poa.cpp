@@ -38,6 +38,7 @@ TAO_Thread_Policy::copy (CORBA::Environment &env)
   auto_ptr<TAO_Thread_Policy> new_policy (new TAO_Thread_Policy (*this));
 
   PortableServer::Policy_var result = new_policy->_this (env);
+
   if (env.exception () != 0)
     return PortableServer::Policy::_nil ();
   else
