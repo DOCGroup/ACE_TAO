@@ -14,6 +14,10 @@
 #ifndef FILL_ACE_QOS_H
 #define FILL_ACE_QOS_H
 
+#include "ace/config-all.h"
+
+#if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
+
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Synch.h"
@@ -72,4 +76,5 @@ private:
   FLOW_SPEC_HASH_MAP flow_spec_map_;
 };
 
+#endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 #endif /* FILL_ACE_QOS_H */

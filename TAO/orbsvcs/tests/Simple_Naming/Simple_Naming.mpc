@@ -1,7 +1,7 @@
 project(Simple Naming Client) : orbsvcsexe {
   depends += CosNaming Svc_Utils IORTable PortableServer
   exename  = client
-  libs     = TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer TAO
+  libs    += TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
 
   Source_Files {
     client.cpp

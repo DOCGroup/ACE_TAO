@@ -1,6 +1,6 @@
 project(Test Client Module): taolib_with_idl {
   sharedname = Test_Client_Module
-  libs       = TAO
+  libs      += TAO
   idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   dllflags   = TEST_CLIENT_MODULE_BUILD_DLL
 
@@ -13,7 +13,7 @@ project(Test Client Module): taolib_with_idl {
 project(Test Server Module) : taolib_with_idl {
   depends   += PortableServer
   sharedname = Test_Server_Module
-  libs       = TAO_PortableServer TAO
+  libs      += TAO_PortableServer TAO
   idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   dllflags   = TEST_SERVER_MODULE_BUILD_DLL
 

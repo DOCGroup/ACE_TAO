@@ -1,6 +1,6 @@
 project(ETCL) : orbsvcslib {
   sharedname = TAO_ETCL
-  libs       = TAO
+  libs      += TAO
   dllflags   = TAO_ETCL_BUILD_DLL
 
   IDL_Files {

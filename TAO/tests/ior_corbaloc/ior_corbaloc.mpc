@@ -1,16 +1,11 @@
-project: server {
-  depends += CosNaming
-  libs    += TAO_CosNaming
-
+project: namingexe {
   Source_Files {
     status_i.cpp
     server.cpp
   }
 }
 
-project(client): server {
-  depends += CosNaming
-  libs    += TAO_CosNaming
+project(client): namingexe {
   exename  = client
 
   Source_Files {

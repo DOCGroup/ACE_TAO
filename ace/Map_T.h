@@ -14,8 +14,7 @@
 #define ACE_MAP_T_H
 #include "ace/pre.h"
 
-#include "ace/Map.h"
-#include "ace/Pair.h"
+#include "ace/Pair_T.h"
 #include "ace/Map_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Active_Map_Manager.h"
