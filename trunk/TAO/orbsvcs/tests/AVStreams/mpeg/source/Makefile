@@ -13,7 +13,9 @@ INFO  = README
 DIRS  =	mpeg_shared \
 	mpeg_mib \
 	mpeg_server \
-	mpeg_client
+	mpeg_client \
+	client \
+	server
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
