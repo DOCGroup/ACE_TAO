@@ -808,7 +808,7 @@ TAO_IFR_Service_Utils::check_subsection (
 
       if ((*checker) (entry_name.fast_rep ()) != 0)
         {
-          ACE_THROW (CORBA::BAD_PARAM (5,
+          ACE_THROW (CORBA::BAD_PARAM (3,
                                        CORBA::COMPLETED_NO));
           return;
         }
