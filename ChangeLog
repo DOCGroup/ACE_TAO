@@ -1,3 +1,7 @@
+Wed May 19 12:46:33 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/SSL/SSL_SOCK.i: Added missing #include "ace/OS_NS_sys_socket.h"
+
 Wed May 19 12:14:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/Reactor_Registration_Test.cpp: Fixed string types to work
