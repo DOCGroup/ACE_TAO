@@ -1,3 +1,14 @@
+Wed May 21 16:05:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Containers_T.i (ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)):
+	  If the next() pointer is 0, don't dereference it. Thanks very much
+	  to Ken Kane <kkane@livevault.com> for this fix.
+
+	* tests/DLList_Test.cpp: Added a run_reverse_iterate() test function
+	  to hit the error case above.
+
+	* THANKS: Added Ken Kane <kkane@livevault.com> to the Hall of Fame.
+
 Wed May 21 21:46:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Main.cpp:
