@@ -98,7 +98,7 @@
         <componentinstantiationref idref="a_BMDisplay"/>
       </usesport>
       <providesport>
-        <providesidentifier>datain</providesidentifier>
+        <providesidentifier>dataout</providesidentifier>
         <componentinstantiationref idref="a_BMClosedED"/>
       </providesport>
     </connectinterface>
