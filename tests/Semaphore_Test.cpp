@@ -25,8 +25,9 @@
 
 #if defined (ACE_HAS_THREADS)
 
-// Semaphore used in the tests.
-static ACE_Thread_Semaphore s(0);
+// Semaphore used in the tests.  Start it "locked" (i.e., its initial
+// count is 0).
+static ACE_Thread_Semaphore s (0);
 
 // Default number of iterations.
 static size_t n_iterations = 10;
@@ -73,26 +74,34 @@ parse_args (int argc, char *argv[])
 
 
 // Tests the amount of time spent in a timed wait.
+
 static int 
 test_timeout (void)
 {
-  ACE_Time_Value begin, wait, diff;
-  
-  // Pick some random number of milliseconds to 
-  wait = ACE_Time_Value (0, (ACE_OS::rand () % 10) * 100000);
-  begin = ACE_OS::gettimeofday ();
-  s.acquire(wait);
-  diff = ACE_OS::gettimeofday () - begin;
+  // Pick some random number of milliseconds.
+  ACE_Time_Value wait (0, (ACE_OS::rand () % 10) * 100000);
+
+  ACE_Time_Value begin = ACE_OS::gettimeofday ();
+
+  if (s.acquire (wait) == -1)
+    ACE_ASSERT (errno == ETIME);
+
+  ACE_Time_Value diff = ACE_OS::gettimeofday () - begin;
+
   if (diff < wait)
-  {
-    ACE_DEBUG ((LM_DEBUG, "Timed wait fails length test\n"));
-    ACE_DEBUG ((LM_DEBUG, "Value: %d us      Actual %d us\n", wait.usec (), diff.usec ()));
-    return -1;
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "Timed wait fails length test\n"));
+      ACE_DEBUG ((LM_DEBUG, "Value: %d us, actual %d us\n",
+		  wait.usec (),
+		  diff.usec ()));
+      return -1;
+    }
+
   return 0;
 }
 
-// Worker tries to acquire the semaphore, hold it for a while, and then releases it.
+// Worker tries to acquire the semaphore, hold it for a while, and
+// then releases it.
 
 static void *
 worker (void *)
@@ -100,7 +109,9 @@ worker (void *)
   ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
   
-  for (size_t iterations = 1; iterations <= n_iterations; iterations++)
+  for (size_t iterations = 1;
+       iterations <= n_iterations;
+       iterations++)
     {
       if (s.acquire (ACE_Time_Value (0, (ACE_OS::rand () % 1000) * 1000)))
         ++timeouts;
@@ -129,27 +140,27 @@ int main (int argc, char *argv[])
   parse_args (argc, argv);
   ACE_OS::srand (ACE_OS::time (0L));
 #if !defined (ACE_HAS_STHREADS)
-  size_t i;  // Loop variable
-  
-  // Test out timed waits
-  for (i = 0; i < 5; i++)
+
+  // Test timed waits.
+  for (size_t i = 0; i < 5; i++)
     test_timeout ();
 
-  // Initialize the semaphore to a certain number
+  // Initialize the semaphore to a certain number.
   s.release (n_semcount);
 
-  if (ACE_Thread_Manager::instance ()->spawn_n (n_workers, 
-						ACE_THR_FUNC (worker), 
-						0, 
-						THR_NEW_LWP) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn_n 
+      (n_workers, ACE_THR_FUNC (worker), 0, THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
 
   size_t percent = (timeouts * 100) / (n_workers * n_iterations);
 
-  ACE_DEBUG ((LM_DEBUG, "Worker Threads timed out %d percent of the time\n", percent));
-
+  ACE_DEBUG ((LM_DEBUG,
+	      "Worker threads timed out %d percent of the time\n", percent));
+#else
+  ACE_ERROR ((LM_ERROR,
+	      "Timed semaphores are not supported with native Solaris threads\n"));
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (argc);
