@@ -1,3 +1,12 @@
+Tue Aug 17 19:07:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* common/NamespaceSupport.cpp:
+
+	  Changed ACE_NEW_RETURN to use "NS_Node_T" instead of "struct
+	  NS_Node_T" --- the latter triggers a gcc 3.3 parser bug when
+	  used with the "new (std::nothrow)" version of ACE_NEW_RETURN.
+	  Fortunately, the "struct" is unnecessary.
+
 Sat Feb 21 23:51:25 2004  .  <.@isis.vanderbilt.edu>
 
         * common/Exception.h:
@@ -774,3 +783,7 @@ Wed Oct 23 17:27:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
           simpler. Removed try_grow_cdata() as it is no longer needed.
           Handle the case when the parser was accepting invalid character
           references().
+
+Local Variables:
+add-log-time-format: current-time-string
+End:
