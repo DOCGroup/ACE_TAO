@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : ftorbutils, rtevent, naming {
+project : ftorbutils, rtevent, naming, minimum_corba {
   after     += FtRtEvent
   libs      += TAO_FtRtEvent
   tagchecks += FtRtEvent
-  avoids    += minimum_corba
 }
