@@ -1,3 +1,9 @@
+Wed Jan 16 09:01:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Containers_T.{h,cpp}:
+          Added ACE_Fixed_Set_Const_Iterator to make it possible to
+          iterate through a const ACE_Fixed_Set instance
+
 Wed Jan 16 07:53:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * include/makeinclude/ace_flags.bor:

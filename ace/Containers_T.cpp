@@ -1099,6 +1099,68 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::next (T *&item)
     return 0;
 }
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set_Const_Iterator)
+
+  template <class T, size_t ACE_SIZE> void
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::dump (void) const
+{
+  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::dump");
+}
+
+template <class T, size_t ACE_SIZE>
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Const_Iterator (const ACE_Fixed_Set<T, ACE_SIZE> &s)
+  : s_ (s),
+    next_ (-1)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Const_Iterator");
+  this->advance ();
+}
+
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::advance (void)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::advance");
+
+  for (++this->next_;
+       ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
+         && this->s_.search_structure_[this->next_].is_free_;
+       ++this->next_)
+    continue;
+
+  return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
+}
+
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::first (void)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::first");
+
+  next_ = -1;
+  return this->advance ();
+}
+
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::done (void) const
+{
+  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::done");
+
+  return ACE_static_cast (ACE_CAST_CONST size_t, this->next_) >=
+    this->s_.cur_size_;
+}
+
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next (T *&item)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next");
+  if (ACE_static_cast (size_t, this->next_) < this->s_.cur_size_)
+    {
+      item = &this->s_.search_structure_[this->next_].item_;
+      return 1;
+    }
+  else
+    return 0;
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Set)
 
   template <class T> void
