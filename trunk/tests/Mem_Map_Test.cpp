@@ -38,16 +38,19 @@ reverse_file (ACE_HANDLE file_handle,
               int size)
 {
   int count = 0;
-  size--;
+  // LynxOS 3.0.0/PowerPC needs the volatile qualifier, with
+  // -O2 optimization enabled.
+  volatile int i = size;
+  i--;
 
-  if (array[size] == '\0')
-    array[size] = '\n';
+  if (array[i] == '\0')
+    array[i] = '\n';
 
-  while (--size >= 0)
+  while (--i >= 0)
     {
-      if (array[size] == '\n')
+      if (array[i] == '\n')
         {
-          ACE_OS::write (file_handle, array + size + 1, count);
+          ACE_OS::write (file_handle, array + i + 1, count);
           ACE_OS::write (file_handle, ASYS_TEXT ("\n"), 1);
           count = 0;
         }
