@@ -31,7 +31,7 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 
 void
 CIAO::DomainApplicationManager_Impl::
-init (void)
+init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((Deployment::ResourceNotAvailable,
                    Deployment::StartError,
                    Deployment::PlanError))
@@ -40,6 +40,15 @@ init (void)
 
   ACE_TRY
     {
+      // Call get_plan_info() method to get the total number
+      // of child plans and list of NodeManager names.
+      if ( this->get_plan_info () == false)
+        ACE_THROW ((::Deployment::PlanError ()));
+
+      // Check the validity of the global deployment plan.
+      if ( this->check_validity () == false)
+        ACE_THROW ((::Deployment::PlanError ()));
+
       // Invoke preparePlan for each child deployment plan.
       for (int i = 0; i < this->num_child_plans_; i++)
       {
@@ -55,7 +64,7 @@ init (void)
 
         if (this->child_plans_info_.find (this->node_manager_names_[i], 
                                           entry) != 0)
-           ACE_THROW ((::Deployment::PlanError() ));
+           ACE_THROW ((::Deployment::PlanError ()));
                                           
         Deployment::DeploymentPlan_var my_child_plan = entry->int_id_;
 
@@ -79,6 +88,14 @@ init (void)
   return;
 }
 
+
+bool
+CIAO::DomainApplicationManager_Impl::
+get_plan_info (void)
+{
+  // @@ Not implemented.
+  return true;
+}
 
 bool
 CIAO::DomainApplicationManager_Impl::

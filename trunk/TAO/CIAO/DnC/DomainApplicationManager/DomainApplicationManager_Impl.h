@@ -140,6 +140,13 @@ namespace CIAO
 
   protected:
     /**
+     * Parse the global deployment plan, get the total number of
+     * child plans included in the global plan, and get the list of 
+     * names of NodeManagers for each child plan.
+     */
+    bool get_plan_info (void);
+
+    /**
      * Check whether all the NodeManager names are present in the
      * deployment information data file.
      */
