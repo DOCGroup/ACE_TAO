@@ -170,19 +170,16 @@ int be_visitor_args_compiled_marshal_cs::visit_array (be_array *node)
         case AST_Argument::dir_IN:
           break;
         case AST_Argument::dir_INOUT:
-          *os << node->name () << "_forany ("
-              << arg->local_name () << ")";
+          *os << "_tao_argument_" << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
           if (node->size_type () == be_decl::VARIABLE)
             {
-              *os << node->name () << "_forany ("
-                  << arg->local_name () << ".ptr ())";
+              *os << "_tao_argument_" << arg->local_name ();
             }
           else
             {
-              *os << node->name () << "_forany ("
-                  << arg->local_name () << ")";
+              *os << "_tao_argument_" << arg->local_name ();
             }
           break;
         }

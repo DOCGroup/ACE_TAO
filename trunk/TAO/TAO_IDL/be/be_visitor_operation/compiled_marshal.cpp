@@ -129,8 +129,9 @@ int be_visitor_operation_rettype_compiled_marshal::visit_array (be_array *node)
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << node->name () << "_forany ("
-          << "_tao_retval" << ")";
+      *os << "_tao_retval_forany";
+      // *os << node->name () << "_forany ("
+      // << "_tao_retval" << ")";
     }
   else
     {
