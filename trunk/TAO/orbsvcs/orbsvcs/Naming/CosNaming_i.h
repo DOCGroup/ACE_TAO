@@ -38,8 +38,10 @@ public:
           HASH_MAP;
          
   // = Initialization and termination methods.
-  TAO_NamingContext (size_t default_hash_table_size = ACE_DEFAULT_MAP_SIZE,
-		    int root = 0);
+  TAO_NamingContext (PortableServer::POA_ptr poa,
+		     size_t default_hash_table_size = ACE_DEFAULT_MAP_SIZE,
+		     int root = 0);
+
   // Default constructor, which initializes the <size> of the table,
   // and sets a root flag.
 
@@ -49,6 +51,9 @@ public:
 
   ~TAO_NamingContext (void);
   // destructor.
+
+  // Returns the Default POA of this Servant object
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
   virtual void bind (const CosNaming::Name &n, 
 		     CORBA::Object_ptr obj, 
@@ -168,6 +173,9 @@ private:
   // Lock to serialize access to the underlying data structure.  This
   // is a lock adapter that hides the type of lock, which may be a
   // null lock if the ORB decides threading is not necessary.
+
+  PortableServer::POA_var poa_;
+  // Implement a different _default_POA()
 };
 
 class TAO_ORBSVCS_Export TAO_BindingIterator : public POA_CosNaming::BindingIterator
@@ -183,11 +191,15 @@ class TAO_ORBSVCS_Export TAO_BindingIterator : public POA_CosNaming::BindingIter
 public:
   // = Intialization and termination methods.
   TAO_BindingIterator (TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter,
-                      ACE_Lock *lock);
+		       PortableServer::POA_ptr poa,
+		       ACE_Lock *lock);
   // Constructor.
 
   ~TAO_BindingIterator (void);
   // Destructor.
+
+  // Returns the Default POA of this Servant object
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
   CORBA::Boolean next_one (CosNaming::Binding_out b, 
 			   CORBA::Environment &IT_env);
@@ -209,6 +221,10 @@ private:
   ACE_Lock *lock_;
   // Lock passed on from <TAO_NamingContext> to serialize access to the
   // internal data structure.
+
+  PortableServer::POA_var poa_;
+  // Implement a different _default_POA()
+
 }; 
 
 #endif /* TAO_NAMING_I_H */
