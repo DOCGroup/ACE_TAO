@@ -141,6 +141,7 @@ main (int argc, char *argv[])
 
       Client* client;
       ACE_NEW_RETURN (client, Client[nthreads], 1);
+
       for (int i = 0; i != nthreads; ++i)
         {
           client[i].set (server.in (), niterations);
