@@ -1,3 +1,7 @@
+Sat Mar 31 07:16:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/tao/IFR_Client/IFR_BaseC.cpp: Fixed errors in MSVC. 
+
 Sat Mar 31 02:23:16 2001  Sharath Cholleti  <sharath@cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp
@@ -26,7 +30,6 @@ Sat Mar 31 02:23:16 2001  Sharath Cholleti  <sharath@cs.wustl.edu>
 
 	Fixed fuzz warnings for ACE_TRY_ENV.
 
-=======
 Sat Mar 31 02:06:09 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Makefile.bor:

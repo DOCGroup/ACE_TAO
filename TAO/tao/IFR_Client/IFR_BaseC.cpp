@@ -20,6 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "IFR_BaseC.h"
+#include "tao/corbafwd.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
@@ -398,13 +399,13 @@ _TAO_IRObject_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::IRObject::CORBA_IRObject (int collocated)
+CORBA_IRObject::CORBA_IRObject (int collocated)
 {
   this->CORBA_IRObject_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::IRObject::~CORBA_IRObject (void)
+CORBA_IRObject::~CORBA_IRObject (void)
 {}
 
 void
@@ -2305,13 +2306,13 @@ _TAO_Contained_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::Contained::CORBA_Contained (int collocated)
+CORBA_Contained::CORBA_Contained (int collocated)
 {
   this->CORBA_Contained_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::Contained::~CORBA_Contained (void)
+CORBA_Contained::~CORBA_Contained (void)
 {}
 
 void
@@ -4703,17 +4704,17 @@ _TAO_Container_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::Container::CORBA_Container (int collocated)
+CORBA_Container::CORBA_Container (int collocated)
 {
   this->CORBA_Container_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::Container::~CORBA_Container (void)
+CORBA_Container::~CORBA_Container (void)
 {}
 
 void
-CORBA::Container::CORBA_Container_setup_collocation (int collocated)
+CORBA_Container::CORBA_Container_setup_collocation (int collocated)
 {
   if (collocated)
     this->the_TAO_Container_Proxy_Broker_ =
