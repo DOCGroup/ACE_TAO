@@ -12,11 +12,11 @@ ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::accept (ACE_SOCK_Stream &stream,
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_, -1);
   
-  return SUPER::accept (stream, 
-                        remote_address, 
-                        timeout, 
-                        restart, 
-                        reset_new_handle);
+  return ACE_SOCK_Acceptor::accept (stream, 
+                                    remote_address, 
+                                    timeout, 
+                                    restart, 
+                                    reset_new_handle);
 }
 
 template <class ACE_LOCK> ACE_LOCK &

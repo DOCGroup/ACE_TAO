@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Asynch_Acceptor.h"
+#include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Proactor.h"
 
 #include "IO.h"
@@ -384,8 +385,8 @@ ACE_STATIC_SVC_DEFINE (HTTP_Server, "HTTP_Server", ACE_SVC_OBJ_T,
                        | ACE_Service_Type::DELETE_OBJ, 0)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
+template class ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

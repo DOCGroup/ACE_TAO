@@ -187,7 +187,19 @@ for help with this port. <P>
 <DD>
      Steve Huston &lt<A HREF="mailto:shuston@riverace.com">shuston@riverace.com</A>&gt
 	has ported ACE to work with UnixWare 2.01 and
-	  its standard C++ compiler.
+	  its standard C++ compiler.<P>
+
+<DT><B>Chorus</B> <BR><BR>
+<DD>
+
+     Wei Chiang &lt<A HREF="mailto:chiang@tele.nokia.fi">chiang@tele.nokia.fi</A>&gt
+	has ported ACE to Chorus 3.1 using GNU G++ 2.7.2.<P>
+
+<DT><B>LynxOS</B> <BR><BR>
+<DD>
+
+     Dave Mayerhoefer &lt<A HREF="mailto:davem@lynx.com">davem@lynx.com</A>&gt
+	has ported ACE to LynxOS 2.5 using GNU G++ 2.7.2.<P>
 
 <DT><STRONG>VxWorks</STRONG> <BR><BR>
 <DD>
@@ -722,14 +734,21 @@ $ACE_ROOT), and then invoke the top-level Makefile with the
 % mkdir build-SunOS5
 % cd build-SunOS5
 % make -f ../Makefile clone
+% (cd ace; ln -s config-sunos5.5-g++.h config.h)
+% (cd include/makeincludes; ln -s platform_sunos5-g++.h platform_macros.GNU)
 % setenv ACE_ROOT $cwd
 % make
 </pre><P>
 
-This will establish a complete tree of links.  When you do a make in
-this directory you will be producing object code that is not stored in
-the same place as the original source tree.  This way, you can easily
-build another platform in a parallel tree structure. <P>
+This will establish a complete tree of links.  Note that you must to
+build a config.h and platform_macros.GNU in cloned directory.  In
+addition, make sure you set your LD_LIBRARY_PATH to
+$ACE_ROOT/ace:$LD_LIBRARY_PATH on SVR4 UNIX platforms. <P>
+
+When you do a make in the $ACE_ROOT directory you will be producing
+object code that is not stored in the same place as the original
+source tree.  This way, you can easily build another platform in a
+parallel tree structure. <P>
 
 <B> VERY IMPORTANT! </B> <P>
 
