@@ -317,7 +317,8 @@ CORBA_Any::operator<<= (from_string s)
       ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
                                     sizeof _oc_string,
                                     (char *) &_oc_string,
-                                    1));
+                                    1,
+                                    sizeof (CORBA::String_var)));
     }
   else
     tc = CORBA::_tc_string; // unbounded.

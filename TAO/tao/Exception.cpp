@@ -288,7 +288,8 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
                              stream.buffer (),
-                             1);
+                             1,
+                             sizeof (CORBA_UserException));
 }
 
 void
@@ -358,7 +359,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
                              stream.buffer (),
-                             1);
+                             1,
+                             sizeof (CORBA_SystemException));
   
   TAO_Exceptions::system_exceptions->add (tcp);
   assert (tcp->length_ <= TAO_Exceptions::TC_BUFLEN);

@@ -73,8 +73,8 @@ static CORBA::TypeCode _tc__tc_CORBA_ORB_InconsistentTypeCode (
     CORBA::tk_except, 
     sizeof (_oc_CORBA_ORB_InconsistentTypeCode), 
     (char *) &_oc_CORBA_ORB_InconsistentTypeCode, 
-    0
-  );
+    0,
+    sizeof (CORBA_ORB_InconsistentTypeCode));
 
 // Static initialization.
 int CORBA_ORB::orb_init_count_ = 0;

@@ -92,6 +92,63 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     private_state_ (new TC_Private_State (kind)),
     non_aligned_buffer_ (0)
 {
+  // all these are simple typecodes and the comparison is based solely on
+  this->private_state_->tc_size_known_ = 1;
+  switch (this->kind_)
+    {
+    case CORBA::tk_null:
+    case CORBA::tk_void:
+      this->private_state_->tc_size_ = 0;
+      break;
+    case CORBA::tk_short:
+      this->private_state_->tc_size_ = sizeof (CORBA::Short);
+      break;
+    case CORBA::tk_ushort:
+      this->private_state_->tc_size_ = sizeof (CORBA::UShort);
+      break;
+    case CORBA::tk_long:
+      this->private_state_->tc_size_ = sizeof (CORBA::Long);
+      break;
+    case CORBA::tk_ulong:
+      this->private_state_->tc_size_ = sizeof (CORBA::ULong);
+      break;
+    case CORBA::tk_float:
+      this->private_state_->tc_size_ = sizeof (CORBA::Float);
+      break;
+    case CORBA::tk_double:
+      this->private_state_->tc_size_ = sizeof (CORBA::Double);
+      break;
+    case CORBA::tk_longlong:
+      this->private_state_->tc_size_ = sizeof (CORBA::LongLong);
+      break;
+    case CORBA::tk_ulonglong:
+      this->private_state_->tc_size_ = sizeof (CORBA::ULongLong);
+      break;
+    case CORBA::tk_longdouble:
+      this->private_state_->tc_size_ = sizeof (CORBA::LongDouble);
+      break;
+    case CORBA::tk_boolean:
+      this->private_state_->tc_size_ = sizeof (CORBA::Boolean);
+      break;
+    case CORBA::tk_octet:
+      this->private_state_->tc_size_ = sizeof (CORBA::Octet);
+      break;
+    case CORBA::tk_char:
+      this->private_state_->tc_size_ = sizeof (CORBA::Char);
+      break;
+    case CORBA::tk_wchar:
+      this->private_state_->tc_size_ = sizeof (CORBA::WChar);
+      break;
+    case CORBA::tk_TypeCode:
+      this->private_state_->tc_size_ = sizeof (CORBA::TypeCode);
+      break;
+    case CORBA::tk_Principal:
+      this->private_state_->tc_size_ = sizeof (CORBA::Principal);
+      break;
+    case CORBA::tk_any:
+      this->private_state_->tc_size_ = sizeof (CORBA::Any);
+      break;
+    }
 }
 
 // Constructor for all other typecodes, including constants with
@@ -101,6 +158,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
                                 size_t length,
                                 const char *buffer,
                                 CORBA::Boolean orb_owns_tc,
+                                CORBA::ULong size,
                                 CORBA::TypeCode_ptr parent)
   //  : length_ (length - 4),
   : length_ (length),
@@ -159,6 +217,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 
       (void) ACE_OS::memcpy (start, buffer, this->length_);
       this->buffer_ = start;
+      this->private_state_->tc_size_known_ = 1;
+      this->private_state_->tc_size_ = size;
     }
   else
     {
