@@ -323,6 +323,11 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -GA\t\t\tgenerate Any operator and type code bodies in *A.cpp")
+      ACE_TEXT (" (generated in *C.cpp by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Guc\t\t\tgenerate uninlined constant if declared ")
       ACE_TEXT ("in a module")
       ACE_TEXT (" (inlined by default)\n")

@@ -40,6 +40,14 @@ be_visitor_root_any_op::~be_visitor_root_any_op (void)
 int
 be_visitor_root_any_op::visit_root (be_root *node)
 {
+  if (be_global->gen_anyop_files () 
+      && this->ctx_->state () == TAO_CodeGen::TAO_ROOT_ANY_OP_CS)
+    {
+      // Switch streams, ctx will be reassigned when this
+      // pass is done.
+      this->ctx_->stream (tao_cg->anyop_source ());
+    }
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
