@@ -42,8 +42,8 @@ ACE_FILE_Addr::set (LPCTSTR filename)
   this->ACE_Addr::base_set (AF_FILE,
                             ACE_OS::strlen (filename) + 1);
   (void) ACE_OS::strncpy (this->filename_,
-                         filename,
-                         sa.get_size ());
+                          filename,
+                          sizeof this->filename_);
 }
 
 ACE_FILE_Addr &
