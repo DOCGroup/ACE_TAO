@@ -39,7 +39,7 @@ CosEC_Multiple::init (int argc, char *argv[])
 int
 CosEC_Multiple::init_ORB  (int argc, char *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
