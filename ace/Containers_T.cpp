@@ -478,7 +478,9 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
                          (ACE_Node<T> *) this->allocator_->malloc (sizeof (ACE_Node<T>)),
                          ACE_Node<T> (new_item, this->head_->next_),
                          -1);
-  // Link this pointer into the front of the list.
+  // Link this pointer into the front of the list.  Note that the
+  // "real" head of the queue is <head_->next_>, whereas <head_> is
+  // just a pointer to the dummy node.
   this->head_->next_ = temp;
 
   this->cur_size_++;
@@ -492,7 +494,9 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
 
   ACE_Node<T> *temp;
 
-  // Insert <item> into the old dummy node location.
+  // Insert <item> into the old dummy node location.  Note that this
+  // isn't actually the "head" item in the queue, it's a dummy node at
+  // the "tail" of the queue...
   this->head_->item_ = new_item;
 
   // Create a new dummy node.
