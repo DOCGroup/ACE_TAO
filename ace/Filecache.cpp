@@ -2,7 +2,7 @@
 
 #define ACE_BUILD_DLL
 
-#include "ace/Filecache.h"
+#include "ace/Filecache_New2.h"
 
 static const int R_MASK = S_IRUSR|S_IRGRP|S_IROTH;
 static const int W_MASK = S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH;
@@ -28,30 +28,8 @@ static const int WCOPY_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 // static data members
 ACE_Filecache *ACE_Filecache::cvf_ = 0;
 ACE_SYNCH_RW_MUTEX ACE_Filecache::lock_;
-
-// This is how you make data opaque in C++.  I'd like to do this with
-// ACE_Filecache_Object too, but Doug would pro'ly kill me.
-class ACE_Filecache_Singleton
-{
-public:
-  ACE_Filecache_Singleton (void)
-  { 
-    this->singleton_ = ACE_Filecache::instance ();
-  }
-
-  ~ACE_Filecache_Singleton (void)
-  { 
-    delete this->singleton_; 
-  }
-
-private:
-  ACE_Filecache * singleton_;
-};
-
-// This singleton is necessary for now in order to delete the
-// temporary files that are created for the cache.  This won't be
-// needed in the future when we remove reliance on copying files.
-static ACE_Filecache_Singleton cvf_singleton;
+ACE_SYNCH_RW_MUTEX ACE_Filecache::hash_lock_[ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
+ACE_SYNCH_RW_MUTEX ACE_Filecache::file_lock_[ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
 
 class ACE_Filecache_Object
   // = TITLE
@@ -60,12 +38,16 @@ class ACE_Filecache_Object
   //     consumption.  Please consult a physician before attempting to
   //     use this class.
 {
+  friend class ACE_Filecache;
+
 public:
-  ACE_Filecache_Object (const char *filename);
+  ACE_Filecache_Object (const char *filename,
+                        ACE_SYNCH_RW_MUTEX &lock);
   // Creates a file for reading.
 
   ACE_Filecache_Object (const char *filename,
-	     int size);
+                        int size,
+                        ACE_SYNCH_RW_MUTEX &lock);
   // Creates a file for writing.
 
   ~ACE_Filecache_Object (void);
@@ -76,10 +58,6 @@ public:
 
   int release (void);
   // Decrement the reference_count_.
-
-  // = action_ accessors
-  int action (void) const;
-  int action (int action_value);
 
   // = error_ accessors
   int error (void) const;
@@ -116,7 +94,7 @@ private:
 public:
 
   enum 
-  { 
+  {
     READING = 1,
     WRITING = 2
   };
@@ -151,11 +129,13 @@ private:
   int error_;
   // Status indicators.
 
-  int reference_count_;
-  ACE_SYNCH_RW_MUTEX lock_;
-  // reference_count_ counts how many users of the file there are.
-  // lock_ provides a synchronization mechanism for critical sections
-  // of code.
+  int stale_;
+  // If set to 1, means the object is flagged for removal.
+
+  ACE_SYNCH_RW_MUTEX junklock_;
+  ACE_SYNCH_RW_MUTEX &lock_;
+  // lock_ provides a bookkeeping mechanism for users of this object.
+  // junklock_ is the default initializer
 };
 
 void
@@ -177,9 +157,8 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const char * filename)
   // fetch the file from the Virtual_Filesystem
   // let the Virtual_Filesystem do the work of cache coherency
 
+  // Filecache will also do the acquire, since it holds the lock at that time.
   this->file_ = ACE_Filecache::instance ()->fetch (filename);
-
-  this->file_->acquire ();
 }
 
 ACE_Filecache_Handle::ACE_Filecache_Handle (const char * filename, int size)
@@ -188,8 +167,9 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const char * filename, int size)
   // since this is being opened for a write,
   // simply create a new ACE_Filecache_Object now,
   // and let the destructor add it into CVF later
-  this->file_ = new ACE_Filecache_Object (filename, size);
-  this->file_->acquire ();
+
+  // Filecache will also do the acquire, since it holds the lock at that time.
+  this->file_ = ACE_Filecache::instance ()->create (filename, size);
 }
 
 ACE_Filecache_Handle::~ACE_Filecache_Handle (void)
@@ -198,22 +178,7 @@ ACE_Filecache_Handle::~ACE_Filecache_Handle (void)
     // this was dup ()'d
     ACE_OS::close (this->handle_);
 
-  if (this->file_ != 0)
-    switch (this->file_->action ())
-      {
-      case ACE_Filecache_Object::WRITING:
-	this->file_->release ();
-	// assert (this->file_->reference_count () == 0);
-	// put it into the CVF
-	ACE_Filecache::instance ()->replace (this->file_);
-	break;
-
-      default:
-	// last one using a stale file is resposible for deleting it
-	if (this->file_->release () == 0)
-	  delete this->file_;
-	break;
-      }
+  ACE_Filecache::instance ()->finish (this->file_);
 }
 
 void *
@@ -253,6 +218,84 @@ ACE_Filecache_Handle::size (void) const
 }
 
 
+// ------------------
+// ACE_Filecache_Hash
+// ------------------
+
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+
+#define ACE_Filecache_Hash \
+        ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>
+#define ACE_Filecache_Hash_Entry \
+        ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>
+
+
+ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (const char *const &ext_id,
+                                              ACE_Filecache_Object *const &int_id,
+                                              ACE_Filecache_Hash_Entry *ptr)
+  : ext_id_ (ext_id ? ACE_OS::strdup (ext_id) : ACE_OS::strdup ("")),
+    int_id_ (int_id),
+    next_ (ptr)
+{
+}
+
+ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry (void)
+{
+  ACE_OS::free ((void *) ext_id_);
+}
+
+// We need these template specializations since KEY is defined as a
+// char*, which doesn't have a hash() or equal() method defined on it.
+
+long unsigned int
+ACE_Filecache_Hash::hash (const char *const &ext_id)
+{
+  return ACE::hash_pjw (ext_id);
+}
+
+int
+ACE_Filecache_Hash::equal (const char *const &id1, const char *const &id2)
+{
+  return ACE_OS::strcmp (id1, id2) == 0;
+}
+
+int 
+ACE_Filecache_Hash::shared_find (const char *const &ext_id,
+                                 ACE_Filecache_Hash_Entry *&entry,
+                                 ACE_Filecache_Hash_Entry *&prev,
+                                 u_long &loc)
+{
+  loc = this->hash (ext_id) % this->total_size_;
+
+  ACE_Filecache_Hash_Entry *temp = this->table_[loc];
+
+  for (;
+       temp != this->sentinel_ && this->equal (temp->ext_id_, ext_id) == 0;
+       temp = temp->next_)
+    prev = temp;
+
+  if (temp != this->sentinel_)
+    {
+      entry = temp;
+      return 0;
+    }
+  else
+    {
+      errno = ENOENT;
+      return -1;
+    }
+}
+
+#undef ACE_Filecache_Hash
+#undef ACE_Filecache_Hash_Entry
+
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+
+
+// -------------
+// ACE_Filecache
+// -------------
+
 ACE_Filecache *
 ACE_Filecache::instance (void)
 {
@@ -269,108 +312,92 @@ ACE_Filecache::instance (void)
 }
 
 ACE_Filecache::ACE_Filecache (void)
+  : size_ (DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE),
+    hash_ (this->size_)
 {
-  this->size_ = DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE;
-
-  for (int i = 0; i < this->size_; i++)
-    this->table_[i] = 0;
 }
 
 ACE_Filecache::~ACE_Filecache (void)
 {
-  for (int i = 0; i < this->size_; i++)
-    if (this->table_[i] != 0)
-      delete this->table_[i];
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::find (const char * filename)
+ACE_Filecache::insert_i (const char *filename, ACE_SYNCH_RW_MUTEX &filelock)
 {
-  int i;
   ACE_Filecache_Object *handle = 0;
 
-  {
-    ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
-
-    i = this->fetch_i (filename);
-
-    if (i != -1 && ! this->table_[i]->update ())
-      handle = this->table_[i];
-  }
-
-  // Considerably slower on misses, but should be faster on hits.
-  // This is actually the double check locking pattern.
-
-  if (handle == 0)
+  if (this->hash_.find (filename, handle) == -1)
     {
-      ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
+      handle = new ACE_Filecache_Object (filename, filelock);
 
-      i = this->fetch_i (filename);
-
-      if (i == -1)
+      ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: creating %s\n", filename));
+      if (this->hash_.bind (filename, handle) == -1)
         {
-          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: missed %s\n", filename));
-        }
-      else if (this->table_[i]->update ())
-        {
-          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: updating %s\n", filename)); 
-          this->remove_i (i);
-          handle = this->table_[i] = new ACE_Filecache_Object (filename);
-          handle->acquire ();
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: found %s\n", filename)); 
-          handle = this->table_[i];
+          delete handle;
+          handle = 0;
         }
     }
+  else
+    handle = 0;
 
   return handle;
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::fetch (const char * filename)
+ACE_Filecache::remove_i (const char *filename)
 {
-  int i;
   ACE_Filecache_Object *handle = 0;
 
-  {
-    ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
-
-    i = this->fetch_i (filename);
-
-    if (i != -1 && ! this->table_[i]->update ())
-      handle = this->table_[i];
-  }
-
-  // Considerably slower on misses, but should be faster on hits.
-  // This is actually the double check locking pattern.
-
-  // Nearly equivalent to this->find (), except a miss causes the CVF
-  // to insert the file into the cache.
-
-  if (handle == 0)
+  // Disassociate file from the cache.
+  if (this->hash_.unbind (filename, handle) == 0)
     {
-      ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
+      handle->stale_ = 1;
 
-      i = this->fetch_i (filename);
+      // Try a lock.  If it succeds, we can delete it now.
+      // Otherwise, it will clean itself up later.
+      if (handle->lock_.tryacquire_write () == 0)
+        {
+          delete handle;
+          handle = 0;
+        }
+    }
+  else
+    handle = 0;
 
-      if (i == -1)
+  return handle;
+}
+
+ACE_Filecache_Object *
+ACE_Filecache::update_i (const char *filename, ACE_SYNCH_RW_MUTEX &filelock)
+{
+  ACE_Filecache_Object *handle = 0;
+
+  // Just in case someone removed it
+  if (this->hash_.find (filename, handle) == -1)
+    {
+      handle = new ACE_Filecache_Object (filename, filelock);
+
+      ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: creating %s\n", filename));
+      if (this->hash_.bind (filename, handle) == -1)
         {
-          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: missed %s\n", filename));
-          handle = this->insert_i (new ACE_Filecache_Object (filename));
+          delete handle;
+          handle = 0;
         }
-      else if (this->table_[i]->update ())
+    }
+  else
+    {
+      if (handle->update ())
         {
-          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: updating %s\n", filename)); 
-          this->remove_i (i);
-          handle = this->table_[i] = new ACE_Filecache_Object (filename);
-          handle->acquire ();
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: found %s\n", filename)); 
-          handle = this->table_[i];
+          handle = this->remove_i (filename);
+
+          handle = new ACE_Filecache_Object (filename, filelock);
+
+          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: updating %s\n", filename));
+          if (this->hash_.bind (filename, handle) == -1)
+            {
+              delete handle;
+              handle = 0;
+            }
         }
     }
 
@@ -378,109 +405,118 @@ ACE_Filecache::fetch (const char * filename)
 }
 
 int
-ACE_Filecache::fetch_i (const char * filename)
+ACE_Filecache::find (const char * filename)
 {
-  for (int i = 0;
-       i < DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE; 
-       i++)
-    {
-      if (this->table_[i] == 0) 
-	continue;
+  return this->hash_.find (filename);
+}
 
-      if (ACE_OS::strcmp (filename, this->table_[i]->filename ()) == 0)
-	return i;
+
+ACE_Filecache_Object *
+ACE_Filecache::fetch (const char * filename)
+{
+  ACE_Filecache_Object *handle = 0;
+
+  u_long loc = ACE::hash_pjw (filename) % this->size_;
+  ACE_SYNCH_RW_MUTEX &hashlock = ACE_Filecache::hash_lock_[loc];
+  ACE_SYNCH_RW_MUTEX &filelock = ACE_Filecache::file_lock_[loc];
+
+  filelock.acquire_read ();
+  if (this->hash_.find (filename, handle) == -1)
+    {
+      ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
+
+      // Second check in the method call
+      handle = this->insert_i (filename, filelock);
+
+      if (handle == 0)
+        filelock.release ();
     }
-
-  return -1;
-}
-
-ACE_Filecache_Object *
-ACE_Filecache::remove (const char * filename)
-{
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
-
-  int i = this->fetch_i (filename);
-
-  return i == -1 ? 0 : this->remove_i (i);
-}
-
-ACE_Filecache_Object *
-ACE_Filecache::remove_i (int index)
-{
-  ACE_Filecache_Object * handle = 0;
-
-  if (index != -1)
+  else
     {
-      handle = this->table_[index];
-      this->table_[index] = 0;
-
-      if (handle->release () == 0)
+      if (handle->update ())
         {
-          delete handle;
-          handle = 0;
+          filelock.release ();
+
+            {
+              // Double check locking pattern
+              ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
+
+              // Second check in the method call
+              handle = this->update_i (filename, filelock);
+            }
+
+          if (handle)
+            filelock.acquire_read ();
         }
+
+      ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: found %s\n", filename)); 
     }
+
 
   return handle;
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::insert (ACE_Filecache_Object * new_file)
+ACE_Filecache::create (const char *filename, int size)
 {
-  // Assume the filename associated with this file is unique.
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
+  ACE_Filecache_Object *handle = 0;
 
-  return this->insert_i (new_file);
+  u_long loc = ACE::hash_pjw (filename) % this->size_;
+  ACE_SYNCH_RW_MUTEX &filelock = ACE_Filecache::file_lock_[loc];
+
+  handle = new ACE_Filecache_Object (filename, size, filelock);
+  handle->acquire ();
+
+  return handle;
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::insert_i (ACE_Filecache_Object * new_file)
+ACE_Filecache::finish (ACE_Filecache_Object *&file)
 {
-  int i;
-  int max = 0;
-  size_t maxsize = 0;
+  int result;
+  ACE_Filecache_Object *handle = 0;
 
-  for (i = 0; i < DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE; i++)
-    {
-      if (this->table_[i] != 0)
-        {
-          if (this->table_[i]->size () > maxsize)
-            maxsize = this->table_[max = i]->size ();
-          continue;
-        }
-      this->table_[i] = new_file;
-      break;
-    }
+  u_long loc = ACE::hash_pjw (file->filename_) % this->size_;
+  ACE_SYNCH_RW_MUTEX &hashlock = ACE_Filecache::hash_lock_[loc];
 
-  if (i == DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
-    {
-      // Forced to exercise a replacement policy here.  Let's play
-      // nice, and remove the largest object from the cache.
-      this->remove_i (max);
-      this->table_[max] = new_file;
-    }
+  if (file != 0)
+    switch (file->action_)
+      {
+      case ACE_Filecache_Object::WRITING:
+        do
+          {
+            ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
 
-  new_file->acquire ();
-  return new_file;
-}
+            file->release ();
 
-ACE_Filecache_Object *
-ACE_Filecache::replace (ACE_Filecache_Object *new_file)
-{
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
+            handle = this->remove_i ((char *) file->filename_);
+            result = this->hash_.bind (file->filename_, file);
 
-  int i = this->fetch_i (new_file->filename ());
+            if (result == 0)
+              file->acquire ();
+          }
+        while (0);
 
-  if (i == -1)
-    this->insert_i (new_file);
-  else
-    {
-      this->remove_i (i);
-      this->table_[i] = new_file;
-      new_file->acquire ();
-    }
+	break;
+      default:
+	file->release ();
 
-  return new_file;
+	// last one using a stale file is resposible for deleting it
+        if (file->stale_)
+          {
+            // Try a lock.  If it succeds, we can delete it now.
+            // Otherwise, it will clean itself up later.
+            if (file->lock_.tryacquire_write () == 0)
+              {
+                delete file;
+                file = 0;
+              }
+          }
+
+	break;
+      }
+
+  return file;
 }
 
 void
@@ -491,88 +527,81 @@ ACE_Filecache_Object::init (void)
   this->error_ = SUCCESS;
   this->tempname_ = 0;
   this->size_ = 0;
-  this->reference_count_ = 0 ;
 
   ACE_OS::memset (&(this->stat_), 0, sizeof (this->stat_));
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (void)
+  : stale_ (0),
+    lock_ (junklock_)
 {
   this->init ();
 }
 
-ACE_Filecache_Object::ACE_Filecache_Object (const char *filename)
+ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
+                                            ACE_SYNCH_RW_MUTEX &lock)
+  : stale_ (0),
+    lock_ (lock)
 {
   this->init ();
 
   // ASSERT strlen(filename) < sizeof (this->filename_)
   ACE_OS::strcpy (this->filename_, filename);
-  this->action (ACE_Filecache_Object::READING);
+  this->action_ = ACE_Filecache_Object::READING;
   // place ourselves into the READING state
 
   // Can we access the file?
   if (ACE_OS::access (this->filename_, R_OK) == -1)
     {
-      this->error (ACE_Filecache_Object::ACCESS_FAILED);
+      this->error_i (ACE_Filecache_Object::ACCESS_FAILED);
       return;
     }
 
   // Can we stat the file?
   if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
     {
-      this->error (ACE_Filecache_Object::STAT_FAILED);
+      this->error_i (ACE_Filecache_Object::STAT_FAILED);
       return;
     }
 
   this->size_ = this->stat_.st_size;
+  this->tempname_ = (char *) this->filename_;
 
-  // Create the temporary file, which will become our copy.
-  this->tempname_ = ACE_OS::tempnam (".", "zJAWS");
-
-  // Can we open the original file?
-  ACE_HANDLE original = ACE_OS::open (this->filename_, RCOPY_FLAGS, R_MASK);
-
-  if (original == ACE_INVALID_HANDLE)
+  // Can we open the file?
+  this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK);
+  if (this->handle_ == ACE_INVALID_HANDLE)
     {
-      this->error (ACE_Filecache_Object::OPEN_FAILED);
+      this->error_i (ACE_Filecache_Object::OPEN_FAILED,
+                     "ACE_Filecache_Object::acquire: open");
       return;
     }
 
-  // Can we open the copy?
-  ACE_HANDLE copy = ACE_OS::open (this->tempname_, WCOPY_FLAGS, W_MASK);
-  if (copy == ACE_INVALID_HANDLE)
+  // Can we map the file?
+   if (this->mmap_.map (this->handle_, -1,
+                            PROT_READ, MAP_PRIVATE) != 0)
     {
-      this->error (ACE_Filecache_Object::COPY_FAILED);
-      ACE_OS::close (original);
+      this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
+                     "ACE_Filecache_Object::acquire: map");
+      ACE_OS::close (this->handle_);
+      this->handle_ = ACE_INVALID_HANDLE;
       return;
     }
 
-  // Copy the original into the copy.
-  ACE_Mem_Map original_map (original);
-  ACE_Mem_Map copy_map (copy, this->size_, PROT_WRITE, MAP_SHARED);
-
-  void *src = original_map.addr ();
-  void *dst = copy_map.addr ();
-  
-  if (src == MAP_FAILED || dst == MAP_FAILED)
-    {
-      this->error (ACE_Filecache_Object::MEMMAP_FAILED);
-      copy_map.remove ();
-    }
-  else
-    ACE_OS::memcpy (dst, src, this->size_);
-
-  ACE_OS::close (original);
-  ACE_OS::close (copy);
+   // Ok, finished!
+   this->action_ = ACE_Filecache_Object::READING;
 }
 
-ACE_Filecache_Object::ACE_Filecache_Object (const char * filename, int size)
+ACE_Filecache_Object::ACE_Filecache_Object (const char * filename,
+                                            int size,
+                                            ACE_SYNCH_RW_MUTEX &lock)
+  : stale_ (0),
+    lock_ (lock)
 {
   this->init ();
 
   this->size_ = size;
   ACE_OS::strcpy (this->filename_, filename);
-  this->action (ACE_Filecache_Object::WRITING);
+  this->action_ = ACE_Filecache_Object::WRITING;
   
   // Can we access the file?
   if (ACE_OS::access (this->filename_, R_OK|W_OK) == -1
@@ -580,167 +609,117 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char * filename, int size)
       && ACE_OS::access (this->filename_, F_OK) != -1)
     {
       // File exists, but we cannot access it.
-      this->error (ACE_Filecache_Object::ACCESS_FAILED);
+      this->error_i (ACE_Filecache_Object::ACCESS_FAILED);
       return;
     }
 
-  this->tempname_ = ACE_OS::tempnam (".", "zJAWS");
+  this->tempname_ = this->filename_;
+
+  // Can we open the file?
+  this->handle_ = ACE_OS::open (this->tempname_, WRITE_FLAGS, W_MASK);
+  if (this->handle_ == ACE_INVALID_HANDLE)
+    {
+      this->error_i (ACE_Filecache_Object::OPEN_FAILED,
+                     "ACE_Filecache_Object::acquire: open");
+      return;
+    }
+
+  // Can we seek?
+  if (ACE_OS::lseek (this->handle_, this->size_ - 1, SEEK_SET) == -1)
+    {
+      this->error_i (ACE_Filecache_Object::OPEN_FAILED,
+                     "ACE_Filecache_Object::acquire: lseek");
+      ACE_OS::close (this->handle_);
+      return;
+    }
+
+  // Can we write?
+  if (ACE_OS::write (this->handle_, "", 1) != 1)
+    {
+      this->error_i (ACE_Filecache_Object::WRITE_FAILED,
+                     "ACE_Filecache_Object::acquire: write");
+      ACE_OS::close (this->handle_);
+      return;
+    }
+
+  // Can we map?
+  if (this->mmap_.map (this->handle_, this->size_, PROT_RDWR, MAP_SHARED) != 0)
+    {
+      this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
+                     "ACE_Filecache_Object::acquire: map");
+      ACE_OS::close (this->handle_);
+    }
+
+  // Ok, done!
 }
 
 ACE_Filecache_Object::~ACE_Filecache_Object (void)
 {
-  if (this->tempname_)
+  if (this->error_ == SUCCESS)
     {
-      if (this->error_ == SUCCESS)
-        ACE_OS::unlink (this->tempname_);
-      ACE_OS::free (this->tempname_);
+      this->mmap_.unmap ();
+      ACE_OS::close (this->handle_);
+      this->handle_ = ACE_INVALID_HANDLE;
     }
 }
 
 int
 ACE_Filecache_Object::acquire (void)
 {
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
-
-  if (this->reference_count_++ == 0)
-    {
-      if (this->error_ == SUCCESS)
-        // load file into memory
-        switch (this->action_)
-          {
-          case ACE_Filecache_Object::READING:
-            this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK);
-
-            if (this->handle_ == ACE_INVALID_HANDLE)
-              this->error_i (ACE_Filecache_Object::OPEN_FAILED,
-                             "ACE_Filecache_Object::acquire: open");
-            else if (this->mmap_.map (this->handle_, -1,
-                                      PROT_READ, MAP_PRIVATE) != 0)
-              {
-                this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
-                               "ACE_Filecache_Object::acquire: map");
-                ACE_OS::close (this->handle_);
-                this->handle_ = ACE_INVALID_HANDLE;
-              }
-            else
-              this->action_ = ACE_Filecache_Object::READING;
-            break;
-
-          case ACE_Filecache_Object::WRITING:
-            this->handle_ = ACE_OS::open (this->tempname_,
-					  WRITE_FLAGS,
-					  W_MASK);
-
-            if (this->handle_ == ACE_INVALID_HANDLE)
-              this->error_i (ACE_Filecache_Object::OPEN_FAILED,
-                             "ACE_Filecache_Object::acquire: open");
-            else if (ACE_OS::lseek (this->handle_,
-                                    this->size_ - 1,
-                                    SEEK_SET) == -1)
-              {
-                this->error_i (ACE_Filecache_Object::OPEN_FAILED,
-                               "ACE_Filecache_Object::acquire: lseek");
-                ACE_OS::close (this->handle_);
-              }
-            else if (ACE_OS::write (this->handle_, "", 1) != 1)
-              {
-                this->error_i (ACE_Filecache_Object::WRITE_FAILED,
-                               "ACE_Filecache_Object::acquire: write");
-                ACE_OS::close (this->handle_);
-              }
-            else if (this->mmap_.map (this->handle_, this->size_,
-                                      PROT_RDWR, MAP_SHARED) != 0)
-              {
-                this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
-                               "ACE_Filecache_Object::acquire: map");
-                ACE_OS::close (this->handle_);
-              }
-            break;
-
-          default:
-            break;
-          }
-    }
-
-  return this->reference_count_;
+  return this->lock_.tryacquire_read ();
 }
 
 int
 ACE_Filecache_Object::release (void)
 {
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
-
-  if (--this->reference_count_ == 0)
+  if (this->action_ == WRITING)
     {
-      if (this->error_ == SUCCESS)
-        // Free file from memory if reference count is zero.
-        switch (this->action_)
-          {
-          case ACE_Filecache_Object::READING:
-            this->mmap_.unmap ();
-            ACE_OS::close (this->handle_);
-            this->handle_ = ACE_INVALID_HANDLE;
-            break;
+      // We are safe since only one thread has a writable Filecache_Object
 
-          case ACE_Filecache_Object::WRITING:
-            do
-              {
-                ACE_HANDLE original = ACE_OS::open (this->filename_,
-                                                    WRITE_FLAGS, W_MASK);
-                if (original == ACE_INVALID_HANDLE)
-		  this->error_ = ACE_Filecache_Object::OPEN_FAILED;
-                else if (ACE_OS::write (original, this->mmap_.addr (),
-                                        this->size_) == -1)
-                  {
-                    this->error_ = ACE_Filecache_Object::WRITE_FAILED;
-                    ACE_OS::close (original);
-                    ACE_OS::unlink (this->filename_);
-                  }
-                else if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
-		  this->error_ = ACE_Filecache_Object::STAT_FAILED;
+      ACE_HANDLE original = ACE_OS::open (this->filename_, WRITE_FLAGS, W_MASK);
+      if (original == ACE_INVALID_HANDLE)
+        this->error_ = ACE_Filecache_Object::OPEN_FAILED;
+      else if (ACE_OS::write (original, this->mmap_.addr (),
+                              this->size_) == -1)
+        {
+          this->error_ = ACE_Filecache_Object::WRITE_FAILED;
+          ACE_OS::close (original);
+          ACE_OS::unlink (this->filename_);
+        }
+      else if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
+        this->error_ = ACE_Filecache_Object::STAT_FAILED;
 
-                this->mmap_.unmap ();
-                ACE_OS::close (this->handle_);
-                this->handle_ = ACE_INVALID_HANDLE;
-                this->action_ = ACE_Filecache_Object::READING;
-              }
-            while (0);
-            break;
+      this->mmap_.unmap ();
+      ACE_OS::close (this->handle_);
+      this->handle_ = ACE_INVALID_HANDLE;
 
-          default:
-            break;
-          }
+      // Leave the file in an acquirable state.
+      this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK);
+      if (this->handle_ == ACE_INVALID_HANDLE)
+        {
+          this->error_i (ACE_Filecache_Object::OPEN_FAILED,
+                         "ACE_Filecache_Object::acquire: open");
+        }
+      else if (this->mmap_.map (this->handle_, -1,
+                                PROT_READ, MAP_PRIVATE) != 0)
+        {
+          this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
+                         "ACE_Filecache_Object::acquire: map");
+          ACE_OS::close (this->handle_);
+          this->handle_ = ACE_INVALID_HANDLE;
+        }
+
+      this->action_ = ACE_Filecache_Object::READING;
     }
 
-  return this->reference_count_;
-}
-
-int
-ACE_Filecache_Object::action (void) const
-{
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((ACE_Filecache_Object *) this)->lock_);
-  return this->action_;
-}
-
-int
-ACE_Filecache_Object::action (int action_value)
-{
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
-  return (this->action_ = action_value);
+  return this->lock_.release ();
 }
 
 int
 ACE_Filecache_Object::error (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((ACE_Filecache_Object *) this)->lock_);
+  // The existence of the object means a read lock is being held.
   return this->error_;
-}
-
-int
-ACE_Filecache_Object::error (int error_value, const char * s)
-{
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
-  return this->error_i (error_value, s);
 }
 
 int
@@ -755,35 +734,35 @@ ACE_Filecache_Object::error_i (int error_value, const char * s)
 const char *
 ACE_Filecache_Object::filename (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((ACE_Filecache_Object *) this)->lock_);
+  // The existence of the object means a read lock is being held.
   return this->filename_;
 }
 
 size_t
 ACE_Filecache_Object::size (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((ACE_Filecache_Object *) this)->lock_);
+  // The existence of the object means a read lock is being held.
   return this->size_;
 }
 
 ACE_HANDLE
 ACE_Filecache_Object::handle (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((ACE_Filecache_Object *) this)->lock_);
+  // The existence of the object means a read lock is being held.
   return this->handle_;
 }
 
 void *
 ACE_Filecache_Object::address (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((ACE_Filecache_Object *) this)->lock_);
+  // The existence of the object means a read lock is being held.
   return this->mmap_.addr ();
 }
 
 int
 ACE_Filecache_Object::update (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((ACE_Filecache_Object *) this)->lock_);
+  // The existence of the object means a read lock is being held.
   int result;
   struct stat statbuf;
 
@@ -791,7 +770,17 @@ ACE_Filecache_Object::update (void) const
     result = 1;
   else
     // non-portable code may follow
-      result = (ACE_OS::difftime (this->stat_.st_mtime, statbuf.st_mtime) < 0);
+    result = (ACE_OS::difftime (this->stat_.st_mtime, statbuf.st_mtime) < 0);
 
   return result;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>;
+template class ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>;
+#pragma instantiate ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
