@@ -1,8 +1,14 @@
 Wed Jan 08 10:26:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/Message_Block.cpp (~ACE_Data_block): assigned 0 to
+	* ace/Message_Block.cpp (~ACE_Data_Block): assigned 0 to
 	  allocator_strategry_ after deleting it; also, fixed template
 	  specializations (for g++) by using macros instead of class names
+
+	* ace/Service_Object.cpp (ACE_Service_Object): reordered
+	  initializations in constructor
+
+	* ace/Service_Record.cpp (ACE_Service_Record): reordered
+	  initializations in constructor
 
 	* ace/config-linux-lxpthreads.h:  added
 	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS, thanks to
