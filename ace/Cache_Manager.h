@@ -12,7 +12,7 @@
 #include "ace/Synch.h"
 
 // @@ James, this #include is wrong...
-#include "ace_Cache_Manager_T.h"
+#include "ace/Cache_Manager_T.h"
 
 // @@ James, can you please update ALL of these classes and methods to
 // use the standard ACE commenting style, i.e., add = TITLE and =

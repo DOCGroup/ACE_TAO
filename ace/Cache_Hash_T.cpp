@@ -3,8 +3,8 @@
 #ifndef ACE_CACHE_HASH_T_CPP
 #define ACE_CACHE_HASH_T_CPP
 
-#include "ace_Cache_Hash_T.h"
-#include "ace_Hash_Bucket_T.h"
+#include "ace/Cache_Hash_T.h"
+#include "ace/Hash_Bucket_T.h"
 
 ACE_RCSID(ace, Cache_Hash_T, "$Id$")
 

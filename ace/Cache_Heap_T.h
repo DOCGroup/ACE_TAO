@@ -9,7 +9,7 @@
 
 #include "ace/Malloc.h"
 // @@ James, this #include is wrong...
-#include "ace_Cache_Object.h"
+#include "ace/Cache_Object.h"
 
 // Forward declarations
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
@@ -105,7 +105,7 @@ private:
 // stuff as well... (see other template files to see how this works).
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace_Cache_Heap_T.cpp"
+#include "ace/Cache_Heap_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_CACHE_HEAP_T_H */

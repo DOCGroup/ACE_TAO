@@ -11,7 +11,7 @@
 #include "ace/Synch.h"
 
 // @@ James, I think that this #include is wrong...
-#include "ace_Cache_Object.h"
+#include "ace/Cache_Object.h"
 
 // @@ James, can you please update ALL of these classes and methods to
 // use the standard ACE commenting style, i.e., add = TITLE and =
@@ -187,7 +187,7 @@ private:
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 // @@ James, this #include is incorrect.
-#include "ace_Cache_Manager_T.cpp"
+#include "ace/Cache_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_CACHE_MANAGER_T_H */
