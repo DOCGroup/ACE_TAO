@@ -106,14 +106,14 @@ endif
 
 cleanrelease:
 	($(TIMESTAMP)make realclean; cd ..; 
-	 find $(RELEASE_FILES) -print | egrep -v /CVS | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
 	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
 release:
 	($(TIMESTAMP)cd ..; \
-	 find $(RELEASE_FILES) -print | egrep -v /CVS | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
 	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 	(cd ..; \
-	 find $(RELEASE_LIB_FILES) -print | egrep -v /CVS | cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
+	 find $(RELEASE_LIB_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
 	 chmod a+r ACE-lib.tar.gz; mv ACE-lib.tar.gz ./ACE_wrappers/)
 
