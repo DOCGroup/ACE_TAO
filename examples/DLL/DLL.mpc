@@ -14,7 +14,8 @@ project(*Today) : acelib {
 }
 
 project(*Main) : aceexe {
-  after += DLL_Newsweek DLL_Today
+  exename = test_dll
+  after  += DLL_Newsweek DLL_Today
   Source_Files {
     test_dll.cpp
   }
