@@ -57,7 +57,8 @@ Fri Jan 29 20:16:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Fri Jan 29 18:07:28 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp:
-	  Removed unused variables
+	  Removed unused variables as this was giving warnings with the
+	  SGI compiler
 
 Fri Jan 29 18:04:25 1999  Fred Kuhns <fredk@cs,wustl.edu>
 
