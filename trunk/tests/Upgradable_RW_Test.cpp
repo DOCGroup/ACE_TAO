@@ -34,7 +34,7 @@ ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
 static size_t n_iterations = 50;
 
 // Maximum string length used
-static const MAX_STRING_SIZE = 200;
+static const size_t MAX_STRING_SIZE = 200;
 
 // switch on RW mutexes, else use ordinary mutexes
 // #define RW_MUTEX 1

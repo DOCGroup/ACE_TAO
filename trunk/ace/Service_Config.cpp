@@ -271,7 +271,6 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
                            ASYS_TEXT ("%c is not a ACE_Service_Config option\n"),
                            c),
                           -1);
-        break;
       }
 
   return 0;

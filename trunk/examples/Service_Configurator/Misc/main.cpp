@@ -31,7 +31,7 @@ ACE_STATIC_SVC_REQUIRE (Timer_Service_1)
 int
 main (int, ASYS_TCHAR *argv[])
 {
-  ASYS_TCHAR *l_argv[7];
+  ASYS_TCHAR *l_argv[9];
 
   // Manufacture a "fake" svc.conf entry to demonstrate the -S option
   // that allows us to pass these entries via the "command-line"
