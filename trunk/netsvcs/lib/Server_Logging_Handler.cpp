@@ -359,7 +359,6 @@ template class ACE_Strategy_Acceptor<ACE_Thr_Server_Logging_Handler, LOGGING_PEE
 #else
   #if defined (ACE_HAS_TLI)
     template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_SYNCH>;
-    template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
   #endif /* ACE_HAS_TLI */
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
