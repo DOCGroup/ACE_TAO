@@ -106,12 +106,10 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil Test::Roundtrip reference <%s>\n",
-                             ior),
-                            1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Nil Test::Roundtrip reference <%s>\n",
+                           ior),
+                          1);
 
       for (int j = 0; j < 100; ++j)
         {
@@ -136,16 +134,24 @@ main (int argc, char *argv[])
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
 
       for (int i = 0; i != niterations; ++i)
-        {
-          // Invoke asynchronous operation....
-          roundtrip->sendc_test_method (roundtrip_handler.in (),
-                                        ACE_OS::gethrtime ()
-                                        TAO_ENV_ARG_PARAMETER);
+         {
+           // Invoke asynchronous operation....
+           roundtrip->sendc_test_method (roundtrip_handler.in (),
+                                         ACE_OS::gethrtime ()
+                                         TAO_ENV_ARG_PARAMETER);
+ 	  if (orb->work_pending (TAO_ENV_ARG_PARAMETER)
+ 	      orb->perform_work (TAO_ENV_ARG_PARAMETER);
+ 	  
+           ACE_TRY_CHECK;
+         }
+ 
+       ACE_Time_Value tv (0, 2000);
 
-          ACE_Time_Value tv (0, 20000);
-          orb->run (tv TAO_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+       while (roundtrip_handler_impl->pending_callbacks ()) 
+         {
+           orb->perform_work (tv TAO_ENV_ARG_PARAMETER);
+           ACE_TRY_CHECK;
+         }
 
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
