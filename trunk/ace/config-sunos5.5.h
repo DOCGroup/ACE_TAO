@@ -71,9 +71,6 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-// sched_get_priority_min () not implemented on Solaris 2.5.x
-#define ACE_THR_PRI_FIFO_DEF 30
-
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
