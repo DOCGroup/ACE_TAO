@@ -40,6 +40,7 @@ endif # COMSPEC
 TAO_BASE_LIBS=-lTAO $(ACELIB) $(LIBS)
 TAO_SRVR_LIBS=-lTAO_PortableServer $(TAO_BASE_LIBS)
 TAO_CLNT_LIBS=-lTAO $(TAO_BASE_LIBS)
+TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface
 
 ####
 #### Macro customization.
