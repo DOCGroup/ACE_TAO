@@ -2,10 +2,9 @@ Mon May 10 00:36:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Request.h (CORBA_Request>): 
 	* tao/Request.cpp : Added new definition for the class
-	CORBA_ORB_RequestSeq. This was added to facilitate the testing
-	process. Thanks to Carlos for helping to generate the new class by
-	inheriting from TAO_Pseudo_Unbounded_Sequence ().
-	
+ 	  CORBA_ORB_RequestSeq. This was added to facilitate the testing
+ 	  process. Thanks to Carlos for helping to generate the new class
+ 	  by inheriting from TAO_Pseudo_Unbounded_Sequence ().
 
 Sun May  9 12:47:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -168,9 +167,8 @@ Fri May 07 22:45:33 1999  David L. Levine  <levine@cs.wustl.edu>
 Fri May  7 22:34:58 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/corbafwd.h (CORBA):
-        * tao/TypeCode_Constants.cpp:
-        Added new typecode for the interface NamedValue. This would make
-        us compatible with CORBA spec.
+        * tao/TypeCode_Constants.cpp: Added new typecode for the interface
+ 	  NamedValue. This would make us compatible with CORBA spec.
 
 Fri May  7 19:50:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -241,25 +239,26 @@ Fri May  7 19:16:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri May  7 16:55:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tao/Typecode.h (CORBA_TypeCode):
-        Changed the _narrow definitions in TypeCode::BadKind and
-        Type_code::Bounds to be of type static. THis will now be according
-        to the spec. This is the result of test run on the header module.
+        * tao/Typecode.h (CORBA_TypeCode): Changed the _narrow definitions
+ 	  in TypeCode::BadKind and Type_code::Bounds to be of type
+ 	  static. THis will now be according to the spec. This is the
+ 	  result of test run on the header module.
 
-        * tao/ORB.h:
-        * ORB.cpp
-        Changed the signature of the method, resol_initial_reference
-        (). This now takes in const string and it was previously a
-        non-const one. We had to make this change to be compatible with
-        the spec and the vsOrb test suite checks for this.
+        * tao/ORB.h,
+        * ORB.cpp: Changed the signature of the method,
+ 	  resolve_initial_reference(). This now takes in const string and
+	  it was previously a non-const one. We had to make this change to
+	  be compatible with the spec and the vsOrb test suite checks for
+	  this. 
+
 Fri May  7 12:56:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Integrated Byron
-        Harris <harris_b@ociweb.com> 's patches for checking for \\'s in
-        command line IDL file given to tao_idl.
+ 	  Harris <harris_b@ociweb.com> 's patches for checking for \\'s in
+ 	  command line IDL file given to tao_idl.
 
         * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Fixed the
-        IRIX warnings.
+ 	  IRIX warnings.
 
 Fri May  7 10:00:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -770,8 +769,8 @@ Tue May  4 20:23:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue May  4 20:17:41 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tao/CORBA.pidl:
-        New file for adding entries that would generate new typecodes
+        * tao/CORBA.pidl: New file for adding entries that would generate
+ 	  new typecodes.
 
 1999-05-04  Seth Widoff  <swidoff@cs.cmu.edu>
 
