@@ -626,7 +626,7 @@ TAO_VDev::~TAO_VDev (void)
 // ----------------------------------------------------------------------
 
 
-TAO_MMDevice::TAO_MMDevice (TAO_Endpoint_Strategy *endpoint_strategy)
+TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
   : endpoint_strategy_ (endpoint_strategy)
 {
 }
