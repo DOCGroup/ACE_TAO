@@ -1,3 +1,24 @@
+Wed Oct  1 06:55:03 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/drwho/drwho.mpc:
+        * apps/drwho/nobuild.mpb:
+
+          Added verbatim (in nobuild.mpb) to stop the drwho application from
+          building on VxWorks, Chorus, minbw32 and cygwin32.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added a new marker to support the above change.
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+
+          Fixed support for HP-UX.
+
+        * bin/depgen.pl:
+
+          Added support to ignore aCC style options (with a plus sign).
+
 Tue Sep 30 14:06:53 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/gperf/tests/gperf_test.mpb:

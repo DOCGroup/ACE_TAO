@@ -1,4 +1,4 @@
-project(*-client) : aceexe {
+project(*-client) : aceexe, nobuild {
   Source_Files {
     Protocol_Manager.cpp
     Drwho_Node.cpp
@@ -40,7 +40,7 @@ project(*-client) : aceexe {
   }
 }
 
-project(*-server) : aceexe {
+project(*-server) : aceexe, nobuild {
   Source_Files {
     Protocol_Manager.cpp
     Drwho_Node.cpp
