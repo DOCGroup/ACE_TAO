@@ -1,3 +1,8 @@
+Tue Nov  9 11:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*Value.{h,cpp}:
+          Splitted several PolicyValue files in multiple
+
 Tue Nov  9 08:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Policy_Strategies.cpp:
