@@ -2,5 +2,5 @@ project : Kokyulib, core {
   sharedname  = Kokyu
   dynamicflags    = KOKYU_BUILD_DLL
   libout      = ..
-  // include_dir = $(ACE_ROOT)/ace
+  include_dir = $(ACE_ROOT)/ace
 }

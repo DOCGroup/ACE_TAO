@@ -1,5 +1,4 @@
 project {
   after += ObjRefTemplate
-  libs    += TAO_ObjRefTemplate
-  libpaths += $(TAO_ROOT)/tao/ObjRefTemplate
+  libs  += TAO_ObjRefTemplate
 }

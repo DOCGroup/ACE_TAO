@@ -1,7 +1,5 @@
 project : valuetype, taolib, core {
-  sharedname  = TAO_ObjRefTemplate
-  libs       += TAO_Valuetype TAO
-  dynamicflags    = TAO_ORT_BUILD_DLL
-  libout      = ..
-  include_dir = tao/ObjRefTemplate
+  sharedname   = TAO_ObjRefTemplate
+  dynamicflags = TAO_ORT_BUILD_DLL
+  include_dir  = tao/ObjRefTemplate
 }

@@ -56,7 +56,7 @@
 <%if(type_is_binary)%>
 				AdditionalDependencies="<%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%><%if(ssl)%><%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%><%endif%><%if(zzip)%><%foreach(zzip_libs)%> <%zzip_lib%>.lib<%endfor%><%endif%>"
 <%endif%>
-				OutputFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.exe<%endif%><%if(type_is_static)%><%libout%>\<%staticname%><%lib_modifier%>.lib<%endif%>"
+				OutputFile="<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.exe<%endif%><%if(type_is_static)%><%libout%>\<%staticname%><%lib_modifier%>.lib<%endif%>"
 				Version="<%version("1.0")%>"
 				LinkIncremental="<%incremental("1")%>"
 				SuppressStartupBanner="TRUE"

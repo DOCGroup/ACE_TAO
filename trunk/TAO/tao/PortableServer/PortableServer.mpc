@@ -1,4 +1,4 @@
-project : taolib, core {
+project : taolib, core, objreftemplate, valuetype, iorinterceptor {
   sharedname   = TAO_PortableServer
   dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
   include_dir  = tao/PortableServer
