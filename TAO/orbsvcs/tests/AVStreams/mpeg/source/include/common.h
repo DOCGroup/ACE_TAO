@@ -358,6 +358,9 @@ typedef struct
 #define CmdVPclearScreen 32   /* CTR to VP(GUI), to clear all images in VD buffer */
 #define CmdVPaudioPosition 33 /* CTR to VP(GUI), in audio-only case, set position bar */
 
+// to terminate the event loop
+#define CmdExit  34
+
 /* CTR-VS */
 
 /* CmdINITvideo: followd by parameters of a fixed structure of 3 integers
