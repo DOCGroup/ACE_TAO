@@ -1,9 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ace/os_include/os_errno.h"
-#include "ace/Time_Value.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_macros.h"
+#include "ace/Time_Value.h"
 
 // It would be really cool to add another version of select that would
 // function like the one we're defending against below!

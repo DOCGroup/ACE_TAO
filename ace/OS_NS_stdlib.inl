@@ -333,27 +333,28 @@ ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 
 #endif /* !ACE_WIN32 */
 
-#if !defined (ACE_LACKS_REALPATH)
+#if !defined (ACE_HAS_WINCE)
+#  if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
 ACE_OS::realpath (const char *file_name,
 		  char *resolved_name)
 {
-# if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
   return ::_fullpath (resolved_name, file_name, PATH_MAX);
-# else /* ACE_WIN32 */
+#    else /* ACE_WIN32 */
   return ::realpath (file_name, resolved_name);
-# endif /* ! ACE_WIN32 */
+#    endif /* ! ACE_WIN32 */
 }
-#endif /* !ACE_LACKS_REALPATH */
+#  endif /* !ACE_LACKS_REALPATH */
 
-#if defined (ACE_HAS_WCHAR)
+#  if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *
 ACE_OS::realpath (const wchar_t *file_name,
 		  wchar_t *resolved_name)
 {
-# if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
   return ::_wfullpath (resolved_name, file_name, PATH_MAX);
-# else /* ACE_WIN32 */
+#    else /* ACE_WIN32 */
   ACE_Wide_To_Ascii n_file_name (file_name);
   char n_resolved[PATH_MAX];
   if (0 != ACE_OS::realpath (n_file_name.char_rep (), n_resolved))
@@ -363,9 +364,10 @@ ACE_OS::realpath (const wchar_t *file_name,
       return resolved_name;
     }
   return 0;
-# endif /* ! ACE_WIN32 */
+#    endif /* ! ACE_WIN32 */
 }
-#endif /* ACE_HAS_WCHAR */
+#  endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WINCE */
 
 ACE_INLINE ACE_EXIT_HOOK
 ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)

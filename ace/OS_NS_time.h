@@ -105,10 +105,6 @@ private:
 #endif /* ACE_PSOS_HAS_TIME */
 
 #if defined (ACE_HAS_WINCE)
-  /// Supporting data for ctime and ctime_r functions on WinCE.
-  const wchar_t *day_of_week_name[7];
-  const wchar_t *month_name[12];
-
 // WinCE doesn't have most of the standard C library time functions. It
 // also doesn't define struct tm. SYSTEMTIME has pretty much the same
 // info though, so we can map it when needed. Define struct tm here and
@@ -229,6 +225,12 @@ typedef ACE_UINT64 ACE_hrtime_t;
 
 
 namespace ACE_OS {
+
+# if defined (ACE_HAS_WINCE)
+  /// Supporting data for ctime and ctime_r functions on WinCE.
+  const wchar_t *day_of_week_name[];
+  const wchar_t *month_name[];
+# endif /* ACE_HAS_WINCE */
 
 # if defined (CHORUS) && !defined (CHORUS_4)
   // We must format this code as follows to avoid confusing OSE.

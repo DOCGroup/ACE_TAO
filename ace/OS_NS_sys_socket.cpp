@@ -59,7 +59,6 @@ ACE_OS::connect (ACE_HANDLE handle,
                           addrlen);
 # endif /* ACE_HAS_WINSOCK2 */
 }
-#endif  // ACE_HAS_WINCE
 
 ACE_HANDLE
 ACE_OS::join_leaf (ACE_HANDLE socket,
@@ -95,6 +94,7 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 # endif /* ACE_HAS_WINSOCK2 */
 }
+#endif  // ACE_HAS_WINCE
 
 int
 ACE_OS::socket_init (int version_high, int version_low)

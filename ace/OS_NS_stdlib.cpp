@@ -259,7 +259,7 @@ ACE_OS::realloc (void *ptr, size_t nbytes)
   return ACE_REALLOC_FUNC (ACE_MALLOC_T (ptr), nbytes);
 }
 
-#if defined (ACE_LACKS_REALPATH)
+#if defined (ACE_LACKS_REALPATH) && !defined (ACE_HAS_WINCE)
 char *
 ACE_OS::realpath (const char *file_name,
 		  char *resolved_name)
@@ -426,7 +426,7 @@ ACE_OS::realpath (const char *file_name,
 
   return rpath;
 }
-#endif /* ACE_LACKS_REALPATH */
+#endif /* ACE_LACKS_REALPATH && !ACE_HAS_WINCE */
 
 #if defined (ACE_LACKS_STRTOL)
 long

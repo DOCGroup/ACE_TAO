@@ -49,6 +49,41 @@ namespace ACE_OS {
 
 } /* namespace ACE_OS */
 
+#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+/**
+ * @class ACE_CE_Errno
+ *
+ * Some versions of CE don't support <errno> and some versions'
+ * implementations are busted.  So we implement our own.
+ * Our implementation takes up one Tls key, however, it does not
+ * allocate memory fromt the heap so there's no problem with cleanin
+ * up the errno when a thread exit.
+ */
+class ACE_Export ACE_CE_Errno
+{
+public:
+  ACE_CE_Errno () {}
+  static void init ();
+  static void fini ();
+  static ACE_CE_Errno *instance ();
+
+  operator int (void) const;
+  int operator= (int);
+
+private:
+  static ACE_CE_Errno *instance_;
+  static DWORD errno_key_;
+};
+
+# define errno (* (ACE_CE_Errno::instance ()))
+#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
+#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+#  define ACE_ERRNO_TYPE ACE_CE_Errno
+#else
+#  define ACE_ERRNO_TYPE int
+#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE

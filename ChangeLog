@@ -1,3 +1,61 @@
+Mon Aug 30 17:38:22 2004  Steve Huston  <shuston@riverace.com>
+
+	Changes that get PocketPC/WinCE back into a state where they build.
+
+	* ace/config-WinCE.h: Add ACE_LACKS_ASSERT_H, ACE_LACKS_SEARCH_H,
+	  and ACE_LACKS_WCHAR_H for WinCE 3.
+	  Add ACE_LACKS_SWAB for all versions.
+
+	* ace/config-win32-msvc.h: Set (or clear) ACE_LACKS_RTTI based on
+	  whether or not the compiler switch to enable rtti is used.
+
+	* ace/OS_Errno.{h inl}:
+	* ace/OS_NS_errno.{h inl}: Moved ACE_CE_Errno from OS_Errno to
+	  OS_NS_errno. This seems like a more sensible place for an errno
+	  replacement, and avoids having to add includes for OS_Errno.h to
+	  a bunch of other files.
+
+	* ace/OS_NS_stdio.inl (rename): In the char* variant, always convert
+	  the names to wide-char for WinCE.
+
+	* ace/OS_NS_stdlib.{h cpp inl}: Don't attempt ACE_OS::realpath() for
+	  ACE_HAS_WINCE. It has no native support and there's no
+	  ACE_OS::getcwd() to fake it with.
+
+	* ace/OS_NS_stropts.{h cpp}: The 9-arg version of ACE_OS::ioctl is
+	  ok for WinCE, but the ACE_QoS one is disabled. Changed both files
+	  to implement this. They were mismatched for CE.
+
+	* ace/OS_NS_sys_select.inl: Replace #include ace/os_include/os_errno.h
+	  with ace/OS_NS_errno.h to pick up errno correctly across all
+	  platforms.
+
+	* ace/OS_NS_sys_socket.cpp: Moved #endif closing #ifndef ACE_HAS_WINCE
+	  to encompass join_leaf() to match what's done in the class decl.
+
+	* ace/OS_NS_sys_stat.inl (mkdir, stat): Added #include
+	  "ace/OS_NS_macros.h" to get ACE_ADAPT_RETVAL.
+	  For the char* mkdir() and stat(), CE needs to convert
+	  the strings to wide-char.
+
+	* ace/OS_NS_time.h: Moved the day_of_week and month_name const
+	  strings into the ACE_OS namespace, as OS_NS_time.cpp desires.
+
+	* ace/OS_NS_time.cpp: Removed the MT-only compile block around the
+	  day_of_week and month_name arrays. As suspected by Don Hinton,
+	  this is an incorrect condition.
+	  Also added #include "ace/OS_NS_stdio.h" for ACE_HAS_WINCE, as the
+	  ctime_r emulation needs it.
+
+	* ace/OS_NS_unistd.inl (unlink): Convert path to wide-char for WinCE.
+	  (rmdir): RemoveDirectory() takes only 1 arg.
+	  wide-char getcwd() is a NOTSUP for WinCE, as is the char* version.
+
+	* ace/Proactor.cpp: Add #include "ace/config-lite.h" since the
+	  user config is needed to decide whether to compile this file.
+	  Also remove 'tv' param name from the stubbed-out version of
+	  run_event_loop(ACE_Time_Value&).
+
 Mon Aug 30 16:24:51 2004  Steve Huston  <shuston@riverace.com>
 
 	* NEWS: Noted that the wide-char stuff is done and autoconf is in
