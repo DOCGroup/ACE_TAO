@@ -1,17 +1,17 @@
 //
 // $Id$
 //
-
+//
 // ============================================================================
 //
 // = LIBRARY
 //    TAO IDL
 //
 // = FILENAME
-//    amh_sh.cpp
+//    amh_rh_sh.cpp
 //
 // = DESCRIPTION
-//    Visitor generating AMH skeleton code for Operation node in the
+//    Visitor generating AMH-RH skeleton code for Operation node in the
 //    skeleton header.
 //
 // = AUTHOR
@@ -19,31 +19,31 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include  "idl.h"
+#include  "idl_extern.h"
+#include  "be.h"
 #include "ast_decl.h"
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, operation_amh_sh, "$Id$")
+ACE_RCSID(be_visitor_operation, operation_amh_rh_sh, "$Id$")
 
 
 // ******************************************************
-// Visitor for generating AMH skeleton for "operation" in skeleton header.
+// Visitor for generating AMH-RH skeleton for "operation"
+// in skeleton header.
 // ******************************************************
 
-be_visitor_amh_operation_sh::be_visitor_amh_operation_sh (be_visitor_context *ctx)
+be_visitor_amh_rh_operation_sh::be_visitor_amh_rh_operation_sh (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_amh_operation_sh::~be_visitor_amh_operation_sh (void)
+be_visitor_amh_rh_operation_sh::~be_visitor_amh_rh_operation_sh (void)
 {
 }
 
 int
-be_visitor_amh_operation_sh::visit_operation (be_operation *node)
+be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
 {
   // Nothing to be done for oneway operations.
   if (node->flags () == AST_Operation::OP_oneway)
@@ -55,7 +55,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << "\n// \t *** AMH operation declaration starts here ***\n";
+  *os << "\n// \t *** AMH-RH operation declaration starts here ***\n";
 
   be_interface *intf;
   intf = this->ctx_->attribute ()
@@ -91,34 +91,8 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
           *os << "get_";
         }
     }
+
   *os << node->local_name();
-
-  /*
-  // STEP 3: Generate the argument list with the appropriate
-  //         mapping. For these we grab a visitor that generates the
-  //         parameter listing. We also generate the ResponseHandler
-  //         argument 'on the fly' and add it to the argument list
-
-  //ACE_CString rh_name;
-  //ACE_OSTREAM temp;
-  AST_Decl *parent = ScopeAsDecl (intf->defined_in ());
-  if (parent)
-  {
-  *os << parent->name ();
-  }
-  *os << intf->local_name () ;
-  //<< "ResponseHandler *response_handler, ";
-  AST_Type *rh_field_type = new AST_Type;
-
-  // Create the argument
-  Identifier *id = new Identifier ("ResponseHandler");
-  UTL_IdList *list = new UTL_IdList (id, 0);
-  be_argument *rh_arg = new be_argument (AST_Argument::dir_IN,
-  rh_field_type,
-  list,
-  0);
-  node->add_argument_to_scope (rh_arg);
-  */
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_SH);

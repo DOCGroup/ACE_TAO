@@ -74,8 +74,10 @@
 #include "be_visitor_operation/thru_poa_proxy_impl_ss.h"
 #include "be_visitor_operation/direct_proxy_impl_ss.h"
 
-// AMH : added 12/12
-#include "be_visitor_operation/amh_sh.h"
-#include "be_visitor_operation/amh_ss.h"
+// AMH
+//#include "be_visitor_operation/amh_sh.h"
+//#include "be_visitor_operation/amh_ss.h"
+#include "be_visitor_operation/amh_rh_sh.h"
+#include "be_visitor_operation/amh_rh_ss.h"
 
 #endif // TAO_BE_VISITOR_OPERATION_H

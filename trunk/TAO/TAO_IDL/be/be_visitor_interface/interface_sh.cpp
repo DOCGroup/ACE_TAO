@@ -43,16 +43,21 @@ be_visitor_interface_sh::~be_visitor_interface_sh (void)
 int
 be_visitor_interface_sh::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
-  long i; // loop index
-  static char namebuf [NAMEBUFSIZE]; // holds the class name
-
   if (node->srv_hdr_gen () || node->imported () || node->is_local ())
     return 0;
 
+  // if we are to generate AMH classes, do it now
+  if (be_global->gen_amh_classes ())
+    {
+      //be_visitor_amh_interface_sh amh_intf (this->ctx_);
+      //amh_intf.visit_interface (node);
+    }
+
+  // Generate the normal skeleton as usual
+  static char namebuf [NAMEBUFSIZE]; // holds the class name
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
 
-  os = this->ctx_->stream ();
+  TAO_OutStream *os  = this->ctx_->stream (); // output stream
 
   // Generate the skeleton class name.
 
@@ -105,7 +110,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   if (n_parents > 0)
     {
-      for (i = 0; i < n_parents; ++i)
+      for (long i = 0; i < n_parents; ++i)
         {
           *os << "public virtual " << "POA_"
               << node->inherits ()[i]->name ();
