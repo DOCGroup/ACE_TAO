@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.70 $)dnl
+AC_REVISION($Revision 0.71 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -172,17 +172,32 @@ AC_CHECK_LIB(cposix, strerror, [LIBS="$LIBS -lcposix"])
 AC_MINIX
 AC_CYGWIN
 
-dnl The user's/default C++ flags are stored in "CXXFLAGS."  We use
-dnl the variable "ACE_CXXFLAGS" to set the C++ flags we want.  At the end
-dnl of the configuration process we combine ACE_CXXFLAGS and CXXFLAGS
-dnl into CXXFLAGS (e.g., CXXFLAGS="$ACE_CXXFLAGS $CXXFLAGS").  CXXFLAGS
-dnl goes after ACE_CXXFLAGS so that the user's C++ flag command line
-dnl choices always override the configure script's choices.
-ACE_CXXFLAGS=""
-ACE_CFLAGS=""
 
-dnl Set the test language as C++
-AC_LANG_CPLUSPLUS
+dnl Setup Libtool
+dnl
+dnl This should be done in the "programs" section of this file but compiler
+dnl potentially set by the thread checks will have been missed by libtool
+dnl if the libtool setup was done prior to the thread checks.
+
+dnl Disable building of static libraries by default
+AC_DISABLE_STATIC
+
+dnl Enable Libtool module support
+AC_LIBTOOL_DLOPEN
+
+dnl FIXME: Temporary hack to make libtool work with g++.
+dnl        Shared library support will only work with GNU g++ and GNU ld
+dnl        right now.
+dnl save_CC="$CC"
+dnl CC="$CXX"
+
+dnl Check for libtool and turn on Automake processing for Libtool
+AC_PROG_LIBTOOL
+
+dnl Enable C++ support in libtool
+AC_LIBTOOL_CXX
+
+dnl CC="$save_CC"
 
 dnl Check if we support symlinks
 AC_PROG_LN_S
@@ -201,6 +216,20 @@ AC_CHECK_PROG(GPERF, gperf, gperf) dnl
 
 dnl Check for profiling progam
 AC_CHECK_PROGS(PROF, gprof prof,) dnl
+
+
+dnl Set the test language as C++
+AC_LANG_CPLUSPLUS
+
+dnl The user's/default C++ flags are stored in "CXXFLAGS."  We use
+dnl the variable "ACE_CXXFLAGS" to set the C++ flags we want.  At the end
+dnl of the configuration process we combine ACE_CXXFLAGS and CXXFLAGS
+dnl into CXXFLAGS (e.g., CXXFLAGS="$ACE_CXXFLAGS $CXXFLAGS").  CXXFLAGS
+dnl goes after ACE_CXXFLAGS so that the user's C++ flag command line
+dnl choices always override the configure script's choices.
+ACE_CXXFLAGS=""
+ACE_CFLAGS=""
+
 
 dnl
 dnl SECTION 2: Configure script command line options
@@ -997,29 +1026,6 @@ ACE_CHECK_ASYNCH_IO
 dnl Additional `-lposix4' library check since it may not be added by the
 dnl above checks on some platforms that may need it
 ACE_SEARCH_LIBS(clock_gettime, rt posix4, AC_DEFINE(ACE_HAS_CLOCK_GETTIME),)dnl
-
-dnl Setup Libtool
-dnl
-dnl This should be done in the "programs" section of this file but compiler
-dnl potentially set by the thread checks will have been missed by libtool
-dnl if the libtool setup was done prior to the thread checks.
-
-dnl Disable building of static libraries by default
-AC_DISABLE_STATIC
-
-dnl Enable Libtool module support
-AC_LIBTOOL_DLOPEN
-
-dnl FIXME: Temporary hack to make libtool work with g++.
-dnl        Shared library support will only work with GNU g++ and GNU ld
-dnl        right now.
-save_CC="$CC"
-CC="$CXX"
-
-dnl Check for libtool and turn on Automake processing for Libtool
-AC_PROG_LIBTOOL
-
-CC="$save_CC"
 
 dnl
 dnl SECTION 5: checks for header files
@@ -5856,18 +5862,18 @@ dnl
 dnl SECTION 13: checks for system services
 dnl
 
-dnl TODO: I'm not sure if I am interpreting the meaning of
-dnl       ACE_HAS_SIGNAL_SAFE_OS_CALLS.  Could someone make
-dnl       sure I am testing for ACE_HAS_SIGNAL_SAFE_OS_CALLS
-dnl       correctly?
-dnl                      -Ossama
+dnl Some circular dependency problems occur
+dnl ACE_HAS_SIGNAL_SAFE_OS_CALLS is defined.  Until this is rectified,
+dnl don't run the ACE_SYS_RESTARTABLE_SYSCALLS test.
+dnl    -Ossama
+dnl 
 dnl Do not run this test if we are using a cross-compiler.
-if test "$cross_compiling" != yes; then
-  ACE_SYS_RESTARTABLE_SYSCALLS
-  if test "$ac_cv_sys_restartable_syscalls" = yes; then
-    AC_DEFINE(ACE_HAS_SIGNAL_SAFE_OS_CALLS)
-  fi
-fi
+dnl if test "$cross_compiling" != yes; then
+dnl   ACE_SYS_RESTARTABLE_SYSCALLS
+dnl   if test "$ac_cv_sys_restartable_syscalls" = yes; then
+dnl     AC_DEFINE(ACE_HAS_SIGNAL_SAFE_OS_CALLS)
+dnl   fi
+dnl fi
 
 dnl Check if platform defines ctime() as a macro
 ACE_CACHE_CHECK(for ctime() macro,
