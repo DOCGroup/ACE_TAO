@@ -70,7 +70,7 @@ FileImpl::System::open (const char *file_name,
   // from ACE_HANDLE string
   CORBA::Object_var obj =
     this->poa_->create_reference_with_id (oid.in (),
-                                          this->_interface_repository_id (),
+                                          "IDL:File/Descriptor:1.0",
                                           env);
   if (env.exception () != 0)
     return File::Descriptor::_nil ();
