@@ -1,3 +1,11 @@
+Wed Jul 07 19:51:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
+          orbsvcs/orbsvcs/RtecScheduler.idl
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: fixed casting
+          problems reported by GHS and OSF1 builds.
+
 Wed Jul  7 19:24:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/Options.html:

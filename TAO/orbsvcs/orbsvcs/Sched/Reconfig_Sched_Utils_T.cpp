@@ -122,8 +122,14 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
               ACE_ERROR_RETURN ((LM_ERROR, "RT_Info in map was null"), -1);
             }
 
+          // Reference the associated scheduling entry: the double cast is
+          // needed to ensure that the size of the pointer and the size of the
+          // stored magic cookie are the same (see the definition of
+          // ptr_arith_t in ACE to grok how this works portably).
           next_rse = ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry *,
-                                           next_rt_info->volatile_token);
+                                           ACE_static_cast (ptr_arith_t,
+                                                            next_rt_info->
+                                                              volatile_token));
           if (next_rse == 0)
 	    {
               ACE_ERROR_RETURN ((LM_ERROR, "entry pointer in RT_Info was null"), -1);
