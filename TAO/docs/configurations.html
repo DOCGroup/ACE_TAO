@@ -635,7 +635,7 @@ Programming Considerations<a NAME="programming"></a></h3>
       support, you can still use <code>-ORBsvcconf</code> to change
       the program behavior temporarily.</p>
 
-      <p>On these platform, you can alter the in-stock settings for
+      <p>On these platform, you can alter the default settings for
       TAO components by defining the following macros in your
       <code>config.h</code> file:</p>
 
@@ -645,9 +645,13 @@ Programming Considerations<a NAME="programming"></a></h3>
         <li><code>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</code>
       </ul>
 
+      <p>The ACE Makefiles <code>fakesvcconf</code> flag can be
+      used to define <code>TAO_PLATFORM_SVC_CONF_FILE_NOTSUP</code>.
+      To define that macro, just add <code>fakesvcconf=1</code> to
+      your <code>make</code> invocation.
+
       <p>See <a href="../tao/orbconf.h"><code>orbconf.h</code></a> for
       an example.
-
 </ul>
 
 <hr>
