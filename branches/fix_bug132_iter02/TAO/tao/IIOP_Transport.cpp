@@ -332,7 +332,7 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 int
 TAO_IIOP_Transport::schedule_output (void)
 {
-  if (TAO_debug_level > 4)
+  if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - IIOP_Transport[%d]::schedule_output\n",
@@ -347,10 +347,10 @@ TAO_IIOP_Transport::schedule_output (void)
 int
 TAO_IIOP_Transport::cancel_output (void)
 {
-  if (TAO_debug_level > 4)
+  if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Transport[%d]::schedule_output\n",
+                  "TAO (%P|%t) - IIOP_Transport[%d]::cancel_output\n",
                   this->handle ()));
     }
   ACE_Reactor *r =

@@ -97,6 +97,10 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Session_Control.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TestC.cpp
 # End Source File
 # Begin Source File
@@ -110,6 +114,10 @@ SOURCE=.\TestS.cpp
 # Begin Source File
 
 SOURCE=.\Coordinator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Session_Control.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

@@ -3,7 +3,19 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Big_Oneways server"=.\server.dsp - Package Owner=<4>
+Project: "Big_Oneways Client"=.\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Big_Oneways Server"=.\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
