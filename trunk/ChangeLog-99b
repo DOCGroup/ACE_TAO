@@ -1,3 +1,9 @@
+Thu Oct 07 11:35:13 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/streams.h: Added #include <strstream.h> in the non-Win32
+          section of the !ACE_HAS_STANDARD_CPP_LIBRARY section, for systems
+          like Solaris w/ SC4.2.
+
 Wed Oct  6 21:36:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Forgot to remove a stray %s.
