@@ -41,7 +41,7 @@ TAO_Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 
   // We add to the #REFCOUNT# since the Connector needs this. See
   // Connector::make_connection() for details.
-  svc_handler->add_reference ();
+  sh->add_reference ();
 
    // At this point, the #REFCOUNT# is two.
 
