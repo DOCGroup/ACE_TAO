@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Log_Msg.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_LOG_MSG_H)
@@ -35,12 +35,12 @@
 #endif	/* ACE_NDEBUG */
 
 #if defined (ACE_NLOGGING)
-#define ACE_HEX_DUMP(X) 
+#define ACE_HEX_DUMP(X)
 #define ACE_RETURN(Y) do { return (Y); } while (0)
 #define ACE_ERROR_RETURN(X, Y) return (Y)
 #define ACE_ERROR_BREAK(X) { break; }
-#define ACE_ERROR(X) 
-#define ACE_DEBUG(X) 
+#define ACE_ERROR(X)
+#define ACE_DEBUG(X)
 #define ACE_ERROR_INIT(VALUE, FLAGS)
 #else
 #define ACE_HEX_DUMP(X) \
@@ -104,7 +104,7 @@
 
 class ACE_Thread_Descriptor;
 
-class ACE_Export ACE_Log_Msg 
+class ACE_Export ACE_Log_Msg
   // = TITLE
   //     Provides a variable length argument message logging
   //     abstraction.
@@ -118,18 +118,18 @@ class ACE_Export ACE_Log_Msg
 {
 public:
   // Logger Flags.
-  enum 
+  enum
   {
-    STDERR = 01,  
-    // Write messages to stderr. 
-    LOGGER = 02,  
+    STDERR = 01,
+    // Write messages to stderr.
+    LOGGER = 02,
     // Write messages to the local client logger deamon.
     OSTREAM = 04,
     // Write messages to the ostream * stored in thread-specific
     // storage.
     VERBOSE = 010,
     // Display messages in a verbose manner.
-    SILENT = 020  
+    SILENT = 020
     // Do not print messages at all (just leave in thread-specific
     // storage for later inspection).
   };
@@ -148,8 +148,8 @@ public:
   ~ACE_Log_Msg (void);
   // cleanup logger.
 
-  int open (const char *prog_name, 
-	    u_long options_flags = ACE_Log_Msg::STDERR, 
+  int open (const char *prog_name,
+	    u_long options_flags = ACE_Log_Msg::STDERR,
 	    LPCTSTR logger_key = 0);
   // Initialize the ACE error handling facility.  <prog_name> is the
   // name of the executable program.  <flags> are a bitwise-or of
@@ -259,7 +259,7 @@ public:
   u_long priority_mask (u_long);
   // Set the <ACE_Log_Priority> mask, returns original mask.
 
-  pid_t getpid (void) const; 
+  pid_t getpid (void) const;
   // Optimize reading of the pid (avoids a system call if the
   // value is cached...).
 
@@ -267,7 +267,7 @@ public:
   const char *local_host (void) const;
   void local_host (const char *);
 
-  void set (const char *file, 
+  void set (const char *file,
 	    int line,
 	    int op_status = -1,
 	    int errnum = 0,
@@ -298,21 +298,21 @@ public:
   // 't': print thread id (1 if single-threaded)
   // 'u': print as unsigned int
   // 'X', 'x': print as a hex number
-  // '%': print out a single percent sign, '%' 
+  // '%': print out a single percent sign, '%'
 
   ssize_t log (const char *format, ACE_Log_Priority priority, va_list argp);
   // An alternative logging mechanism that makes it possible to
   // integrate variable argument lists from other logging mechanisms
   // into the ACE mechanism.
 
-  int log_hexdump (ACE_Log_Priority log_priority, 
-		   const char *buffer, 
+  int log_hexdump (ACE_Log_Priority log_priority,
+		   const char *buffer,
 		   int size,
 		   const char *text = 0);
   // Method to log hex dump.  This is useful for debugging.  Calls
   // <log> to do the actual print, but formats first to make the chars
   // printable.
-  
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -365,14 +365,14 @@ private:
   // = The following fields are *not* kept in thread-specific storage
   // since we only want one instance for the entire process!
 
-  static const char *program_name_; 
-  // Records the program name. 
+  static const char *program_name_;
+  // Records the program name.
 
   static const char *local_host_;
   // Name of the local host (used when printing messages).
 
   static pid_t pid_;
-  // Process id of the current process. 
+  // Process id of the current process.
 
   static u_long flags_;
   // Options flags.
@@ -389,8 +389,8 @@ private:
   friend void ACE_OS::cleanup_tss (const u_int);
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Log_Msg &operator= (const ACE_Log_Msg &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Log_Msg (const ACE_Log_Msg &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Log_Msg &operator= (const ACE_Log_Msg &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Log_Msg (const ACE_Log_Msg &))
 };
 
 // #if defined (__ACE_INLINE__)

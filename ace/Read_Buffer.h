@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Read_Buffer.h
 //
 // = AUTHOR
 //    Doug Schmidt and Seth Widoff
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_READ_BUFFER_H)
@@ -21,14 +21,14 @@
 #include "ace/ACE.h"
 #include "ace/Malloc.h"
 
-class ACE_Export ACE_Read_Buffer 
+class ACE_Export ACE_Read_Buffer
   // = TITLE
   //     Efficiently reads an artibrarily large buffer from an input
   //     stream up to an including a termination character.  Also
   //     performs search/replace on single occurrences a character in
   //     the buffer using the priniciples of Integrated Layer
   //     Processing.
-  // 
+  //
   // = DESCRIPTION
   //     This implementation is optimized to do a single dynamic
   //     allocation and make only one copy of the data.  It uses
@@ -51,7 +51,7 @@ public:
   // <search> is >= 0 then all occurrences of the <search> value are
   // substituted with the <replace> value.
   char *read (int terminator = EOF,
-	      int search = '\n', 
+	      int search = '\n',
 	      int replace = '\0');
 
   size_t replaced (void) const;
@@ -66,7 +66,7 @@ public:
 private:
   char *rec_read (int term, int search, int replace);
   // Recursive helper method that does the work...
-  
+
   size_t size_;
   // The total number of characters in the buffer.
 
@@ -84,9 +84,9 @@ private:
   // Pointer to the allocator.
 
   // = Disallow copying and assignment...
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Read_Buffer &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Read_Buffer (const ACE_Read_Buffer &));
-};  
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Read_Buffer &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Read_Buffer (const ACE_Read_Buffer &))
+};
 
 #include "ace/Read_Buffer.i"
 

@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Map_Manager.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_MAP_MANAGER_H)
@@ -59,7 +59,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Manager
   // = TITLE
   //     Define a map abstraction that associates <EXT_ID>s with
-  //     <INT_ID>s.  
+  //     <INT_ID>s.
   //
   // = DESCRIPTION
   //     The <EXT_ID> must support <operator==> (this constraint can
@@ -87,11 +87,11 @@ public:
   ACE_Map_Manager (ACE_Allocator *alloc = 0);
   // Initialize a <Map_Manager> with the <ACE_DEFAULT_MAP_SIZE>.
 
-  ACE_Map_Manager (size_t size, 
+  ACE_Map_Manager (size_t size,
 		   ACE_Allocator *alloc = 0);
   // Initialize a <Map_Manager> with <size> entries.
 
-  int open (size_t length = ACE_DEFAULT_MAP_SIZE, 
+  int open (size_t length = ACE_DEFAULT_MAP_SIZE,
 	    ACE_Allocator *alloc = 0);
   // Initialize a <Map_Manager> with size <length>.
 
@@ -103,7 +103,7 @@ public:
   // Close down a <Map_Manager> and release dynamically allocated
   // resources.
 
-  int trybind (const EXT_ID &ext_id, 
+  int trybind (const EXT_ID &ext_id,
 	       INT_ID &int_id);
   // Associate <ext_id> with <int_id> if and only if <ext_id> is not
   // in the map.  If <ext_id> is already in the map then the <int_id>
@@ -112,16 +112,16 @@ public:
   // attempt is made to bind an existing entry, and returns -1 if
   // failures occur.
 
-  int bind (const EXT_ID &ext_id, 
+  int bind (const EXT_ID &ext_id,
 	    const INT_ID &int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is already in the
   // map then the <Map_Entry> is not changed.  Returns 0 if a new
   // entry is bound successfully, returns 1 if an attempt is made to
   // bind an existing entry, and returns -1 if failures occur.
 
-  int rebind (const EXT_ID &ext_id, 
+  int rebind (const EXT_ID &ext_id,
 	      const INT_ID &int_id,
-	      EXT_ID &old_ext_id, 
+	      EXT_ID &old_ext_id,
 	      INT_ID &old_int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is not in the
   // map then behaves just like <bind>.  Otherwise, store the old
@@ -130,7 +130,7 @@ public:
   // have an atomic way of updating <Map_Entries> and you also need
   // full control over memory allocation.  Returns 0 if a new entry is
   // bound successfully, returns 1 if an existing entry was rebound,
-  // and returns -1 if failures occur. 
+  // and returns -1 if failures occur.
 
   int find (const EXT_ID &ext_id, INT_ID &int_id);
   // Locate <ext_id> and pass out parameter via <int_id>.  If found,
@@ -166,7 +166,7 @@ protected:
 
   void free_search_structure (void);
   // Explicitly call the destructors and free up the search_structure_.
-  
+
   ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
   // Implementation of the Map (should use hashing instead of
   // array...).
@@ -175,7 +175,7 @@ protected:
 
   // These methods assume that the locks are held by the private
   // methods.
-  
+
   int bind_i (const EXT_ID &ext_id, const INT_ID &int_id);
   // Performs the binding of <ext_id> to <int_id>.  Must be
   // called with locks held.
@@ -183,7 +183,7 @@ protected:
   int rebind_i (const EXT_ID &ext_id, const INT_ID &int_id,
 		EXT_ID &old_ext_id, INT_ID &old_int_id);
   // Performs a rebinding of <ext_it> to <int_id>.  Must be called
-  // with locks held. 
+  // with locks held.
 
   int find_i (const EXT_ID &ext_id, INT_ID &int_id);
   // Performs a find of <int_id> using <ext_id> as the key.  Must be
@@ -215,7 +215,7 @@ protected:
   ACE_Allocator *allocator_;
   // Pointer to a memory allocator.
 
-  ACE_LOCK lock_; 
+  ACE_LOCK lock_;
   // Synchronization variable for the MT_SAFE <ACE_Map_Manager>.
 
   int equal (const EXT_ID &id1, const EXT_ID &id2);
@@ -246,8 +246,8 @@ private:
   // Index of highest active elementin this->search_structure_.
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager &operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager &operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>

@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    Mem_Map.h 
+//    Mem_Map.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_MEM_MAP_H)
@@ -21,7 +21,7 @@
 
 class ACE_Export ACE_Mem_Map
   // = TITLE
-  //     C++ interface to the mmap(2) UNIX system call. 
+  //     C++ interface to the mmap(2) UNIX system call.
 {
 public:
   // = Initialization and termination methods.
@@ -29,52 +29,52 @@ public:
   ACE_Mem_Map (void);
   // Default constructor.
 
-  ACE_Mem_Map (ACE_HANDLE handle, 
-	       int length = -1, 
-	       int prot = PROT_RDWR, 
-	       int share = MAP_PRIVATE, 
-	       void *addr = 0, 
+  ACE_Mem_Map (ACE_HANDLE handle,
+	       int length = -1,
+	       int prot = PROT_RDWR,
+	       int share = MAP_PRIVATE,
+	       void *addr = 0,
 	       off_t pos = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
 
   ACE_Mem_Map (LPCTSTR filename,
-	       int len = -1, 
-	       int flags = O_RDWR | O_CREAT, 
-	       int mode = ACE_DEFAULT_FILE_PERMS, 
-	       int prot = PROT_RDWR, 
-	       int share = MAP_PRIVATE, 
-	       void *addr = 0, 
+	       int len = -1,
+	       int flags = O_RDWR | O_CREAT,
+	       int mode = ACE_DEFAULT_FILE_PERMS,
+	       int prot = PROT_RDWR,
+	       int share = MAP_PRIVATE,
+	       void *addr = 0,
 	       off_t pos = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file specified by <file_name>.
 
-  int map (ACE_HANDLE handle, 
-	   int length = -1, 
-	   int prot = PROT_RDWR, 
-	   int share = MAP_PRIVATE, 
+  int map (ACE_HANDLE handle,
+	   int length = -1,
+	   int prot = PROT_RDWR,
+	   int share = MAP_PRIVATE,
 	   void *addr = 0,
 	   off_t pos = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
 
-  int map (int length = -1, 
-	   int prot = PROT_RDWR, 
-	   int share = MAP_PRIVATE, 
-	   void *addr = 0, 
+  int map (int length = -1,
+	   int prot = PROT_RDWR,
+	   int share = MAP_PRIVATE,
+	   void *addr = 0,
 	   off_t pos = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Remap the file associated with <handle_>.
 
   int map (LPCTSTR filename,
-	   int len = -1, 
-	   int flags = O_RDWR | O_CREAT, 
-	   int mode = ACE_DEFAULT_FILE_PERMS, 
-	   int prot = PROT_RDWR, 
-	   int share = MAP_PRIVATE, 
-	   void *addr = 0, 
+	   int len = -1,
+	   int flags = O_RDWR | O_CREAT,
+	   int mode = ACE_DEFAULT_FILE_PERMS,
+	   int prot = PROT_RDWR,
+	   int share = MAP_PRIVATE,
+	   void *addr = 0,
 	   off_t pos = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file specified by <filename>.
@@ -83,7 +83,7 @@ public:
   // Destructor.
 
   int open (LPCTSTR filename,
-	    int flags = O_RDWR | O_CREAT, 
+	    int flags = O_RDWR | O_CREAT,
 	    int mode = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
   // Open the file without mapping it.
@@ -143,7 +143,7 @@ public:
   ACE_HANDLE handle (void) const;
   // Return the underlying <handle_>.
 
-  const TCHAR *filename (void) const;	
+  const TCHAR *filename (void) const;
   // Return the name of file that is mapped (if any).
 
   void dump (void) const;
@@ -161,7 +161,7 @@ private:
 
   size_t length_;
   // Length of the mapping.
-  
+
   ACE_HANDLE handle_;
   // HANDLE for the open file.
 
@@ -172,19 +172,19 @@ private:
   // Keeps track of whether we need to close the handle.  This is set
   // if we opened the file.
 
-  int map_it (ACE_HANDLE handle, 
-	      int len = -1, 
-	      int prot = PROT_RDWR, 
-	      int share = MAP_SHARED, 
-	      void *addr = 0, 
+  int map_it (ACE_HANDLE handle,
+	      int len = -1,
+	      int prot = PROT_RDWR,
+	      int share = MAP_SHARED,
+	      void *addr = 0,
 	      off_t pos = 0,
               LPSECURITY_ATTRIBUTES sa = 0);
   // This method does the dirty work of actually calling ::mmap to map
   // the file into memory.
 
   // = Disallow copying and assignment.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Mem_Map (const ACE_Mem_Map &));
-  ACE_UNIMPLEMENTED_FUNC (void operator = (const ACE_Mem_Map &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Mem_Map (const ACE_Mem_Map &))
+  ACE_UNIMPLEMENTED_FUNC (void operator = (const ACE_Mem_Map &))
 };
 
 #if defined (__ACE_INLINE__)
