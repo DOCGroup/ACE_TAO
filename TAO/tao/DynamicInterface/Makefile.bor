@@ -6,8 +6,9 @@ NAME = TAO_DynamicInterface
 
 OBJFILES = \
 	$(OBJDIR)\Context.obj \
+   $(OBJDIR)\DII_Arguments.obj \
 	$(OBJDIR)\DII_Invocation.obj \
-	$(OBJDIR)\DII_ClientRequestInfo.obj \
+   $(OBJDIR)\DII_Invocation_Adapter.obj \
 	$(OBJDIR)\DII_Reply_Dispatcher.obj \
 	$(OBJDIR)\Dynamic_Adapter_Impl.obj \
 	$(OBJDIR)\Dynamic_Implementation.obj \
