@@ -267,7 +267,11 @@ Quoter_Client::init_naming_service (void)
       CORBA::Object_var quoter_FactoryObj_var;
 
       if (factories_ptr->length () >= 1)
-        quoter_FactoryObj_var = (*factories_ptr)[0]; // everything is ok, at least one factory is there
+        {
+          // everything is ok, at least one factory is there
+          CosLifeCycle::Factory_ptr factory = (*factories_ptr)[0]; 
+          quoter_FactoryObj_var = factory; 
+        }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
                            "No Factory received.\n"),
