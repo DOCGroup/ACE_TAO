@@ -71,7 +71,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Metrics_Local_Cache_Test.o .obj/Metrics_Local_Cache_Test.o .obj/Metrics_Local_Cache_Test.o .obj/Metrics_Local_Cache_Test.o: Metrics_Local_Cache_Test.cpp \
+.obj/Metrics_Local_Cache_Test.o .obj/Metrics_Local_Cache_Test.so .shobj/Metrics_Local_Cache_Test.o .shobj/Metrics_Local_Cache_Test.so: Metrics_Local_Cache_Test.cpp \
   $(ACE_ROOT)/ace/OS.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -317,13 +317,16 @@ realclean: clean
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/RTCORBA/Multi_Priority_Mapping.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
-  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
+  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
+  $(TAO_ROOT)/tao/RTCORBA/Multi_Priority_Mapping.i \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Metrics/Metrics_Logger.h \
   $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -478,7 +481,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i
 
-.obj/Remote_Metrics_Logger.o .obj/Remote_Metrics_Logger.o .obj/Remote_Metrics_Logger.o .obj/Remote_Metrics_Logger.o: Remote_Metrics_Logger.cpp \
+.obj/Remote_Metrics_Logger.o .obj/Remote_Metrics_Logger.so .shobj/Remote_Metrics_Logger.o .shobj/Remote_Metrics_Logger.so: Remote_Metrics_Logger.cpp \
   $(ACE_ROOT)/ace/OS.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -846,7 +849,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Metrics/Metrics_Utils.i
 
-.obj/Rate_Group_Info.o .obj/Rate_Group_Info.o .obj/Rate_Group_Info.o .obj/Rate_Group_Info.o: Rate_Group_Info.cpp Rate_Group_Info.h \
+.obj/Rate_Group_Info.o .obj/Rate_Group_Info.so .shobj/Rate_Group_Info.o .shobj/Rate_Group_Info.so: Rate_Group_Info.cpp Rate_Group_Info.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
