@@ -1,3 +1,10 @@
+Wed Mar 28 16:48:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/NestedUpcall/Triangle_Test/server_A.cpp (main): 
+	* tests/NestedUpcall/Triangle_Test/server_B.cpp:
+	* tests/NestedUpcall/Triangle_Test/initiator.cpp: Fixed fuzz
+	  warnings. 
+
 Wed Mar 28 16:27:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Time/Client_i.cpp:
