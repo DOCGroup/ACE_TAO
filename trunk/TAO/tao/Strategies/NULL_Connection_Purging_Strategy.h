@@ -13,13 +13,13 @@
 #include "ace/pre.h"
 
 #include "strategies_export.h"
-#include "tao/Connection_Purging_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// ****************************************************************
+#include "tao/Connection_Purging_Strategy.h"
+
 
 /**
  * @class TAO_NULL_Connection_Purging_Strategy
@@ -29,8 +29,7 @@
  * This class does not do anything.
  */
 
-class TAO_Strategies_Export TAO_NULL_Connection_Purging_Strategy:
-                            public TAO_Connection_Purging_Strategy
+class TAO_Strategies_Export TAO_NULL_Connection_Purging_Strategy: public TAO_Connection_Purging_Strategy
 {
 public:
   /// The constructor
