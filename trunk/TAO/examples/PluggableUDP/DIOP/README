@@ -1,0 +1,70 @@
+DIOP - UDP Based Pluggable Protocol
+===================================
+
+This directory contains all of the code needed to use the UDP
+Pluggable Protocol (DIOP).  It should be considered a work in progress
+and will eventually be integrated in with the other standard pluggable
+protocols in tao/Strategies.
+
+Notes on the DIOP implementation:
+
+- The DIOP implemenation uses unconnected UDP sockets.
+
+- The server side implementation bypasses the actual TAO acceptor
+  and opens always a UDP socket on start-up.
+
+- The address of that UDP socket can be configured via
+  e.g. -ORBEndpoint diop://:1303
+
+  If nothing is specified, the implementation will select a port
+  and open a socket on all network interfaces.
+  (This is the default ORB behavior and can be overwritten using
+   the -ORBEndpoint switch)
+
+- Because no connections - no state - exist, all client requests
+  from different clients arrive at the same socket!
+
+- The client side DIOP implementation bypasses the actual
+  TAO connector. It installs a connection handler on the first
+  invocation on a remote CORBA object.
+
+
+DIOP Installation:
+
+- Compile TAO/examples/PluggableUDP/DIOP to create the DIOP library.
+
+- Uncomment the following line in TAO/tao/corbafwd.h:
+
+  #define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
+
+- The application using DIOP should have a svc.conf file with the
+  following entry:
+
+  dynamic DIOP_Factory Service_Object * TAO_DIOP:_make_TAO_DIOP_Protocol_Factory() ""
+  static Resource_Factory "-ORBProtocolFactory DIOP_Factory"
+
+
+Issues:
+
+- Optimization of DIOP_Transport::{send,recv}
+
+- Default port is the same on client and server, therefore
+  the client ports need to be explicitly set by -ORBEndpoint option.
+  Maybe there is a way to find free ports?
+
+- Remove commented out code from DIOP_* files.
+
+
+Appendix:
+
+ The client understands the following options:
+                           -d
+                           -k <ior>
+                           -t <timeout in ms>
+                           -i <iterations>
+
+Comments, Suggestions, or Feedback:
+
+  mailto:Michael.Kircher@mchp.siemens.de or,
+  mailto:John.Mackenzie.extern@icn.siemens.de or,
+  mailto:fhunleth@cs.wustl.edu
