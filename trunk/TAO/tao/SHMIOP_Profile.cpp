@@ -277,7 +277,37 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
   tmp[length] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
+  
+  ACE_INET_Addr host_addr;
 
+  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+    {
+      char tmp_host [MAXHOSTNAMELEN + 1];
+
+      // If no host is specified: assign the default host : the local host.
+      if (host_addr.get_host_name (tmp_host,
+                                   sizeof (tmp_host)) != 0)
+      {
+        const char *tmp = host_addr.get_host_addr ();
+        if (tmp == 0)
+          {
+            if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nTAO (%P|%t) ")
+                          ACE_TEXT ("SHMIOP_Profile::parse_string ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot determine hostname")));
+            return -1;
+          }
+        else
+          this->endpoint_.host_ = tmp;
+      }
+      else
+        {
+          this->endpoint_.host_ = (const char *) tmp_host;
+        }
+    }
+  
   if (this->endpoint_.object_addr_.set (this->endpoint_.port_,
                                         this->endpoint_.host_.in ()) == -1)
     {
@@ -288,6 +318,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
       return -1;
+      
     }
 
   start = ++okd;  // increment past the object key separator
@@ -495,7 +526,7 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
 #if (TAO_HAS_RT_CORBA == 1)
   // For now, use/transfer multiple endpoints per profile only with
-  // RTCORBA. 
+  // RTCORBA.
 
   // Encode profile endpoints.
   TAO_SHMIOP_Profile *p =
@@ -514,7 +545,7 @@ int
 TAO_SHMIOP_Profile::encode_endpoints (void)
 {
   // Create a data structure and fill it with endpoint info for wire
-  // transfer. 
+  // transfer.
   // We include information for the head of the list
   // together with other endpoints because even though its addressing
   // info is transmitted using standard ProfileBody components, its
@@ -557,7 +588,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
     }
 
   // Add component with encoded endpoint data to this profile's
-  // TaggedComponents. 
+  // TaggedComponents.
   tagged_components_.set_component (tagged_component);
   this->endpoints_encoded_ = 1;
 
