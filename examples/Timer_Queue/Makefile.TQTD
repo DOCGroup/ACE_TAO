@@ -8,6 +8,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
+LIB     = libTQTD.a
 SHLIB   = libTQTD.$(SOEXT)
 FILES   = Async_Timer_Queue_Test \
           Reactor_Timer_Queue_Test \
@@ -17,7 +18,7 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 
 LIBS   += $(ACELIB)
 
-BUILD   = $(VSHLIB)
+BUILD   = $(VLIB) $(VSHLIB)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

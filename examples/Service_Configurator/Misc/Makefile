@@ -13,10 +13,13 @@
 #----------------------------------------------------------------------------
 MAKEFILE=Makefile
 
+ifeq ($(shared_libs),1)
 # These examples don't require SSL support... those that do are below.
 MKLIST = Makefile.Timer \
            Makefile.main
-
+else
+MKLIST =
+endif
 
 ## Ensure that Makefiles in MKLIST are executed in sequence during a
 ## parallel build because we share some files between multiple libraries.
