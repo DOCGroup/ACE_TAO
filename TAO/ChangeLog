@@ -1,3 +1,16 @@
+Tue Oct 28 22:46:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService.dsp:
+
+          Turned on RTTI in the project settings.
+
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.h:
+
+          Removed the IFR_Client export macro from these files.
+
 Tue Oct 28 22:29:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
