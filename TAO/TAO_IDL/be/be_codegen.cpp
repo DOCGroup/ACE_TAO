@@ -1476,6 +1476,14 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // Includes whatever arg helper template classes that may be needed.
   this->gen_arg_file_includes (this->client_stubs_);
 
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.interface_seen_))
+    {
+      // Needed for _narrow(), which is now template-based.
+      this->gen_standard_include (this->client_stubs_,
+                                  "ace/OS_NS_String.h");
+    }
+
   if (be_global->gen_amh_classes () == I_TRUE)
     {
       *this->client_stubs_ << be_nl;
