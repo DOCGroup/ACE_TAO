@@ -4,13 +4,10 @@
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 
-#include "CCF/CIDL/CIDL_SyntaxTree.hpp"
-#include "CCF/CIDL/CIDL_Traversal.hpp"
+#include "Collectors.hpp"
 
-using std::ostream;
-
-using namespace CIDL;
-using namespace CIDL::SyntaxTree;
+#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/Traversal.hpp"
 
 // SourceEmitterBase is a base class that holds the ostream member
 // common to every other class in this file.
@@ -18,9 +15,9 @@ using namespace CIDL::SyntaxTree;
 class SourceEmitterBase
 {
 protected:
-  SourceEmitterBase (ostream&);
+  SourceEmitterBase (std::ostream&);
 
-  ostream& os;
+  std::ostream& os;
 };
 
 // Emitter generates the servant source mapping for declarations collected
@@ -28,69 +25,32 @@ protected:
 //
 class ServantSourceEmitter
   : public SourceEmitterBase,
-    public virtual Traversal::TranslationUnit,
-    public virtual Traversal::TranslationRegion,
-    public virtual Traversal::FileScope,
-    public virtual Traversal::Module,
-    public virtual Traversal::UnconstrainedInterfaceDef,
-    public virtual Traversal::ConcreteEventTypeDef,
-    public virtual Traversal::ComponentDef,
-    public virtual Traversal::HomeDef
+    public CCF::CIDL::Traversal::TranslationUnit
 {
 public:
-  ServantSourceEmitter (ostream& os_,
+  ServantSourceEmitter (std::ostream& os_,
+                        std::string export_macro,
                         CommandLine const& cl,
-                        UnconstrainedInterfaceDefSet const& interface_set,
-                        ComponentDefSet const& component_set,
-                        HomeDefSet const& home_set);
-
-  bool
-  contains_element (ModulePtr const& m) const;
+                        Declarations const& declarations);
 
   virtual void
-  visit_translation_unit_pre (TranslationUnitPtr const&);
+  generate (CCF::CIDL::SyntaxTree::TranslationUnitPtr const& u);
 
   virtual void
-  visit_module_pre (ModulePtr const& m);
-
-  virtual void
-  visit_unconstrained_interface_def (
-    UnconstrainedInterfaceDefPtr const& i);
-
-  virtual void
-  visit_component_def (ComponentDefPtr const& c);
-
-  virtual void
-  visit_home_def (HomeDefPtr const& h);
-
-  virtual void
-  visit_module_post (ModulePtr const& m);
+  pre (CCF::CIDL::SyntaxTree::TranslationUnitPtr const&);
 
 private:
   CommandLine const& cl_;
+  std::string export_macro_;
 
-  ComponentDefSet const& component_set_;
-  HomeDefSet const& home_set_;
-  UnconstrainedInterfaceDefSet const& interface_set_;
-};
-
-class ServantSourceFinalizingEmitter
-  : public SourceEmitterBase,
-    public virtual Traversal::TranslationUnit,
-    public virtual Traversal::TranslationRegion,
-    public virtual Traversal::FileScope,
-    public virtual Traversal::Module,
-    public virtual Traversal::HomeDef
-{
-public:
-  ServantSourceFinalizingEmitter (ostream& os_,
-                                  string export_macro);
-
-  virtual void
-  visit_home_def (HomeDefPtr const& h);
-
-private:
-  string export_macro_;
+  Declarations const& declarations_;
 };
 
 #endif // SERVANT_SOURCE_GENERATOR_HPP
+
+/*
+ * Local Variables:
+ * mode: C++
+ * c-basic-offset: 2
+ * End:
+ */

@@ -1,29 +1,33 @@
 // $Id$
 #include "CCF/CompilerElements/FileSystem.hpp"
+#include "CCF/CompilerElements/TokenStream.hpp"
+#include "CCF/CompilerElements/Preprocessor.hpp"
+#include "CCF/CompilerElements/Diagnostic.hpp"
+#include "CCF/CompilerElements/Context.hpp"
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineParser.hpp"
 #include "CCF/CodeGenerationKit/CommandLineDescriptor.hpp"
 
-#include "CCF/CIDL/CIDL_LexicalAnalyzer.hpp"
-#include "CCF/CIDL/CIDL_Parser.hpp"
-#include "CCF/CIDL/CIDL_SyntaxTree.hpp"
-#include "CCF/CIDL/CIDL_SemanticActionImpl.hpp"
+#include "CCF/CIDL/LexicalAnalyzer.hpp"
+#include "CCF/CIDL/Parser.hpp"
+#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticAction/Impl/Factory.hpp"
 
 #include "ExecutorMappingGenerator.hpp"
 #include "ServantGenerator.hpp"
-
-#include "CCF/CompilerElements/TokenStream.hpp"
-#include "CCF/CompilerElements/Preprocessor.hpp"
 
 #include <iostream>
 
 using std::cerr;
 using std::endl;
 
+using namespace CCF;
+using namespace CIDL;
+using namespace SyntaxTree;
+
 int main (int argc, char* argv[])
 {
-  using namespace IDL2::SyntaxTree;
 
   try
   {
@@ -40,12 +44,20 @@ int main (int argc, char* argv[])
     }
 
     ExecutorMappingGenerator lem_gen;
+    ServantGenerator svnt_gen (cl);
+
 
     if (cl.get_value ("help", false) || cl.get_value ("help-html", false))
     {
       CL::Description d (argv[0]);
 
       lem_gen.options (d);
+      svnt_gen.options (d);
+
+      d.add_option (CL::OptionDescription (
+                      "trace-semantic-actions",
+                      "Turn on semnatic actions tracing facility.",
+                      true));
 
       d.add_option (CL::OptionDescription (
                       "preprocess-only",
@@ -83,14 +95,14 @@ int main (int argc, char* argv[])
       try
       {
         file_path = fs::path (*i, fs::native);
-        ifs.open (file_path, std::ios_base::out);
+        ifs.open (file_path);
       }
       catch (fs::filesystem_error const&)
       {
         cerr << *i << ": error: unable to open in read mode" << endl;
         return -1;
       }
-      catch (ios_base::failure const&)
+      catch (std::ios_base::failure const&)
       {
         cerr << *i << ": error: unable to open in read mode" << endl;
         return -1;
@@ -102,22 +114,20 @@ int main (int argc, char* argv[])
     //   get after eof.
     ifs.exceptions (ios_base::iostate (0));
 
-    std::istream& is = ifs.is_open () 
-      ? static_cast<std::istream&> (ifs)
-      : static_cast<std::istream&> (std::cin);
+    std::istream& is = ifs.is_open () ? ifs : std::cin;
 
-    CCF::InputStreamAdapter isa (is);
-    CCF::Preprocessor pp (isa);
+    InputStreamAdapter isa (is);
+    Preprocessor pp (isa);
 
     if (cl.get_value ("preprocess-only", false))
     {
       while (true)
       {
-        CCF::Preprocessor::int_type i = pp.next ();
+        Preprocessor::int_type i = pp.next ();
 
         if (pp.eos (i)) break;
 
-        CCF::Preprocessor::char_type c = pp.to_char_type (i);
+        Preprocessor::char_type c = pp.to_char_type (i);
 
         std::cout << c ;
       }
@@ -125,18 +135,20 @@ int main (int argc, char* argv[])
     }
 
 
-    CIDL::LexicalAnalyzer lexer (pp);
-    TokenStream token_stream;
+    Diagnostic::Stream diagnostic_stream;
+
+
+    LexicalAnalyzer lexer (pp);
+    TokenList token_stream;
 
     //@@ bad token comparison
-    for (TokenPtr token = lexer.next ();
-         token.in () != lexer.eos.in ();
-         token = lexer.next ())
+    for (TokenPtr token = lexer.next ();; token = lexer.next ())
     {
       token_stream.push_back (token);
+      if (ReferenceCounting::strict_cast<EndOfStream> (token) != 0) break;
     }
 
-    if (token_stream.size () == 0)
+    if (token_stream.size () == 1)
     {
       cerr << "no tokens produced so nothing to parse" << endl;
       return 0;
@@ -150,7 +162,8 @@ int main (int argc, char* argv[])
     //Create .builtin region
     {
       TranslationRegionPtr builtin (
-        new TranslationRegion (unit->table (),
+        new TranslationRegion (fs::path (".builtin"),
+                               unit->table (),
                                unit->create_order ()));
       unit->insert (builtin);
 
@@ -168,8 +181,7 @@ int main (int argc, char* argv[])
       s->insert (BuiltInTypeDefPtr (new String (s)));
     }
 
-    //@@ This should be in IDL3 or even CIDL part I just need
-    //   a mechanism to create them in proper order.
+    //Create implied #include <Components.idl>
     {
       TranslationRegionPtr builtin (
         new ImpliedIncludeTranslationRegion (fs::path ("Components.idl"),
@@ -178,7 +190,7 @@ int main (int argc, char* argv[])
       unit->insert (builtin);
 
       ScopePtr fs = builtin->scope ();
-      ModulePtr m (new SyntaxTree::Module (SimpleName("Components"), fs));
+      ModulePtr m (new Module (SimpleName("Components"), fs));
       fs->insert (m);
 
       LocalInterfaceDefPtr i (
@@ -195,28 +207,37 @@ int main (int argc, char* argv[])
                                       unit->create_order ()));
     unit->insert (tr);
 
-    CIDL::SemanticActionFactoryImpl action_factory (tr);
+
+    CompilerElements::Context context;
+    context.set ("file-path", file_path);
+
+    bool trace = cl.get_value ("trace-semantic-actions", false);
+
+    context.set ("idl2::semantic-action::trace", trace);
+    context.set ("idl3::semantic-action::trace", trace);
+    context.set ("cidl::semantic-action::trace", trace);
+
+
+    SemanticAction::Impl::Factory actions (context, diagnostic_stream, tr);
 
     //-----------------------------------------------------------------
 
-    CIDL::Parser parser (lexer, action_factory);
+    Parser parser (context, diagnostic_stream, lexer, actions);
 
-    bool result = Details::parse (token_stream.begin (),
-                                  token_stream.end (),
-                                  parser.start ());
+    IDL2::Parsing::parse (token_stream.begin (),
+                          token_stream.end (),
+                          parser.start ());
 
-    if (!result) return -1;
+    if (diagnostic_stream.error_count () != 0) return -1;
 
     // Generate executor mapping
-
     {
       lem_gen.generate (cl, unit);
     }
 
-    // Generate servant code
+    // Generate Servant code
     {
-      ServantGenerator gen (cl);
-      gen.generate (unit);
+      svnt_gen.generate (unit);
     }
 
   }
