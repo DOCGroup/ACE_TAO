@@ -1,3 +1,10 @@
+Sun Oct 03 10:21:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/SV_Shared_Memory_Test.cpp: create parent_mutex and
+          parent_synch before forking, to avoid race condition between
+          their creation in the parent and use in the child.  This
+          allowed us to remove the sleep (1) in the child. [Bug 91]
+
 Sun Oct 03 10:17:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (ACE_Thread_Adapter::invoke): added casts of
