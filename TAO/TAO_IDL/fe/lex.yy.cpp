@@ -811,7 +811,7 @@ TAO_YY_MALLOC_DECL
 
 /* Code executed at the end of each rule. */
 #ifndef TAO_YY_BREAK
-#define TAO_YY_BREAK break;
+#define TAO_YY_BREAK ACE_NOTREACHED (break;)
 #endif
 
 #define TAO_YY_RULE_SETUP \
@@ -1109,7 +1109,7 @@ TAO_YY_RULE_SETUP
 		  tao_yylval.strval = "::";
 		  return IDL_SCOPE_DELIMITOR;
 		}
-	TAO_YY_BREAK
+        TAO_YY_BREAK
 case 40:
 TAO_YY_RULE_SETUP
 #line 152 "fe/idl.ll"
@@ -1225,35 +1225,35 @@ TAO_YY_RULE_SETUP
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_tao_yytext);
 		}
-	TAO_YY_BREAK
+	break;
 case 52:
 TAO_YY_RULE_SETUP
 #line 223 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
-	TAO_YY_BREAK
+	break;
 case 53:
 TAO_YY_RULE_SETUP
 #line 226 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
-	TAO_YY_BREAK
+	break;
 case 54:
 TAO_YY_RULE_SETUP
 #line 229 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 		}
-	TAO_YY_BREAK
+	break;
 case 55:
 TAO_YY_RULE_SETUP
 #line 232 "fe/idl.ll"
 {
 		  idl_parse_line_and_file(ace_tao_yytext);
 	        }
-	TAO_YY_BREAK
+	break;
 case 56:
 TAO_YY_RULE_SETUP
 #line 235 "fe/idl.ll"
@@ -1261,7 +1261,7 @@ TAO_YY_RULE_SETUP
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-	TAO_YY_BREAK
+	break;
 case 57:
 TAO_YY_RULE_SETUP
 #line 239 "fe/idl.ll"
@@ -1269,7 +1269,7 @@ TAO_YY_RULE_SETUP
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-	TAO_YY_BREAK
+	break;
 case 58:
 TAO_YY_RULE_SETUP
 #line 243 "fe/idl.ll"
@@ -1287,19 +1287,19 @@ TAO_YY_RULE_SETUP
 		    }
 	          }
 	        }
-	TAO_YY_BREAK
+	break;
 case 59:
 TAO_YY_RULE_SETUP
 #line 257 "fe/idl.ll"
 ;
-	TAO_YY_BREAK
+	break;
 case 60:
 TAO_YY_RULE_SETUP
 #line 258 "fe/idl.ll"
 {
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-	TAO_YY_BREAK
+	break;
 case 61:
 TAO_YY_RULE_SETUP
 #line 261 "fe/idl.ll"
@@ -1309,7 +1309,7 @@ case 62:
 TAO_YY_RULE_SETUP
 #line 263 "fe/idl.ll"
 TAO_YY_ECHO;
-	TAO_YY_BREAK
+	break;
 case TAO_YY_STATE_EOF(INITIAL):
 	tao_yyterminate();
 
@@ -2472,7 +2472,7 @@ idl_escape_reader(
 	    str[i] = save;
 	    return out;
 	}
-	ACE_NOTREACHED (break);
+        TAO_YY_BREAK;
       default:
 	// check for octal value
 	if (str[1] >= '0' && str[1] <= '7') {
@@ -2488,6 +2488,6 @@ idl_escape_reader(
 	} else {
 	  return str[1] - 'a';
 	}
-	ACE_NOTREACHED (break);
+	TAO_YY_BREAK;
     }
 }
