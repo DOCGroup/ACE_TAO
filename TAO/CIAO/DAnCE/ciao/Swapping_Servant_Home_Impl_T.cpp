@@ -142,20 +142,17 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure))
   {
-    ACE_DEBUG ((LM_DEBUG, "i am creating the home here inside create ()\n"));
     if (this->executor_.in () == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
                         COMP::_nil ());
     }
 
-    ACE_DEBUG ((LM_DEBUG, "creating home\n"));
 
     ::Components::EnterpriseComponent_var _ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    ACE_DEBUG ((LM_DEBUG, "created home \n"));
 
     COMP_EXEC_VAR _ciao_comp =
       COMP_EXEC::_narrow (_ciao_ec.in ()
@@ -190,12 +187,10 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "activating the component\n"));
     CORBA::Object_var hobj =
       this->container_->get_objref (this
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
-    ACE_DEBUG ((LM_DEBUG, "obtaining the reference\n"));
 
     Components::CCMHome_var home =
       Components::CCMHome::_narrow (hobj.in ()
@@ -212,18 +207,14 @@ namespace CIAO
         Container::Component
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    ACE_DEBUG ((LM_DEBUG, "generated the reference\n"));
 
-    ACE_DEBUG ((LM_DEBUG, "creating the servant impl template\n"));
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
           (this->executor_.in (), home, this->container_);
-    ACE_DEBUG ((LM_DEBUG, "created the servant impl template\n"));
 
     this->container_->update_servant_map (oid, svt);
 
-    ACE_DEBUG ((LM_DEBUG, "updated the map\n"));
 
     COMP_VAR ho = COMP::_narrow (objref.in ()
                                  ACE_ENV_ARG_PARAMETER);

@@ -22,7 +22,6 @@ namespace CIAO
        executor_ (EXEC::_duplicate (exe)),
        home_ (Components::CCMHome::_duplicate (home))
   {
-    ACE_DEBUG ((LM_DEBUG, "created the dynamic servant\n"));
   }
 
   template <typename COMP_SVNT,
@@ -46,7 +45,6 @@ namespace CIAO
     <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
      EXEC, EXEC_VAR, COMP>::create (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "actually trying to create the servant\n"));
     ::Components::EnterpriseComponent_var ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
@@ -55,15 +53,12 @@ namespace CIAO
                                                   ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    ACE_DEBUG ((LM_DEBUG, "narrowed down to EXEC VAR\n"));
     
     COMP_SVNT *svt = new COMP_SVNT(ciao_comp.in (), this->home_.in (),
                                    this->container_);
 
-    ACE_DEBUG ((LM_DEBUG, "created the COMP SVNT\n"));
 
     PortableServer::ServantBase_var safe (svt);
-    ACE_DEBUG ((LM_DEBUG, "actually created the dynamic servant\n"));
     return safe._retn ();
   }
 }

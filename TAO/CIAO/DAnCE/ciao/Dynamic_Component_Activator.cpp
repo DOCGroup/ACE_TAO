@@ -25,7 +25,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest))
   {
-    ACE_DEBUG ((LM_DEBUG, "i am here to incarnate\n"));
     Dynamic_Component_Servant_Base* servant = 0;
 
     if (this->servant_map_.find (oid, servant) == 0)
