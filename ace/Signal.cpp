@@ -20,7 +20,7 @@ ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 
 static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ace_sig_handler_dispatch);
 
-#if !defined (HPUX)
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 extern "C" void 
 ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
@@ -29,14 +29,14 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 }
 
 static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ace_sig_handlers_dispatch);
-#endif /* HPUX */
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #else
 static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ACE_Sig_Handler::dispatch);
 
-#if !defined (HPUX)
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ACE_Sig_Handlers::dispatch);
-#endif /* HPUX */
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 #if defined (ACE_MT_SAFE)
@@ -346,7 +346,7 @@ ACE_Sig_Adapter::handle_signal (int signum,
 
 // There are bugs with HP/UX's C++ compiler that prevents this stuff
 // from compiling...
-#if !defined (HPUX)
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #define ACE_MAX_SIGNAL_HANDLERS size_t (20)
 
 // Keeps track of the id that uniquely identifies each registered
@@ -665,4 +665,4 @@ ACE_MT (template class ACE_Guard<ACE_Recursive_Thread_Mutex>);
 template class ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-#endif /* HPUX */
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */

@@ -13,6 +13,10 @@
 #define HPUX
 #endif /* HPUX */
 
+#if __cplusplus < 199707L
+#define ACE_HAS_BROKEN_HPUX_TEMPLATES
+#endif /* __cplusplus < 199707L */
+
 #define _HPUX_SOURCE
 #include /**/ <sys/stdsyms.h>
 #include /**/ <sched.h>                              /*  pthread.h doesn't include this */

@@ -24,6 +24,7 @@ ACE_HAS_AUTOMATIC_INIT_FINI 		Compiler/platform correctly calls init()/fini() fo
 ACE_HAS_BROKEN_BITSHIFT                 Compiler has integer overflow problem with bit-shift operations.
 ACE_HAS_BROKEN_CONVERSIONS		Compiler can't handle calls like foo->operator T *()
 ACE_HAS_BROKEN_CTIME			Compiler/platform uses macro for ctime (e.g., MVS)
+ACE_HAS_BROKEN_HPUX_TEMPLATES		Earlier versions of HP/UX C++ are damned...
 ACE_HAS_BROKEN_MSG_H			Platform headers don't support <msg.h> prototypes
 ACE_HAS_BROKEN_MMAP_H			HP/UX does not wrap the mmap(2) header files with extern "C".
 ACE_HAS_BROKEN_POSIX_TIME               Platform defines struct timespec in <sys/timers.h>
