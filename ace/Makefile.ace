@@ -259,6 +259,7 @@ TEMPLATE_FILES = \
 	   Array_Base \
 	   Node \
 	   Unbounded_Set \
+	   Unbounded_Set_Ex \
 	   Unbounded_Queue \
            Asynch_Acceptor \
            Asynch_Connector \
