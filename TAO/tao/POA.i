@@ -300,6 +300,7 @@ TAO_POA::activate_object (PortableServer::Servant servant,
   TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->activate_object_i (servant,
+                                  -1,
                                   ACE_TRY_ENV);
 }
 
@@ -313,6 +314,7 @@ TAO_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 
   this->activate_object_with_id_i (id,
                                    servant,
+                                   -1,
                                    ACE_TRY_ENV);
 }
 
@@ -335,6 +337,7 @@ TAO_POA::create_reference (const char *intf,
   TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil ());
 
   return this->create_reference_i (intf,
+                                   -1,
                                    ACE_TRY_ENV);
 }
 
@@ -348,6 +351,7 @@ TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
 
   return this->create_reference_with_id_i (id,
                                            intf,
+                                           -1,
                                            ACE_TRY_ENV);
 }
 
@@ -395,6 +399,93 @@ TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
 
   return this->id_to_reference_i (oid, ACE_TRY_ENV);
 }
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+ACE_INLINE CORBA::Object_ptr
+TAO_POA::create_reference_with_priority (const char * intf,
+                                         RTCORBA::Priority priority,
+                                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
+{
+  this->validate_priority_and_policies (priority,
+                                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
+
+  return this->create_reference_i (intf,
+                                   priority,
+                                   ACE_TRY_ENV);
+}
+
+ACE_INLINE CORBA::Object_ptr
+TAO_POA::create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
+                                                const char * intf,
+                                                RTCORBA::Priority priority,
+                                                CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
+{
+  this->validate_priority_and_policies (priority,
+                                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
+
+  return this->create_reference_with_id_i (oid,
+                                           intf,
+                                           priority,
+                                           ACE_TRY_ENV);
+}
+
+ACE_INLINE PortableServer::ObjectId *
+TAO_POA::activate_object_with_priority (PortableServer::Servant servant,
+                                        RTCORBA::Priority priority,
+                                        CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::WrongPolicy))
+{
+  this->validate_priority_and_policies (priority,
+                                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
+
+  return this->activate_object_i (servant,
+                                  priority,
+                                  ACE_TRY_ENV);
+}
+
+ACE_INLINE void
+TAO_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
+                                               PortableServer::Servant servant,
+                                               RTCORBA::Priority priority,
+                                               CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::ObjectAlreadyActive,
+                   PortableServer::POA::WrongPolicy))
+{
+  this->validate_priority_and_policies (priority,
+                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
+
+  this->activate_object_with_id_i (oid,
+                                   servant,
+                                   priority,
+                                   ACE_TRY_ENV);
+}
+
+#endif /* TAO_HAS_RT_CORBA */
 
 //
 // Forwarding related.

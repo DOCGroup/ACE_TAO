@@ -744,13 +744,17 @@ TAO_POA::is_servant_in_map (PortableServer::Servant servant)
 }
 
 int
-TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id)
+TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id,
+                            CORBA::Short priority,
+                            int &priorities_match)
 {
   while (1)
     {
       int deactivated = 0;
       int user_id_in_map =
         this->active_object_map ().is_user_id_in_map (id,
+                                                      priority,
+                                                      priorities_match,
                                                       deactivated);
 
       if (!user_id_in_map)
@@ -782,6 +786,7 @@ TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id)
 
 PortableServer::ObjectId *
 TAO_POA::activate_object_i (PortableServer::Servant servant,
+                            CORBA::Short priority,
                             CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the SYSTEM_ID and RETAIN policy; if not
@@ -808,6 +813,7 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // Object Map. The Object Id is returned.
   PortableServer::ObjectId_var user_id;
   if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
+                                                                         priority,
                                                                          user_id.out ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -835,6 +841,7 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
 void
 TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                                     PortableServer::Servant servant,
+                                    CORBA::Short priority,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN policy; if not present, the
@@ -862,9 +869,24 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // If the CORBA object denoted by the Object Id value is already
   // active in this POA (there is a servant bound to it in the Active
   // Object Map), the ObjectAlreadyActive exception is raised.
-  if (is_user_id_in_map (id))
+  int priorities_match = 1;
+  if (is_user_id_in_map (id,
+                         priority,
+                         priorities_match))
     {
       ACE_THROW (PortableServer::POA::ObjectAlreadyActive ());
+    }
+
+  // If the activate_object_with_id_and_priority operation is invoked
+  // with a different priority to an earlier invocation of one of the
+  // create reference with priority operations, for the same object,
+  // then the ORB shall raise a BAD_INV_ORDER system exception (with a
+  // Standard Minor Exception Code of 1). If the priority value is the
+  // same then the ORB shall return SUCCESS.
+  if (!priorities_match)
+    {
+      ACE_THROW (CORBA::BAD_INV_ORDER (1,
+                                       CORBA::COMPLETED_NO));
     }
 
   // If the POA has the UNIQUE_ID policy and the servant is already in
@@ -879,7 +901,9 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // Otherwise, the activate_object_with_id operation enters an
   // association between the specified Object Id and the specified
   // servant in the Active Object Map.
-  if (this->active_object_map ().bind_using_user_id (servant, id) != 0)
+  if (this->active_object_map ().bind_using_user_id (servant,
+                                                     id,
+                                                     priority) != 0)
     {
       ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
@@ -1214,6 +1238,7 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::Object_ptr
 TAO_POA::create_reference_i (const char *intf,
+                             CORBA::Short priority,
                              CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the SYSTEM_ID policy; if not present, the
@@ -1240,6 +1265,7 @@ TAO_POA::create_reference_i (const char *intf,
   if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
       if (this->active_object_map ().bind_using_system_id_returning_system_id (0,
+                                                                               priority,
                                                                                system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1273,6 +1299,7 @@ TAO_POA::create_reference_i (const char *intf,
 CORBA::Object_ptr
 TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                      const char *intf,
+                                     CORBA::Short priority,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
   // If the POA has the SYSTEM_ID policy and it detects that the
@@ -1313,6 +1340,7 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
       // collocated object when DIRECT collocation strategy is used.
 
       if (this->active_object_map ().find_system_id_using_user_id (user_id,
+                                                                   priority,
                                                                    system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1383,6 +1411,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
+                                                                             -1,
                                                                              user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1482,6 +1511,7 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var system_id;
       if (this->active_object_map ().bind_using_system_id_returning_system_id (servant,
+                                                                               -1,
                                                                                system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1821,6 +1851,54 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
     }
 }
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+int
+TAO_POA::valid_priority (RTCORBA::Priority /* priority */)
+{
+  return 1;
+}
+
+void
+TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
+                                         CORBA::Environment &ACE_TRY_ENV)
+{
+  // If the priority parameter of any of the above operations is not a
+  // valid CORBA priority or if it fails to match the priority
+  // configuration for resources assigned to the POA, then the ORB
+  // shall raise a BAD_PARAM system exception.
+  if (!this->valid_priority (priority))
+    {
+      ACE_THROW (PortableServer::POA::ObjectNotActive ());
+    }
+
+  // For each of the above operations, if the POA does not support the
+  // SERVER_DECLARED option for the PriorityModelPolicy then the ORB
+  // shall raise a WrongPolicy user exception.
+  if (0 /*this->policies ().priority_model () != RTCORBA::SERVER_DECLARED */)
+    {
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
+    }
+
+  // For each of the above operations, if the POA supports the
+  // IMPLICIT_ACTIVATION option for the ImplicitActivationPolicy then
+  // the ORB shall raise a WrongPolicy user exception. This relieves
+  // an ORB implementation of the need to retrieve the target object's
+  // priority from "somewhere" when a request arrives for an inactive
+  // object.
+  if (this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
+    {
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
+    }
+
+  // In all other respects the semantics of the corresponding
+  // (i.e. without the name extensions "_with_priority" and
+  // "_and_priority") PortableServer::POA operations shall be
+  // observed.
+}
+
+#endif /* TAO_HAS_RT_CORBA */
+
 //
 // Forwarding related.
 //
@@ -1850,6 +1928,7 @@ TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
   // Register the forwarding servant with the same object Id.
   this->activate_object_with_id_i (oid,
                                    forwarding_servant,
+                                   -1,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -3741,6 +3820,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   this->activate_object_with_id_i (id.in (),
                                    this->server_object_,
+                                   -1,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 

@@ -46,6 +46,9 @@
 // POA Manager
 #include "tao/POAManager.h"
 
+// RT CORBA
+#include "tao/rtcorbafwd.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
@@ -452,11 +455,44 @@ public:
   CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-//
-// Forwarding related.
-//
+#if (TAO_HAS_RT_CORBA == 1)
+
+  CORBA::Object_ptr create_reference_with_priority (const char * intf,
+                                                    RTCORBA::Priority priority,
+                                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::WrongPolicy));
+
+  CORBA::Object_ptr create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
+                                                           const char * intf,
+                                                           RTCORBA::Priority priority,
+                                                           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::WrongPolicy));
+
+  PortableServer::ObjectId * activate_object_with_priority (PortableServer::Servant p_servant,
+                                                            RTCORBA::Priority priority,
+                                                            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantAlreadyActive,
+                     PortableServer::POA::WrongPolicy));
+
+  void activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
+                                             PortableServer::Servant p_servant,
+                                             RTCORBA::Priority priority,
+                                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantAlreadyActive,
+                     PortableServer::POA::ObjectAlreadyActive,
+                     PortableServer::POA::WrongPolicy));
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+  //
+  // Forwarding related.
+  //
   void forward_object (const PortableServer::ObjectId &oid,
                        CORBA::Object_ptr forward_to,
                        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -572,13 +608,17 @@ protected:
 
   int is_servant_in_map (PortableServer::Servant servant);
 
-  int is_user_id_in_map (const PortableServer::ObjectId &user_id);
+  int is_user_id_in_map (const PortableServer::ObjectId &user_id,
+                         CORBA::Short priority,
+                         int &priorities_match);
 
   PortableServer::ObjectId *activate_object_i (PortableServer::Servant p_servant,
+                                               CORBA::Short priority,
                                                CORBA_Environment &ACE_TRY_ENV);
 
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
                                   PortableServer::Servant p_servant,
+                                  CORBA::Short priority,
                                   CORBA_Environment &ACE_TRY_ENV);
 
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
@@ -600,11 +640,14 @@ protected:
                         CORBA::Environment &ACE_TRY_ENV);
 
   CORBA::Object_ptr create_reference_i (const char *intf,
+                                        CORBA::Short priority,
                                         CORBA_Environment &ACE_TRY_ENV);
 
   CORBA::Object_ptr create_reference_with_id_i (const PortableServer::ObjectId &oid,
                                                 const char *intf,
+                                                CORBA::Short priority,
                                                 CORBA_Environment &ACE_TRY_ENV);
+
   PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant,
                                              CORBA_Environment &ACE_TRY_ENV);
 
@@ -653,7 +696,17 @@ protected:
                         CORBA::Boolean &is_system_id,
                         TAO_Temporary_Creation_Time &poa_creation_time);
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  int valid_priority (RTCORBA::Priority priority);
+
+  void validate_priority_and_policies (RTCORBA::Priority priority,
+                                       CORBA::Environment &ACE_TRY_ENV);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 protected:
+
   TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant &servant,
                                          CORBA_Environment &ACE_TRY_ENV);
