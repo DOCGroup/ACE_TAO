@@ -22,7 +22,7 @@
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
 
-class Driver;
+#include "ECT_Driver.h"
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
 {
@@ -32,7 +32,8 @@ class Test_Consumer : public POA_RtecEventComm::PushConsumer
   //
   // = DESCRIPTION
 public:
-  Test_Consumer (Driver* driver, void* cookie,
+  Test_Consumer (ECT_Driver* driver,
+                 void* cookie,
                  int n_suppliers);
 
   void connect (const char* name,
@@ -54,7 +55,7 @@ public:
   // The skeleton methods.
 
 private:
-  Driver* driver_;
+  ECT_Driver* driver_;
   // The main driver for the test.
 
   void* cookie_;
@@ -75,69 +76,6 @@ private:
 
   int shutdown_count_;
   // How many shutdown events we have received.
-};
-
-class Driver
-{
-  //
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
-public:
-  Driver (void);
-
-  enum {
-    MAX_CONSUMERS = 16
-    // Maximum number of consumers.
-  };
-
-  int run (int argc, char* argv[]);
-  // Execute the test.
-
-  void shutdown_consumer (void* consumer_cookie,
-                          CORBA::Environment&);
-  // Callback method for consumers, each consumer will call this
-  // method once it receives all the shutdown events from the
-  // suppliers.
-
-private:
-  int parse_args (int argc, char* argv[]);
-  // parse the command line args
-
-  void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-                          CORBA::Environment &_env);
-  void disconnect_consumers (CORBA::Environment &_env);
-  // Connect and disconnect the consumers.
-
-  void dump_results (void);
-  // Print out the results
-
-private:
-  Test_Consumer* consumers_[Driver::MAX_CONSUMERS];
-  // The consumer array.
-
-  int n_consumers_;
-  // The number of consumers.
-
-  int n_suppliers_;
-  // How many suppliers are sending events, used for shutdown, each
-  // supplier sends a shutdown message after it finishes, the consumer
-  // finishes when all the suppliers do.
-
-  int event_a_;
-  int event_b_;
-  // We send two types of events, with different contents.
-
-  const char* pid_file_name_;
-  // The name of a file where the process stores its pid
-
-  CORBA::ORB_var orb_;
-  // A reference to the ORB, to shut it down properly.
-
-  ACE_SYNCH_MUTEX lock_;
-  int active_count_;
-  // How many consumers are still receiving events.
 };
 
 #endif /* ECT_CONSUMER_H */
