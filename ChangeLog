@@ -1,3 +1,7 @@
+Sun Dec 16 08:04:23 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Message_Queue_Test_Ex.cpp : fixed a compiler error
+
 Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Message_Queue_Test_Ex.cpp (main): Fixed a minor bug

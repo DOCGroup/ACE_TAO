@@ -13,7 +13,7 @@
 //      1. A simple test of the ACE_Message_Queue_Ex that executes
 //         a performance measurement test for both single-threaded
 //         (null synch) and thread-safe ACE_Message_Queue_Ex
-//         instantiations.  
+//         instantiations.
 //      2. An example of using a user-defined class to parameterize
 //         ACE_Message_Queue_Ex.
 //
@@ -117,7 +117,7 @@ single_thread_performance_test (void)
                     User_Class (test_message),
                     -1);
 
-  UserBlock **receive_block_p = 0;
+  User_Class **receive_block_p = 0;
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
                   -1);
