@@ -8,7 +8,7 @@ ACE_RCSID (LoadBalancing,
 
 
 TAO_LB_RPMS_Monitor_ORBInitializer::TAO_LB_RPMS_Monitor_ORBInitializer (
-  TAO_LB_RPMS_Monitor_Interceptor *interceptor)
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor)
   : interceptor_ (interceptor)
 {
 }

@@ -16,7 +16,7 @@ ACE_RCSID (LoadBalancing,
 TAO_LB_ObjectGroupManager::TAO_LB_ObjectGroupManager (
   TAO_LB_PropertyManager &property_manager,
   TAO_LB_ObjectGroup_Map &map)
-  : property_mangager_ (property_manager),
+  : property_manager_ (property_manager),
     object_group_map_ (map)
 {
 }
@@ -117,7 +117,7 @@ TAO_LB_ObjectGroupManager::get_object_group_ref (
 CORBA::Object_ptr
 TAO_LB_ObjectGroupManager::get_member_ref (
     LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const LoadBalancing::Location & loc,
+    const LoadBalancing::Location & /* loc */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound,

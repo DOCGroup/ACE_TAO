@@ -25,13 +25,13 @@ TAO_LB_RPMS_Monitor::init (CORBA::Environment &ACE_TRY_ENV)
   PortableInterceptor::ServerRequestInterceptor_var tmp = this->interceptor_;
 
   TAO_LB_RPMS_Monitor_ORBInitializer *initializer = 0;
-  ACE_NEW (temp_initializer,
+  ACE_NEW (initializer,
            TAO_LB_RPMS_Monitor_ORBInitializer (this->interceptor_));
 
   PortableInterceptor::ORBInitializer_var orb_initializer =
-    temp_initializer;
+    initializer;
 
-  PortableInterceptor::register_orb_initializer (initializer.in (),
+  PortableInterceptor::register_orb_initializer (orb_initializer.in (),
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -77,9 +77,9 @@ TAO_LB_RPMS_Monitor::register_redirect (const char *type_id,
                                         CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->interceptor_.register_redirect (type_id,
-                                        redirect_to,
-                                        ACE_TRY_ENV);
+  this->interceptor_->register_redirect (type_id,
+                                         redirect_to,
+                                         ACE_TRY_ENV);
 }
 
 void
@@ -87,6 +87,6 @@ TAO_LB_RPMS_Monitor::remove_redirect (const char *type_id,
                                       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->interceptor_.remove_redirect (type_id,
-                                      ACE_TRY_ENV);
+  this->interceptor_->remove_redirect (type_id,
+                                       ACE_TRY_ENV);
 }
