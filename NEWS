@@ -34,6 +34,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.3 and ACE-5.4.4
 . Some improvements in autoconf support; better detection of available
   OS and compiler features.
 
+. Fixed bugs in ACE TSS emulation
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.2 and ACE-5.4.3
 ====================================================
 
