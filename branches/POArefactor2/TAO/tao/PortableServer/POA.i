@@ -3,8 +3,6 @@
 // $Id$
 
 // Exception macros
-#include "poa_macros.h"
-#include "POA_Guard.h"
 #include "tao/Environment.h"
 
 ACE_INLINE CORBA::Boolean
@@ -19,41 +17,6 @@ TAO_POA::lock (void)
   return this->lock_;
 }
 
-ACE_INLINE PortableServer::POA_ptr
-TAO_POA::create_POA (const char *adapter_name,
-                     PortableServer::POAManager_ptr poa_manager,
-                     const CORBA::PolicyList &policies
-                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::AdapterAlreadyExists,
-                   PortableServer::POA::InvalidPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->create_POA_i (adapter_name,
-                             poa_manager,
-                             policies
-                             ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE void
-TAO_POA::destroy (CORBA::Boolean etherealize_objects,
-                  CORBA::Boolean wait_for_completion
-                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Lock access for the duration of this transaction.
-  TAO::Portable_Server::POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
-  ACE_CHECK;
-  ACE_UNUSED_ARG (poa_guard);
-
-  this->destroy_i (etherealize_objects,
-                   wait_for_completion
-                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
 ACE_INLINE TAO_POA_Policy_Set &
 TAO_POA::policies (void)
 {
@@ -66,93 +29,6 @@ TAO_POA::active_object_map (void) const
   return *this->active_object_map_;
 }
 
-ACE_INLINE CORBA::Object_ptr
-TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
-                                   const char *intf
-                                   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
-
-  return this->create_reference_with_id_i (id,
-                                           intf,
-                                           this->cached_policies_.server_priority ()
-                                           ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE PortableServer::ObjectId *
-TAO_POA::servant_to_id (PortableServer::Servant servant
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy))
-{
-  // If we had upgradeable locks, this would initially be a read lock
-  //
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->servant_to_id_i (servant
-                                ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE PortableServer::Servant
-TAO_POA::reference_to_servant (CORBA::Object_ptr reference
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongAdapter,
-                   PortableServer::POA::WrongPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->reference_to_servant_i (reference
-                                       ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object_ptr
-TAO_POA::servant_to_reference (PortableServer::Servant servant
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy))
-{
-  TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
-
-  return this->servant_to_reference_i (servant
-                                       ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE PortableServer::Servant
-TAO_POA::id_to_servant (const PortableServer::ObjectId &oid
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->id_to_servant_i (oid
-                                ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object_ptr
-TAO_POA::id_to_reference (const PortableServer::ObjectId &oid
-                          ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->id_to_reference_i (oid ACE_ENV_ARG_PARAMETER);
-}
-
 ACE_INLINE PortableServer::POA_ptr
 TAO_POA::the_parent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -161,16 +37,6 @@ TAO_POA::the_parent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     return PortableServer::POA::_duplicate (this->parent_);
   else
     return PortableServer::POA::_nil ();
-}
-
-ACE_INLINE PortableServer::POAList *
-TAO_POA::the_children (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->the_children_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE PortableServer::POAManager_ptr

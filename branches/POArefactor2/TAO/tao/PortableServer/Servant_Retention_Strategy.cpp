@@ -1269,6 +1269,8 @@ namespace TAO
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
+      ACE_UNUSED_ARG (id);
+
       // Get the default servant, in case we have a not correct request_processing
       // strategy we will get an exception
       PortableServer::Servant servant = 0;
@@ -1386,19 +1388,19 @@ namespace TAO
     void
     Non_Retain_Servant_Retention_Strategy::deactivate_all_objects (
       CORBA::Boolean etherealize_objects
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
-      return;
+      ACE_UNUSED_ARG (etherealize_objects);
     }
 
     void
     Non_Retain_Servant_Retention_Strategy::cleanup_servant (
       TAO_Active_Object_Map::Map_Entry *active_object_map_entry
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
-      return;
+      ACE_UNUSED_ARG (active_object_map_entry);
     }
 
     PortableServer::ObjectId *
