@@ -25,26 +25,33 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
   : syncscope_setup_ (orb
                       ACE_ENV_ARG_PARAMETER)
 {
-  ACE_CHECK;
-
-  if (use_rt_corba)
+  ACE_TRY
     {
-      this->rtcorba_setup_ =
-      auto_ptr<RTCORBA_Setup> (new RTCORBA_Setup (orb,
-                                                  rt_class
-                                                  ACE_ENV_ARG_PARAMETER));
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
-      this->rtpoa_setup_ =
-        auto_ptr<RTPOA_Setup> (new RTPOA_Setup (orb,
-                                                *this->rtcorba_setup_
-                                                ACE_ENV_ARG_PARAMETER));
-      ACE_TRY_CHECK;
+      if (use_rt_corba)
+        {
+          this->rtcorba_setup_ =
+            auto_ptr<RTCORBA_Setup> (new RTCORBA_Setup (orb,
+                                                        rt_class
+                                                        ACE_ENV_ARG_PARAMETER));
+          ACE_TRY_CHECK;
 
-      this->priorityband_setup_ =
-        auto_ptr<PriorityBand_Setup> (new PriorityBand_Setup (orb,
-                                                              *this->rtcorba_setup_
-                                                              ACE_ENV_ARG_PARAMETER));
-      ACE_TRY_CHECK;
-    }
+          this->rtpoa_setup_ =
+            auto_ptr<RTPOA_Setup> (new RTPOA_Setup (orb,
+                                                    *this->rtcorba_setup_
+                                                    ACE_ENV_ARG_PARAMETER));
+          ACE_TRY_CHECK;
+
+          this->priorityband_setup_ =
+            auto_ptr<PriorityBand_Setup> (new PriorityBand_Setup (orb,
+                                                                  *this->rtcorba_setup_
+                                                                  ACE_ENV_ARG_PARAMETER));
+          ACE_TRY_CHECK;
+        }
+    } ACE_CATCHANY
+      {
+        // TODO
+      }
+  ACE_ENDTRY;
 }
