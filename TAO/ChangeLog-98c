@@ -1,3 +1,15 @@
+Wed Sep 16 09:14:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.cpp: 
+	  Fixed several portability problems, some ACE_thread_t variables
+	  were initialized to 0 instead of ACE_OS::NULL_thread and == was
+	  used to compare them, instead of ACE_OS::thr_equal.
+
+	* tao/CDR.cpp: 
+	  A faster implementation of read_array() for the case were
+	  byteswapping is required. Thanks to "Anders W. Tell"
+	  <anderst@toolsmiths.se> for this patch.
+
 Tue Sep 15 21:37:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Object.cpp: 
