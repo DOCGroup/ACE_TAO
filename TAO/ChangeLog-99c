@@ -1,826 +1,833 @@
+Wed Sep 01 16:04:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp,
+          Transient_Naming_Context.cpp
+          use the explicit TAO_Bindings_Iterator template instantiation
+          even with ACE_HAS_GNU_REPO.  g++ 2.91.66 misses it with -frepo.
+
 Wed Sep  1 14:36:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IORS.h: Added TAO_Export to all classes.  Thanks to Dmitry
-	  Goldshtain <Goldshtain@bank.gov.ua> for reporting this.
+        * tao/IORS.h: Added TAO_Export to all classes.  Thanks to Dmitry
+          Goldshtain <Goldshtain@bank.gov.ua> for reporting this.
 
 Wed Sep  1 13:14:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
-	  Changed generated operation code so that ACE_NEW_RETURN returns
- 	  _tao_retval instead of 0, which does not work for enum return
- 	  types. Had to change some other names around to avoid
- 	  clashes. Thanks to Sharo Randall <rasb@eci.esys.com> for
- 	  pointing this out.
+        * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+          Changed generated operation code so that ACE_NEW_RETURN returns
+          _tao_retval instead of 0, which does not work for enum return
+          types. Had to change some other names around to avoid
+          clashes. Thanks to Sharo Randall <rasb@eci.esys.com> for
+          pointing this out.
 
 Wed Sep  1 12:37:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/Pluggable.h:
-	* tao/Pluggable.i:
-	* tao/Pluggable.cpp:
-	* tao/Profile.h:
-	* tao/Profile.i:
-	* tao/Profile.cpp:
-	  Move the TAO_Profile class to its own file.
-	  The base class now implements the methods to access and
-	  manipulate the tagged components of the profile.
+        * tao/Makefile:
+        * tao/Pluggable.h:
+        * tao/Pluggable.i:
+        * tao/Pluggable.cpp:
+        * tao/Profile.h:
+        * tao/Profile.i:
+        * tao/Profile.cpp:
+          Move the TAO_Profile class to its own file.
+          The base class now implements the methods to access and
+          manipulate the tagged components of the profile.
 
-	* tao/MProfile.h:
-	* tao/Acceptor_Registry.cpp:
-	  Needs to include the new Profile file.
+        * tao/MProfile.h:
+        * tao/Acceptor_Registry.cpp:
+          Needs to include the new Profile file.
 
-	* tao/Invocation.cpp:
-	  If the TAO_USE_PRIORITY_POLICY macro is defined the ORB will use
-	  the profile that matches the current thread priority.
+        * tao/Invocation.cpp:
+          If the TAO_USE_PRIORITY_POLICY macro is defined the ORB will use
+          the profile that matches the current thread priority.
 
-	* tao/Tagged_Components.cpp:
-	  Fixed several bugs in the demarshaling code.
+        * tao/Tagged_Components.cpp:
+          Fixed several bugs in the demarshaling code.
 
-	* tao/UIOP_Profile.h:
-	* tao/UIOP_Profile.i:
-	* tao/UIOP_Profile.cpp:
-	* tao/IIOP_Profile.h:
-	* tao/IIOP_Profile.i:
-	* tao/IIOP_Profile.cpp:
-	  The tagged component access and manipulation code is in the base
-	  class now.
+        * tao/UIOP_Profile.h:
+        * tao/UIOP_Profile.i:
+        * tao/UIOP_Profile.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.i:
+        * tao/IIOP_Profile.cpp:
+          The tagged component access and manipulation code is in the base
+          class now.
 
-	* tao/Pool_Per_Endpoint.cpp:
-	* tao/Reactor_Per_Priority.cpp:
-	  Only print debugging messages if the debug level is high
-	  enough.
+        * tao/Pool_Per_Endpoint.cpp:
+        * tao/Reactor_Per_Priority.cpp:
+          Only print debugging messages if the debug level is high
+          enough.
 
-	* tests/Endpoint_Per_Priority/Makefile:
-	* tests/Endpoint_Per_Priority/client.conf:
-	* tests/Endpoint_Per_Priority/client.cpp:
-	* tests/Endpoint_Per_Priority/server.conf:
-	* tests/Endpoint_Per_Priority/test.idl:
-	* tests/Endpoint_Per_Priority/test_i.h:
-	* tests/Endpoint_Per_Priority/test_i.cpp:
-	  Modified the test to pass an application level id of the client
-	  thread to the server. This is used to verify that the request
-	  actually executes at the right level on the server-side.
-	  The client receives the number and priorities of the threads on
-	  the command line.
+        * tests/Endpoint_Per_Priority/Makefile:
+        * tests/Endpoint_Per_Priority/client.conf:
+        * tests/Endpoint_Per_Priority/client.cpp:
+        * tests/Endpoint_Per_Priority/server.conf:
+        * tests/Endpoint_Per_Priority/test.idl:
+        * tests/Endpoint_Per_Priority/test_i.h:
+        * tests/Endpoint_Per_Priority/test_i.cpp:
+          Modified the test to pass an application level id of the client
+          thread to the server. This is used to verify that the request
+          actually executes at the right level on the server-side.
+          The client receives the number and priorities of the threads on
+          the command line.
 
 Wed Sep  1 12:30:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/MessagingS.cpp:
-	  Forgot to remove the 'return new...' line when replacing
-	  with 'ACE_NEW_RETURN...'. DU caught it.
+        * tao/MessagingS.cpp:
+          Forgot to remove the 'return new...' line when replacing
+          with 'ACE_NEW_RETURN...'. DU caught it.
 
 Wed Sep  1 10:56:57 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/IORManipulation.h: Added a TAO Export macro to
-	  TAO_IOR_Manipulation_impl.  Thanks to Goldshtain Dmitry
- 	  <goldshtain.dmitry@usa.net> for reporting this.
+        * tao/IORManipulation.h: Added a TAO Export macro to
+          TAO_IOR_Manipulation_impl.  Thanks to Goldshtain Dmitry
+          <goldshtain.dmitry@usa.net> for reporting this.
 
 Wed Sep  1 10:48:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/sequence.idl:
-	  Added nested sequence examples to this file.
+        * tests/IDL_Test/sequence.idl:
+          Added nested sequence examples to this file.
 
 Wed Sep  1 09:52:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sequence.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_co.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	  Changes to enable code generation for nested IDL sequences. Any
- 	  number of levels of nesting will work. Thanks to Lars Immisch
- 	  <lars@ibp.de> for sending in the example that got the ball
- 	  rolling.
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_co.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Changes to enable code generation for nested IDL sequences. Any
+          number of levels of nesting will work. Thanks to Lars Immisch
+          <lars@ibp.de> for sending in the example that got the ball
+          rolling.
 
 Wed Sep  1 07:09:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/AMI/simple_client.cpp:
-	  Removed an extra "*/".
+        * tests/AMI/simple_client.cpp:
+          Removed an extra "*/".
 
 Wed Sep 01 04:53:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp (start_request):
-	* tao/UIOP_Transport.cpp (start_request): Fixed unused variable
-	  warnings.
+        * tao/IIOP_Transport.cpp (start_request):
+        * tao/UIOP_Transport.cpp (start_request): Fixed unused variable
+          warnings.
 
 Wed Sep 01 04:04:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Invocation.h:
-	* tao/Invocation.cpp (prepare_header): Extracted the code that
-	  builds the request header out from transport->start_request.
-	  The problem with putting the requst header builder in
-	  transport->start_request was that it built the request header
-	  pre-maturely.  And when interceptors have a change to modify the
-	  service context list, the change wouldn't get to put into the
-	  header.  We can build the request header directly from
-	  GIOP_Invocation directly because all the pieces of information
-	  required to build the header are carried by the Invocation
-	  class. The disadvantage of this change is that, we'll need to
-	  call the <prepare_header> method explicitly in stubs which
-	  somehow increase the footprint a bit.  We may need to improve
-	  this so for people don't need interceptors, TAO can still be
-	  mean and lean.
+        * tao/Invocation.h:
+        * tao/Invocation.cpp (prepare_header): Extracted the code that
+          builds the request header out from transport->start_request.
+          The problem with putting the requst header builder in
+          transport->start_request was that it built the request header
+          pre-maturely.  And when interceptors have a change to modify the
+          service context list, the change wouldn't get to put into the
+          header.  We can build the request header directly from
+          GIOP_Invocation directly because all the pieces of information
+          required to build the header are carried by the Invocation
+          class. The disadvantage of this change is that, we'll need to
+          call the <prepare_header> method explicitly in stubs which
+          somehow increase the footprint a bit.  We may need to improve
+          this so for people don't need interceptors, TAO can still be
+          mean and lean.
 
-	* tao/Asynch_Invocation.cpp:
-	* tao/Invocation.cpp (start): The signature of
-	  transport_->start_request has been changed.
+        * tao/Asynch_Invocation.cpp:
+        * tao/Invocation.cpp (start): The signature of
+          transport_->start_request has been changed.
 
-	* tao/Pluggable.h:
-	* tao/Pluggable.cpp:
-	* tao/IIOP_Transport.h:
-	* tao/IIOP_Transport.cpp:
-	* tao/UIOP_Transport.h:
-	* tao/UIOP_Transport.cpp: (start_request): Since the header
-	  builder has been moved to GIOP_Invocation, this method no longer
-	  needs that many arguments.
+        * tao/Pluggable.h:
+        * tao/Pluggable.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/UIOP_Transport.h:
+        * tao/UIOP_Transport.cpp: (start_request): Since the header
+          builder has been moved to GIOP_Invocation, this method no longer
+          needs that many arguments.
 
-	* tao/Object.cpp: Fixed remote method invocation code (to call
-	  prepare_header explicitly.)
+        * tao/Object.cpp: Fixed remote method invocation code (to call
+          prepare_header explicitly.)
 
-	* tao/Stub.cpp (do_static_call,do_dynamic_call): Fixed remote
-	  method invocation code.
+        * tao/Stub.cpp (do_static_call,do_dynamic_call): Fixed remote
+          method invocation code.
 
-	* tao/DomainC.cpp:
-	* tao/InterfaceC.cpp
-	* tao/POAC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.cpp: Fixed remote method invocation code.
+        * tao/DomainC.cpp:
+        * tao/InterfaceC.cpp
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp: Fixed remote method invocation code.
 
-	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:  Generated
-	  stubs also need call <prepare_header> explicitly.
+        * TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:  Generated
+          stubs also need call <prepare_header> explicitly.
 
-	* tests/Interceptors/interceptors.cpp: Turned on the service
-	  context list testing code.  Fixed incorrect message id check.
+        * tests/Interceptors/interceptors.cpp: Turned on the service
+          context list testing code.  Fixed incorrect message id check.
 
 Tue Aug 31 21:04:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp
-	  (get_control_callback,get_callback,set_protocol_object):  Fixed
-	  "*/ found outside of comment" warnings.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+          (get_control_callback,get_callback,set_protocol_object):  Fixed
+          "*/ found outside of comment" warnings.
 
 Tue Aug 31 20:35:56 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/sfp:
-	  Removed the files in this drectory as this test is superseded by
-	  the new set of tests under the Pluggable directory.
+        * orbsvcs/tests/AVStreams/sfp:
+          Removed the files in this drectory as this test is superseded by
+          the new set of tests under the Pluggable directory.
 
-	* orbsvcs/tests/AVStreams/Makefile:
-	  Updated the Makefile to include the new AV tests.
+        * orbsvcs/tests/AVStreams/Makefile:
+          Updated the Makefile to include the new AV tests.
 
 Tue Aug 31 18:07:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/:
-	  The modififed implementation of the A/V Streaming Service now
-	  fully supports the Full Profile interfaces like FDev,
-	  FlowConnection, FlowEndPoint. It also support the
-	  Point-to-MultiPoint binding and MultiPoint-to-MultiPoint
-	  binding. The implementation provides a pluggable protocols
-	  framework for flow protocols like SFP, RTP and also for
-	  transport protocols like TCP, UDP and ATM. It provides an
-	  extensible Policy framework to add new policies for flow
-	  protocols. There's also an implementation of
-	  MultiPoint-to-MultiPoint binding.
+        * orbsvcs/orbsvcs/AV/:
+          The modififed implementation of the A/V Streaming Service now
+          fully supports the Full Profile interfaces like FDev,
+          FlowConnection, FlowEndPoint. It also support the
+          Point-to-MultiPoint binding and MultiPoint-to-MultiPoint
+          binding. The implementation provides a pluggable protocols
+          framework for flow protocols like SFP, RTP and also for
+          transport protocols like TCP, UDP and ATM. It provides an
+          extensible Policy framework to add new policies for flow
+          protocols. There's also an implementation of
+          MultiPoint-to-MultiPoint binding.
 
-	  For more documentation, please check
-	  http://www.cs.wustl.edu/~naga/pluggable_av.ps.gz
+          For more documentation, please check
+          http://www.cs.wustl.edu/~naga/pluggable_av.ps.gz
 
-	  The following files have been newly added.
+          The following files have been newly added.
 
-	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}:
-	  Provides generic transport related interaces.
+        * orbsvcs/orbsvcs/AV/Transport.{h,cpp}:
+          Provides generic transport related interaces.
 
-	* orbsvcs/orbsvcs/AV/TCP.{h,cpp}:
-   	  These files contain the TCP Null flow protocol layer and the TCP
-	  transport interfaces.
+        * orbsvcs/orbsvcs/AV/TCP.{h,cpp}:
+          These files contain the TCP Null flow protocol layer and the TCP
+          transport interfaces.
 
-	* orbsvcs/orbsvcs/AV/UDP.{h,cpp}:
-	  These files contain the UDP Null flow protocol layer and the UDP
-	  transport interfaces.
+        * orbsvcs/orbsvcs/AV/UDP.{h,cpp}:
+          These files contain the UDP Null flow protocol layer and the UDP
+          transport interfaces.
 
-	* orbsvcs/orbsvcs/AV/MCast.{h,cpp}:
-	  These files contain the UDP Multicast related transport interfaces.
+        * orbsvcs/orbsvcs/AV/MCast.{h,cpp}:
+          These files contain the UDP Multicast related transport interfaces.
 
-	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}:
-	* orbsvcs/orbsvcs/AV/RTCP.{h,cpp}:
-	* orbsvcs/orbsvcs/AV/source.{h,cpp}:
-	  Provides a RTP/RTCP implementation based on Vic (a Videoconferencing
-	  tool developed at U Cal Berkeley).
+        * orbsvcs/orbsvcs/AV/RTP.{h,cpp}:
+        * orbsvcs/orbsvcs/AV/RTCP.{h,cpp}:
+        * orbsvcs/orbsvcs/AV/source.{h,cpp}:
+          Provides a RTP/RTCP implementation based on Vic (a Videoconferencing
+          tool developed at U Cal Berkeley).
 
-	* orbsvcs/orbsvcs/AV/Policy.{h,cpp}:
-	  Provides the Policy related classes for the pluggable protocols framework.
+        * orbsvcs/orbsvcs/AV/Policy.{h,cpp}:
+          Provides the Policy related classes for the pluggable protocols framework.
 
-	* orbsvcs/orbsvcs/AV/Protocol_Factory.{h,cpp}:
-	  Provides the generice interfaces for flow protocol factories and
-	  transport factories.
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.{h,cpp}:
+          Provides the generice interfaces for flow protocol factories and
+          transport factories.
 
-	* orbsvcs/orbsvcs/AV/Flows_T.{h,cpp}:
-	  FDev implementation classes.
+        * orbsvcs/orbsvcs/AV/Flows_T.{h,cpp}:
+          FDev implementation classes.
 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.{h,cpp,i}:
-	  Moved the Flow Spec Entry classes from AVStreams_i.* files to
-	  these.
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.{h,cpp,i}:
+          Moved the Flow Spec Entry classes from AVStreams_i.* files to
+          these.
 
-	For additional modification that was done during the branch please
-	check $TAO_ROOT/orbsvcs/orbsvcs/AV/pluggable_av_log.
+        For additional modification that was done during the branch please
+        check $TAO_ROOT/orbsvcs/orbsvcs/AV/pluggable_av_log.
 
-	* orbsvcs/tests/AVStreams/Pluggable:
-	  This directory provides a simple file transfer test using the
-	  pluggable protocols framework and runs over TCP  Null layer, UDP
-	  Null layer, SFP and RTP using the light profile interfaces.
+        * orbsvcs/tests/AVStreams/Pluggable:
+          This directory provides a simple file transfer test using the
+          pluggable protocols framework and runs over TCP  Null layer, UDP
+          Null layer, SFP and RTP using the light profile interfaces.
 
-	* orbsvcs/tests/AVStreams/Full_Profile:
-	  This directory provides the same file transfer test as in
-	  Pluggable directory using the Full Profile interfaces.
+        * orbsvcs/tests/AVStreams/Full_Profile:
+          This directory provides the same file transfer test as in
+          Pluggable directory using the Full Profile interfaces.
 
-	* orbsvcs/tests/AVStreams/Multicast:
-	  This directory provides a file transfer test using the
-	  point-to-multipoint binding in AV using light profile interfaces.
+        * orbsvcs/tests/AVStreams/Multicast:
+          This directory provides a file transfer test using the
+          point-to-multipoint binding in AV using light profile interfaces.
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile:
-	  Multicast file transfer test using the point-to-multipoint binding
-	  for full profile interfaces.
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile:
+          Multicast file transfer test using the point-to-multipoint binding
+          for full profile interfaces.
 
 Tue Aug 31 17:59:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	  Minor change to idl.yy to allow output of error message
-	  when error is of the form:
-		struct foo {
-				char bar;
-				sequence<bar> boink;
-			   };
-	  Previously, IDL compiler would generate no code for the
-	  sequence and output no error message. This would happen
-	  also in unions and with bounded member sequences.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+          Minor change to idl.yy to allow output of error message
+          when error is of the form:
+                struct foo {
+                                char bar;
+                                sequence<bar> boink;
+                           };
+          Previously, IDL compiler would generate no code for the
+          sequence and output no error message. This would happen
+          also in unions and with bounded member sequences.
 
 Tue Aug 31 14:23:55 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/UIOP_Connector.cpp:  Also rearranged the code so that it'll
-	  compile properly.
+        * tao/UIOP_Connector.cpp:  Also rearranged the code so that it'll
+          compile properly.
 
 Tue Aug 31 14:17:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp: Rearranged the code so that it'll
-	  compile properly.  Thanks to Bala for reporting this.
+        * tao/IIOP_Connector.cpp: Rearranged the code so that it'll
+          compile properly.  Thanks to Bala for reporting this.
 
 Tue Aug 31 13:33:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Quoter/Makefile:
-	  The dependencies where broken so the test wouldn't compile.
+        * examples/Quoter/Makefile:
+          The dependencies where broken so the test wouldn't compile.
 
 Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Added a series of fixes that allow TAO to build and
-	  run cleanly with SunC++ 5.0 and Solaris 7 even when debugging is
- 	  NOT enabled.  These changes require moving the explicit template
- 	  instantiations from the BOTTOM of the *.cpp files to near the
- 	  top.  Thanks to Robert Shewan <rshew@peri.com> for reporting
- 	  this.
+        * Added a series of fixes that allow TAO to build and
+          run cleanly with SunC++ 5.0 and Solaris 7 even when debugging is
+          NOT enabled.  These changes require moving the explicit template
+          instantiations from the BOTTOM of the *.cpp files to near the
+          top.  Thanks to Robert Shewan <rshew@peri.com> for reporting
+          this.
 
 Tue Aug 31 9:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tao/TAO.dsp:
-	  Added the files Linear_Priority_Mapping.{h,i,cpp}
-	  and Direct_Priority_Mapping.{h,i,cpp}
+        * tao/TAO.dsp:
+          Added the files Linear_Priority_Mapping.{h,i,cpp}
+          and Direct_Priority_Mapping.{h,i,cpp}
 
 Tue Aug 31 8:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_attribute/attribute.cpp
-	  TAO_IDL/be/be_visitor_interface/interface.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_ch.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_cs.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp:
-	  Fixed bugs in the code generation for attributes when
-	  compiling in AMI mode.
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp
+          TAO_IDL/be/be_visitor_interface/interface.cpp
+          TAO_IDL/be/be_visitor_operation/ami_ch.cpp
+          TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp:
+          Fixed bugs in the code generation for attributes when
+          compiling in AMI mode.
 
-	* tests/AMI/simple-client.cpp,
-	  tests/AMI/simple_client.dsp,
-	  tests/AMI/client.dsp,
-	  tests/AMI/server.dsp,
-	  tests/AMI/test.idl
-	  tests/AMI/test_i.cpp,
-	  tests/AMI/client.conf,
-	  tests/AMI/simple-client-exclusive.conf,
-	  tests/AMI/simple-client-muxed.conf,
-	  tests/AMI/client-global.conf,
-	  tests/AMI/test_i.i:
-	  Removed these files because they got replaced by new ones.
+        * tests/AMI/simple-client.cpp,
+          tests/AMI/simple_client.dsp,
+          tests/AMI/client.dsp,
+          tests/AMI/server.dsp,
+          tests/AMI/test.idl
+          tests/AMI/test_i.cpp,
+          tests/AMI/client.conf,
+          tests/AMI/simple-client-exclusive.conf,
+          tests/AMI/simple-client-muxed.conf,
+          tests/AMI/client-global.conf,
+          tests/AMI/test_i.i:
+          Removed these files because they got replaced by new ones.
 
-	* tests/AMI/ami_test.idl,
-	  tests/AMI/ami_test_i.cpp,
-	  tests/AMI/ami_test_i.h,
-	  tests/AMI/simple_client_exclusive.conf,
-	  tests/AMI/simple_client_muxed.conf,
-	  tests/AMI/AMI_Test_Client.dsp,
-	  tests/AMI/AMI_Test_Simple_Client.dsp,
-	  tests/AMI/AMI_Test_Server.dsp:
-	  Added these files for the new generation of AMI tests.
+        * tests/AMI/ami_test.idl,
+          tests/AMI/ami_test_i.cpp,
+          tests/AMI/ami_test_i.h,
+          tests/AMI/simple_client_exclusive.conf,
+          tests/AMI/simple_client_muxed.conf,
+          tests/AMI/AMI_Test_Client.dsp,
+          tests/AMI/AMI_Test_Simple_Client.dsp,
+          tests/AMI/AMI_Test_Server.dsp:
+          Added these files for the new generation of AMI tests.
 
-	* tests/AMI/Makefile,
-	  tests/AMI/run_test.pl,
-	  tests/AMI/ami_test.dsw,
-	  tests/AMI/simple_client.cpp,
-	  tests/AMI/client.cpp,
-	  tests/AMI/server.cpp:
-	  Modified these files to make the test more readable
-	  and less MT_Client cut&paste like.
+        * tests/AMI/Makefile,
+          tests/AMI/run_test.pl,
+          tests/AMI/ami_test.dsw,
+          tests/AMI/simple_client.cpp,
+          tests/AMI/client.cpp,
+          tests/AMI/server.cpp:
+          Modified these files to make the test more readable
+          and less MT_Client cut&paste like.
 
 
 Mon Aug 30 23:24:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/Priority_Mapping.h:
-	* tao/Priority_Mapping.cpp:
-	* tao/Direct_Priority_Mapping.cpp:
-	* tao/Direct_Priority_Mapping.h:
-	* tao/Direct_Priority_Mapping.i:
-	* tao/Linear_Priority_Mapping.cpp:
-	* tao/Linear_Priority_Mapping.h:
-	* tao/Linear_Priority_Mapping.i:
-	* tao/default_resource.h:
-	* tao/default_resource.cpp:
-	  The TAO_Priority_Mapping class is trivial now, two derived
-	  classes implement simple priority mapping strategies.
-	  Linear_Priority_Mapping uses a linear map between the full range
-	  of priorities in a scheduling class to the full range of
-	  CORBA priorities.
-	  Direct_Priority_Mapping uses a simpler mapping where a suitable
-	  offset is used to map the minimum CORBA priority to the minimum
-	  native priority.
+        * tao/Makefile:
+        * tao/Priority_Mapping.h:
+        * tao/Priority_Mapping.cpp:
+        * tao/Direct_Priority_Mapping.cpp:
+        * tao/Direct_Priority_Mapping.h:
+        * tao/Direct_Priority_Mapping.i:
+        * tao/Linear_Priority_Mapping.cpp:
+        * tao/Linear_Priority_Mapping.h:
+        * tao/Linear_Priority_Mapping.i:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          The TAO_Priority_Mapping class is trivial now, two derived
+          classes implement simple priority mapping strategies.
+          Linear_Priority_Mapping uses a linear map between the full range
+          of priorities in a scheduling class to the full range of
+          CORBA priorities.
+          Direct_Priority_Mapping uses a simpler mapping where a suitable
+          offset is used to map the minimum CORBA priority to the minimum
+          native priority.
 
-	* tao/Messaging_Policy_i.h:
-	* tao/Messaging_Policy_i.cpp:
-	  Use ServantBase_var for exception safety.
+        * tao/Messaging_Policy_i.h:
+        * tao/Messaging_Policy_i.cpp:
+          Use ServantBase_var for exception safety.
 
-	* tao/RT_Current.h:
-	  Need "tao/Exception.h" for platforms that implement throw specs.
+        * tao/RT_Current.h:
+          Need "tao/Exception.h" for platforms that implement throw specs.
 
-	* tao/ORB_Core.cpp:
-	* tao/Single_Reactor.cpp:
-	  Minor cosmetic fixes.
+        * tao/ORB_Core.cpp:
+        * tao/Single_Reactor.cpp:
+          Minor cosmetic fixes.
 
-	* tao/Pool_Per_Endpoint.h:
-	* tao/Pool_Per_Endpoint.i:
-	* tao/Pool_Per_Endpoint.cpp:
-	  Added option to control the thread creation flags.
+        * tao/Pool_Per_Endpoint.h:
+        * tao/Pool_Per_Endpoint.i:
+        * tao/Pool_Per_Endpoint.cpp:
+          Added option to control the thread creation flags.
 
-	* tests/Endpoint_Per_Priority/Makefile:
-	  Updated dependencies.
+        * tests/Endpoint_Per_Priority/Makefile:
+          Updated dependencies.
 
-	* tests/Endpoint_Per_Priority/server.cpp:
-	  Use the new <flags> option in the Pool_Per_Endpoint strategy.
+        * tests/Endpoint_Per_Priority/server.cpp:
+          Use the new <flags> option in the Pool_Per_Endpoint strategy.
 
 Mon Aug 30 17:10:30 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Added a note on Connection Caching feature
-	  which contains the "-fsquangle" option info too.
+        * TAO-INSTALL.html: Added a note on Connection Caching feature
+          which contains the "-fsquangle" option info too.
 
 Mon Aug 30 17:16:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_scope.cpp:
-	  Removed unused arg in function
-	  last_inout_or_out_node ().
+        * TAO_IDL/be/be_visitor_scope.cpp:
+          Removed unused arg in function
+          last_inout_or_out_node ().
 
 Mon Aug 30 17:10:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Interceptors/interceptors.cpp: Fixed erronous format
-	  specifiers.
+        * tests/Interceptors/interceptors.cpp: Fixed erronous format
+          specifiers.
 
 Mon Aug 30 10:43:21 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* PROBLEM-REPORT-FORM:
+        * PROBLEM-REPORT-FORM:
 
-	  Updated to point to refer reports tao-bugs mailing list.
+          Updated to point to refer reports tao-bugs mailing list.
 
-	* tao/Exception.h:
-	* tao/orbconf.h:
+        * tao/Exception.h:
+        * tao/orbconf.h:
 
-	  Comment updates.
+          Comment updates.
 
 Mon Aug 30 15:58:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added the new files to the MSVC projects.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added the new files to the MSVC projects.
 
 Mon Aug 30 15:56:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Interceptors/Makefile: Updated dependencies.
+        * tests/Interceptors/Makefile: Updated dependencies.
 
 Mon Aug 30 15:15:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/orbconf.h:
-	* rules.tao.GNU:
-	  Added a number of new classes to implement the
-	  endpoint-per-priority concurrency strategy.  In this strategy
-	  each priority level is assigned a different reactor, threads use
-	  the reactor for their priority level; acceptors are also bound
-	  to the reactor of their priority level, as specificied in the
-	  command-line.
-	  Since the priority is embedded in the IOR using a tagged
-	  component the client can use that to select which endpoint it
-	  will use, preserving priority end-to-end (the client-side is not
-	  implemented yet).
-	  This achieves total isolation of threads running at different
-	  priorities.
+        * tao/Makefile:
+        * tao/orbconf.h:
+        * rules.tao.GNU:
+          Added a number of new classes to implement the
+          endpoint-per-priority concurrency strategy.  In this strategy
+          each priority level is assigned a different reactor, threads use
+          the reactor for their priority level; acceptors are also bound
+          to the reactor of their priority level, as specificied in the
+          command-line.
+          Since the priority is embedded in the IOR using a tagged
+          component the client can use that to select which endpoint it
+          will use, preserving priority end-to-end (the client-side is not
+          implemented yet).
+          This achieves total isolation of threads running at different
+          priorities.
 
-	* tao/Pool_Per_Endpoint.h:
-	* tao/Pool_Per_Endpoint.i:
-	* tao/Pool_Per_Endpoint.cpp:
-	  Helper class that creates the threads to run the ORB based on
-	  the endpoints (and their priorities) as specified in the
-	  command-line.
-	  The user is not required to create the threads using this class,
-	  but it is much simpler to do so.
+        * tao/Pool_Per_Endpoint.h:
+        * tao/Pool_Per_Endpoint.i:
+        * tao/Pool_Per_Endpoint.cpp:
+          Helper class that creates the threads to run the ORB based on
+          the endpoints (and their priorities) as specified in the
+          command-line.
+          The user is not required to create the threads using this class,
+          but it is much simpler to do so.
 
-	* tao/Reactor_Registry.h:
-	* tao/Reactor_Registry.i:
-	* tao/Reactor_Registry.cpp:
-	  A new abstraction to control the number of reactors created by
-	  the ORB. This class also decides which reactor handles which
-	  endpoint and which reactor is used by each thread.
+        * tao/Reactor_Registry.h:
+        * tao/Reactor_Registry.i:
+        * tao/Reactor_Registry.cpp:
+          A new abstraction to control the number of reactors created by
+          the ORB. This class also decides which reactor handles which
+          endpoint and which reactor is used by each thread.
 
-	* tao/Single_Reactor.h:
-	* tao/Single_Reactor.i:
-	* tao/Single_Reactor.cpp:
-	* tao/Reactor_Per_Priority.h:
-	* tao/Reactor_Per_Priority.i:
-	* tao/Reactor_Per_Priority.cpp:
-	  Two simple implementations of the Reactor_Registry strategy. The
-	  first one creates a single reactor for the ORB. The second one
-	  creates a new reactor for each priority level.
+        * tao/Single_Reactor.h:
+        * tao/Single_Reactor.i:
+        * tao/Single_Reactor.cpp:
+        * tao/Reactor_Per_Priority.h:
+        * tao/Reactor_Per_Priority.i:
+        * tao/Reactor_Per_Priority.cpp:
+          Two simple implementations of the Reactor_Registry strategy. The
+          first one creates a single reactor for the ORB. The second one
+          creates a new reactor for each priority level.
 
-	* tao/rtcorbafwd.h:
-	* tao/rtcorbafwd.i:
-	* tao/rtcorbafwd.cpp:
-	  Some of the new features use types and interfaces defined in the
-	  RTCORBA spec, we added a
+        * tao/rtcorbafwd.h:
+        * tao/rtcorbafwd.i:
+        * tao/rtcorbafwd.cpp:
+          Some of the new features use types and interfaces defined in the
+          RTCORBA spec, we added a
 
-	* tao/Priority_Mapping.h:
-	* tao/Priority_Mapping.i:
-	* tao/Priority_Mapping.cpp:
-	  Base class and default implementation for the
-	  RTCORBA::PriorityMapping native type.
+        * tao/Priority_Mapping.h:
+        * tao/Priority_Mapping.i:
+        * tao/Priority_Mapping.cpp:
+          Base class and default implementation for the
+          RTCORBA::PriorityMapping native type.
 
-	* tao/Resource_Factory.h:
-	* tao/Resource_Factory.cpp:
-	* tao/default_resource.h:
-	* tao/default_resource.cpp:
-	  Added new methods to create the Reactor_Registry and the
-	  Priority_Mapping strategies.
+        * tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Added new methods to create the Reactor_Registry and the
+          Priority_Mapping strategies.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
-	  Modified to deal with the new Reactor_Registry class and the
-	  Priority_Mapping functions.
-	  Also changed shutdown() to shutdown all the reactors in the
-	  ORB.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Modified to deal with the new Reactor_Registry class and the
+          Priority_Mapping functions.
+          Also changed shutdown() to shutdown all the reactors in the
+          ORB.
 
-	* tao/RTCORBA.pidl:
-	  File used to generate some of the RTCORBA types.
+        * tao/RTCORBA.pidl:
+          File used to generate some of the RTCORBA types.
 
-	* tao/RT_Current.h:
-	* tao/RT_Current.i:
-	* tao/RT_Current.cpp:
-	  Implement the RTCORBA::Current interface, at this point the
-	  interface is not used (i.e. resolve_initial_references() does
-	  not work), but should be fully functional soon.
+        * tao/RT_Current.h:
+        * tao/RT_Current.i:
+        * tao/RT_Current.cpp:
+          Implement the RTCORBA::Current interface, at this point the
+          interface is not used (i.e. resolve_initial_references() does
+          not work), but should be fully functional soon.
 
-	* tao/Leader_Follower.h:
-	* tao/Leader_Follower.i:
-	* tao/Leader_Follower.cpp:
-	  Separate the Leader_Follower information to its own file (it
-	  used to be in ORB_Core), this class is used by the
-	  Reactor_Per_Endpoint registry to keep a separate LF group for
-	  each priority level.
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.i:
+        * tao/Leader_Follower.cpp:
+          Separate the Leader_Follower information to its own file (it
+          used to be in ORB_Core), this class is used by the
+          Reactor_Per_Endpoint registry to keep a separate LF group for
+          each priority level.
 
-	* tao/Wait_Strategy.cpp:
-	* tao/Reply_Dispatcher.cpp:
-	  They must include "tao/Leader_Follower.h" now.
+        * tao/Wait_Strategy.cpp:
+        * tao/Reply_Dispatcher.cpp:
+          They must include "tao/Leader_Follower.h" now.
 
-	* tao/IIOP_Acceptor.cpp:
-	* tao/UIOP_Acceptor.cpp:
-	  Get the right reactor from the ORB_Core.
+        * tao/IIOP_Acceptor.cpp:
+        * tao/UIOP_Acceptor.cpp:
+          Get the right reactor from the ORB_Core.
 
-	* tests/MT_Client/Makefile:
-	  Updated dependencies
+        * tests/MT_Client/Makefile:
+          Updated dependencies
 
-	* tests/Endpoint_Per_Priority/Makefile:
-	* tests/Endpoint_Per_Priority/README:
-	* tests/Endpoint_Per_Priority/client.conf:
-	* tests/Endpoint_Per_Priority/client.cpp:
-	* tests/Endpoint_Per_Priority/run_test.pl:
-	* tests/Endpoint_Per_Priority/server.conf:
-	* tests/Endpoint_Per_Priority/server.cpp:
-	* tests/Endpoint_Per_Priority/test.idl:
-	* tests/Endpoint_Per_Priority/test_i.cpp:
-	* tests/Endpoint_Per_Priority/test_i.h:
-	* tests/Endpoint_Per_Priority/test_i.i:
-	  A new test for the endpoint-per-priority concurrency strategy,
-	  still work in progress.
+        * tests/Endpoint_Per_Priority/Makefile:
+        * tests/Endpoint_Per_Priority/README:
+        * tests/Endpoint_Per_Priority/client.conf:
+        * tests/Endpoint_Per_Priority/client.cpp:
+        * tests/Endpoint_Per_Priority/run_test.pl:
+        * tests/Endpoint_Per_Priority/server.conf:
+        * tests/Endpoint_Per_Priority/server.cpp:
+        * tests/Endpoint_Per_Priority/test.idl:
+        * tests/Endpoint_Per_Priority/test_i.cpp:
+        * tests/Endpoint_Per_Priority/test_i.h:
+        * tests/Endpoint_Per_Priority/test_i.i:
+          A new test for the endpoint-per-priority concurrency strategy,
+          still work in progress.
 
-	* */Makefile:
-	  Updated dependencies
+        * */Makefile:
+          Updated dependencies
 
 Mon Aug 30 14:19:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Reply_Dispatcher.h:
-	* tao/Reply_Dispatcher.cpp:
-	* tao/Asynch_Invocation.i:
-	* tao/Asynch_Invocation.cpp: I changed the service context
-	  handling interfaces but did not update these file to reflect the
-	  change.  Thanks to Jeff and Michael for noticing this.
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Asynch_Invocation.i:
+        * tao/Asynch_Invocation.cpp: I changed the service context
+          handling interfaces but did not update these file to reflect the
+          change.  Thanks to Jeff and Michael for noticing this.
 
 Mon Aug 30 13:01:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/BoundsC.cpp:
-	* tao/CONV_FRAMEC.i:
-	* tao/CurrentC.cpp:
-	* tao/CurrentS.cpp:
-	* tao/DomainC.cppi:
-	* tao/DomainC.i:
-	* tao/DomainS.cpp:
-	* tao/DynAnyC.cpp:
-	* tao/DynAnyC.i:
-	* tao/DynAnyS.cpp:
-	* tao/InconsistentTypeCodeC.cpp:
-	* tao/InterceptorC.cpp:
-	* tao/InterceptorC.i:
-	* tao/InterceptorS.cpp:
-	* tao/InterfaceC.cpp:
-	* tao/InterfaceC.i:
-	* tao/IORC.cpp:
-	* tao/IORC.i:
-	* tao/IOPC.i:
-	* tao/IORS.cppi:
-	* tao/MessagingC.cpp:
-	* tao/MessagingC.i:
-	* tao/MessagingS.cpp:
-	* tao/Object_KeyC.i:
-	* tao/POAC.cpp:
-	* tao/POAC.i:
-	* tao/POAS.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.i:
-	* tao/PolicyS.cpp:
-	* tao/PollableC.cpp:
-	* tao/PollablS.cpp:
-	* tao/WrongTransactionC.cpp:
-	  Replaced all occurrences of 'new' with 'ACE_NEW*'.
+        * tao/BoundsC.cpp:
+        * tao/CONV_FRAMEC.i:
+        * tao/CurrentC.cpp:
+        * tao/CurrentS.cpp:
+        * tao/DomainC.cppi:
+        * tao/DomainC.i:
+        * tao/DomainS.cpp:
+        * tao/DynAnyC.cpp:
+        * tao/DynAnyC.i:
+        * tao/DynAnyS.cpp:
+        * tao/InconsistentTypeCodeC.cpp:
+        * tao/InterceptorC.cpp:
+        * tao/InterceptorC.i:
+        * tao/InterceptorS.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/InterfaceC.i:
+        * tao/IORC.cpp:
+        * tao/IORC.i:
+        * tao/IOPC.i:
+        * tao/IORS.cppi:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.i:
+        * tao/MessagingS.cpp:
+        * tao/Object_KeyC.i:
+        * tao/POAC.cpp:
+        * tao/POAC.i:
+        * tao/POAS.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.i:
+        * tao/PolicyS.cpp:
+        * tao/PollableC.cpp:
+        * tao/PollablS.cpp:
+        * tao/WrongTransactionC.cpp:
+          Replaced all occurrences of 'new' with 'ACE_NEW*'.
 
 Mon Aug 30 12:25:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Advanced: Converted several of the examples to use
-	  ACE+TAO programming style.
+        * examples/Advanced: Converted several of the examples to use
+          ACE+TAO programming style.
 
 Mon Aug 30 12:05:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.i: Fixed old g++ errors/warings.  Thanks to David for
-	  reporting this.
+        * tao/ORB.i: Fixed old g++ errors/warings.  Thanks to David for
+          reporting this.
 
 Mon Aug 30 11:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_operation.cpp
-	  TAO_IDL/be/be_visitor_factory.cpp
-	  TAO_IDL/be/be_visitor_scope.cpp
-	  TAO_IDL/be/be_visitor_attribute/attribute.cpp
-	  TAO_IDL/be/be_visitor_interface/interface.cpp
-	  TAO_IDL/be/be_visitor_interface/interface_ch.cpp
-	  TAO_IDL/be/be_visitor_interface/interface_ci.cpp
-	  TAO_IDL/be/be_visitor_interface/interface_cs.cpp
-	  TAO_IDL/be/be_visitor_interface/interface_sh.cpp
-	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	  TAO_IDL/be/be_visitor_interface/tie_sh.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_arglist.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_ch.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_cs.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_arglist_ch.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_operation.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
-	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp
-	  TAO_IDL/be/be_visitor_operation/argument.cpp
-	  TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
-	  TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp
-	  TAO_IDL/be_include/be_codegen.h
-	  TAO_IDL/be_include/be_operation.h
-	  TAO_IDL/be_include/be_visitor_scope.h
-	  TAO_IDL/be_include/be_visitor_interface/tie_sh.h
-	  TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_ss.h:
-	  Renamed the Code Generation enums to make it more clear what
-	  is actually meant. I also added support for attributes, though still work needs
-	  to be done in that area. Besides that I fixed bugs in the code generation.
+        * TAO_IDL/be/be_operation.cpp
+          TAO_IDL/be/be_visitor_factory.cpp
+          TAO_IDL/be/be_visitor_scope.cpp
+          TAO_IDL/be/be_visitor_attribute/attribute.cpp
+          TAO_IDL/be/be_visitor_interface/interface.cpp
+          TAO_IDL/be/be_visitor_interface/interface_ch.cpp
+          TAO_IDL/be/be_visitor_interface/interface_ci.cpp
+          TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+          TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+          TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+          TAO_IDL/be/be_visitor_interface/tie_sh.cpp
+          TAO_IDL/be/be_visitor_operation/ami_arglist.cpp
+          TAO_IDL/be/be_visitor_operation/ami_ch.cpp
+          TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_arglist_ch.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_operation.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+          TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp
+          TAO_IDL/be/be_visitor_operation/argument.cpp
+          TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+          TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp
+          TAO_IDL/be_include/be_codegen.h
+          TAO_IDL/be_include/be_operation.h
+          TAO_IDL/be_include/be_visitor_scope.h
+          TAO_IDL/be_include/be_visitor_interface/tie_sh.h
+          TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_ss.h:
+          Renamed the Code Generation enums to make it more clear what
+          is actually meant. I also added support for attributes, though still work needs
+          to be done in that area. Besides that I fixed bugs in the code generation.
 
-	* tao/Transport_Mux_Strategy.cpp:
-	  Fixed a bug concerning an uninitialized message state.
+        * tao/Transport_Mux_Strategy.cpp:
+          Fixed a bug concerning an uninitialized message state.
 
 Mon Aug 30 10:21:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* PROBLEM-REPORT-FORM:
+        * PROBLEM-REPORT-FORM:
 
-	  Fixed typo.
+          Fixed typo.
 
 Mon Aug 30 02:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	  (visit_interface): Added a missing "}" and fixed indentation
-	  problem in generated code.  This was causing compilation errors
-	  in tests/Collocation project.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+          (visit_interface): Added a missing "}" and fixed indentation
+          problem in generated code.  This was causing compilation errors
+          in tests/Collocation project.
 
 Mon Aug 30 02:37:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	Merging the PI-current (Interceptors) branch to the main trunk.
+        Merging the PI-current (Interceptors) branch to the main trunk.
 
-	* tests/Interceptors/Interceptors.dsw:
-	* tests/Interceptors/Makefile:
-	* tests/Interceptors/README:
-	* tests/Interceptors/client.cpp:
-	* tests/Interceptors/client.dsp:
-	* tests/Interceptors/interceptors.cpp:
-	* tests/Interceptors/interceptors.h:
-	* tests/Interceptors/run_test.pl:
-	* tests/Interceptors/server.cpp:
-	* tests/Interceptors/server.dsp:
-	* tests/Interceptors/test.idl:
-	* tests/Interceptors/test_i.cpp:
-	* tests/Interceptors/test_i.h: A "Silly" interceptor testing
-	  program.
+        * tests/Interceptors/Interceptors.dsw:
+        * tests/Interceptors/Makefile:
+        * tests/Interceptors/README:
+        * tests/Interceptors/client.cpp:
+        * tests/Interceptors/client.dsp:
+        * tests/Interceptors/interceptors.cpp:
+        * tests/Interceptors/interceptors.h:
+        * tests/Interceptors/run_test.pl:
+        * tests/Interceptors/server.cpp:
+        * tests/Interceptors/server.dsp:
+        * tests/Interceptors/test.idl:
+        * tests/Interceptors/test_i.cpp:
+        * tests/Interceptors/test_i.h: A "Silly" interceptor testing
+          program.
 
-	* tao/Makefile:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp: Added new interceptor files.
+        * tao/Makefile:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp: Added new interceptor files.
 
-	* tao/Interceptor.pidl: TAO's tentative "portable" interceptor
-	  definitions.  Run this file thru TAO_IDL as:
+        * tao/Interceptor.pidl: TAO's tentative "portable" interceptor
+          definitions.  Run this file thru TAO_IDL as:
 
-	  tao_idl -Gl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl
+          tao_idl -Gl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl
 
-	  gets us the following stub/skeleton files.  the InterceptorS_T.*
-	  and InterceptorS.i are removed (because they are useless empty
-	  files.)  The following describes what else needs to be changed
-	  for each file.
+          gets us the following stub/skeleton files.  the InterceptorS_T.*
+          and InterceptorS.i are removed (because they are useless empty
+          files.)  The following describes what else needs to be changed
+          for each file.
 
-	* tao/InterceptorC.cpp: Prefixed all include files with tao/.
+        * tao/InterceptorC.cpp: Prefixed all include files with tao/.
 
-	* tao/InterceptorC.i: No change necessary.
+        * tao/InterceptorC.i: No change necessary.
 
-	* tao/InterceptorC.h: Removed incliding corba.h, CORBAC.h.  Added
-	  include files Any.h and Interceptor.h.  Prefixed all include
-	  files with tao/.
+        * tao/InterceptorC.h: Removed incliding corba.h, CORBAC.h.  Added
+          include files Any.h and Interceptor.h.  Prefixed all include
+          files with tao/.
 
-	* tao/InterceptorS.cpp: Removed including inline file
-	  InterceptorS.i and prefixing tao/ to all include files.
+        * tao/InterceptorS.cpp: Removed including inline file
+          InterceptorS.i and prefixing tao/ to all include files.
 
-	* tao/InterceptorS.h: Removed include file CORBAC.h and IOPC.h.
-	  Prefixed all include files with tao/.  Added an include file
-	  Servant_Base.h.  Removed including the template file and the
-	  inline file.
+        * tao/InterceptorS.h: Removed include file CORBAC.h and IOPC.h.
+          Prefixed all include files with tao/.  Added an include file
+          Servant_Base.h.  Removed including the template file and the
+          inline file.
 
-	* tao/Interceptor.h:
-	* tao/Interceptor.i: The interceptor wholesale file.  Including
-	  the (.h) file and you get everything you need to use the
-	  interceptor feature.  These two files probide inlined
-	  interceptor adapters that simplify tao_idl complexity.
+        * tao/Interceptor.h:
+        * tao/Interceptor.i: The interceptor wholesale file.  Including
+          the (.h) file and you get everything you need to use the
+          interceptor feature.  These two files probide inlined
+          interceptor adapters that simplify tao_idl complexity.
 
-	* tao/Interceptor.cpp: This file provides the default no-op
-	  interceptor method.  The interceptors classes remain abstract
-	  but users are not required to overwrite the interception methods
-	  that are not of their interests.
+        * tao/Interceptor.cpp: This file provides the default no-op
+          interceptor method.  The interceptors classes remain abstract
+          but users are not required to overwrite the interception methods
+          that are not of their interests.
 
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/ORB.cpp: Added naive interceptor registration methods.  They
-	  are naive because they only allow one interceptor for
-	  client/server side interceptors.  We definitely need a more
-	  rebust interceptor registration mechanism.  However, it is not
-	  clear how the semantics of the future portable interceptor spec
-	  will be.
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB.cpp: Added naive interceptor registration methods.  They
+          are naive because they only allow one interceptor for
+          client/server side interceptors.  We definitely need a more
+          rebust interceptor registration mechanism.  However, it is not
+          clear how the semantics of the future portable interceptor spec
+          will be.
 
-	* tao/orbconf.h: If we are not building MinimumCORBA, we have
-	  interceptors.
+        * tao/orbconf.h: If we are not building MinimumCORBA, we have
+          interceptors.
 
-	* tao/corba.h: This file must include Interceptor.h for others to
-	  use the interceptors.
+        * tao/corba.h: This file must include Interceptor.h for others to
+          use the interceptors.
 
-	* tao/Reply_Dispatcher.h:
-	* tao/Reply_Dispatcher.i:
-	* tao/Reply_Dispatcher.cpp: There's no need for reply dispatcher
-	  to own it's own ServiceContextList object.  Instead, it holds a
-	  reference to the owning Invocation object and initialize the
-	  reference in its constructor.
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.i:
+        * tao/Reply_Dispatcher.cpp: There's no need for reply dispatcher
+          to own it's own ServiceContextList object.  Instead, it holds a
+          reference to the owning Invocation object and initialize the
+          reference in its constructor.
 
-	* tao/POA.h: Removed a duplicated include file.
+        * tao/POA.h: Removed a duplicated include file.
 
-	* tao/Invocation.h:
-	* tao/Invocation.i:
-	* tao/Invocation.cpp:
-	* tao/Server_Request.h:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i:
-	* tao/GIOP_Server_Request.cpp: There's really no need to
-	  differentiate the request service_info from the reply
-	  service_info.  Their lifetimes are not overlapped.
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+        * tao/Invocation.cpp:
+        * tao/Server_Request.h:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.i:
+        * tao/GIOP_Server_Request.cpp: There's really no need to
+          differentiate the request service_info from the reply
+          service_info.  Their lifetimes are not overlapped.
 
-	  (request_id):  Added the new method to fish out request_id
-	  information of a request.
+          (request_id):  Added the new method to fish out request_id
+          information of a request.
 
-	* tao/CORBA.pidl: Added several definitions to make the file
-	  syntatically correct.  Also added stuff needed by the
-	  interceptors.
+        * tao/CORBA.pidl: Added several definitions to make the file
+          syntatically correct.  Also added stuff needed by the
+          interceptors.
 
-	* TAO_IDL/be_include/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be_include/be_visitor_operation/operation_ss.cpp: Added
-	  a new method to compute and cache the operation name.
-	  Interceptors need to refer to the name frequently.
+        * TAO_IDL/be_include/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_ss.cpp: Added
+          a new method to compute and cache the operation name.
+          Interceptors need to refer to the name frequently.
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Added server
-	  side interception points.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Added server
+          side interception points.
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Added client
-	  side interception points.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Added client
+          side interception points.
 
 Sun Aug 29 23:16:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  The following are changes for supporting locality constraint
-	  objects
+          The following are changes for supporting locality constraint
+          objects
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: Disallowed
-	  generating of CDR inserting/extrating operations for sequences
-	  when generating LC objects.
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: Disallowed
+          generating of CDR inserting/extrating operations for sequences
+          when generating LC objects.
 
-	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_throw_spec):
-	  Do not generate throw spec for locality constraint objects for
-	  now.  This may be overkilled, but as far as interceptors care,
-	  adding throw spec to interceptor methods doesn't make sense at
-	  all.  Who knows what kind of exceptions are going to be thrown
-	  from an interceptor?
+        * TAO_IDL/be/be_visitor_operation/operation.cpp (gen_throw_spec):
+          Do not generate throw spec for locality constraint objects for
+          now.  This may be overkilled, but as far as interceptors care,
+          adding throw spec to interceptor methods doesn't make sense at
+          all.  Who knows what kind of exceptions are going to be thrown
+          from an interceptor?
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
-	  (visit_interface): Servant names should always have "POA_"
-	  prefix.
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+          (visit_interface): Servant names should always have "POA_"
+          prefix.
 
-	* TAO_IDL/be/be_helper.cpp: Insert the $_I_d_$ field in all
-	  generate files so we can add them into cvs repository easily.
+        * TAO_IDL/be/be_helper.cpp: Insert the $_I_d_$ field in all
+          generate files so we can add them into cvs repository easily.
 
-	* TAO_IDL/be/be_codegen.cpp (start_client_stubs): When generating
-	  code for locality constraint objects, always include generated
-	  *S.h in the stub definition because these objects are always
-	  directly collocated and we don't depends on factory methods to
-	  create collocated stubs (i.e., we need to generate collocated
-	  stubs directly in _narrow.)
+        * TAO_IDL/be/be_codegen.cpp (start_client_stubs): When generating
+          code for locality constraint objects, always include generated
+          *S.h in the stub definition because these objects are always
+          directly collocated and we don't depends on factory methods to
+          create collocated stubs (i.e., we need to generate collocated
+          stubs directly in _narrow.)
 
 Sun Aug 29 23:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/orbconf.h:
-	  Added TAO_USES_ROBUST_CONNECTION_MGMT macro which sets the
-	  connection purging and recycling feature "on" by default.
-	  Just commenting it out from orbconf.h and building libTAO.so
-	  again will shut"off" the feature.
+        * tao/orbconf.h:
+          Added TAO_USES_ROBUST_CONNECTION_MGMT macro which sets the
+          connection purging and recycling feature "on" by default.
+          Just commenting it out from orbconf.h and building libTAO.so
+          again will shut"off" the feature.
 
-	* tao/IIOP_Connector.{h,cpp}:
-	* tao/UIOP_Connector.{h,cpp}:
-	  Using the TAO_USES_ROBUST_CONNECTION_MGMT macro made both the
-	  pre-connect-strategy tagged changes and the connection purging
-	  feature co-exist.
+        * tao/IIOP_Connector.{h,cpp}:
+        * tao/UIOP_Connector.{h,cpp}:
+          Using the TAO_USES_ROBUST_CONNECTION_MGMT macro made both the
+          pre-connect-strategy tagged changes and the connection purging
+          feature co-exist.
 
-	* tao/Acceptor_Impl.{h,cpp}:
-	  The <accept> and <open> methods behave differently when the
-	  connection purging is "on" and "off". The
-	  <out_of_sockets_handler> method is not used when the feature is
-	  not set.
+        * tao/Acceptor_Impl.{h,cpp}:
+          The <accept> and <open> methods behave differently when the
+          connection purging is "on" and "off". The
+          <out_of_sockets_handler> method is not used when the feature is
+          not set.
 
-	* tao/Connector_Registry.{h,cpp}:
-	  The <purge_connections> method is eliminated when the feature is
-	  not used.
+        * tao/Connector_Registry.{h,cpp}:
+          The <purge_connections> method is eliminated when the feature is
+          not used.
 
-	* tao/Pluggable.h:
-	  The pure virtual <purge_connections> method was appropriately
-	  not included in the class when the connection purging feature
-	  was not requested.
+        * tao/Pluggable.h:
+          The pure virtual <purge_connections> method was appropriately
+          not included in the class when the connection purging feature
+          was not requested.
 
 Sun Aug 29 21:53:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
