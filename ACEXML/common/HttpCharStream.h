@@ -33,9 +33,6 @@ public:
   /// Default constructor.
   ACEXML_HttpCharStream (void);
 
-  /// Construct and open an URL.
-  ACEXML_HttpCharStream (const ACEXML_Char *url);
-
   /// Destructor
   virtual ~ACEXML_HttpCharStream (void);
 

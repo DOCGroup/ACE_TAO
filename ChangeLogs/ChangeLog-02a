@@ -1,3 +1,35 @@
+Tue Jun 04 16:02:11 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/HttpCharStream.h:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/Filecharstream.h:
+        * ACEXML/common/Filecharstream.cpp:
+
+          Removed the constructor which accepted a string containing
+          either a filename or a URL from these files. Problem was it was
+          relying on calling open to do the work, but if open fails there
+          was no way to report the error without throwing exceptions. So
+          don't allow people to use this constructor and always insist on
+          using open.
+
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * ACEXML/common/URL_Addr.h:
+        * ACEXML/common/URL_Addr.cpp:
+        * ACEXML/common/XML_Codecs.cpp:
+        * tests/Codecs_Test.cpp:
+
+          Other miscellaneous fixes including using
+          ACE_Auto_Basic_Array_Ptr instead of ACE_Auto_Array_Ptr.
+
+        * ACEXML/common/Makefile.bor:
+        * ACEXML/tests/Makefile.bor:
+
+          Added new files.
+
+        * ACEXML/tests/HttpCharStream_Test.cpp:
+
+          Cosmetic fixes.
+
 Tue Jun 04 14:18:56 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/tests/HttpCharStream_Test.dsp:

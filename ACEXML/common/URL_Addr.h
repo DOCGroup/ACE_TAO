@@ -12,29 +12,29 @@
 #ifndef _ACEXML_URL_ADDR_H
 #define _ACEXML_URL_ADDR_H
 
-#include "ace/INET_Addr.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
+#include "ace/INET_Addr.h"
+#include "ACEXML/common/XML_Types.h"
+#include "ACEXML/common/ACEXML_Export.h"
 
 /**
  *  @class ACEXML_URL_Addr URL_Addr.h "ACEXML/common/URL_Addr.h"
  *
  *  Defines a URL address family address format.
  */
-class ACEXML_URL_Addr : public ACE_INET_Addr
+class ACEXML_Export ACEXML_URL_Addr : public ACE_INET_Addr
 {
 public:
   /// Initialization and termination methods.
   ACEXML_URL_Addr (void);
 
   /// Constructor.
-  ACEXML_URL_Addr (const ACE_TCHAR *host_name,
-                   const ACE_TCHAR *path_name,
-                   u_short port = ACE_DEFAULT_HTTP_PORT);
+  ACEXML_URL_Addr (const ACEXML_Char *host_name,
+                   const ACEXML_Char *path_name,
+                   unsigned short port = ACE_DEFAULT_HTTP_PORT);
 
   /// Copy constructor.
   ACEXML_URL_Addr (const ACEXML_URL_Addr &addr);
@@ -50,7 +50,7 @@ public:
    *  <address> it is assumed to be an ip-number or ip-address number, with
    *  the port number <ACE_DEFAULT_HTTP_PORT>.
    */
-  virtual int string_to_addr (const ACE_TCHAR *address);
+  virtual int string_to_addr (const ACEXML_Char *address);
 
   /**
    *  Transform the current <ACE_INET_Addr> address into string format. If
@@ -61,7 +61,7 @@ public:
    *  "www.cs.wustl.edu:80/~schmidt/"). Returns -1 if the <size> of the
    *  <buffer> is too small, else 0.
    */
-  virtual int addr_to_string (ACE_TCHAR *s,
+  virtual int addr_to_string (ACEXML_Char *s,
                               size_t size,
                               int ipaddr_format = 1) const;
 
@@ -75,7 +75,7 @@ public:
    *  allocated on demand and deallocated when the object is destroyed.
    *  Returns -1 if dynamic memory fails, else 0.
    */
-  virtual const ACE_TCHAR *addr_to_string (int ipaddr_format = 1) const;
+  virtual const ACEXML_Char *addr_to_string (int ipaddr_format = 1) const;
 
   /// Assignment operator.
   void operator= (const ACEXML_URL_Addr &addr);
@@ -96,16 +96,16 @@ public:
   virtual u_long hash (void) const;
 
   /// Return the path name.
-  const ACE_TCHAR *get_path_name (void) const;
+  const ACEXML_Char *get_path_name (void) const;
 
   /// Commit suicide.
   int destroy (void);
 
 private:
-  ACE_TCHAR *path_name_;
+  ACEXML_Char *path_name_;
   // Our path name.
 
-  ACE_TCHAR *addr_string_;
+  ACEXML_Char *addr_string_;
   // The dynamically created address string that's used for the
   // <addr_to_string> method.
 
