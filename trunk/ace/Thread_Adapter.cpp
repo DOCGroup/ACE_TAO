@@ -42,7 +42,6 @@ ACE_Thread_Adapter::sync_log_msg (const ACE_TCHAR *prg)
     }
 }
 
-
 void *
 ACE_Thread_Adapter::invoke (void)
 {

@@ -23,5 +23,15 @@
 # error "Compiler does not seem to be supported"
 #endif /* _MSC_VER */
 
+#if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#  define ACE_ENDTHREADEX(STATUS) ::_endthread ()
+#elif defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#  define ACE_ENDTHREADEX(STATUS) ::_endthread ()
+#elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
+#  define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
+#else
+#  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -1,3 +1,11 @@
+Fri Aug 25 18:09:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/config-win32.h:
+        * ace/OS.cpp:
+        * ace/Thread_Adapter.cpp:
+          Factor out the definition of ACE_ENDTHREADEX to the
+          config-win32.h file.
+
 Fri Aug 25 17:11:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Thread_Control.h:
