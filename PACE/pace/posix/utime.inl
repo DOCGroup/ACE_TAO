@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    utime.inl
+ *    pace/posix/utime.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 int

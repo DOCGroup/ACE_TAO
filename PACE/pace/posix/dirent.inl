@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    dirent.inl
+ *    pace/posix/dirent.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 DIR *

@@ -6,26 +6,23 @@
  *    pace
  *
  * = FILENAME
- *    stdio.h
+ *    pace/posix/stdio.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_STDIO_H
 #define PACE_STDIO_H
-
 
 #include "pace/defines.h"
 #include <stdio.h>
 #include <stdarg.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   #define pace_stderr stderr;
 
@@ -193,13 +190,12 @@ extern "C" {
                                  const char * format,
                                  va_list argptr);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "stdio.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/stdio.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_STDIO_H */

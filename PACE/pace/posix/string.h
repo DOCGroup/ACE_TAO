@@ -6,25 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    string.h
+ *    pace/posix/string.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_STRING_H
 #define PACE_STRING_H
-
 
 #include "pace/defines.h"
 #include "pace/unistd.h"
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE void * pace_memccpy (void * s1, const void * s2, int c, size_t n);
 
@@ -75,13 +72,12 @@ extern "C" {
 
 
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "string.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/string.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_STRING_H */

@@ -1,22 +1,20 @@
-/* $Id $ -*- C -*-
+/* $Id$
 
- * ===========================================================================
+ * =============================================================================
  *
  * = LIBRARY
  *    pace
  *
  * = FILENAME
- *    assert.c
+ *    pace/posix/assert.c
  *
  * = AUTHOR
  *    Joe Hoffert
  *
- * ===========================================================================
- */
-
+ * ============================================================================= */
 
 #include "pace/assert.h"
 
-# if !defined (PACE_HAS_INLINE)
-# include "assert.inl"
-# endif /* !PACE_HAS_INLINE */
+#if !defined (PACE_HAS_INLINE)
+# include "pace/posix/assert.inl"
+#endif /* ! PACE_HAS_INLINE */

@@ -6,24 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    inet.h
+ *    pace/posix/inet.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_ARPA_INET_H
 #define PACE_ARPA_INET_H
-
 
 #include "pace/defines.h"
 #include <arpa/inet.h>
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE unsigned long pace_inet_addr (const char * cp);
 
@@ -39,13 +37,12 @@ extern "C" {
 
   PACE_INLINE int pace_inet_aton (const char * str, struct in_addr * addr);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "inet.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/inet.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_ARPA_INET_H */

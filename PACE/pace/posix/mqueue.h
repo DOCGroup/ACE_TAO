@@ -6,35 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    mqueue.h
+ *    pace/posix/mqueue.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_MQUEUE_H
 #define PACE_MQUEUE_H
 
-
 #include "pace/defines.h"
-
-/* Linux doesn't support this file at all. We will allow the interface, but
-   all return values will be PACE_ERRNO_LACKS_RT. */
-# if defined (linux)
-typedef unsigned int mqd_t;
-struct mq_attr { };
-struct sigevent { };
-#include "pace/unistd.h"
-# else /* !linux */
 #include <mqueue.h>
-#endif /* !linux */
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_mq_close (mqd_t mqdes);
 
@@ -68,13 +55,12 @@ extern "C" {
 
   PACE_INLINE int pace_mq_unlink (const char * name);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "mqueue.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/mqueue.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_MQUEUE_H */
