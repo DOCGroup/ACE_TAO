@@ -41,7 +41,7 @@ be_visitor_operation_rettype_is::~be_visitor_operation_rettype_is (void)
 }
 
 int
-be_visitor_operation_rettype_is::visit_array (be_array *node)
+be_visitor_operation_rettype_is::visit_array (be_array *)
 {
 
 
@@ -51,7 +51,7 @@ be_visitor_operation_rettype_is::visit_array (be_array *node)
 }
 
 int
-be_visitor_operation_rettype_is::visit_enum (be_enum *node)
+be_visitor_operation_rettype_is::visit_enum (be_enum *)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
@@ -60,7 +60,7 @@ be_visitor_operation_rettype_is::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_operation_rettype_is::visit_interface (be_interface *node)
+be_visitor_operation_rettype_is::visit_interface (be_interface *)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
@@ -69,7 +69,7 @@ be_visitor_operation_rettype_is::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_operation_rettype_is::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_operation_rettype_is::visit_interface_fwd (be_interface_fwd *)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
@@ -79,7 +79,7 @@ be_visitor_operation_rettype_is::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_operation_rettype_is::visit_native (be_native *node)
+be_visitor_operation_rettype_is::visit_native (be_native *)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
@@ -108,7 +108,7 @@ be_visitor_operation_rettype_is::visit_predefined_type (be_predefined_type *node
 }
 
 int
-be_visitor_operation_rettype_is::visit_sequence (be_sequence *node)
+be_visitor_operation_rettype_is::visit_sequence (be_sequence *)
 {
 
 
@@ -132,7 +132,7 @@ be_visitor_operation_rettype_is::visit_string (be_string * /* node*/)
 }
 
 int
-be_visitor_operation_rettype_is::visit_structure (be_structure *node)
+be_visitor_operation_rettype_is::visit_structure (be_structure *)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
@@ -159,7 +159,7 @@ be_visitor_operation_rettype_is::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_operation_rettype_is::visit_union (be_union *node)
+be_visitor_operation_rettype_is::visit_union (be_union *)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream

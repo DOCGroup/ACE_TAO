@@ -39,7 +39,7 @@ be_visitor_union::~be_visitor_union (void)
 
 // visit the Union node and its scope
 int
-be_visitor_union::visit_union (be_union *node)
+be_visitor_union::visit_union (be_union *)
 {
   return -1; // must be overriden
 }

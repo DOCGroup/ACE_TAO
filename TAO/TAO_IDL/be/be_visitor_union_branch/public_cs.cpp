@@ -189,7 +189,7 @@ be_visitor_union_branch_public_cs::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_union_branch_public_cs::visit_string (be_string *node)
+be_visitor_union_branch_public_cs::visit_string (be_string *)
 {
   return 0;
 }

@@ -41,7 +41,7 @@ be_visitor_typedef::~be_visitor_typedef (void)
 }
 
 // visit the Typedef node and its scope
-int be_visitor_typedef::visit_typedef (be_typedef *node)
+int be_visitor_typedef::visit_typedef (be_typedef *)
 {
   return -1; // must be overridden
 }
@@ -188,7 +188,7 @@ be_visitor_typedef::visit_enum (be_enum *node)
 
 // visit an predefined type
 int
-be_visitor_typedef::visit_predefined_type (be_predefined_type *node)
+be_visitor_typedef::visit_predefined_type (be_predefined_type *)
 {
   return 0;
 }

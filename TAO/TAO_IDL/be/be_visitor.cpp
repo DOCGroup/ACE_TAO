@@ -42,7 +42,7 @@ int be_visitor::visit_decl (be_decl *)
   return 0;
 }
 
-int be_visitor::visit_scope (be_scope *node)
+int be_visitor::visit_scope (be_scope *)
 {
   return 0;
 }

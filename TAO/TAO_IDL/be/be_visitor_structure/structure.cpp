@@ -39,7 +39,7 @@ be_visitor_structure::~be_visitor_structure (void)
 
 // visit the Structure node and its scope
 int
-be_visitor_structure::visit_structure (be_structure *node)
+be_visitor_structure::visit_structure (be_structure *)
 {
   return -1; // must be overriden
 }
