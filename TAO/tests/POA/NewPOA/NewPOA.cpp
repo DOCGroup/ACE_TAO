@@ -38,10 +38,12 @@ main (int argc, char **argv)
     }
 
   // Obtain the object reference to the RootPOA.
-  CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+  CORBA::Object_var obj =
+    orb->resolve_initial_references ("RootPOA");
 
   // _narrow() the Object to get the POA object, i.e., the root_poa.
-  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in(), env);
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (obj.in(), env);
 
   if (env.exception () != 0)
     {
@@ -59,10 +61,11 @@ main (int argc, char **argv)
 
   // Creation of the firstPOA
   ACE_CString name = "firstPOA";
-  PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
-                                                            PortableServer::POAManager::_nil(),
-                                                            policies,
-                                                            env);
+  PortableServer::POA_var first_poa =
+    root_poa->create_POA (name.c_str (),
+                          PortableServer::POAManager::_nil(),
+                          policies,
+                          env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_POA");
@@ -72,28 +75,30 @@ main (int argc, char **argv)
   // Creation of the new POA, i.e. firstPOA/secondPOA
   name += TAO_POA::name_separator ();
   name += "secondPOA";
-  PortableServer::POA_var second_poa = root_poa->create_POA (name.c_str (),
-                                                             PortableServer::POAManager::_nil(),
-                                                             policies,
-                                                             env);
+  PortableServer::POA_var second_poa =
+    root_poa->create_POA (name.c_str (),
+                          PortableServer::POAManager::_nil(),
+                          policies,
+                          env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_POA");
       return -1;
     }
 
-  // Creating thirdPOA/fourthPOA/fifthPOA. The non-existing thirdPOA and thirdPOA/fourthPOA
-  // are created automatically.
+  // Creating thirdPOA/fourthPOA/fifthPOA. The non-existing thirdPOA
+  // and thirdPOA/fourthPOA are created automatically.
   name = "thirdPOA";
   name += TAO_POA::name_separator ();
   name += "forthPOA";
   name += TAO_POA::name_separator ();
   name += "fifthPOA";
 
-  PortableServer::POA_var fifth_poa = root_poa->create_POA (name.c_str (),
-                                                            PortableServer::POAManager::_nil(),
-                                                            policies,
-                                                            env);
+  PortableServer::POA_var fifth_poa =
+    root_poa->create_POA (name.c_str (),
+                          PortableServer::POAManager::_nil(),
+                          policies,
+                          env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_POA");
@@ -117,28 +122,32 @@ main (int argc, char **argv)
 
   // Get the names of all the POAs and print them out.
 
-  CORBA::String_var root_poa_name = root_poa->the_name (env);
+  CORBA::String_var root_poa_name =
+    root_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
 
-  CORBA::String_var first_poa_name = first_poa->the_name (env);
+  CORBA::String_var first_poa_name =
+    first_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
 
-  CORBA::String_var second_poa_name = second_poa->the_name (env);
+  CORBA::String_var second_poa_name =
+    second_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
 
-  CORBA::String_var fifth_poa_name = fifth_poa->the_name (env);
+  CORBA::String_var fifth_poa_name =
+    fifth_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
