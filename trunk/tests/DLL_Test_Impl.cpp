@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "DLL_Test_Impl.h"
+#include "ace/ACE.h"
 #include "ace/OS_Errno.h"
 #include "ace/svc_export.h"
 
@@ -39,6 +40,18 @@ Hello_Impl::say_next (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("How are you?\n")));
+}
+
+ACE_TCHAR *
+Hello_Impl::new_info (void)
+{
+  return ACE::strnew (ACE_TEXT ("Hello_Impl::new_info() allocated by ACE::strnew()"));
+}
+
+ACE_TCHAR *
+Hello_Impl::malloc_info (void)
+{
+  return ACE_OS_String::strdup (ACE_TEXT ("Hello_Impl::new_info() allocated by ACE_OS_Memory::malloc()"));
 }
 
 extern "C" ACE_Svc_Export Hello *

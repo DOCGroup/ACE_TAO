@@ -367,6 +367,9 @@ public:
   /// segfaulting...
   static char *strnew (const char *s);
 
+  /// Delete the memory allocated by <strnew>.
+  static void strdelete (char *s);
+
   /// Create a fresh new copy of <str>, up to <n> chars long.  Uses
   /// <ACE_OS::malloc> to allocate the new string.
   static char *strndup (const char *str, size_t n);
@@ -379,6 +382,8 @@ public:
   static const wchar_t *strend (const wchar_t *s);
 
   static wchar_t *strnew (const wchar_t *s);
+
+  static void strdelete (wchar_t *s);
 
   static wchar_t *strndup (const wchar_t *str, size_t n);
 
