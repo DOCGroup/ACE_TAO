@@ -1697,7 +1697,7 @@ ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consum
   // interval.low, interval.high));
 
   // Register the timer.
-  int id =
+  long id =
     this->channel_->schedule_timer (consumer->dependency ()->rt_info,
                                     consumer,
                                     consumer->preemption_priority (),
@@ -1750,7 +1750,7 @@ ACE_ES_Correlation_Module::reschedule_timeout (ACE_ES_Consumer_Rep_Timeout *cons
       consumer->preemption_priority (::IntervalToPriority (interval));
 
       // Register the timer.
-      int id =
+      long id =
         this->channel_->schedule_timer (0, // Do not pass an RT_Info.
                                         consumer,
                                         consumer->preemption_priority (),
