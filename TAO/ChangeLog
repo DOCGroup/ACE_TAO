@@ -1,3 +1,8 @@
+Mon Jul 29 13:18:13 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: Fix unterminated
+	  ACE_DEBUG macro.
+
 Sun Jul 28 15:23:43 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/tests/Trading/Trading.dsw:
