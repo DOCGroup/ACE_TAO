@@ -1,3 +1,10 @@
+Tue Mar 07 11:00:10 2000 Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.cpp: Updated the comments
+	  to make it clear how the ACE_Message_Block buffers are reused.
+  	  Thanks to Dong-Yueh Liu <dyliu@ms1.hinet.net> for suggesting
+ 	  this.
+
 Tue Mar 07 10:28:16 2000  bala  <bala@cs.wustl.edu>
 
         * ACE version 5.0.15 released.
@@ -15,7 +22,7 @@ Mon Mar  6 13:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           researched completely, it has been disabled on vxworks.
 	  Thanks to David Hall <David.Hall@grc.nasa.gov> for reporting
 	  this bug.
-
+		
 Sun Mar  5 21:32:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp:
