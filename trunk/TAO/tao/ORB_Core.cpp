@@ -2099,23 +2099,37 @@ TAO_ORB_Core::resolve_rir (const char *name,
   // Check if a DefaultInitRef was specified.
   if (ACE_OS::strlen (default_init_ref) != 0)
     {
+      static const char corbaloc_prefix[] = "corbaloc:";
+      char object_key_delimiter = 0;
+
       ACE_CString list_of_profiles (default_init_ref);
+
+      // Check if the protocol is corbaloc:.
+      // If it is, set the object_key_delimiter.
+      if (ACE_OS::strncmp (default_init_ref,
+                           corbaloc_prefix,
+                           sizeof corbaloc_prefix -1) == 0)
+        {
+          object_key_delimiter = '/';
+        }
+      else
+        {
+          // Obtain the appropriate object key delimiter for the
+          // specified protocol.
+          object_key_delimiter =
+            this->connector_registry ()->object_key_delimiter (
+                     list_of_profiles.c_str ());
+        }
 
       // Clean up.
       delete [] default_init_ref;
-
-      // Obtain the appropriate object key delimiter for the
-      // specified protocol.
-      const char object_key_delimiter =
-        this->connector_registry ()->object_key_delimiter (
-                     list_of_profiles.c_str ());
 
       // Make sure that the default initial reference doesn't end
       // with the object key delimiter character.
       if (list_of_profiles[list_of_profiles.length() - 1] !=
           object_key_delimiter)
-        list_of_profiles += ACE_CString (object_key_delimiter);
-
+            list_of_profiles += ACE_CString (object_key_delimiter);
+      
       list_of_profiles += object_id;
 
       return this->orb ()->string_to_object (list_of_profiles.c_str (),

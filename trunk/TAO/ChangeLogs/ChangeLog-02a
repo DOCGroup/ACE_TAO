@@ -1,3 +1,10 @@
+Wed Jan 10 18:48:31 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp (resolve_rir): 
+	  Added a check for the corbaloc and do the necessary. This change
+	  is necessary so that the -ORBDefaultInitRef option recognizes
+	  the corbaloc protocol.
+	
 Wed Jan 10 17:21:12 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp : 
