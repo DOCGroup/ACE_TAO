@@ -176,7 +176,7 @@ TAO_PG_ObjectGroupManager::locations_of_members (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+  ACE_CHECK_RETURN (0);
 
   PortableGroup::Locations *temp = 0;
   ACE_NEW_THROW_EX (temp,
@@ -326,7 +326,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
     this->poa_->create_reference_with_id (oid,
                                           type_id
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ())
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   ACE_NEW_THROW_EX (group_entry,
