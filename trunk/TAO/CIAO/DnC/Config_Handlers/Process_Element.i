@@ -9,7 +9,7 @@
  */
 //=====================================================================
 
-#include "Process_Element.i"
+#include "Process_Element.h"
 
 template <typename VALUE, typename DATA, typename OBJECT>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
@@ -17,7 +17,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 DOMNodeIterator* iter,
                                 VALUE value,
                                 DATA& data,
-                                Process_Function <OBJECT>* func,
+                                Process_Function <OBJECT, DATA>* func,
                                 REFMAP& id_map)
 {
   // the number of attributes
@@ -72,7 +72,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
              true);
           href_iter->nextNode ();
 
-          static_cast< Process_Member_Function<OBJECT>* > (href)->doc(href_doc);
+          static_cast< Process_Member_Function<OBJECT, DATA>* > (href)->doc(href_doc);
           (*func) (iter, data);
         }
     }
@@ -85,7 +85,7 @@ void process_element (DOMNode* node,
                       DOMNodeIterator* iter,
                       DATA& data,
                       VALUE val,
-                      Process_Function <OBJECT>* func,
+                      Process_Function <OBJECT, DATA>* func,
                       REFMAP& id_map)
 {
   // fetch attributes
@@ -111,7 +111,7 @@ void process_sequential_element (DOMNode* node,
                                  DOMDocument* doc,
                                  DOMNodeIterator* iter,
                                  SEQUENCE& seq,
-                                 Process_Function <OBJECT>* func,
+                                 Process_Function <OBJECT, DATA>* func,
                                  REFMAP& id_map)
 {
   if (node->hasAttributes ())

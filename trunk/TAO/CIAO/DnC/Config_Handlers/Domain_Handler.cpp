@@ -7,6 +7,8 @@
 #include "Property_Handler.h"
 #include "SP_Handler.h"
 
+#include "Process_Element.h"
+
 #include <iostream>
 #include "string.h"
 
@@ -68,15 +70,23 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("sharedResource")))
             {
-              this->process_sr_element (node, this->doc_,
-                                        this->iter_,
-                                        domain);
+              //              this->process_sr_element (node, this->doc_,
+              //                                        domain);
             }
           else if (node_name == XStr (ACE_TEXT ("node")))
             {
+              process_sequential_element (node,
+                                          this->doc_,
+                                          this->iter_,
+                                          domain.node,
+                                          Process_Member_Function<Domain_Handler, Deployment::Node> (this,
+                                                                                                      &Domain_Handler::process_node,
+                                                                                                      this->doc_),
+                                          this->id_map_);
+              /*
               this->process_node_element (node, this->doc_,
                                           this->iter_,
-                                          domain);
+                                          domain);**/
             }
           else if (node_name == XStr (ACE_TEXT ("interconnect")))
             {
