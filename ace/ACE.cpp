@@ -3118,7 +3118,8 @@ ACE::max_handles (void)
 // Otherwise, set it to be the value of NEW_LIMIT.
 
 int
-ACE::set_handle_limit (int new_limit)
+ACE::set_handle_limit (int new_limit,
+                       int increase_limit_only)
 {
   ACE_TRACE ("ACE::set_handle_limit");
   int cur_limit = ACE::max_handles ();
@@ -3146,6 +3147,7 @@ ACE::set_handle_limit (int new_limit)
     }
   else if (new_limit > cur_limit)
     {
+      // Increase the limit.
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
       rl.rlim_cur = new_limit;
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
@@ -3154,8 +3156,9 @@ ACE::set_handle_limit (int new_limit)
       ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_LACKS_RLIMIT */
     }
-  else
+  else if (increase_limit_only == 0)
     {
+      // Decrease the limit.
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
       rl.rlim_cur = new_limit;
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
