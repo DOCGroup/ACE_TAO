@@ -1,3 +1,9 @@
+Thu Aug 06 14:59:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch: Added template specializations for
+ 	  ACE_Guard<ACE_Null_Mutex>, ACE_Write_Guard<ACE_Null_Mutex>, and
+ 	  ACE_Read_Guard<ACE_Null_Mutex>.
+
 Thu Aug  6 14:30:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-irix6.x-sgic++-nothreads.h: 

@@ -1442,4 +1442,70 @@ public:
 // Include the templates here.
 #include "ace/Synch_T.h"
 
+template <class ACE_LOCK>
+class ACE_Guard;
+
+class ACE_Export ACE_Guard<ACE_Null_Mutex>
+{
+  // = TITLE
+  //
+  // = DESCRIPTION
+  //
+public:
+  // = Initialization and termination methods.
+  ACE_Guard (ACE_Null_Mutex &) {}
+  ACE_Guard (ACE_Null_Mutex &, int) {}
+  ~ACE_Guard (void) {}
+
+  int acquire (void) { return 0; }
+  int tryacquire (void) { return 0; }
+  int release (void) { return 0; }
+  int locked (void) { return 1; }
+  int remove (void) { return 0; }
+  void dump (void) const {}
+
+private:
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Guard<ACE_Null_Mutex> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &))
+};
+
+template <class ACE_LOCK>
+class ACE_Write_Guard;
+
+class ACE_Export ACE_Write_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
+{
+  // = TITLE
+public:
+  ACE_Write_Guard (ACE_Null_Mutex &m) 
+    : ACE_Guard<ACE_Null_Mutex> (m) {}
+  ACE_Write_Guard (ACE_Null_Mutex &m, int blocked) 
+    : ACE_Guard<ACE_Null_Mutex> (m, blocked) {}
+
+  int acquire_write (void) { return 0; }
+  int acquire (void) { return 0; }
+  int tryacquire_write (void) { return 0; }
+  int tryacquire (void) { return 0; }
+  void dump (void) const {}
+};
+
+template <class ACE_LOCK>
+class ACE_Read_Guard;
+
+class ACE_Export ACE_Read_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
+{
+  // = TITLE
+public:
+  ACE_Read_Guard (ACE_Null_Mutex &m) 
+    : ACE_Guard<ACE_Null_Mutex> (m) {}
+  ACE_Read_Guard (ACE_Null_Mutex &m, int blocked) 
+    : ACE_Guard<ACE_Null_Mutex> (m, blocked) {}
+
+  int acquire_write (void) { return 0; }
+  int acquire (void) { return 0; }
+  int tryacquire_write (void) { return 0; }
+  int tryacquire (void) { return 0; }
+  void dump (void) const {}
+};
+
 #endif /* ACE_SYNCH_H */
