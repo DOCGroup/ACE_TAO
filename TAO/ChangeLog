@@ -1,3 +1,24 @@
+Thu Sep 23 22:38:39 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+	* tests/Sequence_Unit_Tests/testing_counters.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+	  The enable_shared_from_this trick was introduced in boost-1.31,
+	  but I do not want to force Jeff and others to move out of 1.30.2
+	  just to run the unit tests.  So I reimplemented the trick using
+	  the canonical weak_ptr<> self reference, and a static allocator
+	  to initialize the self reference.
+
+Thu Sep 23 22:23:46 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/testing_counters.hpp:
+	  Include <boost/utility.hpp> instead of <boost/noncopyable.hpp>
+	  as the second header only showed up in 1.31
+
 Thu Sep 23 22:21:22 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
