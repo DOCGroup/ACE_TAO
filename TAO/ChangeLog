@@ -1,3 +1,14 @@
+Thu Oct 31 17:09:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/MProfile_Connection_Timeout:
+	* tests/MProfile_Connection_Timeout/client.cpp:
+	* tests/MProfile_Connection_Timeout/server.cpp:
+	* tests/MProfile_Connection_Timeout/test.idl:
+	* tests/MProfile_Connection_Timeout/test_i.cpp:
+	* tests/MProfile_Connection_Timeout/test_i.h: New test for BUG ID
+	  1284. This is just a preliminary checkin. Other parts of the
+	  test are coming in shortly.
+
 Thu Oct 31 16:46:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosNotification.dsp:
