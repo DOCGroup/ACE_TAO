@@ -8,7 +8,6 @@
 
 local interface CCM_Hello : Hello
 {
-  string sayhello (in string username);
 };
 
 // Component main executor
@@ -29,6 +28,6 @@ local interface CCM_HelloWorld
 };
 
 local interface CCM_HelloWorld_Context
-  : Components::CCMContext
+  : ::Components::CCMContext
 {
 };
