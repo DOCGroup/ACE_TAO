@@ -30,10 +30,11 @@
 #include "ace/Select_Reactor.h"
 // @@ Make sure you use the -I option in the makefile to avoid having to use the ../... pathname stuff..
 #include "../include/common.h"
-#include "../mpeg_server/proto.h"
+#include "../mpeg_server/server_proto.h"
 #include "fileio.h"
 #include "routine.h"
 #include "com.h"
+#include "Video_Control_i.h"
 
 #if defined (NATIVE_ATM)
 #include "atmcom.h"
@@ -175,6 +176,12 @@ public:
   ~AV_Server ();
   // Destructor
 private:
+
+  TAO_ORB_Manager orb_manager_;
+  // the TAO ORB manager.
+
+  Video_Control_i video_control_;
+  // The Video_Control implementation object.
 
   AV_Acceptor acceptor_;
   // the acceptor

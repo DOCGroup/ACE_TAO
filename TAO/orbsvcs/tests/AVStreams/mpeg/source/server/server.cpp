@@ -254,7 +254,9 @@ AV_Server_Sig_Handler::register_handler (void)
   // Register signal handler object.  Note that NULL_MASK is used to
   // keep the ACE_Reactor from calling us back on the "/dev/null"
   // descriptor.
-  if (ACE_Reactor::instance ()->register_handler 
+
+  //  if (ACE_Reactor::instance ()->register_handler 
+  if (TAO_ORB_Core_instance ()->reactor ()->register_handler
       (this, ACE_Event_Handler::NULL_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "%p\n", 
@@ -271,7 +273,8 @@ AV_Server_Sig_Handler::register_handler (void)
   sig_set.sig_add (SIGTERM);
 
   // Register the signal handler object to catch the signals.
-  if (ACE_Reactor::instance ()->register_handler (sig_set, 
+  //  if (ACE_Reactor::instance ()->register_handler (sig_set, 
+  if (TAO_ORB_Core_instance ()->reactor ()->register_handler (sig_set,
                                                   this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "%p\n", 
@@ -474,6 +477,26 @@ AV_Server::init (int argc,
 {
   int result;
 
+  TAO_TRY
+    {
+  // Initialize the orb_manager
+      this->orb_manager_->init_child_poa (argc,
+                                          argv,
+                                          "child_poa",
+                                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      this->activate_under_child_poa ("Video_Control",
+                                      this->video_control_,
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception");
+      return -1;
+    }
+  
   result = this->parse_args (argc, argv);
   if (result < 0)
     return result;
@@ -531,13 +554,16 @@ int
 AV_Server::run ()
 {
   int result;
-  this->server_control_addr_.set (VCR_TCP_PORT);
+    this->server_control_addr_.set (VCR_TCP_PORT);
 
   // "listen" on the socket
   if (this->acceptor_.open (this->server_control_addr_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
-  ACE_Reactor::instance ()->run_event_loop ();
+    //  ACE_Reactor::instance ()->run_event_loop (); 
+
+  // Run the ORB event loop
+  this->orb_manager_->run ();
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P)AV_Server::run () "

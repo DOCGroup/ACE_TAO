@@ -124,7 +124,7 @@
 #include "fileio.h"
 #include "com.h"   
 #include "sendpt.h"
-#include "proto.h"
+#include "server_proto.h"
 #include "Video_Server.h"
 
 class Mpeg_Global

@@ -213,11 +213,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i interface/fb.xbm \
- interface/play.xbm interface/step.xbm interface/stop.xbm \
- interface/loop.xbm interface/ff.xbm interface/MainWindow.mib \
- interface/Info.mib video.h ../include/common.h newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h
+ $(ACE_ROOT)/ace/Log_Record.i \
+ interface/fb.xbm interface/play.xbm interface/step.xbm \
+ interface/stop.xbm interface/loop.xbm interface/ff.xbm \
+ interface/MainWindow.mib interface/Info.mib video.h \
+ ../include/common.h newproto.h ../mpeg_shared/routine.h \
+ ../mpeg_shared/../include/common.h global.h
 .obj/util.o .obj/util.so .shobj/util.o .shobj/util.so: util.cpp video.h proto.h util.h
 .obj/util32.o .obj/util32.so .shobj/util32.o .shobj/util32.so: util32.cpp video.h proto.h ui.h
 .obj/vb.o .obj/vb.so .shobj/vb.o .shobj/vb.so: vb.cpp ../include/common.h \
@@ -271,8 +272,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i decoders.h util.h \
- video.h proto.h global.h ui.h
+ $(ACE_ROOT)/ace/Log_Record.i decoders.h \
+ util.h video.h proto.h global.h ui.h
 .obj/vp.o .obj/vp.so .shobj/vp.o .shobj/vp.so: vp.cpp ../include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
