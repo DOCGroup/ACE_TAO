@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SYNCH_T_H
+#include "ace/pre.h"
 #define ACE_SYNCH_T_H
 
 #include "ace/Event_Handler.h"
@@ -963,4 +964,5 @@ public:
 #pragma implementation ("Synch_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_SYNCH_T_H */

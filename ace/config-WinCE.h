@@ -1,6 +1,7 @@
 // $Id$
 
 #ifndef ACE_CONFIG_WINCE_H
+#include "ace/pre.h"
 #define ACE_CONFIG_WINCE_H
 
 #if !defined (ACE_HAS_WINCE)
@@ -201,4 +202,5 @@ inline int isprint (const char c)
   return (c < 0x20 || c > 0x7e ? 0 : 1);
 }
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_WINCE_H */

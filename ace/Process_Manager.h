@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_PROCESS_MANAGER_H
+#include "ace/pre.h"
 #define ACE_PROCESS_MANAGER_H
 
 #include "ace/Synch.h"
@@ -385,4 +386,5 @@ private:
 #include "ace/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_PROCESS_MANAGER_H */

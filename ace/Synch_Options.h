@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SYNCH_OPTIONS_H
+#include "ace/pre.h"
 #define ACE_SYNCH_OPTIONS_H
 
 #include "ace/ACE.h"
@@ -144,4 +145,5 @@ private:
 #include "ace/Synch_Options.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_SYNCH_OPTIONS_H */

@@ -22,6 +22,7 @@
 // ============================================================================
 
 #ifndef ACE_STREAMS_H
+#include "ace/pre.h"
 #define ACE_STREAMS_H
 
 #include "ace/inc_user_config.h"
@@ -130,4 +131,5 @@
 
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
+#include "ace/post.h"
 #endif /* ACE_STREAMS_H */

@@ -5,6 +5,7 @@
 // configurations for IBM's VisualAge C++ compiler on Win32 and AIX.
 
 #ifndef CONFIG_VISUALAGE_H
+#include "ace/pre.h"
 #define CONFIG_VISUALAGE_H
 
 #ifdef __TOS_WIN__
@@ -15,4 +16,5 @@
    #include "PLATFORM NOT SPECIFIED"
 #endif /* __TOS_WIN__ */
 
+#include "ace/post.h"
 #endif //CONFIG_VISUALAGE_H

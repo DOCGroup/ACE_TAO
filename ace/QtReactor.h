@@ -14,6 +14,7 @@
 //    integrated in to ACE by Balachandran Natarajan <bala@cs.wustl.edu>
 // ============================================================================
 #ifndef ACE_QTREACTOR_H
+#include "ace/pre.h"
 #define ACE_QTREACTOR_H
 
 
@@ -147,4 +148,5 @@ class ACE_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
 
 #endif /*ACE_HAS_QT */
 
+#include "ace/post.h"
 #endif /* ACE_QTREACTOR_H */

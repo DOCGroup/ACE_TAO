@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_NAMING_CONTEXT_H
+#include "ace/pre.h"
 #define ACE_NAMING_CONTEXT_H
 
 #include "ace/ACE.h"
@@ -330,4 +331,5 @@ private:
 
 ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)
 
+#include "ace/post.h"
 #endif /* ACE_NAMING_CONTEXT_H */

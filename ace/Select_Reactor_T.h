@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SELECT_REACTOR_T_H
+#include "ace/pre.h"
 #define ACE_SELECT_REACTOR_T_H
 
 #include "ace/Select_Reactor_Base.h"
@@ -666,4 +667,5 @@ private:
 #pragma implementation ("Select_Reactor_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_T_H */

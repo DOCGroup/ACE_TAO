@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_BASED_POINTER_REPOSITORY_H
+#include "ace/pre.h"
 #define ACE_BASED_POINTER_REPOSITORY_H
 
 #include "ace/OS.h"                  // Need ACE_Export
@@ -63,4 +64,5 @@ private:
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
         ACE_BASED_POINTER_REPOSITORY;
 
+#include "ace/post.h"
 #endif /* ACE_BASED_POINTER_REPOSITORY_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef ACE_DIRENT_H
+#include "ace/pre.h"
 #define ACE_DIRENT_H
 
 #include "ace/OS.h"
@@ -104,4 +105,5 @@ private:
 #include "ace/Dirent.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_DIRENT_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SERVICE_TYPE_H
+#include "ace/pre.h"
 #define ACE_SERVICE_TYPE_H
 
 #include "ace/Service_Object.h"
@@ -184,4 +185,5 @@ private:
 #include "ace/Service_Types.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* _SERVICE_TYPE_H */

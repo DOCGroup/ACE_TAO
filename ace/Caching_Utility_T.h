@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef CACHING_UTILITY_H
+#include "ace/pre.h"
 #define CACHING_UTILITY_H
 
 #include "ace/OS.h"
@@ -308,4 +309,5 @@ protected:
 #pragma implementation ("Caching_Utility_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* CACHING_UTILITY_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SSTRING_H
+#include "ace/pre.h"
 #define ACE_SSTRING_H
 
 #include "ace/ACE.h"
@@ -646,4 +647,5 @@ private:
 #include "ace/SString.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_SSTRING_H */

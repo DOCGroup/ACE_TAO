@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CAPABILITIES_H
+#include "ace/pre.h"
 #define ACE_CAPABILITIES_H
 
 #include "ace/OS.h"
@@ -174,4 +175,5 @@ private:
 #include "ace/Capabilities.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* __ACE_CAPABILITIES_H__ */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_GROUP_DYNAMIC_H
+#include "ace/pre.h"
 #define ACE_CLASSIX_GROUP_DYNAMIC_H
 
 /* ------------------------------------------------------------------------- */
@@ -58,4 +59,5 @@ class ACE_CLASSIX_Group_Dynamic : public ACE_CLASSIX_Group
 #include "ace/CLASSIX/CLASSIX_Group_Dynamic.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_CLASSIX_GROUP_DYNAMIC_H */

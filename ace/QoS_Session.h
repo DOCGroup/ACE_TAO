@@ -15,6 +15,7 @@
 // ===========================================================================
 
 #ifndef ACE_QOS_SESSION_H
+#include "ace/pre.h"
 #define ACE_QOS_SESSION_H
 
 #include "ace/INET_Addr.h"
@@ -116,6 +117,7 @@ protected:
 
 };
 
+#include "ace/post.h"
 #endif /* ACE_QOS_SESSION_H */
 
 

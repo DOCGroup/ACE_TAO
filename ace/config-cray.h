@@ -2,6 +2,7 @@
 // $Id$
 
 #ifndef ACE_CONFIG_CRAY_H
+#include "ace/pre.h"
 #define ACE_CONFIG_CRAY_H
 
 /*
@@ -237,4 +238,5 @@
 
 /* #define ACE_HAS_SYS_ERRLIST */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_CRAY_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_DEV_CONNECTOR_H
+#include "ace/pre.h"
 #define ACE_DEV_CONNECTOR_H
 
 #include "ace/DEV_IO.h"
@@ -95,4 +96,5 @@ public:
 #include "ace/DEV_Connector.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_DEV_CONNECTOR_H */

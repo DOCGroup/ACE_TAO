@@ -6,6 +6,7 @@
 // common to all VisualAge compilers.
 
 #ifndef ACE_WIN32_VISUALAGECPP_H
+#include "ace/pre.h"
 #define ACE_WIN32_VISUALAGECPP_H
 
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
@@ -82,4 +83,5 @@
 
 #endif /* defined(__IBMCPP__) */
 
+#include "ace/post.h"
 #endif /* ACE_WIN32_VISUALAGECPP_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MAP_MANAGER_H
+#include "ace/pre.h"
 #define ACE_MAP_MANAGER_H
 
 #include "ace/OS.h"
@@ -548,4 +549,5 @@ public:
 #pragma implementation ("Map_Manager.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_MAP_MANAGER_H */

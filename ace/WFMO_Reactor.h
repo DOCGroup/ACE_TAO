@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_WFMO_REACTOR_H
+#include "ace/pre.h"
 #define ACE_WFMO_REACTOR_H
 
 #include "ace/Signal.h"
@@ -1164,4 +1165,5 @@ int WSAEnumNetworkEvents (SOCKET s,
 #if defined (__ACE_INLINE__)
 #include "ace/WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
+#include "ace/post.h"
 #endif /* ACE_WFMO_REACTOR_H */

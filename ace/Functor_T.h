@@ -34,6 +34,7 @@
 // ============================================================================
 
 #ifndef ACE_FUNCTOR_T_H
+#include "ace/pre.h"
 #define ACE_FUNCTOR_T_H
 
 #include "ace/Functor.h"
@@ -140,4 +141,5 @@ public:
 #pragma implementation ("Functor_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_FUNCTOR_T_H */

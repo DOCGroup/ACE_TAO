@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_ACTIVATION_QUEUE_H
+#include "ace/pre.h"
 #define ACE_ACTIVATION_QUEUE_H
 
 #include "ace/Synch_T.h"
@@ -92,5 +93,6 @@ protected:
 #include "ace/Activation_Queue.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_ACTIVATION_QUEUE_H */
 

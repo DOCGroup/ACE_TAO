@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef ACE_CORBA_REF_H
+#include "ace/pre.h"
 #define ACE_CORBA_REF_H
 
 #include "ace/ACE.h"
@@ -82,4 +83,5 @@ private:
 #pragma implementation ("CORBA_Ref.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* CORBA_REF_H */

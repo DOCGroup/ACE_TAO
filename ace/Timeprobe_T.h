@@ -2,6 +2,7 @@
 // $Id$
 
 #ifndef ACE_TIMEPROBE_T_H
+#include "ace/pre.h"
 #define ACE_TIMEPROBE_T_H
 
 #include "ace/OS.h"
@@ -170,4 +171,5 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_COMPILE_TIMEPROBES */
+#include "ace/post.h"
 #endif /* ACE_TIMEPROBE_T_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_XTI_ATM_MCAST_H
+#include "ace/pre.h"
 #define ACE_XTI_ATM_MCAST_H
 
 #include "ace/TLI_Connector.h"
@@ -118,4 +119,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_XTI_ATM */
+#include "ace/post.h"
 #endif /* ACE_XTI_ATM_MCAST_H */

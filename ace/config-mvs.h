@@ -4,6 +4,7 @@
 // Config file for MVS with OpenEdition
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 // The following #defines are hacks to get around things
@@ -113,4 +114,5 @@
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

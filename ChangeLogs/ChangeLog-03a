@@ -1,8 +1,51 @@
+Sat Mar 18 05:42:06 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/pre.h:
+        * ace/post.h: Added two new file.  <pre.h> preserves the current
+          alignment setting of the compiler and <post.h> restores the
+          alignment setting.  They are used to make ACE a better team
+          player with other library on NT platforms.
+
+        * include/makeinclude/compiler.bor:
+        * include/makeinclude/make_flags.bor: Applied the changes for the
+          updated Borland makefiles.
+
+          When using ACE+TAO on Win32 (using either MSVC or BCB) you
+          currently must ensure that your application's compiler options
+          are set to be the same as those used to build ACE+TAO. For
+          example, since ACE+TAO is built using 8-byte alignment, your
+          application must also use this alignment otherwise bad things
+          can happen.
+
+          Other libraries on Win32 free the developer from this burden by
+          explicitly setting these options in the source code. For
+          example, the Windows SDK header files contain things like
+
+             #include <pshpack4.h>
+             ...
+             #include <poppack.h>
+
+          where these header files contain the appropriate #pragmas for
+          setting alignment options. (BTW, structure alignment is not the
+          only option that may be set, I'm just using it as an
+          example. Warnings could be disabled, and - my ulterior motive -
+          I have a few problematic BCB compiler options that I would like
+          to control.)
+
+          This sort of thing helps a library to play nicely with any other
+          libraries or source code someone may be using. It somewhat
+          simplifies the instructions for setting up project that uses
+          ACE+TAO, and it lets developers change their compiler options
+          with abandon without breaking ACE+TAO.
+
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+          providing the patches.
+
 Fri Mar 17 23:28:20 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/OS/Process/process.cpp (tokenize): Fixed a typo in the
-	  code.  Thanks to Byron Harris <harris_b@ociweb.com> for noticing
- 	  this.
+        * examples/OS/Process/process.cpp (tokenize): Fixed a typo in the
+          code.  Thanks to Byron Harris <harris_b@ociweb.com> for noticing
+          this.
 
 Fri Mar 17 20:43:20 2000  Sangwoo Jin <swjinjin@sei.co.kr>
 

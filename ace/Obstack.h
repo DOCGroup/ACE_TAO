@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_OBSTACK_H
+#include "ace/pre.h"
 #define ACE_OBSTACK_H
 
 #include "ace/Malloc.h"
@@ -107,4 +108,5 @@ protected:
 #include "ace/Obstack.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_OBSTACK_H */

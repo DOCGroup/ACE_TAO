@@ -35,6 +35,7 @@
 
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 ////////////////////////////////////////////////////////////////
@@ -241,4 +242,5 @@
 #define ACE_LACKS_MKFIFO
 
 #define ACE_MALLOC_ALIGN 8
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

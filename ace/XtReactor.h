@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef ACE_XTREACTOR_H
+#include "ace/pre.h"
 #define ACE_XTREACTOR_H
 
 #include "ace/Select_Reactor.h"
@@ -128,4 +129,5 @@ private:
 };
 #endif /* ACE_HAS_XT */
 
+#include "ace/post.h"
 #endif /* ACE_XTREACTOR_H */

@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #ifndef ACE_STREAM_MODULES
+#include "ace/pre.h"
 #define ACE_STREAM_MODULES
 
 template <ACE_SYNCH_DECL>
@@ -137,4 +138,5 @@ public:
 #pragma implementation ("Stream_Modules.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_STREAM_MODULES */

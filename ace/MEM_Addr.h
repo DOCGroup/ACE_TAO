@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MEM_ADDR_H
+#include "ace/pre.h"
 #define ACE_MEM_ADDR_H
 
 #include "ace/ACE.h"
@@ -140,4 +141,5 @@ private:
 #include "ace/MEM_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_MEM_ADDR_H */

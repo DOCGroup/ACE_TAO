@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MANAGED_OBJECT_H
+#include "ace/pre.h"
 #define ACE_MANAGED_OBJECT_H
 
 #include "ace/OS.h"
@@ -155,4 +156,5 @@ private:
 #pragma implementation ("Managed_Object.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_MANAGED_OBJECT_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_PAIR_H
+#include "ace/pre.h"
 #define ACE_PAIR_H
 
 #include "ace/OS.h"
@@ -30,4 +31,5 @@
 // Include the templates here.
 #include "ace/Pair_T.h"
 
+#include "ace/post.h"
 #endif /* ACE_PAIR_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_STATS_H
+#include "ace/pre.h"
 #define ACE_STATS_H
 
 #include "ace/ACE.h"
@@ -241,4 +242,5 @@ private:
 # include "ace/Stats.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ! ACE_STATS_H */

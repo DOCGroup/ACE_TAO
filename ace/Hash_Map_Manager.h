@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_HASH_MAP_MANAGER_H
+#include "ace/pre.h"
 #define ACE_HASH_MAP_MANAGER_H
 
 #include "ace/OS.h"
@@ -31,4 +32,5 @@
 // Include the templates here.
 #include "ace/Hash_Map_Manager_T.h"
 
+#include "ace/post.h"
 #endif /* ACE_HASH_MAP_MANAGER_H */

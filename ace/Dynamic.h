@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_DYNAMIC_H
+#include "ace/pre.h"
 #define ACE_DYNAMIC_H
 
 #include "ace/ACE.h"
@@ -66,4 +67,5 @@ private:
 #include "ace/Dynamic.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_DYNAMIC_H */

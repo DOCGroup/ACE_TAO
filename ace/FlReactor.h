@@ -21,6 +21,7 @@
 // ============================================================================
 
 #ifndef ACE_FLREACTOR_H
+#include "ace/pre.h"
 #define ACE_FLREACTOR_H
 
 #include "ace/Select_Reactor.h"
@@ -110,4 +111,5 @@ private:
 
 #endif /* ACE_HAS_FL */
 
+#include "ace/post.h"
 #endif /* ACE_FLREACTOR_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef ACE_FUTURE_H
+#include "ace/pre.h"
 #define ACE_FUTURE_H
 
 #include /**/ "ace/Containers.h"
@@ -323,4 +324,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
+#include "ace/post.h"
 #endif /* ACE_FUTURE_H */

@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #ifndef ACE_MESSAGE_BLOCK_H
+#include "ace/pre.h"
 #define ACE_MESSAGE_BLOCK_H
 
 #include "ace/Malloc.h"
@@ -838,4 +839,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Message_Block_T.h"
+#include "ace/post.h"
 #endif /* ACE_MESSAGE_BLOCK_H */

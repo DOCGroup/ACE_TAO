@@ -7,6 +7,7 @@
 // platforms using GNU C++ but without the POSIX (pthread) threads package
 
 #ifndef ACE_CONFIG_FREEBSD_H
+#include "ace/pre.h"
 #define ACE_CONFIG_FREEBSD_H
 
 #include <osreldate.h>
@@ -192,4 +193,5 @@ ange */
 #define TCGETS TIOCGETA
 #define TCSETS TIOCSETA
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_FREEBSD_H */

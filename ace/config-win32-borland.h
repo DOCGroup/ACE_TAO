@@ -4,6 +4,7 @@
 // The following configuration file contains defines for Borland compilers.
 
 #ifndef ACE_WIN32_BORLAND_H
+#include "ace/pre.h"
 #define ACE_WIN32_BORLAND_H
 
 #if defined (__BORLANDC__)
@@ -73,4 +74,5 @@
 
 #endif /* defined(__BORLANDC__) */
 
+#include "ace/post.h"
 #endif /* ACE_WIN32_BORLAND_H */

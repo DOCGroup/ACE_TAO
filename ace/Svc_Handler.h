@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SVC_HANDLER_H
+#include "ace/pre.h"
 #define ACE_SVC_HANDLER_H
 
 // Forward decls.
@@ -280,4 +281,5 @@ protected:
 #pragma implementation ("Svc_Handler.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_SVC_HANDLER_H */

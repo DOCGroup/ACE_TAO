@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_HASH_MAP_WITH_ALLOCATOR_T_H
+#include "ace/pre.h"
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_H
 
 #include "ace/Hash_Map_Manager.h"
@@ -100,4 +101,5 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 
+#include "ace/post.h"
 #endif /* ACE_HASH_MAP_WITH_ALLOCATOR_T_H */

@@ -25,6 +25,7 @@
 // ============================================================================
 
 #ifndef ACE_POSIX_ASYNCH_IO_H
+#include "ace/pre.h"
 #define ACE_POSIX_ASYNCH_IO_H
 
 #include "ace/OS.h"
@@ -1650,4 +1651,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS */
+#include "ace/post.h"
 #endif /* ACE_POSIX_ASYNCH_IO_H */

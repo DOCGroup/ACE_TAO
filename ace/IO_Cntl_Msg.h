@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_IO_CNTL_MSG_H
+#include "ace/pre.h"
 #define ACE_IO_CNTL_MSG_H
 
 class ACE_Export ACE_IO_Cntl_Msg
@@ -82,4 +83,5 @@ private:
   // Return value
 };
 
+#include "ace/post.h"
 #endif /* ACE_IO_CNTL_MSG_H */

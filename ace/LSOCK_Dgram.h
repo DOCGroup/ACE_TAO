@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_LOCAL_SOCK_DGRAM_H
+#include "ace/pre.h"
 #define ACE_LOCAL_SOCK_DGRAM_H
 
 #include "ace/SOCK_Dgram.h"
@@ -65,4 +66,5 @@ public:
 #endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#include "ace/post.h"
 #endif /* ACE_LOCAL_SOCK_DGRAM_H */

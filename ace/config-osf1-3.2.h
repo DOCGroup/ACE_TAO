@@ -5,6 +5,7 @@
 // platforms with the DEC 5.1 C++ compiler.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #define ACE_LACKS_SETSCHED
@@ -183,4 +184,5 @@ extern "C" pid_t getpgid (pid_t);
 #define ACE_PAGE_SIZE 8192
 #define ACE_HAS_GETPAGESIZE
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

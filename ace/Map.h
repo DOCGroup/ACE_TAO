@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MAP_H
+#include "ace/pre.h"
 #define ACE_MAP_H
 
 #include "ace/OS.h"
@@ -30,4 +31,5 @@
 // Include the templates here.
 #include "ace/Map_T.h"
 
+#include "ace/post.h"
 #endif /* ACE_MAP_H */

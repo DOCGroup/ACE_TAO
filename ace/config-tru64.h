@@ -6,6 +6,7 @@
 // config-osf1-4.0.h, and adds deltas for newer platforms.
 
 #ifndef ACE_CONFIG_TRU64_H
+#include "ace/pre.h"
 #define ACE_CONFIG_TRU64_H
 
 #if defined (DIGITAL_UNIX)
@@ -20,4 +21,5 @@
 #  include "ace/config-osf1-3.2.h"
 #endif /* ! DIGITAL_UNIX */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_TRU64_H */

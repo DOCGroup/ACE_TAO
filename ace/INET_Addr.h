@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_INET_ADDR_H
+#include "ace/pre.h"
 #define ACE_INET_ADDR_H
 
 #include "ace/ACE.h"
@@ -201,4 +202,5 @@ private:
 #include "ace/INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_INET_ADDR_H */

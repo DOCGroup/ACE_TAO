@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SPIPE_H
+#include "ace/pre.h"
 #define ACE_SPIPE_H
 
 #include "ace/IPC_SAP.h"
@@ -64,4 +65,5 @@ protected:
 #include "ace/SPIPE.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_SPIPE_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef ACE_WIN32_PROACTOR_H
+#include "ace/pre.h"
 #define ACE_WIN32_PROACTOR_H
 
 #include "ace/OS.h"
@@ -263,4 +264,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 */
+#include "ace/post.h"
 #endif /* ACE_PROACTOR_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef ACE_TTY_IO_H
+#include "ace/pre.h"
 #define ACE_TTY_IO_H
 
 #include "ace/OS.h"
@@ -70,4 +71,5 @@ public:
 #endif /* ACE_NEEDS_DEV_IO_CONVERSION */
 };
 
+#include "ace/post.h"
 #endif /* ACE_TTY_IO_H */

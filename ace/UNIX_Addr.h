@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_UNIX_ADDR_H
+#include "ace/pre.h"
 #define ACE_UNIX_ADDR_H
 
 #include "ace/Addr.h"
@@ -92,4 +93,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#include "ace/post.h"
 #endif /* ACE_UNIX_ADDR_H */

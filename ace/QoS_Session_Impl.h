@@ -15,6 +15,7 @@
 // ===========================================================================
 
 #ifndef ACE_QOS_SESSION_IMPL_H
+#include "ace/pre.h"
 #define ACE_QOS_SESSION_IMPL_H
 
 #include "ace/QoS_Session.h"
@@ -189,4 +190,5 @@ private:
 #include "ace/QoS_Session_Impl.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_QOS_SESSION_IMPL_H */

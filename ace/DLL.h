@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_DLL_H
+#include "ace/pre.h"
 #define ACE_DLL_H
 
 #include "ace/OS.h"
@@ -103,4 +104,5 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL &))
 };
 
+#include "ace/post.h"
 #endif /* ACE_DLL_H */

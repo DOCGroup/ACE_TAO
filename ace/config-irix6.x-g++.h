@@ -5,6 +5,7 @@
 // Indigo2EX running Irix 6.2 platform using the GNU C++ Compiler
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
@@ -49,4 +50,5 @@
 //#define ACE_HAS_SYS_SIGLIST
 
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

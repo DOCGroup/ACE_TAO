@@ -16,6 +16,7 @@
 // Janne (Jan.Perman@osd.Ericsson.se)
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
@@ -451,4 +452,5 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

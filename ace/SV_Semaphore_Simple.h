@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SV_SEMAPHORE_SIMPLE_H
+#include "ace/pre.h"
 #define ACE_SV_SEMAPHORE_SIMPLE_H
 
 #include "ace/ACE.h"
@@ -148,4 +149,5 @@ protected:
 #include "ace/SV_Semaphore_Simple.i"
 #endif
 
+#include "ace/post.h"
 #endif /* _SV_SEMAPHORE_SIMPLE_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_HIGH_RES_TIMER_H
+#include "ace/pre.h"
 #define ACE_HIGH_RES_TIMER_H
 
 #include "ace/ACE.h"
@@ -225,4 +226,5 @@ private:
 #include "ace/High_Res_Timer.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_HIGH_RES_TIMER_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_PROCESS_H
+#include "ace/pre.h"
 #define ACE_PROCESS_H
 
 #include "ace/OS.h"
@@ -435,4 +436,5 @@ protected:
 #include "ace/Process.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_PROCESS_H */

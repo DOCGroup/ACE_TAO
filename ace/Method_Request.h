@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_METHOD_REQUEST_H
+#include "ace/pre.h"
 #define ACE_METHOD_REQUEST_H
 
 #include "ace/OS.h"
@@ -58,4 +59,5 @@ protected:
   // The priority of the request.
 };
 
+#include "ace/post.h"
 #endif /* ACE_METHOD_REQUEST_H */

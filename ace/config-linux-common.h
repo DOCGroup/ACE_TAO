@@ -8,6 +8,7 @@
 // and configures based on those.
 
 #ifndef ACE_LINUX_COMMON_H
+#include "ace/pre.h"
 #define ACE_LINUX_COMMON_H
 
 #define ACE_HAS_BYTESEX_H
@@ -234,4 +235,5 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+#include "ace/post.h"
 #endif /* ACE_LINUX_COMMON_H */

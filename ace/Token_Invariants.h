@@ -20,6 +20,7 @@
 // ============================================================================
 
 #ifndef ACE_TOKEN_INVARIANTS_H
+#include "ace/pre.h"
 #define ACE_TOKEN_INVARIANTS_H
 
 #include "ace/Synch.h"
@@ -220,4 +221,5 @@ protected:
 #include "ace/Token_Invariants.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_TOKEN_INVARIANTS_H */

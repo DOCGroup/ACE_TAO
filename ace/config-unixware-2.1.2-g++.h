@@ -5,6 +5,7 @@
 // for Unixware platforms running UnixWare 2.1.2 and gcc version 2.7.2.2
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 // See README for what the ACE_HAS... and ACE_LACKS... macros mean
@@ -97,4 +98,5 @@
 
 #define ACE_HAS_IDTYPE_T
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_HANDLE_SET_H
+#include "ace/pre.h"
 #define ACE_HANDLE_SET_H
 
 #include "ace/ACE.h"
@@ -211,4 +212,5 @@ private:
 #include "ace/Handle_Set.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_HANDLE_SET */

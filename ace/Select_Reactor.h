@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SELECT_REACTOR_H
+#include "ace/pre.h"
 #define ACE_SELECT_REACTOR_H
 
 #include "ace/Select_Reactor_T.h"
@@ -68,4 +69,5 @@ private:
 #include "ace/Select_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_H */

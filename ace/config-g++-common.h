@@ -6,6 +6,7 @@
 // to all g++ platforms, including egcs.
 
 #ifndef ACE_GNUG_COMMON_H
+#include "ace/pre.h"
 #define ACE_GNUG_COMMON_H
 
 #if __GNUC__ > 2  ||  ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)  || \
@@ -95,4 +96,5 @@
 #define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
+#include "ace/post.h"
 #endif /* ACE_GNUG_COMMON_H */

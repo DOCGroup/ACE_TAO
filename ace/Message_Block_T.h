@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MESSAGE_BLOCK_T_H
+#include "ace/pre.h"
 #define ACE_MESSAGE_BLOCK_T_H
 
 #include "ace/Message_Block.h"
@@ -78,4 +79,5 @@ private:
 #pragma implementation ("Message_Block_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_MESSAGE_BLOCK_T_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MEM_CONNECTOR_H
+#include "ace/pre.h"
 #define ACE_MEM_CONNECTOR_H
 
 #include "ace/SOCK_Connector.h"
@@ -106,4 +107,5 @@ private:
 #include "ace/MEM_Connector.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_MEM_CONNECTOR_H */

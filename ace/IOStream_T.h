@@ -20,6 +20,7 @@
 // ============================================================================
 
 #ifndef ACE_IOSTREAM_T_H
+#include "ace/pre.h"
 #define ACE_IOSTREAM_T_H
 
 #include "ace/IOStream.h"
@@ -276,4 +277,5 @@ protected:
 #pragma implementation ("IOStream_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
+#include "ace/post.h"
 #endif /* ACE_IOSTREAM_T_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_FIFO_SEND_H
+#include "ace/pre.h"
 #define ACE_FIFO_SEND_H
 
 #include "ace/FIFO.h"
@@ -61,4 +62,5 @@ public:
 #include "ace/FIFO_Send.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_FIFO_SEND_H */

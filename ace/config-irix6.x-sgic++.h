@@ -5,6 +5,7 @@
 // installed.
 
 #ifndef ACE_CONFIG_IRIX6X_H
+#include "ace/pre.h"
 #define ACE_CONFIG_IRIX6X_H
 
 // Include basic (non-threaded) configuration
@@ -49,4 +50,5 @@
   #define ACE_MT_SAFE 1
 #endif /* ACE_MT_SAFE */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_IRIX6X_H */
