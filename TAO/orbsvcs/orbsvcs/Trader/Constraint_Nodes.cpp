@@ -16,38 +16,39 @@
 
 
 #include "Constraint_Nodes.h"
+#include "Constraint_Visitors.h"
 
 const CORBA::Long MAX_SIGNED_INTEGER = (~(CORBA::Long)0) >> 1;
 const CORBA::Long MIN_SIGNED_INTEGER = ~(MAX_SIGNED_INTEGER);
 const CORBA::ULong MAX_UNSIGNED_INTEGER = (~(CORBA::ULong)0);
 
 int
-TAO_Noop_Constraint::accept(TAO_Constraint_Visitor* visitor)
+TAO_Noop_Constraint::accept (TAO_Constraint_Visitor* visitor)
 {
   int return_value = -1;
-  switch(this->type_)
+  switch (this->type_)
     {
     case TAO_FIRST:
-      return_value = visitor->visit_first(this);
+      return_value = visitor->visit_first (this);
       break;
     case TAO_RANDOM:
-      return_value = visitor->visit_random(this);
+      return_value = visitor->visit_random (this);
     }
 
   return return_value;
 }
 
 TAO_Binary_Constraint::
-TAO_Binary_Constraint(TAO_Expression_Type op_type,
+TAO_Binary_Constraint (TAO_Expression_Type op_type,
 				TAO_Constraint* left,
 				TAO_Constraint* right)
-  : op_ (op_type),
+  : op_  (op_type),
     left_ (left),
     right_ (right)
 {
 }
 
-TAO_Binary_Constraint::~TAO_Binary_Constraint()
+TAO_Binary_Constraint::~TAO_Binary_Constraint ()
 {
   delete left_;
   delete right_;
@@ -78,7 +79,7 @@ static int (*dispatch_table[]) (TAO_Constraint_Visitor*,
 
 // Simulate the fun of actual double dispatching.
 int
-TAO_Binary_Constraint::accept(TAO_Constraint_Visitor* visitor)
+TAO_Binary_Constraint::accept (TAO_Constraint_Visitor* visitor)
 {
   int offset = this->op_ - TAO_GT,
     return_value = -1;
@@ -91,7 +92,7 @@ TAO_Binary_Constraint::accept(TAO_Constraint_Visitor* visitor)
 
 int
 TAO_Binary_Constraint::
-visit_or(TAO_Constraint_Visitor* visitor,
+visit_or (TAO_Constraint_Visitor* visitor,
 		  TAO_Binary_Constraint* expr)
 {
   return visitor->visit_or(expr);
@@ -99,7 +100,7 @@ visit_or(TAO_Constraint_Visitor* visitor,
 
 int
 TAO_Binary_Constraint::
-visit_and(TAO_Constraint_Visitor* visitor,
+visit_and (TAO_Constraint_Visitor* visitor,
 	  TAO_Binary_Constraint* expr)
 {
   return visitor->visit_and(expr);
@@ -107,129 +108,129 @@ visit_and(TAO_Constraint_Visitor* visitor,
 
 int
 TAO_Binary_Constraint::
-visit_less_than(TAO_Constraint_Visitor* visitor,
+visit_less_than (TAO_Constraint_Visitor* visitor,
 		TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_less_than(expr);
+  return visitor->visit_less_than (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_less_than_equal(TAO_Constraint_Visitor* visitor,
+visit_less_than_equal (TAO_Constraint_Visitor* visitor,
 		      TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_less_than_equal(expr);
+  return visitor->visit_less_than_equal (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_greater_than(TAO_Constraint_Visitor* visitor,
+visit_greater_than (TAO_Constraint_Visitor* visitor,
 		   TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_greater_than(expr);
+  return visitor->visit_greater_than (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_greater_than_equal(TAO_Constraint_Visitor* visitor,
+visit_greater_than_equal (TAO_Constraint_Visitor* visitor,
 			 TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_greater_than_equal(expr);
+  return visitor->visit_greater_than_equal (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_equal(TAO_Constraint_Visitor* visitor,
+visit_equal (TAO_Constraint_Visitor* visitor,
 	    TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_equal(expr);
+  return visitor->visit_equal (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_not_equal(TAO_Constraint_Visitor* visitor,
+visit_not_equal (TAO_Constraint_Visitor* visitor,
 		TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_not_equal(expr);
+  return visitor->visit_not_equal (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_add(TAO_Constraint_Visitor* visitor,
+visit_add (TAO_Constraint_Visitor* visitor,
 	  TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_add(expr);
+  return visitor->visit_add (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_sub(TAO_Constraint_Visitor* visitor,
+visit_sub (TAO_Constraint_Visitor* visitor,
 	  TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_sub(expr);
+  return visitor->visit_sub (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_mult(TAO_Constraint_Visitor* visitor,
+visit_mult (TAO_Constraint_Visitor* visitor,
 	   TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_mult(expr);
+  return visitor->visit_mult (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_div(TAO_Constraint_Visitor* visitor,
+visit_div (TAO_Constraint_Visitor* visitor,
 	  TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_div(expr);
+  return visitor->visit_div (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_twiddle(TAO_Constraint_Visitor* visitor,
+visit_twiddle (TAO_Constraint_Visitor* visitor,
 	      TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_twiddle(expr);
+  return visitor->visit_twiddle (expr);
 }
 
 int
 TAO_Binary_Constraint::
-visit_in(TAO_Constraint_Visitor* visitor,
+visit_in (TAO_Constraint_Visitor* visitor,
 	 TAO_Binary_Constraint* expr)
 {
-  return visitor->visit_in(expr);
+  return visitor->visit_in (expr);
 }
 
 
 TAO_Constraint*
-TAO_Binary_Constraint::left_operand()
+TAO_Binary_Constraint::left_operand (void) const
 {
   return this->left_;
 }
 
 TAO_Constraint*
-TAO_Binary_Constraint::right_operand()
+TAO_Binary_Constraint::right_operand (void) const
 {
   return this->right_;
 }
 
 TAO_Unary_Constraint::
-TAO_Unary_Constraint(TAO_Expression_Type op_type,
+TAO_Unary_Constraint (TAO_Expression_Type op_type,
 		     TAO_Constraint* operand)
   : op_ (op_type),
     operand_ (operand)
 {
 }
 
-TAO_Unary_Constraint::~TAO_Unary_Constraint()
+TAO_Unary_Constraint::~TAO_Unary_Constraint (void)
 {
   delete operand_;
 }
 
   
 int
-TAO_Unary_Constraint::accept(TAO_Constraint_Visitor* visitor)
+TAO_Unary_Constraint::accept (TAO_Constraint_Visitor* visitor)
 {
   // Since there are only three unary operators, there's no need for a
   // dispatch table.
@@ -237,25 +238,25 @@ TAO_Unary_Constraint::accept(TAO_Constraint_Visitor* visitor)
   switch (this->op_)
     {
     case TAO_CONSTRAINT:
-      return_value = visitor->visit_constraint(this);
+      return_value = visitor->visit_constraint (this);
       break;
     case TAO_WITH:
-      return_value = visitor->visit_with(this);
+      return_value = visitor->visit_with (this);
       break;
     case TAO_MIN:
-      return_value = visitor->visit_min(this);
+      return_value = visitor->visit_min (this);
       break;
     case TAO_MAX:
-      return_value = visitor->visit_max(this);
+      return_value = visitor->visit_max (this);
       break;
     case TAO_NOT:
-      return_value = visitor->visit_not(this);
+      return_value = visitor->visit_not (this);
       break;
     case TAO_UMINUS:
-      return_value = visitor->visit_unary_minus(this);
+      return_value = visitor->visit_unary_minus (this);
       break;
     case TAO_EXIST:
-      return_value = visitor->visit_exist(this);
+      return_value = visitor->visit_exist (this);
       break;
     }
 
@@ -263,30 +264,30 @@ TAO_Unary_Constraint::accept(TAO_Constraint_Visitor* visitor)
 }
 
 TAO_Constraint*
-TAO_Unary_Constraint::operand()
+TAO_Unary_Constraint::operand (void)
 {
   return this->operand_;
 }
 
 TAO_Property_Constraint::
-TAO_Property_Constraint(const char* name)
-  : name_ (ACE_OS::strdup (name))
+TAO_Property_Constraint (const char* name)
+  : name_ (CORBA::string_dup (name))
 {
 }
 
-TAO_Property_Constraint::~TAO_Property_Constraint()
+TAO_Property_Constraint::~TAO_Property_Constraint (void)
 {
-  delete this->name_;
+  CORBA::string_free (this->name_);
 }
   
 int
 TAO_Property_Constraint::accept(TAO_Constraint_Visitor* visitor)
 {
-  return visitor->visit_property(this);
+  return visitor->visit_property (this);
 }
 
 const char*
-TAO_Property_Constraint::name() const
+TAO_Property_Constraint::name (void) const
 {
   return name_;
 }
@@ -299,7 +300,7 @@ TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
 
 
 TAO_Literal_Constraint::
-TAO_Literal_Constraint(CORBA::Any* any)
+TAO_Literal_Constraint (CORBA::Any* any)
   : type_ (TAO_Literal_Constraint::comparable_type (any->type ()))
 {
   CORBA::Environment env;
@@ -351,7 +352,7 @@ TAO_Literal_Constraint(CORBA::Any* any)
       {
 	char * s;
 	any_ref >>= s;
-	this->op_.str_ = ACE_OS::strdup(s);
+	this->op_.str_ = CORBA::string_dup (s);
       }
       break;
     case TAO_SEQUENCE:
@@ -359,44 +360,44 @@ TAO_Literal_Constraint(CORBA::Any* any)
     }
 }
 
-TAO_Literal_Constraint::TAO_Literal_Constraint(CORBA::ULong uinteger)
+TAO_Literal_Constraint::TAO_Literal_Constraint (CORBA::ULong uinteger)
   : type_ (TAO_UNSIGNED)
 {
   this->op_.uinteger_ = uinteger;
 }
 
-TAO_Literal_Constraint::TAO_Literal_Constraint(CORBA::Long integer)
+TAO_Literal_Constraint::TAO_Literal_Constraint (CORBA::Long integer)
   : type_ (TAO_SIGNED)
 {
   this->op_.integer_ = integer;
 }
 
-TAO_Literal_Constraint::TAO_Literal_Constraint(CORBA::Boolean boolean)
+TAO_Literal_Constraint::TAO_Literal_Constraint (CORBA::Boolean boolean)
   : type_ (TAO_BOOLEAN)
 {
   this->op_.bool_ = boolean;
 }
 
-TAO_Literal_Constraint::TAO_Literal_Constraint(CORBA::Double doub)
+TAO_Literal_Constraint::TAO_Literal_Constraint (CORBA::Double doub)
   : type_ (TAO_DOUBLE)
 {
   this->op_.double_ = doub;
 }
 
-TAO_Literal_Constraint::TAO_Literal_Constraint(const char* str)
+TAO_Literal_Constraint::TAO_Literal_Constraint (const char* str)
   : type_ (TAO_STRING)
 {
-  this->op_.str_ = ACE_OS::strdup(str);
+  this->op_.str_ = CORBA::string_dup (str);
 }
 
-TAO_Literal_Constraint::~TAO_Literal_Constraint(void)
+TAO_Literal_Constraint::~TAO_Literal_Constraint (void)
 {
   if (this->type_ == TAO_STRING)
-    free (this->op_.str_);
+    CORBA::string_free (this->op_.str_);
 }
 
 int
-TAO_Literal_Constraint::accept(TAO_Constraint_Visitor* visitor)
+TAO_Literal_Constraint::accept (TAO_Constraint_Visitor* visitor)
 {
   return visitor->visit_literal(this);
 }
@@ -407,12 +408,12 @@ TAO_Literal_Constraint::operator= (const TAO_Literal_Constraint& co)
   this->copy (co);
 }
 
-TAO_Literal_Constraint::operator CORBA::Boolean(void) const
+TAO_Literal_Constraint::operator CORBA::Boolean (void) const
 {
   return (this->type_ == TAO_BOOLEAN) ? this->op_.bool_ : CORBA::B_FALSE;
 }
 
-TAO_Literal_Constraint::operator CORBA::ULong(void) const
+TAO_Literal_Constraint::operator CORBA::ULong (void) const
 {
   CORBA::ULong return_value = (CORBA::ULong)0;
   
@@ -432,7 +433,7 @@ TAO_Literal_Constraint::operator CORBA::ULong(void) const
   return return_value;
 }
 
-TAO_Literal_Constraint::operator CORBA::Long(void) const
+TAO_Literal_Constraint::operator CORBA::Long (void) const
 {
   CORBA::Long return_value = (CORBA::Long)0;
 
@@ -455,7 +456,7 @@ TAO_Literal_Constraint::operator CORBA::Long(void) const
   return return_value;
 }
 
-TAO_Literal_Constraint::operator CORBA::Double(void) const
+TAO_Literal_Constraint::operator CORBA::Double (void) const
 {
   CORBA::Double return_value = (CORBA::Double)0.0;
   
@@ -878,8 +879,8 @@ operator- (const TAO_Literal_Constraint& operand)
 }
 
 TAO_Expression_Type
-TAO_Literal_Constraint::widest_type(const TAO_Literal_Constraint& left,
-				    const TAO_Literal_Constraint& right)
+TAO_Literal_Constraint::widest_type (const TAO_Literal_Constraint& left,
+				     const TAO_Literal_Constraint& right)
 {
   TAO_Expression_Type left_type = left.expr_type(),
     right_type = right.expr_type(),
@@ -901,7 +902,7 @@ TAO_Literal_Constraint::copy (const TAO_Literal_Constraint& lit)
 {
   this->type_ = lit.type_;
   if (this->type_ == TAO_STRING)
-    this->op_.str_ = ACE_OS::strdup(lit.op_.str_);
+    this->op_.str_ = CORBA::string_dup (lit.op_.str_);
   else if (this->type_ == TAO_DOUBLE)
     this->op_.double_ = lit.op_.double_;
   else if (this->type_ == TAO_UNSIGNED)

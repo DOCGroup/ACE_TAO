@@ -7,7 +7,7 @@
 //    orbsvcs
 // 
 // = FILENAME
-//    Register_Offer_Iterator.h
+//    Offer_Iterators_T.h
 //
 // = AUTHOR
 //    Marina Spivak <marina@cs.wustl.edu>
@@ -18,7 +18,7 @@
 #ifndef TAO_REGISTER_OFFER_ITERATOR_H
 #define TAO_REGISTER_OFFER_ITERATOR_H
 
-#include "Offer_Iterator.h"
+#include "Offer_Iterators.h"
 
 template <class TRADER>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
@@ -73,7 +73,7 @@ private:
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Register_Offer_Iterator.cpp"
+#include "Offer_Iterators_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_REGISTER_OFFER_ITERATOR_H */
