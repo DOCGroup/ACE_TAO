@@ -1,3 +1,8 @@
+﻿Fri Dec 12 09:46:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/RTScheduling/VoidData/VoidData.dsp:
+          Added missing libpaths
+
 Fri Dec 12 09:32:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1334_Regression/client.cpp:
