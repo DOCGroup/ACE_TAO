@@ -1,17 +1,4 @@
 // $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Load_Balancing
-//
-// = FILENAME
-//    Identity_Server.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
-
 #include "Identity_Server.h"
 #include "ace/Get_Opt.h"
 #include "Identity_i.h"
