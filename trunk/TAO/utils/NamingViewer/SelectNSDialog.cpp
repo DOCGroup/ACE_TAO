@@ -49,13 +49,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSelectNSDialog message handlers
 
-void CSelectNSDialog::OnOK() 
+void CSelectNSDialog::OnOK()
 {
 	// TODO: Add extra validation here
 	int index = m_Servers.GetCurSel();
   if(index == LB_ERR)
   {
-    AfxMessageBox("You must select a server or cancel");
+    AfxMessageBox(ACE_TEXT ("You must select a server or cancel"));
     return;
   }
   char* pIOR = (char*)m_Servers.GetItemData(index);
@@ -64,7 +64,7 @@ void CSelectNSDialog::OnOK()
 	CDialog::OnOK();
 }
 
-void CSelectNSDialog::OnAdd() 
+void CSelectNSDialog::OnAdd()
 {
 	// TODO: Add your control notification handler code here
 	CAddNameServerDlg Dialog;
@@ -82,7 +82,7 @@ void CSelectNSDialog::OnAdd()
 
 }
 
-void CSelectNSDialog::OnRemove() 
+void CSelectNSDialog::OnRemove()
 {
 	// TODO: Add your control notification handler code here
 	int index = m_Servers.GetCurSel();
@@ -98,7 +98,7 @@ void CSelectNSDialog::OnRemove()
   m_Servers.DeleteString(index);
 }
 
-BOOL CSelectNSDialog::OnInitDialog() 
+BOOL CSelectNSDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
@@ -106,8 +106,8 @@ BOOL CSelectNSDialog::OnInitDialog()
   HKEY hKey = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, ACE_TEXT("Software\\TAO\\NamingViewer\\Servers"));
   m_pConfig = new ACE_Configuration_Win32Registry(hKey);
   ACE_Configuration_Section_Key Section = m_pConfig->root_section();;
-  int index = 0; 
-  ACE_TString name; 
+  int index = 0;
+  ACE_TString name;
   ACE_Configuration::VALUETYPE type;
   while(m_pConfig->enumerate_values(Section, index, name, type) == 0)
   {
@@ -126,7 +126,7 @@ BOOL CSelectNSDialog::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CSelectNSDialog::OnDestroy() 
+void CSelectNSDialog::OnDestroy()
 {
 	CDialog::OnDestroy();
 	

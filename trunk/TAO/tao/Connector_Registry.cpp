@@ -195,8 +195,8 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_WARNING,
-                          ACE_LIB_TEXT ("TAO (%P|%t) - TAO_Connector_Registry"
-                                        "::create_profile: ")
+                          ACE_LIB_TEXT ("TAO (%P|%t) - TAO_Connector_Registry")
+                          ACE_LIB_TEXT ("::create_profile: ")
                           ACE_LIB_TEXT ("WARNING: extracting object from ")
                           ACE_LIB_TEXT ("default ORB_Core\n")));
             }

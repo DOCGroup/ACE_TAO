@@ -21,6 +21,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 CORBA::ORB_var orb;
 int showIOR = 0;
@@ -28,7 +29,7 @@ int showNSonly = 0;
 
 const char* USAGE = "Usage: %s [ --name <name> ] [--destroy]\n";
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -36,16 +37,21 @@ main (int argc, char *argv[])
   int destroy_after_unbind = 0;
   ACE_TRY
     {
+      ACE_Argv_Type_Converter argcon (argcw, argvw);
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
+                         "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      char *pname = argv[0];
-      const char *name = 0;
+      int argc = argcon.get_argc ();
+      ACE_TCHAR** argv = argcon.get_TCHAR_argv ();
+
+      ACE_TCHAR *pname = argv[0];
+      const ACE_TCHAR *name = 0;
 
       while (argc > 0)
         {
-          if (ACE_OS::strcmp (*argv, "--name") == 0)
+          if (ACE_OS::strcmp (*argv, ACE_TEXT ("--name")) == 0)
             {
               if (argc == 1)
                 {
@@ -57,11 +63,11 @@ main (int argc, char *argv[])
               argv++;
               name = *argv;
             }
-          else if (ACE_OS::strcmp (*argv, "--destroy") == 0)
+          else if (ACE_OS::strcmp (*argv, ACE_TEXT ("--destroy")) == 0)
             {
               destroy_after_unbind = 1;
             }
-          else if (ACE_OS::strncmp(*argv, "--", 2) == 0)
+          else if (ACE_OS::strncmp(*argv, ACE_TEXT ("--"), 2) == 0)
             {
               ACE_DEBUG ((LM_DEBUG, USAGE, pname));
               return 1;
@@ -78,7 +84,7 @@ main (int argc, char *argv[])
         // make a copy
 
         char buf[BUFSIZ];
-        ACE_OS::strcpy (buf, name);
+        ACE_OS::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (name));
         char *bp = &buf[0];
         char *cp = 0;
         int ntoks = 0;
