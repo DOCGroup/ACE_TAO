@@ -126,6 +126,44 @@ test_ace_u_longlong (void)
                                   (ACE_U_LongLong) (ull6 % 0x20007),
                                   0, 0x3f63);
 
+  ACE_U_LongLong ull7 (37500);
+  ull7 *= 100;
+  errors += check_ace_u_longlong ("37500 * 100",
+                                  ull7,
+                                  0, 3750000);
+
+  errors += check_ace_u_longlong ("3750000 << 16",
+                                  ull7 << 16 ,
+                                  0x39, 0x38700000);
+
+  errors += check_ace_u_longlong ("3750000 >> 16",
+                                  ull7 >> 16,
+                                  0, 0x39);
+
+  ull7 <<= 32;
+  errors += check_ace_u_longlong ("3750000 <<= 32",
+                                  ull7,
+                                  3750000, 0);
+
+  ull7 >>= 12;
+  errors += check_ace_u_longlong ("3750000 <<= 32 >>= 15",
+                                  ull7,
+                                  0x393, 0x87000000);
+
+  ACE_U_LongLong ull8 (0x0f0f, 0xf0f0);
+  ACE_U_LongLong ull9 (0xf0f0, 0xf0f0);
+  ull8 |= ull9;
+  errors += check_ace_u_longlong ("ull8 |= ull9",
+                                  ull8,
+                                  0xf0f0, 0xffff);
+
+  ull9.lo (0x5678);
+  ull9.hi (0x1234);
+  ull8 &= ull9;
+  errors += check_ace_u_longlong ("ull8 &= 0x12345678",
+                                  ull9,
+                                  0x1234, 0x5678);
+
   return errors;
 }
 #endif /* ACE_HAS_STHREADS */
