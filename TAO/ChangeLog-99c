@@ -1,3 +1,18 @@
+Tue Aug 24 18:14:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+	  Code generation for enums in .h file now
+	  appends an enum value called
+	  <enum name>_TAO_ENUM_32BIT_ENFORCER and sets its
+	  value to 0xFFFFFFFF. All enums in CORBA must be
+	  32 bits in size, and some compilers will try to
+	  use a smaller space if the enum values are 
+	  small enough. Note that this extra member is not
+	  part of the IDL compiler's internal representation
+	  of the enum, so unions that use the enum as a
+	  discriminator won't have incorrect _default()
+	  code generated.
+
 Tue Aug 24 16:38:16 1999  Mike Moran  <mm4@cs.wustl.edu>
 
 	* examples/Advanced/
