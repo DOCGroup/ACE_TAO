@@ -85,53 +85,77 @@ class WaitObject extends TimedWait
 public class TimerQueue implements Runnable
 {
   /**
-   * Default Constructor
+   * Constructor.
+   *@param createInternalThread flag specifying whether to create an
+   * internal thread that runs the event loop. If it is true, a thread
+   * is spawned and it runs the event loop, handling all timeout
+   * events. If it is false, the caller is then responsible for calling
+   * handleEvents () to run the event loop.
    */
-  public TimerQueue ()
+  public TimerQueue (boolean createInternalThread)
   {
-    new Thread (this).start ();
+    this.eventLoopRunning_ = false;
+    if (createInternalThread)
+      new Thread (this).start ();
   }
-
+  
   /**
-   * This is the work horse of TimerQueue. It forms the event loop and
-   * takes care of all scheduling.
+   * The thread run method. Do *NOT* call this method! It gets called
+   * automatically. 
    */
   public void run ()
   {
-    TimeValue timeout = null;
-    TimeValue earliest = null;
+    this.handleEvents ();
+  }
 
-    for (;;)
+  /**
+   * Handle timeout events. This forms the event loop and takes care
+   * of all scheduling. This method should only be called if the Timer
+   * Queue was constructed with the value of createInternalThread as
+   * false.
+   */
+  public void handleEvents ()
+  {
+    if (!this.eventLoopRunning_)
       {
-	synchronized (this.obj_) 
+	// Set the flag indicating that the event loop is now running
+	this.eventLoopRunning_ = true;
+
+	TimeValue timeout = null;
+	TimeValue earliest = null;
+
+	for (;;)
 	  {
-	    earliest = this.earliestTime ();
-	    if (earliest != null)
-	      timeout = TimeValue.minus (earliest, TimeValue.getTimeOfDay ());
-	    else
-	      timeout = new TimeValue ();
-	    try
+	    synchronized (this.obj_) 
 	      {
-		// Extract the earliest time from the queue and do a timed wait
-		this.obj_.timedWait (timeout);
-		
-		// We have been notified. Check to see if we need to
-		// restart the wait with a different timeout
-		if (this.reset_)
+		earliest = this.earliestTime ();
+		if (earliest != null)
+		  timeout = TimeValue.minus (earliest, TimeValue.getTimeOfDay ());
+		else
+		  timeout = new TimeValue ();
+		try
 		  {
-		    this.reset_ = false;
-		    this.obj_.condition (false);
-		    timeout = TimeValue.minus (this.earliestTime (), TimeValue.getTimeOfDay ());
+		    // Extract the earliest time from the queue and do a timed wait
+		    this.obj_.timedWait (timeout);
+		
+		    // We have been notified. Check to see if we need to
+		    // restart the wait with a different timeout
+		    if (this.reset_)
+		      {
+			this.reset_ = false;
+			this.obj_.condition (false);
+			timeout = TimeValue.minus (this.earliestTime (), TimeValue.getTimeOfDay ());
+		      }
 		  }
-	      }
-	    catch (TimeoutException e)
-	      {
-		// Timeout occurred. Call handleTimeout on appropriate
-		// Event Handlers
-		this.dispatchHandlers ();
-	      }
-	    catch (InterruptedException e)
-	      {
+		catch (TimeoutException e)
+		  {
+		    // Timeout occurred. Call handleTimeout on appropriate
+		    // Event Handlers
+		    this.dispatchHandlers ();
+		  }
+		catch (InterruptedException e)
+		  {
+		  }
 	      }
 	  }
       }
@@ -211,7 +235,15 @@ public class TimerQueue implements Runnable
 				    this.timerId_);
     synchronized (this.obj_)
       {
-	if (this.isEmpty () || futureTime.lessThan (this.earliestTime ()))
+	// Check if event loop is running. If it is not, then we can
+	// just place it at the appropriate place in the queue and
+	// don't need to do any notification. If event loop is
+	// running, then check if the node is the first node in the
+	// queue (either because the queue is empty or because the
+	// time for the node is earlier than the currently scheduled
+	// timer node).
+	if (this.eventLoopRunning_ &&
+	    (this.isEmpty () || futureTime.lessThan (this.earliestTime ())))
 	  {
 	    // Insert the node into (the beginning of) the queue to be
 	    // scheduled. 
@@ -221,7 +253,7 @@ public class TimerQueue implements Runnable
 	    // using the earliest timeout
 	    this.obj_.notify ();
 	  }
-	else // Place in the middle of the list somewhere.
+	else // Place in the appropriate position in the queue.
 	  {
 	    this.reschedule (node);
 	  }
@@ -241,21 +273,23 @@ public class TimerQueue implements Runnable
     TimerNode prev = null;
     TimerNode curr = null;
 
-    // Try to locate the TimerNode that matches the timerId.
-
-    for (curr = this.head_; 
-	 curr != null && curr.timerId_ != timerId;
-	 curr = curr.next_)
-      prev = curr;
-
-    if (curr != null)
+    synchronized (this.obj_)
       {
-	if (prev == null)
-	  this.head_ = curr.next_;
-	else
-	  prev.next_ = curr.next_;
+	// Try to locate the TimerNode that matches the timerId.
+	for (curr = this.head_; 
+	     curr != null && curr.timerId_ != timerId;
+	     curr = curr.next_)
+	  prev = curr;
 
-	return curr.arg_;
+	if (curr != null)
+	  {
+	    if (prev == null)
+	      this.head_ = curr.next_;
+	    else
+	      prev.next_ = curr.next_;
+
+	    return curr.arg_;
+	  }
       }
     return null;
   }
@@ -269,25 +303,28 @@ public class TimerQueue implements Runnable
     TimerNode prev = null;
     TimerNode curr = this.head_;
 
-    while (curr != null)
+    synchronized (this.obj_)
       {
-	if (curr.handler_ == handler)
+	while (curr != null)
 	  {
-	    if (prev == null)
+	    if (curr.handler_ == handler)
 	      {
-		this.head_ = curr.next_;
-		curr = this.head_;
+		if (prev == null)
+		  {
+		    this.head_ = curr.next_;
+		    curr = this.head_;
+		  }
+		else
+		  {
+		    prev.next_ = curr.next_;
+		    curr = prev.next_;
+		  }
 	      }
 	    else
 	      {
-		prev.next_ = curr.next_;
-		curr = prev.next_;
+		prev = curr;
+		curr = curr.next_;
 	      }
-	  }
-	else
-	  {
-	    prev = curr;
-	    curr = curr.next_;
 	  }
       }
   }
@@ -377,5 +414,8 @@ public class TimerQueue implements Runnable
 
   private boolean reset_;
   // Flag indicating whether to start the wait again
+
+  private boolean eventLoopRunning_;
+  // Flag indicating whether the event loop is running or not
 }
 
