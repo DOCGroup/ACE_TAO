@@ -77,7 +77,7 @@ retrieve_ft_request_context(
                             PortableInterceptor::ServerRequestInfo_ptr ri,
                             IOP::ServiceContext_var& service_context,
                             FT::FTRequestServiceContext& ft_request_service_context
-                            ACE_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL)
 {
   service_context = ri->get_request_service_context(IOP::FT_REQUEST ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -105,13 +105,13 @@ retrieve_ft_request_context(
 FTRT::TransactionDepth
 get_transaction_depth_context(
   PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_ENV_ARG_DECL)
 {
   IOP::ServiceContext_var service_context;
   ACE_TRY {
     service_context = ri->get_request_service_context(FTRT::FT_TRANSACTION_DEPTH
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
+    ACE_TRY_CHECK;
   }
   ACE_CATCH  (CORBA::BAD_PARAM, ex)
   {
@@ -143,13 +143,13 @@ get_transaction_depth_context(
 FTRT::SequenceNumber
 get_sequence_number_context(
                             PortableInterceptor::ServerRequestInfo_ptr ri
-                            ACE_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL)
 {
   FTRT::SequenceNumber result;
   IOP::ServiceContext_var service_context;
   service_context = ri->get_request_service_context(FTRT::FT_SEQUENCE_NUMBER
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(0);
 
   const char * buf =
     ACE_reinterpret_cast (const char *,
@@ -160,12 +160,12 @@ get_sequence_number_context(
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
   cdr.reset_byte_order (ACE_static_cast (int,byte_order));
 
   if ((cdr >> result) == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
   return result;
 }
@@ -270,7 +270,7 @@ FtEventServiceInterceptor::receive_request_service_contexts (
 
 void
 FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+                                            ACE_ENV_ARG_DECL)
                                             ACE_THROW_SPEC ((CORBA::SystemException,
                                             PortableInterceptor::ForwardRequest))
 {
@@ -281,7 +281,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 
 void
 FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       ACE_ENV_ARG_DECL)
                                        ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FT::FTRequestServiceContext ft_request_service_context;
@@ -292,7 +292,7 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
       service_context,
       ft_request_service_context
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
   }
   ACE_CATCH (CORBA::BAD_PARAM, ex) {
     return;
@@ -307,7 +307,7 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
 void
 FtEventServiceInterceptor::send_exception (
   PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {
@@ -320,8 +320,7 @@ FtEventServiceInterceptor::send_exception (
 }
 
 void
-FtEventServiceInterceptor::send_other (
-                                       PortableInterceptor::ServerRequestInfo_ptr
+FtEventServiceInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr
                                        ACE_ENV_ARG_DECL_NOT_USED)
                                        ACE_THROW_SPEC ((CORBA::SystemException,
                                        PortableInterceptor::ForwardRequest))

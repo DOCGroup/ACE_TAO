@@ -27,12 +27,12 @@ public:
               PortableServer::POA_var poa);
   virtual ~FT_ProxyAdmin_Base();
   void activate(const PortableServer::ObjectId& oid
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+              ACE_ENV_ARG_DECL);
 
-  const PortableServer::ObjectId& object_id(ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const;
+  const PortableServer::ObjectId& object_id(ACE_ENV_SINGLE_ARG_DECL) const;
 
   /// Returns an CORBA object reference when the servant is activated
-  CORBA::Object_var reference(ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const;
+  CORBA::Object_var reference(ACE_ENV_SINGLE_ARG_DECL) const;
 
 protected:
 

@@ -37,10 +37,10 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
         {
           CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
                                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN(0);
           channel = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
                                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN(0);
         }
         break;
       case 'n':
@@ -68,12 +68,12 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       CosNaming::NamingContext_var naming_context =
         resolve_init<CosNaming::NamingContext>(orb.in(), "NameService"
         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN(0);
 
       channel  = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
         name
         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN(0);
     }
 
     if (use_gateway)
@@ -88,9 +88,9 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 int main(int argc, ACE_TCHAR** argv)
 {
   ACE_TRY_NEW_ENV {
-    orb = CORBA::ORB_init(argc, argv
+    orb = CORBA::ORB_init(argc, argv, ""
       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+    ACE_TRY_CHECK;
 
     RtecEventChannelAdmin::EventChannel_var channel
       = get_event_channel(argc, argv ACE_ENV_ARG_PARAMETER);
@@ -141,10 +141,9 @@ int main(int argc, ACE_TCHAR** argv)
   }
   ACE_CATCHANY {
     ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+    return -1;
   }
   ACE_ENDTRY;
-
-    ACE_CHECK_RETURN(-1);
 
   return 0;
 }

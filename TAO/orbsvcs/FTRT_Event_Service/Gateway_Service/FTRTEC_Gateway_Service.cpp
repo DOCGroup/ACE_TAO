@@ -80,7 +80,8 @@ int main(int argc,  ACE_TCHAR** argv)
 {
   ACE_TRY_NEW_ENV
   {
-    orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
+    orb = CORBA::ORB_init (argc, argv, ""
+                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (parse_args(argc, argv)==-1)

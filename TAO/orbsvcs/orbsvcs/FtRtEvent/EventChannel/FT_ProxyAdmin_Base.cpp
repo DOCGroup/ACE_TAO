@@ -19,7 +19,7 @@ FT_ProxyAdmin_Base::~FT_ProxyAdmin_Base()
 }
 
 void FT_ProxyAdmin_Base::activate(const PortableServer::ObjectId& oid
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+              ACE_ENV_ARG_DECL)
 {
   poa_->activate_object_with_id(oid, servant_
                             ACE_ENV_ARG_PARAMETER);
@@ -34,7 +34,7 @@ const PortableServer::ObjectId& FT_ProxyAdmin_Base::object_id(ACE_ENV_SINGLE_ARG
 }
 
 
-CORBA::Object_var FT_ProxyAdmin_Base::reference(ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+CORBA::Object_var FT_ProxyAdmin_Base::reference(ACE_ENV_SINGLE_ARG_DECL) const
 {
   return  poa_->servant_to_reference(servant_
                                 ACE_ENV_ARG_PARAMETER);

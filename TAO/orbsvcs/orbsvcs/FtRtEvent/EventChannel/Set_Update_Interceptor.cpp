@@ -65,7 +65,7 @@ TAO_Set_Update_Interceptor::send_request (
       ACE_CHECK;
 
       FTRT::TransactionDepth transaction_depth =
-        Request_Context_Repository().get_transaction_depth(ri);
+        Request_Context_Repository().get_transaction_depth(ri ACE_ENV_ARG_PARAMETER);
       TAO_OutputCDR cdr;
       ACE_Message_Block mb;
 
@@ -112,7 +112,7 @@ TAO_Set_Update_Interceptor::send_request (
 void
 TAO_Set_Update_Interceptor::receive_reply (
   PortableInterceptor::ClientRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ri);
@@ -130,7 +130,7 @@ TAO_Set_Update_Interceptor::receive_other (
 void
 TAO_Set_Update_Interceptor::receive_exception (
   PortableInterceptor::ClientRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {

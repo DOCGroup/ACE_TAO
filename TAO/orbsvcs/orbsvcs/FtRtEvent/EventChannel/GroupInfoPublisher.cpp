@@ -59,7 +59,7 @@ GroupInfoPublisherBase::backups() const
 void
 GroupInfoPublisherBase::update(const FTRT::ManagerInfoList & info_list,
                            int my_position
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                           ACE_ENV_ARG_DECL)
 {
   bool become_primary = (my_position == 0 && !primary_);
   primary_ = (my_position == 0);
@@ -81,7 +81,7 @@ GroupInfoPublisherBase::update(const FTRT::ManagerInfoList & info_list,
 
   iogr_ =
     ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-                                                     ACE_ENV_SINGLE_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (primary_ && !CORBA::is_nil(naming_context_.in())) {

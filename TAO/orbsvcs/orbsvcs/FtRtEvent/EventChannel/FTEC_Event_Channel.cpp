@@ -67,7 +67,7 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
 
 FtRtecEventChannelAdmin::EventChannel_ptr
 TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership
-                                 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                                 ACE_ENV_ARG_DECL)
 {
     FTRTEC::Fault_Detector_Loader* detector_loader =
       ACE_Dynamic_Service<FTRTEC::Fault_Detector_Loader>::instance("FTRTEC_Fault_Detector");
@@ -126,7 +126,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership
     ec->activate(orb_,
                  supplier_admin_object_id,
                  consumer_admin_object_id
-                 ACE_ENV_SINGLE_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
     FtRtecEventChannelAdmin::EventChannel_var result;
@@ -151,7 +151,7 @@ void TAO_FTEC_Event_Channel::set_listener(TAO_FTEC_Become_Primary_Listener* list
 
 void TAO_FTEC_Event_Channel::set_update (
         const FTRT::State & s
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -164,7 +164,7 @@ void TAO_FTEC_Event_Channel::set_update (
 
 void TAO_FTEC_Event_Channel::oneway_set_update (
         const FTRT::State & s
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -190,7 +190,7 @@ TAO_FTEC_Event_Channel::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-TAO_FTEC_Event_Channel::set_state (const FTRT::State & s ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+TAO_FTEC_Event_Channel::set_state (const FTRT::State & s ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidState))
 {
   ACE_DEBUG((LM_DEBUG, "TAO_FTEC_Event_Channel::set_state\n"));
@@ -219,8 +219,7 @@ TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr obs
 {
   /// we have yet to implement the replication of observers
   /// throw an exception for the moment
-  ACE_THROW(RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER());
-  ACE_CHECK;
+  ACE_THROW_RETURN(RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(), 0);
 
   return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
 }
@@ -236,7 +235,6 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle 
   /// we have yet to implement the replication of observers
   /// throw an exception for the moment
   ACE_THROW(RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER());
-  ACE_CHECK;
 
   ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
 }
@@ -247,7 +245,7 @@ CORBA::Boolean
 TAO_FTEC_Event_Channel::start (
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out location
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_NOT_USED
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -260,7 +258,7 @@ void
 TAO_FTEC_Event_Channel::create_group (
         const FTRT::ManagerInfoList & info_list,
         CORBA::ULong object_group_ref_version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -273,7 +271,7 @@ TAO_FTEC_Event_Channel::create_group (
 void
 TAO_FTEC_Event_Channel::join_group (
         const FTRT::ManagerInfo & info
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -286,7 +284,7 @@ void
 TAO_FTEC_Event_Channel::add_member (
         const FTRT::ManagerInfo & info,
         CORBA::ULong object_group_ref_version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -299,8 +297,7 @@ void
 TAO_FTEC_Event_Channel::remove_member (
         const FTRT::Location & crashed_location,
         CORBA::ULong object_group_ref_version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ))
@@ -313,7 +310,7 @@ TAO_FTEC_Event_Channel::remove_member (
 void
 TAO_FTEC_Event_Channel::replica_crashed (
         const FTRT::Location & location
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -329,7 +326,7 @@ TAO_FTEC_Event_Channel::replica_crashed (
 TAO_FTEC_Event_Channel::connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
         const RtecEventChannelAdmin::ConsumerQOS & qos
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -345,7 +342,7 @@ TAO_FTEC_Event_Channel::connect_push_consumer (
 TAO_FTEC_Event_Channel::connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
         const RtecEventChannelAdmin::SupplierQOS & qos
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -359,7 +356,7 @@ TAO_FTEC_Event_Channel::connect_push_supplier (
 void
 TAO_FTEC_Event_Channel::disconnect_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -372,7 +369,7 @@ TAO_FTEC_Event_Channel::disconnect_push_supplier (
 void
 TAO_FTEC_Event_Channel::disconnect_push_consumer (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -385,7 +382,7 @@ TAO_FTEC_Event_Channel::disconnect_push_consumer (
 void
 TAO_FTEC_Event_Channel::suspend_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -399,7 +396,7 @@ TAO_FTEC_Event_Channel::suspend_push_supplier (
 void
 TAO_FTEC_Event_Channel::resume_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -414,7 +411,7 @@ void
 TAO_FTEC_Event_Channel::push (
         const FtRtecEventChannelAdmin::ObjectId & oid,
         const RtecEventComm::EventSet & data
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

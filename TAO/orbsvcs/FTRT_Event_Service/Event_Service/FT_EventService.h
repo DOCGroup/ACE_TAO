@@ -34,7 +34,7 @@ public:
 private:
   int parse_args (int argc, ACE_TCHAR* argv []);
   void setup_scheduler(CosNaming::NamingContext_ptr naming_context
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                        ACE_ENV_ARG_DECL);
   int report_factory(CORBA::ORB_ptr orb,
                    FtRtecEventChannelAdmin::EventChannel_ptr ec);
   virtual void become_primary();

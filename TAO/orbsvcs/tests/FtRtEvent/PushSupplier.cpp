@@ -50,12 +50,12 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel ACE_
   ACE_DEBUG((LM_DEBUG, "for_suppliers\n"));
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     channel->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(0);
 
-    ACE_DEBUG((LM_DEBUG, "obtain_push_consumer\n"));
+  ACE_DEBUG((LM_DEBUG, "obtain_push_consumer\n"));
   consumer_ =
     supplier_admin->obtain_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(0);
 
 
 
@@ -91,7 +91,7 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel ACE_
 
 
 void  PushSupplier_impl::disconnect_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -133,6 +133,7 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
     event[0].data.any_value <<= seq_no_;
 
     consumer_->push(event ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
     ACE_DEBUG((LM_DEBUG, "sending data %d\n", seq_no_));
     ++seq_no_;
   }

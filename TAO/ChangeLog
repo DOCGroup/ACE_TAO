@@ -1,3 +1,58 @@
+Fri Oct 17 01:28:53 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.h
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.h
+        * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.cpp
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ProxyConsumerStateWorker.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ProxySupplierStateWorker.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h
+        * orbsvcs/tests/FtRtEvent/PushConsumer.cpp
+        * orbsvcs/tests/FtRtEvent/PushConsumer.h
+        * orbsvcs/tests/FtRtEvent/PushSupplier.cpp
+        * orbsvcs/tests/FtRtEvent/PushSupplier.h
+        * orbsvcs/tests/FtRtEvent/consumer.cpp
+        * orbsvcs/tests/FtRtEvent/supplier.cpp
+          Fixed problems in emulated exception case
+
 Fri Oct 16 06:01:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling.bor:
