@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/inc_user_config.h"
 #include "JAWS/Assoc_Array.h"
 
 ACE_RCSID(JAWS, Assoc_Array, "$Id$")
