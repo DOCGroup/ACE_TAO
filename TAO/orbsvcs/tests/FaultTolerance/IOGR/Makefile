@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-#LDLIBS = -lTAO_FaultTolerance -lTAO
-
 IDL_FILES=test
 IDL_SRC = testC testS
 BIN_UNCHECKED = server Manager
@@ -50,7 +48,7 @@ include $(TAO_ROOT)/taoconfig.mk
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
 TAO_IOR_MANIP_LIBS = -lTAO_IORManip
-TAO_FT_LIBS = -lTAO_FaultTolerance -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer
+TAO_FT_LIBS = -lTAO_FaultTolerance -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_IORManip -lTAO_DynamicAny -lTAO_PortableServer
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
