@@ -70,15 +70,15 @@ ACE_STATIC_SVC_REQUIRE (ACE_Service_Manager)
 
 // List of statically configured services.
 
+ACE_STATIC_SVCS *ACE_Service_Config::static_svcs_ = 0;
+
 ACE_STATIC_SVCS *
 ACE_Service_Config::static_svcs (void)
 {
-  static ACE_STATIC_SVCS *instance_ = 0;
+  if (ACE_Service_Config::static_svcs_ == 0)
+    ACE_NEW_RETURN (ACE_Service_Config::static_svcs_, ACE_STATIC_SVCS, 0);
 
-  if (instance_ == 0)
-    ACE_NEW_RETURN (instance_, ACE_STATIC_SVCS, 0);
-
-  return instance_;
+  return ACE_Service_Config::static_svcs_;
 }
 
 ACE_Allocator *
@@ -527,8 +527,6 @@ ACE_Service_Config::close (void)
 {
   ACE_TRACE ("ACE_Service_Config::close");
 
-  ACE_DEBUG ((LM_SHUTDOWN, "shutting down daemon %n\n"));
-
   // ACE_Service_Config must be deleted before the Singletons are
   // closed so that an object's fini() method may reference a
   // valid ACE_Reactor.
@@ -537,6 +535,11 @@ ACE_Service_Config::close (void)
   // The Singletons can be used independently of the services.
   // Therefore, this call must go out here.
   ACE_Service_Config::close_singletons ();
+
+  // Delete the dynamically allocated static_svcs instance.
+  delete ACE_Service_Config::static_svcs_;
+  ACE_Service_Config::static_svcs_ = 0;
+
   return 0;
 }
 
