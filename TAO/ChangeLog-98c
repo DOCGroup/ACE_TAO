@@ -31,8 +31,6 @@ Tue Nov 18 18:34:16 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 	Task_Client.cpp instead of the main program, to insure that its
 	called in the right thread.
 
-Tue Nov 18 18:32:14 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
-
 	* tests/Cubit/COOL/Task_Client.{h,cpp}: Used the COOL_Activity to
 	create threads instead of ACE_Task.
 
