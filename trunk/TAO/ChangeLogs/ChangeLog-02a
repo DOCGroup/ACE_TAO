@@ -33,6 +33,8 @@ Fri Mar 01 13:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Timed_Buffered_Oneways/server.bor:
         * tests/Timeout/client.bor:
         * tests/Timeout/server.bor:
+        * examples/Buffered_AMI/client.bor
+        * examples/Buffered_AMI/server.bor
           Added TAO_Messaging library
 
 Thu Feb 28 20:25:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
