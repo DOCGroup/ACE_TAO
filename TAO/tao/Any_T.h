@@ -74,23 +74,23 @@ namespace TAO
    *
    * Used for arrays
    */
-  template<typename T, typename T_forany> 
+  template<typename T_slice, typename T_forany> 
   class Any_Array_Impl_T : public Any_Impl
   {
   public:
     Any_Array_Impl_T (_tao_destructor destructor,
                       CORBA::TypeCode_ptr,
-                      T * const);
+                      T_slice * const);
     virtual ~Any_Array_Impl_T (void);
 
     static void insert (CORBA::Any &, 
                         _tao_destructor destructor,
                         CORBA::TypeCode_ptr,
-                        T * const);
+                        T_slice * const);
     static CORBA::Boolean extract (const CORBA::Any &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const T *&);
+                                   const T_slice *&);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
@@ -101,7 +101,7 @@ namespace TAO
     virtual void free_value (void);
 
   private:
-    T * value_;
+    T_slice * value_;
   };
 
   /**

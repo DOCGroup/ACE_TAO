@@ -1,3 +1,20 @@
+Fri Apr  4 12:06:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * tao/Any_T.cpp:
+        * tao/Any_T.h:
+        * tao/Any_T.inl:
+        * tao/skip.cpp:
+
+          Fixed problems with demarshaling Anys that contain arrays
+          or unions with an enum discriminator type. Thanks to
+          Phil Mesnier <mesnier_p@ociweb.com> for reporting the 
+          problem with arrays. Also changed the name of the first
+          template parameter in Any_Array_Impl_T to T_slice, since
+          it is the array slice pointer that is used for this
+          parameter when instantiating the template class.
+
 Fri Apr 04 10:43:55 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
