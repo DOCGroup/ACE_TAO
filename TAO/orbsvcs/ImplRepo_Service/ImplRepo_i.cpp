@@ -15,7 +15,8 @@
 
 ImplRepo_i::ImplRepo_i (void)
   : forwarder_impl_ (0),
-    activator_ (0)
+    activator_ (0),
+    ior_multicast_ (0)
 {
   // Nothing
 }
@@ -224,6 +225,7 @@ ImplRepo_i::register_server (const char *server,
     }
 }
 
+
 // Updates the entry in the Repository about this <server> or adds it
 // if necessary.
 
@@ -235,12 +237,21 @@ ImplRepo_i::reregister_server (const char *server,
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 
+  // Get current starting up value
+  int starting_up = this->repository_.starting_up (server);
+
+  // Remove old info
   this->repository_.remove (server);
 
+  // Add server with new startup parameters
   this->repository_.add (server,
                          "",
                          options.command_line.in (),
                          options.working_directory.in ());
+
+  // Set old starting up value, if there was one.
+  if (starting_up != -1)
+    this->repository_.starting_up (server, starting_up);
 
   if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -254,6 +265,7 @@ ImplRepo_i::reregister_server (const char *server,
                           options.command_line.in (),
                           options.working_directory.in ()));
 }
+
 
 // Remove the server entry from the Repository
 
@@ -419,22 +431,22 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                     "The server IOR is: <%s>\n",
                     str.in ()));
 
-      CORBA::String_var ir_var  =
+      this->ir_var_ =
         this->orb_manager_.activate_under_child_poa ("implrepo",
                                                      this,
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (OPTIONS::instance()->debug () >= 2)
+      if (OPTIONS::instance ()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "The IR IOR is: <%s>\n",
-                    ir_var.in ()));
+                    this->ir_var_.in ()));
 
       if (OPTIONS::instance()->output_file ())
         {
           ACE_OS::fprintf (OPTIONS::instance()->output_file (),
                            "%s",
-                           ir_var.in ());
+                           this->ir_var_.in ());
           ACE_OS::fclose (OPTIONS::instance()->output_file ());
         }
 
@@ -457,6 +469,77 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       root_poa->the_activator (activator.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+#if defined (ACE_HAS_IP_MULTICAST)
+      //
+      // Install ior multicast handler.
+      //
+      // Get reactor instance from TAO.
+      ACE_Reactor *reactor =
+        TAO_ORB_Core_instance ()->reactor ();
+
+      // See if the -ORBMulticastDiscoveryEndpoint option was specified.
+      ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()
+                       ->mcast_discovery_endpoint ());
+
+      // First, see if the user has given us a multicast port number
+      // on the command-line;
+      u_short port =
+        TAO_ORB_Core_instance ()->orb_params ()->service_port (IMPLREPOSERVICE);
+
+      if (port == 0)
+        {
+          // Check environment var. for multicast port.
+          const char *port_number =
+            ACE_OS::getenv ("ImplRepoServicePort");
+
+          if (port_number != 0)
+            port = ACE_OS::atoi (port_number);
+        }
+
+      // Port wasn't specified on the command-line or in environment -
+      // use the default.
+      if (port == 0)
+        port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+
+      // Instantiate a handler which will handle client requests for
+      // the root Naming Context ior, received on the multicast port.
+      ACE_NEW_RETURN (this->ior_multicast_,
+                      TAO_IOR_Multicast (),
+                      -1);
+
+      if (mde.length () != 0)
+        {
+          if (this->ior_multicast_->init (this->ir_var_.in (),
+                                          mde.c_str (),
+                                          TAO_SERVICEID_IMPLREPOSERVICE) == -1)
+            return -1;
+        }
+      else
+        {
+          if (this->ior_multicast_->init (this->ir_var_.in (),
+                                          port,
+                                          ACE_DEFAULT_MULTICAST_ADDR,
+                                          TAO_SERVICEID_IMPLREPOSERVICE) == -1)
+            return -1;
+        }
+
+      // Register event handler for the ior multicast.
+      if (reactor->register_handler (this->ior_multicast_,
+                                     ACE_Event_Handler::READ_MASK) == -1)
+        {
+          if (OPTIONS::instance ()->debug () > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Implementation Repository: cannot register Event handler\n"));
+          return -1;
+        }
+
+      if (OPTIONS::instance ()->debug () > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Implementation Repository: The multicast server setup is done.\n"));
+
+#endif /* ACE_HAS_IP_MULTICAST */
+
     }
   ACE_CATCHANY
     {
@@ -510,6 +593,9 @@ ImplRepo_i::~ImplRepo_i (void)
 
   if (this->activator_ != 0)
     delete this->activator_;
+
+  if (this->ior_multicast_ != 0)
+    delete this->ior_multicast_;
 }
 
 

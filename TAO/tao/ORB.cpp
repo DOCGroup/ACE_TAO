@@ -467,64 +467,68 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
     "ImplRepoServicePort"
   };
 
- u_short default_service_port [] =
- {
-   TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
-   TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
-   TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT
- };
-   
- const char * service_objid [] =
- {
-   TAO_OBJID_NAMESERVICE,
-   TAO_OBJID_TRADINGSERVICE,
-   TAO_OBJID_IMPLREPOSERVICE
- };
+  u_short default_service_port [] =
+  {
+    TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
+    TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
+    TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT
+  };
  
- CORBA_Object_var return_value = CORBA_Object::_nil ();
- 
- // By now, the table filled in with -ORBInitRef arguments has been
- // checked.  We only get here if the table didn't contain an initial
- // reference for the requested Service.
- 
- // Check to see if the user has an environment variable.
- ACE_CString service_ior = ACE_OS::getenv (env_service_ior[mcast_service_id]);
- 
- if (service_ior.length () != 0)
+  const char * service_objid [] =
+  {
+    TAO_OBJID_NAMESERVICE,
+    TAO_OBJID_TRADINGSERVICE,
+    TAO_OBJID_IMPLREPOSERVICE
+  };
+
+  CORBA_Object_var return_value = CORBA_Object::_nil ();
+
+  // By now, the table filled in with -ORBInitRef arguments has been
+  // checked.  We only get here if the table didn't contain an initial
+  // reference for the requested Service.
+
+  // Check to see if the user has an environment variable.
+  ACE_CString service_ior = ACE_OS::getenv (env_service_ior[mcast_service_id]);
+
+  if (service_ior.length () != 0)
    {
      return_value =
        this->string_to_object (service_ior.c_str (),
                                ACE_TRY_ENV);
      ACE_CHECK_RETURN (CORBA_Object::_nil ());
    }
- else
+  else
    {
      // First, determine if the port was supplied on the command line
      u_short port =
        this->orb_core_->orb_params ()->service_port (mcast_service_id);
-     
+   
      if (port == 0)
        {
          // Look for the port among our environment variables.
          const char *port_number =
            ACE_OS::getenv (env_service_port[mcast_service_id]);
-         
+       
          if (port_number != 0)
            port = (u_short) ACE_OS::atoi (port_number);
          else
            port = default_service_port[mcast_service_id];
        }
-     
-     return_value =
-       this->multicast_to_service (service_objid[mcast_service_id],
-                                   port,
-                                   timeout,
-                                   ACE_TRY_ENV);
-     ACE_CHECK_RETURN (CORBA_Object::_nil ());
+   
+     // Find service with multicast.
+     if (this->orb_core_->orb_params ()->use_multicast ())
+     {
+       return_value =
+         this->multicast_to_service (service_objid[mcast_service_id],
+                                     port,
+                                     timeout,
+                                     ACE_TRY_ENV);
+       ACE_CHECK_RETURN (CORBA_Object::_nil ());
+     }
    }
- 
- // Return ior.
- return return_value._retn ();
+
+  // Return ior.
+  return return_value._retn ();
 }
 
 int

@@ -171,3 +171,14 @@ TAO_ORB_Parameters::nodelay (int x)
   this->nodelay_ = x;
 }
 
+ACE_INLINE int
+TAO_ORB_Parameters::use_multicast (void) const
+{
+  return this->use_multicast_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::use_multicast (int um)
+{
+  this->use_multicast_ = um;
+}

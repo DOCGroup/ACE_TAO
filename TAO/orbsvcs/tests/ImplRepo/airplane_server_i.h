@@ -21,7 +21,7 @@
 #if !defined (AIRPLANE_SERVER_I_H)
 #define AIRPLANE_SERVER_I_H
 
-#include "tao/TAO.h"
+#include "tao/corba.h"
 #include "airplane_i.h"
 #include "orbsvcs/IR_Helper.h"
 
@@ -58,8 +58,14 @@ private:
   char **argv_;
   // The command line arguments.
 
-  TAO_ORB_Manager orb_manager_;
-  // The ORB manager.
+  CORBA::ORB_var orb_;
+  // The ORB.
+
+  PortableServer::POA_var airplane_poa_;
+  // The POA for the Airplane Server.
+
+  PortableServer::POAManager_var poa_manager_;
+  // The POA manager.
 
   Airplane_i *server_impl_;
   // The Paper Airplane Server Implementation.  
