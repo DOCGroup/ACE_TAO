@@ -1,49 +1,49 @@
-// SOCK_Connector.cpp
+// SOCK_SEQPACK_Connector.cpp
 // $Id$
 
-#include "ace/SOCK_Connector.h"
+#include "ace/SOCK_SEQPACK_Connector.h"
+
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 
-#if !defined (ACE_HAS_WINCE)
-#include "ace/OS_QoS.h"
-#endif  // ACE_HAS_WINCE
-
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Connector.i"
+#include "ace/SOCK_SEQPACK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID(ace, SOCK_Connector, "$Id$")
+ACE_RCSID(ace, SOCK_SEQPACK_Connector, "SOCK_SEQPACK_Connector.cpp,v 4.35 2002/03/08 23:18:09 spark Exp")
 
-ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Connector)
+ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Connector)
 
 void
-ACE_SOCK_Connector::dump (void) const
+ACE_SOCK_SEQPACK_Connector::dump (void) const
 {
-  ACE_TRACE ("ACE_SOCK_Connector::dump");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::dump");
 }
 
 int
-ACE_SOCK_Connector::shared_open (ACE_SOCK_Stream &new_stream,
+ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_association,
                                  int protocol_family,
                                  int protocol,
                                  int reuse_addr)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::shared_open");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_open");
+
+
 
   // Only open a new socket if we don't already have a valid handle.
-  if (new_stream.get_handle () == ACE_INVALID_HANDLE
-      && new_stream.open (SOCK_STREAM,
-                          protocol_family,
-                          protocol,
-                          reuse_addr) == -1)
+  if (new_association.get_handle () == ACE_INVALID_HANDLE
+
+      && new_association.open (SOCK_SEQPACKET,
+                               protocol_family,
+                               protocol,
+                               reuse_addr) == -1)
     return -1;
   else
     return 0;
 }
 
 int
-ACE_SOCK_Connector::shared_open (ACE_SOCK_Stream &new_stream,
+ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_association,
                                  int protocol_family,
                                  int protocol,
                                  ACE_Protocol_Info *protocolinfo,
@@ -51,60 +51,110 @@ ACE_SOCK_Connector::shared_open (ACE_SOCK_Stream &new_stream,
                                  u_long flags,
                                  int reuse_addr)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::shared_open");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_open");
 
   // Only open a new socket if we don't already have a valid handle.
-  if (new_stream.get_handle () == ACE_INVALID_HANDLE
-      && new_stream.open (SOCK_STREAM,
-                          protocol_family,
-                          protocol,
-                          protocolinfo,
-                          g,
-                          flags,
-                          reuse_addr) == -1)
-    return -1;
+  if (new_association.get_handle () == ACE_INVALID_HANDLE
+      && new_association.open (SOCK_SEQPACKET,
+                               protocol_family,
+                               protocol,
+                               protocolinfo,
+                               g,
+                               flags,
+                               reuse_addr) == -1)
+      return -1;
   else
     return 0;
 }
 
 int
-ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
+ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
                                           const ACE_Time_Value *timeout,
                                           const ACE_Addr &local_sap)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::shared_connect_start");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_connect_start");
 
   if (local_sap != ACE_Addr::sap_any)
     {
       sockaddr *laddr = ACE_reinterpret_cast (sockaddr *,
                                               local_sap.get_addr ());
-      int size = local_sap.get_size ();
+      size_t size = local_sap.get_size ();
 
-      if (ACE_OS::bind (new_stream.get_handle (),
+      if (ACE_OS::bind (new_association.get_handle (),
                         laddr,
                         size) == -1)
         {
           // Save/restore errno.
           ACE_Errno_Guard error (errno);
-          new_stream.close ();
+          new_association.close ();
           return -1;
         }
     }
 
   // Enable non-blocking, if required.
   if (timeout != 0
-      && new_stream.enable (ACE_NONBLOCK) == -1)
+      && new_association.enable (ACE_NONBLOCK) == -1)
+    return -1;
+  else
+    return 0;
+}
+
+// Multihomed version of same
+int
+ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
+                                          const ACE_Time_Value *timeout,
+                                          const ACE_Multihomed_INET_Addr &local_sap)
+{
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_connect_start");
+
+  if (local_sap.ACE_Addr::operator!= (ACE_Addr::sap_any))
+    {
+      // The total number of addresses is the number of secondary
+      // addresses plus one.
+      size_t num_addresses = local_sap.get_num_secondary_addresses() + 1;
+
+      // Create an array of sockaddr_in to hold the underlying
+      // representations of the primary and secondary
+      // addresses.
+      sockaddr_in*  local_inet_addrs = 0;
+      ACE_NEW_NORETURN(local_inet_addrs,
+                       sockaddr_in[num_addresses]);
+      if (!local_inet_addrs)
+        return -1;
+
+      // Populate the array by invoking the get_addresses method on
+      // the Multihomed_INET_Addr
+      local_sap.get_addresses(local_inet_addrs, num_addresses);
+
+      // Call bind
+      if (ACE_OS::bind (new_association.get_handle (),
+                        ACE_reinterpret_cast (sockaddr *,
+                                              local_inet_addrs),
+                        (sizeof (sockaddr_in))*num_addresses) == -1)
+        {
+          // Save/restore errno.
+          ACE_Errno_Guard error (errno);
+          new_association.close ();
+          return -1;
+        }
+
+      delete [] local_inet_addrs;
+    }
+
+  // Enable non-blocking, if required.
+  if (timeout != 0
+      && new_association.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
     return 0;
 }
 
 int
-ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
+ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association &new_association,
                                            const ACE_Time_Value *timeout,
                                            int result)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::shared_connect_finish");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_connect_finish");
   // Save/restore errno.
   ACE_Errno_Guard error (errno);
 
@@ -118,7 +168,7 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
               && timeout->usec () == 0)
             error = EWOULDBLOCK;
           // Wait synchronously using timeout.
-          else if (this->complete (new_stream,
+          else if (this->complete (new_association,
                                    0,
                                    timeout) == -1)
             error = errno;
@@ -130,18 +180,19 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
   // EISCONN is treated specially since this routine may be used to
   // check if we are already connected.
   if (result != -1 || error == EISCONN)
-    // Start out with non-blocking disabled on the <new_stream>.
-    new_stream.disable (ACE_NONBLOCK);
+    // Start out with non-blocking disabled on the <new_association>.
+    new_association.disable (ACE_NONBLOCK);
   else if (!(error == EWOULDBLOCK || error == ETIMEDOUT))
-    new_stream.close ();
+    new_association.close ();
 
   return result;
 }
 
-// Actively connect and produce a new ACE_SOCK_Stream if things go well...
+// Actively connect and produce a new ACE_SOCK_SEQPACK_Association if things go well...
+
 
 int
-ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
+ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
                              const ACE_Addr &remote_sap,
                              const ACE_Time_Value *timeout,
                              const ACE_Addr &local_sap,
@@ -150,77 +201,70 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              int /* perms */,
                              int protocol)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::connect");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::connect");
 
-  if (this->shared_open (new_stream,
+  if (this->shared_open (new_association,
                          remote_sap.get_type (),
                          protocol,
                          reuse_addr) == -1)
     return -1;
-  else if (this->shared_connect_start (new_stream,
+  else if (this->shared_connect_start (new_association,
                                        timeout,
                                        local_sap) == -1)
     return -1;
 
-  int result = ACE_OS::connect (new_stream.get_handle (),
+  int result = ACE_OS::connect (new_association.get_handle (),
                                 ACE_reinterpret_cast (sockaddr *,
                                                       remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
-  return this->shared_connect_finish (new_stream,
+  return this->shared_connect_finish (new_association,
                                       timeout,
                                       result);
 }
 
-#if !defined (ACE_HAS_WINCE)
+// Multihomed version of same
 int
-ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
+ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
                              const ACE_Addr &remote_sap,
-                             ACE_QoS_Params qos_params,
                              const ACE_Time_Value *timeout,
-                             const ACE_Addr &local_sap,
-                             ACE_Protocol_Info * protocolinfo,
-                             ACE_SOCK_GROUP g,
-                             u_long flags,
+                             const ACE_Multihomed_INET_Addr &local_sap,
                              int reuse_addr,
-                             int /* perms */)
+                             int /* flags */,
+                             int /* perms */,
+                             int protocol)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::connect");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::connect");
 
-  if (this->shared_open (new_stream,
+  if (this->shared_open (new_association,
                          remote_sap.get_type (),
-                         0,
-                         protocolinfo,
-                         g,
-                         flags,
+                         protocol,
                          reuse_addr) == -1)
     return -1;
-  else if (this->shared_connect_start (new_stream,
+  else if (this->shared_connect_start (new_association,
                                        timeout,
                                        local_sap) == -1)
     return -1;
 
-  int result = ACE_OS::connect (new_stream.get_handle (),
+  int result = ACE_OS::connect (new_association.get_handle (),
                                 ACE_reinterpret_cast (sockaddr *,
                                                       remote_sap.get_addr ()),
-                                remote_sap.get_size (),
-                                qos_params);
+                                remote_sap.get_size ());
 
-  return this->shared_connect_finish (new_stream,
+  return this->shared_connect_finish (new_association,
                                       timeout,
                                       result);
 }
-#endif  // ACE_HAS_WINCE
 
 // Try to complete a non-blocking connection.
 
 int
-ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
+ACE_SOCK_SEQPACK_Connector::complete (ACE_SOCK_SEQPACK_Association &new_association,
                               ACE_Addr *remote_sap,
                               const ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::complete");
-  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (),
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::complete");
+  ACE_HANDLE h = ACE::handle_timed_complete (new_association.get_handle (),
                                              tv);
   // We failed to get connected.
   if (h == ACE_INVALID_HANDLE)
@@ -232,14 +276,14 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
       // then retry to see if it's a real failure.
       ACE_Time_Value time (0, ACE_NON_BLOCKING_BUG_DELAY);
       ACE_OS::sleep (time);
-      h = ACE::handle_timed_complete (new_stream.get_handle (),
+      h = ACE::handle_timed_complete (new_association.get_handle (),
                                       tv);
       if (h == ACE_INVALID_HANDLE)
         {
 #endif /* ACE_WIN32 */
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
-      new_stream.close ();
+      new_association.close ();
       return -1;
 #if defined (ACE_WIN32)
         }
@@ -257,17 +301,17 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
         {
           // Save/restore errno.
           ACE_Errno_Guard error (errno);
-          new_stream.close ();
+          new_association.close ();
           return -1;
         }
     }
 
-  // Start out with non-blocking disabled on the <new_stream>.
-  new_stream.disable (ACE_NONBLOCK);
+  // Start out with non-blocking disabled on the <new_association>.
+  new_association.disable (ACE_NONBLOCK);
   return 0;
 }
 
-ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
+ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
                                         const ACE_Addr &remote_sap,
                                         const ACE_Time_Value *timeout,
                                         const ACE_Addr &local_sap,
@@ -276,9 +320,9 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                                         int perms,
                                         int protocol)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::ACE_SOCK_Connector");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector");
 
-  if (this->connect (new_stream,
+  if (this->connect (new_association,
                      remote_sap,
                      timeout,
                      local_sap,
@@ -290,37 +334,32 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+                ACE_LIB_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
 }
 
-#if !defined (ACE_HAS_WINCE)
-ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
+// Multihomed version of same
+ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
                                         const ACE_Addr &remote_sap,
-                                        ACE_QoS_Params qos_params,
                                         const ACE_Time_Value *timeout,
-                                        const ACE_Addr &local_sap,
-                                        ACE_Protocol_Info *protocolinfo,
-                                        ACE_SOCK_GROUP g,
-                                        u_long flags,
+                                        const ACE_Multihomed_INET_Addr &local_sap,
                                         int reuse_addr,
-                                        int perms)
+                                        int flags,
+                                        int perms,
+                                        int protocol)
 {
-  ACE_TRACE ("ACE_SOCK_Connector::ACE_SOCK_Connector");
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector");
 
-  if (this->connect (new_stream,
+  if (this->connect (new_association,
                      remote_sap,
-                     qos_params,
                      timeout,
                      local_sap,
-                     protocolinfo,
-                     g,
-                     flags,
                      reuse_addr,
-                     perms) == -1
+                     flags,
+                     perms,
+                     protocol) == -1
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+                ACE_LIB_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
 }
-#endif  // ACE_HAS_WINCE

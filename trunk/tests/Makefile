@@ -65,6 +65,7 @@ BIN =   ACE_Test \
         Message_Queue_Test_Ex \
         Message_Queue_Notifications_Test \
         Multicast_Test \
+        Multihomed_INET_Addr_Test \
         Notify_Performance_Test \
         Object_Manager_Test \
         Obstack_Test \
@@ -101,6 +102,7 @@ BIN =   ACE_Test \
         SOCK_Test \
         SOCK_Connector_Test \
         SOCK_Send_Recv_Test \
+        SOCK_SEQPACK_Association_Test \
         SPIPE_Test \
         SString_Test \
         SV_Shared_Memory_Test \
@@ -258,8 +260,7 @@ realclean: clean
 
 
 .obj/ACE_Test.o .obj/ACE_Test.so .shobj/ACE_Test.o .shobj/ACE_Test.so: ACE_Test.cpp $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/pre.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -813,8 +814,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Thread_Manager.i
 
 .obj/Basic_Types_Test.o .obj/Basic_Types_Test.so .shobj/Basic_Types_Test.o .shobj/Basic_Types_Test.so: Basic_Types_Test.cpp \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/OS.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1144,8 +1144,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream.cpp
 
 .obj/Cache_Map_Manager_Test.o .obj/Cache_Map_Manager_Test.so .shobj/Cache_Map_Manager_Test.o .shobj/Cache_Map_Manager_Test.so: Cache_Map_Manager_Test.cpp \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/OS.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1305,8 +1304,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.i \
-  Cache_Map_Manager_Test.h
+  $(ACE_ROOT)/ace/Get_Opt.i Cache_Map_Manager_Test.h
 
 .obj/Cached_Accept_Conn_Test.o .obj/Cached_Accept_Conn_Test.so .shobj/Cached_Accept_Conn_Test.o .shobj/Cached_Accept_Conn_Test.so: Cached_Accept_Conn_Test.cpp test_config.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -2383,8 +2381,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  Collection_Test.h
+  $(ACE_ROOT)/ace/Containers_T.cpp Collection_Test.h
 
 .obj/Config_Test.o .obj/Config_Test.so .shobj/Config_Test.o .shobj/Config_Test.so: Config_Test.cpp test_config.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -2453,8 +2450,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Framework_Component_T.h \
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  Config_Test.h $(ACE_ROOT)/ace/Configuration.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp Config_Test.h \
+  $(ACE_ROOT)/ace/Configuration.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -3880,8 +3877,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Atomic_Op.i
 
-.obj/Get_Opt_Test.o .obj/Get_Opt_Test.so .shobj/Get_Opt_Test.o .shobj/Get_Opt_Test.so: Get_Opt_Test.cpp \
-  $(ACE_ROOT)/ace/OS.h \
+.obj/Get_Opt_Test.o .obj/Get_Opt_Test.so .shobj/Get_Opt_Test.o .shobj/Get_Opt_Test.so: Get_Opt_Test.cpp $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4915,8 +4911,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp
 
-.obj/Log_Msg_Test.o .obj/Log_Msg_Test.so .shobj/Log_Msg_Test.o .shobj/Log_Msg_Test.so: Log_Msg_Test.cpp \
-  $(ACE_ROOT)/ace/streams.h \
+.obj/Log_Msg_Test.o .obj/Log_Msg_Test.so .shobj/Log_Msg_Test.o .shobj/Log_Msg_Test.so: Log_Msg_Test.cpp $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5037,8 +5032,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
 .obj/Logging_Strategy_Test.o .obj/Logging_Strategy_Test.so .shobj/Logging_Strategy_Test.o .shobj/Logging_Strategy_Test.so: Logging_Strategy_Test.cpp \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/OS.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5361,8 +5355,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Framework_Component_T.h \
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  Map_Test.h $(ACE_ROOT)/ace/Active_Map_Manager.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp Map_Test.h \
+  $(ACE_ROOT)/ace/Active_Map_Manager.h \
   $(ACE_ROOT)/ace/Active_Map_Manager.i \
   $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Map_Manager.h \
@@ -5618,8 +5612,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Caching_Strategies_T.cpp
 
 .obj/Max_Default_Port_Test.o .obj/Max_Default_Port_Test.so .shobj/Max_Default_Port_Test.o .shobj/Max_Default_Port_Test.so: Max_Default_Port_Test.cpp \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/OS.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5739,8 +5732,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Framework_Component_T.h \
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  $(ACE_ROOT)/ace/Thread_Manager.i \
-  Max_Default_Port_Test.h \
+  $(ACE_ROOT)/ace/Thread_Manager.i Max_Default_Port_Test.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i test_config.h
 
@@ -6007,8 +5999,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Process.h \
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/Process_Manager.h \
-  $(ACE_ROOT)/ace/Process_Manager.i \
-  MEM_Stream_Test.h
+  $(ACE_ROOT)/ace/Process_Manager.i MEM_Stream_Test.h
 
 .obj/Mem_Map_Test.o .obj/Mem_Map_Test.so .shobj/Mem_Map_Test.o .shobj/Mem_Map_Test.so: Mem_Map_Test.cpp test_config.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -6254,8 +6245,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Framework_Component_T.h \
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  MT_Reactor_Timer_Test.h \
-  $(ACE_ROOT)/ace/Reactor.h \
+  MT_Reactor_Timer_Test.h $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -6987,8 +6977,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Notification_Strategy.inl \
   $(ACE_ROOT)/ace/Message_Queue.i \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
-  $(ACE_ROOT)/ace/High_Res_Timer.i \
-  Message_Queue_Test_Ex.h
+  $(ACE_ROOT)/ace/High_Res_Timer.i Message_Queue_Test_Ex.h
 
 .obj/Message_Queue_Notifications_Test.o .obj/Message_Queue_Notifications_Test.so .shobj/Message_Queue_Notifications_Test.o .shobj/Message_Queue_Notifications_Test.so: Message_Queue_Notifications_Test.cpp \
   $(ACE_ROOT)/ace/pre.h \
@@ -7323,6 +7312,98 @@ realclean: clean
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Atomic_Op.i
 
+.obj/Multihomed_INET_Addr_Test.o .obj/Multihomed_INET_Addr_Test.so .shobj/Multihomed_INET_Addr_Test.o .shobj/Multihomed_INET_Addr_Test.so: Multihomed_INET_Addr_Test.cpp test_config.h \
+  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+  $(ACE_ROOT)/ace/Multihomed_INET_Addr.h \
+  $(ACE_ROOT)/ace/INET_Addr.h \
+  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Multihomed_INET_Addr.i
+
 .obj/Notify_Performance_Test.o .obj/Notify_Performance_Test.so .shobj/Notify_Performance_Test.o .shobj/Notify_Performance_Test.so: Notify_Performance_Test.cpp test_config.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -7551,8 +7632,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
-.obj/Obstack_Test.o .obj/Obstack_Test.so .shobj/Obstack_Test.o .shobj/Obstack_Test.so: Obstack_Test.cpp \
-  $(ACE_ROOT)/ace/OS.h \
+.obj/Obstack_Test.o .obj/Obstack_Test.so .shobj/Obstack_Test.o .shobj/Obstack_Test.so: Obstack_Test.cpp $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8562,8 +8642,7 @@ realclean: clean
   $(ACE_ROOT)/ace/SOCK_Connector.h \
   $(ACE_ROOT)/ace/SOCK_Connector.i \
   $(ACE_ROOT)/ace/File_Lock.h \
-  $(ACE_ROOT)/ace/File_Lock.inl \
-  Process_Strategy_Test.h
+  $(ACE_ROOT)/ace/File_Lock.inl Process_Strategy_Test.h
 
 .obj/Priority_Buffer_Test.o .obj/Priority_Buffer_Test.so .shobj/Priority_Buffer_Test.o .shobj/Priority_Buffer_Test.so: Priority_Buffer_Test.cpp test_config.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -10118,8 +10197,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Framework_Component_T.h \
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  Reactor_Performance_Test.h \
-  $(ACE_ROOT)/ace/SOCK_Stream.h \
+  Reactor_Performance_Test.h $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
   $(ACE_ROOT)/ace/SOCK.h \
   $(ACE_ROOT)/ace/Addr.h \
@@ -11817,6 +11895,83 @@ realclean: clean
   $(ACE_ROOT)/ace/SOCK_Connector.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i
+
+.obj/SOCK_SEQPACK_Association_Test.o .obj/SOCK_SEQPACK_Association_Test.so .shobj/SOCK_SEQPACK_Association_Test.o .shobj/SOCK_SEQPACK_Association_Test.so: SOCK_SEQPACK_Association_Test.cpp \
+  $(ACE_ROOT)/ace/OS.h $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/SOCK_SEQPACK_Association.h \
+  $(ACE_ROOT)/ace/SOCK_IO.h \
+  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/IPC_SAP.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/IPC_SAP.i \
+  $(ACE_ROOT)/ace/SOCK.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/SOCK_IO.i \
+  $(ACE_ROOT)/ace/INET_Addr.h \
+  $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/SOCK_SEQPACK_Association.i \
+  $(ACE_ROOT)/ace/SOCK_SEQPACK_Connector.h \
+  $(ACE_ROOT)/ace/Multihomed_INET_Addr.h \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Multihomed_INET_Addr.i \
+  $(ACE_ROOT)/ace/SOCK_SEQPACK_Connector.i
 
 .obj/SPIPE_Test.o .obj/SPIPE_Test.so .shobj/SPIPE_Test.o .shobj/SPIPE_Test.so: SPIPE_Test.cpp test_config.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -13988,7 +14143,41 @@ realclean: clean
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set_Ex.inl \
   $(ACE_ROOT)/ace/Unbounded_Set_Ex.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(ACE_ROOT)/ace/Malloc.h \
+  $(ACE_ROOT)/ace/Malloc.i \
+  $(ACE_ROOT)/ace/Malloc_T.h \
+  $(ACE_ROOT)/ace/Malloc_Allocator.h \
+  $(ACE_ROOT)/ace/Malloc_Allocator.i \
+  $(ACE_ROOT)/ace/Free_List.h \
+  $(ACE_ROOT)/ace/Free_List.i \
+  $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Malloc_T.i \
+  $(ACE_ROOT)/ace/Malloc_T.cpp \
+  $(ACE_ROOT)/ace/Memory_Pool.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/Signal.h \
+  $(ACE_ROOT)/ace/Signal.i \
+  $(ACE_ROOT)/ace/Mem_Map.h \
+  $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/Memory_Pool.i \
+  $(ACE_ROOT)/ace/SString.i
 
 .obj/Upgradable_RW_Test.o .obj/Upgradable_RW_Test.so .shobj/Upgradable_RW_Test.o .shobj/Upgradable_RW_Test.so: Upgradable_RW_Test.cpp Upgradable_RW_Test.h \
   $(ACE_ROOT)/ace/pre.h \
