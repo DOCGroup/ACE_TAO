@@ -20,12 +20,13 @@ public:
 
   int svc (void)
   {
-    dispatcher_->schedule (0, qos_);
-    barrier_.wait ();
-
     ACE_hthread_t thr_handle;
     ACE_Thread::self (thr_handle);
     int prio;
+
+    prio = dispatcher_->schedule (0, qos_);
+    ACE_Thread::setprio (thr_handle, prio);
+    barrier_.wait ();
 
     if (ACE_Thread::getprio (thr_handle, prio) == -1)
       {
