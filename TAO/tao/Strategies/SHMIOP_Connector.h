@@ -33,6 +33,8 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
 
+class TAO_SHMIOP_Endpoint;
+
 // ****************************************************************
 
 /**
@@ -90,6 +92,11 @@ protected:
                        TAO_Transport_Descriptor_Interface *desc);
 
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+
+private:
+
+  /// Return the remote endpoint, a helper function
+  TAO_SHMIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
 

@@ -8,6 +8,7 @@
 # include "tao/Environment.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID(tao, Environment, "$Id$")
 
 

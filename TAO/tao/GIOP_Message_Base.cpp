@@ -18,6 +18,7 @@
 
 ACE_RCSID (tao, GIOP_Message_Base, "$Id$")
 
+
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
   : orb_core_ (orb_core),

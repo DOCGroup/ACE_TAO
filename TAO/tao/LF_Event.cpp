@@ -56,6 +56,7 @@ TAO_LF_Event::state_changed_i (int new_state)
     {
       // From the LFS_IDLE state we can only become active.
       if (new_state == TAO_LF_Event::LFS_ACTIVE
+          || new_state == TAO_LF_Event::LFS_CONNECTION_WAIT
           || new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)
         this->state_ = new_state;
       return;
@@ -63,6 +64,22 @@ TAO_LF_Event::state_changed_i (int new_state)
   else if (this->state_ == TAO_LF_Event::LFS_ACTIVE)
     {
       // From LFS_ACTIVE we can only move to a few states
+      if (new_state != TAO_LF_Event::LFS_IDLE)
+        {
+          if (new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)
+            {
+              this->state_ = TAO_LF_Event::LFS_FAILURE;
+            }
+          else
+            {
+              this->state_ = new_state;
+            }
+        }
+      return;
+    }
+  else if (this->state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
+    {
+      // From LFS_CONNECTION_WAIT we can only move to a few states
       if (new_state != TAO_LF_Event::LFS_IDLE)
         {
           if (new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)

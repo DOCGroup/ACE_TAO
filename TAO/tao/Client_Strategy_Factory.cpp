@@ -30,6 +30,12 @@ TAO_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *)
   return 0;
 }
 
+TAO_Connect_Strategy *
+TAO_Client_Strategy_Factory::create_connect_strategy (TAO_ORB_Core *)
+{
+  return 0;
+}
+
 int
 TAO_Client_Strategy_Factory::allow_callback (void)
 {

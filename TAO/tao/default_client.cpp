@@ -1,12 +1,16 @@
 // $Id$
 
-#include "tao/default_client.h"
-#include "tao/ORB_Core.h"
-#include "tao/Wait_On_Read.h"
-#include "tao/Wait_On_Reactor.h"
-#include "tao/Wait_On_Leader_Follower.h"
-#include "tao/Exclusive_TMS.h"
-#include "tao/Muxed_TMS.h"
+#include "default_client.h"
+#include "ORB_Core.h"
+#include "Wait_On_Read.h"
+#include "Wait_On_Reactor.h"
+#include "Wait_On_Leader_Follower.h"
+#include "Exclusive_TMS.h"
+#include "Muxed_TMS.h"
+#include "Blocked_Connect_Strategy.h"
+#include "Reactive_Connect_Strategy.h"
+#include "LF_Connect_Strategy.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_client.i"
@@ -29,6 +33,9 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 #else
   this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
 #endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
+
+  // @@todo: will be changed when other strategies are implemented.
+  this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
 }
 
 TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory (void)
@@ -129,7 +136,27 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                 this->report_option_value_error (ACE_LIB_TEXT("-ORBTransportMuxStrategy"), name);
             }
         }
+      else if (ACE_OS::strcmp (argv[curarg],
+                               ACE_LIB_TEXT("-ORBConnectStrategy")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              ACE_TCHAR* name = argv[curarg];
 
+              if (ACE_OS::strcasecmp (name,
+                                      ACE_LIB_TEXT("Blocked")) == 0)
+                this->connect_strategy_ = TAO_BLOCKED_CONNECT;
+              else if (ACE_OS::strcasecmp (name,
+                                           ACE_LIB_TEXT("Reactive")) == 0)
+                this->connect_strategy_ = TAO_REACTIVE_CONNECT;
+              else if (ACE_OS::strcasecmp (name,
+                                           ACE_LIB_TEXT("LF")) == 0)
+                this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
+              else
+                this->report_option_value_error (ACE_LIB_TEXT("-ORBTransportMuxStrategy"), name);
+            }
+        }
       else if (ACE_OS::strncmp (argv[curarg], ACE_LIB_TEXT("-ORB"), 4) == 0)
         {
           // Can we assume there is an argument after the option?
@@ -217,6 +244,32 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
 
   return ws;
 }
+
+TAO_Connect_Strategy *
+TAO_Default_Client_Strategy_Factory::create_connect_strategy (TAO_ORB_Core *orb_core)
+{
+  TAO_Connect_Strategy *cs = 0;
+
+  if (this->connect_strategy_ == TAO_BLOCKED_CONNECT)
+    ACE_NEW_RETURN (cs,
+                    TAO_Blocked_Connect_Strategy (orb_core),
+                    0);
+  else if (this->connect_strategy_ == TAO_REACTIVE_CONNECT)
+    ACE_NEW_RETURN (cs,
+                    TAO_Reactive_Connect_Strategy (orb_core),
+                    0);
+  else
+    {
+      // = Leader follower model.
+
+      ACE_NEW_RETURN (cs,
+                      TAO_LF_Connect_Strategy (orb_core),
+                      0);
+    }
+
+  return cs;
+}
+
 
 int
 TAO_Default_Client_Strategy_Factory::allow_callback (void)

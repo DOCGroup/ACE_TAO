@@ -70,6 +70,9 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
 
+  // Create our connect strategy
+  this->create_connect_strategy ();
+
   // @@ Michael: We do not use regular connection management.
 
   return 0;
@@ -95,12 +98,8 @@ TAO_DIOP_Connector::close (void)
 int
 TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  if (endpoint->tag () != TAO_TAG_UDP_PROFILE)
-    return -1;
-
   TAO_DIOP_Endpoint *diop_endpoint =
-    ACE_dynamic_cast (TAO_DIOP_Endpoint *,
-                      endpoint );
+    this->remote_endpoint (endpoint);
 
   if (diop_endpoint == 0)
     return -1;
@@ -135,15 +134,13 @@ TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   TAO_Transport *&transport = invocation->transport ();
 
   TAO_DIOP_Endpoint *diop_endpoint =
-    ACE_dynamic_cast (TAO_DIOP_Endpoint *,
-                      desc->endpoint ());
+    this->remote_endpoint (desc->endpoint ());
 
   if (diop_endpoint == 0)
     return -1;
 
   const ACE_INET_Addr &remote_address =
     diop_endpoint->object_addr ();
-
 
   TAO_DIOP_Connection_Handler *svc_handler = 0;
 
@@ -171,6 +168,8 @@ TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                     ACE_TEXT ("new connection on HANDLE %d\n"),
                     svc_handler->get_handle ()));
    }
+
+  svc_handler->decr_refcount ();
 
   // @@ Michael: We do not use regular connection management.
 
@@ -257,6 +256,22 @@ TAO_DIOP_Connector::init_tcp_properties (void)
 {
   // @@ Michael: We have not TCP, so we have no TCP properties.
   return 0;
+}
+
+TAO_DIOP_Endpoint *
+TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
+{
+  if (endpoint->tag () != TAO_TAG_UDP_PROFILE)
+    return 0;
+
+  TAO_DIOP_Endpoint *diop_endpoint =
+    ACE_dynamic_cast (TAO_DIOP_Endpoint *,
+                      endpoint );
+
+  if (diop_endpoint == 0)
+    return 0;
+
+  return diop_endpoint;
 }
 
 

@@ -30,6 +30,8 @@ class TAO_GIOP_Invocation;
 class TAO_Profile;
 class TAO_MProfile;
 class TAO_ORB_Core;
+class TAO_Connect_Strategy;
+
 /**
  * @class TAO_Connector
  *
@@ -114,8 +116,16 @@ protected:
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);
 
+  /// Create a connect strategy
+  void create_connect_strategy (void);
+
   /// Return the TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);
+
+protected:
+
+  /// The (a)synch connect strategy
+  TAO_Connect_Strategy *active_connect_strategy_;
 
 private:
 
@@ -124,7 +134,6 @@ private:
 
   /// Pointer to our ORB core
   TAO_ORB_Core *orb_core_;
-
 };
 
 #if defined (__ACE_INLINE__)
