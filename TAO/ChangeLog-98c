@@ -1,3 +1,34 @@
+Mon Jun 22 11:15:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* TAO_IDL/be/be_helper.cpp: Added gen_ifdef_AHETI(), gen_else_AHETI()
+	  and gen_endif_AHETI() to write the proper #ifdef.
+
+	* TAO_IDL/be/be_sequence.cpp: Added instance_name() to create
+	  a unique instantiation name for the instantiated templates.
+	  Added object_manager_name () to create a unique object_manager
+	  name.
+
+	* TAO_IDL/be/be_visitor_sequence.cpp: Added the new files.
+	
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp: Added ifdefs
+	  for generating appropriate code to handle Object Manager
+	  references.
+
+	* TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Added 
+	  the hook-up to generate the instantiated templates. Basically
+ 	  the hook-up is the method instantiate_sequence().
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_c{i,s}.cpp: Added 
+	  the ifdef distinguishing.
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp,
+	  TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
+	  New files for code generation.
+
 Mon Jun 22 09:19:40 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: The typecode
