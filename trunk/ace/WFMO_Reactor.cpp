@@ -1008,7 +1008,8 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
     active_threads_ (0),
     owner_ (ACE_Thread::self ()),
     change_state_thread_ (0),
-    open_for_business_ (0)
+    open_for_business_ (0),
+    deactivated_ (0)
 {
   ACE_UNUSED_ARG (unused);
 
