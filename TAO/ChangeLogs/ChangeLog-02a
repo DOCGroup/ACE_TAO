@@ -38,9 +38,9 @@ Thu Sep 13 12:46:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  handler from cache. Just leaving the cache entry after the
 	  connection is closed leads to increase in run time memory
 	  requirements. See bug #1025 for details. Thanks to
-	  Jean-Christophe Dubois <jcd@one.com> and Kevin <krc@one.com> for
-	  reporting this. Thanks to Chris Cleeland and Chad Elliott for
-	  reviewing the fix.
+	  Jean-Christophe Dubois <jcd@one.com> and Kevin Cline
+	  <krc@one.com> for reporting this. Thanks to Chris Cleeland and
+	  Chad Elliott for reviewing the fix.
 	
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
@@ -60,6 +60,7 @@ Thu Sep 13 11:33:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu Sep 13 11:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
 	* tao/IIOP_Connection_Handler.cpp (process_listen_point_list):
 	  When creating an IIOP Endpoint, passed in the value of the
 	  ORBDottedDecimal address value from the ORB_Core. This is a real
