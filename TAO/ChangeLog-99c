@@ -1,5 +1,11 @@
 Thu Aug  5 09:13:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao/ORB.cpp (work_pending): Reverted the implementation so
+	  that it always returns 1 and doesn't forward to the Reactor's
+ 	  work_pending() method.  Irfan needs to fix this when he returns.
+  	  Thanks to Trey Grubbs <t-grubbs1@raytheon.com> for reporting
+ 	  this.
+
 	* TAO_IDL/driver/drv_args.cpp (DRV_usage): Changed the output
 	  so that it correctly indicates that C++ exception support is
  	  enabled by default.  Thanks to Alex Hornby <alex@anvil.co.uk>
