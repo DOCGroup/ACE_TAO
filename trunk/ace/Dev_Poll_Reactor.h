@@ -25,6 +25,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_EVENT_POLL)
+// The sys_epoll interface was introduced in Linux kernel 2.5.45.
+// Don't support backported versions since they appear to be buggy.
+// The obsolete ioctl()-based interface is no longer supported.
+# include <linux/version.h>
+# if LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45)
+#   undef ACE_HAS_EVENT_POLL
+#   error Disabling Linux epoll support.  Kernel used in C library is too old.
+#   error Linux kernel 2.5.45 or better is required.
+# endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45) */
+#endif  /* ACE_HAS_EVENT_POLL */
 
 #if defined (ACE_HAS_EVENT_POLL) && defined (ACE_HAS_DEV_POLL)
 #  error ACE_HAS_EVENT_POLL and ACE_HAS_DEV_POLL are mutually exclusive.
@@ -32,6 +43,7 @@
 
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
+d
 
 #include "ace/Pipe.h"
 #include "ace/Lock_Adapter_T.h"
