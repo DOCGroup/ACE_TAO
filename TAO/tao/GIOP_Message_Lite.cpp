@@ -1104,17 +1104,12 @@ TAO_GIOP_Message_Lite::send_reply_exception (
   ACE_TRY
     {
       // Write the exception.
-      CORBA::exception_type extype =
-        CORBA::USER_EXCEPTION;
+      reply_params.reply_status_ = TAO_GIOP_USER_EXCEPTION;
 
       if (CORBA::SystemException::_downcast (x) != 0)
         {
-          extype = CORBA::SYSTEM_EXCEPTION;
+          reply_params.reply_status_ = TAO_GIOP_SYSTEM_EXCEPTION;
         }
-
-      // write the reply_status
-      reply_params.reply_status_ =
-        TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype);
 
       // Make the GIOP & reply header. They are version specific.
       this->write_reply_header (output,
@@ -1123,13 +1118,6 @@ TAO_GIOP_Message_Lite::send_reply_exception (
 
       x->_tao_encode (output, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      // @@ Any way to implement this without interpretive
-      //    marshaling???
-      /*      output.encode (except_tc,
-                     x,
-                     0,
-                     ACE_TRY_ENV);
-                     ACE_TRY_CHECK; */
     }
   ACE_CATCH (CORBA_Exception, ex)
     {
