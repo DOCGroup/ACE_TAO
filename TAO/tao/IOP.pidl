@@ -26,6 +26,7 @@ module IOP
     sequence<octet> component_data;
   };
   typedef sequence<TaggedComponent> MultipleComponentProfile;
+  typedef sequence<TaggedComponent> TaggedComponentList;
 
   const ComponentId TAG_ORB_TYPE = 0;
   const ComponentId TAG_CODE_SETS = 1;
