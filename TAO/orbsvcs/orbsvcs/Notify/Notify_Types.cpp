@@ -1,6 +1,8 @@
 // $Id$
 #include "Notify_Types.h"
 
+ACE_RCSID(Notify, Notify_Types, "$Id$")
+
 TAO_Notify_EventType
 TAO_Notify_EventType::special_event_type_ ("*", "%ALL");
 
@@ -25,21 +27,13 @@ TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name,
 
 TAO_Notify_EventType::TAO_Notify_EventType (const CosNotification::EventType& event_type)
 {
-  // @@ Check it these dups are indeed required.
-  // @@ Pradeep: do not live with broken windows, if the code did not
-  // need the dups then just remove them!
-
   this->event_type_.type_name = event_type.type_name.in ();
-  //CORBA::string_dup (event_type.type_name.in ());
   this->event_type_.domain_name = event_type.domain_name.in ();
-  // CORBA::string_dup (event_type.domain_name.in ());
   this->recompute_hash ();
 }
 
 TAO_Notify_EventType::~TAO_Notify_EventType ()
 {
-  // @@ Pradeep:
-  // No-Op.
 }
 
 u_long
@@ -63,7 +57,7 @@ TAO_Notify_EventType::recompute_hash (void)
   //
   // @@ Or use grow the buffer when needed, or just add the two hash
   // values or something, but fix this code!
-  // 
+  //
   char buffer[BUFSIZ];
   ACE_OS::strcpy (buffer, this->event_type_.domain_name.in ());
   ACE_OS::strcat (buffer, this->event_type_.type_name.in ());
@@ -82,16 +76,12 @@ TAO_Notify_EventType::operator=(const CosNotification::EventType& rhs)
 int
 TAO_Notify_EventType::operator==(const TAO_Notify_EventType& rhs) const
 {
-  // @@ Pradeep: what kind of hack is this?  What you should do is:
-  // if (this->hash () != rhs.hash ())
-  //    return 0;
-  // else
-  //   compare the strings!
-  //
-  if (this->hash () == rhs.hash ())
-    return 1;
-  else
+  if (this->hash () != rhs.hash ())
     return 0;
+  else // compare the strings
+    return (ACE_OS::strcmp (this->event_type_.type_name, rhs.event_type_.type_name) == 0  &&
+            ACE_OS::strcmp (this->event_type_.domain_name, rhs.event_type_.domain_name) == 0
+            );
 }
 
 CORBA::Boolean
@@ -120,31 +110,23 @@ TAO_Notify_EventType::get_native (void) const
 // = Any Event Type.
 
 TAO_Notify_Any::TAO_Notify_Any (void)
+  :is_owner_(0)
 {
-  // @@ Pradeep: get in the habit of initializing in the
-  // initialization section.  This is a field of the base class (beats
-  // me why it is there), but then you should provide a protected
-  // constructor to initialize it!
-
-  // @@ Pradeep: remember it is 'this->is_owner_'
-  is_owner_ = 0;
 }
 
 TAO_Notify_Any::TAO_Notify_Any (const CORBA::Any & data)
-  :data_ ((CORBA::Any*)&data)
+  :data_ ((CORBA::Any*)&data),
+   is_owner_(0)
   // Note: This appears like we're casting away const correctness
   //       but this class still respects it via the is_owner flag.
   //
 {
-  is_owner_ = 0;
 }
 
 TAO_Notify_Any::~TAO_Notify_Any ()
 {
-  // @@ Pradeep: please be consistent, use this-> for *all* fields.
-
   if (this->is_owner_)
-    delete data_;
+    delete this->data_;
 }
 
 TAO_Notify_Event*
@@ -232,21 +214,21 @@ TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer,
 // TAO_Notify_Any apply here too.
 
 TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (void)
+  :is_owner_ (0)
 {
-  is_owner_ = 0;
 }
 
 TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent & notification)
   :data_ ((CosNotification::StructuredEvent*)&notification),
-   event_type_ (notification.header.fixed_header.event_type)
+   event_type_ (notification.header.fixed_header.event_type),
+   is_owner_ (0)
 {
-  is_owner_ = 0;
 }
 
 TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
 {
   if (this->is_owner_)
-    delete data_;
+    delete this->data_;
 }
 
 TAO_Notify_Event*
@@ -277,7 +259,7 @@ TAO_Notify_StructuredEvent::operator=(const TAO_Notify_StructuredEvent& structur
 {
   ACE_DEBUG ((LM_DEBUG, "In TAO_Notify_StructuredEvent::operator=\n"));
   if (this->is_owner_)
-    delete data_;
+    delete this->data_;
 
   ACE_NEW (this->data_,
            CosNotification::StructuredEvent (*structured_event.data_));
@@ -325,13 +307,13 @@ TAO_Notify_StructuredEvent::do_push (CosNotifyComm::StructuredPushConsumer_ptr c
 
 // ****************************************************************
 
-// = EVENTTYPE_LIST
+// = TAO_Notify_EventType_List
 void
-EVENTTYPE_LIST::populate (CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventType_List::populate (CosNotification::EventTypeSeq& event_type_seq)
 {
   event_type_seq.length (this->size ());
 
-  EVENTTYPE_LIST::ITERATOR iter (*this);
+  TAO_Notify_EventType_List::ITERATOR iter (*this);
 
   TAO_Notify_EventType* event_type;
 
@@ -341,7 +323,7 @@ EVENTTYPE_LIST::populate (CosNotification::EventTypeSeq& event_type_seq)
 }
 
 void
-EVENTTYPE_LIST::insert_seq (const CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventType_List::insert_seq (const CosNotification::EventTypeSeq& event_type_seq)
 {
   TAO_Notify_EventType event_type;
 
@@ -353,7 +335,7 @@ EVENTTYPE_LIST::insert_seq (const CosNotification::EventTypeSeq& event_type_seq)
 }
 
 void
-EVENTTYPE_LIST::remove_seq (const CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventType_List::remove_seq (const CosNotification::EventTypeSeq& event_type_seq)
 {
   TAO_Notify_EventType event_type;
 
@@ -370,13 +352,13 @@ template class ACE_Unbounded_Set <TAO_Notify_EventType>;
 template class ACE_Unbounded_Set_Iterator<TAO_Notify_EventType>;
 template class ACE_Node<TAO_Notify_EventType>;
 
-template class ACE_Unbounded_Set<TAO_Notify_Event_Listener*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Notify_Event_Listener*>;
-template class ACE_Node<TAO_Notify_Event_Listener*>;
+template class ACE_Unbounded_Set<TAO_Notify_EventListener*>;
+template class ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener*>;
+template class ACE_Node<TAO_Notify_EventListener*>;
 
-template class ACE_Unbounded_Set<TAO_Notify_Update_Listener*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Notify_Update_Listener*>;
-template class ACE_Node<TAO_Notify_Update_Listener*>;
+template class ACE_Unbounded_Set<TAO_Notify_UpdateListener*>;
+template class ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener*>;
+template class ACE_Node<TAO_Notify_UpdateListener*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -384,12 +366,12 @@ template class ACE_Node<TAO_Notify_Update_Listener*>;
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_EventType>
 #pragma instantiate ACE_Node<TAO_Notify_EventType>
 
-#pragma instantiate ACE_Unbounded_Set<TAO_Notify_Event_Listener*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_Event_Listener*>
-#pragma instantiate ACE_Node<TAO_Notify_Event_Listener*>
+#pragma instantiate ACE_Unbounded_Set<TAO_Notify_EventListener*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener*>
+#pragma instantiate ACE_Node<TAO_Notify_EventListener*>
 
-#pragma instantiate ACE_Unbounded_Set<TAO_Notify_Update_Listener*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_Update_Listener*>
-#pragma instantiate ACE_Node<TAO_Notify_Update_Listener*>
+#pragma instantiate ACE_Unbounded_Set<TAO_Notify_UpdateListener*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener*>
+#pragma instantiate ACE_Node<TAO_Notify_UpdateListener*>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

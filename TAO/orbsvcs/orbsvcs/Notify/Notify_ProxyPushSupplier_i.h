@@ -85,6 +85,9 @@ virtual void disconnect_push_supplier (
   CosEventComm::PushConsumer_var cosec_push_consumer_;
   CosNotifyComm::PushConsumer_var notify_push_consumer_;
   // The consumer connected to us.
+
+  typedef TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::ProxyPushSupplier>
+    proxy_inherited;
 };
 
 class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushSupplier_i : public POA_CosEventChannelAdmin::ProxyPushSupplier, public virtual PortableServer::RefCountServantBase

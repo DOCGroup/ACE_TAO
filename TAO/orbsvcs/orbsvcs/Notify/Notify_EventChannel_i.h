@@ -18,16 +18,16 @@
 #ifndef TAO_NOTIFY_EVENTCHANNEL_I_H_
 #define TAO_NOTIFY_EVENTCHANNEL_I_H_
 #include "ace/pre.h"
-
-#include "Notify_ID_Pool_T.h"
-#include "Notify_QoSAdmin_i.h"
-#include "Notify_Event_Manager.h"
-#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "Notify_ID_Pool_T.h"
+#include "Notify_QoSAdmin_i.h"
+#include "Notify_Event_Manager.h"
 
 class TAO_Notify_EventChannelFactory_i;
 class TAO_Notify_Resource_Manager;
@@ -50,14 +50,15 @@ class TAO_Notify_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotify
   //   routing is handled by its contained Event Manager class.
   //
  public:
-  TAO_Notify_EventChannel_i (CosNotifyChannelAdmin::EventChannelFactory_ptr my_factory, TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFactory_i* my_factory, TAO_Notify_Resource_Manager* resource_manager);
   // Constructor.
   // <my_factory> is the parent.
 
   virtual ~TAO_Notify_EventChannel_i (void);
   // Destructor
 
-  void init (const CosNotification::QoSProperties& initial_qos,
+  void init (CosNotifyChannelAdmin::ChannelID channel_id,
+             const CosNotification::QoSProperties& initial_qos,
              const CosNotification::AdminProperties& initial_admin,
              PortableServer::POA_ptr my_POA,
              CORBA::Environment &ACE_TRY_ENV);
@@ -223,14 +224,11 @@ virtual CosNotification::QoSProperties * get_qos (
 
 protected:
   // = Helper Methods
-  CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV);
- // Create the default filter factory.
-
  void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
  // Cleanup all resources used by this object.
 
  // = Data Members
- CosNotifyChannelAdmin::EventChannelFactory_var my_factory_;
+ TAO_Notify_EventChannelFactory_i* my_factory_;
  // The factory that created us.
 
  PortableServer::POA_var my_POA_;
@@ -244,9 +242,8 @@ protected:
  // The POA in which we should activate SupplierAdmins in.
  // We create and own this.
 
- CosNotifyFilter::FilterFactory_var default_filter_factory_;
- // The default filter factory.
- // We create and own this.
+ CosNotifyChannelAdmin::ChannelID channel_id_;
+ // The ID assigned to this channel.
 
  TAO_Notify_Resource_Manager* resource_manager_;
  // We get this factory from the EventChannelFactory who owns it.

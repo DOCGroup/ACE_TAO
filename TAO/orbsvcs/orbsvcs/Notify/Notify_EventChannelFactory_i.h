@@ -55,6 +55,12 @@ public:
   // Create a factory servant and activates it with the default POA.
   // Also creates a resource factory and assigns it this default_POA.
 
+  CosNotifyChannelAdmin::EventChannelFactory_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  // Get the CORBA object.
+
+  void event_channel_destroyed (CosNotifyChannelAdmin::ChannelID channel_id);
+  // Called by child EC's when they're about to go away.
+
   TAO_Notify_Resource_Manager* get_resource_manager (void);
   // Get the resource manager;
 
@@ -100,9 +106,6 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
   // = Data members
  TAO_Notify_Resource_Manager* resource_manager_;
  // This factory is owned by the Event Channel Factory.
-
- CosNotifyChannelAdmin::EventChannelFactory_var my_ref_;
- // My CORBA object.
 
  PortableServer::POA_var my_POA_;
  // The POA in which we live.

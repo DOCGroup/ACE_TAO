@@ -1,10 +1,12 @@
 // $Id$
 
+#include "tao/Servant_Base.h"
+#include "tao/POAC.h"
 #include "Notify_EventChannelFactory_i.h"
 #include "Notify_EventChannel_i.h"
 #include "Notify_Resource_Manager.h"
-#include "tao/Servant_Base.h"
-#include "tao/POAC.h"
+
+ACE_RCSID(Notify, Notify_EventChannelFactory_i, "$Id$")
 
 TAO_Notify_EventChannelFactory_i::TAO_Notify_EventChannelFactory_i (void)
 {
@@ -34,12 +36,8 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA, C
                      channelfactory, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
 
-  channelfactory->my_ref_ = CosNotifyChannelAdmin::EventChannelFactory
+  return CosNotifyChannelAdmin::EventChannelFactory
     ::_narrow (obj.in (), ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
-
-  return CosNotifyChannelAdmin::EventChannelFactory::
-    _duplicate (channelfactory->my_ref_.in ());
 }
 
 void
@@ -57,6 +55,20 @@ TAO_Notify_EventChannelFactory_i::init_i (PortableServer::POA_ptr default_POA, C
     create_event_channel_POA (this->my_POA_.in (), ACE_TRY_ENV);
 }
 
+CosNotifyChannelAdmin::EventChannelFactory_ptr
+TAO_Notify_EventChannelFactory_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
+{
+  return CosNotifyChannelAdmin::EventChannelFactory
+    ::_narrow (this->resource_manager_->
+               servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV));
+}
+
+void
+TAO_Notify_EventChannelFactory_i::event_channel_destroyed (CosNotifyChannelAdmin::ChannelID channel_id)
+{
+  this->ec_ids_.put (channel_id);
+}
+
 void
 TAO_Notify_EventChannelFactory_i::cleanup_i (void)
 {
@@ -65,7 +77,6 @@ TAO_Notify_EventChannelFactory_i::cleanup_i (void)
 
   delete this->resource_manager_;
 
-  my_ref_ = CosNotifyChannelAdmin::EventChannelFactory::_nil ();
   my_POA_ = PortableServer::POA::_nil ();
   ec_POA_ = PortableServer::POA::_nil ();
   this->resource_manager_ = 0;
@@ -84,16 +95,17 @@ TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSPrope
                    ))
 {
   TAO_Notify_EventChannel_i* channel =
-    this->resource_manager_->create_event_channel (this->my_ref_.in (),
+    this->resource_manager_->create_event_channel (this,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
   PortableServer::ServantBase_var channel_var (channel);
 
-  channel->init (initial_qos, initial_admin, this->ec_POA_.in (), ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
-
   ec_id = this->ec_ids_.get ();
+
+  channel->init (ec_id, initial_qos, initial_admin, this->ec_POA_.in (),
+                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
   CORBA::Object_var obj = this->resource_manager_->
     activate_object_with_id (ec_id,

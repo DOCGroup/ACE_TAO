@@ -2,6 +2,8 @@
 
 #include "orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h"
 
+ACE_RCSID(Notify, Notify_QoSAdmin_i, "$Id$")
+
 // Implementation skeleton constructor
 TAO_Notify_QoSAdmin_i::TAO_Notify_QoSAdmin_i (void)
 {

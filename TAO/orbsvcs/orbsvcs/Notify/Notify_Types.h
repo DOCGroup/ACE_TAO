@@ -23,10 +23,9 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "ace/Containers_T.h"
 
-class TAO_Notify_Event_Listener;
-class TAO_Notify_Update_Listener;
+class TAO_Notify_EventListener;
+class TAO_Notify_UpdateListener;
 
-// @@ Pradeep: do not forget the TAO_***_Export macros...
 class TAO_Notify_EventType
 {
   // = TITLE
@@ -84,18 +83,16 @@ protected:
 // like the one above.  Or better yet, do not put multiple classes in
 // the same file.
 
-// @@ Pradeep: more export macro madness
 class TAO_Notify_Event
 {
   // = TITLE
   //   TAO_Notify_Event
   //
   // = DESCRIPTION
-  //   @@ Pradeep: Could you explain in more detail what do this
-  //   abstraction is there for?  Is it to treat different event
-  //   types, like anys, structured events, etc. homogenously?
-  //
   //   Abstraction for an event
+  //   This class allows us to treat event types homogenously.
+  //   Derived types for anys and structured events provide the implementation.
+  //   This the the "prototype" creational pattern.
   //
 public:
   virtual CORBA::Boolean is_special_event_type (void) const = 0;
@@ -117,17 +114,19 @@ public:
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   // Push self to <consumer>
-
-protected:
-  CORBA::Boolean is_owner_;
-  // Do we own the data.
 };
 
 // ****************************************************************
 
 class TAO_Notify_Any : public TAO_Notify_Event
 {
-  // @@ Pradeep: please document this class...
+  // = TITLE
+  //   TAO_Notify_Any
+  //
+  // = DESCRIPTION
+  //   This class is the concrete prototype for the Any type.
+  //
+
 public:
   TAO_Notify_Any (void);
   TAO_Notify_Any (const CORBA::Any & data);
@@ -146,13 +145,21 @@ public:
 protected:
   CORBA::Any* data_;
   // The data
+
+  CORBA::Boolean is_owner_;
+  // Do we own the data.
 };
 
 // ****************************************************************
 
 class TAO_Notify_StructuredEvent : public TAO_Notify_Event
 {
-  // @@ Pradeep: please document this class.
+  // = TITLE
+  //   TAO_Notify_StructuredEvent
+  //
+  // = DESCRIPTION
+  //   This class is the concrete prototype for the Structured Event Type.
+  //
 public:
   TAO_Notify_StructuredEvent (void);
   TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent & notification);
@@ -173,15 +180,17 @@ protected:
 
   TAO_Notify_EventType event_type_;
   // The event type of <data_>
+
+  CORBA::Boolean is_owner_;
+  // Do we own the data.
 };
 
 // ****************************************************************
 
-// @@ Pradeep: please change the name of this class...
-class EVENTTYPE_LIST : public ACE_Unbounded_Set <TAO_Notify_EventType>
+class TAO_Notify_EventType_List : public ACE_Unbounded_Set <TAO_Notify_EventType>
 {
   // = TITLE
-  //   EVENTTYPE_LIST
+  //   TAO_Notify_EventType_List
   //
   // = DESCRIPTION
   //   Allows operations using the CosNotification::EventTypeSeq type.
@@ -202,17 +211,12 @@ public:
 
 // ****************************************************************
 
-// @@ Pradeep, please don't use all CAPS for types, we use all caps
-// for macros only.
-// @@ Pradeep: typedefs or not they should be prefixed, otherwise you
-// are polluting the namespace.
-
 // = typedefs
-typedef ACE_Unbounded_Set<TAO_Notify_Event_Listener*> EVENT_LISTENER_LIST;
+typedef ACE_Unbounded_Set<TAO_Notify_EventListener*> TAO_Notify_EventListener_List;
 // A list of event listeners that are looking for the same event type.
 
-typedef ACE_Unbounded_Set<TAO_Notify_Update_Listener*> UPDATE_LISTENER_LIST;
-// list of update listeners.
+typedef ACE_Unbounded_Set<TAO_Notify_UpdateListener*> TAO_Notify_UpdateListener_List;
+// A list of update listeners who want to be notified about publish/subscribe changes.
 
 #include "ace/post.h"
 #endif /* TAO_NOTIFY_TYPES_H */

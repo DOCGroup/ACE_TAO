@@ -17,13 +17,17 @@
 #ifndef TAO_NOTIFY_PROXY_T_H
 #define TAO_NOTIFY_PROXY_T_H
 #include "ace/pre.h"
+#include "ace/Containers_T.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/CosNotificationS.h"
 #include "Notify_QoSAdmin_i.h"
 #include "Notify_FilterAdmin_i.h"
 #include "Notify_Listeners.h"
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/CosNotificationS.h"
-#include "ace/Containers_T.h"
 #include "notify_export.h"
 
 class TAO_Notify_Resource_Manager;
@@ -41,7 +45,7 @@ class TAO_Notify_Event_Manager;
 // compilers, but they deserve it! ;-) ;-)
 
 template <class SERVANT_TYPE>
-class TAO_Notify_Export TAO_Notify_Proxy : public SERVANT_TYPE, public TAO_Notify_Update_Listener
+class TAO_Notify_Export TAO_Notify_Proxy : public SERVANT_TYPE, public TAO_Notify_UpdateListener
 {
   // = TITLE
   //   TAO_Notify_Proxy
@@ -63,7 +67,7 @@ public:
   // Init the Proxy.
 
   // = Notify_Update_Listener methods
-  virtual void dispatch_update (EVENTTYPE_LIST& added_list, EVENTTYPE_LIST& removed_list, CORBA::Environment &ACE_TRY_ENV);
+  virtual void dispatch_update (TAO_Notify_EventType_List& added_list, TAO_Notify_EventType_List& removed_list, CORBA::Environment &ACE_TRY_ENV);
 
   virtual CosNotifyChannelAdmin::ProxyType MyType (
     CORBA::Environment &ACE_TRY_ENV
