@@ -169,7 +169,8 @@ Mon Mar  8 20:21:15 2004  Olli Savia  <ops@iki.fi>
 
           ACE_HAS_TERM_IOCTLS is now enabled for all LynxOS versions.
 
-          Moved missing prototype declaration of pthread_sigmask to os_signal.h.
+          Moved missing prototype declaration of pthread_sigmask to
+	  os_signal.h.
 
           Removed unneeded ALIGNBYTES and ALIGN macros.
 
