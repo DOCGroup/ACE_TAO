@@ -113,7 +113,7 @@ main(int argc, char * argv[])
       Time_impl *time_servant = new Time_impl;
       PortableServer::ServantBase_var self_manage (time_servant);
 
-      poa->activate_object_with_id (ServerId,
+      poa->activate_object_with_id (ServerId.in (),
                                     time_servant
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
