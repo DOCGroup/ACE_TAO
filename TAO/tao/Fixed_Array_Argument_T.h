@@ -159,7 +159,7 @@ namespace TAO
 
     typedef Fixed_Array_Tag                             idl_tag;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/Fixed_Array_Argument_T.inl"
