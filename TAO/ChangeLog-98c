@@ -6,9 +6,8 @@ Tue Oct  6 20:05:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 Tue Oct  6 17:16:46 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-  * tao/DynUnion_i.cpp:
-    Another try at making VxWorks happy without using memcmp in
-    DynUnion_i_T.cpp. This should do it.
+        * tao/DynUnion_i.cpp: Another try at making VxWorks happy without
+ 	  using memcmp in DynUnion_i_T.cpp. This should do it.
 
 Tue Oct  6 13:01:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
