@@ -46,6 +46,12 @@ public:
 
   ACE_TCHAR *malloc_info (void);
   // Uses ACE_OS_Memory::malloc() to allocate the returned string.
+
+  // Overload the new/delete opertors so the object will be
+  // created/deleted using the memory allocator associated with the
+  // DLL/SO.
+  void *operator new (size_t bytes);
+  void operator delete (void *ptr);
 };
 
 #endif /* ACE_TESTS_DLL_TEST_IMPL_H */
