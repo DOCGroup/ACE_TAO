@@ -1,3 +1,11 @@
+Wed Mar 22 16:24:26 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
+	  Fixed bug#502. If the Naming Service is not started, an appropriate
+	  message is displayed.
+	  Thanks to Nechypurenko Andrey <A.Nechypurenko.telesens.de>
+	  for reporting this.
+
 Wed Mar 22 14:11:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
@@ -6,7 +14,7 @@ Wed Mar 22 14:11:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
 	* TAO_IDL/be/be_visitor_struct/struct_cs.cpp:
 	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  Changed the code generated for the body of 
+	  Changed the code generated for the body of
 	  _tao_any_destructor() to generate the datatype's local
 	  name instead of its scoped name. Thanks to Carlos for
 	  reporting this bug.
@@ -39,7 +47,7 @@ Wed Mar 22 09:44:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/GIOP_Message_Base.cpp:
 	* tao/GIOP_Message_Lite.cpp;
 	  Removed unreachable 'break' statements (occurre after
-	  'return' statement in a switch case. These were 
+	  'return' statement in a switch case. These were
 	  causing warnings on kai3.3.
 
 Tue Mar 21 20:13:01 2000  Ossama Othman  <ossama@uci.edu>
@@ -88,7 +96,7 @@ Tue Mar 21 21:16:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Mar 21 20:31:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynAnyC.cpp 
+	* tao/DynAnyC.cpp
 	* tao/DynAnyC.h:
 	* tao/DynArray_i.cpp:
 	* tao/DynArray_i.h:
@@ -110,10 +118,10 @@ Tue Mar 21 20:31:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Object_KeyC.h:
 	* tao/POAC.cpp:
 	* tao/POAC.h:
-	* tao/PolicyC.h: 
+	* tao/PolicyC.h:
 	* tao/Request.h:
-	* tao/Services.h: 
-	* tao/corbafwd.h: 
+	* tao/Services.h:
+	* tao/corbafwd.h:
 	   Removed all typedefs of foo_ptr to foo::_ptr_type and
 	   all typedefs and use of foo * as foo_ptr, for all datatypes
 	   except interfaces, valuetypes, pseudo objects, and a few
@@ -123,7 +131,7 @@ Tue Mar 21 20:31:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	   in to hopefully reduce confusion.
 
 	* tao/TAO.dsp:
-	   Added BoundsC.* to the project file. It had been removed by 
+	   Added BoundsC.* to the project file. It had been removed by
 	   a recent checkin.
 
 Tue Mar 21 17:13:48 2000  Carlos O'Ryan  <coryan@uci.edu>
@@ -139,9 +147,9 @@ Tue Mar 21 19:06:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Changed the function that looks up succesive
 	  components of a scoped name to recursive instead of
 	  iterative. This makes it easier to handle backing
-	  up and trying another path when the IDL file 
+	  up and trying another path when the IDL file
 	  contains reopened and/or nested and/or #included
-	  modules. Thanks to Florian Lackerbauer 
+	  modules. Thanks to Florian Lackerbauer
 	  <florian.lackerbauer@mchp.siemens.de> for sending
 	  in the nasty IDL example file.
 
@@ -745,7 +753,7 @@ Tue Mar 21 13:51:23 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Mar 21 11:29:05 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Server_Request.h: Made some cosmetic changes. 
+	* tao/GIOP_Server_Request.h: Made some cosmetic changes.
 
 Tue Mar 21 10:00:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
