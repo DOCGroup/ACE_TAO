@@ -46,7 +46,7 @@ IFR_Service::init (int argc,
                    char *argv[],
                    CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
       this->orb_ = CORBA::ORB_init (argc, 
                                     argv, 

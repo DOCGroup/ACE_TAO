@@ -352,8 +352,6 @@ TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc,
         }
     }
   }
-
-  return 0;
 }
 
 IR::PrimitiveDef_ptr 
@@ -602,8 +600,8 @@ TAO_Repository_i::create_array (CORBA::ULong length,
 }
 
 IR::FixedDef_ptr 
-TAO_Repository_i::create_fixed (CORBA::UShort digits,
-                                CORBA::Short scale,
+TAO_Repository_i::create_fixed (CORBA::UShort /* digits */,
+                                CORBA::Short /* scale */,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
