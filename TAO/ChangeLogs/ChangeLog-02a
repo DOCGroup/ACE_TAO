@@ -1,3 +1,27 @@
+Mon Dec 18 10:45:33 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
+
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
+
+	* orbsvcs/tests/AVStreams/Latency/control.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
+
+	  Fixed compile warnings.
+	
 Mon Dec 18 08:03:13 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
         * tao/Exception.cpp:
