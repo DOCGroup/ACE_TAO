@@ -7,21 +7,19 @@
 #include "ace/OS_NS_strings.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 
-using namespace ConfigFactory;
+#if ! defined (__ACE_INLINE__)
+#include "Config_Factory.i"
+#endif /* __ACE_INLINE__ */
 
-//ACE_RCSID(DOA03, Default_Config_Factory, "$Id$")
+ACE_RCSID(Configurator, Default_Config_Factory, "$Id$")
+
+namespace ConfigFactory {
 
 typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> MUF_SCHED_TYPE;
 typedef TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RMS_SCHED_TYPE;
+typedef TAO_Reconfig_Scheduler<TAO_EDF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> EDF_SCHED_TYPE;
 
 Config_Factory::~Config_Factory (void)
-{
-}
-
-Default_Config_Factory::Default_Config_Factory (void)
-  : Config_Factory (),
-    test_config_(0), //default to ECConfig
-    sched_type_(RMS) //default to RMS scheduling
 {
 }
 
@@ -32,11 +30,8 @@ Default_Config_Factory::~Default_Config_Factory (void)
 int
 Default_Config_Factory::init_svcs (void)
 {
-  /*
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_Default_Config_Factory);
-  */
-  return 0;
 }
 
 int
@@ -68,6 +63,12 @@ Default_Config_Factory::init (int argc, ACE_TCHAR* argv[])
                   this->sched_type_ = MUF;
                   ACE_DEBUG ((LM_DEBUG,
                               "Default_Config_Factory: Scheduling type is MUF\n"));
+                }
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("edf")) == 0)
+                {
+                  this->sched_type_ = EDF;
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Default_Config_Factory: Scheduling type is EDF\n"));
                 }
               else
                 {
@@ -103,6 +104,11 @@ Default_Config_Factory::create_testconfig ()
   if (this->test_config_ == 0)
     {
       switch (this->sched_type_) {
+        case EDF:
+          ACE_DEBUG ((LM_DEBUG,
+                      "Default_Config_Factory: Returning EDF Test_Config\n"));
+          return new TestConfig::ECConfig<EDF_SCHED_TYPE>();
+          break;
         case MUF:
           ACE_DEBUG ((LM_DEBUG,
                       "Default_Config_Factory: Returning MUF Test_Config\n"));
@@ -129,3 +135,23 @@ Default_Config_Factory::destroy_testconfig (TestConfig::Test_Config *x)
 {
   delete x;
 }
+
+// ****************************************************************
+
+ACE_STATIC_SVC_DEFINE (Default_Config_Factory,
+                       ACE_TEXT ("Config_Factory"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (Default_Config_Factory),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
+ACE_FACTORY_DEFINE (Test_Driver, Default_Config_Factory)
+
+// ****************************************************************
+
+} //namespace ConfigFactory
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
