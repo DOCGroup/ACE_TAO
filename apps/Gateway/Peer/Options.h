@@ -18,20 +18,22 @@ public:
   // Parse the arguments.
 
   // = Accessor methods.
-  char *program_name (void);
-  const char *slave_name (void);
-  int debug (void);
-  int exec_slave (void);
-  size_t iteration_count (void);
-  int use_sbrk (void);
-  int use_shmem (void);
-  size_t max_msg_size (void);
-  size_t spawn_count (void);
-  int spawn_threads (void);
-  int use_mmap (void);
-  int child (void);
+  int verbose (void) const;
+  // Are we in verbose mode?
+
+  u_short port (void) const;
+  // What is our listening port number?
+
+  long timeout (void) const;
+  // What is our timeout?
 
 private:
+  enum
+  {
+    DEFAULT_TIMEOUT = 60
+    // By default, disconnect the peer every minute.
+  }
+
   Options (void);
   // Ensure Singleton.
 
@@ -41,41 +43,14 @@ private:
   void print_usage_and_die (void);
   // Explain usage and exit.
 
-  char *program_name_;
-  // Name of the program.
+  int verbose_;
+  // Flag to indicate if we want verbose diagnostics.
 
-  const char *slave_name_;
-  // Name of slave process.
+  u_short port_;
+  // Our port number.
 
-  int debug_;
-  // Flag to indicate if we are debugging.
-
-  int exec_slave_;
-  // Flag to indicate if we should exec after forking.
-
-  size_t iteration_count_;
-  // Number of iterations to call malloc_recurse().
-
-  int use_sbrk_;
-  // Should we use sbrk(2)?
-
-  int use_shmem_;
-  // Should we use Shared Memory?
-
-  size_t max_msg_size_;
-  // Maximum number of bytes to malloc.
-
-  size_t spawn_count_;
-  // Number of threads.
-
-  int spawn_threads_;
-  // Spawn threads vs. processes.
-
-  int use_mmap_;
-  // Use mmap() as the backing store.
-
-  int child_;
-  // We're a child process.
+  long timeout_;
+  // The amount of time to wait before disconnecting from the Peerd.
 };
 
 #endif /* OPTIONS_H */
