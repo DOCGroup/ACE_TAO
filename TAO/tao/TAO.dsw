@@ -57,6 +57,36 @@ Package=<4>
 
 ###############################################################################
 
+Project: "BiDirGIOP"=.\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BiDir_GIOP_Static"=.\BiDir_GIOP\TAO_BiDir_GIOP_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "DynamicInterface"=.\DynamicInterface\TAO_DynamicInterface.dsp - Package Owner=<4>
 
 Package=<5>
@@ -70,30 +100,6 @@ Package=<4>
 ###############################################################################
 
 Project: "DynamicInterface_Static"=.\DynamicInterface\TAO_DynamicInterface_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "BiDir_GIOP"=.\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "BiDir_GIOP_Static"=.\BiDir_GIOP\TAO_BiDir_GIOP_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
