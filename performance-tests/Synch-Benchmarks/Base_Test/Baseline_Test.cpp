@@ -123,10 +123,8 @@ Baseline_Test_Options::reset_params (size_t multiply,
                                      size_t iteration,
                                      int yield)
 {
-  this->total_iteration_ = 0;
-  this->real_ = 0;
-  this->system_ = 0;
-  this->user_ = 0;
+  this->current_iteration_ = 0;
+  this->timer.reset ();
   // Start a new test, reset statistic info.
 
   this->current_yield_method_ = yield;
@@ -138,11 +136,19 @@ Baseline_Test_Options::reset_params (size_t multiply,
 void
 Baseline_Test_Options::print_result (void)
 {
+  ACE_Time_Value tv;
+  ACE_hrtime_t nsec;
+
+  this->timer.elapsed_time_incr (tv);
+  this->timer.elapsed_time_incr (nsec);
   ACE_DEBUG ((LM_DEBUG,
-              "Real Time: %f\n System Time: %f\nUser Time: %f\n",
-              this->real_,
-              this->system_,
-              this->user_));
+              "Total Time: %d sec %d usec for a "
+              "total of %d iterations (%d iterations before yield)\n"
+              "Average time: %d nanoseconds.\n",
+              tv.sec (), tv.usec (),
+              this->current_iteration_,
+              this->current_multiply_factor_,
+              nsec / this->current_iteration_));
 }
 
 Baseline_Test::Baseline_Test (void)
@@ -167,7 +173,6 @@ Baseline_Test::pre_run_test (Benchmark_Base *bb)
   baseline_options.reset_params (this->current_test_->multiply_factor (),
                                  this->current_test_->iteration (),
                                  this->current_test_->yield_method ());
-
   if (baseline_options.test_try_lock ())
     {
       ACE_Thread_Manager::instance ()->spawn
@@ -177,6 +182,11 @@ Baseline_Test::pre_run_test (Benchmark_Base *bb)
       this->get_lock_.wait ();
       // Wait until the lock is held by the spawning thread.
     }
+
+  this->run_test ();
+  baseline_options.reset_params (this->current_test_->multiply_factor (),
+                                 this->current_test_->iteration (),
+                                 this->current_test_->yield_method ());
 
   return 0;
 }
