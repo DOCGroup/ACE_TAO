@@ -33,6 +33,7 @@ class be_interface_strategy
 public:
   enum Strategy_Kind {
       DEFAULT = 0,
+      AMI_INTERFACE,
       AMI_HANDLER,
       AMI_EXCEPTION_HOLDER
   };
@@ -193,5 +194,21 @@ public:
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
 };
+
+class be_interface_ami_strategy
+  : public be_interface_default_strategy
+{
+public:
+  be_interface_ami_strategy (be_interface *node);
+
+  virtual ~be_interface_ami_strategy ();
+
+  // overridden methods.
+  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
+                                            int is_extra_state = 0);
+
+  virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+};
+
 
 #endif  // if !defined

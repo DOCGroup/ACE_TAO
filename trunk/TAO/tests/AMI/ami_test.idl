@@ -33,7 +33,8 @@ module A
           raises (DidNotWork);
   
         attribute long yadda;
-        //  oneway void shutdown ();
+        
+        oneway void shutdown ();
       };
 
   };

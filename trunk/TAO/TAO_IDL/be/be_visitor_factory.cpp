@@ -766,6 +766,9 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_decl (new_ctx);
 
     // AMI next generation visitors.
+    case TAO_CodeGen::TAO_AMI_INTERFACE_CH:
+      return new be_visitor_ami_interface_ch (new_ctx);
+
     case TAO_CodeGen::TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CH:
       return new be_visitor_operation_ami_handler_reply_stub_operation_ch (new_ctx);
 
