@@ -106,11 +106,9 @@ ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
     
     // Go through all the handles looking for <handle>.  Even if we find
     // it, we continue through the rest of the list since <handle> could
-    // appear multiple times. All handles are checked except the 0th one
-    // and the 1st one (i.e., the "wakeup all" event and the notify
-    // event).
+    // appear multiple times. All handles are checked.
     int result = 0;
-    for (size_t i = 2; i < this->max_handlep1_ && error == 0; i++)
+    for (size_t i = 0; i < this->max_handlep1_ && error == 0; i++)
       {
 	if (this->current_handles_[i] == handle)
 	  {
@@ -135,13 +133,12 @@ ACE_ReactorEx_Handler_Repository::unbind_all (void)
   {
     ACE_GUARD (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_);
     
-    // Remove all the handlers except the 0th one and the 1st one (i.e.,
-    // the "wakeup all" event and the notify event).
-    for (size_t i = 2; i < this->max_handlep1_; i++)
+    // Remove all the handlers 
+    for (size_t i = 0; i < this->max_handlep1_; i++)
       this->remove_handler_i (i, ACE_Event_Handler::NULL_MASK);
   }
   // The guard is released here
-
+  
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
   this->reactorEx_.wakeup_all_threads ();
@@ -274,9 +271,10 @@ ACE_ReactorEx_Handler_Repository::handle_additions (void)
 
 ACE_ReactorEx::ACE_ReactorEx (ACE_Sig_Handler *sh,
 			      ACE_Timer_Queue *tq)
-  : timer_queue_ (tq),
+  : timer_queue_ (0),
     delete_timer_queue_ (0),
     handler_rep_ (*this),
+    delete_handler_rep_ (0),
     // this event is initially signaled
     ok_to_wait_ (1), 
     // this event is initially unsignaled
@@ -287,7 +285,7 @@ ACE_ReactorEx::ACE_ReactorEx (ACE_Sig_Handler *sh,
     active_threads_ (0),
     owner_ (ACE_Thread::self ()),
     change_state_thread_ (0),
-    closed_for_business_ (0)
+    open_for_business_ (0)
 {
   if (this->open (ACE_ReactorEx::DEFAULT_SIZE, 0, sh, tq) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ReactorEx"));
@@ -297,9 +295,10 @@ ACE_ReactorEx::ACE_ReactorEx (size_t size,
 			      int unused,
 			      ACE_Sig_Handler *sh,
 			      ACE_Timer_Queue *tq)
-  : timer_queue_ (tq),
+  : timer_queue_ (0),
     delete_timer_queue_ (0),
     handler_rep_ (*this),
+    delete_handler_rep_ (0),
     // this event is initially signaled
     ok_to_wait_ (1), 
     // this event is initially unsignaled
@@ -310,7 +309,7 @@ ACE_ReactorEx::ACE_ReactorEx (size_t size,
     active_threads_ (0),
     owner_ (ACE_Thread::self ()),
     change_state_thread_ (0),
-    closed_for_business_ (0)
+    open_for_business_ (0)
 {
   if (this->open (size, 0, sh, tq) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ReactorEx"));
@@ -325,16 +324,26 @@ ACE_ReactorEx::open (size_t size,
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
+  // If we are already open, return -1
+  if (this->open_for_business_)
+    return -1;
+
   // Setup the atomic wait array (used later in <handle_events>)
   this->atomic_wait_array_[0] = this->lock_.lock ().proc_mutex_;
   this->atomic_wait_array_[1] = this->ok_to_wait_.handle ();
   
+  // This is to guard against reopens of ReactorEx
+  if (this->delete_handler_rep_)
+    this->handler_rep_.~ACE_ReactorEx_Handler_Repository ();
+
   // Open the handle repository
   // Two additional handles for internal purposes
   if (this->handler_rep_.open (size + 2) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
 		       "opening handler repository"), 
 		      -1);
+  else
+    this->delete_handler_rep_ = 1;
 
   // Open the notification handler
   if (this->notify_handler_.open (*this) == -1)
@@ -361,14 +370,22 @@ ACE_ReactorEx::open (size_t size,
     }
 
   // Timer Queue 
-  if (this->timer_queue_ == 0)
+  if (this->delete_timer_queue_)
+    delete this->timer_queue_;
+
+  if (tq == 0)
     {
       ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_List, -1);
       this->delete_timer_queue_ = 1;
     }
+  else 
+    {
+      this->timer_queue_ = tq;
+      this->delete_timer_queue_ = 0;
+    }
 
-  // We are no longer closed for business; i.e., we are now open
-  this->closed_for_business_ = 0;
+  // We are open for business
+  this->open_for_business_ = 1;
   
   return 0;
 }
@@ -376,8 +393,18 @@ ACE_ReactorEx::open (size_t size,
 int
 ACE_ReactorEx::close (void)
 {
-  this->closed_for_business_ = 1;
+  // This GUARD is necessary since we are updating shared state.
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
+
+  // If we are already closed, return error
+  if (!this->open_for_business_)
+    return -1;
+
+  // We are now closed
+  this->open_for_business_ = 0;
+  // This will unregister all handles
   this->handler_rep_.close ();
+
   return 0;
 }
 
@@ -454,7 +481,7 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
   ACE_TRACE ("ACE_ReactorEx::handle_events");
 
   // Make sure we are not closed 
-  if (this->closed_for_business_)
+  if (!this->open_for_business_)
     return -1;
   
   // Stash the current time -- the destructor of this object will
@@ -464,6 +491,7 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
 
   // Check to see if it is ok to enter ::WaitForMultipleObjects
   // This will acquire <this->lock_> on success
+  // On failure, the lock will not be acquired
   int result = this->ok_to_wait (max_wait_time, alertable);  
   if (result != 1)
     return result;
@@ -630,9 +658,15 @@ ACE_ReactorEx::dispatch_handler (int index)
   ACE_HANDLE handle = *(this->handler_rep_.handles () + index);
   siginfo_t sig (handle);
 
-  // Dispatch the handler.
-  if (this->handler_rep_.event_handlers ()[index]->handle_signal (0, &sig) == -1)
-    this->handler_rep_.unbind (handle, ACE_Event_Handler::NULL_MASK);
+  // Dispatch the handler if it has not been scheduled for deletion.
+  // Note that this is a very week test if there are multiple threads
+  // dispatching this index as no locks are held here. Generally, you
+  // do not want to do something like deleting the this pointer in
+  // handle_close() if you have registered multiple times and there is
+  // more than one thread in ReactorEx->handle_events().
+  if (!this->handler_rep_.scheduled_for_deletion (index))
+    if (this->handler_rep_.event_handlers ()[index]->handle_signal (0, &sig) == -1)
+      this->handler_rep_.unbind (handle, ACE_Event_Handler::NULL_MASK);
   return 0;
 }
 
