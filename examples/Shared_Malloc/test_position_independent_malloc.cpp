@@ -115,9 +115,9 @@ initialize (TEST_MALLOC *allocator)
 }
 
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "a:T");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("a:T"));
 
   for (int c;
        (c = get_opt ()) != -1;
@@ -127,7 +127,7 @@ parse_args (int argc, char *argv[])
         {
         case 'a':
           // Override the default base address.
-          base_addr = ACE_reinterpret_cast (void *, 
+          base_addr = ACE_reinterpret_cast (void *,
                                             ACE_OS::atoi (get_opt.opt_arg ()));
           break;
         case 'T':
@@ -140,17 +140,17 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
   ACE_MMAP_Memory_Pool_Options options (base_addr);
 
   // Create an allocator.
-  TEST_MALLOC *ptr;
+  TEST_MALLOC *ptr = 0;
   ACE_NEW_RETURN (ptr,
-                  TEST_MALLOC ("test_file",
-                               "test_lock",
+                  TEST_MALLOC (ACE_TEXT("test_file"),
+                               ACE_TEXT("test_lock"),
                                &options),
                   1);
   auto_ptr <TEST_MALLOC> allocator (ptr);
