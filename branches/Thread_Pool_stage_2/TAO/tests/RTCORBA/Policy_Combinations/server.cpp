@@ -104,7 +104,7 @@ static CORBA::Short server_priority;
 static CORBA::Short client_priority;
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 2;
-static CORBA::ULong dynamic_threads = 2;
+static CORBA::ULong dynamic_threads = 0;
 static RTCORBA::Priority default_thread_priority;
 static CORBA::Boolean allow_request_buffering = 0;
 static CORBA::ULong max_buffered_requests = 0;

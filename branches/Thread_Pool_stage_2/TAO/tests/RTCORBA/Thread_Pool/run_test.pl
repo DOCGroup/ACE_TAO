@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../bin';
 use PerlACE::Run_Test;
 
-$number_of_clients = 3;
+$number_of_clients = 4;
 $status = 0;
 
 @configurations = 

@@ -5,7 +5,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Thread_Pools, client, "$Id$")
+ACE_RCSID(Thread_Pool, client, "$Id$")
 
 const char *ior = "file://ior_1";
 int iterations = 6;

@@ -63,7 +63,7 @@ test_i::_default_POA (CORBA_Environment &)
 
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 2;
-static CORBA::ULong dynamic_threads = 2;
+static CORBA::ULong dynamic_threads = 0;
 static CORBA::Boolean allow_request_buffering = 0;
 static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
