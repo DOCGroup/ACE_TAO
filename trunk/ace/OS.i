@@ -5218,7 +5218,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   
   QOS qos;
-  DWORD qos_len = 0;
+  DWORD qos_len = sizeof (QOS);
   
   if (io_control_code == SIO_SET_QOS)
     {
@@ -5226,7 +5226,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
       qos.ReceivingFlowspec = ace_qos.receiving_flowspec ();
       qos.ProviderSpecific = (WSABUF) ace_qos.provider_specific ();
       
-      qos_len = sizeof (QOS) + ace_qos.provider_specific ().iov_len;
+      qos_len += ace_qos.provider_specific ().iov_len;
       
       ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
                                        io_control_code,
