@@ -487,15 +487,17 @@ TAO_PG_ObjectGroupManager::create_object_group (
                                           type_id
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  
+  { int _TODO_replace_this_with_commemted_out_version_; } 
+  FT::TagFTGroupTaggedComponent tag_component;
+  //  PortableGroup::TagGroupTaggedComponent tag_component;
+  TAO_FT_IOGR_Property prop (tag_component);
 
-  FT::TagFTGroupTaggedComponent ft_tag_component;
-  TAO_FT_IOGR_Property prop (ft_tag_component);
-
-  ft_tag_component.component_version.major = (CORBA::Octet) 1;
-  ft_tag_component.component_version.minor = (CORBA::Octet) 0;
-  ft_tag_component.group_domain_id = domain_id;
-  ft_tag_component.object_group_id = group_id;
-  ft_tag_component.object_group_ref_version = 0;
+  tag_component.component_version.major = (CORBA::Octet) 1;
+  tag_component.component_version.minor = (CORBA::Octet) 0;
+  tag_component.group_domain_id = domain_id;
+  tag_component.object_group_id = group_id;
+  tag_component.object_group_ref_version = 0;
 
   // Set the property
   iorm_->set_property (&prop, 
@@ -710,16 +712,18 @@ TAO_PG_ObjectGroupManager::get_group_entry (
   if (CORBA::is_nil (this->poa_.in ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
+  { int _TODO_replace_this_with_commemted_out_version_; } 
+  FT::TagFTGroupTaggedComponent tc;
   // extract the group_id from the object group reference
-  FT::TagFTGroupTaggedComponent ftc;
+  //PortableGroup::TagGroupTaggedComponent tc;
   TAO_FT_IOGR_Property tmp_prop;
 
   tmp_prop.get_tagged_component (object_group,
-                                 ftc
+                                 tc
                                  ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  PortableGroup::ObjectGroupId group_id = ftc.object_group_id;
+  PortableGroup::ObjectGroupId group_id = tc.object_group_id;
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (group_id, group_entry) != 0)

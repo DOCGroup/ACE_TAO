@@ -9,7 +9,8 @@
 #include "tao/IOP.pidl" // from 98-03-01.idl
 #include "tao/GIOP.pidl" // from 98-03-01.idl
 #include "tao/Policy.pidl"
-#include "PortableGroup.idl"
+
+//#include "PortableGroup.idl"
 
 
 #pragma prefix "omg.org"
@@ -18,22 +19,49 @@
 // These have been moved to the file IOP.pidl
 module FT
 {
-  /// FTDomainId's are denoted as strings
-  typedef PortableGroup::GroupDomainId FTDomainId;
+// ***** Temporarily backed-out this change *****
+//       It caused a circular depdency problem between 
+//       PortableGroup and FTORB
+//
+//  /// FTDomainId's are denoted as strings
+//  typedef PortableGroup::GroupDomainId FTDomainId;
+//
+//    /// The objectgroup id
+//  typedef PortableGroup::ObjectGroupId ObjectGroupId;
+//
+//  /// The reference version of the object group
+//  typedef PortableGroup::ObjectGroupRefVersion ObjectGroupRefVersion;
+//
+//  /**
+//   * @struct TagFTGroupTaggedComponent
+//   *
+//   * @brief Contents of the Tagged_Component field with tag
+//   *  TAG_FT_GROUP
+//   */
+//  typedef PortableGroup::TagGroupTaggedComponent TagFTGroupTaggedComponent;
 
-    /// The objectgroup id
-  typedef PortableGroup::ObjectGroupId ObjectGroupId;
-
-  /// The reference version of the object group
-  typedef PortableGroup::ObjectGroupRefVersion ObjectGroupRefVersion;
-
-  /**
-   * @struct TagFTGroupTaggedComponent
-   *
-   * @brief Contents of the Tagged_Component field with tag
-   *  TAG_FT_GROUP
-   */
-  typedef PortableGroup::TagGroupTaggedComponent TagFTGroupTaggedComponent;
+    /// FTDomainId's are denoted as strings
+    typedef string FTDomainId;
+  
+      /// The objectgroup id
+    typedef unsigned long long ObjectGroupId;
+  
+    /// The reference version of the object group
+    typedef unsigned long ObjectGroupRefVersion;
+  
+    /**
+     * @struct TagFTGroupTaggedComponent
+     *
+     * @brief Contents of the Tagged_Component field with tag
+     *  TAG_FT_GROUP
+     */
+    struct TagFTGroupTaggedComponent
+    {
+      GIOP::Version component_version;
+      FTDomainId group_domain_id;
+      ObjectGroupId object_group_id;
+      ObjectGroupRefVersion object_group_ref_version;
+    };
 
   /**
    * @struct TagFTPrinaryTaggedComponent

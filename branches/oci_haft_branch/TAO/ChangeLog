@@ -1,3 +1,26 @@
+Wed Sep 24 17:05:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc
+          Added dependency on iormanip to eliminate link errors.
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp
+          Explicitly cast the intentional conversion of an int to
+          a float to eliminate a compiler warning on VC++ 7.1.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+
+        * tao/Utils/Utils.mpc
+          Added dependency on portableserver to eliminate link errors.
+
+        * orbsvcs/orbsvcs/FTORB.mpc
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl
+          Temporarily reverted to TagFTGroupTaggedComponent (which duplicates
+          TagGroupTaggedComponent) because it causes a circular dependency 
+          problem. Will reinstate this change later.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp
+          Explicitly cast to ULong to eliminate compiler warning on VC++ 7.
+
 Wed Sep 24 11:41:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
