@@ -128,11 +128,6 @@ STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/guajira.cs.wustl.ed
 #WEB    = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?tripoli_AIX_VAC
 #GROUP  = External
 
-[Lynx_PPC]
-LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/
-WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_LYNX_PPC
-STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/status.txt
-
 #[Lynx_I386]
 #LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_LYNX_I386/
 #WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_LYNX_I386

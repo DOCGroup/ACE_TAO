@@ -1,3 +1,7 @@
+Thu May 23 20:36:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* bin/nightlybuilds/builds.lst: Move Lynx_PPC build to new scoreboard.
+
 Thu May 23 14:04:52 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/LocatorImpl.cpp:
