@@ -16,10 +16,10 @@ typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>
         TAO_ORB_CORE;
 
 TAO_ORB_Core::TAO_ORB_Core (void)
-  : orb_ (0),
-    reactor_ (0),
+  : reactor_ (0),
     thr_mgr_ (0),
     connector_ (0),
+    orb_ (0),
     root_poa_ (0),
     oa_params_ (0),
     orb_params_ (0),
@@ -325,15 +325,15 @@ TAO_ORB_Core::init (int& argc, char** argv)
       if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) TAO_ORB_Core::init failed to resolve local host %p.\n"), -1);
-      
+
       host = CORBA::string_dup (buffer);
     }
-  
+
   if (rendezvous.set (port, (char *) host) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_ORB_Core::init failed to resolve host %s, %p.\n",
                        (char*)host, "reason"), -1);
-  
+
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
   // There's really no way to deal with this in a portable manner, so
   // we just have to suck it up and get preprocessor conditional and
@@ -724,14 +724,14 @@ TAO_ORB_Core::create_and_set_root_poa (void)
   TAO_POA_Manager *manager = new TAO_Strategy_POA_Manager;
   TAO_POA_Policies root_poa_policies;
   root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
-  
+
   // Construct a new POA
   poa = new TAO_Strategy_POA ("RootPOA",
                               *manager,
                               root_poa_policies,
                               0,
                               env);
-  
+
   if (env.exception () != 0)
     return;
 
