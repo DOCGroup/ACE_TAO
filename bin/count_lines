@@ -141,7 +141,7 @@ sub initfiletypes {
     # twice, but it could be unproperly classified.
 
     local %filenames =
-        ('GNUMakefile'     => 'Makefile',
+        ('GNUmakefile'     => 'Makefile',
          'Makefile.*'   => 'Makefile',
          'README'       => 'README files',
          'COPYING'      => 'Licenses',

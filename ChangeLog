@@ -8,10 +8,10 @@ Sat May  1 22:23:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Makefile:
 	* bin/Makefile:
-	* GNUMakefile:
-	* bin/GNUMakefile:
+	* GNUmakefile:
+	* bin/GNUmakefile:
 
-	  Renamed "Makefile"s to "GNUMakefile"s to make it obvious to
+	  Renamed "Makefile"s to "GNUmakefile"s to make it obvious to
 	  users that GNU Make is required to parse the files.
 
 	* bin/ace-install:
@@ -25,7 +25,7 @@ Sat May  1 22:23:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* bin/update-ace+tao.sh:
 
 	  Updated to references to "Makefile" to use the new name
-	  "GNUMakefile".
+	  "GNUmakefile".
 
 Sat May 01 17:12:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

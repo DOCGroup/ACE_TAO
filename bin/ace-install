@@ -451,7 +451,7 @@ if [ $install -ne 0 ]; then
 
     ALL_PROGS=`find orbsvcs -type f -perm +a+x -print | grep -v ".*lib.*" | grep -v ".\.pl" | grep -v test | grep -v example`
     ALL_PROGS="`find utils  -type f -perm +a+x -print` $ALL_PROGS"
-    PROGS=`echo $ALL_PROGS | tr " " "\n" | grep -v test | grep -v default.bld | grep -v README | grep -v GNUMakefile`
+    PROGS=`echo $ALL_PROGS | tr " " "\n" | grep -v test | grep -v default.bld | grep -v README | grep -v GNUmakefile`
 
     for f in TAO_IDL/tao_idl $PROGS; do
         echo $f
