@@ -1,3 +1,8 @@
+Thu Oct  2 16:12:45 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.i:
+	  Fixed unused args warning.
+
 Thu Oct  2 07:44:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Kokyu/README:
