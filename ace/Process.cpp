@@ -70,21 +70,21 @@ ACE_Process::spawn (ACE_Process_Options &options)
             && ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
           {
             ACE_DEBUG ((LM_MAX,
-                        "(%P): ace/Process.cpp; unable to open stdin; exiting!!!!\n"));
+                        "(%P): ACE_Process::spawn (); unable to open stdin; exiting!!!!\n"));
             ACE_OS::exit (errno);
           }
         else if (options.get_stdout () != ACE_INVALID_HANDLE
                  && ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
           {
             ACE_DEBUG ((LM_MAX,
-                        "(%P): ace/Process.cpp; unable to open stdout; exiting!!!!\n"));
+                        "(%P): ACE_Process::spawn (); unable to open stdout; exiting!!!!\n"));
             ACE_OS::exit (errno);
           }
         else if (options.get_stderr () != ACE_INVALID_HANDLE
                  && ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
           {
             ACE_DEBUG ((LM_MAX,
-                        "(%P): ace/Process.cpp; unable to open stderr; exiting!!!!\n"));
+                        "(%P): ACE_Process::spawn (); unable to open stderr; exiting!!!!\n"));
             ACE_OS::exit (errno);
           }
 
@@ -123,7 +123,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           {
             // If the execv fails, this child needs to exit.
             ACE_DEBUG ((LM_MAX,
-                        "(%P): ace/Process.cpp; exec failed: exiting!!!!\n"));
+                        "(%P): ACE_Process::spawn (); exec failed: exiting!!!!\n"));
             ACE_OS::exit (errno);
           }
 
