@@ -5,7 +5,7 @@
 //     File_i.h
 //
 // = DESCRIPTION
-//     This Program defines the implementation classes for the File IDL
+//      Defines the implementation classes for the File IDL
 //     module
 //
 // = AUTHOR
