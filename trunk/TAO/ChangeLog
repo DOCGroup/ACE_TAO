@@ -1,3 +1,8 @@
+Sun Jul 11 20:15:17 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Fixed incorrect link and fixed a typo and a few spaces
+
 Sat Jul 10 12:43:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
@@ -26,7 +31,7 @@ Fri Jul  9 07:29:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Fixed warnings in the daily builds. Thanks to Johnny for letting
 	  me know about this. This should also fix the problems in DSI
-	  tests. 
+	  tests.
 
 Thu Jul  8 17:48:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -37,12 +42,12 @@ Thu Jul  8 17:48:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Corrected the memory leak fix in this checkin
  	  "Fri Jun 11 15:30:57 2004  Balachandran Natarajan
-	  <bala@dre.vanderbilt.edu>". 
+	  <bala@dre.vanderbilt.edu>".
 
 	  This should fix the failure with Bug_1482_Regression tests in
 	  our daily builds. Coincidentally this should also fix the
 	  problem that Keith O'Hara reported while trying to run FT_App
-	  tests. 
+	  tests.
 
 Thu Jul  8 18:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
