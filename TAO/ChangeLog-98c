@@ -3,7 +3,8 @@ Wed Sep  2 19:24:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Sequence.i: 
 	* tao/Sequence.cpp: 
 	  Another method made inline (::replace()) to workaround a bug in
-	  Sun/CC on Solaris 2.6
+	  Sun/CC on Solaris 2.6. Thanks to Don Davis
+	  <ded@heart.jhuapl.edu> for reporting this and providing a fix!
 
 Wed Sep  2 18:59:22 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
