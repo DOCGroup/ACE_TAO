@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ec_typed_events, naming, messaging {
+project : naming, messaging {
   after     += CosEvent
   libs      += TAO_CosEvent
   comps     += CosEvent
