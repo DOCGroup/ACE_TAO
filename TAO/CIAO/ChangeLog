@@ -1,3 +1,10 @@
+Sun Aug 22 17:06:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tools/IDL3_to_IDL2/be_global.cpp:
+	* tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+
+	  Fixed unused variable warnings in our daily builds. 
+
 Sun Aug 22 16:26:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* performance-tests/Protocols/Receiver/Receiver.mpc:

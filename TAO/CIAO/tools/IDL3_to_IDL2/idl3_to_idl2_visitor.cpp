@@ -312,7 +312,7 @@ idl3_to_idl2_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
       *os << "abstract ";
     }
     
-  AST_Decl::NodeType nt = node->node_type ();
+  (void) node->node_type ();
     
   *os << "valuetype " << node->local_name () << ";";
 
@@ -1549,7 +1549,7 @@ idl3_to_idl2_visitor::tranfer_scope_elements (AST_Home *src,
 
 void
 idl3_to_idl2_visitor::gen_factories (AST_Home *node,
-                                     AST_Interface &xplicit)
+                                     AST_Interface &)
 {
   AST_Operation **item = 0;
 
@@ -1585,7 +1585,7 @@ idl3_to_idl2_visitor::gen_factories (AST_Home *node,
 
 void
 idl3_to_idl2_visitor::gen_finders (AST_Home *node,
-                                   AST_Interface &xplicit)
+                                   AST_Interface &)
 {
   AST_Operation **item = 0;
 

@@ -95,7 +95,7 @@ BE_GlobalData::parse_args (long &i, char **av)
 
 // Prepare an argument for a BE
 void
-BE_GlobalData::prep_be_arg (char *s)
+BE_GlobalData::prep_be_arg (char *)
 {
 }
 
