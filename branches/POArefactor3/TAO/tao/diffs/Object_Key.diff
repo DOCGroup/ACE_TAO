@@ -3,18 +3,18 @@
 @@ -41,6 +41,10 @@
  #include "Object_KeyC.inl"
  #endif /* !defined INLINE */
-
+ 
 +#include "ace/ACE.h"
 +#include "ace/OS_NS_string.h"
 +#include "ace/os_include/os_ctype.h"
 +
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:64
-
+ 
 @@ -92,6 +96,150 @@
  TAO::ObjectKey::~ObjectKey (void)
  {}
-
+ 
 +// Hand crafted.
 +
 +void
@@ -143,7 +143,7 @@
 +      ACE_Message_Block::DONT_DELETE))
 +      {
 +        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-+          static_cast <TAO_Unbounded_Sequence<CORBA::Octet>*> (&key);
++          ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &key);
 +        oseq->replace (_tao_seq_len, strm.start ());
 +        oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
 +        strm.skip_bytes (_tao_seq_len);
@@ -160,7 +160,7 @@
 +}
 +
  #endif /* end #if !defined */
-
+ 
  // TAO_IDL - Generated from
 --- orig/Object_KeyC.h	2004-11-30 17:27:03.904264000 +0100
 +++ Object_KeyC.h	2004-11-30 17:27:30.252150400 +0100
@@ -188,5 +188,5 @@
 +    static CORBA::Boolean demarshal_key (ObjectKey &key,
 +                                         TAO_InputCDR &cdr);
    };
-
+ 
  #endif /* end #if !defined */
