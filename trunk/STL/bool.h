@@ -3,22 +3,24 @@ K// $Id$
 #if !defined (ACE_BOOL_H)
 #define ACE_BOOL_H
 
+#if defined (_MSC_VER)
 // Define bool out of the std namespace.
-#if defined (_MSC_VER)  &&  _MSC_VER > 1010
-# include /**/ <yvals.h>
-#else  /* ! (_MSC_VER > 1010) */
-# if !defined (bool)
-#   define bool int
-# endif /* bool */
+# if _MSC_VER > 1010
+#   include /**/ <yvals.h>
+# else  /* _MSC_VER <= 1010 */
+#   if !defined (bool)
+#     define bool int
+#   endif /* bool */
 
-# if !defined (true)
-#   define true 1
-# endif /* true */
+#   if !defined (true)
+#     define true 1
+#   endif /* true */
 
-# if !defined (false)
-#   define false 0
-# endif /* false */
-#endif /* ! (_MSC_VER > 1010) */
+#   if !defined (false)
+#     define false 0
+#   endif /* false */
+# endif /* _MSC_VER <= 1010 */
+#endif /* _MSC_VER */
 
 
  /*
