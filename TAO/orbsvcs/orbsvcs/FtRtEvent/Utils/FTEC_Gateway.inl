@@ -1,4 +1,4 @@
-// $Id : $
+// $Id$
 
 namespace TAO_FTRTEC {
   ACE_INLINE RtecEventChannelAdmin::EventChannel_ptr

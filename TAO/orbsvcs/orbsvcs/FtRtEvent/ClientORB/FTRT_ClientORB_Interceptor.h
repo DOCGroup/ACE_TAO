@@ -81,4 +81,5 @@ private:
   CORBA::Long transaction_depth_;
 };
 
+#include /**/ "ace/post.h"
 #endif

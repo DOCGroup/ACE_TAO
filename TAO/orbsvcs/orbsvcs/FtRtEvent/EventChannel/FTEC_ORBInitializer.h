@@ -11,7 +11,7 @@
 //=============================================================================
 #ifndef FTEC_ORBINITIALIZER__H_
 #define FTEC_ORBINITIALIZER__H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
@@ -36,5 +36,5 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* FTEC_ORBINITIALIZER__H_ */

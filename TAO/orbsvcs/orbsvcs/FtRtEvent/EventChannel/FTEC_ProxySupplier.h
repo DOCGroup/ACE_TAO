@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   FTEC_ProxyPushSupplier.h
+ *  @file   FTEC_ProxySupplier.h
  *
  *  $Id$
  *

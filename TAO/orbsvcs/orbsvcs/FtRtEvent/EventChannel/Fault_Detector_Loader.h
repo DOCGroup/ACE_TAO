@@ -13,7 +13,7 @@
 #ifndef FAULT_DETECTOR_LOADER_H
 #define FAULT_DETECTOR_LOADER_H
 
-#include  "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -51,5 +51,5 @@ namespace FTRTEC {
   ACE_FACTORY_DECLARE (TAO_FTRTEC, Fault_Detector_Loader)
 }
 
-#include  "ace/post.h"
+#include /**/ "ace/post.h"
 #endif //FAULT_DETECTOR_LOADER_H

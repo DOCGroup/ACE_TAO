@@ -12,7 +12,7 @@
 #ifndef FT_PROXYADMIN_BASE_H
 #define FT_PROXYADMIN_BASE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corba.h"
 #include "tao/PortableServer/Servant_Base.h"
 
@@ -45,5 +45,5 @@ protected:
 
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif
