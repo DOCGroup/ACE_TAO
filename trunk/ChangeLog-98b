@@ -1,49 +1,56 @@
+Mon Nov  2 22:54:08 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/config-win32.h:
+        * ace/config-win32-common.h:
+          Only define ACE_LACKS_RECVMSG/SENDMSG for non-WinSock2 systems.
+          Before, it was being defined for all non-NT configurations.
+
 Mon Nov  2 18:18:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Reactor/Dgram/CODgram.cpp,
-	  examples/Reactor/Dgram/Dgram.cpp:
-	  Fixed these programs so that they will work across
-	  processes/machines, as well as within the same process.  Thanks
- 	  to Larry <larry@paradigmsim.com> for reporting this.
+        * examples/Reactor/Dgram/CODgram.cpp,
+          examples/Reactor/Dgram/Dgram.cpp:
+          Fixed these programs so that they will work across
+          processes/machines, as well as within the same process.  Thanks
+          to Larry <larry@paradigmsim.com> for reporting this.
 
-	* Added a "site map" for ACE.  Thanks to Rainer Blome
- 	  <rainer_blome@de.ibm.com> for contributing this.
+        * Added a "site map" for ACE.  Thanks to Rainer Blome
+          <rainer_blome@de.ibm.com> for contributing this.
 
 Mon Nov  2 18:13:29 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/ACE-FMM.html
-	  Updated from Bob's <bob@netwrench.com> latest.
+          Updated from Bob's <bob@netwrench.com> latest.
 
 Mon Nov 02 11:22:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Test.{h,cpp}: Renamed Acceptor_Handler to
-	  Request_Handler to better reflect what the class actually does.
+        * tests/Thread_Pool_Reactor_Test.{h,cpp}: Renamed Acceptor_Handler to
+          Request_Handler to better reflect what the class actually does.
 
-	* docs/ACE-categories.html: Fixed erroneous html tags.  Thanks to
-	  Rainer Blome <rainer_blome@de.ibm.com> for reporting this.
+        * docs/ACE-categories.html: Fixed erroneous html tags.  Thanks to
+          Rainer Blome <rainer_blome@de.ibm.com> for reporting this.
 
 Mon Nov 02 00:26:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace: Since connectors really don't have any state, they don't
-	  need to inherit from the SAP classes. Therefore, modified the
-	  following to be simpler:
+        * ace: Since connectors really don't have any state, they don't
+          need to inherit from the SAP classes. Therefore, modified the
+          following to be simpler:
 
-	  TLI_Connector
-	  DEV_Connector
-	  SPIPE_Connector
-	  UPIPE_Connector
+          TLI_Connector
+          DEV_Connector
+          SPIPE_Connector
+          UPIPE_Connector
 
 Sun Nov 01 21:18:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (upcall): Before handle_input is called
- 	  because of FD_CLOSE, we check the return value of handle_input
- 	  because of FD_READ. If the user had returned -1, we won't call
- 	  handle_input again.  Thanks to Gonzalo Diethelm
-	  <Gonzalo.Diethelm@jda.cl> for suggesting this change.
+        * ace/WFMO_Reactor.cpp (upcall): Before handle_input is called
+          because of FD_CLOSE, we check the return value of handle_input
+          because of FD_READ. If the user had returned -1, we won't call
+          handle_input again.  Thanks to Gonzalo Diethelm
+          <Gonzalo.Diethelm@jda.cl> for suggesting this change.
 
-	* examples/Reactor/WFMO_Reactor/test_network_events.cpp
-	  (handle_input): Changed this method to keep reading from the
- 	  socket until EWOULDBLOCK occurs.
+        * examples/Reactor/WFMO_Reactor/test_network_events.cpp
+          (handle_input): Changed this method to keep reading from the
+          socket until EWOULDBLOCK occurs.
 
 Sun Nov  1 17:32:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
