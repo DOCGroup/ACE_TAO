@@ -12,41 +12,53 @@
 
 <h1>TAO Implementation Repository </h1>
 
-<p>Revision 3.01 - July 9, 1998</p>
+<p>Revision 3.02 - July 10, 1998</p>
 
 <hr>
 
 <h2>Table of Contents</h2>
 
-<p align="left"><a href="#Overview">Overview</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#PersistentandTransientIORs">Persistent and Transient IORs</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#TheImplementationRepository">The Implementation Repository</a>
-<br>
-<a href="#TAOsImplementationRepository">TAO's Implementation Repository</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#VirtualServerName">Virtual Server Name</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#NewIORs">New IORs</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#WhatwaswrongwiththeoldIOR">What was
-wrong with the old IOR?</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#WhydoesImplRepocontainanOBJKey">Why
-does the Implementation Repository profile contain an Object Key?</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#POAExtensions">POA Extensions</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#PossibleFutureGoals">Possible Future Goals</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#ServerRestrictions">Server Restrictions</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#PreliminaryInterface">Preliminary Interface</a><br>
-<a href="#AlternateImplementations">Alternate Implementations</a><br>
-<a href="#AccessingtheImplementationRepository">Accessing the Implementation Repository</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#HelperApplication">Helper Application</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#LocatinganinstanceofImplRepo">Locating an instance of the
-Implementation Repository</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#Serverside">Server Side</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#Clientside">Client Side</a><br>
-<a href="#Howitworks">How It Works</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#HowServerProducesPersistentIORdefault">How a server produces
-a Persistent IOR (in the default case)</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#HowServerProducesPersistentIORcomplex">How a server produces
-a Persistent IOR (in the complex case)</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#HowClientUsesPersistentIOR">How a client uses a Persistent
-IOR</a></p>
+<ul>
+  <li><a href="#Overview">Overview</a> <ul>
+      <li><a href="#PersistentandTransientIORs">Persistent and Transient IORs</a> </li>
+      <li><a href="#TheImplementationRepository">The Implementation Repository</a> </li>
+    </ul>
+  </li>
+  <li><a href="#TAOsImplementationRepository">TAO's Implementation Repository</a> <ul>
+      <li><a href="#VirtualServerName">Virtual Server Name</a> </li>
+      <li><a href="#NewIORs">New IORs</a> <ul>
+          <li><a href="#WhatwaswrongwiththeoldIOR">What was wrong with the old IOR?</a> </li>
+          <li><a href="#WhydoesImplRepocontainanOBJKey">Why does the Implementation Repository profile
+            contain an Object Key?</a> </li>
+        </ul>
+      </li>
+      <li><a href="#POAExtensions">POA Extensions</a> </li>
+      <li><a href="#PossibleFutureGoals">Possible Future Goals</a> </li>
+      <li><a href="#ServerRestrictions">Server Restrictions</a> </li>
+      <li><a href="#PreliminaryInterface">Preliminary Interface</a> </li>
+    </ul>
+  </li>
+  <li><a href="#AlternateImplementations">Alternate Implementations</a> </li>
+  <li><a href="#AccessingtheImplementationRepository">Accessing the Implementation Repository</a>
+    <ul>
+      <li><a href="#HelperApplication">Helper Application</a> </li>
+      <li><a href="#LocatinganinstanceofImplRepo">Locating an instance of the Implementation
+        Repository</a> <ul>
+          <li><a href="#Serverside">Server Side</a> </li>
+          <li><a href="#Clientside">Client Side</a> </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#Howitworks">How It Works</a> <ul>
+      <li><a href="#HowServerProducesPersistentIORdefault">How a server produces a Persistent IOR
+        (in the default case)</a> </li>
+      <li><a href="#HowServerProducesPersistentIORcomplex">How a server produces a Persistent IOR
+        (in the complex case)</a> </li>
+      <li><a href="#HowClientUsesPersistentIOR">How a client uses a Persistent IOR</a> </li>
+    </ul>
+  </li>
+</ul>
 
 <hr>
 
@@ -57,50 +69,36 @@ IOR</a></p>
 
 <h3><a name="PersistentandTransientIORs">Persistent and Transient IORs</a></h3>
 
-<p>CORBA defines two types of object references, persistent and transient.&nbsp; The
-difference between the two is the lifetime of the reference in relation to the lifetime of
-the server thread or process that created it.&nbsp; A transient object reference lifetime
-is tied to the lifetime of its server.&nbsp;&nbsp;&nbsp; If the server stops or exits, the
-transient object reference no longer exists.&nbsp; All references to this object should
-now be invalid, even if the server is restarted.&nbsp; Persistent object references can
-outlive its server.&nbsp; The server can be stopped and restarted without invalidating all
-object references to it. &nbsp; This enables the implementation of features like
-load-on-demand servers and object migration.</p>
+<p>CORBA defines two types of object references, persistent and transient. The difference
+between the two is the lifetime of the reference in relation to the lifetime of the server
+thread or process that created it. A transient object reference lifetime is tied to the
+lifetime of its server. If the server stops or exits, the transient object reference no
+longer exists. All references to this object should now be invalid, even if the server is
+restarted. Persistent object references can outlive its server. The server can be stopped
+and restarted without invalidating all object references to it. This enables the
+implementation of features like load-on-demand servers and object migration.</p>
 
 <p>Note that both persistent and transient object references can refer to objects on
-persistent servers.&nbsp; A persistent server is a server that is always running.&nbsp; It
-can generate transient references, persistent references, or even
-      both.
-      Users should be aware that persistance of the object reference
-      does not imply any persistance on the object implementation
-      state, servant implementors should take the necessary measures
-      to preserve the state of their servants,
-      using,
-      for instance,
-      databases or files;
-      it is certainly possible to provide persistent object references
-      for objects whose state is not persistent.
-</p>
-<!-- IMHO we should make the difference between persitent object -->
-<!-- references and persistent objects, an infinite source of -->
-<!-- confussion for our users, and me (coryan). -->
-<!-- DB: Done -->
-<!-- COR: Added more detail, feel free to eliminate the redundant -->
-<!-- repetitions ;-) -->
+persistent servers. A persistent server is a server that is always running. It can
+generate transient references, persistent references, or even both. Users should be aware
+that persistance of the object reference does not imply any persistance on the object
+implementation state. Servant implementors should take the necessary measures to preserve
+the state of their servants, using, for instance, databases or files; it is certainly
+possible to provide persistent object references for objects whose state is not
+persistent. </p>
 
 <h3><a name="TheImplementationRepository">The Implementation Repository</a></h3>
 
 <p>According to the CORBA specification, &quot;The Implementation Repository contains
 information that allows the ORB to locate and activate implementations of objects&quot;
-[CORBA Spec Rev.&nbsp; 2.2: 2.1.14]&nbsp; In earlier revisions of the specification, there
-was a method <CODE>get_implementation ()</CODE> in the CORBA Object
-interface.&nbsp; This has been
+[CORBA Spec Rev. 2.2: 2.1.14] In earlier revisions of the specification, there was a
+method <code>get_implementation()</code> in the CORBA Object interface. This has been
 deprecated as of 2.2, leaving both the interface and implementation of the Implementation
 Repository up to the ORB vendor.</p>
 
 <p>A very good paper describing an implementation of the Implementation Repository is
 &quot;<a href="http://www.cs.wustl.edu/~schmidt/michi.pdf">Binding, Migration, and
-Scalability in CORBA</a>&quot; [Henning].&nbsp; In it he states that the Implementation
+Scalability in CORBA</a>&quot; [Henning]. In it he states that the Implementation
 Repository has three functions: 
 
 <ol>
@@ -109,8 +107,8 @@ Repository has three functions:
   <li>Starts servers on demand if they are registered for it</li>
 </ol>
 
-<p>The TAO implementation will be implemented much like how this paper describes. &nbsp;
-The next section details our goals and plans for the implementation.</p>
+<p>The TAO implementation will be implemented much like how this paper describes. The next
+section details our goals and plans for the implementation.</p>
 
 <hr>
 
@@ -119,50 +117,53 @@ The next section details our goals and plans for the implementation.</p>
 <p>Here is an overview of our plans for the TAO'S Implementation Repository. 
 
 <ul>
-  <li>Use of the Implementation Repository will be optional.&nbsp; Real-time applications can
-    choose not to use the Implementation Repository for performance reasons.</li>
+  <li>Use of the Implementation Repository will be optional. Real-time applications can choose
+    not to use the Implementation Repository for performance reasons.</li>
   <li>Use of the Implementation Repository will be invisible to clients and servers for the
-    common use-case.&nbsp; For more complicated behavior, programs can use Implementation
-    Repository extensions of the POA.</li>
+    common use-case. For more complicated behavior, programs can use Implementation Repository
+    extensions of the POA.</li>
   <li>The Implementation will work with any CORBA client that supports LOCATION_FORWARD
     messages and multiple profiles in IORs, even if the client is not implemented using TAO.</li>
   <li>The Implementation Repository will keep track of all process that have registered with
-    it by using a &quot;ping&quot; object located in the server.&nbsp; This ensures that
-    multiple instances of the same server are not started.</li>
-  <li>TAO will be fork safe<strong>.&nbsp; </strong>Because the Implementation Repository will
-    need to use fork/exec (or CreateProcess on NT) to start servers, then the open connection
-    to the client will need to be preserved over the server creation.</li>
+    it by using a &quot;ping&quot; object located in the server. This ensures that multiple
+    instances of the same server are not started.</li>
+  <li>TAO will be fork safe. Because the Implementation Repository will need to use fork/exec
+    (or CreateProcess on NT) to start servers, then the open connection to the client will
+    need to be preserved over the server creation.</li>
 <!-- COR: Maybe I didn't explain myself properly when we discussed -->
 <!-- COR: this, I would expect that after fork all connections are -->
 <!-- COR: closed on the server, otherwise we will end up leaking -->
 <!-- COR: resources (file descriptors or handles) -->
-
-  <li>TAO will have IIOP 1.1 support.&nbsp; In addition to the Type ID, Host, Port, and Object
-    Key, a Tagged Components section will be added.&nbsp; This is where a tag for orb type and
-    version will be located.</li>
+<!-- DB: Then I'm not sure how are we supposed to return a LOCATION -->
+<!-- DB: FORWARD if we have to close the connection? -->
+  <li>TAO will exploit features of IIOP 1.1 to safely and efficiently verify if an IOR was
+    generated by TAO itself on the client side. The server will still determine this through
+    the object key, since that is all that is passed in a request.</li>
 <!-- COR: As you point out below IIOP 1.1 is not needed, so why -->
 <!-- COR: include it here? -->
 <!-- COR: Anyway I would say: TAO will exploit features of IIOP 1.1 to -->
 <!-- COR: safely and efficiently verify if an IOR was generated by TAO -->
 <!-- COR: itself. -->
+<!-- DB: Good point.  And also added a bit about how this only applies -->
+<!-- DB: to the client side. -->
   <li>Multiple Profiles support. Our goal is to have the clients contact the object first, and
-    if that fails, then contact the Implementation Repository.&nbsp; </li>
+    if that fails, then contact the Implementation Repository. </li>
 </ul>
 
 <h3><a name="VirtualServerName">Virtual Server Name</a></h3>
 
 <p>The Implementation Repository must keep track of which servers are started and stopped.
-&nbsp; The question is at what resolution?&nbsp; It cannot contain an entry for every
-object, since that would take up too much room.&nbsp; It could contain an entry for every
-server, and then group objects there.&nbsp; But that is sort of inflexible for object
-migration, since objects are tied to their executable.&nbsp; Instead, we want it to be
-something between object and executable.&nbsp; In the <a
-href="http://www.cs.wustl.edu/~schmidt/michi.pdf">Henning</a> paper, he mentions the use
-of a server name as the index for the table in the Implementation Repository.&nbsp; </p>
+The question is at what resolution? It cannot contain an entry for every object, since
+that would take up too much room. It could contain an entry for every server, and then
+group objects there. But that is sort of inflexible for object migration, since objects
+are tied to their executable. Instead, we want it to be something between object and
+executable. In the <a href="http://www.cs.wustl.edu/~schmidt/michi.pdf">Henning</a> paper,
+he mentions the use of a server name as the index for the table in the Implementation
+Repository. </p>
 
-<p>We will use a virtual server name for a group of objects.&nbsp; So the virtual server
-isn't restricted to being tied to an executable or to an object.&nbsp;&nbsp; Since it
-isn't tied to an executable, the virtual servers can be migrated to other servers.</p>
+<p>We will use a virtual server name for a group of objects. So the virtual server isn't
+restricted to being tied to an executable or to an object. Since it isn't tied to an
+executable, the virtual servers can be migrated to other servers.</p>
 
 <h3><a name="NewIORs">New IORs</a></h3>
 
@@ -175,7 +176,8 @@ isn't tied to an executable, the virtual servers can be migrated to other server
   </tr>
 </table>
 
-<p>Currently, TAO uses only one IIOP 1.0 Tagged Profile, and that is set up as the following:</p>
+<p>Currently, TAO uses only one IIOP 1.0 Tagged Profile, and that is set up as the
+following:</p>
 
 <table border="1">
   <tr>
@@ -234,12 +236,6 @@ look like the following:</p>
 
 <p>For Persistent IORs, a second tagged profile will be added to point to the
 Implementation Repository:</p>
-<!-- DB: I rephrased it so maybe that clears it up a bit.  Do we need -->
-<!-- DB: anything about IIOP 1.1?  I mean, we don't really require it, -->
-<!-- DB: do we? -->
-<!-- COR: Ah, good point, I believe that IIOP 1.1 will help us -->
-<!-- COR: because we will use a standard mechanism to check if the -->
-<!-- COR: IOR was generated by TAO, but you are right -->
 
 <table border="1">
   <tr>
@@ -273,23 +269,23 @@ ID would be that of the Implementation Repository Object.</p>
 <h4><a name="WhatwaswrongwiththeoldIOR">What was wrong with the old IOR?</a></h4>
 
 <p>We need a place to put a TAO marker in it so TAO servers can differentiate TAO IORs and
-IORs from other vendors.&nbsp; In the old scheme, Persistent IORs had a null timestamp.
-&nbsp; To support virtual servers, we need to use that spot to store the name (so the
-Implementation Repository knows which server to start up).</p>
+IORs from other vendors. In the old scheme, Persistent IORs had a null timestamp. To
+support virtual servers, we need to use that spot to store the name (so the Implementation
+Repository knows which server to start up).</p>
 
 <h4><a name="WhydoesImplRepocontainanOBJKey">Why does the Implementation Repository
 profile contain an Object Key?</a></h4>
 
-<p>It needs to know what the object key of the object when forwarding.&nbsp; A server may
+<p>It needs to know what the object key of the object when forwarding. A server may
 contain more than one </p>
 
 <h3><a name="POAExtensions">POA Extensions</a></h3>
 
 <p>POA will contain <code>create_reference_with_virtual_server[_and_id] (...)</code> that
 can take in additional arguments for a virtual server name and a sequence of
-Implementation Repository IORs.&nbsp; This will then communicate with each Implementation
-Repository and get its generated profile back.&nbsp; Then all the profiles will be
-combined to produce an Persistent IOR.</p>
+Implementation Repository IORs. This will then communicate with each Implementation
+Repository and get its generated profile back. Then all the profiles will be combined to
+produce an Persistent IOR.</p>
 
 <h3><a name="PossibleFutureGoals">Possible Future Goals</a></h3>
 
@@ -306,7 +302,16 @@ domain:
     Repository can load it via those methods.</li>
   <li>GUI interface for such things as the helper application.</li>
   <li>Federations of Implementation Repositories.</li>
+  <li>The ability to start a remote server (possibly with rsh, ssh, rexec, etc)</li>
 </ul>
+<!-- How are we planning to start a "remote" server? Isn't federations -->
+<!-- of ImplRepo a solution for that? What are the drawbacks or -->
+<!-- advantages of using rsh ssh, rexec or a similar NT service? -->
+<!-- DB: Hmm, I reworded this, but where would a discussion of this -->
+<!-- DB: be put? -->
+<!-- COR: What about a "Future extensions" -->
+<!-- COR: or "Things we will not implement on the first release" -->
+<!-- DB: Added a note here. -->
 
 <h3><a name="ServerRestrictions">Server Restrictions</a></h3>
 
@@ -479,24 +484,17 @@ Repository </a></h3>
 <h4><a name="Serverside">Server side</a></h4>
 
 <p>In the default case, the Implementation Repository will be found via the command-line,
-environment variables, and multicast (in that order).&nbsp; Using the POA extensions,
-other Implementation Repositories can be specified in the call to <code>POA::create_reference_with_virtual_server</code>
-().&nbsp; The default port of the Implementation Repository can be overridden through
-command line options or environment variables. </p>
-<!-- How are we planning to start a "remote" server? Isn't federations -->
-<!-- of ImplRepo a solution for that? What are the drawbacks or -->
-<!-- advantages of using rsh ssh, rexec or a similar NT service? -->
-<!-- DB: Hmm, I reworded this, but where would a discussion of this -->
-<!-- DB: be put? -->
-<!-- COR: What about a "Future extensions" -->
-<!-- COR: or "Things we will not implement on the first release" -->
+environment variables, and multicast (in that order). Using the POA extensions, other
+Implementation Repositories can be specified in the call to <code>POA::create_reference_with_virtual_server()</code>.
+The default port of the Implementation Repository can be overridden through command line
+options or environment variables. </p>
 
 <h4><a name="Clientside">Client side</a></h4>
 
 <p>One or more Implementation Repositories will be stored in additional profiles in the
-IOR. &nbsp; Other Implementation Repositories can also be located by multicasting (on a
-default multicast group) the server name of the Persistent Object the client is interested
-in. The default multicast group and default port of the Implementation Repository can be
+IOR. Other Implementation Repositories can also be located by multicasting (on a default
+multicast group) the server name of the Persistent Object the client is interested in. The
+default multicast group and default port of the Implementation Repository can be
 overridden through command line options or environment variables. </p>
 
 <hr>
@@ -507,18 +505,24 @@ overridden through command line options or environment variables. </p>
 (in the default case)</a></h3>
 
 <p>Before the server starts, it must be registered (via a command-line utility) with an
-implementation repository that supports multicast.
+implementation repository that supports multicast. </p>
 <!-- COR: is multicast support mandatory? OTOH it will be there -->
-<!-- COR: always, right? --> 
+<!-- COR: always, right? -->
+<!-- DB: I'm taking the default case to be that you wrote your -->
+<!-- DB: before all this Impl Repo stuff came about.  So you -->
+<!-- DB: won't have any environment variables or command line -->
+<!-- DB: options that deal with the Impl Repo, so multicast is -->
+<!-- DB: the only way we can do it without any work from the -->
+<!-- DB: the user. -->
 
 <ol>
-  <li>Now the server will start up and call <code>ORB_init</code>.&nbsp; <code>ORB_init</code>,
-    if not passed a server name, will take argv[0] and use that as a default server name (TAO
-    expects this to be the executable name).&nbsp; </li>
+  <li>Now the server will start up and call <code>ORB_init</code>. <code>ORB_init</code>, if
+    not passed a server name, will take argv[0] and use that as a default server name (TAO
+    expects this to be the executable name). </li>
   <li><code>ORB_init</code> will create a ping object.</li>
   <li><code>ORB_init</code> will look for Implementation Repositories on the command line,
-    environmental variables, and then through multicast -- in that order.&nbsp; Once it finds
-    one it registers itself and passes the ping object to the implementation repository with
+    environmental variables, and then through multicast -- in that order. Once it finds one it
+    registers itself and passes the ping object to the implementation repository with
     server_is_running () call.</li>
   <li>The profile returned by registration will be stored for later use.</li>
   <li>Client later can call <code>POA::create_reference</code> ().</li>
@@ -538,7 +542,7 @@ already, although it does not need to be multicast aware.
   <li><code>ORB_init</code> is called and does the default work (if it has Implementation
     Repositories to contact).</li>
   <li><code>POA::create_reference_with_virtual_server[_and_id]</code> () will be called with a
-    server name and list of Implementation Repositories.&nbsp; </li>
+    server name and list of Implementation Repositories. </li>
   <li>The profile for the object is created.</li>
   <li>The ping object created in <code>ORB_init</code> and the object key is passed to the
     Implementation Repositories, and their profiles are returned.</li>
@@ -554,20 +558,19 @@ already, although it does not need to be multicast aware.
     regular objects and Implementation Repositories.</li>
   <li>It will now make a request on the first profile, which is the last known profile for the
     object.</li>
-  <li>If this fails, then the next one will be tried.&nbsp; And if that fails, the next.
-    &nbsp; One of the other profiles will be a reference to the Implementation Repository, in
-    which it will either return NOT_FOUND or will start up the server and return a Location
-    Forward message.</li>
+  <li>If this fails, then the next one will be tried. And if that fails, the next. One of the
+    other profiles will be a reference to the Implementation Repository, in which it will
+    either return NOT_FOUND or will start up the server and return a Location Forward message.</li>
 </ul>
 
-<p>If everything fails, then most clients will return failure for the request.&nbsp; TAO
-clients will also have added functionality where other Implementation Repositories can be
+<p>If everything fails, then most clients will return failure for the request. TAO clients
+will also have added functionality where other Implementation Repositories can be
 specified on the command line, in environment variables, or found through multicast will
 also be contacted. 
 
 <ul>
-  <li>If all of the profiles fail, then contact the other Implementation Repositories. &nbsp;
-    First get those specified on the command line or in environment variables.</li>
+  <li>If all of the profiles fail, then contact the other Implementation Repositories. First
+    get those specified on the command line or in environment variables.</li>
   <li>Then, if multicast is available: <ul>
       <li>Multicast the Object Reference to a group of Implementation Repositories&nbsp; </li>
       <li>Wait until response or a timeout. The response will contain the Object Reference of a
@@ -588,6 +591,7 @@ Implementation Repository.</p>
 
 <hr>
 
-<p>Back to the <a href="index.html">TAO documentation</a> page. <!--#include virtual="/~schmidt/cgi-sig.html" --> </p>
+<p>Back to the <a href="index.html">TAO documentation</a> page.</p>
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </body>
 </html>
