@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
+// be/be_visitor_interface_fwd/cdr_op_ci.cpp:59
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -40,7 +40,7 @@ TAO_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_CORBA_PolicyList_I_
 #define _TAO_CDR_OP_CORBA_PolicyList_I_
@@ -58,7 +58,7 @@ CORBA::Boolean TAO_Export operator>> (
 #endif /* _TAO_CDR_OP_CORBA_PolicyList_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_CORBA_PolicyTypeSeq_I_
 #define _TAO_CDR_OP_CORBA_PolicyTypeSeq_I_
@@ -76,7 +76,7 @@ CORBA::Boolean TAO_Export operator>> (
 #endif /* _TAO_CDR_OP_CORBA_PolicyTypeSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/cdr_op_ci.cpp:51
+// be/be_visitor_enum/cdr_op_ci.cpp:51
 
 ACE_INLINE
 CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::SetOverrideType &_tao_enumval)

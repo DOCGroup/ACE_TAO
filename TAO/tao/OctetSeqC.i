@@ -27,17 +27,17 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_CORBA_OctetSeq_I_
 #define _TAO_CDR_OP_CORBA_OctetSeq_I_
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean  operator<< (
     TAO_OutputCDR &,
     const CORBA::OctetSeq &
   );
 
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean  operator>> (
     TAO_InputCDR &,
     CORBA::OctetSeq &
   );

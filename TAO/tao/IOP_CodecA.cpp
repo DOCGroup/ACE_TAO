@@ -591,3 +591,4 @@ CORBA::Boolean operator>>= (
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
+
