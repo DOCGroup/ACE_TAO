@@ -245,12 +245,21 @@ extern "C" { char * cuserid (char *s); }
 // must be loaded.
 // Read the aio(4) man page for what to do, otherwise any aio_* call
 // will coredump.
+// Additionally, FreeBSD 5 appears to also have removed the SIGEV_THREAD
+// notification method from AIO.
 
-// By default use Proactor which does not use POSIX Real-time Signals
+// By default use Proactor which does not use POSIX Real-time Signals,
+// unless on FreeBSD 5 or up.
 #ifdef ACE_HAS_AIO_CALLS
-#ifndef ACE_POSIX_AIOCB_PROACTOR
-#define ACE_POSIX_AIOCB_PROACTOR
-#endif /* ACE_POSIX_AIOCB_PROACTOR */
+#  if (__FreeBSD_version > 500000)
+#    ifdef ACE_POSIX_AIOCB_PROACTOR
+#      undef ACE_POSIX_AIOCB_PROACTOR
+#    endif /* ACE_POSIX_AIOCB_PROACTOR */
+#  else
+#    ifndef ACE_POSIX_AIOCB_PROACTOR
+#      define ACE_POSIX_AIOCB_PROACTOR
+#    endif /* ACE_POSIX_AIOCB_PROACTOR */
+#  endif /* __FreeBSD_version > 500000 */
 #endif /* ACE_HAS_AIO_CALLS */
 
 /* FreeBSD does not define sigval_t */

@@ -19,7 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__)
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && \
+    !(defined (__FreeBSD_version) && (__FreeBSD_version > 500000))
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
@@ -96,5 +97,5 @@ protected:
 #include "ace/POSIX_CB_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ */
+#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !FreeBSD 5 */
 #endif /* ACE_POSIX_CB_PROACTOR_H*/
