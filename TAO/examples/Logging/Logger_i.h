@@ -48,14 +48,14 @@ public:
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
 
-  virtual void log2 (const Logger::Log_Record &log_rec
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void log_twoway (const Logger::Log_Record &log_rec
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output.
 
-  virtual void logv2 (const Logger::Log_Record &log_rec,
-                      Logger::Verbosity_Level verbosity
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void logv_twoway (const Logger::Log_Record &log_rec,
+                            Logger::Verbosity_Level verbosity
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output with the given
   // verbosity level

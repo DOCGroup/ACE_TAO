@@ -225,7 +225,7 @@ Logger_Client::run (void)
       // Setup the fourth log record
       this->init_record (rec4,
                          Logger::LM_EMERGENCY,
-                         "log2() test (4) \n");
+                         "log_twoway() test (4) \n");
 
       // If debugging, output the new log records
       if (TAO_debug_level > 0)
@@ -276,8 +276,8 @@ Logger_Client::run (void)
       this->logger_2_->verbosity (Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Log the fourth record using log2()
-      this->logger_2_->log2 (rec4 ACE_ENV_ARG_PARAMETER);
+      // Log the fourth record using log_twoway()
+      this->logger_2_->log_twoway (rec4 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 
