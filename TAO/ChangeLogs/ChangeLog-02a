@@ -1,3 +1,16 @@
+Sun Apr 30 18:13:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/diffs/MessagingC.h.diff:
+        * tao/diffs/MessagingC.i.diff:
+        * tao/diffs/MessagingC.cpp.diff:
+        * tao/diffs/MessagingS.h.diff:
+        * tao/diffs/MessagingS.i.diff:
+        * tao/diffs/MessagingS.cpp.diff:
+        * tao/diffs/MessagingS_T.h.diff:
+        * tao/diffs/MessagingS_T.i.diff:
+        * tao/diffs/MessagingS_T.cpp.diff:
+	  Updated the diff files.
+
 Sun Apr 30 19:52:56 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp

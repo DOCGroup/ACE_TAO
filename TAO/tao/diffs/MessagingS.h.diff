@@ -1,31 +1,25 @@
---- orig/MessagingS.h	Fri Apr 28 16:44:03 2000
-+++ MessagingS.h	Fri Apr 28 16:30:37 2000
-@@ -7,15 +7,17 @@
- // Information about TAO is available at:
- //                 http://www.cs.wustl.edu/~schmidt/TAO.html
+--- orig/MessagingS.h	Sun Apr 30 18:03:08 2000
++++ MessagingS.h	Sun Apr 30 18:06:01 2000
+@@ -11,11 +11,15 @@
+ #define _TAO_IDL_ORIG_MESSAGINGS_H_
  
--#ifndef _TAO_IDL_ORIG_MESSAGINGS_H_
--#define _TAO_IDL_ORIG_MESSAGINGS_H_
-+#ifndef _TAO_IDL_TMP_MESSAGINGS_H_
-+#define _TAO_IDL_TMP_MESSAGINGS_H_
-+#include "ace/pre.h"
- 
--#include "TimeBaseS.h"
+ #include "ace/pre.h"
++
++#include "orbconf.h"
++
++#if (TAO_HAS_CORBA_MESSAGING == 1)
++
+ #include "TimeBaseS.h"
 -#include "IOPS.h"
 -#include "PolicyS.h"
 -#include "PollableS.h"
--#include "MessagingC.h"
-+#include "tao/orbconf.h"
+ #include "MessagingC.h"
++#include "POAC.h"
++#include "Servant_Base.h"
  
-+#if (TAO_HAS_CORBA_MESSAGING == 1)
-+
-+#include "tao/TimeBaseS.h"
-+#include "tao/POA_CORBA.h"
-+#include "tao/MessagingC.h"
  
  #if !defined (ACE_LACKS_PRAGMA_ONCE)
- # pragma once
-@@ -30,6 +32,9 @@
+@@ -31,6 +35,9 @@
  
  TAO_NAMESPACE  POA_Messaging
  {
@@ -35,7 +29,7 @@
    class ReplyHandler;
    typedef ReplyHandler *ReplyHandler_ptr;
    class TAO_Export ReplyHandler :  public virtual PortableServer::ServantBase
-@@ -44,7 +49,7 @@
+@@ -45,7 +52,7 @@
  
      virtual CORBA::Boolean _is_a (
          const char* logical_type_id,
@@ -44,7 +38,7 @@
            TAO_default_environment ()
        );
  
-@@ -56,7 +61,7 @@
+@@ -57,7 +64,7 @@
          CORBA::ServerRequest &req,
          void *obj,
          void *context,
@@ -53,7 +47,7 @@
            TAO_default_environment ()
        );
  
-@@ -64,19 +69,19 @@
+@@ -65,19 +72,19 @@
          CORBA::ServerRequest &req,
          void *obj,
          void *context,
@@ -76,7 +70,7 @@
            TAO_default_environment ()
        );
  
-@@ -99,11 +104,11 @@
+@@ -100,11 +107,11 @@
          const CORBA::Char *logical_type_id,
          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
        );
@@ -90,7 +84,7 @@
        };
  
  
-@@ -124,14 +129,14 @@
+@@ -125,14 +132,14 @@
          const CORBA::Char *logical_type_id,
          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
        );
@@ -109,7 +103,7 @@
    private:
      ReplyHandler_ptr servant_;
    };
-@@ -139,7 +144,7 @@
+@@ -140,7 +147,7 @@
  
  #endif /* end #if !defined */
  
@@ -118,7 +112,7 @@
  #if defined (ACE_HAS_USING_KEYWORD)
    // TIE class: Refer to CORBA v2.2, Section 20.34.4
    template <class T>
-@@ -156,7 +161,7 @@
+@@ -157,7 +164,7 @@
      // ctor with T*, ownership flag and a POA
      ~ReplyHandler_tie (void);
      // dtor
@@ -127,7 +121,7 @@
      // TIE specific functions
      T *_tied_object (void);
      // return the underlying object
-@@ -168,17 +173,17 @@
+@@ -169,17 +176,17 @@
      // do we own it
      void _is_owner (CORBA::Boolean b);
      // set the ownership
@@ -148,7 +142,7 @@
      // copy and assignment are not allowed
      ReplyHandler_tie (const ReplyHandler_tie &);
      void operator= (const ReplyHandler_tie &);
-@@ -186,6 +191,8 @@
+@@ -187,6 +194,8 @@
  
  #endif /* ACE_HAS_USING_KEYWORD */
  
@@ -157,11 +151,12 @@
  }
  TAO_NAMESPACE_CLOSE
  
-@@ -199,4 +206,7 @@
+@@ -199,6 +208,8 @@
+ #if defined(_MSC_VER) && (_MSC_VER >= 1200)
  #pragma warning(pop)
  #endif /* _MSC_VER */
- 
-+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 +
-+#include "ace/post.h"
++#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+ 
+ #include "ace/post.h"
  #endif /* ifndef */
