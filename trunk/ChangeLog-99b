@@ -1,38 +1,44 @@
+Sat Feb 20 15:39:16 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp},Object_Manager.{h,cpp}: changed ACE_OS::exit ()
+          to call an exit hook that is registered by the ACE_Object_Manager,
+          instead of directly calling ACE_Object_Manager::fini ().
+
 Sat Feb 20 11:50:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (thr_equal): Moved the body of ACE_OS::thr_equal before
-	  recursive_mutex methods to avoid "function redefined as inline"
-	  problem.  Thanks to David Levine for reporting this.
+        * ace/OS.i (thr_equal): Moved the body of ACE_OS::thr_equal before
+          recursive_mutex methods to avoid "function redefined as inline"
+          problem.  Thanks to David Levine for reporting this.
 
 Sat Feb 20 09:05:20 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.cpp: Changed the ACE_static_cast() in ACE_OS_Wstring to
- 	  first use an ACE_const_cast().  Thanks to Andy Gokhale for
- 	  reporting this.
+        * ace/OS.cpp: Changed the ACE_static_cast() in ACE_OS_Wstring to
+          first use an ACE_const_cast().  Thanks to Andy Gokhale for
+          reporting this.
 
 Sat Feb 20 02:53:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (ACE_OS_WString): Need to add a statis cast when
-	  converting from wchar to char to eliminate a warning from Win98.
+        * ace/OS.cpp (ACE_OS_WString): Need to add a statis cast when
+          converting from wchar to char to eliminate a warning from Win98.
 
-	* ace/config-win32-common.h: Do not check for library type on CE.
+        * ace/config-win32-common.h: Do not check for library type on CE.
 
-	* ace/config-WinCE.h: Defined ACE_HAS_WINCE as 1.
+        * ace/config-WinCE.h: Defined ACE_HAS_WINCE as 1.
 
 Fri Feb 19 22:54:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	  Fixed the return types for ACE_OS_WString and ACE_OS_CString
-	  assignment operators, even though they are not defined they
-	  should be declared to return something, otherwise egcs give us a
-	  ton of warnings.
+        * ace/OS.h:
+          Fixed the return types for ACE_OS_WString and ACE_OS_CString
+          assignment operators, even though they are not defined they
+          should be declared to return something, otherwise egcs give us a
+          ton of warnings.
 
 Fri Feb 19 21:02:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-common.h: #define'd ACE_HAS_RECURSIVE_MUTEXES
- 	  for Win32.
+        * ace/config-win32-common.h: #define'd ACE_HAS_RECURSIVE_MUTEXES
+          for Win32.
 
-	* ace/OS.cpp: Removed the SString.h dependency in OS.cpp!
+        * ace/OS.cpp: Removed the SString.h dependency in OS.cpp!
 
 Fri Feb 19 21:44:31 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -43,21 +49,21 @@ Fri Feb 19 21:44:31 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Fri Feb 19 18:18:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.{h,i,cpp}: Added ACE_OS_WString and ACE_OS_CString which
-	  should only be used within ACE_OS to perform conversion between
-	  wchar strings and char string.
-	  Changed the wide/multibyte conversion macros to use
-	  ACE_OS_?String classes and removed dependencies to Auto_Ptr.h
-	  and SString.h.
+        * ace/OS.{h,i,cpp}: Added ACE_OS_WString and ACE_OS_CString which
+          should only be used within ACE_OS to perform conversion between
+          wchar strings and char string.
+          Changed the wide/multibyte conversion macros to use
+          ACE_OS_?String classes and removed dependencies to Auto_Ptr.h
+          and SString.h.
 
-	* ace/config-win32-common.h: Removed checked for (_DLL) if
-	  ACE_HAS_DLL = 0.  Otherwise, the static build won't compile.
+        * ace/config-win32-common.h: Removed checked for (_DLL) if
+          ACE_HAS_DLL = 0.  Otherwise, the static build won't compile.
 
-	* ace/Token_Manager.cpp (release_token):
-	* ace/Service_Manager.cpp (list_services): Changed
-	  ASYS_MULTIBYTE_STRING to ASYS_ONLY_MULTIBYTE_STRING.  Because
-	  the new conversion classes have stronger type checking, these
-	  errors weren't found until now.
+        * ace/Token_Manager.cpp (release_token):
+        * ace/Service_Manager.cpp (list_services): Changed
+          ASYS_MULTIBYTE_STRING to ASYS_ONLY_MULTIBYTE_STRING.  Because
+          the new conversion classes have stronger type checking, these
+          errors weren't found until now.
 
 Fri Feb 19 17:01:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
