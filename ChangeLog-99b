@@ -1,3 +1,16 @@
+1999-09-01  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  Added a wrapper ACE_OS::enum_protocols () for WSAEnumProtocols
+	  ().Tested this function with the ACE QOS test.
+	* ACE_wrappers/ace/OS.h:
+	* ACE_wrappers/ace/OS.i:
+
+	  Replaced the occurences of WSAEnumProtocols with
+	  ACE_OS::enum_protocols () and successfully ran the QOS test.
+	
+	* examples/QOS/client.cpp: 
+	* examples/QOS/server.cpp: 
+
 Wed Sep  1 15:51:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Ensure that ACE_OS::localtime_r() does the "Right

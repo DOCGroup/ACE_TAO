@@ -426,8 +426,8 @@ BOOL FindServiceProvider(
 
   // first have enum_protocols () tell us how big a buffer is needed.
   int ret_val = ACE_OS::enum_protocols(NULL, 
- 									   protocol_buffer, 
-									   &buffer_length);
+                                       protocol_buffer, 
+                                       &buffer_length);
   if (ret_val != -1)
     {
       printf("WSAEnumProtocols: should not have suceeded\n");
@@ -447,17 +447,17 @@ BOOL FindServiceProvider(
           // now we can call WSAEnumProtocols again with the expectation it will
           // succeed because we have allocated a big enough buffer.
           ret_val = ACE_OS::enum_protocols (NULL, 
-											protocol_buffer, 
-											&buffer_length);
+                                            protocol_buffer, 
+                                            &buffer_length);
           if (ret_val == -1)
             {
               printf("WSAEnumProtocols(3): %d\n", WSAGetLastError());
             }
           else
             {
-			  ACE_DEBUG ((LM_DEBUG,
-						  "BUFFER LENGTH = %d",
-						  buffer_length));
+              ACE_DEBUG ((LM_DEBUG,
+                          "BUFFER LENGTH = %d",
+                          buffer_length));
 			  
               // loop thru protocols, looking for a matching service provider 
               for (int i = 0; i < ret_val; i++)
