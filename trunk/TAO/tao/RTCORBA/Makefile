@@ -77,6 +77,18 @@ ifeq ($(corba_messaging),1)
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DTAO_RTCORBA_BUILD_DLL
+endif
+endif
+
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS
+endif
+endif
+
 else
 all:
 endif # corba_messaging
