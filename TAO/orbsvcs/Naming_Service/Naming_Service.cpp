@@ -160,20 +160,21 @@ TAO_Naming_Service::run (CORBA_Environment& ACE_TRY_ENV)
 {
   if (time_ == 0)
     {
-      return this->orb_manager_.run (ACE_TRY_ENV);
+      this->orb_manager_.run (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
   else
     {
       ACE_Time_Value t (time_);
-      return this->orb_manager_.run (ACE_TRY_ENV, &t);
+      this->orb_manager_.run (ACE_TRY_ENV, &t);
       ACE_CHECK_RETURN (-1);
     }
-
   // Clean up after we exit from the loop.
   PortableServer::POA_var poa = this->orb_manager_.root_poa ();
   poa->destroy (1, 1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 // Destructor.
