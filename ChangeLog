@@ -1,3 +1,10 @@
+Mon Oct 27 15:51:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac:
+	* m4/acinclude.m4: Remove \ from \-quoted double- and back-quote
+	  characters to obey warnings from autoheader 2.57g. autoheader's
+	  processing of these warnings was erroneous, causing it to fail.
+
 Mon Oct 27 19:48:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
