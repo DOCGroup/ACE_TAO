@@ -12,6 +12,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
 
+#include "tao/RT_Policy_i.h"
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
 #include "tao/GIOP_Utils.h"
@@ -265,6 +266,76 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // @@ RT CORBA Policies processing code.  This is a temporary location
+  // for this code until more of it is accumulated.  It will likely be
+  // factored into separate method(s)/split/moved to different
+  // locations within this method/<prepare_header>.  (Marina)
+
+  // RTCORBA::PriorityModelPolicy related processing.
+  // @@ This processing isn't necessary for Locate Requests, since they
+  // do not have Service Context Lists.  However, since this method is
+  // called from TAO_GIOP_Locate_Request_Invocation::start, the
+  // processing does happen for Locate Requests.  It works, but we are
+  // losing some performance ...
+  TAO_PriorityModelPolicy *priority_model_policy =
+    this->stub_->exposed_priority_model ();
+
+  // Auto cleanup of policy.
+  CORBA::Object_var priority_release = priority_model_policy;
+
+  if (priority_model_policy != 0)
+    {
+      if (priority_model_policy->get_priority_model ()
+          == RTCORBA::CLIENT_PROPAGATED)
+        {
+          // Encapsulate the priority of the current thread into
+          // request's service context list.
+
+          RTCORBA::Priority thread_priority;
+
+          if (this->orb_core_->get_thread_priority (thread_priority) == -1)
+            ACE_THROW (CORBA::DATA_CONVERSION (1,
+                                               CORBA::COMPLETED_NO));
+
+          TAO_OutputCDR cdr;
+          if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+               == 0)
+              || (cdr << thread_priority) == 0)
+            ACE_THROW (CORBA::MARSHAL ());
+
+          IOP::ServiceContextList context_list =
+            this->service_info ();
+
+          CORBA::ULong l = context_list.length ();
+          context_list.length (l + 1);
+          context_list[l].context_id = IOP::RTCorbaPriority;
+
+          // Make a *copy* of the CDR stream...
+          CORBA::ULong length = cdr.total_length ();
+          context_list[l].context_data.length (length);
+          CORBA::Octet *buf = context_list[l].context_data.get_buffer ();
+
+          for (const ACE_Message_Block *i = cdr.begin ();
+               i != 0;
+               i = i->cont ())
+            {
+              ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+              buf += i->length ();
+            }
+        }
+    }
+  else
+    {
+      // The Object does not contain PriorityModel policy in its IOR.
+      // We must be talking to a non-RT ORB.  Do nothing special -
+      // just proceed with the regular invocation.
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   // Loop until a connection is established or there aren't any more
   // profiles to try.
   for (;;)
@@ -518,11 +589,11 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // New for Multiple profile.  Get the MProfile list from the
   // forwarded object refererence
 
-  this->stub_->add_forward_profiles (*stubobj->make_profiles ());
+  this->stub_->add_forward_profiles (stubobj->base_profiles ());
   // store the new profile list and set the first forwarding profile
-  // note: this has to be and is thread safe.  Also make_profiles() returns
-  // a pointer to a new MProfile object which we give to our
-  // TAO_Stub.
+  // note: this has to be and is thread safe.
+  // @@ TAO_Stub::add_forward_profiles() already makes a copy of the
+  //    MProfile, so do not make a copy here.
 
   // @@ Why do we clear the environment?
   // ACE_TRY_ENV.clear ();
@@ -613,7 +684,7 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
+TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
 {
@@ -633,23 +704,24 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
       CORBA::String_var buf;
 
+      TAO_InputCDR tmp_stream (this->inp_stream (),
+                               this->inp_stream ().start ()->length (),
+                               0);
+
       // Pull the exception ID out of the marshaling buffer.
-      if (this->inp_stream ().read_string (buf.inout ()) == 0)
+      if (tmp_stream.read_string (buf.inout ()) == 0)
         {
-          // @@ Why do we close the connection. Only the request
-          //    failed, but the connection seems to be still
-          //    valid!
-          // this->transport_->close_connection ();
           ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                             CORBA::COMPLETED_YES),
                             TAO_INVOKE_EXCEPTION);
         }
 
       for (CORBA::ULong i = 0;
-           i < exceptions.count ();
+           exceptions != 0 && i < exceptions->count ();
            i++)
         {
-          CORBA::TypeCode_ptr tcp = exceptions.item (i, ACE_TRY_ENV);
+          CORBA::TypeCode_ptr tcp =
+            exceptions->item (i, ACE_TRY_ENV);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           const char *xid = tcp->id (ACE_TRY_ENV);
@@ -663,7 +735,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
           // this is a client side problem, for one particular
           // request.
           // this->transport_->close_connection ();
-          // ACE_RETHROW;
+          // ACE_RE_THROW;
 
           const ACE_Message_Block* cdr =
             this->inp_stream ().start ();
