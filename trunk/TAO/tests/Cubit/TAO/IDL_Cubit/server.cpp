@@ -179,6 +179,8 @@ main (int argc, char** argv)
 {
   Cubit_Server cubit_server;
   
+  ACE_DEBUG ((LM_DEBUG,
+              "\n \t IDL_Cubit:SERVER \n \n"));
   TAO_TRY
     {
       if (cubit_server.init (argc,argv,TAO_TRY_ENV) == -1)
