@@ -1219,3 +1219,26 @@ ACE::recv_n (ACE_HANDLE handle,
 
   return bytes_received;
 }
+
+u_long
+is_prime (const u_long n,
+          const u_long min_factor,
+          const u_long max_factor)
+{
+  if (n > 3)
+    {
+      for (u_long factor = min_factor; factor <= max_factor; ++factor)
+        {
+          if (n / factor * factor == n)
+            {
+              return factor;
+            }
+        }
+
+      return 0;
+    }
+  else
+    {
+      return 0;
+    }
+}
