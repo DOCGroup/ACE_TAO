@@ -1,3 +1,8 @@
+Tue Jun 30 23:48:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Message_Queue.h: Added /**/ between #include and <> to
+	  prevent warnings from MSVC.
+
 Tue Jun 30 22:05:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Dynamic_Priority_Test.cpp: added template
