@@ -1,3 +1,16 @@
+Fri May  7 16:44:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        
+          When creating implied IDL nodes for home declarations,
+          appended 'Explicit' to the name of the parent (which,
+          it exists, will have already been created as implied
+          IDL) of an explicit home interface. Without this suffix,
+          explicit home interfaces would inherit from both the
+          explicit and implicit base class home interfaces,
+          leading to problems compiling the generated servant class
+          for the derived home.
+
 Fri May  7 14:46:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* GNUmakefile:
