@@ -1,3 +1,9 @@
+Sun Oct 20 00:10:14 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/ImplRepo_Service/Makefile: Fixed the problems with this
+	  change "Fri Oct 18 15:52:11 2002 Priyanka Gontla
+	  <pgontla@ociweb.com>". 
+
 Sat Oct 19 09:47:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Prevent ImplRepo from being compiled
