@@ -1,8 +1,14 @@
+Fri Jun 18 09:13:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+          Don't mix virtual and non-virtual bases. This fixes warnings
+          from the HP aCC compiler.
+
 Thu Jun 17 13:53:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
-        
+
           Fixed IDL compiler crash caused by illegal valuetype
           member declaration.
 
@@ -15,18 +21,18 @@ Thu Jun 17 12:51:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_err.cpp:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Removed all support for reading from standard input (for
           example 'tao_idl < foo.idl'). Reasons for this change are:
-          
+
           - The IDL compiler has no filename on which to base the
             names of the generated files. Even if we make up a
             name, the generated files are unusable if foo.idl is
             included in another IDL file.
-            
+
           - Most if not all C++ compilers (including gcc and Visual Studio)
             do not accept this kind of input.
-            
+
           The above command line now outputs the error message
           "IDL: No input files" similarly to gcc's output in a similar
           situation.
@@ -39,35 +45,35 @@ Wed Jun 16 19:11:16 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  Also tracks which invocations were received and which were
 	  missed.
 
-	* performance-tests\Protocols\client.cpp: 
+	* performance-tests\Protocols\client.cpp:
 
 	  Added ability to select protocol for test messages.  All setup
 	  and teardown messages will be using TCP while the test messages
 	  will use the specified protocol.
 
-	* performance-tests\Protocols\test.idl: 
+	* performance-tests\Protocols\test.idl:
 
 	  Separated setup, teardown, and shutdown of the test.
 
 Wed Jun 16 15:54:56 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols/client.cpp (run): 
+	* performance-tests/Protocols/client.cpp (run):
 
 	  Small fix.
 
 Wed Jun 16 13:54:56 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\Protocols\client.cpp: 
-	* performance-tests\Protocols\server.cpp: 
-	* performance-tests\Protocols\test.idl: 
+	* performance-tests\Protocols\client.cpp:
+	* performance-tests\Protocols\server.cpp:
+	* performance-tests\Protocols\test.idl:
 
 	  Added ability to send messages of arbitrary size.
 
 Wed Jun 16 11:25:49 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Diffserv/server.cpp: 
-	* performance-tests/Protocols/client.cpp: 
-	* performance-tests/Protocols/server.cpp: 
+	* tests/RTCORBA/Diffserv/server.cpp:
+	* performance-tests/Protocols/client.cpp:
+	* performance-tests/Protocols/server.cpp:
 
 	  Minor fixes.  Thanks to Johnny for pointing them out.
 

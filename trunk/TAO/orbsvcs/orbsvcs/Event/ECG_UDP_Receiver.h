@@ -97,8 +97,8 @@ private:
 class TAO_RTEvent_Export TAO_ECG_UDP_Receiver
   : public virtual PortableServer::RefCountServantBase
   , public virtual POA_RtecEventComm::PushSupplier
-  , public TAO_EC_Deactivated_Object
-  , public TAO_ECG_Dgram_Handler
+  , public virtual TAO_EC_Deactivated_Object
+  , public virtual TAO_ECG_Dgram_Handler
 {
 public:
 
@@ -136,7 +136,7 @@ public:
 
   /// Connect or reconnect to the EC with the given publications.
   /**
-   * NOTE: if we are already connected to EC and a reconnection is
+   * @note If we are already connected to EC and a reconnection is
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */
@@ -214,8 +214,8 @@ private:
   /// complete message has been received.
   TAO_ECG_CDR_Message_Receiver cdr_receiver_;
 
-  // Handler we must notify when shutdown occurs, so it has an
-  // opportunity to clean up resources.
+  /// Handler we must notify when shutdown occurs, so it has an
+  /// opportunity to clean up resources.
   TAO_ECG_Refcounted_Handler handler_rptr_;
 
   typedef TAO_EC_Auto_Command<TAO_ECG_UDP_Receiver_Disconnect_Command>
