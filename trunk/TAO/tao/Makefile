@@ -83,6 +83,7 @@ PUB_HDRS = \
   DLL_Parser \
   FILE_Parser \
   CORBALOC_Parser \
+  CORBANAME_Parser \
   CORBA_String
 
 PLUGGABLE_PROTOCOLS_FILES = \
@@ -239,6 +240,7 @@ ORB_CORE_FILES = \
   DLL_Parser \
   FILE_Parser \
   CORBALOC_Parser \
+  CORBANAME_Parser \
   Bind_Dispatcher_Guard \
   Fault_Tolerance_Service
 

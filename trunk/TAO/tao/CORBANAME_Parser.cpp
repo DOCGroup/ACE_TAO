@@ -2,16 +2,6 @@
 
 #include "CORBANAME_Parser.h"
 
-#include "ace/Profile_Timer.h"
-
-#include "tao/Object_Loader.h"
-#include "tao/Object.h"
-#include "tao/corba.h"
-#include "tao/ORB.h"
-#include "tao/Exception.h"
-#include "tao/Environment.h"
-#include "ace/Read_Buffer.h"
-
 #if !defined(__ACE_INLINE__)
 #include "CORBANAME_Parser.i"
 #endif /* __ACE_INLINE__ */
@@ -156,7 +146,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
         }
 
       // Make a dynamic request for resolve_str in this naming context
-      obj = this->parse_string_dynamic_request_helper (naming_context.in (),
+      obj = this->parse_string_dynamic_request_helper (name_context.in (),
                                                        key_string,
                                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -171,7 +161,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
   return obj;
 }
 
-ACE_FACTORY_DEFINE (TAO_IOR_CORBANAME, TAO_CORBANAME_Parser)
+ACE_FACTORY_DEFINE (TAO, TAO_CORBANAME_Parser)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
