@@ -1,3 +1,10 @@
+Tue Mar 31 07:22:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (cond_timedwait): restored ACE_HAS_DCE_DRAFT4_THREADS
+          behavior to use absolute time.  Special-case only on LynxOS,
+          which requires a relative time.  Thanks to Steve Coy
+          <stevec@magna.com.au> for reporting this on HP-UX.
+
 Fri Mar 27 23:04:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: added ACE_DEFAULT_MAX_SOCKET_BUFSIZ
