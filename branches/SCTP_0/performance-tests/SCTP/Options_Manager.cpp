@@ -31,10 +31,14 @@ ACE_CDR::Double Options_Manager::histogram_min_bin=0.0;
 ACE_CDR::Double Options_Manager::histogram_max_bin=10000.0;
 ACE_CDR::ULong Options_Manager::histogram_num_outliers=100;
 ACE_CDR::ULong Options_Manager::histogram_bin_count=1000;
+ACE_CDR::UShort Options_Manager::client_port = 0;
+ACE_CDR::ULong Options_Manager::client_connect_addr=INADDR_ANY;
 ACE_CDR::UShort Options_Manager::server_port = 45453;
 ACE_TCHAR Options_Manager::server_host[Options_Manager::string_len];
 ACE_CDR::ULong Options_Manager::server_accept_addr=INADDR_ANY;
 ACE_CDR::UShort Options_Manager::payload_size_power_of_2=31;
+ACE_CDR::ULong Options_Manager::secondary_connect_addrs[max_num_secondary_connect_addrs];
+ACE_CDR::UShort Options_Manager::num_secondary_connect_addrs = 0;
 ACE_CDR::ULong Options_Manager::secondary_accept_addrs[max_num_secondary_accept_addrs];
 ACE_CDR::UShort Options_Manager::num_secondary_accept_addrs = 0;
 ACE_CDR::UShort Options_Manager::_usage = 0;
@@ -62,7 +66,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
     int c;
     ACE_Get_Opt * get_opt=NULL;
     if (!ACE_OS::strcmp("client-opts", opts_set)){
-      get_opt = new ACE_Get_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:p:H:s:h"));
+      get_opt = new ACE_Get_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h"));
 
       get_opt->long_option("test_iterations",         'c', ACE_Get_Opt::ARG_REQUIRED);
       get_opt->long_option("test_enable_nagle",       'n');
@@ -71,6 +75,8 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
       get_opt->long_option("histogram_max_bin",       'M', ACE_Get_Opt::ARG_REQUIRED);
       get_opt->long_option("histogram_num_outliers",  'x', ACE_Get_Opt::ARG_REQUIRED);
       get_opt->long_option("histogram_bin_count",     'b', ACE_Get_Opt::ARG_REQUIRED);
+      get_opt->long_option("client_port",             'C', ACE_Get_Opt::ARG_REQUIRED);
+      get_opt->long_option("client_accept_addr",      'i', ACE_Get_Opt::ARG_REQUIRED);
       get_opt->long_option("server_port",             'p', ACE_Get_Opt::ARG_REQUIRED);
       get_opt->long_option("server_host",             'H', ACE_Get_Opt::ARG_REQUIRED);
       get_opt->long_option("payload_size_power_of_2", 's', ACE_Get_Opt::ARG_REQUIRED);
@@ -122,6 +128,121 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
           case 'b':
             histogram_bin_count    = ACE_OS::atoi(get_opt->opt_arg ());
             break;
+          case 'C':
+            client_port            = ACE_OS::atoi(get_opt->opt_arg ());
+            break;
+          case 'i':{
+
+            // The argument to this option is a comma-separated list
+            // of dotted-decimal ipv4 addresses.
+
+            // Create a writable copy of the options argument
+            char str[Options_Manager::string_len];
+            ACE_OS::strncpy(str, get_opt->opt_arg(), Options_Manager::string_len);
+
+            // Get a pointer to the first comma in the list
+            char *next_secondary_addr = ACE_OS::strchr(str, ',');
+
+            // If found, the comma is replaced with \0 and pointer
+            // updated to point to the string that begins immediately
+            // after the comma.
+            if (next_secondary_addr) {
+              *next_secondary_addr = '\0';
+              ++next_secondary_addr;
+            }
+
+            // Obtain the 32-bit, host-byte-order representation of
+            // the primary address.
+            struct in_addr foo;
+            int aton_retval = ACE_OS::inet_aton(str, &foo);
+
+            // If this representation was not obtained, terminate with
+            // an error.
+            if (!aton_retval) {
+
+              char error_message[Options_Manager::string_len + 100];
+              ACE_OS::sprintf(error_message,
+                              "Could not make sense of primary "
+                              "address: %s",
+                              str);
+
+              _error = 1;
+              _error_message = ACE_OS::strdup(error_message);
+              break;
+            }
+
+            // Otherwise, store the representation in the
+            // client_connect_addr member variable.
+            client_connect_addr = ntohl(foo.s_addr);
+
+//              ACE_DEBUG ((LM_DEBUG,
+//                          "Primary connect addr: %s     retval = %d\n",
+//                          str,
+//                      aton_retval));
+
+//              if (next_secondary_addr) {
+//                ACE_DEBUG ((LM_DEBUG,
+//                            "Secondary addr(s) remaining to be parsed: %s\n",
+//                            next_secondary_addr));
+//              } else {
+//                ACE_DEBUG ((LM_DEBUG,
+//                            "No secondary addr remaining to be parsed.\n"));
+//              }
+
+            // The following loop parses secondary addresses from the
+            // list.  The loop repeats as long as ACE_OS::strchr
+            // returns non-null (i.e., as long as yet another comma is
+            // found.
+            while (next_secondary_addr &&
+                   num_secondary_connect_addrs <
+                   max_num_secondary_connect_addrs) {
+
+              // Get a pointer to the next comma in the list.
+              char *next_next_secondary_addr = ACE_OS::strchr(next_secondary_addr, ',');
+
+              // If found, the comma is replaced with \0 and pointer
+              // updated to point to the string that begins immediately
+              // after the comma.
+              if (next_next_secondary_addr) {
+                *next_next_secondary_addr = '\0';
+                ++next_next_secondary_addr;
+              }
+
+              // Obtain the 32-bit, host-byte-order representation of
+              // a secondary address.
+              aton_retval = ACE_OS::inet_aton(next_secondary_addr, &foo);
+
+              // If the representation was obtained without error,
+              // store it in the next available slot of the
+              // secondary_connect_addrs array.  Otherwise, terminate
+              // with an error.
+              if (aton_retval) {
+                secondary_connect_addrs[num_secondary_connect_addrs++] =
+                  ntohl(foo.s_addr);
+              } else {
+
+                char error_message[Options_Manager::string_len + 100];
+                ACE_OS::sprintf(error_message,
+                                "Could not make sense of secondary "
+                                "address: %s",
+                                next_secondary_addr);
+
+                _error = 1;
+                _error_message = ACE_OS::strdup(error_message);
+                break;
+              }
+
+//                ACE_DEBUG ((LM_DEBUG,
+//                            "secondary_addr[%d] = %s      retval = %d\n",
+//                            num_secondary_connect_addrs - 1,
+//                            next_secondary_addr,
+//                        aton_retval));
+
+              next_secondary_addr = next_next_secondary_addr;
+            }
+
+            break;
+          }
           case 'p':
             server_port            = ACE_OS::atoi(get_opt->opt_arg ());
             break;

@@ -30,17 +30,24 @@ public:
   static ACE_CDR::ULong histogram_bin_count;
   static ACE_CDR::ULong histogram_num_outliers;
 
+  static ACE_CDR::UShort client_port;
+  static ACE_CDR::ULong  client_connect_addr;
+
   static ACE_CDR::UShort server_port;
   static ACE_TCHAR server_host[string_len];
   static ACE_CDR::ULong server_accept_addr;
 
   static ACE_CDR::UShort payload_size_power_of_2;
 
+  // Secondary client_connect_addrs for SCTP SOCK_SEQPACK test
+  static ACE_CDR::UShort const max_num_secondary_connect_addrs = 100;
+  static ACE_CDR::ULong secondary_connect_addrs[max_num_secondary_connect_addrs];
+  static ACE_CDR::UShort num_secondary_connect_addrs;
+
   // Secondary server_accept_addrs for SCTP SOCK_SEQPACK test
   static ACE_CDR::UShort const max_num_secondary_accept_addrs = 100;
   static ACE_CDR::ULong secondary_accept_addrs[max_num_secondary_accept_addrs];
   static ACE_CDR::UShort num_secondary_accept_addrs;
-
 
   static ACE_CDR::UShort _error;
   static const ACE_TCHAR* _error_message;
