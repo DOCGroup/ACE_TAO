@@ -15,6 +15,7 @@
 
 #include <ace/Module.h>
 #include <ace/Stream.h>
+#include <ace/streams.h>
 // These are the neccessary ACE headers.
 
 

@@ -1,3 +1,7 @@
+Thu Jan 14 00:07:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* docs/tutorials/014/stream.cpp: Added #include "ace/streams.h".
+
 Wed Jan 13 23:18:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h:
