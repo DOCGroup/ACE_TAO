@@ -1,3 +1,15 @@
+Wed Oct 16 12:41:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/Makefile: Add C++NPv1 and C++NPv2 to the DIRS list.
+
+        * examples/C++NPv2/Makefile: Only build the SSL-using examples
+          (AC_CLD, AIO_CLD, TPCLS) is ssl=1 is set.
+
+        * examples/C++NPv2/Makefile.AC_CLD:
+        * examples/C++NPv2/Makefile.AIO_CLD:
+        * examples/C++NPv2/Makefile.TPCLS:
+          Set up the SSL build params correctly and warn if ssl=1 not used.
+
 Wed Oct 16 12:08:21 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AC_CLD.mak:

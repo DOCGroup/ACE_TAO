@@ -9,6 +9,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+# These examples don't require SSL support... those that do are below.
 EXAMPLES = Reactor_Logging_Server \
            Select_Reactor_Logging_Server \
            TP_Reactor_Logging_Server \
@@ -17,11 +18,12 @@ EXAMPLES = Reactor_Logging_Server \
            SLDex \
            CLD \
            TPLS \
-           TPCLS \
            SR_Configurable_Logging_Server \
-           AC_CLD \
-           AIO_CLD \
            display_logfile
+
+ifneq ($(ssl),)
+  EXAMPLES += AC_CLD  AIO_CLD  TPCLS
+endif # ssl
 
 all:
 	@for ex in $(EXAMPLES); \
