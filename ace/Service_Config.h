@@ -106,15 +106,15 @@ typedef ACE_Unbounded_Queue_Iterator<ACE_TString>
  * @brief Supplies common server operations for dynamic and static
  * configuration of services.
  *
- * The <ACE_Service_Config> uses the Monostate pattern.  Therefore,
+ * The ACE_Service_Config uses the Monostate pattern.  Therefore,
  * you can only have one of these instantiated per-process.
- * NOTE: the signal_handler_ static member is allocated by the
- * <ACE_Object_Manager>.  The <ACE_Service_Config> constructor
+ * @note The signal_handler_ static member is allocated by the
+ * ACE_Object_Manager.  The ACE_Service_Config constructor
  * uses signal_handler_.  Therefore, if the program has any
- * static <ACE_Service_Config> objects, there might be
+ * static ACE_Service_Config objects, there might be
  * initialization order problems.  They can be minimized, but
  * not eliminated, by _not_ #defining
- * <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
+ * ACE_HAS_NONSTATIC_OBJECT_MANAGER.
  */
 class ACE_Export ACE_Service_Config
 {
@@ -141,12 +141,12 @@ public:
 
   /**
    * Performs an open without parsing command-line arguments.  The
-   * <logger_key> indicates where to write the logging output, which
+   * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.  If
-   * <ignore_default_svc_conf_file> is non-0 then the "svc.conf" file
-   * will be ignored.  If <ignore_debug_flag> is non-0 then the
+   * @a ignore_default_svc_conf_file is non-0 then the "svc.conf" file
+   * will be ignored.  If @a ignore_debug_flag is non-0 then the
    * application is responsible for setting the
-   * <ACE_Log_Msg::priority_mask> appropriately.  Returns number of
+   * @c ACE_Log_Msg::priority_mask() appropriately.  Returns number of
    * errors that occurred on failure and 0 otherwise.
    */
   static int open_i (const ACE_TCHAR program_name[],
@@ -244,8 +244,8 @@ public:
 
   /**
    * Perform user-specified close hooks on all of the configured
-   * services in the <Service_Repository>, then delete the
-   * <Service_Repository> itself.  Returns 0.
+   * services in the Service_Repository, then delete the
+   * Service_Repository itself.  Returns 0.
    */
   static int close_svcs (void);
 
@@ -274,16 +274,16 @@ public:
   static int initialize (const ACE_Service_Type *,
                          const ACE_TCHAR *parameters);
 
-  /// Initialize and activate a statically <svc_name> service.
+  /// Initialize and activate a statically @a svc_name service.
   static int initialize (const ACE_TCHAR *svc_name,
                          const ACE_TCHAR *parameters);
 
-  /// Resume a <svc_name> that was previously suspended or has not yet
+  /// Resume a @a svc_name that was previously suspended or has not yet
   /// been resumed (e.g., a static service).
   static int resume (const ACE_TCHAR svc_name[]);
 
   /**
-   * Suspend <svc_name>.  Note that this will not unlink the service
+   * Suspend @a svc_name.  Note that this will not unlink the service
    * from the daemon if it was dynamically linked, it will mark it as
    * being suspended in the Service Repository and call the <suspend>
    * member function on the appropriate <ACE_Service_Object>.  A
@@ -292,7 +292,7 @@ public:
    */
   static int suspend (const ACE_TCHAR svc_name[]);
 
-  /// Totally remove <svc_name> from the daemon by removing it
+  /// Totally remove @a svc_name from the daemon by removing it
   /// from the ACE_Reactor, and unlinking it if necessary.
   static int remove (const ACE_TCHAR svc_name[]);
 
@@ -319,7 +319,7 @@ public:
   /// directives.
   static int process_file (const ACE_TCHAR file[]);
 
-  /// Process one service configuration <directive>, which is passed as
+  /// Process one service configuration @a directive, which is passed as
   /// a string.  Returns the number of errors that occurred.
   static int process_directive (const ACE_TCHAR directive[]);
 
@@ -397,7 +397,7 @@ protected:
   static int start_daemon (void);
 
   /// Add the default statically-linked services to the
-  /// <ACE_Service_Repository>.
+  /// ACE_Service_Repository.
   static int load_static_svcs (void);
 
 private:
