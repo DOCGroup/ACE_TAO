@@ -1,3 +1,84 @@
+Thu Jun 19 16:58:00 UTC 2003 Stephen Torri <storri@cse.wustl.edu>
+
+        * orbsvcs/tests/Metrics/Makefile:
+        * orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.cpp:
+        * orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.h:
+        * orbsvcs/tests/Metrics/Remote_Metrics_Logger.cpp:
+        * orbsvcs/tests/Metrics/Remote_Metrics_Logger.h:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.cpp:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.h:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.i:
+        * orbsvcs/tests/Metrics/Makefile:
+        * tao/orbconf.h:
+
+          Added tests for libTAO_Metrics.
+
+        * orbsvcs/orbsvcs/Metrics/metrics_export.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.i:
+        * orbsvcs/orbsvcs/Metrics:
+        * orbsvcs/orbsvcs/Metrics.idl:
+        * orbsvcs/orbsvcs/Makefile.Metrics:
+        * orbsvcs/orbsvcs/Makefile:
+
+          Adding new TAO Metrics ORB service.
+	  - TAO_Metrics_Frame_Manager_Data is a class makes use of 
+	    the <ACE_Time_Value> class to store period and 
+	    endpoint data for a given time frame. This is used
+	    by the TAO_Metrics_Frame_Manager to make use of the 
+	    <ACE_Metrics_Cache> class to implement a cache for local use.
+
+	  - TAO_Metrics_Timeprobe is a class that makes use of the 
+	    <ACE_Metrics_Timeprobe> class to implement a timeprobe for 
+	    use in a local metrics cache.
+
+   	  - TAO_Metrics_LocalCache is a class that makes use of the 
+	    <ACE_Metrics_Cache> class to implement a cache for local use
+	    for storing metrics data.
+
+	  - TAO_Metrics_ReportingCache is a class that use of the 
+	    <TAO_Metrics_LocalCache> as its a cache for local use, 
+	    and adds reporting to the logger <TAO_Metrics_Logger>.
+
+	  - TAO_Metrics_Logger is a class that allows a client to
+	    log monitored QoS. Clients will pass their information
+	    to the TAO_Metrics_Logger in a series of TAO_Metrics_Logger_Data
+	    elements.
+
+	  - TAO_Metrics_UpcallMonitor is a class that allows clients to 
+	    monitor QoS, collected by the rest of the metrics framework.
+
+	  - TAO_Metrics_ReportingUpcallMonitor is a class implemenets
+	    a reporting extension for a Metrics QoS Monitor.
+
+	  - TAO_Utils is a collection of metrics utility functions.
+
+
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.h:
+        * tao/RTCORBA/Multi_Priority_Mapping.i:
+
 Thu Jun 19 16:01:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/index.html:
