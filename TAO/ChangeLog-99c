@@ -1,3 +1,14 @@
+Thu Mar 11 22:49:35 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/ORB.cpp (multicast_query):
+	INET_Addr::get_port_number () returns a port number converted to
+	host byte order.  Made changes to account for that.
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+	Made sure that upon the receipt of the multicast packet, the reply
+	was sent to the port indicated in the array contained in the
+	packet as opposed to the port from which the packet came from.
+
 Thu Mar 11 20:41:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp: There were some major
