@@ -5,6 +5,7 @@
 
 debug = 1
 exceptions = 1
+rtti = 1
 
 CC              = cxx
 CXX             = $(CC)
@@ -29,7 +30,10 @@ ifeq ($(CXX_VER),POST_5X)
                    -msg_disable 9,174,193,236,401,610,835,839
 endif
 
-CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS) #### -nortti
+CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
+ifeq ($(rtti),)
+  CCFLAGS += -nortti
+endif # rtti
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
