@@ -25,7 +25,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   ACE_CString name2 = (ACE_CString)"time";
   ACE_CString name3 = (ACE_CString)"info";
 
-  CORBA::Any_var value;
+  CORBA::Any* value;
   ACE_NEW (value, CORBA::Any);
 
 #if defined (ACE_LACKS_LONGLONG_T)
@@ -39,7 +39,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
       this->property_lookup_.bind (name1, value);
     }
 
-  CORBA::Any_var value2;
+  CORBA::Any* value2;
   ACE_NEW (value2, CORBA::Any);
 
 #if defined (ACE_LACKS_LONGLONG_T)
@@ -53,7 +53,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
       this->property_lookup_.bind (name2, value2);
     }
 
-  CORBA::Any_var value3;
+  CORBA::Any* value3;
   ACE_NEW (value3, CORBA::Any);
 
   *value3 <<= this->rec_.info;
