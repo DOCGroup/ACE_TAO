@@ -1,24 +1,31 @@
+Fri Oct 12 12:15:22 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/nightlybuilds/builds.lst:
+          The QNX machine is no longer running that OS, plus attempts to
+          bring it back to life failed.  The build is removed until
+          further notice.
+
 Thu Oct 11 17:52:32 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp:
-	  Somehow the file didnt get committed yesterday. So, committing
-	  the following change now.
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Somehow the file didnt get committed yesterday. So, committing
+          the following change now.
 
-	  Wed Oct 10 16:56:18 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+          Wed Oct 10 16:56:18 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 Thu Oct 11 10:57:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/RB_Tree.h:
-	* ace/RB_Tree.i:
-	* ace/RB_Tree.cpp:
-	  Reverted to the 5.2 release state. The proposed changes were
-	  breaking some builds, and they were not bug fixes in any case.
+        * ace/RB_Tree.h:
+        * ace/RB_Tree.i:
+        * ace/RB_Tree.cpp:
+          Reverted to the 5.2 release state. The proposed changes were
+          breaking some builds, and they were not bug fixes in any case.
 
 Wed Oct 10 16:56:18 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp:
-	  Reverted the following change as it ended up with some problems
-	  for multicast services.
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Reverted the following change as it ended up with some problems
+          for multicast services.
 
           Fri Oct  5 14:40:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -26,190 +33,190 @@ Wed Oct 10 16:56:18 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 Wed Oct 10 06:16:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * ace/Activation_Queue.{h,cpp}: Added support for two ACE_Allocator that
-	  will control how the message blocks and data blocks are
- 	  allocated.  Thanks to Gil Rapaport <grapaport@comgates.co.il>
- 	  for contributing this.
+          will control how the message blocks and data blocks are
+          allocated.  Thanks to Gil Rapaport <grapaport@comgates.co.il>
+          for contributing this.
 
-	* examples/Reactor/WFMO_Reactor/test_apc.cpp (main):
-	* examples/Reactor/WFMO_Reactor/test_abandoned.cpp (main): Don't
-	  use a global Event_Handler since this violates the design rules
- 	  for the ACE_Reactor.  Thanks to Heping He
- 	  <heping.he@riskmetrics.com> for reporting this and to Irfan for
- 	  suggesting where the problem arose.
+        * examples/Reactor/WFMO_Reactor/test_apc.cpp (main):
+        * examples/Reactor/WFMO_Reactor/test_abandoned.cpp (main): Don't
+          use a global Event_Handler since this violates the design rules
+          for the ACE_Reactor.  Thanks to Heping He
+          <heping.he@riskmetrics.com> for reporting this and to Irfan for
+          suggesting where the problem arose.
 
 Tue Oct  9 07:46:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/C++NPv1/Logging_Handler.h: Added a new constructor to
-	  class Logging_Handler that just takes an ACE_SOCK_Stream.  We
- 	  need to use this in C++NPv2.
+        * examples/C++NPv1/Logging_Handler.h: Added a new constructor to
+          class Logging_Handler that just takes an ACE_SOCK_Stream.  We
+          need to use this in C++NPv2.
 
-	* ace/Message_Queue_T.cpp (wait_not_full_cond): Thanks to Leo Kov
- 	  <leo_kov@hotmail.com> for reporting this.
+        * ace/Message_Queue_T.cpp (wait_not_full_cond): Thanks to Leo Kov
+          <leo_kov@hotmail.com> for reporting this.
 
-	* ace/TTY_IO.cpp (control): Inserted some useful
-	  ACE_OS::set_errno_to_last_error() calls.  Also, for Win32 made
- 	  readtimeoutmsec == 0 cause no timeout, whereas readtimeoutmsec
- 	  == MAXDWORD causes infinite timeout.  Thanks to Lars Steubesand
- 	  <Lars_Steubesand@hsgmed.com> for reporting this.
+        * ace/TTY_IO.cpp (control): Inserted some useful
+          ACE_OS::set_errno_to_last_error() calls.  Also, for Win32 made
+          readtimeoutmsec == 0 cause no timeout, whereas readtimeoutmsec
+          == MAXDWORD causes infinite timeout.  Thanks to Lars Steubesand
+          <Lars_Steubesand@hsgmed.com> for reporting this.
 
 Mon Oct  8 20:19:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/DLL/test_dll.cpp: There's no need to specify
-	  ACE_DLL_SUFFIX as it prevent ACE_Lib_Find to figure out the
-	  correct DLL name.
+        * examples/DLL/test_dll.cpp: There's no need to specify
+          ACE_DLL_SUFFIX as it prevent ACE_Lib_Find to figure out the
+          correct DLL name.
 
-	  The ACE_ERROR_RETURN macro store and reset the errno so there's
-	  no need to use dll.error() with it.  Changed to use "%p" to
-	  display the error.
+          The ACE_ERROR_RETURN macro store and reset the errno so there's
+          no need to use dll.error() with it.  Changed to use "%p" to
+          display the error.
 
-	  Thanks to Heping He <heping.he@riskmetrics.com> for reporting
-	  the problem.
+          Thanks to Heping He <heping.he@riskmetrics.com> for reporting
+          the problem.
 
 Mon Oct  8 11:15:21 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
-	* ace/RB_Tree.h (class ACE_RB_Tree_Node):
-	* ace/RB_Tree.i:
+        * ace/RB_Tree.h (class ACE_RB_Tree_Node):
+        * ace/RB_Tree.i:
 
-	  Changed access privilege on the operator new/delete to be
-	  public, and added assertion in those method implementation to
-	  make sure that wrong use of these method are promptly notified.
-	  This changes should fix the problem that some compiling were
-	  still having with RB_Trees.
+          Changed access privilege on the operator new/delete to be
+          public, and added assertion in those method implementation to
+          make sure that wrong use of these method are promptly notified.
+          This changes should fix the problem that some compiling were
+          still having with RB_Trees.
 
 Sat Oct 06 23:06:41 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
-	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
-	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i, close):
+        * ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+        * ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i, close):
 
-	  Removed the do/while(SSL_pending()) loop.  Its introduction into
-	  the code was a bit misguided.  There is no need to flush the SSL
-	  buffer before returning to the Reactor's event loop since the
-	  code now sends a notification to the Reactor to force the
-	  Reactor to invoke the event handler before waiting in the event
-	  loop.  This fixes some SSL protocol errors that manifested
-	  during multithreaded SSL communication.  [Bug 943]
+          Removed the do/while(SSL_pending()) loop.  Its introduction into
+          the code was a bit misguided.  There is no need to flush the SSL
+          buffer before returning to the Reactor's event loop since the
+          code now sends a notification to the Reactor to force the
+          Reactor to invoke the event handler before waiting in the event
+          loop.  This fixes some SSL protocol errors that manifested
+          during multithreaded SSL communication.  [Bug 943]
 
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
 
-	  It is no longer necessary to call SSL_accept()/connect() to
-	  flush the SSL buffer before running the Reactor's event loop
-	  since the Reactor is notified that it should call the
-	  appropriate event handler before blocking on select() for
-	  WaitForMultipleObjects(), for example.
+          It is no longer necessary to call SSL_accept()/connect() to
+          flush the SSL buffer before running the Reactor's event loop
+          since the Reactor is notified that it should call the
+          appropriate event handler before blocking on select() for
+          WaitForMultipleObjects(), for example.
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (reactor, handler):
+        * ace/SSL/SSL_SOCK_Stream.cpp (reactor, handler):
 
-	  New methods to set the Reactor and event handler associated with
-	  the ACE_SSL_SOCK_Stream.  If each of these is set, then the
-	  Reactor will be notified if data is still pending in the SSL
-	  buffer.
+          New methods to set the Reactor and event handler associated with
+          the ACE_SSL_SOCK_Stream.  If each of these is set, then the
+          Reactor will be notified if data is still pending in the SSL
+          buffer.
 
-	  (~ACE_SSL_SOCK_Stream):
+          (~ACE_SSL_SOCK_Stream):
 
-	  Uninlined the destructor.  There is no need for it to be
-	  inlined, and doing so only caused unnecessary code bloat.
+          Uninlined the destructor.  There is no need for it to be
+          inlined, and doing so only caused unnecessary code bloat.
 
-	* ace/SSL/SSL_SOCK_Stream.h (notify, reactor, handler):
+        * ace/SSL/SSL_SOCK_Stream.h (notify, reactor, handler):
 
-	  Added these new method declarations, in addition to the
-	  corresponding attributes.
+          Added these new method declarations, in addition to the
+          corresponding attributes.
 
-	  Updated documentation.
+          Updated documentation.
 
-	* ace/SSL/SSL_SOCK_Stream.i (notify):
+        * ace/SSL/SSL_SOCK_Stream.i (notify):
 
-	  Method that pushes the event handler on to the Reactor's
-	  notification pipe when necessary.  Invoked by recv_i() and
-	  send_i().
+          Method that pushes the event handler on to the Reactor's
+          notification pipe when necessary.  Invoked by recv_i() and
+          send_i().
 
-	* ace/SSL/SSL_SOCK_Acceptor.h:
-	* ace/SSL/SSL_SOCK_Connector.h:
-	* ace/SSL/SSL_Accept_Handler.h:
-	* ace/SSL/SSL_Connect_Handler.h:
+        * ace/SSL/SSL_SOCK_Acceptor.h:
+        * ace/SSL/SSL_SOCK_Connector.h:
+        * ace/SSL/SSL_Accept_Handler.h:
+        * ace/SSL/SSL_Connect_Handler.h:
 
-	  Updated documentation.
+          Updated documentation.
 
 Sat Oct  6 16:04:29 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
-	* ace/RB_Tree.h:
-	* ace/RB_Tree.i:
+        * ace/RB_Tree.h:
+        * ace/RB_Tree.i:
 
-	  The operator new and delete were declared to be No-Op but were
-	  not implemented as such. This was breaking some builds. Now the
-	  operator are declared as private and they also have a no-op
-	  implementation. This should solve some linking error that were
-	  occurring.
+          The operator new and delete were declared to be No-Op but were
+          not implemented as such. This was breaking some builds. Now the
+          operator are declared as private and they also have a no-op
+          implementation. This should solve some linking error that were
+          occurring.
 
 Sat Oct  6 11:17:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Adrian Mercieca to the hallf of fame.
+        * THANKS: Added Adrian Mercieca to the hallf of fame.
 
 Fri Oct 05 18:30:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/RW_Process_Mutex.cpp: Added inclusion ACE.h and fixed member
-	  initialization.
+        * ace/RW_Process_Mutex.cpp: Added inclusion ACE.h and fixed member
+          initialization.
 
 Fri Oct  5 18:16:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/SString.h:
-	* ace/SString.cpp: Changes the usage of ostream to
-	  ACE_OSTREAM_TYPE. Thanks to Russ Noseworthy for letting us
-	  know.
+        * ace/SString.h:
+        * ace/SString.cpp: Changes the usage of ostream to
+          ACE_OSTREAM_TYPE. Thanks to Russ Noseworthy for letting us
+          know.
 
 Thu Oct  4 07:10:01 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/RB_Tree.*: Added support for using the "ACE_Allocator" parameters
-	  to manage memory.  Thanks to Airat A. Sadreev <airatsa@nm.ru>
- 	  for reporting contributing this.
+        * ace/RB_Tree.*: Added support for using the "ACE_Allocator" parameters
+          to manage memory.  Thanks to Airat A. Sadreev <airatsa@nm.ru>
+          for reporting contributing this.
 
 Wed Oct  3 07:20:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/RW_Process_Mutex.{h,cpp}: Added the ability to create a
-	  unique name if the user doesn't supply one.  Thanks to Tom
- 	  Wagner <TomW@CoManage.net> for suggesting this.
+        * ace/RW_Process_Mutex.{h,cpp}: Added the ability to create a
+          unique name if the user doesn't supply one.  Thanks to Tom
+          Wagner <TomW@CoManage.net> for suggesting this.
 
-	* ace/Synch.h: Clarified that the timed wait capabilities of
-	  ACE_Semaphore only work on Solaris if ACE_HAS_PTHREAD is enabled
- 	  *and* ACE_HAS_POSIX_SEM/ACE_HAS_STHREAD are disabled.  Thanks to
- 	  Bonifides Bautista <earlboy@my-deja.com> for reporting this.
+        * ace/Synch.h: Clarified that the timed wait capabilities of
+          ACE_Semaphore only work on Solaris if ACE_HAS_PTHREAD is enabled
+          *and* ACE_HAS_POSIX_SEM/ACE_HAS_STHREAD are disabled.  Thanks to
+          Bonifides Bautista <earlboy@my-deja.com> for reporting this.
 
 Fri Oct  5 12:48:48 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.i (close):
+        * ace/SSL/SSL_SOCK_Stream.i (close):
 
-	  Reset the SSL object to allow another connection to be made
-	  using the existing ACE_SSL_SOCK_Stream instance.  This prevents
-	  the previous SSL session state from being associated with the
-	  new SSL session/connection.  Thanks to Vladimir Chovanec
-	  <Vladimir.CHOVANEC@asset.sk> for pointing out this problem and
-	  suggesting a course of action.
+          Reset the SSL object to allow another connection to be made
+          using the existing ACE_SSL_SOCK_Stream instance.  This prevents
+          the previous SSL session state from being associated with the
+          new SSL session/connection.  Thanks to Vladimir Chovanec
+          <Vladimir.CHOVANEC@asset.sk> for pointing out this problem and
+          suggesting a course of action.
 
 Fri Oct  5 14:40:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp (open): Removed the #if defined (linux)
-	  from the code. Looks like this had to be removed to get it
-	  working for RTI under Linux. The other ChangeLog entries that
-	  this change is concerned with are "Sat Feb 17 17:23:46 2001
-	  Darrell Brunsch <brunsch@uci.edu>" and "Fri Jan 26 11:18:15 2001
-	  Douglas C. Schmidt". Looks like the patch provided by Keith
-	  Nicewarner <knicewar@erg.sri.com> is being reverted. I remember
-	  a communication from Keith which seemed to hint that this may
-	  not be required.
+        * ace/SOCK_Dgram_Mcast.cpp (open): Removed the #if defined (linux)
+          from the code. Looks like this had to be removed to get it
+          working for RTI under Linux. The other ChangeLog entries that
+          this change is concerned with are "Sat Feb 17 17:23:46 2001
+          Darrell Brunsch <brunsch@uci.edu>" and "Fri Jan 26 11:18:15 2001
+          Douglas C. Schmidt". Looks like the patch provided by Keith
+          Nicewarner <knicewar@erg.sri.com> is being reverted. I remember
+          a communication from Keith which seemed to hint that this may
+          not be required.
 
-	  Thanks to Russ Noseworthy for suggesting this.
+          Thanks to Russ Noseworthy for suggesting this.
 
 Fri Oct  5 14:04:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Hagen Ulrich to the Hall of Fame.
+        * THANKS: Added Hagen Ulrich to the Hall of Fame.
 
 Fri Oct  5 13:55:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Makefile: Removed the SUPPRESS_DASH_G option. Not really
-	  sure where it is used. Further, added a tab to the place where
-	  rules for CHORUS are set. This should fix BUGID 1049. Thanks to
-	  Hagen Ulrich <ulrich.hagen@siemens.com> and Dr.David Levine for
-	  reporting and verifying the fix.
+        * ace/Makefile: Removed the SUPPRESS_DASH_G option. Not really
+          sure where it is used. Further, added a tab to the place where
+          rules for CHORUS are set. This should fix BUGID 1049. Thanks to
+          Hagen Ulrich <ulrich.hagen@siemens.com> and Dr.David Levine for
+          reporting and verifying the fix.
 
 Fri Oct 05 05:56:50 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -243,27 +250,27 @@ Thu Oct  4 13:18:37 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Oct  4 10:14:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Donald Acton to the Hall of Fame.
+        * THANKS: Added Donald Acton to the Hall of Fame.
 
 Thu Oct  4 06:39:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/config-sunos5.5.h: Added ACE_LACKS_MKSTEMP as SunOS 5.5 does
-	  not support mkstemp ().
+        * ace/config-sunos5.5.h: Added ACE_LACKS_MKSTEMP as SunOS 5.5 does
+          not support mkstemp ().
 
-	* ace/config-sunos5.6.h: Undefined ACE_LACKS_MKSTEMP as Sun 5.6
-	  and above support it.
+        * ace/config-sunos5.6.h: Undefined ACE_LACKS_MKSTEMP as Sun 5.6
+          and above support it.
 
-	  Thanks to Don Hinton <dhinton@swan.fr> for reporting this
-	  problem and Chad Elliott for testing this out on a Sun OS 5.5
-	  box.
+          Thanks to Don Hinton <dhinton@swan.fr> for reporting this
+          problem and Chad Elliott for testing this out on a Sun OS 5.5
+          box.
 
 Wed Oct  3 16:37:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp (read_1): Reverted this change "Wed Oct  3
-	  15:05:43 2001  Jeff Parsons <parsons@cs.wustl.edu>".  This
-	  change is alone not enough to fix the problem that Brad
-	  reported. The sample program for the text needs to be fixed to
-	  get it working right.
+        * ace/CDR_Stream.cpp (read_1): Reverted this change "Wed Oct  3
+          15:05:43 2001  Jeff Parsons <parsons@cs.wustl.edu>".  This
+          change is alone not enough to fix the problem that Brad
+          reported. The sample program for the text needs to be fixed to
+          get it working right.
 
 Wed Oct  3 15:05:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -274,10 +281,10 @@ Wed Oct  3 15:05:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Fri Aug 17 16:56:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           to read_1(). A similar change made in several other methods is
- 	  ok, but in this case bytes can be copied into the input CDR
- 	  stream without changing wr_ptr, so the check will fail
- 	  unnecessarily. Thanks to Brad Hoskins <BHoskins@slo.newport.com>
- 	  for pointing this out.
+          ok, but in this case bytes can be copied into the input CDR
+          stream without changing wr_ptr, so the check will fail
+          unnecessarily. Thanks to Brad Hoskins <BHoskins@slo.newport.com>
+          for pointing this out.
 
 Wed Oct  2 12:18:37 2001  Steve Huston  <shuston@riverace.com>
 
@@ -291,31 +298,31 @@ Tue Oct  2 21:52:31 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Oct  2 19:52:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Makefile: Removed some of the files that no longer exist in the
-	  repository. The inclusion of these files in the Makefile added
-	  noise during the beta cutting process.
+        * Makefile: Removed some of the files that no longer exist in the
+          repository. The inclusion of these files in the Makefile added
+          noise during the beta cutting process.
 
 Tue Oct 02 15:34:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* etc/tao_cosevent.doxygen:
-	* etc/tao_cosnotification.doxygen:
-	  Fixed typos in the tag file names.
+        * etc/tao_cosevent.doxygen:
+        * etc/tao_cosnotification.doxygen:
+          Fixed typos in the tag file names.
 
 Tue Oct  2 15:52:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Sunny Leung to the Hall of Fame.
+        * THANKS: Added Sunny Leung to the Hall of Fame.
 
 Tue Oct  2 15:33:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Removed one instance of Peter Phillips
-	  <pphillip@opentext.com> from the Hall of Fame.
+        * THANKS: Removed one instance of Peter Phillips
+          <pphillip@opentext.com> from the Hall of Fame.
 
 Tue Oct  2 15:00:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp (clone_from): Copied the GIOP major and minor
-	  versions from the incoming CDR stream. Thanks to Sunny Leung
-	  <sleung@opentext.com> for reporting this. This closes bugzilla
-	  #1043.
+        * ace/CDR_Stream.cpp (clone_from): Copied the GIOP major and minor
+          versions from the incoming CDR stream. Thanks to Sunny Leung
+          <sleung@opentext.com> for reporting this. This closes bugzilla
+          #1043.
 
 Tue Oct  2 09:45:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -325,23 +332,23 @@ Tue Oct  2 09:45:39 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Oct  1 20:04:14 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* THANKS:
-	  Added Tushar Nair to the THANKS file.
+        * THANKS:
+          Added Tushar Nair to the THANKS file.
 
 Mon Oct  1 18:06:48 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Object_Manager.cpp (ACE_UnhandledExceptionFilter):
-	  Removed the un-needed #if 0's. Left them before as a safety
-	  measure (in case something doesnt work) and forgot to remove
-	  them later.
+        * ace/Object_Manager.cpp (ACE_UnhandledExceptionFilter):
+          Removed the un-needed #if 0's. Left them before as a safety
+          measure (in case something doesnt work) and forgot to remove
+          them later.
 
-	* ace/Log_Msg.cpp (instance):
-	  Fixed the seg faults that are raised when ace is compiled with
-	  ACE_NTRACE=0 on SunOS. Added a check before locking and
-	  releasing a lock.
+        * ace/Log_Msg.cpp (instance):
+          Fixed the seg faults that are raised when ace is compiled with
+          ACE_NTRACE=0 on SunOS. Added a check before locking and
+          releasing a lock.
 
-	  Thanks to Tushar Nair <ntushar@yahoo.com> for reporting the
-	  problem and for providing a fix.
+          Thanks to Tushar Nair <ntushar@yahoo.com> for reporting the
+          problem and for providing a fix.
 
 Mon Oct  1 18:27:41 2001  Steve Huston  <shuston@riverace.com>
 
@@ -351,130 +358,130 @@ Mon Oct  1 18:27:41 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Oct  1 14:44:13 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Context.cpp (ssl_library_init):
+        * ace/SSL/SSL_Context.cpp (ssl_library_init):
 
-	  Initialize the locking callbacks in the crypto library before
-	  initializing the OpenSSL library.  OpenSSL may require the
-	  locking callbacks to be initialized before its own
-	  initialization.
+          Initialize the locking callbacks in the crypto library before
+          initializing the OpenSSL library.  OpenSSL may require the
+          locking callbacks to be initialized before its own
+          initialization.
 
-	* ace/SSL/SSL_Context.cpp (ssl_library_fini):
+        * ace/SSL/SSL_Context.cpp (ssl_library_fini):
 
-	  Perform crypto library resource cleanup before reclaiming the
-	  locks used by the locking callbacks.  Crypto library resource
-	  cleanup makes use of the locking callbacks.
+          Perform crypto library resource cleanup before reclaiming the
+          locks used by the locking callbacks.  Crypto library resource
+          cleanup makes use of the locking callbacks.
 
 Mon Oct  1 15:19:11 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/C++NPv1/README: Added a section that illustrates the
-	  mapping of chapters onto files in the directory.
+        * examples/C++NPv1/README: Added a section that illustrates the
+          mapping of chapters onto files in the directory.
 
 Mon Oct  1 12:58:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp (handle_socket_events): A fix for the problem
-	  that started showing  up this time is like this. One of the
-	  threads was dispatching an upcall. In the intermediate time the
-	  Reactor woke up another thread to close the handler, remember
-	  that this is possible with the TP_Reactor if the application
-	  resumes the handles (the way TAO does that). Now when the thread
-	  that that dispatched the upcall returned it tries to invoke a
-	  method on the already closed handle. To prevent that from
-	  happening we make an extra check to see whether the handle
-	  associated with the handler is still available in the internal
-	  map of the Reactor. As this check is done in the return path of
-	  the thread this should have less performance impact. This is
-	  another reason why we should have #1031 in place ASAP.
+        * ace/TP_Reactor.cpp (handle_socket_events): A fix for the problem
+          that started showing  up this time is like this. One of the
+          threads was dispatching an upcall. In the intermediate time the
+          Reactor woke up another thread to close the handler, remember
+          that this is possible with the TP_Reactor if the application
+          resumes the handles (the way TAO does that). Now when the thread
+          that that dispatched the upcall returned it tries to invoke a
+          method on the already closed handle. To prevent that from
+          happening we make an extra check to see whether the handle
+          associated with the handler is still available in the internal
+          map of the Reactor. As this check is done in the return path of
+          the thread this should have less performance impact. This is
+          another reason why we should have #1031 in place ASAP.
 
 Mon Oct  1 12:23:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst (WEB): Changed the name of the
-	  Sun's EGCS build. We have not been using EGCS but 2.95.x for a
-	  long time now.
+        * bin/nightlybuilds/builds.lst (WEB): Changed the name of the
+          Sun's EGCS build. We have not been using EGCS but 2.95.x for a
+          long time now.
 
 Mon Oct  1 10:46:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/PerlACE/Run_Test.pm (check_n_cleanup_files): Removed the
-	  word "ERROR" when files are left behind. This was creating noise
-	  in the daily builds. We have captured the problem in the
-	  bugzilla with id #1014. After 1.2 goes out, if someone is
-	  looking at this problem again we need to add this back so that
-	  our daily builds can pick them up.
+        * bin/PerlACE/Run_Test.pm (check_n_cleanup_files): Removed the
+          word "ERROR" when files are left behind. This was creating noise
+          in the daily builds. We have captured the problem in the
+          bugzilla with id #1014. After 1.2 goes out, if someone is
+          looking at this problem again we need to add this back so that
+          our daily builds can pick them up.
 
 Sun Sep 30 17:25:33 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
+        * ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
 
-	  Reset errno to prevent previous values (e.g. EWOULDBLOCK) from
-	  being associated with a fatal SSL error (e.g. an alert).
+          Reset errno to prevent previous values (e.g. EWOULDBLOCK) from
+          being associated with a fatal SSL error (e.g. an alert).
 
 Sun Sep 30 16:52:22 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Asynch_Stream.cpp (do_SSL_shutdown):
+        * ace/SSL/SSL_Asynch_Stream.cpp (do_SSL_shutdown):
 
-	  Return the "retval" variable instead of always returning -1.
-	  The actual return value may not always be -1.  Thanks to Alain
-	  Totouom <atotouom@gmx.de> for providing this fix.
+          Return the "retval" variable instead of always returning -1.
+          The actual return value may not always be -1.  Thanks to Alain
+          Totouom <atotouom@gmx.de> for providing this fix.
 
-	* THANKS:
+        * THANKS:
 
-	  Added Alain to the list of contributors.
+          Added Alain to the list of contributors.
 
 Sun Sep 30 09:13:04 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
-	  Made reactor mask constant to emphasize the fact that it is
-	  indeed a constant.
+          Made reactor mask constant to emphasize the fact that it is
+          indeed a constant.
 
 Sat Sep 29 08:07:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Configuration.{h,cpp}: Changed "allocator" to "alloc" to
-	  avoid bugs with MSVC++ 5.0.  Thanks to Munagala Ramanath
- 	  <amberarrow@yahoo.com> for reporting this.
+        * ace/Configuration.{h,cpp}: Changed "allocator" to "alloc" to
+          avoid bugs with MSVC++ 5.0.  Thanks to Munagala Ramanath
+          <amberarrow@yahoo.com> for reporting this.
 
-	* ACE-INSTALL.html: Yet more improvements courtesy of Chris
- 	  Kohloff.
+        * ACE-INSTALL.html: Yet more improvements courtesy of Chris
+          Kohloff.
 
 Fri Sep 28 23:38:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+        * ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
 
-	  Cleaned up the code.
+          Cleaned up the code.
 
-	  Do not attempt to verify the X.509 certificate.  Only the
-	  application knows how best to do that.
+          Do not attempt to verify the X.509 certificate.  Only the
+          application knows how best to do that.
 
-	* ace/SSL/SSL_Context.cpp (ssl_library_init):
+        * ace/SSL/SSL_Context.cpp (ssl_library_init):
 
-	  Fixed some Unicode problems.  Wrap strings within an ACE_TEXT
-	  macro.
+          Fixed some Unicode problems.  Wrap strings within an ACE_TEXT
+          macro.
 
-	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
-	* ace/SSL/SSL_SOCK_Stream.i:
+        * ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Stream.i:
 
-	  Corrected some comments.
+          Corrected some comments.
 
-	* ace/SSL/SSL_SOCK_Stream.h (send_n, recv_n):
+        * ace/SSL/SSL_SOCK_Stream.h (send_n, recv_n):
 
-	  Added a "bytes transferred" pointer parameter.  This allows the
-	  amount of bytes transferred to returned via this parameter, thus
-	  matching the semantics of their ACE_SOCK_Stream counterparts.
+          Added a "bytes transferred" pointer parameter.  This allows the
+          amount of bytes transferred to returned via this parameter, thus
+          matching the semantics of their ACE_SOCK_Stream counterparts.
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (send):
+        * ace/SSL/SSL_SOCK_Stream.cpp (send):
 
-	  Do not block attempt a timed send() if data is available in
-	  OpenSSL's internal buffer.  This prevents a condition where
-	  needlessly blocking on select() would occur.  A similar fix for
-	  recv() was made earlier.  See Fri Aug 24 16:54:02 2001  Ossama
-	  Othman  <ossama@uci.edu> for details.
+          Do not block attempt a timed send() if data is available in
+          OpenSSL's internal buffer.  This prevents a condition where
+          needlessly blocking on select() would occur.  A similar fix for
+          recv() was made earlier.  See Fri Aug 24 16:54:02 2001  Ossama
+          Othman  <ossama@uci.edu> for details.
 
-	  (send_n, recv_n):
+          (send_n, recv_n):
 
-	  If the "bytes transferred" pointer parameter is non-zero then
-	  return the amounts of bytes transferred through it.  This makes
-	  these methods better match the semantics of their
-	  ACE_SOCK_Stream counterparts.
+          If the "bytes transferred" pointer parameter is non-zero then
+          return the amounts of bytes transferred through it.  This makes
+          these methods better match the semantics of their
+          ACE_SOCK_Stream counterparts.
 
 Fri Sep 28 19:24:51 2001  Steve Huston  <shuston@riverace.com>
 
@@ -486,102 +493,102 @@ Fri Sep 28 19:24:51 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 28 12:46:25 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Context.cpp (report_error):
+        * ace/SSL/SSL_Context.cpp (report_error):
 
-	  Don't bother displaying an error message if the error code is
-	  zero (i.e. no error).
+          Don't bother displaying an error message if the error code is
+          zero (i.e. no error).
 
 Fri Sep 28 12:31:39 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
 
-	  Transfer ownership of the Reactor to the previous owner for the
-	  SSL_ERROR_ZERO_RETURN case.  Thanks to Vladimir Chovanec
-	  <Vladimir.CHOVANEC@asset.sk> for pointing out this problem.
+          Transfer ownership of the Reactor to the previous owner for the
+          SSL_ERROR_ZERO_RETURN case.  Thanks to Vladimir Chovanec
+          <Vladimir.CHOVANEC@asset.sk> for pointing out this problem.
 
-	  Remove the SSL event handler from the reactor for the
-	  SSL_ERROR_ZERO_RETURN case.  Previously, this method returned
-	  without removing it, resulting in a seg fault.
+          Remove the SSL event handler from the reactor for the
+          SSL_ERROR_ZERO_RETURN case.  Previously, this method returned
+          without removing it, resulting in a seg fault.
 
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
-	  Ported the updates made to the ssl_accept() counterpart to this
-	  method.
+          Ported the updates made to the ssl_accept() counterpart to this
+          method.
 
-	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
-	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
-	* ace/SSL/SSL_SOCK_Stream.i (send_i):
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+        * ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Stream.i (send_i):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
-	  In the event a SSL_ERROR_SYSCALL error condition occurs, call
-	  ACE_OS::set_errno_to_last_error() to make sure errno is updated
-	  appropriately since OpenSSL does not do that.  Fixes some
-	  "misbehaving" Reactor interactions.  Thanks to Andrew Finnell
-	  <Andrew.Finnell@esecurityinc.com> for tracking down the problem
-	  and suggesting these fixes.
+          In the event a SSL_ERROR_SYSCALL error condition occurs, call
+          ACE_OS::set_errno_to_last_error() to make sure errno is updated
+          appropriately since OpenSSL does not do that.  Fixes some
+          "misbehaving" Reactor interactions.  Thanks to Andrew Finnell
+          <Andrew.Finnell@esecurityinc.com> for tracking down the problem
+          and suggesting these fixes.
 
 Fri Sep 28 09:37:28 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Context.h (report_error):
-	* ace/SSL/SSL_Context.cpp (report_error):
+        * ace/SSL/SSL_Context.h (report_error):
+        * ace/SSL/SSL_Context.cpp (report_error):
 
-	  New SSL error reporting functions that use the ACE_Log_Msg
-	  facilities to dump error information.
+          New SSL error reporting functions that use the ACE_Log_Msg
+          facilities to dump error information.
 
-	* ace/SSL/SSL_Context.cpp (set_mode):
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
-	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
-	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
-	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+        * ace/SSL/SSL_Context.cpp (set_mode):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
+        * ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+        * ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
 
-	  Use the new report_error() static method to display error
-	  information instead of OpenSSL's ERR_print_error_fp().
+          Use the new report_error() static method to display error
+          information instead of OpenSSL's ERR_print_error_fp().
 
-	* ace/SSL/SSL_SOCK_Connector.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
 
-	  Include 'ace/Log_Msg.h' to pull ACE_ERROR macro definitions.
-	  Fixes compile-time problems on Tru64.  Thanks to Martin
-	  Krumpolec for providing this fix.  [Bug 1034]
+          Include 'ace/Log_Msg.h' to pull ACE_ERROR macro definitions.
+          Fixes compile-time problems on Tru64.  Thanks to Martin
+          Krumpolec for providing this fix.  [Bug 1034]
 
-	  (ACE_SSL_SOCK_Connector):
+          (ACE_SSL_SOCK_Connector):
 
-	  Wrap format specifier string in ACE_ERROR call with ACE_TEXT.
-	  Fixes mismatched Unicode/non-unicode strings.
+          Wrap format specifier string in ACE_ERROR call with ACE_TEXT.
+          Fixes mismatched Unicode/non-unicode strings.
 
 Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/SPIPE_Acceptor.{h,cpp}: Fixed the use of "char" for
+        * ace/SPIPE_Acceptor.{h,cpp}: Fixed the use of "char" for
           "already_connected_" to be "int".  Thanks to Johnny Willemsen
           for reporting this.
 
-	* ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
-	  Thanks to Chris Kohloff for contributing this and to
-	  Jan Kalin <jan.kalin@zag.si> for motivating this.
+        * ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
+          Thanks to Chris Kohloff for contributing this and to
+          Jan Kalin <jan.kalin@zag.si> for motivating this.
 
-	* ace/TTY_IO.cpp: Fixed numerous bugs in the control() method.
+        * ace/TTY_IO.cpp: Fixed numerous bugs in the control() method.
           Thanks to Airat A. Sadreev <airatsa@nm.ru> for reporting this.
 
-	* ace/TTY_IO.h: Add a new field for Win32.  Thanks to
-	  Airat A. Sadreev <airatsa@nm.ru> for reporting this.
+        * ace/TTY_IO.h: Add a new field for Win32.  Thanks to
+          Airat A. Sadreev <airatsa@nm.ru> for reporting this.
 
 Thu Sep 27 06:12:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/config-win32.h: Added a special-case for Borland C++ Builder,
-	  which must include vcl.h before windows.h.  Thanks to Chris
- 	  Kohloff for reporting this.  This fixes Bug ID 899 for the time
- 	  being.
+        * ace/config-win32.h: Added a special-case for Borland C++ Builder,
+          which must include vcl.h before windows.h.  Thanks to Chris
+          Kohloff for reporting this.  This fixes Bug ID 899 for the time
+          being.
 
-	* ace/Module.cpp (ACE_Module): The line
+        * ace/Module.cpp (ACE_Module): The line
 
-	  this->name ("<unknown>");
+          this->name ("<unknown>");
 
-	  was  be replaced with
+          was  be replaced with
 
           this->name (ACE_TEXT("<unknown>"));
 
-	  Thanks to Airat A. Sadreev <sadreevaa@hq.tatenergo.ru> for
- 	  reporting this.  This fixes bug id 1041.
+          Thanks to Airat A. Sadreev <sadreevaa@hq.tatenergo.ru> for
+          reporting this.  This fixes bug id 1041.
 
 Thu Sep 27 13:09:19 2001  Bala  <bala@cs.wustl.edu>
 
@@ -589,116 +596,116 @@ Thu Sep 27 13:09:19 2001  Bala  <bala@cs.wustl.edu>
 
 Tue Sep 25 16:12:14 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
+        * ace/SSL/SSL_SOCK_Stream.i (recv_i):
 
-	  Use ACE_OS::set_errno_to_last_error() set errno instead of doing
-	  so manually to get around broken compilers that reset the last
-	  error when assigning to errno.  Thanks to Chris Kohloff for
-	  pointing out the problem and suggesting this fix.
+          Use ACE_OS::set_errno_to_last_error() set errno instead of doing
+          so manually to get around broken compilers that reset the last
+          error when assigning to errno.  Thanks to Chris Kohloff for
+          pointing out the problem and suggesting this fix.
 
 Tue Sep 25 13:00:37 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Obstack.h: Fixed a typo when declaring ACE_Obstack
-	  exportable.  I mistakenly used the underlying
-	  ACE_EXPORT_SINGLETON_DECLARATION macro directly.
-	  ACE_SINGLETON_DECLARATION is the right macro to use here.
+        * ace/Obstack.h: Fixed a typo when declaring ACE_Obstack
+          exportable.  I mistakenly used the underlying
+          ACE_EXPORT_SINGLETON_DECLARATION macro directly.
+          ACE_SINGLETON_DECLARATION is the right macro to use here.
           Thanks to Martin Krumpolec <krumpolec@asset.sk> for reporting
-	  the bug.
+          the bug.
 
 Tue Sep 25 09:12:28 2001  Andrew Finnell  <Andrew.Finnell@esecurityinc.com>
 
-	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
+        * ace/SSL/SSL_SOCK_Stream.i (recv_i):
 
-	  On MS Windows, OpenSSL does not store the last error in errno so
-	  explicitly do so.  This corrects problems where a server is
-	  unaware that a client has forcefully disconnected.
+          On MS Windows, OpenSSL does not store the last error in errno so
+          explicitly do so.  This corrects problems where a server is
+          unaware that a client has forcefully disconnected.
 
 Tue Sep 25 00:01:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Service_Repository.cpp (instance): There are three stages of
-	  the Object Manager: (a) starting up; (b) running; (c) shutdown.
-	  ACE_Service_Repository::instance() was not creating a new
-	  instance in (a) and (c).  It was changed to allow creation (a).
+        * ace/Service_Repository.cpp (instance): There are three stages of
+          the Object Manager: (a) starting up; (b) running; (c) shutdown.
+          ACE_Service_Repository::instance() was not creating a new
+          instance in (a) and (c).  It was changed to allow creation (a).
 
 Mon Sep 24 01:55:29 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added TAO's PICurrent test to the list of automated regression
-	  tests.
+          Added TAO's PICurrent test to the list of automated regression
+          tests.
 
 Sun Sep 23 19:28:06 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Reactor.h (ACE_Reactor): Fixed comments for
-	  <end_reactor_event_loop> and <reactor_event_loop_done>.  Both
-	  methods work on an instance of reactor, not the global singleton
-	  reactor.  Thanks to Doug for noticing this.
+        * ace/Reactor.h (ACE_Reactor): Fixed comments for
+          <end_reactor_event_loop> and <reactor_event_loop_done>.  Both
+          methods work on an instance of reactor, not the global singleton
+          reactor.  Thanks to Doug for noticing this.
 
 Sun Sep 23 10:02:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/High_Res_Timer.h: Removed a question mark "?",  in a line
-	  which read  "or sometimes 3.579 Mhz??". This seems to remove the
-	  warning in VXWORKS builds. I have no clue about the problem that
-	  VXWORKS compiler sees. It took only more than an hour to figure
-	  this out. :(.
+        * ace/High_Res_Timer.h: Removed a question mark "?",  in a line
+          which read  "or sometimes 3.579 Mhz??". This seems to remove the
+          warning in VXWORKS builds. I have no clue about the problem that
+          VXWORKS compiler sees. It took only more than an hour to figure
+          this out. :(.
 
 Sat Sep 22 08:59:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Service_Manager.cpp (handle_input): Added some logic to
-	  strip off newlines and carriage returns for Windows platforms.
-  	  Thanks to Kyle Brost <Kyle.Brost@quest.com> for contributing
- 	  this.
+        * ace/Service_Manager.cpp (handle_input): Added some logic to
+          strip off newlines and carriage returns for Windows platforms.
+          Thanks to Kyle Brost <Kyle.Brost@quest.com> for contributing
+          this.
 
 Sat Sep 22 12:28:21 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/ACE_SSL_LIB.dsp:
+        * ace/SSL/ACE_SSL_LIB.dsp:
 
-	  Corrected code generation settings to use the multi-threaded DLL
-	  version of the run-time library.  Corrects "legacy" build
-	  problems.
+          Corrected code generation settings to use the multi-threaded DLL
+          version of the run-time library.  Corrects "legacy" build
+          problems.
 
 Sat Sep 22 08:59:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/High_Res_Timer.{h,i,cpp}: Added comments to explain how
-	  to configure the timers properly on various platforms.  Thanks
- 	  to Alain Decamps <Alain.Decamps@PIDPA.be> for reporting this.
+        * ace/High_Res_Timer.{h,i,cpp}: Added comments to explain how
+          to configure the timers properly on various platforms.  Thanks
+          to Alain Decamps <Alain.Decamps@PIDPA.be> for reporting this.
 
-	* ace/OS.i (ACE_Flow_Spec): Added a check for ACE_HAS_WINSOCK2_GQOS
-	  so that things will compile properly on MinGW32.  Thanks to Jeff
- 	  McNiel <JMcNiel@datacrit.com> for reporting this.
+        * ace/OS.i (ACE_Flow_Spec): Added a check for ACE_HAS_WINSOCK2_GQOS
+          so that things will compile properly on MinGW32.  Thanks to Jeff
+          McNiel <JMcNiel@datacrit.com> for reporting this.
 
 Fri Sep 21 15:54:55 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS_Dirent.cpp: Fixed all the allocations so they work properly
-	  when used with ACE_TCHAR!  Thanks to Olof Lindfors
- 	  <olof.lindfors@protegrity.com>.
+        * ace/OS_Dirent.cpp: Fixed all the allocations so they work properly
+          when used with ACE_TCHAR!  Thanks to Olof Lindfors
+          <olof.lindfors@protegrity.com>.
 
 Tue Sep 18 06:25:22 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/*Reactor*: Changed all uses of "delta_time" to "delay_time".
-	  Thanks to Johnny Willemsen for reporting this.
+        * ace/*Reactor*: Changed all uses of "delta_time" to "delay_time".
+          Thanks to Johnny Willemsen for reporting this.
 
 Sun Sep 16 11:53:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Connector.cpp (handle_output): Fixed the comment to be
-	  ACE_WIN32.  Thanks to Kobi Cohen-Arazi <kobi@mivzak.com> for
- 	  reporting this.
+        * ace/Connector.cpp (handle_output): Fixed the comment to be
+          ACE_WIN32.  Thanks to Kobi Cohen-Arazi <kobi@mivzak.com> for
+          reporting this.
 
 Fri Sep 21 17:11:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Message_Block.h: Tried rewording some comments in the
-	  ACE_Message_Block. Thanks to Tom Wagner <TomW@CoManage.net> for
-	  suggesting this.
+        * ace/Message_Block.h: Tried rewording some comments in the
+          ACE_Message_Block. Thanks to Tom Wagner <TomW@CoManage.net> for
+          suggesting this.
 
-	* THANKS: Added Tom Wagner <TomW@CoManage.net> to the Hall of
-	  Fame.
+        * THANKS: Added Tom Wagner <TomW@CoManage.net> to the Hall of
+          Fame.
 
 Fri Sep 21 22:11:53 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/ACE_SSL_LIB.dsp:
+        * ace/SSL/ACE_SSL_LIB.dsp:
 
-	  Removed hardcoded user-specific include paths, and user-specific
-	  preprocessor macro definitions.
+          Removed hardcoded user-specific include paths, and user-specific
+          preprocessor macro definitions.
 
 Thu Sep 20 18:15:49 2001  Steve Huston  <shuston@riverace.com>
 
@@ -707,27 +714,27 @@ Thu Sep 20 18:15:49 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Sep 20 12:29:09 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/ACE_SSL_LIB.dsp:
-	* ace/SSL/ACE_SSL_LIB.dsw:
+        * ace/SSL/ACE_SSL_LIB.dsp:
+        * ace/SSL/ACE_SSL_LIB.dsw:
 
-	  New static build MSVC++ project and workspace files for the
-	  ACE_SSL library contributed by Jonathan Reis <reis@stentor.com>.
-	  [Bug 1032]
+          New static build MSVC++ project and workspace files for the
+          ACE_SSL library contributed by Jonathan Reis <reis@stentor.com>.
+          [Bug 1032]
 
 Thu Sep 20 12:16:13 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK.cpp (enable, disable):
+        * ace/SSL/SSL_SOCK.cpp (enable, disable):
 
-	  Removed unreachable "return" statements.  [Bug 1033]
+          Removed unreachable "return" statements.  [Bug 1033]
 
-	* ace/SSL/SSL_SOCK_Stream.i (ACE_SSL_SOCK_Stream):
-	* ace/SSL/SSL_SOCK_Stream.cpp:
+        * ace/SSL/SSL_SOCK_Stream.i (ACE_SSL_SOCK_Stream):
+        * ace/SSL/SSL_SOCK_Stream.cpp:
 
-	  Moved constructor to the ".cpp" file since to prevent inclusion
-	  of `ace/Log_Msg.h' in `SSL_SOCK_Stream.h'.  This fixes problems
-	  with some platforms needing the Log_Msg include to pull in the
-	  ACE_ERROR macros without needlessly increasing inter-header
-	  dependencies and inclusions.  [Bug 1034]
+          Moved constructor to the ".cpp" file since to prevent inclusion
+          of `ace/Log_Msg.h' in `SSL_SOCK_Stream.h'.  This fixes problems
+          with some platforms needing the Log_Msg include to pull in the
+          ACE_ERROR macros without needlessly increasing inter-header
+          dependencies and inclusions.  [Bug 1034]
 
 Thu Sep 20 14:44:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -745,9 +752,9 @@ Thu Sep 20 06:28:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Sep 19 16:56:02 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.h (THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM): Added
-	  definitions for THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM on
-	  platforms that do not support threads.
+        * ace/OS.h (THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM): Added
+          definitions for THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM on
+          platforms that do not support threads.
 
 Wed Sep 19 16:54:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -759,10 +766,10 @@ Wed Sep 19 16:54:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Sep 19 14:15:08 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Enabled generation of debug info even for
-	  release configurations.  Thanks to Jonathan Reis
-	  <reis@stentor.com> for suggesting this.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Enabled generation of debug info even for
+          release configurations.  Thanks to Jonathan Reis
+          <reis@stentor.com> for suggesting this.
 
 Wed Sep 19 10:23:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -841,20 +848,20 @@ Mon Sep 17 13:49:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Sep 17 11:36:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/run_tests.lst: This is the script used by the shell
-	  script in that directory. As the name is confusing this is being
-	  moved as a new file.
+        * tests/run_tests.lst: This is the script used by the shell
+          script in that directory. As the name is confusing this is being
+          moved as a new file.
 
-	* tests/run_tests_remote.lst: Renamed the run_tests.lst as
-	  run_tests_shell.lst. This is invoked by run_tests.sh
+        * tests/run_tests_remote.lst: Renamed the run_tests.lst as
+          run_tests_shell.lst. This is invoked by run_tests.sh
 
-	* tests/run_tests.sh: Renamed as a new file.
+        * tests/run_tests.sh: Renamed as a new file.
 
-	* tests/run_tests_remote.sh: Renamed the file run_tests.sh as this
-	  one. This script can be used to run tests remotely on a
-	  CHORUS/ClassiX/MVME targets. Further this can also be used to
-	  run tests on platforms that dont support perl or do not have
-	  perl.
+        * tests/run_tests_remote.sh: Renamed the file run_tests.sh as this
+          one. This script can be used to run tests remotely on a
+          CHORUS/ClassiX/MVME targets. Further this can also be used to
+          run tests on platforms that dont support perl or do not have
+          perl.
 
 Sun Sep 16 11:19:01 2001  Balachandran  <bala@cs.wustl.edu>
 
