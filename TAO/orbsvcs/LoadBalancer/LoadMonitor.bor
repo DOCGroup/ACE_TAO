@@ -11,7 +11,9 @@ NAME = LoadMonitor
 !endif
 
 OBJFILES = \
+	$(OBJDIR)\Push_Handler.obj \
 	$(OBJDIR)\LoadMonitor.obj
+
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

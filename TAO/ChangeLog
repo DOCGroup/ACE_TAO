@@ -22,9 +22,10 @@ Tue Aug 13 11:25:23 2002  Ossama Othman  <ossama@uci.edu>
 	  invoking the top-level Makefile despite the fact that the
 	  binary sources were modified.
 
+	* orbsvcs/LoadBalancer/LoadMonitor.bor (OBJFILES)
 	* orbsvcs/LoadBalancer/Makefile.LoadMonitor (SRC):
 
-	  Added Push_Handler to the list of sources.
+	  Added Push_Handler to the list of sources and/or object files.
 
 Tue Aug 13 10:54:08 2002  Ossama Othman  <ossama@uci.edu>
 
