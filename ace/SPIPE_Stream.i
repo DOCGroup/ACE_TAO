@@ -3,7 +3,7 @@
 
 // SPIPE_Stream.i
 
-// Create an ACE_SPIPE_Stream. 
+// Create an ACE_SPIPE_Stream.
 
 ASYS_INLINE int
 ACE_SPIPE_Stream::get_remote_addr (ACE_SPIPE_Addr &remote_sap) const
@@ -89,7 +89,7 @@ ACE_SPIPE_Stream::recv (iovec iov[], size_t n) const
   return ACE_OS::readv (this->get_handle (), (iovec *) iov, n);
 }
 
-// This routine sends an open file descriptor to this socket. 
+// This routine sends an open file descriptor to this socket.
 
 ASYS_INLINE int
 ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
@@ -135,26 +135,26 @@ ACE_SPIPE_Stream::recv_handle (strrecvfd &recvfd) const
 #if defined (ACE_HAS_STREAM_PIPES)
   return ACE_OS::ioctl (this->get_handle (), I_RECVFD, (void *) &recvfd);
 #else
-  recvfd = recvfd;
+  ACE_UNUSED_ARG (recvfd);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
 ASYS_INLINE ssize_t
 ACE_SPIPE_Stream::send (const void *buf, size_t n,
-			ACE_OVERLAPPED *overlapped) const
+                        ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
-  return ACE_OS::write (this->get_handle (), 
-			(const char *) buf, n,
-			overlapped);
+  return ACE_OS::write (this->get_handle (),
+                        (const char *) buf, n,
+                        overlapped);
 }
 
 ASYS_INLINE ssize_t
 ACE_SPIPE_Stream::recv (void *buf, size_t n,
-			ACE_OVERLAPPED *overlapped) const
+                        ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::recv");
   return ACE_OS::read (this->get_handle (), (char *) buf, n,
-		       overlapped);
+                       overlapped);
 }
