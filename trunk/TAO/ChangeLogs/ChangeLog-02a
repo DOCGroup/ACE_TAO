@@ -41,7 +41,6 @@ Wed Mar 28 13:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added missing ACE_CHECK/ACE_TRY_CHECK
 
->>>>>>> 1.2993
 Wed Mar 28 13:43:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed
