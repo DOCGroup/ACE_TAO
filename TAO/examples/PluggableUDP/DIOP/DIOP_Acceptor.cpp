@@ -209,10 +209,18 @@ TAO_DIOP_Acceptor::close (void)
 {
   if (this->connection_handler_)
     {
-      // This will trigger that the connection handler gets deleted.
-      this->orb_core_->reactor ()->remove_handler (this->connection_handler_,
-                                                   ACE_Event_Handler::READ_MASK);
-
+      // Remove the connection handler from the reactor in the case
+      // of a valid handle, or close it yourself, if the handle is invalid.
+      // Either way it will cause the connection handler to be destructed.
+      if (this->connection_handler_->get_handle () != ACE_INVALID_HANDLE)
+        {
+          this->orb_core_->reactor ()->remove_handler (this->connection_handler_,
+                                                       ACE_Event_Handler::READ_MASK);
+        }
+      else
+        {
+          this->connection_handler_->handle_close ();
+        }
       this->connection_handler_ = 0;
     }
   return 0;
@@ -392,8 +400,12 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
   this->connection_handler_->local_addr (addr);
   this->connection_handler_->open_server ();
 
-  this->orb_core_->reactor ()->register_handler (this->connection_handler_,
-                                                 ACE_Event_Handler::READ_MASK);
+  // Register only with a valid handle
+  if (this->connection_handler_->get_handle () != ACE_INVALID_HANDLE)
+    {
+      this->orb_core_->reactor ()->register_handler (this->connection_handler_,
+                                                     ACE_Event_Handler::READ_MASK);
+    }
   // ------------------------------------
 
 

@@ -1,3 +1,11 @@
+Sat Apr 28 10:40:01 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+
+          Fixed the failure behavior in the case the UDP socket
+          returns an invalid handle. This had caused memory leaks,
+          which are now gone.
+
 Fri Apr 27 22:20:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/IDL_Test/Makefile.bor: Added rules for the new idl file,
