@@ -365,6 +365,14 @@ ACE_WFMO_Reactor_Handler_Repository::handle_deletions (void)
 
       for (int i = last_valid_index; i >= 0; i--)
 	{
+          // This stuff is necessary here, since we should not make
+          // the upcall until all the internal data structures have
+          // been updated.  This is to protect against upcalls that
+          // try to deregister again.
+          ACE_HANDLE handle = ACE_INVALID_HANDLE;
+          ACE_Reactor_Mask masks = 0;
+          ACE_Event_Handler *event_handler = 0;
+
 	  // See if this entry is scheduled for deletion
 	  if (this->current_info_[i].delete_entry_)
 	    {
@@ -375,18 +383,17 @@ ACE_WFMO_Reactor_Handler_Repository::handle_deletions (void)
 	      // threads in WFMO_Reactor.
 	      //
 	      // Make sure that the DONT_CALL mask is not set
-	      ACE_Reactor_Mask masks = this->current_info_[i].close_masks_;
+	      masks = this->current_info_[i].close_masks_;
 	      if (ACE_BIT_ENABLED (masks, ACE_Event_Handler::DONT_CALL) == 0)
 		{
 		  // Grab the correct handle depending on the type entry
-		  ACE_HANDLE handle;
 		  if (this->current_info_[i].io_entry_)
 		    handle = this->current_info_[i].io_handle_;
 		  else
 		    handle = this->current_handles_[i];
 
-		  // Upcall
-		  this->current_info_[i].event_handler_->handle_close (handle, masks);
+		  // Event handler
+		  event_handler = this->current_info_[i].event_handler_;
 		}
 
 	      // If <WFMO_Reactor> created the event, we need to clean it up
@@ -435,7 +442,12 @@ ACE_WFMO_Reactor_Handler_Repository::handle_deletions (void)
 	      // <to_be_deleted_set_>
 	      last_valid_index--;
 	    }
-	}
+          
+          // Now that all internal structures have been updated, make
+          // the upcall.
+          if (event_handler != 0)
+            event_handler->handle_close (handle, masks);
+        }
       // Reset <this->max_handlep1_>
       this->max_handlep1_ = last_valid_index + 1;
     }
@@ -468,6 +480,14 @@ ACE_WFMO_Reactor_Handler_Repository::handle_additions (void)
       int last_valid_index = this->suspended_handles_ - 1;
       for (i = last_valid_index; i >= 0; i--)
 	{
+          // This stuff is necessary here, since we should not make
+          // the upcall until all the internal data structures have
+          // been updated.  This is to protect against upcalls that
+          // try to deregister again.
+          ACE_HANDLE handle = ACE_INVALID_HANDLE;
+          ACE_Reactor_Mask masks = 0;
+          ACE_Event_Handler *event_handler = 0;
+
 	  // See if this entry is scheduled for deletion
 	  if (this->current_suspended_info_[i].delete_entry_)
 	    {
@@ -478,18 +498,17 @@ ACE_WFMO_Reactor_Handler_Repository::handle_additions (void)
 	      // threads in WFMO_Reactor.
 	      //
 	      // Make sure that the DONT_CALL mask is not set
-	      ACE_Reactor_Mask masks = this->current_suspended_info_[i].close_masks_;
+              masks = this->current_suspended_info_[i].close_masks_;
 	      if (ACE_BIT_ENABLED (masks, ACE_Event_Handler::DONT_CALL) == 0)
 		{
 		  // Grab the correct handle depending on the type entry
-		  ACE_HANDLE handle;
 		  if (this->current_suspended_info_[i].io_entry_)
 		    handle = this->current_suspended_info_[i].io_handle_;
 		  else
 		    handle = this->current_suspended_info_[i].event_handle_;
 
 		  // Upcall
-		  this->current_suspended_info_[i].event_handler_->handle_close (handle, masks);
+		  event_handler = this->current_suspended_info_[i].event_handler_;
 		}
 	  
 	      // If <WFMO_Reactor> created the event, we need to clean it up
@@ -528,6 +547,11 @@ ACE_WFMO_Reactor_Handler_Repository::handle_additions (void)
 	      // Reduce the number of suspended handles
 	      last_valid_index--;
 	    }
+
+          // Now that all internal structures have been updated, make
+          // the upcall.
+          if (event_handler != 0)
+            event_handler->handle_close (handle, masks);          
 	}
       
       // Reset <this->suspended_handles_>

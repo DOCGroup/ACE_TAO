@@ -1,3 +1,25 @@
+Tue Nov 11 01:44:39 1997    <irfan@TWOSTEP>
+
+	* examples/Naming/test_open.cpp (main): Added a new naming test
+ 	  that binds to the net_local server and tries to bind entries to
+ 	  it.
+
+	* netsvcs/lib/Name_Handler.cpp: Added a new class called
+ 	  Naming_Context.  This helper class adds the correct default
+ 	  constructor to the ACE_Naming_Context class so that we can use
+ 	  it in ACE_Singleton.
+
+	  Previously, each Name_Handler was getting its own
+ 	  Naming_Context.  This is obviously incorrect as the mapping
+ 	  address in already occupied by the first Name_Handler.
+  	  Therefore, the Naming_Context was changed into a Singleton
+ 	  accessable by all Name_Handlers.
+ 
+	* ace/WFMO_Reactor.cpp (handle_additions && handle_deletions):
+ 	  Changed code to make sure that we should not make the upcall
+ 	  until all the internal data structures have been updated.  This
+ 	  is to protect against upcalls that try to deregister again.
+
 Tue Nov 11 01:28:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.43, released Tue Nov 11 01:28:50 1997.

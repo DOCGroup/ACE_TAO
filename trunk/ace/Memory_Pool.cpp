@@ -279,7 +279,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 			   this->base_addr_,
                            0,
                            this->sa_) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
 
       return this->mmap_.addr ();
     }
