@@ -1,7 +1,7 @@
 Tue Apr 03 13:45:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.cpp: Fixed mismatched ACE_TRACE messages.  Thanks to
-	  the all mighty fuzzmaterd for reporting this.
+	  the all mighty fuzzmasterd for reporting this.
 
 Tue Apr  3 11:40:42 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
