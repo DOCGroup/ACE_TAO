@@ -39,9 +39,11 @@
 #define PTHREAD_STACK_MIN (1024*10)
 #endif
 
+#define ACE_LACKS_THREAD_PROCESS_SCOPING
+
 #undef PTHREAD_INHERIT_SCHED
 
-struct sched_param  
+struct sched_param
 {
   int sched_priority;
   int prio;
