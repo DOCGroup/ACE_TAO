@@ -60,11 +60,14 @@ ACE_Framework_Repository::close (void)
       // Delete components in reverse order.
       for (int i = this->current_size_ - 1; i >= 0; i--)
         {
-          ACE_Framework_Component *s = ACE_const_cast (ACE_Framework_Component *,
-                                                       this->component_vector_[i]);
-          --this->current_size_;
-          s->close_singleton ();
-          delete s;
+          if (this->component_vector_[i])
+            {
+              ACE_Framework_Component *s = ACE_const_cast (ACE_Framework_Component *,
+                                                           this->component_vector_[i]);
+
+              --this->current_size_;
+              s->close_singleton ();
+            }
         }
 
       delete [] this->component_vector_;
@@ -147,29 +150,7 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
 
   for (i = 0; i < this->current_size_; i++)
     if (this->component_vector_[i] &&
-        ACE_OS_String::strcmp (this->component_vector_[i]->name_, name))
-      {
-        this->component_vector_[i]->close_singleton ();
-        delete this->component_vector_[i];
-        this->component_vector_[i] = 0;
-        //return 0;
-      }
-
-  return 0;
-}
-
-int
-ACE_Framework_Repository::remove_dll_components (const ACE_TCHAR *dll_name)
-{
-  ACE_TRACE ("ACE_Framework_Repository::register_component");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-  int i;
-
- ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_components ('%s')\n"), dll_name));
-
-  for (i = 0; i < this->current_size_; i++)
-    if (this->component_vector_[i] &&
-        ACE_OS_String::strcmp (this->component_vector_[i]->dll_name_, dll_name))
+        ACE_OS_String::strcmp (this->component_vector_[i]->name_, name) == 0)
       {
         this->component_vector_[i]->close_singleton ();
         delete this->component_vector_[i];
@@ -178,7 +159,29 @@ ACE_Framework_Repository::remove_dll_components (const ACE_TCHAR *dll_name)
       }
 
   return -1;
+}
 
+int
+ACE_Framework_Repository::remove_dll_components (const ACE_TCHAR *dll_name)
+{
+  ACE_TRACE ("ACE_Framework_Repository::register_component");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  int i;
+  int retval = -1;
+
+ ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_components ('%s')\n"), dll_name));
+
+  for (i = 0; i < this->current_size_; i++)
+    if (this->component_vector_[i] &&
+        ACE_OS_String::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_c...()\n")));
+        this->component_vector_[i]->close_singleton ();
+        this->component_vector_[i] = 0;
+        ++retval;
+      }
+
+  return retval == -1 ? -1 : 0;
 }
 
 void

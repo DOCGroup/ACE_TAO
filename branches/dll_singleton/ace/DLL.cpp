@@ -159,7 +159,7 @@ ACE_DLL::close (void)
     {
      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL::close(): close_on_destruction\n")));
      // First remove any associated Framework Components.
-      ACE_Framework_Repository::instance () ->remove_dll_components (this->dll_name_);
+     ACE_Framework_Repository::instance () ->remove_dll_components (this->dll_name_);
 
       retval = ACE_OS::dlclose (this->handle_);
 

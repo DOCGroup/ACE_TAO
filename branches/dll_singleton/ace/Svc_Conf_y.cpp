@@ -977,7 +977,7 @@ case 30:
                                                             gobbler);
           ace_yyval.svc_record_ = new ACE_Service_Type (ace_yyvsp[-3].ident_,
                                      stp,
-                                     ace_yyvsp[-1].location_node_->handle (),
+                                     ace_yyvsp[-1].location_node_->dll (),
                                      ace_yyvsp[0].type_);
         }
       else

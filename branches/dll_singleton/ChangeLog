@@ -1,3 +1,41 @@
+Sat May 18 20:33:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
+	
+	* ace/Global_Macros.h:
+
+	  Defined a new macros, ACE_TRACE_IMPL, and implemented ACE_TRACE
+	  in terms of it if tracing is turned on.  This allows you to 
+	  easily and selectively turn tracing back on in an individual 
+	  file if you want without recompiling everything by just undefining
+	  ACE_TRACE and redefining it as ACE_TRACE_IMPL.
+
+	* ace/Framework_Component.cpp:
+
+	  Fixed some errors in the remove* methods.
+	
+	* ace/Svc_Conf_y.cpp:
+
+	  Made appropriate changes to use new dll methods when 
+	  creating an ACE_Service_Type instead of a handle.
+	
+	* ace/Parse_Node.{h,cpp}:
+
+	  Made the dll_ variable a pointer to an ACE_DLL instance and
+	  added a method to return it and take ownership.
+	
+	* ace/Service_Object.{h,cpp,i}:
+
+	  Store a pointer to the ACE_DLL instance that loaded the 
+	  dll containing the dynamic ACE_Service_Object, not just
+	  a handle to the dll itself. Removed handle() methods.  This
+	  means that ACE_DLL's close method will be the one to call
+	  ACE_OS::dlclose() as well as ACE_Framework_Repository::
+	  remove_dll_components() mentioned below.
+	
+	* tests/Framework_Component_DLL.cpp:
+	* tests/Framework_Component_Test.cpp:
+
+	  Minor cleanup mainly in comments and debug statements.
+
 Fri May 17 13:24:59 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Framework_Component_Test.cpp:
@@ -17,7 +55,6 @@ Fri May 17 13:24:59 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  by the generate_export_file.pl script).  Added virtual dll_name()
 	  method to Simple_Service to make testing easier (this isn't needed
 	  by real classes that use the adapter template).
-
 
 Thu May 16 17:54:49 UTC 2002  Don Hinton  <dhinton@ieee.org>
 

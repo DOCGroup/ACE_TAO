@@ -7,6 +7,11 @@
 //
 // = DESCRIPTION
 //    This program tests both the ACE_Framework_Compondent and ACE_Repository.
+//    Since Framework Components are singletons that can live in dlls loaded
+//    via the Service Configurator framework, this test uses that framework
+//    to load services from a dll that has a singleton based on ACE_DLL_Singleton.
+//    When the dll is finally ready to be unloaded, the singleton will be 
+//    automatically cleaned up just-in-time.//    
 //
 // = AUTHOR
 //    Don Hinton <dhinton@ieee.org>
@@ -55,11 +60,13 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Service_Config::process_directive (ACE_TEXT ("remove Server_1"));  
 
   // Make sure our singlton is still happy..
-  ACE_DEBUG ((LM_DEBUG, 
-              ACE_TEXT ("Simple_Service is still alive in library: %s\n"),
-              ss->dll_name ()));
+  // This will blow up now that simple service is deleted when the first
+  // ACE_DLL is destoyed--that's why we need to ref count the dlls ourselves
+  //ACE_DEBUG ((LM_DEBUG, 
+  //            ACE_TEXT ("Simple_Service is still alive in library: %s\n"),
+  //            ss->dll_name ()));
 
-  //ACE_Service_Config::close ();
+  ACE_Service_Config::close ();
 
   ACE_END_TEST;
   return 0;

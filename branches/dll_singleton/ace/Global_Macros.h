@@ -103,10 +103,12 @@ friend class ace_dewarn_gplusplus
 
 // ----------------------------------------------------------------
 
+# define ACE_TRACE_IMPL(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
+
 # if (ACE_NTRACE == 1)
 #   define ACE_TRACE(X)
 # else
-#   define ACE_TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
+#   define ACE_TRACE(X) ACE_TRACE_IMPL(X)
 # endif /* ACE_NTRACE */
 
 // ----------------------------------------------------------------
