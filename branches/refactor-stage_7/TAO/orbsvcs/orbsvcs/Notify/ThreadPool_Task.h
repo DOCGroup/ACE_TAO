@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_THREADPOOL_TASK_H
 #define TAO_Notify_THREADPOOL_TASK_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,6 +23,7 @@
 #include "ace/Task.h"
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
+
 #include "AdminProperties.h"
 #include "Worker_Task.h"
 
@@ -91,4 +93,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_THREADPOOL_TASK_H */

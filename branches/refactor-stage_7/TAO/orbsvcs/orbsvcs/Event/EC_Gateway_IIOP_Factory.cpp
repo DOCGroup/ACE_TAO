@@ -7,6 +7,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
+
 #include "ECG_ConsumerEC_Control.h"
 #include "ECG_Reactive_ConsumerEC_Control.h"
 #include "ECG_Reconnect_ConsumerEC_Control.h"
@@ -16,7 +17,9 @@
 #include "EC_Gateway_IIOP_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Gateway_IIOP_Factory, "$Id$")
+ACE_RCSID (Event, 
+           EC_Gateway_IIOP_Factory, 
+           "$Id$")
 
 int
 TAO_EC_Gateway_IIOP_Factory::init_svcs (void)

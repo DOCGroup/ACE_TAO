@@ -2,12 +2,17 @@
 #include "FT_Policy_i.h"
 
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
+
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "FT_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(FaultTolerance, FT_Policy_i, "$Id$")
+ACE_RCSID (FaultTolerance, 
+           FT_Policy_i, 
+           "$Id$")
 
 TimeBase::TimeT
 TAO_FT_Request_Duration_Policy::request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

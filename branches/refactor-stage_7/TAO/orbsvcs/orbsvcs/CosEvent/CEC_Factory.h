@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
 #include "tao/Objref_VarOut_T.h"
+
 #include "event_export.h"
 
 class ACE_Lock;

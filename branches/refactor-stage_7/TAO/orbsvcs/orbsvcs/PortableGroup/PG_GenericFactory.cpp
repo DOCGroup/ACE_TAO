@@ -5,11 +5,11 @@
 #include "PG_Property_Utils.h"
 #include "PG_conf.h"
 
+#include "tao/ORB_COnstants.h"
 
 ACE_RCSID (PortableGroup,
            PG_GenericFactory,
            "$Id$")
-
 
 TAO_PG_GenericFactory::TAO_PG_GenericFactory (
   TAO_PG_ObjectGroupManager & object_group_manager,

@@ -14,6 +14,7 @@
 
 #ifndef TAO_CEC_TYPEDEVENTCHANNEL_H_
 #define TAO_CEC_TYPEDEVENTCHANNEL_H_
+
 #include "ace/pre.h"
 
 #include "CEC_Factory.h"
@@ -26,7 +27,9 @@
 #include "event_export.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
+
 #include "tao/IFR_Client/IFR_BasicC.h"
+
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"

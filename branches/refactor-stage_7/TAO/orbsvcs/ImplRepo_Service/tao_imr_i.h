@@ -16,7 +16,9 @@
 #define TAO_IMR_I_H
 
 #include "tao/PortableServer/ImR_LocatorC.h"
-#include "tao/corba.h"
+
+#include "tao/ORB.h"
+
 #include "ace/SString.h"
 
 // Forward Declaration

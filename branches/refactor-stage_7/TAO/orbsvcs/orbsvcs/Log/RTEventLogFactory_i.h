@@ -28,9 +28,9 @@
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecSchedulerS.h"
-#include "RTEventLog_i.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include "RTEventLog_i.h"
 #include "rteventlog_export.h"
 
 #if defined(_MSC_VER)

@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_REFCOUNTABLE_GUARD_T_H
 #define TAO_Notify_REFCOUNTABLE_GUARD_T_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -57,4 +58,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_REFCOUNTABLE_GUARD_T_H */

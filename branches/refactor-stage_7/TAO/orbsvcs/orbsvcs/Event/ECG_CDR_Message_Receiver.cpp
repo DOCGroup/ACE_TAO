@@ -2,7 +2,9 @@
 
 #include "ECG_CDR_Message_Receiver.h"
 #include "ECG_CDR_Message_Sender.h"
+
 #include "tao/Exception.h"
+
 #include "ace/SOCK_Dgram.h"
 #include "ace/ACE.h"
 
@@ -10,7 +12,9 @@
 #include "ECG_CDR_Message_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_CDR_Message_Receiver, "$Id$")
+ACE_RCSID (Event, 
+           ECG_CDR_Message_Receiver, 
+           "$Id$")
 
 
 TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor (void)

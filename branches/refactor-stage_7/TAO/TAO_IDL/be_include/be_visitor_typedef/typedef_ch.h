@@ -56,6 +56,9 @@ public:
   virtual int visit_interface (be_interface *node);
   // visit an interface;
 
+  virtual int visit_interface_fwd (be_interface_fwd *node);
+  // visit an interface;
+
   virtual int visit_predefined_type (be_predefined_type *node);
   // visit predefined type node
 

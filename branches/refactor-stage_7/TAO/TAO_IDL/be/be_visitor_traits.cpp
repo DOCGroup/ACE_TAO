@@ -175,7 +175,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
 
   // I think we need to generate this only for non-defined forward
   // declarations.
-  if (!node->imported () && !node->is_defined ())
+  if (!node->imported ())
     {
       os->gen_ifdef_macro (node->flat_name (), "traits");
 

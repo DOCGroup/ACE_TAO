@@ -14,6 +14,7 @@
 
 #ifndef TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
 #define TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
+
 #include "ace/pre.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
@@ -29,14 +30,17 @@ class TAO_CEC_TypedEventChannel;
 class TAO_CEC_DynamicImplementationServer;
 
 //Class TAO_CEC_TypedProxyPushConsumer
-class TAO_Event_Export TAO_CEC_TypedProxyPushConsumer : public virtual POA_CosTypedEventChannelAdmin::TypedProxyPushConsumer
+class TAO_Event_Export TAO_CEC_TypedProxyPushConsumer
+  : public virtual POA_CosTypedEventChannelAdmin::TypedProxyPushConsumer
 {
 public:
   typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr _ptr_type;
   typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_var _var_type;
 
   //Constructor 
-  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedEventChannel* typed_event_channel);
+  TAO_CEC_TypedProxyPushConsumer (
+      TAO_CEC_TypedEventChannel* typed_event_channel
+    );
   
   //Destructor 
   virtual ~TAO_CEC_TypedProxyPushConsumer (void);
@@ -85,7 +89,9 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)...
-  virtual CORBA::Object_ptr get_typed_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Object_ptr get_typed_consumer (
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+    )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
@@ -146,10 +152,12 @@ class TAO_Event_Export TAO_CEC_TypedProxyPushConsumer_Guard
 {
 public:
   /// Constructor
-  TAO_CEC_TypedProxyPushConsumer_Guard (ACE_Lock *lock,
-                                        CORBA::ULong &refcount,
-                                        TAO_CEC_TypedEventChannel *ec,
-                                        TAO_CEC_TypedProxyPushConsumer *proxy);
+  TAO_CEC_TypedProxyPushConsumer_Guard (
+      ACE_Lock *lock,
+      CORBA::ULong &refcount,
+      TAO_CEC_TypedEventChannel *ec,
+      TAO_CEC_TypedProxyPushConsumer *proxy
+    );
 
   /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer_Guard (void);

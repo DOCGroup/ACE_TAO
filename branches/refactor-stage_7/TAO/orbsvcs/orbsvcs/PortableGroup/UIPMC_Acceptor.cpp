@@ -3,12 +3,13 @@
 // $Id$
 
 #include "UIPMC_Acceptor.h"
-
 #include "UIPMC_Profile.h"
+
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -16,7 +17,9 @@
 #include "UIPMC_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, UIPMC_Acceptor, "$Id$")
+ACE_RCSID (PortableGroup, 
+           UIPMC_Acceptor, 
+           "$Id$")
 
 
 TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (CORBA::Boolean /*flag*/)

@@ -81,6 +81,9 @@ const CORBA::ULong TAO_TAG_SHMEM_PROFILE = 0x54414f02U;
 /// UDP
 const CORBA::ULong TAO_TAG_UDP_PROFILE = 0x54414f04U;
 
+/// Unreliable IP Multicast
+const CORBA::ULong TAO_TAG_UIPMC_PROFILE = 0x54414f0CU;
+
 /**
  * @name Minor Code Encoding
  *

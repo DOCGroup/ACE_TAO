@@ -6,7 +6,9 @@
 #include "UIPMC_Acceptor.h"
 #include "UIPMC_Connector.h"
 
-ACE_RCSID(TAO_PORTABLESERVER, UIPMC_Factory, "$Id$")
+ACE_RCSID (PortableGroup, 
+           UIPMC_Factory, 
+           "$Id$")
 
 static const char prefix_[] = "uipmc";
 

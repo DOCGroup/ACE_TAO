@@ -4,14 +4,18 @@
 #include "CEC_EventChannel.h"
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ProxyPushConsumer.h"
+
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEventChannel.h"
 #include "CEC_TypedSupplierAdmin.h"
 #include "CEC_TypedProxyPushConsumer.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 #include "CEC_ProxyPullConsumer.h"
+
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
+
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)

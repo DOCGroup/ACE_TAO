@@ -104,6 +104,7 @@ SOURCE=.\Security\InvocationCredentialsPolicy.cpp
 # Begin Source File
 
 SOURCE=.\Security\PrincipalAuthenticator.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

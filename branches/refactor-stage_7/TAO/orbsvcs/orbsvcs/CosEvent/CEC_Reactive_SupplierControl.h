@@ -16,20 +16,22 @@
 
 #ifndef TAO_CEC_REACTIVE_SUPPLIERCONTROL_H
 #define TAO_CEC_REACTIVE_SUPPLIERCONTROL_H
+
 #include /**/ "ace/pre.h"
 
 #include "CEC_SupplierControl.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
-#include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
+
+#include "tao/ORB.h"
+
+#include "ace/Event_Handler.h"
 
 class TAO_CEC_EventChannel;
-
 class TAO_CEC_Reactive_SupplierControl;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -45,7 +47,8 @@ class TAO_CEC_TypedEventChannel;
  * periodically wakeup and verify the state of the suppliers
  * registered with the Event Channel.
  */
-class TAO_Event_Export TAO_CEC_SupplierControl_Adapter : public ACE_Event_Handler
+class TAO_Event_Export TAO_CEC_SupplierControl_Adapter 
+  : public ACE_Event_Handler
 {
 public:
   /// Constructor
@@ -71,7 +74,8 @@ private:
  * = LOCKING
  * = TODO
  */
-class TAO_Event_Export TAO_CEC_Reactive_SupplierControl : public TAO_CEC_SupplierControl
+class TAO_Event_Export TAO_CEC_Reactive_SupplierControl 
+  : public TAO_CEC_SupplierControl
 {
 public:
   /// Constructor.  It does not assume ownership of the <event_channel>
@@ -83,10 +87,12 @@ public:
 
   /// Constructor for the typed ec.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
-                                    const ACE_Time_Value &timeout,
-                                    TAO_CEC_TypedEventChannel *typed_event_channel,
-                                    CORBA::ORB_ptr orb);
+  TAO_CEC_Reactive_SupplierControl (
+      const ACE_Time_Value &rate,
+      const ACE_Time_Value &timeout,
+      TAO_CEC_TypedEventChannel *typed_event_channel,
+      CORBA::ORB_ptr orb
+    );
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
@@ -201,4 +207,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_CEC_SUPPLIERCONTROL_H */

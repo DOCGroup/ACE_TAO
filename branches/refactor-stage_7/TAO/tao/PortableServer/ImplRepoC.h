@@ -964,13 +964,77 @@ TAO::Collocation_Proxy_Broker *
     CORBA::Object_ptr obj
   );
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+#if defined (_MSC_VER)
 
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__TRAITS_CH_)
+#define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_PortableServer_Export Objref_Traits<ImplementationRepository::ServerObject>
+  {
+    static ImplementationRepository::ServerObject_ptr tao_duplicate (
+        ImplementationRepository::ServerObject_ptr
+      );
+    static void tao_release (
+        ImplementationRepository::ServerObject_ptr
+      );
+    static ImplementationRepository::ServerObject_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        ImplementationRepository::ServerObject_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__TRAITS_CH_)
+#define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_PortableServer_Export Objref_Traits<ImplementationRepository::ServerInformationIterator>
+  {
+    static ImplementationRepository::ServerInformationIterator_ptr tao_duplicate (
+        ImplementationRepository::ServerInformationIterator_ptr
+      );
+    static void tao_release (
+        ImplementationRepository::ServerInformationIterator_ptr
+      );
+    static ImplementationRepository::ServerInformationIterator_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        ImplementationRepository::ServerInformationIterator_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__TRAITS_CH_)
+#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_PortableServer_Export Objref_Traits<ImplementationRepository::Administration>
+  {
+    static ImplementationRepository::Administration_ptr tao_duplicate (
+        ImplementationRepository::Administration_ptr
+      );
+    static void tao_release (
+        ImplementationRepository::Administration_ptr
+      );
+    static ImplementationRepository::Administration_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        ImplementationRepository::Administration_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52

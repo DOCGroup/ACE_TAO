@@ -173,61 +173,64 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_uidt << "}";
     }
 
-  // Collocation setup method.
-  *os << be_nl << be_nl
-      << "void" << be_nl
-      << node->name () << "::" << node->flat_name ()
-      << "_setup_collocation (int collocated)" << be_nl
-      << "{" << be_idt_nl
-      << "if (collocated)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "this->the" << node->base_proxy_broker_name ()
-      << "_ =" << be_idt_nl
-      << "::" << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer (";
-      
-   if (node->is_abstract ())
-      {
-        *os << be_idt << be_idt_nl
-            << "this->equivalent_objref ()" << be_uidt_nl
-            << ");" << be_uidt;
-      }
-    else
-      {
-        *os << "this);";
-      }
-
-  *os << be_uidt << be_uidt_nl 
-      << "}" << be_uidt;
-
-  // Now we setup the immediate parents.
-  int n_parents = node->n_inherits ();
-  int has_parent = 0;
-
-  if (n_parents > 0)
+  if (! node->is_local ())
     {
-      for (int i = 0; i < n_parents; ++i)
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << node->name () << "::" << node->flat_name ()
+          << "_setup_collocation (int collocated)" << be_nl
+          << "{" << be_idt_nl
+          << "if (collocated)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "this->the" << node->base_proxy_broker_name ()
+          << "_ =" << be_idt_nl
+          << "::" << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer (";
+      
+       if (node->is_abstract ())
+          {
+            *os << be_idt << be_idt_nl
+                << "this->equivalent_objref ()" << be_uidt_nl
+                << ");" << be_uidt;
+          }
+        else
+          {
+            *os << "this);";
+          }
+
+      *os << be_uidt << be_uidt_nl 
+          << "}" << be_uidt;
+
+      // Now we setup the immediate parents.
+      int n_parents = node->n_inherits ();
+      int has_parent = 0;
+
+      if (n_parents > 0)
         {
-          be_interface *inherited =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
-
-          if (has_parent == 0)
+          for (int i = 0; i < n_parents; ++i)
             {
-              *os << be_nl;
+              be_interface *inherited =
+                be_interface::narrow_from_decl (node->inherits ()[i]);
+
+              if (has_parent == 0)
+                {
+                  *os << be_nl;
+                }
+
+              has_parent = 1;
+
+              *os << be_nl
+                  << "this->" << inherited->flat_name ()
+                  << "_setup_collocation" << " (collocated);";
             }
-
-          has_parent = 1;
-
-          *os << be_nl
-              << "this->" << inherited->flat_name ()
-              << "_setup_collocation" << " (collocated);";
         }
+
+      *os << be_uidt_nl << "}";
     }
 
-  *os << be_uidt_nl << "}";
-
-  *os << be_nl << be_nl << node->name () << "::~" << node->local_name ()
+  *os << be_nl << be_nl 
+      << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 

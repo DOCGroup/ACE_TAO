@@ -6,16 +6,25 @@
 #include "Buffering_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Buffering_Strategy, "$Id$")
+ACE_RCSID (Notify, 
+           Buffering_Strategy, 
+           "$Id$")
 
 #include "ace/Message_Queue.h"
+
 #include "orbsvcs/CosNotificationC.h"
+
 #include "Method_Request.h"
 #include "Notify_Extensions.h"
 #include "QoSProperties.h"
+
 #include "tao/debug.h"
 
-TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (TAO_Notify_Message_Queue& msg_queue, TAO_Notify_AdminProperties_var& admin_properties, CORBA::Long batch_size)
+TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
+    TAO_Notify_Message_Queue& msg_queue, 
+    TAO_Notify_AdminProperties_var& admin_properties, 
+    CORBA::Long batch_size
+  )
   : msg_queue_ (msg_queue),
     admin_properties_ (admin_properties),
     global_queue_lock_ (admin_properties->global_queue_lock ()),
@@ -38,7 +47,9 @@ TAO_Notify_Buffering_Strategy::~TAO_Notify_Buffering_Strategy ()
 }
 
 void
-TAO_Notify_Buffering_Strategy::update_qos_properties (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_Buffering_Strategy::update_qos_properties (
+    const TAO_Notify_QoSProperties& qos_properties
+  )
 {
   this->order_policy_.set (qos_properties);
 
@@ -49,7 +60,8 @@ TAO_Notify_Buffering_Strategy::update_qos_properties (const TAO_Notify_QoSProper
 
   TAO_Notify_Property_Time blocking_timeout (TAO_Notify_Extensions::BlockingPolicy);
 
-  if (blocking_timeout.set (qos_properties) != -1) // if set to a valid time, init the blocking_time_
+  // if set to a valid time, init the blocking_time_
+  if (blocking_timeout.set (qos_properties) != -1)
     {
       this->use_discarding_ = 0;
 
@@ -94,7 +106,8 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request& method_reques
           if (this->global_queue_length_ == this->max_global_queue_length_.value ()
               && this->msg_queue_.message_count () == 0) // global max. reached but can't discard
             {
-              // block. this is a hack because the real solution is to locate the appropriate queue and dequeue from it.
+              // block. this is a hack because the real solution is 
+              // to locate the appropriate queue and dequeue from it.
               this->global_queue_not_full_condition_.wait ();
             }
           else // local max reached or, at global max but non-zero local count.

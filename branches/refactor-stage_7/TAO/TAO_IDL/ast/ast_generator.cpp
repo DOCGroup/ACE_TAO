@@ -180,13 +180,6 @@ AST_Generator::create_module (UTL_Scope *s,
         }
     }
 
-  // If we are opening module CORBA, we must add the predefined
-  // types TypeCode, TCKind and maybe ValueBase.
-  if (!ACE_OS::strcmp (retval->local_name ()->get_string (), "CORBA"))
-    {
-      retval->add_CORBA_members ();
-    }
-
   return retval;
 }
 

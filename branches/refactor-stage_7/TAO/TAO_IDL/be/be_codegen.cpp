@@ -161,28 +161,29 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   if (be_global->pre_include () != 0)
     {
-      *this->client_header_ << "\n#include /**/ \""
+      *this->client_header_ << "#include /**/ \""
                             << be_global->pre_include ()
-                            << "\"\n";
+                            << "\"\n\n";
     }
 
   // This one is a good candidate to go first since applications need
   // full knowledge of CORBA::ORB. It's rather heavyweight though
   // (includes PolicyC.h) and should probably be refactored somehow.
-  this->gen_standard_include (this->client_header_,
-                              "tao/ORB.h");
+  *this->client_header_ << "#include \"tao/ORB.h\"";
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
   *this->client_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
                         << "# pragma once\n"
-                        << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+                        << "#endif /* ACE_LACKS_PRAGMA_ONCE */";
+
+  *this->client_header_ << be_nl;
 
   // Other include files.
 
   if (be_global->stub_export_include () != 0)
     {
-      *this->client_header_ << "\n\n#include \""
+      *this->client_header_ << "\n#include \""
                             << be_global->stub_export_include ()
                             << "\"";
     }
@@ -402,15 +403,7 @@ TAO_CodeGen::start_server_header (const char *fname)
     {
       *this->server_header_ << "#include /**/ \""
                             << be_global->pre_include ()
-                            << "\"";
-    }
-
-  // Include the Messaging files if AMI is enabled.
-  if (be_global->ami_call_back () == I_TRUE)
-    {
-      // Include Messaging skeleton file.
-      this->gen_standard_include (this->server_header_,
-                                  "tao/Messaging/MessagingS.h");
+                            << "\"\n";
     }
 
   // We must include all the skeleton headers corresponding to
@@ -432,6 +425,14 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       this->server_header_->print ("\n#include \"%s\"",
                                    server_hdr);
+    }
+
+  // Include the Messaging files if AMI is enabled.
+  if (be_global->ami_call_back () == I_TRUE)
+    {
+      // Include Messaging skeleton file.
+      this->gen_standard_include (this->server_header_,
+                                  "tao/Messaging/MessagingS.h");
     }
 
   // The server header should include the client header.
@@ -1338,6 +1339,13 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.any_seen_,
       "tao/Any.h",
+      this->client_header_
+    );
+
+  // ParameterMode is so rarely used, it was put in a separate TAO file.
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.parametermode_seen_,
+      "tao/ParameterMode.h",
       this->client_header_
     );
 

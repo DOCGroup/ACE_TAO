@@ -10,6 +10,7 @@
 
 #ifndef TAO_ECG_REACTIVE_CONSUMEREC_CONTROL_H
 #define TAO_ECG_REACTIVE_CONSUMEREC_CONTROL_H
+
 #include /**/ "ace/pre.h"
 
 #include "ECG_ConsumerEC_Control.h"
@@ -18,7 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
+
 #include "ace/Event_Handler.h"
 
 class TAO_ECG_Reactive_ConsumerEC_Control;
@@ -120,4 +122,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_ECG_REACTIVE_CONSUMEREC_CONTROL_H */

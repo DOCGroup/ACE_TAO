@@ -12,9 +12,12 @@
 
 #ifndef TAO_FT_POLICY_I_H
 #define TAO_FT_POLICY_I_H
+
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
+
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -208,6 +211,6 @@ private:
 #include "FT_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
-
 #include /**/ "ace/post.h"
+
 #endif /* TAO_FT_POLICY_I_H */

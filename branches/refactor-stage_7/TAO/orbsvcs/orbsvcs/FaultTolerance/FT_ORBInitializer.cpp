@@ -5,9 +5,11 @@
 #include "FT_ORBInitializer.h"
 #include "FT_PolicyFactory.h"
 #include "FT_ClientRequest_Interceptor.h"
-#include "orbsvcs/FT_CORBA_ORBC.h"
-#include "tao/Exception.h"
 
+#include "orbsvcs/FT_CORBA_ORBC.h"
+
+#include "tao/Exception.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (FaultTolerance,
            FT_ORBInitializer,

@@ -11,6 +11,7 @@
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Reactor.h"
 
