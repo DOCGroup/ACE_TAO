@@ -27,6 +27,31 @@
 
 ACE_RCSID(Adapter_Activator, server, "$Id$")
 
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined (_MSC_VER)
+# pragma warning (disable : 4250)
+#endif /* _MSC_VER */
+
+class Reference_Counted_Foo : public virtual PortableServer::RefCountServantBase,
+                              public virtual MyFooServant
+{
+public:
+  Reference_Counted_Foo (CORBA::ORB_ptr orb,
+                         PortableServer::POA_ptr poa,
+                         CORBA::Long value);
+  // Constructor - takes a POA and a value parameter
+};
+
+Reference_Counted_Foo::Reference_Counted_Foo (CORBA::ORB_ptr orb,
+                                              PortableServer::POA_ptr poa,
+                                              CORBA::Long value)
+  : MyFooServant (orb,
+                  poa,
+                  value)
+{
+}
+
 class Adapter_Activator : public POA_PortableServer::AdapterActivator
 {
 public:
@@ -83,13 +108,18 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                             ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      MyFooServant *foo_impl = new MyFooServant (this->orb_.in (),
-                                                 child.in (),
-                                                 28);
+      Reference_Counted_Foo *foo_impl = new Reference_Counted_Foo (this->orb_.in (),
+                                                                   child.in (),
+                                                                   28);
 
       child->set_servant (foo_impl,
                           ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+
+      // This means that the ownership of <foo_impl> now belongs to
+      // the POA.
+      foo_impl->_remove_ref (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Finally everything is fine
       return 1;
@@ -111,9 +141,9 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
           ACE_CHECK_RETURN (0);
         }
 
-      MyFooServant *foo_impl = new MyFooServant (this->orb_.in (),
-                                                 child.in (),
-                                                 29);
+      Reference_Counted_Foo *foo_impl = new Reference_Counted_Foo (this->orb_.in (),
+                                                                   child.in (),
+                                                                   29);
 
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId ("third Foo");
@@ -122,6 +152,11 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                       foo_impl,
                                       ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+
+      // This means that the ownership of <foo_impl> now belongs to
+      // the POA.
+      foo_impl->_remove_ref (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Finally everything is fine
       return 1;
@@ -339,9 +374,9 @@ main (int argc, char **argv)
       }
 
       // Create a servant.
-      MyFooServant first_foo_impl (orb.in (),
-                                   root_poa.in (),
-                                   27);
+      Reference_Counted_Foo first_foo_impl (orb.in (),
+                                            root_poa.in (),
+                                            27);
 
       PortableServer::ObjectId_var first_oid =
         root_poa->activate_object (&first_foo_impl,
