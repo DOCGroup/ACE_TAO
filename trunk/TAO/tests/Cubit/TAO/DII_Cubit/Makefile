@@ -29,6 +29,7 @@ ECHO_CLT_OBJS = test1.o echo_clnt.o
 BIN = svr clnt
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -49,6 +50,7 @@ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 DCFLAGS = -g
+OCFLAGS = 
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 

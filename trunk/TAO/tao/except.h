@@ -186,7 +186,7 @@ public:
   }
 
   void print_exception (const char *info,
-                        FILE *f=stdout);
+                        FILE *f=stdout) const;
   // print the exception to output determined by f
 
 private:
@@ -196,5 +196,13 @@ private:
   CORBA_Environment (const CORBA_Environment &src);
   CORBA_Environment &operator = (const CORBA_Environment &src);
 };
+
+ACE_INLINE void
+print_exception (CORBA_Environment const *e,
+                 const char* info, FILE* f = stdout)
+{
+  e->print_exception (info, f);
+}
+  
 
 #endif /* TAO_EXCEPT_H */

@@ -23,6 +23,7 @@ BIN = client server
 BUILD = $(BIN)
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

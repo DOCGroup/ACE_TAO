@@ -22,6 +22,7 @@ CUBIT_CLT_OBJS = cubitC.o clnt.o
 BIN = svr clnt
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
