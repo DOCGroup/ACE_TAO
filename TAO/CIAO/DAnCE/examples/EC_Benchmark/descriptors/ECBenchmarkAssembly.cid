@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>75068A24-13D8-4ECC-834B-5DF6848A210A</UUID>
+
+  <assemblyImpl>
+    <instance xmi:id="Producer_91D6544D-6623-447C-84A8-5971CD7F1BCA">
+      <name>Producer</name>
+      <package href="Producer.cpd"/>
+    </instance>
+    <instance xmi:id="Consumer_6CD28A0F-985B-4CF1-B7F9-1EBC4A12FEFA">
+      <name>Consumer</name>
+      <package href="Consumer.cpd"/>
+    </instance>
+    <connection>
+      <name>timeout_timeout</name>
+      <internalEndpoint>
+        <portName>timeout</portName>
+        <instance xmi:idref="Producer_91D6544D-6623-447C-84A8-5971CD7F1BCA"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>timeout</portName>
+        <instance xmi:idref="Consumer_6CD28A0F-985B-4CF1-B7F9-1EBC4A12FEFA"/>
+      </internalEndpoint>
+    </connection>
+  </assemblyImpl>
+
+</Deployment:ComponentImplementationDescription>

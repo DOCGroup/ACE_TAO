@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>7817DBFA-F6DD-4B54-BF33-27A405C7C8FF</UUID>
+
+  <implements href="Consumer.ccd"/>
+
+  <monolithicImpl>
+    <primaryArtifact>
+      <name>Consumer_exec</name>
+      <referencedArtifact href="Consumer_exec.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Consumer_stub</name>
+      <referencedArtifact href="Consumer_stub.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Consumer_svnt</name>
+      <referencedArtifact href="Consumer_svnt.iad"/>
+    </primaryArtifact>
+  </monolithicImpl>
+
+  <configProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Consumer.ior</string>
+      </value>
+    </value>
+  </configProperty>
+
+</Deployment:ComponentImplementationDescription>
