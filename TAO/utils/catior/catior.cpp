@@ -33,6 +33,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/IIOP_EndpointsC.h"
+#include "tao/CDR.h"
 
 
 static CORBA::Boolean
