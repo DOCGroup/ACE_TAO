@@ -13,19 +13,20 @@
  *
  * ============================================================================= */
 
-#include <errno.h>
+#include "pace/errno.h"
+#include "pace/signal.h"
 extern int errno;
 
 PACE_INLINE
 char *
-pace_asctime (const struct tm * time)
+pace_asctime (const pace_tm * time)
 {
   return asctime (time);
 }
 
 PACE_INLINE
 char *
-pace_asctime_r (const struct tm * time, char * buf)
+pace_asctime_r (const pace_tm * time, char * buf)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return asctime_r (time, buf);
@@ -54,7 +55,7 @@ pace_difftime (pace_time_t time1, pace_time_t time2)
 PACE_INLINE
 int
 pace_clock_getres (clockid_t clock_id,
-                   struct timespec * res)
+                   pace_timespec * res)
 {
   return clock_getres (clock_id, res);
 }
@@ -62,7 +63,7 @@ pace_clock_getres (clockid_t clock_id,
 PACE_INLINE
 int
 pace_clock_gettime (clockid_t clock_id,
-                    struct timespec * tp)
+                    pace_timespec * tp)
 {
   return clock_gettime (clock_id, tp);
 }
@@ -70,7 +71,7 @@ pace_clock_gettime (clockid_t clock_id,
 PACE_INLINE
 int
 pace_clock_settime (clockid_t clock_id,
-                    const struct timespec * tp)
+                    const pace_timespec * tp)
 {
 #if PACE_HAS_POSIX == PACE_LYNXOS
   /* Cast away const for Lynx prototype compatability. */
@@ -102,15 +103,15 @@ pace_ctime_r (const time_t * clock, char * buf)
 }
 
 PACE_INLINE
-struct tm *
+pace_tm *
 pace_gmtime (const time_t * clock)
 {
   return gmtime (clock);
 }
 
 PACE_INLINE
-struct tm *
-pace_gmtime_r (const time_t * clock, struct tm * result)
+pace_tm *
+pace_gmtime_r (const time_t * clock, pace_tm * result)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return gmtime_r (clock, result);
@@ -123,15 +124,15 @@ pace_gmtime_r (const time_t * clock, struct tm * result)
 }
 
 PACE_INLINE
-struct tm *
+pace_tm *
 pace_localtime (const time_t * clock)
 {
   return localtime (clock);
 }
 
 PACE_INLINE
-struct tm *
-pace_localtime_r (const time_t * clock, struct tm * result)
+pace_tm *
+pace_localtime_r (const time_t * clock, pace_tm * result)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return localtime_r (clock, result);
@@ -145,15 +146,15 @@ pace_localtime_r (const time_t * clock, struct tm * result)
 
 PACE_INLINE
 time_t
-pace_mktime (struct tm * timeptr)
+pace_mktime (pace_tm * timeptr)
 {
   return mktime (timeptr);
 }
 
 PACE_INLINE
 int
-pace_nanosleep (const struct timespec * rqtp,
-                struct timespec * rmtp)
+pace_nanosleep (const pace_timespec * rqtp,
+                pace_timespec * rmtp)
 {
   return nanosleep (rqtp, rmtp);
 }
@@ -162,7 +163,7 @@ PACE_INLINE
 size_t
 pace_strftime (char *s, size_t maxsize,
                const char *format,
-               const struct tm *timeptr)
+               const pace_tm *timeptr)
 {
   return strftime (s, maxsize, format, timeptr);
 }
@@ -177,7 +178,7 @@ pace_time (time_t * tloc)
 PACE_INLINE
 int
 pace_timer_create (clockid_t clock_id,
-                   struct sigevent *evp,
+                   pace_sigevent * evp,
                    timer_t *timerid)
 {
   return timer_create (clock_id, evp, timerid);
@@ -200,7 +201,7 @@ pace_timer_getoverrun (timer_t timerid)
 PACE_INLINE
 int
 pace_timer_gettime (timer_t timerid,
-                    struct itimerspec * value)
+                    pace_itimerspec * value)
 {
   return timer_gettime (timerid, value);
 }
@@ -209,8 +210,8 @@ PACE_INLINE
 int
 pace_timer_settime (timer_t timerid,
                     int flags,
-                    const struct itimerspec * value,
-                    struct itimerspec * ovalue)
+                    const pace_itimerspec * value,
+                    pace_itimerspec * ovalue)
 {
   return timer_settime (timerid, flags, value, ovalue);
 }

@@ -14,14 +14,14 @@
  * ============================================================================= */
 
 PACE_INLINE
-DIR *
+PACE_DIR *
 pace_opendir (const char * dirname)
 {
   return opendir (dirname);
 }
 
 PACE_INLINE
-struct dirent *
+pace_dirent *
 pace_readdir (PACE_DIR * dirp)
 {
   return readdir (dirp);

@@ -45,6 +45,11 @@ extern "C" {
 #define PACE_PTHREAD_SCOPE_PROCESS PTHREAD_SCOPE_PROCESS
 #define PACE_PTHREAD_SCOPE_SYSTEM PTHREAD_SCOPE_SYSTEM
 
+#ifndef PACE_SCHED_PARAM
+#define PACE_SCHED_PARAM
+  typedef struct sched_param pace_sched_param;
+#endif /* PACE_SCHED_PARAM */
+
   /**
      PACE's implementation of the POSIX function pthread_atfork.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
@@ -83,7 +88,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 13.5.1.
    */
   PACE_INLINE int pace_pthread_attr_getschedparam (const pace_pthread_attr_t * attr,
-                                                   struct sched_param * param);
+                                                   pace_sched_param * param);
 
   /**
      PACE's implementation of the POSIX function pthread_attr_getschedpolicy.
@@ -146,8 +151,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 13.5.1.
    */
   PACE_INLINE int pace_pthread_attr_setschedparam (pace_pthread_attr_t * attr,
-                                                   const struct
-                                                   sched_param * param);
+                                                   const
+                                                   pace_sched_param * param);
 
   /**
      PACE's implementation of the POSIX function pthread_attr_setschedpolicy.
@@ -242,7 +247,7 @@ extern "C" {
    */
   PACE_INLINE int pace_pthread_cond_timedwait (pthread_cond_t * cond,
                                                pace_pthread_mutex_t * mutex,
-                                               const struct timespec * abstime);
+                                               const pace_timespec * abstime);
 
   /**
      PACE's implementation of the POSIX function pthread_cond_wait.
@@ -320,7 +325,7 @@ extern "C" {
    */
   PACE_INLINE int pace_pthread_getschedparam (pace_pthread_t thread,
                                               int * policy,
-                                              struct sched_param * param);
+                                              pace_sched_param * param);
 
   /**
      PACE's implementation of the POSIX function pthread_getspecific.
@@ -515,7 +520,7 @@ extern "C" {
    */
   PACE_INLINE int pace_pthread_setschedparam (pace_pthread_t thread,
                                               int policy,
-                                              const struct sched_param * param);
+                                              const pace_sched_param * param);
 
   /**
      PACE's implementation of the POSIX function pthread_setspecific.

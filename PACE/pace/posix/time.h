@@ -69,6 +69,11 @@ extern "C" {
   typedef struct itimerspec pace_itimerspec;
 #endif /* PACE_ITIMERSPEC */
 
+#ifndef PACE_SIGEVENT
+#define PACE_SIGEVENT
+  typedef struct sigevent pace_sigevent;
+#endif /* PACE_SIGEVENT */
+
   /**
      PACE's implementation of the POSIX function asctime.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
@@ -203,7 +208,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 14.2.2.
    */
   PACE_INLINE int pace_timer_create (pace_clockid_t clock_id,
-                                     struct sigevent * evp,
+                                     pace_sigevent * evp,
                                      pace_timer_t * timerid);
 
   /**

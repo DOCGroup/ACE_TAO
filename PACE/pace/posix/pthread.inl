@@ -56,7 +56,7 @@ pace_pthread_attr_getinheritsched (const pace_pthread_attr_t * attr,
 PACE_INLINE
 int
 pace_pthread_attr_getschedparam (const pace_pthread_attr_t * attr,
-                                 struct sched_param * param)
+                                 pace_sched_param * param)
 {
   return pthread_attr_getschedparam (attr, param);
 }
@@ -124,7 +124,7 @@ pace_pthread_attr_setinheritsched (pace_pthread_attr_t * attr,
 PACE_INLINE
 int
 pace_pthread_attr_setschedparam (pace_pthread_attr_t * attr,
-                                 const struct sched_param * param)
+                                 const pace_sched_param * param)
 {
   return pthread_attr_setschedparam (attr, param);
 }
@@ -201,7 +201,7 @@ PACE_INLINE
 int
 pace_pthread_cond_timedwait (pthread_cond_t * cond,
                              pace_pthread_mutex_t * mutex,
-                             const struct timespec * abstime)
+                             const pace_timespec * abstime)
 {
 #if PACE_HAS_POSIX == PACE_LYNXOS
   /* Cast away const since LynxOS' prototypes aren't const */
@@ -291,7 +291,7 @@ PACE_INLINE
 int
 pace_pthread_getschedparam (pace_pthread_t thread,
                             int * policy,
-                            struct sched_param * param)
+                            pace_sched_param * param)
 {
   return pthread_getschedparam (thread, policy, param);
 }
@@ -501,7 +501,7 @@ PACE_INLINE
 int
 pace_pthread_setschedparam (pace_pthread_t thread,
                             int policy,
-                            const struct sched_param * param)
+                            const pace_sched_param * param)
 {
   return pthread_setschedparam (thread, policy, param);
 }
