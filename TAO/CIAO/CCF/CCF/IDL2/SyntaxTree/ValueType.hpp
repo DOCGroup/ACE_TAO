@@ -73,18 +73,10 @@ namespace CCF
       class ValueTypeForwardDecl : public virtual ValueTypeDecl,
                                    public virtual TypeForwardDecl
       {
-      public:
+      protected:
         virtual
         ~ValueTypeForwardDecl () throw () {}
 
-        ValueTypeForwardDecl (SimpleName const& name,
-                              ScopePtr const& scope)
-            : Declaration (name, scope)
-        {
-          type_info (static_type_info ());
-        }
-
-      protected:
         ValueTypeForwardDecl ()
         {
           type_info (static_type_info ());
@@ -129,26 +121,10 @@ namespace CCF
                            public virtual TypeDef,
                            public virtual Scope
       {
-      public:
+      protected:
         virtual
         ~ValueTypeDef () throw () {}
 
-        ValueTypeDef (SimpleName const& name,
-                      ScopePtr const& scope,
-                      ScopedNameSet const& inherits)
-            : Declaration (name, scope)
-        {
-          type_info (static_type_info ());
-
-          for (ScopedNameSet::const_iterator i = inherits.begin ();
-               i != inherits.end ();
-               i++)
-          {
-            inherits_.insert (ValueTypeDefRef (table (), *i));
-          }
-        }
-
-      protected:
         ValueTypeDef (ScopedNameSet const& inherits)
         {
           type_info (static_type_info ());
@@ -164,6 +140,36 @@ namespace CCF
         // This c-tor is never called.
         //
         ValueTypeDef ();
+
+      public:
+        typedef
+        ValueTypeDefRefSetName::const_iterator
+        Iterator;
+
+        Iterator
+        inherits_begin () const
+        {
+          return inherits_.begin ();
+        }
+
+        Iterator
+        inherits_end () const
+        {
+          return inherits_.end ();
+        }
+
+      protected:
+        ScopedNameSet
+        inherits () const
+        {
+          ScopedNameSet s;
+
+          for (Iterator i (inherits_begin ()), end (inherits_end ());
+               i != end;
+               ++i) s.insert (i->name ());
+
+          return s;
+        }
 
 
         // Runtime declaration type information

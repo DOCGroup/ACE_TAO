@@ -14,6 +14,8 @@ Legend:
 
 @@ Write proper build instructions.
 
+@@ Seem to me some of the declaration_class implementations are redundant.
+
 @% Need to do something with this ctor initialization mess.
 
 @@ Can I use C++ templates instead of m4 in BuiltIn stuff?

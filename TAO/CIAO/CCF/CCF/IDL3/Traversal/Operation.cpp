@@ -223,7 +223,7 @@ namespace CCF
       void HomeFactoryDecl::
       post (NodePtr const&)
       {
-      }      
+      }
     }
   }
 }

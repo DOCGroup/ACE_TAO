@@ -13,7 +13,7 @@ module M1
   component C1 
   {
     provides M::I i;
-  };  
+  };
   
   home H1 manages C1
   {

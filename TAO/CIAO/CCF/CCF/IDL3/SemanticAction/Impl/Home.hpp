@@ -67,9 +67,10 @@ namespace CCF
               test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
-                std::string type = d->declaration_class ();
-
-                if (type != "home") throw IncompatibleType (type);
+                if (!d->is_a<HomeDef> ())
+                {
+                  throw IncompatibleType (d->declaration_class ());
+                }
 
                 // This is not really necessary since home cannot be
                 // forward-declared (yet ;-).
@@ -124,7 +125,7 @@ namespace CCF
             Name name (id->lexeme ());
 
             struct SupportsPredicate :
-  public DeclarationTable::ResolvePredicate
+              public DeclarationTable::ResolvePredicate
             {
               struct IncompatibleType :
                 public DeclarationTable::ResolutionFailure
@@ -137,13 +138,13 @@ namespace CCF
               test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
-                std::string type = d->declaration_class ();
-
                 // Spec doesn't say anything about which interfaces
                 // component can support.
-                if (type != "unconstrained interface")
-                  throw IncompatibleType (type);
-
+                if (!d->is_a<UnconstrainedInterfaceDecl> ())
+                {
+                  throw IncompatibleType (d->declaration_class ());
+                }
+                
                 return d->dynamic_type<TypeDecl> ()->defined ();
               }
             } p;
@@ -200,7 +201,7 @@ namespace CCF
             Name name (id->lexeme ());
 
             struct ManagesPredicate :
-  public DeclarationTable::ResolvePredicate
+              public DeclarationTable::ResolvePredicate
             {
               struct IncompatibleType :
                 public DeclarationTable::ResolutionFailure
@@ -213,9 +214,10 @@ namespace CCF
               test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
-                std::string type = d->declaration_class ();
-
-                if (type != "component") throw IncompatibleType (type);
+                if (!d->is_a<ComponentDecl> ())
+                {
+                  throw IncompatibleType (d->declaration_class ());
+                }
 
                 return d->dynamic_type<TypeDecl>()->defined ();
               }
