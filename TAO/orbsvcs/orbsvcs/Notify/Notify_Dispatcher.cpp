@@ -3,6 +3,16 @@
 #include "Notify_Dispatcher.h"
 #include "ace/CORBA_macros.h"
 #include "orbsvcs/orbsvcs/CosNotifyCommC.h" // i get some errors with env otherwise
+#include "Notify_FilterAdmin_i.h"
+
+TAO_Notify_Dispatcher::TAO_Notify_Dispatcher (void)
+  :filter_admin_ (0)
+{
+}
+
+TAO_Notify_Dispatcher::~TAO_Notify_Dispatcher ()
+{
+}
 
 TAO_Notify_Dispatcher*
 TAO_Notify_Dispatcher::create (CORBA::Environment &ACE_TRY_ENV)
@@ -17,6 +27,12 @@ TAO_Notify_Dispatcher::create (CORBA::Environment &ACE_TRY_ENV)
                     Notify_Reactive_Dispatcher (),
                     CORBA::NO_MEMORY());
   return dispatcher;
+}
+
+void
+TAO_Notify_Dispatcher::set_FilterAdmin (TAO_Notify_FilterAdmin_i* filter_admin)
+{
+  filter_admin_ = filter_admin;
 }
 
 int
@@ -45,6 +61,33 @@ Notify_Reactive_Dispatcher::dispatch_event (const CORBA::Any & data,
       if (iter.next (p_dispatcher) == 0)
         break;
       (*p_dispatcher)->dispatch_event (data, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
+void
+Notify_Reactive_Dispatcher::dispatch_event (
+                                            const CosNotification::StructuredEvent& event,
+                                            CORBA::Environment &ACE_TRY_ENV)
+{
+  if (filter_admin_ != 0)
+    {
+      CORBA::Boolean truth =
+        filter_admin_->match_structured (event, ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (truth == 0)
+        return; // don't propogate the event further out.
+    }
+
+  DISPATCHER_SET_ITER iter (contained_);
+  TAO_Notify_Dispatcher **p_dispatcher;
+
+  for (iter.first ();iter.done () != 1;iter.advance ())
+    {
+      if (iter.next (p_dispatcher) == 0)
+        break;
+      (*p_dispatcher)->dispatch_event (event, ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
