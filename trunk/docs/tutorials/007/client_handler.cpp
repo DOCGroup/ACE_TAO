@@ -152,7 +152,7 @@ int Client_Handler::handle_input (ACE_HANDLE _handle)
    */
 
   char buf[128];
-  memset (buf, 0, sizeof (buf));
+  ACE_OS::memset (buf, 0, sizeof (buf));
 
   /*
      Invoke the process() method to do the work but save it's return value instead
@@ -196,7 +196,7 @@ int Client_Handler::handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask)
 int Client_Handler::svc(void)
 {
   char buf[128];
-  memset (buf, 0, sizeof (buf));
+  ACE_OS::memset (buf, 0, sizeof (buf));
 
   while( 1 )
   {

@@ -85,7 +85,10 @@ Indent : #
 	# include just like the makefile components above.
 Depend : depend
 	perl fix.Makefile
-	
+
+.depend : #
+	touch .depend
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
