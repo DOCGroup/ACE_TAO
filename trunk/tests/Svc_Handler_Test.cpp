@@ -131,7 +131,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     file_io.get_info (info);
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("file size = %d\n"), info.size_));
 
-    for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_Log_Record::MAXLOGMSGLEN)) > 0; )
+    for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_MAXLOGMSGLEN)) > 0; )
       {
         buf[n_bytes] = '\0';
         ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("%s"), ACE_TEXT_CHAR_TO_TCHAR(buf)));
