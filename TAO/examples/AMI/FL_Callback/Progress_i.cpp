@@ -110,7 +110,7 @@ Progress_Window::sent_request (CORBA::Long id)
   obj->value (obj->value () + 1);
   obj->redraw ();
 
-  int i = obj->value ();
+  int i = ACE_static_cast(int,obj->value ());
   if (i % 100 == 0)
     ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
 }
@@ -125,7 +125,7 @@ Progress_Window::recv_reply (CORBA::Long id)
   obj->value (obj->value () + 1);
   obj->redraw ();
 
-  int i = obj->value ();
+  int i = ACE_static_cast(int,obj->value ());
   if (i % 100 == 0)
     ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
 }
