@@ -1,4 +1,0 @@
-project {
-  depends += Messaging
-  libs    += TAO_Messaging
-}

@@ -1,7 +1,0 @@
-project : Kokyulib, core {
-  depends     = ace
-  sharedname  = Kokyu
-  dllflags    = KOKYU_BUILD_DLL
-  libout      = ..
-  include_dir = ace
-}
