@@ -1,3 +1,9 @@
+Wed Jan  7 13:03:49 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Unbounde_Set_Ex.h:
+          Added #include of ace/os_include/os_stddef.h to get size_t. This
+          fixed compile errors in the Cygwin build
+
 Wed Jan  7 12:57:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/UDP/UDP.mpc:
