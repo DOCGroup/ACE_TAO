@@ -8,7 +8,6 @@
 #include "tao/Protocol_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "tao/Codeset_Translator_Factory.h"
 
 ACE_RCSID (tao,
            Resource_Factory,
@@ -48,42 +47,6 @@ TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
   this->factory_ = factory;
   this->factory_owner_ = owner;
 }
-
-// Codeset Item
-TAO_Codeset_Item::TAO_Codeset_Item (const ACE_CString &name)
-  :   name_ (name),
-      factory_ (0),
-      factory_owner_ (0)
-{
-}
-
-TAO_Codeset_Item::~TAO_Codeset_Item (void)
-{
-  if (this->factory_owner_ == 1)
-    delete this->factory_;
-}
-
-const ACE_CString &
-TAO_Codeset_Item::codeset_name (void)
-{
-  return this->name_;
-}
-
-TAO_Codeset_Translator_Factory *
-TAO_Codeset_Item::factory (void)
-{
-  return this->factory_;
-}
-
-void
-TAO_Codeset_Item::factory (TAO_Codeset_Translator_Factory *factory,
-                            int owner)
-{
-  this->factory_ = factory;
-  this->factory_owner_ = owner;
-}
-
-// End of Codeset Item Class
 
 
 TAO_Resource_Factory::TAO_Resource_Factory (void)
@@ -187,20 +150,6 @@ TAO_Resource_Factory::get_codeset_manager (void)
   return 0;
 }
 
-TAO_Codeset_Translator_Factory  *
-TAO_Resource_Factory::get_char_translator  (CONV_FRAME::CodeSetId ,
-                                            CONV_FRAME::CodeSetId )
-{
-  return 0;
-}
-
-TAO_Codeset_Translator_Factory *
-TAO_Resource_Factory::get_wchar_translator (CONV_FRAME::CodeSetId ,
-                                            CONV_FRAME::CodeSetId )
-{
-  return 0;
-}
-
 int
 TAO_Resource_Factory::init_protocol_factories (void)
 {
@@ -257,24 +206,15 @@ TAO_Resource_Factory::load_default_protocols (void)
 template class ACE_Dynamic_Service<TAO_Resource_Factory>;
 template class ACE_Node<TAO_Protocol_Item*>;
 ///
-template class ACE_Node<TAO_Codeset_Item*>;
-///
 template class ACE_Unbounded_Set<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
 ///
-template class ACE_Unbounded_Set<TAO_Codeset_Item*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Resource_Factory>
 #pragma instantiate ACE_Node<TAO_Protocol_Item*>
 ///
-#pragma instantiate ACE_Node<TAO_Codeset_Item*>
-///
 #pragma instantiate ACE_Unbounded_Set<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
-#pragma instantiate ACE_Unbounded_Set<TAO_Codeset_Item*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

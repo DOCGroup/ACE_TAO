@@ -25,6 +25,7 @@
 #include "ace/Reactor.h"
 
 #include "Codeset_Manager.h"
+#include "Codeset_Translator_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
@@ -117,7 +118,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , wchar_translator_ (0)
   , tcs_set_ (0)
   , first_request_ (1)
-  , wchar_allowed_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -2201,13 +2201,11 @@ TAO_Transport::notify_reactor (void)
   return 1;
 }
 
-
 TAO_Transport_Cache_Manager &
 TAO_Transport::transport_cache_manager (void)
 {
   return this->orb_core_->lane_resources ().transport_cache ();
 }
-
 
 void
 TAO_Transport::assign_translators (TAO_InputCDR *inp, TAO_OutputCDR *outp)
@@ -2221,11 +2219,6 @@ TAO_Transport::assign_translators (TAO_InputCDR *inp, TAO_OutputCDR *outp)
     {
       this->wchar_translator_->assign (inp);
       this->wchar_translator_->assign (outp);
-    }
-  else
-    {
-      if (inp) inp->wchar_allowed(this->wchar_allowed_);
-      if (outp) outp->wchar_allowed(this->wchar_allowed_);
     }
 }
 
