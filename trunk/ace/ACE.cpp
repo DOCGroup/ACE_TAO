@@ -1903,4 +1903,5 @@ ACE::get_ip_interfaces (size_t &count,
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class auto_array_ptr<struct ifreq>;
+template class auto_basic_array_ptr<struct ifreq>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
