@@ -36,7 +36,7 @@ Mon Aug 18 14:33:45 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp: 
 	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp: 	
 
-	  Changes the project files so they do not create executables in
+	  Changed the project files so they do not create executables in
 	  the Debug dirs.
 	
 Mon Aug 18 14:24:45 2003  George Edwards <g.edwards@vanderbilt.edu>
