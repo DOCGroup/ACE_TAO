@@ -1,3 +1,7 @@
+Tue Apr 17 15:43:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/POA/TIE/client.dsp: Removed FooS.* from project.
+
 Tue Apr 17 13:03:49 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/Transport.h (TAO_Synch_Refcountable): Reworked this so that
@@ -5,11 +9,11 @@ Tue Apr 17 13:03:49 2001  Chris Cleeland  <cleeland_c@ociweb.com>
  	optimization for single-threaded versions of the ORB so they can
  	use a null lock implementation if desired and thus achieve better
  	performance.  [Bug 861]
-	
+
         * tao/Transport.cpp: Updated various methods to take advantage of
 	the optimization outlined above.  Specifically, the TAO_Transport
 	constructor now initializes its TAO_Synch_Refcountable's lock
-	using the resource factory's create_cached_connection_lock(), just 
+	using the resource factory's create_cached_connection_lock(), just
 	like TAO_Transport's handler_lock_ and the connection cache lock.
 	Thanks to Joe Hoffert <joeh@cs.wustl.edu> and Bala
 	<bala@cs.wustl.edu> for pointing out this opportunity and testing
