@@ -1,62 +1,62 @@
 Tue Sep 29 13:23:25 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO/docs/releasenotes/orbcore.html
-	  Added entry for current status of DynAny support.
+        * TAO/docs/releasenotes/orbcore.html
+          Added entry for current status of DynAny support.
 
 Tue Sep 29 12:20:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/releasenotes/ec.html: 
-	  Documented the latest feaures of the EC.
+        * docs/releasenotes/ec.html:
+          Documented the latest feaures of the EC.
 
-	* docs/releasenotes/orbcore.html: 
-	  Documented some of the latest optimizations implemented in the
-	  ORB.
+        * docs/releasenotes/orbcore.html:
+          Documented some of the latest optimizations implemented in the
+          ORB.
 
-	* docs/releasenotes/TODO.html: 
-	  Yet another task for the EC.
+        * docs/releasenotes/TODO.html:
+          Yet another task for the EC.
 
 Tue Sep 29 11:08:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
-	* orbsvcs/orbsvcs/Event/Timer_Module.i: 
-	* orbsvcs/orbsvcs/Event/Timer_Module.cpp: 
-	* orbsvcs/orbsvcs/Event/Task_Manager.h: 
-	* orbsvcs/orbsvcs/Event/Task_Manager.i: 
-	* orbsvcs/orbsvcs/Event/Task_Manager.cpp: 
-	  New class Timer_Module that replaces the Task_Manager
-	  class. This module of the EC is in charge of implementing the
-	  timer queue.  Currently there are two implementations of the
-	  module: a pool of Reactors running at different priorities
-	  to dispatch the timers; a single reactor (shared with the ORB)
-	  to dispatch all the timers.
-	  In the future we plan to implement the timers using the
-	  Thread_Timer_Queue_Adapter or a similar mechanism.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/Timer_Module.h:
+        * orbsvcs/orbsvcs/Event/Timer_Module.i:
+        * orbsvcs/orbsvcs/Event/Timer_Module.cpp:
+        * orbsvcs/orbsvcs/Event/Task_Manager.h:
+        * orbsvcs/orbsvcs/Event/Task_Manager.i:
+        * orbsvcs/orbsvcs/Event/Task_Manager.cpp:
+          New class Timer_Module that replaces the Task_Manager
+          class. This module of the EC is in charge of implementing the
+          timer queue.  Currently there are two implementations of the
+          module: a pool of Reactors running at different priorities
+          to dispatch the timers; a single reactor (shared with the ORB)
+          to dispatch all the timers.
+          In the future we plan to implement the timers using the
+          Thread_Timer_Queue_Adapter or a similar mechanism.
 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Use the new abstractions in the Timer_Module to schedule and
-	  cancel timers.
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Use the new abstractions in the Timer_Module to schedule and
+          cancel timers.
 
-	* orbsvcs/orbsvcs/Event/Module_Factory.h: 
-	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
-	  Added methods to create the new module.
+        * orbsvcs/orbsvcs/Event/Module_Factory.h:
+        * orbsvcs/orbsvcs/Event/Module_Factory.cpp:
+          Added methods to create the new module.
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
-	  Some experimental changes to test the new single threaded module
-	  factory for the Event Channel.
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Some experimental changes to test the new single threaded module
+          factory for the Event Channel.
 
-	* Many makefiles were updated because the dependencies changed.
+        * Many makefiles were updated because the dependencies changed.
 
-	* tests/Param_Test/README: 
-	  Removed outdated arguments.
+        * tests/Param_Test/README:
+          Removed outdated arguments.
 
-	* docs/releasenotes/TODO.html: 
-	  Minor updates.
+        * docs/releasenotes/TODO.html:
+          Minor updates.
 
 Tue Sep 29 07:18:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -66,6 +66,9 @@ Tue Sep 29 07:18:28 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Thruput/COOL/client.cpp,server.cpp:
           replaced direct {f,io}stream.h #includes with #include of
           ace/streams.h.
+
+        * performance-tests/Thruput/TAO/ttcp_decl.h,ttcp_i.cpp,client.cpp,
+          server.cpp: replaced USE_QUANTIFY with ACE_HAS_QUANTIFY.
 
 Tue Sep 29 00:18:22 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
