@@ -1,3 +1,10 @@
+Fri Nov 16 13:36:09 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:  Removed deletes from
+	  destructor.  Was causing Multicast and Pluggable tests to crash.
+	* orbsvcs/orbsvcs/AV/UDP.cpp (open_i): Added a check of the
+	  result variable to remove a KAI C++ warning.
+
 Thu Nov 15 17:54:41 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/RTCP_Channel.h:

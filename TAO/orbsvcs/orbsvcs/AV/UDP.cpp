@@ -430,6 +430,11 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                                                        this->entry_->is_multicast (),
                                                        TAO_AV_UDP_Connection_Setup::ACCEPTOR);
 
+	  if( result < 0)
+          {
+             ACE_DEBUG((LM_DEBUG,"(%N,%l) Error during connection setup: %d\n", result));
+          }
+
           local_addr->set (local_addr->get_port_number (),
                            local_addr->get_host_name ());
 
