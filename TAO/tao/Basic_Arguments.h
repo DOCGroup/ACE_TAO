@@ -36,15 +36,15 @@ namespace TAO
     public:
     typedef void        ret_type;
 
-    typedef Argument    stub_ret_val;
-    typedef Argument    skel_ret_val;
+    typedef Argument    ret_val;
 
     typedef Basic_Tag   idl_tag;
   };
 
   /**
    *
-   * @brief Specializations for basic arg types, except (w)char/boolean/octet.
+   * @brief Specializations for basic stub arg types, 
+   *  except (w)char/boolean/octet.
    *
    */
 

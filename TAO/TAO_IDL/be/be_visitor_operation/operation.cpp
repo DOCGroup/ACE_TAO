@@ -451,7 +451,7 @@ be_visitor_operation::gen_stub_operation_body (
   this->gen_arg_template_param_name (return_type,
                                      os);
 
-  *os << ">::stub_ret_val _tao_retval;";
+  *os << ">::ret_val _tao_retval;";
 
   // Declare the argument helper classes.
   this->gen_stub_body_arglist (node, os);

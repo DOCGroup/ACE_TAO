@@ -115,95 +115,6 @@ namespace TAO
   };
 
   /**
-   * @class In_UB_String_SArgument_T
-   *
-   * @brief Template class for IN skeleton UB (w)string argument.
-   *
-   */
-  template<typename S, typename S_var>
-  class In_UB_String_SArgument_T : public Argument
-  {
-  public:
-    In_UB_String_SArgument_T (void);
-
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    const S * arg (void) const;
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Inout_UB_String_SArgument_T
-   *
-   * @brief Template class for INOUT skeleton UB (w)string argument.
-   *
-   */
-  template<typename S, typename S_var>
-  class Inout_UB_String_SArgument_T : public Argument
-  {
-  public:
-    Inout_UB_String_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S *& arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Out_UB_String_SArgument_T
-   *
-   * @brief Template class for INOUT skeleton UB (w)string argument.
-   *
-   */
-  template<typename S, typename S_var>
-  class Out_UB_String_SArgument_T : public Argument
-  {
-  public:
-    Out_UB_String_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S *& arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Ret_UB_String_SArgument_T
-   *
-   * @brief Template class for return skeleton value of UB (w)string.
-   *
-   */
-  template<typename S, typename S_var>
-  class Ret_UB_String_SArgument_T : public Argument
-  {
-  public:
-    Ret_UB_String_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_result (CORBA::Any *);
-
-    S *& arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
    * @struct UB_String_Tag
    *
    * @brief Struct for unbounded (w)string arguments id tag.
@@ -228,12 +139,7 @@ namespace TAO
     typedef In_UB_String_Argument_T<T>                  in_arg_val;
     typedef Inout_UB_String_Argument_T<T>               inout_arg_val;
     typedef Out_UB_String_Argument_T<T,T_out>           out_arg_val;
-    typedef Ret_UB_String_Argument_T<T,T_var>           stub_ret_val;
-
-    typedef In_UB_String_SArgument_T<T,T_var>           in_sarg_val;
-    typedef Inout_UB_String_SArgument_T<T,T_var>        inout_sarg_val;
-    typedef Out_UB_String_SArgument_T<T,T_var>          out_sarg_val;
-    typedef Ret_UB_String_SArgument_T<T,T_var>          skel_ret_val;
+    typedef Ret_UB_String_Argument_T<T,T_var>           ret_val;
 
     typedef UB_String_Tag                               idl_tag;
   };

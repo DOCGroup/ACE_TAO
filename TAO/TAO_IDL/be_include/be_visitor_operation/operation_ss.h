@@ -64,9 +64,6 @@ public:
   // = helper
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled
-
-private:
-  char *operation_name_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_SS_H_ */

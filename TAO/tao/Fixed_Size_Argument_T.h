@@ -116,95 +116,6 @@ namespace TAO
   };
 
   /**
-   * @class In_Fixed_Size_SArgument_T
-   *
-   * @brief Template class for IN skeleton argument of fixed size IDL types.
-   *
-   */
-  template<typename S>
-  class In_Fixed_Size_SArgument_T : public Argument
-  {
-  public:
-    In_Fixed_Size_SArgument_T (void);
-
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    const S & arg (void) const;
-
-  private:
-    S * x_;
-  };
-
-  /**
-   * @class Inout_Fixed_Size_SArgument_T
-   *
-   * @brief Template class for INOUT skeleton arg of fixed size IDL types.
-   *
-   */
-  template<typename S>
-  class Inout_Fixed_Size_SArgument_T : public Argument
-  {
-  public:
-    Inout_Fixed_Size_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S & arg (void);
-
-  private:
-    S * x_;
-  };
-
-  /**
-   * @class Out_Fixed_Size_SArgument_T
-   *
-   * @brief Template class for OUT skeleton argument of fixed size IDL types.
-   *
-   */
-  template<typename S>
-  class Out_Fixed_Size_SArgument_T : public Argument
-  {
-  public:
-    Out_Fixed_Size_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S & arg (void);
-
-  private:
-    S x_;
-  };
-
-  /**
-   * @class Ret_Fixed_Size_SArgument_T
-   *
-   * @brief Template class for return skeleton value of fixed size IDL types.
-   *
-   */
-  template<typename S>
-  class Ret_Fixed_Size_SArgument_T : public Argument
-  {
-  public:
-    Ret_Fixed_Size_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_result (CORBA::Any *);
-
-    S & arg (void);
-
-  private:
-    S * x_;
-  };
-
-  /**
    * @struct Basic_Tag
    *
    * @brief Struct for fixed size IDL type arguments id tag.
@@ -229,12 +140,7 @@ namespace TAO
     typedef In_Fixed_Size_Argument_T<T>       in_arg_val;
     typedef Inout_Fixed_Size_Argument_T<T>    inout_arg_val;
     typedef Out_Fixed_Size_Argument_T<T>      out_arg_val;
-    typedef Ret_Fixed_Size_Argument_T<T>      stub_ret_val;
-
-    typedef In_Fixed_Size_SArgument_T<T>      in_sarg_val;
-    typedef Inout_Fixed_Size_SArgument_T<T>   inout_sarg_val;
-    typedef Out_Fixed_Size_SArgument_T<T>     out_sarg_val;
-    typedef Ret_Fixed_Size_SArgument_T<T>     skel_ret_val;
+    typedef Ret_Fixed_Size_Argument_T<T>      ret_val;
 
     typedef Fixed_Size_Tag                    idl_tag;
   };

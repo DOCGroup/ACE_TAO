@@ -94,7 +94,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       this->gen_arg_template_param_name (node->return_type (),
                                          os);
 
-      *os << ">::stub_ret_val *) args[0])->arg () =" << be_idt_nl;
+      *os << ">::ret_val *) args[0])->arg () =" << be_idt_nl;
     }
 
   *os << "ACE_reinterpret_cast (" << be_idt << be_idt_nl

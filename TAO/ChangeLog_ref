@@ -1,3 +1,96 @@
+Mon Aug 25 19:15:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_SArgument_T.cpp:
+        * tao/BD_String_SArgument_T.h:
+        * tao/BD_String_SArgument_T.inl:
+        * tao/Basic_SArgument_T.cpp:
+        * tao/Basic_SArgument_T.h:
+        * tao/Basic_SArgument_T.inl:
+        * tao/Basic_SArguments.cpp:
+        * tao/Basic_SArguments.h:
+        * tao/Fixed_Array_SArgument_T.cpp:
+        * tao/Fixed_Array_SArgument_T.h:
+        * tao/Fixed_Array_SArgument_T.inl:
+        * tao/Fixed_Size_SArgument_T.cpp:
+        * tao/Fixed_Size_SArgument_T.h:
+        * tao/Fixed_Size_SArgument_T.inl:
+        * tao/Object_SArgument_T.cpp:
+        * tao/Object_SArgument_T.h:
+        * tao/Object_SArgument_T.inl:
+        * tao/Special_Basic_SArgument_T.cpp:
+        * tao/Special_Basic_SArgument_T.h:
+        * tao/Special_Basic_SArgument_T.inl:
+        * tao/Special_Basic_SArguments.cpp:
+        * tao/Special_Basic_SArguments.h:
+        * tao/UB_String_SArgument_T.cpp:
+        * tao/UB_String_SArgument_T.h:
+        * tao/UB_String_SArgument_T.inl:
+        * tao/UB_String_SArguments.cpp:
+        * tao/UB_String_SArguments.h:
+        * tao/Var_Array_SArgument_T.cpp:
+        * tao/Var_Array_SArgument_T.h:
+        * tao/Var_Array_SArgument_T.inl:
+        * tao/Var_Size_SArgument_T.cpp:
+        * tao/Var_Size_SArgument_T.h:
+        * tao/Var_Size_SArgument_T.inl:
+
+	  New files containing the skeleton argument classes,
+	  now in a set of files separated from the stub
+	  argument classes.
+
+        * tao/Arg_Traits_T.h:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/BD_String_Argument_T.inl:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Argument_T.inl:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Argument_T.inl:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.inl:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Argument_T.inl:
+        * tao/UB_String_Arguments.cpp:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Var_Size_Argument_T.inl:
+
+	  Removed the skeleton argument classes from these
+	  files.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+
+          Updated source file contents of these projects.
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Minor changes required by the changes above.
+
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.h:
+
+	  Files overlooked in a previous checkin.
+
 Mon Aug 25 18:44:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Base.inl

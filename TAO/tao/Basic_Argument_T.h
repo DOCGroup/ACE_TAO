@@ -116,95 +116,6 @@ namespace TAO
   };
 
   /**
-   * @class In_Basic_SArgument_T
-   *
-   * @brief Template class for IN skeleton argument of basic IDL types.
-   *
-   */
-  template<typename S>
-  class In_Basic_SArgument_T : public Argument
-  {
-  public:
-    In_Basic_SArgument_T (void);
-
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S arg (void) const;
-
-  private:
-    S x_;
-  };
-
-  /**
-   * @class Inout_Basic_SArgument_T
-   *
-   * @brief Template class for INOUT skeleton argument of basic IDL types.
-   *
-   */
-  template<typename S>
-  class Inout_Basic_SArgument_T : public Argument
-  {
-  public:
-    Inout_Basic_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S & arg (void);
-
-  private:
-    S x_;
-  };
-
-  /**
-   * @class Out_Basic_SArgument_T
-   *
-   * @brief Template class for OUT skeleton argument of basic IDL types.
-   *
-   */
-  template<typename S>
-  class Out_Basic_SArgument_T : public Argument
-  {
-  public:
-    Out_Basic_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_param (Dynamic::Parameter &);
-
-    S & arg (void);
-
-  private:
-    S x_;
-  };
-
-  /**
-   * @class Ret_Basic_SArgument_T
-   *
-   * @brief Template class for return skeleton value of basic IDL types.
-   *
-   */
-  template<typename S>
-  class Ret_Basic_SArgument_T : public Argument
-  {
-  public:
-    Ret_Basic_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    virtual void interceptor_result (CORBA::Any *);
-
-    S & arg (void);
-
-  private:
-    S x_;
-  };
-
-  /**
    * @struct Basic_Tag
    *
    * @brief Struct for basic IDL type arguments id tag.
@@ -215,7 +126,7 @@ namespace TAO
   /**
    * @struct Basic_Arg_Traits_T
    *
-   * @brief Template class for argument traits of basic IDL types.
+   * @brief Template class for stub argument traits of basic IDL types.
    *
    */
   template<typename T>
@@ -229,12 +140,7 @@ namespace TAO
     typedef In_Basic_Argument_T<T>      in_arg_val;
     typedef Inout_Basic_Argument_T<T>   inout_arg_val;
     typedef Out_Basic_Argument_T<T>     out_arg_val;
-    typedef Ret_Basic_Argument_T<T>     stub_ret_val;
-
-    typedef In_Basic_SArgument_T<T>     in_sarg_val;
-    typedef Inout_Basic_SArgument_T<T>  inout_sarg_val;
-    typedef Out_Basic_SArgument_T<T>    out_sarg_val;
-    typedef Ret_Basic_SArgument_T<T>    skel_ret_val;
+    typedef Ret_Basic_Argument_T<T>     ret_val;
 
     typedef Basic_Tag                   idl_tag;
   };

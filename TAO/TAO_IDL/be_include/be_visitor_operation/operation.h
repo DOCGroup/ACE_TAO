@@ -101,11 +101,12 @@ public:
   // interceptor's try block
 
 protected:
+  void gen_stub_body_arglist (be_operation *node,
+                              TAO_OutStream *os,
+                              idl_bool ami = I_FALSE);
+
   void gen_arg_template_param_name (AST_Type *bt,
                                     TAO_OutStream *os);
-
-private:
-  char *operation_name_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_H_ */

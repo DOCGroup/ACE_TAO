@@ -198,7 +198,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       this->gen_arg_template_param_name (bt,
                                          os);
 
-      *os << ">::stub_ret_val _tao_retval;";
+      *os << ">::ret_val _tao_retval;";
 
       // If we are a attribute node, add the length of the operation
       // name.

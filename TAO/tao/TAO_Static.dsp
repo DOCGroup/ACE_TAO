@@ -111,7 +111,15 @@ SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Any_SystemException.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\append.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Argument.cpp
 # End Source File
 # Begin Source File
 
@@ -128,6 +136,14 @@ SOURCE=.\Asynch_Reply_Dispatcher_Base.cpp
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Arguments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArguments.cpp
 # End Source File
 # Begin Source File
 
@@ -184,6 +200,10 @@ SOURCE=.\ClientRequestInfo.cpp
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -479,6 +499,10 @@ SOURCE=.\IORInterceptor_Adapter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_Adapter_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Leader_Follower.cpp
 # End Source File
 # Begin Source File
@@ -564,10 +588,6 @@ SOURCE=.\MProfile.cpp
 # Begin Source File
 
 SOURCE=.\Muxed_TMS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Notify_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -711,6 +731,10 @@ SOURCE=.\Profile.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile_Transport_Resolver.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.cpp
 # End Source File
 # Begin Source File
@@ -732,6 +756,10 @@ SOURCE=.\Reactive_Flushing_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\Refcounted_ObjectKey.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Remote_Invocation.cpp
 # End Source File
 # Begin Source File
 
@@ -791,6 +819,14 @@ SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_Arguments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringSeqC.cpp
 # End Source File
 # Begin Source File
@@ -804,6 +840,10 @@ SOURCE=.\Stub_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Invocation.cpp
 # End Source File
 # Begin Source File
 
@@ -903,6 +943,14 @@ SOURCE=.\TypeCodeFactory_Adapter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_Arguments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -936,6 +984,10 @@ SOURCE=.\Abstract_Servant_Base.h
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Acceptor_Impl.h
 # End Source File
 # Begin Source File
 
@@ -975,11 +1027,15 @@ SOURCE=.\Any_Special_Impl_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_Specializations.h
+SOURCE=.\Any_SystemException.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\arg_shifter.h
+SOURCE=.\Arg_Traits_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Argument.h
 # End Source File
 # Begin Source File
 
@@ -1000,6 +1056,34 @@ SOURCE=.\Asynch_Reply_Dispatcher_Base.h
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Arguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.h
 # End Source File
 # Begin Source File
 
@@ -1043,10 +1127,6 @@ SOURCE=.\Cleanup_Func_Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Cleanup_Func_Registry.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
@@ -1060,6 +1140,10 @@ SOURCE=.\ClientRequestInfo.h
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -1103,7 +1187,7 @@ SOURCE=.\Connection_Purging_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connector_Registry.h
+SOURCE=.\Connector_Impl.h
 # End Source File
 # Begin Source File
 
@@ -1179,10 +1263,6 @@ SOURCE=.\Default_Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\DLL_ORB.h
 # End Source File
 # Begin Source File
@@ -1235,11 +1315,23 @@ SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Flushing_Strategy.h
+SOURCE=.\Fixed_Array_Argument_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\giop.h
+SOURCE=.\Fixed_Array_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1339,10 +1431,6 @@ SOURCE=.\Incoming_Message_Queue.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.h
 # End Source File
 # Begin Source File
@@ -1375,23 +1463,15 @@ SOURCE=.\IOPC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ior_corbaloc_export.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ior_corbaname_export.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOR_Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORInfo.h
+SOURCE=.\IORInterceptor_Adapter.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORInterceptor_Adapter.h
+SOURCE=.\IORInterceptor_Adapter_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1415,15 +1495,7 @@ SOURCE=.\LF_Event.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Event.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\LF_Event_Binder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Binder.inl
 # End Source File
 # Begin Source File
 
@@ -1431,15 +1503,7 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Event_Loop_Thread_Helper.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\LF_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.inl
 # End Source File
 # Begin Source File
 
@@ -1447,15 +1511,7 @@ SOURCE=.\LF_Follower_Auto_Adder.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Follower_Auto_Adder.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\LF_Follower_Auto_Ptr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.inl
 # End Source File
 # Begin Source File
 
@@ -1467,19 +1523,7 @@ SOURCE=.\LF_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Strategy.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\LF_Strategy_Complete.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -1519,15 +1563,15 @@ SOURCE=.\Muxed_TMS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Notify_Handler.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\nvlist.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\object.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -1551,6 +1595,10 @@ SOURCE=.\Object_Ref_Table.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_SArgument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objectid.h
 # End Source File
 # Begin Source File
@@ -1564,6 +1612,10 @@ SOURCE=.\ObjectKey_Table.h
 # Begin Source File
 
 SOURCE=.\Objref_VarOut_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OBV_Constants.h
 # End Source File
 # Begin Source File
 
@@ -1675,6 +1727,10 @@ SOURCE=.\Profile.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile_Transport_Resolver.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.h
 # End Source File
 # Begin Source File
@@ -1691,10 +1747,6 @@ SOURCE=.\Queued_Message.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Queued_Message.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reactive_Connect_Strategy.h
 # End Source File
 # Begin Source File
@@ -1704,6 +1756,10 @@ SOURCE=.\Reactive_Flushing_Strategy.h
 # Begin Source File
 
 SOURCE=.\Refcounted_ObjectKey.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Remote_Invocation.h
 # End Source File
 # Begin Source File
 
@@ -1735,10 +1791,6 @@ SOURCE=.\Resume_Handle.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Resume_Handle.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Seq_Out_T.h
 # End Source File
 # Begin Source File
@@ -1748,6 +1800,10 @@ SOURCE=.\Seq_Var_T.h
 # Begin Source File
 
 SOURCE=.\sequence.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sequence_T.h
 # End Source File
 # Begin Source File
 
@@ -1771,7 +1827,19 @@ SOURCE=.\ServicesC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\singletons.h
+SOURCE=.\Special_Basic_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Arguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArguments.h
 # End Source File
 # Begin Source File
 
@@ -1788,6 +1856,10 @@ SOURCE=.\Stub_Factory.h
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Invocation.h
 # End Source File
 # Begin Source File
 
@@ -1859,10 +1931,6 @@ SOURCE=.\Transport.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Transport_Acceptor.h
 # End Source File
 # Begin Source File
@@ -1887,15 +1955,47 @@ SOURCE=.\Transport_Timer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\try_macros.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\typecode.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\TypeCodeFactory_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Arguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Valuetype_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.h
 # End Source File
 # Begin Source File
 
@@ -1932,6 +2032,10 @@ SOURCE=.\WrongTransactionC.h
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Acceptor_Impl.i
 # End Source File
 # Begin Source File
 
@@ -1987,6 +2091,22 @@ SOURCE=.\Base_Transport_Property.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -2007,11 +2127,19 @@ SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cleanup_Func_Registry.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ClientInterceptorAdapter.inl
 # End Source File
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor_Adapter.inl
 # End Source File
 # Begin Source File
 
@@ -2024,6 +2152,10 @@ SOURCE=.\Connection_Handler.i
 # Begin Source File
 
 SOURCE=.\Connection_Purging_Strategy.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Impl.inl
 # End Source File
 # Begin Source File
 
@@ -2111,7 +2243,19 @@ SOURCE=.\FILE_Parser.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\giop.i
+SOURCE=.\Fixed_Array_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2191,6 +2335,10 @@ SOURCE=.\IIOPC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Incoming_Message_Queue.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
@@ -2223,11 +2371,35 @@ SOURCE=.\Leader_Follower.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Invocation_Event.inl
+SOURCE=.\LF_Event.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Linear_Priority_Mapping.i
+SOURCE=.\LF_Event_Binder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Loop_Thread_Helper.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Adder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.inl
 # End Source File
 # Begin Source File
 
@@ -2267,6 +2439,10 @@ SOURCE=.\object.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Argument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_KeyC.i
 # End Source File
 # Begin Source File
@@ -2275,7 +2451,15 @@ SOURCE=.\Object_Loader.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ObjectIdListC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Objref_VarOut_T.inl
 # End Source File
 # Begin Source File
 
@@ -2367,11 +2551,19 @@ SOURCE=.\Pseudo_VarOut_T.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Queued_Message.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Refcounted_ObjectKey.inl
 # End Source File
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 
@@ -2387,6 +2579,10 @@ SOURCE=.\sequence.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sequence_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Callbacks.i
 # End Source File
 # Begin Source File
@@ -2396,6 +2592,14 @@ SOURCE=.\Service_Context.inl
 # Begin Source File
 
 SOURCE=.\ServicesC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2455,6 +2659,10 @@ SOURCE=.\TimeBaseC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Acceptor.inl
 # End Source File
 # Begin Source File
@@ -2475,12 +2683,41 @@ SOURCE=.\typecode.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\VarOut_T.inl
 # End Source File
 # End Group
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Acceptor_Impl.cpp
+# PROP Exclude_From_Build 1
+# End Source File
 # Begin Source File
 
 SOURCE=.\Any_Array_Impl_T.cpp
@@ -2518,12 +2755,62 @@ SOURCE=.\Array_VarOut_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Codeset_Translator_Factory_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\CONV_FRAMES_T.cpp
+SOURCE=.\Connector_Impl.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_SArgument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -2549,6 +2836,46 @@ SOURCE=.\Seq_Var_T.cpp
 # Begin Source File
 
 SOURCE=.\Sequence_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
