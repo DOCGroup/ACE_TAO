@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-
 // $Id$
 
 // ============================================================================
@@ -32,7 +31,7 @@ public:
   // Constructor
 
   int init (int argc, 
-            char **argv, 
+            char *argv[],
             CORBA_Environment &env);
   // Initialize the ORB/root POA, using the supplied command line
   // arguments or the default ORB components. 
