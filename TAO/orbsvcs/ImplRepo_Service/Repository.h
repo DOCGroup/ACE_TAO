@@ -49,7 +49,7 @@ public:
   
   void update_running_info (const ACE_TString host,
                             const unsigned short port,
-                            const ACE_TString ping_ior);
+                            const ACE_TString server_object_ior);
   // Updates information that is relevant only when an instance
   // of the server is running.
 
@@ -60,7 +60,7 @@ public:
 
   void get_running_info (ACE_TString &host,
                          unsigned short &port,
-                         ACE_TString &ping_ior);
+                         ACE_TString &server_object_ior);
   // Returns information about a running instance.
 
   // @@ Does this belong here?
@@ -93,13 +93,16 @@ private:
   unsigned short port_;
   // Current port used by the server.
 
-  ACE_TString ping_ior_;
-  // IOR of the ping object in the server.
+  ACE_TString server_object_ior_;
+  // IOR of the server object in the server.
 
   // No copying allowed.
   void operator= (Server_Info &);
   Server_Info (Server_Info &);
 };
+
+
+
 
 class Server_Repository
   // = TITLE
@@ -136,7 +139,7 @@ public:
   int update (const ACE_TString POA_name,
               const ACE_TString host,
               const unsigned short port,
-              const ACE_TString ping_ior);
+              const ACE_TString server_object_ior);
   // Update the associated process information.
 
   int get_startup_info (const ACE_TString POA_name,
@@ -148,7 +151,7 @@ public:
   int get_running_info (const ACE_TString POA_name,
                         ACE_TString &host,
                         unsigned short &port,
-                        ACE_TString &ping_ior);
+                        ACE_TString &server_object_ior);
   // Returns information related to a running copy.
   
   int starting_up (const ACE_TString POA_name, int new_value);
