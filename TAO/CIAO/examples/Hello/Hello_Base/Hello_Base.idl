@@ -9,7 +9,7 @@
 #ifndef HELLO_IDL
 #define HELLO_IDL
 
-#include <ciao/Components.idl>
+#include <Components.idl>
 
 module Hello
 {

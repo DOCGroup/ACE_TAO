@@ -1,3 +1,14 @@
+Fri Feb  6 15:54:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Hello/Hello_Base/Hello_Base.idl:
+        * examples/OEP/BasicSP/BasicSP.idl:
+        * examples/OEP/Display/HUDisplay.idl:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.idl:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
+        
+          Removed the 'ciao/' path prefix from inclusions of
+          Components.idl.
+
 Fri Feb  6 14:49:48 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CIDLC/CIDLC.mpc:
