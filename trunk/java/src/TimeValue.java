@@ -112,7 +112,7 @@ public class TimeValue
    */
   public static TimeValue relativeTimeOfDay(long sec, int nanos) 
   {
-    return new TimeValue(System.currentTimeMillis() / 1000 + sec, 
+    return new TimeValue ((System.currentTimeMillis() / 1000) + sec,
 			 nanos);
   }  
 
@@ -125,8 +125,9 @@ public class TimeValue
    */
   public static TimeValue relativeTimeOfDay(TimeValue offset)
   {
-    return new TimeValue(System.currentTimeMillis() + offset.sec(),
-                         offset.nanos());
+    return new TimeValue ((System.currentTimeMillis() / 1000) +
+			  offset.sec(),
+			  offset.nanos());
   }
 
   /**

@@ -82,6 +82,14 @@ public class StreamTail extends Task
     return 0;
   }
 
+  // put the given MessageBlock without a timeout (block forever if
+  // necessary)
+  public int put (MessageBlock mb) 
+  {
+    return this.put (mb, null);
+  }
+
+  // tv is an absolute time timeout
   public int put (MessageBlock mb, TimeValue tv)
   {
     if (this.isWriter ())
