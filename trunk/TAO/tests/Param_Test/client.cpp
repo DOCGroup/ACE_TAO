@@ -242,7 +242,7 @@ Param_Test_Client<T>::run_dii_test (void)
           this->results_.error_count (this->results_.error_count () + 1);
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) client.cpp - "
-                      "Invalid results in run_dii_test in iteration %d",
+                      "Invalid results in run_dii_test in iteration %d\n",
                       i));
           continue;
         }

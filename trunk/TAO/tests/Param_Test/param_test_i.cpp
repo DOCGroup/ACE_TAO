@@ -795,8 +795,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Param_Test::Ooops))
 {
-  int d = this->test_exception_count_ % 3;
-  this->test_exception_count_++;
+  int d = s1 % 3;
   if (d == 0)
     {
       s2 = s1 * 2;
@@ -805,6 +804,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
     }
   else if (d == 1)
       ACE_THROW_RETURN (Param_Test::Ooops (CORBA::string_dup (" % 3 == 1"), s1), 0);
+
   ACE_THROW_RETURN (Param_Test::BadBoy (), 0);
 }
 

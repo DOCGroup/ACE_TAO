@@ -591,6 +591,10 @@ public:
   // Indicates if we have reached a point where all ORB owned
   // resources will be deallocated.
 
+  // The function used by tao to handle the "unexpected" exceptions,
+  // It raises CORBA::UNKNOWN.
+  static void _tao_unexpected_exception (void);
+
   // Reference counting...
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
