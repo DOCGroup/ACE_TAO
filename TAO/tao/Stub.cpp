@@ -532,6 +532,11 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   #if (TAO_HAS_RT_CORBA == 1)
 
+// @@ Angelo, would it make sense to parse the whole list once for all
+// policy types we are interested in, rather than keep parsing for
+// each type?  Then we can also keep just one flag, i.e.,
+// are_policies_parse_, rather than one for each policy ...
+
 CORBA::Policy *
 TAO_Stub::parse_policy (CORBA::PolicyType ptype)
 {
@@ -563,7 +568,7 @@ TAO_Stub::exposed_priority_model (void)
       if (!CORBA::is_nil (this->priority_model_policy_))
         this-> priority_model_policy_->_add_ref ();
 
-    return this->priority_model_policy_;
+      return this->priority_model_policy_;
     }
 
   // The policy list has not been parsed
@@ -577,7 +582,8 @@ TAO_Stub::exposed_priority_model (void)
   if (!CORBA::is_nil (policy))
     {
       RTCORBA::PriorityModelPolicy *pm_policy = 0;
-
+      // @@ Angelo, I think there is a memory leak here.  <narrow>
+      // method creates/adds ref to object... Same applies to other methods...
       pm_policy =
         RTCORBA::PriorityModelPolicy::_narrow (policy);
 

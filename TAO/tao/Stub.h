@@ -192,19 +192,16 @@ public:
 #if (TAO_HAS_RT_CORBA == 1)
 
   TAO_PriorityModelPolicy *exposed_priority_model (void);
-  // Gives the RTCORBA::PriorityModelPolicy associated
-  // to object or null if no priority model policy has
-  // been set.
+  // Returns the RTCORBA::PriorityModelPolicy exported
+  // in object's IOR.
 
   TAO_PriorityBandedConnectionPolicy *exposed_priority_banded_connection (void);
-  // Gives the RTCORBA::PriorityBandedConnectionPolicy associated
-  // to object or null if no priority model policy has
-  // been set.
+  // Returns the RTCORBA::PriorityBandedConnectionPolicy exported
+  // in object's IOR.
 
   TAO_ClientProtocolPolicy *exposed_client_protocol (void);
-  // Gives the RTCORBA::ClientProtocolPolicy associated
-  // to object or null if no priority model policy has
-  // been set.
+  // Returns the RTCORBA::ClientProtocolPolicy exported
+  // in object's IOR.
 
 # endif /*TAO_HAS_RT_CORBA == 1*/
 
