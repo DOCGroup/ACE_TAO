@@ -5,6 +5,19 @@
 #include "ace/Dynamic_Service.h"
 #include "Time_Date.h"
 
+ACE_Reactor *
+My_Resource_Factory::get_reactor (void)
+{
+#if defined (ACE_HAS_THREADS)
+  // Use whatever the default is if we've got threads.
+  return TAO_Default_Resource_Factory::get_reactor ();
+#else
+  // Just use the Singleton Reactor.
+  return ACE_Reactor::instance ();
+}
+
+ACE_FACTORY_DEFINE (Alt_Resource_Factory, My_Resource_Factory)
+
 int
 DLL_ORB::svc (void)
 {
@@ -45,9 +58,13 @@ DLL_ORB::init (int argc, char *argv[])
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+#if defined (ACE_HAS_THREADS)
       // Become an Active Object so that the ORB
       // will execute in a separate thread.
       return this->activate ();
+#else
+      return 0;
+#endif /* ACE_HAS_THREADS */
     }
   ACE_CATCHANY
     {
@@ -149,7 +166,6 @@ Time_Date_Servant::init (int argc, char *argv[])
 // Time_Date service.
 ACE_SVC_FACTORY_DEFINE (DLL_ORB)
 ACE_SVC_FACTORY_DEFINE (Time_Date_Servant)
-
 
 # if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

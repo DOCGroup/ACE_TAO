@@ -3,11 +3,11 @@
 #include "tao/corba.h"
 #include "Alt_Resource_Factory.h"
 
-class Alt_Resource_Factory_Export My_Resource_Factory :  public TAO_Resource_Factory
+class Alt_Resource_Factory_Export My_Resource_Factory : public TAO_Resource_Factory
 {
 public:
   virtual ACE_Reactor *get_reactor (void);
-  // Return an <ACE_Reactor> to be utilized.
+  // Return an <ACE_Reactor> that will be utilized by the ORB.
 
 private:
   struct My_Reactors
@@ -22,4 +22,5 @@ private:
 };
 
 ACE_FACTORY_DECLARE (Alt_Resource_Factory, My_Resource_Factory)
+
 
