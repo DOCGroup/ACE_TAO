@@ -1,3 +1,9 @@
+Tue Feb 17 04:08:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): The CPP_PATH has
+	  been causing a lot of nasty trouble on NT.  Changed this
+	  function to allow overwrite internal default value at run time.
+
 Tue Feb 17 00:56:08 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/tests/CosPropertyService/main.cpp (main): Added some
@@ -13,7 +19,7 @@ Mon Feb 16 18:00:15 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Mon Feb 16 17:51:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -s option to use the 
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -s option to use the
 	NamingService. Default doesn't use NamingService.
 
 Mon Feb 16 17:38:15 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
@@ -29,7 +35,7 @@ Mon Feb 16 17:22:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 	* tests/Cubit/TAO/IDL_Cubit/Makefile: Changed LDFLAGS to link orbsvcs
 	library.Now uses the Naming service.
 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: Added code to register 
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: Added code to register
 	IDL_Cubit/cubit_factory name with the naming service.
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Added a -s flag to use the
@@ -92,7 +98,7 @@ Mon Feb 16 02:34:24 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 	Makefile ( Makefile for making test program for the
 	PropertyService )
 
-	* orbsvcs/orbsvcs/CosProperty_Hash.cpp:  Added this file. 
+	* orbsvcs/orbsvcs/CosProperty_Hash.cpp:  Added this file.
 
 	* orbsvcs/orbsvcs/CosProperty_Hash.h (Table): Added this
 	file. This contains  the classes for maintaining Hash Table for
