@@ -55,7 +55,7 @@ macros.
         <li>Within a <code>TAO_TRY</code> block, use the variable
             <code>TAO_TRY_ENV</code> to pass down the
             <code>CORBA_Environment</code> (see <a
-            href="try_env">this</a> example.) <p>
+            href="#try_env">this</a> example.) <p>
 
         <li>Follow <em>every</em> exception throwing function with
             <code>TAO_CHECK_ENV</code>. <p>
@@ -101,10 +101,10 @@ definitions of macros discussed here.
       exception is called <code>_env</code>. Use
       <code>TAO_THROW_ENV</code> and <code>TAO_THROW_ENV_RETURN</code>
       to pass back thru the <code>CORBA_Environment</code> variable
-      specified.  (Also see: <a href="try_throw">Throwing exceptions
+      specified.  (Also see: <a href="#try_throw">Throwing exceptions
       within try blocks.</a>)<p>
 
-  <li><a name="#try_env"></a>Use <code>TAO_TRY</code>,
+  <li><a name="try_env"></a>Use <code>TAO_TRY</code>,
       <code>TAO_CHECK_ENV</code>, <code>TAO_CATCH</code>,
       <code>TAO_CATCHANY</code>, and <code>TAO_ENDTRY</code>
       macros. For example:<br>
@@ -192,7 +192,7 @@ definitions of macros discussed here.
       TAO_ENDTRY;
 </pre><p>
 
-      <a name="#try_throw"></a>
+      <a name="try_throw"></a>
   <li>Notice that you need to use <code>TAO_TRY_THROW</code> and
       <code>TAO_TRY_THROW_EX</code> when throwing exceptions within
       the try block.  Without using it, the exception won't be caught
