@@ -1,7 +1,0 @@
-#
-# Makefile for building the CDR tests
-#
-
-MAKEFILES = allocator.bor basic_types.bor growth.bor octet_sequence.bor tc.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
