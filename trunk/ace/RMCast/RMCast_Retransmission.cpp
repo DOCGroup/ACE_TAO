@@ -33,9 +33,9 @@ public:
   {
     if (key > this->max_sequence_number_)
       return 0;
-    ACE_DEBUG ((LM_DEBUG,
-                "  Retransmission::resend - message %d resent\n",
-                key));
+    // ACE_DEBUG ((LM_DEBUG,
+    //             "  Retransmission::resend - message %d resent\n",
+    //             key));
     ACE_RMCast::Data data = item;
     int r = this->next_->data (data);
     if (r != 0)
@@ -138,9 +138,9 @@ public:
   {
     if (key >= this->ack_.next_expected)
       return 0;
-    ACE_DEBUG ((LM_DEBUG,
-                "  Retransmission::ack - message %d erased\n",
-                key));
+    // ACE_DEBUG ((LM_DEBUG,
+    //             "  Retransmission::ack - message %d erased\n",
+    //             key));
     return this->messages_->unbind_i (this->ace_mon_, key);
   }
 
@@ -159,11 +159,7 @@ private:
 int
 ACE_RMCast_Retransmission::ack (ACE_RMCast::Ack &ack)
 {
-  Messages::Write_Guard ace_mon (this->messages_.mutex_,
-                                 this->messages_.cond_,
-                                 this->messages_.pending_writes_,
-                                 this->messages_.writing_,
-                                 this->messages_.collection_);
+  Messages::Write_Guard ace_mon (this->messages_);
 
   ACE_RMCast_Ack_Worker worker (ack, ace_mon, &this->messages_);
 
@@ -179,6 +175,7 @@ template class ACE_RB_Tree_Reverse_Iterator<ACE_UINT32,ACE_RMCast::Data,ACE_Less
 template class ACE_RB_Tree_Node<ACE_UINT32,ACE_RMCast::Data>;
 
 template class ACE_RMCast_Copy_On_Write<ACE_UINT32,ACE_RMCast::Data,ACE_RMCast_Retransmission::Collection,ACE_RMCast_Retransmission::Collection_Iterator>;
+template class ACE_RMCast_Copy_On_Write_Container<ACE_RMCast_Retransmission::Collection,ACE_RMCast_Retransmission::Collection_Iterator>;
 template class ACE_RMCast_Copy_On_Write_Write_Guard<ACE_RMCast_Retransmission::Collection,ACE_RMCast_Retransmission::Collection_Iterator>;
 template class ACE_RMCast_Copy_On_Write_Read_Guard<ACE_RMCast_Retransmission::Collection,ACE_RMCast_Retransmission::Collection_Iterator>;
 template class ACE_RMCast_Copy_On_Write_Collection<ACE_RMCast_Retransmission::Collection,ACE_RMCast_Retransmission::Collection_Iterator>;
