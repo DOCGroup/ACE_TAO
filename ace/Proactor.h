@@ -99,7 +99,6 @@ protected:
  */
 class ACE_Export ACE_Proactor
 {
-
   // = Here are the private typedefs that the <ACE_Proactor> uses.
 
   typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *,

@@ -103,7 +103,6 @@ ACE_Proactor_Timer_Handler::svc (void)
 {
   ACE_Time_Value absolute_time;
   ACE_Time_Value relative_time;
-  int empty_flag = 0;
   int result = 0;
 
   while (this->shutting_down_ == 0)
