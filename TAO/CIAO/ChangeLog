@@ -4,7 +4,8 @@ Mon Jan 31 21:00:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Generate '#include "ace/OS_NS_string.h"' directive.  CIAO CIDL
 	  servant sources call ACE_OS::strcmp(), the prototype of which is
-	  found in that header.
+	  found in that header.  Necessitated by inter-header dependency
+	  reductions in ACE.
 
 Mon Jan 31 11:59:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
