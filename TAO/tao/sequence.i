@@ -14,21 +14,21 @@
 //
 // ============================================================================
 
-// operations on the unbounded sequence class
+// Operations on the unbounded sequence class.
 
 ACE_INLINE
 TAO_Base_Sequence::TAO_Base_Sequence (void)
   : maximum_ (0),
     length_ (0),
     buffer_ (0),
-    release_ (0)
+    release_ (CORBA::B_FALSE)
 {
 }
 
 ACE_INLINE
 TAO_Base_Sequence::TAO_Base_Sequence (CORBA::ULong maximum,
                                       CORBA::ULong length,
-                                      void* buffer,
+                                      void *buffer,
                                       CORBA::Boolean release)
   : maximum_ (maximum),
     length_ (length),
