@@ -252,10 +252,15 @@ copied instead of appended to the CDR stream.</TD></TR>
 	      (<em>which</em> = <code>global</code>)
 	      or a per-thread (<em>which</em> = <code>tss</code>)
 	      allocator for the incoming CDR buffers.
-	      The default is <CODE>tss</CODE> and should give the
+	      Though <CODE>tss</CODE> should give the
 	      optimal performance;
-	      unless the user takes advantage of the features in TAO
-	      to keep the CDR stream buffer after the upcall.
+	      we made the default <CODE>global</CODE>.
+	      TAO optimizations for octet sequences will not work when 
+	      returning that data type if the allocator is
+	      <CODE>tss</CODE>.
+	      Using global allocator also allows the users to
+	      take advantage of the TAO octet sequence
+	      extensions to preserve the buffer after the upcall.
 	    </TD></TR>
 </TABLE>
 </P>
