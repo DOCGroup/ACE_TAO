@@ -359,12 +359,14 @@ libACE_Sockets_la_SOURCES = \
   INET_Addr.cpp \
   Multihomed_INET_Addr.cpp \
   IPC_SAP.cpp \
+  ICMP_Socket.cpp \
   LSOCK.cpp \
   LSOCK_Acceptor.cpp \
   LSOCK_CODgram.cpp \
   LSOCK_Connector.cpp \
   LSOCK_Dgram.cpp \
   LSOCK_Stream.cpp \
+  Ping_Socket.cpp \
   SOCK.cpp \
   SOCK_Acceptor.cpp \
   SOCK_CODgram.cpp \
