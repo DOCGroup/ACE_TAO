@@ -25,15 +25,15 @@ $server_args =
     "-s $iorfile1 -c $iorfile2 -p 1413566208 "
     ."-ORBSvcconf svc_unix.conf -ORBendpoint iiop://  -ORBendpoint shmiop:// -ORBEndpoint uiop://";
 $client_args =
-    "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210 -ORBdebuglevel 1";
+    "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210 -ORBdebuglevel 1 -ORBSvcconf svc_unix.conf ";
 
 if ($^O eq "MSWin32")
 {
 $server_args =
-    "-s $iorfile1 -c $iorfile2 "
+    "-s $iorfile1 -c $iorfile2 -p 1413566210 "
     ."-ORBSvcconf svc_nt.conf -ORBendpoint iiop:// -ORBendpoint shmiop:// ";
 $client_args =
-    "-s file://$iorfile1 -c file://$iorfile2 -ORBdebuglevel 1 ";
+    "-s file://$iorfile1 -c file://$iorfile2 -ORBdebuglevel 1 -ORBSvcconf client_nt.conf";
 }
 
 # Start server.
