@@ -515,6 +515,7 @@ ACE_Reactor::requeue_position (int rp)
   ACE_TRACE ("ACE_Reactor::requeue_position");
   ACE_MT (ACE_GUARD (ACE_REACTOR_MUTEX, ace_mon, this->token_));
 #if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (rp);
   // Must always requeue ourselves "next" on Win32.
   this->requeue_position_ = 0;
 #else
@@ -1761,7 +1762,7 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 int
 ACE_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
 {
-  int result;
+  int result = -1;
 
   ACE_SEH_TRY {
     ACE_Reactor_Handle_Set dispatch_set;

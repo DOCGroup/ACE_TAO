@@ -5616,7 +5616,7 @@ ACE_OS::mmap (void *addr,
 {
   // ACE_TRACE ("ACE_OS::mmap");
 #if defined (ACE_WIN32)
-  int nt_flags;
+  int nt_flags = 0;
   ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
   
   // Ensure that file_mapping is non-zero.
@@ -6815,6 +6815,8 @@ ACE_OS::kill (pid_t pid, int signum)
 {
   // ACE_TRACE ("ACE_OS::kill");
 #if defined (ACE_WIN32) || defined (CHORUS)
+  ACE_UNUSED_ARG (pid);
+  ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::kill (pid, signum), int, -1);
@@ -6962,14 +6964,14 @@ ACE_OS::strcat (wchar_t *s, const wchar_t *t)
 }
 
 ACE_INLINE wchar_t *
-ACE_OS::strchr (const wchar_t *s, int c)
+ACE_OS::strchr (const wchar_t *s, wint_t c)
 {
   // ACE_TRACE ("ACE_OS::strchr");
   return ::wcschr (s, c);
 }
 
 ACE_INLINE wchar_t *
-ACE_OS::strrchr (const wchar_t *s, int c)
+ACE_OS::strrchr (const wchar_t *s, wint_t c)
 {
   // ACE_TRACE ("ACE_OS::strrchr");
   return ::wcsrchr (s, c);
@@ -7073,6 +7075,7 @@ ACE_OS::open (const wchar_t *filename,
 	      int mode, 
 	      int perms)
 {
+  ACE_UNUSED_ARG (perms);
   // ACE_TRACE ("ACE_OS::open");
   // Warning: This function ignores _O_APPEND
   DWORD access = GENERIC_READ;
@@ -7140,6 +7143,8 @@ ACE_INLINE ACE_SHLIB_HANDLE
 ACE_OS::dlopen (ACE_WIDE_DL_TYPE filename, int mode)
 {
   // ACE_TRACE ("ACE_OS::dlopen");
+  ACE_UNUSED_ARG (mode);
+
   ACE_OSCALL_RETURN (::LoadLibraryW (filename), ACE_SHLIB_HANDLE, 0);
 }
 
@@ -7187,6 +7192,8 @@ ACE_INLINE int
 ACE_OS::mkdir (const wchar_t *path, mode_t mode)
 {
   // ACE_TRACE ("ACE_OS::mkdir");
+  ACE_UNUSED_ARG (mode);
+
   ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);  
 }
 

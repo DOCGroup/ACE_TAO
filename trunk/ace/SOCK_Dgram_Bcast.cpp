@@ -187,6 +187,8 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const char *host_name)
 		   "ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enable for this interface."));
     }
 #else
+  ACE_UNUSED_ARG (host_name);
+
   ACE_INET_Addr addr (u_short (0), ACE_UINT32 (INADDR_BROADCAST));
   ACE_NEW_RETURN (this->if_list_, ACE_Bcast_Node (addr, this->if_list_), -1);
 #endif /* !ACE_WIN32 */

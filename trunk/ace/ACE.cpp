@@ -106,6 +106,8 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
 			     int flags)
 {
 #if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (reactor);
+
   ACE_Stdin_Args *args = 0;
   ACE_NEW_RETURN (args, ACE_Stdin_Args, -1);
   args->handler_ = eh;
@@ -115,7 +117,6 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
   // Keep compilers happy.
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (thr_mgr);
-  ACE_UNUSED_ARG (reactor);
   return reactor->register_handler (ACE_STDIN, eh, ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
 }

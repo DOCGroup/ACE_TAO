@@ -208,7 +208,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 					int signum)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-  ACE_Service_Config::no_static_svcs_ = ignore_static_svcs;
+  ACE_Service_Config::no_static_svcs_ = (char) ignore_static_svcs;
   ACE_Service_Config::signum_ = signum;
 
   // Initialize the Service Repository.
