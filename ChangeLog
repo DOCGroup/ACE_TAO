@@ -1,6 +1,13 @@
+Thu Dec  4 16:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Vector_Test.cpp:
+	  When using BCB6 or earlier the second template argument of the
+	  ACE_Vector template must be passed explicit. Just expecting
+	  that the default one is used doesn't work with Borland.
+
 Thu Dec  4 14:30:44 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 
-	* ace/Task_Ex_T.i (reply, put_next): 
+	* ace/Task_Ex_T.i (reply, put_next):
 	Thses 2 funcitons releted to ACE_Stream Framework,
 	doesn't work with new ACE_Task_Ex (yet)
 
@@ -9,7 +16,7 @@ Wed Dec  3 23:37:59 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 	* ace/Task_Ex_T.h:
 	Add remark about the idea of merging ACE_Task and ACE_Task_Ex.
 	Add remark about sibling alwasy returning 0
-	
+
 	* ace/Task_Ex_T.cpp (ACE_Task_Ex::sibling):
 	ACE_Task_Ex::sibling cannot call mod_->sibling(this) because it
 	is not typed as ACE_Task<>. Return 0 alwasy when calling sibling.
@@ -26,7 +33,7 @@ Wed Dec  3 12:14:51 2003  Steve Huston  <shuston@riverace.com>
 	* ace/Vector_T.{h cpp i}: Added operator== and operator!= methods
 	  that take the correct vector length into account. The inherited
 	  ACE_Array methods run the whole array max length.
-	
+
 	Thu Sep 04 12:20:39 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Vector_T.{h, i, cpp}: Added new ACE_Vector_Iterator<T> class
