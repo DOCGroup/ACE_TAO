@@ -3,7 +3,9 @@
 #include "PushConsumer.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
+#include "FtRtEvent_Test.h"
 #include <vector>
+#include <fstream>
 
 
 ACE_RCSID (FtRtEvent,
@@ -18,15 +20,13 @@ PushConsumer_impl::PushConsumer_impl()
 {
 }
 
-int PushConsumer_impl::init(CORBA::ORB_ptr orb, int num_iterations,
+int PushConsumer_impl::init(CORBA::ORB_ptr orb,
                             RtecEventChannelAdmin::EventChannel_ptr channel,
-                            const ACE_Time_Value& timer_interval ACE_ENV_ARG_DECL)
+                            const Options& options ACE_ENV_ARG_DECL)
 {
-  ACE_UNUSED_ARG(timer_interval);
-
   orb_ = orb;
-  num_iterations_ = num_iterations;
-  run_times.assign(num_iterations, -1);
+  num_iterations_ = options.num_iterations;
+  run_times.assign(options.num_iterations, -1);
 
   RtecEventChannelAdmin::ConsumerQOS qos;
   qos.is_gateway = 1;
@@ -38,6 +38,10 @@ int PushConsumer_impl::init(CORBA::ORB_ptr orb, int num_iterations,
   h0.source = ACE_ES_EVENT_SOURCE_ANY;
 
   RtecEventComm::PushConsumer_var push_consumer = _this();
+
+  CORBA::String_var str = orb_->object_to_string(push_consumer.in());
+  std::ofstream out(options.proxy_consumer_file.c_str());
+  out << str.in();
 
   ACE_Time_Value time_val = ACE_OS::gettimeofday ();
 
@@ -74,7 +78,7 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
     event[0].data.any_value >>= x;
     run_times[x] = static_cast<int>(elaps/10);
 
-    if (num_iterations_-1 == static_cast<int>(x) ) {
+    if ( num_iterations_ == static_cast<int>(x) ) {
       supplier_->disconnect_push_supplier();
       orb_->shutdown();
       output_result();

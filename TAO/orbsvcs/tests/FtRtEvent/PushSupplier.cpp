@@ -9,6 +9,7 @@
 #include "tao/Stub.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
+#include "FtRtEvent_Test.h"
 
 ACE_RCSID (FtRtEvent,
            PushSupplier,
@@ -43,14 +44,15 @@ PushSupplier_impl::~PushSupplier_impl()
   reactor_task_.wait();
 }
 
-int PushSupplier_impl::init(CORBA::ORB_ptr orb, int num_iterations,
+int PushSupplier_impl::init(CORBA::ORB_ptr orb,
                             RtecEventChannelAdmin::EventChannel_ptr channel, 
-                            const ACE_Time_Value& timer_interval
+                            const Options& options
                             ACE_ENV_ARG_DECL)
 {
   orb_ = orb;
-  num_iterations_ = num_iterations;
-  reactor_task_.timer_interval_ = timer_interval;
+  num_iterations_ = options.num_iterations;
+  reactor_task_.timer_interval_ = options.timer_interval;
+  proxy_consumer_file_ = options.proxy_consumer_file;
 
   RtecEventChannelAdmin::SupplierQOS qos;
   qos.publications.length (1);
@@ -130,16 +132,31 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
     event[0].header.ec_send_time = time_val.sec () * 10000000 + time_val.usec ()* 10;
     event[0].data.any_value <<= seq_no_;
 
-    consumer_->push(event ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    TAO_FTRTEC::Log(1, "sending data %d\n", seq_no_);
+    if (num_iterations_ > (int) seq_no_++) {
+      consumer_->push(event ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+    else {
+      ACE_CString ior("file://");
+      ior += proxy_consumer_file_;
+      CORBA::Object_var obj = orb_->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      RtecEventComm::PushConsumer_var consumer = 
+        RtecEventComm::PushConsumer::_narrow(obj.in());
+      ACE_OS::sleep(1);
+      consumer->push(event ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-    if (num_iterations_ ==(int) ++seq_no_) {
       ACE_DEBUG((LM_DEBUG, "shutdown orb\n"));
       this->reactor()->cancel_timer(this);
       this->reactor()->end_reactor_event_loop();
       this->reactor(0);
       orb_->shutdown();
+    }
+
+    TAO_FTRTEC::Log(1, "sending data %d\n", seq_no_);
+
+    if (num_iterations_ ==(int) ++seq_no_) {
     }
   }
   ACE_CATCHANY

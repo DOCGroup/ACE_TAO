@@ -17,10 +17,10 @@ ACE_RCSID (FtRtEvent,
 
 FtRtEvent_Test_Base::FtRtEvent_Test_Base()
 : gateway_(0)
-, timer_interval_(1,0)
-, num_iterations_(100)
 , use_gateway_(1)
 {
+  options_.num_iterations=100;
+  options_.timer_interval.set(1,0);
 }
 
 FtRtEvent_Test_Base::~FtRtEvent_Test_Base()
@@ -31,8 +31,8 @@ FtRtEvent_Test_Base::~FtRtEvent_Test_Base()
 int 
 FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:hi:k:n?"));
-  int opt;
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:hi:k:np:?"));
+    int opt;
 
   while ((opt = get_opt ()) != EOF)
   {
@@ -52,25 +52,29 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       }
       break;
     case 'k':
-      num_iterations_ = atoi(get_opt.opt_arg ());
+      options_.num_iterations = atoi(get_opt.opt_arg ());
       break;
     case 'n':
       use_gateway_ = 0;
       break;
     case 'f':
-      timer_interval_.set(1.0/ACE_OS::atoi(get_opt.opt_arg ()));
+      options_.timer_interval.set(1.0/ACE_OS::atoi(get_opt.opt_arg ()));
+      break;
+    case 'p':
+      options_.proxy_consumer_file = get_opt.opt_arg ();
       break;
     case 'h':
     case '?':
       ACE_DEBUG((LM_DEBUG,
         ACE_LIB_TEXT("Usage: %s ")
-        ACE_LIB_TEXT("-i ftrt_eventchannel_ior\n")
-        ACE_LIB_TEXT("-n       do not use gateway\n")
+        ACE_LIB_TEXT("-d debuglevel\n")
         ACE_LIB_TEXT("-f event_frequency  in HZ (default 1 HZ)\n")
+        ACE_LIB_TEXT("-i ftrt_eventchannel_ior\n")
+        ACE_LIB_TEXT("-k number_of_events\n")
+        ACE_LIB_TEXT("-n       do not use gateway\n")
         ACE_LIB_TEXT("\n"),
         argv[0]));
       return -1;
-
     }
   }
   return 0;

@@ -18,6 +18,13 @@ namespace TAO_FTRTEC {
   class FTEC_Gateway;
 }
 
+struct Options
+{
+  ACE_Time_Value timer_interval;
+  int num_iterations;
+  ACE_CString proxy_consumer_file;
+};
+
 class FtRtEvent_Test_Base
 {
 public:
@@ -29,9 +36,8 @@ protected:
   CORBA::ORB_var orb_;
   RtecEventChannelAdmin::EventChannel_var channel_;
   TAO_FTRTEC::FTEC_Gateway* gateway_;
-  ACE_Time_Value timer_interval_;
-  int num_iterations_;
   int use_gateway_;
+  Options options_;
 private:
   int parse_args(int argc, ACE_TCHAR** argv 
                  ACE_ENV_ARG_DECL);
@@ -51,7 +57,7 @@ class FtRtEvent_Test : public FtRtEvent_Test_Base
 template <class T>
 int FtRtEvent_Test<T>::init(ACE_ENV_SINGLE_ARG_DECL)
 {
-  return client_.init(orb_.in(), num_iterations_, channel_.in(), timer_interval_ 
+  return client_.init(orb_.in(), channel_.in(), options_ 
                       ACE_ENV_ARG_PARAMETER);
 }
 
