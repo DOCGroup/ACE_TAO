@@ -1,3 +1,11 @@
+Wed Mar 28 14:42:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+
+          Fixes for Fuzz warnings in generated code.
+
 Wed Mar 28 12:39:44 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
