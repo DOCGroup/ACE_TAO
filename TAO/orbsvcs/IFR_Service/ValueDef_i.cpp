@@ -59,7 +59,7 @@ TAO_ValueDef_i::supported_interfaces (CORBA::Environment & /* ACE_TRY_ENV */)
 
 void 
 TAO_ValueDef_i::supported_interfaces (
-    const IR::InterfaceDefSeq &supported_interfaces,
+    const IR::InterfaceDefSeq & /* supported_interfaces */,
     CORBA::Environment & /* ACE_TRY_ENV */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -166,7 +166,7 @@ TAO_ValueDef_i::is_truncatable (CORBA::Boolean /* is_truncatable */,
 }
 
 CORBA::Boolean 
-TAO_ValueDef_i::is_a (const char *id,
+TAO_ValueDef_i::is_a (const char * /* id */,
                       CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
