@@ -45,12 +45,15 @@ ifeq ($(PACE_SYSNAME),SunOS)
   # need a 3 digit version number for comparison purposes.
   ifeq ($(PACE_SYSVER),57)
     PACE_SYSVER := $(PACE_SYSVER)0
-  endif # PACE_SYSVER
+  endif # PACE_SYSVER == 57
   ifeq ($(PACE_SYSVER),56)
     PACE_SYSVER := $(PACE_SYSVER)0
-  endif # PACE_SYSVER
+  endif # PACE_SYSVER == 56
   VPATH :=.:posix:$(VPATH)
-  CFLAGS += -DPACE_SUNOS=$(PACE_SYSVER)
+  CFLAGS += -DPACE_SUNOS=$(PACE_SYSVER) -D_REENTRANT
+  ifeq ($(threads),1)
+    CFLAGS += -D_POSIX_PTHREAD_SEMANTICS
+  endif # ! ($(threads),0)
 endif
 
 ifeq ($(PACE_SYSNAME),NT)

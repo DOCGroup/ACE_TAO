@@ -434,10 +434,10 @@ include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
 
 .PHONY: PACE_COMPONENTS
 PACE_COMPONENTS:
-	@sh $(ACE_ROOT)/bin/pace_components --pace --set ' $(PACE_COMPONENTS) '
+	@sh $(ACE_ROOT)/bin/ace_components --pace --set ' $(PACE_COMPONENTS) '
 
 realclean:
-	@sh $(ACE_ROOT)/bin/pace_components --pace --remove
+	@sh $(ACE_ROOT)/bin/ace_components --pace --remove
 
 # AIX template compilation speedup hack
 # Not added for PACE - can always be added later if needed

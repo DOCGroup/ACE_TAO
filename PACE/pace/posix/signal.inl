@@ -152,14 +152,8 @@ PACE_INLINE
 int
 pace_sigwait (const pace_sigset_t * set, int * sig)
 {
-#if (PACE_SUNOS)
-  *sig = sigwait ((pace_sigset_t *)set);
-  if (*sig == -1)
-    return -1;
-  return 0;
-#else
-  return sigwait (set, sig);
-#endif /* PACE_SUNOS */
+  return sigwait (PACE_NONCONST_ARG_CAST (pace_sigset_t *) set,
+                  PACE_VOIDSTARTSTAR_ARG_CAST (void**) sig);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 

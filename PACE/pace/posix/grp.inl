@@ -31,14 +31,14 @@ pace_getgrgid_r (pace_gid_t gid,
                  size_t bufsize,
                  pace_group ** result)
 {
-#if (PACE_SUNOS)
-  *result = getgrgid_r (gid, grp, buffer, bufsize);
+#if (PACE_LYNXOS)
+  *result = getgrgid_r (grp, gid, buffer, bufsize);
   if (*result == 0)
     return errno;
   return 0;
 #else
   return getgrgid_r (gid, grp, buffer, bufsize, result);
-#endif /* PACE_SUNOS */
+#endif /* ! PACE_LYNXOS */
 }
 #endif /* PACE_HAS_POSIX_SDR_UOF */
 
@@ -60,13 +60,14 @@ pace_getgrnam_r (const char * name,
                   size_t bufsize,
                   pace_group ** result)
 {
-#if (PACE_SUNOS)
-  *result = getgrnam_r (name, grp, buffer, bufsize);
+#if (PACE_LYNXOS)
+  *result = getgrnam_r (grp, PACE_NONCONST_ARG_CAST (char *) name,
+                        buffer, bufsize);
   if (*result == 0)
     return errno;
   return 0;
 #else
   return getgrnam_r (name, grp, buffer, bufsize, result);
-#endif /* PACE_SUNOS */
+#endif /* ! PACE_LYNXOS */
 }
 #endif /* PACE_HAS_POSIX_SDR_UOF */
