@@ -1,66 +1,72 @@
+Sat Jan 22 18:25:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
+          Fixed typo in the inline include file, only a problem in builds
+          that disable inlining.
+
 Sat Jan 22 17:04:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
-	  Added support for atomic reconnections.  Before this change the
-	  event channel could loose messages when a consumer reconnected,
-	  because the implementation basically disconnected the consumer
-	  and then connected it again.  There was an interval where the
-	  suppliers could push events, while the consumer was temporarily
-	  disconnected.
-	  The new implementation pushes a reconnected() message through
-	  the event channel, the consumer and supplier admins and finally
-	  to each proxy.
-	  There were no changes on the critical path, or regular
-	  connect/disconnect calls, so this only affect the performance of
-	  reconnections.
-	  This fixes bug #271
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+          Added support for atomic reconnections.  Before this change the
+          event channel could loose messages when a consumer reconnected,
+          because the implementation basically disconnected the consumer
+          and then connected it again.  There was an interval where the
+          suppliers could push events, while the consumer was temporarily
+          disconnected.
+          The new implementation pushes a reconnected() message through
+          the event channel, the consumer and supplier admins and finally
+          to each proxy.
+          There were no changes on the critical path, or regular
+          connect/disconnect calls, so this only affect the performance of
+          reconnections.
+          This fixes bug #271
 
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
-	  Another attempt at fixing this code to compile without CORBA
-	  Messaging support. It happens that ACE_HAS_CORBA_MESSAGING is
-	  always defined, but sometimes to 0 and other times to 1.
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          Another attempt at fixing this code to compile without CORBA
+          Messaging support. It happens that ACE_HAS_CORBA_MESSAGING is
+          always defined, but sometimes to 0 and other times to 1.
 
-	* orbsvcs/tests/Event/Event.dsw:
-	* orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
-	* orbsvcs/tests/Event/Basic/Atomic_Reconnect.dsp:
-	* orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
-	* orbsvcs/tests/Event/Basic/Basic.dsw:
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Basic/run_test.pl:
-	  New test to check that Atomic reconnects actually work.
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          New test to check that Atomic reconnects actually work.
 
-	* orbsvcs/tests/Event/Basic/mt_disconnect.conf:
-	* orbsvcs/tests/Event/Basic/mt.svc.conf:
-	  Renamed because it is also used in the Atomic_Reconnect test.
+        * orbsvcs/tests/Event/Basic/mt_disconnect.conf:
+        * orbsvcs/tests/Event/Basic/mt.svc.conf:
+          Renamed because it is also used in the Atomic_Reconnect test.
 
 Sat Jan 22 17:11:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
-	  Brian Harris <harris_b@ociweb.com> reported that when using
-	  the -GI option with the IDL compiler to generate implementation
-	  files for an IDL file 'foo', an included IDL file 'bar' caused 
-	  the generation of #include "barI.h" in the implementation header 
-	  file, when it should be #include "barC.h". However, since barC.h 
-	  is indirectly included by the line #include "fooS.h", it does 
-	  not need to be there at all. The block that generates this line 
-	  in be_codegen.cpp is commented out for now, to see if some use
-	  case arises where it is needed. This closes out bug 410.
+        * TAO_IDL/be/be_codegen.cpp:
+          Brian Harris <harris_b@ociweb.com> reported that when using
+          the -GI option with the IDL compiler to generate implementation
+          files for an IDL file 'foo', an included IDL file 'bar' caused
+          the generation of #include "barI.h" in the implementation header
+          file, when it should be #include "barC.h". However, since barC.h
+          is indirectly included by the line #include "fooS.h", it does
+          not need to be there at all. The block that generates this line
+          in be_codegen.cpp is commented out for now, to see if some use
+          case arises where it is needed. This closes out bug 410.
 
 Fri Jan 21 21:19:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
