@@ -39,7 +39,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "tao/RTScheduling/RTSchedulerC.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "tao/RTCORBA/RTCORBAC.h"
 
 #if defined (TAO_EXPORT_MACRO)

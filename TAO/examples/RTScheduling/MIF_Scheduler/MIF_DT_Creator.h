@@ -5,7 +5,6 @@
 
 #include "../DT_Creator.h"
 #include "mif_dt_creator_export.h"
-#include "../Task.h"
 
 class MIF_DT_Creator_Export MIF_DT_Creator: public DT_Creator
 {
