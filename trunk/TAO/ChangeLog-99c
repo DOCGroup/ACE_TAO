@@ -1,3 +1,8 @@
+Sun May 16 10:35:17 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+ 	  Fixed a compile warning regarding checking nil pointers.
+
 Sat May 15 23:04:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/fe/lex.yy.cpp (TAO_YY_BREAK): removed the ACE_NOTREACHED
