@@ -16,7 +16,10 @@ unlink $iorfile;
 $server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
 $client_conf = PerlACE::LocalFile ("client$PerlACE::svcconf_ext");
 
-$client_args = "-ORBSvcConf $client_conf -w 15 -k file://$iorfile";
+$server_startup_wait_time = 5; 
+$client_wait_time         = 15;
+
+$client_args = "-ORBSvcConf $client_conf -w $client_wait_time -k file://$iorfile";
 
 # Set the SSL environment
 $ENV{'SSL_CERT_FILE'} = 'cacert.pem';
@@ -33,7 +36,7 @@ $CL3 = new PerlACE::Process ("client", "$client_args");
 
 
 local $start_time = time();
-local $max_running_time = 300; # 5 minutes
+local $max_running_time = 500; # < 10 minutes
 local $elapsed = time() - $start_time;
 
 while($status == 0 && $elapsed < $max_running_time)
@@ -41,7 +44,7 @@ while($status == 0 && $elapsed < $max_running_time)
     # Start the server
     $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1)
+    if (PerlACE::waitforfile_timed ($iorfile, $server_startup_wait_time) == -1)
     {
 	print STDERR "ERROR: cannot find file <$iorfile>\n";
 	$SV->Kill (); $SV->TimedWait (1);
@@ -54,14 +57,15 @@ while($status == 0 && $elapsed < $max_running_time)
     $CL3->Spawn ();
 
     # Let our clients to execute few requests
-    sleep (1);
+    sleep (3);
 
     # Now kill the server and start it again.
     $SV->Kill ();
     $SV->TimedWait (5);
+    
     $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1)
+    if (PerlACE::waitforfile_timed ($iorfile, $server_startup_wait_time) == -1)
     {
 	print STDERR "ERROR: cannot find file <$iorfile>\n";
 	$SV->Kill (); $SV->TimedWait (1);
@@ -70,10 +74,11 @@ while($status == 0 && $elapsed < $max_running_time)
 
     # Wait for the server and clients to finish
 
-    $client1 = $CL1->WaitKill (10);
-    $client2 = $CL2->WaitKill (10);
-    $client3 = $CL3->WaitKill (10);
-    $server = $SV->WaitKill (10);
+    # Waiting for the first client longer because it waits for others and shutdowns the server.
+    $client1 = $CL1->WaitKill ($client_wait_time * 2); 
+    $client2 = $CL2->WaitKill ($client_wait_time * 2);
+    $client3 = $CL3->WaitKill ($client_wait_time * 2);
+    $server = $SV->WaitKill (5); # should be down already
 
     if ($client1)
     {
