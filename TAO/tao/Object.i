@@ -2,6 +2,19 @@
 
 // ****************************************************************
 
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::Object_ptr obj)
+{
+  return obj == 0;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA_Object_ptr obj)
+{
+  if (obj)
+    obj->_decr_refcnt ();
+}
+
 ACE_INLINE CORBA::ULong
 CORBA_Object::_incr_refcnt (void)
 {

@@ -254,6 +254,19 @@ TAO_Stub::orb_core (void) const
   return this->orb_core_;
 }
 
+ACE_INLINE CORBA::ORB_ptr
+TAO_Stub::servant_orb (void)
+{
+  // Simply pass back the ORB pointer for temporary use.
+  return this->servant_orb_.ptr ();
+}
+
+ACE_INLINE void
+TAO_Stub::servant_orb (CORBA::ORB_ptr orb)
+{
+  this->servant_orb_ = orb;
+}
+
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
 ACE_INLINE
 TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub *p)

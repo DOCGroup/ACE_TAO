@@ -18,14 +18,3 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Server_Request, "$Id$")
-
-CORBA::Boolean
-CORBA::is_nil (CORBA_ServerRequest *x)
-{
-  return x != 0;
-}
-
-void
-CORBA::release (CORBA_ServerRequest *)
-{
-}

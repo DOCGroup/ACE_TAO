@@ -43,15 +43,15 @@ int
 TAO_ORB_Manager::init (int &argc,
                        char **argv,
                        const char *orb_name,
-                       CORBA::Environment &env)
+                       CORBA::Environment &ACE_TRY_ENV)
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     orb_name,
-                                    env);
-      TAO_CHECK_ENV_RETURN (env, -1);
+                                    ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
     }
 
   if (CORBA::is_nil (this->poa_.in ()))
@@ -68,18 +68,18 @@ TAO_ORB_Manager::init (int &argc,
       // Get the POA object.
       this->poa_ =
         PortableServer::POA::_narrow (poa_object.in (),
-                                      env);
+                                      ACE_TRY_ENV);
 
-      TAO_CHECK_ENV_RETURN (env, -1);
+      ACE_CHECK_RETURN (-1);
     }
 
   if (CORBA::is_nil (this->poa_manager_.in ()))
     {
       // Get the POA_Manager.
       this->poa_manager_ =
-        this->poa_->the_POAManager (env);
+        this->poa_->the_POAManager (ACE_TRY_ENV);
 
-      TAO_CHECK_ENV_RETURN (env, -1);
+      ACE_CHECK_RETURN (-1);
     }
 
   return 0;
@@ -89,13 +89,13 @@ int
 TAO_ORB_Manager::init_child_poa (int& argc,
 				 char **argv,
 				 const char *poa_name,
-				 CORBA_Environment &env)
+				 CORBA_Environment &ACE_TRY_ENV)
 {
   return this->init_child_poa (argc,
                                argv,
                                poa_name,
                                0,
-                               env);
+                               ACE_TRY_ENV);
 }
 
 int
@@ -103,7 +103,7 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 				 char **argv,
 				 const char *poa_name,
                                  const char *orb_name,
-				 CORBA_Environment &env)
+				 CORBA_Environment &ACE_TRY_ENV)
 {
   int init_result;
 
@@ -111,7 +111,8 @@ TAO_ORB_Manager::init_child_poa (int& argc,
   init_result = this->init (argc,
                             argv,
                             orb_name,
-                            env);
+                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (init_result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -126,14 +127,14 @@ TAO_ORB_Manager::init_child_poa (int& argc,
   // Id Assignment policy
   policies[0] =
     this->poa_->create_id_assignment_policy (PortableServer::USER_ID,
-                                             env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+                                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   // Lifespan policy
   policies[1] =
     this->poa_->create_lifespan_policy (PortableServer::PERSISTENT,
-                                        env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+                                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   // We use a different POA, otherwise the user would have to change
   // the object key each time it invokes the server.
@@ -142,20 +143,20 @@ TAO_ORB_Manager::init_child_poa (int& argc,
     this->poa_->create_POA (poa_name,
                             this->poa_manager_.in (),
                             policies,
-                            env);
+                            ACE_TRY_ENV);
   // Warning!  If create_POA fails, then the policies won't be
   // destroyed and there will be hell to pay in memory leaks!
-  TAO_CHECK_ENV_RETURN (env, -1);
+  ACE_CHECK_RETURN (-1);
 
   // Creation of the new POAs over, so destroy the Policy_ptr's.
   for (CORBA::ULong i = 0;
-       i < policies.length () && env.exception () == 0;
+       i < policies.length ();
        ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (env);
+      policy->destroy (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
     }
-  TAO_CHECK_ENV_RETURN (env, -1);
 
   return 0;
 }
@@ -163,10 +164,10 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 // Activate POA manager.
 
 int
-TAO_ORB_Manager::activate_poa_manager (CORBA_Environment &env)
+TAO_ORB_Manager::activate_poa_manager (CORBA_Environment &ACE_TRY_ENV)
 {
-  this->poa_manager_->activate (env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  this->poa_manager_->activate (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -174,22 +175,22 @@ TAO_ORB_Manager::activate_poa_manager (CORBA_Environment &env)
 
 CORBA::String
 TAO_ORB_Manager::activate (PortableServer::Servant servant,
-                           CORBA_Environment &env)
+                           CORBA_Environment &ACE_TRY_ENV)
 {
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (servant,
-                                 env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   CORBA::Object_var obj =
     this->poa_->id_to_reference (id.in (),
-                                 env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   CORBA::String str =
     this->orb_->object_to_string (obj.in (),
-                                  env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+                                  ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   return str;
 }
@@ -216,7 +217,7 @@ TAO_ORB_Manager::deactivate (const char *id,
 CORBA::String
 TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
                                            PortableServer::Servant servant,
-                                           CORBA_Environment& env)
+                                           CORBA_Environment& ACE_TRY_ENV)
 {
   if (object_name == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -229,19 +230,19 @@ TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
 
   this->child_poa_->activate_object_with_id (id.in (),
                                              servant,
-                                             env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+                                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   CORBA::Object_var obj =
     this->child_poa_->id_to_reference (id.in (),
-                                       env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+                                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   CORBA::String str =
     this->orb_->object_to_string (obj.in (),
-                                  env);
+                                  ACE_TRY_ENV);
 
-  TAO_CHECK_ENV_RETURN (env, 0);
+  ACE_CHECK_RETURN (0);
 
   return str;
 }
@@ -266,11 +267,11 @@ TAO_ORB_Manager::deactivate_under_child_poa (const char *id,
 // Enter the ORB event loop.
 
 int
-TAO_ORB_Manager::run (CORBA_Environment &env,
+TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV,
                       ACE_Time_Value *tv)
 {
-  this->poa_manager_->activate (env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  this->poa_manager_->activate (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (this->orb_->run (tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -282,10 +283,10 @@ TAO_ORB_Manager::run (CORBA_Environment &env,
 
 int
 TAO_ORB_Manager::run (ACE_Time_Value &tv,
-                      CORBA_Environment &env)
+                      CORBA_Environment &ACE_TRY_ENV)
 {
-  this->poa_manager_->activate (env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  this->poa_manager_->activate (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (this->orb_->run (tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -296,10 +297,10 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv,
 }
 
 int
-TAO_ORB_Manager::run (CORBA_Environment &env)
+TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV)
 {
-  this->poa_manager_->activate (env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  this->poa_manager_->activate (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (this->orb_->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -341,10 +342,10 @@ TAO_ORB_Manager::poa_manager (void)
 
 TAO_ORB_Manager::~TAO_ORB_Manager (void)
 {
-  CORBA::Environment env;
+  CORBA::Environment ACE_TRY_ENV;
 
   if (CORBA::is_nil (this->poa_.in ()) == 0)
     this->poa_->destroy (1,
                          1,
-                         env);
+                         ACE_TRY_ENV);
 }

@@ -389,6 +389,13 @@ public:
   TAO_ORB_Core* orb_core (void) const;
   // Accessor
 
+  CORBA::ORB_ptr servant_orb (void);
+  void servant_orb (CORBA::ORB_ptr orb);
+  // Accesor and mutator for the servant ORB.  Notice that the muatator
+  // assumes the ownership of the passed in ORB and the accesor does not
+  // return a copy of the orb since the accessing of the ORB is considered
+  // temporary.
+
 protected:
   void put_params (CORBA_Environment &TAO_IN_ENV,
                    const TAO_Call_Data *info,
@@ -466,6 +473,13 @@ private:
 
   TAO_ORB_Core* orb_core_;
   // The ORB
+
+  CORBA::ORB_var servant_orb_;
+  // If this stub refers to a collocated object then we need to hold on to
+  // the servant's ORB (which may be different from the client ORB) so that,
+  //   1. we know that the ORB will stay alive long enough, and,
+  //   2. we can search for the servant/POA's status starting from
+  //      the ORB's RootPOA.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
   TAO_Policy_Manager_Impl* policies_;

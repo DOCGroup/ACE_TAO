@@ -91,8 +91,8 @@ CORBA_Exception::_is_a (const char* repository_id) const
 }
 
 void
-CORBA_Exception::print_exception (const char *info,
-                                  FILE *) const
+CORBA_Exception::_tao_print_exception (const char *info,
+                                       FILE *) const
 {
   const char *id = this->_id ();
 
@@ -105,7 +105,7 @@ CORBA_Exception::print_exception (const char *info,
                                                     this));
 
   if (x2 != 0)
-    x2->print_exception_tao_ ();
+    x2->_tao_print_system_exception ();
   else
     // @@ we can use the exception's typecode to dump all the data
     // held within it ...
@@ -158,6 +158,12 @@ CORBA_UserException::operator= (const CORBA_UserException &src)
 {
   this->CORBA_Exception::operator= (src);
   return *this;
+}
+
+void
+CORBA_UserException::_raise (void)
+{
+  TAO_RAISE (*this);
 }
 
 int
@@ -232,7 +238,7 @@ CORBA_SystemException::_raise (void)
 }
 
 CORBA::ULong
-CORBA_SystemException::errno_tao_ (int errno_value)
+CORBA_SystemException::_tao_errno (int errno_value)
 {
   switch (errno_value)
     {
@@ -264,17 +270,17 @@ CORBA_SystemException::errno_tao_ (int errno_value)
 }
 
 CORBA::ULong
-CORBA_SystemException::minor_code_tao_ (u_int location,
+CORBA_SystemException::_tao_minor_code (u_int location,
                                         int errno_value)
 {
   return
     TAO_DEFAULT_MINOR_CODE
     | location
-    | errno_tao_ (errno_value);
+    | _tao_errno (errno_value);
 }
 
 void
-CORBA_SystemException::print_exception_tao_ (FILE *) const
+CORBA_SystemException::_tao_print_system_exception (FILE *) const
 {
   // @@ there are a other few "user exceptions" in the CORBA scope,
   // they're not all standard/system exceptions ... really need to
@@ -390,9 +396,10 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (void)
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
 {
-  // @@ Nanbor, shouldn't we be checking for "new" failure here with
-  // ACE_NEW?
   this->exception_ = new CORBA_Any (ex);
+  if (this->exception_ == 0)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) Unable to copy CORBA::UnknownUerException due to memory exhaustion\n"));
 }
 
 CORBA_UnknownUserException::~CORBA_UnknownUserException (void)
@@ -435,7 +442,7 @@ CORBA_UnknownUserException::_raise (void)
 
 void
 TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-                                            CORBA::Environment &TAO_IN_ENV)
+                                            CORBA::Environment &ACE_TRY_ENV)
 {
   // Create the TypeCode for the CORBA_UnknownUserException.
 
@@ -471,15 +478,17 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.write_string (field_name) == 0
       || stream.encode (CORBA::_tc_TypeCode,
                         &CORBA::_tc_any, 0,
-                        TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW (CORBA_INITIALIZE ());
+                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || ACE_TRY_ENV.exception () != 0)
+    ACE_THROW (CORBA_INITIALIZE ());
 
-  // @@ Nanbor, shouldn't we be checking for "new" failure here?
-  tcp = new CORBA::TypeCode (CORBA::tk_except,
-                             stream.length (),
-                             stream.buffer (),
-                             1,
-                             sizeof (CORBA_UserException));
+  ACE_NEW_THROW_EX (tcp,
+                    CORBA::TypeCode (CORBA::tk_except,
+                                     stream.length (),
+                                     stream.buffer (),
+                                     1,
+                                     sizeof (CORBA_UserException)),
+                    CORBA_NO_MEMORY ());
 }
 
 void
@@ -544,10 +553,12 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.encode (CORBA::_tc_TypeCode,
                         &CORBA::_tc_ulong, 0,
                         ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || ACE_TRY_ENV.exception () != 0
       || stream.write_string (completed) == 0
       || stream.encode (CORBA::_tc_TypeCode,
                         &TC_completion_status, 0,
-                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || ACE_TRY_ENV.exception () != 0)
     ACE_THROW (CORBA::INITIALIZE ());
   // @@ It is possible to throw an exception at this point?  What if
   // the exception typecode has not been initialized yet?
@@ -559,12 +570,13 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // a TypeCode, saving it away in the list of ones that the ORB will
   // always accept as part of any operation response!
 
-  // @@ Nanbor, shouldn't we check for "new" failure here?
-  tcp = new CORBA::TypeCode (CORBA::tk_except,
-                             stream.length (),
-                             stream.buffer (),
-                             1,
-                             sizeof (CORBA_SystemException));
+  ACE_NEW_THROW_EX (tcp,
+                    CORBA::TypeCode (CORBA::tk_except,
+                                     stream.length (),
+                                     stream.buffer (),
+                                     1,
+                                     sizeof (CORBA_SystemException)),
+                    CORBA_NO_MEMORY ());
 
   TAO_Exceptions::system_exceptions->add (tcp);
 
@@ -699,15 +711,6 @@ CORBA_##name ::_is_a (const char* interface_id) const \
 { \
   return ((ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/" #name ":1.0")==0) \
           || CORBA_SystemException::_is_a (interface_id)); \
-}
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-void \
-CORBA_##name ::_raise (void) \
-{ \
-  TAO_RAISE(*this); \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION

@@ -11,6 +11,17 @@
 // IIOP_ServerRequest the "fast" version (with no copies at all). The
 // first would be use for DII and the later for SII.
 
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA_ServerRequest *x)
+{
+  return x != 0;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA_ServerRequest *)
+{
+}
+
 ACE_INLINE CORBA_ServerRequest *
 CORBA_ServerRequest::_duplicate (CORBA_ServerRequest *)
 {

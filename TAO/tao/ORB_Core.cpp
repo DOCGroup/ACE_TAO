@@ -65,6 +65,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
     //    is staticaly added to the service configurator.
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
+    collocation_strategy_ (THRU_POA),
     poa_current_ (0),
     object_adapter_ (0),
     tm_ (),
@@ -485,6 +486,22 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                 this->opt_for_collocation_ = 1;
               else if (ACE_OS::strcasecmp (opt, "NO") == 0)
                 this->opt_for_collocation_ = 0;
+
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcmp (current_arg, "-ORBcollocationstrategy") == 0)
+        // Specify which collocation policy we want to use.
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char *opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "thru_poa") == 0)
+                this->collocation_strategy_ = THRU_POA;
+              else if (ACE_OS::strcasecmp (opt, "direct") == 0)
+                this->collocation_strategy_ = DIRECT;
 
               arg_shifter.consume_arg ();
             }
@@ -1127,7 +1144,7 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
   //    the object is collocated.
   // @@ Note, if collocated we can not be forwarded!
   //    Also, acceptor_registry_->is_collocated (...) will check the
-  //    address (ORB Host) but not the object_key.  This should be checked 
+  //    address (ORB Host) but not the object_key.  This should be checked
   //    also.
 
   return this->acceptor_registry_->is_collocated (mprofile);

@@ -180,6 +180,13 @@ TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
     }
 }
 
+CORBA::Object_ptr
+TAO_ServantBase::_create_collocated_objref (CORBA::ULong type,
+                                            CORBA::Environment &ACE_TRY_ENV)
+{
+  return CORBA::Object::_nil ();
+}
+
 TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
 {
 }
