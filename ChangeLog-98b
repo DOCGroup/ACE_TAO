@@ -1,11 +1,14 @@
 Thu Sep 17 11:23:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS: Modified ACE_THR_FUNC so that its signature is always
+ 	  void *(*)(void *).  We now have a new type called
+ 	  ACE_THR_FUNC_INTERNAL that is defined for each different OS
+ 	  platform, e.g., VxWorks, pSoS, et al.
+
 	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp (run_server): Oops,
  	  we can't use ACE_THR_FUNC here since that has a different
- 	  signature on VxWorks.  So we'll just expand this a bit.  I
- 	  modeified David' change just a bit to make this more portable.
-  	  Thanks to Raja Ati <rati@jupiter.montereynets.com> for reporting
- 	  this.
+ 	  signature on VxWorks.  So we'll just expand this a bit.  Thanks
+ 	  to Raja Ati <rati@jupiter.montereynets.com> for reporting this.
 
 Thu Sep 17 09:54:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
