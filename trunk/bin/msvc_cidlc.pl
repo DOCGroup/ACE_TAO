@@ -137,6 +137,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
 }
 
 if ($#directories < 0) {
+    print "Using VC7 files\n" if ( $verbose );
     push @directories, ("$CIAO_ROOT\\CIDLC");
 }
 
