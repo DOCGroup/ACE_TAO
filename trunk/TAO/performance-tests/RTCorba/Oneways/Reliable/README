@@ -23,9 +23,6 @@ server		-- sets SyncScope policy value to SYNC_WITH_SERVER.
 target		-- sets SyncScope policy value to SYNC_WITH_TARGET.
 twoway		-- makes regular twoway requests.
 
-Separate tests are run for throughput and for latency measurements,
-although the latency test also outputs throughput information.
-
 If the test type is 'none', request buffering is enabled, and
 a buffering constraint policy is created, based on the number of
 requests the queue should hold, as passed in the -m argument. If the
@@ -55,13 +52,18 @@ system exceptions that may be raised will be sent back to the
 client.
 
 If the test type is 'twoway', the tests will be run with standard
-twoways requests, in order to compare the data with the various
-SyncScope policy values of oneway requests.
+twoways requests, in order to compare the data with the results
+from the various SyncScope policy values of oneway requests.
 
 
 All the above command line options except -x may be used with the
 perl script run_test.pl. If no test type is specified, the script
 will run each test type in turn before the server is shut down.
+
+There is also a perl script called client_test.pl, which facilitates
+testing with the client and server on different machines. To use
+this script, first run the server manually, then run client_test.pl.
+With this script, the server will not shut down automatically.
 
 There is code in the test to set the priorities of the client and
 server threads to values consistent with a real time priority 
