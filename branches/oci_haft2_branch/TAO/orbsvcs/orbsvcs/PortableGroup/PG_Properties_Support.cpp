@@ -13,7 +13,6 @@
 
 #include "PG_Properties_Support.h"
 
-
 TAO::PG_Properties_Support::PG_Properties_Support ()
 {
 }
@@ -23,9 +22,17 @@ TAO::PG_Properties_Support::~PG_Properties_Support ()
 
 }
 
+void TAO::PG_Properties_Support::set_default_property (const char * name,
+      const PortableGroup::Value & value
+      ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->default_properties_.set_property(name, value ACE_ENV_ARG_PARAMETER);
+}
+
 void TAO::PG_Properties_Support::set_default_properties (const PortableGroup::Properties & props)
 {
-  this->default_properties_.decode(props);
+  this->default_properties_.decode (props);
 }
 
 PortableGroup::Properties *

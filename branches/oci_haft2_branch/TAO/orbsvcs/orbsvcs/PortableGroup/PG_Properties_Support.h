@@ -62,6 +62,19 @@ namespace TAO
     ~PG_Properties_Support ();
 
     /**
+     * Set a single default property.
+     * Overwriting any value previously set for that property.
+     * Leaving all other properties untouched.
+     * @param name the name of the property to set
+     * @value an Any containing the value.
+     */
+    void set_default_property (const char * name,
+          const PortableGroup::Value & value
+          ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+          ;
+
+    /**
      * Update the default property set.
      *
      * Properties that appear in props are replaced in or added to the default

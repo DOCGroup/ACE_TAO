@@ -71,10 +71,17 @@ void TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_se
     // note assumption one level name with no kind
     // @@ TODO: fix this
     const CosNaming::NameComponent & nc = nsName[0];
+
+    this->set_property (ACE_static_cast (const char *, nc.id), property.val ACE_ENV_ARG_PARAMETER)
+    ACE_CHECK;
+
+#if 0
     ACE_CString name = ACE_static_cast (const char *, nc.id);
 
     const PortableGroup::Value * value_copy;
     ACE_NEW_THROW_EX (value_copy, PortableGroup::Value (property.val), CORBA::NO_MEMORY ());
+    ACE_CHECK;
+
     const PortableGroup::Value * replaced_value = 0;
     if (0 == this->values_.rebind (name, value_copy, replaced_value))
     {
@@ -94,6 +101,7 @@ void TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_se
       // @@ should throw something here
       ACE_THROW (CORBA::NO_MEMORY ());
     }
+#endif
   }
 }
 
@@ -143,6 +151,39 @@ void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_se
   }
 }
 
+void TAO::PG_Property_Set::set_property (
+  const char * name,
+  const PortableGroup::Value & value
+  ACE_ENV_ARG_DECL)
+{
+  ACE_CString key (name);
+  PortableGroup::Value * value_copy;
+  ACE_NEW_THROW_EX (
+    value_copy, PortableGroup::Value (value),
+    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+
+  const PortableGroup::Value * replaced_value = 0;
+  if (0 == this->values_.rebind (name, value_copy, replaced_value))
+  {
+    if (0 != replaced_value)
+    {
+      delete replaced_value;
+    }
+  }
+  else
+  {
+    if (TAO_debug_level > 3)
+    {
+      ACE_ERROR ( (LM_ERROR,
+        "%n\n%T: Property_set: rebind failed.\n"
+        ));
+    }
+    // @@ should throw something here
+    ACE_THROW (CORBA::NO_MEMORY ());
+  }
+}
+
 
 
 void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & property_set) const
@@ -153,10 +194,8 @@ void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & propert
   property_set.length (merged_values.current_size ());
 
   size_t pos = 0;
-  // note AFICT ACE_Hash_Map does not support const iterators, hence the const cast.
-  ValueMap & mutable_values = ACE_const_cast (ValueMap &, this->values_);
-  for (ValueMapIterator it = mutable_values.begin ();
-        it != mutable_values.end ();
+  for (ValueMapIterator it = merged_values.begin ();
+        it != merged_values.end ();
         ++it)
   {
     const ACE_CString & name = (*it).ext_id_;

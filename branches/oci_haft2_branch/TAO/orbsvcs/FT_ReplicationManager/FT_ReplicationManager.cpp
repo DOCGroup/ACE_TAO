@@ -300,6 +300,50 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     }
   }
 
+  ////////////////////////////////
+  // Initialize default properties
+  PortableGroup::Value value;
+  value <<= TAO_PG_MEMBERSHIP_STYLE;
+  this->properties_support_.set_default_property (PortableGroup::PG_MEMBERSHIP_STYLE, value ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
+
+  value <<= TAO_PG_INITIAL_NUMBER_MEMBERS;
+  this->properties_support_.set_default_property (PortableGroup::PG_INITIAL_NUMBER_MEMBERS, value ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
+
+  value <<= TAO_PG_MINIMUM_NUMBER_MEMBERS;
+  this->properties_support_.set_default_property (PortableGroup::PG_MINIMUM_NUMBER_MEMBERS, value ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
+
+  value <<= FT::SEMI_ACTIVE;
+  this->properties_support_.set_default_property (FT::FT_REPLICATION_STYLE, value ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
+
+  value <<= FT::CONS_APP_CTRL;
+  this->properties_support_.set_default_property (  FT::FT_CONSISTENCY_STYLE, value ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
+
+  value <<= FT::PULL;
+  this->properties_support_.set_default_property (FT::FT_FAULT_MONITORING_STYLE, value ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
+
+  value <<= FT::MEMB;
+  this->properties_support_.set_default_property (FT::FT_FAULT_MONITORING_GRANULARITY, value ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
+
+#if 0
+  FaultMonitoringIntervalAndTimeoutValue times;
+  value <<= times;
+  this->properties_support_.set_default_property (FT::FT_FAULT_MONITORING_INTERVAL_AND_TIMEOUT, value ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
+#endif
+
+#if 0
+  value << interval;
+  this->properties_support_.set_default_property (FT::FT_CHECKPOINT_INTERVAL, value);
+#endif
+
+
   return result;
 }
 

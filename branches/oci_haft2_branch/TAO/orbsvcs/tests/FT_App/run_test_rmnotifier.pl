@@ -12,7 +12,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       Fault_Notifier
 #           implements FaultNotifier interface.
 # Processes used in test:
-# TODO: Document adding ReplicationManager
+#       ReplicationManager
+#
 #       FT_Replica
 #           implements TestReplica interface.
 #           implements PullMonitorable.

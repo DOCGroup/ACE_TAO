@@ -190,6 +190,66 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
   return result;
 }
 
+
+CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group (
+    const char * type_id
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ( (CORBA::SystemException ))
+{
+  CORBA::Object_var group = CORBA::Object::_nil ();
+
+  PortableGroup::ObjectGroupId group_id = 0;
+
+  if (this->have_replication_manager_)
+  {
+    // set typeid properties
+    PortableGroup::Properties properties (1);
+    properties.length (3);
+
+    properties[0].nam.length (1);
+    properties[0].nam[0].id = PortableGroup::PG_MEMBERSHIP_STYLE;
+    properties[0].val <<= PortableGroup::MEMB_INF_CTRL;
+
+    PortableGroup::InitialNumberMembersValue inm(2);
+    properties[1].nam.length (1);
+    properties[1].nam[0].id = PortableGroup::PG_INITIAL_NUMBER_MEMBERS;
+    properties[1].val <<= inm;
+
+    PortableGroup::MinimumNumberMembersValue mnm(1);
+    properties[2].nam.length (1);
+    properties[2].nam[0].id = PortableGroup::PG_MINIMUM_NUMBER_MEMBERS;
+    properties[2].val <<= mnm;
+
+    this->replication_manager_->set_type_properties (
+      type_id,
+      properties
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (group._retn ());
+
+    ::PortableGroup::GenericFactory::FactoryCreationId_var creation_id;
+    PortableGroup::Criteria criteria (1);
+    criteria.length (1);
+    criteria[0].nam.length (1);
+    criteria[0].nam[0].id = PortableGroup::PG_MEMBERSHIP_STYLE;
+    criteria[0].val <<= PortableGroup::MEMB_APP_CTRL;
+
+    group = this->replication_manager_->create_object (
+      type_id,
+      criteria,
+      creation_id
+      ACE_ENV_ARG_PARAMETER
+      );
+    ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+      ACE_TEXT("%T %n (%P|%t): Object_Group_Creator: infrastructure managed group requires Replication Manager\n")
+      ));
+  }
+  return group._retn ();
+}
+
 CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
     const char * role,
     int write_iors
@@ -206,7 +266,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
 
   CORBA::ULong count = infos->length ();
   ACE_ERROR ( (LM_INFO,
-    "%T %n (%P|%t): Object_Group_Creator: found %u factories for %s : %s\n",
+    ACE_TEXT("%T %n (%P|%t): Object_Group_Creator: found %u factories for %s : %s\n"),
     ACE_static_cast (unsigned, count),
     role,
     ACE_static_cast (const char *, type_id)
@@ -219,11 +279,32 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
     ::PortableGroup::GenericFactory::FactoryCreationId_var creation_id;
     if (this->have_replication_manager_)
     {
-      PortableGroup::Criteria criteria (1);
-      criteria.length (1);
+
+      //////////////////////////////////////////////////////
+      // note infrastructure controlled because we want the
+      // ReplicationManager to manage the object after it's created.
+      // Initial number members = 0 because we do not want the Replication
+      // Manager to populate the group.
+      // Minimum number of members = 0 because we do not want the
+      // Replication Manager to replace failed members.
+      // Semi-active, because that's what we do.
+      PortableGroup::Criteria criteria (3);
+      criteria.length (4);
       criteria[0].nam.length (1);
       criteria[0].nam[0].id = PortableGroup::PG_MEMBERSHIP_STYLE;
-      criteria[0].val <<= PortableGroup::MEMB_APP_CTRL;
+      criteria[0].val <<= PortableGroup::MEMB_INF_CTRL;
+
+      criteria[1].nam.length (1);
+      criteria[1].nam[0].id = PortableGroup::PG_INITIAL_NUMBER_MEMBERS;
+      criteria[1].val <<= PortableGroup::InitialNumberMembersValue (0);
+
+      criteria[2].nam.length (1);
+      criteria[2].nam[0].id = PortableGroup::PG_MINIMUM_NUMBER_MEMBERS;
+      criteria[2].val <<= PortableGroup::MinimumNumberMembersValue (0);
+
+      criteria[3].nam.length (1);
+      criteria[3].nam[0].id = FT::FT_REPLICATION_STYLE;
+      criteria[3].val <<= FT::SEMI_ACTIVE;
 
       group = this->replication_manager_->create_object (
         type_id.in (),

@@ -53,6 +53,13 @@ namespace TAO
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    /////////////////
+    // functionality
+    CORBA::Object_ptr create_infrastructure_managed_group(
+        const char * type_id
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     int unregister_role(const char * role ACE_ENV_ARG_DECL);
 
     ////////////
