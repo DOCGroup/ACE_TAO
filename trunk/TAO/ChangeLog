@@ -1,3 +1,10 @@
+Sun Dec 28 10:49:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/PortableGroup.bor:
+	  Add PortableGroup_Simple_DSC to the list of object files so that
+	  the corresponding idl file is compiled. Make sure this file is
+	  build first, because other files use the generated files.
+
 Sat Dec 27 23:40:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FT_ClientORB.bor:
@@ -14,8 +21,8 @@ Sat Dec 27 16:15:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	  Added generation of orbconf.h include and redefintion of the
 	  export macro to the anyop header file (when using the -GA
-	  option). 
-	
+	  option).
+
 	* tao/Typecode.cpp:
 	* tao/Typecode.h:
 
@@ -44,7 +51,7 @@ Sat Dec 27 10:14:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
 
 	  Dealt with VC6 idiosyncracies. VC6 never scopes variables inside
-	  for loops. 
+	  for loops.
 
 Sat Dec 27 10:08:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -68,11 +75,11 @@ Sat Dec 27 09:17:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
 
 	  Fixed warnings with g++.
-	
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile: 
 
-	  Needed IORManip library. 
-	
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile:
+
+	  Needed IORManip library.
+
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.mpc:
 	  Fixed  a typo in the MPC file.
 
@@ -95,7 +102,7 @@ Sat Dec 27 09:05:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/LoadBalancer/LoadMonitor.bor:
 	* orbsvcs/LoadBalancer/Makefile.LoadManager:
 	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
-	  
+
 	  They need the IORManipulation library to be linked in.
 
 Sat Dec 27 08:51:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -121,12 +128,12 @@ Fri Dec 26 22:39:16 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
 
-          Made changes to the remove_member () methos to delete the object 
+          Made changes to the remove_member () methos to delete the object
           group entry from the location_map When a member of the object
-	  group is removed. 
+	  group is removed.
 
 	  Thanks to Stephen Procter <stephen.procter@rd.bbc.co.uk> for
-	  letting us know about the problem through the PRF. 
+	  letting us know about the problem through the PRF.
 
 Fri Dec 26 22:32:25 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -145,9 +152,9 @@ Fri Dec 26 22:32:25 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile.bor:
         * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Test.idl:
         * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
-        
+
 	  Added a new test to check the add_member () and remove_member ()
-	  functionality on the object group manager. 
+	  functionality on the object group manager.
 
 Fri Dec 26 17:35:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
