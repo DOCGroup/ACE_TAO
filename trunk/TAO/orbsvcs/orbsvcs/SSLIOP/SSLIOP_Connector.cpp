@@ -66,11 +66,13 @@ TAO_SSLIOP_Connector::make_caching_strategy (void)
   TAO_Resource_Factory *resource_factory =
     this->orb_core_->resource_factory ();
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) \
+    || TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1
   ACE_NEW_RETURN (this->caching_strategy_,
                   TAO_SSLIOP_CACHING_STRATEGY,
                   -1);
 #else
+#if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
   switch (resource_factory->connection_caching_strategy_type ())
     {
     case TAO_Resource_Factory::NOOP:
@@ -98,8 +100,9 @@ TAO_SSLIOP_Connector::make_caching_strategy (void)
                       -1);
       break;
     }
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+#endif /* TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0 */
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+          || TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1 */
 
   this->caching_strategy_->purge_percent (resource_factory->purge_percentage ());
   return 0;
@@ -184,7 +187,7 @@ template class ACE_Hash_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY,
 template class ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
+#if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
 template class ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 template class ACE_LFU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 template class ACE_FIFO_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
@@ -198,7 +201,7 @@ template class ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY,
 template class ACE_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP, TAO_HASH_MAP_ITERATOR, TAO_HASH_MAP_REVERSE_ITERATOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>;
 template class ACE_Cache_Map_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP_ITERATOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>;
 template class ACE_Cache_Map_Reverse_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP_REVERSE_ITERATOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>;
-
+#endif /*TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0*/
 #else
 
 template class ACE_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>;
@@ -278,7 +281,7 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
 
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
+#if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
 #pragma instantiate ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
 #pragma instantiate ACE_LFU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
 #pragma instantiate ACE_FIFO_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
@@ -292,7 +295,7 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP, TAO_HASH_MAP_ITERATOR, TAO_HASH_MAP_REVERSE_ITERATOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>
 #pragma instantiate ACE_Cache_Map_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP_ITERATOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>
 #pragma instantiate ACE_Cache_Map_Reverse_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP_REVERSE_ITERATOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>
-
+#endif /* TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0 */
 #else
 
 #pragma instantiate ACE_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>
@@ -463,38 +466,54 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
 					      transport,
 					      max_wait_time);
 
-  ACE_INET_Addr oa =
+  ACE_INET_Addr remote_address =
     profile->object_addr ();
-  oa.set_port_number (profile->ssl_port ());
+
+  // Verify that the remote ACE_INET_Addr was initialized properly.
+  // Failure can occur if hostname lookup failed when initializing the
+  // remote ACE_INET_Addr.
+  if (remote_address.get_type () != AF_INET)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                      ACE_TEXT ("TAO (%P|%t) This is most likely ")
+                      ACE_TEXT ("due to a hostname lookup ")
+                      ACE_TEXT ("failure.\n")));
+        }
+
+      return -1;
+    }
+
+  remote_address.set_port_number (profile->ssl_port ());
 
   TAO_SSLIOP_Client_Connection_Handler *svc_handler = 0;
   int result = 0;
 
-  ACE_Synch_Options synch_options;
   if (max_wait_time != 0)
     {
       ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
                                        *max_wait_time);
-      
+
       // The connect call will set the hint () stored in the Profile
-      // object; but we obtain the transport in the <result>
+      // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
       result = this->base_connector_.connect (profile->ssl_hint (),
                                               svc_handler,
-                                              oa,
+                                              remote_address,
                                               synch_options);
     }
   else
     {
       // The connect call will set the hint () stored in the Profile
-      // object; but we obtain the transport in the <result>
+      // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
       result = this->base_connector_.connect (profile->ssl_hint (),
                                               svc_handler,
-                                              oa);
-
+                                              remote_address);
     }
 
   if (result == -1)
