@@ -71,6 +71,8 @@ main (int, ASYS_TCHAR *[])
 
   ACE_TIMEPROBE_PRINT;
 
+  ACE_END_TEST;
+
   return 0;
 }
 

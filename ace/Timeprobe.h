@@ -271,7 +271,7 @@ template class ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>;
 #  define ACE_TIMEPROBE_RESET
 #  define ACE_TIMEPROBE(id)
 #  define ACE_TIMEPROBE_PRINT
-#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id)
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) ACE_UNUSED_ARG (descriptions)
 #  define ACE_FUNCTION_TIMEPROBE(X)
 
 #endif /* ACE_ENABLE_TIMEPROBES */
