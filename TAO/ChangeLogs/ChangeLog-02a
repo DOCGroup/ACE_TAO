@@ -1,3 +1,12 @@
+Wed Nov  1 10:14:26 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+
+          Changed the ImplRepo_Service to use ServantLocators instead
+          of a default_servant.  [Bug 668]
+
 Wed Nov  1 10:04:27 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/Messaging_Policy_i.cpp (relative_expiry): 

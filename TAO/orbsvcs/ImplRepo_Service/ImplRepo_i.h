@@ -24,7 +24,6 @@
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/PortableServer/ImplRepoS.h"
 #include "tao/IORTable/IORTable.h"
-#include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "ace/Process_Manager.h"
 
 // Forward declarations.
@@ -61,8 +60,6 @@ private:
   // The object to use as the default servant.
 };
 
-// ****************************************************************
-
 class ImplRepo_i;
 
 class IMR_Locator : public virtual IORTable::Locator,
@@ -82,10 +79,7 @@ private:
   // The Implementation Repository implementation
 };
 
-// ****************************************************************
-
-class ImplRepo_i
-  : public POA_ImplementationRepository::Administration
+class ImplRepo_i : public POA_ImplementationRepository::Administration
 {
   // = TITLE
   //    Implementation Repository
@@ -274,13 +268,14 @@ private:
   friend class IMR_Forwarder;
 };
 
-class IMR_Forwarder: public TAO_DynamicImplementation
+class IMR_Forwarder: public PortableServer::ServantLocator
   // = TITLE
   //    Implementation Repository Forwarder
   //
   // = DESCRIPTION
-  //    This class is provides a DSI implementation that is used to handle
-  //    arbitrary calls and forward them to the correct place.
+  //    This class is provides a ServantLocator implementation that 
+  //    is used to handle arbitrary calls and forward them to the 
+  //    correct place.
 {
 public:
   IMR_Forwarder (CORBA::ORB_ptr orb_ptr,
@@ -288,18 +283,24 @@ public:
                  ImplRepo_i *ir_impl);
   // Constructor
 
-  virtual void invoke (CORBA::ServerRequest_ptr request,
-                       CORBA::Environment &env);
-  // The invoke() method receives requests issued to any CORBA
+  virtual PortableServer::Servant 
+    preinvoke (const PortableServer::ObjectId &oid,
+               PortableServer::POA_ptr poa,
+               const char * operation,
+               PortableServer::ServantLocator::Cookie &cookie
+               TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest));
+  // The preinvoke() method receives requests issued to any CORBA
   // object incarnated by the DSI servant and performs the
   // processing necessary to execute the request.
 
-  CORBA::RepositoryId _primary_interface (
-      const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa,
-      CORBA::Environment &env = TAO_default_environment ()
-    );
-  // DynamicImplementation stuff
+  virtual void postinvoke (const PortableServer::ObjectId &oid,
+                           PortableServer::POA_ptr poa,
+                           const char * operation,
+                           PortableServer::ServantLocator::Cookie cookie,
+                           PortableServer::Servant servant
+                           TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   class ImplRepo_i *imr_impl_;
@@ -308,7 +309,7 @@ private:
   CORBA::ORB_var orb_var_;
   // ORB reference.
 
-  PortableServer::POA_var poa_var_;
+  PortableServer::Current_var poa_current_var_;
   // POA reference.
 };
 

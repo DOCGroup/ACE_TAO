@@ -843,20 +843,13 @@ ImplRepo_i::init (int argc,
       retval = OPTIONS::instance()->parse_args (argc, argv);
 
       if (retval != 0)
-        {
-          return retval;
-        }
+        return retval;
 
       ACE_NEW_RETURN (this->forwarder_impl_,
                       IMR_Forwarder (this->orb_.in (),
                                      this->root_poa_.in (),
                                      this),
                       -1);
-
-      PortableServer::ObjectId_var forwarder_id =
-        this->root_poa_->activate_object (this->forwarder_impl_, ACE_TRY_ENV);
-
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var imr_id =
         PortableServer::string_to_ObjectId ("ImplRepoService");
@@ -1323,8 +1316,6 @@ ImplRepo_i::shutdown_server (const char *server,
     }
 }
 
-// ****************************************************************
-
 IMR_Locator::IMR_Locator (ImplRepo_i *repo)
   :  repo_ (repo)
 {
@@ -1339,7 +1330,6 @@ IMR_Locator::locate (const char *object_key,
   return this->repo_->find_ior (key, ACE_TRY_ENV);
 }
 
-// ****************************************************************
 
 IMR_Adapter_Activator::IMR_Adapter_Activator (IMR_Forwarder *servant)
   : servant_ (servant)
@@ -1353,35 +1343,23 @@ IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                        CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::PolicyList policies (4);
-  policies.length (4);
+  CORBA::PolicyList policies (2);
+  policies.length (2);
 
   const char *exception_message = "Null Message";
 
   ACE_TRY
     {
-      // ID Assignment Policy
-      exception_message = "While PortableServer::POA::create_id_assignment_policy";
+      // Servant Retention Policy
+      exception_message = "While PortableServer::POA::create_servant_retention_policy";
       policies[0] =
-        parent->create_id_assignment_policy (PortableServer::USER_ID, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Lifespan Policy
-      exception_message = "While PortableServer::POA::create_lifespan_policy";
-      policies[1] =
-        parent->create_lifespan_policy (PortableServer::PERSISTENT, ACE_TRY_ENV);
+        parent->create_servant_retention_policy (PortableServer::NON_RETAIN, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Request Processing Policy
       exception_message = "While PortableServer::POA::create_request_processing_policy";
-      policies[2] =
-        parent->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Id Uniqueness Policy
-      exception_message = "While PortableServer::POA::create_id_uniqueness_policy";
-      policies[3] =
-        parent->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, ACE_TRY_ENV);
+      policies[1] =
+        parent->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
@@ -1407,13 +1385,15 @@ IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       child->the_activator (this, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      exception_message = "While unknown_adapter, set_servant";
-      child->set_servant (this->servant_, ACE_TRY_ENV);
+      exception_message = "While unknown_adapter, set_servant_manager";
+      child->set_servant_manager(this->servant_, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR, "IMR_Adapter_Activator::unknown_adapter - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, 
+                  "IMR_Adapter_Activator::unknown_adapter - %s\n", 
+                  exception_message));
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "System Exception");
       return 0;
     }
@@ -1428,47 +1408,37 @@ IMR_Forwarder::IMR_Forwarder (CORBA::ORB_ptr orb_ptr,
                               PortableServer::POA_ptr poa_ptr,
                               ImplRepo_i *imr_impl)
   : imr_impl_ (imr_impl),
-    orb_var_ (CORBA::ORB::_duplicate (orb_ptr)),
-    poa_var_ (PortableServer::POA::_duplicate (poa_ptr))
+    orb_var_ (CORBA::ORB::_duplicate (orb_ptr))
 {
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Object_var tmp =
+        this->orb_var_->resolve_initial_references ("POACurrent",
+                                                    ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->poa_current_var_ =
+        PortableServer::Current::_narrow (tmp.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore
+    }
+  ACE_ENDTRY;
 }
 
-CORBA::RepositoryId
-IMR_Forwarder::_primary_interface (const PortableServer::ObjectId &,
-                                   PortableServer::POA_ptr,
-                                   CORBA::Environment &)
+PortableServer::Servant 
+IMR_Forwarder::preinvoke (const PortableServer::ObjectId &oid,
+                          PortableServer::POA_ptr poa,
+                          const char * operation,
+                          PortableServer::ServantLocator::Cookie &cookie
+                          TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
-  return 0;
-}
+  TAO_ENV_ARG_DEFN;
 
-void
-IMR_Forwarder::invoke (CORBA::ServerRequest_ptr,
-                       CORBA::Environment &ACE_TRY_ENV)
-{
-  // @@ This could be optimized, the PortableServer::Current object
-  // can be cached..
-  CORBA::Object_var tmp =
-    this->orb_var_->resolve_initial_references ("POACurrent",
-                                                ACE_TRY_ENV);
-  ACE_CHECK;
-
-  PortableServer::Current_var current =
-    PortableServer::Current::_narrow (tmp.in (), ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // The servant determines the key associated with the database entry
-  // represented by self
-  PortableServer::ObjectId_var oid =
-    current->get_object_id (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // Now convert the id into a string
-  CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
-
-  PortableServer::POA_ptr poa = current->get_POA (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // Now activate.
+  // Activate.
 
   ACE_TString ior;
 
@@ -1481,10 +1451,9 @@ IMR_Forwarder::invoke (CORBA::ServerRequest_ptr,
 
   char *key_str = 0;
 
-  // @@ Even if the POA Current is cached the following code will
-  //    work.  But the implementation cannot be cached!
-  TAO_POA_Current *tao_current =
-    ACE_dynamic_cast(TAO_POA_Current*, current.in ());
+  // Unlike POA Current, this implementation cannot be cached.
+  TAO_POA_Current *tao_current = 
+    ACE_dynamic_cast(TAO_POA_Current*, this->poa_current_var_.in ());
   TAO_POA_Current_Impl *impl = tao_current->implementation ();
   TAO_ObjectKey::encode_sequence_to_string (key_str,
                                             impl->object_key ());
@@ -1500,10 +1469,24 @@ IMR_Forwarder::invoke (CORBA::ServerRequest_ptr,
   ACE_CHECK;
 
   if (!CORBA::is_nil (forward_obj))
-    ACE_THROW (PortableServer::ForwardRequest (forward_obj));
+    ACE_THROW_RETURN (PortableServer::ForwardRequest (forward_obj), 0);
   else
     ACE_ERROR ((LM_ERROR,
                 "Error: Forward_to reference is nil.\n"));
+
+  ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+}
+
+void 
+IMR_Forwarder::postinvoke (const PortableServer::ObjectId &,
+                           PortableServer::POA_ptr ,
+                           const char * ,
+                           PortableServer::ServantLocator::Cookie ,
+                           PortableServer::Servant servant
+                           TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  delete servant;
 }
 
 
