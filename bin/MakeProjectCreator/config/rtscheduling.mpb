@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : rtcorba, portableserver {
-  after   += RTScheduler 
-  libs    += TAO_RTScheduler
-}

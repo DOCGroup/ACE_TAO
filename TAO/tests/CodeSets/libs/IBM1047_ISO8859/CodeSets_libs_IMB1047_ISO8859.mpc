@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*) : taolib {
-  sharedname = IBM1047_ISO8859
-  dynamicflags += IBM1047_ISO8859_BUILD_DLL
-}
