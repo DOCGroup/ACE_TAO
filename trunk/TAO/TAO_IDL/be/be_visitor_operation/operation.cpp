@@ -645,17 +645,17 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
                                              idl_bool ami)
 {
   AST_Argument *arg = 0;
+  UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
+  
+  if (ami)
+    {
+      // Skip the reply handler (first argument).
+      arg_decl_iter.next ();
+    }
 
-  for (UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
-       ! arg_decl_iter.is_done ();
-       arg_decl_iter.next ())
+  for (; ! arg_decl_iter.is_done (); arg_decl_iter.next ())
     {
       arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
-
-      if (ami && arg->direction () == AST_Argument::dir_OUT)
-        {
-          continue;
-        }
 
       *os << be_nl
           << "TAO::Arg_Traits<";

@@ -1,3 +1,12 @@
+Wed Nov 26 14:15:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        
+          Fixed code generation for AMI operations with INOUT parameters.
+          Thanks to Cyrille Chépélov <cyrille@softek.fr> for
+          reporting the problem.
+
 Wed Nov 26 18:09:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
