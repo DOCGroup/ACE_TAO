@@ -1,3 +1,11 @@
+Mon Mar 31 10:01:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp (set_is_multiple):
+
+          Added ACE_UNUSED_ARG macros for the arguments, which are not used
+          except in a specialization. BCB gives a warning if the arg names in
+          the unspecialized version are just left out.
+
 Mon Mar 31 14:18:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* orbsvcs/tests/Bug_1393_Regression/Bug_1393_Regression.mpc:
