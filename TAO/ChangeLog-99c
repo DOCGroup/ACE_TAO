@@ -1,8 +1,23 @@
 Wed Jun 16 20:14:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/ORB_Core.cpp:
+	  Added missing initializations
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp: 
+	  Fixed error messages, they were crashing the application
+	  (incorrect usage of %p), they were misleading and hard to read.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	  Minor fixes for NT.
+
 	* tao/varout.i:
 	  A minor change to keep HP/aCC happy, thanks to Steve Huston for
 	  reporting this problem.
+
+	* tao/TAO.cpp:
+	  Catch any exceptions in the destructor so they won't get
+	  propagated.
 
 Wed Jun 16 19:59:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

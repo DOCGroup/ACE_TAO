@@ -127,7 +127,7 @@ Cubit_Client::read_ior (const char *filename)
 
   if (this->f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
+                       "Unable to open <%s> for reading: %p\n",
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (this->f_handle_);
@@ -173,8 +173,9 @@ Cubit_Client::parse_args (void)
         result = this->read_ior (get_opts.optarg);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             "Unable to read ior from <%s> : %p\n",
+                             get_opts.optarg,
+							 ""),
                             -1);
         break;
       case 'k': // read the cubit IOR from the command-line.
