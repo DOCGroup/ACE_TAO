@@ -312,7 +312,7 @@ ACE_OS::num_processors (void)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return sys_info.dwNumberOfProcessors;
-#elif defined (linux) || defined (sun) || defined (DIGITAL_UNIX)
+#elif defined (linux) || defined (sun) || defined (DIGITAL_UNIX) || defined (CYGWIN32)
   return ::sysconf (_SC_NPROCESSORS_CONF);
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -330,7 +330,7 @@ ACE_OS::num_processors_online (void)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return sys_info.dwNumberOfProcessors;
-#elif defined (linux) || defined (sun) || defined (DIGITAL_UNIX)
+#elif defined (linux) || defined (sun) || defined (DIGITAL_UNIX) || defined (CYGWIN32)
   return ::sysconf (_SC_NPROCESSORS_ONLN);
 #elif defined (__hpux)
   struct pst_dynamic psd;
