@@ -107,7 +107,7 @@ TAO_Log_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
 
   if (this->property_lookup_.find (key, any) == 0)
     {
-      this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (any));
+      this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (any.ptr ()));
       return_value = 0;
     }
 
@@ -279,7 +279,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
           // the nested component.
           if (nested == 0)
             {
-              TAO_ETCL_Literal_Constraint lit (this->current_member_);
+              TAO_ETCL_Literal_Constraint lit (this->current_member_.ptr ());
               this->queue_.enqueue_head (lit);
               return 0;
             }
@@ -379,7 +379,7 @@ TAO_Log_Constraint_Visitor::visit_component_pos (TAO_ETCL_Component_Pos *pos)
 
       if (comp == 0)
         {
-          TAO_ETCL_Literal_Constraint result (value);
+          TAO_ETCL_Literal_Constraint result (value.ptr ());
           this->queue_.enqueue_head (result);
           return 0;
         }
@@ -426,7 +426,7 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
 
   if (comp == 0)
     {
-      TAO_ETCL_Literal_Constraint result (any);
+      TAO_ETCL_Literal_Constraint result (any.ptr ());
       this->queue_.enqueue_head (result);
       return 0;
     }
@@ -518,7 +518,7 @@ TAO_Log_Constraint_Visitor::visit_component_array (
 
       if (comp == 0)
         {
-          TAO_ETCL_Literal_Constraint result (value);
+          TAO_ETCL_Literal_Constraint result (value.ptr ());
           this->queue_.enqueue_head (result);
           return 0;
         }
@@ -577,7 +577,7 @@ TAO_Log_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
             CORBA::Any_var disc_any = disc->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
-            TAO_ETCL_Literal_Constraint lit (disc_any);
+            TAO_ETCL_Literal_Constraint lit (disc_any.ptr ());
             this->queue_.enqueue_head (lit);
             return 0;
           }
