@@ -51,7 +51,9 @@ $server_exec_prefix ./server -s -f $ior_file -t $threads > \
    ${tmp}server.log 2>&1 &
 server_pid=$!
 
-sleep 4
+while [ ! -f $ior_file ]; do
+  sleep 2
+done
 
 
 ########
