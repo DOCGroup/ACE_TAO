@@ -1,13 +1,20 @@
+Fri May 29 21:55:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/High_Res_Timer.cpp: don't use ACE_HAS_PENTIUM code on
+          Solaris (ACE_HAS_HI_RES_TIMER) because it uses ::gethrtime ().
+          (dump): on Solaris, print 64-bit ints with %llu format.  Other
+          platforms may need that, also.
+
 Fri May 29 17:52:37 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.9 released.
 
 Fri May 29 16:19:34 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Synch_T.h (class ACE_Guard): ACE_Guard's destructor was
- 	  changing the errno value.  Fixed this to avoid doing so...
-  	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
- 	  this.
+        * ace/Synch_T.h (class ACE_Guard): ACE_Guard's destructor was
+          changing the errno value.  Fixed this to avoid doing so...
+          Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+          this.
 
 Fri May 29 15:33:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -16,21 +23,21 @@ Fri May 29 15:33:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri May 29 14:46:49 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/Makefile
-	* ace/RB_Tree.h
-	* ace/RB_Tree.cpp: Added changes to RB_Tree to enable overloading
-	  of the comparison method.  Added class RB_Tree to the UNIX
-	  Makefile.
+        * ace/Makefile
+        * ace/RB_Tree.h
+        * ace/RB_Tree.cpp: Added changes to RB_Tree to enable overloading
+          of the comparison method.  Added class RB_Tree to the UNIX
+          Makefile.
 
-	* ace/OS.cpp: Added some minor fixes to the difftime implementation.
+        * ace/OS.cpp: Added some minor fixes to the difftime implementation.
 
-	* ace/OS.cpp:
-	* ace/OS.i:
-	* ace/README:
-	* ace/config-sunos4*:
-	  Added ACE_LACKS_DIFFTIME macro because SunOS4 does not support
-	  the Standard C difftime function.  Added a difftime
-	  implementation for when such is the case.
+        * ace/OS.cpp:
+        * ace/OS.i:
+        * ace/README:
+        * ace/config-sunos4*:
+          Added ACE_LACKS_DIFFTIME macro because SunOS4 does not support
+          the Standard C difftime function.  Added a difftime
+          implementation for when such is the case.
 
 Fri May 29 08:22:36 1998  Steve Huston  <shuston@riverace.com>
 
