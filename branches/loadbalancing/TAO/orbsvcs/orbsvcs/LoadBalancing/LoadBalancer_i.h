@@ -54,6 +54,9 @@ public:
 
   // Local methods
 
+  void load_changed (ReplicaProxy_Impl *proxy,
+                     CORBA::Environment &ACE_TRY_ENV);
+
   void disconnect (ReplicaProxy_Impl *proxy,
                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));

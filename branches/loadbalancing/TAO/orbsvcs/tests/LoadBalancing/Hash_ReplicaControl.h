@@ -16,7 +16,8 @@ public:
   Timeout_Adapter (Hash_ReplicaControl *adaptee);
 
   // Receive the timeout event
-  virtual int handle_timeout (void *arg);
+  virtual int handle_timeout (const ACE_Time_Value &current_time,
+                              void *arg);
 
 private:
   Hash_ReplicaControl *adaptee_;
@@ -32,7 +33,8 @@ public:
              LoadBalancing::LoadBalancer_ptr balancer,
              CORBA::Environment &ACE_TRY_ENV);
 
-  int handle_timeout (void *arg);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                      void *arg);
   // Handle a timeout event
 
   void request_received (void);

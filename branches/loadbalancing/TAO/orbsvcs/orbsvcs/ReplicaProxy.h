@@ -58,6 +58,9 @@ public:
   CORBA::Object_ptr replica (void);
   // Return a reference to the Replica.
 
+  LoadBalancing::ReplicaControl_var control_;
+  // Reference to the ReplicaControl.
+
 private:
 
   void connect (LoadBalancer_Impl *balancer,
@@ -71,9 +74,6 @@ private:
   // with the ReplicaProxy.
 
 private:
-  LoadBalancing::ReplicaControl_var control_;
-  // Reference to the ReplicaControl.
-
   CORBA::Object_var replica_;
   // Reference to the Object being load balanced.
 

@@ -26,7 +26,7 @@ LoadBalancer_Impl::LoadBalancer_Impl (const char *interface_id,
         this->poa_->activate_object (&this->redirector_,
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
+
       this->group_identity_ =
         this->poa_->id_to_reference (oid.in (),
                                      ACE_TRY_ENV);
@@ -76,4 +76,11 @@ LoadBalancer_Impl::group_identity (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Object::_duplicate (this->group_identity_.in ());
+}
+
+void
+LoadBalancer_Impl::load_changed (ReplicaProxy_Impl *proxy,
+                                 CORBA::Environment &ACE_TRY_ENV)
+{
+  this->strategy_->load_changed (proxy, ACE_TRY_ENV);
 }

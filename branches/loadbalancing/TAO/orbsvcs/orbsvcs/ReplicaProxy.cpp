@@ -30,6 +30,8 @@ ReplicaProxy_Impl::current_load (CORBA::Float load,
 
   this->current_load_ = load;
   ACE_DEBUG ((LM_DEBUG, "Load[%x] = %f\n", long(this), load));
+
+  this->balancer_->load_changed (this, ACE_TRY_ENV);
 }
 
 void

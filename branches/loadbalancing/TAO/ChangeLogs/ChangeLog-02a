@@ -1,3 +1,26 @@
+Sun Mar 26 13:53:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadBalancer.h:
+	* orbsvcs/LoadBalancer/LoadBalancer.cpp
+	* orbsvcs/orbsvcs/LoadBalancing.dsp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	  Implemented new load balancing strategy.
+
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	  Add debugging messages
+
+	* orbsvcs/tests/LoadBalancing/server.cpp:
+	  Workaround problems on Win32 implementations of the Reactor.
+
 Sat Mar 25 21:27:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/LoadBalancer/LoadBalancer.cpp:

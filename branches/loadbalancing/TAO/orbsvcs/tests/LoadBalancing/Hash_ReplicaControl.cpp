@@ -18,9 +18,12 @@ Hash_ReplicaControl::init (CORBA::ORB_ptr orb,
                            LoadBalancing::LoadBalancer_ptr balancer,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_Time_Value tv (1, 0);
+  ACE_DEBUG ((LM_DEBUG,
+              "Hash_ReplicaControl::init\n"));
+  ACE_Time_Value interval (1, 0);
+  ACE_Time_Value restart (1, 0);
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
-  reactor->schedule_timer (&this->adapter_, tv, tv);
+  reactor->schedule_timer (&this->adapter_, 0, interval, restart);
 
   LoadBalancing::ReplicaControl_var control =
     this->_this (ACE_TRY_ENV);
@@ -42,8 +45,12 @@ Hash_ReplicaControl::init (CORBA::ORB_ptr orb,
 }
 
 int
-Hash_ReplicaControl::handle_timeout (void *)
+Hash_ReplicaControl::handle_timeout (const ACE_Time_Value &,
+                                     void *)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Hash_ReplicaControl::handle_timeout\n"));
+
   ACE_Time_Value elapsed_time =
     ACE_OS::gettimeofday () - this->interval_start_;
   this->interval_start_ = ACE_OS::gettimeofday ();
@@ -54,7 +61,7 @@ Hash_ReplicaControl::handle_timeout (void *)
   this->interval_start_ = ACE_OS::gettimeofday ();
 
   this->current_load_ =
-    (this->current_load_ + load) / 2;
+    0.25F * this->current_load_ + 0.75F * load;
 
   ACE_TRY_NEW_ENV
     {
@@ -112,7 +119,10 @@ Timeout_Adapter::Timeout_Adapter (Hash_ReplicaControl *adaptee)
 }
 
 int
-Timeout_Adapter::handle_timeout (void *arg)
+Timeout_Adapter::handle_timeout (const ACE_Time_Value &current_time,
+                                 void *arg)
 {
-  return this->adaptee_->handle_timeout (arg);
+  ACE_DEBUG ((LM_DEBUG,
+              "Hash_ReplicaControl::handle_timeout\n"));
+  return this->adaptee_->handle_timeout (current_time, arg);
 }

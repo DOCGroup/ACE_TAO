@@ -11,6 +11,7 @@ ACE_RCSID(LoadBalancer, LoadBalancer, "$Id$")
 TAO_LoadBalancer::TAO_LoadBalancer (void)
   :  interface_repository_id_ ("IDL:CORBA/Object:1.0"),
      load_balancer_file_ ("lb.ior"),
+     strategy_ (0),
      balancer_ (0)
 {
 }
@@ -25,7 +26,7 @@ TAO_LoadBalancer::parse_args (int argc,
                               char *argv[],
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:o:h");
+  ACE_Get_Opt get_opts (argc, argv, "i:o:s:h");
 
   int c = 0;
 
@@ -38,6 +39,15 @@ TAO_LoadBalancer::parse_args (int argc,
           break;
         case 'o':
           this->load_balancer_file_ = get_opts.optarg;
+          break;
+
+        case 's':
+          if (ACE_OS::strcasecmp (get_opts.optarg, "rr") == 0)
+            this->strategy_ = 0;
+          else if (ACE_OS::strcasecmp (get_opts.optarg, "md") == 0)
+            this->strategy_ = 1;
+          else
+            ACE_DEBUG ((LM_DEBUG, "Unknown strategy, using rr\n"));
           break;
 
         case 'h':
@@ -82,9 +92,14 @@ TAO_LoadBalancer::init (int argc,
   ACE_CHECK;
 
   // Initialize the LoadBalancer servant.
+  Load_Balancing_Strategy *strategy =
+    &this->round_robin_;
+  if (this->strategy_ == 1)
+    strategy = &this->minimum_dispersion_;
+
   ACE_NEW (this->balancer_,
            LoadBalancer_Impl (this->interface_repository_id_,
-                              &this->round_robin_,
+                              strategy,
                               this->root_poa_.in ()));
 
   CORBA::Object_var obj =
