@@ -1,3 +1,15 @@
+2003-11-25  Douglas C. Schmidt  <schmidt@deuce.doc.wustl.edu>
+
+	* utils/wxNamingViewer/wxBindNewContext.cpp: Updated this file to
+	  fix the following problems:
+	
+	  - wxBindNewContext.cpp:110, add a # in front of endif
+	
+	  - wxBindNewContext.cpp: 113 - 119, remove duplicate definition of
+	    WxBindNewContext constructor.
+
+          Thanks to Charles Frasch for reporting this!
+
 Tue Nov 25 16:21:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Servant_To_Reference_Test/server.cpp (svc): 
