@@ -1,3 +1,54 @@
+Mon Apr 28 20:50:09 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.inl:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/Daemon/Softpkg_Commands.cpp:
+	* tools/ServerActivator/ServerActivator_test_client.cpp: Changed
+	  all "[event]_ptr ev" and "[key]_ptr k" to "[event] *ev" and
+	  "[key] *k".  They all map to valuetypes and, according to the
+	  spec, there should not be _ptr typedef defined.  TAO_IDL
+	  recently removed the incorrect typedef so we need to remove
+	  their useage.  Thanks to Jeff Parsons for pointing this out.
+
+	* ciao/CCMCore.dsw:
+	* ciao/CIAO_Client.dsp:
+	* ciao/CIAO_Container.dsp:
+	* ciao/CIAO_Server.dsp:
+	* examples/handcrafted/Hello/client.dsp:
+	* examples/handcrafted/Hello/hello.dsw:
+	* examples/handcrafted/Hello/hello_executors.dsp:
+	* examples/handcrafted/Hello/hello_servants.dsp:
+	* examples/handcrafted/Hello/hello_stub.dsp:
+	* tools/ComponentServer/ComponentServer.dsp:
+	* tools/ComponentServer/ComponentServer.dsw:
+	* tools/ComponentServer/ComponentServer_test_client.dsp:
+	* tools/ServerActivator/ServerActivator.dsp:
+	* tools/ServerActivator/ServerActivator.dsw:
+	* tools/ServerActivator/ServerActivator_test_client.dsp:
+	* tools/Simple_Component_Server/Simple_Component_Server.dsw:
+	* tools/Simple_Component_Server/Simple_Component_Server.dsp:
+	  Removed all vc6 dsp files.  They confused the msvc nightly build
+	  script.  The script doesn't seem to parse the mpc generated dsp
+	  files correctly and their build order are all messed up.
+	  Besides, we only maintain mpc files in CIAO now.
+
 Mon Apr 28 19:39:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* README: Added the root README file to provide some instructions

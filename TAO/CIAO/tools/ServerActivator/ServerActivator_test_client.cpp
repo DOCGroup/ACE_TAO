@@ -109,7 +109,7 @@ main (int argc, char *argv[])
           Components::ConfigValues com_config (2);
           com_config.length (2);
 
-          Components::ConfigValue_ptr item = new OBV_Components::ConfigValue ();
+          Components::ConfigValue *item = new OBV_Components::ConfigValue ();
 
           item->name (CORBA::string_dup ("CIAO-executor-path"));
           item->value () <<= CORBA::string_dup ("hello_executors");

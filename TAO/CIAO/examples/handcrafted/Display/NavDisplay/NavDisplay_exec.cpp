@@ -16,7 +16,7 @@ MyImpl::NavDisplay_exec_impl::~NavDisplay_exec_impl ()
 // Operations from HUDisplay::NavDisplay
 
 void
-MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
+MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -143,7 +143,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::tickConsumer_Refresh_Servant::_get_comp
 
 ACE_INLINE void
 CIAO_GLUE_HUDisplay::NavDisplay_Servant::tickConsumer_Refresh_Servant::push_tick
-(HUDisplay::tick_ptr evt
+(HUDisplay::tick *evt
  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

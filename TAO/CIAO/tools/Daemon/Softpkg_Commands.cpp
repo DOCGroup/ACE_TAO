@@ -118,7 +118,7 @@ CIAO::Daemon_i::CMD_Start_Home::run (ACE_ENV_SINGLE_ARG_DECL)
       Components::ConfigValues home_config;
       // Setting home config value here:
       home_config.length (2);
-      Components::ConfigValue_ptr item = new OBV_Components::ConfigValue ();
+      Components::ConfigValue *item = new OBV_Components::ConfigValue ();
 
       item->name (CORBA::string_dup ("CIAO-servant-UUID"));
       item->value () <<= CORBA::string_dup (info.servant_UUID_.c_str ());

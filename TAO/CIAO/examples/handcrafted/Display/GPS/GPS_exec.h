@@ -47,7 +47,7 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
-    push_Refresh (HUDisplay::tick_ptr ev
+    push_Refresh (HUDisplay::tick *ev
                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

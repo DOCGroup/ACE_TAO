@@ -179,7 +179,7 @@ namespace CIAO_GLUE_HUDisplay
 
       ~tickConsumer_Refresh_Servant ();
 
-      virtual void push_tick (HUDisplay::tick_ptr evt
+      virtual void push_tick (HUDisplay::tick *evt
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 

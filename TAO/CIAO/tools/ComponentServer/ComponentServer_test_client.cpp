@@ -75,7 +75,7 @@ main (int argc, char *argv[])
       Components::ConfigValues com_config (2);
       com_config.length (2);
 
-      Components::ConfigValue_ptr item = new OBV_Components::ConfigValue ();
+      Components::ConfigValue *item = new OBV_Components::ConfigValue ();
 
       item->name (CORBA::string_dup ("CIAO-servant-UUID"));
       item->value () <<= CORBA::string_dup ("DCE:93D254CF-9538-44e8-BB98-AABCD134ADD3");

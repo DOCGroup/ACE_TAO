@@ -275,7 +275,7 @@ ACE_INLINE CORBA::Object_ptr
 
 ACE_INLINE void
 [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::push_[eventtype]
-  ([eventtype]_ptr evt
+  ([eventtype] *evt
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -286,7 +286,7 @@ ACE_INLINE void
 ##  foreach [type] in (all parents of eventtype, if any, not including EventConsumerBase)
 ACE_INLINE void
 [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::push_[type]
-  ([type]_ptr evt
+  ([type] *evt
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -426,7 +426,7 @@ ACE_INLINE ::Components::CCMObject_ptr
 // We do not support key'ed home at the moment but we might
 // as well generate the mapping.
 ACE_INLINE [component name]_ptr
-[ciao module name]::[home name]_Servant::create ([key type]_ptr key)
+[ciao module name]::[home name]_Servant::create ([key type] *key)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::CreationFailure,
                    ::Components::DuplicateKeyValue,
@@ -438,7 +438,7 @@ ACE_INLINE [component name]_ptr
 }
 
 ACE_INLINE [component name]_ptr
-[ciao module name]::[home name]_Servant::find_by_primary_key ([key type]_ptr key)
+[ciao module name]::[home name]_Servant::find_by_primary_key ([key type] *key)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::FinderFailure,
                    ::Components::UnknownKeyValue,
@@ -451,7 +451,7 @@ ACE_INLINE [component name]_ptr
 
 
 ACE_INLINE void
-[ciao module name]::[home name]_Servant::remove ([key type]_ptr key)
+[ciao module name]::[home name]_Servant::remove ([key type] *key)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::RemoveFailure,
                    ::Components::UnknownKeyValue,
@@ -462,7 +462,7 @@ ACE_INLINE void
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-ACE_INLINE [key type]_ptr
+ACE_INLINE [key type] *
 [ciao module name]::[home name]_Servant::get_primary_key ([component name]_ptr comp)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
