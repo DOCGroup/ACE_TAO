@@ -141,7 +141,7 @@ TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl: !SUNCC5_1
 TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !GIOP10
 TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
