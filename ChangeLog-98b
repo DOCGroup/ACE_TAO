@@ -1,3 +1,8 @@
+Thu Dec 17 21:06:30 EST 1998  James CE Johnson <jcej@lads.com>
+
+	* docs/tutorials/000:
+    Removed.  This is redundant with the Chap* directories.
+
 Thu Dec 17 17:18:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude/platform_sco5.0.0-{nothread,fsu-pthread}.GNU:
