@@ -1,3 +1,23 @@
+Thu Oct 07 18:47:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h (ACE_NOTSUP): Added new macro.  This one is similar to
+	  ACE_NOTSUP_RETURN, except that there is no return value (similar
+	  to ACE_GUARD and ACE_GUARD_RETURN).
+
+	* ace/Message_Queue (message_length): Returns the total length on
+	  the queue, i.e., sum of the message block lengths.
+
+	  Since manual changes to these stats might be necessary,
+	  specially when queued message blocks change size or lengths
+	  (without dequeuing the messages from the queue), we also provide
+	  methods for setting these stats.
+
+	* ace/Message_Block.i (total_length): This new method is similar
+	  to <total_size> except that it deals with the length of the
+	  message blocks and not the size of the message blocks.  It
+	  returns the length of the message blocks, including chained
+	  message blocks.
+
 Thu Oct  7 13:17:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Changed the word "compiler" to

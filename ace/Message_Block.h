@@ -322,6 +322,9 @@ public:
   // Get the length of the message
   void length (size_t n);
   // Set the length of the message
+  size_t total_length (void) const;
+  // Get the length of the <Message_Block>s, including chained
+  // <Message_Block>s.
 
   // = Set/get <Message_Block> size info.
   size_t total_size (void) const;
