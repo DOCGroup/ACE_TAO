@@ -18,7 +18,7 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-class Handle_L_Dgram : public ACE_Service_Object, public ACE_LSOCK_Dgram
+class ACE_Svc_Export Handle_L_Dgram : public ACE_Service_Object, public ACE_LSOCK_Dgram
 {
 public:
   Handle_L_Dgram (void);

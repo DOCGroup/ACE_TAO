@@ -19,7 +19,7 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-class Handle_L_Pipe : public ACE_Service_Object, public ACE_LSOCK_Acceptor
+class ACE_Svc_Export Handle_L_Pipe : public ACE_Service_Object, public ACE_LSOCK_Acceptor
 {
 public:
   Handle_L_Pipe (void);
@@ -51,4 +51,3 @@ extern ACE_Service_Object_Type lp;
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* _HANDLE_L_PIPE_H */
-

@@ -17,7 +17,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 
-class Handle_R_Stream : public ACE_Service_Object, public ACE_SOCK_Acceptor
+class ACE_Svc_Export Handle_R_Stream : public ACE_Service_Object, public ACE_SOCK_Acceptor
 {
 public:
   Handle_R_Stream (void);
@@ -47,6 +47,3 @@ extern ACE_Service_Object_Type rs;
 #endif /* __ACE_INLINE__ */
 
 #endif /* _HANDLE_R_STREAM_H */
-
-
-
