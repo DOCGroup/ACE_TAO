@@ -1,3 +1,18 @@
+Mon Oct 27 14:26:10 1997    <irfan@TWOSTEP>
+
+	* ace/WFMO_Reactor.cpp (update_state): Fixed a bug in the
+ 	  WFMO_Reactor.  wakeup_all_threads() used to be an internal
+ 	  method that was called when changes were made to the state of
+ 	  the reactor.  When wakeup_all_threads() became public, there was
+ 	  no code in place to handle explicit user wakeups.  In
+ 	  particular, the wakeup_all_threads event was never reset.
+  	  Thanks to Evgeny Beskrovny <evgeny_beskrovny@icomverse.com> for
+ 	  pointing out this bug.
+
+	* ace/OS.i (ACE_FAIL_RETURN): Added mapping from
+ 	  ERROR_PATH_NOT_FOUND to ENOENT.  Thanks to David Brackman
+ 	  <dbrackma@OhioEE.com> for suggesting this.
+
 Mon Oct 27 11:36:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (exit_cleanup_i): removed protection against recursive

@@ -660,6 +660,7 @@ ACE_OS::umask (mode_t cmask)
   case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
   case ERROR_FILE_EXISTS:       errno = EEXIST; break; \
   case ERROR_SHARING_VIOLATION: errno = EACCES; break; \
+  case ERROR_PATH_NOT_FOUND:    errno = ENOENT; break; \
   } \
   return RESULT; } while (0)
 
