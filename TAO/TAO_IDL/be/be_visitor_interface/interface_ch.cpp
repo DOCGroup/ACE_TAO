@@ -266,6 +266,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  if (! node->is_abstract ())
+    {
+      node->analyze_parentage ();
+    }
+
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
   // we have to override _add_ref() to avoid ambiguity, because it is
   // called in _tao_Queryinterface().
