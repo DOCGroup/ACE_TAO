@@ -5607,6 +5607,7 @@ private:
 # if defined (ASYS_INLINE)
 #   undef ASYS_INLINE
 # endif /* ASYS_INLINE */
+# define ASYS_INLINE 
 #else
 # define ASYS_INLINE inline
 # if defined (ACE_HAS_INLINED_OSCALLS)
