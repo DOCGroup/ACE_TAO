@@ -774,7 +774,7 @@ decodeDCTDCSizeChrom(unsigned int *value)
 static void
 decodeDCTCoeff(unsigned short int *dct_coeff_tbl, unsigned int *run, int *level)
 {
-  unsigned int temp, index, num_bits;
+  unsigned int temp, index /*, num_bits*/;
   unsigned int value, next32bits, flushed;
 
   /*
