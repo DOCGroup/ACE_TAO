@@ -1,3 +1,19 @@
+Tue Nov 25 15:52:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/POA.i:
+
+	  Calling servant_to_reference () from multiple threads from an
+	  application could lead to race conditions. This checkin prevents
+	  this race condition by adding a lock. We have also added a
+	  method servant_to_reference_i () which does the bulk of the
+	  work. 
+	  
+	* tests/Servant_To_Reference_Test:
+
+	  A new test to check for race conditions.
+
 Tue Nov 25 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosNaming.mpc:
