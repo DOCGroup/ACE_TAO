@@ -8,6 +8,10 @@ Fri May 30 18:18:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           in this directory are no longer useful or up to date. Soon
           parts of the CIDL compiler will be checked into this directory.
 
+        * READEME:
+
+          Updated file.
+
 Fri May 30 17:41:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
