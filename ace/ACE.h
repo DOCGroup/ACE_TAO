@@ -609,6 +609,10 @@ public:
   // Computes the ISO 8802-3 standard 32 bits CRC for the string
   // (not for a file).
 
+  static u_long crc32 (const char *buf, ACE_UINT32 len);
+  // Computes the ISO 8802-3 standard 32 bits CRC for the given
+  // buffer (the length is included in the CRC).
+
   static u_long gcd (u_long x, u_long y);
   // Euclid's greatest common divisor algorithm.
 
