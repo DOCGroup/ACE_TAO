@@ -1,3 +1,22 @@
+Mon May 31 16:19:17 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/NodeApplicationManager/NodeApplicationManager.mpc:
+	  Updated this file.
+
+	* DnC/NodeApplicationManager/CIAO_NAM_Export.h:
+	  Added this export file.
+
+	* DnC/NodeApplicationManager/NodeApplicationManager.cpp:
+	  Removed this file since NodeApplicationManager will be
+	  collocated with NodeManager.
+
+	* DnC/NodeApplicationManager/CIAO_NodeApplicationManager.idl:
+	  Removed this file since I have moved this into deployment_svnt
+	  project.
+
+	* DnC/Core/NodeApplication_Impl.cpp:
+	  Changed from 0 to CORBA::Object::_nil () as return value.
+
 Mon May 31 15:18:25 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/test/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
