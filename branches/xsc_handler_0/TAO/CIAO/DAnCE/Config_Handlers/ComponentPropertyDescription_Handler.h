@@ -1,6 +1,6 @@
 //================================================
 /**
- *  @file  CPD_Handler.h
+ *  @file  ComponentPropertyDescription_Handler.h
  *
  *  $Id$
  *
@@ -8,8 +8,8 @@
  */
 //================================================
 
-#ifndef CPD_HANDLER_H
-#define CPD_HANDLER_H
+#ifndef COMPONENTPROPERTYDESCRIPTION_HANDLER_H
+#define COMPONENTPROPERTYDESCRIPTION_HANDLER_H
 
 #include /**/ "ace/pre.h"
                                                                                 
@@ -23,13 +23,13 @@
 
 
 namespace CIAO{
-  
+    
   namespace Config_Handlers{
 
   /*
-   * @class CPD_Handler
+   * @class ComponentPropertyDescription_Handler
    * 
-   * @brief Handler class for <CCMComponentPortDescription> types.
+   * @brief Handler class for <ComponentPortDescription> types.
    * 
    * This class defines handler methods to map values from 
    * XSC objects, parsed from the descriptor files, to the
@@ -37,24 +37,24 @@ namespace CIAO{
    * 
    */
 
-   class CPD_Handler{
-  
+   class ComponentPropertyDescription_Handler{
+ 
     public:
-    
-      CPD_Handler (void);
-      virtual ~CPD_Handler (void);
-        
+       
+      ComponentPropertyDescription_Handler (void);
+      virtual ~ComponentPropertyDescription_Handler (void);
+              
       ///This method maps the values from the
-      ///XSC object <ComponentInterfaceDescription> to
-      ///the CORBA IDL type <Deployment::ComponentInterfaceDescription>.  
+      ///XSC object <ComponentPropertyDescription> to
+      ///the CORBA IDL type <Deployment::ComponentPropertyDescription>.    
       void
-      get_ComponentPortDescription (
-        Deployment::ComponentPortDescription& toconfig,
-        ComponentPortDescription& desc);
-       };
+      get_ComponentPropertyDescription (
+          Deployment::ComponentPropertyDescription& toconfig,
+          ComponentPropertyDescription& desc);
+   };
 
  }
 }
 
 #include /**/ "ace/post.h"
-#endif /* CPD_HANDLER_H */
+#endif /* COMPONENTPROPERTYDESCRIPTION_HANDLER_H */

@@ -14,7 +14,6 @@
 
 #include "Basic_Deployment_Data.hpp"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -39,20 +38,17 @@ namespace CIAO
     * corresponding CORBA IDL Any type.
     *
     */
-
-    class ANY_Handler
-    {
-    public:
-
-      ANY_Handler (void);
-
-      virtual ~ANY_Handler (void);
-
-      static void get_any(CORBA::Any& toconfig,
-                          Any& desc);
+    
+    class ANY_Handler{
+     
+      public:
+       
+        ANY_Handler (void);
+        virtual ~ANY_Handler (void);
+  
+        static void get_Any (CORBA::Any& toconfig, Any& desc);          
 
     };
-
   }
 }
 

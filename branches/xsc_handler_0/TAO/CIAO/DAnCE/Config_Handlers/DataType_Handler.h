@@ -1,6 +1,6 @@
 //================================================
 /**
- *  @file  CPD_Handler.h
+ *  @file  DataType_Handler.h
  *
  *  $Id$
  *
@@ -8,8 +8,8 @@
  */
 //================================================
 
-#ifndef CPD_HANDLER_H
-#define CPD_HANDLER_H
+#ifndef DATATYPE_HANDLER_H
+#define DATATYPE_HANDLER_H
 
 #include /**/ "ace/pre.h"
                                                                                 
@@ -23,13 +23,13 @@
 
 
 namespace CIAO{
-  
+    
   namespace Config_Handlers{
 
   /*
-   * @class CPD_Handler
+   * @class DataType_Handler
    * 
-   * @brief Handler class for <CCMComponentPortDescription> types.
+   * @brief Handler class for <ComponentPortDescription> types.
    * 
    * This class defines handler methods to map values from 
    * XSC objects, parsed from the descriptor files, to the
@@ -37,24 +37,22 @@ namespace CIAO{
    * 
    */
 
-   class CPD_Handler{
-  
+   class DataType_Handler{
+ 
     public:
-    
-      CPD_Handler (void);
-      virtual ~CPD_Handler (void);
-        
-      ///This method maps the values from the
-      ///XSC object <ComponentInterfaceDescription> to
-      ///the CORBA IDL type <Deployment::ComponentInterfaceDescription>.  
+       
+      DataType_Handler (void);
+      virtual ~DataType_Handler (void);
+              
+      ////This method takes a <CIAO::Config_Handlers::DataType>
+      ///and returns the corresponding CORBA::TypeCode.
       void
-      get_ComponentPortDescription (
-        Deployment::ComponentPortDescription& toconfig,
-        ComponentPortDescription& desc);
-       };
+      get_DataType (CORBA::TypeCode_ptr& type,
+                    DataType& desc);
+    };
 
  }
 }
 
 #include /**/ "ace/post.h"
-#endif /* CPD_HANDLER_H */
+#endif /* DATATYPE_HANDLER_H */
