@@ -679,7 +679,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
     {
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
       ACE_Notification_Buffer buffer (eh, mask);
-      int notification_required = 0;
+      // int notification_required = 0;
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
@@ -798,7 +798,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
     ACE_Notification_Buffer *temp;
 
     if (notify_queue_.is_empty ())
-      break;
+      return 0;
     else if (notify_queue_.dequeue_head (temp) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%p\n"),
