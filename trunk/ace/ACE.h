@@ -500,6 +500,9 @@ public:
   // the same process. The uniqueness of this name is therefore only
   // valid for the life of <object>.
 
+  static u_long log2 (u_long num);
+  // Computes the base 2 logarithm of <num>.
+
 private:
   ACE (void);
   // Ensure we can't define an instance of this class...

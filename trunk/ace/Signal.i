@@ -101,7 +101,15 @@ ACE_INLINE void
 ACE_Sig_Action::mask (sigset_t *ss)
 {
   ACE_TRACE ("ACE_Sig_Action::mask");
-  this->sa_.sa_mask = *ss; // Structure assignment
+  if (ss != 0)
+    this->sa_.sa_mask = *ss; // Structure assignment
+}
+
+ACE_INLINE void
+ACE_Sig_Action::mask (ACE_Sig_Set &ss)
+{
+  ACE_TRACE ("ACE_Sig_Action::mask");
+  this->sa_.sa_mask = ss.sigset (); // Structure assignment
 }
 
 ACE_INLINE ACE_SignalHandler

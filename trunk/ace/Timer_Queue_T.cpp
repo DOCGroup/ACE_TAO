@@ -16,13 +16,12 @@ ACE_Timer_Node_T<TYPE>::dump (void) const
 {
   ACE_TRACE ("ACE_Timer_Node_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  // ACE_DEBUG ((LM_DEBUG, "\type_ = %x", this->type_));
   ACE_DEBUG ((LM_DEBUG, "\nact_ = %x", this->act_));
   this->timer_value_.dump ();
   this->interval_.dump ();
   ACE_DEBUG ((LM_DEBUG, "\nprev_ = %x", this->prev_));
   ACE_DEBUG ((LM_DEBUG, "\nnext_ = %x", this->next_));
-  ACE_DEBUG ((LM_DEBUG, "\ntimer_id_ = %d", this->timer_id_));
+  ACE_DEBUG ((LM_DEBUG, "\ntimer_id_ = %d\n", this->timer_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

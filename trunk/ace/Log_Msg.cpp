@@ -932,7 +932,9 @@ ACE_Log_Msg::log (const char *format_str,
 	  ACE_Str_Buf log_msg ((void *) &log_record,
 			       int (log_record.length ()));
 #if defined (ACE_HAS_STREAM_PIPES)
-	  result = message_queue_.send (int (log_record.type ()),
+	  // Try to use the putpmsg() API if possible in order to
+	  // ensure correct message queueing according to priority.
+	  result = message_queue_.send (int (log_record.priority ()),
 					&log_msg);
 #elif !defined (ACE_WIN32)
 	  result = message_queue_.send (log_msg);

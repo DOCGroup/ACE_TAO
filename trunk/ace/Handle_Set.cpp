@@ -80,8 +80,8 @@ ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
 // speed up the count.
 
 #if defined (ACE_HAS_LONG_FDMASK)
-// If there are platforms where fd_mask isn't typedef'd to "int" we'll
-// have to use the following code.
+// If there are platforms where fd_mask isn't typedef'd to a 4 byte
+// quantify we'll have to use the following code.
 
 int
 ACE_Handle_Set::count_bits (u_long n) const
@@ -89,15 +89,22 @@ ACE_Handle_Set::count_bits (u_long n) const
   ACE_TRACE ("ACE_Handle_Set::count_bits");
   int rval = 0;
 
-  for (int i = 0; n != 0; i++)
+  while (n > 0)
     {
+#if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
+      rval++;
+      n &= n - 1;
+#else
       rval += ACE_Handle_Set::nbits_[n & 0xff];
       n >>= 8;
+#endif /* ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT */
     }
 
   return rval;
 }
 #else
+
+// Otherwise we can use the following.
 
 int
 ACE_Handle_Set::count_bits (u_long n) const

@@ -65,6 +65,7 @@ ACE_HAS_EXCEPTIONS			Compiler supports C++ exception handling
 ACE_HAS_GETPAGESIZE			Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be defined, except on Win32)
 ACE_HAS_GETRUSAGE                       Platform supports the getrusage() system call.
 ACE_HAS_GNU_CSTRING_H			Denotes that GNU has cstring.h as standard which redefines memchr() 
+ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT Optimize ACE_Handle_Set::count_bits for select() operations (common case)
 ACE_HAS_HI_RES_TIMER			Compiler/platform supports SunOS high resolution timers
 ACE_HAS_INLINED_OSCALLS			Inline all the static class OS methods to remove call overhead
 ACE_HAS_IP_MULTICAST			Platform supports IP multicast

@@ -145,6 +145,25 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   ACE_OS::sigaction (signum, &this->sa_, 0);
 }
 
+ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
+				int signum,
+				ACE_Sig_Set &sig_mask,
+				int sig_flags)
+{
+  // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
+  this->sa_.sa_flags = sig_flags;
+
+  // Structure assignment...
+  this->sa_.sa_mask = sig_mask.sigset (); 
+
+#if !defined(ACE_HAS_TANDEM_SIGNALS)
+  this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
+#else
+  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
+#endif /* !ACE_HAS_TANDEM_SIGNALS */
+  ACE_OS::sigaction (signum, &this->sa_, 0);
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)
 
 void
@@ -246,7 +265,7 @@ ACE_Sig_Handler::remove_handler (int signum,
 
   if (ACE_Sig_Handler::in_range (signum))
     {
-      ACE_Sig_Action sa (SIG_DFL, 0, -1); // Define the default disposition.
+      ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0); // Define the default disposition.
 
       if (new_disp == 0)
 	new_disp = &sa;
@@ -284,7 +303,7 @@ ACE_Sig_Handler::dispatch (int signum,
   if (eh != 0 && eh->handle_signal (signum, siginfo, ucontext) == -1)
     {
       // Define the default disposition.
-      ACE_Sig_Action sa (SIG_DFL, 0, -1);
+      ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
 
       ACE_Sig_Handler::signal_handlers_[signum] = 0;
 
@@ -586,7 +605,7 @@ ACE_Sig_Handlers::remove_handler (int signum,
 	  // register the new disposition or restore the default
 	  // disposition.
 
-	  ACE_Sig_Action sa (SIG_DFL, 0, -1);
+	  ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
 
 	  if (new_disp == 0)
 	    new_disp = &sa;

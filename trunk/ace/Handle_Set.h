@@ -61,7 +61,8 @@ public:
   // Synchronize the underlying FD_SET with the MAX_FD and the SIZE.
 
   operator fd_set *();
-  // Returns a pointer to the underlying fd_set.
+  // Returns a pointer to the underlying <fd_set>.  Returns 0 if
+  // <size_> == 0.
 
   void dump (void) const;
   // Dump the state of an object.
