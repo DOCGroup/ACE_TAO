@@ -155,7 +155,13 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
   int_id = this->item_->int_id_;
   int_id->heap_item (0);
 
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
+  ACE_DES_FREE_TEMPLATE4(this->item_, this->allocator_->free,
+                         JAWS_Cache_List_Item,
+                         EXT_ID, FACT, H_FN, E_FN);
+#else
   ACE_DES_FREE (this->item_, this->allocator_->free, Cache_List_Item);
+#endif
   this->item_ = 0;
   return 0;
 }
@@ -169,7 +175,13 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
   this->remove_i ((Cache_List_Item *) item);
   this->item_->int_id_->heap_item (0);
 
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
+  ACE_DES_FREE_TEMPLATE4(this->item_, this->allocator_->free,
+                         JAWS_Cache_List_Item,
+                         EXT_ID, FACT, H_FN, E_FN);
+#else
   ACE_DES_FREE (this->item_, this->allocator_->free, Cache_List_Item);
+#endif
   this->item_ = 0;
 
   return 0;
