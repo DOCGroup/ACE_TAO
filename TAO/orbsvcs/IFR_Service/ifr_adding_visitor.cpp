@@ -1690,7 +1690,7 @@ ifr_adding_visitor::get_referenced_type (AST_Type *node,
             ));
         }
 
-      ACE_UNUSED_ARG (ACE_TRY_ENV);
+      ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
       break;
     // For names types, we can just look up the entry and update
     // ir_current_.
