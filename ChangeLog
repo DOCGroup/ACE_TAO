@@ -1,8 +1,26 @@
+Fri May 31 13:35:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/TPC_Logging_Server.{h cpp}:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+          Primarily formatting changes to match the book.
+
+        * examples/C++NPv2/SLDex.mak: Removed Logging_Acceptor_Ex from
+          files list; it's only a header file.
+
 Fri May 31 11:07:25 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Modified this 
 	  so use pointers rather than references to simplify things in
 	  the book.
+
+Thu May 30 23:03:38 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/SR_Configurable_Logging_Server.{cpp mak}:
+        * examples/C++NPv2/Makefile: Added new ACE_Select_Reactor-based
+          configurable logging server.
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Code changes
+          to match book and fix reconnect problems.
 
 Thu May 30 18:02:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 

@@ -51,12 +51,12 @@ protected:
   // The SSL ``context'' data structure.
   SSL_CTX *ssl_ctx_;
 
-  // The SSL data structure corresponding to authenticated 
+  // The SSL data structure corresponding to authenticated
   // SSL connections.
   SSL *ssl_;
 
 public:
-  typedef ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_Acceptor> 
+  typedef ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_Acceptor>
           PARENT;
   typedef ACE_SOCK_Acceptor::PEER_ADDR PEER_ADDR;
 
