@@ -239,6 +239,12 @@ declaration.</li>
 <li>
 The IDL Compiler generates templates for servant implementations. The options
 are -GI [ h | s | b | e | c ]</li>
+
+<li>
+The IDL compiler generates source code for the management and (de)marshaling
+of wide characters and wide strings, enabling the sending and receiving of
+Unicode over the wire. However, wide character and wide string literals are
+not yet portable to Unix platforms (see entry under Future Work below).</li>
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
@@ -266,7 +272,12 @@ to generalize the changes necessary to generated code.</li>
 The generated sequence classes should not be generated per sequence, but
 per type and parent scope. Which means, that the overhead of having the
 source code generated serveral times should be reduced. To do this, an
-extra pass over the internal representation of the IDL file has to be done.<P>
+extra pass over the internal representation of the IDL file has to be done.<P></li>
+
+<li>
+Unix's native wchar_t type is not compatible with Unicode. CORBA wide string
+implementations are required to support Unicode, but are not restricted to
+it, so the IDL compiler should ultimately support Unix's wchar_t as well.
 </ul>
 
 
