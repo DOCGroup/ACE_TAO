@@ -1,11 +1,12 @@
 # $Id$
 #   Win32 auto_compile script.
-if (!$ENV{ACE_ROOT}) {
-    $ACE_ROOT = getcwd ()."\\";
-    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT";
+if (!$ENV{CIAO_ROOT}) {
+    $CIAO_ROOT = getcwd ()."TAO\CIAO\\";
+    warn "CIAO_ROOT not defined, defaulting to CIAO_ROOT=$CIAO_ROOT";
 }
 else {
     $ACE_ROOT = $ENV{ACE_ROOT};
+    $CIAO_ROOT = $ENV{CIAO_ROOT};
 }
 
 use lib "$ENV{ACE_ROOT}/bin";
