@@ -293,6 +293,11 @@ public:
   void dump (void) const;
 
 protected:
+  /// Implement the flush operation on the <ACE_Message_Queue>, which
+  /// writes all the queued <ACE_Message_Block>s to the <PEER_STREAM>.
+  /// Assumes that the caller holds the lock.
+  virtual int flush_i (void);
+
   /// Maximum size the <Message_Queue> can be before we have to flush
   /// the buffer.
   size_t maximum_buffer_size_;

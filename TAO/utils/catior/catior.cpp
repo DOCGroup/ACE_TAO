@@ -222,6 +222,10 @@ catior (char* str
 
   CORBA::ULong profile_counter = 0;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "Number of Profiles in IOR:\t%d\n",
+              profiles));
+
   // No profiles means a NIL objref.
   if (profiles == 0)
     return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -229,7 +233,7 @@ catior (char* str
     while (profiles-- != 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "Profile Count:\t%d\n",
+                    "Profile number:\t%d\n",
                     ++profile_counter));
 
         // We keep decoding until we find a valid IIOP profile.
@@ -659,7 +663,7 @@ cat_profile_helper (TAO_InputCDR& stream,
          && iiop_version_minor <= 2))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%I detected new v%d.%d %s profile",
+                  "%I detected new v%d.%d %s profile that catior cannot decode",
                   iiop_version_major,
                   iiop_version_minor,
                   protocol));
@@ -696,7 +700,7 @@ cat_profile_helper (TAO_InputCDR& stream,
     return 0;
 
   //IIOP 1.0 does not have tagged_components.
-  if (iiop_version_minor)
+  if (!(iiop_version_major == 1 && iiop_version_minor == 0))
     {
       if (cat_tagged_components (str) == 0)
         return 0;
@@ -722,10 +726,10 @@ cat_shmiop_profile (TAO_InputCDR& stream)
 static CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& stream)
 {
-  // OK, we've got an IIOP profile.  It's going to be
-  // encapsulated ProfileData.  Create a new decoding stream and
-  // context for it, and tell the "parent" stream that this data
-  // isn't part of it any more.
+  // OK, we've got a UIOP profile.  It's going to be encapsulated
+  // ProfileData.  Create a new decoding stream and context for it,
+  // and tell the "parent" stream that this data isn't part of it any
+  // more.
 
   CORBA::ULong encap_len;
   if (stream.read_ulong (encap_len) == 0)
@@ -738,28 +742,29 @@ cat_uiop_profile (TAO_InputCDR& stream)
   if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
     return 0;
 
-  // Read and verify major, minor versions, ignoring IIOP
+  // Read and verify major, minor versions, ignoring UIOP
   // profiles whose versions we don't understand.
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet iiop_version_major, iiop_version_minor;
-  if (! (str.read_octet (iiop_version_major)
-         && iiop_version_major == 1
-         && str.read_octet (iiop_version_minor)
-         && iiop_version_minor <= 1))
+  CORBA::Octet uiop_version_major, uiop_version_minor;
+  // It appears that as of April 2002 UIOP version is 1.2
+  if (! (str.read_octet (uiop_version_major)
+         && uiop_version_major == 1
+         && str.read_octet (uiop_version_minor)
+         && uiop_version_minor <= 2))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%I detected new v%d.%d UIOP profile",
-                  iiop_version_major,
-                  iiop_version_minor));
+                  uiop_version_major,
+                  uiop_version_minor));
       return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "%I UIOP Version:\t%d.%d\n",
-              iiop_version_major,
-              iiop_version_minor));
+              uiop_version_major,
+              uiop_version_minor));
 
   // Get host and port.
   CORBA::String_var rendezvous;
