@@ -1,3 +1,8 @@
+Sat Jul 10 13:56:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MT_Reactor_Timer_Test.cpp (main): Fixed signed/unsigned
+	  comparison.
+
 Sat Jul 10 08:01:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: THANKS instead of README.
