@@ -207,6 +207,7 @@ typedef ACE_UINT16 ACE_USHORT16;
 
     ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
     ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
+    ACE_U_LongLong operator* (const ACE_UINT32);
     ACE_U_LongLong &operator*= (const ACE_UINT32);
 
     ACE_U_LongLong operator<< (const u_int) const;
@@ -238,6 +239,7 @@ typedef ACE_UINT16 ACE_USHORT16;
     // The following operators convert their arguments to
     // ACE_UINT32.  So, there may be information loss if they are
     // used.
+    ACE_U_LongLong operator* (const ACE_INT32);
     ACE_U_LongLong &operator*= (const ACE_INT32);
     ACE_UINT32 operator/ (const ACE_INT32) const;
 #if ACE_SIZEOF_INT == 4
