@@ -1,3 +1,11 @@
+Tue Jul 31 16:53:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Svc_Conf.h (ace_yyrestart, ace_yy_delete_parse_buffer,
+	  ace_yydirective):
+
+	  Remove these global function and variable declarations.  They
+	  are no longer used.
+
 Tue Jul 31 16:43:33 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Basic_Types.h:
