@@ -21,16 +21,7 @@
 #include <set>
 #include <string>
 
-#if defined (OS_NO_NAMESPACE)
-#define queue uncouth
-#endif /* OS_NO_NAMESPACE */
-
 #include "orbsvcs/CosTradingC.h"
-
-#if defined  (OS_NO_NAMESPACE)
-#undef queue
-#endif /* OS_NO_NAMESPACE */
-
 
 class TAO_Property_Evaluator
 //

@@ -21,15 +21,7 @@
 #include <queue>
 #include <string>
 
-#if defined (OS_NO_NAMESPACE)
-#define queue foobar
-#endif /* OS_NO_NAMESPACE */
-
 #include "orbsvcs/CosTradingS.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef queue
-#endif /* OS_NO_NAMESPACE */
 
 class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
 // = TITLE

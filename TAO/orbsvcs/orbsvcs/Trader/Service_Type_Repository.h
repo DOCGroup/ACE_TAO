@@ -266,6 +266,12 @@ private:
     TAO_THROW_SPEC ((SERVICE_TYPE_REPOS::ValueTypeRedefinition));
   // Ensure that properties of a super_type aren't having their types
   // or retstrictions redefined.
+
+  //  void validate_interface (const char* if_name,
+  //			   SUPER_TYPE_MAP& super_map,
+  //			   CORBA::Environment& _env)
+  //    TAO_THROW_SPEC ((SERVICE_TYPE_REPOS::InterfaceTypeMismatch));
+  // Ensure that the interface type derives from its superclasses'.
   
   void update_type_map (const char* name,
 			SERVICE_TYPE_REPOS::TypeStruct& type,
