@@ -12,7 +12,6 @@
 
 DOMDocument* create_document (const char *url)
 {
-
   xercesc::XMLPlatformUtils::Initialize();
   static const XMLCh gLS[] = { xercesc::chLatin_L,
                                xercesc::chLatin_S,
@@ -62,6 +61,7 @@ DOMDocument* create_document (const char *url)
 
   DOMDocument* doc = parser->parseURI (url);
   ACE_TString root_node_name;
+
   root_node_name = XMLString::transcode
     (doc->getDocumentElement ()->getNodeName ());
 
