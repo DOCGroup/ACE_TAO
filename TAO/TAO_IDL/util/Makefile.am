@@ -20,21 +20,22 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
 noinst_LIBRARIES = libutil.a
 
 libutil_a_SOURCES = \
-         utl_decllist.cpp  \
-         utl_error.cpp  \
-         utl_exceptlist.cpp  \
-         utl_exprlist.cpp  \
-         utl_global.cpp  \
-         utl_identifier.cpp  \
-         utl_idlist.cpp  \
-         utl_indenter.cpp  \
-         utl_labellist.cpp  \
-         utl_list.cpp  \
-         utl_namelist.cpp  \
-         utl_scope.cpp  \
-         utl_stack.cpp  \
-         utl_string.cpp  \
-         utl_strlist.cpp
+  utl_decllist.cpp \
+  utl_error.cpp \
+  utl_exceptlist.cpp \
+  utl_exprlist.cpp \
+  utl_global.cpp \
+  utl_identifier.cpp \
+  utl_idlist.cpp \
+  utl_indenter.cpp \
+  utl_labellist.cpp \
+  utl_list.cpp \
+  utl_namelist.cpp \
+  utl_scope.cpp \
+  utl_stack.cpp \
+  utl_string.cpp \
+  utl_strlist.cpp
+
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.

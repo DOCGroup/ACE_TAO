@@ -18,7 +18,7 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
 noinst_LIBRARIES = libnarrow.a
 
 libnarrow_a_SOURCES = \
-         narrow.cpp
+  narrow.cpp
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.
