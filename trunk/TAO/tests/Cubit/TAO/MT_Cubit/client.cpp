@@ -21,13 +21,16 @@ double csw = 0.0;
 #if defined (VXWORKS) 
 u_int ctx = 0;
 
-void 
+extern "C"
+int
 switchHook ( WIND_TCB *pOldTcb,    /* pointer to old task's WIND_TCB */
 	     WIND_TCB *pNewTcb )   /* pointer to new task's WIND_TCB */
 {
   // We create the client threads with names starting with "@".  
   if ( pNewTcb->name[0] == '@')
     ctx++;
+
+  return 0;
 }	     
 #endif /* VXWORKS */
 
@@ -124,13 +127,10 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   util_task_duration = delta_t.sec () * ACE_ONE_SECOND_IN_MSECS + (double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS;
 #endif /* !CHORUS */
 
-  // The minimum priority thread is the utilization thread.
+  // The thread priority 
   ACE_Sched_Priority priority;
 
 #if defined (VXWORKS) 
-  if (ts.context_switch_test_ == 1)
-    taskSwitchHookAdd ((FUNCPTR)switchHook);
-
   // set a task_id string startiing with "@", so we are able to
   // accurately count the number of context switches.
   strcpy (task_id, "@High");
@@ -138,7 +138,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 
   // Now activate the high priority client.
 #if defined (VXWORKS)
-  priority = ACE_THR_PRI_FIFO_DEF;
+  priority = 101;
 #elif defined (ACE_WIN32)
   priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
@@ -168,58 +168,16 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
                 "%p; priority is %d\n",
                 "activate failed",
                 priority));
-  
-  ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
-	                                             ACE_SCOPE_THREAD);
-
-  u_int number_of_priorities = 0;
-  while (priority_iterator.more ())
-		{
-	      number_of_priorities ++;
-		  priority_iterator.next ();
-  }
-  
-  // 1 priority is exclusive for the high priority client.
-  number_of_priorities --;
-
-  // if utilization thread is present, reduce in 1 the available priorities.
-  if (ts.use_utilization_test_ == 1)
-    {
-      number_of_priorities --;
-  }
-
+    
   u_int number_of_low_priority_client = ts.thread_count_ - 1;
 
-  // Drop the priority, so that the priority of clients will increase
-  // with increasing client number.
-  for (j = 0; j < number_of_low_priority_client + 1; j++)
-    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
-
-  // if the lowest priority of the "low priority clients" is the minimum, 
-  // and we are running the utilization thread, increment the priority, 
-  // since we don't want the utlization thread and a "low priority thread" 
-  // to have the same priority.
-  if ( priority == ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                    ACE_SCOPE_THREAD) &&
-	   ts.use_utilization_test_ == 1)
-    priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
-	
-  // granularity of the assignment of the priorities.  Some OSs have 
-  // fewer levels of priorities than we have threads in our test, so 
-  // with this mechanism we assign priorities to groups of threads when 
-  // there are more threads than priorities.
-  u_int grain = number_of_low_priority_client / number_of_priorities;
-  u_int counter = 0;
-
-  if (grain <= 0) 
-	  grain = 1;
+  // Drop the priority
+  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+    priority,
+    ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating %d clients starting at low priority %d\n",
+              "Creating %d clients at priority %d\n",
               ts.thread_count_ - 1,
               priority));
   
@@ -240,15 +198,14 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 #endif /* VXWORKS */
       
       ACE_DEBUG ((LM_DEBUG,
-		  "Creating client with thread ID %d and priority %d\n",
-		  i,
-                  priority));
+		  "Creating client with thread ID %d\n",
+		  i));
 
       // The first thread starts at the lowest priority of all the low
       // priority clients.
       if (low_priority_client[i - 1]->activate (THR_BOUND | ACE_SCHED_FIFO,
 						1,
-						1,
+						0,
 #if !defined (VXWORKS) 
 						priority) == -1)
 #else
@@ -266,16 +223,6 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 	            "activate failed",
 	            priority));
 
-      counter = (counter + 1) % grain;
-      if ( (counter == 0) && 
-           //Just so when we distribute the priorities among the threads, we make sure we don't go overboard.
-           ((number_of_priorities * grain) > (number_of_low_priority_client - (i - 1))) )
-	  {
-		  // Get the next higher priority.
-		  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-		                                              priority,
-		                                              ACE_SCOPE_THREAD);
-	  }
     }
 
   if (ts.use_utilization_test_ == 1)
@@ -305,8 +252,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   // any further.
   ts.barrier_->wait ();
 
-  
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+#if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
   ACE_Profile_Timer timer_for_context_switch;
   ACE_Profile_Timer::Rusage usage;
 
@@ -314,7 +260,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
     {
       timer_for_context_switch.start ();
       timer_for_context_switch.get_rusage (usage);
-# if defined (ACE_HAS_PRUSAGE_T)
+# if defined (ACE_HAS_PRUSAGE_T) 
       context_switch = usage.pr_vctx + usage.pr_ictx;
 # else  /* ACE_HAS_PRUSAGE_T */
       context_switch = usage.ru_nvcsw + usage.ru_nivcsw;
@@ -322,6 +268,14 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
     }
 #endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
+#if defined (VXWORKS) 
+  if (ts.context_switch_test_ == 1)
+    {
+     fprintf(stderr, "Adding the context switch hook!\n");
+     taskSwitchHookAdd ((FUNCPTR)&switchHook);
+    }
+#endif
+  
   // Wait for all the client threads to exit (except the utilization thread).
   thread_manager.wait ();
 
@@ -352,7 +306,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 		  "Voluntary context switches=%d, Involuntary context switches=%d\n",
 		  usage.pr_vctx,
 		  usage.pr_ictx));
-#elif defined (ACE_HAS_GETRUSAGE)
+#elif defined (ACE_HAS_GETRUSAGE) && !defined (ACE_WIN32)
       timer_for_context_switch.stop ();
       timer_for_context_switch.get_rusage (usage);
       // Add up the voluntary context switches & involuntary context switches
@@ -362,10 +316,10 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 		  usage.ru_nvcsw,
 		  usage.ru_nivcsw));
 #elif defined (VXWORKS) /* ACE_HAS_GETRUSAGE */
-      taskSwitchHookDelete ((FUNCPTR)switchHook);
-      ACE_DEBUG ((LM_DEBUG, 
-		  "Context switches=%d\n",
-		  ctx));
+      taskSwitchHookDelete ((FUNCPTR)&switchHook);
+       ACE_DEBUG ((LM_DEBUG, 
+ 		  "Context switches=%d\n",
+ 		  ctx));
 #endif
     }
 
@@ -535,15 +489,24 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
     Client CB_5Hz_client (thread_manager, &ts, CB_5HZ_CONSUMER);
     Client CB_1Hz_client (thread_manager, &ts, CB_1HZ_CONSUMER);
 
-    ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
+    ACE_Sched_Priority priority;
 
-    ACE_DEBUG ((LM_DEBUG,
-                "Creating 40 Hz client with priority %d\n",
-                priority));
-    if (CB_40Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "activate failed"));
+#if defined (VXWORKS)
+  priority = 101;
+#elif defined (ACE_WIN32)
+  priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                    ACE_SCOPE_THREAD);
+#else  /* ! VXWORKS */
+  priority = ACE_THR_PRI_FIFO_DEF + 25;
+#endif /* ! ACE_WIN32 */
+
+     ACE_DEBUG ((LM_DEBUG,
+                 "Creating 40 Hz client with priority %d\n",
+                 priority));
+     if (CB_40Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
+       ACE_ERROR ((LM_ERROR,
+                   "%p\n",
+                   "activate failed"));
 
     priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                     priority,
@@ -551,7 +514,7 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 20 Hz client with priority %d\n",
                 priority));
-    if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
+    if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
@@ -562,7 +525,7 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 10 Hz client with priority %d\n",
                 priority));
-    if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
+    if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
@@ -573,7 +536,7 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 5 Hz client with priority %d\n",
                 priority));
-    if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
+    if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
@@ -584,13 +547,13 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 1 Hz client with priority %d\n",
                 priority));
-    if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
+    if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
 
     // Wait for all the threads to exit.
-    ACE_Thread_Manager::instance ()->wait ();
+    thread_manager.wait ();
 
     ACE_DEBUG ((LM_DEBUG,
                 "Test done.\n"
@@ -599,7 +562,7 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
                 "10Hz client latency : %u usec\n"
                 "5Hz client latency : %u usec\n"
                 "1Hz client latency : %u usec\n",
-                CB_40Hz_client.get_latency (0),
+	        CB_40Hz_client.get_latency (0),
                 CB_20Hz_client.get_latency (1),
                 CB_10Hz_client.get_latency (2),
                 CB_5Hz_client.get_latency (3),
@@ -641,7 +604,7 @@ main (int argc, char *argv[])
 #if defined (__Lynx__)
           30,
 #else  /* ! __Lynx__ */
-          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+	  ACE_THR_PRI_FIFO_DEF,// ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
 #endif /* ! __Lynx__ */
           ACE_SCOPE_PROCESS)) != 0)
     {

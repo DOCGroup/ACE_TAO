@@ -1,3 +1,18 @@
+Sat Jun  6 18:55:51 1998  Sergio Flores  <sergio@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/cubit.idl:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:	
+	* tests/Cubit/TAO/MT_Cubit/server.h: Changed the code to use the
+ 	same priority for all low priority clients.  Deleted unnecessary
+ 	code that implemented a cubit factory, we now will use the file to
+ 	store/retrieve the iors.  Fixed a bug having to with unsupported
+ 	fields in the rusage structure for NT.
+	
 Sat Jun  6 17:35:59 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface.cpp: Added CORBA::Environment

@@ -127,7 +127,7 @@
 #endif
 #define ACE_NEEDS_SYSTIME_H
 #define ACE_PAGE_SIZE 4096
-#define ACE_THR_PRI_FIFO_DEF 6
+#define ACE_THR_PRI_FIFO_DEF 101
 
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1

@@ -44,28 +44,4 @@ public:
   virtual void shutdown (CORBA::Environment &env);
 };
 
-class Cubit_Factory_i : public POA_Cubit_Factory
-{
-  // = TITLE
-  //   Cubit Factory implementation class.
-public:
-  Cubit_Factory_i (CORBA::String *cubits,
-                   u_int num_of_objs);
-  // Constructor.
-
-  ~Cubit_Factory_i (void);
-  // Destructor.
-  
-  virtual CORBA::String create_cubit (CORBA::UShort index, 
-				      CORBA::Environment &env); 
-  // Make the cubit object whose priority is "priority".
-
-private:
-  CORBA::String * my_cubit_;
-  // Array of cubit iors.
-
-  u_int num_of_objs_;
-  // Number of cubit objects we have ior's for.
-};
-
 #endif /* _CUBIT_I_HH */
