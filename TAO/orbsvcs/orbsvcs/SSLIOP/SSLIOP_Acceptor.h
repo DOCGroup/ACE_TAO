@@ -72,10 +72,9 @@ public:
                             const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile);
+                               TAO_MProfile &mprofile,
+                               CORBA::Boolean share_profile);
 
-  virtual int create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
-                                            TAO_MProfile &mprofile);
   // Rather than creating a separate profile for each endpoint, this
   // version of <create_mprofile> method adds all endpoints to a
   // single SSLIOP profile, i.e., <mprofile> will not contain more than
@@ -96,6 +95,16 @@ private:
                                    int minor);
   // Ensure that neither the endpoint configuration nor the ORB
   // configuration violate security measures.
+
+  /// Helper method to add a new profile to the mprofile for
+  /// each endpoint.
+  int create_new_profiles (const TAO_ObjectKey &object_key,
+                           TAO_MProfile &mprofile);
+
+  /// Helper method to create a profile that contains all of
+  /// our endpoints.
+  int create_shared_profile (const TAO_ObjectKey &object_key,
+                             TAO_MProfile &mprofile);
 
 private:
   TAO_SSLIOP_BASE_ACCEPTOR ssl_acceptor_;

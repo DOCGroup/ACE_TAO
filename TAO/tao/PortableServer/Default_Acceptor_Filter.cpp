@@ -19,7 +19,9 @@ TAO_Default_Acceptor_Filter::fill_mprofile (const TAO_ObjectKey &object_key,
        acceptor != acceptors_end;
        ++acceptor)
     {
-      if ((*acceptor)->create_mprofile (object_key, mprofile)
+      if ((*acceptor)->create_mprofile (object_key,
+                                        mprofile,
+                                        0 /* one endpoint per profile */)
           == -1)
         return -1;
     }

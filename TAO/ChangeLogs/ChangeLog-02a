@@ -1,3 +1,18 @@
+Fri May 25 15:56:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/DIOP_Acceptor.{cpp,h}:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.{cpp,h}:
+	* tao/IIOP_Acceptor.{cpp,h}:
+	* tao/Pluggable.h:
+	* tao/PortableServer/Default_Acceptor_Filter.cpp:
+	* tao/PortableServer/RT_Acceptor_Filters.cpp:
+	* tao/Strategies/SHMIOP_Acceptor.{cpp,h}:
+	* tao/Strategies/UIOP_Acceptor.{cpp,h}:
+	  Added share_profile flag to TAO_Acceptor::create_mprofile
+	  and removed TAO_Acceptor::create_endpoint_for_mprofile.
+	  Thanks to Paul Calabrese <calabrese_p@ociweb.com> for
+	  suggesting the modification to simplify the interface.
+
 Fri May 25 15:31:45 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tests/Leader_Followers/run_test.pl: Changed this to use
@@ -11,28 +26,28 @@ Fri May 25 15:31:45 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 Fri May 25 12:04:02 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/Security/Send_File/client_nopasswd.conf: 
-	* orbsvcs/examples/Security/Send_File/server_nopasswd.conf: 
+	* orbsvcs/examples/Security/Send_File/client_nopasswd.conf:
+	* orbsvcs/examples/Security/Send_File/server_nopasswd.conf:
 	  Updated to use client_key and server_key certificates as the
 	  private keys.
 
-	* orbsvcs/examples/Security/Send_File/server_cert.pem: 
-	* orbsvcs/examples/Security/Send_File/server_key.pem: 
-	* orbsvcs/examples/Security/Send_File/client_cert.pem: 
-	* orbsvcs/examples/Security/Send_File/client_key.pem: 
-	* orbsvcs/examples/Security/Send_File/cacert.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/server_key.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem: 
-	
- 	  The previous certificates expired. So, used the ones in 
+	* orbsvcs/examples/Security/Send_File/server_cert.pem:
+	* orbsvcs/examples/Security/Send_File/server_key.pem:
+	* orbsvcs/examples/Security/Send_File/client_cert.pem:
+	* orbsvcs/examples/Security/Send_File/client_key.pem:
+	* orbsvcs/examples/Security/Send_File/cacert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+
+ 	  The previous certificates expired. So, used the ones in
 	  $ACE_ROOT/TAO/orbsvcs/tests/Security/SecurityLevel1
-	
+
 Fri May 25 13:32:55 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* TAO_IDL/include/idl_global.h: Moved template instantiations into 
+	* TAO_IDL/include/idl_global.h: Moved template instantiations into
 	utl_global.cpp.  The instantiations in the header files caused
 	problems on, at the very least, Linux builds using g++.
 
@@ -69,11 +84,11 @@ Fri May 25 08:47:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri May 25 06:02:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/tutorials/Quoter/RT_Event_Service: Added some fixes to 
+	* docs/tutorials/Quoter/RT_Event_Service: Added some fixes to
 	  ensure that we don't delete the tie member too quickly.  Thanks
  	  to Dayisi <dayisi@163.com> for reporting this.
 
-	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp (close): 
+	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp (close):
 	  Fixed a bug where we don't wait for our own thread to quit.
   	  Thanks to Dayisi <dayisi@163.com> for reporting this.
 
@@ -178,7 +193,7 @@ Thu May 24 18:31:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * performance-tests/POA/Implicit_Activation/Test.idl:
 
           Put a leading underscore in front of an inteface
-          declaration named Factory, which differs from the 
+          declaration named Factory, which differs from the
           IDL keyword 'factory' only by case. Generated code
           will be unchanged.
 
@@ -316,7 +331,7 @@ Wed May 23 21:27:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
           there, since an exact match causes the lexer to return
           a token of the wrong type, leading to a 'syntax error'
           message. Case-insensitive checking has now been added,
-          just before the node is added to the AST, and it is 
+          just before the node is added to the AST, and it is
           turned off by a check of the new 'escaped' flag in class
           Identifier. Note that a case-sensitive match with a C++
           keyword will, as defined by the spec, cause '_cxx_' to
@@ -561,8 +576,8 @@ Tue May 22 21:21:10 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  Service and IFR implementation to
  	  TAO_Trading_Loader::init_multicast_server() that checks for the
  	  multicast endpoint.  Thanks to Mike Pyle
- 	  <mike.pyle@burning-glass.com> for this fix.	
-  
+ 	  <mike.pyle@burning-glass.com> for this fix.
+
 Mon May 21 18:43:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/QtTests: Fixed the Makefile so that it handles the
@@ -675,7 +690,7 @@ Sat May 19 17:17:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  "iioploc://" with "corbaloc:iiop:" to conform to the CORBA INS
  	  standard consistently.  Thanks to Craig Rodrigues for suggesting
  	  this.
-  
+
 Sat May 19 11:02:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed a problem
