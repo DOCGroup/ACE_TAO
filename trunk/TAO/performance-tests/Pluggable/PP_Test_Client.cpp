@@ -296,7 +296,7 @@ PP_Test_Client::shutdown_server (int do_shutdown)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -341,7 +341,7 @@ PP_Test_Client::run_oneway (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -386,7 +386,7 @@ PP_Test_Client::run_void (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 PP_Test_Client::~PP_Test_Client (void)
@@ -482,6 +482,6 @@ PP_Test_Client::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
