@@ -302,6 +302,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_input (ACE_HANDLE h)
 
   if (this->cleanup_AST (h, ast) != -1)
     {
+      ACE_ASSERT (ast != 0);
       ast->svc_handler ()->close (0);
       delete ast;
     }
@@ -548,7 +549,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cancel (SVC_HANDLER *sh)
     if (me->int_id_->svc_handler () == sh)
       {
         AST *ast = 0;
-        this->cleanup_AST (me->ext_id_, ast);
+        (void) this->cleanup_AST (me->ext_id_, ast);
         delete ast;
         return 0;
       }
@@ -665,10 +666,14 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_close (ACE_HANDLE, ACE_
 
           // Clean it up.
           AST *ast = 0;
-          this->cleanup_AST (handle, ast);
+          int r = this->cleanup_AST (handle, ast);
 
           // Close the svc_handler.
-          ast->svc_handler ()->close (0);
+          if (r != -1)
+            {
+              ACE_ASSERT (ast != 0);
+              ast->svc_handler ()->close (0);
+            }
 
           // Zap the ast.
           delete ast;
