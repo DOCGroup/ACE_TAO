@@ -1,3 +1,9 @@
+Tue Nov 11 08:12:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-lynxos.h (getopt): Missing 't' from const => see
+ 	  getopt prototype parameter list.  Thanks to Manojkumar Acharya
+ 	  <mja@cvsf325.gpt.co.uk>.
+
 Tue Nov 11 08:09:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/INET_Addr.cpp (get_host_name): added ACE_UNUSED_ARG (len);
