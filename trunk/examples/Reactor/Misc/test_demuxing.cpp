@@ -118,7 +118,8 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
     case SIGINT:
       // Tell the ACE_Reactor to enable the ready bit for
       // this->handle_.  The ACE_Reactor will subsequently call the
-      // Sig_Handler::handle_input method from within its event loop.
+      // <Sig_Handler::handle_input> method from within its event
+      // loop.
       return ACE_Service_Config::reactor ()->ready_ops 
 	(this->handle_, ACE_Event_Handler::READ_MASK, ACE_Reactor::ADD_MASK);
     case SIGQUIT:

@@ -1098,7 +1098,7 @@ typedef SEM_ID ACE_mutex_t;
 typedef ACE_mutex_t ACE_thread_mutex_t;
 #if !defined (ACE_HAS_POSIX_SEM)
 // although ACE_HAS_POSIX_SEM is assumed for VxWorks
-typedef semaphore * ACE_sema_t;
+typedef semaphore *ACE_sema_t;
 #endif /* !ACE_HAS_POSIX_SEM */
 typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
@@ -1159,8 +1159,8 @@ private:
 
 #if defined (VXWORKS)
   ACE_sema_t waiters_done_;
-  // A semaphore used by the broadcast/signal thread to wait
-  // for the waiting thread(s) to wake up and get a chance at the
+  // A semaphore used by the broadcast/signal thread to wait for all
+  // the waiting thread(s) to wake up and be released from the
   // semaphore.
 #elif defined (ACE_WIN32)
   HANDLE waiters_done_;

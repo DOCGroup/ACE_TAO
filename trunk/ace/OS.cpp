@@ -1127,7 +1127,15 @@ ACE_TSS_Cleanup::exit (void *status)
   CWinThread *pThread = ::AfxGetThread ();
   if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
 #endif /* ACE_HAS_MFC */
-    ::_endthreadex ((DWORD) status);
+    {
+#if 0
+      ACE_hthread_t thr;
+      ACE_OS::thr_self (thr);
+      if (thr)
+	ACE_OS::close (thr);
+#endif
+      ::_endthreadex ((DWORD) status);
+    }
 #if 0 
   ::ExitThread ((DWORD) status);
 #endif 
@@ -2008,9 +2016,9 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
   char *buf;
 
 #if defined (ACE_HAS_ALLOCA)
-  buf = alloca (length);
+  buf = (char *) alloca (length);
 #else 
-  ACE_NEW_RETURN (buf, length, -1);
+  ACE_NEW_RETURN (buf, char[length], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   char *ptr = buf;
@@ -2021,7 +2029,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
       ptr += iov[i].iov_len;
     }
 
-  ssize_t result = ACE_SOCK_Dgram::send_n (handle, buf, length);
+  ssize_t result = ACE::send_n (handle, buf, length);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] buf;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -2034,7 +2042,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 // "Fake" readv for sites without it.  Note that this is thread-safe.
 
 extern "C" int
-readv (ACE_HANDLE handle, struct iovec *vp, int vpcount)
+readv (ACE_HANDLE handle, struct iovec *iov, int n)
 {
 // ACE_TRACE ("::readv");
 
@@ -2049,21 +2057,26 @@ readv (ACE_HANDLE handle, struct iovec *vp, int vpcount)
 
   char *buf;
 #if defined (ACE_HAS_ALLOCA)
-  buf = alloca (length);
+  buf = (char *) alloca (length);
 #else 
-  ACE_NEW_RETURN (buf, length, -1);
+  ACE_NEW_RETURN (buf, char[length], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
-  length = ACE_SOCK_Dgram::recv_n (buf, length);
+  length = ACE::recv_n (handle, buf, length);
 
   if (length != -1)
     {
       char *ptr = buf;
-
-      for (i = 0; i < n; i++)
+      int copyn = length;
+     
+      for (i = 0; 
+	   i < n && copyn > 0; 
+	   i++)
 	{
-	  ACE_OS::memcpy (iov[i].iov_base, ptr, iov[i].iov_len);
+	  ACE_OS::memcpy (iov[i].iov_base, ptr,
+			  copyn > iov[i].iov_len ? iov[i].iov_len : copyn);
 	  ptr += iov[i].iov_len;
+	  copyn -= iov[i].iov_len;
 	}
     }
 
