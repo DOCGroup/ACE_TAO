@@ -9,6 +9,16 @@ Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/Timeprobe.cpp (print_times): divide by 1000u instead of 1000
           to allow overload resolution of ACE_U_LongLong::operator /.
 
+        * tao/orb_core.cpp: removed break's after return's to avoid compiler
+          warnings.
+
+        * tao/typecode.cpp: wrapped some break and return statements with
+          ACE_NOTREACHED to avoid compiler warnings.
+
+        * tao/debug.cpp (use_debug_stream_to_get_rid_of_warning): changed
+          to return debug_stream instead of (not) using it.  ghs warned that
+          "controlling expression is constant" the way things were.
+
 Tue Feb 10 17:39:13 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/SchedEntry.cpp
