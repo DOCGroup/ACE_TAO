@@ -51,11 +51,13 @@ FileImpl::System::open (const char *file_name,
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
+      //CORBA::Exception exception = File::IOError (errno);
+      ACE_THROW_RETURN (File::IOError (), 0);
+
+      /*      ACE_NEW_THROW_EX (exception,
                         File::IOError (errno),
-                        File::IOError);
-      ACE_CHECK_RETURN (0);
+                        exception);
+                        ACE_CHECK_RETURN (0);*/
     }
 
   char file_descriptor_buffer[BUFSIZ];
@@ -141,11 +143,7 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer,
     return len;
   else
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        File::IOError (errno),
-                        File::IOError);
-      ACE_CHECK_RETURN (0);
+      ACE_THROW_RETURN (File::IOError (), 0);
     }
   return 0; // Not needed
 }
@@ -168,11 +166,7 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes,
   else
     {
       File::Descriptor::DataBuffer::freebuf (buffer);
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        File::IOError (errno),
-                        File::IOError);
-      ACE_CHECK_RETURN (0);
+      ACE_THROW_RETURN (File::IOError (), 0);
     }
   return 0;
 }
@@ -190,11 +184,7 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
                                                     whence);
   if (result == -1)
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        File::IOError (errno),
-                        File::IOError);
-      ACE_CHECK_RETURN (0);
+     ACE_THROW_RETURN (File::IOError (), 0); 
     }
   else
     return (CORBA::ULong) result;
@@ -213,10 +203,6 @@ FileImpl::Descriptor::destroy (CORBA::Environment &ACE_TRY_ENV)
 
   if (result != 0)
     {
-      CORBA::Exception *exception;
-      ACE_NEW_THROW_EX (exception,
-                        File::IOError (errno),
-                        File::IOError);
-      ACE_CHECK;
+      ACE_THROW (File::IOError ());
     }
 }
