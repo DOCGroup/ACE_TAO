@@ -1,3 +1,8 @@
+Fri Dec 10 12:04:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* docs/releasenotes/TODO.html:
+	  Made several updates relating to the IDL compiler.
+
 Fri Dec 10 09:00:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simulator/Event_Supplier/DualEC_Sup.cpp
