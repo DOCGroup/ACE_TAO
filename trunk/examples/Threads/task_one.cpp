@@ -1,13 +1,12 @@
-// This test program illustrates how the ACE barrier synchronization
 // $Id$
 
+// This test program illustrates how the ACE barrier synchronization
 // mechanisms work in conjunction with the ACE_Task and the
 // ACE_Thread_Manager.  It is instructive to compare this with the
 // test_barrier.cpp test to see how they differ.
 
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
