@@ -102,12 +102,12 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	
 	scheduler_.set (rt_info_.value,
 			RtecScheduler.Criticality.VERY_LOW_CRITICALITY,
-			new TimeBase.ulonglong (0,0), 
-			new TimeBase.ulonglong (0,0),
-			new TimeBase.ulonglong (0,0),
+			new TimeBase.ulonglong (0),
+			new TimeBase.ulonglong (0),
+			new TimeBase.ulonglong (0),
 			2500000,  // period
 			RtecScheduler.Importance.VERY_LOW_IMPORTANCE,
-			new TimeBase.ulonglong (0,0),
+			new TimeBase.ulonglong (0),
 			1,
 			RtecScheduler.Info_Type.OPERATION);	  	        
 	
@@ -118,9 +118,9 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	RtecEventComm.Event notification_event_ = 
 	  new RtecEventComm.Event (ACE_ES_EVENT_NOTIFICATION,  0, 
 				   1,        // ttl
-				   new TimeBase.ulonglong (0,0),
-				   new TimeBase.ulonglong (0,0),
-				   new TimeBase.ulonglong (0,0),
+				   new TimeBase.ulonglong (0),
+				   new TimeBase.ulonglong (0),
+				   new TimeBase.ulonglong (0),
 				   new RtecEventComm.EventData (orb_.create_any())
 				    );
 
