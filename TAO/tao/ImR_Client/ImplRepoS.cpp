@@ -98,7 +98,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:731
+  // be\be_visitor_arg_traits.cpp:743
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__SARG_TRAITS_SS_
@@ -117,7 +117,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:731
+  // be\be_visitor_arg_traits.cpp:743
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__SARG_TRAITS_SS_
@@ -136,7 +136,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__SARG_TRAITS_SS_
@@ -197,7 +197,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:731
+  // be\be_visitor_arg_traits.cpp:743
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_
@@ -216,7 +216,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:731
+  // be\be_visitor_arg_traits.cpp:743
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_
@@ -235,7 +235,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_
@@ -273,7 +273,7 @@ namespace TAO
 
 
 // Stub/skeleton argument selection function templates.
-// TAO_IDL - Generated from be\be_visitor_root/root.cpp:110
+// TAO_IDL - Generated from be\be_visitor_root/root.cpp:111
 
 namespace
 {
@@ -654,7 +654,7 @@ POA_ImplementationRepository::ServerInformationIterator::~ServerInformationItera
 
 void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -705,7 +705,6 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
           , arg_2
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -765,7 +764,7 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
 
 void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -791,9 +790,8 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
       this->servant_->destroy (
         ACE_ENV_SINGLE_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-    
+  
   private:
     
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
@@ -843,7 +841,7 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
 
 void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -887,9 +885,8 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-    
+  
   private:
     
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
@@ -942,7 +939,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
 
 void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -979,9 +976,8 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-    
+  
   private:
     
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
@@ -1081,7 +1077,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
 
 void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -1118,7 +1114,6 @@ void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -1747,7 +1742,7 @@ POA_ImplementationRepository::Administration::~Administration (void)
 
 void POA_ImplementationRepository::Administration::activate_server_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -1784,7 +1779,6 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -1846,7 +1840,7 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
 
 void POA_ImplementationRepository::Administration::register_server_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -1890,7 +1884,6 @@ void POA_ImplementationRepository::Administration::register_server_skel (
         , arg_2
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -1954,7 +1947,7 @@ void POA_ImplementationRepository::Administration::register_server_skel (
 
 void POA_ImplementationRepository::Administration::reregister_server_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -1998,7 +1991,6 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
         , arg_2
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -2062,7 +2054,7 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
 
 void POA_ImplementationRepository::Administration::remove_server_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2099,7 +2091,6 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -2160,7 +2151,7 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
 
 void POA_ImplementationRepository::Administration::shutdown_server_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2197,7 +2188,6 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -2258,7 +2248,7 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
 
 void POA_ImplementationRepository::Administration::server_is_running_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2309,9 +2299,8 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
         , arg_3
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-    
+  
   private:
     
     POA_ImplementationRepository::Administration * const servant_;
@@ -2374,7 +2363,7 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
 
 void POA_ImplementationRepository::Administration::server_is_shutting_down_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2411,7 +2400,6 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -2472,7 +2460,7 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
 
 void POA_ImplementationRepository::Administration::find_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2516,7 +2504,6 @@ void POA_ImplementationRepository::Administration::find_skel (
         , arg_2
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -2579,7 +2566,7 @@ void POA_ImplementationRepository::Administration::find_skel (
 
 void POA_ImplementationRepository::Administration::list_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2630,7 +2617,6 @@ void POA_ImplementationRepository::Administration::list_skel (
         , arg_3
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -2692,7 +2678,7 @@ void POA_ImplementationRepository::Administration::list_skel (
 
 void POA_ImplementationRepository::Administration::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2736,7 +2722,6 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -2791,7 +2776,7 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
 
 void POA_ImplementationRepository::Administration::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2828,7 +2813,6 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -2930,7 +2914,7 @@ void POA_ImplementationRepository::Administration::_interface_skel (
 
 void POA_ImplementationRepository::Administration::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2967,7 +2951,6 @@ void POA_ImplementationRepository::Administration::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -3089,7 +3072,7 @@ POA_ImplementationRepository::Administration::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1673
+// be\be_visitor_root/root.cpp:1674
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
