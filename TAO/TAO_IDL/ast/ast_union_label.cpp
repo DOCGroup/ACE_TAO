@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union_label.h"
 #include "ast_expression.h"
 #include "ast_visitor.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_union_label, 

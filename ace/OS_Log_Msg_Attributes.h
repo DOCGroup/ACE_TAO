@@ -16,23 +16,14 @@
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "ace/streams.h"
-#include "ace/os_include/os_stdio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_OSTREAM_TYPE)
-# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#   define ACE_OSTREAM_TYPE FILE
-# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#   define ACE_OSTREAM_TYPE ostream
-# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#endif /* ! ACE_OSTREAM_TYPE */
-
-
 #include "ace/OS_Export.h"
+#include "ace/os_include/os_stdio.h"
+#include "ace/iosfwd.h"
 
 /// The attributes required by ACE_Log_Msg.
 /**
