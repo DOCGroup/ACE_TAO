@@ -1,9 +1,16 @@
-Tue Jul  1 17:00:20 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+Tue Jul  1 23:00:15 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* Added a new tests directory with the Cubit and TTCP
+	examples. The older test directory will be deleted soon.
+
+	In addition, the tc_constants in the tc_constants.cpp  file are
+	declared with an ACE_Svc_Export to make the Win NT compiler
+	happy. Extern declarations in typecode.h had the same changes.
 
 	* Updated the PC_install.bat file. In addition, there was one more
-	warning in typecode.cpp (Win NT compiler) that was fixed. Finally,
-	in the the tc_const.cpp file, the ACE_Svc_Export was used
-	accidently. This has been fixed.
+ 	warning in typecode.cpp (Win NT compiler) that was fixed. Finally,
+ 	in the the tc_const.cpp file, the ACE_Svc_Export was used
+ 	accidently. This has been fixed.
 
 	* A number of files were updated with ACE_Svc_Export so that
 	variables and classes do not remain unresolved for Win32
