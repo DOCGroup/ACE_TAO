@@ -86,6 +86,33 @@ project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe {
   }
 }
 
+project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
+  exename = ft_fault_consumer
+
+  Source_Files {
+    FTApp_FaultConsumer_Main.cpp
+    ../../FT_ReplicationManager/FT_FaultConsumer.cpp
+  }
+
+//  // Custom folder: script to run this test
+//  Define_Custom(Script){
+//    inputext = .pl, .py, .rb
+//    generic_outputext = .txt
+//  }
+//
+//  Script_Files {
+//    run_test_detector.pl
+//  }
+
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_fault_consumer.pl
+  }
+}
+
 project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_registry
 
