@@ -1174,7 +1174,8 @@ CORBA::ORB::resolve_initial_references (const char *name,
   ACE_OS::strcat (ior_env_var_name,
                   "IOR");
 
-  ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name);
+  ACE_CString service_ior =
+    ACE_OS::getenv (ior_env_var_name.in ());
 
   if (ACE_OS::strcmp (service_ior.c_str (), "") != 0 )
     {
