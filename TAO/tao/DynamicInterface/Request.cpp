@@ -371,7 +371,7 @@ CORBA_Request::poll_response (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                     this->lock_,
                     0);
 
-  return this->response_received_;
+  return this->orb_->work_pending ();
 }
 
 void

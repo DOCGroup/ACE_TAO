@@ -1,3 +1,10 @@
+Mon Jan 20 12:03:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicInterface/Request.cpp:
+
+	  Fixed a bug in poll_response(). Thanks to Jaroslaw Nozderko 
+	  <jarek@eko.net.pl> for reporting it.
+
 Mon Jan 20 08:00:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp: Removed multiple inclusions of an
