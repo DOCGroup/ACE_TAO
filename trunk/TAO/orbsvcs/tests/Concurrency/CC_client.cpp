@@ -296,7 +296,7 @@ CC_Client::run_extended_tests (char *params)
 
   char *cmd  = ACE_OS::strtok (params, ";");
   char *arg1 = ACE_OS::strtok (NULL, ";");
-  char *arg2 = ACE_OS::strtok (NULL, ";");
+  //  char *arg2 = ACE_OS::strtok (NULL, ";");
 
   // A possible scenario using test 1,2, and 3 Create and lock the
   // lock set with the name 'Name'

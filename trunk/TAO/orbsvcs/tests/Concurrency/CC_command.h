@@ -44,7 +44,7 @@ class CC_Command
 
  protected:
   CosConcurrencyControl::LockSet_var
-    CC_Command::GetLockSet(char *lock_set_name, CORBA::Environment &_env);
+    GetLockSet(char *lock_set_name, CORBA::Environment &_env);
   // Function to look up the lock set we are operating on, or if the
   // name is "" return the global lock set variable
 
