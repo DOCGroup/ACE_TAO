@@ -1,3 +1,9 @@
+Sun Aug 12 02:17:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_Acceptor.cpp:
+        * ace/MEM_Connector.cpp: On non-Win32 platforms, disable
+	  multithreaded MEM_IO if _ACE_USE_SV_SEM is defined.
+
 Sun Aug 12 01:27:51 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Log_Msg_Test.cpp: Correct const-ness of a pointer
