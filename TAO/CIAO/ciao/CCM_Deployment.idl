@@ -148,6 +148,8 @@ module Components
       void remove ()
         raises (RemoveFailure);
 
+      
+
     };
 
   };

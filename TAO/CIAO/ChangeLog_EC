@@ -1,0 +1,17 @@
+Mon Sep 15 16:59:34 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * ciao/CCM_Deployment.idl ciao/Container_Base.cpp 
+        * ciao/Container_Base.h
+        * ciao/Cookies.cpp
+        * ciao/Cookies.h 
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h 
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h 
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.h 
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h
+
+        Initial implementation of CIAO event services.
+
