@@ -53,7 +53,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   os->indent ();
   // Generate the stub factory function pointer definition.
-  *os << node->name () << "_ptr (*";
+  *os << "extern " << node->name () << "_ptr (*";
 
   *os << "_TAO_collocation_"
       << node->flatname () << "_Stub_Factory_function_pointer) ("
