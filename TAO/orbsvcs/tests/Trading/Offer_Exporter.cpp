@@ -27,7 +27,7 @@ TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
     {
       TAO_Dynamic_Property* dp = 0;
       this->clean_up_.dequeue_head (dp);
-      delete dp;
+      dp->destroy ();
     }
 }
 
