@@ -1,25 +1,41 @@
+Thu Nov  2 14:44:35 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Explicitly instantiate
+          ACE_Atomic_Op<ACE_SYNCH_MUTEX,CORBA::ULong>
+          it used to be instantiated in the TAO library, but now that code
+          is in TAO_DynamicInterface.
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Use the Atomic_Op instantiation from EC_Gateway_UDP.
+
+        * TAO_IDL/Makefile.dependencies:
+          The IDL compiler was touched if static_libs_only was not
+          defined.
+
 Thu Nov  2 15:07:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Uninlined the declarations of the overloaded CORBA::release 
-	  and CORBA::is_nil methods for Request, ServerRequest and
-	  Context. Also moved the declarations of 
-	  CORBA::release (ServerRequest) and 
-	  CORBA::is_nil (ServerRequest) inside the minimum CORBA
-	  guards, since ServerRequest is now used only for DSI.
+          Uninlined the declarations of the overloaded CORBA::release
+          and CORBA::is_nil methods for Request, ServerRequest and
+          Context. Also moved the declarations of
+          CORBA::release (ServerRequest) and
+          CORBA::is_nil (ServerRequest) inside the minimum CORBA
+          guards, since ServerRequest is now used only for DSI.
 
 Thu Nov  2 12:03:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.cpp:
 
-	  Moved the #endif of TAO_HAS_MINIMUM_CORBA to the end of
-	  the file, after the explicit template instantiations.
+          Moved the #endif of TAO_HAS_MINIMUM_CORBA to the end of
+          the file, after the explicit template instantiations.
 
-	* tao/DynamicInterface/TAO_DynamicInterface.dsp:
+        * tao/DynamicInterface/TAO_DynamicInterface.dsp:
 
-	  Fixed a typo in the project settings for the release
-	  version.
+          Fixed a typo in the project settings for the release
+          version.
 
 Wed Nov  1 10:14:26 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -32,26 +48,26 @@ Wed Nov  1 10:14:26 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Nov  1 10:04:27 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Messaging_Policy_i.cpp (relative_expiry): 
-	* tao/ORB_Core.cpp: 
-	  Removed unnecessary TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY 
-	  guards.
-	
+        * tao/Messaging_Policy_i.cpp (relative_expiry):
+        * tao/ORB_Core.cpp:
+          Removed unnecessary TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
+          guards.
+
 Wed Nov  1 09:47:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Stub.cpp: 
-	* tao/Messaging_Policy_i.h: 
-	* tao/Messaging_Policy_i.cpp: 
-	* tao/Messaging_PolicyFactory.cpp (create_policy): 
-	* tao/Messaging_ORBInitializer.cpp (pre_init): 
-	  Changed TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY to
-	  TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
-	
+        * tao/Stub.cpp:
+        * tao/Messaging_Policy_i.h:
+        * tao/Messaging_Policy_i.cpp:
+        * tao/Messaging_PolicyFactory.cpp (create_policy):
+        * tao/Messaging_ORBInitializer.cpp (pre_init):
+          Changed TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY to
+          TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
+
 Wed Nov  1 08:19:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Messaging_ORBInitializer.cpp:
 
-          Added TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY protection 
+          Added TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY protection
           around call to TAO_ORB_Core::set_timeout_hook.
 
         * tao/Messaging_PolicyFactory.cpp:
@@ -66,138 +82,138 @@ Wed Nov  1 08:19:12 2000  Darrell Brunsch <brunsch@uci.edu>
           Standardized the use of the protection macros, since the .h
           file was using TAO_HAS_CORBA_MESSAGING, but the .cpp file
           was using TAO_HAS_SYNC_SCOPE_POLICY or nothing at all.  Made
-          them consistent.  Granted, I don't know if this is the 
+          them consistent.  Granted, I don't know if this is the
           "correct" way of doing it, but it links for me though.
 
 Wed Nov 01 09:58:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/Object_Adapter.h (prepare_for_upcall): Added
-	  back the default value for ACE_TRY_ENV.  I thought that this was
-	  library code and should not have a default.  Actually, this code
-	  is also called from the Through POA stubs and therefore requires
-	  the default so that it can be called from code that uses native
-	  exceptions and not the simulated exceptions.  Thanks to Carlos
-	  for pointing this out.
+        * tao/PortableServer/Object_Adapter.h (prepare_for_upcall): Added
+          back the default value for ACE_TRY_ENV.  I thought that this was
+          library code and should not have a default.  Actually, this code
+          is also called from the Through POA stubs and therefore requires
+          the default so that it can be called from code that uses native
+          exceptions and not the simulated exceptions.  Thanks to Carlos
+          for pointing this out.
 
 Wed Nov  1 08:14:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicInterface/Context.cpp:
-	* tao/DynamicInterface/Context.h:
-	* tao/DynamicInterface/DII_Invocation.cpp:
-	* tao/DynamicInterface/DII_Invocation.h:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.h:
-	* tao/DynamicInterface/Dynamic_Implementation.cpp:
-	* tao/DynamicInterface/Dynamic_Implementation.h:
-	* tao/DynamicInterface/ExceptionList.cpp:
-	* tao/DynamicInterface/ExceptionList.h:
-	* tao/DynamicInterface/Request.cpp:
-	* tao/DynamicInterface/Request.h:
-	* tao/DynamicInterface/Server_Request.cpp:
-	* tao/DynamicInterface/Server_Request.h:
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.h:
+        * tao/DynamicInterface/ExceptionList.cpp:
+        * tao/DynamicInterface/ExceptionList.h:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/Server_Request.h:
 
-	  Replaced or added TAO_HAS_MINIMUM_CORBA guards around
-	  these files.
+          Replaced or added TAO_HAS_MINIMUM_CORBA guards around
+          these files.
 
 Wed Nov  1 07:33:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/implrepo.dsp:
-	* orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.dsp:
 
-	  Added TAO_DynamicInterface to linked libraries, and
-	  tao/DynamicInterface to the link path.
+          Added TAO_DynamicInterface to linked libraries, and
+          tao/DynamicInterface to the link path.
 
-	* ImplRepo_i.cpp:
+        * ImplRepo_i.cpp:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
 Wed Nov  1 07:05:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAOACE.dsw:
+        * TAOACE.dsw:
 
-	  Left out of earlier checkin
+          Left out of earlier checkin
 
-	  Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+          Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 
 Tue Oct 31 20:17:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Changes corresponding those made to TAO.dsp in
+          Changes corresponding those made to TAO.dsp in
 
-	  Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+          Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Oct 31 20:03:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
 
-	  Added decision to use ACE_NESTED_CLASS macro for interceptors
-	  request info subclasses' return type code, similiar to 
-	  previous changes made for arguments. Also changed the name
-	  of the visitor context substate enum value to be more 
-	  general, since it isn't used just for arguments any more.
-	  Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
-	  for reporting this bug and sending in an example IDL file.
+          Added decision to use ACE_NESTED_CLASS macro for interceptors
+          request info subclasses' return type code, similiar to
+          previous changes made for arguments. Also changed the name
+          of the visitor context substate enum value to be more
+          general, since it isn't used just for arguments any more.
+          Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
+          for reporting this bug and sending in an example IDL file.
 
 Tue Oct 31 17:34:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
-	
-	* tao/PortableInterceptorC.h: 
-	  Removed the unnecessary TAO_HAS_CORBA_MESSAGING Guard.
 
-	* tao/Stub.h (TAO_Stub): 
-	* tao/Stub.cpp (buffering_constraint): 
+        * tao/PortableInterceptorC.h:
+          Removed the unnecessary TAO_HAS_CORBA_MESSAGING Guard.
 
-	* tao/ORB_Core.i: 
-	* tao/ORB_Core.cpp (stubless_relative_roundtrip_timeout): 
-	  Added the TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY adn
-	  TAO_HAS_SYNC_SCOPE_POLICY guards around the related functions.
-	
-	* tao/Messaging_Policy_i.h: 
-	  Added the missing TAO_HAS_CORBA_MESSAGING Guard around the
-	  class.
-	
+        * tao/Stub.h (TAO_Stub):
+        * tao/Stub.cpp (buffering_constraint):
+
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp (stubless_relative_roundtrip_timeout):
+          Added the TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY adn
+          TAO_HAS_SYNC_SCOPE_POLICY guards around the related functions.
+
+        * tao/Messaging_Policy_i.h:
+          Added the missing TAO_HAS_CORBA_MESSAGING Guard around the
+          class.
+
 
 Tue Oct 31 18:50:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.cpp:
 
-	  Removed unused arguments in the no-op definitions
-	  of the base class functions.
+          Removed unused arguments in the no-op definitions
+          of the base class functions.
 
 Tue Oct 31 18:43:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	* tao/Invocation.h:
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
 
-	  Added TAO_HAS_MINIMUM_CORBA == 0 guards around the
-	  declaration and definition of the version of invoke()
-	  that takes an ExceptionList. This version is used only
-	  by DII. Thanks to Priyanka for reporting this problem,
-	  which occurs in minimum CORBA builds.
+          Added TAO_HAS_MINIMUM_CORBA == 0 guards around the
+          declaration and definition of the version of invoke()
+          that takes an ExceptionList. This version is used only
+          by DII. Thanks to Priyanka for reporting this problem,
+          which occurs in minimum CORBA builds.
 
 Tue Oct 31 17:55:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* rules.tao.GNU:
+        * rules.tao.GNU:
 
-	  Added variable TAO_DYNAMIC_LIBS, set to
-	  -lTAO_DynamicInterface, and used it in the
-	  following Makefiles, which all use DII and/or DSI
-	  code.
+          Added variable TAO_DYNAMIC_LIBS, set to
+          -lTAO_DynamicInterface, and used it in the
+          following Makefiles, which all use DII and/or DSI
+          code.
 
-	* examples/POA/DSI/Makefile:
-	* performance-tests/Cubit/TAO/DII_Cubit/Makefile:
-	* performance-tests/Latency/Makefile:
-	* tests/DSI_Gateway/Makefile:
-	* tests/Param_Test/Makefile:
+        * examples/POA/DSI/Makefile:
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+        * performance-tests/Latency/Makefile:
+        * tests/DSI_Gateway/Makefile:
+        * tests/Param_Test/Makefile:
 
 Tue Oct 31 14:53:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -21,6 +21,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 all: tao_idl
 
+ifeq ($(static_libs_only),)
+  override static_libs_only=0
+endif
+
 ifeq ($(static_libs_only),0)
 
 tao_idl: libTAO_IDL_FE_DLL.$(SOEXT) libTAO_IDL_BE_DLL.$(SOEXT)

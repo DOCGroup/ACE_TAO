@@ -22,10 +22,8 @@ ACE_RCSID(EC_Mcast, EC_Mcast, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_PushConsumer_Adapter<ECM_Supplier>;
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX,int>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_PushConsumer_Adapter<ECM_Supplier>
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX,int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ECM_Driver::ECM_Driver (void)
