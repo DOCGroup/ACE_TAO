@@ -1,3 +1,9 @@
+Tue Dec 30 10:00:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+
+	  Fixed typos in the mpc files.
+
 Tue Dec 30 09:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
