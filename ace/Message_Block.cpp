@@ -224,7 +224,7 @@ ACE_Message_Block::total_size (void) const
        temp != 0;
        temp = temp->cont ())
     s += temp->size ();
-  
+
   return s;
 }
 
@@ -713,10 +713,12 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
 
   // We will now commit suicide: this object *must* have come from the
   // allocator given.
-  if(this->message_block_allocator_ == 0)
+  if (this->message_block_allocator_ == 0)
     delete this;
   else
-    ACE_DES_FREE(this,message_block_allocator_->free,ACE_Message_Block);
+    ACE_DES_FREE (this,
+                  message_block_allocator_->free,
+                  ACE_Message_Block);
 
   return result;
 }
