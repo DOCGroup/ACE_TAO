@@ -1,19 +1,31 @@
+Thu May 20 09:42:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h (fcntl): changed type of last argument from int to
+          long, to permit safer casting from pointer types.
+
+        * ace/OS.i (flock_*): use ACE_OS::fcntl instead of ::fcntl.
+
+        * ace/OS.cpp (ftruncate): use ACE_OS::fcntl instead of ::fcntl.
+
+        Thanks to Joe Golio <Joe.Golio@xylan.com> for reporting that
+        these functions weren't using ACE_OS::fcntl.
+
 Wed May 19 23:50:18 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* ace/TkReactor.{h,cpp}: 
-	* ace/Makefile:
-	  Added a new reactor implementation based on the Tcl/Tk Event
-	  loop and event handling mechanism.
-	
-	* ace/tests/TkReactor_Test.{cpp,tcl}:
-	* ace/tests/Makefile:
-	  The Tk Reactor test and the tcl script for the GUI. This is
-	  similar to the XtReactor_Test. 
+        * ace/TkReactor.{h,cpp}:
+        * ace/Makefile:
+          Added a new reactor implementation based on the Tcl/Tk Event
+          loop and event handling mechanism.
 
-	* ace/include/makeinclude/wrapper_macros.GNU:
-	* ace/include/makeinclude/platform_sunos5_sunc++.GNU
-	  Added changes to Makefile flags for XtReactor.
-		
+        * ace/tests/TkReactor_Test.{cpp,tcl}:
+        * ace/tests/Makefile:
+          The Tk Reactor test and the tcl script for the GUI. This is
+          similar to the XtReactor_Test.
+
+        * ace/include/makeinclude/wrapper_macros.GNU:
+        * ace/include/makeinclude/platform_sunos5_sunc++.GNU
+          Added changes to Makefile flags for XtReactor.
+
 Wed May 19 21:56:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Queue.h: fixed typo in comment: interrupt.
