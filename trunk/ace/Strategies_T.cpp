@@ -238,7 +238,6 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
 							     void *arg)
 {
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler");
-  ACE_UNUSED_ARG (arg);
 
   int result = 0;
 
@@ -253,7 +252,7 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
     result = -1;
 
-  if (result == 0 && svc_handler->open ((void *) this) == -1)
+  if (result == 0 && svc_handler->open (arg) == -1)
     result = -1;
 
   if (result == -1)
@@ -350,7 +349,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
       // This maybe too harsh
       // if (!ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK))
       // goto failure;
-      if (svc_handler->open ((void *) this) != -1)
+      if (svc_handler->open (arg) != -1)
         return 0;
       else
         result = -1;
