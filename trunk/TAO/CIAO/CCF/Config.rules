@@ -1,0 +1,8 @@
+# file      : Config.rules
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $id$
+
+# Please provide correct values for your site:
+#
+BOOST_ROOT   ?=
+UTILITY_ROOT ?=

@@ -1,0 +1,32 @@
+# file      : CCF/IDL3/Makefile.archive
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $id$
+
+root = ../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Archive.pre.rules)
+
+cxx_translation_units := LexicalAnalyzer.cpp Parser.cpp
+
+translated_units := SyntaxTree/Component.o  \
+                    SyntaxTree/EventType.o  \
+                    SyntaxTree/Home.o       \
+                    SyntaxTree/Operation.o
+
+
+translated_units += Traversal/Component.o  \
+                    Traversal/EventType.o  \
+                    Traversal/Home.o       \
+                    Traversal/Operation.o
+
+module_base           := IDL3
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Archive.post.rules)

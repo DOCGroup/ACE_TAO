@@ -1,0 +1,40 @@
+# file      : CCF/IDL2/Makefile.archive
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $id$
+
+root = ../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Archive.pre.rules)
+
+
+cxx_translation_units := LexicalAnalyzer.cpp Parser.cpp
+
+
+translated_units := SyntaxTree/BuiltIn.o      \
+                    SyntaxTree/Elements.o     \
+                    SyntaxTree/Interface.o    \
+                    SyntaxTree/Module.o       \
+                    SyntaxTree/Operation.o    \
+                    SyntaxTree/Translation.o  \
+                    SyntaxTree/ValueType.o
+
+translated_units += Traversal/BuiltIn.o       \
+                    Traversal/Elements.o      \
+                    Traversal/Interface.o     \
+                    Traversal/Module.o        \
+                    Traversal/Operation.o     \
+                    Traversal/Translation.o
+
+translated_units += SemanticAction/Operation.o
+
+module_base           := IDL2
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Archive.post.rules)
