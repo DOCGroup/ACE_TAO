@@ -20,7 +20,6 @@
 #include "ace/OS.h"
 #include <iostream.h>
 
-
 TAO_Trader_Base::TAO_Trader_Base (void)
   : trading_components_ (*this),
     import_attributes_ (*this),
