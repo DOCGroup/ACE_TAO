@@ -1,3 +1,9 @@
+Sun Apr 11 18:20:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO/examples/POA/DSI/DSI.DSW:
+
+	  Removed this from the repo.
+
 Sat Apr 10 23:39:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* */*.ds[p,w]:
