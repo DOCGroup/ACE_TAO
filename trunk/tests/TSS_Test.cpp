@@ -71,6 +71,8 @@ worker (void *c)
   int count = int (c);
 #endif /* ! ACE_HAS_64BIT_LONGS */
 
+  ACE_DEBUG ((LM_DEBUG, "(%t) worker, iterations = %d\n", count));
+
   ACE_thread_key_t key = ACE_OS::NULL_key;
   int *ip = 0;
 
