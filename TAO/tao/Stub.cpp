@@ -199,10 +199,10 @@ TAO_Stub::hash (CORBA::ULong max,
                 ACE_TEXT ("(%P|%t) hash called on a null profile\n")));
 
   ACE_THROW_RETURN (CORBA::INTERNAL (
-                                     CORBA_SystemException::_tao_minor_code (
-                                                                             TAO_DEFAULT_MINOR_CODE,
-                                                                             0),
-                                     CORBA::COMPLETED_NO),
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        0),
+                      CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -332,7 +332,6 @@ TAO_Stub::parse_policies (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   CORBA::ULong length = policy_list->length ();
-  CORBA::ULong policy_type = 0;
 
   // @@ Priyanka The code implemented in this methods doesn't do what
   //    it is supposed to. I reverted your change for the time being.
@@ -361,7 +360,10 @@ CORBA::Policy *
 TAO_Stub::exposed_priority_model (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!this->are_policies_parsed_)
-    this->parse_policies (ACE_TRY_ENV);
+    {
+      this->parse_policies (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   return CORBA::Policy::_duplicate (this->priority_model_policy_);
 }
@@ -376,7 +378,10 @@ CORBA::Policy *
 TAO_Stub::exposed_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!this->are_policies_parsed_)
-    this->parse_policies (ACE_TRY_ENV);
+    {
+      this->parse_policies (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   return CORBA::Policy::_duplicate (this->priority_banded_connection_policy_);
 }
@@ -392,7 +397,10 @@ CORBA::Policy *
 TAO_Stub::exposed_client_protocol (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!this->are_policies_parsed_)
-    this->parse_policies (ACE_TRY_ENV);
+    {
+      this->parse_policies (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   return CORBA::Policy::_duplicate (this->client_protocol_policy_);
 }
@@ -558,10 +566,11 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
       //    CORBA::INV_Policy (). So, in here, I am not checking the
       //    CORBA::Environment variable, but checking on the value of
       //    type_value to throw the right exception. - Priyanka
-      this->orb_core_->get_protocols_hooks ()->validate_policy_type (slot,
-                                                                     type_value,
-                                                                     ACE_TRY_ENV);
-      //ACE_CHECK;
+      this->orb_core_->get_protocols_hooks ()->validate_policy_type (
+         slot,
+         type_value,
+         ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       if (type_value == 1 || type_value == 4)
         ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
@@ -574,7 +583,8 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   // Notice the use of an explicit constructor....
-  auto_ptr<TAO_Policy_Manager_Impl> policy_manager (new TAO_Policy_Manager_Impl);
+  auto_ptr<TAO_Policy_Manager_Impl> policy_manager (
+    new TAO_Policy_Manager_Impl);
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
@@ -595,6 +605,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
       policy_manager->copy_from (this->policies_,
                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+
       policy_manager->set_policy_overrides (policies,
                                             set_add,
                                             ACE_TRY_ENV);
@@ -954,6 +965,7 @@ TAO_Stub::effective_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
   // Get the value from the ior.
   CORBA::Policy_var exposed =
     this->exposed_priority_banded_connection (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
@@ -964,8 +976,8 @@ TAO_Stub::effective_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::Policy_var policy =
     this->orb_core_->get_protocols_hooks ()->
-    effective_priority_banded_connection_hook (override,
-                                               exposed,
+    effective_priority_banded_connection_hook (override.in (),
+                                               exposed.in (),
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -982,6 +994,7 @@ TAO_Stub::effective_client_protocol (CORBA::Environment &ACE_TRY_ENV)
   // Get the value from the ior.
   CORBA::Policy_var exposed =
     this->exposed_client_protocol (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
