@@ -75,6 +75,9 @@ public:
   virtual int visit_union (be_union *node);
   // visit union type
 
+  virtual int visit_valuetype (be_valuetype *node);
+  // visit valuetype
+
 };
 
 class be_visitor_cdr_op_field_decl : public be_visitor_scope
