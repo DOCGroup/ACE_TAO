@@ -2,6 +2,7 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "tao/qt_resource_loader.h"
 
 ACE_RCSID(QtTests, client, "$Id$")
 
@@ -11,7 +12,7 @@ int
 main (int argc, char *argv[])
 {
   QApplication app (argc, argv);
-  TAO_QtResource_Factory::set_context (&app);
+  TAO_QtResource_Loader qt_resources( &app );
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
