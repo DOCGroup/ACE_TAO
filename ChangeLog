@@ -1,3 +1,13 @@
+Tue Dec  9 15:51:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          When ACE_Log_Msg::LOGGER or ACE_Log_Msg::SYSLOG is passed as
+          flags, make sure the correct bit is set in flags_. This fixes
+          the problem reported by A. Kleibeuker
+          <kleibeuk@natlab.research.philips.com> that CORBA::ORB_init()
+          fails after ACE_Log_Msg::SYSLOG is passed to the
+          ACE_Log_Msg->open() call.
+
 Tue Dec  9 09:28:49 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyEditor.pm:
