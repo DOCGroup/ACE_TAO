@@ -208,9 +208,11 @@ spawn (void)
 	{
 	case -1:
 	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
-	  exit (-1);
+	  /* NOTREACHED */
 	case 0: 
 	  client (&server_addr);
+	  exit (0);
+	  /* NOTREACHED */
 	default:
 	  server ((void *) &peer_acceptor);
 	  ACE_OS::wait ();
