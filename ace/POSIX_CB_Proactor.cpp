@@ -5,6 +5,7 @@
 
 #if defined (ACE_HAS_AIO_CALLS) && !defined(__sun) && !defined(__Lynx__)
 
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
@@ -79,7 +80,9 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   result->aio_sigevent.sigev_notify = SIGEV_CALLBACK;
   result->aio_sigevent.sigev_func   = aio_completion_func ;
 #else
-  result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
+  result->aio_sigevent.sigev_notify = SIGEV_THREAD;
+  result->aio_sigevent.sigev_notify_function = aio_completion_func;
+  result->aio_sigevent.sigev_notify_attributes = 0;
 #endif /* __sgi */
 
 #if defined (__FreeBSD__)
@@ -106,7 +109,7 @@ ACE_POSIX_CB_Proactor::handle_events_i (unsigned long milli_seconds)
     {
       // Wait for <milli_seconds> amount of time.
       ACE_Time_Value abs_time = ACE_OS::gettimeofday ()
-                              + ACE_Time_Value ( milli_seconds);
+                              + ACE_Time_Value (0, milli_seconds * 1000);
 
       result_wait = this->sema_.acquire(abs_time);
     }
