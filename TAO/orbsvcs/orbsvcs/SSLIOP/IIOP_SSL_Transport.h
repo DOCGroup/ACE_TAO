@@ -41,7 +41,7 @@ class TAO_Resume_Handle;
  * sure that SSL session state from a previous connection is not
  * associated with the non-SSL connection handled by this handler.
  *
- * However, this class overrides the handle_input_i() method to
+ * However, this class overrides the handle_input() method to
  * invalidate the current TSS SSL state during a standard IIOP
  * (insecure) upcall.  This prevents SSL session state from a previous
  * SSL connection from being associated with non-SSL connections
@@ -70,9 +70,9 @@ public:
    * Please check the documentation in "tao/Transport.h" for more
    * details.
    */
-  virtual int handle_input_i (TAO_Resume_Handle &rh,
-                              ACE_Time_Value *max_wait_time = 0,
-                              int block = 0);
+  virtual int handle_input (TAO_Resume_Handle &rh,
+                            ACE_Time_Value *max_wait_time = 0,
+                            int block = 0);
 protected:
 
   /// Reference to the SSLIOP::Current object (downcast to gain access

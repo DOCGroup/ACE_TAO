@@ -20,23 +20,20 @@ TAO_Connection_Handler::transport (void)
   return this->transport_;
 }
 
-#if 0
-// NOTE: Not used
 ACE_INLINE int
-TAO_Connection_Handler::is_connect_complete (void) const
+TAO_Connection_Handler::is_closed (void)
 {
-  return this->successful () || this->error_detected ();
+  return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
 
 ACE_INLINE int
-TAO_Connection_Handler::is_connect_successful (void) const
+TAO_Connection_Handler::is_open (void)
 {
-  return (this->error_detected () == 0);
+  return this->state_ == TAO_LF_Event::LFS_SUCCESS;
 }
-#endif /*if 0*/
 
 ACE_INLINE int
-TAO_Connection_Handler::is_finalized (void)
+TAO_Connection_Handler::is_connecting (void)
 {
-  return this->is_state_final ();
+  return this->state_ == TAO_LF_Event::LFS_CONNECTION_WAIT;
 }

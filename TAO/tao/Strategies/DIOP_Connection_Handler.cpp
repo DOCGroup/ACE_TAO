@@ -34,7 +34,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (this->orb_core () != 0);
+  ACE_ASSERT (0);
 }
 
 
@@ -52,12 +52,12 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
-  TAO_Transport::release (specific_transport);
 }
 
 
 TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 {
+  delete this->transport ();
   this->udp_socket_.close ();
 }
 
@@ -166,20 +166,57 @@ TAO_DIOP_Connection_Handler::close_connection (void)
 int
 TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_eh (h, this);
+  int result =
+    this->handle_input_eh (h, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
 TAO_DIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  return this->handle_output_eh (handle, this);
+  int result =
+    this->handle_output_eh (handle, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
-TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
-                                           ACE_Reactor_Mask rm)
+TAO_DIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+                                             const void *)
 {
-  return this->handle_close_eh (handle, rm, this);
+  // We don't use this upcall from the Reactor.  However, we should
+  // override this since the base class returns -1 which will result
+  // in handle_close() getting called.
+  return 0;
+}
+
+int
+TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE,
+                                           ACE_Reactor_Mask)
+{
+  ACE_ASSERT (0);
+  return 0;
+}
+
+int
+TAO_DIOP_Connection_Handler::close (u_long)
+{
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->transport ()->remove_reference ();
+  return 0;
 }
 
 int
@@ -187,46 +224,6 @@ TAO_DIOP_Connection_Handler::release_os_resources (void)
 {
   return this->peer().close ();
 }
-
-// @@ Frank: Hopefully this isn't needed
-/*
-int
-TAO_DIOP_Connection_Handler::process_listen_point_list (
-    DIOP::ListenPointList &listen_list)
-{
-  // Get the size of the list
-  CORBA::ULong len = listen_list.length ();
-
-  for (CORBA::ULong i = 0; i < len; ++ i)
-    {
-      DIOP::ListenPoint listen_point = listen_list[i];
-      ACE_INET_Addr addr (listen_point.port,
-                          listen_point.host.in ());
-
-
-      // Construct an  DIOP_Endpoint object
-      TAO_DIOP_Endpoint endpoint (addr,
-                                  0);
-
-      // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
-
-      // Mark the connection as bidirectional
-      prop.set_bidir_flag (1);
-
-      // The property for this handler has changed. Recache the
-      // handler with this property
-      int retval = this->transport ()->recache_transport (&prop);
-      if (retval == -1)
-        return retval;
-
-      // Make the handler idle and ready for use
-      this->transport ()->make_idle ();
-    }
-
-  return 0;
-}
-*/
 
 // ****************************************************************
 

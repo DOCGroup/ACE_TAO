@@ -69,7 +69,7 @@ HTTP_Header_Processing_Strategy::execute (void)
           int status_index = line.find ("HTTP", 0);
           ACE_CString status = line.substring (status_index + 9, //HTTP/1.1 200
                                                3);
-                  
+
            URL_Status *url_status = 0;
           ACE_NEW_RETURN (url_status,
                           URL_Status,
@@ -92,7 +92,7 @@ HTTP_Header_Processing_Strategy::execute (void)
         }
     }
   return 0;
-  
+
 }
 
 HTML_Body_Validation_Strategy::HTML_Body_Validation_Strategy (URL &url,
@@ -109,7 +109,7 @@ HTML_Body_Validation_Strategy::execute (void)
   char host_name_buf[BUFSIZ + 1];
   ACE_CString host_name (host_name_buf);
   host_name.set (url_.url_addr ().get_host_name (),1);
-                          
+
   // All to facilitate relative paths
   char temp[BUFSIZ + 1];
   ACE_CString prev_location (temp);
@@ -117,19 +117,19 @@ HTML_Body_Validation_Strategy::execute (void)
   prev_location.set (this->url_.url_addr ().get_path_name (),
                      ACE_OS::strlen (this->url_.url_addr ().get_path_name ()),
                      1);
-  int index = prev_location.rfind ('/', prev_location.length ()); 
+  int index = prev_location.rfind ('/', prev_location.length ());
   ACE_CString str = prev_location.substring (0, index + 1);
   prev_location.set (str.c_str (), 1);
-  
+
   // Note: prev_location always ends with '/'
   if (prev_location[0] != '/')
-    prev_location = "/" + prev_location; 
+    prev_location = "/" + prev_location;
 
   // Build the url portion which can be attached to teh relative paths.
   prev_location = host_name + prev_location;
-  
+
   char url_string[BUFSIZ + 1];
-  ACE_CString url (url_string); 
+  ACE_CString url (url_string);
 
   while (this->iterator_.next (url) > 0)
     {
@@ -144,15 +144,15 @@ HTML_Body_Validation_Strategy::execute (void)
            }
           if (url[0] == '.' && url[1] == '/')
             url.set (&url[2], 1);
-          
+
           url = prev_location + url;
         }
-      else 
+      else
         url.set (&url[7], 1);
       // Double slash at the end works!e.g www.cs.wustl.edu/~kirthika//
-      if (url.find (".html") < 0) 
-        url = url + "/";          
-      
+      if (url.find (".html") < 0)
+        url = url + "/";
+
       // Create the new URL address.
       ACE_URL_Addr *url_addr;
       ACE_NEW_RETURN (url_addr,
@@ -171,7 +171,7 @@ HTML_Body_Validation_Strategy::execute (void)
           ACE_NEW_RETURN (url_command,
                           URL_Command (http_url),
                           0);
-          
+
           OPTIONS::instance ()->command_processor ()->insert (url_command);
         }
     }
@@ -203,7 +203,7 @@ URL_Validation_Visitation_Strategy_Factory::make_header_strategy (URL_Iterator &
 {
   URL_Processing_Strategy *ps;
   ACE_NEW_RETURN (ps,
-                  HTTP_Header_Processing_Strategy (*this->url_, 
+                  HTTP_Header_Processing_Strategy (*this->url_,
                                                    iterator),
                   0);
   return ps;
@@ -256,15 +256,10 @@ template class ACE_Creation_Strategy<Client_Svc_Handler>;
 template class ACE_Hash_Map_Entry<ACE_ADDR, Client_Svc_Handler *>;
 template class ACE_Hash<ACE_ADDR>;
 template class ACE_Equal_To<ACE_ADDR>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>;
 template class ACE_Recycling_Strategy<Client_Svc_Handler>;
 template class ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<Client_Svc_Handler>;
+template class ACE_NonBlocking_Connect_Handler<Client_Svc_Handler>;
 
 
 template class ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>;
@@ -349,15 +344,10 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 #pragma instantiate ACE_Hash_Map_Entry<ACE_ADDR, Client_Svc_Handler *>
 #pragma instantiate ACE_Hash<ACE_ADDR>
 #pragma instantiate ACE_Equal_To<ACE_ADDR>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>
 #pragma instantiate ACE_Recycling_Strategy<Client_Svc_Handler>
 #pragma instantiate ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<Client_Svc_Handler>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Client_Svc_Handler>
 
 #pragma instantiate ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>
 #pragma instantiate ACE_Reference_Pair<ACE_ADDR, Client_Svc_Handler *>
@@ -423,7 +413,7 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 URL_Validation_Visitor::URL_Validation_Visitor (void)
 {
-  ACE_NEW (this->caching_connect_strategy_, 
+  ACE_NEW (this->caching_connect_strategy_,
            CACHED_CONNECT_STRATEGY (this->caching_strategy_));
   ACE_NEW (this->strat_connector_,
            STRATEGY_CONNECTOR(0,
@@ -435,14 +425,14 @@ URL_Validation_Visitor::URL_Validation_Visitor (void)
                 "%p %s\n"
                 "strategy connector creation failed"));
 
-  
+
 }
 
 URL_Validation_Visitor::~URL_Validation_Visitor (void)
 {
   this->strat_connector_ = 0;
   if (this->caching_connect_strategy_ != 0)
-    delete this->caching_connect_strategy_;	
+    delete this->caching_connect_strategy_;
 }
 
 URL_Validation_Visitor::URL_CACHE &
@@ -462,7 +452,7 @@ URL_Validation_Visitor::in_cache (const ACE_URL_Addr &url_addr)
                   "status %d for URL %s (cached)\n",
                   reply_status.status (),
                   url_addr.addr_to_string (0)));
-      
+
       // Invalid status.
       if (reply_status.status () != 200)
         return -1;
@@ -475,11 +465,11 @@ URL_Validation_Visitor::in_cache (const ACE_URL_Addr &url_addr)
 
 URL_Visitation_Strategy_Factory *
 URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
-{ 
+{
   // Since this is HTTP 1.1 we'll need to establish a connection
   // only once. Trying for relative paths.
 
-  if (url.stream ().open (this->strat_connector_, 
+  if (url.stream ().open (this->strat_connector_,
                           url.url_addr ()) == -1)
     return 0;
 
@@ -529,13 +519,13 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
   if (result == 0)
     {
       Auto_Destroyer <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
-       
+
       if (*vs == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_visitation_strategy_factory"),
                           -1);
-  
+
       Auto_Destroyer <URL_Iterator> ihs (vs->make_header_iterator ());
       if (*ihs == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -552,12 +542,12 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
       if (phs_result == -1)
         ACE_DEBUG ((LM_DEBUG,
                     "Invalid "));
-  
+
       ACE_DEBUG ((LM_DEBUG,
                   "URL with status %d %s\n",
                   http_url.reply_status ().status (),
                   http_url.url_addr().addr_to_string (0)));
-  
+
       // Store the http url in the cache.
       if (this->url_cache ().bind (http_url.url_addr (),
                                    http_url.reply_status ()) != 0)
@@ -568,25 +558,25 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
       // Since it is invalid dont go further.
       if (phs_result == -1)
         return 0;
-      
+
       // Get back if the recurse option isnt set.
       if (OPTIONS::instance ()->recurse () != 1)
         return 0;
-  
+
       Auto_Destroyer <URL_Iterator> is (vs->make_body_iterator ());
       if (*is == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_body_iterator"),
                           -1);
-  
+
       Auto_Destroyer <URL_Processing_Strategy> ps (vs->make_body_strategy (**is));
       if (*ps == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_body_strategy"),
                           -1);
-  
+
       if (ps->execute () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
@@ -678,7 +668,7 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
                   URL_Download_Visitation_Strategy_Factory (&url),
                   0);
   return vs;
- 
+
 }
 
 int
@@ -721,5 +711,3 @@ URL_Download_Visitor::visit (HTTP_URL &http_url)
                       -1);
   return 0;
 }
-
-

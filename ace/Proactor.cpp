@@ -164,13 +164,42 @@ ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall (void)
 }
 
 int
-ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
+ACE_Proactor_Handle_Timeout_Upcall::registration (TIMER_QUEUE &,
+                                                  ACE_Handler *,
+                                                  const void *)
+{
+  return 0;
+}
+
+int
+ACE_Proactor_Handle_Timeout_Upcall::preinvoke (TIMER_QUEUE &,
+                                               ACE_Handler *,
+                                               const void *,
+                                               int,
+                                               const ACE_Time_Value &,
+                                               const void *&)
+{
+  return 0;
+}
+
+int
+ACE_Proactor_Handle_Timeout_Upcall::postinvoke (TIMER_QUEUE &,
+                                                ACE_Handler *,
+                                                const void *,
+                                                int,
+                                                const ACE_Time_Value &,
+                                                const void *)
+{
+  return 0;
+}
+
+int
+ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &,
                                              ACE_Handler *handler,
                                              const void *act,
+                                             int,
                                              const ACE_Time_Value &time)
 {
-  ACE_UNUSED_ARG (timer_queue);
-
   if (this->proactor_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
@@ -201,25 +230,30 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
 }
 
 int
-ACE_Proactor_Handle_Timeout_Upcall::cancellation (TIMER_QUEUE &timer_queue,
-                                                  ACE_Handler *handler)
+ACE_Proactor_Handle_Timeout_Upcall::cancel_type (TIMER_QUEUE &,
+                                                 ACE_Handler *,
+                                                 int,
+                                                 int &)
 {
-  ACE_UNUSED_ARG (timer_queue);
-  ACE_UNUSED_ARG (handler);
-
   // Do nothing
   return 0;
 }
 
 int
-ACE_Proactor_Handle_Timeout_Upcall::deletion (TIMER_QUEUE &timer_queue,
-                                              ACE_Handler *handler,
-                                              const void *arg)
+ACE_Proactor_Handle_Timeout_Upcall::cancel_timer (TIMER_QUEUE &,
+                                                  ACE_Handler *,
+                                                  int,
+                                                  int)
 {
-  ACE_UNUSED_ARG (timer_queue);
-  ACE_UNUSED_ARG (handler);
-  ACE_UNUSED_ARG (arg);
+  // Do nothing
+  return 0;
+}
 
+int
+ACE_Proactor_Handle_Timeout_Upcall::deletion (TIMER_QUEUE &,
+                                              ACE_Handler *,
+                                              const void *)
+{
   // Do nothing
   return 0;
 }

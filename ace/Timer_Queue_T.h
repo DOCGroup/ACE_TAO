@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Test_and_Set.h"
+#include "ace/Event_Handler.h"
 
 /**
  * @class ACE_Timer_Node_Dispatch_Info_T
@@ -39,6 +39,9 @@ public:
 
   /// Asynchronous completion token associated with the timer.
   const void *act_;
+
+  /// Flag to check if the timer is recurring.
+  int recurring_timer_;
 };
 
 /**
@@ -226,9 +229,9 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const = 0;
 
   /**
-   * Schedule <type> that will expire at <future_time>,
-   * which is specified in absolute time.  If it expires then <act> is
-   * passed in as the value to the <functor>.  If <interval> is != to
+   * Schedule <type> that will expire at <future_time>, which is
+   * specified in absolute time.  If it expires then <act> is passed
+   * in as the value to the <functor>.  If <interval> is != to
    * <ACE_Time_Value::zero> then it is used to reschedule the <type>
    * automatically, using relative time to the current <gettimeofday>.
    * This method returns a <timer_id> that uniquely identifies the the
@@ -243,7 +246,7 @@ public:
   virtual long schedule (const TYPE &type,
                          const void *act,
                          const ACE_Time_Value &future_time,
-                         const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /**
    * Resets the interval of the timer represented by <timer_id> to
@@ -291,8 +294,8 @@ public:
    * there is a node whose value <= <cur_time> else returns a 0.
    *
    */
-  int dispatch_info (const ACE_Time_Value &current_time,
-                     ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
+  virtual int dispatch_info (const ACE_Time_Value &current_time,
+                             ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
   /**
    * Run the <functor> for all timers whose values are <=
@@ -346,7 +349,7 @@ public:
 
   /// Determine the next event to timeout.  Returns <max> if there are
   /// no pending timers or if all pending timers are longer than max.
-  /// This method acquires a lock internally since it modifies internal state. 
+  /// This method acquires a lock internally since it modifies internal state.
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
 
   /**
@@ -354,7 +357,7 @@ public:
    * no pending timers or if all pending timers are longer than max.
    * <the_timeout> should be a pointer to storage for the timeout value,
    * and this value is also returned.  This method does not acquire a
-   * lock internally since it doesn't modify internal state.  If you 
+   * lock internally since it doesn't modify internal state.  If you
    * need to call this method when the queue is being modified
    * concurrently, however, you should make sure to acquire the <mutex()>
    * externally before making the call.
@@ -390,14 +393,28 @@ public:
   /// after it is returned by a method like <remove_first>.
   virtual void return_node (ACE_Timer_Node_T<TYPE> *);
 
+  /// This method will call the preinvoke() on <functor>.
+  void preinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+                  const ACE_Time_Value &cur_time,
+                  const void *&upcall_act);
 
-  /// This method will call the <functor> with the <type>, <act> and
-  /// <cur_time>
-  /* virtual */ void upcall (TYPE &type,
-                       const void *act,
-                       const ACE_Time_Value &cur_time);
+  /// This method will call the timeout() on <functor>.
+  void upcall (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+               const ACE_Time_Value &cur_time);
+
+  /// This method will call the postinvoke() on <functor>.
+  void postinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+                   const ACE_Time_Value &cur_time,
+                   const void *upcall_act);
 
 protected:
+
+  /// Schedule a timer.
+  virtual long schedule_i (const TYPE &type,
+                           const void *act,
+                           const ACE_Time_Value &future_time,
+                           const ACE_Time_Value &interval) = 0;
+
   /// Reschedule an "interval" <ACE_Timer_Node>.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *) = 0;
 
@@ -408,8 +425,8 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
   /// Non-locking version of dispatch_info ()
-  int dispatch_info_i (const ACE_Time_Value &current_time,
-                       ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
+  virtual int dispatch_info_i (const ACE_Time_Value &current_time,
+                               ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
   /// Synchronization variable for <ACE_Timer_Queue>.
   /// NOTE: the right name would be lock_, but HP/C++ will choke on that!
@@ -467,22 +484,58 @@ public:
   /// Destructor.
   ~ACE_Event_Handler_Handle_Timeout_Upcall (void);
 
-  /// This method is called when the timer expires
+  /// This method is called when a timer is registered.
+  int registration (TIMER_QUEUE &timer_queue,
+                    ACE_Event_Handler *handler,
+                    const void *arg);
+
+  /// This method is called before the timer expires.
+  int preinvoke (TIMER_QUEUE &timer_queue,
+                 ACE_Event_Handler *handler,
+                 const void *arg,
+                 int recurring_timer,
+                 const ACE_Time_Value &cur_time,
+                 const void *&upcall_act);
+
+  /// This method is called when the timer expires.
   int timeout (TIMER_QUEUE &timer_queue,
                ACE_Event_Handler *handler,
                const void *arg,
+               int recurring_timer,
                const ACE_Time_Value &cur_time);
 
-  /// This method is called when the timer is cancelled
-  int cancellation (TIMER_QUEUE &timer_queue,
-                    ACE_Event_Handler *handler);
+  /// This method is called after the timer expires.
+  int postinvoke (TIMER_QUEUE &timer_queue,
+                  ACE_Event_Handler *handler,
+                  const void *arg,
+                  int recurring_timer,
+                  const ACE_Time_Value &cur_time,
+                  const void *upcall_act);
+
+  /// This method is called when a handler is cancelled
+  int cancel_type (TIMER_QUEUE &timer_queue,
+                   ACE_Event_Handler *handler,
+                   int dont_call,
+                   int &requires_reference_counting);
+
+  /// This method is called when a timer is cancelled
+  int cancel_timer (TIMER_QUEUE &timer_queue,
+                    ACE_Event_Handler *handler,
+                    int dont_call,
+                    int requires_reference_counting);
 
   /// This method is called when the timer queue is destroyed and
   /// the timer is still contained in it
   int deletion (TIMER_QUEUE &timer_queue,
                 ACE_Event_Handler *handler,
                 const void *arg);
+
 private:
+
+  /// Flag indicating that reference counting is required for this
+  /// event handler upcall.
+  int requires_reference_counting_;
+
   // = Don't allow these operations for now.
   ACE_UNIMPLEMENTED_FUNC (ACE_Event_Handler_Handle_Timeout_Upcall (const ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK> &))

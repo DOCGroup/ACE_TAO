@@ -29,6 +29,9 @@ class ACE_Reactor_Impl;
 // declaration will not work
 #include "ace/Timer_Queue.h"
 
+// Contains the timer related interface for the Reactor.
+#include "ace/Reactor_Timer_Interface.h"
+
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
 
@@ -44,7 +47,7 @@ class ACE_Reactor_Impl;
  * its delegation/implementation class, e.g.,
  * <ACE_Select_Reactor> or <ACE_WFMO_Reactor>.
  */
-class ACE_Export ACE_Reactor
+class ACE_Export ACE_Reactor : public ACE_Reactor_Timer_Interface
 {
 public:
   /// Operations on the "ready" mask and the "dispatch" mask.
@@ -295,56 +298,98 @@ public:
   virtual int handle_events (ACE_Time_Value &max_wait_time);
   virtual int alertable_handle_events (ACE_Time_Value &max_wait_time);
 
-  // = Register and remove Handlers.
+  // = Register and remove handlers.
 
-  /// Register <event_handler> with <mask>.  The I/O handle will always
-  /// come from <get_handle> on the <event_handler>.
+  /**
+   * Register handler for I/O events.
+   *
+   * A handler can be associated with multiple handles. A handle
+   * cannot be associated with multiple handlers.
+   *
+   * The handle will come from ACE_Event_Handler::get_handle().
+   *
+   * Reactor will call ACE_Event_Handler::add_reference() for a new
+   * handler/handle pair.
+   *
+   * If this handler/handle pair has already been registered, any new
+   * masks specified will be added. In this case,
+   * ACE_Event_Handler::add_reference() will not be called.
+   *
+   * If the registered handler is currently suspended, it will remain
+   * suspended.  When the handler is resumed, it will have the
+   * existing masks plus any masks added through this call. Handlers
+   * do not have partial suspensions.
+   */
   virtual int register_handler (ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
-  /// Register <event_handler> with <mask>.  The I/O handle is provided
-  /// through the <io_handle> parameter.
+  /**
+   * Register handler for I/O events.
+   *
+   * Same as register_handler(ACE_Event_Handler*,ACE_Reactor_Mask),
+   * except handle is explicitly specified.
+   */
   virtual int register_handler (ACE_HANDLE io_handle,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
 #if defined (ACE_WIN32)
+
   /**
-   * Register an <event_handler> that will be notified when
-   * <event_handle> is signaled.  Since no event mask is passed
-   * through this interface, it is assumed that the <event_handle>
-   * being passed in is an event handle and not an I/O handle.
+   * Register handler for OS events.
    *
-   * Originally this interface was available for all platforms, but
-   * because ACE_HANDLE is an int on non-Win32 platforms, compilers
-   * are not able to tell the difference between
+   * Register an <event_handler> that will be notified when
+   * <event_handle> is signaled.
+   *
+   * Reactor will call ACE_Event_Handler::add_reference() for a new
+   * handler/handle pair.
+   *
+   * This interface is only available Win32 platforms because
+   * ACE_HANDLE is an int on non-Win32 platforms and compilers are not
+   * able to tell the difference between
    * register_handler(ACE_Event_Handler*,ACE_Reactor_Mask) and
-   * register_handler(ACE_Event_Handler*,ACE_HANDLE). Therefore, we
-   * have restricted this method to Win32 only.
+   * register_handler(ACE_Event_Handler*,ACE_HANDLE).
    */
   virtual int register_handler (ACE_Event_Handler *event_handler,
                                 ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
+
 #endif /* ACE_WIN32 */
 
   /**
-   * Register an <event_handler> that will be notified when
-   * <event_handle> is signaled.  <mask> specifies the network events
-   * that the <event_handler> is interested in.
+   * Register handler for I/O events.
+   *
+   * Similar to
+   * register_handler(ACE_HANDLE,ACE_Event_Handler*,ACE_Reactor_Mask),
+   * except that the user gets to specify the event handle that will
+   * be used for this registration.  This only applies to Reactors
+   * that use event handles for I/O registrations.
    */
   virtual int register_handler (ACE_HANDLE event_handle,
                                 ACE_HANDLE io_handle,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
-  /// Register <event_handler> with all the <handles> in the <Handle_Set>.
+  /**
+   * Register handler for multiple I/O events.
+   *
+   * Shorthand for calling
+   * register_handler(ACE_HANDLE,ACE_Event_Handler*,ACE_Reactor_Mask),
+   * multiple times for the same <event_handler> and <masks> but
+   * different <handles>.
+   */
   virtual int register_handler (const ACE_Handle_Set &handles,
                                 ACE_Event_Handler *event_handler,
-                                ACE_Reactor_Mask mask);
+                                ACE_Reactor_Mask masks);
 
   /**
+   * Register handler for signals.
+   *
    * Register <new_sh> to handle the signal <signum> using the
    * <new_disp>.  Returns the <old_sh> that was previously registered
    * (if any), along with the <old_disp> of the signal handler.
+   *
+   * Reactor will call ACE_Event_Handler::add_reference() on <new_sh>
+   * and ACE_Event_Handler::remove_reference() on <old_sh>.
    */
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
@@ -352,78 +397,129 @@ public:
                                 ACE_Event_Handler **old_sh = 0,
                                 ACE_Sig_Action *old_disp = 0);
 
-  /// Registers <new_sh> to handle a set of signals <sigset> using the
-  /// <new_disp>.
-  virtual int register_handler (const ACE_Sig_Set &sigset,
-                                ACE_Event_Handler *new_sh,
-                                ACE_Sig_Action *new_disp = 0);
-
   /**
-   * Removes <event_handler>.  Note that the I/O handle will be
-   * obtained using <get_handle> method of <event_handler> .  If
-   * <mask> includes <ACE_Event_Handler::DONT_CALL> then the
-   * <handle_close> method of the <event_handler> is not invoked.
+   * Register handler for multiple signals.
+   *
+   * Shorthand for calling
+   * register_handler(int,ACE_Event_Handler*,ACE_Sig_Action*,ACE_Event_Handler**,ACE_Sig_Action*)
+   * multiple times for the same <event_handler> and <sig_action> but
+   * different <signals>.
    */
-  virtual int remove_handler (ACE_Event_Handler *event_handler,
-                              ACE_Reactor_Mask mask);
+  virtual int register_handler (const ACE_Sig_Set &signals,
+                                ACE_Event_Handler *event_handler,
+                                ACE_Sig_Action *sig_action = 0);
 
   /**
-   * Removes the <ACE_Event_Handler> associated with <handle>.  If
-   * <mask> includes <ACE_Event_Handler::DONT_CALL> then the
-   * <handle_close> method of the associated <event_handler> is not
-   * invoked.
+   * Remove <masks> from <handle> registration.
+   *
+   * For I/O handles, <masks> are removed from the Reactor.  Unless
+   * <masks> includes <ACE_Event_Handler::DONT_CALL>,
+   * ACE_Event_Handler::handle_close() will be called with the <masks>
+   * that have been removed.  If all masks have been removed,
+   * ACE_Event_Handler::remove_reference() will be called.
+   *
+   * For OS handles, the <handle> is removed from the Reactor.  Unless
+   * <masks> includes <ACE_Event_Handler::DONT_CALL>,
+   * ACE_Event_Handler::handle_close() will be called with
+   * <ACE_Event_Handler::NULL_MASK>.
+   * ACE_Event_Handler::remove_reference() will also be called.
    */
   virtual int remove_handler (ACE_HANDLE handle,
-                              ACE_Reactor_Mask mask);
+                              ACE_Reactor_Mask masks);
 
   /**
-   * Removes all handles in <handle_set>.  If <mask> ==
-   * <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
-   * the associated <event_handler>s is not invoked.
+   * Remove <masks> from <event_handler> registration.
+   *
+   * Same as remove_handler(ACE_HANDLE,ACE_Reactor_Mask), except
+   * <handle> comes from ACE_Event_Handler::get_handle().
    */
-  virtual int remove_handler (const ACE_Handle_Set &handle_set,
-                              ACE_Reactor_Mask mask);
+  virtual int remove_handler (ACE_Event_Handler *event_handler,
+                              ACE_Reactor_Mask masks);
 
   /**
+   * Remove <masks> from multiple <handle> registrations.
+   *
+   * Shorthand for calling remove_handler(ACE_HANDLE,ACE_Reactor_Mask)
+   * multiple times for the same <masks> but different <handles>.
+   */
+  virtual int remove_handler (const ACE_Handle_Set &handles,
+                              ACE_Reactor_Mask masks);
+
+  /**
+   * Remove signal handler registration.
+   *
    * Remove the ACE_Event_Handler currently associated with <signum>.
    * Install the new disposition (if given) and return the previous
-   * disposition (if desired by the caller).  Returns 0 on success and
-   * -1 if <signum> is invalid.
+   * disposition (if desired by the caller).
+   *
+   * ACE_Event_Handler::handle_close() will be called with
+   * <ACE_Event_Handler::SIGNAL_MASK>.
+   * ACE_Event_Handler::remove_reference() will also be called.
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp,
                               ACE_Sig_Action *old_disp = 0,
                               int sigkey = -1);
 
-  /// Calls <remove_handler> for every signal in <sigset>.
+  /**
+   * Remove multiple signal handler registrations.
+   *
+   * Shorthand for calling
+   * remove_handler(int,ACE_Sig_Action*,ACE_Sig_Action*,int) multiple
+   * times for every signal in <sigset>.
+   */
   virtual int remove_handler (const ACE_Sig_Set &sigset);
 
   // = Suspend and resume Handlers.
 
-  /// Suspend <event_handler> temporarily.  Use
-  /// <ACE_Event_Handler::get_handle> to get the handle.
-  virtual int suspend_handler (ACE_Event_Handler *event_handler);
-
-  /// Suspend <handle> temporarily.
+  /**
+   * Suspend <handle> temporarily.
+   */
   virtual int suspend_handler (ACE_HANDLE handle);
 
-  /// Suspend all <handles> in handle set temporarily.
+  /**
+   * Suspend <event_handler> temporarily.
+   *
+   * Handle is obtained from ACE_Event_Handler::get_handle().
+   */
+  virtual int suspend_handler (ACE_Event_Handler *event_handler);
+
+  /**
+   * Suspend <handles> temporarily.
+   *
+   * Shorthand for calling suspend_handler(ACE_HANDLE) with multiple
+   * <handles>.
+   */
   virtual int suspend_handler (const ACE_Handle_Set &handles);
 
-  /// Suspend all <handles> temporarily.
+  /**
+   * Suspend all registered handles temporarily.
+   */
   virtual int suspend_handlers (void);
 
-  /// Resume <event_handler>. Use <ACE_Event_Handler::get_handle> to
-  /// get the handle.
-  virtual int resume_handler (ACE_Event_Handler *event_handler);
-
-  /// Resume <handle>.
+  /**
+   * Resume <handle>.
+   */
   virtual int resume_handler (ACE_HANDLE handle);
 
-  /// Resume all <handles> in handle set.
+  /**
+   * Resume <event_handler>.
+   *
+   * Handle is obtained from ACE_Event_Handler::get_handle().
+   */
+  virtual int resume_handler (ACE_Event_Handler *event_handler);
+
+  /**
+   * Resume <handles>.
+   *
+   * Shorthand for calling resume_handler(ACE_HANDLE) with multiple
+   * <handles>.
+   */
   virtual int resume_handler (const ACE_Handle_Set &handles);
 
-  /// Resume all <handles>.
+  /**
+   * Resume all registered handles.
+   */
   virtual int resume_handlers (void);
 
   /// Does the reactor allow the application to resume the handle on
@@ -435,12 +531,19 @@ public:
   // = Timer management.
 
   /**
-   * Schedule an ACE_Event_Handler that will expire after an amount
+   * Schedule a timer event.
+   *
+   * Schedule a timer event that will expire after an <delay> amount
    * of time.  The return value of this method, a timer_id value,
-   * uniquely identifies the event_handler in the ACE_Reactor's
-   * internal list of timers.
-   * This timer_id value can be used to cancel the timer
-   * with the cancel_timer() call.
+   * uniquely identifies the <event_handler> in the ACE_Reactor's
+   * internal list of timers.  This timer_id value can be used to
+   * cancel the timer with the cancel_timer() call.
+   *
+   * Reactor will call ACE_Event_Handler::add_reference() on the
+   * handler.  After the timeout occurs and
+   * ACE_Event_Handler::handle_timeout() has completed, the handler
+   * will be implicitly removed from the Reactor and
+   * ACE_Event_Handler::remove_reference() will be called.
    *
    * @see cancel_timer()
    * @see reset_timer_interval()
@@ -457,31 +560,52 @@ public:
                                const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /**
+   * Reset recurring timer interval.
+   *
    * Resets the interval of the timer represented by <timer_id> to
    * <interval>, which is specified in relative time to the current
    * <gettimeofday>.  If <interval> is equal to
    * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
+   *
+   * This change will not take effect until the next timeout.
    */
   virtual int reset_timer_interval (long timer_id,
                                     const ACE_Time_Value &interval);
 
-  /// Cancel all <Event_Handler>s that match the address of
-  /// <event_handler>.  Returns number of handlers cancelled.
-  virtual int cancel_timer (ACE_Event_Handler *event_handler,
-                            int dont_call_handle_close = 1);
-
   /**
-   * Cancel the single <Event_Handler> that matches the <timer_id>
-   * value, which was returned from the schedule method.  If arg is
-   * non-NULL then it will be set to point to the ``magic cookie''
-   * argument passed in when the Event_Handler was registered.  This
-   * makes it possible to free up the memory and avoid memory leaks.
-   * Returns 1 if cancellation succeeded and 0 if the <timer_id>
-   * wasn't found.
+   * Cancel timer.
+   *
+   * Cancel timer associated with <timer_id> that was returned from
+   * the schedule_timer() method.  If arg is non-NULL then it will be
+   * set to point to the ``magic cookie'' argument passed in when the
+   * handler was registered.  This makes it possible to free up the
+   * memory and avoid memory leaks.  Returns 1 if cancellation
+   * succeeded and 0 if the <timer_id> wasn't found.
+   *
+   * On successful cancellation, ACE_Event_Handler::handle_close()
+   * will be called with <ACE_Event_Handler::TIMER_MASK>.
+   * ACE_Event_Handler::remove_reference() will also be called.
    */
   virtual int cancel_timer (long timer_id,
                             const void **arg = 0,
+                            int dont_call_handle_close = 1);
+
+  /**
+   * Cancel all timers associated with event handler.
+   *
+   * Shorthand for calling cancel_timer(long,const void **,int)
+   * multiple times for all timer associated with <event_handler>.
+   *
+   * ACE_Event_Handler::handle_close() will be called with
+   * <ACE_Event_Handler::TIMER_MASK> only once irrespective of the
+   * number of timers associated with the event handler.
+   * ACE_Event_Handler::remove_reference() will also be called once
+   * for every timer associated with the event handler.
+   *
+   * Returns number of handlers cancelled.
+   */
+  virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1);
 
   // = High-level Event_Handler scheduling operations
@@ -491,9 +615,9 @@ public:
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
-  /// activity expected, or you need immediate re-examination of
-  /// the wait masks, either call ACE_Reactor::notify after this
-  /// call, or use ACE_Reactor::register_handler instead.
+  /// activity expected, or you need immediate re-examination of the
+  /// wait masks, either call ACE_Reactor::notify after this call, or
+  /// use ACE_Reactor::register_handler instead.
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added);
 
@@ -503,8 +627,8 @@ public:
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of
-  /// the wait masks, either call ACE_Reactor::notify after this
-  /// call, or use ACE_Reactor::register_handler instead.
+  /// the wait masks, either call ACE_Reactor::notify after this call,
+  /// or use ACE_Reactor::register_handler instead.
   virtual int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added);
 
@@ -531,16 +655,35 @@ public:
   // = Notification methods.
 
   /**
-   * Notify <event_handler> of <mask> event.  The <ACE_Time_Value>
-   * indicates how long to blocking trying to notify.  If <timeout> ==
-   * 0, the caller will block until action is possible, else will wait
-   * until the relative time specified in <timeout> elapses).  Note that
-   * <mask> can only be one of the pre-defined <ACE_Event_Handler>
-   * masks, e.g., <READ_MASK>, <WRITE_MASK>, or <EXCEPT_MASK>.
+   * Dispatch user specified events.
+   *
+   * Handler will be dispatched irrespective of whether it is
+   * registered, not registered, or suspended in the Reactor.
+   *
+   * If user specified event is successfully queued,
+   * ACE_Event_Handler::add_reference() will be called.  After the
+   * notify occurs and the upcall to the handler completes, the
+   * handler will be implicitly removed from the Reactor and
+   * ACE_Event_Handler::remove_reference() will be called.  No other
+   * upcall reference counting is done.
+   *
+   * For I/O or OS events, the upcall is invoked with an
+   * ACE_INVALID_HANDLE.
+   *
+   * For timer events, the upcall is invoked with a null ACT.
+   *
+   * @param event_handler: IN - Handler on which the event will be
+   * dispatched.
+   * @param masks: IN - Events to be dispatched - multiple events can
+   * be OR'd together.
+   * @param timeout: INOUT - Relative time up to which to wait for
+   * user specified event to be queued.  If tv is 0, wait
+   * indefinitely.  When the call returns, tv has the time remaining
+   * after the call completes.
    */
   virtual int notify (ACE_Event_Handler *event_handler = 0,
-                      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value *tv = 0);
+                      ACE_Reactor_Mask masks = ACE_Event_Handler::EXCEPT_MASK,
+                      ACE_Time_Value *timeout = 0);
 
   /**
    * Set the maximum number of times that ACE_Reactor will
@@ -564,10 +707,14 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. If <eh> == 0, all notifications for all
-   * handlers are removed (but not any notifications posted just to wake up
-   * the reactor itself). Returns the number of notifications purged.
-   * Returns -1 on error.
+   * <ACE_Event_Handler> object. If <eh> == 0, all notifications for
+   * all handlers are removed (but not any notifications posted just
+   * to wake up the reactor itself). Returns the number of
+   * notifications purged.  Returns -1 on error.
+   *
+   * After the purging occurs, the handler will be implicitly removed
+   * from the Reactor and ACE_Event_Handler::remove_reference() will
+   * be called.
    */
   virtual int purge_pending_notifications (ACE_Event_Handler *,
                                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
@@ -575,9 +722,21 @@ public:
   // = Assorted helper methods.
 
   /**
+   * Return the Event_Handler associated with <handle>.  Return 0 if
+   * <handle> is not registered.
+   *
+   * Reactor will call ACE_Event_Handler::add_reference() on the
+   * handler before returning it.
+   */
+  virtual ACE_Event_Handler *find_handler (ACE_HANDLE handle);
+
+  /**
    * Check to see if <handle> is associated with a valid Event_Handler
    * bound to <mask>.  Return the <event_handler> associated with this
    * <handler> if <event_handler> != 0.
+   *
+   * Reactor will call ACE_Event_Handler::add_reference() on the
+   * handler before returning it if <event_handler> != 0.
    */
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,

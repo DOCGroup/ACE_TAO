@@ -130,27 +130,6 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const;
 
   /**
-   * Schedule a timer that may optionally auto-reset.
-   * Schedule <type> that will expire at <future_time>,
-   * which is specified in absolute time.  If it expires then <act> is
-   * passed in as the value to the <functor>.  If <interval> is != to
-   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
-   * automatically, using relative time to the current <gettimeofday>.
-   * This method returns a <timer_id> that uniquely identifies the the
-   * <type> entry in an internal list.  This <timer_id> can be used to
-   * cancel the timer before it expires.  The cancellation ensures
-   * that <timer_ids> are unique up to values of greater than 2
-   * billion timers.  As long as timers don't stay around longer than
-   * this there should be no problems with accidentally deleting the
-   * wrong timer.  Returns -1 on failure (which is guaranteed never to
-   * be a valid <timer_id>).
-   */
-  virtual long schedule (const TYPE &type,
-                         const void *act,
-                         const ACE_Time_Value &future_time,
-                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
-
-  /**
    * Resets the interval of the timer represented by <timer_id> to
    * <interval>, which is specified in relative time to the current
    * <gettimeofday>.  If <interval> is equal to
@@ -201,6 +180,28 @@ public:
   virtual ACE_Timer_Node_T<TYPE> *get_first (void);
 
 protected:
+
+  /**
+   * Schedule a timer that may optionally auto-reset.
+   * Schedule <type> that will expire at <future_time>,
+   * which is specified in absolute time.  If it expires then <act> is
+   * passed in as the value to the <functor>.  If <interval> is != to
+   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
+   * automatically, using relative time to the current <gettimeofday>.
+   * This method returns a <timer_id> that uniquely identifies the the
+   * <type> entry in an internal list.  This <timer_id> can be used to
+   * cancel the timer before it expires.  The cancellation ensures
+   * that <timer_ids> are unique up to values of greater than 2
+   * billion timers.  As long as timers don't stay around longer than
+   * this there should be no problems with accidentally deleting the
+   * wrong timer.  Returns -1 on failure (which is guaranteed never to
+   * be a valid <timer_id>).
+   */
+  virtual long schedule_i (const TYPE &type,
+                           const void *act,
+                           const ACE_Time_Value &future_time,
+                           const ACE_Time_Value &interval);
+
   /// Reschedule an "interval" <ACE_Timer_Node>.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 

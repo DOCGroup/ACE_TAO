@@ -72,13 +72,13 @@ public:
 #endif
 
 
-  /// Overload of the handle_input_i () in the TAO_Transport
+  /// Overload of the handle_input () in the TAO_Transport
   /// class. This is required to set up the state guard. The
   /// thread-per-connection and wait on RW strategies call this
-  /// handle_input_i ().
-  virtual int handle_input_i (TAO_Resume_Handle &rh,
-                              ACE_Time_Value *max_wait_time = 0,
-                              int block = 0);
+  /// handle_input ().
+  virtual int handle_input (TAO_Resume_Handle &rh,
+                            ACE_Time_Value *max_wait_time = 0,
+                            int block = 0);
 protected:
   /** @name Overridden Template Methods
    *
@@ -88,22 +88,19 @@ protected:
 
   virtual ACE_Event_Handler * event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
-  virtual TAO_Connection_Handler * invalidate_event_handler_i (void);
 
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send_i (iovec *iov, int iovcnt,
-                          size_t &bytes_transferred,
-                          const ACE_Time_Value *timeout = 0);
+  virtual ssize_t send (iovec *iov, int iovcnt,
+                        size_t &bytes_transferred,
+                        const ACE_Time_Value *timeout = 0);
 
   /// Read len bytes from into buf.
-  virtual ssize_t recv_i (char *buf,
-                          size_t len,
-                          const ACE_Time_Value *s = 0);
-
-  virtual int register_handler_i (void);
+  virtual ssize_t recv (char *buf,
+                        size_t len,
+                        const ACE_Time_Value *s = 0);
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful

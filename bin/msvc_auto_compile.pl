@@ -276,6 +276,16 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
 	push @directories, ("$ACE_ROOT\\TAO\\orbsvcs\\tests\\Notify\\lib");
 	push @directories, ("$ACE_ROOT\\TAO");
     }
+    elsif ($ARGV[0] =~ '-tests_TAO') {       # Build TAO tests
+        print "Building TAO tests\n" if ( $verbose );
+        $use_custom_dir = 1;
+	push @directories, ("$ACE_ROOT\\TAO\\tests");
+    }
+    elsif ($ARGV[0] =~ '-examples_TAO') {       # Build TAO examples
+        print "Building TAO examples\n" if ( $verbose );
+        $use_custom_dir = 1;
+	push @directories, ("$ACE_ROOT\\TAO\\examples");
+    }
     elsif ($ARGV[0] =~ '-dir') {        # Compile only a specific directory
         shift;
         print "Adding directory $ARGV[0]\n" if ( $verbose );

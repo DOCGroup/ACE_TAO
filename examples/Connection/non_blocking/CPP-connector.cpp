@@ -4,7 +4,7 @@
 #define CPP_CONNECTOR_C
 
 #include "CPP-connector.h"
-                                                        
+
 ACE_RCSID(non_blocking, CPP_connector, "$Id$")
 
 #define PR_ST_1 ACE_PEER_STREAM_1
@@ -30,7 +30,7 @@ Peer_Handler<PR_ST_2>::open (void *)
   this->action_ = &Peer_Handler<PR_ST_2>::connected;
 
   ACE_DEBUG ((LM_DEBUG,
-              "please enter input..: "));      
+              "please enter input..: "));
 
   if (this->reactor ())
 
@@ -49,11 +49,20 @@ Peer_Handler<PR_ST_2>::open (void *)
   else
     {
       while (this->connected () != -1)
-	continue;
+        continue;
 
-      this->handle_close (ACE_INVALID_HANDLE, 
-			  ACE_Event_Handler::READ_MASK);
+      this->handle_close (ACE_INVALID_HANDLE,
+                          ACE_Event_Handler::READ_MASK);
     }
+  return 0;
+}
+
+template <PR_ST_1> int
+Peer_Handler<PR_ST_2>::close (u_long)
+{
+  ACE_ERROR ((LM_ERROR,
+              "Connect not successful: ending reactor event loop\n"));
+  this->reactor ()->end_reactor_event_loop();
   return 0;
 }
 
@@ -74,18 +83,18 @@ Peer_Handler<PR_ST_2>::connected (void)
                             buf,
                             sizeof buf);
 
-  if (n > 0 
+  if (n > 0
       && this->peer ().send_n (buf,
                                n) != n)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "write failed"),
                       -1);
-  else if (n == 0) 
+  else if (n == 0)
     {
       // Explicitly close the connection.
-      if (this->peer ().close () == -1) 
-	ACE_ERROR_RETURN ((LM_ERROR,
+      if (this->peer ().close () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "close"),
                           1);
@@ -94,7 +103,7 @@ Peer_Handler<PR_ST_2>::connected (void)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "please enter input..: "));      
+                  "please enter input..: "));
       return 0;
     }
 }
@@ -106,7 +115,7 @@ Peer_Handler<PR_ST_2>::stdio (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "in stdio\nplease enter input..: "));
-      
+
   ssize_t n = ACE_OS::read (ACE_STDIN,
                             buf,
                             sizeof buf);
@@ -121,8 +130,17 @@ Peer_Handler<PR_ST_2>::stdio (void)
                           -1);
       return 0;
     }
-  else 
+  else
     return -1;
+}
+
+template <PR_ST_1> int
+Peer_Handler<PR_ST_2>::handle_timeout (const ACE_Time_Value &,
+                                       const void *)
+{
+  ACE_ERROR ((LM_ERROR,
+              "Connect timedout. "));
+  return this->close ();
 }
 
 template <PR_ST_1> int
@@ -160,7 +178,7 @@ Peer_Handler<PR_ST_2>::handle_input (ACE_HANDLE)
 
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE h,
-				     ACE_Reactor_Mask mask)
+                                     ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down handle %d with mask %d\n",
@@ -229,12 +247,12 @@ IPC_Client<SVH, PR_CO_2>::init (int argc, char *argv[])
   // initialization.
   this->inherited::open (ACE_Reactor::instance ());
 
-  const char *r_addr = argc > 1 ? argv[1] : 
-    ACE_SERVER_ADDRESS (ACE_DEFAULT_SERVER_HOST, 
-			ACE_DEFAULT_SERVER_PORT_STR);
-  ACE_Time_Value timeout (argc > 2 
-			  ? ACE_OS::atoi (argv[2]) 
-			  : ACE_DEFAULT_TIMEOUT);
+  const char *r_addr = argc > 1 ? argv[1] :
+    ACE_SERVER_ADDRESS (ACE_DEFAULT_SERVER_HOST,
+                        ACE_DEFAULT_SERVER_PORT_STR);
+  ACE_Time_Value timeout (argc > 2
+                          ? ACE_OS::atoi (argv[2])
+                          : ACE_DEFAULT_TIMEOUT);
 
   // Handle signals through the ACE_Reactor.
   if (ACE_Reactor::instance ()->register_handler
@@ -266,30 +284,9 @@ IPC_Client<SVH, PR_CO_2>::init (int argc, char *argv[])
     return 0;
 }
 
-template <class SVH, PR_CO_1> 
+template <class SVH, PR_CO_1>
 IPC_Client<SVH, PR_CO_2>::~IPC_Client (void)
 {
-}
-
-template <class SVH, PR_CO_1> int
-IPC_Client<SVH, PR_CO_2>::handle_close (ACE_HANDLE h, 
-				       ACE_Reactor_Mask)
-{
-  if (h == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR,
-                "%p on %d\n",
-                "connection failed",
-                h));
-  else 
-    {
-      // We are closing down the connector.
-      ACE_DEBUG ((LM_DEBUG,
-                  "closing down IPC_Client\n"));
-      this->inherited::handle_close ();
-    }
-
-  ACE_Reactor::end_event_loop();
-  return 0;
 }
 
 #undef PR_ST_1

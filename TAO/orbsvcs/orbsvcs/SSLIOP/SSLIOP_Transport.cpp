@@ -29,23 +29,13 @@ TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
     connection_handler_ (handler),
     messaging_object_ (0)
 {
-  if (connection_handler_ != 0)
-    {
-      // REFCNT: Matches one of
-      // TAO_Transport::connection_handler_close() or
-      // TAO_Transport::close_connection_shared.
-      this->connection_handler_->incr_refcount();
-    }
-
   // Use the normal GIOP object
   ACE_NEW (this->messaging_object_,
            TAO_GIOP_Message_Base (orb_core));
-
 }
 
 TAO_SSLIOP_Transport::~TAO_SSLIOP_Transport (void)
 {
-  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
 }
 
@@ -68,9 +58,9 @@ TAO_SSLIOP_Transport::messaging_object (void)
 }
 
 int
-TAO_SSLIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
-                                      ACE_Time_Value *max_wait_time,
-                                      int block)
+TAO_SSLIOP_Transport::handle_input (TAO_Resume_Handle &rh,
+                                    ACE_Time_Value *max_wait_time,
+                                    int block)
 {
   int result = 0;
 
@@ -80,16 +70,16 @@ TAO_SSLIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
   if (result == -1)
     return -1;
 
-  return TAO_Transport::handle_input_i (rh,
-                                        max_wait_time,
-                                        block);
+  return TAO_Transport::handle_input (rh,
+                                      max_wait_time,
+                                      block);
 }
 
 ssize_t
-TAO_SSLIOP_Transport::send_i (iovec *iov,
-                              int iovcnt,
-                              size_t &bytes_transferred,
-                              const ACE_Time_Value *max_wait_time)
+TAO_SSLIOP_Transport::send (iovec *iov,
+                            int iovcnt,
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
   ssize_t retval =
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
@@ -101,9 +91,9 @@ TAO_SSLIOP_Transport::send_i (iovec *iov,
 }
 
 ssize_t
-TAO_SSLIOP_Transport::recv_i (char *buf,
-                              size_t len,
-                              const ACE_Time_Value *max_wait_time)
+TAO_SSLIOP_Transport::recv (char *buf,
+                            size_t len,
+                            const ACE_Time_Value *max_wait_time)
 {
   ssize_t n = this->connection_handler_->peer ().recv (buf,
                                                        len,
@@ -137,35 +127,6 @@ TAO_SSLIOP_Transport::recv_i (char *buf,
 
   return n;
 }
-
-
-
-
-int
-TAO_SSLIOP_Transport::register_handler_i (void)
-{
-  if (TAO_debug_level > 4)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - SSLIOP_Transport::register_handler %d\n",
-                  this->id ()));
-    }
-
-  // @@ It seems like this method should go away, the right reactor is
-  //    picked at object creation time.
-  ACE_Reactor *r = this->orb_core_->reactor ();
-
-  if (r == this->connection_handler_->reactor ())
-    return 0;
-
-  // Set the flag in the Connection Handler
-  this->ws_->is_registered (1);
-
-  // Register the handler with the reactor.
-  return r->register_handler (this->connection_handler_,
-                              ACE_Event_Handler::READ_MASK);
-}
-
 
 int
 TAO_SSLIOP_Transport::send_request (TAO_Stub *stub,
@@ -280,17 +241,6 @@ TAO_SSLIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   // 1
   this->bidirectional_flag (1);
 
-  // Just make sure that the connection handler is sane before we go
-  // head and do anything with it.
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->handler_lock_,
-                    -1);
-
-  if (this->check_event_handler_i ("SSLIOP_Transport::tear_listen_point_list")
-      == -1)
-    return -1;
-
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
@@ -373,17 +323,6 @@ TAO_SSLIOP_Transport::get_listen_point (
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
   {
-    // Just make sure that the connection handler is sane before we go
-    // head and do anything with it.
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->handler_lock_,
-                      -1);
-
-    if (this->check_event_handler_i ("SSLIOP_Transport::get_listen_point")
-        == -1)
-      return -1;
-
     if (this->connection_handler_->peer ().get_local_addr (local_addr)
         == -1)
       {
@@ -435,12 +374,4 @@ TAO_SSLIOP_Transport::get_listen_point (
     }
 
   return 1;
-}
-
-TAO_Connection_Handler *
-TAO_SSLIOP_Transport::invalidate_event_handler_i (void)
-{
-  TAO_Connection_Handler * eh = this->connection_handler_;
-  this->connection_handler_ = 0;
-  return eh;
 }

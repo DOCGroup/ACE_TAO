@@ -1,14 +1,543 @@
-Mon Jul  7 11:14:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp (visit_enum):
+	* The following changes utilize the new memory management mechanisms
+	  of Event Handlers.  Previously, both the connection handlers and
+	  the transports had their own reference counting mechanism and
+	  independent lifetimes.  The reference counting was inadequate
+	  since it was not originated at the Reactor and the independent
+	  lifetimes unnecessarily completed protocol specific transport
+	  code.  
 
-	  Fixed a cut and paste error that was causing the code generation
-	  for the any operators in the stub source file to be skipped. Thanks
-	  to <dyafe@itgil.com> for reporting the bug.
+	  These changes couple the lifetime of the connection handler with
+	  that of the transport and utilizes the reference count in the
+	  base ACE_Event_Handler class.  This allowed us to remove several
+	  hacks throughout TAO code which were designed to prevent (or
+	  delay) crashes.  Several extra checks and unnecessary locks were
+	  also removed.
 
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+	  All of the following protocols were updated:
 
-	  Fixed cut and paste error in the explicit template instantiation.
+	  - DIOP
+	  - IIOP
+	  - SCIOP
+	  - SHMIOP
+	  - SSLIOP
+	  - UIOP
+	  - UIPMC
+
+	Fri Jun 20 19:45:07 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\Connection_Handler: 
+
+	  - Removed the incr_refcount() and decr_refcount() methods and
+	  the related <reference_count_> and <refcount_lock_> members.
+	  Also removed any explicit reference counting since now the
+	  Reactor framework will handle this correctly.
+
+	  - Removed all asserts for a valid <transport_> since now the
+	  lifetime of the handler and the transport are the same.
+
+	  - Removed connection_close_wait() since this state is no longer
+	  needed.
+
+	  - handle_close_eh() is no longer required since we no longer
+	  rely on the Reactor calling handle_close().
+
+	  - Moved the call to release_os_resources() from decr_refcount()
+	  to the destructor.
+
+	  - Mega-simplified transport() method since the transport will
+	  only be set once.
+
+	  - Call to Transport::send_connection_closed_notifications() was
+	  moved to Connection_Handler::close_connection_eh() to ensure it
+	  gets called in all cases when the handler is closed.
+
+	  - close_connection_eh() was also super-simplified.  Now it
+	  simply purges the handler from the connection cache and removes
+	  the handler from the Reactor.
+
+	  - Made the destructor public since this class is no longer
+	  (directly) reference counted.
+
+	  - is_finalized() was renamed to is_closed().
+
+	  - is_open() and is_connecting() were added to check the status
+	  of the connection handler.
+
+	* tao\IIOP_Connection_Handler: 
+
+	  - Added close() method that will be called by the Acceptor or
+	  Connector when connection establishment fails.
+
+	  - No need to reference count the transport.  Handlers and
+	  transports now have the same lifespan.  Transport in created in
+	  the constructor and deleted in the destructor.
+	
+	  - handle_input() and handle_output() intercept any errors from
+	  handle_input_eh() and handle_output_eh() respectively and call
+	  close_connection().  We no longer rely on handle_close().
+
+	  - Assert that handle_close() no longer gets called.
+
+          - Added handle_timeout(). We don't use this upcall for I/O.
+	  This is only used by the Connector to indicate that the
+	  connection timedout.  Therefore, we should call close().
+
+	  - The unused constructor should assert(0).
+
+	* tao\Transport: 
+
+	  - The Transport class no longer needs to inherit from
+	  TAO_Synch_Refcountable.  The reference counting is provided by
+	  the Event_Handler class.
+	
+	  - Replaced the _duplicate() and release() methods with
+	  add_reference() and remove_reference() methods.  This matches
+	  the signature of the reference counting methods on the base
+	  Event_Handler class.
+
+	  - Changed provide_handler() to simply provide the related
+	  connection handler.
+
+	  - register_handler() was made virtual and register_handler_i()
+	  was removed since there was no locking required.  Same was done
+	  for recv() and send().
+
+	  - Removed:
+
+	  	close_connection_shared()
+		close_connection_no_purge()
+		close_connection_i(),
+		connection_handler_closing()
+		check_event_handler_i()
+		invalidate_event_handler_i()
+
+	  since they were no longer needed.
+
+	  - Renamed handle_input_i() to handle_input().
+
+	  - Made send_connection_closed_notifications() public.
+
+	  - No need for:
+
+	        send_message_block_chain()
+		send_message_shared()
+		schedule_output_i()
+		drain_queue_helper()
+		handle_timeout()
+		check_buffering_constraints_i()
+		notify_reactor()
+
+	  to call check_event_handler_i() since the handler is always
+	  valid.
+
+	  - No need for to call send_connection_closed_notifications() in
+	  case of errors since it will get called when the handler is
+	  closed.
+
+	  - No need for process_parsed_messages() to do any explicit
+	  reference counting since now the Reactor framework will handle
+	  this correctly.
+
+          - No need for notify_reactor() to create a Notify_Handler.  The
+	  Reactor framework already does the proper reference counting for
+	  notifications.	
+
+	* tao\IIOP_Transport: 
+
+	  - invalidate_event_handler_i() no longer needed.  
+
+	  - Override send() and recv() instead of send_i() and recv_i().
+
+	  - No need for reference counting the connection handler since
+	  the lifespan of the connection handler is tied to the lifespan
+	  of the transport.
+
+	  - register_handler_i() no longer needed.
+
+	  - No need for:
+
+		send_request()
+		send_message_shared()
+		tear_listen_point_list()
+		get_listen_point()
+
+	  to call check_event_handler_i() since the handler is always
+	  valid.
+
+	* tao\Acceptor_Impl.cpp (activate_svc_handler): 
+
+	  Made several changes to this method.  Now the sequence is:
+
+	  - At the start of the method, the service handler has been
+	  created and the new connection has been accepted.  #REFCOUNT# is
+	  one at this point.
+
+	  - Cache handler: If successful, #REFCOUNT# is two at this
+	  point.  If failure, call close on handler.
+
+	  - Activate/register handler: If successful, #REFCOUNT# is three
+	  at this point. We can let go of our reference.  If failure,
+	  remove handler from cache and call close on handler.
+
+	  - Success completion of method: #REFCOUNT# is two at this point.
+
+	* tao\IIOP_Connector.cpp (make_connection): 
+
+	  Made several changes to this method.  Now the sequence is:
+
+	  - The connect() method creates the service handler and bumps the
+	  #REFCOUNT# up one extra.  There are three possibilities from
+	  calling connect(): (a) connection succeeds immediately - in this
+	  case, the #REFCOUNT# on the handler is two; (b) connection
+	  completion is pending - in this case, the #REFCOUNT# on the
+	  handler is also two; (c) connection fails immediately - in this
+	  case, the #REFCOUNT# on the handler is one since close() gets
+	  called on the handler.
+
+          - The extra reference count in
+	  TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
+	  the case when connection completion is pending and we are going
+	  to wait on a variable in the handler to change, signifying
+	  success or failure.  Note, that this increment cannot be done
+	  once the connect() returns since this might be too late if
+	  another thread picks up the completion and potentially deletes
+	  the handler before we get a chance to increment the reference
+	  count.
+
+	  - If there is no immediate result, wait for completion. No need
+	  to specify timeout to wait() since the correct timeout was
+	  passed to the Connector. The Connector will close the handler in
+	  the case of timeouts, so the event will complete (either success
+	  or failure) within timeout.
+
+	  - When the wait completes, check if the handler has been closed.
+          Irrespective of success or failure, remove the #REFCOUNT#
+          added for waiting.
+
+          - There are three possibilities when wait() returns: (a)
+	  connection succeeded; (b) connection failed; (c) wait() failed
+	  because of some other error.  It is easy to deal with (a) and
+	  (b).  (c) is tricky since the connection is still pending and
+	  may get completed by some other thread.  The following deals
+	  with (c).
+
+          * In case of failure and close() has not be called, first
+	  cancel from connector.  Then double check to make sure the
+	  handler has not been closed yet.  This double check is required
+	  to ensure that the connection handler was not closed yet by some
+	  other thread since it was still registered with the connector.
+	  Once connector.cancel() has been processed, we are assured that
+	  the connector will no longer open/close this handler.
+
+	  * If closed, there is nothing to do.
+
+	  * If the handler has been opened, some other thread was able to
+	  open the handler even though wait failed for this thread. Reset
+	  <result> to zero.
+
+	  * If the handler is still connecting, forcefully close() the
+	  handler.
+
+	  - If the connection has be successfully connected, add the
+	  handler to connection cache.
+
+	  - Failure in adding to cache, close the handler.
+
+	  - If the wait strategy wants us to be registered with the reactor
+   	  then we do so. If registeration is required and it succeeds,
+   	  #REFCOUNT# becomes two.
+
+	  - In case of reactor registration failures, purge from the
+	  connection cache and close the handler.
+
+	  - In case of success, handover the transport pointer to the
+	  Invocation class.
+
+	* tao\Connector_Impl.cpp (make_svc_handler): 
+
+	  We add to the #REFCOUNT# since the Connector needs this. See
+	  Connector::make_connection() for details.
+
+	* tao\Transport_Cache_Manager (close): 
+
+	  Previously, close() was returning a handle set and a set of
+	  event handlers.  This was changed such the only a set of
+	  connection handlers is returned since the previous parameters
+	  are no longer necessary.
+
+	  Also in purge(), there is no need to actually purge the handler
+	  since they will be purged when the handlers close.  This also
+	  removes the need for Transport::close_connection_no_purge().
+	  Transport_Cache_Manager no longer needs to be friends with the
+	  Transport.
+
+	* tao\Thread_Lane_Resources.cpp (finalize): 
+
+	  We now close the transport cache and return the handlers that
+	  were still registered.  The cache will decrease the #REFCOUNT#
+	  on the handler when it removes the handler from cache.  However,
+	  #REFCOUNT# is increased when the handler is placed in the
+	  handler set. Then we go through the handler set, closing the
+	  connections and removing the references. Finally the connection
+	  is closed.  There is also a potential removal from the Reactor.
+	  Finally, the #REFCOUNT# related to the handler set decreases.
+
+	* tao\Notify_Handler:
+
+	  These files are no longer required since the Reactor framework
+	  does the correct reference counting for notifications.
+
+	* tao\LF_CH_Event:
+	* tao\LF_Event:
+
+	  Removed the LFS_CONNECTION_CLOSE_WAIT state since it is no
+	  longer needed.
+
+	* tao\Connect_Strategy: 
+
+	  Removed Connect_Strategy::post_failed_connect() since
+	  *_Connector::make_connection() now does the right thing.
+
+	* tao\Asynch_Reply_Dispatcher_Base.cpp: 
+	* tao\Asynch_Reply_Dispatcher_Base.i: 
+	* tao\Cache_Entries.cpp:
+	* tao\Invocation.cpp:
+	* tao\Transport.cpp:
+	* tao\Notify_Handler.cpp:
+	* tao\Thread_Per_Connection_Handler.cpp:
+	* tao\PortableServer\AMH_Response_Handler.cpp:
+
+	  Replace calls to Transport::_duplicate() and
+	  Transport::release() with new Transport::add_handler() and
+	  Transport::remove_handler() methods respectively.
+
+	* tests\TAO_Tests.dsw:
+
+	  Added several missing tests:
+		
+	  - AMH_Exceptions_Test
+	  - AMH_Oneway_Test 
+	  - Abstract Interface
+	  - Bug_1361_Regression
+	  - Bug_1482_Regression
+	  - Collocation_Test
+	  - Connect_Strategy_Test
+	  - Connection_Timeout
+	  - File_IO
+	  - MProfile_Connection_Timeout
+	  - MT_BiDir
+	  - Manipulation
+	  - Muxed_GIOP_Versions
+	  - Nested_Upcall_Crash
+	  - No_Server_MT_Connect_Test
+	  - ORB_shutdown
+	  - Objref_Sequence_Test
+	  - Oneway_Buffering
+	  - Stack_Recursion
+	  - Strategies 
+	  - Two_Objects 
+
+	* tao\Makefile.bor:
+	* tao\Makefile.tao:
+	* tao\TAO.dsp:
+	* tao\TAO_Static.dsp:
+	* tao\tao.mpc:
+
+	  Removed Notify_Handler* from project/makefiles.
+
+	* tests\Connection_Timeout\client.dsp:
+	* tests\MProfile_Connection_Timeout\client.dsp:
+	* tests\MProfile_Connection_Timeout\server.dsp:
+	* tests\MT_BiDir\client.dsp:
+	* tests\MT_BiDir\server.dsp:
+	* tests\ORB_shutdown\server.dsp:
+
+	  Fixed the above project files.
+
+	* tests\Bug_1361_Regression\Bug_1361_Regression.dsw:
+	* tests\Bug_1361_Regression\client.dsp:
+	* tests\Bug_1361_Regression\server.dsp:
+	* tests\Bug_1361_Regression\shutdown.dsp:
+
+	  New project files.
+
+	Tue Jun 24 21:46:13 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\Strategies\DIOP_Connection_Handler:
+	* tao\Strategies\SCIOP_Connection_Handler:
+	* tao\Strategies\SHMIOP_Connection_Handler:
+	* tao\Strategies\UIOP_Connection_Handler:
+	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connection_Handler:
+	
+	  - Constructor: Removed code to release the transport.  Lifetimes
+	  of transports and connection handlers are now coupled.
+
+	  - Destructor: Delete the transport.
+
+	  - handle_input(), handle_output(): Intercept any errors from
+	  handle_input_eh() and handle_output_eh() respectively and call
+	  close_connection(). We no longer rely on handle_close().
+
+	  - handle_close(): Assert that this method no longer gets called.
+
+          - handle_timeout(): Added this method. We don't use this upcall
+	  for I/O.  This is only used by the Connector to indicate that
+	  the connection timedout.  Therefore, we should call close().
+
+	  - close(): Added this method that will be called by the Acceptor
+	  or Connector when connection establishment fails.
+
+	  - The unused constructor should assert(0).
+
+	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connection_Handler:
+
+	  - Constructor: Replaced the code to release the transport with
+	  explicit deletion.  Lifetimes of transports and connection
+	  handlers are now coupled.
+
+	  - The unused constructor should assert(0).
+
+	* tao\Strategies\DIOP_Transport: 
+	* tao\Strategies\SCIOP_Transport: 
+	* tao\Strategies\SHMIOP_Transport:
+	* tao\Strategies\UIOP_Transport:
+	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Transport:
+	
+	  - Constructor: No need to manage reference count on the
+	  connection handler.  Lifetimes of transports and connection
+	  handlers are now coupled.
+
+	  - Destructor: Removed the assert for the connection handler.
+
+	  - send(), recv(): send_i() and recv_i() were renamed send() and
+	  recv() respectively since locks are no longer required while
+	  sending or receiving.
+
+	  - handle_input(): handle_input_i() was renamed to
+	  handle_input().
+
+	  - register_handler(): No longer required since the base class
+	  does the right thing.
+
+	  - invalidate_event_handler_i(): This is no longer required.
+
+	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Transport:
+
+	  No need for acquiring <handler_lock_> and calling
+	  check_event_handler_i() in tear_listen_point_list() and
+	  get_listen_point() since <connection_handler_> is now always
+	  valid for the lifetime of the transport.
+
+	* tao\Strategies\DIOP_Transport: 
+
+	  - Removed commented out code. 
+
+	  - Renamed register_handler_i() to register_handler(). 
+
+	* tao\Strategies\SCIOP_Transport: 
+
+	  - send_request(), get_listen_point(), tear_listen_point_list():
+	  Removed guard and check for valid connection handler.
+
+	  - send_message_shared(): Removed check for valid connection
+	  handler.
+
+	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Transport:
+
+	  Rename handle_input_i() to handle_input().
+
+	* tao\Strategies\SCIOP_Connector.cpp (make_connection): 
+	* tao\Strategies\UIOP_Connector.cpp (make_connection): 
+	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connector.cpp (make_connection):
+	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connector.cpp (ssliop_connect):
+	
+	  Made this method similar to IIOP_Connector::make_connection().
+
+	* tao\Strategies\SHMIOP_Connector.cpp (make_connection): 
+
+	  Made this method similar to IIOP_Connector::make_connection()
+	  except that the connects are always blocking.
+
+	* tao\Strategies\DIOP_Connector.cpp (make_connection):  
+
+	  - Replaced decr_refcount() with remove_reference() and
+	  duplicate() with add_reference() respectively.
+
+	Wed Jun 25 15:56:14 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\Strategies\DIOP_Acceptor:
+
+	  Revised the management of the connection handler.  Replaced the
+	  call to handle_close() with call to remove_reference().
+
+	Thu Jun 26 19:34:26 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\Strategies\DIOP_Acceptor.cpp (close): 
+
+	  Added DONT_CALL mask to the remove_handler() call so that
+	  handle_close() is not called anymore.
+
+	Mon Jun 30 20:46:22 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connection_Handler: 
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connector.cpp:
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Transport:
+
+	  DIOP and UIPMC are very similar.  Therefore, similar changes
+	  were made.
+
+	* tests\Connection_Failure: 
+
+	  New test added that checks connection failures by connecting to
+	  a non-existent object.  
+
+	  The following files were added:
+
+	  - tests\Connection_Failure\Connection_Failure.dsw
+	  - tests\Connection_Failure\Connection_Failure.mpc
+	  - tests\Connection_Failure\Makefile
+	  - tests\Connection_Failure\Makefile.bor
+	  - tests\Connection_Failure\README
+	  - tests\Connection_Failure\client.bor
+	  - tests\Connection_Failure\client.cpp
+	  - tests\Connection_Failure\client.dsp
+	  - tests\Connection_Failure\run_test.pl
+	  - tests\Connection_Failure\test.idl
+
+	  and the following were modified:
+
+	  - tests\Makefile
+	  - tests\Makefile.bor
+	  - tests\TAO_Tests.dsw
+	  - tests\README
+	  - $ACE_ROOT\bin\tao_orb_tests.lst
+
+	Thu May 15 19:46:49 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
+	* TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* TAO/tao/IIOP_Connector.cpp:
+	* TAO/tao/Strategies/DIOP_Connector.cpp:
+	* TAO/tao/Strategies/SHMIOP_Connector.cpp:
+	* TAO/tao/Strategies/UIOP_Connector.cpp:
+
+	  Fixed Connector related template instantiations.
+
+	Thu May 22 14:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Merged Reactor_RefCount branch with the main truck since all ACE
+	  level changes are now complete.  New branch is
+	  Reactor_RefCount_1.
+
+	Tue May 27 19:59:25 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Merged Reactor_RefCount_1 branch with the main truck to avail
+	  new changes by Bala to the TAO connection handlers.  New branch
+	  is Reactor_RefCount_2.
 
 Mon Jul 07 07:46:00 2003  Justin Michel  <michel_j@ociweb.com>
 	

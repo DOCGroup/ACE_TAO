@@ -11,14 +11,16 @@
 ACE_RCSID(tao, Cache_Entries, "$Id$")
 
 TAO_Cache_IntId::TAO_Cache_IntId (TAO_Transport *transport)
-  : transport_ (TAO_Transport::_duplicate (transport)),
+  : transport_ (transport),
     recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
 {
+  transport->add_reference ();
 }
 
 TAO_Cache_IntId::~TAO_Cache_IntId (void)
 {
-  TAO_Transport::release (this->transport_);
+  if (this->transport_)
+    this->transport_->remove_reference ();
 }
 
 TAO_Cache_IntId&
@@ -28,9 +30,12 @@ TAO_Cache_IntId::operator= (const TAO_Cache_IntId &rhs)
     {
       this->recycle_state_ = rhs.recycle_state_;
 
-      TAO_Transport* old_transport = this->transport_;
-      this->transport_ = TAO_Transport::_duplicate (rhs.transport_);
-      TAO_Transport::release (old_transport);
+      TAO_Transport *old_transport = this->transport_;
+      this->transport_ = rhs.transport_;
+      if (this->transport_)
+        this->transport_->add_reference ();
+      if (old_transport)
+        old_transport->remove_reference ();
     }
 
   return *this;

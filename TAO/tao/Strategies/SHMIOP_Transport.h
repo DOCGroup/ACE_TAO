@@ -69,25 +69,22 @@ protected:
   //@{
   virtual ACE_Event_Handler * event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
-  virtual TAO_Connection_Handler * invalidate_event_handler_i (void);
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send_i (iovec *iov, int iovcnt,
-                          size_t &bytes_transferred,
-                          const ACE_Time_Value *timeout = 0);
+  virtual ssize_t send (iovec *iov, int iovcnt,
+                        size_t &bytes_transferred,
+                        const ACE_Time_Value *timeout = 0);
 
   /// Read len bytes from into buf.
-  virtual ssize_t recv_i (char *buf,
-                          size_t len,
-                          const ACE_Time_Value *s = 0);
+  virtual ssize_t recv (char *buf,
+                        size_t len,
+                        const ACE_Time_Value *s = 0);
 
   virtual int consolidate_message (ACE_Message_Block &incoming,
                                    ssize_t missing_data,
                                    TAO_Resume_Handle &rh,
                                    ACE_Time_Value *max_wait_time);
-
-  virtual int register_handler_i (void);
 
   //@}
 

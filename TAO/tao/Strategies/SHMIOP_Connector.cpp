@@ -29,13 +29,7 @@ template class TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
 template class ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
 template class ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
-template class ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>;
-
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*>;
-template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
+template class ACE_NonBlocking_Connect_Handler<TAO_SHMIOP_Connection_Handler>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -44,13 +38,7 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Conn
 #pragma instantiate ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
 #pragma instantiate ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>
-
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_SHMIOP_Connection_Handler>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -145,7 +133,7 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
        if (TAO_debug_level > 0)
          {
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                       ACE_LIB_TEXT ("TAO (%P|%t) SHMIOP connection failed.\n")
                        ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
                        ACE_LIB_TEXT ("due to a hostname lookup ")
                        ACE_LIB_TEXT ("failure.\n")));
@@ -177,9 +165,6 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   const ACE_INET_Addr &remote_address =
     shmiop_endpoint->object_addr ();
 
-
-  TAO_SHMIOP_Connection_Handler *svc_handler = 0;
-
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
@@ -191,27 +176,25 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
 
+  TAO_SHMIOP_Connection_Handler *svc_handler = 0;
+
+  // Connect.
   int result = this->base_connector_.connect (svc_handler,
                                               remote_address,
                                               synch_options);
 
-  int status = svc_handler->is_finalized ();
-  // Reduce the refcount to the svc_handler that we have. The
-  // increment to the handler is done in make_svc_handler (). Now
-  // that we dont need the reference to it anymore we can decrement
-  // the refcount whether the connection is successful ot not.
-  long refcount = svc_handler->decr_refcount ();
+  // This call creates the service handler and bumps the #REFCOUNT# up
+  // one extra.  There are two possibilities: (a) connection succeeds
+  // immediately - in this case, the #REFCOUNT# on the handler is two;
+  // (b) connection fails immediately - in this case, the #REFCOUNT#
+  // on the handler is one since close() gets called on the handler.
+  // We always use a blocking connection so the connection is never
+  // pending.
 
-  ACE_ASSERT (refcount >= 0);
-  ACE_UNUSED_ARG (refcount);
+  // Irrespective of success or failure, remove the extra #REFCOUNT#.
+  svc_handler->remove_reference ();
 
-  // = We dont do a wait since we know that we are doing a blocking
-  // connect
-  if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                ACE_TEXT ("The result is <%d> \n"), result));
-
+  // In case of errors.
   if (result == -1)
     {
       // Give users a clue to the problem.
@@ -227,46 +210,73 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       ACE_TEXT ("errno")));
         }
 
-      (void) this->active_connect_strategy_->post_failed_connect (svc_handler,
-                                                                  status);
-
       return -1;
     }
 
-  TAO_Transport *base_transport =
-    TAO_Transport::_duplicate (svc_handler->transport ());
+  // At this point, the connection has be successfully connected.
+  // #REFCOUNT# is one.
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
+                "new connection to <%s:%d> on Transport[%d]\n",
+                shmiop_endpoint->host (), shmiop_endpoint->port (),
+                svc_handler->peer ().get_handle ()));
+
+  TAO_Transport *transport =
+    svc_handler->transport ();
 
   // Add the handler to Cache
   int retval =
     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                             base_transport);
+                                                                             transport);
 
-  if (retval != 0 && TAO_debug_level > 0)
+  // Failure in adding to cache.
+  if (retval != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                  ACE_TEXT ("could not add the new  connection to Cache \n")));
+      // Close the handler.
+      svc_handler->close ();
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
+                      "could not add the new connection to cache\n"));
+        }
+
+      return -1;
     }
 
-
   // If the wait strategy wants us to be registered with the reactor
-  // then we do so.
-  retval =  base_transport->wait_strategy ()->register_handler ();
+  // then we do so. If registeration is required and it succeeds,
+  // #REFCOUNT# becomes two.
+  retval =  transport->wait_strategy ()->register_handler ();
 
-  if (retval != 0 && TAO_debug_level > 0)
+  // Registration failures.
+  if (retval != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                  ACE_LIB_TEXT ("could not add the new connection to reactor \n")));
+      // Purge from the connection cache.
+      transport->purge_entry ();
+
+      // Close the handler.
+      svc_handler->close ();
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
+                      "could not register the new connection in the reactor\n"));
+        }
+
+      return -1;
     }
 
   // Handover the transport pointer to the Invocation class.
-  TAO_Transport *&transport = invocation->transport ();
-  transport = base_transport;
+  TAO_Transport *&invocation_transport =
+    invocation->transport ();
+  invocation_transport = transport;
 
   return 0;
 }
-
 
 TAO_Profile *
 TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)

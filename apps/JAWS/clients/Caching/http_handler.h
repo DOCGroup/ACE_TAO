@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Connector.h"
+#include "ace/Svc_Handler.h"
 
 class HTTP_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
@@ -78,4 +79,3 @@ private:
   // Factory that actively establishes a connection with an HTTP
   // server.
 };
-

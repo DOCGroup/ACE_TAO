@@ -13,11 +13,9 @@
 # include "tao/Transport_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (TAO,
            Transport_Cache_Manager,
            "$Id$")
-
 
 TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core)
   : percent_ (orb_core.resource_factory ()->purge_percentage ()),
@@ -98,8 +96,6 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
   // are holding our lock
   this->purging_strategy_->update_item (int_id.transport ());
 
-
-
   int retval = this->cache_map_.bind (ext_id,
                                       int_id,
                                       entry);
@@ -118,7 +114,6 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                       "unable to bind in the first attempt. "
                       "Trying with a new index\n"));
         }
-
 
       // There was an entry like this before, so let us do some
       // minor adjustments and rebind
@@ -194,8 +189,6 @@ TAO_Transport_Cache_Manager::find (const TAO_Cache_ExtId &key,
 
   return status;
 }
-
-
 
 int
 TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
@@ -284,7 +277,6 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
   return 0;
 }
 
-
 int
 TAO_Transport_Cache_Manager::update_entry (HASH_MAP_ENTRY *&entry)
 {
@@ -307,8 +299,7 @@ TAO_Transport_Cache_Manager::update_entry (HASH_MAP_ENTRY *&entry)
 }
 
 int
-TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &reactor_registered,
-                                      TAO_EventHandlerSet &unregistered)
+TAO_Transport_Cache_Manager::close_i (TAO_Connection_Handler_Set &handlers)
 {
   HASH_MAP_ITER end_iter =
     this->cache_map_.end ();
@@ -322,10 +313,8 @@ TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &reactor_registered,
 
       if ((*iter).int_id_.recycle_state () != ACE_RECYCLABLE_CLOSED)
         {
-          // Get the transport to fill its associated connection's handle in
-          // the handle sets.
-          (*iter).int_id_.transport ()->provide_handle (reactor_registered,
-                                                        unregistered);
+          // Get the transport to fill its associated connection's handler.
+          (*iter).int_id_.transport ()->provide_handler (handlers);
           // Inform the transport that has a reference to the entry in the
           // map that we are *gone* now. So, the transport should not use
           // the reference to the entry that he has, to acces us *at any
@@ -463,12 +452,13 @@ TAO_Transport_Cache_Manager::purge (void)
         int count = 0;
         for(int i = 0; count < amount && i < sorted_size; i++)
           {
-            if (this->is_entry_idle(sorted_set[i]))
+            if (this->is_entry_idle (sorted_set[i]))
               {
                 sorted_set[i]->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
 
                 TAO_Transport* transport = sorted_set[i]->int_id_.transport ();
-                if (transports_to_be_closed.push (TAO_Transport::_duplicate(transport)) != 0)
+                transport->add_reference ();
+                if (transports_to_be_closed.push (transport) != 0)
                   {
                     ACE_DEBUG ((LM_INFO,
                                 ACE_TEXT ("TAO (%P|%t) - ")
@@ -483,16 +473,6 @@ TAO_Transport_Cache_Manager::purge (void)
                                           ACE_TEXT ("cache: [%d] \n"),
                                           transport->id ()));
                   }
-
-                // We need to save the cache_map_entry before we
-                // set it to zero, so we can call purge_entry_i()
-                // after we call close_connection_no_purge ().
-                HASH_MAP_ENTRY* entry = transport->cache_map_entry ();
-
-                // This is a bit ugly, but we must do this to
-                // avoid taking and giving locks inside this loop.
-                transport->cache_map_entry (0);
-                this->purge_entry_i (entry);
 
                 // Count this as a successful purged entry
                 count++;
@@ -512,8 +492,10 @@ TAO_Transport_Cache_Manager::purge (void)
       if (transports_to_be_closed.pop (transport) == 0)
         {
           if (transport)
-            transport->close_connection_no_purge ();
-          TAO_Transport::release (transport);
+            {
+              transport->close_connection ();
+              transport->remove_reference ();
+            }
         }
     }
 

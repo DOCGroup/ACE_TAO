@@ -119,13 +119,6 @@ public:
   /// Must be called on a non-empty queue.
   virtual const ACE_Time_Value& earliest_time (void) const;
 
-  /// Schedules a timer.
-  virtual long schedule (const TYPE& type,
-                         const void* act,
-                         const ACE_Time_Value& future_time,
-                         const ACE_Time_Value& interval
-                           = ACE_Time_Value::zero);
-
   /// Changes the interval of a timer (and can make it periodic or non
   /// periodic by setting it to ACE_Time_Value::zero or not).
   virtual int reset_interval (long timer_id,
@@ -165,7 +158,15 @@ public:
 
   /// Reads the earliest node from the queue and returns it.
   virtual ACE_Timer_Node_T<TYPE>* get_first (void);
-  
+
+protected:
+
+  /// Schedules a timer.
+  virtual long schedule_i (const TYPE& type,
+                           const void* act,
+                           const ACE_Time_Value& future_time,
+                           const ACE_Time_Value& interval);
+
 private:
   // The following are documented in the .cpp file.
   ACE_Timer_Node_T<TYPE>* get_first_i (void) const;
