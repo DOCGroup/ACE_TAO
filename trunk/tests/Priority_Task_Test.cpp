@@ -19,6 +19,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
+#include "ace/Thread_Priority.h"
 #include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -52,9 +53,12 @@ Priority_Task::close (u_long)
 int
 Priority_Task::open (void *arg)
 {
-  this->priority_ = *(int *) arg;
+  ACE_Thread_Priority priority(ACE_Thread_Priority::ACE_HIGH_PRIORITY_CLASS,
+			       ACE_Thread_Priority::Thread_Priority(*(int *) arg));
+
   // Become an active object.
-  ACE_ASSERT (this->activate (THR_NEW_LWP, 1, 0, this->priority_) != -1);
+  ACE_ASSERT (this->activate (THR_NEW_LWP, 1, 0,
+			      priority.os_default_thread_priority()) != -1);
   return 0;
 }
 
@@ -90,7 +94,7 @@ main (int, char *[])
 
   int i;
 
-  // Spawn of ACE_MAX_ITERATIONS of tasks, passing each one their
+  // Spawn off ACE_MAX_ITERATIONS of tasks, passing each one their
   // iteration number as their priority.
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)

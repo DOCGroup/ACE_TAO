@@ -41,6 +41,7 @@ run()
 
 echo "Starting tests..."
 
+run TSS_Test			# uses Task, Mutex, Guard
 run Time_Value_Test
 run SString_Test
 run Naming_Test			# uses Naming_Context, WString
@@ -64,7 +65,6 @@ run Reactor_Notify_Test		# uses Reactor's notify() method, Task
 run Reactor_Timer_Test		# uses Event_Handler, Reactor
 run Reader_Writer_Test		# uses Thread_Manager, Mutex
 run SOCK_Test			# uses Thread_Manager, SOCK_SAP
-run TSS_Test			# uses Task, Mutex, Guard
 
 # ifdef ACE_HAS_STREAM_PIPES
 run SPIPE_Test			# uses SPIPE_Acceptor/Connector, Thread_Manager
