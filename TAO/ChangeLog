@@ -1,3 +1,18 @@
+Mon Mar 31 18:05:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Services.cpp:
+        * tao/Services.h:
+        * tao/Services.i:
+
+          Removed these files. They were supposed to be removed from the
+          main trunk but there was a glitch during a branch merge and
+          ther were still around, and obviously got carried over to
+          this branch.
+
+        * tao/IFR_Client/TAO_IFR_Client.dsp:
+
+          Turned on RTTI for the hand-crafted files.
+
 Sun Mar 30 21:13:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_interface.cpp:
