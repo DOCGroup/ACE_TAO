@@ -100,23 +100,24 @@ Client_i::parse_args (void)
 void
 Client_i::time (void)
 {
-  // Make the RMI.
-  CORBA::Long timedate = this->server_->time (this->env_);
-
-  // @@ Darrell, please rewrite this using the TAO_TRY/TAO_CATCH
-  // macros!
-
-  if (this->env_.exception () != 0)
-    this->env_.print_exception ("from time");
-  else
+  TAO_TRY
     {
+      // Make the RMI.
+      CORBA::Long timedate = this->server_->time (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      // Print out Value
       char *ascii_timedate =
         ACE_OS::ctime (ACE_reinterpret_cast (time_t *, &timedate));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "string time is %s\n",
-                  ascii_timedate));
+      ACE_DEBUG ((LM_DEBUG, "string time is %s\n", ascii_timedate));
     }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Client_i::time");
+      return;
+    }
+  TAO_ENDTRY;
 }
 
 // Execute client example code.
