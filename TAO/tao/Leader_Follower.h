@@ -182,15 +182,11 @@ public:
   int set_server_thread (ACE_Time_Value *max_wait_time);
   // Calls <set_server_thread> on the leader/followers object.
 
-  int reset_server_thread (void);
-  // Calls <reset_server_thread> and <elect_new_leader> on the
-  // leader/followers object.
-
 private:
   TAO_Leader_Follower &leader_follower_;
   // Reference to leader/followers object.
 
-  int auto_reset_;
+  int call_reset_;
   // Remembers whether we have to call the reset method in the
   // destructor.
 };
