@@ -45,10 +45,6 @@ main (int argc, char *argv[])
   ACE_TLI_Acceptor   server;
   ACE_TLI_Stream     new_stream;
 
-  /* Allow up to 100 simultaneous threads */
-  if (thr_mgr.open (100) == -1)
-    ACE_OS::perror ("thr_mgr.open"), ACE_OS::exit (1);
-
   // Open the server and reuse the address if in use...
   if (server.open (ACE_INET_Addr (port), 1) == -1)
     ACE_OS::t_error ("server.open"), ACE_OS::exit (1);
