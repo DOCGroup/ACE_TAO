@@ -89,8 +89,9 @@ ProxyPushConsumer_i::push (const CORBA::Any &data,
   RtecEventComm::EventSet events (1);
   events.length (1);
 
-  RtecEventComm::Event& e = events[0];
-  RtecEventComm::Event eqos = qos_.publications[0].event;
+  RtecEventComm::Event &e = events[0];
+  RtecEventComm::Event eqos =
+    qos_.publications[0].event;
 
   // NOTE: we initialize the <EventHeader> field using the 1st
   // <publications> from the <SupplierQOS>.so we assume that
@@ -100,13 +101,18 @@ ProxyPushConsumer_i::push (const CORBA::Any &data,
   e.header.type = eqos.header.type;
 
   ACE_hrtime_t t = ACE_OS::gethrtime ();
-  ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
+
+  // @@ Pradeep, now that we've got the Time Service in TAO, do we
+  // need to use this ORBSVCS_Time stuff?
+  ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time,
+                                 t);
   e.header.ec_recv_time = ORBSVCS_Time::zero;
   e.header.ec_send_time = ORBSVCS_Time::zero;
 
   e.data.any_value = data;
 
-  this->ppc_->push (events, TAO_TRY_ENV);
+  this->ppc_->push (events,
+                    TAO_TRY_ENV);
 }
 
 void

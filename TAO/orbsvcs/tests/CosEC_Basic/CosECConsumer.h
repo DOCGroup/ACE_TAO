@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
-//
+
 // ============================================================================
 //
 // = FILENAME
@@ -11,6 +11,7 @@
 //
 // = DESCRIPTION
 //   Defines a simple Push Consumer.
+/
 // ============================================================================
 
 #ifndef COSECCONSUMER_H_
@@ -25,37 +26,41 @@ class CosECConsumer : public POA_CosEventComm::PushConsumer
 {
   // = TITLE
   //   CosECConsumer
+  //
   // = DESCRIPTION
-  //   The CosECConsumer is a simple PushConsumer that connects to the CosEC
-  //   and receives events from it.
+  //   The CosECConsumer is a simple PushConsumer that connects to the
+  //   CosEC and receives events from it.
 
 public:
- void open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-            CORBA::Environment& TAO_TRY_ENV);
+  void open (CosEventChannelAdmin::EventChannel_ptr event_channel,
+             CORBA::Environment& TAO_TRY_ENV);
   // This method connects the consumer to the EC.
 
   void close (CORBA::Environment &TAO_TRY_ENV);
   // Disconnect from the EC.
 
   void connect (CORBA::Environment &TAO_TRY_ENV);
+  // @@ Pradeep, please add a comment here.
 
   void disconnect (CORBA::Environment &TAO_TRY_ENV);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
-  virtual void push (const CORBA::Any & data,
+  virtual void push (const CORBA::Any &data,
                      CORBA::Environment &TAO_TRY_ENV);
   // push the event to the consumer.
 
- virtual void disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV);
- // disconnect the consumer from the EC.
+  virtual void disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV);
+  // disconnect the consumer from the EC.
 
 private:
- CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
+  CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC using this proxy.
 
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   // We talk to the EC using this proxy.
 };
 
-#endif //COSECCONSUMER_H_
+// @@ Pradeep, please don't use // here, but use /* ... */ instead.
+// Please fix all uses of this in your code since it's not portable.
+#endif // COSECCONSUMER_H_
