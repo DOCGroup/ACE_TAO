@@ -1,0 +1,27 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/giop.hh
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+typedef CORBA_SEQUENCE<CORBA_Octet>  1    37      19     1     0   0.1   0.0
+class IOP{};                         39   109     45    21     0   0.5   0.0
+class GIOP{};                        112  321     65 ? 120     0   1.8   0.0
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                               129   145     0   1.1   0.0
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+
