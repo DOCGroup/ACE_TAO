@@ -40,7 +40,7 @@ public:
     SUPPLIER_CONNECTOR = 020,
     CONSUMER_CONNECTOR = 040,
 
-    DEFAULT_TIMEOUT = 32
+    MAX_TIMEOUT = 32
     // The maximum timeout for trying to re-establish connections.
   };
 
