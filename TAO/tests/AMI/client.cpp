@@ -135,7 +135,7 @@ public:
       ACE_CHECK;
     };
 
-  void get_yadda (CORBA::Long,
+  void get_yadda (CORBA::Long result,
                   CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
