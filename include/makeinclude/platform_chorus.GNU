@@ -7,7 +7,14 @@ optimize = 1
 shared_libs =
 static_libs = 1
 
+#
+# The following file includes definitions such as $(CC), $(XDIR), etc.
+#
 include         $(CLASSIXDIR)/dtool/htgt-cf.rf
+#
+# Tool PATH
+#
+TOOLDIR		= $(XDIR)/bin
 INC_DIR         = $(CLASSIXDIR)/include
 BIN_DIR		=
 LIB_DIR		= $(CLASSIXDIR)/lib
@@ -31,13 +38,12 @@ LD              = $(CXX)
 LDFLAGS		+= -r -Ur -nostdlib			\
 		   -L$(LIB_DIR)/CC			\
 		   -L$(LIB_DIR)/classix
-#LIBS		+= -lC -lcx.u
+
 OCFLAGS		+= -O2
 PIC		= -fPIC
-#AR		= ar
-AR		= $(XDIR)/bin/ar
-#ARFLAGS		= rv
+
+AR		= $(TOOLDIR)/ar
 ARFLAGS		= srv
-#RANLIB		= /bin/true
-RANLIB		= $(XDIR)/bin/ranlib
-PRELIB	= @true
+
+RANLIB		= $(TOOLDIR)/ranlib
+PRELIB          = @true
