@@ -22,10 +22,6 @@ main (int argc, char **argv)
 {
   Server_i server;
   
-  // @@ *done*Kirthika, I don't think the error-handling logic is quite
-  // correct yet.  Can you please make sure that you check for error
-  // returns from these methods and bail out of main() if you do,
-  // rather than fall through to other methods?
   if (server.init (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failure during Initialisation: init ()\n"),
