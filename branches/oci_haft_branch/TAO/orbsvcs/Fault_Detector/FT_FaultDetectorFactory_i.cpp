@@ -18,23 +18,33 @@
 #include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
 
-#ifdef FDF_NOISY
-# define METHOD_ENTRY(name)  \
-    ACE_ERROR (( LM_ERROR,    \
+// Use this macro at the beginning of CORBA methods
+// to aid in debugging.
+#define METHOD_ENTRY(name)    \
+    ACE_DEBUG (( LM_DEBUG,    \
     "Enter %s\n", #name       \
       ))
 
-# define METHOD_RETURN(name) \
-    ACE_ERROR (( LM_ERROR,    \
+// Use this macro to return from CORBA methods
+// to aid in debugging.  Note that you can specify
+// the return value after the macro, for example:
+// METHOD_RETURN(Plugh::plover) xyzzy; is equivalent
+// to return xyzzy;
+// METHOD_RETURN(Plugh::troll); is equivalent to
+// return;
+// WARNING: THIS GENERATES TWO STATEMENTS!!! THE FOLLOWING
+// will not do what you want it to:
+//  if (cave_is_closing) METHOD_RETURN(Plugh::pirate) aarrggh;
+// Moral:  Always use braces.
+#define METHOD_RETURN(name)   \
+    ACE_DEBUG (( LM_DEBUG,    \
       "Leave %s\n", #name     \
       ));                     \
     return /* value goes here */
-#else
-# define METHOD_ENTRY(name)
 
-# define METHOD_RETURN(name)  \
-    return /* value goes here */
-#endif
+
+//////////////////////////////////////////////////////
+// FT_FaultDetectorFactory_i  Construction/destruction
 
 FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   : ior_output_file_(0)
@@ -43,7 +53,6 @@ FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   , removed_(0)
 {
 }
-
 
 FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
 {
@@ -58,6 +67,9 @@ FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
   threadManager_.close ();
 }
 
+////////////////////////////////////////////
+// FT_FaultDetectorFactory_i private methods
+
 void FT_FaultDetectorFactory_i::shutdown_i()
 {
   // assume mutex is locked
@@ -70,6 +82,28 @@ void FT_FaultDetectorFactory_i::shutdown_i()
     }
   }
 }
+
+int FT_FaultDetectorFactory_i::write_IOR()
+{
+  int result = -1;
+  FILE* out = ACE_OS::fopen (ior_output_file_, "w");
+  if (out)
+  {
+    ACE_OS::fprintf (out, "%s", static_cast<const char *>(ior_));
+    ACE_OS::fclose (out);
+    result = 0;
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+      "Open failed for %s\n", ior_output_file_
+    ));
+  }
+  return result;
+}
+
+//////////////////////////////////////////////////////
+// FT_FaultDetectorFactory_i public, non-CORBA methods
 
 int FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
 {
@@ -112,7 +146,8 @@ const char * FT_FaultDetectorFactory_i::identity () const
 }
 
 
-int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager)
+int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager
+  ACE_ENV_ARG_DECL)
 {
   int result = 0;
   orb_ = orbManager.orb();
@@ -166,7 +201,50 @@ int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager)
   return result;
 }
 
+void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i * detector)
+{
+  InternalGuard guard (internals_);
+  if (id < detectors_.size())
+  {
+    if(detectors_[id] == detector)
+    {
+      delete detectors_[id];
+      detectors_[id] = 0;
+      removed_ += 1;
+      if (detectors_.size() == removed_)
+      {
+        ACE_ERROR (( LM_ERROR,
+          "FaultDetectorFactory is idle.\n"
+          ));
+        if (quitOnIdle_)
+        {
+          ACE_ERROR (( LM_ERROR,
+            "FaultDetectorFactory exits due to quit on idle option.\n"
+            ));
+          orb_->shutdown (0);
+        }
+      }
+    }
+    else
+    {
+      ACE_ERROR (( LM_ERROR,
+        "Remove detector %d mismatch.\n",
+        ACE_static_cast(int, id)
+        ));
+    }
+  }
+  else
+  {
+    ACE_ERROR (( LM_ERROR,
+      "Attempt to remove invalid detector %d. Limit %d.\n",
+      ACE_static_cast(int, id),
+      ACE_static_cast(int, detectors_.size())
+      ));
+  }
+}
 
+//////////////////////////////////////////
+// FT_FaultDetectorFactory_i CORBA methods
 
 void FT_FaultDetectorFactory_i::change_properties (
     const FT::Properties & property_set
@@ -404,81 +482,23 @@ void FT_FaultDetectorFactory_i::delete_object (
   METHOD_RETURN(FT_FaultDetectorFactory_i::delete_object);
 }
 
-int FT_FaultDetectorFactory_i::write_IOR()
-{
-  int result = -1;
-  FILE* out = ACE_OS::fopen (ior_output_file_, "w");
-  if (out)
-  {
-    ACE_OS::fprintf (out, "%s", static_cast<const char *>(ior_));
-    ACE_OS::fclose (out);
-    result = 0;
-  }
-  else
-  {
-    ACE_ERROR ((LM_ERROR,
-      "Open failed for %s\n", ior_output_file_
-    ));
-  }
-  return result;
-}
-
-
-void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i * detector)
-{
-  InternalGuard guard (internals_);
-  if (id < detectors_.size())
-  {
-    if(detectors_[id] == detector)
-    {
-      delete detectors_[id];
-      detectors_[id] = 0;
-      removed_ += 1;
-      if (detectors_.size() == removed_)
-      {
-        ACE_ERROR (( LM_ERROR,
-          "FaultDetectorFactory is idle.\n"
-          ));
-        if (quitOnIdle_)
-        {
-          ACE_ERROR (( LM_ERROR,
-            "FaultDetectorFactory exits due to quit on idle option.\n"
-            ));
-          orb_->shutdown (0);
-        }
-      }
-    }
-    else
-    {
-      ACE_ERROR (( LM_ERROR,
-        "Remove detector %d mismatch.\n",
-        ACE_static_cast(int, id)
-        ));
-    }
-  }
-  else
-  {
-    ACE_ERROR (( LM_ERROR,
-      "Attempt to remove invalid detector %d. Limit %d.\n",
-      ACE_static_cast(int, id),
-      ACE_static_cast(int, detectors_.size())
-      ));
-  }
-}
-
 CORBA::Boolean FT_FaultDetectorFactory_i::is_alive ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FT_FaultDetectorFactory_i::is_alive);
-
   METHOD_RETURN(FT_FaultDetectorFactory_i::is_alive)
     1;
 }
 
+///////////////////////////////////
+// Template instantiation for
+// competence-challenged compilers.
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template ACE_Vector<Fault_Detector_i *>;
+  template ACE_Guard<ACE_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Vector<Fault_Detector_i *>
+# pragma ACE_Guard<ACE_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-
+#include "ace/post.h"

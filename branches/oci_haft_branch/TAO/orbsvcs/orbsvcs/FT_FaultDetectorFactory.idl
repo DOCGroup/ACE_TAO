@@ -1,0 +1,113 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file    FT_FaultDetectorFactory.idl
+ *
+ *  $Id$
+ *
+ *  @author:  Dale Wilson, OCI <wilson_d@ociweb.com>
+ */
+//=============================================================================
+
+#ifndef _FT_DETECTOR_FACTORY_IDL_
+#define _FT_DETECTOR_FACTORY_IDL_
+
+// A TAO specific addition to FT_CORBA.
+// No interface was specified for the FaultDetector
+// in the FT CORBA specification, so we decided to
+// define a GenericFactory to create FaultDetectors and
+// control the FaultDetectors through the GenericFactory
+// interface (with extenstions.)
+
+#pragma prefix "omg.org"
+
+#include "orbsvcs/FT_CORBA.idl"
+#include "orbsvcs/FT_Replica.idl"
+#include "orbsvcs/PortableGroup.idl"
+
+module FT
+{
+  ///////////////////////////////////////////////////
+  // names for properties used in Fault Tolerant CORBA
+  /// TimeBase::TimeT how often to call is_alive();
+  const string FT_FAULT_MONITORING_INTERVAL = "MonitoringInterval";
+
+  /// FT::FaultNotifier where to send fault reports
+  const string FT_NOTIFIER = "Notifier";
+
+  /// FT::PullMonitorable the object to monitor
+  const string FT_MONITORABLE = "Monitorable";
+
+  ///////////////////////////////////////////
+  // Names specified in the FT CORBA specification
+
+  const string FT_EVENT_TYPE_DOMAIN = "FT_CORBA";
+  const string FT_EVENT_TYPE_NAME = "ObjectCrashFault";
+
+  /// FT::FTDomainId domain to report to notifier
+  const string FT_DOMAIN_ID = "FTDomainId";
+
+  /// FT::Location location to report to notifier
+  const string FT_LOCATION = "Location";
+
+  /// FT::TypeId type to report to notifier
+  const string FT_TYPE_ID = "TypeId";
+
+  /// FT::ObjectGroupId group to report to notifier
+  const string FT_GROUP_ID = "GroupId";
+
+  // end of names from FT CORBA specification
+  ///////////////////////////////////////////
+  /**
+   * A FaultDetectorFactory creates and manages a set of FaultDetectors.
+   *
+   * A FaultDetectorFactory acts as an agent for a ReplicationManager
+   * which needs to create one or more FaultDetectors at a particular
+   * location.
+   *
+   * At present, FaultDetectors monitor via the is_alive() method of
+   * the PullMonitorable interface which must be implemented by the
+   * object-to-be-monitored.  Other monitoring techniques may be
+   * supported in the future.  In particular heartbeat/watchdog
+   * monitoring is anticipated.
+   *
+   * Notifications of failing objects are sent to a FaultNotifier
+   * which is responsible for distributing them to interested parties.
+   *
+   * The implementation of the GenericFactory::create_object method
+   * creates a FaultDetector object to monitor a single monitorable.
+   * The FaultDetector is *not* a first-class CORBA object.  The
+   * Object reference returned by create_object will be nil.  You
+   * cannot interact directly with a FaultDetector.
+   * The only interaction that a FaultDetector needs after it is
+   * started is to tell it to change it's monitoring parameters,
+   * or to shut down.  The change_properties () and shutdown ()
+   * methods on the Factory provide the needed capabilities.
+   *
+   * The create_object requires the following criteria:
+   *  FT::Notifier Notifier
+   *  FT::PullMonitorable Monitorable
+   *  FT::DomainId domain_id,
+   *  FT::ObjectGroupId group_id,
+   *  FT::Location object_location,
+   *  FT::_TypeId object_type
+   */
+  interface FaultDetectorFactory : GenericFactory, PullMonitorable
+  {
+    /**
+     * Adjust properties on-the-fly.
+     * Applies to all FaultDetectors created by this factory.
+     * @param property_set is a set of properties that (may) have new values.
+     */
+    void change_properties(in Properties property_set)
+      raises (InvalidProperty);
+
+    /**
+     * Ask the Fault Detector Factory to come to an orderly end.
+     */
+    oneway void shutdown();
+  };
+};
+
+#endif // for #ifndef _FT_DETECTOR_FACTORY_IDL_

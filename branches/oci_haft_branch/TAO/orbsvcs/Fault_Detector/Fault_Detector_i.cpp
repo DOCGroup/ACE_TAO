@@ -15,6 +15,23 @@
 #include "Fault_Detector_i.h"
 #include "FT_FaultDetectorFactory_i.h"
 
+///////////////////////////////
+// Fault_Detector_i static data
+
+ACE_Time_Value Fault_Detector_i::sleepTime_(1,0);
+
+
+/////////////////////////////////////////
+// Fault_Detector_i public static methods
+
+void Fault_Detector_i::setTimeValue(ACE_Time_Value value)
+{
+  sleepTime_ = value;
+}
+
+////////////////////////////////////////////
+// Fault_Detector_i construction/destruction
+
 Fault_Detector_i::Fault_Detector_i (
       FT_FaultDetectorFactory_i & factory,
       CORBA::ULong id,
@@ -41,6 +58,25 @@ Fault_Detector_i::Fault_Detector_i (
 Fault_Detector_i::~Fault_Detector_i ()
 {
 }
+
+////////////////////////////////////
+// Fault_Detector_i public interface
+
+
+void Fault_Detector_i::requestQuit()
+{
+  quitRequested_ = 1;
+  // wake up the thread
+  sleep_.signal ();
+}
+
+void Fault_Detector_i::start(ACE_Thread_Manager & threadManager)
+{
+  threadManager.spawn(thr_func, this);
+}
+
+///////////////////////////////////////////////////
+// Fault_Detector_i private implementation methods
 
 void Fault_Detector_i::run()
 {
@@ -82,7 +118,6 @@ void Fault_Detector_i::run()
   // this exception-safe and stupid-return-safe.
   factory_.removeDetector (id_, this);
 }
-
 
 void Fault_Detector_i::notify()
 {
@@ -126,26 +161,22 @@ void Fault_Detector_i::notify()
     }
     ACE_CATCHANY
     {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        "Fault Detector cannot send notification.\n");
     }
     ACE_ENDTRY;
   }
   else
   {
-    // todo log error: cannot create event
+    ACE_ERROR ((LM_ERROR,
+      "Fault Detector cannot create Structured Event.\n"
+      ));
   }
 }
 
-void Fault_Detector_i::requestQuit()
-{
-  quitRequested_ = 1;
-  // wake up the thread
-  sleep_.signal ();
-}
 
-void Fault_Detector_i::start(ACE_Thread_Manager & threadManager)
-{
-  threadManager.spawn(thr_func, this);
-}
+/////////////////////////////////////////////////////////
+// Fault_Detector_i private static implementation methods
 
 //static
 ACE_THR_FUNC_RETURN Fault_Detector_i::thr_func (void * arg)
@@ -155,11 +186,4 @@ ACE_THR_FUNC_RETURN Fault_Detector_i::thr_func (void * arg)
   return 0;
 }
 
-//static
-ACE_Time_Value Fault_Detector_i::sleepTime_(1,0);
-
-//static
-void Fault_Detector_i::setTimeValue(ACE_Time_Value value)
-{
-}
-
+#include "ace/post.h"
