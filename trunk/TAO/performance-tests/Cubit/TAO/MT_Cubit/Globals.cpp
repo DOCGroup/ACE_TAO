@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Globals.h"
+#include "ace/Log_Msg.h"
 
 Globals::Globals (void)
   : thr_create_flags (0),
