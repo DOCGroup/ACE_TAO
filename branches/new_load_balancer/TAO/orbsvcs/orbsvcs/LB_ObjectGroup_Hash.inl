@@ -10,6 +10,8 @@ TAO_LB_ObjectGroup_Hash::operator() (
   return object_group->_hash (max);
 }
 
+// -------------------------------------------------------------------
+
 ACE_INLINE CORBA::ULong
 TAO_LB_FactoryCreationId_Hash::operator() (
   const TAO_LoadBalancing::FactoryCreationId &factory_creation_id) const

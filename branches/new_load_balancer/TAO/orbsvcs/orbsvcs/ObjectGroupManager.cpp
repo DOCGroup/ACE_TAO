@@ -1,8 +1,11 @@
 // -*- C++ -*-
 
-// $Id$
+#include "ObjectGroupManager.h"
 
-ACE_RCSID(orbsvcs, ObjectGroupManager, "$Id$")
+
+ACE_RCSID (LoadBalancing,
+           ObjectGroupManager,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "LoadBalancer_i.i"
