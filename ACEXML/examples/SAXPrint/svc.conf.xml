@@ -1,5 +1,15 @@
 <?xml version="1.0"?>
-<!-- <!DOCTYPE ACE_Svc_Conf> -->
+<!DOCTYPE ACE_Svc_Conf PUBLIC 'GOODSAM' 'http://ace.cs.wustl.edu/dtd/ACE_SVCCONF.DTD'
+  [
+    <!NOTATION goody PUBLIC 'NBC' 'http://hardcoreace.com/'>
+    <!NOTATION frodo PUBLIC 'ABC'>
+    <!NOTATION bilbo SYSTEM "C:/ACE-GUIDELINE">
+    <!ENTITY ccm 'CCM_App'>
+    <!ENTITY pippin PUBLIC 'GOTO' 'http://taozen.com/' NDATA NBC>
+    <!ENTITY sam PUBLIC 'SHIRE' 'http://taozen.com/'>
+    <!ENTITY gandolf SYSTEM 'D:/RINGS.DOT'>
+  ]>
+
 <ACE_Svc_Conf>
 <static id="ACE_Service_Manager">
   <params>-d</params>
@@ -32,7 +42,7 @@
   </module>
 </streamdef>
 
-<stream id="CCM_App">
+<stream id="&ccm;">
   <module>
     <remove id="Device_Adapter"/>
     <!-- <remove id="Event_Analyzer"/> -->

@@ -30,7 +30,11 @@ ACEXML_Parser::ACEXML_Parser (void)
   :   dtd_handler_ (0),
       entity_resolver_ (0),
       content_handler_ (0),
-      error_handler_ (0)
+      error_handler_ (0),
+      instream_ (0),
+      doctype_ (0),
+      dtd_system_ (0),
+      dtd_public_ (0)
 {
 }
 
@@ -115,6 +119,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
   this->parse_xml_prolog (xmlenv);
   ACEXML_CHECK;
 
+  // @@ Should startDocument come before or after parsing the DTD definition?
   this->content_handler_->startDocument (xmlenv);
   ACEXML_CHECK;
 
@@ -169,7 +174,8 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
         }
     }
 
-  this->parse_element (xmlenv);
+  // Now parse root element.
+  this->parse_element (1, xmlenv);
   ACEXML_CHECK;
 
   this->content_handler_->endDocument (xmlenv);
@@ -213,6 +219,19 @@ ACEXML_Parser::skip_whitespace (ACEXML_Char **whitespace)
     *whitespace = this->obstack_.freeze ();
 
   return ch;
+}
+
+int
+ACEXML_Parser::skip_whitespace_count (ACEXML_Char *peeky)
+{
+  int wscount = 0;
+  ACEXML_Char dummy;
+  ACEXML_Char &forward = (peeky == 0 ? dummy : *peeky);
+
+  for (;this->is_whitespace ((forward = this->peek ())); ++wscount)
+      this->get ();
+
+  return wscount;
 }
 
 void
@@ -454,7 +473,7 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
       this->get () != 'P' ||
       this->get () != 'E')
     {
-      xmlenv.exception (new ACEXML_SAXParseException ("Expecting 'DOCTYPE'"));
+      xmlenv.exception (new ACEXML_SAXParseException ("Expecting keyword 'DOCTYPE'"));
       return -1;
     }
 
@@ -465,26 +484,36 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
       return -1;
     }
 
-  //  ACEXML_Char *doctype =
-  this->read_name (nextch);
+  this->doctype_ = this->read_name (nextch);
+
+  this->skip_whitespace_count (&nextch);
+
+  if (nextch == 'S' || nextch == 'P') // ExternalID defined
+    {
+      this->parse_external_id_and_ref (this->dtd_public_,
+                                       this->dtd_system_,
+                                       xmlenv);
+      if (xmlenv.exception () != 0)
+        return -1;
+      else if (this->dtd_public_ == 0)
+          cout << "ACEXML Parser got external DTD id: SYSTEM " << this->dtd_system_
+               << endl;
+      else
+          cout << "==> ACEXML Parser got DTD external id: PUBLIC "
+               << this->dtd_public_
+               << " "
+               << this->dtd_system_
+               << endl;
+    }
 
   nextch = this->skip_whitespace (0);
-
   switch (nextch)
     {
     case '[':                   // Internal DTD definitionl
       if (this->parse_internal_dtd (xmlenv) < 0)
         return -1;              // Error in markupdecl
       break;
-    case 'S':                   // SYSTEM
-    case 'P':                   // PUBLIC
-      {
-        // Error: We don't handle either system or public ID yet.
-        xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-        return -1;
-      }
-      break;
-    case '>':                   // No DTD definition
+    case '>':                   // End of DTD definition
       // this is an XML document without a dectypedecl.
       return 0;
     case '0':
@@ -494,13 +523,8 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
       break;
     }
 
-  nextch = this->skip_whitespace (0);
-
-  switch (nextch)
+  if (this->skip_whitespace (0) != '>')
     {
-    case '>':
-      return 0;                 // all is fine now.
-    default:
       xmlenv.exception (new ACEXML_SAXParseException ("Internal error"));
       return -1;
     }
@@ -508,7 +532,7 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
 }
 
 void
-ACEXML_Parser::parse_element (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // Parse STag.
@@ -518,6 +542,14 @@ ACEXML_Parser::parse_element (ACEXML_Env &xmlenv)
   if (startname == 0)
     {
       xmlenv.exception (new ACEXML_SAXParseException ("Unexpected EOF"));
+      return;
+    }
+
+  if (is_root &&
+      this->doctype_ != 0 &&
+      ACE_OS_String::strcmp (startname, this->doctype_) != 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException ("Root element missing."));
       return;
     }
 
@@ -715,7 +747,7 @@ ACEXML_Parser::parse_element (ACEXML_Env &xmlenv)
             return;
 
           default:              // a new nested element?
-            this->parse_element (xmlenv);
+            this->parse_element (0, xmlenv);
             ACEXML_CHECK;
             break;
           }
@@ -1076,7 +1108,7 @@ ACEXML_Parser::get_quoted_string (ACEXML_Char *&str)
 int
 ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
 {
-  ACEXML_Char nextch = this->get ();
+  ACEXML_Char nextch = this->skip_whitespace (0);
 
   do {
     switch (nextch)
@@ -1106,7 +1138,7 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
                     break;
 
                   default:
-                    xmlenv.exception (new ACEXML_SAXParseException ("Invalid decl spec"));
+                    xmlenv.exception (new ACEXML_SAXParseException ("Invalid keyword in decl spec"));
                     return -1;
                   }
                 break;
@@ -1152,13 +1184,15 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
           }
         break;
 
-      case '%':                 // DeclSep.
+      case '%':                 // DeclSep.  Define new PEreference...
         break;
 
       case ']':                 // End of internal definitions.
-        return 0;
+        return 0;               // Not applicable when parsing external DTD spec.
 
-      case 0:
+      case 0:                   // This may not be an error if we decide
+                                // to generalize this function to handle both
+                                // internal and external DTD definitions.
         xmlenv.exception (new ACEXML_SAXParseException ("Unexpected EOF"));
         return -1;
 
@@ -1189,8 +1223,134 @@ ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
 {
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-  return -1;
+  ACEXML_Char nextch;
+
+  if (this->get () != 'N' ||
+      this->get () != 'T' ||
+      this->get () != 'I' ||
+      this->get () != 'T' ||
+      this->get () != 'Y' ||
+      this->skip_whitespace_count (&nextch) == 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException ("Expecting keyword `ENTITY'"));
+      return -1;
+    }
+
+  int is_GEDecl = 1;
+  if (nextch == '%')            // This is a PEDecl.
+    {
+      is_GEDecl = 0;
+      this->get ();             // consume the '%'
+      if (this->skip_whitespace_count (&nextch) == 0)
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Can't use a reference when defining entity name"));
+          return -1;
+        }
+    }
+
+  ACEXML_Char *entity_name = this->read_name ();
+  if (entity_name == 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException ("Error reading ENTITY name."));
+      return -1;
+    }
+
+  this->skip_whitespace_count (&nextch);
+
+  if (nextch == '\'' || nextch == '"')
+    {
+      ACEXML_Char *entity_value = 0;
+
+      if (this->get_quoted_string (entity_value) != 0)
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Error reading ENTITY value."));
+          return -1;
+        }
+
+      if (is_GEDecl)
+        {
+          if (this->entities_.add_entity (entity_name, entity_value) != 0)
+            {
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Error storing entity definition (duplicate definition?)"));
+              return -1;
+            }
+        }
+      else
+        {
+          // @@ need to implement PEdecl lookup mechanism
+          xmlenv.exception (new ACEXML_SAXNotSupportedException ());
+          return -1;
+        }
+    }
+  else
+    {
+      ACEXML_Char *systemid, *publicid;
+
+      this->parse_external_id_and_ref (publicid, systemid, xmlenv);
+      if (xmlenv.exception () != 0)
+        return -1;
+
+      if (systemid == 0)
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Invalid ExternalID definition (system ID missing.)"));
+          return -1;
+        }
+
+      this->skip_whitespace_count (&nextch);
+      if (nextch == 'N')        // NDATA section followed
+        {
+          if (is_GEDecl == 0)
+            {
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Unexpecting keyword NDATA in PEDecl."));
+              return -1;
+            }
+
+          if (this->get () != 'N' ||
+              this->get () != 'D' ||
+              this->get () != 'A' ||
+              this->get () != 'T' ||
+              this->get () != 'A' ||
+              this->skip_whitespace_count (&nextch) == 0)
+            {
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Expecting keyword NDATA."));
+              return -1;
+            }
+
+          ACEXML_Char *ndata = this->read_name ();
+          this->dtd_handler_->unparsedEntityDecl (entity_name,
+                                                  publicid,
+                                                  systemid,
+                                                  ndata,
+                                                  xmlenv);
+          if (xmlenv.exception () != 0)
+            return -1;
+        }
+      else
+        {
+          // @@ Need to support external CharStream sources
+          cout << "ENTITY: (" << entity_name << ") ";
+
+          if (publicid == 0)
+            cout << "SYSTEM " << systemid << endl;
+          else
+            cout << "PUBLIC " << publicid << " " << systemid << endl;
+        }
+    }
+
+  // End of ENTITY definition
+  if (this->skip_whitespace (0) != '>')
+    {
+      xmlenv.exception (new ACEXML_SAXParseException
+                        ("Expecting end of ENTITY definition."));
+      return -1;
+    }
+  return 0;
 }
 
 int
@@ -1203,6 +1363,114 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::parse_notation_decl (ACEXML_Env &xmlenv)
 {
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-  return -1;
+  if (this->get () != 'N' ||
+      this->get () != 'O' ||
+      this->get () != 'T' ||
+      this->get () != 'A' ||
+      this->get () != 'T' ||
+      this->get () != 'I' ||
+      this->get () != 'O' ||
+      this->get () != 'N' ||
+      this->skip_whitespace_count () == 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException ("Expecting keyword `NOTATION'"));
+      return -1;
+    }
+
+  ACEXML_Char *notation = this->read_name ();
+  if (notation == 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException ("Invalid notation name."));
+      return -1;
+    }
+
+  this->skip_whitespace_count ();
+  ACEXML_Char *systemid, *publicid;
+
+  this->parse_external_id_and_ref (publicid, systemid, xmlenv);
+  if (xmlenv.exception () != 0)
+    return -1;
+
+  if (this->get () != '>')
+    {
+      xmlenv.exception (new ACEXML_SAXParseException
+                        ("Expecting NOTATION closing '>'."));
+      return -1;
+    }
+
+  this->dtd_handler_->notationDecl (notation,
+                                    publicid,
+                                    systemid,
+                                    xmlenv);
+  if (xmlenv.exception () != 0)
+    return -1;
+
+  return 0;
+}
+
+int
+ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
+                                          ACEXML_Char *&systemId,
+                                          ACEXML_Env &xmlenv)
+{
+  publicId = systemId = 0;
+  ACEXML_Char nextch = this->get ();
+
+  switch (nextch)
+    {
+    case 'S':                   // External SYSTEM id.
+      if (this->get () != 'Y' ||
+          this->get () != 'S' ||
+          this->get () != 'T' ||
+          this->get () != 'E' ||
+          this->get () != 'M' ||
+          this->skip_whitespace_count () == 0)
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Expecting keyword 'SYSTEM'"));
+          return -1;
+        }
+      if (this->get_quoted_string (systemId) != 0)
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Error while parsing SYSTEM literal for SYSTEM id."));
+          return -1;
+        }
+      break;
+    case 'P':                   // External PUBLIC id or previously defined PUBLIC id.
+      if (this->get () != 'U' ||
+          this->get () != 'B' ||
+          this->get () != 'L' ||
+          this->get () != 'I' ||
+          this->get () != 'C' ||
+          this->skip_whitespace_count () == 0)
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Expecting keyword 'PUBLIC'"));
+          return -1;
+        }
+      if (this->get_quoted_string (publicId) != 0)
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Error while parsing public literal for PUBLIC id."));
+          return -1;
+        }
+
+      this->skip_whitespace_count (&nextch);
+      if (nextch == '\'' || nextch == '"') // not end of NOTATION yet.
+        {
+          if (this->get_quoted_string (systemId) != 0)
+            {
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Error while parsing system literal for PUBLIC id."));
+              return -1;
+            }
+        }
+      break;
+    default:
+      xmlenv.exception (new ACEXML_SAXParseException
+                        ("Expecting either keyword `SYSTEM' or `PUBLIC'."));
+      return -1;
+    }
+  return 0;
 }

@@ -147,24 +147,38 @@ ACEXML_Print_Handler::startPrefixMapping (const ACEXML_Char *,
 // *** Methods inherit from ACEXML_DTDHandler.
 
 void
-ACEXML_Print_Handler::notationDecl (const ACEXML_Char *,
-                                    const ACEXML_Char *,
-                                    const ACEXML_Char *,
+ACEXML_Print_Handler::notationDecl (const ACEXML_Char *name,
+                                    const ACEXML_Char *publicID,
+                                    const ACEXML_Char *systemID,
                                     ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  cout << "* Event notationDecl: (" << name << ") ";
+
+  if (publicID == 0)
+    cout << "SYSTEM " << systemID << endl;
+  else if (systemID == 0)
+    cout << "PUBLIC " << publicID << endl;
+  else
+    cout << "PUBLIC " << publicID << " " << systemID << endl;
 }
 
 void
-ACEXML_Print_Handler::unparsedEntityDecl (const ACEXML_Char *,
-                                          const ACEXML_Char *,
-                                          const ACEXML_Char *,
-                                          const ACEXML_Char *,
+ACEXML_Print_Handler::unparsedEntityDecl (const ACEXML_Char *name,
+                                          const ACEXML_Char *publicID,
+                                          const ACEXML_Char *systemID,
+                                          const ACEXML_Char *notationName,
                                           ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  cout << "* Unparsed Entity: " << name;
+
+  if (publicID == 0)
+    cout << " SYSTEM " << systemID;
+  else
+    cout << " PUBLIC " << publicID << " " << systemID;
+
+  cout << " NDATA " << notationName << endl;
 }
 
 // Methods inherit from ACEXML_EnitityResolver.

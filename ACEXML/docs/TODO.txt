@@ -17,11 +17,10 @@
   <li>Add Schema paring ability.  It is not clear to me, however, how
       to specify which schema a document is associated with.
 
-  <li>Add document locator implementation so we can report in which
-      line/column an error occurs.
-
   <li>Add support for resolving external entities, such as a
-      schema/namespace definition located on the web.
+      schema/namespace definition located on the web.  There should be
+      a factory object to create various kinds of @ref CharStream
+      based on the URN or <i>PEReference</i> being parsed.
 
   <li>A char stream should be able to differentiate the file encoding
       and perform the correct transcoding automatically.
