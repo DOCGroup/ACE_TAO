@@ -78,7 +78,6 @@ project : acelib, taoversion, core {
       Environment.cpp
       Object.cpp
       LocalObject.cpp
-      ObjectIDList.cpp
       ORB.cpp
       corbafwd.cpp
       Policy_ForwardC.cpp
@@ -97,10 +96,6 @@ project : acelib, taoversion, core {
       MProfile.cpp
       Stub.cpp
       Typecode.cpp
-      AbstractBase.cpp
-      ValueBase.cpp
-      ValueFactory.cpp
-      ValueFactory_Map.cpp
       CDR.cpp
       Client_Strategy_Factory.cpp
       debug.cpp
@@ -116,7 +111,6 @@ project : acelib, taoversion, core {
       ClientRequestInfo_i.cpp
       RequestInfo_Util.cpp
       ClientInterceptorAdapter.cpp
-      ObjectReferenceTemplateC.cpp
       PortableInterceptorC.cpp
       PICurrent.cpp
       PICurrent_ORBInitializer.cpp
@@ -226,7 +220,6 @@ project : acelib, taoversion, core {
       Messaging_PolicyValueC.cpp
       ServicesC.cpp
       NVList.cpp
-      IFR_TypeCodes.cpp
       Dynamic_Adapter.cpp
     }
   }
