@@ -1637,8 +1637,8 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
     if (ACE_ADAPT_RETVAL(::pthread_mutexattr_init (&attributes), result) == 0
 #     if defined (_POSIX_THREAD_PROCESS_SHARED)
-	&& ACE_ADAPT_RETVAL(::pthread_mutexattr_setpshared(&attributes, type),
-			    result) == 0
+        && ACE_ADAPT_RETVAL(::pthread_mutexattr_setpshared(&attributes, type),
+                            result) == 0
 #     endif /* _POSIX_THREAD_PROCESS_SHARED */
         && ACE_ADAPT_RETVAL(::pthread_mutex_init (m, &attributes), result)== 0)
 #   else // draft 6
@@ -1717,7 +1717,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   ACE_OSCALL_RETURN (::pthread_mutex_destroy (m), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m),
-				       ace_result_), int, -1);
+                                       ace_result_), int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6*/
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_destroy (m), ace_result_), int, -1);
@@ -2142,7 +2142,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   if (ACE_ADAPT_RETVAL(::pthread_condattr_init (&attributes), result) == 0
 #       if defined (_POSIX_THREAD_PROCESS_SHARED)
       && ACE_ADAPT_RETVAL(::pthread_condattr_setpshared(&attributes, type),
-			  result) == 0
+                          result) == 0
 #       endif /* _POSIX_THREAD_PROCESS_SHARED */
       && ACE_ADAPT_RETVAL(::pthread_cond_init (cv, &attributes), result) == 0
 #     else  /* this is draft 6 */
@@ -2284,8 +2284,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                   int, -1, result);
 #     else
       ACE_OSCALL (::pthread_cond_timedwait (cv, external_mutex,
-					    (ACE_TIMESPEC_PTR) &ts),
-	          int, -1, result);
+                                            (ACE_TIMESPEC_PTR) &ts),
+                  int, -1, result);
 #     endif /* __Lynx__ */
     }
 
@@ -5540,7 +5540,7 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
   ACE_OSCALL_RETURN (pthread_setintr (new_state), int, -1);
 #   else /* this is draft 7 or std */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcancelstate (new_state,
-								 old_state),
+                                                                 old_state),
                                        ace_result_),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
@@ -5582,7 +5582,7 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
   ACE_OSCALL_RETURN (pthread_setintrtype (new_type), int, -1);
 #   else /* this is draft 7 or std */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcanceltype (new_type,
-								old_type),
+                                                                old_type),
                                        ace_result_),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
@@ -5730,11 +5730,11 @@ ACE_OS::thr_sigsetmask (int how,
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (AIX)
   ACE_OSCALL_RETURN (sigthreadmask (how, nsm, osm), int, -1);
-  // Draft 4 and 6 implementations will sometimes have a sigprocmask() that
+  // Draft 4 and 6 implementations will sometimes have a sigprocmask () that
   // modifies the calling thread's mask only.  If this is not so for your
   // platform, define ACE_LACKS_PTHREAD_THR_SIGSETMASK.
 #   elif defined(ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-  ACE_OSCALL_RETURN (sigprocmask (how, nsm, osm), int, -1);
+  ACE_OSCALL_RETURN (::sigprocmask (how, nsm, osm), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
                                        ace_result_), int, -1);
