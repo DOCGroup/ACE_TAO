@@ -182,6 +182,8 @@ Wed Jul 14 22:03:08 1999  David L. Levine  <levine@cs.wustl.edu>
         * ACE-INSTALL.html: updated config/platform info for
           Digital UNIX 4.0f (and 5.0).
 
+          [Bug 65]
+
 Wed Jul 14 19:44:21 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Thread_Manager.cpp (spawn_i): Defer acquiring the thread
