@@ -132,11 +132,11 @@ long get_duration(long val1, long val2)
 
 #ifdef LINUX
 #else
-void usleep(unsigned int usec)
+int usleep(unsigned int usec)
 {
   struct timeval val;
 
-  if (usec <= 0) return;
+  if (usec <= 0) return -1;
   val.tv_sec = usec / 1000000;
   val.tv_usec = usec % 1000000;
   if (select(0, NULL, NULL, NULL, &val) == -1 && errno != 4)
@@ -144,6 +144,7 @@ void usleep(unsigned int usec)
    ACE_OS::perror ("sleep with select");
     ACE_OS::exit (1);
   }
+  return 0;
 }
 #endif
 
