@@ -111,6 +111,10 @@ deinstall.local:
 
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
 
+ifeq (,$(LN_S))
+  LN_S = ln -s
+endif # ! LN_S
+
 $(INSBIN)/%$(VAR) \
 $(INSINC)/ace% \
 $(INSLIB)/%$(VAR).a \
@@ -130,7 +134,7 @@ $(INSMAN)/mann/% :
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F) -> $(@D)" ; \
-			$(RM) $(@); ln -s $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
+			$(RM) $(@); $(LN_S) $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
 		fi ; \
 	fi
 ifdef MVSLIB
@@ -140,7 +144,7 @@ ifdef MVSLIB
 			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
-			$(RM) $(@); ln -s $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+			$(RM) $(@); $(LN_S) $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
