@@ -1,3 +1,13 @@
+Tue Sep 05 13:34:26 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/TP_Reactor.cpp (dispatch_i): Try to correct mis-set size_
+          in the any_ready_ handle sets by sync()ing them if the reactor
+          state has not been changed. This is an attempted workaround to
+          a symptom of having the handle set say size_ > 0 but there are
+          no bits set. The underlying cause is not known.
+          Also, reverse the eval order when checking !found_io && handle_iter
+          done to avoid doing another iter call when not needed.
+
 Mon Sep 04 10:25:27 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/TP_Reactor.cpp (dispatch_i): If a handle's bit is set via
