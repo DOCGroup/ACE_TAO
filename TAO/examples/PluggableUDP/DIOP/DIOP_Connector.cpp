@@ -11,6 +11,9 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 
+#include "ace/Connector.h"
+
+
 ACE_RCSID (DIOP,
            DIOP_Connector,
            "$Id$")
