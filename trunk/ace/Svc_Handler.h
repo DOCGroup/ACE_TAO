@@ -149,7 +149,7 @@ public:
   /// <Svc_Handler> is allocated dynamically, which allows it to clean
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
-  void *operator new (size_t n, const nothrow_t&);
+  void *operator new (size_t n, const ACE_nothrow_t&);
 #endif
 
   /// This operator permits "placement new" on a per-object basis.
