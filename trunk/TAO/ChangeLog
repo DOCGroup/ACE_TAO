@@ -1,3 +1,18 @@
+Fri Feb 14 14:37:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_predefined_type.cpp (compute_repoID):
+
+	  Fixed function to catch a reference to CORBA::Object
+	  in an IDL file. The repository ID must be handled as
+	  a special case, since this node type is not looked up
+	  in the AST.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Fixed incorrect typecode generation for members of type
+	  CORBA::Object. Thanks to Ferran Boladeres Salvadó <bds@iis.fhg.de>
+	  for sending in the example code that uncovered the bug.
+
 Fri Feb 14 18:39:01 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/RTCORBA/RT_ORBInitializer.cpp:
