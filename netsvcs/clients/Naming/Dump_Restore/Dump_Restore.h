@@ -21,7 +21,7 @@ public:
       UNBIND,
       REBIND
     };
-  Dump_Restore (int argc, char *argv[]);
+  Dump_Restore (int argc, ACE_TCHAR *argv[]);
   // Initialize name options and naming context
 
   ~Dump_Restore (void);
@@ -32,7 +32,7 @@ public:
   void dump (void);
 
 private:
-  char hostname_[MAXHOSTNAMELEN + 1];
+  ACE_TCHAR hostname_[MAXHOSTNAMELEN + 1];
   // Cache the hostname and port number for remote case
 
   void display_menu (void);
@@ -44,7 +44,7 @@ private:
   int set_node_local (void);
   // Set options to use NODE_LOCAL naming context.
 
-  int set_host (const char *hostname,
+  int set_host (const ACE_TCHAR *hostname,
                 int port);
   // Set options to use NET_LOCAL naming context specifying host name
   // and port number.
