@@ -80,13 +80,20 @@ STUB_Object::reset_forward (void)
 
 ACE_INLINE
 void
+STUB_Object::reset_profiles_i (void)
+{
+  reset_forward ();
+  reset_base ();
+}
+
+ACE_INLINE
+void
 STUB_Object::reset_profiles (void)
 {
   ACE_MT (ACE_GUARD (ACE_Lock,
                      guard,
                      *this->profile_lock_ptr_));
-  reset_forward ();
-  reset_base ();
+  reset_profiles_i ();
 }
 
 ACE_INLINE
@@ -157,13 +164,8 @@ STUB_Object::next_forward_profile (void)
 
 ACE_INLINE
 TAO_Profile *
-STUB_Object::next_profile (void)
+STUB_Object::next_profile_i (void)
 {
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->profile_lock_ptr_,
-                            0));
 
   TAO_Profile *pfile_next = 0;
   if (forward_profiles_)
@@ -181,6 +183,25 @@ STUB_Object::next_profile (void)
     set_profile_in_use_i (pfile_next);
 
   return pfile_next;
+}
+
+ACE_INLINE
+TAO_Profile *
+STUB_Object::next_profile (void)
+{
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->profile_lock_ptr_,
+                            0));
+  return next_profile_i ();
+}
+
+ACE_INLINE
+CORBA::Boolean
+STUB_Object::valid_forward_profile (void)
+{
+  return (profile_success_ && forward_profiles_);
 }
 
 ACE_INLINE
