@@ -51,7 +51,7 @@ namespace ACE
   //  Used internally so not exported.
 
   /// Does this box have ipv6 turned on?
-  int ipv6_enabled_-1;
+  int ipv6_enabled_ = -1;
 }
 #endif /* ACE_HAS_IPV6 */
 
