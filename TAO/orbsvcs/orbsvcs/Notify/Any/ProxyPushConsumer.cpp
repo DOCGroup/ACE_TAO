@@ -129,3 +129,9 @@ TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
     ACE_ENDTRY;
   }
 }
+
+void
+TAO_Notify_ProxyPushConsumer::init (TAO_Notify_SupplierAdmin *supplier_admin)
+{
+  TAO_Notify_ProxyConsumer::init (supplier_admin);
+}
