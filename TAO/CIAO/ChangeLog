@@ -1,3 +1,16 @@
+Mon Jun  7 01:40:57 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+	  Finished the creat_connctions method.
+	  Partially finished the startLaunch method.
+
+	* DnC/ciao/NodeApplication_Impl.h:
+	* DnC/ciao/NodeApplication_Impl.cpp:
+	* DnC/ciao/NodeApplication_Impl.inl:
+	  Finished implementing the NodeApplication interface.
+	  Added the finish launch method.
+
 Sun Jun  6 21:13:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:

@@ -15,8 +15,7 @@ CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 CIAO::NodeApplicationManager_Impl *
 CIAO::NodeApplicationManager_Impl::
 init (const char *nodeapp_location,
-      CORBA::ULong delay,
-      const Deployment::DeploymentPlan & plan
+      CORBA::ULong delay
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::InvalidProperty))
@@ -67,11 +66,12 @@ init (const char *nodeapp_location,
 
 void
 CIAO::NodeApplicationManager_Impl::
-parse_config_value (ACE_CString & string
+parse_config_value (ACE_CString & str
 		    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::InvalidProperty))
 {
+  ACE_UNUSED_ARG (str);
   ACE_DEBUG ((LM_DEBUG, "Not implemnted!\n"));
 }
 
@@ -194,13 +194,61 @@ create_node_application (const ACE_CString & options
 
 Deployment::Connections *
 CIAO::NodeApplicationManager_Impl::
-create_connections (void)
+create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::ResourceNotAvailable,
 		   Deployment::StartError,
 		   Deployment::InvalidProperty))
 {
-  return (0);
+  Deployment::Connections_var retv;
+  CORBA::ULong len = retv->length ();
+
+  ACE_NEW_THROW_EX (retv.out (),
+                    Deployment::Connections (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
+  Component_Iterator iter (this->component_map_.begin ());
+
+  for (;
+       iter != this->component_map_.end ();
+       ++iter)
+  {
+    // Get all the facets first
+    Components::FacetDescriptions_var facets =
+      ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    for (CORBA::ULong i = 0; i < facets->length (); ++i)
+    {
+      // Note: Its a bit strange to me that in the valuetype a string access
+      // method returns a const char * while an Object returns a Object_ptr
+      // without a const. They are all public member, so?
+      retv->length (len+1);
+      retv[len].instanceName = (*iter).ext_id_.c_str ();
+      retv[len].portName = facets[i]->name ();
+      retv[len].kind = Deployment::Facet;
+      retv[len].endpoint = CORBA::Object::_duplicate (facets[i]->facet_ref ());
+      ++len;
+    }
+
+    // Get all the event consumers
+    Components::ConsumerDescriptions_var consumers =
+      ((*iter).int_id_)->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    for (CORBA::ULong i = 0; i < consumers->length (); ++i)
+    {
+      retv->length (len+1);
+      retv[len].instanceName = (*iter).ext_id_.c_str ();
+      retv[len].portName = consumers[i]->name ();
+      retv[len].kind = Deployment::EventConsumer;
+      retv[len].endpoint = CORBA::Object::_duplicate (consumers[i]->consumer ());
+      ++len;
+    }
+
+  }
+  return retv._retn ();
 }
 
 Deployment::Application_ptr
@@ -214,6 +262,7 @@ startLaunch (const Deployment::Properties & configProperty,
 		   Deployment::StartError,
 		   Deployment::InvalidProperty))
 {
+  ACE_UNUSED_ARG (configProperty);
   /**
    *  1. First Map properties to TAO/CIAO specific property/configurations
    *  2. Necessary property checking (needed?)
@@ -221,15 +270,12 @@ startLaunch (const Deployment::Properties & configProperty,
    *  4. Initialize the NodeApplication.
    *  5. get the provided connection endpoints back and return them.
    */
-  ACE_TRY
-    {
 
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
 
+  providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (start) this->nodeapp_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return this->nodeapp_.in ();
@@ -243,6 +289,8 @@ destroyApplication (Deployment::Application_ptr app
   ACE_THROW_SPEC ((CORBA::SystemException
 		   , Deployment::StopError))
 {
+  ACE_UNUSED_ARG (app);
+
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   //@@ Since we know there is only 1 nodeapp so the passed in
   //   parameter could be ignored.
