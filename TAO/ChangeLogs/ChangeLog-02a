@@ -1,3 +1,12 @@
+Wed Mar 27 17:51:19 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/fe_declarator.cpp (compose):
+
+          Moved a string compare to follow a block where one of the
+          string compare args is checked for NULL. Thanks to Kevin
+          Heifner <heifner_k@ociweb.com> and Chad Elliott 
+          <elliott_c@ociweb.com> for pointing out the oversight.
+
 Wed Mar 27 12:31:33 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator <<):
