@@ -8,10 +8,6 @@ Sat Apr 11 12:46:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  what went wrong if an error occurs.  Thanks to Luca for
  	  reporting this.
 
-Sat Apr 11 11:52:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ACE version 4.4.38, released Sat Apr 11 11:52:29 1998.
-
 Fri Apr 10 02:42:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.{h,cpp} (log_hexdump): 
