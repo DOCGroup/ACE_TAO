@@ -18,6 +18,7 @@ DIRS =  \
         Quoter \
         RTCORBA \
         Simple \
+  	ior_corbaloc \
 	TypeCode_Creation
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -26,6 +26,7 @@ DIRS  = Callback_Quoter \
 	Content_Server \
         PluggableUDP \
 	TypeCode_Creation \
+	ior_corbaloc \
 	RTCORBA
 
 ifndef TAO_ROOT
