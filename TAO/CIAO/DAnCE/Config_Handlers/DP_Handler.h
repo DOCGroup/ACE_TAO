@@ -13,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers/Config_Handlers_Export.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,9 +39,18 @@ namespace CIAO
     class Config_Handlers_Export DP_Handler
     {
     public:
+      class NoPlan {};
+
       DP_Handler (DeploymentPlan &dp);
 
-      ~DP_Handler (void);
+      ~DP_Handler (void)
+        throw ();
+
+      ::Deployment::DeploymentPlan const *plan (void) const
+        throw (NoPlan);
+
+      ::Deployment::DeploymentPlan *plan (void)
+        throw (NoPlan);
 
     private:
 
@@ -48,9 +58,11 @@ namespace CIAO
 
     private:
 
-      ::Deployment::DeploymentPlan *idl_dp_;
+      auto_ptr< ::Deployment::DeploymentPlan> idl_dp_;
 
       DeploymentPlan &dp_;
+
+      bool retval_;
     };
   }
 }

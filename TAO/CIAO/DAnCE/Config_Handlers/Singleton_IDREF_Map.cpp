@@ -37,5 +37,17 @@ namespace CIAO
       return true;
     }
 
+    bool
+    IDREF_Map::unbind_refs (void)
+    {
+      int retval =
+        this->idref_map_.unbind_all ();
+
+      if (retval < 0)
+        return false;
+
+      return true;
+    }
+
   }
 }

@@ -63,6 +63,9 @@ namespace CIAO
        */
       bool find_ref (const ACE_CString& id, size_t val);
 
+      /// Unbind all the elements
+      bool unbind_refs (void);
+
     private:
       typedef ACE_Hash_Map_Manager<ACE_CString,
                                    size_t,
