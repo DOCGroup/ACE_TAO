@@ -132,7 +132,8 @@ sub usageAndExit {
   if (defined $arg) {
     print "$arg\n\n";
   }
-  print "Usage: $base [ChangeLog File] [user name] [email address]\n\n" .
+  print "Usage: $base [ChangeLog File] [user name] [email address]\n" .
+        "        " . (' ' x length($base)) . "[-d <dir1 dir2 ... dirN>]\n\n" .
         "       Uses cvs to determine which files are modified or added\n" .
         "       and generates a bare ChangeLog entry based on those files.\n" .
         "       This script should be run at the same directory level in\n" .
@@ -153,7 +154,11 @@ sub usageAndExit {
         "\n" .
         "       The user name and email address can be passed as a parameter to\n" .
         "       this script.  If either is not passed, then the script will try\n" .
-        "       to determine it automatically.\n";
+        "       to determine it automatically.\n" .
+        "\n" .
+        "       If -d is used, everything on the command line after it is\n" .
+        "       considered a directory or file to be considered in the\n" .
+        "       ChangeLog entry.\n";
   exit(0);
 }
 
@@ -162,13 +167,21 @@ sub usageAndExit {
 # Subroutine Section
 # ************************************************************
 
-my($file)  = undef;
-my($name)  = undef;
-my($email) = undef;
+my($file)     = undef;
+my($name)     = undef;
+my($email)    = undef;
+my(@dirs)     = ();
+my($restdirs) = 0;
 
 foreach my $arg (@ARGV) {
-  if ($arg eq '-h') {
+  if ($restdirs) {
+    push(@dirs, $arg);
+  }
+  elsif ($arg eq '-h') {
     usageAndExit();
+  }
+  elsif ($arg eq '-d') {
+    $restdirs = 1;
   }
   elsif ($arg =~ /^\-/) {
     usageAndExit("Unrecognized parameter: $arg");
@@ -210,7 +223,7 @@ if (!defined $email) {
 }
 
 my($editor) = new ChangeLogEdit($name, $email);
-my($status, $error, $unknown) = $editor->edit($file);
+my($status, $error, $unknown) = $editor->edit($file, @dirs);
 
 if (defined $unknown) {
   my(@uarray) = @$unknown;

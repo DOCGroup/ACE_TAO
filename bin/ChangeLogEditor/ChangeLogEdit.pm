@@ -34,6 +34,7 @@ sub new {
 sub edit {
   my($self)    = shift;
   my($ofile)   = shift;
+  my(@dirs)    = @_;
   my($tfile)   = "$ofile.$<.$$";
   my($status)  = 0;
   my($error)   = '';
@@ -44,7 +45,7 @@ sub edit {
     my($creator) = new ChangeLogEntry($self->{'name'},
                                       $self->{'email'});
     my($entry) = '';
-    ($entry, $unknown) = $creator->create();
+    ($entry, $unknown) = $creator->create(@dirs);
     if (defined $entry) {
       if ($entry =~ /^ERROR:/) {
         $error = $entry;

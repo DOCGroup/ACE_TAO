@@ -70,11 +70,12 @@ sub sortFileList {
 
 sub create {
   my($self)  = shift;
+  my(@dirs)  = @_;
   my($fl)    = new FileLocator();
   my($modif,
      $remov,
      $confl,
-     $unknown) = $fl->locate();
+     $unknown) = $fl->locate(@dirs);
   my($entry) = scalar(localtime());
 
   if (defined $$confl[0]) {
