@@ -1,6 +1,8 @@
 #ifndef CCF_PREPROCESSOR_HPP
 #define CCF_PREPROCESSOR_HPP
 
+#include <deque>
+
 #include "CCF/CompilerElements/TokenStream.hpp"
 
 namespace CCF

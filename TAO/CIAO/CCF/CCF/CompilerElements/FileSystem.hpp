@@ -1,11 +1,10 @@
 // file      : CCF/CompilerElements/FileSystem.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $id$
 // cvs-id    : $Id$
 
 #ifndef CCF_RUNTIME_FILE_SYSTEM_HPP
 #define CCF_RUNTIME_FILE_SYSTEM_HPP
-
-#include "MSVC_Pragmas.hpp"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/fstream.hpp>

@@ -1,11 +1,10 @@
 // file      : CCF/CompilerElements/ExH.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $id$
 // cvs-id    : $Id$
 
 #ifndef CCF_RUNTIME_EX_H_H
 #define CCF_RUNTIME_EX_H_H
-
-#include "MSVC_Pragmas.hpp"
 
 #include "Utility/ExH/ExH.hpp"
 
