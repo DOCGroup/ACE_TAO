@@ -438,6 +438,10 @@ subproject UPIPE_SAP_Test icc "UPIPE_SAP_Test.icc", ics "UPIPE_SAP_Test.ics"
 {
 }
 
+subproject Unbounded_Set_Test_Ex icc "Unbounded_Set_Test_Ex.icc", ics "Unbounded_Set_Test_Ex.ics"
+{
+}
+
 subproject Upgradable_RW_Test icc "Upgradable_RW_Test.icc", ics "Upgradable_RW_Test.ics"
 {
 }
@@ -551,6 +555,7 @@ use Timer_Queue_Test
 use TkReactor_Test
 use Tokens_Test
 use UPIPE_SAP_Test
+use Unbounded_Set_Test_Ex
 use Upgradable_RW_Test
 use Vector_Test
 use XtReactor_Test
