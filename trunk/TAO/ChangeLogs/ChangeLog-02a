@@ -1,3 +1,9 @@
+Sat Oct 07 14:00:27 2000 Balachandran Natarajan <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed
+	  compilation warnings in SunCC5.
+
 Sat Oct 07 11:06:31 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/CORBANAME_Parser.cpp:
