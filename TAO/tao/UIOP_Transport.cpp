@@ -152,7 +152,7 @@ TAO_UIOP_Client_Transport::client_handler (void)
 }
 
 void
-TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core */*orb_core*/,
+TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
                                           TAO_Target_Specification & /*spec*/,
                                           TAO_OutputCDR &output,
                                           CORBA::Environment &ACE_TRY_ENV)
@@ -166,7 +166,7 @@ TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core */*orb_core*/,
   // @@ This should be implemented in the transport object, which
   //    would query the profile to obtain the version...
   if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_REQUEST, 
+      (TAO_PLUGGABLE_MESSAGE_REQUEST,
        output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
@@ -188,7 +188,7 @@ TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
   // @@ This should be implemented in the transport object, which
   //    would query the profile to obtain the version...
   if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST, 
+      (TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST,
        output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 
@@ -323,9 +323,9 @@ TAO_UIOP_Client_Transport::register_handler (void)
 
 int
 TAO_UIOP_Client_Transport::
-  messaging_init (CORBA::Octet major, 
-                  CORBA::Octet minor) 
-{  
+  messaging_init (CORBA::Octet major,
+                  CORBA::Octet minor)
+{
   if (this->client_mesg_factory_ == 0)
     {
       if (this->lite_flag_)
@@ -364,15 +364,15 @@ TAO_UIOP_Client_Transport::
           if (TAO_debug_level > 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N|%l|%p|%t) No matching major version number \n")), 
+                                 ASYS_TEXT ("(%N|%l|%p|%t) No matching major version number \n")),
                                 0);
             }
         }
     }
-  
+
   return 1;
 }
- 
+
 
 CORBA::Boolean
 TAO_UIOP_Client_Transport::send_request_header (TAO_Operation_Details &opdetails,
@@ -381,7 +381,7 @@ TAO_UIOP_Client_Transport::send_request_header (TAO_Operation_Details &opdetails
 {
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
-  CORBA::Boolean retval = 
+  CORBA::Boolean retval =
     this->client_mesg_factory_->write_message_header (opdetails,
                                                       TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER,
                                                       spec,
@@ -469,5 +469,3 @@ TAO_UIOP_Transport::send_request_header (TAO_Operation_Details & /*opdetails*/,
 }
 
 #endif  /* TAO_HAS_UIOP */
-
-
