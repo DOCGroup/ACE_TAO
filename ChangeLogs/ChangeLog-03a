@@ -1,4 +1,48 @@
-Mon Oct 14 18:21:40 2002  Patrick J. McNerthney <ace@mcnerthney.com> 
+Mon Oct 14 19:20:35 2002  Frank Hunleth  <frank@hunleth.com>
+
+	* ACE-INSTALL.html: Added installation notes for the OpenBSD port.
+
+	* ace/config-openbsd.h:
+	* ace/config-openbsd-pthread.h:
+	* include/makeinclude/platform_openbsd.GNU:
+	* include/makeinclude/platform_openbsd_pthread.GNU: Configuration
+	  files for OpenBSD.
+
+	* ace/ACE.cpp: Added OpenBSD-specific error code to ACE::out_of_handles
+
+	* ace/OS.h: Added #define for OpenBSD-specific path to siginfo.h and
+	  ACE_LACKS_CLEARERR guards around clearerr() for OpenBSD.
+
+	* ace/OS.i: Added support for getifaddrs() with ACE_HAS_GETIFADDRS
+          and fix for segfault when calling dlsym with a null handle.  Added
+	  guards on clearerr using ACE_LACKS_CLEARERR. (All only affect
+	  OpenBSD.)
+
+	* ace/POSIX_Proactor.cpp:
+	* ace/POSIX_Proactor.h: Added SystemType family for OpenBSD.
+
+	* ace/README: Added new ACE #defines to support OpenBSD. These include:
+	  ACE_HAS_GETIFADDRS - for support of the getifaddrs() system call
+	  ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE - add check to dlsym call
+	    to protect against NULL.  OpenBSD 3.1 needs this.
+	  ACE_LACKS_CLEARERR - #define to remove clearerr definition due
+	    to bogus syntax error on OpenBSD.
+
+	* ace/Sock_Connect.cpp: Added code to get_ip_interfaces to use
+          getifaddrs() if it is supported.  OpenBSD is the only platform to
+	  use this currently.  Under OpenBSD, the code to parse the return
+	  values from the corresponding ioctl calls gets confused when IPv6
+	  interfaces are present.
+
+	* tests/Malloc_Test.cpp: Added OpenBSD to the list of platforms that
+	  can't handle the remap of fault part of the test.
+
+	* tests/Reactor_Dispatch_Order_Test.cpp: Added code for OpenBSD to
+	  clear the write mask after handle_output is called, since OpenBSD
+	  calls handle_output more than once before the data is received
+	  over the pipe.
+
+Mon Oct 14 18:21:40 2002  Patrick J. McNerthney <ace@mcnerthney.com>
 
         * ace/OS.h: Added FILE_FLAG_WRITE_THROUGH defines for
 	  non-supporting operating systems and added various PIPE_*
@@ -12,7 +56,7 @@ Mon Oct 14 18:21:40 2002  Patrick J. McNerthney <ace@mcnerthney.com>
 
         * ace/SPIPE_Acceptor.{h.cpp}: Added support to enable the
 	  selection of whether bytestream or message mode is used on
-	  Windows.   
+	  Windows.
 
 Mon Oct 14 20:19:51 2002  Steve Huston  <shuston@riverace.com>
 
@@ -33,10 +77,15 @@ Mon Oct 14 17:23:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  performed in "Tue Mar 12 17:43:32 2002  Balachandran Natarajan
 	  <bala@cs.wustl.edu>". This optimizations created problems for
 	  CORBA::Any implementation which assumes that the data is totally
-	  contained within the Any. Using the optimization created problems 
-          for Any's that are copied between different threads. Thanks to 
+	  contained within the Any. Using the optimization created problems
+          for Any's that are copied between different threads. Thanks to
           Chen Jian <jchen@huawei.com> for reporting this problem.
 
+<<<<<<< ChangeLog
+	* THANKS: Added Chen Jian <jchen@huawei.com> to the hall of fame.
+
+=======
+>>>>>>> 4.4188
 Mon Oct 14  10:12:31 2002  Steve Huston  <shuston@riverace.com>
 
         Fix for Bugzilla # 1316:
