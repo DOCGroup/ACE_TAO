@@ -3928,6 +3928,10 @@ typedef int ucontext_t;
 #   undef t_errno
 # endif /* ACE_HAS_BROKEN_T_ERRNO */
 
+#if defined rewinddir
+#undef rewinddir
+#endif /* rewinddir */
+
 class ACE_Export ACE_Thread_ID
 {
   // = TITLE
@@ -4338,9 +4342,9 @@ public:
   static DIR *opendir (const char *filename);
   static void closedir (DIR *);
   static struct dirent *readdir (DIR *);
-  static int *readdir_r (DIR *dirp,
-                         struct dirent *entry,
-                         struct dirent **entry);
+  static int readdir_r (DIR *dirp,
+                        struct dirent *entry,
+                        struct dirent **result);
   static long telldir (DIR *);
   static void seekdir (DIR *,
                        long loc);

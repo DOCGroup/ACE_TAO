@@ -33,7 +33,7 @@ Dirent::readdir (void)
   return ACE_OS::readdir (this->dirp_);
 }
 
-ACE_INLINE int *
+ACE_INLINE int
 Dirent::readdir_r (struct dirent *entry,
                    struct dirent **result)
 {

@@ -12,7 +12,6 @@
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
 #include "ace/Containers.h"
-#include "ace/Array.h"
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
 #include "ace/Signal.h"

@@ -14,7 +14,7 @@
 // header files that are not already included
 #include "ace/Local_Tokens.h"
 #include "ace/Token.h"
-#include "ace/Array.h"
+#include "ace/Containers.h"
 #include "ace/Obstack.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Message_Queue.h"
