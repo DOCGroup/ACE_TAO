@@ -238,7 +238,7 @@ main (int argc, char* argv[])
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));
 
   ACE_END_TEST;
-  return 42;
+  return 0;
 }
 
 #else
