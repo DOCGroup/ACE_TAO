@@ -4,7 +4,9 @@ default:
 	:debuglevel=multi
 cubitC.cpp
 	C++
-clnt.cpp
+cubitS.cpp
 	C++
-sockem.c
-	C
+client.cpp
+	C++
+tmplinst.cpp
+	C++
