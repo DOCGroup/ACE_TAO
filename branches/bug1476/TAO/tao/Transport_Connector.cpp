@@ -254,13 +254,16 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   if (base_transport->is_connected ())
     return base_transport;
 
-  // @bala, Makes it sense to move the code below to a separate method
-  // called for example wait_for_connect(r, bese_transport, timeout),
-  // this looks  very much similar to a part of
-  // TAO_IIOP_Connector::make_connection
+  return this->wait_for_connection (r,
+                                    base_transport,
+                                    timeout);
+}
 
-  // @@ Johnny, yes, need to..
-
+TAO_Transport*
+TAO_Connector::wait_for_connection (TAO::Profile_Transport_Resolver *r,
+                                    TAO_Transport *base_transport,
+                                    ACE_Time_Value *timeout)
+{
   // If we don't need to block for a transport just set the timeout to
   // be zero.
   ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
@@ -278,7 +281,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Transport_Connector::connect, "
+                "TAO (%P|%t) - Transport_Connector::wait_for_connection, "
                 "wait done result = %d\n",
                 result));
 
@@ -339,7 +342,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
           // because we touched the reactor and errno could be changed
           if (TAO_debug_level > 3)
             ACE_ERROR ((LM_ERROR,
-                        "TAO (%P|%t) - Transport_Connector::connect, "
+                        "TAO (%P|%t) - Transport_Connector::wait_for_connection, "
                         "connection failed.\n"));
           return 0;
         }
@@ -371,23 +374,19 @@ TAO_Connector::create_connect_strategy (void)
 
 int
 TAO_Connector::check_connection_closure (
-  TAO_Connection_Handler *svc_handler)
-// @@ Johnny, these are *NOT* service handlers just connection
-// handlers. This is confusing. In IIOP_Connector when we were using
-// IIOP_Connection_Handler we were using it as a service handler. Am I
-// making sense?
+  TAO_Connection_Handler *connection_handler)
 {
   int result = -1;
 
   // Check if the handler has been closed.
   int closed =
-    svc_handler->is_closed ();
+    connection_handler->is_closed ();
 
   // In case of failures and close() has not be called.
   if (!closed)
     {
       // First, cancel from connector.
-      if (this->cancel_svc_handler (svc_handler) == -1)
+      if (this->cancel_svc_handler (connection_handler) == -1)
         return -1;
 
       // Double check to make sure the handler has not been closed
@@ -397,14 +396,14 @@ TAO_Connector::check_connection_closure (
       // Once connector.cancel() has been processed, we are
       // assured that the connector will no longer open/close this
       // handler.
-      closed = svc_handler->is_closed ();
+      closed = connection_handler->is_closed ();
 
       // If closed, there is nothing to do here.  If not closed,
       // it was either opened or is still pending.
       if (!closed)
         {
           // Check if the handler has been opened.
-          const int open = svc_handler->is_open ();
+          const int open = connection_handler->is_open ();
 
           // Some other thread was able to open the handler even
           // though wait failed for this thread.
@@ -416,10 +415,10 @@ TAO_Connector::check_connection_closure (
           else
             {
               // Assert that it is still connecting.
-              ACE_ASSERT (svc_handler->is_connecting ());
+              ACE_ASSERT (connection_handler->is_connecting ());
 
               // Force close the handler now.
-              svc_handler->close_handler ();
+              connection_handler->close_handler ();
             }
         }
     }

@@ -138,7 +138,16 @@ protected:
    * @return -1 The connection is closed
    */
   virtual int check_connection_closure (
-      TAO_Connection_Handler *svc_handler);
+      TAO_Connection_Handler *connection_handler);
+
+  /**
+   * Wait for connection. We have a transport that is not connected yet,
+   * wait until it is connected.
+   */
+  virtual TAO_Transport* wait_for_connection(
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport *base_transport,
+      ACE_Time_Value *timeout);
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);
