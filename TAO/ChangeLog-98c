@@ -1,3 +1,8 @@
+Thu Jun 25 17:57:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/DII_Cubit/Makefile: Integrated the new DII_Cubit
+ 	  test into the Makefile scheme.
+
 Thu Jun 25 17:17:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
