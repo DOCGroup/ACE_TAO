@@ -98,7 +98,9 @@ private:
 #endif /* ACE_HAS_SVR4_TLI */
 };
 
+#if defined (__ACE_INLINE__)
 #include "ace/TLI.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */
 #include "ace/post.h"
