@@ -1,6 +1,6 @@
 Tue Dec  8 00:49:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/CDR.i: Applied more exception handle macros.
+	* tao/CDR.i: Applied more exception handling macros.
 
 Mon Dec  7 22:00:50 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
