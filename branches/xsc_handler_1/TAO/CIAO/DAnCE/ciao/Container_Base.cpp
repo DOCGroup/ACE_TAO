@@ -5,6 +5,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
 #include "Servant_Activator.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"
