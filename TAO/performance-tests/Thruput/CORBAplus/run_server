@@ -1,9 +1,0 @@
-#!/bin/csh
-#
-# Usage: server <switches>
-# -u : use IOR 
-# -f m : output results in Mbps
-# -b <sock Q size> ** not implemented **
-#
-
-server -f m
