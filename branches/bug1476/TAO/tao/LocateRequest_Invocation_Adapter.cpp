@@ -49,7 +49,8 @@ namespace TAO
            s == TAO_INVOKE_RESTART)
       {
         Profile_Transport_Resolver resolver (effective_target,
-                                             stub);
+                                             stub,
+                                             true);
 
         ACE_TRY
           {
@@ -57,7 +58,7 @@ namespace TAO
                 ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
-            resolver.resolve (max_wait_time, true
+            resolver.resolve (max_wait_time
                               ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 

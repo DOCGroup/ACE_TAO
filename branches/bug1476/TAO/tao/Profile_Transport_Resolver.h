@@ -58,13 +58,19 @@ namespace TAO
    * object. This class helps in choosing the right profile, and pick
    * a transport from cache (or create a new transport if needed) that
    * represents the profile.
-   *
    */
   class TAO_Export Profile_Transport_Resolver
   {
   public:
-    Profile_Transport_Resolver (CORBA::Object *ep,
-                                TAO_Stub *);
+    /// Constructor
+    /**
+     * With @a must_connect we tell whether this resolved should always deliver
+     * a connected transport or whether it is allowed to deliver a not
+     * connected transport.
+     */
+    Profile_Transport_Resolver (CORBA::Object *p,
+                                TAO_Stub *stub,
+                                bool connected);
 
     ~Profile_Transport_Resolver (void);
 
@@ -75,11 +81,9 @@ namespace TAO
      * the ORB_Core to decide on the strategy to be used for selecting
      * the profile.
      */
-    void resolve (ACE_Time_Value *val,
-                  bool block
+    void resolve (ACE_Time_Value *val
                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
 
     //@{
     /**
@@ -101,6 +105,9 @@ namespace TAO
 
     /// Accessor for the transport reserved for this invocation.
     TAO_Transport *transport (void) const;
+
+    /// Accessor whether we must deliver a connected transport
+    bool connected (void) const;
     //@}
 
     /// Signal to let the resolver know that the transport has been
@@ -111,8 +118,7 @@ namespace TAO
     /// delegate the responsibility of reserving a transport from the
     /// connection cache for this invocation.
     bool try_connect (TAO_Transport_Descriptor_Interface *desc,
-                      ACE_Time_Value *val,
-                      bool block
+                      ACE_Time_Value *val
                       ACE_ENV_ARG_DECL);
 
     /// Initialize the inconsistent policy list that this object has
@@ -165,6 +171,9 @@ namespace TAO
      * avoid.
      */
     CORBA::PolicyList *inconsistent_policies_;
+
+    /// Must we deliver a connected transport
+    bool connected_;
   };
 } // TAO namespace end
 

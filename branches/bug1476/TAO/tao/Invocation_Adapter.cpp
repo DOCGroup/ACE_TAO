@@ -213,8 +213,8 @@ namespace TAO
        Messaging::SyncScope sync_scope;
 
        stub->orb_core ()->call_sync_scope_hook (stub,
-                                                     has_synchronization,
-                                                     sync_scope);
+                                                has_synchronization,
+                                                sync_scope);
       if (has_synchronization && sync_scope == Messaging::SYNC_NONE)
       block = false;
     }
@@ -222,9 +222,10 @@ namespace TAO
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
     Profile_Transport_Resolver resolver (effective_target,
-                                         stub );
-// pass bool
-    resolver.resolve (max_wait_time, block
+                                         stub,
+                                         block);
+
+    resolver.resolve (max_wait_time
                       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
@@ -244,7 +245,7 @@ namespace TAO
     else if (this->type_ == TAO_TWOWAY_INVOCATION)
       {
         // @@ NOTE:Need to change this to something better. Too many
-        // hash defines meaning the same  thing..
+        // hash defines meaning the same thing..
         details.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
         return this->invoke_twoway (details,
                                     effective_target,

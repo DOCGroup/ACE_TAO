@@ -1,4 +1,17 @@
+Wed Jun 30 14:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/Profile_Transport_Resolver.{h,cpp,i}:
+          Instead of passed with each operation whether the connect should
+          block or not, we now pass a boolean with the constructor if this
+          tranport must deliver a connected transport or whether it is also
+          allowed to deliver a not connected transport. Added an accessor for
+          this member.
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Endpoint_Selectors.{h,cpp}:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+          Instead of passing the block boolean with each operation, pass it
+          with the constructor or the Profile_Transport_Resolver.
 
 Wed Jun 30 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

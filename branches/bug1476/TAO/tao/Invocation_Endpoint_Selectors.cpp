@@ -36,8 +36,7 @@ TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 void
 TAO_Default_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *max_wait_time,
-    bool block
+    ACE_Time_Value *max_wait_time
     ACE_ENV_ARG_DECL)
 {
   do
@@ -48,7 +47,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       // If we shouldn't block but the profile doesn't support this
       // we can't use this profile
 // shouldn't we just loop and try the next?
-      if (!block && !r->profile()->supports_non_blocking_oneways())
+      if (!r->connected() && !r->profile()->supports_non_blocking_oneways())
         {
           break;
         }
@@ -65,8 +64,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
 // now back to the transport resolver
           bool retval =
             r->try_connect (&desc,
-                            max_wait_time,
-                            block
+                            max_wait_time
                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
