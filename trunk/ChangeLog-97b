@@ -1,3 +1,9 @@
+Thu Oct 23 21:22:16 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Copied some documentation about makefile flags
+	  from include/makeinclude/wrapper_macros.GNU and added a section
+	  for this.
+
 Thu Oct 23 20:37:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Array.*: added ACE_Array_Iterator.

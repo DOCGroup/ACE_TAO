@@ -692,6 +692,7 @@ in your PATH.<P>
 <LI><A HREF="#cloning">Cloning the Source Tree</A>
 <LI><A HREF="#corba">Building CORBA Versions of ACE</A>
 <LI><A HREF="#mvs">Additional Build Tips for MVS</A>
+<LI><A HREF="#flags">Makfile Flags</A>
 <LI><A HREF="http://www.cs.wustl.edu/~levine/CVS.html">Version Control</A>
 <LI><A HREF="http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html">ACE Makefile hints</a>
 </UL>
@@ -793,6 +794,40 @@ additional tips: <P>
    uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file.<P>
 
 <HR><P>
+<H4><A NAME="flags">Makefile Flags</A></H4>
+
+ACE supports the following flags.  They can be enabled either on the command 
+line, e.g., "make purify=1", or added to your platform_macros.GNU.  To 
+disable the option, set the flag to null, e.g., "make debug=".  Some flags 
+support setting to 0 disable, e.g., "make debug=0".  debug=1 is enabled in 
+the platform files that are released with ACE.<P>
+
+Please note that the effects of a flag may be platform specific.
+Also, combinations of certain flags may or may not be allowed on
+specific platforms, e.g., debug=1 opt=1 is supported by g++ but
+not all other C++ compilers.<P>
+
+<PRE>
+Flag             Description
+----             -----------
+debug            Enable debugging; see DCFLAGS and DCCFLAGS.
+exceptions       Enable exception handling (not supported by all platforms).
+fast             Enable -fast option, e.g., with Sun C++.
+inline           Enable ACE inlining.  Some platforms enable inlining by
+                   default, others do not.
+optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
+orbix            Enable use of Orbix.
+profile          Enable profiling; see PCFLAGS and PCCFLAGS.
+purify           Purify all executables.
+quantify         Quantify all executables.
+shared_libs      Build shared libraries. Ignored if static_libs_only is set.
+static_libs      Build shared libraries. Ignored if shared_libs_only is set.
+shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
+                   specified by the Makefile, as in performance-tests/Misc.
+static_libs_only Only build static libraries.
+</PRE>
+<HR><P>
+
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">
 ACE</A> home page.
 
