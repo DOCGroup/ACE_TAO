@@ -156,13 +156,15 @@ be_visitor_exception_ctor_assign::visit_interface (be_interface *node)
 
   if (this->ctx_->exception ()) // Special constructor.
     {
-      *os << "this->" << bd->local_name () << " = " << node->name ()
-          << "::_duplicate (_tao_" << bd->local_name () << ");";
+      *os << "this->" << bd->local_name () << " = TAO::Objref_Traits<"
+          << node->name () << ">::duplicate (_tao_" 
+          << bd->local_name () << ");";
     }
   else
     {
-      *os << "this->" << bd->local_name () << " = " << node->name ()
-          << "::_duplicate (_tao_excp." << bd->local_name () << ".in ());";
+      *os << "this->" << bd->local_name () << " = TAO::Objref_Traits<"
+          << node->name () << ">::duplicate (_tao_excp." 
+          << bd->local_name () << ".in ());";
     }
 
   return 0;
