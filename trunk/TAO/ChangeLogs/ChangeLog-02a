@@ -1,3 +1,18 @@
+Tue Oct 31 17:55:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* rules.tao.GNU:
+
+	  Added variable TAO_DYNAMIC_LIBS, set to
+	  -lTAO_DynamicInterface, and used it in the
+	  following Makefiles, which all use DII and/or DSI
+	  code.
+
+	* examples/POA/DSI/Makefile:
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+	* performance-tests/Latency/Makefile:
+	* tests/DSI_Gateway/Makefile:
+	* tests/Param_Test/Makefile:
+
 Tue Oct 31 14:53:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * */Makefile*:
