@@ -113,6 +113,10 @@ SOURCE=.\LoadBalancingS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\Minimum_Dispersion.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\ReplicaProxy.cpp
 # End Source File
 # Begin Source File
@@ -146,6 +150,10 @@ SOURCE=.\LoadBalancingC.h
 # Begin Source File
 
 SOURCE=.\LoadBalancingS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\Minimum_Dispersion.h
 # End Source File
 # Begin Source File
 

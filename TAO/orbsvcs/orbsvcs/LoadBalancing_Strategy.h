@@ -48,8 +48,11 @@ public:
 
   virtual int remove (ReplicaProxy_Impl *) = 0;
   // Remove ReplicaProxy servant from the set of replica proxies.
-};
 
+  virtual void load_changed (ReplicaProxy_Impl *impl,
+                             CORBA::Environment &ACE_TRY_ENV);
+  // The load on one proxy has changed.
+};
 
 #if !defined (__ACE_INLINE__)
 #include "LoadBalancing_Strategy.i"

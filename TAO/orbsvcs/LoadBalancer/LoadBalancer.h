@@ -21,6 +21,7 @@
 
 #include "orbsvcs/LoadBalancing/LoadBalancer_i.h"
 #include "orbsvcs/LoadBalancing/Round_Robin_Strategy.h"
+#include "orbsvcs/LoadBalancing/Minimum_Dispersion.h"
 
 class TAO_LoadBalancer
 {
@@ -58,7 +59,11 @@ private:
   const char *load_balancer_file_;
   // The load balancing service IOR is stored in this file
 
+  int strategy_;
+  // Select the right strategy
+
   Round_Robin_Strategy round_robin_;
+  Minimum_Dispersion_Strategy minimum_dispersion_;
 
   LoadBalancer_Impl *balancer_;
   // The load balancer
