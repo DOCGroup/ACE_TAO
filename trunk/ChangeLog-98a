@@ -1,57 +1,64 @@
+Thu Mar 19 10:13:35 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/preempt.cpp: 1) Added -f option to fork
+          instead of spawning new threads.  2) Added -l option for
+          specifying number of iterations of low priority thread/process.
+          3) On Solaris, print LWP ID.
+
 Thu Mar 19 02:47:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp: Link against user32.lib for all configurations
-	  for we now use Msg_WFMO and related APIs in ACE.  (We should do
-	  the same to ace_lib.dsp.)
+        * ace/ace_dll.dsp: Link against user32.lib for all configurations
+          for we now use Msg_WFMO and related APIs in ACE.  (We should do
+          the same to ace_lib.dsp.)
 
-	* ace/config-WinCE.h: Added dummy definition of stdin and stdout.
-	  They don't have any real effect.
-	
-	* ace/ACE.{h,cpp} (ldopen,ldfind): Made these functions visible
-	  under CE.  Modified them to work under CE.
+        * ace/config-WinCE.h: Added dummy definition of stdin and stdout.
+          They don't have any real effect.
 
-	* ace/OS.cpp: Added scope name to day_of_week_name and
-	  month_name.  They are used only on CE.
- 	
-	* ace/OS.{h,i}: Added some dummy C methods for CE.  Yacc and Lex
-	  generated codes use these functions, although we don't really
-	  use them in ACE.
+        * ace/ACE.{h,cpp} (ldopen,ldfind): Made these functions visible
+          under CE.  Modified them to work under CE.
 
-	* ace/OS.i (exit): Added implementation of ACE_OS::exit under CE.  Since
-	  there's no ExitProcess available, I use TerminateProcess, which
-	  is not exactly the same as using ExitProcess but that's the
-	  closest thing I can think of.
-	  (open): Made the char version unsupported under CE.
-	  (fread,fwrite,...): Added dummy C methods definition for CE.
+        * ace/OS.cpp: Added scope name to day_of_week_name and
+          month_name.  They are used only on CE.
 
-	* ace/Parse_Node.cpp: Regular CE stuff.  There's a boundary
-	  of char/wchar functions somewhere in this file.  Most Svc_Conf
-	  stuff uses char functions but the information gets converted to
-	  wchar later.
+        * ace/OS.{h,i}: Added some dummy C methods for CE.  Yacc and Lex
+          generated codes use these functions, although we don't really
+          use them in ACE.
 
-	* ace/Service_Config.{h,i}: Added char version function for
-	  Service_Type under CE.  Service_Type (and its subclasses) are
-	  the boundary of char/wchar functions.
-	  
-	* ace/Service_Object.{h,i}: Added the chname method which always
-	  returns char value of a Service_Object under all platforms.
+        * ace/OS.i (exit): Added implementation of ACE_OS::exit under CE.  Since
+          there's no ExitProcess available, I use TerminateProcess, which
+          is not exactly the same as using ExitProcess but that's the
+          closest thing I can think of.
+          (open): Made the char version unsupported under CE.
+          (fread,fwrite,...): Added dummy C methods definition for CE.
 
-	* ace/Svc_Conf.y:
-	* ace/Svc_Conf_y.cpp:
-	* ace/Object_Manager.{cpp}: Regular CE stuff.
-	
-	* ace/Svc_Conf_l.cpp: Regular CE stuff.  Haven't figure out a way
-	  to modify this from Svc_Conf.l yet.
+        * ace/Parse_Node.cpp: Regular CE stuff.  There's a boundary
+          of char/wchar functions somewhere in this file.  Most Svc_Conf
+          stuff uses char functions but the information gets converted to
+          wchar later.
 
-	* ace/Service_Config.cpp
-	* ace/Object_Manager.{cpp}: Ifdef'ed inclusion of Naming Context
-	  related header files out.  Naming context uses Registry which
-	  uses iostream and STL, both are not available on CE (yet?).
+        * ace/Service_Config.{h,i}: Added char version function for
+          Service_Type under CE.  Service_Type (and its subclasses) are
+          the boundary of char/wchar functions.
 
-	* ace/WFMO_Reactor.{h,cpp}:
-	* ace/Proactor.{h,i,cpp}:
-	* ace/Asynch_IO.{h,cpp}: Ifdef'ed the body so they are not visible
-	  under CE.  CE doesn't have asynchronous IO.
+        * ace/Service_Object.{h,i}: Added the chname method which always
+          returns char value of a Service_Object under all platforms.
+
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+        * ace/Object_Manager.{cpp}: Regular CE stuff.
+
+        * ace/Svc_Conf_l.cpp: Regular CE stuff.  Haven't figure out a way
+          to modify this from Svc_Conf.l yet.
+
+        * ace/Service_Config.cpp
+        * ace/Object_Manager.{cpp}: Ifdef'ed inclusion of Naming Context
+          related header files out.  Naming context uses Registry which
+          uses iostream and STL, both are not available on CE (yet?).
+
+        * ace/WFMO_Reactor.{h,cpp}:
+        * ace/Proactor.{h,i,cpp}:
+        * ace/Asynch_IO.{h,cpp}: Ifdef'ed the body so they are not visible
+          under CE.  CE doesn't have asynchronous IO.
 
 Wed Mar 18 21:30:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -59,31 +66,31 @@ Wed Mar 18 21:30:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Mar 18 16:36:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Makefile (releaseall): There is no more TAO.tar.gz.  There are
- 	  now two tar files, ACE.tar.gz and ACE+TAO.tar.gz.
-  	  ACE+TAO.tar.gz contains ALL of ACE.  In particular, it will
- 	  always have the same version number and same ACE contents as
- 	  ACE.tar.gz.  The intent here is that people who just want to use
- 	  ACE will use ACE.tar.gz and people who want to use ACE and TAO
- 	  will use ACE+TAO.tar.gz.  Thanks to David Levine and Irfan for
- 	  helping with this.
+        * Makefile (releaseall): There is no more TAO.tar.gz.  There are
+          now two tar files, ACE.tar.gz and ACE+TAO.tar.gz.
+          ACE+TAO.tar.gz contains ALL of ACE.  In particular, it will
+          always have the same version number and same ACE contents as
+          ACE.tar.gz.  The intent here is that people who just want to use
+          ACE will use ACE.tar.gz and people who want to use ACE and TAO
+          will use ACE+TAO.tar.gz.  Thanks to David Levine and Irfan for
+          helping with this.
 
 Wed Mar 18 15:50:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (ACE_Log_Msg): Added codes to grab 
-	  ACE_Log_Msg_Manager's lock while updating the instance_count_.
-	  There was a race condition without the change.  Thanks to Detlef
-	  Becker's <Detlef.Becker@med.siemens.de> thread creation stress
-	  test to reveal the bug.
+        * ace/Log_Msg.cpp (ACE_Log_Msg): Added codes to grab
+          ACE_Log_Msg_Manager's lock while updating the instance_count_.
+          There was a race condition without the change.  Thanks to Detlef
+          Becker's <Detlef.Becker@med.siemens.de> thread creation stress
+          test to reveal the bug.
 
 Tue Mar 17 17:20:00 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Threads/test.dsw:
-	* examples/Threads/task_five.cpp:
-	* examples/Threads/task_five.dsp:
-	* examples/Threads/Makefile: Added a new ACE_Task testing
- 	  program. Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
- 	  for providing the source.
+        * examples/Threads/test.dsw:
+        * examples/Threads/task_five.cpp:
+        * examples/Threads/task_five.dsp:
+        * examples/Threads/Makefile: Added a new ACE_Task testing
+          program. Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
+          for providing the source.
 
 Wed Mar 18 11:00:11 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
