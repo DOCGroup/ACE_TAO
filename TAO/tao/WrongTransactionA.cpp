@@ -27,51 +27,11 @@
 
 #include "WrongTransactionC.h"
 #include "tao/Typecode.h"
-#include "tao/SystemException.h"
-#include "tao/Any_Dual_Impl_T.h"
 #include "tao/CDR.h"
+#include "tao/Any.h"
+#include "tao/Any_Dual_Impl_T.h"
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_CORBA_WrongTransaction[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f5772),
-  ACE_NTOHL (0x6f6e6754),
-  ACE_NTOHL (0x72616e73),
-  ACE_NTOHL (0x61637469),
-  ACE_NTOHL (0x6f6e3a31),
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/WrongTransaction:1.0
-    17,
-  ACE_NTOHL (0x57726f6e),
-  ACE_NTOHL (0x67547261),
-  ACE_NTOHL (0x6e736163),
-  ACE_NTOHL (0x74696f6e),
-  ACE_NTOHL (0x0),  // name = WrongTransaction
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_WrongTransaction (
-    CORBA::tk_except,
-    sizeof (_oc_CORBA_WrongTransaction),
-    (char *) &_oc_CORBA_WrongTransaction,
-    0,
-    sizeof (CORBA::WrongTransaction)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_WrongTransaction =
-    &_tc_TAO_tc_CORBA_WrongTransaction;
-}
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -81,12 +41,12 @@ TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
   )
 {
   CORBA::String_var id;
-
+  
   if ((cdr >> id.out ()) == 0)
     {
       return 0;
     }
-
+  
   ACE_TRY_NEW_ENV
     {
       this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -97,7 +57,7 @@ TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
       return 0;
     }
   ACE_ENDTRY;
-
+  
   return 1;
 }
 
@@ -135,8 +95,8 @@ CORBA::Boolean operator>>= (
     CORBA::WrongTransaction *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::WrongTransaction *&,
+  return _tao_any >>= const_cast<
+      const CORBA::WrongTransaction *&> (
       _tao_elem
     );
 }
@@ -156,8 +116,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -172,4 +130,4 @@ CORBA::Boolean operator>>= (
         CORBA::WrongTransaction \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
