@@ -2,7 +2,7 @@ Wed Apr 14 17:06:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: added #define ACE_HAS_DLL 0.
           Thanks to Thomas Mehrkam <Thomas_Mehrkam@i-o.com> for
-          reporting this.
+          reporting that it's necessary on NT hosts.
 
 Wed Apr 14 13:10:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
