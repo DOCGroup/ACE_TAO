@@ -1,5 +1,9 @@
 Mon Aug 31 16:38:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/config-kcc-common.h: Added ACE_HAS_CPLUSPLUS_HEADERS to
+ 	  prevent warnings/errors.  Thanks to Ben Eng <ben@jetpen.com> and
+ 	  Todd Pack <todd@rwii.com> for reporting this.
+
 	* Added a bunch of patches so that ACE compiles and passes its
  	  tests on Chorus with gcc.  Thanks to Alberto Villarica"
  	  <Alberto.Villarica.rav@nt.com> for reporting this.
