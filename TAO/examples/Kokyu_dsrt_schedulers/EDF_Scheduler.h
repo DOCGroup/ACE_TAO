@@ -194,16 +194,19 @@ public TAO_Local_RefCounted_Object
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  Kokyu::DSRT_Dispatcher_Factory<EDF_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
+    kokyu_dispatcher_;
  private:
   CORBA::ORB_var orb_;
   IOP::Codec_var codec_;
   RTScheduling::Current_var current_;
-  Kokyu::DSRT_Dispatcher_Factory<EDF_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
-    kokyu_dispatcher_;
+//  Kokyu::DSRT_Dispatcher_Factory<EDF_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
+//    kokyu_dispatcher_;
   Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type_;
   int ace_sched_policy_;
   int ace_sched_scope_;
 };
 
-static int ID_BEGIN = 0;
+//extern int ID_BEGIN;
+
 #endif //EDF_SCHEDULER_H
