@@ -1,10 +1,16 @@
+Thu Sep  4 09:30:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Log_Msg.h: Reverted this change "Wed Sep 3 17:42:00 2003
+	  Justin Michel <michel_j@ociweb.com>". This caused builds to
+	  break so easily. 
+
 Wed Sep 3 17:42:00 2003 Justin Michel <michel_j@ociweb.com>
 
         * ace/Log_Msg.h:
 
-          An empty ACE_ASSERT now uses ACE_UNUSED_ARG. This prevents warnings
-        by compilers that aren't smart enough to recognize that the code *is*
-        used, but only by the preprocessor.
+          An empty ACE_ASSERT now uses ACE_UNUSED_ARG. This prevents
+	  warnings by compilers that aren't smart enough to recognize that
+	  the code *is* used, but only by the preprocessor.
 
 Wed Sep  3 17:01:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
