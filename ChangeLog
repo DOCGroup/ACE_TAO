@@ -1,3 +1,10 @@
+Tue Oct 14 21:54:07 2003  Nanbor Wang  <nanbor@.cs.wustl.edu>
+
+	* Makefile (CIAO_CORE_DIRS): Added Kokyu to the list of base
+	  library for CIAO.  Although CIAO doesn't depend on Kokyu, it is
+	  needed to allow the compilation in orbsvcs/orbsvcs/ to run to
+	  completion.
+
 Tue Oct 14 23:21:00 UTC 2003  Don Hinton <dhinton@dresystems.com>
 
         * ace/OS.h:
