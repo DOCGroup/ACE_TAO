@@ -11,7 +11,7 @@ REM
 if "%1" == "" goto emptyexport
 Echo // Definition for Win32 Export directives.
 Echo // This file is generated automatically by
-Echo // ${TAO_ROOT}/TAO_IDL/GenExportH.BAT
+Echo // ${ACE_ROOT}/GenExportH.BAT
 Echo // ------------------------------
 Echo #if !defined (%1_EXPORT_H)
 Echo #define %1_EXPORT_H
@@ -37,7 +37,8 @@ Echo #  define %1_SINGLETON_DECLARATION(T)
 Echo #endif     /* %1_HAS_DLL */
 Echo.
 Echo #endif     /* %1_EXPORT_H */
-Echo            // End of auto generated file.
+Echo.
+Echo // End of auto generated file.
 goto endrun
 :emptyexport
 Echo #error usage: GenExportH.BAT EXPORT_TAG (Remember to redirect the output to a file.)
