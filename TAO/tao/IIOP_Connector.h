@@ -180,15 +180,16 @@ public:
   typedef ACE_NOOP_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
         TAO_NULL_CREATION_STRATEGY;
 
+protected:
+  TAO_ORB_Core *orb_core_;
+  // ORB Core.
+
 private:
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
 
   TAO_IIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for IIOP.
-
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
