@@ -1,3 +1,9 @@
+Mon Nov 15 09:33:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Configuration.h (ACE_Configuration_Section_Key): The
+ 	  reserved word "operator" has a typo and is typed as "Operator".
+  	  Thanks to Andy Gokhale for reporting this.
+
 Sun Nov 14 20:20:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Configuration.h: Improved the ACE-ification of this file.
