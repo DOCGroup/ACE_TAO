@@ -8,7 +8,7 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
-// begin of linux-common.h 
+// begin of linux-common.h
 
 /* #define ACE_HAS_BYTESEX_H */
 
@@ -125,7 +125,7 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_LACKS_WRITEV
-#define ACE_NEEDS_HUGE_THREAD_STACKSIZE 4096
+#define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 #define ACE_NEEDS_SCHED_H
 #define ACE_HAS_POSIX_NONBLOCK
 

@@ -182,13 +182,7 @@
 // now temporarily supports both forms.  Platform's implementation of
 // sendmsg() has a non-const msgheader parameter.
 #define ACE_HAS_BROKEN_SENDMSG
-
-// As 1MB thread-stack size seems to become standard (at least Solaris and
-// NT have it), we should raise the minimum stack size to this level for
-// avoiding unpleasant surprises when porting ACE software to Digital UNIX.
-// Do not define this smaller than 64KB, because ACE_Log_Msg::log needs that!
-// TK, 05 Feb 97
-#define ACE_NEEDS_HUGE_THREAD_STACKSIZE (1024 * 1024)
 #define ACE_HAS_IDTYPE_T
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */
