@@ -14,7 +14,7 @@ DATE=`date +%Y/%m/%d-%H:%M`
 
 COMMON_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool"
 
-SEQUENCE_TESTS="Single_Threaded"
+SEQUENCE_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool"
 
 SEQ_TEST_TYPE="octet long short char double longlong"
 
