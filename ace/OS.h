@@ -6094,11 +6094,6 @@ private:
   friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
   // This class is for internal use by ACE_OS, etc., only.
 
-  static u_int init_fini_count_;
-  // Counter to match init ()/fini () calls.  init () must increment
-  // it; fini () must decrement it.  fini () then does nothing until
-  // it reaches 0.
-
   static ACE_OS_Object_Manager *instance (void);
   // Accessor to singleton instance.
 
