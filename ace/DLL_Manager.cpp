@@ -166,19 +166,17 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name)
   ACE_TRACE ("ACE_DLL_Handle::symbol");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  auto_ptr <ACE_TCHAR> auto_name (ACE_Lib_Find::ldname (sym_name));
+  ACE_Auto_Array_Ptr <ACE_TCHAR> auto_name (ACE_Lib_Find::ldname (sym_name));
 
   void *sym =  ACE_OS::dlsym (this->handle_, auto_name.get ());
 
-  auto_ptr <ACE_TString> error = this->error ();
-
-  // Linux says that the symbol could be null and that it isn't an error.
+ // Linux says that the symbol could be null and that it isn't an error.
   // So you should check the error message also, but since null symbols
   // won't do us much good anyway, let's still report an error.
   if (!sym)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE_DLL_Handle::symbol error: \"%s\"."),
-                       error->c_str ()),
+                       ACE_LIB_TEXT ("ACE_DLL_Handle::symbol (\"%s\") \"%s\"."),
+                       auto_name.get (), this->error ()->c_str ()),
                       0);
 
   return sym;
@@ -216,7 +214,7 @@ ACE_DLL_Handle::get_handle (int become_owner)
 // This method is used return the last error of a library operation.
 
 auto_ptr <ACE_TString>
-ACE_DLL_Handle::error (void) const
+ACE_DLL_Handle::error (void)
 {
   ACE_TRACE ("ACE_DLL_Handle::error");
 

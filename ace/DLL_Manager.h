@@ -98,7 +98,7 @@ private:
   /// failed.  This is used internal to print out the error to the log,
   /// but since this object is shared, we can't store or return the error
   /// to the caller.
-  auto_ptr <ACE_TString> error (void) const;
+  auto_ptr <ACE_TString> error (void);
 
   // Keep track of how many ACE_DLL objects have a reference to this
   // dll.
