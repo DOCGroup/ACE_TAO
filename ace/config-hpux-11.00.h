@@ -189,6 +189,15 @@
 // HP-UX is a POSIX-compliant system - see what's available.
 #include "ace/config-posix.h"
 
+// config-posix.h sets up ACE_HAS_AIO_CALLS if the headers define the
+// proper things. In HP-UX 11's case, the AIOCB Proactor works the best
+// overall. If the user hasn't overridden it, select AIOCB.
+#if defined (ACE_HAS_AIO_CALLS)
+#  if !defined (ACE_POSIX_AIOCB_PROACTOR) && !defined (ACE_POSIX_SIG_PROACTOR)
+#    define ACE_POSIX_AIOCB_PROACTOR
+#  endif /* !ACE_HAS_POSIX_AIOCB_PROACTOR && !ACE_POSIX_SIG_PROACTOR */
+#endif /* ACE_HAS_AIO_CALLS)
+
 ////////////////////////////////////////////////////////////////////////////
 //
 // General OS information - see README for more details on what they mean
