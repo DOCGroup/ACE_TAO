@@ -1,3 +1,9 @@
+Wed Jan  7 18:53:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/RTScheduling/rtscheduler_export.h:
+          Added check for TAO_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Wed Jan  7 18:48:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Utils/utils_export.h:
