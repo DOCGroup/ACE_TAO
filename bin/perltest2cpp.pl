@@ -1004,6 +1004,7 @@ sub handleAssignment {
         else {
           if ($count != 0) {
             $line .= getIndent();
+            $v = ", $v";
           }
         }
         ##
