@@ -137,7 +137,7 @@ ifdef quantify
 #### You might want to adjust the Quantify options below.
 #### -best-effort is undocumented but supported, and seems
 #### to help avoid occasional link failure.
-PRELINK += quantify -best-effort -cache-dir=/tmp/purifycache
+PRELINK += quantify -best-effort -cache-dir=/tmp/purifycache -max_threads=100
 endif # quantify
 
 ifdef purify
