@@ -462,7 +462,7 @@ TAO_CodeGen::start_server_header (const char *fname)
   if (be_global->gen_amh_classes ())
     {
       this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/AMH_Response_Handler.h");
+                                  "tao/Messaging/AMH_Response_Handler.h");
     }
 
   *this->server_header_ << be_nl << be_nl
@@ -890,7 +890,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
     {
       *this->implementation_header_ << "#include \"tao/LocalObject.h\"\n\n";
     }
-    
+
   return 0;
 }
 
@@ -942,7 +942,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
 
   this->implementation_skeleton_->print ("#include \"%s\"\n\n",
                                          impl_hdr);
-                                         
+
   return 0;
 }
 
