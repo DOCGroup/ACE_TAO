@@ -38,13 +38,13 @@ public:
   enum
   {
     M_DELETE_NONE = 0,
-    // Indicates that close() should not delete any tasks.
+    // Indicates that close() should not delete any Tasks.
 
     M_DELETE_READER = 1,
-    // Indicates that close() should delete the writer thread.
+    // Indicates that close() should delete the writer Task.
 
     M_DELETE_WRITER = 2,
-    // Indicates that close() should delete the reader thread.
+    // Indicates that close() should delete the reader Task.
 
     M_DELETE = 3 
     // Indicates that close() deletes the Tasks.  Don't change this

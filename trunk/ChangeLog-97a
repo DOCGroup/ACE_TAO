@@ -1,3 +1,10 @@
+Sat Feb 22 10:57:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Stream.cpp (open): Make sure that if we allocate the Tasks
+ 	  in the Stream head and the Stream tail that we set the M_DELETE
+ 	  flag so that the close() method will clean up the memory.
+  	  Thanks to David Levine and Purify for noticing this problem.
+
 Fri Feb 21 08:06:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Yikes, it looks like the Solaris and the POSIX version
