@@ -115,8 +115,8 @@ extensively on the following platforms and compilers:
 
 * VxWorks
 
-     	. David Levine has ported ACE to VxWorks 5.2 using the
-	  GreenHills 1.8.7 compiler. 
+     	. David Levine has ported ACE to VxWorks 5.2 and 5.3 using the
+	  GreenHills 1.8.8 compiler. 
 
 * MVS OpenEdition
 
