@@ -1,5 +1,11 @@
+Sun Mar 04 10:58:08 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added Log_Msg_NT_Event_Log.{h,cpp} to NT
+	  project files.
+
 Sun Mar  4 10:41:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
- 
+
         * ace/Log_Msg.cpp,
           ace/Log_Msg.h,
 	  ace/Logging_Strategy.cpp,
@@ -9,11 +15,11 @@ Sun Mar  4 10:41:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  ace/OS.i,
 	  ace/ace.rc: Added support for the new NT event logging capability.
 	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing this.
-   
+
         * ace/Log_Msg_NT_Event_Log.cpp
 	  ace/Log_Msg_NT_Event_Log.h
 	  ace/ace_message_table.bin:  Added these files to support the new
- 	  NT event logging capability.  
+ 	  NT event logging capability.
  	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing
  	  this.
 
