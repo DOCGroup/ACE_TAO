@@ -120,6 +120,12 @@ Thu Apr 22 20:01:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ACEXML/common/URL_Addr.inl:
 	* ACEXML/parser/parser/ParserContext.h:
 	* ACEXML/parser/parser/ParserContext.inl:
+	* ACEXML/common/AttributesImpl.h:
+	* ACEXML/common/AttributesImpl.i:
+	* ACEXML/common/URL_Addr.h:
+	* ACEXML/common/URL_Addr.inl:
+	* ACEXML/parser/parser/ParserContext.h:
+	* ACEXML/parser/parser/ParserContext.inl:
 
 	  Changed all return types for equality, relational and logical
 	  operators to "bool", as is the norm for modern C++.
