@@ -1,3 +1,12 @@
+Fri Aug  2 08:44:19 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/PSS/PSDL_Struct_Visitor.cpp (gen_code_for_si): 
+	  Filled in information to the structure that will be
+	  generated.
+
+	* orbsvcs/examples/PSS/client.cpp (main): 
+	  Fixed the warning in GCC 3.0 build.
+
 Fri Aug  2 07:38:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
