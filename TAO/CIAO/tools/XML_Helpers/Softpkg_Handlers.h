@@ -6,6 +6,9 @@
  *
  *  $Id$
  *
+ *  This file turned out to host only one handler.  We'll still keep
+ *  the name as Softpkg_Handlers, however.
+ *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

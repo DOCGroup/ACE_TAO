@@ -14,6 +14,7 @@
 #define CIAO_XML_UTILS_H
 
 #include "Softpkg_Handlers.h"
+#include "Assembly_Spec.h"
 
 namespace CIAO
 {
@@ -44,6 +45,8 @@ namespace CIAO
      */
     static int parse_softpkg (Softpkg_Handler::Softpkg_Info *info);
 
+    static int parse_componentassembly (const char *filename,
+                                        Assembly_Spec *spec);
 
   };
 
