@@ -1,3 +1,10 @@
+Wed Jun 23 13:05:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Made changes to fix some memory leaks.
+
 Wed Jun 23 12:31:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
