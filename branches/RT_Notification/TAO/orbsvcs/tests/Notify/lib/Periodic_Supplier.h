@@ -80,6 +80,8 @@ protected:
   /// The event to send.
   TAO_NS_StructuredEvent event_;
 
+  TAO_NS_StructuredEvent zeroth_event;
+
   /// The priority of this task.
   CORBA::Short priority_;
 

@@ -8,8 +8,11 @@ ACE_RCSID(lib, TAO_EventChannel_Command, "$id$")
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
+#include "ace/Dynamic_Service.h"
+#include "../../../orbsvcs/Notify/Service.h"
 
 TAO_NS_EventChannel_Command::TAO_NS_EventChannel_Command (void)
+  : colocated_ (0)
 {
 }
 
@@ -34,7 +37,7 @@ TAO_NS_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0) // -Create ec_name factory_name
+      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0) // -Create ec_name factory_name [COLOCATED]
         {
           this->command_ = CREATE;
 
@@ -45,6 +48,11 @@ TAO_NS_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           this->factory_ = arg_shifter.get_current ();
           arg_shifter.consume_arg ();
+
+          if (arg_shifter.cur_arg_strncasecmp ("COLOCATED") == 0)
+            {
+              this->colocated_ = 1;
+            }
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-Destroy") == 0) // -Destroy ec_name
         {
@@ -73,8 +81,70 @@ TAO_NS_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
+TAO_NS_EventChannel_Command::create_colocated_ecf (ACE_ENV_SINGLE_ARG_DECL)
+{
+  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
+
+  // The Service Object.
+  TAO_Notify_Service* notify_service;
+
+  notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
+
+  if (notify_service == 0)
+    {
+      notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
+    }
+
+  if (notify_service == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
+      return;
+    }
+
+  // Resolve some helpers.
+  CORBA::ORB_var orb;
+  PortableServer::POA_var poa;
+  CosNaming::NamingContextExt_var naming;
+
+  LOOKUP_MANAGER->resolve (orb ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  LOOKUP_MANAGER->resolve (poa ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  LOOKUP_MANAGER->resolve (naming ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  notify_service->init (orb.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Activate the factory
+  notify_factory =
+    notify_service->create (poa.in ()
+                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Register with the Naming Service
+  CosNaming::Name_var name =
+    naming->to_name (TAO_NS_Name::event_channel_factory
+                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  naming->rebind (name.in (),
+                  notify_factory.in ()
+                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
 TAO_NS_EventChannel_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 {
+  if (this->colocated_ == 1)
+    {
+      this->create_colocated_ecf (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
   CosNotifyChannelAdmin::EventChannelFactory_var ec_factory;
 
   LOOKUP_MANAGER->resolve (ec_factory , TAO_NS_Name::event_channel_factory ACE_ENV_ARG_PARAMETER);
@@ -83,7 +153,7 @@ TAO_NS_EventChannel_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
   CosNotification::QoSProperties qos;
   CosNotification::AdminProperties admin;
 
-  // create an event channel
+  // Create an event channel
   CosNotifyChannelAdmin::EventChannel_var ec =
     ec_factory->create_channel (qos,
                                 admin,
