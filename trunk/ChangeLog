@@ -7,6 +7,29 @@ Wed Dec 11 17:00:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* ace/WIN32_Asynch_IO.cpp: Fixed a warning in Borland builds.
 
+Tue Dec 10 19:42:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.{h cpp}: Added new method, ACE_OS::snprintf() that wraps
+          native snprintf() if available (ACE_HAS_SNPRINTF for char,
+          ACE_HAS_XPG4_MULTIBYTE or ACE_WIN32 for wide char); else returns
+          -1, ENOTSUP.
+
+        * ace/config-linux-common.h: Add detection for ACE_HAS_SNPRINTF.
+
+        * ace/config-win32-common.h: Removed #define ACE_HAS_VSWPRINTF.
+          vswprintf() on Windows is not the standard way, and this setting
+          was only used for Win32. See comments in OS.cpp, sprintf(wchar_t...)
+          for more info. Added ACE_HAS_SNPRINTF in its place.
+
+        * ace/Log_Msg.cpp (log): Don't overrun the msg_ buffer while
+          building the logged message. Silently stops logging characters
+          when the limit is reached.
+          Also, on %a aborts, don't just do a "while (1);" on WinCE.
+          Forcing the user to cycle power is not a good idea.
+
+        * tests/Log_Msg_Test.cpp: Add a test case for logging a string
+          that can't possibly fit in the logging buffers.
+
 Tue Dec 10 18:10:41 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Changed the default proactor type to

@@ -223,6 +223,16 @@ test_log_msg_features (const ACE_TCHAR *program)
                 badname,
                 cleanup));
 
+  // Try a log operation that would overflow the logging buffer if not
+  // properly guarded.
+  ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
+  size_t i = 0;
+  const ACE_TCHAR alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
+  size_t j = ACE_OS::strlen (alphabet);
+  while (i < ACE_Log_Record::MAXLOGMSGLEN)
+    big[i++] = alphabet[i % j];
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big: %s\n"), big));
+
   // Exercise many different combinations of OSTREAM.
 
   ACE_DEBUG ((LM_INFO,
