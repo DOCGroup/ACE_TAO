@@ -1,3 +1,39 @@
+Sun Jul 22 21:53:23 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* $ACE_ROOT/auto_run_tests.lst: Disabled Exposed_Policies test for
+	  single threaded configurations and Linux.  This test requires
+	  multiple threads and support for multiple native priorities.
+
+	* tests/Exposed_Policies/Policy_Tester.cpp (Policy_Tester): Fixed
+	  several things:
+	
+	  - No need for the Policy_Tester::~Policy_Tester to call
+	  shutdown().  This is already done by the servant.
+
+	  - No need for TRY/CATCH blocks in each function.  This
+	  unnecessarily stops any exceptions from propagating to higher
+	  layers.
+
+	  - Fixed return values and added error checking.
+
+	  - No need to call destroy() on the POAs. ORB::shutdown is
+	  enough.
+
+	  - Removed unnecessary default values from the function
+	  prototypes.
+
+	* tests/Exposed_Policies/run_test.pl: 
+	* tests/Exposed_Policies/POA.cfg: 
+	* tests/Exposed_Policies/Object.cfg: 
+
+	  Updated config files so that the priorities would be ok for
+	  Win32.
+
+	* tests/Exposed_Policies/server.cpp: Improved error checking.
+
+	* tests/Exposed_Policies/server.conf: Removed Thread Pool Reactor
+	  directive from the service config file.
+
 Sun Jul 22 16:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Client_Task.cpp:
