@@ -241,13 +241,13 @@ catior (char* str,
             continue;
           }
 
-        if (tag == TAO_IOP_TAG_INTERNET_IOP)
+        if (tag == TAO_TAG_IIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_iiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
-        else if (tag == TAO_IOP_TAG_UNIX_IOP)
+        else if (tag == TAO_TAG_UIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_uiop_profile (stream);

@@ -11,7 +11,7 @@
 #include "ace/Process.h"
 #include "ace/Auto_Ptr.h"
 
-// Conversion 
+// Conversion
 ImplementationRepository::ActivationMode convert (Server_Info::ActivationMode mode)
 {
   if (mode == Server_Info::NORMAL)
@@ -78,7 +78,7 @@ ImplRepo_i::ImplRepo_i (void)
 // not already started and if it can be started.
 
 void
-ImplRepo_i::activate_server (const char *server,                               
+ImplRepo_i::activate_server (const char *server,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound,
@@ -107,10 +107,10 @@ ImplRepo_i::activate_server_i (const char *server,
 
   ACE_TString logical, startup, working;
   Server_Info::ActivationMode activation;
-  if (this->repository_.get_startup_info (server, 
-                                          logical, 
-                                          startup, 
-                                          working, 
+  if (this->repository_.get_startup_info (server,
+                                          logical,
+                                          startup,
+                                          working,
                                           activation) != 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -178,7 +178,7 @@ ImplRepo_i::activate_server_i (const char *server,
             CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION, 0),
             CORBA::COMPLETED_NO),
           ImplRepo_i::Endpoint ());
-    
+
       // Check to see if it is already starting up
       int startup_val = this->repository_.starting_up (server, 1);
 
@@ -438,7 +438,7 @@ ImplRepo_i::server_is_running (const char * server,
   TAO_AcceptorSetItor end = registry->end ();
   for (TAO_AcceptorSetItor i = registry->begin (); i != end; ++i)
     {
-      if ((*i)->tag () == TAO_IOP_TAG_INTERNET_IOP)
+      if ((*i)->tag () == TAO_TAG_IIOP_PROFILE)
         {
           acceptor = (*i);
           break;
