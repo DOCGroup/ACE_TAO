@@ -18,7 +18,7 @@ $PerlACE::Process::chorus = 0;
 $PerlACE::Process::cwd = getcwd();
 
 for(my $i = 0; $i <= $#ARGV; $i++) {
-    if ($ARGV[$i] eq '-chorus') {  
+    if ($ARGV[$i] eq '-chorus') {
         if (defined $ARGV[$i + 1]) {
             $PerlACE::Process::chorus = 1;
             $PerlACE::Process::chorushostname = $ARGV[$1 + 1];
@@ -28,7 +28,7 @@ for(my $i = 0; $i <= $#ARGV; $i++) {
                          "the hostname of the target\n";
             exit(1);
         }
-    
+
         splice(@ARGV, $i, 2);
         # Don't break from the loop just in case there
         # is an accidental duplication of the -chorus option
@@ -59,18 +59,18 @@ else {
 
 ### Constructor and Destructor
 
-sub new  
+sub new
 {
     my $proto = shift;
     my $class = ref ($proto) || $proto;
     my $self = {};
-    
+
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
-    
+
     bless ($self, $class);
     return $self;
 }
@@ -78,11 +78,11 @@ sub new
 sub DESTROY
 {
     my $self = shift;
-    
+
     if ($self->{RUNNING} == 1) {
-        print STDERR "ERROR: <", $self->{EXECUTABLE}, 
+        print STDERR "ERROR: <", $self->{EXECUTABLE},
                      "> still running upon object destruction\n";
-        $self->Kill ();             
+        $self->Kill ();
     }
 }
 
@@ -99,7 +99,7 @@ sub Executable
     }
 
     my $executable = $self->{EXECUTABLE};
-    
+
     if ($self->{IGNOREEXESUBDIR}) {
         return $executable;
     }
@@ -134,10 +134,10 @@ sub CommandLine ()
     }
 
     if ($PerlACE::Process::chorus == 1) {
-        $commandline = "rsh " 
-                       . $PerlACE::Process::chorushostname 
+        $commandline = "rsh "
+                       . $PerlACE::Process::chorushostname
                        . " arun "
-                       . $PerlACE::Process::cwd 
+                       . $PerlACE::Process::cwd
                        . "/"
                        . $commandline;
     }
@@ -177,13 +177,13 @@ sub Spawn ()
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
         if (!-f $self->Executable ()) {
-            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
+            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                          "> not found\n";
             return -1;
         }
 
         if (!$PerlACE::Process::chorus && !-x $self->Executable ()) {
-            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
+            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                          "> not executable\n";
             return -1;
         }
@@ -211,6 +211,7 @@ sub Spawn ()
         }
     }
     $self->{RUNNING} = 1;
+    return 0;
 }
 
 sub WaitKill ($)
@@ -222,9 +223,9 @@ sub WaitKill ($)
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
-        $self->Kill (); 
+        $self->Kill ();
     }
-    
+
     $self->{RUNNING} = 0;
 
     return $status;
@@ -249,11 +250,11 @@ sub TerminateWaitKill ($)
 {
     my $self = shift;
     my $timeout = shift;
-  
+
     if ($self->{RUNNING}) {
         kill ('TERM', $self->{PROCESS});
     }
-    
+
     return $self->WaitKill ($timeout);
 }
 
@@ -301,7 +302,7 @@ sub check_return_value ($)
 sub Kill ()
 {
     my $self = shift;
-  
+
     if ($self->{RUNNING}) {
         kill ('KILL', $self->{PROCESS});
         waitpid ($self->{PROCESS}, 0);
@@ -314,7 +315,7 @@ sub Kill ()
 sub Wait ()
 {
     my $self = shift;
-    
+
     waitpid ($self->{PROCESS}, 0);
 }
 
@@ -322,12 +323,12 @@ sub TimedWait ($)
 {
     my $self = shift;
     my $timeout = shift;
-    
+
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
         if ($pid != 0 && $? != -1) {
             return $self->check_return_value ($?);
-        }            
+        }
         sleep 1;
     }
 
@@ -335,4 +336,3 @@ sub TimedWait ($)
 }
 
 1;
-
