@@ -25,6 +25,7 @@
 #include "be_array.h"
 #include "be_attribute.h"
 #include "be_enum.h"
+#include "be_exception.h"
 #include "be_sequence.h"
 #include "be_string.h"
 #include "be_structure.h"

@@ -40,8 +40,10 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Arg_Traits<" << node->name ()
-          << ">" << this->suffix_;
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::Arg_Traits<" << this->linebreak_ << be_idt << be_idt_nl
+          << node->name () << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
@@ -50,8 +52,9 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
           << node->name () << "_ptr," << this->linebreak_ << be_nl
           << node->name () << "_var," << this->linebreak_ << be_nl
           << node->name () << "_out," << this->linebreak_ << be_nl
-          << "TAO::Objref_Traits<" << node->name () << "> " << this->linebreak_
-          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt << be_uidt;
+          << "TAO::Objref_Traits<" << node->name ()
+          << ">" << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       os->gen_endif ();
     }
@@ -75,8 +78,10 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
 
   // For the traits template class.
   *os << be_nl << be_nl
-      << this->prefix_ << " TAO::Objref_Traits<" << node->name ()
-      << ">" << this->suffix_;
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO::Objref_Traits<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << this->linebreak_ << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
   // For the _var and _out typedefs.
   *os << be_nl << be_nl
@@ -94,8 +99,9 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Narrow_Utils<" << node->name () << ">"
-          << this->suffix_ << be_uidt << be_uidt;
+          << "TAO::Narrow_Utils<" << this->linebreak_ << be_idt << be_idt_nl
+          << node->name () << this->linebreak_ << be_uidt_nl 
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
 
   if (be_global->gen_smart_proxies ())
@@ -152,8 +158,10 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Arg_Traits<" << node->name ()
-          << ">" << this->suffix_;
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << " TAO::Arg_Traits<" << this->linebreak_ << be_idt << be_idt_nl
+          << node->name () << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
@@ -162,8 +170,9 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
           << node->name () << " *," << this->linebreak_ << be_nl
           << node->name () << "_var," << this->linebreak_ << be_nl
           << node->name () << "_out," << this->linebreak_ << be_nl
-          << "TAO::Objref_Traits<" << node->name () << "> " << this->linebreak_
-          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt << be_uidt;
+          << "TAO::Objref_Traits<" << node->name () << "> " 
+          << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       os->gen_endif ();
     }
@@ -184,8 +193,10 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
 
   // For _var and _out template classes.
   *os << be_nl << be_nl
-      << this->prefix_ << " TAO::Value_Traits<" << node->name ()
-      << ">" << this->suffix_;
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO::Value_Traits<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << this->linebreak_ << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
   *os << be_nl << be_nl
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
@@ -629,6 +640,30 @@ be_visitor_tmplinst_cs::visit_enum (be_enum *node)
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Basic_Impl_T<" << this->linebreak_
+          << be_idt << be_idt_nl
+          << node->name () << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+    }
+
+  this->this_mode_generated (node, I_TRUE);
+  return 0;
+}
+
+int
+be_visitor_tmplinst_cs::visit_exception (be_exception *node)
+{
+  if (this->this_mode_generated (node) || node->imported ())
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  if (be_global->any_support ())
+    {
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::Any_Dual_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
