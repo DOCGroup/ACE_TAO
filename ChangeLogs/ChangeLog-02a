@@ -1,3 +1,8 @@
+Fri May 11 07:14:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/CDR_Test.cpp: Reverted this change "Wed May  9 23:19:30
+	  2001  Sharath R. Cholleti " 
+
 Fri May 11 06:47:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/ARGV_Test.cpp: One of those extra ")".
