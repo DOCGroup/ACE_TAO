@@ -1052,6 +1052,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (defined (ACE_HAS_AIO_CALLS) */
 }
 
+#if defined (ACE_HAS_AIO_CALLS)
 void*
 ACE_Asynch_Accept::thread_function (void* arg_reactor)
 {
@@ -1076,6 +1077,7 @@ ACE_Asynch_Accept::thread_function (void* arg_reactor)
   ACE_DEBUG ((LM_DEBUG, "Exiting ACE_Asynch_Accept::thread_function \n"));
   return 0;
 }
+#endif /* ACE_HAS_AIO_CALLS */
 
 // ************************************************************
 
