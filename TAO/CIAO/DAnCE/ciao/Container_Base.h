@@ -20,9 +20,9 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "CCM_ContainerC.h"
-#include "Deployment_CoreC.h"
-#include "CIAO_Server_Export.h"
+#include "ciao/CCM_ContainerC.h"
+#include "ciao/Deployment_CoreC.h"
+#include "ciao/CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,6 +30,8 @@
 
 namespace CIAO
 {
+  class Servant_Activator;
+
   /**
    * @class Container
    *
@@ -86,9 +88,10 @@ namespace CIAO
 
     // Uninstall a servant for component.
     virtual void uninstall_component (::Components::CCMObject_ptr objref,
-                              PortableServer::ObjectId_out oid
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                      PortableServer::ObjectId_out oid
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
 
   protected:
     CORBA::ORB_var orb_;
@@ -187,8 +190,8 @@ namespace CIAO
 
     // Uninstall a servant for component.
     virtual void uninstall_component (::Components::CCMObject_ptr objref,
-                              PortableServer::ObjectId_out oid
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                      PortableServer::ObjectId_out oid
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Install a servant for component or home.
@@ -223,16 +226,27 @@ namespace CIAO
     // Analog of the POA method that creates an object reference from
     // an object id string.
     CORBA::Object_ptr generate_reference (const char *obj_id,
-                                          const char *repo_id
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                          const char *repo_id,
+                                          Container::OA_Type t
+                                          ACE_ENV_ARG_DECL);
+
+    /// Return the servant activator factory that activates the
+    /// servants for facets and consumers.
+    Servant_Activator *ports_servant_activator (void) const;
 
   private:
 
+    /// Create POA  for the component.
+    /**
+     * This is the POA that is returned to the component applications
+     * if they need one.
+     */
     void create_component_POA (const char *name,
                                const CORBA::PolicyList *p,
                                PortableServer::POA_ptr root
                                ACE_ENV_ARG_DECL);
 
+    /// Create POA for the facets and consumers alone.
     void create_facet_consumer_POA (PortableServer::POA_ptr root
                                     ACE_ENV_ARG_DECL);
 
@@ -247,6 +261,10 @@ namespace CIAO
     //         It looks like it can also be declared const, as well.
     bool static_config_flag_;
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
+
+    /// The servant activator factory used to activate facets and
+    /// consumer servants.
+    Servant_Activator *sa_;
   };
 }
 
