@@ -1035,7 +1035,7 @@ ACE_OS::gettimeofday (void)
 
   timeval tv;
   int result = 0;
-#if defined (ACE_HAS_PACE)
+#if (0)
   struct timespec ts;
 
   ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, -1, result);
@@ -2408,14 +2408,16 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                         ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_OS::cond_timedwait");
-#if defined (ACE_HAS_PACE)
+#if (0)
   int result;
   timespec_t ts;
 
   if (timeout != 0)
     ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
-  timeout == 0 ? (result = pace_pthread_cond_wait (cv, external_mutex)) :
-                 (result = pace_pthread_cond_timedwait (cv, external_mutex, (ACE_TIMESPEC_PTR) &ts));
+  ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
+                                ? (pace_pthread_cond_wait (cv, external_mutex))
+                                : (pace_pthread_cond_timedwait (cv, external_mutex, (ACE_TIMESPEC_PTR) &ts),
+                                   int, -1, result);
 
   // We need to adjust this to make the POSIX and Solaris return
   // values consistent.  EAGAIN is from Pthreads DRAFT4 (HP-UX 10.20 and
@@ -3128,6 +3130,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
   ACE_UNUSED_ARG (sa);
+  s->name_ = 0;
   if (name)
   {
     ACE_ALLOCATOR_RETURN (s->name_,
