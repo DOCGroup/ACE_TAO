@@ -32,6 +32,11 @@ Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/ACE.cpp (recv_n): commented out the MSG_PEEK flag check because
           it caused IOStream_Test to not terminate.
 
+        * ace/Env_Value_T.{h,i}: moved ACE_Convert specializations from .i
+          file to .h file, because the resulted in multiple instantiations
+          with ACE_INLINE disabled, and missing specializations without
+          ACE_HAS_TEMPLATES_REQUIRE_SOURCE and inlining enabled.
+
 Thu Feb 19 10:41:05 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK.cpp (open): It appears that we don't need to do
