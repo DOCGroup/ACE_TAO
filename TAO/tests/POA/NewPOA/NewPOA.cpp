@@ -52,8 +52,7 @@ main (int argc, char **argv)
     }
 
   // Policies for the new POAs
-  // CORBA::PolicyList policies (2);
-  PortableServer::PolicyList policies (2);
+  CORBA::PolicyList policies (2);
   policies.length (2);
 
   // Threading policy
@@ -127,8 +126,7 @@ main (int argc, char **argv)
        i < policies.length () && env.exception () == 0;
        ++i)
     {
-      // CORBA::Policy_ptr policy = policies[i];
-      PortableServer::Policy_ptr policy = policies[i];
+      CORBA::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }
 

@@ -60,9 +60,11 @@ public:
 
   virtual PortableServer::ThreadPolicyValue value (CORBA::Environment &env);
 
-  virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
+  virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
 
   virtual void destroy (CORBA::Environment &env);
+
+  virtual CORBA::PolicyType policy_type (CORBA::Environment &environment);
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
 
@@ -82,9 +84,11 @@ public:
 
   virtual PortableServer::LifespanPolicyValue value (CORBA::Environment &env);
 
-  virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
+  virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
 
   virtual void destroy (CORBA::Environment &env);
+
+  virtual CORBA::PolicyType policy_type (CORBA::Environment &environment);
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
 
@@ -104,9 +108,11 @@ public:
 
   virtual PortableServer::IdUniquenessPolicyValue value (CORBA::Environment &env);
 
-  virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
+  virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
 
   virtual void destroy (CORBA::Environment &env);
+
+  virtual CORBA::PolicyType policy_type (CORBA::Environment &environment);
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
 
@@ -126,9 +132,11 @@ public:
 
   virtual PortableServer::IdAssignmentPolicyValue value (CORBA::Environment &env);
 
-  virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
+  virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
 
   virtual void destroy (CORBA::Environment &env);
+
+  virtual CORBA::PolicyType policy_type (CORBA::Environment &environment);
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
 
@@ -148,9 +156,11 @@ public:
 
   virtual PortableServer::ImplicitActivationPolicyValue value (CORBA::Environment &env);
 
-  virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
+  virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
 
   virtual void destroy (CORBA::Environment &env);
+
+  virtual CORBA::PolicyType policy_type (CORBA::Environment &environment);
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
 
@@ -170,9 +180,11 @@ public:
 
   virtual PortableServer::ServantRetentionPolicyValue value (CORBA::Environment &env);
 
-  virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
+  virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
 
   virtual void destroy (CORBA::Environment &env);
+
+  virtual CORBA::PolicyType policy_type (CORBA::Environment &environment);
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
 
@@ -192,9 +204,11 @@ public:
 
   virtual PortableServer::RequestProcessingPolicyValue value (CORBA::Environment &env);
 
-  virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
+  virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
 
   virtual void destroy (CORBA::Environment &env);
+
+  virtual CORBA::PolicyType policy_type (CORBA::Environment &environment);
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
 
@@ -231,12 +245,12 @@ public:
   virtual PortableServer::RequestProcessingPolicyValue request_processing (void) const;
   virtual void request_processing (PortableServer::RequestProcessingPolicyValue value);
 
-  virtual void parse_policies (const PortableServer::PolicyList &policies,
+  virtual void parse_policies (const CORBA::PolicyList &policies,
                                CORBA::Environment &env);
 
 protected:
 
-  virtual void parse_policy (const PortableServer::Policy_ptr policy,
+  virtual void parse_policy (const CORBA::Policy_ptr policy,
                              CORBA::Environment &env);
 
   virtual int validity_check (void);
@@ -319,7 +333,7 @@ public:
 
   virtual PortableServer::POA_ptr create_POA (const char *adapter_name,
                                               PortableServer::POAManager_ptr poa_manager,
-                                              const PortableServer::PolicyList &policies,
+                                              const CORBA::PolicyList &policies,
                                               CORBA::Environment &env);
 
   virtual PortableServer::POA_ptr find_POA (const char *adapter_name,

@@ -9,7 +9,7 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "PolicyS.h"
+#include "tao/corba.h"
 
 #if !defined (__ACE_INLINE__)
 #include "PolicyS.i"
@@ -215,7 +215,7 @@ POA_CORBA::_tao_collocated_Policy::_tao_collocated_Policy (
     POA_CORBA::Policy_ptr  servant,
     STUB_Object *stub
   )
-  : CORBA::Policy (stub, servant, CORBA::B_TRUE),
+  : CORBA_Policy (stub, servant, CORBA::B_TRUE),
     CORBA_Object (stub, servant, CORBA::B_TRUE),
     servant_ (servant)
 {

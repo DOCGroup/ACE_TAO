@@ -59,8 +59,7 @@ main (int argc, char **argv)
     }
 
   // Policies for the firstPOA to be created.
-  // CORBA::PolicyList policies (2); 
-  PortableServer::PolicyList policies (2);
+  CORBA::PolicyList policies (2); 
   policies.length (2);
 
   // Id Assignment Policy
@@ -99,8 +98,7 @@ main (int argc, char **argv)
        i < policies.length () && env.exception () == 0;
        ++i)
     {
-      // CORBA::Policy_ptr policy = policies[i];
-      PortableServer::Policy_ptr policy = policies[i];
+      CORBA::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }
   if (env.exception () != 0)
