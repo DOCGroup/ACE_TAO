@@ -103,6 +103,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 
   db->task (JAWS_Pipeline_Accept_Task_Singleton::instance ());
   db->policy (policy);
+  db->io_handler (0);
 
   db->task ()->next (protocol);
 

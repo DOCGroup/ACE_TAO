@@ -41,13 +41,23 @@ JAWS_Waiter::index (void)
 JAWS_IO_Handler *
 JAWS_Waiter::wait_for_completion (int i)
 {
+loop:
   if (ACE_Proactor::instance ()->handle_events () == -1)
     {
       ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Waiter::wait_for_completion"));
       return 0;
     }
 
-  return (i > 0) ? *(this->find (i)) : *(this->find (this->index ()));
+  JAWS_IO_Handler *ioh;
+  JAWS_IO_Handler **iohptr;
+
+  iohptr = (i >= 0) ? this->find (i) : this->find (this->index ());
+  ioh = *iohptr;
+
+  *iohptr = 0;
+  if (ioh == 0) goto loop;
+
+  return ioh;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

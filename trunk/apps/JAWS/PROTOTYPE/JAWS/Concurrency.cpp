@@ -87,15 +87,35 @@ JAWS_Concurrency_Base::svc_loop (JAWS_Data_Block *db)
 {
   JAWS_TRACE ("JAWS_Concurrency_Base::svc_loop");
 
+  // Thread specific message block and data block
+  ACE_DEBUG ((LM_DEBUG, "(%t) Creating DataBlock\n"));
+  JAWS_Data_Block *ts_db = new JAWS_Data_Block (*db);
+  if (ts_db == 0)
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
+      return -1;
+    }
+
   for (;;)
-    if (this->svc_hook (db) != 0)
-      break;
+    {
+      if (this->svc_hook (ts_db) != 0)
+        break;
+      ts_db->task (db->task ());
+      ts_db->policy (db->policy ());
+      ts_db->payload (0);
+      ts_db->io_handler (0);
+      ts_db->rd_ptr (ts_db->wr_ptr ());
+      ts_db->crunch ();
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) Deleting DataBlock\n"));
+  delete ts_db; // ts_db->release ();
 
   return 0;
 }
 
 int
-JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
+JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 {
   JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook");
 
@@ -106,17 +126,8 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
   JAWS_Pipeline_Handler *task;   // The task itself
   JAWS_Data_Block *mb;     // The task message block
 
-  // Thread specific message block and data block
-  ACE_DEBUG ((LM_DEBUG, "(%t) Creating DataBlock\n"));
-  JAWS_Data_Block *ts_db = new JAWS_Data_Block (*db);
-  if (ts_db == 0)
-    {
-      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
-      return -1;
-    }
-
-  policy = db->policy ();
-  task = db->task ();
+  policy = ts_db->policy ();
+  task = ts_db->task ();
   handler = 0;
 
   // Get the waiter index
@@ -132,6 +143,10 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
       if (task == 0)
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, recycling");
+          handler->done ();
+          handler = 0;
+          JAWS_IO_Handler **ioh = waiter->find (waiter_index);
+          *ioh = 0;
           break;
         }
 
@@ -160,18 +175,13 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
           break;
         }
 
+      if (handler == 0)
+        break;
+
       mb = handler->message_block ();
       task = handler->task ();
     }
   while (result == 0);
-
-  if (handler != 0)
-    {
-      handler->message_block ()->release ();
-      delete handler; // handler->factory ()->destroy_io_handler (handler);
-    }
-  ACE_DEBUG ((LM_DEBUG, "(%t) Deleting DataBlock\n"));
-  delete ts_db; // ts_db->release ();
 
   return result;
 }
