@@ -312,7 +312,7 @@ Options::oneway_client_test (void *)
   ACE_SOCK_Stream cli_stream;
 
   // Add 1 to the port to trigger the oneway test!
-  void *request = options->shared_client_test (options->port () + 1,
+  char *request = options->shared_client_test (options->port () + 1,
                                                cli_stream);
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -361,7 +361,7 @@ Options::twoway_client_test (void *)
 
   ACE_SOCK_Stream cli_stream;
 
-  void *request = options->shared_client_test (options->port (),
+  char *request = options->shared_client_test (options->port (),
                                                cli_stream);
 
   // This variable is allocated off the stack to obviate the need for
