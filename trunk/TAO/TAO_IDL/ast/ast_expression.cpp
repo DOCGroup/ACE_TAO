@@ -1414,6 +1414,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_octet:
@@ -1567,6 +1569,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         }
     case AST_Expression::EV_longdouble:
     case AST_Expression::EV_wstring:
+    case AST_Expression::EV_any:
+    case AST_Expression::EV_object:
       return 0;
     }
 
