@@ -303,33 +303,6 @@ protected:
   ACE_UNIMPLEMENTED_FUNC (ACE_TSS (const ACE_TSS<TYPE> &))
 };
 
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-class ACE_NULL_SYNCH
-  // = TITLE
-  //     Implement a do nothing Synchronization wrapper that
-  //     typedefs the <ACE_Condition> and <ACE_Mutex> to the Null* versions.
-{
-public:
-  typedef ACE_Null_Mutex MUTEX;
-  // "Do-nothing" Mutex type.
-
-  typedef ACE_Null_Mutex RW_MUTEX;
-  // "Do-nothing" RW Mutex type.
-  
-  typedef ACE_Null_Condition CONDITION;
-  // "Do-nothing" Condition type.
-
-  typedef ACE_Null_Mutex SEMAPHORE;
-  // "Do-nothing" Condition type.
-};
-#else /* Necessary to support broken cfront-based C++ compilers... */
-#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition, ACE_Null_Mutex
-#else
-#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition
-#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
-
 template <class ACE_LOCK>
 class ACE_Guard
   // = TITLE
@@ -747,7 +720,28 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#endif /* ACE_HAS_THREADS */
+
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+
+class ACE_NULL_SYNCH
+  // = TITLE
+  //     Implement a do nothing Synchronization wrapper that
+  //     typedefs the <ACE_Condition> and <ACE_Mutex> to the Null* versions.
+{
+public:
+  typedef ACE_Null_Mutex MUTEX;
+  typedef ACE_Null_Mutex NULL_MUTEX;
+  typedef ACE_Null_Mutex PROCESS_MUTEX;
+  typedef ACE_Null_Mutex RECURSIVE_MUTEX;
+  typedef ACE_Null_Mutex RW_MUTEX;
+  typedef ACE_Null_Condition CONDITION;
+  typedef ACE_Null_Mutex SEMAPHORE;
+  typedef ACE_Null_Mutex NULL_SEMAPHORE;
+};
+
+#if defined (ACE_HAS_THREADS)
+
 class ACE_MT_SYNCH
   // = TITLE
   //     Implement a default thread safe synchronization wrapper that
@@ -766,42 +760,59 @@ public:
   typedef ACE_Thread_Semaphore SEMAPHORE;
   typedef ACE_Null_Mutex NULL_SEMAPHORE;
 };
-#define ACE_SYNCH_MUTEX ACE_MT_SYNCH::MUTEX
-#define ACE_SYNCH_NULL_MUTEX ACE_MT_SYNCH::NULL_MUTEX
-#define ACE_SYNCH_PROCESS_MUTEX  ACE_MT_SYNCH::PROCESS_MUTEX;
-#define ACE_SYNCH_RECURSIVE_MUTEX ACE_MT_SYNCH::RECURSIVE_MUTEX
-#define ACE_SYNCH_RW_MUTEX ACE_MT_SYNCH::RW_MUTEX
-#define ACE_SYNCH_CONDITION ACE_MT_SYNCH::CONDITION
-#define ACE_SYNCH_NULL_SEMAPHORE ACE_MT_SYNCH::NULL_SEMAPHORE
-#define ACE_SYNCH_SEMAPHORE ACE_MT_SYNCH::SEMAPHORE
-#else /* Necessary to support broken cfront-based C++ compilers... */
+
+#define ACE_SYNCH ACE_MT_SYNCH
+
+#else /* ACE_HAS_THREADS */
+
+#define ACE_SYNCH ACE_NULL_SYNCH
+
+#endif /* ACE_HAS_THREADS */
+
+#define ACE_SYNCH_MUTEX ACE_SYNCH::MUTEX
+#define ACE_SYNCH_NULL_MUTEX ACE_SYNCH::NULL_MUTEX
+#define ACE_SYNCH_RECURSIVE_MUTEX ACE_SYNCH::RECURSIVE_MUTEX
+#define ACE_SYNCH_RW_MUTEX ACE_SYNCH::RW_MUTEX
+#define ACE_SYNCH_CONDITION ACE_SYNCH::CONDITION
+#define ACE_SYNCH_NULL_SEMAPHORE ACE_SYNCH::NULL_SEMAPHORE
+#define ACE_SYNCH_SEMAPHORE ACE_SYNCH::SEMAPHORE
+
+#else /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
+#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition, ACE_Null_Mutex
 #define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex, ACE_Thread_Semaphore
 #else
+#define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition
 #define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
+
+#if defined (ACE_HAS_THREADS)
+
 #define ACE_SYNCH_MUTEX ACE_Thread_Mutex
 #define ACE_SYNCH_NULL_MUTEX  ACE_Null_Mutex
-#define ACE_SYNCH_PROCESS_MUTEX  ACE_Process_Mutex
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_Recursive_Thread_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_RW_Thread_Mutex
 #define ACE_SYNCH_CONDITION ACE_Thread_Condition<ACE_Thread_Mutex>
 #define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
 #define ACE_SYNCH_NULL_SEMAPHORE  ACE_Null_Mutex
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-#define ACE_SYNCH ACE_MT_SYNCH
-#else
-#define ACE_SYNCH ACE_NULL_SYNCH
+#else /* ACE_HAS_THREADS */
+
 #define ACE_SYNCH_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_NULL_MUTEX ACE_Null_Mutex
-#define ACE_SYNCH_PROCESS_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_CONDITION ACE_Null_Condition
 #define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
 #define ACE_SYNCH_NULL_SEMAPHORE ACE_Null_Mutex
+
 #endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
+// These are available on *all* platforms
+#define ACE_SYNCH_PROCESS_SEMAPHORE ACE_Process_Semaphore
+#define ACE_SYNCH_PROCESS_MUTEX  ACE_Process_Mutex
 
 #if defined (__ACE_INLINE__)
 #include "ace/Synch_T.i"
