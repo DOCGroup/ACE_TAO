@@ -126,10 +126,10 @@ TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
 {
   IOP::ServiceContext* srv_con = new IOP::ServiceContext;
   srv_con->context_id = Client_Interceptor::SchedulingInfo;
-  srv_con->context_data.length (sizeof (long));
+  srv_con->context_data.length (sizeof (size_t));
   ACE_OS::memcpy (srv_con->context_data.get_buffer (),
                   current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
-                  sizeof (long));
+                  sizeof (size_t));
   ACE_CHECK;
   request_info->add_request_service_context (*srv_con,
                                              0);
@@ -162,7 +162,7 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 
   if (serv_cxt != 0)
     {
-      int gu_id;
+      size_t gu_id;
       ACE_OS::memcpy (&gu_id,
                       serv_cxt->context_data.get_buffer (),
                       serv_cxt->context_data.length ());
@@ -175,10 +175,10 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
       ACE_NEW (guid,
                RTScheduling::Current::IdType);
 
-      guid->length (sizeof (long));
+      guid->length (sizeof (size_t));
       ACE_OS::memcpy (guid->get_buffer (),
                       serv_cxt->context_data.get_buffer (),
-                      sizeof (long));
+                      sizeof (size_t));
 
       guid_out.ptr () = guid;
     }

@@ -132,7 +132,7 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
-  int count;
+  size_t count = 0;
   ACE_OS::memcpy (&count,
 		  this->current_->id ()->get_buffer (),
 		  this->current_->id ()->length ());
@@ -193,7 +193,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
-  int count;
+  size_t count = 0;
   ACE_OS::memcpy (&count,
 		  this->current_->id ()->get_buffer (),
 		  this->current_->id ()->length ());
@@ -244,7 +244,7 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 				       ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int count;
+  size_t count = 0;
   ACE_OS::memcpy (&count,
 		  guid.get_buffer (),
 		  guid.length ());
@@ -387,12 +387,12 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
       ACE_NEW (guid,
 	       RTScheduling::Current::IdType);
 
-      guid->length (sizeof(long));
+      guid->length (sizeof(size_t));
       ACE_OS::memcpy (guid->get_buffer (),
 		      serv_cxt->context_data.get_buffer (),
-		      sizeof (long));
+		      sizeof (size_t));
 
-      int gu_id;
+      size_t gu_id;
       ACE_OS::memcpy (&gu_id,
 		      guid->get_buffer (),
 		      guid->length ());
@@ -445,7 +445,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  int count;
+  size_t count;
   ACE_OS::memcpy (&count,
 		  guid->get_buffer (),
 		  guid->length ());
@@ -495,7 +495,7 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr
       RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      int count;
+      size_t count;
       ACE_OS::memcpy (&count,
 		      guid->get_buffer (),
 		      guid->length ());
@@ -544,7 +544,7 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr
 
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  int gu_id;
+  size_t gu_id;
   ACE_OS::memcpy (&gu_id,
 		  guid->get_buffer (),
 		  guid->length ());
@@ -596,7 +596,7 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr
 
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  int gu_id;
+  size_t gu_id;
   ACE_OS::memcpy (&gu_id,
 		  guid->get_buffer (),
 		  guid->length ());
@@ -642,7 +642,7 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr
 
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  int gu_id;
+  size_t gu_id;
   ACE_OS::memcpy (&gu_id,
 		  guid->get_buffer (),
 		  guid->length ());

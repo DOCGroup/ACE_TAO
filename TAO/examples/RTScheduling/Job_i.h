@@ -72,7 +72,7 @@ class Job_i : public POA_Job, public virtual PortableServer::RefCountServantBase
 
   Task_Stats *task_stats_;
 
-  int guid_;
+  size_t guid_;
 };
 
 #endif /* JOB_I_H */
