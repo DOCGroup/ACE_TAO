@@ -46,7 +46,7 @@ public:
 protected:
   int mb_acquired_;
   ACE_Message_Block *mb_;
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
 };
 
 class JAWS_Dispatcher
