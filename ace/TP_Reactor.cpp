@@ -266,7 +266,11 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   if (this->state_changed_ || active_handle_count == 0)
     return signal_occurred + handlers_dispatched;
 
-  // Check for dispatch in write, except, read. Only catch one.
+  // Check for dispatch in write, except, read. Only catch one, but if
+  // one is caught, be sure to clear the handle from each mask in case
+  // there is more than one mask set for it. This would cause problems
+  // if the handler is suspended for dispatching, but its set bit in
+  // another part of ready_set_ kept it from being dispatched.
   int found_io = 0;
   ACE_HANDLE handle;
 
@@ -275,16 +279,18 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
 
     while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
       {
-	if (this->is_suspended_i (handle))
-	  continue;
+        if (this->is_suspended_i (handle))
+          continue;
 
-	// Remember this info
-	event.set (handle,
-		   this->handler_rep_.find (handle),
-		   ACE_Event_Handler::WRITE_MASK,
-		   &ACE_Event_Handler::handle_output);
-	this->ready_set_.wr_mask_.clr_bit (handle);
-	found_io = 1;
+        // Remember this info
+        event.set (handle,
+                   this->handler_rep_.find (handle),
+                   ACE_Event_Handler::WRITE_MASK,
+                   &ACE_Event_Handler::handle_output);
+        this->ready_set_.wr_mask_.clr_bit (handle);
+        this->ready_set_.ex_mask_.clr_bit (handle);
+        this->ready_set_.rd_mask_.clr_bit (handle);
+        found_io = 1;
       }
   }
 
@@ -293,18 +299,20 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       ACE_Handle_Set_Iterator handle_iter (this->ready_set_.ex_mask_);
 
       while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
-	{
-	  if (this->is_suspended_i (handle))
-	    continue;
+        {
+          if (this->is_suspended_i (handle))
+            continue;
 
-	  // Remember this info
-	  event.set (handle,
-		     this->handler_rep_.find (handle),
-		     ACE_Event_Handler::EXCEPT_MASK,
-		     &ACE_Event_Handler::handle_exception);
-	  this->ready_set_.ex_mask_.clr_bit (handle);
-	  found_io = 1;
-	}
+          // Remember this info
+          event.set (handle,
+                     this->handler_rep_.find (handle),
+                     ACE_Event_Handler::EXCEPT_MASK,
+                     &ACE_Event_Handler::handle_exception);
+          this->ready_set_.ex_mask_.clr_bit (handle);
+          this->ready_set_.wr_mask_.clr_bit (handle);
+          this->ready_set_.rd_mask_.clr_bit (handle);
+          found_io = 1;
+        }
     }
 
   if (!found_io)
@@ -312,18 +320,20 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       ACE_Handle_Set_Iterator handle_iter (this->ready_set_.rd_mask_);
 
       while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
-	{
-	  if (this->is_suspended_i (handle))
-	    continue;
+        {
+          if (this->is_suspended_i (handle))
+            continue;
 
-	  // Remember this info
-	  event.set (handle,
-		     this->handler_rep_.find (handle),
-		     ACE_Event_Handler::READ_MASK,
-		     &ACE_Event_Handler::handle_input);
-	  this->ready_set_.rd_mask_.clr_bit (handle);
-	  found_io = 1;
-	}
+          // Remember this info
+          event.set (handle,
+                     this->handler_rep_.find (handle),
+                     ACE_Event_Handler::READ_MASK,
+                     &ACE_Event_Handler::handle_input);
+          this->ready_set_.rd_mask_.clr_bit (handle);
+          this->ready_set_.wr_mask_.clr_bit (handle);
+          this->ready_set_.ex_mask_.clr_bit (handle);
+          found_io = 1;
+        }
     }
 
   result = signal_occurred + handlers_dispatched;
