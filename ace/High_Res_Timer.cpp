@@ -65,10 +65,10 @@ ACE_High_Res_Timer::global_scale_factor ()
               ACE_High_Res_Timer::global_scale_factor (ACE_static_cast (unsigned int,
                                                                         freq.QuadPart / 1000000));
 #         elif defined (linux) && (__alpha__)
-            // Get the BogoMIPS from /proc.  It works fine on
-            // Alpha and Pentium Pro.  For other CPUs, it will
-            // be necessary to interpret the BogoMips, as described
-            // in the BogoMips mini-HOWTO.
+            // Get the BogoMIPS from /proc.  It works fine on Alpha,
+            // only.  For other CPUs, it will be necessary to
+            // interpret the BogoMips, as described in the BogoMips
+            // mini-HOWTO.
             FILE *cpuinfo;
             if ((cpuinfo = ACE_OS::fopen ("/proc/cpuinfo", "r")))
               {
