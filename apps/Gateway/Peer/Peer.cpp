@@ -23,7 +23,7 @@ int
 Peer_Handler::open (void *a)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "handle = %d\n", 
+              "handle = %d\n",
               this->peer ().get_handle ()));
 
   // Call down to the base class to activate and register this handler
@@ -605,7 +605,7 @@ Peer_Acceptor::close (void)
 {
   // Will trigger a delete.
   if (this->peer_handler_ != 0)
-    this->peer_handler_->destroy (); 
+    this->peer_handler_->destroy ();
 
   // Close down the base class.
   return this->inherited::close ();
@@ -651,6 +651,8 @@ Peer_Connector::open (void)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "not running in Connector mode\n"));
+
+  return 0;
 }
 
 int
