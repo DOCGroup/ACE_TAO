@@ -1,3 +1,11 @@
+Fri Apr 28 13:40:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/diffs/InterceptorC.h.diff:
+	* tao/diffs/InterceptorC.cpp.diff:
+	* tao/diffs/InterceptorC.cpp:
+	* tao/Makefile (interceptor.target): Updated the patches for
+	  Interceptor.pidl and regenerate InterceptorC.*.
+
 Fri Apr 28 13:16:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/InterceptorC.h: This file needs to be conditionally
