@@ -1,3 +1,8 @@
+#!/pkg/gnu/bin/perl -I../../../bin
+#
+# If your perl installation isn't in /pkg/gnu/bin/perl,
+# please make the change accordingly
+#
 # This is a Perl script that runs the client and all the other servers that
 # are needed
 
