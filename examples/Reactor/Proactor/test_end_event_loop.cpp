@@ -35,7 +35,7 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
-class ACE_Export My_Task: public ACE_Task <ACE_NULL_SYNCH>
+class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
   // = TITLE
   //   
