@@ -1147,7 +1147,8 @@ IDL_GlobalData::update_prefix (char *filename)
     {
       prefix = ACE::strnew ("");
       (void) this->file_prefixes_.bind (ext_id, prefix);
-      this->pd_root->prefix ("");
+      char *tmp = ACE_const_cast (char *, "");
+      this->pd_root->prefix (tmp);
     }
 
   // The first branch is executed if we are finishing an

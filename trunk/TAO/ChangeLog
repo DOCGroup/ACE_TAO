@@ -1,3 +1,9 @@
+Wed Jan  7 17:17:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/util/utl_global.cpp:
+
+	  Fixed a const cast conversion warning.
+
 Wed Jan  7 13:52:13 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosLifeCycle.idl:
