@@ -135,20 +135,38 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
       Dynamic_ParameterC.cpp
       Dynamic_ParameterA.cpp
       ParameterMode.cpp
+      AnySeqA.cpp
+      AnySeqC.cpp
       BooleanSeqA.cpp
       BooleanSeqC.cpp
+      CharSeqA.cpp
+      CharSeqC.cpp
+      DoubleSeqA.cpp
+      DoubleSeqC.cpp
       FloatSeqA.cpp
       FloatSeqC.cpp
+      LongDoubleSeqA.cpp
+      LongDoubleSeqC.cpp
+      LongLongSeqA.cpp
+      LongLongSeqC.cpp
+      LongSeqA.cpp
+      LongSeqC.cpp
       OctetSeqA.cpp
       OctetSeqC.cpp
       ShortSeqA.cpp
       ShortSeqC.cpp
       StringSeqA.cpp
       StringSeqC.cpp
+      ULongLongSeqA.cpp
+      ULongLongSeqC.cpp
       ULongSeqA.cpp
       ULongSeqC.cpp
       UShortSeqA.cpp
       UShortSeqC.cpp
+      WCharSeqA.cpp
+      WCharSeqC.cpp
+      WStringSeqA.cpp
+      WStringSeqC.cpp
       Codeset_Manager.cpp
       Codeset_Translator_Factory.cpp
       UTF16_BOM_Translator.cpp

@@ -1,3 +1,123 @@
+Tue Jul 20 15:08:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnySeqC.cpp:
+        * tao/AnySeqC.h:
+        * tao/AnySeqC.inl:
+        * tao/AnySeqS.h:
+        * tao/CharSeqC.cpp:
+        * tao/CharSeqC.h:
+        * tao/CharSeqC.inl:
+        * tao/CharSeqS.h:
+        * tao/DoubleSeqC.cpp:
+        * tao/DoubleSeqC.h:
+        * tao/DoubleSeqC.inl:
+        * tao/DoubleSeqS.h:
+        * tao/LongDoubleSeqC.cpp:
+        * tao/LongDoubleSeqC.h:
+        * tao/LongDoubleSeqC.inl:
+        * tao/LongDoubleSeqS.h:
+        * tao/LongLongSeqC.cpp:
+        * tao/LongLongSeqC.h:
+        * tao/LongLongSeqC.inl:
+        * tao/LongLongSeqS.h:
+        * tao/LongSeqC.cpp:
+        * tao/LongSeqC.h:
+        * tao/LongSeqC.inl:
+        * tao/LongSeqS.h:
+        * tao/StringSeqC.inl:
+        * tao/ULongLongSeqC.cpp:
+        * tao/ULongLongSeqC.h:
+        * tao/ULongLongSeqC.inl:
+        * tao/ULongLongSeqS.h:
+        * tao/WCharSeqC.cpp:
+        * tao/WCharSeqC.h:
+        * tao/WCharSeqC.inl:
+        * tao/WCharSeqS.h:
+        * tao/WStringSeqC.cpp:
+        * tao/WStringSeqC.h:
+        * tao/WStringSeqC.inl:
+        * tao/WStringSeqS.h:
+        * tao/AnySeq.pidl:
+        * tao/CharSeq.pidl:
+        * tao/DoubleSeq.pidl:
+        * tao/LongDoubleSeq.pidl:
+        * tao/LongLongSeq.pidl:
+        * tao/LongSeq.pidl:
+        * tao/ULongLongSeq.pidl:
+        * tao/WCharSeq.pidl:
+        * tao/WStringSeq.pidl:
+
+          New files, .pidl files containing sequences of basic types 
+          that were not already added to TAO, and the associated generated
+          files. Thanks to Frank Pilhofer <fp@mc.com> for urging us to
+          add the remaining sequences of basic types to TAO.
+
+        * tao/OctetSeqC.inl:
+
+          Replaced OctetSeqC.i with the above file.
+
+        * tao/orb.idl:
+
+          Added includes of the above new .pidl files.
+
+        * tao/tao.mpc:
+
+          Added source files above to the project.
+
+        * tao/StringSeq.pidl:
+
+          Updated suggested command line for IDL compiler.
+
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqS.h:
+        * tao/StringSeqA.cpp:
+        * tao/StringSeqC.cpp:
+        * tao/StringSeqC.h:
+        * tao/StringSeqS.h:
+
+          Regenerated the above files.
+
+        * tao/OctetSeqC.i:
+        * tao/OctetSeqS.cpp:
+        * tao/OctetSeqS.i:
+        * tao/OctetSeqS_T.cpp:
+        * tao/OctetSeqS_T.h:
+        * tao/OctetSeqS_T.i:
+        * tao/StringSeqC.i:
+
+          Removed these files from the repository. The .i extension is now
+          obsolete and all skeleton header files in TAO have been modified
+          to be simply dummies that the IDL compiler can include in its
+          generated skeleton header files, so the skeleton source, inline
+          and template files need no longer be compiled and linked in TAO.
+
+        * tests/Param_Test/Param_Test.mpc:
+
+          Removed param_test_i.cpp from the client project file.
+
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/anyop.cpp:
+        * tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/complex_any.h:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_any_seq.h:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_long_seq.h:
+        * tests/Param_Test/ub_short_seq.cpp:
+        * tests/Param_Test/ub_short_seq.h:
+        * tests/Param_Test/ub_str_seq.cpp:
+        * tests/Param_Test/ub_str_seq.h:
+        * tests/Param_Test/ub_wstr_seq.cpp:
+        * tests/Param_Test/ub_wstr_seq.h:
+
+          Replaced sequences of shorts, longs, strings, wstrings, and anys
+          with the newly added CORBA counterparts.
+
 Mon Jul 19 19:00:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/ORBEndpoint.html:

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// .\be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_OCTETSEQC_H_
 #define _TAO_IDL_ORIG_OCTETSEQC_H_
@@ -68,13 +68,13 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:48
 
 namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_sequence/sequence_ch.cpp:101
+  // w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_OCTETSEQ_CH_)
 #define _CORBA_OCTETSEQ_CH_
@@ -130,37 +130,25 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_OctetSeq;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:66
 
 } // module CORBA
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// .\be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
 {
 }
 
-// Workaround for a Visual Studio .NET bug where this class is not
-// properly imported by an application if typedef'd or subclassed,
-// resulting in 'multiply defined' link errors. The export macro
-// here forces an explicit import by the application. Please see
-// http://support.microsoft.com/default.aspx?scid=kb;en-us;309801
-// The problem stems from use of the type below in PortableServer,
-// but we put the instantiation here because the application will
-// need to see it in *C.h to avoid the error.
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-  template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
-
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::OctetSeq &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA::OctetSeq*); // noncopying version
@@ -168,7 +156,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OctetSeq *&); 
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
 
 #if !defined _TAO_CDR_OP_CORBA_OctetSeq_H_
 #define _TAO_CDR_OP_CORBA_OctetSeq_H_
@@ -185,11 +173,11 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_OctetSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// .\be\be_codegen.cpp:958
 
 #if defined (__ACE_INLINE__)
-#include "OctetSeqC.i"
-#endif /* defined INLINE */
+#include "OctetSeqC.inl"
+#endif /* defined __ACE_INLINE__ */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

@@ -111,10 +111,10 @@ public:
   // test for fixed structures
 
   // = Start of sequences tests...
-  virtual Param_Test::Long_Seq * test_long_sequence (
-      const Param_Test::Long_Seq & s1,
-      Param_Test::Long_Seq & s2,
-      Param_Test::Long_Seq_out s3
+  virtual CORBA::LongSeq * test_long_sequence (
+      const CORBA::LongSeq & s1,
+      CORBA::LongSeq & s2,
+      CORBA::LongSeq_out s3
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual Param_Test::Bounded_Long_Seq * test_bounded_long_sequence (
@@ -123,10 +123,10 @@ public:
       Param_Test::Bounded_Long_Seq_out s3
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual Param_Test::Short_Seq * test_short_sequence (
-      const Param_Test::Short_Seq & s1,
-      Param_Test::Short_Seq & s2,
-      Param_Test::Short_Seq_out s3
+  virtual CORBA::ShortSeq * test_short_sequence (
+      const CORBA::ShortSeq & s1,
+      CORBA::ShortSeq & s2,
+      CORBA::ShortSeq_out s3
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual Param_Test::Bounded_Short_Seq * test_bounded_short_sequence (
@@ -135,10 +135,10 @@ public:
       Param_Test::Bounded_Short_Seq_out s3
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual Param_Test::StrSeq * test_strseq (
-      const Param_Test::StrSeq & s1,
-      Param_Test::StrSeq & s2,
-      Param_Test::StrSeq_out s3
+  virtual CORBA::StringSeq * test_strseq (
+      const CORBA::StringSeq & s1,
+      CORBA::StringSeq & s2,
+      CORBA::StringSeq_out s3
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual Param_Test::Bounded_StrSeq * test_bounded_strseq (
@@ -147,10 +147,10 @@ public:
       Param_Test::Bounded_StrSeq_out s3
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual Param_Test::WStrSeq * test_wstrseq (
-      const Param_Test::WStrSeq & ws1,
-      Param_Test::WStrSeq & ws2,
-      Param_Test::WStrSeq_out ws3
+  virtual CORBA::WStringSeq * test_wstrseq (
+      const CORBA::WStringSeq & ws1,
+      CORBA::WStringSeq & ws2,
+      CORBA::WStringSeq_out ws3
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual Param_Test::Bounded_WStrSeq * test_bounded_wstrseq (
@@ -201,10 +201,10 @@ public:
       Param_Test::Bounded_Coffee_Mix_out s3
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual Param_Test::AnySeq * test_anyseq (
-          const Param_Test::AnySeq & s1,
-          Param_Test::AnySeq & s2,
-          Param_Test::AnySeq_out s3
+  virtual CORBA::AnySeq * test_anyseq (
+          const CORBA::AnySeq & s1,
+          CORBA::AnySeq & s2,
+          CORBA::AnySeq_out s3
           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // = End of sequences tests....

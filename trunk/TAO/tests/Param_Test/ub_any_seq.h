@@ -60,27 +60,27 @@ public:
   // invoke DII request with appropriate exception handling.
 
 protected:
-  CORBA::Boolean compare (const Param_Test::AnySeq &s1,
+  CORBA::Boolean compare (const CORBA::AnySeq &s1,
                           const Param_Test::StructSeq &s2);
   // compare
 
-  void print_sequence (const Param_Test::AnySeq &s);
+  void print_sequence (const CORBA::AnySeq &s);
   // print individual sequence
 
 private:
   char *opname_;
   // operation name
 
-  Param_Test::AnySeq_var in_;
+  CORBA::AnySeq_var in_;
   // in parameter
 
-  Param_Test::AnySeq_var inout_;
+  CORBA::AnySeq_var inout_;
   // inout parameter
 
-  Param_Test::AnySeq_var out_;
+  CORBA::AnySeq_var out_;
   // out parameter
 
-  Param_Test::AnySeq_var ret_;
+  CORBA::AnySeq_var ret_;
   // return value
 };
 

@@ -26,12 +26,22 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:545
+// .\be\be_codegen.cpp:391
 
-#ifndef _TAO_IDL_ORIG_OCTETSEQS_T_H_
-#define _TAO_IDL_ORIG_OCTETSEQS_T_H_
+#ifndef _TAO_IDL_ORIG_DOUBLESEQS_H_
+#define _TAO_IDL_ORIG_DOUBLESEQS_H_
 
 #include /**/ "ace/pre.h"
+
+#include "DoubleSeqC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Collocation_Proxy_Broker.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -40,34 +50,29 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined (__BORLANDC__)
+#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+#endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
+// TAO_IDL - Generated from
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_sh.cpp:49
 
-#if defined (ACE_HAS_USING_KEYWORD)
 namespace POA_CORBA
 {
+  
+
+// TAO_IDL - Generated from
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_sh.cpp:80
+
 } // module CORBA
-#endif /* ACE_HAS_USING_KEYWORD */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1043
-
-#if defined (__ACE_INLINE__)
-#include "OctetSeqS_T.i"
-#endif /* defined INLINE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "OctetSeqS_T.cpp"
-#endif /* defined REQUIRED SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("OctetSeqS_T.cpp")
-#endif /* defined REQUIRED PRAGMA */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__BORLANDC__)
+#pragma option pop
+#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */

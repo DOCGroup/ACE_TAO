@@ -153,7 +153,7 @@ Test_Big_Union::reset_parameters (void)
       break;
     case 5:
       {
-        Param_Test::Short_Seq seq;
+        CORBA::ShortSeq seq;
         seq.length (gen->gen_short () % 50);
         for (size_t i = 0; i < seq.length (); i++)
           seq[i] = gen->gen_short ();
@@ -376,13 +376,13 @@ Test_Big_Union::check_validity (void)
 
     case 5:
       {
-        const Param_Test::Short_Seq& in =
+        const CORBA::ShortSeq& in =
           this->in_.the_sequence ();
-        const Param_Test::Short_Seq& inout =
+        const CORBA::ShortSeq& inout =
           this->inout_.the_sequence ();
-        const Param_Test::Short_Seq& out =
+        const CORBA::ShortSeq& out =
           this->out_->the_sequence ();
-        const Param_Test::Short_Seq& ret =
+        const CORBA::ShortSeq& ret =
           this->ret_->the_sequence ();
 
         if (in.length () != out.length ()

@@ -101,7 +101,7 @@ Test_Complex_Any::reset_parameters (void)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  Param_Test::AnySeq level2_seq, level3_seq;
+  CORBA::AnySeq level2_seq, level3_seq;
   level2_seq.length (LEVEL_2_LENGTH);
   level3_seq.length (LEVEL_3_LENGTH);
 
@@ -191,8 +191,8 @@ Test_Complex_Any::run_sii_test (Param_Test_ptr objref
 CORBA::Boolean
 Test_Complex_Any::check_validity (void)
 {
-  Param_Test::AnySeq *level2_in_seq;
-  Param_Test::AnySeq *level2_test_seq;
+  CORBA::AnySeq *level2_in_seq;
+  CORBA::AnySeq *level2_test_seq;
 
   if (!(this->in_ >>= level2_in_seq))
     return 0;
@@ -220,8 +220,8 @@ Test_Complex_Any::check_validity (void)
 
 // Private helper function for check_validity.
 CORBA::Boolean
-Test_Complex_Any::comp_engine (const Param_Test::AnySeq *level2_in_seq,
-                               const Param_Test::AnySeq *level2_comp_seq)
+Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
+                               const CORBA::AnySeq *level2_comp_seq)
 {
   if (level2_in_seq->length() != level2_comp_seq->length())
     {
@@ -232,8 +232,8 @@ Test_Complex_Any::comp_engine (const Param_Test::AnySeq *level2_in_seq,
 
   for (CORBA::ULong i = 0; i < level2_in_seq->length (); i++)
     {
-      Param_Test::AnySeq *level3_in_seq;
-      Param_Test::AnySeq *level3_test_seq;
+      CORBA::AnySeq *level3_in_seq;
+      CORBA::AnySeq *level3_test_seq;
 
       if (!((*level2_in_seq)[i] >>= level3_in_seq))
         return 0;

@@ -26,12 +26,53 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:411
+// .\be\be_codegen.cpp:391
 
 #ifndef _TAO_IDL_ORIG_STRINGSEQS_H_
 #define _TAO_IDL_ORIG_STRINGSEQS_H_
 
 #include /**/ "ace/pre.h"
+
+#include "StringSeqC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Collocation_Proxy_Broker.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/Servant_Base.h"
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+#if defined (__BORLANDC__)
+#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+#endif /* __BORLANDC__ */
+
+// TAO_IDL - Generated from
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_sh.cpp:49
+
+namespace POA_CORBA
+{
+  
+
+// TAO_IDL - Generated from
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_sh.cpp:80
+
+} // module CORBA
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
+#if defined (__BORLANDC__)
+#pragma option pop
+#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
