@@ -1,3 +1,40 @@
+Thu Jul 06 16:57:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/Makefile (ior.target): Added auto generation rules for
+          IOR.pidl and removed IORS from Makefile.  It's dependencies
+          needs to be updated.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp: Removed IORS.*.
+
+        * tao/diffs/IORC.h: Added the patch file for IORC.h.
+
+        * tao/IOR.pidl: Changed the interface to local.
+
+        * tao/diffs/IORC.cpp: Removed.
+
+        * tao/IORS.h:
+        * tao/IORS.i:
+        * tao/IORS.cpp: Removed skeleton files.  They are not needed for
+          local interfaces.
+
+        * tao/IORC.h:
+        * tao/IORC.i:
+        * tao/IORC.cpp: Regenerated the stubs as local.
+
+        * tao/IORManipulation.h:
+        * tao/IORManipulation.cpp: Changed TAO_IOR_Manipulation_impl as a
+          local interface implementation.
+
+        * tao/Exceptions.cpp: Local exceptions don't have valid
+          typecodes.  Removed the assertion in the destruction of
+          CORBA_Exception.
+
+        * tests/IORManipulation/IORTest.cpp: Changed to print out
+          exception name TAO_IOP::TAO_IOR_Manipulation::NotFound directly
+          instead of using its _id () since local exceptions don't carry a
+          valid typecode.
+
 Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/orbconf.h:
@@ -107,10 +144,10 @@ Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Servant_Factory produces _i servants for internal use
 	  when the type is not known, _tie servants for the servant
-	  locator, and object references for request return values. 
-	  Servant_Locator contains a subclass of the servant locator 
-	  base class. The servant locator is used for all calls on IFR object 
-	  references, except those on the Repository itself, which has 
+	  locator, and object references for request return values.
+	  Servant_Locator contains a subclass of the servant locator
+	  base class. The servant locator is used for all calls on IFR object
+	  references, except those on the Repository itself, which has
 	  a different POA (and policy list) than the IFR objects it contains.
 
 	* orbsvcs/IFR_Service/IFR_Server.cpp:
@@ -129,7 +166,7 @@ Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* orbsvcs/IFR_Service/InterfaceS_T.i:
 
 	  Generated files. Since the IFR implementation classes form an
-	  inheritance tree, the tie classes are used to decouple this 
+	  inheritance tree, the tie classes are used to decouple this
 	  inheritance from that of the object classes.
 
 	* orbsvcs/IFR_Service/Makefile:
@@ -148,7 +185,7 @@ Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* orbsvcs/tests/InterfaceRepo/IFR_Test/README:
 	* orbsvcs/tests/InterfaceRepo/IFR_Test/client.cpp:
 	* orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
-	  
+
 	  The beginnings of an IFR test suite.
 
 	* docs/releasenotes/index.html:

@@ -57,7 +57,9 @@ CORBA_Exception::CORBA_Exception (void)
 CORBA_Exception::~CORBA_Exception (void)
 {
   ACE_ASSERT (this->refcount_ == 0);
-  ACE_ASSERT (this->type_ != 0);
+  // NW: Since local exception doesn't have a valid type, I commented
+  // the following assertion out.
+  //  ACE_ASSERT (this->type_ != 0);
   CORBA::release (this->type_);
 }
 

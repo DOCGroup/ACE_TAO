@@ -520,9 +520,9 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_ior_manipulation (CORBA::Environment& ACE_TRY_ENV)
+CORBA_ORB::resolve_ior_manipulation (CORBA::Environment&)
 {
-  return this->ior_manipulation_._this (ACE_TRY_ENV);
+  return TAO_IOP::TAO_IOR_Manipulation::_duplicate (&this->ior_manipulation_);
 }
 
 CORBA_Object_ptr
