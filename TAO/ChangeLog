@@ -1,3 +1,16 @@
+Fri Jan 10 18:57:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/CDR_Encaps_Codec.cpp:
+        * tao/NVList.cpp:
+        * tao/RequestInfo_Util.cpp:
+        * tao/append.cpp:
+        * tao/skip.cpp:
+
+          Some cleanup of internal incompatibilities with the new
+          Any implementation.
+
 Fri Jan 10 11:30:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_T.inl:

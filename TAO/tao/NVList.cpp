@@ -129,34 +129,28 @@ CORBA_NVList::add_value (const char *name,
                          CORBA::Flags flags
                          ACE_ENV_ARG_DECL)
 {
-  // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags ACE_ENV_ARG_PARAMETER);
+  // Call the helper to allocate a NamedValue element.
+  CORBA::NamedValue_ptr nv = this->add_element (flags 
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
+
   if (nv)
     {
-      // now initialize the fields
       nv->name_ = CORBA::string_dup (name);
-      if (ACE_BIT_ENABLED (flags, CORBA::IN_COPY_VALUE))
-        // IN_COPY_VALUE means that the parameter is not "borrowed" by
-        // the ORB, but rather that the ORB copies its value.
-        //
-        // Initialize the newly allocated memory using a copy
-        // constructor that places the new "Any" value at just the right
-        // place, and makes a "deep copy" of the data.
-        nv->any_ = value;
-      else
-        {
-          // The normal behaviour for parameters is that the ORB "borrows"
-          // their memory for the duration of calls.
-          //
-          nv->any_._tao_replace (value.type_,
-                                 value._tao_byte_order (),
-                                 value.cdr_);
-        }
+
+      // With the original Any implementation, we had alternate
+      // paths for the assignment based on the IN_COPY_VALUE flag.
+      // Now that the Any's contained Any_Impl is refcounted, the
+      // distinction between the ORB "copying" or "borrowing" the
+      // memory is irrelevant. The IN_COPY_VALUE flag was not
+      // checked anywhere else in the ORB anyway.
+      nv->any_ = value;
       return nv;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // add an element and just initialize its flags and name

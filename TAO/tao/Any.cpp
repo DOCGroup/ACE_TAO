@@ -24,6 +24,19 @@ CORBA::Any::Any (const CORBA::Any &rhs)
     }
 }
 
+CORBA::Any::Any (CORBA::TypeCode_ptr tc,
+                 void *value,
+                 CORBA::Boolean release)
+{
+  ACE_Message_Block *mb = ACE_reinterpret_cast (ACE_Message_Block *,
+                                                value);
+  ACE_NEW (this->impl_,
+           TAO::Unknown_IDL_Type (tc,
+                                  mb,
+                                  tc->byte_order_,
+                                  release));
+}
+
 CORBA::Any::~Any (void)
 {
   if (this->impl_ != 0)
@@ -51,6 +64,21 @@ CORBA::Any::operator= (const CORBA::Any &rhs)
     }
 
   return *this;
+}
+
+void
+CORBA::Any::replace (CORBA::TypeCode_ptr tc,
+                     void *value,
+                     CORBA::Boolean release)
+{
+  ACE_Message_Block *mb = ACE_reinterpret_cast (ACE_Message_Block *,
+                                                value);
+  TAO::Unknown_IDL_Type *unk = 0;
+  ACE_NEW (unk,
+           TAO::Unknown_IDL_Type (tc,
+                                  mb,
+                                  release));
+  this->replace (unk);
 }
 
 void 
