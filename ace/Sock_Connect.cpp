@@ -32,7 +32,7 @@ extern "C" {
 #endif /* VXWORKS */
 
 #if defined (ACE_HAS_WINCE)
-#include <Iphlpapi.h>
+#include /**/ <Iphlpapi.h>
 #endif  // ACE_HAS_WINCE
 
 #if defined (ACE_HAS_IPV6)
