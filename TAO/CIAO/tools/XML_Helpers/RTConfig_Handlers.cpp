@@ -17,19 +17,24 @@ CIAO::RTConfig_Handler::startElement (const ACEXML_Char *namespaceURI,
   switch (this->state_)
     {
     case START:
-      if (ACE_OS::strcmp (qName, "rtrecources") == 0)
+      if (ACE_OS::strcmp (qName, "rtresources") == 0)
         {
           this->state_ = RTRESOURCES;
         }
       else if (ACE_OS::strcmp (qName, "rtpolicyset") == 0)
         {
           this->state_ = RTPOLICYSET;
-          // @@ fix me          this->create_new_rtpolicyset (alist);
+          this->create_new_policyset (alist
+                                      ACEXML_ENV_ARG_PARAMETER);
         }
-      else if (ACE_OS::strcmp (qName, "rtcad-ext") == 0)
+      else if (ACE_OS::strcmp (qName, "rtcad_ext") == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Start parsing RT cad file extension\n"));
         }
+      else
+        ACEXML_THROW (ACEXML_SAXException
+                      ("Error parsing rtcad_ext child\n"));
+
       return;
 
     case RTRESOURCES:
@@ -53,28 +58,71 @@ CIAO::RTConfig_Handler::startElement (const ACEXML_Char *namespaceURI,
                                            alist
                                            ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
-
           this->bands_config_->name = id;
           this->state_ = CONNBANDS;
         }
+      else
+        ACEXML_THROW (ACEXML_SAXException
+                      ("Error parsing rtresource\n"));
+
       return;
 
     case RTPOLICYSET:
-      if (ACE_OS::strcmp (qName, "priority_model_policy") == 0)
+      if (ACE_OS::strcmp (qName, "rtpolicyset") == 0)
         {
-          // @@ parse attributes and add it to the policy set
+          this->create_new_policyset (alist
+                                      ACEXML_ENV_ARG_PARAMETER);
         }
-      else if (ACE_OS::strcmp (qName, "threadpool_policy") == 0)
+      else
         {
-          // @@ parse the attributes and add it to the policy set
-        }
-      else if (ACE_OS::strcmp (qName, "banded_connection_policy") == 0)
-        {
-          // @@ parse the attributes and add it to the policy set
-        }
-      else if (ACE_OS::strcmp (qName, "rtpolicyset") == 0)
-        {
-          // @@ parse the attributes and add it to the policy set
+          CIAO::RTConfiguration::Policy_Config_var newpolicy
+            = new CIAO::RTConfiguration::Policy_Config;
+
+          if (ACE_OS::strcmp (qName, "priority_model_policy") == 0)
+            {
+              CIAO::RTConfiguration::Priority_Model_Config config;
+              this->parse_priority_model_config (alist,
+                                                 config
+                                                 ACEXML_ENV_ARG_PARAMETER);
+              ACEXML_CHECK;
+
+              newpolicy->type = RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
+              newpolicy->configuration <<= config;
+            }
+          else if (ACE_OS::strcmp (qName, "threadpool_policy") == 0)
+            {
+              const char *idref;
+              XML_Utils::get_single_attribute ("idref",
+                                               idref,
+                                               alist
+                                               ACEXML_ENV_ARG_PARAMETER);
+              ACEXML_CHECK;
+
+              newpolicy->type = RTCORBA::THREADPOOL_POLICY_TYPE;
+              // @@ try to catch CORBA exceptions here
+              newpolicy->configuration <<= idref;
+            }
+          else if (ACE_OS::strcmp (qName, "banded_connection_policy") == 0)
+            {
+              const char *idref;
+              XML_Utils::get_single_attribute ("idref",
+                                               idref,
+                                               alist
+                                               ACEXML_ENV_ARG_PARAMETER);
+              ACEXML_CHECK;
+
+              newpolicy->type = RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
+              // @@ try to catch CORBA exceptions here
+              newpolicy->configuration <<= idref;
+            }
+          else
+            ACEXML_THROW (ACEXML_SAXException
+                          ("Error parsing child of rtpolicyset element"));
+
+          // Store the good parsed results.
+          CORBA::ULong len = this->policy_set_->configs.length ();
+          this->policy_set_->configs.length (len+1);
+          this->policy_set_->configs[len] = newpolicy;
         }
       return;
 
@@ -96,11 +144,11 @@ CIAO::RTConfig_Handler::startElement (const ACEXML_Char *namespaceURI,
 
     default:
       ACEXML_THROW (ACEXML_SAXException
-                    (ACE_TEXT ("RTConfig handler internal error")));
+                    ("RTConfig handler internal error"));
       return;
     }
   ACEXML_THROW (ACEXML_SAXException
-                (ACE_TEXT ("RTConfig handler internal error")));
+                ("RTConfig handler internal error"));
 }
 
 void
@@ -113,7 +161,7 @@ CIAO::RTConfig_Handler::endElement (const ACEXML_Char *,
   switch (this->state_)
     {
     case START:
-      if (ACE_OS::strcmp (qName, "rtcad-ext") == 0)
+      if (ACE_OS::strcmp (qName, "rtcad_ext") == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "End parsing RT cad file extension\n"));
         }
@@ -130,31 +178,40 @@ CIAO::RTConfig_Handler::endElement (const ACEXML_Char *,
           // Store the good parsed results.
           CORBA::ULong len = this->rtresources.tpl_configs.length ();
           this->rtresources.tpl_configs.length (len+1);
-          this->rtresources.tpl_configs[len-1] = this->tpl_config_;
+          this->rtresources.tpl_configs[len] = this->tpl_config_;
+          this->state_ = RTRESOURCES;
         }
       return;
 
     case CONNBANDS:
       if (ACE_OS::strcmp (qName, "connectionbands") == 0)
         {
-          // @@ wrap up band sequence.
+          // Store the good parsed results.
+          CORBA::ULong len = this->rtresources.pb_configs.length ();
+          this->rtresources.pb_configs.length (len+1);
+          this->rtresources.pb_configs[len] = this->bands_config_;
+          this->state_ = RTRESOURCES;
         }
       return;
 
     case RTPOLICYSET:
       if (ACE_OS::strcmp (qName, "rtpolicyset") == 0)
         {
-          // @@ add the policy set to the sequence.
+          // Store the good parsed results.
+          CORBA::ULong len = this->policysets.length ();
+          this->policysets.length (len+1);
+          this->policysets[len] = this->policy_set_;
+          this->state_ = START;
         }
       return;
 
     default:
       ACEXML_THROW (ACEXML_SAXException
-                    (ACE_TEXT ("RTConfig handler internal error")));
+                    ("RTConfig handler internal error"));
       return;
     }
   ACEXML_THROW (ACEXML_SAXException
-                (ACE_TEXT ("RTConfig handler internal error")));
+                ("RTConfig handler internal error"));
 }
 
 // =================================================================
@@ -164,14 +221,14 @@ CIAO::RTConfig_Handler::parse_threadpool_attrs (ACEXML_Attributes *alist
                                                 ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  const STACKSIZE_READ = 1;
-  const STATICTHR_READ = 2;
-  const DYNAMICTHR_READ = 4;
-  const DEFAULTPRIO_READ = 8;
-  const YES_BUFFERING_READ = 0X10;
-  const BUFFER_REQ_READ = 0X20;
-  const BUFFER_SIZE_READ = 0X40;
-  const TPNAME_READ = 0X80;
+  const int STACKSIZE_READ = 1;
+  const int STATICTHR_READ = 2;
+  const int DYNAMICTHR_READ = 4;
+  const int DEFAULTPRIO_READ = 8;
+  const int YES_BUFFERING_READ = 0X10;
+  const int BUFFER_REQ_READ = 0X20;
+  const int BUFFER_SIZE_READ = 0X40;
+  const int TPNAME_READ = 0X80;
 
   // Initialize the attribute parse progress.  We will turn off these
   // bits one by one.  At the end, the att_status should be 0.
@@ -302,7 +359,7 @@ CIAO::RTConfig_Handler::parse_threadpool_attrs (ACEXML_Attributes *alist
   // Store the good parsed results.
   CORBA::ULong len = this->rtresources.tp_configs.length ();
   this->rtresources.tp_configs.length (len+1);
-  this->rtresources.tp_configs[len-1] = tp_config;
+  this->rtresources.tp_configs[len] = tp_config;
 }
 
 void
@@ -310,12 +367,12 @@ CIAO::RTConfig_Handler::parse_threadpoollanes_attrs (ACEXML_Attributes *alist
                                                      ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  const STACKSIZE_READ = 1;
-  const YES_BORROWING_READ = 2;
-  const YES_BUFFERING_READ = 4;
-  const BUFFER_REQ_READ = 8;
-  const BUFFER_SIZE_READ = 0X10;
-  const TPNAME_READ = 0X20;
+  const int STACKSIZE_READ = 1;
+  const int YES_BORROWING_READ = 2;
+  const int YES_BUFFERING_READ = 4;
+  const int BUFFER_REQ_READ = 8;
+  const int BUFFER_SIZE_READ = 0X10;
+  const int TPNAME_READ = 0X20;
 
   // Initialize the attribute parse progress.  We will turn off these
   // bits one by one.  At the end, the att_status should be 0.
@@ -364,7 +421,7 @@ CIAO::RTConfig_Handler::parse_threadpoollanes_attrs (ACEXML_Attributes *alist
             this->tpl_config_->allow_borrowing = 0;
 
           ACE_CLR_BITS (att_status,
-                        YES_BUFFERING_READ);
+                        YES_BORROWING_READ);
         }
       else if (ACE_OS_String::strcmp (attName, "buffering") == 0)
         {
@@ -419,9 +476,9 @@ CIAO::RTConfig_Handler::add_threadpoollane (ACEXML_Attributes *alist
                                             ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  const PRIORITY_READ = 1;
-  const STATICTHR_READ = 2;
-  const DYNAMICTHR_READ = 4;
+  const int PRIORITY_READ = 1;
+  const int STATICTHR_READ = 2;
+  const int DYNAMICTHR_READ = 4;
 
   // Initialize the attribute parse progress.  We will turn off these
   // bits one by one.  At the end, the att_status should be 0.
@@ -490,7 +547,7 @@ CIAO::RTConfig_Handler::add_threadpoollane (ACEXML_Attributes *alist
   // Store the good parsed results.
   CORBA::ULong len = this->tpl_config_->lanes.length ();
   this->tpl_config_->lanes.length (len+1);
-  this->tpl_config_->lanes[len-1] = alane;
+  this->tpl_config_->lanes[len] = alane;
 }
 
 void
@@ -498,8 +555,8 @@ CIAO::RTConfig_Handler::add_priorityband (ACEXML_Attributes *alist
                                           ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  const LOW_READ = 1;
-  const HIGH_READ = 2;
+  const int LOW_READ = 1;
+  const int HIGH_READ = 2;
 
   // Initialize the attribute parse progress.  We will turn off these
   // bits one by one.  At the end, the att_status should be 0.
@@ -554,5 +611,80 @@ CIAO::RTConfig_Handler::add_priorityband (ACEXML_Attributes *alist
   // Store the good parsed results.
   CORBA::ULong len = this->bands_config_->bands.length ();
   this->bands_config_->bands.length (len+1);
-  this->bands_config_->bands[len-1] = band;
+  this->bands_config_->bands[len] = band;
+}
+
+void
+CIAO::RTConfig_Handler::create_new_policyset (ACEXML_Attributes *alist
+                                              ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
+{
+  const char *id;
+  XML_Utils::get_single_attribute ("id",
+                                   id,
+                                   alist
+                                   ACEXML_ENV_ARG_PARAMETER);
+  ACEXML_CHECK;
+
+  this->policy_set_ = new CIAO::RTConfiguration::Policy_Set;
+
+  this->policy_set_->name = id;
+}
+
+void
+CIAO::RTConfig_Handler::parse_priority_model_config (ACEXML_Attributes *alist,
+                                                     RTConfiguration::Priority_Model_Config &config
+                                                     ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
+{
+  const int MODEL_READ = 1;
+  const int PRIORITY_READ = 2;
+  int att_status =
+    MODEL_READ |
+    PRIORITY_READ ;
+
+  for (size_t i = 0; i < alist->getLength (); ++i)
+    {
+      const char *attName = alist->getQName (i);
+      const char *attValue = alist->getValue (i);
+
+      if (ACE_OS_String::strcmp (attName, "type") == 0)
+        {
+          // Assuming we have a validating parser.
+          if (ACE_OS_String::strcmp (attValue, "server_declared") == 0)
+            config.model = RTCORBA::SERVER_DECLARED;
+          else if (ACE_OS_String::strcmp (attValue, "client_propagated") == 0)
+            config.model = RTCORBA::CLIENT_PROPAGATED;
+          else
+            ACEXML_THROW (ACEXML_SAXException
+                          ("RTConfig handler error while reading Priority Model Config."));
+
+          ACE_CLR_BITS (att_status,
+                        MODEL_READ);
+        }
+      else if (ACE_OS_String::strcmp (attName, "priority") == 0)
+        {
+          char *endpos;
+
+          config.default_priority =
+            strtoul (attValue, &endpos, 10);
+
+          if (*endpos != 0)
+            ACEXML_THROW
+              (ACEXML_SAXException
+               ("Invalid 'priority' attribute in Priority Model Config."));
+
+          ACE_CLR_BITS (att_status,
+                        PRIORITY_READ);
+        }
+      else
+        ACEXML_THROW
+          (ACEXML_SAXException
+           ("Invalid attribute found in priority_model element"));
+    }
+  if (att_status != 0)
+    ACEXML_THROW
+      (ACEXML_SAXException
+       ("Not all 'priority_model' attributes are set."));
+
 }

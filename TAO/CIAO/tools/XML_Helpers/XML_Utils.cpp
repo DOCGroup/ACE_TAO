@@ -5,6 +5,7 @@
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "Assembly_Handlers.h"
+#include "RTConfig_Handlers.h"
 
 #if !defined (__ACE_INLINE__)
 # include "XML_Utils.inl"
@@ -134,6 +135,62 @@ CIAO::XML_Utils::parse_componentassembly (const char *filename,
   ACEXML_ENDTRY;
   return 0;
 }
+
+int
+CIAO::XML_Utils::parse_rtcad_extension (const char *filename,
+                                        RTConfiguration::RTORB_Resource_Info &rtr,
+                                        RTConfiguration::Policy_Sets &pset)
+{
+  ACEXML_DefaultHandler *handler = 0;
+  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
+
+  ACEXML_FileCharStream *fstm = 0;
+  ACE_NEW_RETURN (fstm,
+                  ACEXML_FileCharStream (),
+                  1);
+
+  if (fstm->open (filename) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Fail to open XML file: %s\n"),
+                       filename),
+                      -1);
+  ACEXML_TRY_NEW_ENV
+    {
+      ACEXML_Parser parser;
+
+      ACE_NEW_RETURN (handler,
+                      CIAO::RTConfig_Handler (&parser,
+                                              rtr,
+                                              pset
+                                              ACEXML_ENV_ARG_PARAMETER),
+                      -1);
+
+      ACEXML_InputSource input(fstm);
+
+      parser.setContentHandler (handler);
+      parser.setDTDHandler (handler);
+      parser.setErrorHandler (handler);
+      parser.setEntityResolver (handler);
+
+      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_TRY_CHECK;
+    }
+  ACEXML_CATCH (ACEXML_SAXException, ex)
+    {
+      ex.print ();
+      return -1;
+    }
+  ACEXML_CATCHANY
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Caught unknown exception.\n"),
+                        -1);
+    }
+  ACEXML_ENDTRY;
+  return 0;
+}
+
+
 
 long
 CIAO::XML_Utils::get_id_and_cardinality (const char *&id,

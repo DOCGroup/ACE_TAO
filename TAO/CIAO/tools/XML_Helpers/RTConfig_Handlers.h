@@ -15,8 +15,8 @@
  */
 //=============================================================================
 
-#ifndef CIAO_ASSEMBLY_HANDLERS_H
-#define CIAO_ASSEMBLY_HANDLERS_H
+#ifndef CIAO_RTCONFIG_HANDLERS_H
+#define CIAO_RTCONFIG_HANDLERS_H
 
 #include "Cascadable_DocHandler.h"
 #include "XML_Utils.h"
@@ -99,12 +99,26 @@ namespace CIAO
                            ACEXML_ENV_ARG_DECL)
       ACE_THROW_SPEC ((ACEXML_SAXException));
 
+    /// parse and create a new policyset from attributes
+    void create_new_policyset (ACEXML_Attributes *atts
+                               ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException));
+
+    /// parse and set up the priority model configuration information
+    void parse_priority_model_config (ACEXML_Attributes *atts,
+                                      RTConfiguration::Priority_Model_Config &config
+                                      ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException));
+
   private:
     // Current context when filling RTConfiguration::ThreadPoolLanes_Configuration
     RTConfiguration::ThreadPoolLanes_Configuration_var tpl_config_;
 
     // Current context when filling RTConfiguration::PriorityBands_Configuration
     RTConfiguration::PriorityBands_Configuration_var bands_config_;
+
+    // Current context when filling RTConfiguration::Policy_Set
+    RTConfiguration::Policy_Set_var policy_set_;
 
     // RTORB related info.
     RTConfiguration::RTORB_Resource_Info &rtresources;
@@ -118,4 +132,4 @@ namespace CIAO
 #if defined (__ACE_INLINE__)
 # include "RTConfig_Handlers.inl"
 #endif /* __ACE_INLINE__ */
-#endif /* CIAO_ASSEMBLY_HANDLERS_H */
+#endif /* CIAO_RTCONFIG_HANDLERS_H */
