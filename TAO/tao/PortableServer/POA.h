@@ -56,7 +56,7 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
-#include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
+#include "ObjectReferenceTemplate_Adapter.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

@@ -1,3 +1,37 @@
+Thu Aug 19 17:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Forward.pidl:
+          Moved AdapterManagerId and AdapterState typedefs to this file
+
+        * tao/PI_ForwardC.{h,cpp,i,inl}:
+          Regenerated these files, replaced .i with .inl file
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+          No need to include orb.idl, removed AdapterMangerId and
+          AdapterState, these moved to other places
+
+        * tao/ObjRefTemplate/Attic/ObjectReferenceTemplate_Adapter_Impl.cpp:
+          Added missing .in()
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.{h,cpp,i,inl}:
+          Regenerated these files, replaced .i with .inl file
+
+        * tao/PortableServer/POA.h:
+          Fixed include
+
+        * tao/PortableServer/POA_Manager.h:
+          No need to include ObjectReferenceTemplaceC.h now the typedefs are
+          in PI_Forward
+
+        * tao/IORInterceptor/IORInterceptor.pidl:
+          Moved AdapterState constants to this file
+
+        * tao/IORInterceptor/IORInterceptorC.{h,cpp,i,inl}:
+          Regenerated these files
+
+        * tao/diffs/ObjectReferenceTemplate.diff:
+          No diffs need to be applied anymore, so zapped this file
+
 Wed Aug 18 13:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.h:

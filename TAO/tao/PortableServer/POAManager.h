@@ -29,7 +29,6 @@
 #include "tao/LocalObject.h"
 
 #include "tao/PortableInterceptorC.h"
-#include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
 #include "ace/Unbounded_Set.h"
 
 // Forward decl.

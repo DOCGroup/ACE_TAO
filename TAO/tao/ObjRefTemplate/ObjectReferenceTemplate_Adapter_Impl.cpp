@@ -64,7 +64,7 @@ TAO_ObjectReferenceTemplate_Adapter_Impl::make_object (
 PortableInterceptor::ObjectReferenceTemplate *
 TAO_ObjectReferenceTemplate_Adapter_Impl::get_adapter_template (void)
 {
-  CORBA::add_ref (ort_template_);
+  CORBA::add_ref (ort_template_.in());
 
   return ort_template_;
 }
@@ -72,7 +72,7 @@ TAO_ObjectReferenceTemplate_Adapter_Impl::get_adapter_template (void)
 PortableInterceptor::ObjectReferenceFactory *
 TAO_ObjectReferenceTemplate_Adapter_Impl::get_obj_ref_factory (void)
 {
-  CORBA::add_ref (ort_factory_);
+  CORBA::add_ref (ort_factory_.in());
 
   return ort_factory_;
 }
@@ -84,7 +84,7 @@ TAO_ObjectReferenceTemplate_Adapter_Impl::set_obj_ref_factory (
 {
   ort_factory_ = current_factory;
 
-  CORBA::add_ref (ort_factory_);
+  CORBA::add_ref (ort_factory_.in());
 
   return 0;
 }
