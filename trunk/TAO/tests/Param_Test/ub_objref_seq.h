@@ -62,13 +62,13 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *);
+  void dii_req_invoke (CORBA::Request *, CORBA::Environment &);
   // invoke DII request with appropriate exception handling.
 
 protected:
   CORBA::Boolean compare (const Param_Test::Coffee_Mix &s1,
                           const Param_Test::Coffee_Mix &s2,
-                                                  CORBA::Environment& env);
+                          CORBA::Environment& env);
   // compare
 
   void print_sequence (const Param_Test::Coffee_Mix &s);

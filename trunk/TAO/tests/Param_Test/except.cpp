@@ -43,14 +43,15 @@ Test_Exception::opname (void) const
 }
 
 void
-Test_Exception::dii_req_invoke (CORBA::Request *req)
+Test_Exception::dii_req_invoke (CORBA::Request *req,
+                                CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY_VAR (*req->env ())
+  ACE_TRY
     {
-      req->invoke ();
-      TAO_CHECK_ENV;
+      req->invoke (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (Param_Test::Ooops, ex)
+  ACE_CATCH (Param_Test::Ooops, ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -65,31 +66,35 @@ Test_Exception::dii_req_invoke (CORBA::Request *req)
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
-      TAO_TRY_ENV.clear ();
+      
+      // Why should we use clear ?????
+      //TAO_TRY_ENV.clear ();
 
       return;
     }
-  TAO_CATCH (CORBA::UNKNOWN, ex)
+  ACE_CATCH (CORBA::UNKNOWN, ex)
     {
       if (TAO_debug_level > 0)
         {
-          TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
-                                       "expected system exception\n");
+          ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - "
+                               "expected system exception\n");
         }
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
-      TAO_TRY_ENV.clear ();
+      
+      // TAO_TRY_ENV.clear ();
 
       return;
     }
-  TAO_CATCH (Param_Test::BadBoy, ex)
+  ACE_CATCH (Param_Test::BadBoy, ex)
     {
-      TAO_TRY_ENV.print_exception ("Test_Exception::run_sii_test - "
-                                   " unexpected exception\n");
-      TAO_RETHROW_SAME_ENV_RETURN_VOID;
+      ACE_PRINT_EXCEPTION (ex, "Test_Exception::run_sii_test - "
+                           " unexpected exception\n");
+      ACE_TRY_THROW (Param_Test::BadBoy);
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 int

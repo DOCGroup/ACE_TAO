@@ -47,9 +47,10 @@ Test_String_Sequence::opname (void) const
 }
 
 void
-Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
+Test_String_Sequence::dii_req_invoke (CORBA::Request *req,
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int

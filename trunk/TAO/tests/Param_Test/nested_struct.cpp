@@ -48,9 +48,9 @@ Test_Nested_Struct::opname (void) const
 }
 
 void
-Test_Nested_Struct::dii_req_invoke (CORBA::Request *req)
+Test_Nested_Struct::dii_req_invoke (CORBA::Request *req, CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int

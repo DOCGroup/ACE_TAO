@@ -50,9 +50,10 @@ Test_Bounded_Struct_Sequence::opname (void) const
 }
 
 void
-Test_Bounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
+Test_Bounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req,
+                                              CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int
