@@ -1,3 +1,8 @@
+Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp: Fixed some warnings.  Thanks to
+	  Carlos for reporting this.
+
 Mon Aug 30 21:14:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Process_Manager.cpp: Added the destructor for
