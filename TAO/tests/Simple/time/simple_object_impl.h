@@ -36,7 +36,8 @@ class Simple_Impl: public POA_simple_object
   //
   // = DESCRIPTION
   //    Implementation of a simple object that has two methods, one that 
-  //    returns the cube of a long, another that shuts down the server.
+  //    return the current time/date on the server and the other that
+  //    shuts down the server.  
 public:
   Simple_Impl (const char *obj_name = 0);
   // Constructor
@@ -44,13 +45,11 @@ public:
   ~Simple_Impl (void);
   // Destructor
 
-  virtual CORBA::Long simple_method (CORBA::Long l,
-                                     CORBA::Environment &env);
-  // Just cubes the long parameter
+  virtual CORBA::Long time (CORBA::Environment &env);
+  // Return the current time/date on the server.
 
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown routine.
 };
-
 
 #endif /* SIMPLE_OBJECT_IMPL_H */

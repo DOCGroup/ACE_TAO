@@ -1,8 +1,8 @@
 $Id$
 
-This is a simple CORBA example that has an object (simple_object) 
-with only two methods, one that cubes a long and another that 
-shuts down the server.  
+This is a simple CORBA example that has an object (simple_object) with
+only two methods, one that returns the current time of day on a remove
+machine and another that shuts down the server.
 
 
 server:

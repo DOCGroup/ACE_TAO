@@ -11,20 +11,20 @@ Simple_Impl::Simple_Impl (const char *)
 {
 }
 
-
 // Destructor
 
 Simple_Impl::~Simple_Impl (void)
 {
 }
 
-// Cube a long
+// Return the current date/time on the server.
 
 CORBA::Long
-Simple_Impl::simple_method (CORBA::Long l, CORBA::Environment &env)
+Simple_Impl::time (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
-  return l * l * l;
+
+  return long (ACE_OS::time (0));
 }
 
 // Shutdown.
@@ -33,8 +33,9 @@ void Simple_Impl::shutdown (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
-  ACE_DEBUG ((LM_DEBUG, "%s\n", "Simple_Impl is shutting down"));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "%s\n",
+              "Simple_Impl is shutting down"));
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 

@@ -23,17 +23,18 @@
 class Client_Impl
 {
   // = TITLE
-  //     Simple Client Implementation
+  //     Simple Client Implementation.
   //
   // = DESCRIPTION
-  //     Class wrapper for a client which gets the server IOR and then makes
-  //     several calls to the server before optionally shutting it down.
+  //     Class wrapper for a client which gets the server IOR and then
+  //     makes several calls to the server before optionally shutting
+  //     it down.
 public:
   // = Constructor and destructor.
   Client_Impl (void);
   ~Client_Impl (void);
 
-  int run ();
+  int run (void);
   // Execute client example code.
 
   int init (int argc, char **argv);
@@ -46,8 +47,8 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  void cube_long (int i);
-  // calculate the cube from a long.
+  void time (void);
+  // Return the current time of day on another machine.
 
   int argc_;
   // # of arguments on the command line.
@@ -59,7 +60,7 @@ private:
   // Key of the obj ref of the server.
 
   u_int loop_count_;
-  // Number of times to do the cube operations.
+  // Number of times to do the time() operation.
 
   int shutdown_;
   // Flag for server shutdown.
