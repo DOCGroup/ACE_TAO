@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 
 #include "Thermometer.h"
@@ -67,7 +68,7 @@ void Temperature_Monitor2::reset_device (Name_Binding_Ptr &resetCount)
                            "Reset Count: %d\n",
                            this->thermometer_->address (),
                            number_of_resets);
-          
+
           notification.send (this->opt_.admin_email (),
                              this->opt_.email_from (),
                              "Excessive number of thermometer resets",

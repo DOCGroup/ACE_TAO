@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 
 #include "Thermometer.h"
@@ -30,7 +31,7 @@ void Temperature_Monitor::record_temperature (float temp)
 // Listing 32 code/ch21
   this->naming_context_.rebind ("current", temp);
 // Listing 32
-    
+
 // Listing 33 code/ch21
   this->naming_context_.unbind ("lastReset");
   this->naming_context_.unbind ("resetCount");
