@@ -569,11 +569,11 @@ public:
   // must implement this and determine what is a collocated object
   // based on information provided in the TAO_Stub.
 
-  virtual int _tao_add_to_IOR_table (ACE_CString &object_id,
+  virtual int _tao_add_to_IOR_table (const ACE_CString &object_id,
                                      CORBA::Object_ptr obj);
   // Add a mapping ObjectID->IOR to the table.
 
-  virtual int _tao_find_in_IOR_table (ACE_CString &object_id,
+  virtual int _tao_find_in_IOR_table (const ACE_CString &object_id,
                                       CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
 
