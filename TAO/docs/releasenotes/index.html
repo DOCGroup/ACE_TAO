@@ -274,14 +274,14 @@ requirements and/or desires become clearer.</li>
 
 <li>
 The IDL compiler now has limited support for valuetypes (see release notes
-for valuetypes for details). If the TAO library is built with 
+for valuetypes for details). If the TAO library is built with
 TAO_HAS_VALUETYPE defined, and IDL_HAS_VALUETYPE is also defined, then
 the IDL compiler will enable OBV support with the command line option
 -Gv, and disable it with the option -Sv (the default).</li>
 
 <li>
 As part of the implementation of interceptors, the TAO IDL compiler
-now generates interception points in the client and server, as well 
+now generates interception points in the client and server, as well
 as the prepare_header method in the stubs.</li>
 
 <li>
@@ -291,7 +291,7 @@ Scoping and name resolution rules have changed in CORBA with version
 <li>
 IDL compiler now supports the CORBA AMI callback model, generating code
 for reply handlers and reply stubs if the -GC command line option is
-used. The TAO library must be compiled with TAO_HAS_CORBA_MESSAGING, 
+used. The TAO library must be compiled with TAO_HAS_CORBA_MESSAGING,
 TAO_HAS_AMI_CALLBACK, TAO_HAS_VALUETYPE and IDL_HAS_VALURTYPE defined.
 </ul>
 
@@ -635,11 +635,11 @@ these extensions.
 
 This effort will implement the RT-CORBA specification and required
 parts of the Messaging specification.  Our implementation of RT-CORBA
-in TAO will occur in stages.  Our inital focus will be the support of
+in TAO will occur in stages.  Our initial focus will be the support of
 statically configured, real-time embedded systems where it is possible
-to eliminate many soures for unbounded priority inversion.  This will
+to eliminate many sources of unbounded priority inversion.  This will
 be followed by a more general implementation which supports more
-dynamic environemnts and scheduling mechanisms.
+dynamic environments and scheduling mechanisms.
 
 Support for statically configured applications requires a framework
 which allows for explicit mappings between CORBA priorities,
@@ -648,15 +648,15 @@ and invocations.  By supporting such mappings, applications will
 realize a greater degree of control over end-to-end priority mappings.
 Essentially, applications are able to assign priorities to connections
 between server and client, then using the existing Policy framework
-along with new Policy objects requests are routed to the appropriate
-connections.  By assigning equivalent thread and object priorities
+along with new Policy objects, requests are routed to the appropriate
+connections.  By assigning equivalent thread and object priorities,
 applications are able to ensure end-to-end priority preservation.
 
 As a part of this initial effort we are also adding support for both
-reliable and buffer one-way operations.  Reliable one-way operations
+reliable and buffered oneway operations.  Reliable oneway operations
 are specified in the messaging specification.  Reliable oneways is a
-method for providing different levels of support for reliable
-message delivery. Traditional oneway semantics are unacceptable in many
+method for providing different levels of support for reliable message
+delivery. Traditional oneway semantics are unacceptable in many
 environments.  For example, there is no guarantee that a particular
 invocation will actually be delivered.  Additionally, location
 forwarding will not occur with traditional oneway invocations.
@@ -676,33 +676,33 @@ different levels synchronization are defined in the RT specification:
         <ul>
           <li>
             <CODE>SYNC_NONE</CODE><BR>
-            The ORB returns control to the client before passing
-            the request to the transport layer.  Client is guaranteed to
-            not block.  No location forward.
+            The ORB returns control to the client before passing the
+            request to the transport layer.  Client is guaranteed not
+            to block.  No location forward is done.
           </li>
           <li>
             <CODE>SYNC_WITH_TRANSPORT</CODE><BR>
-            The ORB returns control to the client only after
-            the transport layer (e.g. TCP) has accepted the request.
-            Client can block, no location forwarding.
+            The ORB returns control to the client only after the
+            transport layer (e.g. TCP) has accepted the request.
+            Client can block. No location forwarding is done.
           </li>
           <li>
             <CODE>SYNC_WITH_SERVER</CODE><BR>
-            server send a reply before invoking the target
-            implementation.  A reply of NO_EXCEPTION implies that
-            all location forwarding has been performed and the
-            ORB shall return control to the client.  Thus the
-            client will block for remote invocations.  Server send
-            reply after invoking any ServantManager but before
-            delivering request to servant.
+            The server sends a reply before invoking the target
+            implementation.  A reply of NO_EXCEPTION implies that all
+            location forwarding has been performed and the ORB shall
+            return control to the client.  Thus the client will block
+            for remote invocations.  Server send reply after invoking
+            any ServantManager but before delivering request to
+            servant.
           </li>
           <li>
             <CODE>SYNC_WITH_TARGET</CODE><BR>
-            Equivalent to a synchronous non-oneway operation in
-            CORBA 2.2.  Server send reply only after the target has
-            completed the invoked operation.  Any location forwarding
-            will have occurred and a SYSTEM_EXCEPTION reply may be sent.
-            The client is assured that the target has acted upon the
+            Equivalent to a synchronous twoway operation in CORBA 2.2.
+            Server sends a reply only after the target has completed
+            the invoked operation.  Any location forwarding will have
+            occurred and a SYSTEM_EXCEPTION reply may be sent.  The
+            client is assured that the target has acted upon the
             request.
           </li>
         </ul>
@@ -710,25 +710,30 @@ different levels synchronization are defined in the RT specification:
 <P>
 
 The underlying transport object will be enhanced to support different
-oneway buffering strategies.  This feature can be used to optimize message
-throughput, possibly at the expense of latency. 
-          The One-Way Buffer will be flushed under 5 conditions:
+oneway buffering strategies.  This feature can be used to optimize
+message throughput, possibly at the expense of latency. The One-Way
+Buffer will be flushed under 5 conditions as specified by the
+Buffering Constraint Policy:
+
         <ul>
-          <li>
-            Timeout value expires as set by the protocol specific
-            attributes in BTPProtocolProperties.</li>
-          <li> Max Byte count is exceeded as set by the protocol specific
-               attributes in BTPProtocolProperties.
-          </li>
-          <li>Explicit flush by the user.</li>
-          <li> Max message is exceeded, or </li>
-          <li>ORB shutdown.</li>
+          <li> Timeout value expires. </li>
+          <li> Max byte count is exceeded. </li>
+          <li> Explicit flush by the user. </li>
+          <li> Max message count is exceeded, or </li>
+          <li> ORB shutdown.</li>
         </ul>
- 
+
 
 <p>Current Status:
 <ul>
-<li>
+
+<li> SyncScopePolicy has been partially implemented.  The options
+currently supported are <CODE>SYNC_NONE</CODE> and
+<CODE>SYNC_WITH_TRANSPORT</CODE>.  </li>
+
+<li> Buffering Constraint Policy is completely supported by TAO
+providing flexible levels of flushing and queueing in the ORB.  </li>
+
 </ul>
 Known issues:
 <ul>
@@ -768,13 +773,6 @@ Known issues:
 
 Future work:
 <ul>
-
-<li> Determine the degree to which we will support the full semantics
-of remote objects on a collocated object. The spec mandates that
-collocated object should behave <i>exactly</i> like remote objects,
-but that means that request will have to be queued rather than calling
-a method directly, and this could be hazardous to our quest for
-real-time ORB status.</li><P>
 
 </ul>
 
@@ -889,6 +887,15 @@ dynamically loaded from DLLs on demand. </li> <P>
 
 <li> Support for collocation should be much better now because the POA
 can tell if we created the object reference.</li><P>
+
+<li> After Nanbor's recent changes for collocation, we support the
+full semantics of remote objects on a collocated object. The spec
+mandates that collocated object should behave <i>exactly</i> like
+remote objects, which includes going through the POA, running the
+Servant Managers, running the interceptors, and expecting the
+reference counting behavior provided by the POA.  Note that the old
+scheme of direct call through to the servant is also still
+available. </li><P>
 
 </UL>
 <hr>
@@ -1307,7 +1314,7 @@ Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
   <li>
 	Use Red-Black trees to optimize lookup on frequently used query keys -
 	namely record id's and time.
-	<br> 
+	<br>
   </li>
 </ul>
 
@@ -1601,7 +1608,7 @@ the AbstractSyntaxTree and generate the implied-IDL code in memory.
 This reduced the amount of AMI specific IDL compiler code dramatically.</li>
 <li>Support for exceptions</li>
 <li>Support for attributes</li>
-<li>Support for deferred synchronous invocations. 
+<li>Support for deferred synchronous invocations.
 <a href="mailto:parsons@cs.wustl.edu">Jeff Parsons</a></li>
 </ul>
 <p> Future Work:
