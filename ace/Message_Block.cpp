@@ -858,12 +858,26 @@ ACE_Message_Block::duplicate (const ACE_Message_Block *mb)
 }
 
 ACE_Data_Block *
-ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask,
-                       int copy_data) const
+ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
+{
+  ACE_TRACE ("ACE_Data_Block::clone");
+
+  ACE_Data_Block* nb = this->clone_nocopy (mask);
+
+  // Copy all of the payload memory into the new object.
+  ACE_OS::memcpy (nb->base_,
+                  this->base_,
+                  this->max_size_);
+
+  return nb;
+}
+
+ACE_Data_Block *
+ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
 {
   ACE_FUNCTION_TIMEPROBE(ACE_DATA_BLOCK_CLONE_ENTER);
 
-  ACE_TRACE ("ACE_Data_Block::clone");
+  ACE_TRACE ("ACE_Data_Block::clone_nocopy");
 
   // You always want to clear this one to prevent memory leaks but you
   // might add some others later.
@@ -884,13 +898,6 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask,
                                          this->data_block_allocator_),
                          0);
 
-  // Copy all of the payload memory into the new object.
-  if (copy_data)
-    {
-      ACE_OS::memcpy (nb->base_,
-                      this->base_,
-                      this->max_size_);
-    }
 
   // Set new flags minus the mask...
   nb->clr_flags (mask | always_clear);

@@ -52,9 +52,10 @@ public:
   virtual ~ACE_Locked_Data_Block (void);
   // Delete all the resources held in the message.
 
-  virtual ACE_Data_Block *clone (ACE_Message_Block::Message_Flags mask = 0) const;
+  virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0) const;
   // Return an exact "deep copy" of the message, the dynamic type is
   // ACE_Locked_Data_Block<>
+  // See the documentation in Message_Block.h for details.
 
 private:
   ACE_LOCK lock_;
