@@ -49,7 +49,7 @@ ReceiverImpl::ReceiverExec_i::set_session_context (Components::SessionContext_pt
   this->context_ =
     ReceiverImpl::ReceiverExec_Context::_narrow (ctx);
 
-  if (CORBA::is_nil (this->context_))
+  if (CORBA::is_nil (this->context_.in ()))
     throw CORBA::INTERNAL ();
 }
 
