@@ -1,3 +1,10 @@
+Thu Feb  1 09:42:41 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_chorus4.x_g++.GNU:
+
+          Modification to allow building for Chorus 4.x on x86.  CPU will be
+          set to x86, but CLX_TYPE will be set to i486-elf-sysv4.
+
 Thu Feb 01 10:29:31 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Synch.i (ACE_Null_Mutex::acquire (ACE_Time_Value&)): Removed
