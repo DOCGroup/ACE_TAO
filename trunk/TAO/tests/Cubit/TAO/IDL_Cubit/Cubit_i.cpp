@@ -295,15 +295,19 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
-  cout << "input:\n" << input << endl;
-  if (output.ptr () == 0)
-    output = new Cubit::RtiPacket(input);
+  if (TAO_debug_level > 0)
+    cout << "input:\n" << input << endl;
 
-  output->packetHeader.packetColor=input.packetHeader.packetColor
+  if (output.ptr () == 0)
+    output = new Cubit::RtiPacket (input);
+
+  output->packetHeader.packetColor
+    = input.packetHeader.packetColor
     * input.packetHeader.packetColor
     * input.packetHeader.packetColor;
 
-  cout << "output\n" <<  *output << endl;
+  if (TAO_debug_level > 0)
+    cout << "output\n" <<  *output << endl;
 }
 
 // Shutdown.
