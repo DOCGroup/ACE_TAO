@@ -162,7 +162,7 @@ Identifier::compare (Identifier *o)
       return I_FALSE;
     }
 
-  if ((this->escaped_ ^ o->escaped_) == 1)
+  if (this->escaped_ ^ o->escaped_)
     {
       return I_FALSE;
     }

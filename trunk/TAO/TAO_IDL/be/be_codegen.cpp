@@ -198,7 +198,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       *this->client_header_ << "\n";
     }
-
+    
   // We must include all the client headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared

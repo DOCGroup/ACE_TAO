@@ -223,7 +223,7 @@ DRV_cpp_init (void)
       ACE_OS::strcpy (option, "-I");
       char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
       size_t len = 0;
-
+      
       if (TAO_ROOT != 0)
         {
           len = ACE_OS::strlen (TAO_ROOT);
@@ -235,7 +235,11 @@ DRV_cpp_init (void)
             }
 
           ACE_OS::strcat (option, TAO_ROOT);
+#if defined (ACE_WIN32)
+          ACE_OS::strcat (option, "\\tao");
+#else
           ACE_OS::strcat (option, "/tao");
+#endif
         }
       else
         {
@@ -252,7 +256,11 @@ DRV_cpp_init (void)
                 }
 
               ACE_OS::strcat (option, ACE_ROOT);
+#if defined (ACE_WIN32)
+              ACE_OS::strcat (option, "\\TAO\\tao");
+#else
               ACE_OS::strcat (option, "/TAO/tao");
+#endif
             }
           else
             {
