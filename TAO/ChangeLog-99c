@@ -1,3 +1,26 @@
+Sat May 29 20:25:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/UTL_Identifier.h:
+	* TAO_IDL/include/UTL_Error.h:
+	* TAO_IDL/include/IDL_Global.h:
+	* TAO_IDL/util/UTL_Identifier.cpp:
+	* TAO_IDL/util/UTL_Scope.cpp:
+	* TAO_IDL/util/UTL_Global.cpp:
+	* TAO_IDL/util/UTL_String.cpp:
+	* TAO_IDL/util/UTL_Error.cpp:
+	* TAO_IDL/driver/DRV_Args.cpp:
+	  Started out as an attempt to have the IDL compiler output
+	  an error if two identifiers in the same scope differ only
+	  in the case of one or more or their characters. However, it
+	  was discovered that sfp.idl (which is derived from the spec)
+	  contains such errors - some enum values clash with struct
+	  names, and since enums don't generate their own scope...
+	  So what we did was to default the IDl compiler to produce
+	  a warning if this happens. This behavior can also be 
+	  specified explicitly by the command line option -Cw. To
+	  be more strict and produce errors instead, use the command
+	  line option -Ce.
+
 Sat May 29 17:48:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object.cpp (_non_existent): This function is not required
