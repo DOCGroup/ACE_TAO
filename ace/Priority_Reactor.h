@@ -59,10 +59,10 @@ protected:
   // = Dispatching methods.
 
   virtual int dispatch_io_set (int number_of_active_handles,
-			       int& number_dispatched,
+			       int &number_dispatched,
 			       int mask,
-			       ACE_Handle_Set& dispatch_mask,
-			       ACE_Handle_Set& ready_mask,
+			       ACE_Handle_Set &dispatch_mask,
+			       ACE_Handle_Set &ready_mask,
 			       ACE_EH_PTMF callback);
   // We simply override this function to implement the priority
   // dispatching.
