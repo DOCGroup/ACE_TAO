@@ -10949,7 +10949,12 @@ ACE_OS::getenv (const char *symbol)
 ACE_INLINE wchar_t *
 ACE_OS::getenv (const wchar_t *symbol)
 {
+#if defined (ACE_LACKS_ENV)
+  ACE_UNUSED_ARG (symbol);
+  ACE_NOTSUP_RETURN (0);
+#else
   ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
+#endif /* ACE_LACKS_ENV */
 }
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
 
@@ -10958,7 +10963,7 @@ ACE_OS::putenv (const ACE_TCHAR *string)
 {
   ACE_OS_TRACE ("ACE_OS::putenv");
 #if defined (ACE_LACKS_ENV)
-  ACE_UNUSED_ARG (strin);
+  ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
   // WinCE and pSOS don't have the concept of environment variables.
