@@ -14,6 +14,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/ImplicitActivationPolicyFactory.h"
 #include "tao/PortableServer/RequestProcessingPolicyFactory.h"
 #include "tao/PortableServer/ServantRetentionPolicyFactory.h"
+#include "tao/PortableServer/Active_Object_Map.h"
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ORT_Adapter.h"

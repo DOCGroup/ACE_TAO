@@ -3,6 +3,7 @@
 #include "Collocated_Object_Proxy_Broker.h"
 #include "Object_Adapter.h"
 #include "Servant_Upcall.h"
+#include "Servant_Base.h"
 
 
 // -- TAO Include --

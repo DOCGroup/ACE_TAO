@@ -16,7 +16,6 @@
 
 #include "portableserver_export.h"
 #include "Policy_Strategy.h"
-#include "Active_Object_Map.h"
 #include "ace/Service_Config.h"
 #include "Servant_Location.h"
 #include "Servant_Upcall.h"
@@ -33,7 +32,7 @@
 
 class TAO_POA;
 class TAO_Active_Object_Map;
-
+struct TAO_Active_Object_Map_Entry;
 namespace TAO
 {
   namespace Portable_Server
@@ -142,7 +141,7 @@ namespace TAO
       virtual
       void
       cleanup_servant (
-        TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+        TAO_Active_Object_Map_Entry *active_object_map_entry
         ACE_ENV_ARG_DECL) = 0;
 
       virtual

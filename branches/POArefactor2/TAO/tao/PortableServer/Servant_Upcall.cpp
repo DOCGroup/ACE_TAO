@@ -8,6 +8,7 @@
 #include "tao/PortableServer/ThreadStrategy.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/Active_Object_Map.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"

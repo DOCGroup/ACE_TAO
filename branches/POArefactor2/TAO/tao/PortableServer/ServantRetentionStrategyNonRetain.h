@@ -15,7 +15,6 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "Active_Object_Map.h"
 #include "Servant_Location.h"
 #include "ServantRetentionStrategy.h"
 
@@ -130,7 +129,7 @@ namespace TAO
       virtual
       void
       cleanup_servant (
-        TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+        TAO_Active_Object_Map_Entry *active_object_map_entry
         ACE_ENV_ARG_DECL);
 
       virtual

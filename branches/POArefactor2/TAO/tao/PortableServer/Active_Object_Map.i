@@ -31,7 +31,7 @@ TAO_Active_Object_Map::bind_using_system_id_returning_system_id (PortableServer:
       return result;
     }
 
-  Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
 
   int result = this->id_assignment_strategy_->bind_using_system_id (servant,
                                                                     priority,
@@ -48,7 +48,7 @@ TAO_Active_Object_Map::bind_using_system_id_returning_user_id (PortableServer::S
                                                                CORBA::Short priority,
                                                                PortableServer::ObjectId_out user_id)
 {
-  Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
 
   int result = this->id_assignment_strategy_->bind_using_system_id (servant,
                                                                     priority,
@@ -65,7 +65,7 @@ TAO_Active_Object_Map::bind_using_user_id (PortableServer::Servant servant,
                                            const PortableServer::ObjectId &user_id,
                                            CORBA::Short priority)
 {
-  Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   return this->id_uniqueness_strategy_->bind_using_user_id (servant,
                                                             user_id,
                                                             priority,
@@ -86,7 +86,7 @@ TAO_Active_Object_Map::find_system_id_using_user_id (const PortableServer::Objec
       return 0;
     }
 
-  Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->id_uniqueness_strategy_->bind_using_user_id (0,
                                                                   user_id,
                                                                   priority,
@@ -101,7 +101,7 @@ ACE_INLINE int
 TAO_Active_Object_Map::rebind_using_user_id_and_system_id (PortableServer::Servant servant,
                                                            const PortableServer::ObjectId &user_id,
                                                            const PortableServer::ObjectId &system_id,
-                                                           TAO_Active_Object_Map::Map_Entry *&entry)
+                                                           TAO_Active_Object_Map_Entry *&entry)
 {
   ACE_UNUSED_ARG (system_id);
 
@@ -139,7 +139,7 @@ ACE_INLINE int
 TAO_Active_Object_Map::find_servant_using_user_id (const PortableServer::ObjectId &user_id,
                                                    PortableServer::Servant &servant)
 {
-  Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->user_id_map_->find (user_id,
                                          entry);
   if (result == 0)
@@ -159,7 +159,7 @@ ACE_INLINE int
 TAO_Active_Object_Map::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
                                                                  const PortableServer::ObjectId &user_id,
                                                                  PortableServer::Servant &servant,
-                                                                 TAO_Active_Object_Map::Map_Entry *&entry)
+                                                                 TAO_Active_Object_Map_Entry *&entry)
 {
   return this->lifespan_strategy_->find_servant_using_system_id_and_user_id (system_id,
                                                                              user_id,
@@ -169,7 +169,7 @@ TAO_Active_Object_Map::find_servant_using_system_id_and_user_id (const PortableS
 
 ACE_INLINE int
 TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
-                                                                 TAO_Active_Object_Map::Map_Entry *&entry)
+                                                                 TAO_Active_Object_Map_Entry *&entry)
 {
   int result = this->user_id_map_->find (user_id,
                                          entry);
@@ -191,7 +191,7 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableS
                                                                  PortableServer::ObjectId_out system_id,
                                                                  CORBA::Short &priority)
 {
-  Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->find_servant_and_system_id_using_user_id (user_id,
                                                                entry);
 

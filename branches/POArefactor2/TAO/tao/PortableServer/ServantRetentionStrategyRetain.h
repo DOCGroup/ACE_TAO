@@ -130,7 +130,7 @@ namespace TAO
       virtual
       void
       cleanup_servant (
-        TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+        TAO_Active_Object_Map_Entry *active_object_map_entry
         ACE_ENV_ARG_DECL);
 
       virtual
@@ -174,7 +174,7 @@ namespace TAO
                          int &wait_occurred_restart_call);
 
       void
-      deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+      deactivate_map_entry (TAO_Active_Object_Map_Entry *active_object_map_entry
                             ACE_ENV_ARG_DECL);
 
       PortableServer::ObjectId *servant_to_system_id_i (

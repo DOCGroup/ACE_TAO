@@ -15,6 +15,7 @@
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Servant_Base.h"
 #include "tao/debug.h"
 #include "tao/TSS_Resources.h"
 
@@ -278,7 +279,7 @@ namespace TAO
 
     void
     Non_Retain_Servant_Retention_Strategy::cleanup_servant (
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+      TAO_Active_Object_Map_Entry *active_object_map_entry
       ACE_ENV_ARG_DECL_NOT_USED)
     {
       ACE_UNUSED_ARG (active_object_map_entry);

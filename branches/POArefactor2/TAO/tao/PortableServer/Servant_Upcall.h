@@ -23,7 +23,6 @@
 
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Active_Object_Map.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -34,6 +33,7 @@
 class TAO_POA;
 class TAO_ServerRequest;
 class TAO_Object_Adapter;
+struct TAO_Active_Object_Map_Entry;
 
 namespace TAO
 {
@@ -147,10 +147,10 @@ namespace TAO
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       /// Set the active_object_map_entry.
-      void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
+      void active_object_map_entry (TAO_Active_Object_Map_Entry *entry);
 
       /// Get the active_object_map_entry.
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
+      TAO_Active_Object_Map_Entry *active_object_map_entry (void) const;
 
       /// We are using the servant locator for this upcall.
       void servant_locator (PortableServer::ServantLocator_ptr servant_locator);
@@ -217,7 +217,7 @@ namespace TAO
 
       /// Pointer to the entry in the TAO_Active_Object_Map corresponding
       /// to the servant for this request.
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
+      TAO_Active_Object_Map_Entry *active_object_map_entry_;
 
       /// Preinvoke data for the upcall.
       Pre_Invoke_State pre_invoke_state_;

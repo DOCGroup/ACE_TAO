@@ -72,12 +72,12 @@ namespace TAO
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     ACE_INLINE void
-    Servant_Upcall::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)
+    Servant_Upcall::active_object_map_entry (TAO_Active_Object_Map_Entry *entry)
     {
       this->active_object_map_entry_ = entry;
     }
 
-    ACE_INLINE TAO_Active_Object_Map::Map_Entry *
+    ACE_INLINE TAO_Active_Object_Map_Entry *
     Servant_Upcall::active_object_map_entry (void) const
     {
       return this->active_object_map_entry_;

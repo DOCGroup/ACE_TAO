@@ -21,6 +21,7 @@
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Active_Object_Map.h"
 
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
@@ -85,7 +86,7 @@ namespace TAO
       const PortableServer::ObjectId &id
       ACE_ENV_ARG_DECL)
     {
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry = 0;
+      TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
       int result = this->active_object_map_->
         find_servant_and_system_id_using_user_id (id,
                                                   active_object_map_entry);
@@ -104,7 +105,7 @@ namespace TAO
 
     void
     Retain_Servant_Retention_Strategy::deactivate_map_entry (
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+      TAO_Active_Object_Map_Entry *active_object_map_entry
       ACE_ENV_ARG_DECL)
     {
       // Decrement the reference count.
@@ -135,7 +136,7 @@ namespace TAO
 
     void
     Retain_Servant_Retention_Strategy::cleanup_servant (
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+      TAO_Active_Object_Map_Entry *active_object_map_entry
       ACE_ENV_ARG_DECL)
     {
       // If a servant manager is associated with the POA,
@@ -252,7 +253,7 @@ namespace TAO
       // specified system Object Id value.  If the Object Id value is
       // not active in the POA, an ObjectNotActive exception is
       // raised.
-      TAO_Active_Object_Map::Map_Entry *entry = 0;
+      TAO_Active_Object_Map_Entry *entry = 0;
 
       result =
         active_object_map_->
@@ -384,7 +385,7 @@ namespace TAO
                             TAO_SERVANT_NOT_FOUND);
         }
 
-      TAO_Active_Object_Map::Map_Entry *entry = 0;
+      TAO_Active_Object_Map_Entry *entry = 0;
       int result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
                                                   user_id,
@@ -430,7 +431,7 @@ namespace TAO
       // Object Id value from the request. If such a servant exists, the
       // POA invokes the appropriate method on the servant.
       PortableServer::Servant servant = 0;
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry = 0;
+      TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
       int result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
                                                   poa_current_impl.object_id (),
@@ -584,7 +585,7 @@ namespace TAO
 
       // We must copy the map entries into a separate place since we
       // cannot remove entries while iterating through the map.
-      ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *> map_entries
+      ACE_Array_Base<TAO_Active_Object_Map_Entry *> map_entries
         (this->active_object_map_->current_size ());
 
       size_t counter = 0;
@@ -597,7 +598,7 @@ namespace TAO
            ++iter)
         {
           TAO_Active_Object_Map::user_id_map::value_type map_pair = *iter;
-          TAO_Active_Object_Map::Map_Entry *active_object_map_entry = map_pair.second ();
+          TAO_Active_Object_Map_Entry *active_object_map_entry = map_pair.second ();
 
           if (!active_object_map_entry->deactivated_)
             {
@@ -1136,7 +1137,7 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall)
     {
-      TAO_Active_Object_Map::Map_Entry *entry = 0;
+      TAO_Active_Object_Map_Entry *entry = 0;
       int result = this->active_object_map_->
         rebind_using_user_id_and_system_id (servant,
                                             user_id,
