@@ -1,3 +1,22 @@
+Mon Jul  7 23:40:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* clients/WebSTONE/src/webclient.c: Removed a bunch of THREAD
+	  storage class decorators from function makeload() because auto
+ 	  variables can't be declared as TSS.  Also #ifdef random number
+ 	  generation code so it uses rand_r on Solaris() and rand() on NT.
+
+	* clients/WebSTONE/src/rexec.c: Modified prototypes for
+	  PassOutputThread() and PassErrorThread() to avoid warnings from
+	  MSVC.  Still need more refinement on this one. ;(
+
+	* clients/WebSTONE/src/webmaster.c: Added prototype for
+	  HostEntCpy() and a null statement to avoid warning from MSVC.
+
+	* clients/WebSTONE/src/gendata/genrand.mak: 
+	* clients/WebSTONE/src/master/webmaster.mak:
+	* clients/WebSTONE/src/client/webclient.mak: Updated file paths
+	  and dependencies.
+
 Sat Jul  5 14:19:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* Renamed the client directory "clients" to reflect the fact that

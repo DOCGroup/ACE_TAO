@@ -56,8 +56,8 @@ static char copyright[] =
 #define STDERROR hStdErr
 #define FILECOOKIE HANDLE
 
-static void PassOutputThread();
-static void PassErrorThread();
+static void PassOutputThread(SOCKET);
+static void PassErrorThread(SOCKET);
 
 HANDLE hStdIn, hStdOut, hStdErr;
 
