@@ -91,7 +91,7 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   else  # ! rtti
     #### ACE_LACKS_RTTI is necessary with -features=castop, but
     #### without -features=rtti, to convert dynamic_cast to static_cast.
-    CCFLAGS += -DACE_LACKS_RTTI
+    CPPFLAGS += -DACE_LACKS_RTTI
   endif # ! rtti
 
   #### Create template repository to avoid compiler warning.
@@ -129,7 +129,7 @@ else  # ! 4.2
       else  # ! rtti
         #### ACE_LACKS_RTTI is necessary with -features=castop, but
         #### without -features=rtti, to convert dynamic_cast to static_cast.
-        CCFLAGS += -DACE_LACKS_RTTI
+        CPPFLAGS += -DACE_LACKS_RTTI
       endif # ! rtti
     else
       #### Support RTTI by default. And, use old iostreams.
@@ -137,11 +137,13 @@ else  # ! 4.2
         ifeq (1,$(stdcpplib))
           CCFLAGS += -library=Cstd
         else
-          CCFLAGS += -library=iostream,no%Cstd -DACE_USES_OLD_IOSTREAMS
+          CCFLAGS += -library=iostream,no%Cstd
+          CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
         endif # stdcpplib
       else
         ifeq (0,$(stdcpplib))
-          CCFLAGS += -library=iostream -DACE_USES_OLD_IOSTREAMS
+          CCFLAGS += -library=iostream
+          CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
         endif # stdcpplib
 
         # If 64-bit build is desired, turn that on. If no code gen options
@@ -171,9 +173,9 @@ ifeq ($(templates),)
       templates = explicit
     else
       ifeq (C++ 5.5,$(findstring C++ 5.5,$(CC_VERSION)))
-        # SunForte8 has no problems using implicit templates 
+        # SunForte8 has no problems using implicit templates
         templates = implicit
-      else 
+      else
         templates = explicit
       endif
     endif
