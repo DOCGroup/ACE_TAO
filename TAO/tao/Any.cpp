@@ -337,11 +337,48 @@ void
 TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
                                     ACE_ENV_ARG_DECL)
 {
+  // @@ (JP) The following code depends on the fact that
+  //         TAO_InputCDR does not contain chained message blocks,
+  //         otherwise <begin> and <end> could be part of
+  //         different buffers!
+
+  // This will be the start of a new message block.
+  char *begin = cdr.rd_ptr ();
+
+  // Skip over the next argument.
+  CORBA::TypeCode::traverse_status status =
+    TAO_Marshal_Object::perform_skip (this->type_,
+                                      &cdr
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+
+  // This will be the end of the new message block.
+  char *end = cdr.rd_ptr ();
+
+  // The ACE_CDR::mb_align() call can shift the rd_ptr by up to
+  // ACE_CDR::MAX_ALIGNMENT-1 bytes. Similarly, the offset adjustment
+  // can move the rd_ptr by up to the same amount. We accommodate
+  // this by including 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional
+  // space in the message block.
+  size_t size = end - begin;
+  
   ACE_Message_Block::release (this->cdr_);
   ACE_NEW (this->cdr_,
-           ACE_Message_Block);
-  ACE_CDR::consolidate (this->cdr_,
-                        cdr.start ());
+           ACE_Message_Block (size + 2 * ACE_CDR::MAX_ALIGNMENT));
+           
+  ACE_CDR::mb_align (this->cdr_);
+  ptr_arith_t offset = ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;
+  this->cdr_->rd_ptr (offset);
+  this->cdr_->wr_ptr (offset + size);
+
+  ACE_OS::memcpy (this->cdr_->rd_ptr (),
+                  begin,
+                  size);
 }
 
 // ****************************************************************

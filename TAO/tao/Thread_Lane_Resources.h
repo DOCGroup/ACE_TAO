@@ -22,6 +22,7 @@
 
 #include "tao/corbafwd.h"
 #include "ace/Synch_T.h"
+#include "ace/Malloc_Base.h"
 
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;

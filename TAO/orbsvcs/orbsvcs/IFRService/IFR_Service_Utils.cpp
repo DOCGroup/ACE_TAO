@@ -857,7 +857,7 @@ TAO_IFR_Service_Utils::create_common (
   // Create new section, or open if it already exists.
   ACE_Configuration_Section_Key sub_key;
   config->open_section (container_key,
-                        "defns",
+                        sub_section_name,
                         1,
                         sub_key);
 
@@ -942,6 +942,7 @@ TAO_IFR_Service_Utils::create_common (
     }
 
   path += sub_section_name;
+  path += '\\';
   path += section_name;
 
   // Store our path under our global repo id for fast lookup.

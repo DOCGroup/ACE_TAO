@@ -646,7 +646,7 @@ TAO_InterfaceDef_i::create_attribute_i (
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "attrs\\"
+                                          "attrs"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
 
@@ -739,7 +739,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "ops\\"
+                                          "ops"
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
 

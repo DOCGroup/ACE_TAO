@@ -25,6 +25,7 @@
 
 #include "tao/Managed_Types.h"
 #include "ace/Log_Msg.h"        /* For "ACE_ASSERT" */
+#include "ace/Message_Block.h"
 
 class CORBA_Object;
 class CORBA_Environment;

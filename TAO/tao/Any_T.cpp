@@ -773,9 +773,14 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                       0);
                       
       auto_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
-
-      TAO_InputCDR cdr (impl->_tao_get_cdr (),
-                        impl->_tao_byte_order ());
+      ACE_Message_Block *mb = impl->_tao_get_cdr ();
+      TAO_InputCDR cdr (mb->data_block (),
+                        ACE_Message_Block::DONT_DELETE,
+                        mb->rd_ptr () - mb->base (),
+                        mb->wr_ptr () - mb->base (),
+                        impl->_tao_byte_order (),
+						            TAO_DEF_GIOP_MAJOR,
+						            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
