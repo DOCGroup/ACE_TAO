@@ -1,3 +1,8 @@
+Fri May 21 07:53:58 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-vxworks5.x.h, config-osf1-4.0.h: Added
+          ACE_HASH_NONCONST_SELECT_TIMEVAL.
+
 Thu May 20 18:01:24 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Filecache.cpp: Added "template<>" to specializations.
