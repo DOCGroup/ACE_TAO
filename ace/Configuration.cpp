@@ -607,14 +607,18 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
   ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
   DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
   DWORD value_type;
-  if (ACE_TEXT_RegEnumValue (base_key,
-                             Index,
-                             name_buffer,
-                             &buffer_size,
-                             NULL,
-                             &value_type,
-                             NULL,
-                             NULL) != ERROR_SUCCESS)
+
+  int rc = ACE_TEXT_RegEnumValue (base_key,
+                                  Index,
+                                  name_buffer,
+                                  &buffer_size,
+                                  NULL,
+                                  &value_type,
+                                  NULL,
+                                  NULL);
+  if (rc == ERROR_NO_MORE_ITEMS)
+    return 1;
+  else if (rc != ERROR_SUCCESS)
     return -2;
 
   name = name_buffer;
