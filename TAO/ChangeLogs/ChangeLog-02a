@@ -1,3 +1,8 @@
+Thu Mar 23 10:16:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* utils/catior/catior.cpp:
+	  Removed an unused CORBA::Environment parameter.
+
 Thu Mar 23 09:23:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Acceptors.cpp (process_client_request): Fixed a
