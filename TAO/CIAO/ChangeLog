@@ -1,3 +1,8 @@
+Mon Jun 02 23:36:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* exampels/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
+	  Regenerated and hand modified the project file.
+
 Mon Jun  2 22:45:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/ComponentsC.h:
