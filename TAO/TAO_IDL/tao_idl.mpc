@@ -8,6 +8,13 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
   install      = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE TAO_IDL_FE gperf
 
+  specific {
+    // Override the template value for optimize.  Building the exe
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).
+    optimize =
+  }
+
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
@@ -57,6 +64,13 @@ project(TAO_IDL_FE) : acelib, core, tao_output, crosscompile {
   sharedname   = TAO_IDL_FE
   includes    += include fe
   dynamicflags = TAO_IDL_FE_BUILD_DLL
+
+  specific {
+    // Override the template value for optimize.  Building the frontend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).
+    optimize =
+  }
 
   Source_Files {
     fe
