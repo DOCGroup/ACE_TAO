@@ -1,3 +1,9 @@
+Tue Aug 31 11:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Oneways/server.cpp:
+          Added some more debug statements so that we can better track the
+          steps of the server
+
 Tue Aug 31 09:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
