@@ -68,7 +68,11 @@
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
 
-#define ACE_LACKS_PRAGMA_ONCE
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+  // We define it with a -D with make depend.
+# define ACE_LACKS_PRAGMA_ONCE
+#endif /* ! ACE_LACKS_PRAGMA_ONCE */
+
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
