@@ -1,0 +1,5 @@
+project : ciao_server {
+  Source_Files {
+    Simple_Component_Server.cpp
+  }
+}
