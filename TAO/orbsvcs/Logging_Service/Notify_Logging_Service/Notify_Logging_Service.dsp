@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_IORTable.lib TAO.lib TAO_CosNotification.lib TAO_DsNotifyLogAdmin.lib ace.lib TAO_PortableServer.lib TAO_DsLogAdmin.lib TAO_CosNaming.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs"
+# ADD LINK32 TAO_IORTable.lib TAO.lib TAO_CosNotification.lib TAO_DsNotifyLogAdmin.lib ace.lib TAO_PortableServer.lib TAO_DsLogAdmin.lib TAO_CosNaming.lib  TAO_CosEvent.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "Notify_Logging_Service - Win32 Debug"
