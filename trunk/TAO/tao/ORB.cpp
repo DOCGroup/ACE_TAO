@@ -296,7 +296,7 @@ CORBA_ORB::create_list (CORBA::Long count,
 }
 
 int
-CORBA_ORB::perform_work (ACE_Time_Value *tv)
+CORBA_ORB::perform_work (const ACE_Time_Value &tv)
 {
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 

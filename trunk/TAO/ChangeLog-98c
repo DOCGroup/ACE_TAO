@@ -1,3 +1,11 @@
+Thu Dec  3 17:58:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB.h (CORBA_ORB): Changed perform_work() to take a default
+ 	  value of ACE_Time_Value::zero to correspond to the intended
+ 	  semantics of the CORBA spec.  Thanks to Steve Vinoski for
+ 	  clarifying this and for Loren Rittle <rittle@comm.mot.com> for
+ 	  surfacing the issue in the first place.
+
 Thu Dec 03 14:23:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h: Removed macros TAO_TRY_SYS[_EX]
