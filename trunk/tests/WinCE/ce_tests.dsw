@@ -111,18 +111,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MT_Reactor_Timer_Test"=.\MT_Reactor_Timer_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "MT_SOCK_Test"=.\MT_SOCK_Test.dsp - Package Owner=<4>
 
 Package=<5>
