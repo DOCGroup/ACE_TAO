@@ -85,14 +85,6 @@ static size_t cli_req_no = ACE_MAX_THREADS ACE_LOAD_FACTOR;
 static int req_delay = 50;
 // Delay before a thread sending the next request (in msec.)
 
-static int main_event_loop = 1;
-// ACE_Reactor::end_event_loop() terminates only the singleton reactor,
-// therefore, we need another flag to terminate the reactor in main ()
-// (which accepts new connection.)
-
-static ACE_Reactor *main_reactor = 0;
-// Reactor used to accept new connection request.
-
 void
 parse_arg (int argc, ASYS_TCHAR *argv[])
 {
@@ -161,11 +153,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
                   buffer));
       if (ACE_OS::strcmp (buffer,
                           ASYS_TEXT ("shutdown")) == 0)
-        {
-          main_event_loop = 0;
-          main_reactor->notify ();
           ACE_Reactor::end_event_loop ();
-        }
       return 0;
     }
   else
@@ -312,18 +300,10 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_Reactor new_reactor (&sr);
   ACE_Reactor::instance (&new_reactor);
 
-  // Most platforms seem to have trouble accepting connections
-  // simultaneously in multiple threads.  Therefore, we can't quite
-  // use the <Acceptor> with the <TP_Reactor>.  Create a
-  // <Select_Reactor> and run the event_loop in the main thread.
-  ACE_Select_Reactor slr;
-  ACE_Reactor mreactor (&slr);
-  main_reactor = &mreactor;
   ACCEPTOR acceptor;
   ACE_INET_Addr accept_addr (rendezvous);
 
-  if (acceptor.open (accept_addr,
-                     main_reactor) == -1)
+  if (acceptor.open (accept_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("open")),
@@ -335,13 +315,6 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->spawn_n (svr_thrno,
                                             svr_worker);
   ACE_Thread_Manager::instance ()->spawn (worker);
-
-  while (main_event_loop)
-    {
-      int result = slr.handle_events ();
-
-      ACE_ASSERT (result != -1);
-    }
 
   ACE_Thread_Manager::instance ()->wait ();
 
