@@ -17,7 +17,7 @@ endif # ! TAO_ROOT
 TAO_IDLFLAGS += -Ge 1\
  -Wb,export_macro=RTCORBA_COMMON_Export \
  -Wb,export_include=rtcorba_common_export.h \
- 
+
 
 LIB = libRTCORBA_Common.a
 SHLIB = libRTCORBA_Common.$(SOEXT)
@@ -49,6 +49,17 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 LDFLAGS  += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
+
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DRTCORBA_COMMON_BUILD_DLL
+endif
+endif
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+endif
+endif
 
 .PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
