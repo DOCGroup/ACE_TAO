@@ -54,12 +54,9 @@ Test_String_Sequence::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_String_Sequence::init_parameters (Param_Test_ptr objref,
-                                       CORBA::Environment &env)
+Test_String_Sequence::init_parameters (Param_Test_ptr ,
+                                       CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (objref);
-  ACE_UNUSED_ARG (env);
-
   const char *choiceList[] =
   {
     "one",
@@ -94,20 +91,20 @@ Test_String_Sequence::reset_parameters (void)
 
 int
 Test_String_Sequence::run_sii_test (Param_Test_ptr objref,
-                                    CORBA::Environment &env)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   Param_Test::StrSeq_out out (this->out_.out ());
   this->ret_ = objref->test_strseq (this->in_.in (),
                                     this->inout_.inout (),
                                     out,
-                                    env);
-  return (env.exception () ? -1:0);
+                                    ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_String_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Any in_arg (Param_Test::_tc_StrSeq,
                      (void *) &this->in_.in (),
@@ -125,23 +122,23 @@ Test_String_Sequence::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value type
-  retval->item (0, env)->value ()->replace (Param_Test::_tc_StrSeq,
-                                            &this->ret_.inout (), // see above
-                                            0, // does not own
-                                            env);
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_StrSeq,
+                                                    &this->ret_.inout (), // see above
+                                                    0, // does not own
+                                                    ACE_TRY_ENV);
   return 0;
 }
 
@@ -168,9 +165,8 @@ Test_String_Sequence::check_validity (void)
 }
 
 CORBA::Boolean
-Test_String_Sequence::check_validity (CORBA::Request_ptr req)
+Test_String_Sequence::check_validity (CORBA::Request_ptr )
 {
-  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

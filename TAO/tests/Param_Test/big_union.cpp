@@ -53,21 +53,27 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req,
 
 int
 Test_Big_Union::init_parameters (Param_Test_ptr objref,
-                           CORBA::Environment &env)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
       // get access to a Coffee Object
-      this->cobj_ = objref->make_coffee (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->cobj_ = objref->make_coffee (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception doing make_coffee");
+      //ACE_UNUSED_ARG (sysex);
+      ACE_PRINT_EXCEPTION (sysex,"System Exception doing make_coffee");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_CATCHANY 
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "An exception caught in make_coffee");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   this->reset_parameters ();
   return 0;
@@ -197,19 +203,19 @@ Test_Big_Union::reset_parameters (void)
 
 int
 Test_Big_Union::run_sii_test (Param_Test_ptr objref,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
   this->ret_ = objref->test_big_union (this->in_,
                                        this->inout_,
                                        this->out_,
-                                       env);
-  return (env.exception () ? -1:0);
+                                       ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_Big_Union::add_args (CORBA::NVList_ptr param_list,
                           CORBA::NVList_ptr retval,
-                          CORBA::Environment &env)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Any in_arg (Param_Test::_tc_Big_Union,
                      &this->in_,
@@ -227,23 +233,23 @@ Test_Big_Union::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("u1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("u2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("u3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value
-  retval->item (0, env)->value ()->replace (Param_Test::_tc_Big_Union,
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Big_Union,
                                             &this->ret_,
                                             0,
-                                            env);
+                                            ACE_TRY_ENV);
   return 0;
 }
 
@@ -278,7 +284,8 @@ Test_Big_Union::check_validity (void)
       break;
     case 1:
       {
-        ACE_TRY_NEW_ENV
+        ACE_DECLARE_NEW_CORBA_ENV;
+        ACE_TRY
           {
             Coffee_ptr in    = this->in_.the_interface ();
             Coffee_ptr inout = this->inout_.the_interface ();
@@ -530,9 +537,9 @@ Test_Big_Union::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Big_Union::check_validity (CORBA::Request_ptr req)
+Test_Big_Union::check_validity (CORBA::Request_ptr /*req*/)
 {
-  ACE_UNUSED_ARG (req);
+  //ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

@@ -52,13 +52,11 @@ Test_Var_Array::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Var_Array::init_parameters (Param_Test_ptr objref,
-                                 CORBA::Environment &env)
+Test_Var_Array::init_parameters (Param_Test_ptr ,
+                                 CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  ACE_UNUSED_ARG (objref);
-  ACE_UNUSED_ARG (env);
 
   // fill the in_ array
   for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
@@ -82,20 +80,20 @@ Test_Var_Array::reset_parameters (void)
 
 int
 Test_Var_Array::run_sii_test (Param_Test_ptr objref,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
   Param_Test::Var_Array_out out_arr (this->out_.out ());
   this->ret_ = objref->test_var_array (this->in_,
                                        this->inout_,
                                        out_arr,
-                                       env);
-  return (env.exception () ? -1:0);
+                                       ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
 			  CORBA::NVList_ptr retval,
-			  CORBA::Environment &env)
+			  CORBA::Environment &ACE_TRY_ENV)
 {
   // We provide the top level memory
   // the Any does not own any of these
@@ -115,23 +113,23 @@ Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("v1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("v2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("v3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value type
-  retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Array,
-                                            this->ret_.in (),
-                                            0, // does not own
-                                            env);
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Var_Array,
+                                                    this->ret_.in (),
+                                                    0, // does not own
+                                                    ACE_TRY_ENV);
   return 0;
 }
 
@@ -147,9 +145,8 @@ Test_Var_Array::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Var_Array::check_validity (CORBA::Request_ptr req)
+Test_Var_Array::check_validity (CORBA::Request_ptr )
 {
-  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
