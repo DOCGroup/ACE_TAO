@@ -34,6 +34,7 @@
 =====================================================================*/
 
 #include "asnmp/smival.h"
+#include "ace/Basic_Types.h"
 
 #define CTR64OUTBUF 30  // maximum ascii string for a 64-bit ctr
 
