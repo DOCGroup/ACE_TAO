@@ -62,9 +62,6 @@ Client_i::Client_i (void)
     task_id_ (0),
     argc_ (0),
     argv_ (0),
-    total_latency_ (0),
-    total_latency_high_ (0),
-    total_util_task_duration_ (0),
     context_switch_ (0)
 {
 }
@@ -536,33 +533,17 @@ Client_i::print_util_stats (void)
 {
  if (this->ts_->use_utilization_test_ == 1)
     {
-      this->total_util_task_duration_ =
-        this->util_task_duration_ * this->util_thread_->get_number_of_computations ();
-
-      this->total_latency_ =
-        (this->delta_.sec () *
-         ACE_ONE_SECOND_IN_MSECS +
-         (ACE_timer_t)this->delta_.usec () / ACE_ONE_SECOND_IN_MSECS);
-
-      this->total_latency_high_ =
-        this->total_latency_ - this->total_util_task_duration_;
-
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Scavenger task performed \t%u computations\n"
                   "(%t) CLIENT task performed \t\t%u CORBA calls as requested\n\n"
-                  "(%t) Utilization test time is \t\t%f seconds\n\t%s\n"
-                  "\t Ratio of computations to CORBA calls is %u.%u:1\n\n",
+                  "(%t) Utilization test time is \t\t%f seconds\n\t%s\n",
                   this->util_thread_->get_number_of_computations (),
                   this->ts_->loop_count_,
                   this->ts_->util_test_time_,
-                  this->ts_->remote_invocations_ == 1? "NOW run the same test again, adding the \"-l\" option.  See README file for explanation.":" ",
-                  this->util_thread_->get_number_of_computations () / this->ts_->loop_count_,
-                  (this->util_thread_->get_number_of_computations () % this->ts_->loop_count_)
-                  * 100 / this->ts_->loop_count_));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) utilization computation time is %A usecs\n",
-                  this->util_task_duration_));
+                  this->ts_->remote_invocations_ == 1 ? 
+                    "NOW run the same test again, adding the \"-l\" option.  See README file for explanation.":
+                    " "
+                  ));
     }
 }
 

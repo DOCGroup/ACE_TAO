@@ -193,14 +193,8 @@ public:
   // priority clients.  By default we use only one priority for all
   // client threads.
 
-  int utilization_task_started_;
-  // Indicates whether the utilization task has started.
-
   ACE_High_Res_Timer timer_;
   // global timer to be started by the utilization task.
-
-  u_int util_time_;
-  // the amount of time in seconds that the utilization test will run.
 
   int ready_;
   // ready flag used by the high priority thread to wake up the low
@@ -361,3 +355,10 @@ private:
 };
 
 #endif /* !defined (TASK_CLIENT_H) */
+
+
+
+
+
+
+

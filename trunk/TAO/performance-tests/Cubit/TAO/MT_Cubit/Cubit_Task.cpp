@@ -106,6 +106,8 @@ Cubit_Task::initialize_orb (void)
                                              TAO_TRY_ENV) == -1)
         return -1;
 
+      TAO_CHECK_ENV;
+
       this->orb_ = this->orb_manager_.orb ();
 
       // Do the argument parsing.
