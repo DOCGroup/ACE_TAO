@@ -176,7 +176,7 @@ out_of_sockets_handler (void)
 {
   // ENOBUFS had to be checked on NT while ENOENT check had to be added for
   // Solaris + Linux.
-  if (errno == EMFILE || errno == ENOBUFS || errno == ENOENT)
+  if (ACE::out_of_file_descriptors (errno))
     {
       // Close connections which are cached by explicitly purging the
       // connection cache maintained by the connector.

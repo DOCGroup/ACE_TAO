@@ -4121,6 +4121,10 @@ struct sigaction
 #   define ENOSYS EFAULT /* Operation not supported or unknown error. */
 # endif /* !ENOSYS */
 
+# if !defined (ENFILE)
+#   define ENFILE EMFILE /* No more socket descriptors are available. */
+# endif /* !ENOSYS */
+
 # if !defined (ENOTSUP)
 #   define ENOTSUP ENOSYS  /* Operation not supported. */
 # endif /* !ENOTSUP */
