@@ -1,9 +1,18 @@
+Tue Mar  1 08:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.{h,cpp}:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.{h,cpp}:
+        * tao/PortableServer/ORT_Adapter_Factory.{h,cpp}:
+        * tao/PortableServer/ORT_Adapter.{h,cpp}:
+          Removed not needed destructors
+
 Mon Feb 28 20:31:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
         * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
-        
-          Enabled inlined code generation for constants 
+
+          Enabled inlined code generation for constants
           (constant's value is assigned in the header file declaration)
           when the constant is declared inside an interface, home,
           valuetype or eventtype. The only documented problem with
@@ -21,13 +30,13 @@ Mon Feb 28 17:06:44 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
-	  
+
 	  Fixed an issue with servers requiring client authentication, whereby
 	  the server failed to resume an SSL session and terminates a
 	  connection in the middle of the handshake, because the
 	  (OpenSSL-based) SSL library was not getting correctly initialized
 	  with a call to SSL_CTX_set_session_id_context(3), as pointed out in
-	  the man page warnings section. 
+	  the man page warnings section.
 
 	  Added new service configuration option "-SSLCAFile FORMAT:file" to
 	  allow the user to explicitly specify where TAO must load the Trusted
@@ -41,8 +50,8 @@ Mon Feb 28 17:06:44 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 	  sources of randomness (entropy). The option mimics the -rand option
 	  on genrsa(1), for example. Note that on Windows platforms it accepts
 	  semi-colon (";") as path delimiter vs. colon (":") on Unix
-	  platforms.  
-	  
+	  platforms.
+
 
 Mon Feb 28 21:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
