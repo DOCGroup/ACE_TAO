@@ -22,6 +22,8 @@
 #include "tao/Exception.h"
 #include "tao/PI_ForwardC.h"
 
+#include "portableserver_export.h"
+
 class TAO_POA;
 
 namespace CORBA
@@ -44,7 +46,7 @@ namespace PortableInterceptor
  * Class that offers an interface to the POA to load and manipulate
  * ORT library.
  */
-class TAO_Export TAO_ObjectReferenceTemplate_Adapter : public ACE_Service_Object
+class TAO_PortableServer_Export TAO_ObjectReferenceTemplate_Adapter : public ACE_Service_Object
 {
 public:
 

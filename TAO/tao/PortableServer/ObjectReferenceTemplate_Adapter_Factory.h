@@ -23,6 +23,8 @@
 
 #include "tao/Exception.h"
 
+#include "portableserver_export.h"
+
 class TAO_ObjectReferenceTemplate_Adapter;
 
 /**
@@ -35,7 +37,7 @@ class TAO_ObjectReferenceTemplate_Adapter;
  * This is a base class for the actual implementation in the
  * TAO_ObjectReferenceTemplate library.
  */
-class TAO_Export TAO_ObjectReferenceTemplate_Adapter_Factory
+class TAO_PortableServer_Export TAO_ObjectReferenceTemplate_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
