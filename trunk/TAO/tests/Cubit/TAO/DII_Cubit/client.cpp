@@ -12,7 +12,8 @@
 //      This class implements a simple CORBA client for the Cubit
 //      example using DII functionality
 //
-// = AUTHORS
+
+// = AUTHOR
 //		Jeff Parsons <jp4@cs.wustl.edu>
 // ============================================================================
 
@@ -22,17 +23,21 @@
 const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
 #define DEFAULT_FACTORY_IOR "ior00"
 #define DEFAULT_FACTORY_KEY "key00"
+const int SMALL_OCTET_SEQ_LENGTH = 16;
+const int LARGE_OCTET_SEQ_LENGTH = 4096;
+const int SMALL_LONG_SEQ_LENGTH = 4;
+const int LARGE_LONG_SEQ_LENGTH = 1024;
 
 // Constructor
 DII_Cubit_Client::DII_Cubit_Client (void)
-  : exit_later_ (0),
-    obj_var_ (CORBA::Object::_nil ()),
-    factory_var_ (CORBA::Object::_nil ()),
+  : 
+    loop_count_ (DEFAULT_LOOP_COUNT),			
+		exit_later_ (0),
     orb_var_ (0),
+		factory_var_ (CORBA::Object::_nil ()),
+    obj_var_ (CORBA::Object::_nil ()),
     call_count_ (0),
     error_count_ (0),
-    // The following can be set from the command line
-    loop_count_ (DEFAULT_LOOP_COUNT),			
     factory_IOR_ (DEFAULT_FACTORY_IOR),
     // Either the previous one or the following three must be set
     // (if not using the naming service). It is redundant at best to
@@ -58,7 +63,7 @@ DII_Cubit_Client::init (int argc, char **argv)
   // Parse command line and verify parameters.
   if (this->parse_args () == -1)
     return -1;
-  
+
   // Construct the IOR from the component args, if necessary.
   if (ACE_OS::strcmp (this->factory_key_,
                       DEFAULT_FACTORY_KEY) 
@@ -71,6 +76,13 @@ DII_Cubit_Client::init (int argc, char **argv)
                        this->portnum_, 
                        this->factory_key_);
     }
+
+	// Quick fix to exit gracefully when no IOR or key args are provided.
+	if (!ACE_OS::strcmp (this->factory_IOR_,
+											 DEFAULT_FACTORY_IOR))
+		{
+			return -1;
+		}
 
   TAO_TRY
     {
@@ -103,12 +115,6 @@ DII_Cubit_Client::init (int argc, char **argv)
                              &dummy,
                              CORBA::B_FALSE);
    
-      mc_req->arguments ()->add_value (0,
-                                       string_arg,
-                                       CORBA::ARG_IN,
-                                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
       // Insert the result-holding variable into the request.
       mc_req->result ()->value ()->replace (CORBA::_tc_Object, 
                                             &obj_var_,
@@ -609,7 +615,7 @@ DII_Cubit_Client::cube_struct_dii (void)
 }
 
 void
-DII_Cubit_Client::cube_octet_seq_dii (void)
+DII_Cubit_Client::cube_octet_seq_dii (int length)
 {
   // Create the request ...
   CORBA::Request_ptr req;
@@ -695,7 +701,7 @@ DII_Cubit_Client::cube_octet_seq_dii (void)
 }
 
 void
-DII_Cubit_Client::cube_long_seq_dii (void)
+DII_Cubit_Client::cube_long_seq_dii (int length)
 {
   // Create the request ...
   CORBA::Request_ptr req;
@@ -783,59 +789,140 @@ DII_Cubit_Client::cube_long_seq_dii (void)
 int
 DII_Cubit_Client::run (void)
 {
-  // NOTE - default loop_count_ is 250 but can be set from the command
-  // line.
+	// NOTE - default loop_count_ is 250 but can be set from the command line.
+	// loop counter.
+	u_int i;
 
-  // loop counter.
-  u_int i;
+	// Make a timer and an elapsed time holder.
+	ACE_Profile_Timer dii_timer;
+	ACE_Profile_Timer::ACE_Elapsed_Time dii_elapsed_time;
 
-  // Make a timer and an elapsed time holder.
-  ACE_Profile_Timer dii_timer;
-  ACE_Profile_Timer::ACE_Elapsed_Time dii_elapsed_time;
+	// Order and format of test calls matches that of SII (IDL) tests
+	// for easy comparison.
 
-  dii_timer.start ();
+	//	short
 
-  for (i = 0; i < this->loop_count_; i++)
-    {
-      this->cube_short_dii ();
-      this->cube_octet_dii ();
-      this->cube_long_dii ();
-      this->cube_struct_dii ();
-      this->cube_octet_seq_dii ();
-      this->cube_long_seq_dii ();
-    }
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_short_dii ();
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_short", dii_elapsed_time);
 
-  dii_timer.stop ();
+	//	octet
 
-  // Put the stats into the holding variable and display.
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube average call",
-                     dii_elapsed_time);
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_octet_dii ();
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_octet", dii_elapsed_time);
 
-  this->call_count_ = 0;
-  this->error_count_ = 0;
+	//	long
 
-  dii_timer.start ();
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_long_dii ();
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_long", dii_elapsed_time);
 
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_union_dii ();
+	//	struct
 
-  dii_timer.stop ();
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_struct_dii ();
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_struct", dii_elapsed_time);
 
-  // Put the stats into the holding variable and display.
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("cube_union_dii call",
-                     dii_elapsed_time);
+	//	union
+
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_union_dii ();
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_union", dii_elapsed_time);
+
+	//	small long sequence
+
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_long_seq_dii (SMALL_LONG_SEQ_LENGTH);
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_small_sequence<long>", dii_elapsed_time);
+
+	//	large long sequence
+
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_long_seq_dii (LARGE_LONG_SEQ_LENGTH);
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_large_sequence<long>", dii_elapsed_time);
+
+	//	small octet sequence
+
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_long_seq_dii (SMALL_OCTET_SEQ_LENGTH);
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_small_sequence<octet>", dii_elapsed_time);
+
+	//	large octet sequence
+
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		this->cube_long_seq_dii (LARGE_OCTET_SEQ_LENGTH);
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube_large_sequence<octet>", dii_elapsed_time);
+
+	//	mixin
+
+	this->call_count_ = 0;
+	this->error_count_ = 0;
+	dii_timer.start ();
+	for (i = 0; i < this->loop_count_; i++)
+		{
+			this->cube_short_dii ();
+			this->cube_octet_dii ();
+			this->cube_long_dii ();
+		}
+	dii_timer.stop ();
+	dii_timer.elapsed_time (dii_elapsed_time);  
+	this->print_stats ("DII cube mixin (short/octet/long)", dii_elapsed_time);
 
   // Using the single calls below to track down memory leaks.  They
   // will be gone eventually.
 #if 0
   this->cube_short_dii ();
-  //	this->cube_long_dii ();
-  //	this->cube_octet_dii ();
+ 	this->cube_long_dii ();
+ 	this->cube_octet_dii ();
   //	this->cube_union_dii ();
-  //	this->cube_struct_dii ();
-  //	this->cube_raw_dii ();
+ 	this->cube_struct_dii ();
+ 	this->cube_raw_dii ();
   //	this->cube_sequence_dii ();
 #endif /* 0 */
   return this->error_count_ == 0 ? 0 : 1;
@@ -849,8 +936,8 @@ int main (int argc, char *argv[])
 
   if (cubit_client.init (argc, argv) == -1)
     return 1;
-  else
-    return cubit_client.run ();
+//  else
+//    return cubit_client.run ();
 
   return 0;
 }
