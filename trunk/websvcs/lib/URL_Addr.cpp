@@ -15,7 +15,6 @@ static size_t ftp_size = sizeof(ftp)/sizeof(ftp[0]) - 1;
 static ACE_TCHAR mailto[] = ACE_TEXT ("mailto:");
 static size_t mailto_size = sizeof(mailto)/sizeof(mailto[0]) - 1;
 
-
 static ACE_TCHAR file[] = ACE_TEXT ("file:");
 static size_t file_size = sizeof(file)/sizeof(file[0]) - 1;
 static ACE_TCHAR afs[] = ACE_TEXT ("afs:");
