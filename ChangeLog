@@ -1,6 +1,14 @@
+Tue Aug 10 12:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          When DISABLE_BIDIR is set, don't run the BiDIR tests, this can be
+          used for builds that build without BiDIR GIOP
+
 Tue Aug 10 11:20:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
-	Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for the information leading to these guard conditions.
+        Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for the information
+        leading to these guard conditions.
 
         * ace/Sock_Connect.cpp
           Added guard checks around #include "ace/OS_NS_fcntl.h"
