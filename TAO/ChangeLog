@@ -1,3 +1,26 @@
+Mon Nov 25 14:39:00 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+
+          Added implied IDL generation for imported (included from another
+          IDL file) interfaces. No C++ code is generated for these or any
+          other imported nodes in the AST.
+
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
+        * orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+        * orbsvcs/orbsvcs/Makefile.PortableGroup:
+
+          Added IDL compiler command line option to generated AMI code. Also
+          added link to TAO Messaging library. These were necessary because some
+          of the interfaces in CosLoadBalancing.idl, which already uses AMI, 
+          inherit from interfaces in PortableGroup.idl, so there must be
+          associated reply handlers to inherit as well.
+
+        * TAOACE_Static.dsw:
+
+          Removed some project dependencies that were causing 'already defined'
+          link errors.
+
 Mon Nov 25 15:09:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/AMI/Handler_i.cpp:
