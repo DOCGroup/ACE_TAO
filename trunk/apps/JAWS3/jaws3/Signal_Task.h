@@ -9,7 +9,9 @@
 #include "ace/Signal.h"
 #include "ace/Singleton.h"
 
-class JAWS_Signal_Task
+#include "jaws3/Export.h"
+
+class JAWS_Export JAWS_Signal_Task
 {
 public:
 
