@@ -146,8 +146,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
     ACE_Event_Handler::WRITE_MASK;
 
   // In case a thread other than the one running the Reactor event
-  // loop
-  // performs the passive SSL connection establishment, transfer
+  // loop performs the passive SSL connection establishment, transfer
   // ownership of the Reactor to the current thread.  Control will be
   // passed back to the previous owner when accepting or rejecting the
   // passive SSL connection.
@@ -199,7 +198,11 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           // The peer has notified us that it is shutting down via
           // the SSL "close_notify" message so we need to
           // shutdown, too.
-          (void) new_stream.close ();
+          //
+          // Removing the event handler from the Reactor causes the
+          // SSL stream to be shutdown.
+          (void) this->reactor_->remove_handler (&eh, reactor_mask);
+          (void) this->reactor_->owner (old_owner);
 
           return -1;
 
