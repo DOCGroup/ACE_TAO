@@ -26,13 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "GIOPC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
-#include "tao/Any.h"
+#include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -40,11 +39,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "GIOPC.i"
+#include "GIOPC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
@@ -52,29 +51,29 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void
+void 
 GIOP::Version::_tao_any_destructor (
     void *_tao_void_pointer
   )
 {
   Version *_tao_tmp_pointer =
-    ACE_static_cast (Version *, _tao_void_pointer);
+    static_cast<Version *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void
+void 
 GIOP::IORAddressingInfo::_tao_any_destructor (
     void *_tao_void_pointer
   )
 {
   IORAddressingInfo *_tao_tmp_pointer =
-    ACE_static_cast (IORAddressingInfo *, _tao_void_pointer);
+    static_cast<IORAddressingInfo *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -85,7 +84,7 @@ GIOP::TargetAddress::TargetAddress (void)
 {
   ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));
   ACE_OS::memset (&this->u_, 0, sizeof (this->u_));
-  this->disc_ = 0;
+  this->disc_ = -32768;
 }
 
 GIOP::TargetAddress::TargetAddress (const ::GIOP::TargetAddress &u)
@@ -152,7 +151,7 @@ GIOP::TargetAddress::~TargetAddress (void)
 void GIOP::TargetAddress::_tao_any_destructor (void *_tao_void_pointer)
 {
   TargetAddress *tmp =
-    ACE_static_cast (TargetAddress *, _tao_void_pointer);
+    static_cast<TargetAddress *> (_tao_void_pointer);
   delete tmp;
 }
 
@@ -163,10 +162,10 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
     {
       return *this;
     }
-
+  
   this->_reset (u.disc_, 0);
   this->disc_ = u.disc_;
-
+  
   switch (this->disc_)
   {
     case 0:
@@ -220,7 +219,7 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
     default:
     break;
   }
-
+  
   return *this;
 }
 
@@ -229,6 +228,7 @@ void GIOP::TargetAddress::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
 {
   switch (this->disc_)
   {
+    
     case 0:
       delete this->u_.object_key_;
       this->u_.object_key_ = 0;
@@ -242,7 +242,7 @@ void GIOP::TargetAddress::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
       this->u_.ior_ = 0;
       break;
     default:
-      break;
+    break;
   }
 }
 
@@ -304,9 +304,9 @@ CORBA::Boolean operator<< (
     {
       return 0;
     }
-
+  
   CORBA::Boolean result = 1;
-
+  
   switch (_tao_union._d ())
   {
     case 0:
@@ -327,7 +327,7 @@ CORBA::Boolean operator<< (
     default:
       break;
   }
-
+  
   return result;
 }
 
@@ -341,16 +341,16 @@ CORBA::Boolean operator>> (
     {
       return 0;
     }
-
+  
   CORBA::Boolean result = 1;
-
+  
   switch (_tao_discriminant)
   {
     case 0:
       {
         CORBA::OctetSeq _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-
+        
         if (result)
           {
             _tao_union.object_key (_tao_union_tmp);
@@ -362,7 +362,7 @@ CORBA::Boolean operator>> (
       {
         IOP::TaggedProfile _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-
+        
         if (result)
           {
             _tao_union.profile (_tao_union_tmp);
@@ -374,7 +374,7 @@ CORBA::Boolean operator>> (
       {
         GIOP::IORAddressingInfo _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-
+        
         if (result)
           {
             _tao_union.ior (_tao_union_tmp);
@@ -386,12 +386,12 @@ CORBA::Boolean operator>> (
       _tao_union._d (_tao_discriminant);
       break;
   }
-
+  
   return result;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -481,5 +481,4 @@ CORBA::Boolean operator>> (
         GIOP::TargetAddress_var \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
