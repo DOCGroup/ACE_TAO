@@ -20,19 +20,59 @@ public RTScheduler::Current,
  public:
   TAO_Scheduler_Current (void);
   
-  RTScheduler::Current_ptr get_Current (void);
+  virtual RTScheduler::DistributableThread
+    spawn (RTScheduling::ThreadAction_ptr start,
+	   CORBA::ULong stack_size,
+	   RTCORBA::Priority base_priority
+	   ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual void begin_scheduling_segment
+    (const char * name,
+     CORBA::Policy_ptr sched_param,
+     CORBA::Policy_ptr implicit_sched_param
+     ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+    
+  virtual void update_scheduling_segment
+    (const char * name,
+     CORBA::Policy_ptr sched_param,
+     CORBA::Policy_ptr implicit_sched_param
+     ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
 
+  virtual void end_scheduling_segment
+    (const char * name
+     ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual RTScheduler::DistributableThread_ptr 
+    lookup(const RTScheduling::Current::IdType & id
+	   ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  // returns a null reference if
+  // the distributable thread is
+  // not known to the local scheduler
+
+  virtual ::RTScheduling::Current::IdType * 
+    id (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual ::CORBA::Policy_ptr 
+    scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual ::CORBA::Policy_ptr 
+    implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual ::RTScheduling::Current::NameList * 
+    current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));  
   
 };
-
-
-
-
-
-
-
-
-
-
 
 #endif /*TAO_RTSCHEDULER_CURRENT_H*/
