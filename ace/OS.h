@@ -1128,6 +1128,8 @@ struct ACE_rwlock_t
 
 #else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
 // Give these things some reasonable value...
+#define ACE_SCOPE_PROCESS 0
+#define ACE_SCOPE_LWP 1
 #define THR_CANCEL_DISABLE      0
 #define THR_CANCEL_ENABLE       0
 #define THR_CANCEL_DEFERRED     0
