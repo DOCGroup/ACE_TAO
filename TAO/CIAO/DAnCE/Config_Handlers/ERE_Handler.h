@@ -13,13 +13,13 @@
 #define ERE_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "DeploymentC.h"
-#include "Config_Handler_export.h"
+#include "ciao/DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Config_Handler_export.h"
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include "XercesString.h"

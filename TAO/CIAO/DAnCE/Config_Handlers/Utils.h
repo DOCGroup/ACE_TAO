@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handler_export.h"
-#include "DeploymentC.h"
+#include "ciao/DeploymentC.h"
 
 #include "tao/Basic_Types.h"
 #include "XercesString.h"
