@@ -1,5 +1,7 @@
 // $Id$
 
+#include "tao/Environment.h"
+
 ACE_INLINE ACE_Lock &
 TAO_POA_Manager::lock (void)
 {
