@@ -1,3 +1,11 @@
+Thu Aug 01 15:19:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LF_Follower_Auto_Adder.h:
+        * tao/Transport_Acceptor.h:
+        * tao/Transport_Connector.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
+          Fixed incorrect doxygen @file command
+
 Wed Jul 31 16:04:33 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Makefile (DIRS):
