@@ -45,11 +45,10 @@ namespace CIAO{
       BaseTypes_Handler();
       virtual ~BaseTypes_Handler();
   
-      ///This method takes a <CORBA::string> and an 
-      ///<XMLSchema::string> and stores the value from
-      ///the <XMLSchema::string> in the <CORBA::string>.
-      static CORBA::String_var& get_string (CORBA::String_var& str, 
-                               XMLSchema::string<char>& desc);
+      ///This method takes a <XMLSchema::string>
+      ///and returns a duplicate char* that is
+      ///created with CORBA::string_dup. 
+      static char* get_string (XMLSchema::string<char>& desc);
          
     };
 
