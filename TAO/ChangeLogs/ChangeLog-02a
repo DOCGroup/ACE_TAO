@@ -1,3 +1,10 @@
+Thu Jun 29 14:42:06 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/UIOP_Profile.cpp (create_tagged_profile):
+
+	  Added missing definition of "length" variable.  This fixes a
+	  compile-time error.
+
 Thu Jun 29 12:00:00 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Stub.h (TAO_Stub_Auto_Ptr):
