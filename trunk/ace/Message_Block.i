@@ -10,6 +10,12 @@ ACE_Message_Block::data_block (void) const
   return this->data_block_;
 }
 
+ACE_INLINE int 
+ACE_Message_Block::reference_count (void) const
+{
+  return data_block () ? data_block ()->reference_count () : 0;
+}
+
 ACE_INLINE char *
 ACE_Data_Block::base (void) const
 {
