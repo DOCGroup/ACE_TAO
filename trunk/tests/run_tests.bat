@@ -98,6 +98,7 @@ type %temp%\log\%arg%.log | find /I "no such file or directory"
 type %temp%\log\%arg%.log | find /I "invalid argument"
 type %temp%\log\%arg%.log | find /I "timeout"
 type %temp%\log\%arg%.log | find /I "bad file number"
+type %temp%\log\%arg%.log | find /I "Win32 structured exception"
 echo.
 
 goto done
