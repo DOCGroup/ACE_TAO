@@ -1,31 +1,36 @@
+Tue Apr 06 15:14:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.h:  added ACE_UINT64_LITERAL for platforms
+          with ACE_LACKS_U_LONGLONG_T.
+
 Tue Apr 06 14:54:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Message_Queue_Test.cpp (performance_test):
-	* tests/Message_Queue_Notifications_Test.cpp (producer): Unicode
-	  related change.
+        * tests/Message_Queue_Test.cpp (performance_test):
+        * tests/Message_Queue_Notifications_Test.cpp (producer): Unicode
+          related change.
 
-	* ace/ace_ce_dll.dsp: Added Active_Map_Manager.cpp.
+        * ace/ace_ce_dll.dsp: Added Active_Map_Manager.cpp.
 
-	* ace/OS.h:
-	* ace/config-WinCE.h: CE now uses non-static object manager.
+        * ace/OS.h:
+        * ace/config-WinCE.h: CE now uses non-static object manager.
 
-	* WindozeCE/WindozeCE.h: Instantiate the non-static object manager
-	  within the class.
+        * WindozeCE/WindozeCE.h: Instantiate the non-static object manager
+          within the class.
 
-	* WindozeCE/WindozeCEDlg.cpp: We should register the bridge window
-	  using its HANDLE so it would work no matter we build ACE with or
-	  without MFC support.
+        * WindozeCE/WindozeCEDlg.cpp: We should register the bridge window
+          using its HANDLE so it would work no matter we build ACE with or
+          without MFC support.
 
 Tue Apr  6 14:17:06 1999  Joe Hoffert  <joeh@tango.cs.wustl.edu>
 
-	* ace/OS.h: Added support for the FORE ATM XTI interface.
+        * ace/OS.h: Added support for the FORE ATM XTI interface.
 
-	* ace/TLI_{Acceptor,Connector}: Added support for the FORE ATM XTI
- 	  interface.
+        * ace/TLI_{Acceptor,Connector}: Added support for the FORE ATM XTI
+          interface.
 
-	* ace/ATM_Addr: Added support for ATM address for the XTI ATM
- 	  driver.  Eventually, this class will be generalized to work on
- 	  WinSock 2 ATM support, as well.
+        * ace/ATM_Addr: Added support for ATM address for the XTI ATM
+          driver.  Eventually, this class will be generalized to work on
+          WinSock 2 ATM support, as well.
 
 Tue Apr 06 13:56:18 1999  Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov>
 
