@@ -1,3 +1,9 @@
+Wed Oct 07 14:49:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs[_static].dsp: Added property service
+	  files.  Thanks to Ulf Jaehrig <jaehrig@desys.com> for noticing
+	  this.
+
 Wed Oct 07 11:33:37 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (state): Fully qualified the enums of the
