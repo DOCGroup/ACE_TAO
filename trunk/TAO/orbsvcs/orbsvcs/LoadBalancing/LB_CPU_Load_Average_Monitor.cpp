@@ -225,7 +225,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
   load_list->length (1);
 
-  load_list[0].id = CosLoadBalancing::CPU;
+  load_list[0].id = CosLoadBalancing::LoadAverage;
   load_list[0].value = load;
 
   return load_list._retn ();
