@@ -41,7 +41,7 @@
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
 {
-  CORBA::TypeCode::_duplicate (this->type_);
+  return CORBA::TypeCode::_duplicate (this->type_);
 }
 
 // TAO doesn't give any guarantees if the value returned by value can be cast
