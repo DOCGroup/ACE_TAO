@@ -2,6 +2,7 @@
 // $Id$
 
 #include "RepositoryManager_Impl.h"
+#include "Config_Handlers/TPD_Handler.h"
 
 CIAO::RepositoryManager_Impl::RepositoryManager_Impl 
    (CORBA::ORB_ptr orb,
@@ -28,17 +29,16 @@ installPackage (const char* installation_name,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  /*
   DOMDocument* top_pc_doc = 
      CIAO::Config_Handler::Utils::create_document (location);
-  CIAO::Config_Handler::Top_PC_Handler top_pc_handler (top_pc_doc,
+  CIAO::Config_Handler::TPD_Handler top_pc_handler (top_pc_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
-  char * package_location = top_pc_handler,process_top_level ();
-  */
-  DOMDocument* top_pc_doc = 
-     CIAO::Config_Handler::Utils::create_document (location);
-  CIAO::Config_Handler::PC_Handler pc_handler (top_pc_doc,
+  ACE_TString package_location = top_pc_handler.process_TopLevelPackageDescription ();
+ 
+  DOMDocument* pc_doc = 
+     CIAO::Config_Handler::Utils::create_document (package_location.c_str());
+  CIAO::Config_Handler::PC_Handler pc_handler (pc_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
   pc_handler.process_PackageConfiguration (this->pc_);

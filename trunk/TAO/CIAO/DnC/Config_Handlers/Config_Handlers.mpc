@@ -41,6 +41,7 @@ project (Config_Handlers) : ciao_deployment_stub {
     RUK_Handler.cpp
     SP_Handler.cpp
     SPK_Handler.cpp
+    TPD_Handler.cpp
     Utils.cpp
     XercesString.cpp
   }
