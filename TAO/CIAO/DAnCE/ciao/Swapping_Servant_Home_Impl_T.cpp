@@ -200,10 +200,12 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (obj_id);
 
-    CORBA::Object_var objref = this->container_->generate_reference
-                                 (obj_id, repo_id,
-                                  Container::Component
-                                  ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var objref =
+      this->container_->generate_reference (
+        obj_id,
+        repo_id,
+        Container::Component
+        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
     COMP_VAR ho = COMP::_narrow (objref.in ()
@@ -212,9 +214,9 @@ namespace CIAO
 
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
-       <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, COMP> 
+       <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, COMP>
           (this->executor_, home.in ());
- 
+
     this->container_.update_map (oid.in (), svt);
 
     return ho._retn ();

@@ -28,7 +28,7 @@ namespace CIAO
   PortableServer::Servant Dynamic_Component_Servant
     <COMP_SERVANT, COMP_EXEC, COMP_EXEC_VAR, EXEC, COMP>::create (void)
   {
-    ::Components::EnterpriseComponent_var ciao_ec = 
+    ::Components::EnterpriseComponent_var ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
 
     COMP_EXEC_VAR ciao_comp = COMP_EXEC::_narrow (ciao_ec.in ()
@@ -36,8 +36,9 @@ namespace CIAO
 
     COMP_SERVANT *svt = 0;
     ACE_NEW_RETURN (svt,
-                    COMP_SERVANT (ciao_comp.in (), this->home_.in ()),
-                                  COMP::_nil ());
+                    COMP_SERVANT (ciao_comp.in (),
+                                  this->home_.in ()),
+                    COMP::_nil ());
   }
 }
 
