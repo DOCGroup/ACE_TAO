@@ -1,3 +1,16 @@
+Sun Oct 12 00:47:33 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl
+	  (init_ref):
+
+	  Do not hardcode LoadManager filename.  Use the value stored in
+	  the $lm_ior variable instead.
+
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/CPU.dsw:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.dsp:
+
+	  New MSVC++ 6 project files for this test.
+
 Sat Oct 11 23:47:39 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
