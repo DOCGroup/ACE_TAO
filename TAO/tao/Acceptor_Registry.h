@@ -81,6 +81,9 @@ public:
   // Check if there is at least one profile in <mprofile> that
   // corresponds to a collocated object.
 
+  TAO_Acceptor *get_acceptor (CORBA::ULong tag);
+  // Return the acceptor bridges
+  
   // = Iterator.
   TAO_AcceptorSetIterator begin (void);
   TAO_AcceptorSetIterator end (void);

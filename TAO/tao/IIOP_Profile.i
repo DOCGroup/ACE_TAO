@@ -54,3 +54,5 @@ TAO_IIOP_Profile::hint (void)
 {
   return this->hint_;
 }
+
+

@@ -125,6 +125,15 @@ TAO_MProfile::get_current_handle (void)
     return 0;
 }
 
+ACE_INLINE TAO_PHandle
+TAO_MProfile::get_current_handle (void) const
+{
+  if (current_ > 0)
+    return current_ - 1;
+  else
+    return 0;
+}
+
 ACE_INLINE void
 TAO_MProfile::rewind (void)
 {

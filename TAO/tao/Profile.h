@@ -110,6 +110,14 @@ public:
   // This method is used with a connection has been reset requiring
   // the hint to be cleaned up and reset to NULL.
 
+  virtual IOP::TaggedProfile &create_tagged_profile (void) = 0;
+  // This method is used to get the IOP::taggedProfile. The profile
+  // information that is received from the server side would have
+  // already been decoded. So this method will just make a
+  // IOP::TaggedProfile struct from the existing information and
+  // return the reference to that. This method is necessary for GIOP
+  // 1.2. 
+
 private:
   TAO_MProfile *forward_to_i (void);
   // this object keeps ownership of this object
@@ -166,9 +174,11 @@ public:
                              CORBA::Environment &ACE_TRY_ENV);
   virtual int addr_to_string(char *buffer, size_t length);
   virtual void reset_hint (void);
-
+  virtual IOP::TaggedProfile &create_tagged_profile (void);
+  
 private:
   TAO_opaque body_;
+  IOP::TaggedProfile tagged_profile_;
 };
 
 #if defined (__ACE_INLINE__)

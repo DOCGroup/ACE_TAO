@@ -322,7 +322,8 @@ TAO_GIOP_Message_Acceptors::
 
   // This will extract the request header, set <response_required> as
   // appropriate.
-  TAO_GIOP_Locate_Request_Header locate_request (input);
+  TAO_GIOP_Locate_Request_Header locate_request (input,
+                                                 orb_core);
 
   TAO_GIOP_Locate_Status_Msg status_info;
 

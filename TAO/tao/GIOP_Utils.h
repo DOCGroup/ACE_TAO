@@ -96,7 +96,7 @@ typedef enum GIOP_ReplyStatusType
   TAO_GIOP_LOCATION_FORWARD_PERM,
   // GIOP 1.2, Reply is a location forward perm type..
 
-  NEEDS_ADDRESSING_MODE
+  TAO_GIOP_NEEDS_ADDRESSING_MODE
   // GIOP1.2,
 
 } TAO_GIOP_Reply_Status_Type;

@@ -21,19 +21,20 @@
 #define TAO_GIOP_MESSAGE_HEADERS_H
 #include "ace/pre.h"
 
-#include "tao/GIOPC.h"
+#include "tao/Tagged_Profile.h"
+
 
 // @@ Bala: what goes in this file? All the message headers? A few of
 // @@ them? Only the Locate_Request header?!
 
-// @@ Bala: the TAO_Export macros are missing here too!
 class TAO_Export TAO_GIOP_Locate_Request_Header
 {
   // = TITLE
   //   Location service support
 public:
 
-  TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg);
+  TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg,
+                                  TAO_ORB_Core *core);
   // Constructor
 
   void request_id (CORBA::ULong id);
@@ -48,11 +49,8 @@ public:
   TAO_ObjectKey &object_key (void);
   // Get the object_key in read/write mode..
 
-  IOP::TaggedProfile &tagged_profile (void);
-  // get the tagged_profile in the read/write mode
-
-  GIOP::IORAddressingInfo &addressing_info (void);
-  // get the addressing info in the read/write mode
+  TAO_Tagged_Profile &profile (void);
+  // Get the reference to the underlying profile
 
   TAO_InputCDR &incoming_stream (void);
   // Get the CDR stream for read/write
@@ -61,20 +59,12 @@ private:
   CORBA::ULong request_id_;
   // Request id
 
+  TAO_Tagged_Profile profile_;
+  // Profile info.
+
   TAO_ObjectKey object_key_;
   // Object Key
 
-  IOP::TaggedProfile profile_;
-  // The Tagged profile. This class would have the Tagged Profile
-
-  GIOP::IORAddressingInfo addr_info_;
-  // The addressing info
-
-  // The above two declarations are not used in TAO as on date. It is
-  // here so that we can use this if we get to that point. The
-  // object_key extracted  from these would still be available in
-  // <object_key_>. 
-  
   TAO_InputCDR *incoming_;
   // Incoming CDR stream
 };

@@ -40,7 +40,8 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
     object_key_ (object_key),
     object_addr_ (addr.get_remote_addr ()),
     hint_ (0),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    tagged_profile_ ()
 {
   this->set (addr.get_remote_addr ());
 }
@@ -448,6 +449,50 @@ TAO_SHMIOP_Profile::encode (TAO_OutputCDR &stream) const
                        this->orb_core_->to_iso8859 (),
                        this->orb_core_->to_unicode ());
 
+  this->create_profile_body (encap);
+
+  // write the encapsulation as an octet sequence...
+  stream << CORBA::ULong (encap.total_length ());
+  stream.write_octet_array_mb (encap.begin ());
+
+  return 1;
+}
+
+IOP::TaggedProfile &
+TAO_SHMIOP_Profile::create_tagged_profile (void)
+{
+  // Check whether we have already created the TaggedProfile
+  if (this->tagged_profile_.profile_data.get_buffer () == 0)
+    {
+      // As we have not created we will now create the TaggedProfile 
+      this->tagged_profile_.tag = TAO_TAG_SHMEM_PROFILE;
+      
+      // Create the encapsulation....
+      TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
+                           TAO_ENCAP_BYTE_ORDER,
+                           this->orb_core_->output_cdr_buffer_allocator (),
+                           this->orb_core_->output_cdr_dblock_allocator (),
+                           this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                           this->orb_core_->to_iso8859 (),
+                           this->orb_core_->to_unicode ());
+      
+      // Create the profile body
+      this->create_profile_body (encap);
+      
+      // Place the message block in to the Sequence of Octets that we
+      // have 
+      this->tagged_profile_.profile_data.replace (
+          (CORBA::ULong) encap.total_length (),
+          encap.begin ());
+    }
+  
+  return this->tagged_profile_;
+}
+
+
+void
+TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
+{
   encap.write_octet (TAO_ENCAP_BYTE_ORDER);
 
   // The GIOP version
@@ -466,12 +511,6 @@ TAO_SHMIOP_Profile::encode (TAO_OutputCDR &stream) const
   if (this->version_.major > 1
       || this->version_.minor > 0)
     this->tagged_components ().encode (encap);
-
-  // write the encapsulation as an octet sequence...
-  stream << CORBA::ULong (encap.total_length ());
-  stream.write_octet_array_mb (encap.begin ());
-
-  return 1;
 }
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

@@ -24,6 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class TAO_Tagged_Profile;
 // @@ Bala: do we want to have separate classes for the server side
 //    and client side?  IMHO not, with bi-directional connections the
 //    differences will be completely blurred.
@@ -103,14 +104,12 @@ protected:
   // Unmarshals the received object key
   
   virtual CORBA::Boolean 
-  unmarshall_iop_profile (TAO_ObjectKey &object_key, 
-                          IOP::TaggedProfile &profile,
+  unmarshall_iop_profile (TAO_Tagged_Profile &profile,
                           TAO_InputCDR &cdr);
   // Unmarshall the IOP::TaggedProfile
 
   virtual CORBA::Boolean 
-  unmarshall_ref_addr (TAO_ObjectKey &object_key, 
-                       GIOP::IORAddressingInfo &profile,
+  unmarshall_ref_addr (TAO_Tagged_Profile &profile,
                        TAO_InputCDR &cdr);
   // Unmarshalls the GIOP::IORAddressingInfo
 };
@@ -220,14 +219,14 @@ public:
   
 private:
   virtual CORBA::Boolean 
-  unmarshall_iop_profile (TAO_ObjectKey &object_key, 
-                          IOP::TaggedProfile &profile,
+  unmarshall_iop_profile (TAO_Tagged_Profile &profile,
                           TAO_InputCDR &cdr);
+  // Unmarshall the IOP::TaggedProfile
   
   virtual CORBA::Boolean 
-  unmarshall_ref_addr (TAO_ObjectKey &object_key, 
-                       GIOP::IORAddressingInfo &ref_addr,
+  unmarshall_ref_addr (TAO_Tagged_Profile &profile,
                        TAO_InputCDR &cdr);
+  // Unmarshall the IOR Addressing info
 };
 
 

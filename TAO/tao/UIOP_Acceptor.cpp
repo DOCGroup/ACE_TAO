@@ -298,6 +298,49 @@ TAO_UIOP_Acceptor::endpoint_count (void)
 }
 
 int
+TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
+                               TAO_ObjectKey &object_key)
+{
+  // Create the decoding stream from the encapsulation in the buffer,
+  TAO_InputCDR cdr (profile.profile_data.mb ());
+  
+    CORBA::Octet major, minor;
+  
+  // Read the version. We just read it here. We don't*do any*
+  // processing. 
+  if (!(cdr.read_octet (major)
+        && cdr.read_octet (minor)))
+  {
+    if (TAO_debug_level > 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                    major,
+                    minor));
+      }
+    return -1;
+  }
+  
+  char *rendezvous = 0;
+
+  // Get rendezvous_point
+  if (cdr.read_string (rendezvous) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
+      return -1;
+    }
+  
+  // delete the rendezvous point. We don't do any processing.
+  delete [] rendezvous;
+  
+  // ... and object key.
+  if ((cdr >> object_key) == 0)
+    return -1;
+  
+  return 1;
+}
+
+int
 TAO_UIOP_Acceptor::parse_options (const char *str)
 {
   if (str == 0)

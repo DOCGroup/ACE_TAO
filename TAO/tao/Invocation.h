@@ -146,6 +146,11 @@ protected:
   // In any case we must demarshal the object reference and setup the
   // profiles.
   // It returns TAO_INVOKE_RESTART unless an exception is raised.
+  
+  CORBA::ULong create_ior_info (void);
+  // Create the IOP::IOR info. We will create the info atmost
+  // once. This method will not work for RTCorba - Bala
+
 protected:
   TAO_Stub *stub_;
   // The object on which this invocation is going.
@@ -175,6 +180,14 @@ protected:
   ACE_Time_Value *max_wait_time_;
   // The timeout remaining for this request, it is initialized in
   // start() and updated as required.
+  
+  IOP::IOR ior_info_;
+  // The ior info. This would be needed for GIOP 1.2, as the clients
+  // could receive an exception from the server asking for this
+  // info. The exception that the client receives is
+  // LOC_NEEDS_ADDRESSING_MODE. If we receive an exception we will
+  // fill up this data atmost *once* and send it to the server.
+  
 };
 
 // ****************************************************************
