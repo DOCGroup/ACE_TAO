@@ -1,3 +1,18 @@
+Mon Dec 28 02:34:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Service_Configurator/IPC-tests/server/server_test.cpp
+	  (main):  Allow loading in static services in this application.
+
+	* ace/Service_Config.{h,i,cpp} (ACE_Service_Config): Changed the
+	  default value of <ignore_static_svcs> to 1.  Otherwise, it is
+	  not consistent with the initial value of
+	  ACE_Service_Config::no_static_svcs_ and that's very confusing.
+	  (open): Added one more argument <ignore_static_svcs> with
+	  default value of 1.  This allow us to turn off this behavior
+	  when opening Service_Config.  Otherwise, the only other way is
+	  to create a fake ACE_Service_Config and use that to change the
+	  static variable <no_static_svcs_>.
+
 Sun Dec 27 21:51:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/purify.solaris2: added a couple of MIU suppressions for
