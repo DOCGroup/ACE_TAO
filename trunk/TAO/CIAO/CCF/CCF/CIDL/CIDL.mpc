@@ -1,7 +1,7 @@
 //$Id$
 
 project(CIDL) {
-  requires += cidl exceptions=1
+  requires += cidl exceptions
   sharedname =
   staticname = CIDL
   includes += ../..
