@@ -7,7 +7,9 @@
 #if !defined (__ACE_INLINE__)
 # include "NodeApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
-CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
+
+
+CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl (void)
 {
 }
 
@@ -145,8 +147,8 @@ create_node_application (const ACE_CString & options
 
       if (node_application.spawn (p_options) == -1)
         {
-	  if (CIAO::debug_level () > 1)
-	    ACE_DEBUG ((LM_ERROR, "Fail to spawn a NodeApplication process\n"));
+          if (CIAO::debug_level () > 1)
+            ACE_DEBUG ((LM_ERROR, "Fail to spawn a NodeApplication process\n"));
 
           ACE_TRY_THROW (Components::CreateFailure ());
         }
@@ -172,8 +174,8 @@ create_node_application (const ACE_CString & options
 
       if (CORBA::is_nil (retval.in ()))
         {
-	  if (CIAO::debug_level () > 1)
-	    ACE_DEBUG ((LM_ERROR, "Fail to acquire the NodeApplication object\n"));
+          if (CIAO::debug_level () > 1)
+            ACE_DEBUG ((LM_ERROR, "Fail to acquire the NodeApplication object\n"));
 
           ACE_TRY_THROW (Components::CreateFailure ());
         }
@@ -292,7 +294,7 @@ startLaunch (const Deployment::Properties & configProperty,
       ACE_DEBUG ((LM_DEBUG, "Failed to create Component Implementation Infos!\n"));
 
     ACE_THROW_RETURN (Deployment::StartError (),
-		      Deployment::Application::_nil());
+                      Deployment::Application::_nil());
   } //@@ I am not sure about which exception to throw. I will come back to this.
 
   // Now spawn the NodeApplication process.
@@ -343,7 +345,7 @@ startLaunch (const Deployment::Properties & configProperty,
 
   if (providedReference == 0)
     ACE_THROW_RETURN (Deployment::StartError () ,
-		      Deployment::Application::_nil());
+                      Deployment::Application::_nil());
 
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
 }
