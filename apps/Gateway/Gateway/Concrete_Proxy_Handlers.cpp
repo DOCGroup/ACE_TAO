@@ -182,8 +182,8 @@ Consumer_Proxy::put (ACE_Message_Block *event, ACE_Time_Value *)
 }
 
 Supplier_Proxy::Supplier_Proxy (const Proxy_Config_Info &pci)
-  : msg_frag_ (0), 
-    Proxy_Handler (pci)
+  : Proxy_Handler (pci),
+    msg_frag_ (0)
 {
   this->proxy_role_ = 'S';
   this->msg_queue ()->high_water_mark (0);
