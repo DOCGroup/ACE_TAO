@@ -56,7 +56,7 @@ for $file (@iorfiles)
 {
     if (PerlACE::waitforfile_timed ($file, 5) == -1)
     {
-        $server = $SV->TimedWait (0);
+        $server = $SV->TimedWait (1);
         if ($server == 2) 
         {
             print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
