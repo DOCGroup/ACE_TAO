@@ -336,6 +336,9 @@ public:
   virtual int open (TAO_ORB_Core *orb_core, ACE_CString &address) = 0;
   // method to initialize acceptor for address.
 
+  virtual int open_default (TAO_ORB_Core *orb_core) = 0;
+  // Open an acceptor on the default endpoint for this protocol
+
   virtual ACE_Event_Handler *acceptor (void) = 0;
   // Return the ACE acceptor...
 

@@ -78,7 +78,6 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
     return 0;
 
-  // @@ Ossama: can you verify that this operator does the right thing?
   return profile->object_addr () == address;
 }
 
@@ -94,6 +93,21 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   ACE_UNIX_Addr addr (address.c_str ());
 
+  return this->open_i (orb_core, addr);
+}
+
+int
+TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
+{
+  ACE_UNIX_Addr addr;
+
+  return this->open_i (orb_core, addr);
+}
+
+int
+TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
+                           const ACE_UNIX_Addr& addr)
+{
   if (this->base_acceptor_.open (orb_core, addr) != 0)
     return -1;
 

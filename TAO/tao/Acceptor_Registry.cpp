@@ -54,7 +54,7 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
     {
       if ((*acceptor)->create_mprofile (object_key, mprofile) == -1)
         return -1;
-	    }
+            }
 
   return 0;
 }
@@ -118,6 +118,55 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
   TAO_EndpointSetIterator last_endpoint =
     orb_core->orb_params ()->endpoints ().end ();
 
+  if (first_endpoint == last_endpoint)
+    {
+      // No endpoints were specified, we let each protocol pick its
+      // own default...
+
+      TAO_ProtocolFactorySetItor end =
+        orb_core->protocol_factories ()->end ();
+      for (TAO_ProtocolFactorySetItor i =
+             orb_core->protocol_factories ()->begin ();
+           i != end;
+           ++i)
+        {
+          TAO_Acceptor *acceptor =
+            (*i)->factory ()->make_acceptor ();
+
+          if (acceptor == 0)
+            {
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            "TAO (%P|%t) unable to create "
+                            "an acceptor for <%s>\n",
+                            (*i)->protocol_name ().c_str ()));
+              continue;
+            }
+
+          if (acceptor->open_default (orb_core) == -1)
+            {
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            "TAO (%P|%t) unable to open "
+                            "default acceptor for <%s>%p\n",
+                            (*i)->protocol_name ().c_str (), ""));
+              continue;
+            }
+
+          this->acceptors_.insert (acceptor);
+        }
+
+      if (this->acceptors_.size () == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P%t) cannot create any default acceptor\n"));
+          return -1;
+        }
+
+      return 0;
+    }
+
   ACE_Auto_Basic_Array_Ptr <char> addr_str;
 
   for (TAO_EndpointSetIterator endpoint = first_endpoint;
@@ -152,7 +201,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
           // Now get the list of avaliable protocol factories.
           TAO_ProtocolFactorySetItor end =
                           orb_core->protocol_factories ()->end ();
-          
+
 
           for (TAO_ProtocolFactorySetItor factory =
                  orb_core->protocol_factories ()->begin ();
