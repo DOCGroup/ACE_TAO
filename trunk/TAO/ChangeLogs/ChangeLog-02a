@@ -1,3 +1,14 @@
+Sat Mar 31 02:06:09 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+        * tao/BiDir_GIOP/Makefile.bor:
+          Added makefile for BiDir_GIOP library.
+
+        * tao/TypeCodeFactory/Makefile.bor:
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+          Cleaned up makefile for TypeCodeFactory library to fix an
+          error in the IFR_Service build.
+
 Fri Mar 30 22:06:02 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	These changes were first given out as a custom patch to TAO
