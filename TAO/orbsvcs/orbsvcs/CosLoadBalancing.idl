@@ -46,7 +46,7 @@ module CosLoadBalancing
   typedef unsigned long LoadId;
 
   // OMG defined LoadId constants.
-  const LoadId CPU = 0;
+  const LoadId LoadAverage = 0;
   const LoadId Disk = 1;
   const LoadId Memory = 2;
   const LoadId Network = 3;
