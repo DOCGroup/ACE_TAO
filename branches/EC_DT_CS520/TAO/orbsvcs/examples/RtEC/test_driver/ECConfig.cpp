@@ -12,6 +12,11 @@
 #include "ace/Array.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Thread_Manager.h"
+#include "ace/INET_Addr.h"
+#include "ace/SOCK_Stream.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/SOCK_Connector.h"
+#include "ace/SString.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -19,14 +24,27 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventCommC.h"
-
-#include "orbsvcs/Event/ECG_Mcast_EH.h"
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
-#include "orbsvcs/Event/ECG_UDP_Receiver.h"
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
-#include "tao/ORB_Core.h"
+#include "orbsvcs/Event/EC_Gateway_Sched.h"
 
 namespace TestConfig {
+
+//TODO: Obviously, we can't just hardcode these!
+//And assuming only one supplier and consumer is bad, too.
+const char *supplierEC_iorfile =
+  "supplierEC.ior";
+const char *supplierSched_iorfile =
+  "supplierSched.ior";
+const char *consumerEC_iorfile =
+  "consumerEC.ior";
+const char *consumerSched_iorfile =
+  "consumerSched.ior";
+const char *supplier_schedule =
+  "supplier_schedule.out";
+const char *consumer_schedule =
+  "consumer_schedule.out";
+const char *remote_inet_addr =
+  "bhangra.doc.wustl.edu";
+int remote_inet_port = 424242;
 
 template <class SCHED_STRAT>
 ECConfig<SCHED_STRAT>::ECConfig (void)
@@ -37,8 +55,9 @@ ECConfig<SCHED_STRAT>::ECConfig (void)
   , importances(0)
   , crits(0)
   , test_done(new ACE_RW_Mutex())
-  , udp_mcast_address(ACE_DEFAULT_MULTICAST_ADDR ":10001")
+  //, udp_mcast_address(ACE_DEFAULT_MULTICAST_ADDR ":10001")
   , configured (0) //false
+  , use_federated (1) //TODO Check whether or not FEDERATED; default to true
 {
 }
 
@@ -88,11 +107,29 @@ ECConfig<SCHED_STRAT>::reset (ACE_ENV_SINGLE_ARG_DECL)
     ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
   }
 
+  if (this->use_federated && !CORBA::is_nil(this->gateway_obs.in()))
+    {
+      // Deactivate the Gateway if it exists
+      PortableServer::POA_var poa =
+        this->gateway_impl->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (this->gateway_impl ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "gateway deactivated\n"));
+    }
+
   delete this->ec_impl;
   this->ec_impl = 0;
 
   delete this->sched_impl;
   this->sched_impl = 0;
+
+  delete this->gateway_impl;
+  this->gateway_impl = 0;
 
   //TODO clear config_infos?
 
@@ -181,14 +218,92 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
             }
         }
 
+      //SUPPLIER writes IORs and blocks
+      if (supp_size > 0 && this->use_federated)
+        {
+          //since there are suppliers, we assume we are a supplier only
+          //save EC and scheduler IOR for federation
+          CORBA::String_var ior =
+            orb->object_to_string (this->event_channel.in () ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          ACE_DEBUG((LM_DEBUG,"Writing supplier EC IOR\n"));
+          // Output the EC's ior to the supplierEC iorfile
+          FILE *output_file = ACE_OS::fopen (supplierEC_iorfile, "w");
+          if (output_file == 0)
+            ACE_ERROR ((LM_ERROR,
+                        "Cannot open output file for writing EC IOR: %s\n",
+                        supplierEC_iorfile));
+          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fclose (output_file);
+
+          ior = orb->object_to_string (this->scheduler.in () ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+          ACE_DEBUG((LM_DEBUG,"Writing supplier Sched IOR\n"));
+          // Output the scheduler's ior to the supplierSched iorfile
+          output_file = ACE_OS::fopen (supplierSched_iorfile, "w");
+          if (output_file == 0)
+            ACE_ERROR ((LM_ERROR,
+                        "Cannot open output file for writing scheduler IOR: %s\n",
+                        supplierSched_iorfile));
+          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fclose (output_file);
+
+          //now we block until the client writes its IOR
+          this->barrier(true);
+        }
+
+      //CONSUMER writes IORs and blocks
+      if (cons_size > 0 && this->use_federated)
+        {
+          //since there are consumers, we assume we are a consumer only
+          //save IOR for federation
+          CORBA::String_var ior =
+            orb->object_to_string (this->event_channel.in () ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          ACE_DEBUG((LM_DEBUG,"Writing consumer EC IOR\n"));
+          // Output the EC's ior to the consumerEC iorfile
+          FILE *output_file = ACE_OS::fopen (consumerEC_iorfile, "w");
+          if (output_file == 0)
+            ACE_ERROR ((LM_ERROR,
+                        "Cannot open output file for writing EC IOR: %s\n",
+                        consumerEC_iorfile));
+          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fclose (output_file);
+
+          ACE_DEBUG((LM_DEBUG,"Writing consumer Sched IOR\n"));
+          ior = orb->object_to_string (this->scheduler.in () ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+          // Output the scheduler's ior to the consumerSched iorfile
+          output_file = ACE_OS::fopen (consumerSched_iorfile, "w");
+          if (output_file == 0)
+            ACE_ERROR ((LM_ERROR,
+                        "Cannot open output file for writing scheduler IOR: %s\n",
+                        consumerSched_iorfile));
+          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fclose (output_file);
+
+          //now we block until the supplier writes its IOR
+          this->barrier(false);
+        }
+
+      if (this->use_federated && cons_size>0) //only federate on consumer side
+        {
+          //gateway EC_Control does not appear to setup gateway on
+          //activation, so we need to set it up BEFORE any consumers
+          //or suppliers connect!
+          this->make_federated(ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
+
       this->consumers.size(cons_size);
       this->connect_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
       this->suppliers.size(supp_size);
       this->connect_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
 
-      if (1) ///TODO Check whether or not FEDERATED; default to true
+      if (this->consumers.size() > 0)
         {
-          this->make_federated(ACE_ENV_SINGLE_ARG_PARAMETER);
+          //this->barrier(false); //wait until both apps are ready to schedule
         }
 
       ////////////////// Configured; compute schedule ///////////
@@ -218,18 +333,34 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Dump the schedule to a file..
-      ACE_Scheduler_Factory::dump_schedule (infos.in (),
-                                            deps.in(),
-                                            configs.in (),
-                                            anomalies.in (),
-                                            "ecconfig.out");
+      // Dump the schedule to a file... (different files for supplier and consumer)
+      if (this->suppliers.size() > 0)
+        {
+          ACE_Scheduler_Factory::dump_schedule (infos.in (),
+                                                deps.in(),
+                                                configs.in (),
+                                                anomalies.in (),
+                                                supplier_schedule);
+        }
+      if (this->consumers.size() > 0)
+        {
+          ACE_Scheduler_Factory::dump_schedule (infos.in (),
+                                                deps.in(),
+                                                configs.in (),
+                                                anomalies.in (),
+                                                consumer_schedule);
+        }
 
       ///////////// Activate the EC /////////////////
       ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
       this->ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
+
+      if (this->suppliers.size() > 0)
+        {
+          //this->barrier(true); //wait until both apps are ready to schedule
+        }
 
       configured = 1; //true
     }
@@ -330,7 +461,7 @@ ECConfig<SCHED_STRAT>::initEC(ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  // DO these need to remain in scope beyond this function?
+  //TODO: do these need to remain in scope beyond this function?
 
   ACE_DEBUG((LM_DEBUG,ACE_TEXT("Creating sched service\n")));
 
@@ -357,116 +488,75 @@ ECConfig<SCHED_STRAT>::initEC(ACE_ENV_SINGLE_ARG_DECL)
 template <class SCHED_STRAT> void
 ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
 {
-  //This code taken from the $TAO_ROOT/orbsvcs/examples/RtEC/MCast example
+  //TODO: IOR location is hardcoded. Obviously, this is BAD BAD BAD.
+  //TODO: This assumes make_federated() is only called by consumer!!!
 
-  // The next step is to setup the multicast gateways.
-  // There are two gateways involved, one sends the locally
-  // generated events to the federated peers, the second gateway
-  // receives multicast traffic and turns it into local events.
+  //get IOR of remote EC
+  ACE_CString remoteEC_ior("file://");
+  ACE_CString remoteSched_ior("file://");
+  //since we're hardcoding filenames anyway, this isn't much worse!
 
-  // The sender requires a helper object to select what
-  // multicast group will carry what traffic, this is the
-  // so-called 'Address Server'.
-  // The intention is that advanced applications can use different
-  // multicast groups for different events, this can exploit
-  // network interfaces that filter unwanted multicast traffic.
-  // The helper object is accessed through an IDL interface, so it
-  // can reside remotely.
-  // In this example, and in many application, using a fixed
-  // multicast group is enough, and a local address server is the
-  // right approach.
+  remoteEC_ior += supplierEC_iorfile;
+  remoteSched_ior += supplierSched_iorfile;
 
-  // First we convert the string into an INET address, then we
-  // convert that into the right IDL structure:
-  ACE_INET_Addr udp_addr (udp_mcast_address);
-  ACE_DEBUG ((LM_DEBUG,
-              "Multicast address is: %s\n",
-              udp_mcast_address));
-  RtecUDPAdmin::UDP_Addr addr;
-  addr.ipaddr = udp_addr.get_ip_address ();
-  addr.port   = udp_addr.get_port_number ();
+  ACE_DEBUG((LM_DEBUG,"Reading EC IOR: %s\n",remoteEC_ior.c_str()));
+  CORBA::Object_var ec_obj =
+    orb->string_to_object (remoteEC_ior.c_str() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  // Now we create and activate the servant
-  this->as_impl.set_addr (addr);
-  this->address_server = as_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  RtecEventChannelAdmin::EventChannel_var remote_ec =
+    RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
+                                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  // We need a local socket to send the data, open it and check
-  // that everything is OK:
-  if (this->endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "Cannot open send endpoint\n"));
-    }
+  ACE_DEBUG((LM_DEBUG,"Reading Sched IOR: %s\n",remoteSched_ior.c_str()));
+  CORBA::Object_var sched_obj = orb->string_to_object(remoteSched_ior.c_str() ACE_ENV_ARG_PARAMETER);
+  RtecScheduler::Scheduler_var remote_sch =
+    RtecScheduler::Scheduler::_narrow (sched_obj.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  // Now we setup the sender:
-  this->sender = TAO_ECG_UDP_Sender::create();
-  this->sender->init (this->event_channel.in (),
-                      this->address_server.in (),
-                      &(this->endpoint)
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_DEBUG((LM_DEBUG,"Creating gateway\n"));
+  TAO_EC_Gateway_Sched *gateway = new TAO_EC_Gateway_Sched();
 
-  // Now we connect the sender as a consumer of events, it will
-  // receive any event from any source and send it to the "right"
-  // multicast group, as defined by the address server set above:
-  RtecEventChannelAdmin::ConsumerQOS sub;
-  sub.is_gateway = 1;
-
-  sub.dependencies.length (1);
-  sub.dependencies[0].event.header.type =
-    ACE_ES_EVENT_ANY;        // first free event type
-  sub.dependencies[0].event.header.source =
-    ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
-
-  sender->connect (sub ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  // To receive events we need to setup an event handler:
-  this->receiver = TAO_ECG_UDP_Receiver::create();
-  TAO_ECG_Mcast_EH mcast_eh (&(*this->receiver));
-
-  // The event handler uses the ORB reactor to wait for multicast
-  // traffic:
-  mcast_eh.reactor (this->orb->orb_core ()->reactor ());
-
-  // The multicast Event Handler needs to know to what multicast
-  // groups it should listen to.  To do so it becomes an observer
-  // with the event channel, to determine the list of events
-  // required by all the local consumer.
-  // Then it register for the multicast groups that carry those
-  // events:
-  mcast_eh.open (this->event_channel.in ()
+  ACE_DEBUG((LM_DEBUG,"Supplier gateway init\n"));
+  //for consumer, remote is supplier EC
+  gateway->init (remote_ec.in (),
+                 this->event_channel.in (),
+                 remote_sch.in (),
+                 this->scheduler.in(),
+                 supplierEC_iorfile, //use EC IOR files as names, since they should be unique
+                 consumerEC_iorfile
                  ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
+  this->gateway_impl = gateway;
+  ACE_DEBUG((LM_DEBUG,"Gateway init completed\n"));
 
-  // Again the receiver connects to the event channel as a
-  // supplier of events, using the Observer features to detect
-  // local consumers and their interests:
-  receiver->init (this->event_channel.in (),
-                  &endpoint,
-                  this->address_server.in ()
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  this->gateway_obs = this->gateway_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
-  // The Receiver is also a supplier of events.  The exact type of
-  // events is only known to the application, because it depends
-  // on the traffic carried by all the multicast groups that the
-  // different event handlers subscribe to.
-  // In this example we choose to simply describe our publications
-  // using wilcards, any event from any source.  More advanced
-  // application could use the Observer features in the event
-  // channel to update this information (and reduce the number of
-  // multicast groups that each receive subscribes to).
-  // In a future version the event channel could perform some of
-  // those tasks automatically
-  RtecEventChannelAdmin::SupplierQOS pub;
-  pub.publications.length (1);
-  pub.publications[0].event.header.type   = ACE_ES_EVENT_ANY;
-  pub.publications[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
-  pub.is_gateway = 1;
+  ACE_TRY
+    {
+      //Might throw a CANT_APPEND_OBSERVER exception
+      //But I think we can ignore it if that happens
+      ACE_DEBUG((LM_DEBUG,"Appending gateway observer\n"));
+      //append to consumer EC so that connecting consumers update the gateway!
+      RtecEventChannelAdmin::Observer_Handle h =
+        this->event_channel->append_observer (this->gateway_obs.in ()
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-  this->receiver->connect (pub ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+      this->gateway_impl->observer_handle (h);
+
+      ACE_DEBUG((LM_DEBUG,"Gateway observer appended\n"));
+    }
+  ACE_CATCH(RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER,exc)
+    {
+      //ignore
+      ACE_DEBUG((LM_DEBUG,"Caught CANT_APPEND_OBSERVER\n"));
+    }
+  ACE_ENDTRY;
+
+  ACE_DEBUG((LM_DEBUG,"Gateway created\n"));
 }
 
 template <class SCHED_STRAT> void
@@ -615,6 +705,63 @@ ECConfig<SCHED_STRAT>::print_RT_Infos (ACE_Array<RtecScheduler::handle_t> cfg_se
     }
   ACE_ENDTRY;
 
+}
+
+template <class SCHED_STRAT> void
+ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
+{
+  //if we are the server (we have suppliers), then we accept.
+  //if we are the client (we have consumers), then we connect.
+
+  //first, create address
+  ACE_CString addr_str(remote_inet_addr);
+  char port_str[7];
+  ACE_OS::sprintf(port_str,"%d",remote_inet_port);
+  port_str[6] = 0;
+  addr_str += ":";
+  addr_str += port_str;
+  remote_inet_port++; //increment port for next barrier
+
+  if (is_supplier)
+    {
+      //now we block on a socket connect until a consumer opens it
+      //this way, we don't start running until the consumer is ready
+      ACE_SOCK_Stream accstrm;
+      ACE_DEBUG((LM_DEBUG,"Opening supplier socket %s\n",addr_str.c_str()));
+      ACE_INET_Addr addr(addr_str.c_str());
+      ACE_SOCK_Acceptor acc(addr);
+      if (acc.accept(accstrm,&addr) != 0) //blocks until consumer opens
+        {
+          ACE_ERROR((LM_ERROR,
+                     "Cannot accept socket: %s\n",
+                     ACE_OS::strerror(errno)));
+        }
+      ACE_DEBUG((LM_DEBUG,"Supplier: unblocked on socket\n"));
+
+      //once opened, no need for socket any more
+      acc.close();
+      accstrm.close();
+      ACE_DEBUG((LM_DEBUG, "Supplier: closed socket\n"));
+    }
+  else
+    {
+      //now we open a socket to start up the supplier
+      ACE_DEBUG((LM_DEBUG,"Connecting consumer socket %s\n",addr_str.c_str()));
+      ACE_SOCK_Stream connstrm;
+      ACE_INET_Addr addr(addr_str.c_str());
+      ACE_SOCK_Connector conn;
+      if (conn.connect(connstrm,addr) != 0) //blocks until supplier opens
+        {
+          ACE_ERROR((LM_ERROR,
+                     "Consumer cannot connect socket: %s\n",
+                     ACE_OS::strerror(errno)));
+        }
+      ACE_DEBUG((LM_DEBUG,"Consumer: connected socket\n"));
+
+      //once opened, no need for socket any more
+      connstrm.close();
+      ACE_DEBUG((LM_DEBUG, "Consumer: closed socket\n"));
+    }
 }
 
 template <class SCHED_STRAT> ACE_THR_FUNC_RETURN
