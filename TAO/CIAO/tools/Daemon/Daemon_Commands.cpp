@@ -2,7 +2,7 @@
 
 #include "Daemon_Commands.h"
 #include "ace/Get_Opt.h"
-#include "CCM_DeploymentC.h"
+#include "ciao/CCM_DeploymentC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Daemon_Commands.inl"

@@ -3,8 +3,8 @@
 /**
  * @@ Compile this file with:
  *
- *     tao_idl -Gv -I W:/ACE_wrappers/TAO -I W:/ACE_wrappers/TAO/orbsvcs/orbsvcs Component_Base.idl
- *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *     tao_idl -I W:/ACE_wrappers/TAO Component_Base.idl
+ *     tao_idl -I ../.. \
  *          -Wb,export_macro=CIAO_Export \
  *          -Wb,export_include=CIAO_export.h \
  *          -Wb,pre_include="ace/pre.h" \

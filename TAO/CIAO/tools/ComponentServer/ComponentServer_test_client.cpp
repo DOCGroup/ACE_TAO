@@ -1,7 +1,7 @@
 // $Id$
 
-#include "CCM_DeploymentC.h"
-#include "Client_init.h"
+#include "ciao/CCM_DeploymentC.h"
+#include "ciao/Client_init.h"
 #include "ace/Get_Opt.h"
 
 const char *ior = "file://test.ior";

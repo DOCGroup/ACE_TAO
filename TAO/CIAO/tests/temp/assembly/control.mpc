@@ -2,7 +2,6 @@
 // $Id$
 
 project : ciao_server, server {
-  idlflags += -I$(TAO_ROOT) -I../../../ciao -I../../../..
 
   Source_Files {
     controlS.cpp
@@ -12,7 +11,6 @@ project : ciao_server, server {
 }
 
 project : ciao_server, client {
-  idlflags += -I$(TAO_ROOT) -I../../../ciao -I../../../..
 
   Source_Files {
     controlC.cpp

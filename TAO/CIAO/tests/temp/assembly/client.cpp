@@ -1,7 +1,7 @@
 // $Id$
 
 #include "controlC.h"
-#include "Client_init.h"
+#include "ciao/Client_init.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Hello, client, "$Id$")
