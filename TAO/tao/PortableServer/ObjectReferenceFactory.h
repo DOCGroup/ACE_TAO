@@ -24,9 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-
-#include "tao/PortableInterceptorC.h"
+#include "tao/ObjectReferenceTemplateC.h"
 #include "tao/PortableServer/PortableServerC.h"
 
 
@@ -73,8 +71,6 @@ class TAO_PortableServer_Export TAO_ObjectReferenceFactory
 
   CORBA::ULong make_object_invoker_;
 };
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/post.h"
 

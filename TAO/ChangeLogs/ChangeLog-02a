@@ -1,3 +1,41 @@
+Thu Jan 17 17:34:10 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ObjectReferenceTemplate.pidl: 
+	* tao/PortableInterceptor.pidl: 
+	  Moved the ObjectReferenceTemplate stuff from
+	  PortableInterceptor.pidl to the new
+	  ObjectReferenceTemplate.pidl. This is needed to get the builds
+	  straight for the minimum corba. By moving the ORT related part
+	  to a separate pidl, we are making it(ORT) usable irrespective of
+	  the usage of interceptors. 
+
+	* tao/PortableInterceptorC.i: 
+	* tao/PortableInterceptorC.h:
+	* tao/PortableInterceptorC.cpp: 
+	  Regenerated and applied patches.
+
+	* tao/ObjectReferenceTemplateC.h: 
+	* tao/ObjectReferenceTemplateC.h: 
+	* tao/ObjectReferenceTemplateC.h: 
+	  Generated and made modifications as needed.
+	
+	* tao/PortableServer/ObjectReferenceTemplate.cpp: 
+	* tao/PortableServer/ObjectReferenceTemplate.h: 
+	* tao/PortableServer/ObjectReferenceFactory.cpp: 
+	* tao/PortableServer/ObjectReferenceFactory.h: 
+	  Since this part is out of the interceptor loop, removed the
+	  if-defines checking for interceptors. Removed the include of
+	  PortableInterceptorC.h and included ObjectReferenceTemplateC.h
+	  instead. 
+
+	* tao/PortableServer/POA.cpp: 
+	* tao/PortableServer/POA.h: 
+	  Included StringSeqC.h needed for minimum corba builds.
+	  Moved wrongly placed #endif for TAO_HAS_MINIMUM_POA check.
+	
+	* tao/Makefile: 
+	  Added ObjectReferenceTemplateC to the list of ORB_CORE files.
+
 Thu Jan 17 16:02:50 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be_include/be_visitor_interface/amh_sh.h:

@@ -610,13 +610,12 @@ protected:
   void imr_notify_shutdown (void);
   // ImplRepo helper method, notify the ImplRepo on shutdown
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   CORBA::Object_ptr invoke_key_to_object (const char *intf,
                                           PortableServer::ObjectId
                                           &user_id
                                           TAO_ENV_ARG_DECL);
-
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::Object_ptr key_to_object (const TAO_ObjectKey &key,
                                    const char *type_id,

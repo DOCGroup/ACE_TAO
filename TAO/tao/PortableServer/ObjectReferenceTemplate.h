@@ -26,9 +26,8 @@
 
 #include "tao/PortableServer/portableserver_export.h"
 
-#if (TAO_HAS_INTERCEPTORS == 1)
+#include "tao/ObjectReferenceTemplateC.h"
 
-#include "tao/PortableInterceptorC.h"
 #include "tao/ValueBase.h"
 #include "tao/Sequence_T.h"
 
@@ -86,8 +85,6 @@ class TAO_PortableServer_Export TAO_ObjectReferenceTemplate
   TAO_POA *poa_;
 
 };
-
-#endif /* TAO__HAS_INTERCEPTORS == 1 */
 
 #include "ace/post.h"
 

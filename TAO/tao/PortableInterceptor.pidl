@@ -41,10 +41,10 @@
 #endif
 
 #include <Current.pidl>
-#include "orb.idl"
 
 #include <Dynamic.pidl> // changed to pidl from idl
 
+#include <ObjectReferenceTemplate.pidl>
 
 //#include <IOP_N.idl>
 
@@ -115,10 +115,10 @@ module PortableInterceptor {
 
 
   // new from orbos/01-01-04 ORT
-  typedef string ServerId ;
-  typedef string ORBId ;
-  typedef CORBA::StringSeq AdapterName ;
-  typedef CORBA::OctetSeq ObjectId ;
+  //typedef string ServerId ;
+  //typedef string ORBId ;
+  //typedef CORBA::StringSeq AdapterName ;
+  //  typedef CORBA::OctetSeq ObjectId ;
 
   local interface ServerRequestInfo : RequestInfo {
     //    #pragma version ServerRequestInfo x.y
@@ -155,29 +155,6 @@ module PortableInterceptor {
     void send_exception (in ServerRequestInfo ri) raises (ForwardRequest);
     void send_other (in ServerRequestInfo ri) raises (ForwardRequest);
   };
-
-  // new from orbos/01-01-04 ORT
-  abstract valuetype ObjectReferenceFactory {
-    Object make_object (in string repository_id, 
-			in ObjectId id) ;
-  };
-
-  abstract valuetype ObjectReferenceTemplate : ObjectReferenceFactory {
-    readonly attribute ServerId server_id ;
-    readonly attribute ORBId orb_id ;
-    readonly attribute AdapterName adapter_name ;
-  };
-
-  typedef sequence<ObjectReferenceTemplate> ObjectReferenceTemplateSeq;
-
-  typedef long AdapterManagerId;
-
-  typedef short AdapterState ;
-  const AdapterState    HOLDING         = 0 ;
-  const AdapterState    ACTIVE          = 1 ;
-  const AdapterState    DISCARDING      = 2 ;
-  const AdapterState    INACTIVE        = 3 ;
-  const AdapterState    NON_EXISTENT    = 4 ;
   
   local interface IORInfo {
     // #pragma version IORInfo x.y
