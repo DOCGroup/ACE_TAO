@@ -451,11 +451,21 @@ public:
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CORBA::PolicyError));
+
 
   // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
+
+  /// Create an empty policy, usually to be filled in later by
+  /// demarshaling.
+  CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
+                                    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CORBA::PolicyError));
 
   /// Resolve the POA.
   CORBA_Object_ptr resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL);
