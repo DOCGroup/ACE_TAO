@@ -1,3 +1,15 @@
+Tue Sep  3 16:38:47 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+
+	  Atomic_Op.cpp is no longer a template source file.  Moved it to
+	  the "Source Files" folder.
+
+	* ace/Synch.cpp (ACE_Mutex):
+
+	  Fixed "unused 'mode' argument" warning.
+
 Tue Sep  3 15:54:33 2002  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * ace/OS.h:
