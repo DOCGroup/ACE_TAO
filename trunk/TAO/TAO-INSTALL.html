@@ -47,20 +47,20 @@ likely unpredictable and erroneous results. <P>
   <LI>Build and install the TAO release under <CODE>$TAO_ROOT</CODE>.<P>
 
       <UL>
-        <LI>Compile the Library: Change directory to 
-            <CODE>$TAO_ROOT/tao</CODE> and execute 
+        <LI>Compile the Library: Change directory to
+            <CODE>$TAO_ROOT/tao</CODE> and execute
             <code><a href="#makenotes">make</a></code>.
-	<LI>Compile TAO_IDL: Change directory to 
+	<LI>Compile TAO_IDL: Change directory to
             <CODE>$TAO_ROOT/TAO_IDL</CODE> and execute
-            <code><a href="#makenotes">make</a></code>. 
-	<LI>Compile ORB Services: Change directory to 
+            <code><a href="#makenotes">make</a></code>.
+	<LI>Compile ORB Services: Change directory to
             <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE> and execute
-            <code><a href="#makenotes">make</a></code>. 
+            <code><a href="#makenotes">make</a></code>.
       </UL>
 
   <LI>To test that the TAO release is properly configured, follow
       instructions on executing the various examples under
-      <CODE>$TAO_ROOT/tests</CODE>.<P> 
+      <CODE>$TAO_ROOT/tests</CODE>.<P>
 
 </OL>
 
@@ -158,7 +158,7 @@ files in the correct place.</P>
       compiler under MSVC.  If you intend to also use the release version of the
 	  libraries, also add <CODE>ACE_wrappers\bin\Release</CODE> to the directories.
 	  <STRONG>Note:</STRONG> The order that these are listed is important.  If your
-	  main development is with the debug versions, make sure \bin is before 
+	  main development is with the debug versions, make sure \bin is before
 	  \bin\Release, otherwise put the \bin\Release first.  Because the output names
 	  for the release and debug versions of TAO_IDL are the same, extra care must be
 	  taken when both versions are generated simulataneously. <P>
@@ -167,8 +167,8 @@ files in the correct place.</P>
       library. <P>
 
   <LI>To build the Cubit test, load the workspace
-      <CODE>tests\Cubit\TAO\IDL_Cubit\IDL_Cubit.dsw</CODE> and build both
-      client and server. <P>
+      <CODE>performance-tests\Cubit\TAO\IDL_Cubit\IDL_Cubit.dsw</CODE>
+      and build both client and server. <P>
 </OL>
 
 <H4><A NAME="taoace">TAOACE.dsw</A></H4>
@@ -297,11 +297,11 @@ that they do.</P>
 <H3>Native Exceptions</H3>
 
 <P>TAO will use native exceptions if TAO_HAS_EXCEPTIONS is defined when it is
-compiled. This can be accomplished in two ways: by defining ACE_HAS_EXCEPTIONS 
-in the config.h or config-*.h files (such as on Windows) or by using 
+compiled. This can be accomplished in two ways: by defining ACE_HAS_EXCEPTIONS
+in the config.h or config-*.h files (such as on Windows) or by using
 <CODE>make exceptions=1</CODE> when you compile TAO.</P>
 
-<P>Take note though, that this only enables support in ACE/TAO, the correct 
+<P>Take note though, that this only enables support in ACE/TAO, the correct
 compiler flags must also be given to the compiler to enable them.</P>
 
 <HR>
