@@ -941,6 +941,7 @@ Manuel Benche <mbenche@jazz.cs.utsa.edu>
 Steve Luoma <stevel@dvc400.com>
 Roger Tragin <rtragin@wpine.com>
 Alex Bangs <bangs@entelos.com>
+Yangfen Qiu <yqiu@thomas.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
