@@ -283,7 +283,7 @@ protected:
   virtual TAO_Root_POA *new_POA (const String &name,
                             TAO_POA_Manager &poa_manager,
                             const TAO_POA_Policy_Set &policies,
-                            TAO_POA *parent,
+                            TAO_Root_POA *parent,
                             ACE_Lock &lock,
                             TAO_SYNCH_MUTEX &thread_lock,
                             TAO_ORB_Core &orb_core,
