@@ -1,3 +1,13 @@
+Tue Mar  9 20:56:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/rules.nested.GNU: 
+	  If the DIRS macro is not set we simply do not recurse. Before
+	  this change we got an error from the shell.
+
+	* bin/auto_compile: 
+	  If there are no errors then send a message when a warning was
+	  detected during compilation.
+
 Tue Mar 09 15:15:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/create_ace_build: check for ace/ and include/ directories
