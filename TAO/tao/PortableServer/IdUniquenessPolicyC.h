@@ -272,11 +272,11 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Portab
 // TAO_IDL - Generated from
 // be\be_visitor_enum/cdr_op_ch.cpp:50
 
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::IdUniquenessPolicyValue &);
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, PortableServer::IdUniquenessPolicyValue);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::IdUniquenessPolicyValue &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "IdUniquenessPolicyC.inl"
