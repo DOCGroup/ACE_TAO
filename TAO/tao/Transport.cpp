@@ -988,7 +988,7 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   // Calculate the actual length of the load that we are supposed to
   // read which is equal to the <missing_data> + length of the buffer
   // that we have..
-  size_t payload = missing_data + incoming.length ();
+  size_t payload = missing_data + incoming.size ();
 
   // Grow the buffer to the size of the message
   ACE_CDR::grow (&incoming,
