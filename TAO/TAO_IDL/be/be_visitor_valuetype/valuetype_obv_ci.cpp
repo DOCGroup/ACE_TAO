@@ -49,7 +49,6 @@ be_visitor_valuetype_obv_ci::~be_visitor_valuetype_obv_ci (void)
 int
 be_visitor_valuetype_obv_ci::visit_valuetype (be_valuetype *node)
 {
-return 0; // %! dead code
   // only visit non-abstract valuetype
   if (node->is_abstract_valuetype ())
     return 0;
@@ -65,6 +64,14 @@ return 0; // %! dead code
     }
   else
     {
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_valuetype_obv_cs::"
+                             "visit_valuetype - "
+                             "visit_scope failed\n"
+                             ), -1);
+        }
     } // if !opt_accessor ()
   return 0;
 }
@@ -73,6 +80,18 @@ return 0; // %! dead code
 int
 be_visitor_valuetype_obv_ci::visit_field (be_field *node)
 {
-  // dead code
+  be_visitor_context *ctx = new be_visitor_context (*this->ctx_);
+  be_visitor_valuetype_field_ci *visitor =
+    new be_visitor_valuetype_field_ci (ctx);
+  visitor->in_obv_space_ = 1;
+  if (visitor->visit_field (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_obv_ci::"
+                         "visit_field - "
+                         "visit_field failed\n"
+                         ), -1);
+    }
+  delete visitor;
   return 0;
 }

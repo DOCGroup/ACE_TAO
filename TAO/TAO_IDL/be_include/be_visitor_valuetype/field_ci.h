@@ -9,37 +9,36 @@
 //    TAO IDL
 //
 // = FILENAME
-//    field_cs.h
+//    field_ci.h
 //
 // = DESCRIPTION
 //     Visitor for the Valuetype class.
 //     This one generates code for accessor and modifier functions of
-//     valuetype state members (in the stub file).
+//     valuetype state members (in the inline file).
 //
 // = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    derived from be_visitor_union_branch/public_ci.h
+//    Jeff Parsons
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_VALUETYPE_FIELD_CS_H_
-#define _BE_VISITOR_VALUETYPE_FIELD_CS_H_
+#ifndef _BE_VISITOR_VALUETYPE_FIELD_CI_H_
+#define _BE_VISITOR_VALUETYPE_FIELD_CI_H_
 
-class be_visitor_valuetype_field_cs : public be_visitor_decl
+class be_visitor_valuetype_field_ci : public be_visitor_decl
 {
   //
   // = TITLE
-  //    be_visitor_valuetype_field_cs
+  //    be_visitor_valuetype_field_ci
   //
   // = DESCRIPTION
   //    This visitor is used to generate the accessors and modifiers
   //    for the members of valuetype
   //
 public:
-  be_visitor_valuetype_field_cs (be_visitor_context *ctx);
+  be_visitor_valuetype_field_ci (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_valuetype_field_cs (void);
+  ~be_visitor_valuetype_field_ci (void);
   // destructor
 
   virtual int visit_field (be_field *node);
@@ -95,5 +94,5 @@ private:
   const char *pre_op_;
 };
 
-#endif /* _BE_VISITOR_VALUETYPE_FIELD_CS_H_ */
+#endif /* _BE_VISITOR_VALUETYPE_FIELD_CI_H_ */
 
