@@ -1,3 +1,8 @@
+Tue Nov  9 16:06:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	  Added Sync_Strategies.h to project.
+
 Tue Nov  9 15:12:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
