@@ -1,10 +1,19 @@
 // -*- MPC -*-
 // $Id$
 
+// The specific section for gnuace is here to avoid problems
+// with parallel builds.  Since the libraries in question share source
+// files, we need to ensure that one of them is built before all others.
+// Also, a specific section was used because you can't set build order
+// without setting a build dependency within vc6 and the like.
+
 project(*AC_CLD) : acelib, ssl {
   avoids += uses_wchar
   sharedname = AC_CLD
   dynamicflags = AC_CLD_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
   Source_Files {
     AC_Client_Logging_Daemon.cpp
     Logging_Handler.cpp
@@ -61,7 +70,10 @@ project(*Reactor_Log_Server) : aceexe {
 
 project(*Select_Reactor_Log_Server) : aceexe {
   avoids += uses_wchar
-  exename = select_reactor_loggin_server
+  exename = select_reactor_logging_server
+  specific(gnuace) {
+    after += *Reactor_Log_Server
+  }
   Source_Files {
     Logging_Acceptor.cpp
     Logging_Event_Handler.cpp
@@ -75,6 +87,9 @@ project(*SLD) : acelib {
   avoids += uses_wchar
   sharedname = SLD
   dynamicflags = SLD_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
   Source_Files {
     SLD.cpp
     Logging_Acceptor.cpp
@@ -87,6 +102,9 @@ project(*SLDex) : acelib {
   avoids += uses_wchar
   sharedname = SLDex
   dynamicflags = SLDEX_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
   Source_Files {
     Logging_Acceptor.cpp
     Logging_Event_Handler.cpp
@@ -108,6 +126,9 @@ project(*SR_Configurable_Log_Server) : aceexe {
 project(*TP_Reactor_Log_Server) : aceexe {
   avoids += uses_wchar
   exename = tp_reactor_logging_server
+  specific(gnuace) {
+    after += *Reactor_Log_Server
+  }
   Source_Files {
     Logging_Acceptor.cpp
     Logging_Event_Handler.cpp
@@ -121,6 +142,9 @@ project(*TPCLS) : acelib, ssl {
   avoids += uses_wchar
   sharedname = TPCLS
   dynamicflags = TPCLS_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
   Source_Files {
     TPC_Logging_Server.cpp
     Logging_Handler.cpp
@@ -131,6 +155,9 @@ project(*TPLS) : acelib {
   avoids += uses_wchar
   sharedname = TPLS
   dynamicflags = TPLS_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
   Source_Files {
     Logging_Acceptor.cpp
     Logging_Event_Handler.cpp
@@ -142,6 +169,9 @@ project(*TPLS) : acelib {
 project(*WFMO_Reactor_Log_Server) : aceexe, wfmo {
   avoids += uses_wchar
   exename = wfmo_reactor_logging_server
+  specific(gnuace) {
+    after += *Reactor_Log_Server
+  }
   Source_Files {
     Logging_Acceptor.cpp
     Logging_Event_Handler.cpp

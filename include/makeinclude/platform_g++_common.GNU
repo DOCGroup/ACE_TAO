@@ -96,7 +96,7 @@ ifeq ($(shared_libs), 1)
     ifeq ($(GNU_LD),1)
       # Make sure this version of ld supports the -E option.
       ifneq ($(mingw32),1)
-        LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | grep -i -e "option" -e "flag" /dev/null; echo $$?')
+        LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | egrep -i "(option|flag)" /dev/null; echo $$?')
       else
         LD_EXPORT_DEFINED := $(shell $(LD_FOR_VERSION_TEST) -E 2>&1 | grep -c -i -e '(option|flag)')
 	    ifeq ($(LD_EXPORT_DEFINED),0)
