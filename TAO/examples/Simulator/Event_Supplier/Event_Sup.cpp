@@ -448,6 +448,10 @@ Demo_Supplier::insert_event_data (
           navigation_.completion_time =  (*sched_data)->completion_time;
           navigation_.computation_time = (*sched_data)->computation_time;
 
+	  // because sched_data does not contain utilization and overhead data
+	  navigation_.utilitzation = ACE_OS::rand() % 100;
+	  navigation_.overhead = ACE_OS::rand() % 20;
+
           data.replace (_tc_Navigation, &navigation_, CORBA::B_TRUE, TAO_TRY_ENV);
         }
         else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
@@ -478,6 +482,10 @@ Demo_Supplier::insert_event_data (
           weapons_.deadline_time =    (*sched_data)->deadline_time;
           weapons_.completion_time =  (*sched_data)->completion_time;
           weapons_.computation_time = (*sched_data)->computation_time;	 
+
+	  // because sched_data does not contain utilization and overhead data
+	  weapons_.utilitzation = ACE_OS::rand() % 100;
+	  weapons_.overhead = ACE_OS::rand() % 20;
 
           data.replace (_tc_Weapons, &weapons_, CORBA::B_TRUE, TAO_TRY_ENV);
         }
