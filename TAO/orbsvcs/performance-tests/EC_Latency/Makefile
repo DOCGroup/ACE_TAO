@@ -11,7 +11,7 @@ endif
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
 
-BIN = client server
+BIN_UNCHECKED = client server
 
 server_OBJS=$(addsuffix .o,server)
 client_OBJS=$(addsuffix .o,client Consumer Supplier Client_Task)

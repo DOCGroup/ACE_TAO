@@ -1,5 +1,6 @@
 Sat Aug 25 09:04:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+        * orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
 	* orbsvcs/performance-tests/EC_Latency/Makefile: Will not build
 	  if corba_messaging == 0.
 
