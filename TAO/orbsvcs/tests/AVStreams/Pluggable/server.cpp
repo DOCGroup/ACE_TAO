@@ -30,6 +30,7 @@ FTP_Server_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
+	TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
@@ -42,28 +43,13 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != 0)
     {
       ACE_hrtime_t stamp;
-      //      int result = ACE_OS::fwrite (frame->rd_ptr (),
-      //                           frame->length (),
-      //                           1,
-      //                           FTP_SERVER::instance ()->file ());
-      if (frame->length () < sizeof(stamp))
-        return 0;
-
-      ACE_OS::memcpy (&stamp, frame->rd_ptr (), sizeof(stamp));
-
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      if (recv_base == 0)
-        {
-          recv_base = now;
-        }
-      else
-        {
-          recv_latency.sample (now - recv_base,
-                               now - stamp);
-        }
-
-     //if (result == 0)
-  //    ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
+      int result = ACE_OS::fwrite (frame->rd_ptr (),
+                                   frame->length (),
+                                   1,
+                                   FTP_SERVER::instance ()->file ());
+      
+      if (result == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
       frame = frame->cont ();
     }
   return 0;

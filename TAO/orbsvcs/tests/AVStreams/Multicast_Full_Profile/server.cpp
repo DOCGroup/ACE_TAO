@@ -40,6 +40,7 @@ FTP_Server_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
+  TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
