@@ -1,3 +1,11 @@
+Sun Jul  9 06:31:38 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Quoter/client.cpp:
+
+          Changed the way we were assigning quoter_FactoryObj_var
+          by just adding a middle variable, factory, in order to remove
+          a compiler error on MSVC.
+
 Sun Jul 09 08:12:54 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.LoadBalancing,Makefile.av:
