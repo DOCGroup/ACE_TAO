@@ -49,7 +49,8 @@ public:
   /// Validate the given properties/criteria.  All criteria
   /// will be validated regardless of whether or not an invalid
   /// property was encountered.
-  void validate_criteria (const PortableGroup::Properties & criteria)
+  void validate_criteria (const PortableGroup::Properties & criteria
+                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidCriteria,
                      PortableGroup::CannotMeetCriteria));
