@@ -2,7 +2,6 @@
 #include "../Simple_util.h"
 #include "Time_i.h"
 
-
 // This is the main driver program for the time and date server.
 
 int
@@ -15,7 +14,10 @@ main (int argc, char *argv[])
 
   TAO_TRY
     {
-      if (server.init ("Time", argc, argv, TAO_TRY_ENV) == -1)
+      if (server.init ("Time",
+                       argc,
+                       argv,
+                       TAO_TRY_ENV) == -1)
         return 1;
       else
         {

@@ -2,21 +2,23 @@
 # include "Simple_util.h"
 
 // Constructor.
+
 template <class Servant>
-Server<Servant>::Server ()
+Server<Servant>::Server () // @@ Bala, please fix the "() -> (void)".
   : ior_output_file_ (0)
 {
   // no-op.
 }
 
 // Destructor.
+
 template <class Servant>
 Server<Servant>::~Server ()
 {
 }
 
-
 // Parse the command-line arguments and set options.
+
 template <class Servant>
 int Server<Servant>::parse_args ()
 {
@@ -78,16 +80,19 @@ int Server<Servant>::init (const char *servant_name,
 
   if (retval != 0)
     return retval;
-
   
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Stash our ORB pointer for later reference.
   this->servant_.orb (orb.in ());
   
+  // Save name in case we use TAO Naming Service.
+  name = servant_name;	
 
   // Activate the servant in its own child POA.
-  name = servant_name;	// save name in case we use TAO Naming Service
+
+  // Make sure that you check for failures here via the TAO_TRY
+  // macros?!
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa (servant_name,
                                                  &this->servant_,
@@ -110,6 +115,8 @@ int Server<Servant>::init (const char *servant_name,
 template <class Servant>
 int Server<Servant>::run (CORBA::Environment &env)
 {
+  // @@ Bala, please indent..
+
 	// Run the main event loop for the ORB.
 	if (this->orb_manager_.run (env) == -1)
 		ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,9 +126,8 @@ int Server<Servant>::run (CORBA::Environment &env)
 	return 0;
 }
 
-
 template <class Servant>
-void Server<Servant>::register_name()
+void Server<Servant>::register_name ()
 {
   namingClient.init(orb_manager_.orb());
   // create the name for the naming service
@@ -133,12 +139,14 @@ void Server<Servant>::register_name()
   // (re)Bind the object.
   TAO_TRY
     {
+      // @@ Bala, please make sure to put a ' ' between this and '('
       CORBA::Object_var object = servant_._this(TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
+      // @@ Bala, please make sure to put a ' ' between this and '('
       namingClient->bind(bindName,
-                           object.in(),       
-                           TAO_TRY_ENV);
+                         object.in(),       
+                         TAO_TRY_ENV);
       TAO_CHECK_ENV;  
     }
   TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
@@ -153,8 +161,8 @@ void Server<Servant>::register_name()
 
 }
 
-
 // Constructor.
+
 template <class InterfaceObj, class Var>
 Client<InterfaceObj, Var>::Client ()
   : ior_ (0)
@@ -192,6 +200,7 @@ int Client<InterfaceObj, Var>::read_ior (char *filename)
 }
 
 // Parses the command line arguments and returns an error status.
+
 template <class InterfaceObj, class Var>
 int Client<InterfaceObj, Var>::parse_args ()
 {
