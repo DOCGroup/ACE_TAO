@@ -1,3 +1,44 @@
+Fri Mar 12 13:20:14 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Active_Objects/active_objects.mpc:
+        * examples/APG/Active_Objects/active_objects.mwc:
+        * examples/APG/Config/config.mpc:
+        * examples/APG/Config/config.mwc:
+        * examples/APG/Containers/containers.mwc:
+        * examples/APG/Logging/logging.mpc:
+        * examples/APG/Logging/logging.mwc:
+        * examples/APG/Misc_IPC/misc_ipc.mpc:
+        * examples/APG/Misc_IPC/misc_ipc.mwc:
+        * examples/APG/Naming/naming.mpc:
+        * examples/APG/Naming/naming.mwc:
+        * examples/APG/Proactor/proactor.mpc:
+        * examples/APG/Proactor/proactor.mwc:
+        * examples/APG/Processes/processes.mpc:
+        * examples/APG/Processes/processes.mwc:
+        * examples/APG/Reactor/reactor.mpc:
+        * examples/APG/Reactor/reactor.mwc:
+        * examples/APG/Shared_Memory/shared_memory.mpc:
+        * examples/APG/Shared_Memory/shared_memory.mwc:
+        * examples/APG/Signals/signals.mpc:
+        * examples/APG/Signals/signals.mwc:
+        * examples/APG/Sockets/sockets.mpc:
+        * examples/APG/Sockets/sockets.mwc:
+        * examples/APG/Streams/streams.mpc:
+        * examples/APG/Streams/streams.mwc:
+        * examples/APG/Svc_Config/svc_config.mpc:
+        * examples/APG/Svc_Config/svc_config.mwc:
+        * examples/APG/ThreadManagement/threadmgmt.mpc:
+        * examples/APG/ThreadManagement/threadmgmt.mwc:
+        * examples/APG/ThreadPools/threadpools.mpc:
+        * examples/APG/ThreadPools/threadpools.mwc:
+        * examples/APG/ThreadSafety/threadsafety.mpc:
+        * examples/APG/ThreadSafety/threadsafety.mwc:
+        * examples/APG/Threads/threads.mpc:
+        * examples/APG/Threads/threads.mwc:
+        * examples/APG/Timers/timers.mpc:
+        * examples/APG/Timers/timers.mwc:
+          Added missing Id tag
+
 Fri Mar 12 06:18:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
