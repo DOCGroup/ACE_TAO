@@ -118,19 +118,13 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
         byte payload[] = new byte[1];
         payload[0] = 0;
         RtecEventComm.Event notification_event_ = new RtecEventComm.Event ();
+        notification_event_.header = 
+          new RtecEventComm.EventHeader (ACE_ES_EVENT_NOTIFICATION,
+                                         0, 1, 0, 0, 0);
 
-        notification_event_.header.type = ACE_ES_EVENT_NOTIFICATION;
-        notification_event_.header.source = 0;
-        notification_event_.header.ttl = 1;
-        notification_event_.header.creation_time = 0;
-        notification_event_.header.ec_recv_time = 0;
-        notification_event_.header.ec_send_time = 0;
-        notification_event_.data.x = 0;
-        notification_event_.data.y = 0; 
-        notification_event_.data.pad0 = 0.0;
-        notification_event_.data.pad1 = 0;
-        notification_event_.data.payload = payload;
-        notification_event_.data.any_value = orb_.create_any();
+        notification_event_.data = 
+          new RtecEventComm.EventData (0, 0, 0.0, 0, 
+                                       payload, orb_.create_any());
 
         RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[1];
         dependencies_[0] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
