@@ -3898,21 +3898,20 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 		     int, -1);
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
   struct sched_param param;
-  int result;
   int policy = 0;
 
   param.sched_priority = prio;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, &policy, &param), 
-				       result), int,
-		     -1, result);
-  return result;
-  ACE_NOTSUP_RETURN (-1);
+				       ace_result_), 
+		     int, -1);
 #elif defined (ACE_HAS_WTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio), 
 				       ace_result_), 
 		     int, -1);
 #elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPrioritySet (thr_id, prio), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPrioritySet (thr_id, prio), 
+				       ace_result_), 
+		     int, -1);
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
