@@ -46,7 +46,7 @@ public:
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
                           const TAO_GIOP_Version &version);
-                          
+
   // Constructor
   TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                           CORBA::ULong &request_id,
@@ -94,8 +94,8 @@ public:
   void operation (const char * name,
                   int release);
   // set the operation name
-  
-  
+
+
   unsigned int operation_length (void) const;
   // return the legnth of the operation
 
@@ -114,19 +114,6 @@ public:
   // = TAO extensions
   // meant to be used internally.
   //
-
-  virtual void demarshal (CORBA_Environment &ACE_TRY_ENV,
-                          const TAO_Call_Data_Skel *info,
-                          ...);
-  // demarshal incoming parameters. Used by the SII skeleton (i.e., the IDL
-  // compiler generated skeleton)
-
-  virtual void marshal (CORBA_Environment &ACE_TRY_ENV,
-                        //                        CORBA_Environment &skel_env,
-                        const TAO_Call_Data_Skel *info,
-                        ...);
-  // marshal outgoing parameters and return value. This is used by the SSI
-  // i.e., by the IDL compiler generated skeletons.
 
   virtual void init_reply (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
@@ -193,7 +180,7 @@ public:
 
 private:
   TAO_Pluggable_Messaging *mesg_base_;
-  
+
   ACE_CString operation_;
   // Operation name.
 

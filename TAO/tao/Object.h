@@ -55,6 +55,9 @@ public:
                                                  TAO_default_environment ());
   // no-op it is just here to simplify some templates.
 
+  static void _tao_any_destructor (void*);
+  // Used in the implementation of CORBA::Any
+
   // These calls correspond to over-the-wire operations, or at least
   // do so in many common cases.  The normal implementation assumes a
   // particular simple, efficient, protocol-neutral interface for

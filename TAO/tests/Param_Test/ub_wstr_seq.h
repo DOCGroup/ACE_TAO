@@ -38,11 +38,6 @@ public:
                     CORBA::Environment &env);
   // run the SII test
 
-  int add_args (CORBA::NVList_ptr nvlist,
-                CORBA::NVList_ptr retval,
-                CORBA::Environment &env);
-  // add args to NVList for DII
-
   const char *opname (void) const;
   // return operation name
 
@@ -62,7 +57,7 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *, 
+  void dii_req_invoke (CORBA::Request *,
                        CORBA::Environment &);
   // invoke DII request with appropriate exception handling.
 

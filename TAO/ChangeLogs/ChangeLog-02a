@@ -1,11 +1,603 @@
+Tue Mar 21 13:51:23 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * Merged in the changes in the non_interpretive branch.
+          This fixes [BUGID:135]
+
+        * */Makefile:
+          Updated dependencies in all the makefiles.
+
+        Thu Mar 16 17:16:53 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/Any.cpp:
+          Fixed some code to work in platforms without exceptions.
+
+        * tao/orb.idl:
+          Added a missing #pragma prefix ""
+
+        * tests/Param_Test/anyop.cpp:
+          Fixed so the Object Reference test works on any host.  Not very
+          elegant or portable, but it does the job.
+
+        Mon Mar 13 15:37:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Removed the deep_free.cpp file from the projects.
+
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          Corrected indentation.
+
+        Mon Mar 13 14:19:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          There are two versions of the >>= operators:
+
+          CORBA::Boolean >>= (const Any&, T*&)
+          CORBA::Boolean >>= (const Any&, const T*&)
+
+          the first one is deprecated, but we still support it. Jeff
+          Parsons pointed out that the first version can be implemented
+          using the second version as follows:
+              return any >>= ACE_const_cast(const T*&,x);
+          i also simplified the implementation of the second version.
+
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Had to revert Jeff fix for the _tao_any_destructor functions
+          declared in deeply nested modules.  GCC gets utterly confused by
+          this declaration:
+             void ::Foo::Bar::_tao_any_destructor (void *) ....
+          it tolerates this one:
+             void Foo::Bar::_tao_any_destructor (void *) ....
+          but fails with this one:
+             void Foo::Bar::Foo::_tao_any_destructor (void *) ....
+
+        * tao/Makefile:
+        * tao/deep_free.cpp:
+        * tao/Marshal.h:
+        * tao/Marshal.i:
+          Removed (finally!) the deep_free methods.  Now we only need to
+          remove the support classes to finally get rid of all the
+          interpretive marshaling code.
+
+        * tao/GIOPC.cpp:
+        * tao/IOPC.cpp:
+        * tao/ImplRepoC.h:
+        * tao/ImplRepoC.i:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoS.h:
+        * tao/ImplRepoS.i:
+        * tao/ImplRepoS.cpp:
+        * tao/ImplRepoS_T.h:
+        * tao/ImplRepoS_T.i:
+        * tao/ImplRepoS_T.cpp:
+        * tao/InterceptorC.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/TAOC.cpp:
+          Fix the hand-crafted files with respect to the two versions of
+          the >>= operators.
+
+        * TAO_IDL/Makefile:
+          Updated dependencies
+
+        * TAO_IDL/be/be_visitor_factory.cpp:
+          Cosmetic fixes.
+
+        Mon Mar 13 08:23:23 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.h:
+        * tao/Any.cpp:
+          The _tao_replace() functions do not require an ACE_TRY_ENV
+          argument.
+          Any _tao_replace() function that requires a void* also requires
+          the destructor function.
+
+        * tao/BoundsC.h:
+        * tao/BoundsC.cpp:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynAnyC.h:
+        * tao/DynAny_i.cpp:
+        * tao/GIOPC.cpp:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IORC.h:
+        * tao/IORC.cpp:
+        * tao/ImplRepoC.h:
+        * tao/ImplRepoC.i:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoS.cpp:
+        * tao/ImplRepoS.h:
+        * tao/ImplRepoS.i:
+        * tao/ImplRepoS_T.h:
+        * tao/ImplRepoS_T.i:
+        * tao/ImplRepoS_T.cpp:
+        * tao/InterceptorC.h:
+        * tao/InterceptorC.cpp:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.cpp:
+        * tao/MessagingC.h:
+        * tao/MessagingC.cpp:
+        * tao/MessagingS.cpp:
+        * tao/NVList.cpp:
+        * tao/ObjectIDList.h:
+        * tao/ObjectIDList.cpp:
+        * tao/POAC.h:
+        * tao/POAC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.cpp:
+        * tao/Sequence.h:
+        * tao/Sequence.cpp:
+        * tao/Services.h:
+        * tao/Services.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.cpp:
+          Changed all the hand-crafted files to use the new _tao_replace
+          style functions.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          The _tao_replace() functions do not require the ACE_TRY_ENV
+          argument anymore.  This let us simplify many of the
+          implementations for >>= and <<= operators.  We also identified
+          some cases of duplicated code and removed as much as possible of
+          that.
+
+        * tests/Param_Test/Param_Test.dsw:
+        * tests/Param_Test/anyop.dsp:
+        * tests/Param_Test/anyop.cpp:
+          Added the anyop test to the NT project files.
+
+        Fri Mar 10 19:06:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/DynAnyC.h:
+        * tao/DynAnyC.cpp:
+          Removed some unnecessary _ptr_type typedefs.
+
+        Fri Mar 10 14:54:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          In the definition of the static function
+          _tao_any_destructor, prepending the global "::"
+          to the scoped name of the class or struct keeps
+          gcc happy. Thanks to Carlos for pointing this out.
+
+        Fri Mar 10 12:24:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/POA/DSI/Database_i.cpp:
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * tests/CDR/basic_types.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref.h:
+        * utils/catior/catior.cpp:
+          Fixed uses of encode(), decode(), replace(), the void*
+          constructor for Any and obsolete >>= or <<= operators.
+
+        * */Makefile:
+          Updated dependencies
+
+        Fri Mar 10 11:28:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.cpp:
+          The >>= operator for 'const Any*' was not working properly,
+          thanks to Jeff for letting me know.
+
+        * tao/GIOPC.h:
+        * tao/GIOPC.cpp:
+          Another pair of files updated.
+
+        Fri Mar 10 12:49:21 2000  Jeff Paraons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp
+        * TAO_IDL/be/be_visitor_argument.cpp
+        * TAO_IDL/be/be_visitor_factory.cpp
+        * TAO_IDL/be/be_visitor_operation.cpp
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/argument.cpp
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp
+        * TAO_IDL/be_include/be_codegen.h
+        * TAO_IDL/be_include/be_visitor_argument.h
+        * TAO_IDL/be_include/be_visitor_factory.h
+        * TAO_IDL/be_include/be_visitor_operation.h
+        * TAO_IDL/be_include/be_visitor_argument/marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/operation_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/operation_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_pre_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h
+        * TAO_IDL/be_include/be_visitor_union/any_op_cs.h
+        * TAO_IDL/driver/drv_args.cpp
+        * TAO_IDL/include/idl_global.h
+        * TAO_IDL/util/utl_global.cpp
+          Changes to remove the generation of code using interpretive
+          marshaling.
+
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_invoke_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_invoke_cs.h
+          Files added or renamed from other files removed below.
+
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/compiled_marshal_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/compiled_marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_pre_docall_cs.h
+          Files removed.
+
+        Fri Mar 10 09:49:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.h:
+        * tao/Any.cpp:
+          More memory management fixes for the >>= and <<= operators.
+          Moved some static _tao_any_destructor functions to the Any
+          class, it is easier to maintain it that way.
+
+        * tao/Object.h:
+        * tao/Object.cpp:
+          Add the _tao_any_destructor helper function.
+
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+          Changed to use the new _tao_any_destructors in the right places.
+
+        * tao/DynAny_i.cpp:
+          It is better just to return 0 than to cast away const.
+
+        Fri Mar 10 11:28:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_static.dsp:
+          Added BoundsC.cpp to these projects.
+
+        * tao/DynAny_i,cpp:
+          In get_string() cast away the constness of the internal
+          char* pointer in the ACE_THROW_RETURN statement.
+
+        Thu Mar  9 21:02:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+
+          Fixed typo.
+
+        Thu Mar  9 18:50:44 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+          The <<= and >>= operators must set a function to cleanup the
+          objects stored by the Any.  The function usually just casts from
+          void* to the real type and invokes 'delete' or CORBA::release().
+          This is far more efficient, type safe and maintainable than the
+          deep_free approach.
+          The function is provided in the _tao_replace() method. For the
+          time beign (until the hand-crafted code is fixed), we maintain
+          both versions.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Modified to:
+          - Generate an _tao_any_destructor() function to destroy the
+            object stored into an any.  For sequences, structures, unions
+            and interfaces the function is an static function of the
+            corresponding class.  For arrays it is a static member of the
+            T_forany class.
+          - The generated <<= and >>= operators have been modified to pass
+            the _tao_any_destructor. Thus the generated code no longer
+            depends on deep_free!
+            Furthermore the implementations of the <<= operators have been
+            optimized.  It makes no sense to pre-allocate the object,
+            because sometimes the >>= operator is never invoked. In other
+            word: eager evaluation only makes sense when the result is
+            used all the time, and this is not the case for the <<=
+            operators.
+
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+          Updated to use the new _tao_replace() methods.
+
+        * tao/DynAny_i.cpp:
+          The >>=(char*&) operators have been removed from the Any class,
+          they were a TAO extension.
+
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/anyop.cpp:
+          Updated dependencies.
+
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/recursive_union.cpp:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_wstring.cpp:
+          Fix a few memory management problems and some glaring bugs.
+          With this round of changes all the DII and SII tests pass!
+          We still have to look for memory leaks.
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * tao/decode.cpp:
+        * tao/encode.cpp:
+          These files were not commited in the last change.
+
+        Wed Mar  8 19:18:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/Marshal.h:
+        * tao/decode.cpp:
+        * tao/encode.cpp:
+          I have started the work to remove the interpretive engine.
+          The first step was to remove the the encode() and decode()
+          methods.  We have re-implemented all the other components in the
+          ORB to use compiled marshaling instead.
+
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+          All the methods taking void* are deprecated (unfortunately due
+          to an editorial mistake this resolution didn't make it into the
+          text of the CORBA 2.3 mapping).  There is no portable way to use
+          them anyway.
+          For the time beign we have commented them out, to check that no
+          portion of TAO invokes them, eventually we will make them
+          visible again, but they will raise the CORBA::NO_IMPLEMENT
+          exception.
+          Re-implement all the basic <<= and >>= operators using
+          _tao_replace() instead of replace().
+          The extraction operators for the CORBA::Any::to_string,
+          CORBA::Any::to_wstring and CORBA::Any::to_object classes were
+          not implemented properly.  First they did not unalias the types,
+          and next they used equivalent() with the wrong TypeCode.
+          Implement the CDR operators for Any using compiled marshaling.
+
+        * tao/Makefile:
+        * tao/BoundsC.h:
+        * tao/BoundsC.cpp:
+          BoundsC was not compiled, though this is the right exception to
+          raise from certain NVList operations.
+          Updated to use _tao_replace() in the >>= and <<= operators.
+
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+          Remove the decode() and encode() methods
+
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/Server_Request.h:
+          Remove the support for interpretive marshaling.
+
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+          Removed old comments about interpretive marshaling.
+
+        * tao/NVList.cpp:
+          It was raising CORBA::TypeCode::Bounds to signal an error, but
+          the correct exception is CORBA::Bounds.
+
+        * tao/Exception.cpp:
+
+        * tao/DynAny_i.cpp:
+        * tao/Forwarding_Servant.cpp:
+        * tao/MessagingS.cpp:
+        * tao/ObjectIDList.cpp:
+        * tao/ObjectIDList.h:
+        * tao/POAS.cpp:
+        * tao/PolicyS.cpp:
+        * tao/PollableS.cpp:
+        * tao/Services.cpp:
+        * tao/Services.h:
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+        * tao/append.cpp:
+        * tao/skip.cpp:
+          Re-implemented several stubs using compiled marshaling.
+          Use _tao_replace() in <<= and >>= operators.
+
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+          Use _tao_encode() and _tao_decode() to marshal and demarshal
+          exceptions.  Those methods are implemented using compiled
+          marshaling.
+
+        * tao/POAC.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Cosmetic changes.
+
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/anyop.cpp:
+          New test to verify that the <<= and >>= operators work
+          correctly.
+
+        * tests/Param_Test/param_test.idl:
+
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/any.h:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/bd_array_seq.h:
+        * tests/Param_Test/bd_array_seq.cpp:
+        * tests/Param_Test/bd_long_seq.h:
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_short_seq.h:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/bd_str_seq.h:
+        * tests/Param_Test/bd_str_seq.cpp:
+        * tests/Param_Test/bd_string.h:
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_struct_seq.h:
+        * tests/Param_Test/bd_struct_seq.cpp:
+        * tests/Param_Test/bd_wstr_seq.h:
+        * tests/Param_Test/bd_wstr_seq.cpp:
+        * tests/Param_Test/bd_wstring.h:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/big_union.h:
+        * tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/complex_any.h:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/except.h:
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/fixed_array.h:
+        * tests/Param_Test/fixed_array.cpp:
+        * tests/Param_Test/fixed_struct.h:
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/multdim_array.h:
+        * tests/Param_Test/multdim_array.cpp:
+        * tests/Param_Test/nested_struct.h:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/objref.h:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref_struct.h:
+        * tests/Param_Test/objref_struct.cpp:
+        * tests/Param_Test/recursive_struct.h:
+        * tests/Param_Test/recursive_struct.cpp:
+        * tests/Param_Test/recursive_union.h:
+        * tests/Param_Test/recursive_union.cpp:
+        * tests/Param_Test/short.h:
+        * tests/Param_Test/short.cpp:
+        * tests/Param_Test/typecode.h:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.h:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_array_seq.h:
+        * tests/Param_Test/ub_array_seq.cpp:
+        * tests/Param_Test/ub_long_seq.h:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_objref_seq.h:
+        * tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/ub_short_seq.h:
+        * tests/Param_Test/ub_short_seq.cpp:
+        * tests/Param_Test/ub_str_seq.h:
+        * tests/Param_Test/ub_str_seq.cpp:
+        * tests/Param_Test/ub_string.h:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_struct_seq.h:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/ub_wstr_seq.h:
+        * tests/Param_Test/ub_wstr_seq.cpp:
+        * tests/Param_Test/ub_wstring.h:
+        * tests/Param_Test/ub_wstring.cpp:
+        * tests/Param_Test/ulonglong.h:
+        * tests/Param_Test/ulonglong.cpp:
+        * tests/Param_Test/var_array.h:
+        * tests/Param_Test/var_array.cpp:
+        * tests/Param_Test/var_struct.h:
+        * tests/Param_Test/var_struct.cpp:
+          We now use the standard <<= and >>= operators to test DII. We
+          also use the add_in_arg(), add_out_arg() and add_inout_arg()
+          helper methods.
+          The add_args() method was removed because it relied on the
+          non-portable, deprecated and ugly replace() operation in
+          CORBA::Any.
+          The SII tests are all passing, most of the DII tests pass too,
+          but these changes uncovered several problems with the
+          implementation of deep_free(), since deep_free has to be
+          removed we better wait for those changes instead of trying to
+          support the current scheme.
+
+        * tao/IIOP_Profile.cpp:
+        * tao/SHMIOP_Profile.cpp:
+        * tao/UIOP_Profile.cpp:
+          Cosmetic fixes.
+
 Tue Mar 21 11:29:05 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Server_Request.h: Made some cosmetic changes. 
 
 Tue Mar 21 10:00:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Utils.cpp (convert_CORBA_to_GIOP_exception): Removed
-	  unnecessary ACE_DEBUG statements.
+        * tao/GIOP_Utils.cpp (convert_CORBA_to_GIOP_exception): Removed
+          unnecessary ACE_DEBUG statements.
 
 Mon Mar 20 19:59:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 

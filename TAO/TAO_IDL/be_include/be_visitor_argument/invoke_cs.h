@@ -8,37 +8,38 @@
 //    TAO IDL
 //
 // = FILENAME
-//    docall_cs.h
+//    invoke_cs.h
 //
 // = DESCRIPTION
 //    Visitors for generation of code for Arguments for passing the arguments
-//    to the docall in the client side stub.
+//    to the CDR << and >> operators
 //
 // = AUTHOR
 //    Aniruddha Gokhale
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_ARGUMENT_DOCALL_CS_H_
-#define _BE_VISITOR_ARGUMENT_DOCALL_CS_H_
+#ifndef _BE_VISITOR_ARGUMENT_INVOKE_CS_H_
+#define _BE_VISITOR_ARGUMENT_INVOKE_CS_H_
 
 // ************************************************************
-// class be_visitor_args_docall_cs
+// class be_visitor_args_invoke_cs
 // ************************************************************
-class be_visitor_args_docall_cs : public be_visitor_args
+
+class be_visitor_args_invoke_cs : public be_visitor_args
 {
   //
   // = TITLE
-  //   be_visitor_args_docall_cs
+  //   be_visitor_args_invoke_cs
   //
   // = DESCRIPTION
-  //   Code to be generated when making the do_static_call
+  //   Code to be generated when making the invocation
   //
 public:
-  be_visitor_args_docall_cs (be_visitor_context *ctx);
+  be_visitor_args_invoke_cs (be_visitor_context *ctx);
   // constructor
 
-  virtual ~be_visitor_args_docall_cs (void);
+  virtual ~be_visitor_args_invoke_cs (void);
   // destructor
 
   virtual int visit_argument (be_argument *node);
@@ -57,6 +58,14 @@ public:
 
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward
+
+#ifdef IDL_HAS_VALUETYPE
+  virtual int visit_valuetype (be_valuetype *node);
+  // visit valuetype
+
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit valuetype forward
+#endif /* IDL_HAS_VALUETYPE */
 
   virtual int visit_predefined_type (be_predefined_type *node);
   // visit predefined type
@@ -78,4 +87,4 @@ public:
 
 };
 
-#endif /* _BE_VISITOR_ARGUMENT_DOCALL_CS_H_ */
+#endif /* _BE_VISITOR_ARGUMENT_INVOKE_CS_H_ */

@@ -183,7 +183,7 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
   // Prepare a String and "define" that in the PropertySet.
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
   anyval <<= strvar.in ();
-  char * newstr;
+  const char * newstr;
   anyval >>= newstr;
   propsetdef_->define_property ("string_property",
                                 anyval,
@@ -332,7 +332,7 @@ Client::test_get_properties (CORBA::Environment &ACE_TRY_ENV)
               CORBA::ULong  ulong_val;
               CORBA::Float  float_val;
               CORBA::Double double_val;
-              char *        string_val;
+              const char *  string_val;
 
               if (properties [pi].property_value >>=
                   CORBA::Any::to_char (char_val))
@@ -539,7 +539,7 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
 
               if (properties [pi].property_value.type () == CORBA::_tc_string)
                 {
-                  char* str;
+                  const char* str;
                   properties [pi].property_value >>= str;
                   ACE_DEBUG ((LM_DEBUG,"%s\n", str));
                 }
@@ -598,7 +598,7 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
 
               if (property->property_value.type () == CORBA::_tc_string)
                 {
-                  char* str;
+                  const char* str;
                   property->property_value >>= str;
                   ACE_DEBUG ((LM_DEBUG,"%s\n", str));
                 }
@@ -681,7 +681,7 @@ Client::test_define_property_with_mode (CORBA::Environment &ACE_TRY_ENV)
   // Prepare a String and "define" that in the PropertySet.
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
   anyval <<= strvar.in ();
-  char* newstr;
+  const char* newstr;
   anyval >>= newstr;
 
   propsetdef_->define_property  ("string_property",

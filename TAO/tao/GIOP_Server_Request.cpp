@@ -50,19 +50,19 @@ TAO_GIOP_ServerRequest::
                             TAO_OutputCDR &output,
                             TAO_ORB_Core *orb_core,
                             const TAO_GIOP_Version &version)
-      :mesg_base_ (mesg_base), 
+      :mesg_base_ (mesg_base),
        incoming_ (&input),
        outgoing_ (&output),
        response_expected_ (0),
        sync_with_server_ (0),
        lazy_evaluation_ (0),
-       
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-      
+
        params_ (0),
-       
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
-       
+
        retval_ (0),
        exception_ (0),
        exception_type_ (TAO_GIOP_NO_EXCEPTION),
@@ -96,13 +96,13 @@ TAO_GIOP_ServerRequest::
         response_expected_ (response_expected),
         sync_with_server_ (0),
         lazy_evaluation_ (0),
-        
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-        
+
         params_ (0),
-        
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
-        
+
         retval_ (0),
         exception_ (0),
         exception_type_ (TAO_GIOP_NO_EXCEPTION),
@@ -265,9 +265,9 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
           CORBA::TypeCode_var tc = this->retval_->type ();
                 if (this->retval_->any_owns_data ())
             {
-              (void) this->outgoing_->encode (tc.in (),
-                                              retval_->value (),
-                                              0, ACE_TRY_ENV);
+              this->retval_->_tao_encode (*this->outgoing_,
+                                          this->orb_core_,
+                                          ACE_TRY_ENV);
               ACE_CHECK;
             }
           else
@@ -293,132 +293,6 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-// Extension
-void
-TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &ACE_TRY_ENV,
-                                   // ORB related exception reporting
-                                   const TAO_Call_Data_Skel *info,
-                                   // call description
-                                   ...)
-{
-  CORBA::ULong i;
-  const TAO_Param_Data_Skel *pdp;
-  va_list param_vector;
-  va_start (param_vector, info);
-
-  for (i = 0, pdp = info->params;
-       i < info->param_count;
-       i++, pdp++)
-    {
-      void *ptr = va_arg (param_vector, void *);
-
-      if ((pdp->mode == CORBA::ARG_IN)
-          || (pdp->mode == CORBA::ARG_INOUT))
-        {
-          // Then just unmarshal the value.
-          (void) incoming_->decode (pdp->tc, ptr, 0, ACE_TRY_ENV);
-          ACE_CHECK;
-        }
-    }
-  va_end (param_vector);
-}
-
-// Extension
-
-void
-TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
-                                 // ORB related exception reporting
-                                 //                             CORBA::Environment &skel_env,
-                                 // skeleton related exception reporting
-                                 const TAO_Call_Data_Skel *info,
-                                 // call description
-                                 ...)
-{
-  // what is "ACE_TRY_ENV" and "skel_env"?
-  // "skel_env" holds the exception that got raised inside the operation
-  // implementation (upcall)
-  //
-  // "orb_env" is the exception that may have been raised due to things going
-  // wrong in the entire dispatch process. These are always system exceptions.
-
-  // check if we are inside with an exception. This may have happened
-  // since the upcall could have set some exception
-#if 0 /* ASG */
-  if (skel_env.exception ())
-    {
-      // We must increase the "refcnt" on the exception, because it is
-      // "owned" by both <skel_env> and (eventually) by the
-      // Server_Request.
-      CORBA::Exception_ptr exception = skel_env.exception ();
-      exception->_incr_refcnt ();
-
-      // The Any does not own the because ultimately it will be owned
-      // by the Server_Request via the call to "set_exception"
-      CORBA::Any any (skel_env.exception ()->_type (), exception);
-      this->set_exception (any, ACE_TRY_ENV);
-    }
-#endif
-
-  // Setup a Reply message so that we can marshal all the outgoing parameters
-  // into it. If an exception was set, then that gets marshaled into the reply
-  // message and we don't do anything after that
-  this->init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
-
-#if 0 /* ASG */
-  // exception? nothing to do after this
-  if (orb_env.exception () || skel_env.exception ())
-    return;
-  ACE_CHECK;
-#endif
-
-  CORBA::ULong i;
-  const TAO_Param_Data_Skel *pdp;
-  va_list param_vector;
-  va_start (param_vector, info);
-
-  ACE_TRY
-    {
-      for (i = 0, pdp = info->params;
-           i < info->param_count;
-           i++, pdp++)
-        {
-          void *ptr = va_arg (param_vector, void *);
-
-          if (pdp->mode == 0)
-            {
-              // check if the return type is not void
-              CORBA::TCKind result = pdp->tc->kind (ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-              if (result != CORBA::tk_void)
-                {
-                  // Then just marshal the value.
-                  (void) this->outgoing_->encode (pdp->tc, ptr, 0,
-                                                  ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-                }
-            }
-          else if ((pdp->mode == CORBA::ARG_INOUT)
-                   || (pdp->mode == CORBA::ARG_OUT))
-            {
-              // Then just marshal the value.
-              (void) this->outgoing_->encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_GIOP_ServerRequest::marshal - parameter encode failed");
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-
-  va_end (param_vector);
-}
 
 void
 TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
@@ -598,7 +472,7 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   int result = this->mesg_base_->send_message (transport,
                                                *this->outgoing_);
 
-                                       
+
 
   if (result == -1)
     {

@@ -11,25 +11,15 @@
 #include "ace/pre.h"
 #define _TAO_IDL_IMPLREPOC_H_
 
-#include "tao/Object.h"
-#include "tao/Managed_Types.h"
-#include "tao/POAC.h"
-#include "tao/Servant_Base.h"
-#include "tao/Operation_Table.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
-#include "tao/Server_Request.h"
-#include "tao/NVList.h"
-#include "tao/Object_Adapter.h"
-#include "tao/Invocation.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "tao/corba.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
 #if defined (TAO_EXPORT_MACRO)
@@ -59,7 +49,7 @@ TAO_NAMESPACE  ImplementationRepository
 
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
-
+  
 #endif /* end #if !defined */
 
 
@@ -73,14 +63,14 @@ TAO_NAMESPACE  ImplementationRepository
     ServerObject_var (ServerObject_ptr);
     ServerObject_var (const ServerObject_var &); // copy constructor
     ~ServerObject_var (void); // destructor
-
+    
     ServerObject_var &operator= (ServerObject_ptr);
     ServerObject_var &operator= (const ServerObject_var &);
     ServerObject_ptr operator-> (void) const;
-
+    
     operator const ServerObject_ptr &() const;
     operator ServerObject_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     ServerObject_ptr in (void) const;
     ServerObject_ptr &inout (void);
     ServerObject_ptr &out (void);
@@ -110,7 +100,7 @@ TAO_NAMESPACE  ImplementationRepository
     operator ServerObject_ptr &();
     ServerObject_ptr &ptr (void);
     ServerObject_ptr operator-> (void);
-
+    
   private:
     ServerObject_ptr &ptr_;
   };
@@ -134,21 +124,23 @@ class TAO_Export ServerObject : public virtual ACE_CORBA_1 (Object)
     static ServerObject_ptr _duplicate (ServerObject_ptr obj);
     static ServerObject_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &env = 
           TAO_default_environment ()
       );
     static ServerObject_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &env = 
           TAO_default_environment ()
       );
     static ServerObject_ptr _nil (void)
       {
-        return (ImplementationRepository::ServerObject_ptr)0;
+        return (ServerObject_ptr)0;
       }
 
+    static void _tao_any_destructor (void*);
+
     virtual void ping (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -156,7 +148,7 @@ class TAO_Export ServerObject : public virtual ACE_CORBA_1 (Object)
       ));
 
     virtual void shutdown (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -164,16 +156,16 @@ class TAO_Export ServerObject : public virtual ACE_CORBA_1 (Object)
       ));
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        const CORBA::Char *type_id, 
+        CORBA::Environment &env = 
           TAO_default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ServerObject (void);
-    ServerObject (TAO_Stub *objref,
-        TAO_ServantBase *_tao_servant = 0,
+    ServerObject (TAO_Stub *objref, 
+        TAO_ServantBase *_tao_servant = 0, 
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~ServerObject (void);
@@ -185,14 +177,14 @@ class TAO_Export ServerObject : public virtual ACE_CORBA_1 (Object)
 class TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory
 {
 public:
-
+  
   TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory (int register_proxy_factory = 1);
-
+  
   virtual ~TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory (void);
-
-  virtual ImplementationRepository::ServerObject_ptr create_proxy (
-      ImplementationRepository::ServerObject_ptr proxy,
-      CORBA::Environment &env =
+  
+  virtual ServerObject_ptr create_proxy (
+      ServerObject_ptr proxy,
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
 };
@@ -200,23 +192,23 @@ public:
 class TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter
 {
 public:
-
+  
   friend class ACE_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-
+  
   int register_proxy_factory (
       TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory *df,
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
-
+  
   int unregister_proxy_factory (
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
-
-  ImplementationRepository::ServerObject_ptr create_proxy (
-      ImplementationRepository::ServerObject_ptr proxy,
-      CORBA::Environment &env =
+  
+  ServerObject_ptr create_proxy (
+      ServerObject_ptr proxy,
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
 
@@ -232,13 +224,13 @@ protected:
   };
 
   typedef ACE_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_ServerObject_PROXY_FACTORY_ADAPTER;
-  class TAO_ImplementationRepository_ServerObject_Smart_Proxy_Base : public virtual ImplementationRepository::ServerObject
+  class TAO_ImplementationRepository_ServerObject_Smart_Proxy_Base : public virtual ACE_NESTED_CLASS (ImplementationRepository, ServerObject)
   {
   public:
-    TAO_ImplementationRepository_ServerObject_Smart_Proxy_Base (ImplementationRepository::ServerObject_ptr proxy);
+    TAO_ImplementationRepository_ServerObject_Smart_Proxy_Base (::ImplementationRepository::ServerObject_ptr proxy);
     ~TAO_ImplementationRepository_ServerObject_Smart_Proxy_Base (void);
       virtual void ping (
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -246,7 +238,7 @@ protected:
     ));
 
   virtual void shutdown (
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -254,7 +246,7 @@ protected:
     ));
 
 private:
-  ImplementationRepository::ServerObject_var base_proxy_;
+  ::ImplementationRepository::ServerObject_var base_proxy_;
 };
 
 
@@ -264,15 +256,15 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerObject;
 
 struct EnvironmentVariable;
 class EnvironmentVariable_var;
-typedef EnvironmentVariable* EnvironmentVariable_ptr;
 
 struct TAO_Export EnvironmentVariable
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef EnvironmentVariable_ptr _ptr_type;
   typedef EnvironmentVariable_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static void _tao_any_destructor (void*);
 
   TAO_String_Manager name;
   TAO_String_Manager value;
@@ -285,16 +277,18 @@ public:
   EnvironmentVariable_var (EnvironmentVariable *);
   EnvironmentVariable_var (const EnvironmentVariable_var &); // copy constructor
   ~EnvironmentVariable_var (void); // destructor
-
+  
   EnvironmentVariable_var &operator= (EnvironmentVariable *);
   EnvironmentVariable_var &operator= (const EnvironmentVariable_var &);
   EnvironmentVariable *operator-> (void);
   const EnvironmentVariable *operator-> (void) const;
-
+  
   operator const EnvironmentVariable &() const;
   operator EnvironmentVariable &();
   operator EnvironmentVariable &() const;
-  // in, inout, out, _retn
+  operator EnvironmentVariable *&(); // variable-size types only
+  
+  // in, inout, out, _retn 
   const EnvironmentVariable &in (void) const;
   EnvironmentVariable &inout (void);
   EnvironmentVariable *&out (void);
@@ -316,7 +310,7 @@ public:
   operator EnvironmentVariable *&();
   EnvironmentVariable *&ptr (void);
   EnvironmentVariable *operator-> (void);
-
+  
 private:
   EnvironmentVariable *&ptr_;
   // assignment from T_var not allowed
@@ -332,7 +326,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Address;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_
 
@@ -340,9 +334,9 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Address;
   {
   public:
     // = Initialization and termination methods.
-
+    
     _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (void); // Default constructor.
-    _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum);
+    _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum,
       CORBA::ULong length,
       EnvironmentVariable *data,
@@ -359,7 +353,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Address;
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+    
     EnvironmentVariable *get_buffer (CORBA::Boolean orphan = 0);
     const EnvironmentVariable *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -371,7 +365,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Address;
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_
@@ -384,24 +378,25 @@ typedef EnvironmentList* EnvironmentList_ptr;
 // EnvironmentList
 // *************************************************************
 
-class TAO_Export EnvironmentList : public
+class TAO_Export EnvironmentList : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<EnvironmentVariable>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 {
 public:
   EnvironmentList (void); // default ctor
   EnvironmentList (CORBA::ULong max); // uses max size
   EnvironmentList (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    EnvironmentVariable *buffer,
+    CORBA::ULong max, 
+    CORBA::ULong length, 
+    EnvironmentVariable *buffer, 
     CORBA::Boolean release=0
   );
   EnvironmentList (const EnvironmentList &); // copy ctor
-  ~EnvironmentList (void); // dtor
+  ~EnvironmentList (void);
+  static void _tao_any_destructor (void*);
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef EnvironmentList_ptr _ptr_type;
@@ -427,17 +422,19 @@ public:
   EnvironmentList_var (EnvironmentList *);
   EnvironmentList_var (const EnvironmentList_var &); // copy constructor
   ~EnvironmentList_var (void); // destructor
-
+  
   EnvironmentList_var &operator= (EnvironmentList *);
   EnvironmentList_var &operator= (const EnvironmentList_var &);
   EnvironmentList *operator-> (void);
   const EnvironmentList *operator-> (void) const;
-
+  
   operator const EnvironmentList &() const;
   operator EnvironmentList &();
   operator EnvironmentList &() const;
+  operator EnvironmentList *&(); // variable-size base types only
+  
   EnvironmentVariable &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn
+  // in, inout, out, _retn 
   const EnvironmentList &in (void) const;
   EnvironmentList &inout (void);
   EnvironmentList *&out (void);
@@ -467,7 +464,7 @@ public:
   EnvironmentList *&ptr (void);
   EnvironmentList *operator-> (void);
   EnvironmentVariable &operator[] (CORBA::ULong index);
-
+  
 private:
   EnvironmentList *&ptr_;
   // assignment from T_var not allowed
@@ -492,20 +489,20 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ActivationMode;
 
 struct StartupOptions;
 class StartupOptions_var;
-typedef StartupOptions* StartupOptions_ptr;
 
 struct TAO_Export StartupOptions
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef StartupOptions_ptr _ptr_type;
   typedef StartupOptions_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static void _tao_any_destructor (void*);
+
   TAO_String_Manager command_line;
-  ImplementationRepository::EnvironmentList environment;
+  ACE_NESTED_CLASS (ImplementationRepository, EnvironmentList) environment;
   TAO_String_Manager working_directory;
-  ImplementationRepository::ActivationMode activation;
+  ACE_NESTED_CLASS (ImplementationRepository, ActivationMode) activation;
 };
 
 class TAO_Export StartupOptions_var
@@ -515,16 +512,18 @@ public:
   StartupOptions_var (StartupOptions *);
   StartupOptions_var (const StartupOptions_var &); // copy constructor
   ~StartupOptions_var (void); // destructor
-
+  
   StartupOptions_var &operator= (StartupOptions *);
   StartupOptions_var &operator= (const StartupOptions_var &);
   StartupOptions *operator-> (void);
   const StartupOptions *operator-> (void) const;
-
+  
   operator const StartupOptions &() const;
   operator StartupOptions &();
   operator StartupOptions &() const;
-  // in, inout, out, _retn
+  operator StartupOptions *&(); // variable-size types only
+  
+  // in, inout, out, _retn 
   const StartupOptions &in (void) const;
   StartupOptions &inout (void);
   StartupOptions *&out (void);
@@ -546,7 +545,7 @@ public:
   operator StartupOptions *&();
   StartupOptions *&ptr (void);
   StartupOptions *operator-> (void);
-
+  
 private:
   StartupOptions *&ptr_;
   // assignment from T_var not allowed
@@ -557,19 +556,19 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_StartupOptions;
 
 struct ServerInformation;
 class ServerInformation_var;
-typedef ServerInformation* ServerInformation_ptr;
 
 struct TAO_Export ServerInformation
 {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef ServerInformation_ptr _ptr_type;
   typedef ServerInformation_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static void _tao_any_destructor (void*);
+
   TAO_String_Manager logical_server;
   TAO_String_Manager server;
-  ImplementationRepository::StartupOptions startup;
+  ACE_NESTED_CLASS (ImplementationRepository, StartupOptions) startup;
   TAO_String_Manager location;
 };
 
@@ -580,16 +579,18 @@ public:
   ServerInformation_var (ServerInformation *);
   ServerInformation_var (const ServerInformation_var &); // copy constructor
   ~ServerInformation_var (void); // destructor
-
+  
   ServerInformation_var &operator= (ServerInformation *);
   ServerInformation_var &operator= (const ServerInformation_var &);
   ServerInformation *operator-> (void);
   const ServerInformation *operator-> (void) const;
-
+  
   operator const ServerInformation &() const;
   operator ServerInformation &();
   operator ServerInformation &() const;
-  // in, inout, out, _retn
+  operator ServerInformation *&(); // variable-size types only
+  
+  // in, inout, out, _retn 
   const ServerInformation &in (void) const;
   ServerInformation &inout (void);
   ServerInformation *&out (void);
@@ -611,7 +612,7 @@ public:
   operator ServerInformation *&();
   ServerInformation *&ptr (void);
   ServerInformation *operator-> (void);
-
+  
 private:
   ServerInformation *&ptr_;
   // assignment from T_var not allowed
@@ -622,7 +623,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerInformation;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_
 
@@ -630,9 +631,9 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerInformation;
   {
   public:
     // = Initialization and termination methods.
-
+    
     _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (void); // Default constructor.
-    _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum);
+    _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum,
       CORBA::ULong length,
       ServerInformation *data,
@@ -649,7 +650,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerInformation;
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+    
     ServerInformation *get_buffer (CORBA::Boolean orphan = 0);
     const ServerInformation *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -661,7 +662,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerInformation;
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_
@@ -674,24 +675,25 @@ typedef ServerInformationList* ServerInformationList_ptr;
 // ServerInformationList
 // *************************************************************
 
-class TAO_Export ServerInformationList : public
+class TAO_Export ServerInformationList : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ServerInformation>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 {
 public:
   ServerInformationList (void); // default ctor
   ServerInformationList (CORBA::ULong max); // uses max size
   ServerInformationList (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    ServerInformation *buffer,
+    CORBA::ULong max, 
+    CORBA::ULong length, 
+    ServerInformation *buffer, 
     CORBA::Boolean release=0
   );
   ServerInformationList (const ServerInformationList &); // copy ctor
-  ~ServerInformationList (void); // dtor
+  ~ServerInformationList (void);
+  static void _tao_any_destructor (void*);
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef ServerInformationList_ptr _ptr_type;
@@ -717,17 +719,19 @@ public:
   ServerInformationList_var (ServerInformationList *);
   ServerInformationList_var (const ServerInformationList_var &); // copy constructor
   ~ServerInformationList_var (void); // destructor
-
+  
   ServerInformationList_var &operator= (ServerInformationList *);
   ServerInformationList_var &operator= (const ServerInformationList_var &);
   ServerInformationList *operator-> (void);
   const ServerInformationList *operator-> (void) const;
-
+  
   operator const ServerInformationList &() const;
   operator ServerInformationList &();
   operator ServerInformationList &() const;
+  operator ServerInformationList *&(); // variable-size base types only
+  
   ServerInformation &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn
+  // in, inout, out, _retn 
   const ServerInformationList &in (void) const;
   ServerInformationList &inout (void);
   ServerInformationList *&out (void);
@@ -757,7 +761,7 @@ public:
   ServerInformationList *&ptr (void);
   ServerInformationList *operator-> (void);
   ServerInformation &operator[] (CORBA::ULong index);
-
+  
 private:
   ServerInformationList *&ptr_;
   // assignment from T_var not allowed
@@ -789,14 +793,14 @@ public:
   ServerInformationIterator_var (ServerInformationIterator_ptr);
   ServerInformationIterator_var (const ServerInformationIterator_var &); // copy constructor
   ~ServerInformationIterator_var (void); // destructor
-
+  
   ServerInformationIterator_var &operator= (ServerInformationIterator_ptr);
   ServerInformationIterator_var &operator= (const ServerInformationIterator_var &);
   ServerInformationIterator_ptr operator-> (void) const;
-
+  
   operator const ServerInformationIterator_ptr &() const;
   operator ServerInformationIterator_ptr &();
-  // in, inout, out, _retn
+  // in, inout, out, _retn 
   ServerInformationIterator_ptr in (void) const;
   ServerInformationIterator_ptr &inout (void);
   ServerInformationIterator_ptr &out (void);
@@ -826,7 +830,7 @@ public:
   operator ServerInformationIterator_ptr &();
   ServerInformationIterator_ptr &ptr (void);
   ServerInformationIterator_ptr operator-> (void);
-
+  
 private:
   ServerInformationIterator_ptr &ptr_;
 };
@@ -854,14 +858,14 @@ public:
   Administration_var (Administration_ptr);
   Administration_var (const Administration_var &); // copy constructor
   ~Administration_var (void); // destructor
-
+  
   Administration_var &operator= (Administration_ptr);
   Administration_var &operator= (const Administration_var &);
   Administration_ptr operator-> (void) const;
-
+  
   operator const Administration_ptr &() const;
   operator Administration_ptr &();
-  // in, inout, out, _retn
+  // in, inout, out, _retn 
   Administration_ptr in (void) const;
   Administration_ptr &inout (void);
   Administration_ptr &out (void);
@@ -891,7 +895,7 @@ public:
   operator Administration_ptr &();
   Administration_ptr &ptr (void);
   Administration_ptr operator-> (void);
-
+  
 private:
   Administration_ptr &ptr_;
 };
@@ -915,18 +919,20 @@ public:
   static Administration_ptr _duplicate (Administration_ptr obj);
   static Administration_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
   static Administration_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
   static Administration_ptr _nil (void)
     {
-      return (ImplementationRepository::Administration_ptr)0;
+      return (Administration_ptr)0;
     }
+
+  static void _tao_any_destructor (void*);
 
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_ALREADYREGISTERED___PTR_CH_)
@@ -934,7 +940,7 @@ public:
 
   class AlreadyRegistered;
   typedef AlreadyRegistered *AlreadyRegistered_ptr;
-
+  
 #endif /* end #if !defined */
 
 
@@ -952,16 +958,19 @@ public:
 
     AlreadyRegistered (void); // default ctor
     AlreadyRegistered (const AlreadyRegistered &); // copy ctor
-    ~AlreadyRegistered (void); // dtor
+    ~AlreadyRegistered (void);
+    static void _tao_any_destructor (void*);
     AlreadyRegistered &operator= (const AlreadyRegistered &);
 
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
+    virtual void _tao_encode (
+        TAO_OutputCDR &,
+        CORBA::Environment &) const;
+    virtual void _tao_decode (
+        TAO_InputCDR &,
+        CORBA::Environment &);
 
     static AlreadyRegistered *_narrow (CORBA::Exception *);
 
@@ -982,7 +991,7 @@ public:
 
   class CannotActivate;
   typedef CannotActivate *CannotActivate_ptr;
-
+  
 #endif /* end #if !defined */
 
 
@@ -1001,16 +1010,19 @@ public:
 
     CannotActivate (void); // default ctor
     CannotActivate (const CannotActivate &); // copy ctor
-    ~CannotActivate (void); // dtor
+    ~CannotActivate (void);
+    static void _tao_any_destructor (void*);
     CannotActivate &operator= (const CannotActivate &);
 
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
+    virtual void _tao_encode (
+        TAO_OutputCDR &,
+        CORBA::Environment &) const;
+    virtual void _tao_decode (
+        TAO_InputCDR &,
+        CORBA::Environment &);
 
     static CannotActivate *_narrow (CORBA::Exception *);
 
@@ -1034,7 +1046,7 @@ public:
 
   class NotFound;
   typedef NotFound *NotFound_ptr;
-
+  
 #endif /* end #if !defined */
 
 
@@ -1052,16 +1064,19 @@ public:
 
     NotFound (void); // default ctor
     NotFound (const NotFound &); // copy ctor
-    ~NotFound (void); // dtor
+    ~NotFound (void);
+    static void _tao_any_destructor (void*);
     NotFound &operator= (const NotFound &);
 
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
+    virtual void _tao_encode (
+        TAO_OutputCDR &,
+        CORBA::Environment &) const;
+    virtual void _tao_decode (
+        TAO_InputCDR &,
+        CORBA::Environment &);
 
     static NotFound *_narrow (CORBA::Exception *);
 
@@ -1078,7 +1093,7 @@ public:
 
   virtual void activate_server (
       const char * server,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1090,7 +1105,7 @@ public:
   virtual void register_server (
       const char * server,
       const ImplementationRepository::StartupOptions & options,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1101,7 +1116,7 @@ public:
   virtual void reregister_server (
       const char * server,
       const ImplementationRepository::StartupOptions & options,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1110,7 +1125,7 @@ public:
 
   virtual void remove_server (
       const char * server,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1120,7 +1135,7 @@ public:
 
   virtual void shutdown_server (
       const char * server,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1132,7 +1147,7 @@ public:
       const char * server,
       const char * addr,
       ImplementationRepository::ServerObject_ptr server_object,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1142,7 +1157,7 @@ public:
 
   virtual void server_is_shutting_down (
       const char * server,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1153,7 +1168,7 @@ public:
   virtual void find (
       const char * server,
       ImplementationRepository::ServerInformation_out info,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1165,7 +1180,7 @@ public:
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
       ImplementationRepository::ServerInformationIterator_out server_iterator,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1173,16 +1188,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      const CORBA::Char *type_id, 
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   Administration (void);
-  Administration (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
+  Administration (TAO_Stub *objref, 
+      TAO_ServantBase *_tao_servant = 0, 
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~Administration (void);
@@ -1194,14 +1209,14 @@ private:
 class TAO_ImplementationRepository_Administration_Default_Proxy_Factory
 {
 public:
-
+  
   TAO_ImplementationRepository_Administration_Default_Proxy_Factory (int register_proxy_factory = 1);
-
+  
   virtual ~TAO_ImplementationRepository_Administration_Default_Proxy_Factory (void);
-
-  virtual ImplementationRepository::Administration_ptr create_proxy (
-      ImplementationRepository::Administration_ptr proxy,
-      CORBA::Environment &env =
+  
+  virtual Administration_ptr create_proxy (
+      Administration_ptr proxy,
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
 };
@@ -1209,23 +1224,23 @@ public:
 class TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter
 {
 public:
-
+  
   friend class ACE_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-
+  
   int register_proxy_factory (
       TAO_ImplementationRepository_Administration_Default_Proxy_Factory *df,
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
-
+  
   int unregister_proxy_factory (
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
-
-  ImplementationRepository::Administration_ptr create_proxy (
-      ImplementationRepository::Administration_ptr proxy,
-      CORBA::Environment &env =
+  
+  Administration_ptr create_proxy (
+      Administration_ptr proxy,
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
 
@@ -1241,14 +1256,14 @@ protected:
   };
 
   typedef ACE_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_Administration_PROXY_FACTORY_ADAPTER;
-  class TAO_ImplementationRepository_Administration_Smart_Proxy_Base : public virtual ImplementationRepository::Administration
+  class TAO_ImplementationRepository_Administration_Smart_Proxy_Base : public virtual ACE_NESTED_CLASS (ImplementationRepository, Administration)
   {
   public:
-    TAO_ImplementationRepository_Administration_Smart_Proxy_Base (ImplementationRepository::Administration_ptr proxy);
+    TAO_ImplementationRepository_Administration_Smart_Proxy_Base (::ImplementationRepository::Administration_ptr proxy);
     ~TAO_ImplementationRepository_Administration_Smart_Proxy_Base (void);
       virtual void activate_server (
       const char * server,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1260,7 +1275,7 @@ protected:
   virtual void register_server (
       const char * server,
       const ImplementationRepository::StartupOptions & options,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1271,7 +1286,7 @@ protected:
   virtual void reregister_server (
       const char * server,
       const ImplementationRepository::StartupOptions & options,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1280,7 +1295,7 @@ protected:
 
   virtual void remove_server (
       const char * server,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1290,7 +1305,7 @@ protected:
 
   virtual void shutdown_server (
       const char * server,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1302,7 +1317,7 @@ protected:
       const char * server,
       const char * addr,
       ImplementationRepository::ServerObject_ptr server_object,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1312,7 +1327,7 @@ protected:
 
   virtual void server_is_shutting_down (
       const char * server,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1323,7 +1338,7 @@ protected:
   virtual void find (
       const char * server,
       ImplementationRepository::ServerInformation_out info,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1335,7 +1350,7 @@ protected:
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
       ImplementationRepository::ServerInformationIterator_out server_iterator,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1343,7 +1358,7 @@ protected:
     ));
 
 private:
-  ImplementationRepository::Administration_var base_proxy_;
+  ::ImplementationRepository::Administration_var base_proxy_;
 };
 
 
@@ -1371,14 +1386,14 @@ public:
   ServerInformationIterator_var (ServerInformationIterator_ptr);
   ServerInformationIterator_var (const ServerInformationIterator_var &); // copy constructor
   ~ServerInformationIterator_var (void); // destructor
-
+  
   ServerInformationIterator_var &operator= (ServerInformationIterator_ptr);
   ServerInformationIterator_var &operator= (const ServerInformationIterator_var &);
   ServerInformationIterator_ptr operator-> (void) const;
-
+  
   operator const ServerInformationIterator_ptr &() const;
   operator ServerInformationIterator_ptr &();
-  // in, inout, out, _retn
+  // in, inout, out, _retn 
   ServerInformationIterator_ptr in (void) const;
   ServerInformationIterator_ptr &inout (void);
   ServerInformationIterator_ptr &out (void);
@@ -1408,7 +1423,7 @@ public:
   operator ServerInformationIterator_ptr &();
   ServerInformationIterator_ptr &ptr (void);
   ServerInformationIterator_ptr operator-> (void);
-
+  
 private:
   ServerInformationIterator_ptr &ptr_;
 };
@@ -1432,23 +1447,25 @@ public:
   static ServerInformationIterator_ptr _duplicate (ServerInformationIterator_ptr obj);
   static ServerInformationIterator_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
   static ServerInformationIterator_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
   static ServerInformationIterator_ptr _nil (void)
     {
-      return (ImplementationRepository::ServerInformationIterator_ptr)0;
+      return (ServerInformationIterator_ptr)0;
     }
+
+  static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean next_n (
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1456,7 +1473,7 @@ public:
     ));
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1464,16 +1481,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      const CORBA::Char *type_id, 
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   ServerInformationIterator (void);
-  ServerInformationIterator (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
+  ServerInformationIterator (TAO_Stub *objref, 
+      TAO_ServantBase *_tao_servant = 0, 
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~ServerInformationIterator (void);
@@ -1485,14 +1502,14 @@ private:
 class TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory
 {
 public:
-
+  
   TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory (int register_proxy_factory = 1);
-
+  
   virtual ~TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory (void);
-
-  virtual ImplementationRepository::ServerInformationIterator_ptr create_proxy (
-      ImplementationRepository::ServerInformationIterator_ptr proxy,
-      CORBA::Environment &env =
+  
+  virtual ServerInformationIterator_ptr create_proxy (
+      ServerInformationIterator_ptr proxy,
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
 };
@@ -1500,23 +1517,23 @@ public:
 class TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter
 {
 public:
-
+  
   friend class ACE_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-
+  
   int register_proxy_factory (
       TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory *df,
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
-
+  
   int unregister_proxy_factory (
-      CORBA::Environment &env =
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
-
-  ImplementationRepository::ServerInformationIterator_ptr create_proxy (
-      ImplementationRepository::ServerInformationIterator_ptr proxy,
-      CORBA::Environment &env =
+  
+  ServerInformationIterator_ptr create_proxy (
+      ServerInformationIterator_ptr proxy,
+      CORBA::Environment &env = 
         TAO_default_environment ()
     );
 
@@ -1532,15 +1549,15 @@ protected:
   };
 
   typedef ACE_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_ServerInformationIterator_PROXY_FACTORY_ADAPTER;
-  class TAO_ImplementationRepository_ServerInformationIterator_Smart_Proxy_Base : public virtual ImplementationRepository::ServerInformationIterator
+  class TAO_ImplementationRepository_ServerInformationIterator_Smart_Proxy_Base : public virtual ACE_NESTED_CLASS (ImplementationRepository, ServerInformationIterator)
   {
   public:
-    TAO_ImplementationRepository_ServerInformationIterator_Smart_Proxy_Base (ImplementationRepository::ServerInformationIterator_ptr proxy);
+    TAO_ImplementationRepository_ServerInformationIterator_Smart_Proxy_Base (::ImplementationRepository::ServerInformationIterator_ptr proxy);
     ~TAO_ImplementationRepository_ServerInformationIterator_Smart_Proxy_Base (void);
       virtual CORBA::Boolean next_n (
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1548,7 +1565,7 @@ protected:
     ));
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -1556,7 +1573,7 @@ protected:
     ));
 
 private:
-  ImplementationRepository::ServerInformationIterator_var base_proxy_;
+  ::ImplementationRepository::ServerInformationIterator_var base_proxy_;
 };
 
 
@@ -1572,86 +1589,48 @@ extern TAO_Export ImplementationRepository::ServerObject_ptr (*_TAO_collocation_
     CORBA::Object_ptr obj
   );
 // Any operators for interface ImplementationRepository::ServerObject
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::ServerObject_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::ServerObject *&);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             const ImplementationRepository::EnvironmentVariable &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::EnvironmentVariable*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::EnvironmentVariable *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       const ImplementationRepository::EnvironmentVariable *&);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             const ImplementationRepository::EnvironmentList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::EnvironmentList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::EnvironmentList *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       const ImplementationRepository::EnvironmentList *&);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::ActivationMode);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::ActivationMode &);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             const ImplementationRepository::StartupOptions &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::StartupOptions*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::StartupOptions *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       const ImplementationRepository::StartupOptions *&);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             const ImplementationRepository::ServerInformation &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::ServerInformation*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::ServerInformation *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       const ImplementationRepository::ServerInformation *&);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             const ImplementationRepository::ServerInformationList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::ServerInformationList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::ServerInformationList *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       const ImplementationRepository::ServerInformationList *&);
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerObject *&);
+TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::EnvironmentVariable &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::EnvironmentVariable*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::EnvironmentVariable *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::EnvironmentVariable *&);
+TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::EnvironmentList &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::EnvironmentList*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::EnvironmentList *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::EnvironmentList *&);
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::ActivationMode);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ActivationMode &);
+TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::StartupOptions &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::StartupOptions*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::StartupOptions *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::StartupOptions *&);
+TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::ServerInformation &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformation*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerInformation *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::ServerInformation *&);
+TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::ServerInformationList &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformationList*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerInformationList *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::ServerInformationList *&);
 extern TAO_Export ImplementationRepository::Administration_ptr (*_TAO_collocation_ImplementationRepository_Administration_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface ImplementationRepository::Administration
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::Administration_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::Administration *&);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             const ImplementationRepository::Administration::AlreadyRegistered &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::Administration::AlreadyRegistered*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::Administration::AlreadyRegistered *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       const ImplementationRepository::Administration::AlreadyRegistered *&);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             const ImplementationRepository::Administration::CannotActivate &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::Administration::CannotActivate*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::Administration::CannotActivate *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       const ImplementationRepository::Administration::CannotActivate *&);
-TAO_Export void operator<<= (CORBA::Any &, 
-                             const ImplementationRepository::Administration::NotFound &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
-                             ImplementationRepository::Administration::NotFound*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       ImplementationRepository::Administration::NotFound *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
-                                       const ImplementationRepository::Administration::NotFound *&);
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration *&);
+TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::AlreadyRegistered &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::AlreadyRegistered*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::AlreadyRegistered *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::Administration::AlreadyRegistered *&);
+TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::CannotActivate &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::CannotActivate*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::CannotActivate *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::Administration::CannotActivate *&);
+TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::NotFound &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::NotFound*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::NotFound *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::Administration::NotFound *&);
 extern TAO_Export ImplementationRepository::ServerInformationIterator_ptr (*_TAO_collocation_ImplementationRepository_ServerInformationIterator_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
@@ -1661,10 +1640,8 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationReposit
 
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerObject_ptr );
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, ImplementationRepository::ServerObject_ptr &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerObject_ptr );
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerObject_ptr &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::EnvironmentVariable &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::EnvironmentVariable &);
 
@@ -1682,7 +1659,7 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_ImplementationRepository_EnvironmentList_H_ */
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ActivationMode &); //
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ActivationMode &); // 
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ActivationMode &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::StartupOptions &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::StartupOptions &);
@@ -1703,10 +1680,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_ImplementationRepository_ServerInformationList_H_ */
 
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const ImplementationRepository::Administration_ptr );
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, ImplementationRepository::Administration_ptr &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::Administration_ptr );
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration_ptr &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::Administration::AlreadyRegistered &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration::AlreadyRegistered &);
 
@@ -1731,10 +1706,8 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::
 TAO_Export ostream& operator<< (ostream &, const ImplementationRepository::Administration::NotFound &);
 
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerInformationIterator_ptr );
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, ImplementationRepository::ServerInformationIterator_ptr &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerInformationIterator_ptr );
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerInformationIterator_ptr &);
 
 #endif /* __ACE_INLINE__ */
 

@@ -81,7 +81,7 @@ TAO_NAMESPACE  GIOP
   struct IORAddressingInfo;
   class IORAddressingInfo_var;
   typedef IORAddressingInfo* IORAddressingInfo_ptr;
-  
+
   struct TAO_Export IORAddressingInfo
   {
 
@@ -89,6 +89,7 @@ TAO_NAMESPACE  GIOP
     typedef IORAddressingInfo_ptr _ptr_type;
     typedef IORAddressingInfo_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+    static void _tao_any_destructor (void*);
 
     CORBA::ULong selected_profile_index;
     IOP::IOR ior;
@@ -101,16 +102,16 @@ TAO_NAMESPACE  GIOP
     IORAddressingInfo_var (IORAddressingInfo *);
     IORAddressingInfo_var (const IORAddressingInfo_var &); // copy constructor
     ~IORAddressingInfo_var (void); // destructor
-    
+
     IORAddressingInfo_var &operator= (IORAddressingInfo *);
     IORAddressingInfo_var &operator= (const IORAddressingInfo_var &);
     IORAddressingInfo *operator-> (void);
     const IORAddressingInfo *operator-> (void) const;
-    
+
     operator const IORAddressingInfo &() const;
     operator IORAddressingInfo &();
     operator IORAddressingInfo &() const;
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     const IORAddressingInfo &in (void) const;
     IORAddressingInfo &inout (void);
     IORAddressingInfo *&out (void);
@@ -132,7 +133,7 @@ TAO_NAMESPACE  GIOP
     operator IORAddressingInfo *&();
     IORAddressingInfo *&ptr (void);
     IORAddressingInfo *operator-> (void);
-    
+
   private:
     IORAddressingInfo *&ptr_;
     // assignment from T_var not allowed
@@ -142,14 +143,11 @@ TAO_NAMESPACE  GIOP
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IORAddressingInfo;
 
 
-#if !defined (_GIOP_TARGETADDRESS_CH_)
-#define _GIOP_TARGETADDRESS_CH_
-
   class TargetAddress;
   class TargetAddress_var;
   typedef TargetAddress* TargetAddress_ptr;
-  
-  class TAO_Export TargetAddress: public TAO_Base_Union 
+
+  class TAO_Export TargetAddress: public TAO_Base_Union
   {
   public:
     TargetAddress (void); // default constructor
@@ -164,6 +162,8 @@ TAO_NAMESPACE  GIOP
     typedef TargetAddress_ptr _ptr_type;
     typedef TargetAddress_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+    static void _tao_any_destructor (void*);
+
 
     void object_key (const TAO_ObjectKey &);// set
     const TAO_ObjectKey &object_key (void) const; // get method (read only)
@@ -172,11 +172,11 @@ TAO_NAMESPACE  GIOP
     void profile (const IOP::TaggedProfile &);// set
     const IOP::TaggedProfile &profile (void) const; // get method (read only)
     IOP::TaggedProfile &profile (void); // get method (read/write only)
-    
+
     void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);// set
     const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const; // get method (read only)
     ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void); // get method (read/write only)
-    
+
     void _default ();
   private:
     CORBA::Short disc_;
@@ -189,26 +189,19 @@ TAO_NAMESPACE  GIOP
   // TAO extensions
   void _reset (CORBA::Short, CORBA::Boolean);
   // Frees any allocated storage
-  
+
   virtual void *_discriminant (void);
   // returns pointer to the discriminant
-  
+
   virtual void _reset (void);
   // calls the above reset with finalize=1
-  
+
   virtual void *_access (CORBA::Boolean flag);
   // accesses the right data member. Also will allocate on TRUE flag
-  
+
 }; // GIOP::TargetAddress
 
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TargetAddress;
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_GIOP_TARGETADDRESS___VAR_CH_)
-#define _GIOP_TARGETADDRESS___VAR_CH_
 
 class TAO_Export TargetAddress_var
 {
@@ -217,16 +210,16 @@ public:
   TargetAddress_var (TargetAddress *);
   TargetAddress_var (const TargetAddress_var &); // copy constructor
   ~TargetAddress_var (void); // destructor
-  
+
   TargetAddress_var &operator= (TargetAddress *);
   TargetAddress_var &operator= (const TargetAddress_var &);
   TargetAddress *operator-> (void);
   const TargetAddress *operator-> (void) const;
-  
+
   operator const TargetAddress &() const;
   operator TargetAddress &();
   operator TargetAddress &() const;
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const TargetAddress &in (void) const;
   TargetAddress &inout (void);
   TargetAddress *&out (void);
@@ -236,13 +229,6 @@ public:
 private:
   TargetAddress *ptr_;
 };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_GIOP_TARGETADDRESS___OUT_CH_)
-#define _GIOP_TARGETADDRESS___OUT_CH_
 
 class TAO_Export TargetAddress_out
 {
@@ -255,7 +241,7 @@ public:
   operator TargetAddress *&();
   TargetAddress *&ptr (void);
   TargetAddress *operator-> (void);
-  
+
 private:
   TargetAddress *&ptr_;
   // assignment from T_var not allowed
@@ -263,34 +249,31 @@ private:
 };
 
 
-#endif /* end #if !defined */
-
-
 }
 TAO_NAMESPACE_CLOSE // module GIOP
 
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const GIOP::IORAddressingInfo &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              GIOP::IORAddressingInfo*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        GIOP::IORAddressingInfo *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const GIOP::IORAddressingInfo *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const GIOP::TargetAddress &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              GIOP::TargetAddress*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        GIOP::TargetAddress *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const GIOP::TargetAddress *&);
 
 #ifndef __ACE_INLINE__
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::IORAddressingInfo &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::IORAddressingInfo &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::TargetAddress &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::TargetAddress &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 
 #endif /* __ACE_INLINE__ */

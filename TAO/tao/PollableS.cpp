@@ -179,31 +179,21 @@ void POA_CORBA::Pollable::_is_a_skel (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  static const TAO_Param_Data_Skel CORBA_Pollable_is_a_paramdata [] =
-  {
-    {CORBA::_tc_boolean, 0, 0},
-    {CORBA::_tc_string, CORBA::ARG_IN, 0}
-  };
-  static const TAO_Call_Data_Skel CORBA_Pollable_is_a_calldata =
-  {"_is_a", 1, 2, CORBA_Pollable_is_a_paramdata};
-  POA_CORBA::Pollable_ptr  _tao_impl = (POA_CORBA::Pollable_ptr) _tao_object_reference;
-  CORBA::Boolean _tao_retval;
-  CORBA::String_var _tao_value;
-  _tao_server_request.demarshal (
-    ACE_TRY_ENV,
-    &CORBA_Pollable_is_a_calldata,
-    &_tao_retval,
-    &_tao_value.inout ()
-  );
+ TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::Pollable *_tao_impl = (POA_CORBA::Pollable *) _tao_object_reference;
+  CORBA::Boolean _tao_retval = 0;
+  CORBA::String_var value;
+  if (!((_tao_in >> value.out ())))
+    ACE_THROW (CORBA::MARSHAL ());
+
+  _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  _tao_retval = _tao_impl->_is_a (_tao_value.in (), ACE_TRY_ENV);
+
+  _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  _tao_server_request.marshal (
-    ACE_TRY_ENV,
-    &CORBA_Pollable_is_a_calldata,
-    &_tao_retval,
-    &_tao_value.inout ()
-  );
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
+    ACE_THROW (CORBA::MARSHAL ());
 }
 
 CORBA::Boolean POA_CORBA::Pollable::_is_a (
@@ -221,23 +211,20 @@ CORBA::Boolean POA_CORBA::Pollable::_is_a (
 
 void POA_CORBA::Pollable::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void * /* _tao_object_reference */ ,
+    void * _tao_object_reference,
     void * /*context*/,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  static const TAO_Param_Data_Skel CORBA_Pollable_non_existent_paramdata [] =
-  {
-    {CORBA::_tc_boolean, 0, 0}
-  };
-  static const TAO_Call_Data_Skel CORBA_Pollable_non_existent_calldata =
-  {"_non_existent", 1, 1, CORBA_Pollable_non_existent_paramdata};
-  CORBA::Boolean _tao_retval = 0;
-  _tao_server_request.marshal (
-    ACE_TRY_ENV,
-    &CORBA_Pollable_non_existent_calldata,
-    &_tao_retval
-  );
+  POA_CORBA::Pollable *_tao_impl = (POA_CORBA::Pollable *) _tao_object_reference;
+  CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
+    ACE_THROW (CORBA::MARSHAL ());
 }
 
 void* POA_CORBA::Pollable::_downcast (
@@ -429,31 +416,21 @@ void POA_CORBA::DIIPollable::_is_a_skel (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  static const TAO_Param_Data_Skel CORBA_DIIPollable_is_a_paramdata [] =
-  {
-    {CORBA::_tc_boolean, 0, 0},
-    {CORBA::_tc_string, CORBA::ARG_IN, 0}
-  };
-  static const TAO_Call_Data_Skel CORBA_DIIPollable_is_a_calldata =
-  {"_is_a", 1, 2, CORBA_DIIPollable_is_a_paramdata};
-  POA_CORBA::DIIPollable_ptr  _tao_impl = (POA_CORBA::DIIPollable_ptr) _tao_object_reference;
-  CORBA::Boolean _tao_retval;
-  CORBA::String_var _tao_value;
-  _tao_server_request.demarshal (
-    ACE_TRY_ENV,
-    &CORBA_DIIPollable_is_a_calldata,
-    &_tao_retval,
-    &_tao_value.inout ()
-  );
+ TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::DIIPollable *_tao_impl = (POA_CORBA::DIIPollable *) _tao_object_reference;
+  CORBA::Boolean _tao_retval = 0;
+  CORBA::String_var value;
+  if (!((_tao_in >> value.out ())))
+    ACE_THROW (CORBA::MARSHAL ());
+
+  _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  _tao_retval = _tao_impl->_is_a (_tao_value.in (), ACE_TRY_ENV);
+
+  _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  _tao_server_request.marshal (
-    ACE_TRY_ENV,
-    &CORBA_DIIPollable_is_a_calldata,
-    &_tao_retval,
-    &_tao_value.inout ()
-  );
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
+    ACE_THROW (CORBA::MARSHAL ());
 }
 
 CORBA::Boolean POA_CORBA::DIIPollable::_is_a (
@@ -472,23 +449,20 @@ CORBA::Boolean POA_CORBA::DIIPollable::_is_a (
 
 void POA_CORBA::DIIPollable::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void * /* _tao_object_reference */ ,
+    void * _tao_object_reference ,
     void * /*context*/,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  static const TAO_Param_Data_Skel CORBA_DIIPollable_non_existent_paramdata [] =
-  {
-    {CORBA::_tc_boolean, 0, 0}
-  };
-  static const TAO_Call_Data_Skel CORBA_DIIPollable_non_existent_calldata =
-  {"_non_existent", 1, 1, CORBA_DIIPollable_non_existent_paramdata};
-  CORBA::Boolean _tao_retval = 0;
-  _tao_server_request.marshal (
-    ACE_TRY_ENV,
-    &CORBA_DIIPollable_non_existent_calldata,
-    &_tao_retval
-  );
+  POA_CORBA::DIIPollable *_tao_impl = (POA_CORBA::DIIPollable *) _tao_object_reference;
+  CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
+    ACE_THROW (CORBA::MARSHAL ());
 }
 
 void* POA_CORBA::DIIPollable::_downcast (
@@ -787,31 +761,21 @@ void POA_CORBA::PollableSet::_is_a_skel (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  static const TAO_Param_Data_Skel CORBA_PollableSet_is_a_paramdata [] =
-  {
-    {CORBA::_tc_boolean, 0, 0},
-    {CORBA::_tc_string, CORBA::ARG_IN, 0}
-  };
-  static const TAO_Call_Data_Skel CORBA_PollableSet_is_a_calldata =
-  {"_is_a", 1, 2, CORBA_PollableSet_is_a_paramdata};
-  POA_CORBA::PollableSet_ptr  _tao_impl = (POA_CORBA::PollableSet_ptr) _tao_object_reference;
-  CORBA::Boolean _tao_retval;
-  CORBA::String_var _tao_value;
-  _tao_server_request.demarshal (
-    ACE_TRY_ENV,
-    &CORBA_PollableSet_is_a_calldata,
-    &_tao_retval,
-    &_tao_value.inout ()
-  );
+ TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::PollableSet *_tao_impl = (POA_CORBA::PollableSet *) _tao_object_reference;
+  CORBA::Boolean _tao_retval = 0;
+  CORBA::String_var value;
+  if (!((_tao_in >> value.out ())))
+    ACE_THROW (CORBA::MARSHAL ());
+
+  _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  _tao_retval = _tao_impl->_is_a (_tao_value.in (), ACE_TRY_ENV);
+
+  _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  _tao_server_request.marshal (
-    ACE_TRY_ENV,
-    &CORBA_PollableSet_is_a_calldata,
-    &_tao_retval,
-    &_tao_value.inout ()
-  );
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
+    ACE_THROW (CORBA::MARSHAL ());
 }
 
 CORBA::Boolean POA_CORBA::PollableSet::_is_a (
@@ -829,23 +793,20 @@ CORBA::Boolean POA_CORBA::PollableSet::_is_a (
 
 void POA_CORBA::PollableSet::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void * /* _tao_object_reference */ ,
+    void * _tao_object_reference ,
     void * /*context*/,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  static const TAO_Param_Data_Skel CORBA_PollableSet_non_existent_paramdata [] =
-  {
-    {CORBA::_tc_boolean, 0, 0}
-  };
-  static const TAO_Call_Data_Skel CORBA_PollableSet_non_existent_calldata =
-  {"_non_existent", 1, 1, CORBA_PollableSet_non_existent_paramdata};
-  CORBA::Boolean _tao_retval = 0;
-  _tao_server_request.marshal (
-    ACE_TRY_ENV,
-    &CORBA_PollableSet_non_existent_calldata,
-    &_tao_retval
-  );
+  POA_CORBA::PollableSet *_tao_impl = (POA_CORBA::PollableSet *) _tao_object_reference;
+  CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
+    ACE_THROW (CORBA::MARSHAL ());
 }
 
 void* POA_CORBA::PollableSet::_downcast (

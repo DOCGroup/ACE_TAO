@@ -47,7 +47,30 @@ void
 Test_Fixed_Array::dii_req_invoke (CORBA::Request *req,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
+  req->add_in_arg ("s1") <<= Param_Test::Fixed_Array_forany (this->in_);
+  req->add_inout_arg ("s2") <<= Param_Test::Fixed_Array_forany (this->inout_);
+  req->add_out_arg ("s3") <<= Param_Test::Fixed_Array_forany (this->out_);
+  req->set_return_type (Param_Test::_tc_Fixed_Array);
+
   req->invoke (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  Param_Test::Fixed_Array_forany forany;
+  req->return_value () >>= forany;
+  Param_Test::Fixed_Array_copy (this->ret_, forany.in ());
+
+  CORBA::NamedValue_ptr arg2 =
+    req->arguments ()->item (1, ACE_TRY_ENV);
+  ACE_CHECK;
+  *arg2->value () >>= forany;
+  Param_Test::Fixed_Array_copy (this->inout_, forany.in ());
+
+  CORBA::NamedValue_ptr arg3 =
+    req->arguments ()->item (2, ACE_TRY_ENV);
+  ACE_CHECK;
+  Param_Test::Fixed_Array_forany out_any (this->out_);
+  *arg3->value () >>= forany;
+  Param_Test::Fixed_Array_copy (this->out_, forany.in ());
 }
 
 int
@@ -101,69 +124,6 @@ Test_Fixed_Array::run_sii_test (Param_Test_ptr objref,
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Fixed_Array::run_sii_test\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
-}
-
-int
-Test_Fixed_Array::add_args (CORBA::NVList_ptr param_list,
-                            CORBA::NVList_ptr retval,
-                            CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      // We provide the top level memory
-      // the Any does not own any of these
-      CORBA::Any in_arg (Param_Test::_tc_Fixed_Array,
-                         this->in_,
-                         0);
-
-      CORBA::Any inout_arg (Param_Test::_tc_Fixed_Array,
-                            this->inout_,
-                            0);
-
-      CORBA::Any out_arg (Param_Test::_tc_Fixed_Array,
-                          this->out_,
-                          0);
-
-      // add parameters
-      param_list->add_value ("l1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("l2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("l3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // add return value type
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (Param_Test::_tc_Fixed_Array,
-                               this->ret_.inout (),
-                               0, // does not own
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Fixed_Array::add_args\n");
 
     }
   ACE_ENDTRY;

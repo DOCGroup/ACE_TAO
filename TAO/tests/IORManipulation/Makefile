@@ -12,16 +12,16 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO 
+LDLIBS = -lTAO
 
-IDL_SRC = 
+IDL_SRC =
 
 PROG_SRCS = IORTest.cpp
 
 SRC = $(PROG_SRCS)
 
 SIMPLE_CLT_OBJS = IORTest.o
-SIMPLE_SVR_OBJS = 
+SIMPLE_SVR_OBJS =
 
 BIN2 = IORTest
 
@@ -48,7 +48,7 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS +=  -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-.PRECIOUS: 
+.PRECIOUS:
 
 IORTest: $(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -72,6 +72,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config-sunos5.7.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \

@@ -424,18 +424,17 @@ TAO_DynAny_i::insert_reference (CORBA::Object_ptr value,
 
   if (kind == CORBA::tk_objref)
     {
-      CORBA::Object_ptr *_tao_object_ptr;
+      CORBA::Object_var obj = CORBA::Object::_duplicate (value);
 
-      ACE_NEW (_tao_object_ptr,
-               CORBA::Object_ptr);
-
-      *_tao_object_ptr = CORBA::Object::_duplicate (value);
-
-      this->value_.replace (this->value_.type (),
-                            (void*)_tao_object_ptr,
-                            1,
-                            ACE_TRY_ENV);
-      ACE_CHECK;
+      TAO_OutputCDR stream;
+      if (!(stream << obj.in ()))
+          ACE_THROW (CORBA::MARSHAL ());
+      this->value_._tao_replace (this->value_.type (),
+                                 TAO_ENCAP_BYTE_ORDER,
+                                 stream.begin (),
+                                 1,
+                                 obj._retn (),
+                                 CORBA::Object::_tao_any_destructor);
     }
   else
     {
@@ -668,12 +667,11 @@ TAO_DynAny_i::get_double (CORBA::Environment &ACE_TRY_ENV)
 char *
 TAO_DynAny_i::get_string (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Char *val;
+  const char *val;
 
   if (!(this->value_ >>= val))
     {
-      ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (),
-                        val);
+      ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 0);
     }
 
   return CORBA::string_dup (val);

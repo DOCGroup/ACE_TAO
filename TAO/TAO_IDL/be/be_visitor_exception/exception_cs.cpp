@@ -75,6 +75,14 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "{" << be_nl;
       *os << "}\n\n";
 
+      *os << "void "
+          << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+          << "{" << be_idt_nl
+          << node->name () << " *tmp = ACE_static_cast ("
+          << node->name () << "*,x);" << be_nl
+          << "delete tmp;" << be_uidt_nl
+          << "}\n\n";
+
       // copy constructor
       os->indent ();
       *os << "// copy constructor" << be_nl;

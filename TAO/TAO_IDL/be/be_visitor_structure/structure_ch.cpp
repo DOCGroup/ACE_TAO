@@ -64,7 +64,9 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       *os << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)\n";
       os->indent ();
       *os << "typedef " << node->local_name () << "_var _var_type;\n"
-          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n\n";
+          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_nl;
+
+      *os << "static void _tao_any_destructor (void*);\n\n";
 
       // generate code for field members
       if (this->visit_scope (node) == -1)

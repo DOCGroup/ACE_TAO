@@ -45,9 +45,10 @@ struct CDR_Test_Types
 
 CDR_Test_Types::CDR_Test_Types (void)
   : o (1), s (2), l (4),
-    str ("abc"), d (8),
-    any (CORBA::_tc_short, new CORBA::Short (s), 1)
+    str ("abc"), d (8)
 {
+  any <<= CORBA::Short (s);
+
   for (int i = 0; i < CDR_Test_Types::ARRAY_SIZE; ++i)
     {
       a[i] = i;
@@ -93,8 +94,7 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
                            i),
                           1);
 #endif
-      if (cdr.encode (CORBA::_tc_any, &test_types.any, 0, env) !=
-          CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (cdr << test_types.any)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "encode Any [%d] failed\n",
                            i),
@@ -179,8 +179,7 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
                           1);
       CORBA::string_free (xstr);
 #endif
-      if (cdr.decode (CORBA::_tc_any, &any, 0, env) ==
-          CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (cdr >> any)
         {
           CORBA::Short s;
           if (any >>= s)

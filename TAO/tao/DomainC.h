@@ -96,6 +96,7 @@ public:
         TAO_default_environment ()
     );
   static CORBA_DomainManager_ptr _nil (void);
+  static void _tao_any_destructor (void*);
 
   virtual CORBA::Policy_ptr get_domain_policy (
       CORBA::PolicyType policy_type,
@@ -138,6 +139,7 @@ public:
   );
   CORBA_DomainManagerList (const CORBA_DomainManagerList &); // copy ctor
   ~CORBA_DomainManagerList (void); // dtor
+  static void _tao_any_destructor (void*);
 };
 
 typedef CORBA_DomainManagerList *CORBA_DomainManagerList_ptr;
@@ -259,6 +261,7 @@ public:
         TAO_default_environment ()
     );
   static CORBA_ConstructionPolicy_ptr _nil (void);
+  static void _tao_any_destructor (void*);
 
   virtual void make_domain_manager (
       CORBA::InterfaceDef_ptr object_type,
@@ -316,9 +319,9 @@ TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA_DomainManagerList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &,
                              CORBA_DomainManagerList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::DomainManagerList *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::DomainManagerList *&);
 
 #ifndef __ACE_INLINE__
