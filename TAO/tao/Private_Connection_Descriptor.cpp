@@ -39,13 +39,18 @@ CORBA::Boolean
 TAO_Private_Connection_Descriptor::is_equivalent (
     const TAO_Connection_Descriptor_Interface *rhs)
 {
-  TAO_Private_Connection_Descriptor *other_desc =
-    ACE_const_cast (TAO_Private_Connection_Descriptor *,
+  // Do away with const first.
+  TAO_Connection_Descriptor_Interface *r =
+    ACE_const_cast (TAO_Connection_Descriptor_Interface *,
                     rhs);
-  
+
+  TAO_Private_Connection_Descriptor *other_desc =
+    ACE_dynamic_cast (TAO_Private_Connection_Descriptor *,
+                      r);
+
   if (other_desc == 0)
     return 0;
-  
+
   return (this->endpoint_->is_equivalent (other_desc->endpoint_)
           && this->object_id_ == other_desc->object_id_);
 }

@@ -1,3 +1,10 @@
+Sat Nov 18 19:23:44 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Base_Connection_Property.cpp (is_equivalent)
+	* tao/Private_Connection_Descriptor.cpp (is_equivalent):
+
+	  Added const_cast.
+
 Sat Nov 18 19:00:29 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/*/Makefile
