@@ -1,3 +1,8 @@
+Wed Mar 30 19:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/be/be_codegen.cpp:
+          Don't generate TAO_EXPORT_NESTED_MACRO, it is not used anymore
+
 Wed Mar 30 19:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Strategies/uiop_endpoints.pidl:
