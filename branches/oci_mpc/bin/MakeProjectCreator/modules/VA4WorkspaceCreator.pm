@@ -1,7 +1,7 @@
-package GNUWorkspaceCreator;
+package VA4WorkspaceCreator;
 
 # ************************************************************
-# Description   : A GNU Workspace (Makefile) creator
+# Description   : A VA4 Workspace Creator
 # Author        : Chad Elliott
 # Create Date   : 5/13/2002
 # ************************************************************
@@ -11,9 +11,8 @@ package GNUWorkspaceCreator;
 # ************************************************************
 
 use strict;
-use File::Basename;
 
-use GNUProjectCreator;
+use VA4ProjectCreator;
 use WorkspaceCreator;
 
 use vars qw(@ISA);
@@ -23,9 +22,16 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+
+sub crlf {
+  my($self) = shift;
+  return $self->windows_crlf();
+}
+
+
 sub workspace_file_name {
   my($self) = shift;
-  return "Makefile";
+  return $self->get_workspace_name() . ".icp";
 }
 
 
@@ -34,10 +40,7 @@ sub pre_workspace {
   my($fh)   = shift;
   my($crlf) = $self->crlf();
 
-  print $fh "#----------------------------------------------------------------------------$crlf" .
-            "#       GNU Workspace$crlf" .
-            "#----------------------------------------------------------------------------$crlf" .
-            "$crlf";
+  print $fh "// Visual Age C++ 4 workspace file$crlf$crlf";
 }
 
 
@@ -49,22 +52,25 @@ sub write_comps {
   my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
 
-  ## Print out the projet Makefile
-  print $fh "include \$(ACE_ROOT)/include/makeinclude/macros.GNU$crlf" .
-            "TARGETS_NESTED := \$(TARGETS_NESTED:.nested=)$crlf" .
-            "$crlf" .
-            "\$(TARGETS_NESTED):$crlf" .
-            "ifeq (Windows,\$(findstring Windows,\$(OS)))$crlf";
   foreach my $project (@list) {
-    print $fh "\t\@cmd /c \"\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@)\"$crlf";
-  }
-  print $fh "else$crlf";
-  foreach my $project (@list) {
-    print $fh "\t\@\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@);$crlf";
-  }
-  print $fh "endif$crlf";
-}
+    my($base) = $project;
+    $base =~ s/\.[^\.]+//;
+    my($ics)  = "$base.ics";
 
+    print $fh "subproject $base icc \"$project\", ics \"$ics\"$crlf" .
+              "{$crlf" .
+              "}$crlf";
+  }
+
+  print $fh "build buildAll$crlf" .
+            "{$crlf";
+  foreach my $project (@list) {
+    my($base) = $project;
+    $base =~ s/\.[^\.]+//;
+    print $fh "        use $base$crlf";
+  }
+  print $fh "}$crlf$crlf";
+}
 
 
 1;

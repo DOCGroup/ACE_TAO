@@ -27,9 +27,7 @@ sub new {
 
   $self->{'values'}  = {};
   $self->{'cindex'}  = 0;
-  my(@current) = ($self->{'values'});
-  $self->{'current'} = \@current;
-
+  $self->{'current'} = [ $self->{'values'} ];
 
   return $self;
 }
@@ -90,12 +88,6 @@ sub parse_line {
   }
 
   return $status, $errorString;
-}
-
-
-sub get_names {
-  my($self) = shift;
-  return keys %{$self->{'values'}};
 }
 
 

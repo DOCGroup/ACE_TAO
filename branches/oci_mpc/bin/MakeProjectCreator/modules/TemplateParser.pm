@@ -11,6 +11,7 @@ package TemplateParser;
 # ************************************************************
 
 use strict;
+use Cwd;
 
 use Parser;
 
@@ -65,6 +66,8 @@ sub basename {
   for(my $i = length($file) - 1; $i >= 0; $i--) {
     my($ch) = substr($file, $i, 1);
     if ($ch eq '/' || $ch eq '\\') {
+      ## The template file may use this value (<%basename_found%>)
+      ## to determine whether a basename removed the directory or not
       $self->{'values'}->{'basename_found'} = 1;
       return substr($file, $i + 1);
     }
@@ -80,6 +83,8 @@ sub dirname {
   for(my $i = length($file) - 1; $i != 0; $i--) {
     my($ch) = substr($file, $i, 1);
     if ($ch eq '/' || $ch eq '\\') {
+      ## The template file may use this value (<%dirname_found%>)
+      ## to determine whether a dirname removed the basename or not
       $self->{'values'}->{'dirname_found'} = 1;
       return substr($file, 0, $i);
     }
@@ -116,6 +121,9 @@ sub is_keyword {
 }
 
 
+## Append the current value to the line that is being
+## built.  This line may be a foreach line or a general
+## line without a foreach.
 sub append_current {
   my($self)  = shift;
   my($value) = shift;
@@ -146,6 +154,55 @@ sub set_current_values {
       $self->{'foreach'}->{'temp_scope'}->[$counter] = $value;
     }
   }
+}
+
+
+sub relative {
+  my($self)  = shift;
+  my($value) = shift;
+  my($rel)   = $self->{'prjc'}->get_relative();
+  my(@keys)  = keys %$rel;
+
+  if (defined $value && defined $keys[0] && $value =~ /\$/) {
+    if (UNIVERSAL::isa($value, 'ARRAY')) {  
+      my(@built) = ();
+      foreach my $val (@$value) {
+        push(@built, $self->relative($val));
+      }
+      $value = \@built;
+    }
+    else {
+      my($cwd)   = getcwd();
+      my($start) = 0;
+      while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
+        my($whole)  = $1;
+        my($name)   = $2;
+        my($val) = $$rel{$name};
+        if (defined $val) {
+          $val =~ s/\\/\//g;
+          if (index($cwd, $val) == 0) {
+            my($count) = 0;
+            substr($cwd, 0, length($val)) = "";
+            while($cwd =~ /^\\/) {
+              $cwd =~ s/^\///;
+            }
+            my($length) = length($cwd);
+            for(my $i = 0; $i < $length; $i++) {
+              if (substr($cwd, $i, 1) eq '/') {
+                $count++;
+              }
+            }
+            $val = "../" x $count;
+            $val =~ s/\/$//;
+            $value =~ s/\$\([^)]+\)/$val/;
+          }
+        }
+        $start += length($whole);
+      }
+    }  
+  }    
+       
+  return $value;
 }
 
 
@@ -193,7 +250,7 @@ sub get_value {
     }
   }
 
-  return $value;
+  return $self->relative($value);
 }
 
 
@@ -221,6 +278,7 @@ sub get_value_with_default {
     else {
 #      print "DEBUG: WARNING: $name using default value of $value\n";
     }
+    $value = $self->relative($value);
   }
 
   return $value;
@@ -365,7 +423,6 @@ sub handle_if {
 
 sub handle_else {
   my($self)   = shift;
-  my($val)    = shift;
   my($sstack) = $self->{'sstack'};
   my(@scopy)  = @$sstack;
   my($name)   = "endif";
@@ -407,6 +464,9 @@ sub handle_special {
   my($name) = shift;
   my($val)  = shift;
 
+  ## If $name (fornotlast, forfirst, etc.) is set to 1
+  ## Then we append the $val onto the current string that's
+  ## being built.
   if ($self->get_value($name)) {
     $self->append_current($val);
   }
@@ -459,6 +519,9 @@ sub handle_basenoextension {
 }
 
 
+## Given a line that starts with an identifier, we split
+## then name from the possible value stored inside ()'s and
+## we stop looking at the line when we find the %> ending 
 sub split_name_value {
   my($self)   = shift;
   my($line)   = shift;
@@ -595,8 +658,8 @@ sub collect_data {
 
   ## VC7 Projects need to know the GUID.
   ## We need to save this value in our know values
-  ## since each guid will be different.  We need this to
-  ## correspond to the same guid used in the workspace.
+  ## since each guid generated will be different.  We need
+  ## this to correspond to the same guid used in the workspace.
   my($guid) = $prjc->update_project_info($self, 1, ['guid']);
   $self->{'values'}->{'guid'} = $guid;
 }
@@ -607,6 +670,7 @@ sub is_only_keyword {
   my($line)   = shift;
   my($status) = 0;
 
+  ## Does the line contain only a keyword?
   if ($line =~ /^<%(.*)%>$/) {
     my($part) = $1;
     if ($part !~ /%>/) {
@@ -630,7 +694,6 @@ sub parse_line {
   my($errorString) = "";
   my($length)      = length($line);
   my($name)        = 0;
-  my($skipempty)   = $self->{'if_skip'};
   my($crlf)        = $self->{'prjc'}->crlf();
   my($clen)        = length($crlf);
   my($startempty)  = ($line eq "" ? 1 : 0);

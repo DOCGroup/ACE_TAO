@@ -1,13 +1,29 @@
-type_description      = "Console Application"
-type_code             = 0x0103
-configurations        = "Static Release" "Static Debug"
+type_description      = "Application"
+platform_longs        = "WCE ARM" "WCE x86" 
 default_configuration = "Static Debug"
+default_platform_long = "WCE ARM"
+configurations        = "Static Release" "Static Debug"
 type_is_binary        = 1
-common_defines        = WIN32 _CONSOLE
-subsystem             = console
+common_defines        = UNICODE _UNICODE
 pch_defines           = ACE_USING_PCH
 ssl_libs              = libeay32 ssleay32
-need_libflags         = 1
+
+WCE x86 {
+  type_code   = 0x8301
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = IX86
+  cpu_defines = _i386_ _X86_ x86
+}
+
+WCE ARM {
+  type_code   = 0x8501
+  cpu_id      = D6518FFC-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = ARM
+  cpp         = clarm.exe
+  cpu_defines = ARM _ARM_
+}
 
 Static Release {
   use_debug_libraries   = 0
@@ -15,9 +31,9 @@ Static Release {
   defines               = NDEBUG
   compile_flags_removed = /YX
   lib_modifier          = s
+  need_libflags         = 1
   output_dir            = Static_Release
   intermediate_dir      = Static_Release
-  debug_switch          =
 }
 
 Static Debug {
@@ -26,6 +42,7 @@ Static Debug {
   defines               = _DEBUG
   compile_flags_removed = /YX
   lib_modifier          = sd
+  need_libflags         = 1
   output_dir            = Static_Debug
   intermediate_dir      = Static_Debug
 }

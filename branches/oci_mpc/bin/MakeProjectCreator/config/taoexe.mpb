@@ -1,4 +1,4 @@
-project : aceexe {
+project : aceexe, taoversion {
   depends  += tao TAO_IDL_EXE
   tao       = 1
   includes += $(TAO_ROOT) $(TAO_ROOT)/tao

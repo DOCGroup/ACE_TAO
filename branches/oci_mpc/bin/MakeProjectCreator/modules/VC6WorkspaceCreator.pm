@@ -25,12 +25,7 @@ use vars qw(@ISA);
 
 sub crlf {
   my($self) = shift;
-  if ($^O eq 'MSWin32') {
-    return "\n";
-  }
-  else {
-    return "\r\n";
-  }
+  return $self->windows_crlf();
 }
 
 
@@ -113,17 +108,6 @@ sub post_workspace {
             "$crlf" .
             "###############################################################################$crlf" .
             "$crlf";
-}
-
-
-sub project_creator {
-  my($self) = shift;
-  return new VC6ProjectCreator($self->get_global_cfg(),
-                               $self->get_include_path(),
-                               $self->get_template_override(),
-                               $self->get_ti_override(),
-                               $self->get_dynamic(),
-                               $self->get_static());
 }
 
 

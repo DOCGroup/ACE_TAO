@@ -37,8 +37,9 @@ sub new {
   my($ti)        = shift;
   my($dynamic)   = shift;
   my($static)    = shift;
+  my($relative)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
-                                $template, $ti, 'workspace');
+                                $template, $ti, $relative, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'} = undef;
@@ -220,7 +221,7 @@ sub write_workspace {
   my($status, $generator) = $self->generate_project_files();
   if ($status) {
     my($fh)   = new FileHandle();
-    my($name) = $self->workspace_file_name();
+    my($name) = $self->transform_file_name($self->workspace_file_name());
     my($dir)  = dirname($name);
 
     if ($dir ne ".") {
@@ -257,7 +258,6 @@ sub generate_project_files {
   foreach my $file (@{$self->{'project_files'}}) {
     my($dir)  = dirname($file);
     my($gen)  = [];
-    my($sgen) = [];
 
     ## We must change to the subdirectory for
     ## which this project file is intended
@@ -341,7 +341,9 @@ sub sort_dependencies {
       my($darr)  = $self->create_array($deps);
       my($moved) = 0;
       foreach my $dep (@$darr) {
-        my($full) = (defined $prepend{$dep} ? "$prepend{$dep}/" : "") . $dep;
+        my($base) = basename($dep);
+        my($full) = (defined $prepend{$base} ?
+                       "$prepend{$base}/" : "") . $base;
         if ($project ne $full) {
           ## See if the dependency is listed after this project
           for(my $j = $i; $j <= $#list; $j++) {
@@ -361,6 +363,27 @@ sub sort_dependencies {
     }
   }
   return @list;
+}
+
+
+sub project_creator {
+  my($self) = shift; 
+  my($str)  = "$self";
+
+  ## NOTE: If the subclassed WorkspaceCreator name prefix does not
+  ##       match the name prefix of the ProjectCreator, this code
+  ##       will not work and the subclassed WorkspaceCreator will
+  ##       need to override this method.
+
+  $str =~ s/Workspace/Project/;
+  $str =~ s/=HASH.*//;
+  return $str->new($self->get_global_cfg(),
+                   $self->get_include_path(),
+                   $self->get_template_override(),
+                   $self->get_ti_override(),
+                   $self->get_dynamic(),
+                   $self->get_static(),
+                   $self->get_relative());
 }
 
 
@@ -390,12 +413,6 @@ sub write_comps {
 sub post_workspace {
   my($self) = shift;
   my($fh)   = shift;
-}
-
-
-sub project_creator {
-  my($self) = shift;
-  return undef;
 }
 
 

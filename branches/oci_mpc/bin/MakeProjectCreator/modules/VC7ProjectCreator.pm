@@ -29,7 +29,6 @@ sub translate_value {
 
   if ($key eq 'depends' && $val ne "") {
     my($arr) = $self->create_array($val);
-    my($app) = "";
     $val = "";
     foreach my $entry (@$arr) {
       $val .= "\"" . $self->project_file_name($entry) . "\" ";
@@ -68,28 +67,9 @@ sub save_project_value {
 }
 
 
-sub sort_files {
-  my($self) = shift;
-  return 1;
-}
-
-
-sub file_sorter {
-  my($self)  = shift;
-  my($left)  = shift;
-  my($right) = shift;
-  return lc($left) cmp lc($right);
-}
-
-
 sub crlf {
   my($self) = shift;
-  if ($^O eq 'MSWin32') {
-    return "\n";
-  }
-  else {
-    return "\r\n";
-  }
+  return $self->windows_crlf();
 }
 
 
@@ -114,7 +94,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return $self->transform_file_name("$name.vcproj");
+  return "$name.vcproj";
 }
 
 

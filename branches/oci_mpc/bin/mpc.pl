@@ -31,6 +31,8 @@ my(@creators) = ('GNUProjectCreator',
                  'VC7ProjectCreator',
                  'BorlandProjectCreator',
                  'GHSProjectCreator',
+                 'EM3ProjectCreator',
+                 'VA4ProjectCreator',
                 );
 
 # ************************************************************

@@ -26,12 +26,7 @@ use vars qw(@ISA);
 
 sub crlf {
   my($self) = shift;
-  if ($^O eq 'MSWin32') {
-    return "\n";
-  }
-  else {
-    return "\r\n";
-  }
+  return $self->windows_crlf();
 }
 
 
@@ -80,21 +75,10 @@ sub write_comps {
     ## default configuration can be built at the top level.
     print $fh ($chdir ? "\tcd $dir$crlf" : "") .
               "\t\$(MAKE) /f " . basename($project) . " CFG=\"\$(CFG)\"$crlf" .
-              ($chdir ? "\tcd " . ("../" x $back) : "");
+              ($chdir ? "\tcd " . ("../" x $back) . $crlf : "");
   }
 }
 
-
-
-sub project_creator {
-  my($self) = shift;
-  return new NMakeProjectCreator($self->get_global_cfg(),
-                                 $self->get_include_path(),
-                                 $self->get_template_override(),
-                                 $self->get_ti_override(),
-                                 $self->get_dynamic(),
-                                 $self->get_static());
-}
 
 
 1;

@@ -22,6 +22,12 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub sort_files {
+  my($self) = shift;
+  return 0;
+}
+
+
 sub translate_value {
   my($self) = shift;
   my($key)  = shift;
@@ -29,7 +35,6 @@ sub translate_value {
 
   if ($key eq 'depends' && $val ne "") {
     my($arr) = $self->create_array($val);
-    my($app) = "";
     $val = "";
     foreach my $entry (@$arr) {
       $val .= "\"" . $self->project_file_name($entry) . "\" ";
@@ -129,8 +134,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return $self->transform_file_name(
-            "Makefile" . ($name ne "" ? "." : "") . $name);
+  return "Makefile" . ($name eq "" ? "" : ".$name");
 }
 
 
