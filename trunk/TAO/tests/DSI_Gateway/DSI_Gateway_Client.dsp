@@ -120,7 +120,7 @@ SOURCE=.\test.idl
 !IF  "$(CFG)" == "DSI_Gateway_Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
