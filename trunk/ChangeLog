@@ -1,3 +1,10 @@
+Sun Dec 21 10:02:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timeprobe.h:
+          Added missing includes when ACE_COMPILE_TIMEPROBES is set to 1.
+          Thanks to Konstantinos Margaritis <markos@debian.gr> for reporting
+          this.
+
 Sun Dec 21 09:45:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* Kokyu/Makefile.bor:
