@@ -162,9 +162,19 @@ public:
   ~CORBA_Environment (void) { clear (); }
 
   CORBA::Exception_ptr exception (void) const { return _exception; }
+  // Return the exception.  Caller must call AddRef() in order to keep
+  // the ptr.
 
   void exception (CORBA::Exception *ex)
-  { clear (); _exception = ex; }
+    // Set the exception to <ex>, taking a reference on it.
+  {
+    if (ex != _exception)
+      {
+        clear ();
+        _exception = ex;
+        _exception->AddRef ();
+      }
+  }
 
   CORBA::ExceptionType exception_type (void) const;
   TAO_CONST CORBA::String exception_id (void) const;
