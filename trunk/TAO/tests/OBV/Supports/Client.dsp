@@ -180,7 +180,7 @@ InputPath=.\Supports_Test.idl
 InputName=Supports_Test
 
 BuildCmds= \
-	$(ACE_ROOT)\bin\tao_idl -o . -Sc $(InputPath)
+	%ACE_ROOT%\bin\tao_idl -o . -Sc $(InputPath) -Gv -Gt
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -203,6 +203,14 @@ BuildCmds= \
 
 !ENDIF 
 
+# End Source File
+# End Group
+# Begin Group "Documentation"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\README
 # End Source File
 # End Group
 # End Target

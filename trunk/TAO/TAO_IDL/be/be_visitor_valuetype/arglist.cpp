@@ -169,7 +169,11 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
         }
       else
         {
-          *os << " = 0;" << be_uidt;
+          *os << " = 0;";
+
+          UTL_Scope *scope = node->defined_in ();
+          be_valuetype *vt = be_valuetype::narrow_from_scope (scope);
+          if (vt) *os << be_uidt;
         }
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CS:

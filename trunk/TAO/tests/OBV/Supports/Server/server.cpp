@@ -51,17 +51,16 @@ main (int argc, char * argv[])
 
 	  vt_graph_factory->_remove_ref ();
 
-
 	  test_impl * a_test_impl;
   
 		ACE_NEW_RETURN (a_test_impl, test_impl (orb.in ()), 1);
 
-	  PortableServer::ServantBase_var owner_transfer(a_test_impl);
+    //PortableServer::ServantBase_var owner_transfer = a_test_impl;
 
-		Supports_Test::test_var a_test = a_test_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    Supports_Test::test_ptr a_test = a_test_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
-	  CORBA::String_var ior = orb->object_to_string (a_test.in () ACE_ENV_ARG_PARAMETER);
+	  CORBA::String_var ior = orb->object_to_string (a_test ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
 	  FILE * output_file = ACE_OS::fopen (ior_output_file, "w");
@@ -75,16 +74,18 @@ main (int argc, char * argv[])
 	  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
-	  orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+    a_test_impl->_remove_ref ();
+
+    orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
-	  root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+	  root_poa->destroy (0, 0 ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
   
 	  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server test finished\n"));
+    ACE_DEBUG ((LM_DEBUG, "Server (%P.%t) completed test successfully\n"));
 
 	}
   ACE_CATCHANY
