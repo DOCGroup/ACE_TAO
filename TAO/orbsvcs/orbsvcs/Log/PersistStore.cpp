@@ -1,4 +1,5 @@
 #include "PersistStore.h"
+
 #include "orbsvcs/Time_Utilities.h"
 
 ACE_RCSID (Log,
@@ -6,8 +7,8 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-PersistStore::PersistStore (CORBA::ULongLong max_size,
-                                CORBA::ULong max_rec_list_len)
+TAO_PersistStore::TAO_PersistStore (CORBA::ULongLong max_size,
+                                    CORBA::ULong max_rec_list_len)
   : maxid_ (0),
     max_size_ (max_size),
     current_size_ (0),
@@ -17,13 +18,13 @@ PersistStore::PersistStore (CORBA::ULongLong max_size,
   // No-Op.
 }
 
-PersistStore::~PersistStore (void)
+TAO_PersistStore::~TAO_PersistStore (void)
 {
   // No-Op.
 }
 
 int
-PersistStore::open (const char * file_name)
+TAO_PersistStore::open (const char * file_name)
 {
   // Open the persistent log file for writing.
   this->write_persistent_file_ = ACE_OS::open (file_name,
@@ -48,7 +49,7 @@ PersistStore::open (const char * file_name)
 }
 
 int
-PersistStore::close (void)
+TAO_PersistStore::close (void)
 {
   ACE_OS::close (this->write_persistent_file_);
 
@@ -57,25 +58,25 @@ PersistStore::close (void)
 
 // TODO: make these inline ..
 CORBA::ULongLong
-PersistStore::get_max_size (void)
+TAO_PersistStore::get_max_size (void)
 {
   return max_size_;
 }
 
 void
-PersistStore::set_max_size (CORBA::ULongLong size)
+TAO_PersistStore::set_max_size (CORBA::ULongLong size)
 {
   this->max_size_ = size;
 }
 
 CORBA::ULongLong
-PersistStore::get_current_size (void)
+TAO_PersistStore::get_current_size (void)
 {
   return this->current_size_;
 }
 
 CORBA::ULongLong
-PersistStore::get_n_records (void)
+TAO_PersistStore::get_n_records (void)
 {
   return this->num_records_;
 }
@@ -83,7 +84,7 @@ PersistStore::get_n_records (void)
 // inline ...
 
 int
-PersistStore::log (DsLogAdmin::LogRecord &rec)
+TAO_PersistStore::log (DsLogAdmin::LogRecord &rec)
 {
   CORBA::TypeCode_ptr tc;
   ACE_Message_Block *mb;
@@ -147,7 +148,7 @@ PersistStore::log (DsLogAdmin::LogRecord &rec)
 }
 
 int
-PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
+TAO_PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
 {
   CORBA::TypeCode_var tc;
   char *mb_data = NULL;
@@ -194,7 +195,7 @@ PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
 }
 
 unsigned short
-PersistStore::get_percentage_full (void)
+TAO_PersistStore::get_percentage_full (void)
 {
   // If the log size is unlimited, return 0
   if (this->max_size_ == 0)

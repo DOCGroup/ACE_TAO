@@ -1,4 +1,5 @@
 #include "Log_Constraint_Interpreter.h"
+
 #include "Log_Constraint_Visitors.h"
 
 ACE_RCSID (Log,

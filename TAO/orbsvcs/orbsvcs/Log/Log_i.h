@@ -21,43 +21,39 @@
 #include "ace/pre.h"
 
 #include "orbsvcs/Log/LogRecordStore.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/DsLogAdminS.h"
-#include "ace/Reactor.h"
-#include "log_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Bug in MSVC 5, See KB article Q167350
-#if defined (_MSC_VER) && (_MSC_VER == 1100)
-using DsLogAdmin::wrap;
-#endif /* (_MSC_VER) && (_MSC_VER == 1100) */
+#include "orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/DsLogAdminS.h"
+#include "ace/Reactor.h"
+#include "log_export.h"
 
 /**
- * @class Log_i
+ * @class TAO_Log_i
  *
  * @brief Used to log events to a logging server
  *
  * This implementation attempts to conform to the telecom
  * logging specification.
  */
-class TAO_Log_Export Log_i : public virtual POA_DsLogAdmin::Log
+class TAO_Log_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
 {
 
 public:
 
   /// Constructor.
-  Log_i (DsLogAdmin::LogMgr_ptr factory,
-         DsLogAdmin::LogId id,
-         LogNotification *log_notifier,
-         DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-         CORBA::ULongLong max_size = 0,
-         ACE_Reactor *reactor = ACE_Reactor::instance ());
+  TAO_Log_i (DsLogAdmin::LogMgr_ptr factory,
+             DsLogAdmin::LogId id,
+             TAO_LogNotification *log_notifier,
+             DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
+             CORBA::ULongLong max_size = 0,
+             ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Destructor.
-  ~Log_i ();
+  ~TAO_Log_i ();
 
   /// Initlialize the Log.
   void init (ACE_ENV_SINGLE_ARG_DECL);
@@ -411,13 +407,13 @@ protected:
   ACE_Reactor *reactor_;
 
   /// The storage for all the records
-  LogRecordStore recordstore_;
+  TAO_LogRecordStore recordstore_;
 
   /// Max count to return in queries.
   CORBA::ULong max_rec_list_len_;
 
   /// For sending Log Generated events.
-  LogNotification* notifier_;
+  TAO_LogNotification* notifier_;
 };
 
 #include "ace/post.h"

@@ -1,4 +1,5 @@
 #include "orbsvcs/Log/BasicLog_i.h"
+
 #include "orbsvcs/Log/LogMgr_i.h"
 
 
@@ -7,25 +8,25 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-BasicLog_i::BasicLog_i (LogMgr_i &logmgr_i,
-                        DsLogAdmin::LogMgr_ptr factory,
-                        DsLogAdmin::LogId id,
-                        DsLogAdmin::LogFullActionType log_full_action,
-                        CORBA::ULongLong max_size,
-                        ACE_Reactor *reactor)
-  : Log_i (factory, id, 0, log_full_action, max_size, reactor),
+TAO_BasicLog_i::TAO_BasicLog_i (TAO_LogMgr_i &logmgr_i,
+                                DsLogAdmin::LogMgr_ptr factory,
+                                DsLogAdmin::LogId id,
+                                DsLogAdmin::LogFullActionType log_full_action,
+                                CORBA::ULongLong max_size,
+                                ACE_Reactor *reactor)
+  : TAO_Log_i (factory, id, 0, log_full_action, max_size, reactor),
     logmgr_i_(logmgr_i)
 {
   // No-Op.
 }
 
-BasicLog_i::~BasicLog_i (void)
+TAO_BasicLog_i::~TAO_BasicLog_i (void)
 {
   // No-Op.
 }
 
 DsLogAdmin::Log_ptr
-BasicLog_i::copy (DsLogAdmin::LogId &id
+TAO_BasicLog_i::copy (DsLogAdmin::LogId &id
                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -49,7 +50,7 @@ BasicLog_i::copy (DsLogAdmin::LogId &id
 }
 
 DsLogAdmin::Log_ptr
-BasicLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
+TAO_BasicLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::BasicLogFactory_var basicLogFactory =
@@ -71,7 +72,7 @@ BasicLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
 }
 
 void
-BasicLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_BasicLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove ourselves from the list of logs.

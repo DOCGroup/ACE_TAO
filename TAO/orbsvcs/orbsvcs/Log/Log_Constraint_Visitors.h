@@ -16,8 +16,8 @@
 //=============================================================================
 
 
-#ifndef LOG_CONSTRAINT_VISITORS_H
-#define LOG_CONSTRAINT_VISITORS_H
+#ifndef TAO_LOG_CONSTRAINT_VISITORS_H
+#define TAO_LOG_CONSTRAINT_VISITORS_H
 
 #include "ace/pre.h"
 #include "ace/Hash_Map_Manager.h"
@@ -34,20 +34,28 @@ class TAO_ETCL_Constraint;
 class TAO_ETCL_Literal_Constraint;
 class TAO_Log_Property_Constraint;
 
-class TAO_Log_Export TAO_Log_Constraint_Visitor 
-  : public TAO_ETCL_Constraint_Visitor
+/**
+ * @class TAO_Log_Constraint_Visitor
+ *
+ * @brief "ETCL" Visitor for the Log queries.
+ */
+class TAO_Log_Export TAO_Log_Constraint_Visitor :
+  public TAO_ETCL_Constraint_Visitor
 {
 public:
+
+  /// Constructor.
   TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord &rec);
-  // Constructor.
 
+  /**
+   * Returns 1 if the offer satisfies the constraint
+   * represented by the the expression tree rooted at <root>, 0 if it
+   * doesn't. If an error occurs during process, the traversal
+   * automatically fails.
+   */
   CORBA::Boolean evaluate_constraint (TAO_ETCL_Constraint *root);
-  // Returns 1 if the offer satisfies the constraint
-  // represented by the the expression tree rooted at <root>, 0 if it
-  // doesn't. If an error occurs during process, the traversal
-  // automatically fails.
 
-  // The overridden methods.
+  // = The overridden methods.
   int visit_literal (TAO_ETCL_Literal_Constraint *);
   int visit_identifier (TAO_ETCL_Identifier *);
   int visit_union_value (TAO_ETCL_Union_Value *);
@@ -66,7 +74,7 @@ public:
   int visit_preference (TAO_ETCL_Preference *);
 
 private:
-  // Sub-methods for visit_binary_expr().
+  // = Sub-methods for visit_binary_expr().
   int visit_or (TAO_ETCL_Binary_Expr *);
   int visit_and (TAO_ETCL_Binary_Expr *);
   int visit_twiddle (TAO_ETCL_Binary_Expr *);
@@ -74,7 +82,7 @@ private:
   int visit_binary_op (TAO_ETCL_Binary_Expr *binary_expr,
                        int op_type);
 
-  // These use dynamic anys look inside the ETCL component.
+  // = These use dynamic anys look inside the ETCL component.
   CORBA::Boolean sequence_does_contain (const CORBA::Any *any,
                                         TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean array_does_contain (const CORBA::Any *any,
@@ -86,28 +94,29 @@ private:
   CORBA::Boolean any_does_contain (const CORBA::Any *any,
                                    TAO_ETCL_Literal_Constraint &item);
 
-  // Utility function to compare a TAO_ETCL_Literal_Constraint type
-  // and a type code.
+  /// Utility function to compare a TAO_ETCL_Literal_Constraint type
+  /// and a type code.
   CORBA::Boolean simple_type_match (int expr_type,
                                     CORBA::TCKind tc_kind);
 
 private:
+
+  /// Used to lookup property name and values.
   ACE_Hash_Map_Manager <ACE_CString, 
                         CORBA::Any*,
                         TAO_SYNCH_MUTEX> 
   property_lookup_;
-  // Used to lookup property name and values.
 
+  /// The result of a non_boolean operation.
   ACE_Unbounded_Queue <TAO_ETCL_Literal_Constraint> queue_;
-  // The result of a non_boolean operation.
 
+  /// Holder for a value found in property_lookup_ or for a
+  /// nested type within that value.
   CORBA::Any_var current_member_;
-  // Holder for a value found in property_lookup_ or for a
-  // nested type within that value.
 
+  /// Local LogRecord.
   DsLogAdmin::LogRecord &rec_;
-  // Local LogRecord
 };
 
 #include "ace/post.h"
-#endif /* LOG_CONSTRAINT_VISITORS_H */
+#endif /* TAO_LOG_CONSTRAINT_VISITORS_H */

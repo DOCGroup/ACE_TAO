@@ -31,32 +31,35 @@
 
 class TAO_Log_Constraint_Visitor;
 
-class TAO_Log_Export TAO_Log_Constraint_Interpreter
-  : public TAO_ETCL_Interpreter
+/**
+ * @class TAO_Log_Constraint_Interpreter
+ *
+ * @brief "ETCL" Interpreter for the Log queries.
+ */
+class TAO_Log_Export TAO_Log_Constraint_Interpreter :
+  public TAO_ETCL_Interpreter
 {
-  //
-  // = TITLE
-  //   TAO_Log_Constraint_Interpreter
-  //
-  // = DESCRIPTION
-  //   "ETCL" Interpreter for the Log queries.
 public:
+
   // = Initialization and termination methods.
+
+  /** 
+   * This constructor builds an expression tree representing the
+   * constraint specified in <constraints>, and throws an Illegal
+   * Constraint exception if the constraint given has syntax errors or
+   * semantic errors, such as mismatched types.
+   */
   TAO_Log_Constraint_Interpreter (const char* constraints
                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((DsLogAdmin::InvalidConstraint,
                      CORBA::NO_MEMORY));
-  // This constructor builds an expression tree representing the
-  // constraint specified in <constraints>, and throws an Illegal
-  // Constraint exception if the constraint given has syntax errors or
-  // semantic errors, such as mismatched types.
 
+  /// Destructor.
   ~TAO_Log_Constraint_Interpreter (void);
-  // Destructor
 
+  /// Returns true if the constraint is evaluated successfully by
+  /// the evaluator.
   CORBA::Boolean evaluate (TAO_Log_Constraint_Visitor &evaluator);
-  // Returns true if the constraint is evaluated successfully by
-  // the evaluator.
 };
 #include "ace/post.h"
 #endif /* TAO_LOG_CONSTRAINT_INTERPRETER_H */

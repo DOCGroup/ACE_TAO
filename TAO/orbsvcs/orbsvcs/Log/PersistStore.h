@@ -13,15 +13,17 @@
  */
 //=============================================================================
 
-#ifndef PERSIST_STORE_H
-#define PERSIST_STORE_H
+#ifndef TAO_PERSIST_STORE_H
+#define TAO_PERSIST_STORE_H
+#include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/DsLogAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/DsLogAdminC.h"
 
 #define PERSIST_LOG_DEFAULT_MAX_REC_LIST_LEN 250
 
@@ -34,82 +36,86 @@ struct PersistentData
   size_t mb_size;
 };
 
-class TAO_Log_Export PersistStore
-{
-  // = TITLE
-  //     A class for storing DsLogAdmin::LogRecord *'s
-  //
-  // = Description
-  //     This implementation is to serve for illustration purposes.
+/**
+ * @class TAO_PersistStore
+ *
+ * @brief A class for storing DsLogAdmin::LogRecord *'s
+ *
+ * This implementation is to serve for illustration purposes.
+ */
 
+class TAO_Log_Export TAO_PersistStore
+{
  public:
+
   // = Initialization and termination methods
 
-  PersistStore (CORBA::ULongLong max_size = 0,
-                CORBA::ULong max_rec_list_len
-                = PERSIST_LOG_DEFAULT_MAX_REC_LIST_LEN);
-  // Constructor
+  /// Constructor.
+  TAO_PersistStore (CORBA::ULongLong max_size = 0,
+                    CORBA::ULong max_rec_list_len
+                    = PERSIST_LOG_DEFAULT_MAX_REC_LIST_LEN);
 
-  ~PersistStore (void);
-  // Destructor
+  /// Destructor.
+  ~TAO_PersistStore (void);
 
+  /// Initialization.
   int open (const char * file_name);
-  // Initialization.
 
+  /// Close the record store.
   int close (void);
-  // Close the record store.
 
-  // = LogRecordStore status methods
+  // = LogRecordStore status methods.
 
+  /// Get the current set value of the max size of the log data.
   CORBA::ULongLong get_max_size (void);
-  // Get the current set value of the max size of the log data.
 
+  /// Set the max size of log data. size == 0, => infinite.
   void set_max_size (CORBA::ULongLong size);
-  // Set the max size of log data. size == 0, => infinite.
 
+  /// Gets the current size of the log data.
   CORBA::ULongLong get_current_size (void);
-  // Gets the current size of the log data.
 
+  /// Get the number of records in the log right now.
   CORBA::ULongLong get_n_records (void);
-  // Get the number of records in the log right now.
 
   // = Record logging, retrieval, update and removal methods
 
+  /// Insert rec into storage. Returns 0 on success -1 on failure and 1
+  /// if the log is full.
   int log (DsLogAdmin::LogRecord &rec);
-  // Insert rec into storage. Returns 0 on success -1 on failure and 1
-  // if the log is full
 
+  /// Set rec to the pointer to the LogRecord with the given
+  /// id. Returns 0 on success, -1 on failure.
   int retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec);
-  // Set rec to the pointer to the LogRecord with the given
-  // id. Returns 0 on success, -1 on failure
 
+  /// Return the percentage of the max space that is currently being used,
+  /// If size is infinite, return 0.
   unsigned short get_percentage_full (void);
-  // Return the percentage of the max space that is currently being used,
-  // If size is infinite, return 0.
 
  protected:
 
+  /// Assigned to a new RecordId and then incremented.
   DsLogAdmin::RecordId maxid_;
-  // Assigned to a new RecordId and then incremented
 
+  /// The maximum size of the log.
   CORBA::ULongLong max_size_;
-  // The maximum size of the log.
 
+  /// The current size (in bytes) of the log.
   CORBA::ULongLong current_size_;
-  // The current size (in bytes) of the log
 
+  /// The current number of records in the log.
   CORBA::ULongLong num_records_;
-  // The current number of records in the log
 
+  /// The max size of the record list returned in a query.
   CORBA::ULong max_rec_list_len_;
-  // The max size of the record list returned in a query.
 
+  /// The file descriptor for the persistent log storage file.
   ACE_HANDLE write_persistent_file_;
   ACE_HANDLE read_persistent_file_;
-  // The file descriptor for the persistent log storage file.
 
+  /// Lock the log operation.
   ACE_Mutex write_lock_;
-  // Lock the log operation 
 };
 
-#endif /*PERSIST_STORE_H*/
+#include "ace/post.h"
+#endif /*TAO_PERSIST_STORE_H*/

@@ -7,12 +7,12 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-NotifyLogFactory_i::NotifyLogFactory_i (void)
+TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (void)
 {
   // No-Op.
 }
 
-NotifyLogFactory_i::NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf)
+TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf)
 : notify_factory_ (ecf)
 {
   ACE_DECLARE_NEW_CORBA_ENV;  
@@ -42,18 +42,18 @@ NotifyLogFactory_i::NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFacto
   ACE_CHECK;
 
     ACE_NEW_THROW_EX (this->notifier_, 
-                  NotifyLogNotification(this->event_channel_.in ()),
+                  TAO_NotifyLogNotification(this->event_channel_.in ()),
                    CORBA::NO_MEMORY ());
 }
 
-NotifyLogFactory_i::~NotifyLogFactory_i()
+TAO_NotifyLogFactory_i::~TAO_NotifyLogFactory_i()
 {
   // No-Op.
 }
 
 DsNotifyLogAdmin::NotifyLogFactory_ptr
-NotifyLogFactory_i::activate (PortableServer::POA_ptr poa
-                           ACE_ENV_ARG_DECL)
+TAO_NotifyLogFactory_i::activate (PortableServer::POA_ptr poa
+                                  ACE_ENV_ARG_DECL)
 {
   DsNotifyLogAdmin::NotifyLogFactory_var v_return;
 
@@ -82,13 +82,13 @@ NotifyLogFactory_i::activate (PortableServer::POA_ptr poa
 }
 
 DsNotifyLogAdmin::NotifyLog_ptr 
-NotifyLogFactory_i::create (
+TAO_NotifyLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_rec_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         const CosNotification::QoSProperties & initial_qos,
         const CosNotification::AdminProperties & initial_admin,
-        DsLogAdmin::LogId_out id//,
+        DsLogAdmin::LogId_out id
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -124,7 +124,7 @@ NotifyLogFactory_i::create (
 }
 
 DsNotifyLogAdmin::NotifyLog_ptr 
-NotifyLogFactory_i::create_with_id (
+TAO_NotifyLogFactory_i::create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
@@ -156,18 +156,18 @@ NotifyLogFactory_i::create_with_id (
   DsNotifyLogAdmin::NotifyLog_var notify_log;
   // Object to return.
 
-  NotifyLog_i* notify_log_i;
+  TAO_NotifyLog_i* notify_log_i;
 
   ACE_NEW_THROW_EX (notify_log_i,
-                    NotifyLog_i (*this,
-                                this->log_mgr_.in (),
-                                this,
-                                this->notify_factory_.in (),
-                                this->notifier_,
-                                id,
-                                full_action,
-                                max_size                              
-                                ),
+                    TAO_NotifyLog_i (*this,
+                                     this->log_mgr_.in (),
+                                     this,
+                                     this->notify_factory_.in (),
+                                     this->notifier_,
+                                     id,
+                                     full_action,
+                                     max_size                              
+                                     ),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (notify_log._retn ());
@@ -198,7 +198,7 @@ NotifyLogFactory_i::create_with_id (
 }
 
 CosNotifyChannelAdmin::AdminID 
-NotifyLogFactory_i::MyID (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::MyID (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -207,7 +207,7 @@ NotifyLogFactory_i::MyID (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr 
-NotifyLogFactory_i::MyChannel (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::MyChannel (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -216,7 +216,7 @@ NotifyLogFactory_i::MyChannel (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyChannelAdmin::InterFilterGroupOperator 
-NotifyLogFactory_i::MyOperator (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::MyOperator (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -225,7 +225,7 @@ NotifyLogFactory_i::MyOperator (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyFilter::MappingFilter_ptr 
-NotifyLogFactory_i::priority_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::priority_filter (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -234,7 +234,7 @@ NotifyLogFactory_i::priority_filter (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void 
-NotifyLogFactory_i::priority_filter (CosNotifyFilter::MappingFilter_ptr filter ACE_ENV_ARG_DECL)
+TAO_NotifyLogFactory_i::priority_filter (CosNotifyFilter::MappingFilter_ptr filter ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -243,7 +243,7 @@ NotifyLogFactory_i::priority_filter (CosNotifyFilter::MappingFilter_ptr filter A
 }
 
 CosNotifyFilter::MappingFilter_ptr 
-NotifyLogFactory_i::lifetime_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::lifetime_filter (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -252,7 +252,7 @@ NotifyLogFactory_i::lifetime_filter (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void 
-NotifyLogFactory_i::lifetime_filter (CosNotifyFilter::MappingFilter_ptr filter ACE_ENV_ARG_DECL)
+TAO_NotifyLogFactory_i::lifetime_filter (CosNotifyFilter::MappingFilter_ptr filter ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -261,7 +261,7 @@ NotifyLogFactory_i::lifetime_filter (CosNotifyFilter::MappingFilter_ptr filter A
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq* 
-NotifyLogFactory_i::pull_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::pull_suppliers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -270,7 +270,7 @@ NotifyLogFactory_i::pull_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq* 
-NotifyLogFactory_i::push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -279,7 +279,7 @@ NotifyLogFactory_i::push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyChannelAdmin::ProxySupplier_ptr 
-NotifyLogFactory_i::get_proxy_supplier (
+TAO_NotifyLogFactory_i::get_proxy_supplier (
   CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CosNotifyChannelAdmin::ProxyNotFound, 
@@ -290,7 +290,7 @@ NotifyLogFactory_i::get_proxy_supplier (
 }
 
 CosNotifyChannelAdmin::ProxySupplier_ptr 
-NotifyLogFactory_i::obtain_notification_pull_supplier (
+TAO_NotifyLogFactory_i::obtain_notification_pull_supplier (
   CosNotifyChannelAdmin::ClientType ctype,
   CosNotifyChannelAdmin::ProxyID& proxy_id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -302,7 +302,7 @@ NotifyLogFactory_i::obtain_notification_pull_supplier (
 }
 
 CosNotifyChannelAdmin::ProxySupplier_ptr 
-NotifyLogFactory_i::obtain_notification_push_supplier (
+TAO_NotifyLogFactory_i::obtain_notification_push_supplier (
   CosNotifyChannelAdmin::ClientType ctype,
   CosNotifyChannelAdmin::ProxyID& proxy_id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -313,11 +313,8 @@ NotifyLogFactory_i::obtain_notification_push_supplier (
   return consumer_admin_->obtain_notification_push_supplier (ctype, proxy_id ACE_ENV_ARG_PARAMETER);
 }
 
-
-
-
 CosEventChannelAdmin::ProxyPushSupplier_ptr 
-NotifyLogFactory_i::obtain_push_supplier (
+TAO_NotifyLogFactory_i::obtain_push_supplier (
         ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -330,7 +327,7 @@ NotifyLogFactory_i::obtain_push_supplier (
 
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr 
-NotifyLogFactory_i::obtain_pull_supplier (
+TAO_NotifyLogFactory_i::obtain_pull_supplier (
         ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -342,7 +339,7 @@ NotifyLogFactory_i::obtain_pull_supplier (
 }
 
 void
-NotifyLogFactory_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_NotifyLogFactory_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ))
@@ -352,7 +349,7 @@ NotifyLogFactory_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 //CosNotifyComm::NotifySubscribe
 void 
-NotifyLogFactory_i::subscription_change (const CosNotification::EventTypeSeq& added,
+TAO_NotifyLogFactory_i::subscription_change (const CosNotification::EventTypeSeq& added,
                           const CosNotification::EventTypeSeq& removed
                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -364,7 +361,7 @@ NotifyLogFactory_i::subscription_change (const CosNotification::EventTypeSeq& ad
 }
 
 CosNotification::QoSProperties* 
-NotifyLogFactory_i::get_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::get_qos (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ))
@@ -373,7 +370,7 @@ NotifyLogFactory_i::get_qos (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void 
-NotifyLogFactory_i::set_qos (const CosNotification::QoSProperties& qos ACE_ENV_ARG_DECL)
+TAO_NotifyLogFactory_i::set_qos (const CosNotification::QoSProperties& qos ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CosNotification::UnsupportedQoS, 
       CORBA::SystemException
@@ -383,7 +380,7 @@ NotifyLogFactory_i::set_qos (const CosNotification::QoSProperties& qos ACE_ENV_A
 }
 
 void 
-NotifyLogFactory_i::validate_qos (const CosNotification::QoSProperties& required_qos,
+TAO_NotifyLogFactory_i::validate_qos (const CosNotification::QoSProperties& required_qos,
                    CosNotification::NamedPropertyRangeSeq_out available_qos
                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -395,7 +392,7 @@ NotifyLogFactory_i::validate_qos (const CosNotification::QoSProperties& required
 }
 
 CosNotifyFilter::FilterID 
-NotifyLogFactory_i::add_filter (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL)
+TAO_NotifyLogFactory_i::add_filter (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ))
@@ -404,7 +401,7 @@ NotifyLogFactory_i::add_filter (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_D
 }
 
 void 
-NotifyLogFactory_i::remove_filter (CosNotifyFilter::FilterID id ACE_ENV_ARG_DECL)
+TAO_NotifyLogFactory_i::remove_filter (CosNotifyFilter::FilterID id ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ))
@@ -413,7 +410,7 @@ NotifyLogFactory_i::remove_filter (CosNotifyFilter::FilterID id ACE_ENV_ARG_DECL
 }
 
 CosNotifyFilter::Filter_ptr 
-NotifyLogFactory_i::get_filter (CosNotifyFilter::FilterID id ACE_ENV_ARG_DECL)
+TAO_NotifyLogFactory_i::get_filter (CosNotifyFilter::FilterID id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CosNotifyFilter::FilterNotFound, 
       CORBA::SystemException
@@ -423,7 +420,7 @@ NotifyLogFactory_i::get_filter (CosNotifyFilter::FilterID id ACE_ENV_ARG_DECL)
 }
 
 CosNotifyFilter::FilterIDSeq* 
-NotifyLogFactory_i::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ))
@@ -432,7 +429,7 @@ NotifyLogFactory_i::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void 
-NotifyLogFactory_i::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NotifyLogFactory_i::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ))
@@ -440,14 +437,3 @@ NotifyLogFactory_i::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   consumer_admin_->remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr <NotifyLog_i>;
-template class ACE_Auto_Basic_Ptr<NotifyLog_i>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr <NotifyLog_i>
-#pragma instantiate ACE_Auto_Notify_Ptr <NotifyLog_i>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
