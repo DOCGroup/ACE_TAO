@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:609
+// be\be_codegen.cpp:609
 
 #ifndef _TAO_IDL_ORIG_POLICYS_CPP_
 #define _TAO_IDL_ORIG_POLICYS_CPP_
@@ -71,7 +71,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -96,7 +96,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -122,7 +122,7 @@ namespace TAO
 
 
 // Stub/skeleton argument selection function templates.
-// TAO_IDL - Generated from be/be_visitor_root/root.cpp:110
+// TAO_IDL - Generated from be\be_visitor_root/root.cpp:111
 
 namespace
 {
@@ -184,7 +184,7 @@ namespace
 
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1535
+// be\be_interface.cpp:1535
 
 class TAO_CORBA_Policy_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -197,7 +197,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /home/ossama/work/skeleton-refactor-merge/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_Policy_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_Policy_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_Policy_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -302,7 +302,7 @@ static TAO_CORBA_Policy_Perfect_Hash_OpTable tao_CORBA_Policy_optable;
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker *
@@ -393,7 +393,7 @@ POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:833
+// be\be_visitor_interface/interface_ss.cpp:832
 
 TAO::Collocation_Proxy_Broker *
 CORBA__TAO_Policy_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -430,7 +430,7 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_TAO_Policy_Direct_Proxy_Impl (void)
 {}
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_get_policy_type (
@@ -453,7 +453,7 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_get_policy_type (
   ACE_CHECK;
 }
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy (
@@ -476,7 +476,7 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy (
   ACE_CHECK;
 }
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::destroy (
@@ -504,7 +504,7 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::destroy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:103
+// be\be_visitor_interface/interface_ss.cpp:103
 
 POA_CORBA::Policy::Policy (void)
   : TAO_ServantBase ()
@@ -523,11 +523,11 @@ POA_CORBA::Policy::~Policy (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:165
+// be\be_visitor_operation/operation_ss.cpp:165
 
 void POA_CORBA::Policy::_get_policy_type_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -535,7 +535,7 @@ void POA_CORBA::Policy::_get_policy_type_skel (
   
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:74
   
   class Upcall_Command
     : public TAO::Upcall_Command
@@ -564,7 +564,6 @@ void POA_CORBA::Policy::_get_policy_type_skel (
         this->servant_->policy_type (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -616,11 +615,11 @@ void POA_CORBA::Policy::_get_policy_type_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:165
+// be\be_visitor_operation/operation_ss.cpp:165
 
 void POA_CORBA::Policy::copy_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -628,7 +627,7 @@ void POA_CORBA::Policy::copy_skel (
   
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:74
   
   class Upcall_Command
     : public TAO::Upcall_Command
@@ -657,7 +656,6 @@ void POA_CORBA::Policy::copy_skel (
         this->servant_->copy (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -709,11 +707,11 @@ void POA_CORBA::Policy::copy_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:165
+// be\be_visitor_operation/operation_ss.cpp:165
 
 void POA_CORBA::Policy::destroy_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -721,7 +719,7 @@ void POA_CORBA::Policy::destroy_skel (
   
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:74
   
   class Upcall_Command
     : public TAO::Upcall_Command
@@ -739,7 +737,6 @@ void POA_CORBA::Policy::destroy_skel (
       this->servant_->destroy (
         ACE_ENV_SINGLE_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
   
   private:
@@ -787,11 +784,11 @@ void POA_CORBA::Policy::destroy_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:170
+// be\be_visitor_interface/interface_ss.cpp:169
 
 void POA_CORBA::Policy::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -799,7 +796,7 @@ void POA_CORBA::Policy::_is_a_skel (
   
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:74
   
   class Upcall_Command
     : public TAO::Upcall_Command
@@ -835,7 +832,6 @@ void POA_CORBA::Policy::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -890,7 +886,7 @@ void POA_CORBA::Policy::_is_a_skel (
 
 void POA_CORBA::Policy::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -898,7 +894,7 @@ void POA_CORBA::Policy::_non_existent_skel (
   
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:74
   
   class Upcall_Command
     : public TAO::Upcall_Command
@@ -927,7 +923,6 @@ void POA_CORBA::Policy::_non_existent_skel (
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -981,7 +976,7 @@ void POA_CORBA::Policy::_non_existent_skel (
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:386
+// be\be_visitor_interface/interface_ss.cpp:385
 
 
 
@@ -1029,7 +1024,7 @@ void POA_CORBA::Policy::_interface_skel (
 
 void POA_CORBA::Policy::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -1037,7 +1032,7 @@ void POA_CORBA::Policy::_component_skel (
   
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:74
   
   class Upcall_Command
     : public TAO::Upcall_Command
@@ -1066,7 +1061,6 @@ void POA_CORBA::Policy::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -1141,7 +1135,7 @@ const char* POA_CORBA::Policy::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:781
+// be\be_visitor_interface/interface_ss.cpp:780
 
 void POA_CORBA::Policy::_dispatch (
     TAO_ServerRequest & req,
@@ -1156,7 +1150,7 @@ void POA_CORBA::Policy::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:732
+// be\be_visitor_interface/interface_ss.cpp:731
 
 CORBA::Policy *
 POA_CORBA::Policy::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -1188,7 +1182,7 @@ POA_CORBA::Policy::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1673
+// be\be_visitor_root/root.cpp:1674
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

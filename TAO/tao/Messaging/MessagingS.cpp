@@ -86,7 +86,7 @@ namespace TAO
 
 
 // Stub/skeleton argument selection function templates.
-// TAO_IDL - Generated from be\be_visitor_root/root.cpp:110
+// TAO_IDL - Generated from be\be_visitor_root/root.cpp:111
 
 namespace
 {
@@ -417,7 +417,7 @@ POA_Messaging::ReplyHandler::~ReplyHandler (void)
 
 void POA_Messaging::ReplyHandler::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -461,7 +461,6 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -516,7 +515,7 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
 
 void POA_Messaging::ReplyHandler::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -553,7 +552,6 @@ void POA_Messaging::ReplyHandler::_non_existent_skel (
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -655,7 +653,7 @@ void POA_Messaging::ReplyHandler::_interface_skel (
 
 void POA_Messaging::ReplyHandler::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -692,7 +690,6 @@ void POA_Messaging::ReplyHandler::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
   
   private:
@@ -814,7 +811,7 @@ POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1673
+// be\be_visitor_root/root.cpp:1674
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
