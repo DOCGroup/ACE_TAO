@@ -53,10 +53,6 @@ public:
   void close_connection (void);
   // Call the corresponding connection handlers handle_close method.
 
-  void resume_connection (ACE_Reactor *reactor);
-  // Calls the reactors resume_handler on behalf of the corresponding
-  // connection handler.
-
   int idle (void);
   // Idles the corresponding connection handler.
 
@@ -150,14 +146,6 @@ public:
 
   virtual int register_handler (void);
   // Register the handler with the reactor. This will be called by the
-  // Wait Strategy if Reactor is used  for that strategy.
-
-  virtual int suspend_handler (void);
-  // Suspend the handler from the reactor. This will be called by the
-  // Wait Strategy if Reactor is used  for that strategy.
-
-  virtual int resume_handler (void);
-  // Resume the handler from the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
 
   virtual int handle_close (void);

@@ -120,12 +120,6 @@ TAO_UIOP_Transport::_nil (void)
 }
 
 void
-TAO_UIOP_Transport::resume_connection (ACE_Reactor *reactor)
-{
-  this->handler_->resume_handler (reactor);
-}
-
-void
 TAO_UIOP_Transport::close_connection (void)
 {
   this->handler_->handle_close ();
@@ -344,20 +338,6 @@ TAO_UIOP_Client_Transport::register_handler (void)
 
   return r->register_handler (this->client_handler (),
                               ACE_Event_Handler::READ_MASK);
-}
-
-int
-TAO_UIOP_Client_Transport::suspend_handler (void)
-{
-  return this->orb_core ()->reactor ()->suspend_handler
-    (this->client_handler ());
-}
-
-int
-TAO_UIOP_Client_Transport::resume_handler (void)
-{
-  return this->orb_core ()->reactor ()->resume_handler
-    (this->client_handler ());
 }
 
 int

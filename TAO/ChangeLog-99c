@@ -1,3 +1,26 @@
+Wed Jun  2 18:53:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/Wait_Strategy.h:
+	* tao/Wait_Strategy.cpp:
+	* tao/Invocation.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connect.cpp:
+	* tao/UIOP_Transport.h:
+	* tao/UIOP_Transport.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connect.cpp:
+	  Removed several unused functions
+	  The send_error() method was assuming that request_id==0 was an
+	  impossible, that is wrong.
+
+	* tests/NestedUpcall/Reactor/client.cpp:
+	* tests/NestedUpcall/MT_Client_Test/client.cpp:
+	  The POA state was not changed, so the test was failing.
+
 Wed Jun 02 17:36:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/TAO.dsp:

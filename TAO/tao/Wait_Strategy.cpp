@@ -85,12 +85,15 @@ TAO_Wait_On_Reactor::handle_input (void)
   int result = this->transport_->handle_client_input (0);
 
   if (result == 1)
-    this->reply_received_ = 1;
+    {
+      this->reply_received_ = 1;
+      result = 0;
+    }
 
   if (result == -1)
-    return -1;
+    this->reply_received_ = -1;
 
-  return 0;
+  return result;
 }
 
 int
@@ -105,12 +108,6 @@ int
 TAO_Wait_On_Reactor::register_handler (void)
 {
   return this->transport_->register_handler ();
-}
-
-int
-TAO_Wait_On_Reactor::resume_handler (ACE_Reactor *reactor)
-{
-  return this->transport_->resume_handler ();
 }
 
 // *********************************************************************
@@ -441,13 +438,6 @@ TAO_Wait_On_Leader_Follower::register_handler (void)
   return this->transport_->register_handler ();
 }
 
-// Resume the connection handler.
-int
-TAO_Wait_On_Leader_Follower::resume_handler (ACE_Reactor *reactor)
-{
-  return this->transport_->resume_handler ();
-}
-
 ACE_SYNCH_CONDITION *
 TAO_Wait_On_Leader_Follower::cond_response_available (void)
 {
@@ -536,10 +526,4 @@ int
 TAO_Wait_On_Read::register_handler (void)
 {
   return 0;
-}
-
-int
-TAO_Wait_On_Read::resume_handler (ACE_Reactor *reactor)
-{
-  return -1;
 }

@@ -66,9 +66,6 @@ public:
   // Register the handler with the Reactor if it makes sense for the
   // strategy.
 
-  virtual int resume_handler (ACE_Reactor *reactor) = 0;
-  // Depending on the wait strategy resume the connect handler.
-
 protected:
   TAO_Transport *transport_;
   // Transport object.
@@ -107,9 +104,6 @@ public:
 
   virtual int register_handler (void);
   // Register the handler with the Reactor.
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the connection handler.
 
 private:
   int reply_received_;
@@ -152,9 +146,6 @@ public:
 
   virtual int register_handler (void);
   // Register the handler with the Reactor.
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the connection handler.
 
 protected:
   ACE_SYNCH_CONDITION* cond_response_available (void);
@@ -208,9 +199,6 @@ public:
 
   virtual int register_handler (void);
   // No-op. Return 0.
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the connection handler. No-op. Returns 0.
 };
 
 #endif /* TAO_WAIT_STRATEGY_H */

@@ -75,13 +75,6 @@ TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t)
 {
 }
 
-int
-TAO_IIOP_Handler_Base::resume_handler (ACE_Reactor *)
-{
-  errno = ENOTSUP;
-  return -1;
-}
-
 TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr ()),
     orb_core_ (TAO_ORB_Core_instance ()),
@@ -498,93 +491,89 @@ TAO_IIOP_Server_Connection_Handler::send_error (CORBA::ULong request_id,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
-  // The request_id is going to be not 0, if it was sucessfully read
-  if (request_id != 0)
+  // Create a new output CDR stream
+  TAO_OutputCDR output;
+
+  // Construct a REPLY header.
+  TAO_GIOP::start_message (TAO_GIOP::Reply, output,
+                           this->orb_core_);
+
+  // A new try/catch block, but if something goes wrong now we
+  // have no hope, just abort.
+  ACE_TRY_NEW_ENV
     {
-      // Create a new output CDR stream
-      TAO_OutputCDR output;
+      // create and write a dummy context
+      TAO_GIOP_ServiceContextList resp_ctx;
+      resp_ctx.length (0);
+      output << resp_ctx;
 
-      // Construct a REPLY header.
-      TAO_GIOP::start_message (TAO_GIOP::Reply, output,
-                               this->orb_core_);
-
-      // A new try/catch block, but if something goes wrong now we
-      // have no hope, just abort.
-      ACE_TRY_NEW_ENV
-        {
-          // create and write a dummy context
-          TAO_GIOP_ServiceContextList resp_ctx;
-          resp_ctx.length (0);
-          output << resp_ctx;
-
-          // Write the request ID
-          output.write_ulong (request_id);
+      // Write the request ID
+      output.write_ulong (request_id);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-          // @@ TODO This is the place to conditionally compile
-          // forwarding. It certainly seems easy to strategize too,
-          // just invoke an strategy to finish marshalling the
-          // response.
+      // @@ TODO This is the place to conditionally compile
+      // forwarding. It certainly seems easy to strategize too,
+      // just invoke an strategy to finish marshalling the
+      // response.
 
-          // Now we check for Forwarding ***************************
+      // Now we check for Forwarding ***************************
 
-          // Try to narrow to ForwardRequest
-          PortableServer::ForwardRequest_ptr forward_request_ptr =
-            PortableServer::ForwardRequest::_narrow (x);
+      // Try to narrow to ForwardRequest
+      PortableServer::ForwardRequest_ptr forward_request_ptr =
+        PortableServer::ForwardRequest::_narrow (x);
 
-          // If narrowing of exception succeeded
-          if (forward_request_ptr != 0
-              && !CORBA::is_nil (forward_request_ptr->forward_reference.in ()))
-            {
-              // write the reply_status
-              output.write_ulong (TAO_GIOP_LOCATION_FORWARD);
+      // If narrowing of exception succeeded
+      if (forward_request_ptr != 0
+          && !CORBA::is_nil (forward_request_ptr->forward_reference.in ()))
+        {
+          // write the reply_status
+          output.write_ulong (TAO_GIOP_LOCATION_FORWARD);
 
-              // write the object reference into the stream
-              CORBA::Object_ptr object_ptr =
-                forward_request_ptr->forward_reference.in();
+          // write the object reference into the stream
+          CORBA::Object_ptr object_ptr =
+            forward_request_ptr->forward_reference.in();
 
-              output << object_ptr;
-            }
-          // end of the forwarding code ****************************
-          else
+          output << object_ptr;
+        }
+      // end of the forwarding code ****************************
+      else
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-            {
-              // Write the exception
-              CORBA::TypeCode_ptr except_tc = x->_type ();
-
-              CORBA::exception_type extype = CORBA::USER_EXCEPTION;
-              if (CORBA::SystemException::_narrow (x) != 0)
-                extype = CORBA::SYSTEM_EXCEPTION;
-
-              // write the reply_status
-              output.write_ulong (TAO_GIOP::convert_CORBA_to_GIOP_exception (extype));
-
-              // write the actual exception
-              output.encode (except_tc, x, 0, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-        }
-      ACE_CATCH (CORBA_Exception, ex)
         {
-          // now we know, that while handling the error an other error
-          // happened -> no hope, close connection.
+          // Write the exception
+          CORBA::TypeCode_ptr except_tc = x->_type ();
 
-          // close the handle
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) closing conn %d after fault %p\n",
-                      this->peer().get_handle (),
-                      "TAO_IIOP_Server_Connection_Handler::send_error"));
-          this->handle_close ();
-          return;
+          CORBA::exception_type extype = CORBA::USER_EXCEPTION;
+          if (CORBA::SystemException::_narrow (x) != 0)
+            extype = CORBA::SYSTEM_EXCEPTION;
+
+          // write the reply_status
+          output.write_ulong (TAO_GIOP::convert_CORBA_to_GIOP_exception (extype));
+
+          // write the actual exception
+          output.encode (except_tc, x, 0, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
-      ACE_ENDTRY;
-
-      // hand it to the next lower layer
-      TAO_GIOP::send_request (this->iiop_transport_, output, this->orb_core_);
     }
+  ACE_CATCH (CORBA_Exception, ex)
+    {
+      // now we know, that while handling the error an other error
+      // happened -> no hope, close connection.
+
+      // close the handle
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) closing conn %d after fault %p\n",
+                  this->peer().get_handle (),
+                  "TAO_IIOP_Server_Connection_Handler::send_error"));
+      this->handle_close ();
+      return;
+    }
+  ACE_ENDTRY;
+
+  // hand it to the next lower layer
+  TAO_GIOP::send_request (this->iiop_transport_, output, this->orb_core_);
 }
 
 int

@@ -905,8 +905,6 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                                      version,
                                                      1);
 
-  this->transport_->resume_connection (this->orb_core_->reactor ());
-
   switch (m)
     {
     case TAO_GIOP::Reply:
