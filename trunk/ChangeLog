@@ -1,3 +1,10 @@
+Mon Mar 17 17:38:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * include/makeinclude/platform_linux_icc.GNU: The GNU file can now
+          work with 64 bit intel compiler in Itanium. Thanks to Lubomir
+          Bulej <lubomir.bulej@mff.cuni.cz> and Petr Tuma
+          <petr.tuma@mff.cuni.cz> for providing the patches.
+
 Mon Mar 17 19:20:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cygwin32.GNU:
