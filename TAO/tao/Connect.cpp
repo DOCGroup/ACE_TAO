@@ -24,8 +24,14 @@ static const char *TAO_Connect_Timeprobe_Description[] =
   "Server_Connection_Handler::handle_input - start",
   "Server_Connection_Handler::handle_input - end",
 
+  "Server_Connection_Handler::handle_locate - start",
+  "Server_Connection_Handler::handle_locate - end",
+
   "Client_Connection_Handler::send_request - start",
   "Client_Connection_Handler::send_request - end",
+
+  "MT_Client_Connection_Handler - before l/f wakeup",
+  "MT_Client_Connection_Handler - after l/f wakeup"
 };
 
 enum
@@ -37,8 +43,14 @@ enum
   TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START,
   TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
 
+  TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
+  TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_END,
+
   TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
-  TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END
+  TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
+
+  TAO_MT_CLIENT_CONNECTION_HANDLER_BEFORE_LF_WAKEUP,
+  TAO_MT_CLIENT_CONNECTION_HANDLER_AFTER_LF_WAKEUP
 };
 
 // Setup Timeprobes
@@ -282,6 +294,8 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                               CORBA::ULong &request_id,
                                               CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START);
+
   // This will extract the request header, set <response_required> as
   // appropriate.
   TAO_GIOP_LocateRequestHeader locateRequestHeader;
@@ -981,6 +995,8 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
       int success = (int) TAO_GIOP::send_request (this->iiop_transport_,
                                                   stream,
                                                   orb_core);
+
+      ACE_TIMEPROBE (TAO_MT_CLIENT_CONNECTION_HANDLER_BEFORE_LF_WAKEUP);
 
       if (!success)
         {
