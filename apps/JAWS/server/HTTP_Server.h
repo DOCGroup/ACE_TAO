@@ -63,9 +63,8 @@ protected:
   virtual int synch_thread_pool (void);
   // Synch Thread Pool implementation
   
-  void setup_signal_handler (void);
-
 private:
+  // James, comment these data members.
   void parse_args (int argc, char **argv);
   int port_;
   int threads_;
@@ -81,10 +80,12 @@ class Synch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
   //     Used to implement Synch Thread Pool
   // 
   // = DESCRIPTION
+  //     Describe this and the others below.
 {
 public:
-  Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor, ACE_Thread_Manager &tm);
-  virtual int open (void *args = 0);
+  Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
+                          ACE_Thread_Manager &tm,
+                          int threads);
   virtual int svc (void);
 
 private:
@@ -93,18 +94,23 @@ private:
 
 class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
   // = TITLE
-  //     Used to implement Thread Per Request
+  //     Used to implement Thread Per Request.
   // 
   // = DESCRIPTION
+  //     Spawns a new thread for every new incoming connection.  The
+  //     handle below is the socket stream of the incoming connection.
 {
 public:
-  Thread_Per_Request_Task (ACE_HANDLE handle, ACE_Thread_Manager &tm);
+  Thread_Per_Request_Task (ACE_HANDLE handle,
+                           ACE_Thread_Manager &tm
+                           int &grp_id);
   virtual int open (void *args = 0);
   virtual int close (u_long);
   virtual int svc (void);
 
 private:
   ACE_HANDLE handle_;
+  int &grp_id_;
 };
 
 // This only works on Win32
@@ -114,10 +120,12 @@ class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
   //     Used to implement Asynch Thread Pool
   // 
   // = DESCRIPTION
+  //     The proactor below utilizes WaitForMultipleObjects.
 {
 public:
-  Asynch_Thread_Pool_Task (ACE_Proactor &proactor, ACE_Thread_Manager &tm);
-  virtual int open (void *args = 0);
+  Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
+                           ACE_Thread_Manager &tm,
+                           int threads);
   virtual int svc (void);
 
 private:

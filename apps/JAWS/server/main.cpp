@@ -28,20 +28,22 @@ int
 main (int argc, char *argv[])
 {
   ACE_Service_Config daemon;
-  ACE_Reactor::instance ();
-  //  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+
   ACE_OS::signal (SIGCHLD, SIG_IGN);
+
+  // SigAction not needed since the handler will shutdown the server.
   ACE_OS::signal (SIGINT, (ACE_SignalHandler) handler);
   ACE_OS::signal (SIGUSR1, (ACE_SignalHandler) handler);
-  //  ACE_UNUSED_ARG (sa);
 
   if (daemon.open (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
 
+  // The configured service creates threads, and the
+  // server won't exit until the threads die.
+
   // Run forever, performing the configured services until we receive
   // a SIGINT.
 
-  // ACE_Reactor::run_event_loop ();
 
   return 0;
 }
