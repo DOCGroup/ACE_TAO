@@ -3413,7 +3413,8 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (sa);
   int result = -1;
 
-  if (ACE_OS::mutex_init (&s->lock_, type, name, arg) == 0
+  if (ACE_OS::mutex_init (&s->lock_, type, name,
+                          (ACE_mutexattr_t *) arg) == 0
       && ACE_OS::cond_init (&s->count_nonzero_, type, name, arg) == 0
       && ACE_OS::mutex_lock (&s->lock_) == 0)
     {
