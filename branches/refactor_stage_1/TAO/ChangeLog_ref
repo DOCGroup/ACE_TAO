@@ -1,3 +1,19 @@
+Mon Apr 14 14:33:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+	  Fixed code generation to work with deeply nested and/or
+	  anonymous sequence members.
+
+	* tests/IDL_Test/sequence.idl:
+
+	  Modified test to check above use cases more thoroughly.
+
 Mon Apr 14 09:16:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/PortableServerC.cpp:

@@ -68,27 +68,6 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  // If our base type is anonymous sequence,
-  // generate code for the base type sequence here.
-
-  if (bt->node_type () == AST_Decl::NT_sequence)
-    {
-      int status =
-          this->gen_anonymous_base_type (
-              bt,
-              TAO_CodeGen::TAO_ROOT_CDR_OP_CS
-            );
-
-      if (status == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_cs::"
-                             "visit_sequence - "
-                             "gen_anonymous_base_type failed\n"),
-                            -1);
-        }
-    }
-
   // Generate the CDR << and >> operator defns.
 
   // Save the sequence node for further use.
