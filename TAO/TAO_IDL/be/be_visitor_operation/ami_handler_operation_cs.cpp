@@ -222,7 +222,7 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
   // Generate the skeleton method.
 
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SKELETON_CS);
+  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CS);
   visitor = tao_cg->make_visitor (&ctx);
 
   if (!visitor || (node->accept (visitor) == -1))

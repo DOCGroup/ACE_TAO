@@ -100,10 +100,16 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       else
         *os << "get_";
     }
-  *os << node->local_name ();
-
-  *os << "(CORBA::Environment &ACE_TRY_ENV)" << be_nl
+  *os << node->local_name () << "(";
+  
+  if (!idl_global->exception_support ())
+    *os << "CORBA::Environment &ACE_TRY_ENV";
+  
+  *os << ")" << be_nl
       << "{" << be_idt_nl;
+
+  *os << this->gen_environment_var () << be_nl;
+
 
   if (node->exceptions ())
     {

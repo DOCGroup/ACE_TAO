@@ -77,10 +77,14 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
 
       *os << "TAO_InputCDR &_tao_reply_cdr," << be_nl
           << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
-          << "CORBA::ULong reply_status," << be_nl
+          << "CORBA::ULong reply_status";
+
+      *os << "," << be_nl
           << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ());"
-          << be_uidt << be_uidt_nl
+          << "TAO_default_environment ()" << be_uidt;
+      
+      *os << ");"
+          << be_uidt << be_nl
           << be_uidt << "\n\n";
     }
   return 0;

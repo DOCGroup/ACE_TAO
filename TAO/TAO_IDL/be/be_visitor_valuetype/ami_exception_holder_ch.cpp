@@ -55,7 +55,12 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (be_valuetype *nod
   // Generate the implemenation of the Messaging aware ORB
   *os << be_nl
       << "class _tao_" << node->local_name () << be_idt_nl
-      << ": public " << node->local_name () << "," << be_nl
+      << ": public ";
+
+  if (!node->is_nested ())
+    *os << "OBV_";
+
+  *os << node->local_name () << "," << be_nl
       << "  public virtual OBV_Messaging::ExceptionHolder," << be_nl
       << "  public virtual CORBA::DefaultValueRefCountBase" << be_uidt_nl
       << "{" << be_idt_nl;
