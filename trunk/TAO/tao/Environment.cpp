@@ -37,7 +37,12 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
 
 CORBA_Environment::CORBA_Environment (void)
   : exception_ (0),
+#if !defined (TAO_USES_FLICK)
     previous_ (0)
+#else
+    previous_ (0),
+    _major(CORBA::NO_EXCEPTION)
+#endif /* TAO_USES_FLICK */
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
 }
@@ -56,7 +61,7 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
 {
   orb_core->default_environment (this);
 }
-#endif 
+#endif
 
 CORBA_Environment&
 CORBA_Environment::operator= (const CORBA_Environment& rhs)
@@ -91,6 +96,9 @@ CORBA_Environment::exception (CORBA_Exception *ex)
   if (this->exception_ != 0)
     {
       this->exception_->_incr_refcnt ();
+#if defined (TAO_USES_FLICK)
+      this->_major = this->exception_type();
+#endif /* TAO_USES_FLICK */
 #if defined (TAO_HAS_EXCEPTIONS)
       this->exception_->_raise ();
 #endif /* TAO_HAS_EXCEPTIONS */
@@ -124,7 +132,7 @@ CORBA_Environment::default_environment ()
   // the Environment argument) because then the user is supposed to
   // clear the environment before calling into the ORB.
   //
-  TAO_ORB_Core_instance ()->default_environment ()->clear ();  
+  TAO_ORB_Core_instance ()->default_environment ()->clear ();
 #endif /* TAO_HAS_EXCEPTIONS */
 
   return *TAO_ORB_Core_instance ()->default_environment ();
@@ -159,7 +167,7 @@ CORBA::Environment::exception_type (void) const
                            typecode_extra, sizeof typecode_extra - 1) != 0)
       || ACE_OS::strncmp (id, poa_prefix, sizeof poa_prefix - 1) == 0)
     return CORBA::SYSTEM_EXCEPTION;
-  
+
   return CORBA::USER_EXCEPTION;
 }
 
@@ -182,12 +190,12 @@ CORBA::Environment::print_exception (const char *info,
   if (this->exception_)
     {
       const char *id = this->exception_->_id ();
-      
+
       ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
-      
+
       // @@ get rid of this logic, and rely on some member function on
       // Exception to say if it's user or system exception.
-      
+
       if (this->exception_type () == CORBA::SYSTEM_EXCEPTION)
         {
           CORBA::SystemException *x2 =
