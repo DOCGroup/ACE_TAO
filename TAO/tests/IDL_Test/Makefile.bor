@@ -41,6 +41,8 @@ OBJFILES = \
 	$(OBJDIR)\reopen_include2S.obj \
 	$(OBJDIR)\reopened_modulesC.obj \
 	$(OBJDIR)\reopened_modulesS.obj \
+	$(OBJDIR)\repo_id_modC.obj \
+	$(OBJDIR)\repo_id_modS.obj \
 	$(OBJDIR)\sequenceC.obj \
 	$(OBJDIR)\sequenceS.obj \
 	$(OBJDIR)\typedefC.obj \
@@ -77,6 +79,7 @@ IDLFILES = \
         $(IDLDIR)\keywords.idl \
         $(IDLDIR)\params.idl \
         $(IDLDIR)\pragma.idl \
+        $(IDLDIR)\repo_id_mod.idl \
         $(IDLDIR)\sequence.idl \
         $(IDLDIR)\typedef.idl \
         $(IDLDIR)\union.idl \
@@ -134,6 +137,9 @@ $(IDLDIR)\paramsC.cpp $(IDLDIR)\paramsS.cpp: $(IDLDIR)\params.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\pragmaC.cpp $(IDLDIR)\pragmaS.cpp: $(IDLDIR)\pragma.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\repo_id_modC.cpp $(IDLDIR)\repo_id_modS.cpp: $(IDLDIR)\repo_id_mod.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\sequenceC.cpp $(IDLDIR)\sequenceS.cpp: $(IDLDIR)\sequence.idl
