@@ -1,3 +1,7 @@
+Thu Feb 13 07:36:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* THANKS: Added Dmitri Belogaj to the hall of fame.
+
 Wed Feb 12 12:40:21 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Prevented a few RTCORBA tests to be run
