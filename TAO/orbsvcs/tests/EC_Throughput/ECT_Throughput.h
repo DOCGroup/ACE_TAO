@@ -132,6 +132,9 @@ private:
 
   int ec_concurrency_hwm_;
   // Set the HWM for the concurrency in the EC.
+
+  int thr_create_flags_;
+  // The thread creation flags
 };
 
 #endif /* ECT_TRHOUGHPUT_H */

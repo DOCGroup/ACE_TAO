@@ -52,10 +52,13 @@ public:
   public:
     Latency_Stats (void);
 
-    void dump_results (const char* description,
-                       const char* description2);
+    void dump_results (const char* test_name,
+                       const char* sub_test);
 
     void sample (ACE_hrtime_t sample);
+
+    void accumulate (const Latency_Stats& stats);
+    // Useful to merge several Latency_Stats.
 
   private:
     u_long n_;
@@ -63,6 +66,41 @@ public:
     ACE_hrtime_t sum2_;
     ACE_hrtime_t min_;
     ACE_hrtime_t max_;
+  };
+
+  class Throughput_Stats
+  {
+    // = TITLE
+    //   Maintains throughput statistics.
+    //
+    // = DESCRIPTION
+    //   This class is used to keep throughput statistics of the Event
+    //   Channel.
+    //   The data should be  collected using the High Resolution
+    //   timers.
+  public:
+    Throughput_Stats (void);
+
+    void dump_results (const char* test_name,
+                       const char* sub_test);
+
+    void start (void);
+    // Start measuring the time.
+
+    void stop (void);
+    // The test has completed
+
+    void sample (void);
+    // An event has been received
+
+    void accumulate (const Throughput_Stats& stats);
+    // Useful to merge several Throughput_Stats.
+
+  private:
+    CORBA::ULong n_;
+    int done_;
+    ACE_hrtime_t start_;
+    ACE_hrtime_t stop_;
   };
 
 private:
