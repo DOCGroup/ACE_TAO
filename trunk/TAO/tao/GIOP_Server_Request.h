@@ -59,6 +59,7 @@ public:
                           TAO_ObjectKey &object_key,
                           const ACE_CString &operation,
                           TAO_OutputCDR &output,
+                          TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
                           const TAO_GIOP_Version &version,
                           int &parse_error);
@@ -141,8 +142,8 @@ public:
 
   virtual void _tao_lazy_evaluation (int lazy_evaluation);
   // Set the lazy evaluation flag
-									
-  virtual void send_no_exception_reply ();
+
+  virtual void send_no_exception_reply (void);
   // Used with reliable oneway requests.
 
   virtual CORBA::Principal_ptr principal (void) const;
@@ -199,6 +200,7 @@ private:
   // Outgoing stream.
 
   TAO_Transport *transport_;
+  // Transport class
 
   CORBA::Boolean response_expected_;
   // 0: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)
