@@ -15,12 +15,12 @@
 //
 //    The implementation of <ACE_Asynch_Transmit_File> and
 //    <ACE_Asynch_Accept> are only supported if ACE_HAS_WINSOCK2 is
-//    defined or you are on WinNT 4.0 or higher
+//    defined or you are on WinNT 4.0 or higher.
 //
 // = AUTHOR
 //    Irfan Pyarali (irfan@cs.wustl.edu),
 //    Tim Harrison (harrison@cs.wustl.edu) and
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu> 
 //
 // ============================================================================
 
@@ -88,6 +88,12 @@ public:
 		     u_long offset_high = 0);
   // Constructor.
 
+#if defined (ACE_HAS_AIO_CALLS)
+  aiocb* aiocb_ptr (void);
+  // Returns the underlying <aio control block> used to issue the aio 
+  // call. 
+#endif /* ACE_HAS_AIO_CALLS */
+
   virtual ~ACE_Asynch_Result (void);
   // Destructor.
 
@@ -116,6 +122,14 @@ protected:
 
   u_long error_;
   // Error if operation failed.
+  
+#if defined (ACE_HAS_AIO_CALLS)
+  aiocb *aiocb_ptr_;
+  // This is the <aio control block> used to issue the <aio_>
+  // call. Let us give this to the OS along with the result, so that
+  // on completion we can take this and use it for <aio_error> and
+  // <aio_return>. 
+#endif /* ACE_HAS_AIO_CALLS */
 };
 
 class ACE_Export ACE_Asynch_Operation
@@ -142,10 +156,13 @@ public:
   // the calling thread.  The function does not cancel asynchronous
   // operations issued by other threads.
 
+  // Access methods.
+  ACE_Proactor* proactor (void);
+  // Return the underlying proactor.
 protected:
 #if defined (ACE_HAS_AIO_CALLS)
   int register_aio_with_proactor (aiocb *aiocb_ptr);
-  // This call is for POSIX <aio_> calls.  This method is used by
+  // This call is for the POSIX implementation. This method is used by
   // <ACE_Asynch_Operation> to store some information with the
   // Proactor after an <aio_> call is issued, so that the Proactor can
   // retrive this information to do <aio_return> and <aio_error>.
@@ -191,7 +208,7 @@ public:
 	    const void *act = 0);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.
-
+  
 protected:
   int shared_read (Result *result);
   // This is the method which does the real work and is there so that
@@ -277,7 +294,7 @@ public:
 	     const void *act = 0);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be written from the <message_block>.
-
+  
 protected:
   int shared_write (Result *result);
   // This is the method which does the real work and is there so that
@@ -364,7 +381,6 @@ public:
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.  The read will start
   // at <offset> from the beginning of the file.
-
 public:
   class ACE_Export Result : public ACE_Asynch_Read_Stream::Result
   {
@@ -712,7 +728,7 @@ public:
 			u_long header_bytes = 0,
 			ACE_Message_Block *trailer = 0,
 			u_long trailer_bytes = 0);
-    // Constructor
+    // Constructor.
 
     void header_and_trailer (ACE_Message_Block *header = 0,
 			     u_long header_bytes = 0,
@@ -745,7 +761,7 @@ public:
 
     u_long header_bytes_;
     // Size of header data.
-
+    
     ACE_Message_Block *trailer_;
     // Trailer data.
 
@@ -871,9 +887,14 @@ class ACE_Export ACE_Asynch_Transmit_Handler : public ACE_Handler
   //     This is a helper class for implementing
   //     <ACE_Asynch_Transmit_File> in Unix systems.
 public:
-  ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result);
-  // Constructor.
-
+  ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result,
+                               ACE_Proactor *proactor);
+  // Constructor. Result pointer will have all the information to do
+  // the file transmission (socket, file, application handler, bytes
+  // to write....)  and the the <proactor> pointer tells this class
+  // the <proactor> that is being used by the
+  // Asynch_Transmit_Operation and the application.
+  
   virtual ~ACE_Asynch_Transmit_Handler (void);
   // Destructor.
 
@@ -895,6 +916,10 @@ private:
   // The asynch result pointer made from the initial transmit file
   // request.
 
+  ACE_Proactor *proactor_;
+  // The Proactor that is being used by the application handler and
+  // so the Asynch_Transmit_File.
+  
   ACE_Asynch_Read_File rf_;
   // To read from the file to be transmitted.
 
@@ -911,9 +936,9 @@ private:
     TRAILER_ACT = 3
   };
 
-  ACT *header_act_;
-  ACT *data_act_;
-  ACT *trailer_act_;
+  ACT header_act_;
+  ACT data_act_;
+  ACT trailer_act_;
   // ACT to transmit header, data and trailer.
 
   size_t file_offset_;
@@ -924,6 +949,9 @@ private:
 
   size_t bytes_transferred_;
   // Number of bytes transferred on the stream.
+  
+  size_t transmit_file_done_;
+  // Flag to indicate that the transmitting is over.
 };
 
 #endif /* ACE_HAS_AIO_CALLS */
