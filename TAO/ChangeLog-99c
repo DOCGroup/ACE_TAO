@@ -1,3 +1,11 @@
+Fri Feb 05 15:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
+
+        * TAO/orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.{cpp, h}:
+	  Changed to generate navigation, weapons events from separate threads
+	
+        * TAO/orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.cpp: 
+	  fixed a problem valuing the wrong data structure
+
 Fri Feb  5 15:25:56 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * Changed IIOP_Core.{h,cpp} and IIOP_ORB.cpp to use 

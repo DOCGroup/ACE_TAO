@@ -44,13 +44,10 @@ static const char usage [] =
 "                 [-O[RBport] ORB port number]\n"
 "                 [-m <count> of messages to send [100]\n"
 "                 [-f <name of input data file>]\n"
-"                 [-t <count> of event generating threads]]\n"
 "                 [-d to dump scheduler header files]\n"
 "                 [-s to suppress data updates by EC]]\n"
 "                 [-r to use runtime schedulers]\n"
 "                 [-p to suppress prioritization of operations]]\n";
-
-  int event_thread_count_;
 
 DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
 : sched_hi_impl_ (0),
@@ -69,7 +66,8 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
   suppress_priority_ (0),
   hi_schedule_file_name_ ("DualEC_Runtime_Hi.h"),
   lo_schedule_file_name_ ("DualEC_Runtime_Lo.h"),
-  event_thread_count_ (1)
+  nav_roll_ (0),
+  nav_pitch_ (0)
 {
   TAO_TRY
     {
@@ -82,9 +80,6 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
                                  "not resolve reference to terminator");
   }
   TAO_ENDTRY;
-
-  // Seed the visualization data
-  navigation_.roll = navigation_.pitch = 0;
 
   // Initialize the high priority RT_Info data
   rt_info_data_hi_.entry_point = "DUALEC_SUP_HI";
@@ -242,23 +237,25 @@ DualEC_Supplier::run_orb (void *)
   return 0;
 }
 
-// Run event generation thread.
+
+// Run navigation event generation thread.
+
 void *
-DualEC_Supplier::run_event_thread (void *arg)
+DualEC_Supplier::run_nav_thread (void *arg)
 {
   DualEC_Supplier * sup = 
     ACE_static_cast (DualEC_Supplier *, arg);
 
   TAO_TRY
     {
-      ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *>
-        schedule_iter (sup->schedule_data_);
+      ACE_Unbounded_Queue_Iterator<Navigation *>
+        nav_iter (sup->navigation_data_);
 
-      if (schedule_iter.done ())
+      if (nav_iter.done ())
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DualEC_Supplier::run_event_thread: "
-                             "there is no scheduling data\n"), 0);
+                             "there is no navigation data\n"), 0);
         }
 
       CORBA::Any any;
@@ -268,19 +265,20 @@ DualEC_Supplier::run_event_thread (void *arg)
       do
       {
         // Insert the event data
-        int data_is_nav = 0;
-        sup->insert_event_data (any,
-                                schedule_iter,
-                                data_is_nav);
+        Navigation **nav;
 
-        // deliver it over the wire, according to the type of data
-        if (data_is_nav)  
+        if ((nav_iter.next (nav)) && (nav) && (*nav))
           {
+            any.replace (_tc_Navigation, *nav, 0, TAO_TRY_ENV);
+
+
             sup->navigation_Supplier->notify (any);
           }
         else
           {
-            sup->weapons_Supplier->notify (any);
+            ACE_ERROR ((LM_ERROR,
+                        "DualEC_Supplier::run_nav_thread:"
+                        "Could Not access navigation data"));
           }
 
         if (total_sent < 5)
@@ -289,6 +287,80 @@ DualEC_Supplier::run_event_thread (void *arg)
         else if (total_sent == 5)
           ACE_DEBUG ((LM_DEBUG,
                       "Everything is running. Going to be mute.\n"));
+
+        nav_iter.advance ();
+
+        if (nav_iter.done ())
+          nav_iter.first ();
+
+      }
+      while (++total_sent < sup->total_messages_);
+
+    }
+  TAO_CATCHANY
+    {
+    }
+  TAO_ENDTRY;
+
+  return 0;
+}
+
+
+// Run weapons event generation thread.
+
+void *
+DualEC_Supplier::run_weap_thread (void *arg)
+{
+  DualEC_Supplier * sup = 
+    ACE_static_cast (DualEC_Supplier *, arg);
+
+  TAO_TRY
+    {
+      ACE_Unbounded_Queue_Iterator<Weapons *>
+        weap_iter (sup->weapons_data_);
+
+      if (weap_iter.done ())
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DualEC_Supplier::run_event_thread: "
+                             "there is no navigation data\n"), 0);
+        }
+
+      CORBA::Any any;
+
+      unsigned long total_sent = 0;
+
+      do
+      {
+        // Insert the event data
+        Weapons **weap;
+
+        if ((weap_iter.next (weap)) && (weap) && (*weap))
+          {
+            any.replace (_tc_Weapons, *weap, 0, TAO_TRY_ENV);
+
+
+            sup->weapons_Supplier->notify (any);
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "DualEC_Supplier::run_weap_thread:"
+                        "Could Not access weapons data"));
+          }
+
+        if (total_sent < 5)
+          ACE_DEBUG ((LM_DEBUG,
+                      "Pushing event data.\n"));
+        else if (total_sent == 5)
+          ACE_DEBUG ((LM_DEBUG,
+                      "Everything is running. Going to be mute.\n"));
+
+        weap_iter.advance ();
+
+        if (weap_iter.done ())
+          weap_iter.first ();
+
       }
       while (++total_sent < sup->total_messages_);
 
@@ -526,12 +598,14 @@ DualEC_Supplier::start_generating_events (void)
       // Load the scheduling data for the simulation.
       this->load_schedule_data (this->schedule_data_);
 
-      // Spawn <event_thread_count_> threads to run 
-      // over the data and generate events
+      // Spawn thread to run over the navigation data and generate events.
       ACE_Thread_Manager event_thread_manager;
-      event_thread_manager.spawn_n (event_thread_count_,
-                                    DualEC_Supplier::run_event_thread, 
-                                    this);
+      event_thread_manager.spawn (DualEC_Supplier::run_nav_thread, 
+                                  this);
+
+      // Spawn thread to run over the weapons data and generate events.
+      event_thread_manager.spawn (DualEC_Supplier::run_weap_thread, 
+                                  this);
 
       // Wait for the threads that are generating events.
       event_thread_manager.wait ();
@@ -543,15 +617,25 @@ DualEC_Supplier::start_generating_events (void)
       // Wait for the thread that runs the orb event loop.
       orb_thread_manager.wait ();
 
-      // clean up the scheduling data
-      ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *>
-        schedule_iter (this->schedule_data_);
-      Schedule_Viewer_Data **data_temp;
-      for (schedule_iter.first ();
-           schedule_iter.done () == 0;
-           schedule_iter.advance ())
-        if (schedule_iter.next (data_temp) && data_temp)
-          delete (*data_temp);
+      // Clean up the navigation data.
+      ACE_Unbounded_Queue_Iterator<Navigation *>
+        nav_iter (this->navigation_data_);
+      Navigation **nav_temp;
+      for (nav_iter.first ();
+           nav_iter.done () == 0;
+           nav_iter.advance ())
+        if (nav_iter.next (nav_temp) && nav_temp)
+          delete (*nav_temp);
+
+      // Clean up the weapons data.
+      ACE_Unbounded_Queue_Iterator<Weapons *>
+        weap_iter (this->weapons_data_);
+      Weapons **weap_temp;
+      for (weap_iter.first ();
+           weap_iter.done () == 0;
+           weap_iter.advance ())
+        if (weap_iter.next (weap_temp) && weap_temp)
+          delete (*weap_temp);
     }
   TAO_CATCHANY
     {
@@ -562,10 +646,18 @@ DualEC_Supplier::start_generating_events (void)
 }
 
 void
-DualEC_Supplier::load_schedule_data
-      (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data)
+DualEC_Supplier::load_schedule_data ()
 {
-  Schedule_Viewer_Data *data = 0;
+  Navigation * nav = 0;
+  Weapons * weap = 0;
+
+  Schedule_Viewer_Data data;
+
+  // constants for periods (in units of one hundred nanoseconds)
+  const TimeBase::TimeT ONE_HZ_PERIOD = 10000000;
+  const TimeBase::TimeT FIVE_HZ_PERIOD = ONE_HZ_PERIOD / 5 ;
+  const TimeBase::TimeT TEN_HZ_PERIOD = ONE_HZ_PERIOD / 10;
+  const TimeBase::TimeT TWENTY_HZ_PERIOD = ONE_HZ_PERIOD / 20;
 
   if (this->input_file_name_)
     {
@@ -592,27 +684,96 @@ DualEC_Supplier::load_schedule_data
               // structure.
               if (ACE_OS::strlen (temp) > 0)
                 {
-                  ACE_NEW (data, Schedule_Viewer_Data);
                   scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
-                                       data->operation_name,
-                                       &data->utilitzation,
-                                       &data->overhead,
-                                       &data->arrival_time,
-                                       &data->deadline_time,
-                                       &data->completion_time,
-                                       &data->computation_time);
+                                       data.operation_name,
+                                       &data.utilitzation,
+                                       &data.overhead,
+                                       &data.arrival_time,
+                                       &data.deadline_time,
+                                       &data.completion_time,
+                                       &data.computation_time);
                   if (scan_count != 7)
                     {
                       ACE_ERROR ((LM_ERROR,
-                                  "DOVE_Supplier::start_generating_events: "
+                                  "DOVE_Supplier::load_schedule_data: "
                                   "scanned incorrect number of data elements: %d\n", scan_count));
-
-                      delete data;
                       return;
                     }
 
-                  // Insert the data into the queue.
-                  schedule_data.enqueue_tail (data);
+ 
+                  if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+                      (strcmp((*sched_data)->operation_name, "low_20") == 0))
+                    {
+                      ACE_NEW (weap, Weapons);
+                      if (weap == 0)
+                        {                       
+                          ACE_ERROR ((LM_ERROR,
+                                      "DOVE_Supplier::load_schedule_data: "
+                                      "failed to allocate Weapons\n"));
+                          return;
+                        }
+
+                      weap->criticality = 1;
+                      weap->deadline_time = TWENTY_HZ_PERIOD;
+                      weap->number_of_weapons = 2;
+                      weap->weapon1_identifier = CORBA::string_alloc (30);
+                      strcpy (weap->weapon1_identifier.inout (),"Photon Torpedoes");
+                      weap->weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
+                      weap->weapon2_identifier = CORBA::string_alloc (30);
+                      strcpy (weap->weapon2_identifier.inout (),"Quantum Torpedoes");
+                      weap->weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
+                      weap->weapon3_identifier = CORBA::string_alloc (1);
+                      strcpy (weap->weapon3_identifier.inout (), "");
+                      weap->weapon3_status = 0;
+                      weap->weapon4_identifier = CORBA::string_alloc (1);
+                      strcpy (weap->weapon4_identifier.inout (), "");
+                      weap->weapon4_status = 0;
+                      weap->weapon5_identifier = CORBA::string_alloc (1);
+                      strcpy (weap->weapon5_identifier.inout (), "");
+                      weap->weapon5_status = 0;
+                      weap->utilization =       0.0;
+                      weap->overhead =          0.0;
+                      weap->arrival_time =      ORBSVCS_Time::zero;
+                      weap->completion_time  =  ORBSVCS_Time::zero;
+                      weap->computation_time =  ORBSVCS_Time::zero;
+                      weap->update_data =       update_data_;
+
+                      // Insert the data into the queue.
+                      weapons_data_.enqueue_tail (weap);
+                    }
+                  else
+                    {
+                      ACE_NEW (nav, Navigation);
+                      if (nav == 0)
+                        {                       
+                          ACE_ERROR ((LM_ERROR,
+                                      "DOVE_Supplier::load_schedule_data: "
+                                  "failed to allocate Navigation\n"));
+                          return;
+                        }
+
+                      nav->criticality = 0;
+                      nav->deadline_time = TWENTY_HZ_PERIOD;
+                      nav->position_latitude = ACE_OS::rand() % 90;
+                      nav->position_longitude = ACE_OS::rand() % 180;
+                      nav->altitude = ACE_OS::rand() % 100;
+                      nav->heading = ACE_OS::rand() % 180;
+                      this nav_roll_ = (this->nav_roll_ >= 180) ? -180 : this->nav_roll_ + 1;
+                      nav->roll = this->nav_roll_;
+                      this->nav_pitch_ =  (this->nav_pitch_ >= 90) ? -90 : this->nav_pitch_ + 1;
+                      nav->pitch = this->nav_pitch_;
+                      nav->utilization =       0.0;
+                      nav->overhead =          0.0;
+                      nav->arrival_time =      ORBSVCS_Time::zero;
+                      nav->completion_time =   ORBSVCS_Time::zero;
+                      nav->computation_time =  ORBSVCS_Time::zero;
+                      nav->update_data =       this->update_data_;
+                      nav->utilization = (double) (20.0 + ACE_OS::rand() % 10);
+                      nav->overhead = (double) (ACE_OS::rand() % 10);
+
+                      // Insert the data into the queue.
+                      navigation_data_.enqueue_tail (nav);
+                    }
                 }
             }
         }
@@ -625,229 +786,11 @@ DualEC_Supplier::load_schedule_data
           return;
         }
     }
-  else
-  {
-    u_long last_completion = 0;
-
-    // Just create 10 dummy scheduling records and use them.
-    for (int i = 0; i < 10; ++i)
-    {
-      ACE_NEW (data, Schedule_Viewer_Data);
-
-      char *oper_name = 0;
-      switch (i % 4)
-      {
-      case 0:
-        oper_name = "high_20";
-        break;
-
-      case 1:
-        oper_name = "low_20";
-        break;
-
-      case 2:
-        oper_name = "high_10";
-        break;
-
-      case 3:
-      default:
-        oper_name = "low_10";
-        break;
-      }
-
-      ACE_OS::strncpy (data->operation_name,
-                       oper_name,
-                       BUFSIZ-1);
-
-      data->utilitzation = (double)(20.0+ACE_OS::rand() %10);
-      data->overhead = (double)(ACE_OS::rand() %20);
-
-      data->arrival_time = ACE_OS::rand() % 200;
-      data->computation_time = (ACE_OS::rand() % 100) + 10;
-
-      data->completion_time = last_completion + (ACE_OS::rand() % 100) + 100;
-      data->completion_time =
-        data->completion_time <  data->arrival_time + data->computation_time
-        ? data->arrival_time + data->computation_time
-        : data->completion_time;
-
-      last_completion = data->completion_time;
-
-      data->deadline_time = data->completion_time + (ACE_OS::rand() % 200) - 50;
-
-      // insert the data into the queue.
-      schedule_data.enqueue_tail (data);
-    }
   }
 }
 
-// This function fills in the random data into the anys transported by
-// the event channel.
 
-void
-DualEC_Supplier::insert_event_data (CORBA::Any &data,
-                                    ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter,
-                                    int &data_is_nav)
-{
-  static u_long last_completion = 0;
-
-  // constants for periods (in units of one hundred nanoseconds)
-  const TimeBase::TimeT ONE_HZ_PERIOD = 10000000;
-  const TimeBase::TimeT FIVE_HZ_PERIOD = ONE_HZ_PERIOD / 5 ;
-  const TimeBase::TimeT TEN_HZ_PERIOD = ONE_HZ_PERIOD / 10;
-  const TimeBase::TimeT TWENTY_HZ_PERIOD = ONE_HZ_PERIOD / 20;
-
-  TAO_TRY
-  {
-    Schedule_Viewer_Data **sched_data;
-
-    if ((schedule_iter.next (sched_data)) && (sched_data) && (*sched_data))
-    {
-      if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
-           (strcmp((*sched_data)->operation_name, "low_20") == 0)  ||
-           (strcmp((*sched_data)->operation_name, "high_1") == 0)  ||
-           (strcmp((*sched_data)->operation_name, "low_1") == 0))
-      {
-        data_is_nav = 1;     
-  
-        if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
-            (strcmp((*sched_data)->operation_name, "high_1") == 0))
-          {
-            navigation_.criticality = 1;
-          }
-        else
-          {
-            navigation_.criticality = 0;
-          }
-
-        if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
-            (strcmp((*sched_data)->operation_name, "low_20") == 0))
-          {
-            navigation_.deadline_time = TWENTY_HZ_PERIOD;
-          }
-        else
-          {
-            navigation_.criticality = ONE_HZ_PERIOD;
-          }
-
-        navigation_.position_latitude = ACE_OS::rand() % 90;
-        navigation_.position_longitude = ACE_OS::rand() % 180;
-        navigation_.altitude = ACE_OS::rand() % 100;
-        navigation_.heading = ACE_OS::rand() % 180;
-        navigation_.roll = (navigation_.roll >= 180) ? -180 : navigation_.roll + 1;
-        navigation_.pitch =  (navigation_.pitch >= 90) ? -90 : navigation_.pitch + 1;
-
-        navigation_.utilization =       0.0;
-        navigation_.overhead =          0.0;
-        navigation_.arrival_time =      ORBSVCS_Time::zero;
-        navigation_.completion_time =   ORBSVCS_Time::zero;
-        navigation_.computation_time =  ORBSVCS_Time::zero;
-        navigation_.update_data =       update_data_;
-
-
-        // because the scheduler data does not supply these values
-        navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
-        navigation_.overhead = (double) (ACE_OS::rand() % 10);
-
-        data.replace (_tc_Navigation, &navigation_, 0, TAO_TRY_ENV);
-      }
-      else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
-               (strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
-                (strcmp((*sched_data)->operation_name, "high_5") == 0)  ||
-                (strcmp((*sched_data)->operation_name, "low_5") == 0))
-      {
-        data_is_nav = 0;     
-
-        if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
-            (strcmp((*sched_data)->operation_name, "high_5") == 0))
-          {
-            weapons_.criticality = 1;
-          }
-        else
-          {
-            weapons_.criticality = 0;
-          }
-
-        if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
-            (strcmp((*sched_data)->operation_name, "low_10") == 0))
-          {
-            navigation_.deadline_time = TEN_HZ_PERIOD;
-          }
-        else
-          {
-            navigation_.criticality = FIVE_HZ_PERIOD;
-          }
-
-
-        weapons_.number_of_weapons = 2;
-        weapons_.weapon1_identifier = CORBA::string_alloc (30);
-        strcpy (weapons_.weapon1_identifier.inout (),"Photon Torpedoes");
-        weapons_.weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
-        weapons_.weapon2_identifier = CORBA::string_alloc (30);
-        strcpy (weapons_.weapon2_identifier.inout (),"Quantum Torpedoes");
-        weapons_.weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
-        weapons_.weapon3_identifier = CORBA::string_alloc (1);
-        strcpy (weapons_.weapon3_identifier.inout (), "");
-        weapons_.weapon3_status = 0;
-        weapons_.weapon4_identifier = CORBA::string_alloc (1);
-        strcpy (weapons_.weapon4_identifier.inout (), "");
-        weapons_.weapon4_status = 0;
-        weapons_.weapon5_identifier = CORBA::string_alloc (1);
-        strcpy (weapons_.weapon5_identifier.inout (), "");
-        weapons_.weapon5_status = 0;
-        weapons_.utilization =       0.0;
-        weapons_.overhead =          0.0;
-        weapons_.arrival_time =      ORBSVCS_Time::zero;
-        weapons_.completion_time  =  ORBSVCS_Time::zero;
-        weapons_.computation_time =  ORBSVCS_Time::zero;
-        weapons_.update_data =       update_data_;
-
-
-        data.replace (_tc_Weapons, &weapons_, 0, TAO_TRY_ENV);
-      }
-      else {
-        ACE_ERROR ((LM_ERROR,
-                    "DualEC_Supplier::insert_event_data:"
-                    "unrecognized operation name [%s]",
-                    (*sched_data)->operation_name));
-      }
-
-      TAO_CHECK_ENV;
-
-
-            if (last_completion > (*sched_data)->completion_time)
-              last_completion = 0;
-
-      if ((*sched_data)->completion_time >= last_completion)
-      {
-              ACE_Time_Value pause (0,
-                                    (*sched_data)->completion_time -
-                                      last_completion);
-              ACE_OS::sleep (pause);
-              last_completion = (*sched_data)->completion_time;
-      }
-    }
-    else
-      ACE_ERROR ((LM_ERROR,
-                  "DualEC_Supplier::insert_event_data:"
-                  "Could Not access scheduling data"));
-
-    schedule_iter.advance ();
-
-    if (schedule_iter.done ())
-      schedule_iter.first ();
-  }
-  TAO_CATCHANY
-  {
-    ACE_ERROR ((LM_ERROR,
-                "(%t)Error in DualEC_Supplier::insert_event_data.\n"));
-  }
-  TAO_ENDTRY;
-}
-
-
-
-// Function get_options.
+// Get command line options.
 
 unsigned int
 DualEC_Supplier::get_options (int argc, char *argv [])
@@ -887,22 +830,6 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: message count must be > 0",
-                               argv[0]),
-                               1);
-          break;
-
-        case 't':
-          temp = ACE_OS::atoi (get_opt.optarg);
-          if (temp > 0)
-            {
-              this->event_thread_count_ = (u_int) temp;
-               ACE_DEBUG ((LM_DEBUG,
-                           "Messages to send: %d\n",
-                           this->total_messages_));
-            }
-          else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: thread count must be > 0",
                                argv[0]),
                                1);
           break;
@@ -990,11 +917,17 @@ main (int argc, char *argv [])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<Schedule_Viewer_Data *>;
-template class ACE_Unbounded_Queue<Schedule_Viewer_Data *>;
-template class ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *>;
+template class ACE_Node<Navigation *>;
+template class ACE_Unbounded_Queue<Navigation *>;
+template class ACE_Unbounded_Queue_Iterator<Navigation *>;
+template class ACE_Node<Weapons *>;
+template class ACE_Unbounded_Queue<Weapons *>;
+template class ACE_Unbounded_Queue_Iterator<Weapons *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<Schedule_Viewer_Data *>
-#pragma instantiate ACE_Unbounded_Queue<Schedule_Viewer_Data *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *>
+#pragma instantiate ACE_Node<Navigation *>
+#pragma instantiate ACE_Unbounded_Queue<Navigation *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<Navigation *>
+#pragma instantiate ACE_Node<Weapons *>
+#pragma instantiate ACE_Unbounded_Queue<Weapons *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<Weapons *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
