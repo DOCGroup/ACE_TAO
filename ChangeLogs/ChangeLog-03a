@@ -1,3 +1,12 @@
+Wed Jun  5 16:42:43 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/examples/SAXPrint/main.cpp (ACE_TMAIN):
+
+          Modified the example to test fetching and parsing an XML URL.
+          This actually tests most of the functions of the new stream
+          class and is better than the lame test that I wrote the other
+          day.
+
 Wed Jun  5 13:54:03 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/DLL_Manager.{h,cpp}:
@@ -23,7 +32,7 @@ Tue Jun 04 16:47:27 2002  Ossama Othman  <ossama@uci.edu>
 	* ace/Service_Config.h:
 
 	  No need to include "ace/DLL.h".  Forward declaring ACE_DLL is
-	  enough. 
+	  enough.
 
 	* ace/Service_Config.cpp:
 
