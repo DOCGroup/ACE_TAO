@@ -40,7 +40,6 @@ template <class T>
 Param_Test_Client<T>::~Param_Test_Client (void)
 {
   CORBA::release (this->orb_);
-  CORBA::release (this->param_test_);
   delete this->test_object_;
 }
 
