@@ -4,6 +4,8 @@
 project(Priority_Test_Controller_stub): ciao_client {
   after += Priority_Test_stub
   sharedname = Controller_stub
+  libs    += Priority_Test_stub
+  libpaths += ..
   idlflags += -Wb,stub_export_macro=CONTROLLER_STUB_Export -Wb,stub_export_include=Controller_stub_export.h -Wb,skel_export_macro=CONTROLLER_SVNT_Export -Wb,skel_export_include=Controller_svnt_export.h
   dynamicflags   = CONTROLLER_STUB_BUILD_DLL
 
