@@ -136,6 +136,16 @@ TAO_ORB_Manager::init_child_poa (int& argc,
   return 0;
 }
 
+// Activate POA manager.
+
+int
+TAO_ORB_Manager::activate_poa_manager (CORBA_Environment &env)
+{
+  this->poa_manager_->activate (env);
+  TAO_CHECK_ENV_RETURN (env, -1);
+  return 0;
+}
+
 // Activate servant in the POA.
 
 CORBA::String

@@ -58,6 +58,14 @@ public:
   // USER_ID policies.  Call this if you want a <child_poa> with the
   // above policies, otherwise call init.  Returns -1 on failure.
 
+  int activate_poa_manager (CORBA_Environment &TAO_IN_ENV =
+                            CORBA::default_environment ());
+  //  Put POA manager into the <Active> state, so that incoming corba
+  //  requests are processed.  This method is useful for clients,
+  //  which are not going to enter "orb->run" loop, yet may want to
+  //  service incoming requests while waiting for a result of CORBA
+  //  call on a server.  Returns -1 on failure.
+
   CORBA::String activate (PortableServer::Servant servant,
                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Activate <servant>, using the POA <activate_object> call.  Users
