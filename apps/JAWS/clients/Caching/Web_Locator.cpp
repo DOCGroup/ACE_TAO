@@ -27,7 +27,6 @@ ACE_URL_Locator_Query::query (const ACE_Specified_Property how,
 {
   // First send out request
 
-
   // Then, receive offers or error code.
 
   return -1;
@@ -75,4 +74,6 @@ ACE_URL_Locator_Register::modify (const ACE_URL_OfferID offer,
   return -1;
 }
 
+// @@ Nanbor, please make sure that you add the template
+// specializations that are necessary to get this to work with GCC.
 #endif /* ACE_WEB_LOCATOR_C */
