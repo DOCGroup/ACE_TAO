@@ -1,3 +1,9 @@
+Tue Mar 18 13:20:59 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* examples/Reactor/Ntalker/ntalker.cpp: The ntalker now uses
+ 	  ACE::register_stdin_handler to register the STDIN. This function
+ 	  allows for portability.
+
 Tue Mar 18 08:12:22 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Svc_Conf_y.cpp,Makefile: replaced "y.tab.c" string with
