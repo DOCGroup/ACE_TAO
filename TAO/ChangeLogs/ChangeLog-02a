@@ -1,3 +1,9 @@
+Wed Jan 23 06:24:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp (create): 
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: Fixed warnings in
+	  Borland builds. 
+
 Tue Jan 22 17:21:15 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation.cpp:

@@ -61,8 +61,7 @@ public:
   // Copy constructor.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
@@ -116,8 +115,8 @@ public:
   // Copy constructor.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
@@ -180,8 +179,8 @@ public:
   // Copy constructor.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
