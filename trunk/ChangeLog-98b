@@ -1,4 +1,11 @@
-Thu May 14 14:46:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu May 14 15:28:42 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h (ACE_OS): Added a wrapper for strcspn(3s).
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp: Added more
+ 	  cool changes to the CPP-inserver.cpp example and renamed it.
+
+Thu May 14 14:46:02 1998  Irfan Pyarali <irfan@cs.wustl.edu>
 
 	* ace/OS.h: Moved the definition of ACE_Export before it is used.
 
