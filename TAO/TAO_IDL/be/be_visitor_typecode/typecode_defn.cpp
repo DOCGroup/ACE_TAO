@@ -998,20 +998,22 @@ be_visitor_typecode_defn::gen_encapsulation (be_array *node)
 int
 be_visitor_typecode_defn::gen_typecode (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent (); // start from whatever indentation level we were at
+  os->indent ();
 
-  // check if we are repeated
+  // Check if we are repeated.
   const be_visitor_typecode_defn::QNode *qnode =
     this->queue_lookup (this->tc_queue_, node);
+
   if (qnode)
     {
-      // we are repeated, so we must generate an indirection here
+      // We are repeated, so we must generate an indirection here.
       *os << "0xffffffff, // indirection" << be_nl;
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
-      // the offset must point to the tc_kind value of the first occurrence of
-      // this type
+
+      // The offset must point to the tc_kind value of the first occurrence of
+      // this type.
       os->print ("0x%x, // negative offset (%ld)\n",
                  (qnode->offset - this->tc_offset_),
                  (qnode->offset - this->tc_offset_));
@@ -1019,27 +1021,26 @@ be_visitor_typecode_defn::gen_typecode (be_enum *node)
     }
   else
     {
-      if (be_global->opt_tc ())
+      if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
         {
-          if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_typecode_defn::"
-                                 "visit_type - "
-                                 "queue insert failed\n"),
-                            -1);
-            }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typecode_defn::"
+                             "visit_type - "
+                             "queue insert failed\n"),
+                        -1);
         }
 
       *os << "CORBA::tk_enum, // typecode kind" << be_nl;
-      // size of the enum
+
+      // Size of the enum.
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
       {
         Scoped_Compute_Queue_Guard guard (this);
 
-        // emit the encapsulation length
+        // Emit the encapsulation length.
         this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
+
         if (node->accept (this) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1052,11 +1053,13 @@ be_visitor_typecode_defn::gen_typecode (be_enum *node)
 
       *os << this->computed_encap_len_ << ", // encapsulation length"
           << be_idt << "\n";
-      // size of the encap length
+
+      // Size of the encap length.
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-      // now emit the encapsulation
+      // Now emit the encapsulation.
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
+
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -1067,8 +1070,8 @@ be_visitor_typecode_defn::gen_typecode (be_enum *node)
         }
 
       *os << be_uidt << "\n";
-
     }
+
   return 0;
 }
 
