@@ -724,25 +724,6 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::current_size ()
 // ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> //
 ///////////////////////////////////////////////////////////////////////
 
-// Passes back the <entry> under the iterator.  Returns 0 if
-// the iteration has completed, otherwise 1.
-
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_INLINE int
-ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const
-{
-  ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next");
-
-  if (this->node_)
-    {
-      next_entry = this->node_;
-      return 1;
-    }
-
-  return 0;
-}
-
-
 // Returns 1 when the iteration has completed, otherwise 0.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
@@ -928,6 +909,32 @@ ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator-- (int)
 }
 
 
+// Passes back the <entry> under the iterator.  Returns 0 if
+// the iteration has completed, otherwise 1.  This method must
+// be declared and defined in both the derived forward and
+// reverse iterator classes rather than in the base iterator
+// class because of a method signature resolution problem
+// caused by the existence of the deprecated next (void)
+// method in the derived forward iterator class.  When that
+// deprecated method is removed, this method should be removed
+// from the derived classes and placed in the base class.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_INLINE int
+ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const
+{
+  ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next");
+
+  if (this->node_)
+    {
+      next_entry = this->node_;
+      return 1;
+    }
+
+  return 0;
+}
+
+
 // Accessor for key of node under iterator (if any). DEPRECATED.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
@@ -1095,3 +1102,34 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator--
   this->forward_i ();
   return retv;
 }
+
+
+// Passes back the <entry> under the iterator.  Returns 0 if
+// the iteration has completed, otherwise 1.  This method must
+// be declared and defined in both the derived forward and
+// reverse iterator classes rather than in the base iterator
+// class because of a method signature resolution problem
+// caused by the existence of the deprecated next (void)
+// method in the derived forward iterator class.  When that
+// deprecated method is removed, this method should be removed
+// from the derived classes and placed in the base class.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_INLINE int
+ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const
+{
+  ACE_TRACE ("ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next");
+
+  if (this->node_)
+    {
+      next_entry = this->node_;
+      return 1;
+    }
+
+  return 0;
+}
+
+
+
+
+
