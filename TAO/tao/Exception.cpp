@@ -520,9 +520,9 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     TAO_SYSTEM_EXCEPTION (TIMEOUT) \
     TAO_SYSTEM_EXCEPTION (TRANSACTION_UNAVAILABLE) \
     TAO_SYSTEM_EXCEPTION (TRANSACTION_MODE) \
-    TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED) \
-    TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK) \
-    TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION)
+    TAO_SYSTEM_EXCEPTION (TRANSACTION_REQUIRED) \
+    TAO_SYSTEM_EXCEPTION (TRANSACTION_ROLLEDBACK) \
+    TAO_SYSTEM_EXCEPTION (INVALID_TRANSACTION)
 
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.
@@ -532,8 +532,11 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 
 #define TAO_SYSTEM_EXCEPTION(name) \
     static CORBA::Long tc_buf_ ## name [TAO_Exceptions::TC_BUFLEN / sizeof (long)]; \
-    CORBA::TypeCode_ptr CORBA::_tc_ ## name;
-STANDARD_EXCEPTION_LIST
+    TAO_NAMESPACE_TYPE(CORBA::TypeCode_ptr) \
+    TAO_NAMESPACE_BEGIN (CORBA) \
+    TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_##name, 0) \
+    TAO_NAMESPACE_END
+  STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)

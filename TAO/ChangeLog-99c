@@ -1,3 +1,11 @@
+Thu Jun 03 15:46:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Exception.cpp:
+	  MSVC 5.0 has some problems defining variables inside a
+	  namespace, a fully qualified name does not work, it *must* be
+	  done inside the namespace.  We were not doing that for the _tc_*
+	  variables for the system exceptions.
+
 Thu Jun  3 15:16:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h:
