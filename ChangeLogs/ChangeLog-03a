@@ -1,3 +1,9 @@
+Fri Jun 08 07:33:03 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (send):
+
+	  Fixed an "unused argument" warning.
+
 Fri Jun 08 07:01:59 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Accept_Handler.h:

@@ -1,7 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
 
-// SOCK_Stream.i
+// SSL_SOCK_Stream.i
 
 ASYS_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
@@ -102,7 +103,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
   // If we get this far then we would have blocked.
   errno = EWOULDBLOCK;
 
-  return bytes_sent;  
+  return bytes_sent;
 }
 
 ASYS_INLINE ssize_t
