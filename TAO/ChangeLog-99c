@@ -1,3 +1,10 @@
+Mon Dec 13 11:36:11 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
+
+	  Changed use of TAO_AcceptorSetItor to TAO_AcceptorSetIterator.
+	  Thanks to Bala for pointing this out.
+
 Mon Dec 13 04:52:37 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.{h,cpp}:
