@@ -5,7 +5,7 @@
 === St. Louis, Missouri
 === Copyright (C) 2002.  All rights reserved.
 ===
-=== V1.0, March 29th, 2002
+=== V1.01, March 30th, 2002
 ===
 
 
@@ -45,6 +45,9 @@ Files contained in FaCE package are:
   - newres.h
   - resource.h
   - TAO.bmp
+
+ ACE entry point definition file
+  - FaCE_OS.h
 
  Additional Framework files for non-ACE users
   - CE_ARGV.h & cpp
@@ -103,7 +106,12 @@ minimal change.
 1. Create a subdirectory named 'FaCE' (or anything in your taste) under
    your current project directory.
 
-2. Copy main framework files listed above and add them into "your" project
+2. Copy FaCE_OS.h to the ACE_ROOT/ace directory, and add following line at
+   the end of your ACE_ROOT/ace/config.h file:
+
+   #include "FaCE_OS.h"
+
+3. Copy main framework files listed above and add them into "your" project
    (NOT FaCE.vcw/vcp).  For non-ACE users, copy additional framework files
    for non-ACE users in addition to the main framework files.
    It would be a good idea to create a new folder in your project and put
@@ -122,14 +130,14 @@ minimal change.
            then you can simply set the whole FaCE folder excluded from
            build in the project setting menu.
 
-3. Change your 'main()' function part similar to the following example.
+4. Change your 'main()' function part similar to the following example.
 
-      #ifdef ACE_HAS_WINCE
-      #include "FaCE/FaCE.h"   // use the name of subdirectory you created
-      int FaCE_MAIN (int argc, ACE_TCHAR *argv[])
-      #else
-      int ACE_TMAIN (int argc, ACE_TCHAR *argv[])  // ACE normal entry point
-      #endif
+   #ifdef ACE_HAS_WINCE
+   #include "FaCE/FaCE.h"   // use the name of subdirectory you created
+   int FaCE_MAIN (int argc, ACE_TCHAR *argv[])
+   #else
+   int ACE_TMAIN (int argc, ACE_TCHAR *argv[])  // ACE normal entry point
+   #endif
 
    Change the directory name for "FaCE/FaCE.h" if necessary.
    For non-ACE users, use 'UNDER_CE' instead of 'ACE_HAS_WINCE'.
@@ -160,13 +168,13 @@ minimal change.
    and you can leave your original wmain type as it was for non-CE platform
    definition.
 
-4. Go to 'ResourceView' or double-click on the 'FaCE.rc'.  Open 'String Table ->
+5. Go to 'ResourceView' or double-click on the 'FaCE.rc'.  Open 'String Table ->
    String Table' from the resource browse view, and change the string value (caption)
    defined for 'IDS_APP_TITLE' from 'FaCE' to your program name.  This will
    help identifying multiple FaCE-fied applications when you brose them
    through system memory -> running programs in case of crash.
 
-5. That's it!
+6. That's it!
 
 ** Optionally, you can personalize the icons defined for FaCE for your own.
    To do this easily, load "FaCE.vcw" (requires ACE library) or "FaCENOACE.vcw"
@@ -177,6 +185,10 @@ minimal change.
    for ace.h, Log_Msg.h, OS.h, and CE_Screen_Output.h.  This is due to the eVC's
    not-so-perfect precompilation file checking and totally harmless.
 
+** Later if you don't want to use FaCE anymore, simply restore your original
+   main function and remove FaCE files from your project (or exclude FaCE files
+   from build).  ACE library does not have to be rebuilt as FaCE_OS.h only
+   contains macro.
 
 == Running FaCE
 
