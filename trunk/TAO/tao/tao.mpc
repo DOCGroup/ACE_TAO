@@ -139,6 +139,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
       FloatSeqC.cpp
       OctetSeqA.cpp
       OctetSeqC.cpp
+      ShortSeqA.cpp
+      ShortSeqC.cpp
       StringSeqA.cpp
       StringSeqC.cpp
       ULongSeqA.cpp
@@ -274,8 +276,11 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
     PolicyS.h
     PollableS.h
     ServicesS.h
+    ShortSeqS.h
     StringSeqS.h
     TAOS.h
     TimeBaseS.h
+    UShortSeqS.h
+    ULongSeqS.h
   }
 }
