@@ -1,3 +1,22 @@
+Wed Aug  8 12:16:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Thread_Per_Connection_Latency/svc.conf:
+	* performance-tests/Thread_Pool_Latency/svc.conf: Made the client
+	  to use Wait On Read Write as we see a big performance drop if we
+	  use the LF. To make the test work without any problems, we now
+	  use the exclusive transport mux strategy. Hopefully this will
+	  get our performance back to normal. 
+	
+	* tao/Muxed_TMS.cpp: Fixed a subtle problem in connection_closed
+	  (). While iterating through the reply_disptacher table to close
+	  the  reply dispatchers, a wrong comparision was made in the for
+	  loop. This would not allow any of the reply dispatchers to be
+	  closed and in turn prevent the transport cleaning up the
+	  resources. This would lead to the client hanging on select ()
+	  even after the connection is closed by the server. I am
+	  surprised that this has not been found out so far. God save
+	  people who have been using the Muxed strategy :-).
+
 Tue Aug 07 21:54:31 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/IORManipulation/IORTest.cpp (main):
