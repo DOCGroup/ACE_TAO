@@ -1,3 +1,10 @@
+Thu Aug 23 09:15:24 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * tests/Strategies/run_test.pl:
+
+          Use the PerlACE::LocalFile() function for the svc.conf
+          files.
+
 Thu Aug 23 01:54:42 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tests/DLL_ORB/Test_Client_Module.bor:
@@ -138,14 +145,14 @@ Tue Aug 21 09:41:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Aug 20 11:27:37 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
-        * test/Strategies/Strategies.dsw:
-        * test/Strategies/client.dsp:
-        * test/Strategies/server.dsp:
-        * test/Strategies/run_test.pl:
+        * tests/Strategies/Strategies.dsw:
+        * tests/Strategies/client.dsp:
+        * tests/Strategies/server.dsp:
+        * tests/Strategies/run_test.pl:
 
           Added MSVC project files and a run_test.pl for this test.
 
-        * test/Strategies/advanced_svc.conf:
+        * tests/Strategies/advanced_svc.conf:
 
           Modified this file for use on Windows platforms (commented out
           the UIOP protocol factory).
