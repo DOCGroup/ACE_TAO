@@ -1,3 +1,21 @@
+Wed May 31 16:35:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/CurrentC.cpp: 
+	* tao/CurrentC.h: 
+	* tao/CurrentC.i:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/ImplRepoC.cpp:
+	* tao/ImplRepoC.i:
+	* tao/InterfaceC.cpp:
+	* tao/InterfaceC.i:
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.i:
+	  Changes to hand-crafted code corresponding to the
+	  changes made in generated code to the >>= and >>
+	  operators for interfaces.
+
 Wed May 31 12:34:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
