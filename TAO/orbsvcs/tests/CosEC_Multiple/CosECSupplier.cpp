@@ -124,7 +124,7 @@ CosECSupplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 void
 CosECSupplier::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Create an Any type to pass to the Cos EC.
