@@ -3,35 +3,24 @@
 # This module contains a few miscellanous functions and some
 # startup ARGV processing that is used by all tests.
 
-# @todo Move config into Config
-@CONFIGS = ();
-
 use PerlACE::Process;
+use PerlACE::ConfigList;
+
 package PerlACE;
+use Cwd;
 
-sub CheckForConfig
+sub LocalFile ($)
 {
-    my @new_argv = ();
+    my $file = shift;
 
-    for($i = 0; $i <= $#ARGV; ++$i) {
-        if ($ARGV[$i] eq '-Config') {  
-            if (defined $ARGV[$i + 1]) {
-                push @::CONFIGS, $ARGV[++$i];
-            }
-            else {
-              print STDERR "You must pass a directory with Config\n";
-              exit(1);
-            }
-        }
-        else {
-            push @new_argv, $ARGV[$i];
-        }
+    my $newfile = getcwd () . '/' . $file;
+
+    if ($^O eq "MSWin32") {
+        $newfile =~ s/\//\\/g;
     }
-    @ARGV = @new_argv;
+
+    return $newfile;
 }
-
-CheckForConfig ();
-
 
 
 # Returns a unique id, uid for unix, last digit of IP for NT
