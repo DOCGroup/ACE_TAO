@@ -1,3 +1,11 @@
+Tue Jul 27 17:42:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/OctetSeqC.h:
+        
+          Put back explicit template instantiation of the sequence
+          base class that was inadvertently left out of the hand-crafting
+          from the last regeneration.
+
 Tue Jul 27 06:11:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security/SL3_SecurityManager.h:
