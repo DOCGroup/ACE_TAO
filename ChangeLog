@@ -1,3 +1,7 @@
+Sat Oct 25 10:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h: Fixed compile problem in this file
+
 Fri Oct 17 18:40:55 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Log_Msg.cpp: Modify the ACE_Log_Msg::dec() method to avoid
