@@ -1299,7 +1299,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 
 int
 ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
-			  int abandon_detached_threads)
+                          int abandon_detached_threads)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait");
 
@@ -1310,34 +1310,34 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
     if (ACE_Object_Manager::shutting_down () != 1)
       {
-	// Program is not shutting down.  Perform a normal wait on threads.
-	if (abandon_detached_threads != 0)
-	  {
-	    ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
-	    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-		   iter (this->thr_list_);
-		 !iter.done ();
-		 iter.advance ())
-	      if (ACE_BIT_ENABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON)) &&
-		  ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
-		this->thr_to_be_removed_.enqueue_tail (iter.next ());
+        // Program is not shutting down.  Perform a normal wait on threads.
+        if (abandon_detached_threads != 0)
+          {
+            ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
+            for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+                   iter (this->thr_list_);
+                 !iter.done ();
+                 iter.advance ())
+              if (ACE_BIT_ENABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON)) &&
+                  ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
+                this->thr_to_be_removed_.enqueue_tail (iter.next ());
 
-	    if (! this->thr_to_be_removed_.is_empty ())
-	      {
-		ACE_Thread_Descriptor *td;
-		while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-		  this->remove_thr (td, 1);
-	      }
-	  }
+            if (! this->thr_to_be_removed_.is_empty ())
+              {
+                ACE_Thread_Descriptor *td;
+                while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+                  this->remove_thr (td, 1);
+              }
+          }
 
-	while (this->thr_list_.size () > 0)
-	  if (this->zero_cond_.wait (timeout) == -1)
-	    return -1;
+        while (this->thr_list_.size () > 0)
+          if (this->zero_cond_.wait (timeout) == -1)
+            return -1;
       }
     else
-	// Program is shutting down, no chance to wait on threads.
-	// Therefore, we'll just remove threads from the list.
-	this->remove_thr_all ();
+        // Program is shutting down, no chance to wait on threads.
+        // Therefore, we'll just remove threads from the list.
+        this->remove_thr_all ();
     // Release the guard, giving other threads a chance to run.
   }
 
@@ -1361,6 +1361,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #endif /* ! VXWORKS */
 #else
   ACE_UNUSED_ARG (timeout);
+  ACE_UNUSED_ARG (abandon_detached_threads);
 #endif /* ACE_HAS_THREADS */
 
   return 0;
