@@ -523,6 +523,8 @@ ACE_Log_Msg::ACE_Log_Msg (void)
                                            ACE_Log_Msg::close,
                                            ACE_Log_Msg::sync_hook,
                                            ACE_Log_Msg::thr_desc_hook);
+
+  this->conditional_values_.is_set_ = 0;
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -762,11 +764,27 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
   typedef void (*PTF)(...);
 
+  // Check if there were any conditional values set.
+  int conditional_values = this->conditional_values_.is_set_;
+
+  // Reset conditional values.
+  this->conditional_values_.is_set_ = 0;
+
   // Only print the message if <priority_mask_> hasn't been reset to
   // exclude this logging priority.
-
   if (this->log_priority_enabled (log_priority) == 0)
     return 0;
+
+  // If conditional values were set and the log priority is correct,
+  // then the values are actually set.
+  if (conditional_values)
+    this->set (this->conditional_values_.file_,
+               this->conditional_values_.line_,
+               this->conditional_values_.op_status_,
+               this->conditional_values_.errnum_,
+               this->restart (),
+               this->msg_ostream (),
+               this->msg_callback ());
 
   // Logging is a benign activity, so don't inadvertently smash errno.
   ACE_Errno_Guard guard (errno);
@@ -1494,6 +1512,19 @@ ACE_Log_Msg::set (const ACE_TCHAR *filename,
   this->restart (rs);
   this->msg_ostream (os);
   this->msg_callback (c);
+}
+
+void
+ACE_Log_Msg::conditional_set (const ACE_TCHAR *filename,
+                              int line,
+                              int status,
+                              int err)
+{
+  this->conditional_values_.is_set_ = 1;
+  this->conditional_values_.file_ = filename;
+  this->conditional_values_.line_ = line;
+  this->conditional_values_.op_status_ = status;
+  this->conditional_values_.errnum_ = err;
 }
 
 void

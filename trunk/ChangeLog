@@ -1,3 +1,34 @@
+Thu Sep 28 22:13:04 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Log_Msg: Macros are evil! All the ACE debugging macros were
+	  evaluating the user arguments twice, once in
+	  log_priority_enabled() and the other in log().  The problem was
+	  that set() was making a deep copy of the filename.  Hence, this
+	  change:
+
+	  Wed May 3 11:43:05 2000 Douglas C. Schmidt <schmidt@ace.cs.wustl.edu>
+
+	  was made to prevent the deep copy which was unnecessary when the
+	  message was not actually logged.  However, this resulted in the
+	  macro evaluating the user arguments twice.  Previously, a
+	  statement like this:
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "timeout occured, iterations left %d\n",
+                      --iterations));
+
+	  <iterations> got reduced by one - now it got reduced by two ;-)
+
+	  The solution was to make a shallow copy of the filename in
+	  conditional_set().  Then in log(), if the log priority is
+	  correct, make a deep copy and then continue will log().  The
+	  macros were changed to call conditional_set() instead of set().
+
+	  Also, changed ACE_RETURN to specify all the parameters,
+	  including <restart>, <callback>, and <stream>.  Otherwise, the
+	  default parameters of set() will end up losing these parameters
+	  set by the user.
+
 Thu Sep 28 15:49:00 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Stream.h (class ACE_Stream): Updated the documentation to clarify
