@@ -21,6 +21,7 @@
 
 #include "ace/Service_Object.h"
 
+class TAO_ORB_Core;
 
 /**
  * @class TAO_BiDir_Adapter
@@ -43,6 +44,11 @@ public:
                         int argc,
                         char *argv [],
                         CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  virtual int parse_policy (TAO_ORB_Core *orb_core,
+                            CORBA::Policy_ptr policy,
+                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
