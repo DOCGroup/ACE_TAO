@@ -12,7 +12,7 @@
 #include "ace/String_Base.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, SString, "String_Base.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")
+ACE_RCSID(ace, String_Base, "String_Base.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_String_Base)
 

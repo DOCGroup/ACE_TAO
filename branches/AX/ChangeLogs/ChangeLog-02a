@@ -1,3 +1,8 @@
+Wed Oct 10 21:17:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/String_Base.cpp: Fixed incorrect RCSID name.  Thanks to
+	  Keith Hamburg <khamburg@cs.wustl.edu> for reporting it.
+
 Wed Sep 12 13:53:14 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/SString.cpp:
