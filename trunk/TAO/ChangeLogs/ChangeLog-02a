@@ -1,3 +1,10 @@
+Thu May 17 18:29:32 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tests/Object_Loader/driver.bor:
+        * tests/Object_Loader/test_dll.bor:
+          Fixed test makefiles to correctly export the necessary
+          classes and functions.
+
 Thu May 17 16:23:40 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Internal.cpp (open_services):
