@@ -1,3 +1,9 @@
+Fri Jul 18 18:59:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Clarified that ACE+TAO no longer build with
+	  MSVC++ 5.x or earlier.  Thanks to Amol Tambe
+ 	  <Amol.Tambe@ideas.com> for reporting this.
+
 Sat Jul 19 18:38:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * docs/ACE-guidelines.html:
