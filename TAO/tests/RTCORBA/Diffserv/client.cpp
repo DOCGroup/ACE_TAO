@@ -1,7 +1,7 @@
 // $Id$
 
 #include "testC.h"
-#include "Client_ORBInitializer.h"
+//#include "Client_ORBInitializer.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
