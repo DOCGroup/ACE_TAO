@@ -3654,7 +3654,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   int result = 0;
   int error = 0;
 
-  if (rw->important_writer_ && rw->ref_count_ == 1) 
+  if (rw->important_writer_ && rw->ref_count_ == 1)
     // only the reader requesting to upgrade its lock is left over
     {
       result = ACE_OS::cond_signal (&rw->waiting_important_writer_);
@@ -3688,7 +3688,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 // return {-1 and no errno set means: error,
 //         -1 and errno==EBUSY set means: could not upgrade,
 //         0 means: upgraded successfully}
-            
+
 
 ACE_INLINE int
 ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
@@ -3701,37 +3701,38 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   ACE_NOTSUP_RETURN (-1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
 
+  int result = 0;
+
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
-  int result = 0;
 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    return -1; 
+    return -1;
     // -1 means didn't get the mutex, error
-  else if (rw->important_writer_) 
+  else if (rw->important_writer_)
     // an other reader upgrades already
     {
       result = -1;
       errno = EBUSY;
     }
-  else 
+  else
     {
-      while (rw->ref_count_ > 1) // wait until only I am left 
+      while (rw->ref_count_ > 1) // wait until only I am left
         {
           rw->num_waiting_writers_++; // prohibit any more readers
           rw->important_writer_ = 1;
 
           if (ACE_OS::cond_wait (&rw->waiting_important_writer_, &rw->lock_) == -1)
             {
-              result = -1;               
+              result = -1;
               // we know that we have the lock again, we have this guarantee,
-              // but something went wrong 
+              // but something went wrong
             }
           rw->important_writer_ = 0;
           rw->num_waiting_writers_--;
         }
-      if (result == 0) 
+      if (result == 0)
         {
           // nothing bad happend
           rw->ref_count_ = -1;
@@ -7934,13 +7935,13 @@ ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 #endif /* __BORLANDC__ */
 
       if (!file)
-	{
+        {
 #if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
-	  ::_rtl_close (crt_handle);
+          ::_rtl_close (crt_handle);
 #else
-	  ::_close (crt_handle);
+          ::_close (crt_handle);
 #endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
-	}
+        }
     }
 
   return file;
@@ -9137,13 +9138,13 @@ ACE_OS::fdopen (ACE_HANDLE handle, const wchar_t *mode)
 #endif /* defined(__BORLANDC__) */
 
       if (!file)
-	{
+        {
 #if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
-	  ::_rtl_close (crt_handle);
+          ::_rtl_close (crt_handle);
 #else
-	  ::_close (crt_handle);
+          ::_close (crt_handle);
 #endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
-	}
+        }
     }
 
   return file;
