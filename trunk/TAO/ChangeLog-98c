@@ -1,3 +1,7 @@
+Tue Dec 22 09:13:06 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/chat/README: updated VxWorks information.
+
 Tue Dec 22 09:36:37 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
@@ -6,10 +10,10 @@ Tue Dec 22 09:36:37 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
           TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
           TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
 
-	  Added these new files. Some compilers were giving lots of
-	  problems when we had virtual methods inlined. So we have now
-	  moved these methods (e.g., _allocate_buffer, _deallocate_buffer,
-	  _shrink_buffer) to the implementation file.
+          Added these new files. Some compilers were giving lots of
+          problems when we had virtual methods inlined. So we have now
+          moved these methods (e.g., _allocate_buffer, _deallocate_buffer,
+          _shrink_buffer) to the implementation file.
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
           TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
@@ -17,17 +21,17 @@ Tue Dec 22 09:36:37 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
           TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
           TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
 
-	  The destructor is now defined "virtual" because there are
-	  virtual methods.
+          The destructor is now defined "virtual" because there are
+          virtual methods.
 
-	* TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
 
-	  Added #include statements for the newly added files.
+          Added #include statements for the newly added files.
 
-	* TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
 
-	  A bunch on new methods added to the visitor class. These methods
-	  are defined in the five new files added above.
+          A bunch on new methods added to the visitor class. These methods
+          are defined in the five new files added above.
 
 Tue Dec 22 07:44:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
