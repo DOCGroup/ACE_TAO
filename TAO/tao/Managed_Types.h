@@ -320,4 +320,8 @@ private:
 };
 #endif /* 0 */
 
+#if defined (__ACE_INLINE__)
+#include "tao/Managed_Types.i"
+#endif /* __ACE_INLINE__ */
+
 #endif /* TAO_MANAGED_TYPES_H */
