@@ -28,10 +28,10 @@
 // gets constructed, even with ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 static
 ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> &
-allocator ()
+myallocator ()
 {
-  static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> allocator;
-  return allocator;
+  static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> myallocator;
+  return myallocator;
 }
 
 const int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
@@ -60,7 +60,7 @@ parent (char *shm)
   else if (synch.acquire () == -1)
     ACE_ERROR ((LM_ERROR, "(%P) %p", "parent synch.acquire"));
 
-  if (allocator ().remove () == -1)
+  if (myallocator ().remove () == -1)
     ACE_ERROR ((LM_ERROR, "(%P) %p\n", "parent allocator.remove"));
   if (mutex.remove () == -1)
     ACE_ERROR ((LM_ERROR, "(%P) %p\n", "parent mutex.remove"));
@@ -116,7 +116,7 @@ main (int, char *[])
   ACE_START_TEST ("SV_Shared_Memory_Test");
 
 #if defined (ACE_HAS_SYSV_IPC)
-  char *shm = (char *) allocator ().malloc (27);
+  char *shm = (char *) myallocator ().malloc (27);
 
   switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
   //  switch (1)
