@@ -137,7 +137,6 @@ TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::Chan
                         CosNotifyChannelAdmin::EventChannel::_nil ());
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
   return CosNotifyChannelAdmin::EventChannel::_narrow (obj._retn ());
 }
