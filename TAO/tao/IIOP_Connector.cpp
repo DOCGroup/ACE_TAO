@@ -298,18 +298,18 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
   return pfile;
 }
 
-int
+void
 TAO_IIOP_Connector::make_profile (const char *endpoint,
                                   TAO_Profile *&profile,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
   //
-  //    //N.n@host:port/object_key
+  //    N.n@host:port/object_key
   //
   // or:
   //
-  //    //host:port/object_key
+  //    host:port/object_key
 
   ACE_NEW_THROW_EX (profile,
                     TAO_IIOP_Profile (endpoint,
@@ -317,9 +317,7 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
                                       ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (-1);
-
-  return 0;  // Success
+  ACE_CHECK;
 }
 
 
