@@ -392,11 +392,11 @@ Clerk_i::register_clerk (void)
       clerk_context_name[0].id = CORBA::string_dup ("ClerkContext");
 
       ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      ACE_TRY_EX(bind_new_context)
         {
           CosNaming::NamingContext_var clerk_context =
 	    this->naming_client_->bind_new_context(clerk_context_name);
-	  ACE_TRY_CHECK;
+	  ACE_TRY_CHECK_EX(bind_new_context);
 	}
       ACE_CATCH(CosNaming::NamingContext::AlreadyBound, ex)
         {
