@@ -22,7 +22,7 @@ static const char *TAO_Transport_Timeprobe_Description[] =
     "IIOP_Transport::send - end",
 
     "IIOP_Transport::receive - start",
-    "IIOP_Transport::recieve - end",
+    "IIOP_Transport::receive - end",
 
     "IIOP_Client_Transport::send_request - start",
     "IIOP_Client_Transport::send_request - end"
