@@ -17,7 +17,9 @@ Thu Aug  7 13:35:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           TAO_Bounded_Abstract_Sequence<> and TAO_Abstract_Manager<>,
           along with the corresponding generated code. There is
           no difference in the way a sequence handles concrete and
-          abstract interfaces.
+          abstract interfaces. Also fixed a bugs in the traits and
+          template instantiaion visitors' handling of recursive
+          valuetypes.
 
 Wed Aug  6 21:44:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
