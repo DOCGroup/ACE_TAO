@@ -1,7 +1,20 @@
 #include "server.h"
+#include "../mpeg_server/Video_Server.h"
 
-Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *r)
-  : ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> (0, 0, r)
+int
+Mpeg_Acceptor::make_svc_handler (Mpeg_Svc_Handler *&sh)
+{
+  ACE_NEW_RETURN (sh,
+                  Mpeg_Svc_Handler (ACE_Reactor::instance (),
+                                    this),
+                  -1);
+  return 0;
+}
+
+Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *reactor,
+                                    Mpeg_Acceptor *acceptor)
+  : ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> (0, 0, reactor),
+    acceptor_ (acceptor)
 {
   
 }
@@ -10,26 +23,42 @@ Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *r)
 int
 Mpeg_Svc_Handler::open (void *)
 {
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Mpeg_Svc_Handler::open called\n"));
-  // Lets use threads at a later point. The current scheme works fine with fork..
-  // this will activate a thread
-  //  this->activate (THR_BOUND);
-  switch (ACE_OS:: fork ())
+  // Lets use threads at a later point. The current scheme works fine
+  // with fork..  this will activate a thread this->activate
+  // (THR_BOUND);
+  switch (ACE_OS::fork ("child"))
     {
     case -1:
       // fork failed!!
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         "(%P|%t) %p: fork failed",
-                         "server"),
+                         "(%P|%t) fork failed\n"),
                         -1);
     case 0:
-      // i am the child. i should go back and listen for more connections
+      // i am the child. i should go back and listen for more
+      // connections
+
+      this->destroy ();
       return 0;
+      //      break;
+
     default:
-      // i am the parent. i should handle this connection
-      this-> svc ();
+      // I am the parent. i should handle this connection
+      
+      // close down the "listen-mode" socket
+      ACE_Reactor::instance ()->remove_handler
+        (this->acceptor_->get_handle (),
+         ACCEPT_MASK);
+      this->svc ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "Parent returning from Mpeg_Svc_handler::open"));
+      //      ACE_OS::exit (0);
+      return 0;
+
     }
-  
+  ACE_DEBUG ((LM_DEBUG,
+              "Child Returning from Mpeg_Svc_Handler::open \n"));
   return 0;
 }
 
@@ -119,16 +148,27 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
   switch (cmd)
     {
     case CmdINITvideo:
-      if (Mpeg_Global::live_audio) LeaveLiveAudio();
-      result=VideoServer (this->peer ().get_handle (), 
-                   this->dgram_.get_handle (), 
-                   Mpeg_Global::rttag, 
-                   -INET_SOCKET_BUFFER_SIZE);
-      if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) handle_input: "),
-                          result);
-      return result;
+      {
+        if (Mpeg_Global::live_audio) LeaveLiveAudio();
+        /* result = VideoServer (this->peer ().get_handle (), 
+                              this->dgram_.get_handle (), 
+                              Mpeg_Global::rttag, 
+                              -INET_SOCKET_BUFFER_SIZE); 
+        */
+               
+        this->vs_.init (this->peer ().get_handle (),
+                        this->dgram_.get_handle (),
+                        Mpeg_Global::rttag,
+                        -INET_SOCKET_BUFFER_SIZE);
+        
+        result = this->vs_.run ();
+        if (result != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) handle_input: "),
+                             result);
+        return result;
+                 
+      }
       break;
     default:
       if (Mpeg_Global::live_audio) LeaveLiveAudio();
@@ -136,6 +176,7 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
                             this->dgram_.get_handle (), 
                             Mpeg_Global::rttag, 
                             -INET_SOCKET_BUFFER_SIZE);
+      ACE_Reactor::instance ()->end_event_loop ();
       if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t)handle_input : "),
@@ -289,11 +330,22 @@ Mpeg_Server::init (int argc,
                    char **argv)
 {
   int result;
-  
+
   result = this->parse_args (argc, argv);
-  
   if (result < 0)
     return result;
+
+  /*
+  ACE_Reactor_Impl *impl = 0;
+  ACE_Reactor *reactor = 0;
+
+  // make the reactor *not* exit the eventloop due to signals
+  // Stick in Irfan's code here to circumvent signal error
+  
+  ACE_NEW_RETURN (impl, ACE_Select_Reactor (ACE_Select_Reactor::DEFAULT_SIZE,1),-1);
+  ACE_NEW_RETURN (reactor, ACE_Reactor (impl),-1);
+  ::delete ACE_Reactor::instance (reactor);
+  */
 
   this->set_signals ();
   Mpeg_Global::parentpid = getpid();
@@ -333,6 +385,7 @@ Mpeg_Server::init (int argc,
 int
 Mpeg_Server::run ()
 {
+  int result;
   this->server_control_addr_.set (VCR_TCP_PORT);
 
   this->server_control_addr_.dump ();
@@ -341,7 +394,27 @@ Mpeg_Server::run ()
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   // enter the reactor event loop
-  ACE_Reactor::run_event_loop ();
+  while (1)
+    {
+      ACE_Reactor::run_event_loop ();
+      if (errno==EINTR)
+        {
+          // This is needed because he starts a timer and it
+          // periodically interrupts us to send the video packets and
+          // when the stop cmd comes the timer is stopped.
+          //          ACE_DEBUG((LM_DEBUG,"run_event_loop:EINTR\n"));
+          result = play_send ();
+          if (result < 0)
+            break;
+          else
+            continue;
+        }
+      else
+        break;
+    }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P)Mpeg_Server::run () came out of the (acceptor) event loop %p\n","run_event_loop\n"));
 }
 
 Mpeg_Server::~Mpeg_Server (void)

@@ -1571,7 +1571,11 @@ static int FastVideoPlay(void)
 #endif
     {
       if (errno == EINTR)
-        continue;
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "PLAYVIDEO:select EINTR signal \n"));
+          continue;
+        }
       perror("Error - VS select between service and video sockets");
       exit(1);
       
@@ -1600,8 +1604,12 @@ static int FastVideoPlay(void)
     }
     if (FD_ISSET(VIDEO_SINGLETON::instance ()->videoSocket, &read_mask))  /* feedback, speed adjustment */
     {
+      ACE_DEBUG((LM_DEBUG,
+                 "FastVideo Play:Data socket selected"));
       GetFeedBack();
     }
+    ACE_DEBUG((LM_DEBUG,
+               "none of the sockets selected \n"));
   }
   return 0;
 }
@@ -1954,13 +1962,19 @@ static int PLAYvideo()
 #endif
     {
       if (errno == EINTR)  /* select() interrupted */
-        continue;
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "PLAYVideo:Select interrupted coninuing..\n"));
+          continue;
+        }
       perror("Error - VS select between service and video sockets");
       exit(1);
       
     }
     if (FD_ISSET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask))   /* stop, speed change, loop swap */
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "PLAYvideo:serviceSocket selected \n"));
       unsigned char tmp;
       result = CmdRead((char *)&tmp, 1);
       if (result != 0)
@@ -2015,8 +2029,12 @@ static int PLAYvideo()
     }
     if (FD_ISSET(VIDEO_SINGLETON::instance ()->videoSocket, &read_mask))  /* feedBack, speed adjustment */
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "PLAYVIDEO:Data SOCKET selected\n"));
       GetFeedBack();
     }
+    ACE_DEBUG ((LM_DEBUG,
+                "PLAYVIDEO:none selected\n"));
   }
   return 0;
 }
