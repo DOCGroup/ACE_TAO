@@ -129,8 +129,6 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
           // encode the value
           retval = stream->encode (elem_tc, any->value_, 0, env);
         }
-      else
-        retval = CORBA::TypeCode::TRAVERSE_STOP;
     }
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
