@@ -573,17 +573,13 @@ ImplRepo_i::list (CORBA::ULong how_many,
   ACE_NEW_THROW_EX (server_list,
                     ImplementationRepository::ServerInformationList (0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   // Get a new iterator
   auto_ptr<Server_Repository::HASH_IR_ITER> server_iter (this->repository_.new_iterator ());
 
   // Check for a memory error.
   if (server_iter.get () == 0)
-  {
     ACE_THROW (CORBA::NO_MEMORY ());
-    ACE_CHECK;
-  }
   
   // Number of servers that will go into the server_list.
   CORBA::ULong n;
@@ -637,7 +633,6 @@ ImplRepo_i::list (CORBA::ULong how_many,
       ACE_NEW_THROW_EX (ir_iter,
                         IR_Iterator (server_iter.release (), this->orb_manager_.root_poa ()),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       ACE_TRY
         {
