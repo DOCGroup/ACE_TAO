@@ -79,7 +79,7 @@ CORBA_Exception::operator = (const CORBA_Exception &src)
   return *this;
 }
 
-const CORBA_String
+TAO_CONST CORBA_String
 CORBA_Exception::id (void) const
 {
   CORBA_Environment env;
@@ -91,7 +91,7 @@ CORBA_Exception::id (void) const
     return 0;
 }
 
-const CORBA_TypeCode_ptr
+TAO_CONST CORBA_TypeCode_ptr
 CORBA_Exception::type (void) const
 {
   assert (refcount_ > 0);

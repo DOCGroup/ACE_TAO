@@ -49,7 +49,7 @@ CORBA_TypeCode::equal (const CORBA_TypeCode_ptr tc,
 }
 
 // returns the Repository ID
-ACE_INLINE const CORBA_String
+ACE_INLINE TAO_CONST CORBA_String
 CORBA_TypeCode::id (CORBA_Environment &env) const
 {
   env.clear ();
@@ -62,7 +62,7 @@ CORBA_TypeCode::id (CORBA_Environment &env) const
 }
 
 // returns the string name
-ACE_INLINE const CORBA_String
+ACE_INLINE TAO_CONST CORBA_String
 CORBA_TypeCode::name (CORBA_Environment &env) const
 {
   env.clear ();

@@ -52,7 +52,7 @@ class ACE_Svc_Export CORBA_NamedValue
 // mode, and some ownership rules for "top level" memory.
 {
 public:
-  const CORBA_String _FAR name (void) 
+  TAO_CONST CORBA_String _FAR name (void) 
     { return (const CORBA_String) _name; }
 
   CORBA_Any_ptr	_FAR value (void) { return &_any; }

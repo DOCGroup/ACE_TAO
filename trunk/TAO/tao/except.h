@@ -48,8 +48,8 @@ public:
   void operator delete (void *p)
   { ::operator delete (p); }
 
-  const CORBA_String id (void) const;
-  const CORBA_TypeCode_ptr type (void) const;
+  TAO_CONST CORBA_String id (void) const;
+  TAO_CONST CORBA_TypeCode_ptr type (void) const;
 
   // = Methods required for COM IUnknown support
 
@@ -188,7 +188,7 @@ public:
   { clear (); _exception = ex; }
 
   CORBA_ExceptionType exception_type (void) const;
-  const CORBA_String exception_id (void) const;
+  TAO_CONST CORBA_String exception_id (void) const;
 
   void clear (void)
   {
