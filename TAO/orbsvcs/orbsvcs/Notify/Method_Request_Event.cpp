@@ -96,7 +96,6 @@ TAO_Notify_Method_Request_Event_Queueable::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_
   return -1;
 }
 
-ACE_INLINE
 const TAO_Notify_Event *
 TAO_Notify_Method_Request_Event::event() const
 {
