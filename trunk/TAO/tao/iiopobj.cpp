@@ -224,30 +224,6 @@ IIOP_Object::IIOP_Object (const char *host,
   this->profile.object_key.maximum = this->profile.object_key.length;
 }
 
-IIOP_Object::~IIOP_Object (void)
-{
-  assert (refcount_ == 0);
-  delete this->fwd_profile_;
-}
-
-IIOP_Object::IIOP_Object (char *repository_id)
-  : STUB_Object (repository_id),
-    base (this),
-    refcount_ (1),
-    fwd_profile_ (0)
-{
-}
-
-IIOP_Object::IIOP_Object (char *repository_id,
-			  const IIOP::Profile &a_profile)
-  : STUB_Object (repository_id),
-    profile (a_profile),
-    base (this),
-    refcount_ (1),
-    fwd_profile_ (0)
-{
-}
-
 // Constructor.  It will usually be used by the server side.
 IIOP_Object::IIOP_Object (char *repository_id,
                           const ACE_INET_Addr &addr, const
