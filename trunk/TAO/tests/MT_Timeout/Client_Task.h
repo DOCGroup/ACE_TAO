@@ -46,6 +46,10 @@ public:
   /// Return the total number of timed out calls
   int timed_out_calls (void) const;
 
+  /// Return the number of calls with a too huge difference in 
+  /// timeout versus actual response arrival.
+  int too_big_difference_calls (void) const;
+
   /// Thread entry point
   int svc (void);
 
@@ -77,6 +81,8 @@ private:
 
   /// Count how many calls timed out
   int timed_out_calls_;
+
+  int too_big_difference_;
 
   /// Implement the Monitor Object Pattern.
   TAO_SYNCH_MUTEX mutex_;

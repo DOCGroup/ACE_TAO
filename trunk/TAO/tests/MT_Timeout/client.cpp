@@ -109,6 +109,27 @@ main (int argc, char *argv[])
                   task0.successful_calls (),
                   task0.timed_out_calls ()));
 
+      // No more than 5 % of the calls are allowed to have a too big
+      // difference
+      if (task0.too_big_difference_calls () > iterations/20
+	  || task1.too_big_difference_calls () > iterations/20)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "ERROR: Too many calls have a too big difference between "
+		      "timeout and elapsed time (task0: %d, task1: %d)\n",
+		      task0.too_big_difference_calls (),
+		      task1.too_big_difference_calls ()));
+	}
+      else  if (task0.too_big_difference_calls () != 0
+		|| task1.too_big_difference_calls () != 0)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Warning: some calls (task0: %d, task1: %d) "
+		      "exceeded their expected elapsed times\n",
+		      task0.too_big_difference_calls (),
+		      task1.too_big_difference_calls ()));
+	}
+	  
       if (task0.timed_out_calls () == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -137,3 +158,10 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+
+
+
+
+
+
