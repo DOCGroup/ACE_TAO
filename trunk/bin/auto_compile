@@ -1,3 +1,7 @@
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
 # -*- perl -*-
 # $Id$
 #
@@ -16,10 +20,6 @@
 # can be obtained either using cvs or downloading the lastest beta
 # from the WWW.
 #
-
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
 
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
