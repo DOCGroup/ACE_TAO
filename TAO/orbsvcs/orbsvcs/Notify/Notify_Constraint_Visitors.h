@@ -46,9 +46,9 @@ public:
   // Put the event data into our hash map.
 
   CORBA::Boolean evaluate_constraint (TAO_ETCL_Constraint *root);
-  // Returns 1 if the offer satisfies the constraint
+  // Returns 1 if the event satisfies the constraint
   // represented by the the expression tree rooted at <root>, 0 if it
-  // doesn't. If an error occurs during process, the traversal
+  // doesn't. If an error occurs during the process, the traversal
   // automatically fails.
 
   // The overridden methods.
@@ -69,7 +69,7 @@ public:
   int visit_binary_expr (TAO_ETCL_Binary_Expr *);
   int visit_preference (TAO_ETCL_Preference *);
 
-private:
+protected:
   // Sub-methods for visit_binary_expr().
   int visit_or (TAO_ETCL_Binary_Expr *);
   int visit_and (TAO_ETCL_Binary_Expr *);
@@ -78,7 +78,7 @@ private:
   int visit_binary_op (TAO_ETCL_Binary_Expr *binary_expr,
                        int op_type);
 
-  // These use dynamic anys look inside the ETCL component.
+  // These use dynamic anys to look inside the ETCL component.
   CORBA::Boolean sequence_does_contain (const CORBA::Any *any,
                                         TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean array_does_contain (const CORBA::Any *any,
@@ -95,7 +95,6 @@ private:
   CORBA::Boolean simple_type_match (int expr_type,
                                     CORBA::TCKind tc_kind);
 
-private:
   enum structured_event_field
     {
       FILTERABLE_DATA,
