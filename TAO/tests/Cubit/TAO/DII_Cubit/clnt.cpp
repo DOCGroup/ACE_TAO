@@ -226,6 +226,8 @@ main (int argc, char *argv[])
   // @@ Winsock shutdown object.
   ACE_winsock_proper_shutdown shutdown_object;
 
+  ACE_UNUSED_ARG (shutdown_object);
+
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   CORBA::Environment env;
 

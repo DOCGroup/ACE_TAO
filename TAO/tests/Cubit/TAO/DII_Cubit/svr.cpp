@@ -106,9 +106,9 @@ main (int argc, char *argv[])
 	  obj_key.buffer = (CORBA::Octet *) obj_str;
 	  obj_key.length = obj_key.maximum = ACE_OS::strlen (obj_str);
      
+#if 0
 	  CORBA::Object_ptr obj = 0;
 
-#if 0
 	  if (oa_ptr->find (obj_key, obj) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       " (%P|%t) Unable to locate object with key '%s', %p\n", 
