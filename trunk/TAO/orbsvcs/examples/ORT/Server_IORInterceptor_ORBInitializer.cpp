@@ -34,7 +34,7 @@ Server_IORInterceptor_ORBInitializer::post_init (
   /// Narrow it down correctly.
   Gateway::Object_Factory_var gateway_object_factory =
     Gateway::Object_Factory::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   /// Check for nil reference
   if (CORBA::is_nil (gateway_object_factory.in ()))

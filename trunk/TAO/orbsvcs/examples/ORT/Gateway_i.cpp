@@ -43,7 +43,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
   // Use the IfR interfaces to query the NVList for this object...
   CORBA::InterfaceDef_var interface =
-    target_object->_get_interface (ACE_ENV_ARG_PARAMETER);
+    target_object->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (interface.in ()))
@@ -63,7 +63,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
   // Save the result typecode...
   CORBA::TypeCode_var result_typecode =
-    operation.in ()->result (ACE_ENV_ARG_PARAMETER);
+    operation.in ()->result (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ParDescriptionSeq_var parameters =
@@ -141,7 +141,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   ACE_TRY
     {
       // Make the DII request
-      dii_request->invoke (ACE_ENV_ARG_PARAMETER);
+      dii_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // At this point the NVList contains all the out and inout
