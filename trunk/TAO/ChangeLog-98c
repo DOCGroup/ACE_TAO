@@ -1,3 +1,8 @@
+Fri Mar 20 09:26:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/POA/Generic_Servant/MyFooServant.h: added
+          #include "generic_servant_export.h".
+
 Fri Mar 20 02:47:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_server.cpp
