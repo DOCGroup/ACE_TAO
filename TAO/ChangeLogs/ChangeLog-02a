@@ -1,3 +1,15 @@
+Thu Jan 17 12:22:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+	* tao/TAO_Internal.cpp (open_services):
+
+	  Moved the parsing code for the "-ORBDebug" and "-ORBDebugLevel"
+	  options to TAO_Internal::open_services() so that Service_Objects
+	  and ORBInitializers may use debugging output dependent on their
+	  values.  Note that this change does not affect other debugging
+	  code in the ORB.  It simply moves the option parsing code
+	  earlier in the bootstrapping process.
+
 Thu Jan 17 12:04:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):

@@ -97,6 +97,21 @@ TAO_Internal::open_services (int &argc, char **argv)
 
           arg_shifter.consume_arg ();
         }
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebug") == 0)
+        {
+          // later, replace all of these
+          // warning this turns on a daemon
+          ACE::debug (1);
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBDebugLevel")))
+        {
+          TAO_debug_level =
+            ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBDaemon") == 0)
         {
           // Be a daemon
