@@ -1,3 +1,10 @@
+Wed Dec 31 09:58:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/RT_lib/RT_Factories_Define.cpp:
+        * orbsvcs/tests/Notify/lib/Factories_Define.cpp:
+        * orbsvcs/tests/Notify/lib/Name.cpp:
+          Removed not needed ; to fix Tru64 warning
+
 Tue Dec 30 20:32:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security.idl:
