@@ -32,7 +32,7 @@ TAO_Security_ORBInitializer::pre_init (
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) Security_ORBInitializer::post_init:\n"
+                    "(%P|%t) Security_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));

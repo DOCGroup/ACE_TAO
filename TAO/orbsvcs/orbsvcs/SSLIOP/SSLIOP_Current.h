@@ -53,7 +53,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Current
 public:
 
   /// Constructor.
-  TAO_SSLIOP_Current (size_t tss_slot, const char *orb_id);
+  TAO_SSLIOP_Current (const char *orb_id);
 
   /// Return the peer certificate associated with the current
   /// request.
@@ -81,6 +81,9 @@ public:
   virtual CORBA::Boolean no_context (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Set the TSS slot ID assigned to this object.
+  void tss_slot (size_t slot);
 
   /// Setup the Current.
   void setup (TAO_SSLIOP_Current_Impl *impl);
