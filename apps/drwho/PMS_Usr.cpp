@@ -24,13 +24,13 @@ PMS_Usr::encode (char *packet, int &packet_length)
 
   // We only send back info on friend that is actually logged in.
 
-  Protocol_Record *frp = this->get_next_friend ();
+  Protocol_Record *prp = this->get_next_friend ();
 
-  if (frp)
+  if (prp)
     {
       buf_ptr = this->handle_protocol_entries (ACE::strecpy (buf_ptr,
-                                                             frp->get_login ()),
-                                               frp->get_drwho_list ());
+                                                             prp->get_login ()),
+                                               prp->get_drwho_list ());
       *buf_ptr++ = '\t';
     }
 

@@ -33,9 +33,9 @@ Hash_Table::get_next_entry (void)
 	   this->current_index++)
 	if (this->hash_table[this->current_index] != 0)
 	  {
-	    Protocol_Record *frp = this->hash_table[this->current_index++];
-	    this->current_ptr  = frp->next_;
-	    return frp;
+	    Protocol_Record *prp = this->hash_table[this->current_index++];
+	    this->current_ptr  = prp->next_;
+	    return prp;
 	  }
 
       this->current_index = -1;
@@ -43,9 +43,9 @@ Hash_Table::get_next_entry (void)
     }
   else 
     {
-      Protocol_Record *frp = this->current_ptr;
+      Protocol_Record *prp = this->current_ptr;
       this->current_ptr	 = this->current_ptr->next_;
-      return frp;
+      return prp;
     }
 }
 
@@ -64,10 +64,10 @@ Hash_Table::~Hash_Table (void)
                 "disposing Hash_Table\n"));
 
   for (int i = 0; i < this->hash_table_size; i++)
-    for (Protocol_Record *frp = this->hash_table[i];
-         frp != 0; )
+    for (Protocol_Record *prp = this->hash_table[i];
+         prp != 0; )
       {
-	Protocol_Record *tmp = frp;
-	frp = frp->next_;
+	Protocol_Record *tmp = prp;
+	prp = prp->next_;
       }
 }

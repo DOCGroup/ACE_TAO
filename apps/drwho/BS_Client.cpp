@@ -59,11 +59,11 @@ BS_Client::insert (const char *key_name, int)
   while (lo <= hi)
     {
       int mid 	= (lo + hi) / 2;
-      Protocol_Record *frp = sorted_buffer[mid];
+      Protocol_Record *prp = sorted_buffer[mid];
       int cmp = ACE_OS::strcmp (key_name,
-                                frp->get_login ());
+                                prp->get_login ());
       if (cmp == 0)
-	return frp;
+	return prp;
       else if (cmp < 0)
 	hi = mid - 1;
       else
@@ -77,11 +77,11 @@ BS_Client::insert (const char *key_name, int)
 Protocol_Record *
 BS_Client::get_each_entry (void)
 {
-  for (Protocol_Record *frp = Binary_Search::get_each_entry ();
-       frp != 0;
-       frp = Binary_Search::get_each_entry ())
-    if (frp->get_drwho_list () != 0)
-      return frp;
+  for (Protocol_Record *prp = Binary_Search::get_each_entry ();
+       prp != 0;
+       prp = Binary_Search::get_each_entry ())
+    if (prp->get_drwho_list () != 0)
+      return prp;
 
   return 0;
 }
