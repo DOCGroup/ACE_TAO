@@ -1,3 +1,17 @@
+Thu Nov 13 16:51:40 1997    <nw1@CHA-CHA>
+
+	* ace/OS.h:  Added two new macros ACE_FACTORY_DECLARE and
+	  ACE_FACTORY_DEFINE.  Changed definitions of
+	  ACE_SVC_FACTORY_DECLARE AND ACE_SVC_FACTORY_DEFINE to use these
+	  two macros.  Refer to changes of the ACE_Export related macros
+	  below, you can now declare/define your service factories as,
+
+	       ACE_FACTORY_DECLARE (FOOBAR, fac_class);
+	       ACE_FACTORY_DEFINE (FOOBAR, fac_class);
+
+	  This will ensure they get define properly and proper decoration
+	  will be added.
+
 Thu Nov 13 16:52:31 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp: Removed all ! defined
