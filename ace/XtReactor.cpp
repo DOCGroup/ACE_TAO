@@ -376,7 +376,7 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
 			       const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_XtReactor::schedule_timer");
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_MUTEX, ace_mon, this->token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
   long result = ACE_Select_Reactor::schedule_timer (handler,
                                                     arg,

@@ -1,3 +1,8 @@
+Tue Aug 25 14:33:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/XtReactor.cpp: 
+	  The lock type for the ACE_XtReactor was wrong.
+
 Tue Aug 25 13:36:10 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tests/Aio_Platform_Test.cpp (do_sysconf): Fixed the VxWorks
