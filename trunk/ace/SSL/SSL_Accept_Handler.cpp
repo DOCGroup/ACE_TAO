@@ -10,8 +10,10 @@ ACE_RCSID (ACE_SSL,
            "$Id$")
 
 
-ACE_SSL_Accept_Handler::ACE_SSL_Accept_Handler (ACE_SSL_SOCK_Stream &s)
-  : ssl_stream_ (s)
+ACE_SSL_Accept_Handler::ACE_SSL_Accept_Handler (ACE_SSL_SOCK_Stream &s,
+                                                int &handler_closed)
+  : ssl_stream_ (s),
+    handler_closed_ (handler_closed)
 {
 }
 
@@ -41,6 +43,8 @@ int
 ACE_SSL_Accept_Handler::handle_close (ACE_HANDLE /* handle */,
                                       ACE_Reactor_Mask /* close_mask */)
 {
+  this->handler_closed_ = 1;
+
   return this->ssl_stream_.close ();
 }
 
@@ -97,7 +101,12 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
       // converted to an SSL_ERROR_WANT_{READ,WRITE} on some
       // platforms, such as AIX.
       if (ACE_OS::set_errno_to_last_error () == EWOULDBLOCK)
-        return 0;
+        {
+          if (::SSL_pending (ssl))
+            return 1;
+
+          break;
+        }
 
     default:
       ACE_SSL_Context::report_error ();
