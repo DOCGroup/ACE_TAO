@@ -20,13 +20,12 @@ CFG=TAO - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE "TAO - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -40,7 +39,7 @@ CFG=TAO - Win32 Alpha Debug
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "Release"
+# PROP Intermediate_Dir "DLL\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
@@ -71,7 +70,7 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
+# PROP Intermediate_Dir "DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
@@ -105,14 +104,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\ /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\ /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -137,14 +136,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\ /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\ /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
