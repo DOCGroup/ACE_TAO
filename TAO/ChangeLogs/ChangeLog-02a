@@ -1,3 +1,37 @@
+Mon Apr 24 14:38:15 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	* orbsvcs/orbsvcs/AV_Static.dsp:
+	* orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+	* orbsvcs/orbsvcs/CosEvent_Static.dsp:
+	* orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+	* orbsvcs/orbsvcs/CosNaming_Static.dsp:
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+	* orbsvcs/orbsvcs/CosProperty_Static.dsp:
+	* orbsvcs/orbsvcs/CosTime_Static.dsp:
+	* orbsvcs/orbsvcs/CosTrading_Static.dsp:
+	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
+	* orbsvcs/orbsvcs/RTSched_Static.dsp:
+	* orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+	  New project to build each service as a static library.
+
+	* tao/TAO_Static.dsp:
+	  In Release mode ACE is compiled with inline functions enabled,
+	  so should be the TAO static library.
+
+	* examples/Simple/time/client.dsp:
+	* examples/Simple/time/client_static.dsp:
+	* examples/Simple/time/server_static.dsp:
+	  Use the new static ORBSVCS libraries.
+	  Compile using the correct macro settings (TAO_NAMING_HAS_DLL=0,
+	  ACE_NO_INLINE cannot be defined for release builds, etc.)
+	  Remove obsolete dependencies on the TAO IDL compiler.
+
+	* orbsvcs/orbsvcs/CosTrading.dsp:
+	  Remove template files from the release build.
+
 Mon Apr 24 11:46:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.cpp:
