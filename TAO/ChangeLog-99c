@@ -1,3 +1,13 @@
+Wed Jul  7 12:59:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.cpp:
+	  Fixed the timeout computations so it works in platforms without
+	  native 64 bit ints.
+
+	* tao/ORB.cpp:
+	  It was not compiling in platforms without native C++
+	  exceptions.
+
 Wed Jul  7 12:49:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
