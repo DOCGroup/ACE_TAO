@@ -202,16 +202,16 @@ show_uninit:
 #       Installation targets
 #----------------------------------------------------------------------------
 
-INSTALL ?=
 # Always add LIB_INSTALL to INSTALL, so libs will get installed even no BIN
 # is built.  LIB_INSTALL is a dependency for BIN, so libs are installed prior
 # to use.  Also, make LIB_INSTALL depend on VLIBS, so libs get built prior to
 # installation.
 ifdef LIB_INSTALL
-  INSTALL += $(LIB_INSTALL)
+  INSTALL ?= $(LIB_INSTALL)
   $(LIB_INSTALL): $(VLIBS)
 endif
 
+INSTALL ?=
 install.local: $(INSTALL)
 
 deinstall.local:

@@ -1,3 +1,13 @@
+Tue Jan 13 18:06:23 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * include/makeinclude/rules.local.GNU:
+          Only assign LIB_INSTALL to INSTALL if INSTALL has not yet been
+          defined.  This will allow users to continue turning off
+          installation of libraries by setting INSTALL= prior to including
+          rules.local.GNU.  Thanks to Craig Rodrigues <crodrigu@bbn.com>
+          for pointing this out.  Normally, the INS* variables can be used
+          for this purpose, since they work for each target type.
+
 Mon Jan 12 23:26:28 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * include/makeinclude/wrapper_macros.GNU:
