@@ -1,3 +1,14 @@
+Sun Dec 09 22:29:16 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/ORB.cpp:
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tests/ORB_init/Portspan/server.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+	  Fixed build warnings due mostly to subtle uses of ACE_TRY_ENV
+	  (or lack thereof)
+
 Sun Dec  9 16:45:06 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SecurityLevel2.idl (set_attributes):
@@ -14,7 +25,7 @@ Sun Dec  9 13:50:47 2001  Ossama Othman  <ossama@uci.edu>
 	  This method now accepts the handle that will be closed instead
 	  of relying on calling the get_handle() method.  This a
 	  precautionary measure for avoiding a race condition.
-	
+
 	  (handle_close, handle_input, handle_output):
 
 	  Pass the handle down to the handle_close_i() method instead of
