@@ -167,7 +167,7 @@ ACE_ARGV::string_to_argv (void)
 }
 
 int
-ACE_ARGV::argv_to_string (ASYS_TCHAR **argv,char *&buf)
+ACE_ARGV::argv_to_string (ASYS_TCHAR **argv,ASYS_TCHAR *&buf)
 {
   if (argv == 0 || argv[0] == 0)
     return 0;
@@ -242,8 +242,8 @@ ACE_ARGV::ACE_ARGV (const ASYS_TCHAR buf[],
   // Create this->argv_.
   if (this->string_to_argv () == -1)
     ACE_ERROR ((LM_ERROR, 
-                "%p\n",
-                "string_to_argv"));
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("string_to_argv")));
 }
 
 ACE_ARGV::ACE_ARGV (ASYS_TCHAR *argv[],
@@ -326,8 +326,8 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *first_argv[],
   int first_argc;
   int second_argc;
 
-  char *first_buf;
-  char *second_buf;
+  ASYS_TCHAR *first_buf;
+  ASYS_TCHAR *second_buf;
 
   // convert the first argv to a string
   first_argc = this->argv_to_string (first_argv,first_buf);
@@ -338,7 +338,7 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *first_argv[],
   // Add the number of arguments in both the argvs.
   this->argc_ = first_argc + second_argc;
 
-  int buf_len = strlen (first_buf) + strlen (second_buf) + 1;
+  int buf_len = ACE_OS::strlen (first_buf) + ACE_OS::strlen (second_buf) + 1;
 
   // Allocate memory to the lenght of the combined argv string.
   ACE_NEW (this->buf_, ASYS_TCHAR[buf_len + 1]);
