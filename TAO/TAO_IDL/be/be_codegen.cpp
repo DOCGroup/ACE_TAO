@@ -39,7 +39,7 @@ TAO_CodeGen::TAO_CodeGen (void)
     gperf_input_filename_ (0),
     curr_os_ (0),
     visitor_factory_ (0),
-    strategy_ (TAO_DYNAMIC_HASH)
+    strategy_ (TAO_PERFECT_HASH)
 {
 }
 
@@ -151,7 +151,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                ++j)
             {
               String* idl_name =
-                idl_global->include_file_names()[j];
+                idl_global->include_file_names ()[j];
 
               const char* client_hdr =
                 IDL_GlobalData::be_get_client_hdr (idl_name);
@@ -212,18 +212,20 @@ TAO_CodeGen::start_client_stubs (const char *fname)
     {
       return -1;
     }
-  // generate the include statement for the client header
+  
+  // generate the include statement for the client header. We just
+  // need to put only the base names. Path info is not required.
   *this->client_stubs_ << "#include \"" <<
-    idl_global->be_get_client_hdr_fname () << "\"\n\n";
+    idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
 
   *this->client_stubs_ << "#include \"" <<
-    idl_global->be_get_server_hdr_fname () << "\"\n\n";
+    idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
 
   // generate the code that includes the inline file if not included in the
   // header file
   *this->client_stubs_ << "#if !defined (__ACE_INLINE__)\n";
   *this->client_stubs_ << "#include \"" <<
-    idl_global->be_get_client_inline_fname () << "\"\n";
+    idl_global->be_get_client_inline_fname (1) << "\"\n";
   *this->client_stubs_ << "#endif /* !defined INLINE */\n\n";
   return 0;
 }
@@ -318,7 +320,7 @@ TAO_CodeGen::start_server_header (const char *fname)
             }
           // the server header should include the client header
           *this->server_header_ << "#include \"" <<
-            idl_global->be_get_client_hdr_fname () << "\"\n\n";
+            idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
 
           *this->server_header_ << "#if defined(_MSC_VER)\n"
                                 << "#pragma warning(disable:4250)\n"
@@ -416,13 +418,13 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
 
   // generate the include statement for the server header
   *this->server_skeletons_ << "#include \"" <<
-    idl_global->be_get_server_hdr_fname () << "\"\n\n";
+    idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
 
   // generate the code that includes the inline file if not included in the
   // header file
   *this->server_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
   *this->server_skeletons_ << "#include \"" <<
-    idl_global->be_get_server_inline_fname () << "\"\n";
+    idl_global->be_get_server_inline_fname (1) << "\"\n";
   *this->server_skeletons_ << "#endif /* !defined INLINE */\n\n";
   return 0;
 }
@@ -484,13 +486,13 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
 
       // generate the include statement for the server header
       *this->server_template_skeletons_ << "#include \"" <<
-        idl_global->be_get_server_template_hdr_fname () << "\"\n\n";
+        idl_global->be_get_server_template_hdr_fname (1) << "\"\n\n";
 
       // generate the code that includes the inline file if not included in the
       // header file
       *this->server_template_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
       *this->server_template_skeletons_ << "#include \"" <<
-        idl_global->be_get_server_template_inline_fname () << "\"\n";
+        idl_global->be_get_server_template_inline_fname (1) << "\"\n";
       *this->server_template_skeletons_ << "#endif /* !defined INLINE */\n\n";
       return 0;
 
@@ -561,7 +563,7 @@ TAO_CodeGen::end_client_header (void)
   // insert the code to include the inline file
   *this->client_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->client_header_ << "#include \"" <<
-    idl_global->be_get_client_inline_fname () << "\"\n";
+    idl_global->be_get_client_inline_fname (1) << "\"\n";
   *this->client_header_ << "#endif /* defined INLINE */\n\n";
 
   *this->client_header_ << "#if defined(_MSC_VER)\n"
@@ -578,12 +580,12 @@ TAO_CodeGen::end_server_header (void)
 {
   // insert the template header
   *this->server_header_ << "#include \"" <<
-    idl_global->be_get_server_template_hdr_fname () << "\"\n";
+    idl_global->be_get_server_template_hdr_fname (1) << "\"\n";
 
   // insert the code to include the inline file
   *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->server_header_ << "#include \"" <<
-    idl_global->be_get_server_inline_fname () << "\"\n";
+    idl_global->be_get_server_inline_fname (1) << "\"\n";
   *this->server_header_ << "#endif /* defined INLINE */\n\n";
 
   *this->server_header_ << "#if defined(_MSC_VER)\n"
@@ -601,21 +603,21 @@ TAO_CodeGen::end_server_template_header (void)
   // insert the code to include the inline file
   *this->server_template_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->server_template_header_ << "#include \"" <<
-    idl_global->be_get_server_template_inline_fname () << "\"\n";
+    idl_global->be_get_server_template_inline_fname (1) << "\"\n";
   *this->server_template_header_ << "#endif /* defined INLINE */\n\n";
 
   // insert the code to include the template source file
   *this->server_template_header_
     << "\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)\n";
   *this->server_template_header_ << "#include \"" <<
-    idl_global->be_get_server_template_skeleton_fname () << "\"\n";
+    idl_global->be_get_server_template_skeleton_fname (1) << "\"\n";
   *this->server_template_header_ << "#endif /* defined REQUIRED SOURCE */\n\n";
 
   // insert the code to include the template pragma
   *this->server_template_header_
     << "\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)\n";
   *this->server_template_header_ << "#pragma implementation (\"" <<
-    idl_global->be_get_server_template_skeleton_fname () << "\")\n";
+    idl_global->be_get_server_template_skeleton_fname (1) << "\")\n";
   *this->server_template_header_ << "#endif /* defined REQUIRED PRAGMA */\n\n";
 
   *this->server_template_header_ << "#if defined(_MSC_VER)\n"

@@ -103,17 +103,55 @@ IDL_GlobalData::IDL_GlobalData()
       pd_idl_src_file (0),
       export_macro_ (0),
       export_include_ (0),
-      client_hdr_ending_ (ACE_OS::strdup ("C.h")),
-      client_stub_ending_ (ACE_OS::strdup ("C.cpp")),
-      client_inline_ending_ (ACE_OS::strdup ("C.i")),
-      server_hdr_ending_ (ACE_OS::strdup ("S.h")),
-      server_template_hdr_ending_ (ACE_OS::strdup ("S_T.h")),
-      server_skeleton_ending_ (ACE_OS::strdup ("S.cpp")),
-      server_template_skeleton_ending_ (ACE_OS::strdup ("S_T.cpp")),
-      server_inline_ending_ (ACE_OS::strdup ("S.i")),
-      server_template_inline_ending_ (ACE_OS::strdup ("S_T.i"))
+      output_dir_ (0)  
 {
-  // empty
+  // Assign the default values to the different filename endings. 
+  ACE_NEW (this->client_hdr_ending_, char [strlen ("C.h")]);
+  ACE_OS::strcpy (this->client_hdr_ending_, "C.h");
+  
+  ACE_NEW (this->client_stub_ending_, char [strlen ("C.cpp")]);
+  ACE_OS::strcpy (this->client_stub_ending_, "C.cpp");
+  
+  ACE_NEW (this->client_inline_ending_, char [strlen ("C.i")]);
+  ACE_OS::strcpy (this->client_inline_ending_, "C.i");
+  
+  ACE_NEW (this->server_hdr_ending_, char [strlen ("S.h")]);
+  ACE_OS::strcpy (this->server_hdr_ending_, "S.h");
+  
+  ACE_NEW (this->server_template_hdr_ending_, char [strlen ("S_T.h")]);
+  ACE_OS::strcpy (this->server_template_hdr_ending_, "S_T.h");
+  
+  ACE_NEW (this->server_skeleton_ending_, char [strlen ("S.cpp")]);
+  ACE_OS::strcpy (this->server_skeleton_ending_, "S.cpp");
+  
+  ACE_NEW (this->server_template_skeleton_ending_, char [strlen ("S_T.cpp")]);
+  ACE_OS::strcpy (this->server_template_skeleton_ending_, "S_T.cpp");
+  
+  ACE_NEW (this->server_inline_ending_, char [strlen ("S.i")]);
+  ACE_OS::strcpy (this->server_inline_ending_, "S.i");
+  
+  ACE_NEW (this->server_template_inline_ending_, char [strlen ("S_T.i")]);
+  ACE_OS::strcpy (this->server_template_inline_ending_, "S_T.i");
+  
+  // Path for the perfect hash generator(gperf) program. Default
+  // is $ACE_ROOT/bin/gperf.
+  // Form the absolute pathname.
+  char *ace_root = ACE_OS::getenv ("ACE_ROOT");
+  if (ace_root == 0)
+    // This may not cause any problem if -g option is used to specify
+    // the correct path for the  gperf program. Let us ignore this
+    // error here. It will be caught when we check the existence of
+    // the perfect hasher.
+    this->perfect_hasher_ = 0;
+  else
+    {
+      // Set it to the default value.
+      ACE_NEW (this->perfect_hasher_, 
+               char [strlen (ace_root) + strlen ("/bin/gperf")]);
+      ACE_OS::sprintf (this->perfect_hasher_,
+                       "%s/bin/gperf",
+                       ace_root);
+    }
 }
 
 // Get or set scopes stack
@@ -122,6 +160,7 @@ IDL_GlobalData::scopes()
 {
   return pd_scopes;
 }
+
 void
 IDL_GlobalData::set_scopes(UTL_ScopeStack *s)
 {
@@ -353,7 +392,7 @@ IDL_GlobalData::set_pragmas(UTL_StrList *p)
   pd_pragmas = p;
 }
 
-// Get or set indicator whether we're reading from stdin
+// Get or set indicator whether we're reading from stdin.
 idl_bool
 IDL_GlobalData::read_from_stdin()
 {
@@ -393,23 +432,28 @@ IDL_GlobalData::store_include_file_name(String *n)
   /*
    * OK, need to store. Make sure there's space for one more string
    */
-  if (pd_n_include_file_names == pd_n_alloced_file_names) {
-    if (pd_n_alloced_file_names == 0) {
-      pd_n_alloced_file_names = INCREMENT;
-      pd_include_file_names = new String *[pd_n_alloced_file_names];
-    } else {
-      o_include_file_names = pd_include_file_names;
-      o_n_alloced_file_names = pd_n_alloced_file_names;
-      pd_n_alloced_file_names += INCREMENT;
-      pd_include_file_names = new String *[pd_n_alloced_file_names];
-      for (i = 0; i < o_n_alloced_file_names; i++)
-        pd_include_file_names[i] = o_include_file_names[i];
-      delete [] o_include_file_names;
+  if (pd_n_include_file_names == pd_n_alloced_file_names)
+    {
+      // Allocating more space.
+
+      if (pd_n_alloced_file_names == 0)
+        {
+          pd_n_alloced_file_names = INCREMENT;
+          pd_include_file_names = new String *[pd_n_alloced_file_names];
+        }
+      else
+        {
+          o_include_file_names = pd_include_file_names;
+          o_n_alloced_file_names = pd_n_alloced_file_names;
+          pd_n_alloced_file_names += INCREMENT;
+          pd_include_file_names = new String *[pd_n_alloced_file_names];
+          for (i = 0; i < o_n_alloced_file_names; i++)
+            pd_include_file_names[i] = o_include_file_names[i];
+          delete [] o_include_file_names;
+        }
     }
-  }
-  /*
-   * Store it
-   */
+
+  // Store it.
   pd_include_file_names[pd_n_include_file_names++] = n;
 }
 
@@ -494,28 +538,42 @@ void IDL_GlobalData::idl_src_file(String *s)
 /************ Helper functions **************/
 static const char*
 be_change_idl_file_extension (String* idl_file,
-			      const char *new_extension)
+			      const char *new_extension,
+                              int base_name_only = 0)
 {
   // @@ This shouldn't happen anyway; but a better error handling
   // mechanism is needed.
   if (idl_file == 0 || new_extension == 0)
-    {
-      return 0;
-    }
-
+    return 0;
+  
   static char fname[MAXPATHLEN];
   ACE_OS::memset (fname, 0, MAXPATHLEN);
 
+  // Get the char* from the String.
   const char* string = idl_file->get_string ();
-
-  // get the base part of the filename
+  
+  // Get the base part of the filename.
   const char *base = ACE_OS::strstr (string, ".idl");
-
+  
   if (base == 0)
     return 0;
+  
+  if ((!base_name_only) && (idl_global->output_dir () != 0))
+    {
+      // Path info should also be added to fname.
 
-  ACE_OS::strncpy (fname, string, base - string);
-  // Turn '\' and '\\' into '/'.
+      // Add path and "/".
+      ACE_OS::sprintf (fname, "%s/", idl_global->output_dir ());
+      
+      // Append the base part to fname.
+      ACE_OS::strncpy (fname + strlen (fname), string, base - string);
+    }
+  else
+    // Base_name_only or no putput_dir specified by user. JUST put the
+    // base part to fname.
+    ACE_OS::strncpy (fname, string, base - string);
+      
+  // Turn '\' and '\\' into '/'. 
   char* i = fname;
   for (char* j = fname; *j != 0; ++i, ++j)
     {
@@ -529,15 +587,20 @@ be_change_idl_file_extension (String* idl_file,
 	*i = *j;
     }
   *i = 0;
+  
+  // Append the newextension.
   ACE_OS::strcat (fname, new_extension);
+
   return fname;
 }
 
 const char *
-IDL_GlobalData::be_get_client_hdr (String *idl_file_name)
+IDL_GlobalData::be_get_client_hdr (String *idl_file_name,
+                                   int base_name_only) 
 {
   return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->client_hdr_ending ());
+                                       idl_global->client_hdr_ending (), 
+                                       base_name_only);
 }
 
 const char *
@@ -548,24 +611,30 @@ IDL_GlobalData::be_get_client_stub (String *idl_file_name)
 }
 
 const char *
-IDL_GlobalData::be_get_client_inline (String *idl_file_name)
+IDL_GlobalData::be_get_client_inline (String *idl_file_name,
+                                      int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->client_inline_ending ());
+                                       idl_global->client_inline_ending (),
+                                       base_name_only);
 }
 
 const char *
-IDL_GlobalData::be_get_server_hdr (String *idl_file_name)
+IDL_GlobalData::be_get_server_hdr (String *idl_file_name,
+                                   int base_name_only) 
 {
   return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_hdr_ending ());
+                                       idl_global->server_hdr_ending (), 
+                                       base_name_only);
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_hdr (String *idl_file_name)
+IDL_GlobalData::be_get_server_template_hdr (String *idl_file_name,
+                                            int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_template_hdr_ending ());
+                                       idl_global->server_template_hdr_ending (),
+                                       base_name_only);
 }
 
 const char *
@@ -576,78 +645,91 @@ IDL_GlobalData::be_get_server_skeleton (String *idl_file_name)
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_skeleton (String *idl_file_name)
+IDL_GlobalData::be_get_server_template_skeleton (String *idl_file_name,
+                                                 int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_template_skeleton_ending ());
+                                       idl_global->server_template_skeleton_ending (),
+                                       base_name_only);
 }
 
 const char *
-IDL_GlobalData::be_get_server_inline (String *idl_file_name)
+IDL_GlobalData::be_get_server_inline (String *idl_file_name,
+                                      int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_inline_ending ());
+                                       idl_global->server_inline_ending (),
+                                       base_name_only);
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_inline (String *idl_file_name)
+IDL_GlobalData::be_get_server_template_inline (String *idl_file_name,
+                                               int base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_template_inline_ending ());
+                                       idl_global->server_template_inline_ending (),
+                                       base_name_only);
 }
 
 const char *
-IDL_GlobalData::be_get_client_hdr_fname ()
+IDL_GlobalData::be_get_client_hdr_fname (int base_name_only)
 {
-  return be_get_client_hdr (idl_global->idl_src_file ());
+  return be_get_client_hdr (idl_global->stripped_filename (),
+                            base_name_only);
 }
 
 const char *
 IDL_GlobalData::be_get_client_stub_fname ()
 {
-  return be_get_client_stub (idl_global->idl_src_file ());
+  return be_get_client_stub (idl_global->stripped_filename ());
 }
 
 const char *
-IDL_GlobalData::be_get_client_inline_fname ()
+IDL_GlobalData::be_get_client_inline_fname (int base_name_only)
 {
-  return be_get_client_inline (idl_global->idl_src_file ());
+  return be_get_client_inline (idl_global->stripped_filename (),
+                               base_name_only);
 }
 
 const char *
-IDL_GlobalData::be_get_server_hdr_fname ()
+IDL_GlobalData::be_get_server_hdr_fname (int base_name_only)
 {
-  return be_get_server_hdr (idl_global->idl_src_file ());
+  return be_get_server_hdr (idl_global->stripped_filename (),
+                            base_name_only); 
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_hdr_fname ()
+IDL_GlobalData::be_get_server_template_hdr_fname (int base_name_only)
 {
-  return be_get_server_template_hdr (idl_global->idl_src_file ());
+  return be_get_server_template_hdr (idl_global->stripped_filename (),
+                                     base_name_only);
 }
 
 const char *
 IDL_GlobalData::be_get_server_skeleton_fname ()
 {
-  return be_get_server_skeleton (idl_global->idl_src_file ());
+  return be_get_server_skeleton (idl_global->stripped_filename ());
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_skeleton_fname ()
+IDL_GlobalData::be_get_server_template_skeleton_fname (int base_name_only)
 {
-  return be_get_server_template_skeleton (idl_global->idl_src_file ());
+  return be_get_server_template_skeleton (idl_global->stripped_filename (),
+                                          base_name_only);
 }
 
 const char *
-IDL_GlobalData::be_get_server_inline_fname ()
+IDL_GlobalData::be_get_server_inline_fname (int base_name_only)
 {
-  return be_get_server_inline (idl_global->idl_src_file ());
+  return be_get_server_inline (idl_global->stripped_filename (),
+                               base_name_only);
 }
 
 const char *
-IDL_GlobalData::be_get_server_template_inline_fname ()
+IDL_GlobalData::be_get_server_template_inline_fname (int base_name_only)
 {
-  return be_get_server_template_inline (idl_global->idl_src_file ());
+  return be_get_server_template_inline (idl_global->stripped_filename (),
+                                        base_name_only);
 }
 
 const char*
@@ -796,13 +878,32 @@ IDL_GlobalData::server_template_inline_ending (void) const
   return this->server_template_inline_ending_;
 }
 
+void
+IDL_GlobalData::output_dir (const char* s)
+{
+  delete this->output_dir_;
+  ACE_NEW (this->output_dir_,
+           char [ACE_OS::strlen (s)]);
+  ACE_OS::strcpy (this->output_dir_, s);
+}
 
+const char*
+IDL_GlobalData::output_dir (void) const 
+{
+  return this->output_dir_;
+}
 
+void
+IDL_GlobalData::perfect_hasher (const char* s)
+{
+  delete this->perfect_hasher_;
+  ACE_NEW (this->perfect_hasher_,
+           char [ACE_OS::strlen (s)]);
+  ACE_OS::strcpy (this->perfect_hasher_, s);
+}
 
-
-
-
-
-
-
-
+const char*
+IDL_GlobalData::perfect_hasher (void) const
+{
+  return this->perfect_hasher_;
+}
