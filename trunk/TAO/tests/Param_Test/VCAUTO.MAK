@@ -1,5 +1,5 @@
-# TAO/tests/
+# TAO/tests/Param_Test/
 
-DIR_LIST = Cubit.dir Param_Test.dir
+MAK_LIST = server client
 
 !INCLUDE <$(ACE_ROOT)\include\makeinclude\VC50_DIR.MAK>
