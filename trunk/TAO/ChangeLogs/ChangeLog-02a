@@ -1,3 +1,31 @@
+Mon Feb 26 20:01:06 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 	
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 	
+	* orbsvcs/tests/AVStreams/Latency/control.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 	
+
+	  Ensured clean termination of the processes.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
+	  
+	  Corrected multicasting address formating to fix the Multicast
+	  and Multicast_Full_Profile tests. 
+
+	  Also fixed the iteration through the reverse flow spec set in
+	  TAO_StreamEndPoint::start.
+
+	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for reporting these
+	  bugs.
+	
+
+
 Mon Feb 26 19:05:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
