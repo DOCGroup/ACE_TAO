@@ -1,3 +1,22 @@
+Tue Nov 23 10:43:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_root.cpp:
+        
+          Fixed off-by-one error in cleanup of global scope between
+          processing multiple IDL files on the command line. We
+          were leaving one extra member of the name-reference list
+          hanging around (in addtion to the predefined types, which
+          persist through the entire execution).
+          
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Fixed the logic that decides whether or not to generate an
+          #include of Typecode.h in the *C.cpp file, meshing with
+          other logic that decides about generating the same include
+          in the *C.h or *A.cpp files. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing out the extra
+          #include in IORInterceptorC.cpp.
+
 Tue Nov 23 06:46:10 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Object_SArgument_T.h:
