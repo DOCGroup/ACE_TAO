@@ -3,6 +3,14 @@ Tue Oct 13 22:39:42 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/MM_Shared_Memory_Test.cpp (client): added an
           ACE_ASSERT to check that shm is non-zero.
 
+        * ace/OS.h,config-chorus.h,README: added
+          ACE_HAS_PTHREAD_PROCESS_ENUM support.  Thanks to
+          Alberto Villarica <Alberto.Villarica.rav@nt.com> and Naga
+          for tracking the problem with Semaphore_Test hanging.
+
+        * ace/OS.h: changed default PTHREAD_PROCESS_SHARED from 0 to 1.
+          That way, it's different than PHTREAD_PROCESS_PRIVATE.
+
 Tue Oct 13 22:09:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Mem_Map.cpp (map_it): One more try to get this right ;)
