@@ -1659,7 +1659,8 @@ ACE::recv_n (ACE_HANDLE handle,
                   if (recv_size == n)
                     recv_size = 0;
                   else
-                    break;
+                    // Return total bytes transferred.
+                    return nbytes;
                 }
             }
 
@@ -2291,7 +2292,8 @@ ACE::send_n (ACE_HANDLE handle,
                   if (send_size == n)
                     send_size = 0;
                   else
-                    break;
+                    // Return total bytes transferred.
+                    return nbytes;
                 }
             }
 
