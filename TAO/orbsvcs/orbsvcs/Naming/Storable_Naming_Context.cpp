@@ -27,7 +27,7 @@ ACE_RCSID (Naming,
            "$Id$")
 
 TAO_Storable_IntId::TAO_Storable_IntId (void)
-  : ref_ (""),
+  : ref_ (CORBA::string_dup ("")),
     type_ (CosNaming::nobject)
 {
 }
@@ -61,8 +61,8 @@ TAO_Storable_IntId::operator= (const TAO_Storable_IntId &rhs)
 }
 
 TAO_Storable_ExtId::TAO_Storable_ExtId (void)
-  : id_ (""),
-    kind_ ("")
+  : id_ (CORBA::string_dup ("")),
+    kind_ (CORBA::string_dup (""))
 {
 }
 
@@ -339,6 +339,11 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
 
   // we are only using the size from this header
   flck->peer() >> header;
+  if (!flck->peer ().good ())
+    {
+      flck->peer ().clear ();
+      ACE_THROW (CORBA::INTERNAL ());
+    }
 
   // reset the destroyed flag
   this->destroyed_ = header.destroyed();
@@ -347,6 +352,11 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
   for (unsigned int i=0; i<header.size(); i++)
   {
     flck->peer() >> record;
+    if (!flck->peer ().good ())
+      {
+        flck->peer ().clear ();
+        ACE_THROW (CORBA::INTERNAL ());
+      }
     if( record.type() == TAO_NS_Persistence_Record::NCONTEXT )
     {
       PortableServer::ObjectId_var id =
@@ -679,6 +689,12 @@ TAO_Storable_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
                            CosNaming::NamingContext::_nil ());
     // get the counter from disk
     *gfl_.get() >> global;
+    if (!gfl_.get ()->good () &&
+        gfl_.get ()->rdstate () != TAO_Storable_Base::eofbit)
+      {
+        gfl_.get ()->clear ();
+        ACE_THROW (CORBA::INTERNAL ());
+      }
     gcounter_ = global.counter();
     // use it to generate a new name
   }
@@ -1512,6 +1528,12 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   // get the counter from disk
   TAO_NS_Persistence_Global global;
   *gfl_.get() >> global;
+  if (!gfl_.get ()->good () &&
+      gfl_.get ()->rdstate () != TAO_Storable_Base::eofbit)
+    {
+      gfl_.get ()->clear ();
+      ACE_THROW (CORBA::INTERNAL ());
+    }
   gcounter_ = global.counter();
   if(redundant_) gfl_->close();
 

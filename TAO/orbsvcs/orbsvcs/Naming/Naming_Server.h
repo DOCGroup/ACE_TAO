@@ -204,10 +204,6 @@ protected:
   /// identified by the <persistence_file_name_>.
   void *base_address_;
 
-  /// After how long the server should stop listening to requests (in
-  /// seconds).
-  size_t time_;
-
   /// If not zero multicast is enabled.
   int multicast_;
 
