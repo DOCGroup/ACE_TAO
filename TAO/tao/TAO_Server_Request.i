@@ -1,12 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-ACE_INLINE CORBA::ORB_ptr
-TAO_ServerRequest::orb (void)
-{
-  return this->orb_core_->orb ();
-}
-
 ACE_INLINE TAO_ORB_Core *
 TAO_ServerRequest::orb_core (void)
 {
