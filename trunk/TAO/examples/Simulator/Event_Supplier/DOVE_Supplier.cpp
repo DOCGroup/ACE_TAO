@@ -20,7 +20,7 @@ ACE_RCSID(Event_Supplier, DOVE_Supplier, "$Id$")
 
 // Static pointer member initialization for Singleton.
 
-ACE_Scheduler_Factory::POD_RT_Info * 
+ACE_Scheduler_Factory::POD_RT_Info *
 DOVE_Supplier::pod_rt_info_instance_ = 0;
 
 // Constructor.
@@ -35,12 +35,12 @@ DOVE_Supplier::DOVE_Supplier ()
     internal_DOVE_Supplier_ptr_ (0),
     MIB_name_ (0)
 {
-  ACE_NEW (internal_DOVE_Supplier_ptr_, 
+  ACE_NEW (internal_DOVE_Supplier_ptr_,
            Internal_DOVE_Supplier (this));
 
   if (internal_DOVE_Supplier_ptr_ == 0)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   "DOVE_Supplier::DOVE_Supplier internal "
                   "supplier not allocated."));
     }
@@ -63,7 +63,7 @@ DOVE_Supplier::~DOVE_Supplier ()
 
 // Initialize the ORB and the connection to the Name Service
 
-int 
+int
 DOVE_Supplier::init (void)
 {
   ACE_TRY_NEW_ENV
@@ -112,9 +112,9 @@ DOVE_Supplier::init (void)
 }
 
 int
-DOVE_Supplier::connect (const char* MIB_name, 
-                        const char* es_name, 
-                        const char * ss_name, 
+DOVE_Supplier::connect (const char* MIB_name,
+                        const char* es_name,
+                        const char * ss_name,
                         ACE_Scheduler_Factory::POD_RT_Info * pod_rt_info)
 {
   // Initialize the supplier if this has not already been done.
@@ -125,7 +125,7 @@ DOVE_Supplier::connect (const char* MIB_name,
                         -1);
     }
 
-  
+
   // Grab the default RT_Info settings if others were not provided.
   if (pod_rt_info == 0)
     {
@@ -157,16 +157,16 @@ DOVE_Supplier::connect (const char* MIB_name,
   // cp_temp if we fail here, and we need what cp_temp points
   // to after the current scope if we succeed here.
   Connection_Params ** cp_list_temp;
-  cp_list_temp = 
+  cp_list_temp =
     new Connection_Params * [this->connection_count_ + 1];
   if (cp_list_temp == 0)
     {
       // Avoid a memory leak if we failed to allocate.
       delete cp_temp;
 
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          " (%P|%t) DOVE_Supplier::connect could not "
-                         "reallocate connection params list"), 
+                         "reallocate connection params list"),
                         -1);
     }
 
@@ -174,7 +174,7 @@ DOVE_Supplier::connect (const char* MIB_name,
   // the old list (if any) to the new one.
   for (int i = 0; i < this->connection_count_; ++i)
     {
-      cp_list_temp [i] = 
+      cp_list_temp [i] =
         this->connection_params_list_ [i];
     }
 
@@ -282,16 +282,16 @@ DOVE_Supplier::notify (CORBA::Any &message)
 
 // Use the next connection in the list of established connections.
 
-void 
+void
 DOVE_Supplier::use_next_connection ()
 {
   if (connection_count_ > 0)
     {
-      current_connection_index_ = 
-        (current_connection_index_ == connection_count_ - 1) 
+      current_connection_index_ =
+        (current_connection_index_ == connection_count_ - 1)
         ? 0 : current_connection_index_ + 1;
 
-      current_connection_params_ = 
+      current_connection_params_ =
         connection_params_list_ [current_connection_index_];
     }
 }
@@ -299,17 +299,17 @@ DOVE_Supplier::use_next_connection ()
 
 // Use the previous connection in the list of established connections.
 
-void 
+void
 DOVE_Supplier::use_prev_connection ()
 {
   if (connection_count_ > 0)
     {
-      current_connection_index_ = 
-        (current_connection_index_ == 0) 
+      current_connection_index_ =
+        (current_connection_index_ == 0)
         ? connection_count_ - 1
         : current_connection_index_ - 1;
 
-      current_connection_params_ = 
+      current_connection_params_ =
         connection_params_list_ [current_connection_index_];
     }
 }
@@ -332,7 +332,7 @@ DOVE_Supplier::get_Scheduler ()
     {
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
-      schedule_name[0].id = 
+      schedule_name[0].id =
         CORBA::string_dup (this->current_connection_params_->ss_name_);
 
       CORBA::Object_var objref =
@@ -350,7 +350,7 @@ DOVE_Supplier::get_Scheduler ()
       current_connection_params_->scheduler_var_ = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DOVE_Supplier::get_Scheduler: "
-                         "error while resolving scheduler %s\n", 
+                         "error while resolving scheduler %s\n",
                          this->current_connection_params_->ss_name_),
                         -1);
     }
@@ -403,10 +403,10 @@ DOVE_Supplier::connect_Supplier ()
   ACE_TRY_NEW_ENV
   {
     // Generate the Real-time information descriptor.
-    this->current_connection_params_->rt_info_ = 
+    this->current_connection_params_->rt_info_ =
       this->current_connection_params_->
         scheduler_var_->
-          create (this->current_connection_params_->pod_rt_info_.entry_point, 
+          create (this->current_connection_params_->pod_rt_info_.entry_point,
                   ACE_TRY_ENV);
 
     ACE_TRY_CHECK;
@@ -441,10 +441,7 @@ DOVE_Supplier::connect_Supplier ()
     qos.publications[0].event.header.creation_time = ORBSVCS_Time::zero ();
     qos.publications[0].event.header.ec_recv_time = ORBSVCS_Time::zero ();
     qos.publications[0].event.header.ec_send_time = ORBSVCS_Time::zero ();
-    qos.publications[0].event.data.any_value.replace (CORBA::_tc_short,
-						      &x,
-						      0,
-						      ACE_TRY_ENV);
+    qos.publications[0].event.data.any_value <<= x;
     ACE_TRY_CHECK;
     qos.publications[0].dependency_info.number_of_calls = 1;
     qos.publications[0].dependency_info.rt_info =
@@ -488,7 +485,7 @@ DOVE_Supplier::connect_Supplier ()
 
 // Access the default rt_info singleton.
 
-ACE_Scheduler_Factory::POD_RT_Info * 
+ACE_Scheduler_Factory::POD_RT_Info *
 DOVE_Supplier::pod_rt_info_instance ()
 {
   if (DOVE_Supplier::pod_rt_info_instance_ == 0)
@@ -499,24 +496,22 @@ DOVE_Supplier::pod_rt_info_instance ()
 
       // Set up the default data.
       DOVE_Supplier::pod_rt_info_instance_->entry_point = "ABC";
-      DOVE_Supplier::pod_rt_info_instance_->criticality = 
+      DOVE_Supplier::pod_rt_info_instance_->criticality =
         RtecScheduler::VERY_LOW_CRITICALITY;
-      DOVE_Supplier::pod_rt_info_instance_->worst_case_execution_time = 
+      DOVE_Supplier::pod_rt_info_instance_->worst_case_execution_time =
         ORBSVCS_Time::zero ();
-      DOVE_Supplier::pod_rt_info_instance_->typical_execution_time = 
+      DOVE_Supplier::pod_rt_info_instance_->typical_execution_time =
         ORBSVCS_Time::zero ();
-      DOVE_Supplier::pod_rt_info_instance_->cached_execution_time = 
+      DOVE_Supplier::pod_rt_info_instance_->cached_execution_time =
         ORBSVCS_Time::zero ();
       DOVE_Supplier::pod_rt_info_instance_->period = 10000000;
-      DOVE_Supplier::pod_rt_info_instance_->importance = 
+      DOVE_Supplier::pod_rt_info_instance_->importance =
         RtecScheduler::VERY_LOW_IMPORTANCE;
       DOVE_Supplier::pod_rt_info_instance_->quantum = ORBSVCS_Time::zero ();
       DOVE_Supplier::pod_rt_info_instance_->threads = 1;
-      DOVE_Supplier::pod_rt_info_instance_->info_type = 
+      DOVE_Supplier::pod_rt_info_instance_->info_type =
         RtecScheduler::OPERATION;
     }
 
   return DOVE_Supplier::pod_rt_info_instance_;
 }
-
-

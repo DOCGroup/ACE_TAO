@@ -9,10 +9,13 @@
 #----------------------------------------------------------------------------
 
 DIRS  =	benchmark \
+	Latency \
 	Pluggable \
 	Full_Profile \
 	Multicast \
 	Multicast_Full_Profile
+
+# mpeg server_discovery
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

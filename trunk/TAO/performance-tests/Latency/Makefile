@@ -15,11 +15,7 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 IDLFILES = testC testS
-BIN = client st_client deferred_synch_client server st_server
-
-ifeq ($(ami),1)
-BIN += ami-latency-client ami-throughput-client
-endif # ami
+BIN_UNCHECKED = client st_client deferred_synch_client server st_server
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i dii_client)
 
@@ -50,6 +46,14 @@ endif # AMI
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN=$(BIN_UNCHECKED)
+  ifeq ($(ami),1)
+    BIN += ami-latency-client ami-throughput-client
+  endif # ami
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

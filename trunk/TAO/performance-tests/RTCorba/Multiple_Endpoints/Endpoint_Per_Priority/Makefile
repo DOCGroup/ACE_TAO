@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-BIN = server client
+BIN_UNCHECKED = server client
 
 CLIENT_OBJS = 	client.o \
 		testC.o
@@ -37,6 +37,11 @@ LSRC=$(CLIENT_OBJS:.o=.cpp) $(SERVER_OBJS:.o=.cpp)
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(rt_corba),1)
+  BIN=$(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
