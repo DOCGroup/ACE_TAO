@@ -861,7 +861,7 @@ sub collect_data {
   foreach my $key (keys %{$prjc->{'valid_components'}}) {
     my(@list) = $prjc->get_component_list($key);
     if (defined $list[0]) {
-      $self->{'values'}->{$key} = "@list";
+      $self->{'values'}->{$key} = \@list;
     }
   }
 
@@ -887,7 +887,8 @@ sub is_only_keyword {
   my($line) = shift;
 
   ## Does the line contain only a keyword?
-  if ($line =~ /^<%(.*)%>$/) {
+  ## Checking for spaces allows nesting in the template.
+  if ($line =~ /^\s*<%(.*)%>$/) {
     my($part) = $1;
     if ($part !~ /%>/) {
       $part =~ s/\(.*//;
