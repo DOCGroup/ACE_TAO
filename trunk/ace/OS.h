@@ -27,10 +27,12 @@
 #define ACE_CORBA_1(NAME) CORBA_##NAME
 #define ACE_CORBA_2(TYPE, NAME) CORBA_##TYPE##_##NAME
 #define ACE_CORBA_3(TYPE, NAME) CORBA_##TYPE##::##NAME
+#define ACE_NESTED_CLASS(TYPE, NAME) NAME
 #else
 #define ACE_CORBA_1(NAME) CORBA::##NAME
 #define ACE_CORBA_2(TYPE, NAME) CORBA::##TYPE##::##NAME
 #define ACE_CORBA_3(TYPE, NAME) CORBA::##TYPE##::##NAME
+#define ACE_NESTED_CLASS(TYPE, NAME) TYPE::##NAME
 #endif /* ACE_WIN32 */
 
 // Define some helpful macros.
