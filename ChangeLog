@@ -1,3 +1,15 @@
+Fri Dec 27 17:43:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: For WinCE, only typedef ptrdiff_t for _WIN32_WCE < 400.
+          eMbedded Visual C++ 4 (Win CE.NET) defines this type.
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd: Removed /M$(CECrtMT)
+          from the CPP options. Neither evc3 nor 4 support any /M options to
+          set the C run-time like MSVC does. It's controlled via the _DEBUG
+          macro only. This also allows the generated vcp file to be used
+          with either evc3 or evc4 (Windows CE .NET). evc3 ignored the option,
+          but evc4 flags it as unknown.
+
 Fri Dec 27 08:38:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.cpp (recv_buf): Changed to return error (-1) and set

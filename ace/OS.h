@@ -1275,7 +1275,9 @@ struct cancel_state
 # if defined (ACE_HAS_WINCE)
 #   include /**/ <types.h>
 
+#   if (_WIN32_WCE < 400)
 typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
+#   endif
 
 //typedef DWORD  nlink_t;
 
