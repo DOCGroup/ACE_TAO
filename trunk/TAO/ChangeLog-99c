@@ -1,3 +1,9 @@
+Mon Jul 19 14:55:42 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/corba.h:
+	* tao/corbafwd.h: Added an ifdef around the #includes and the
+	  declarations connected to the Interface Repository.
+
 Mon Jul 19 12:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp
