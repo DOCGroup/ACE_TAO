@@ -242,15 +242,11 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-TAO_Buffering_Constraint_Policy *
+CORBA::Policy *
 TAO_ORB_Core::default_buffering_constraint (void) const
 {
-  CORBA::Policy_var policy =
-    this->default_policies_->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
-
-  TAO::BufferingConstraintPolicy_ptr bcp =
-    TAO::BufferingConstraintPolicy::_narrow (policy.in ());
-  return ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp);
+  return this->default_policies_->
+              get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
 }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
