@@ -56,6 +56,8 @@ public:
       {
       }
     ACE_ENDTRY;
+
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) done...\n"));
     return 0;
   }
 
@@ -92,7 +94,7 @@ public:
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_hrtime_t elapsed = ACE_OS::gethrtime () - start;
-          
+
           this->sample_history.sample (elapsed);
 
         } ACE_CATCHANY {
@@ -112,9 +114,11 @@ class Low_Priority_Task : public Roundtrip_Task
 {
 public:
   Low_Priority_Task (Test::Roundtrip_ptr roundtrip,
-                      ACE_Barrier *barrier)
+                     ACE_Barrier *barrier,
+                     int period_in_usecs)
     : Roundtrip_Task (roundtrip, barrier)
     , stopped_ (0)
+    , period_in_usecs_ (period_in_usecs)
   {
   }
 
@@ -128,15 +132,19 @@ public:
   {
     for (;;)
       {
+        ACE_Time_Value period (0, this->period_in_usecs_);
+        ACE_OS::sleep (period);
+
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+        if (this->stopped_)
+          return;
+
+
         ACE_TRY {
           CORBA::ULongLong dummy = 0;
           (void) this->roundtrip_->test_method (dummy
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-          ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-          if (this->stopped_)
-            return;
 
         } ACE_CATCHANY {
         } ACE_ENDTRY;
@@ -147,6 +155,8 @@ private:
   TAO_SYNCH_MUTEX mutex_;
 
   int stopped_;
+
+  int period_in_usecs_;
 };
 
 int
@@ -235,7 +245,8 @@ int main (int argc, char *argv[])
 
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,
-                                     rt_class
+                                     rt_class,
+                                     nthreads
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -266,7 +277,8 @@ int main (int argc, char *argv[])
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
-      Low_Priority_Task low_priority (roundtrip.in (), &barrier);
+      Low_Priority_Task low_priority (roundtrip.in (), &barrier,
+                                      low_priority_period);
       low_priority.activate (rt_class.thr_sched_class ()
                              | THR_NEW_LWP | THR_JOINABLE,
                              nthreads, 1,
@@ -275,15 +287,14 @@ int main (int argc, char *argv[])
       High_Priority_Task high_priority (roundtrip.in (), &barrier,
                                         iterations, high_priority_period);
       high_priority.activate (rt_class.thr_sched_class ()
-                             | THR_NEW_LWP | THR_JOINABLE,
-                             nthreads, 1,
-                             rt_class.priority_low ());
+                              | THR_NEW_LWP | THR_JOINABLE,
+                              1, 1,
+                              rt_class.priority_low ());
 
       high_priority.wait ();
       low_priority.stop ();
-      low_priority.wait ();
-                                        
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - all task(s) joined\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - high prio task joined\n"));
 
       ACE_Sample_History &history = high_priority.sample_history;
       if (do_dump_history)
@@ -294,6 +305,13 @@ int main (int argc, char *argv[])
       ACE_Basic_Stats high_priority_stats;
       history.collect_basic_stats (high_priority_stats);
       high_priority_stats.dump_results ("High Priority", gsf);
+
+      low_priority.thr_mgr ()->wait ();
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - all task(s) joined\n"));
+
+      roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
@@ -310,18 +328,6 @@ int main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class Servant_var<Supplier>;
-template class Servant_var<Consumer>;
-template class ACE_Auto_Basic_Array_Ptr<Servant_var<Supplier> >;
-template class ACE_Auto_Basic_Array_Ptr<Servant_var<Consumer> >;
-template class ACE_Auto_Basic_Array_Ptr<Send_Task>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate Servant_var<Supplier>
-#pragma instantiate Servant_var<Consumer>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Servant_var<Supplier> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Servant_var<Consumer> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Send_Task>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

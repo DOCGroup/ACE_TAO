@@ -31,6 +31,7 @@ public:
 
   void init (int iterations,
              int period_in_usecs,
+             int startup_sleep,
              int event_type,
              int event_source,
              Supplier *supplier,
@@ -46,6 +47,8 @@ private:
   int iterations_;
 
   int period_in_usecs_;
+
+  int startup_sleep_;
 
   int event_type_;
 

@@ -38,8 +38,8 @@ Low_Priority_Setup (int nthreads,
   for (int i = 0; i != nthreads; ++i)
     {
       int per_consumer_workload =
-        low_priority_workload / nthreads;
-      if (per_consumer_workload == 0)
+        workload / this->nthreads_;
+      if (workload != 0 && per_consumer_workload == 0)
         per_consumer_workload = 1;
 
       CORBA::Long event_type =
@@ -64,7 +64,8 @@ Low_Priority_Setup (int nthreads,
       if (enable_threads)
         {
           this->tasks_[i].init (0,
-                                send_period,
+                                send_period * this->nthreads_,
+                                i * send_period,
                                 event_type,
                                 experiment_id,
                                 this->clients_[i].supplier (),
@@ -90,7 +91,7 @@ Low_Priority_Setup<Client_Type>::stop_all_threads (void)
     }
   ACE_DEBUG ((LM_DEBUG, "\n"));
   this->thr_mgr_.wait ();
-  
+
   /// Resetting the auto_ptr<> destroys all the objects.  The
   /// destructors automatically stop and wait for all the threads.
   /// Depending on your personal bias this is either "super neat" or

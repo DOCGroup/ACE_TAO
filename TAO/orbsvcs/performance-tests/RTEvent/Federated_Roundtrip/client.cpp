@@ -129,7 +129,8 @@ int main (int argc, char *argv[])
 
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,
-                                     rt_class
+                                     rt_class,
+                                     nthreads
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -162,6 +163,7 @@ int main (int argc, char *argv[])
       orb_task.thr_mgr (&my_thread_manager);
       ORB_Task_Activator orb_task_activator (rt_class.priority_high (),
                                              rt_class.thr_sched_class (),
+                                             1,
                                              &orb_task);
 
       ACE_DEBUG ((LM_DEBUG, "ORB is active\n"));
@@ -187,6 +189,7 @@ int main (int argc, char *argv[])
       int thread_count = 1;
       if (disable_low_priority == 0)
         thread_count += nthreads;
+
       ACE_Barrier barrier (thread_count);
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
@@ -197,8 +200,8 @@ int main (int argc, char *argv[])
 
       Low_Priority_Setup<Client_Pair> low_priority_setup (
           nthreads,
-          iterations,
-          0, // all clients get the same type
+          0, // no limit on the number of iterations
+          1, // each client gets its own type
           experiment_id,
           ACE_ES_EVENT_UNDEFINED + 2,
           low_priority_workload,
@@ -229,6 +232,7 @@ int main (int argc, char *argv[])
       Send_Task high_priority_task;
       high_priority_task.init (iterations,
                                high_priority_period,
+                               0,
                                ACE_ES_EVENT_UNDEFINED,
                                1,
                                high_priority_group.supplier (),
@@ -238,6 +242,7 @@ int main (int argc, char *argv[])
         // Artificial scope to wait for the high priority task...
         Task_Activator<Send_Task> high_priority_act (rt_class.priority_high (),
                                                      rt_class.thr_sched_class (),
+                                                     1,
                                                      &high_priority_task);
       }
 

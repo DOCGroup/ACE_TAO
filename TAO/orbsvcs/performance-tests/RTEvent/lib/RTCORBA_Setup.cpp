@@ -10,8 +10,6 @@
 #include "RIR_Narrow.h"
 #include "RT_Class.h"
 
-#include "tao/RTCORBA/Continuous_Priority_Mapping.h"
-
 #include "ace/Log_Msg.h"
 
 #if !defined(__ACE_INLINE__)
@@ -21,7 +19,8 @@
 ACE_RCSID(TAO_PERF_RTEC, RTCORBA_Setup, "$Id$")
 
 RTCORBA_Setup::RTCORBA_Setup (CORBA::ORB_ptr orb,
-                              const RT_Class &rtclass
+                              const RT_Class &rtclass,
+                              int nthreads
                               ACE_ENV_ARG_DECL)
   :  lanes_ (3)
 {
@@ -32,9 +31,7 @@ RTCORBA_Setup::RTCORBA_Setup (CORBA::ORB_ptr orb,
   ACE_CHECK;
 
   this->priority_mapping_ =
-    auto_ptr<RTCORBA::PriorityMapping> (new TAO_Continuous_Priority_Mapping (rtclass.prc_sched_class ()));
-
-  this->priority_mapping_manager_->mapping (this->priority_mapping_.get ());
+    this->priority_mapping_manager_->mapping ();
 
   RTCORBA::Current_var current =
     RIR_Narrow<RTCORBA::Current>::resolve (orb,
@@ -64,6 +61,7 @@ RTCORBA_Setup::RTCORBA_Setup (CORBA::ORB_ptr orb,
                     this->lanes_[2]
                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+  this->lanes_[2].static_threads = nthreads;
 
   this->process_priority_ = this->lanes_[1].lane_priority;
 }
