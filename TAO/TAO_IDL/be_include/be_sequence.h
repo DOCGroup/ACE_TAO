@@ -77,7 +77,7 @@ public:
   // is this sequence bounded or not
 
   // =Scope management functions
-  be_sequence *fe_add_sequence (be_sequence *);
+  virtual AST_Sequence *fe_add_sequence (AST_Sequence *);
 
   virtual be_decl *decl (void);
   // overridden method on the be_scope class
