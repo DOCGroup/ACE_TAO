@@ -1,3 +1,8 @@
+Wed Jul 21 08:55:12 1999  Steve Huston  <shuston@riverace.com>
+
+        * TAO_IDL/driver/drv_preproc.cpp: For IBM C++ 3.6, add -qflag=w:w
+          to preprocessor options to quiet invalid #pragma info messages.
+
 Wed Jul 21 05:04:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (shutdown): Instead of wapup_all_thread, we need to
