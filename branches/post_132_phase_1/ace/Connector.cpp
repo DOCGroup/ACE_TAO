@@ -10,6 +10,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// NOTE: This will anyway be removed once the new policies for the
+// reactor are merged in.
+static const size_t ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
+
 ACE_RCSID(ace, Connector, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Connector)
@@ -142,6 +146,11 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open (ACE_Reactor *r, int flag
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Connector (ACE_Reactor *r, int flags)
+  : handler_map_ (ACE_CONNECTOR_HANDLER_MAP_SIZE)
+    , connector_ ()
+    , closing_ (0)
+    , flags_ (0)
+    , mutex_ ()
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Connector");
   (void) this->open (r, flags);
