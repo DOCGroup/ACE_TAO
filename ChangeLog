@@ -1,3 +1,8 @@
+Sat Nov 11 18:55:04 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* ace/Profile_Timer.cpp: 
+	  Included Log_Msg.h to fix compile error.
+	
 Fri Nov 10 19:41:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
