@@ -303,7 +303,8 @@ void TAO_Notify_Filter_i::remove_all_constraints (
   ACE_Array<Notify_Constraint_Expr*>
     constr_saved (constraint_expr_list_.current_size ());
 
-  for (u_int index = 0; iter.done () == 0; iter.advance (), ++index)
+  u_int index;
+  for (index = 0; iter.done () == 0; iter.advance (), ++index)
     {
       if (iter.next (entry) != 0)
         {
@@ -312,7 +313,7 @@ void TAO_Notify_Filter_i::remove_all_constraints (
         }
     }
 
-  for (int dindex = 0; dindex < index; ++dindex)
+  for (u_int dindex = 0; dindex < index; ++dindex)
     delete constr_saved [dindex];
 }
 

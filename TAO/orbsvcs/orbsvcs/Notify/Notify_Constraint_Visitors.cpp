@@ -5,7 +5,7 @@ TAO_Notify_Constraint_Evaluator::
 TAO_Notify_Constraint_Evaluator (const CosNotification::StructuredEvent& s_event)
 {
   // Consider the filterable_data for now.
-  for (int index = 0; index < s_event.filterable_data.length (); ++index)
+  for (u_int index = 0; index < s_event.filterable_data.length (); ++index)
     {
       ACE_CString name_str (s_event.filterable_data[index].name);
       property_lookup_.bind (name_str,
