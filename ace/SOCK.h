@@ -72,17 +72,12 @@ protected:
   int open (int type, 
             int protocol_family, 
             int protocol,
-	    int reuse_addr);
+            int reuse_addr);
   // Wrapper around the <socket> system call.
 
   ACE_SOCK (int type, int protocol_family, 
-	    int protocol = 0, int reuse_addr = 0);
+            int protocol = 0, int reuse_addr = 0);
   // Constructor with arguments to call the <socket> system call.
-
-#if defined (ACE_WIN32)
-  static ACE_SOCK dummy_;
-  // Used to ensure we initialize WinSock!
-#endif /* ACE_WIN32 */
 };
 
 #include "ace/SOCK.i"
