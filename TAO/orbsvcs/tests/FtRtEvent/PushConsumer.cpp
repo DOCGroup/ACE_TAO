@@ -40,8 +40,13 @@ int PushConsumer_impl::init(CORBA::ORB_ptr orb,
   RtecEventComm::PushConsumer_var push_consumer = _this();
 
   CORBA::String_var str = orb_->object_to_string(push_consumer.in());
-  std::ofstream out(options.proxy_consumer_file.c_str());
-  out << str.in();
+  if (options.proxy_consumer_file.length()) {
+    std::ofstream out(options.proxy_consumer_file.c_str());
+    if (out.is_open()) 
+      out << str.in();
+    else 
+      ACE_ERROR_RETURN((LM_ERROR,"Cannot open file %s\n",  options.proxy_consumer_file.c_str()), -1);
+  }
 
   ACE_Time_Value time_val = ACE_OS::gettimeofday ();
 
