@@ -27,6 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -63,4 +64,9 @@ public:
   LogMgr_i &logmgr_i_;
   // Used to access the hash map that holds all the Logs created.
 };
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #endif /* TLS_BASICLOG_I_H */

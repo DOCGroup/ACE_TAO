@@ -31,6 +31,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -230,7 +231,7 @@ TAO_NAMESPACE_CLOSE
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)
-#pragma warning(default:4250)
+#pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_AMI_POLLER */

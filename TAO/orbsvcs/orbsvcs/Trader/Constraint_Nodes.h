@@ -21,6 +21,7 @@
 #include "tao/corba.h"
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
@@ -319,5 +320,9 @@ class TAO_Literal_Constraint : public TAO_Constraint
   // The actual types of the TAO_Literal_Constraint.
 
 };
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_CONSTRAINT_NODES_H */

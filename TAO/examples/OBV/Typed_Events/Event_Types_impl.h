@@ -37,6 +37,7 @@
 // reference counting.
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -421,6 +422,6 @@ class Criterion_List_Iterator
 #define JONAS 1
 
 #if defined(_MSC_VER)
-#pragma warning(default:4250)
+#pragma warning(pop)
 #endif /* _MSC_VER */
 #endif /* EVENT_TYPES_IMPL_H */

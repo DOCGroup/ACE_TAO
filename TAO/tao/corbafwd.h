@@ -76,6 +76,7 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -1816,5 +1817,9 @@ typedef TAO_ObjectKey *TAO_ObjectKey_ptr;
 #if defined (__ACE_INLINE__)
 # include "tao/corbafwd.i"
 #endif /* ! __ACE_INLINE__ */
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_CORBAFWD_H */

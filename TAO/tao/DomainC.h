@@ -25,6 +25,7 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -329,5 +330,9 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
 #if defined (__ACE_INLINE__)
 #include "tao/DomainC.i"
 #endif /* defined INLINE */
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_IDL_DOMAINC_H */

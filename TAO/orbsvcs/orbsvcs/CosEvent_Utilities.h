@@ -26,6 +26,7 @@
 #include "orbsvcs/Event_Utilities.h"
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -158,7 +159,7 @@ class TAO_ORBSVCS_Export CosEC_ServantBase :
 
 
 #if defined(_MSC_VER)
-#pragma warning(default:4250)
+#pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_COSEVENT_UTILITIES_H */
