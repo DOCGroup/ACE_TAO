@@ -404,8 +404,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("TAO (%P|%t) Unable to probe network
- ")
+                      ASYS_TEXT ("TAO (%P|%t) Unable to probe network ")
                       ASYS_TEXT ("interfaces.  Using default.")));
         }
 
