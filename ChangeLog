@@ -1,3 +1,13 @@
+Wed Feb 26 11:55:20 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Added POSIX_CB_Proactor.cpp to the Demux files.
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Modification to allow users to name the foreach variable.
+
 Wed Feb 26 07:39:58 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
