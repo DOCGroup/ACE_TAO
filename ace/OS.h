@@ -470,6 +470,27 @@ struct  servent {
 #   if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
 #     define FILE_FLAG_SEQUENTIAL_SCAN 0
 #   endif /* !defined FILE_FLAG_SEQUENTIAL_SCAN */
+#   if !defined(FILE_FLAG_WRITE_THROUGH)
+#     define FILE_FLAG_WRITE_THROUGH 0
+#   endif /* !defined FILE_FLAG_WRITE_THROUGH */
+#   if !defined(PIPE_WAIT)
+#     define PIPE_WAIT 0
+#   endif /* !defined PIPE_WAIT */
+#   if !defined(PIPE_NOWAIT)
+#     define PIPE_NOWAIT 0
+#   endif /* !defined PIPE_WAIT */
+#   if !defined(PIPE_READMODE_BYTE)
+#     define PIPE_READMODE_BYTE 0
+#   endif /* !defined PIPE_READMODE_BYTE */
+#   if !defined(PIPE_READMODE_MESSAGE)
+#     define PIPE_READMODE_MESSAGE 0
+#   endif /* !defined PIPE_READMODE_MESSAGE */
+#   if !defined(PIPE_TYPE_BYTE)
+#     define PIPE_TYPE_BYTE 0
+#   endif /* !defined PIPE_TYPE_BYTE */
+#   if !defined(PIPE_TYPE_MESSAGE)
+#     define PIPE_TYPE_MESSAGE 0
+#   endif /* !defined PIPE_TYPE_MESSAGE */
 
 struct ACE_OVERLAPPED
 {
@@ -3099,6 +3120,27 @@ struct ACE_OVERLAPPED
 #   if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
 #     define FILE_FLAG_SEQUENTIAL_SCAN 0
 #   endif   /* FILE_FLAG_SEQUENTIAL_SCAN */
+#   if !defined(FILE_FLAG_WRITE_THROUGH)
+#     define FILE_FLAG_WRITE_THROUGH 0
+#   endif /* !defined FILE_FLAG_WRITE_THROUGH */
+#   if !defined(PIPE_WAIT)
+#     define PIPE_WAIT 0
+#   endif /* !defined PIPE_WAIT */
+#   if !defined(PIPE_NOWAIT)
+#     define PIPE_NOWAIT 0
+#   endif /* !defined PIPE_WAIT */
+#   if !defined(PIPE_READMODE_BYTE)
+#     define PIPE_READMODE_BYTE 0
+#   endif /* !defined PIPE_READMODE_BYTE */
+#   if !defined(PIPE_READMODE_MESSAGE)
+#     define PIPE_READMODE_MESSAGE 0
+#   endif /* !defined PIPE_READMODE_MESSAGE */
+#   if !defined(PIPE_TYPE_BYTE)
+#     define PIPE_TYPE_BYTE 0
+#   endif /* !defined PIPE_TYPE_BYTE */
+#   if !defined(PIPE_TYPE_MESSAGE)
+#     define PIPE_TYPE_MESSAGE 0
+#   endif /* !defined PIPE_TYPE_MESSAGE */
 
 #   if defined (ACE_HAS_BROKEN_IF_HEADER)
 struct ifafilt;

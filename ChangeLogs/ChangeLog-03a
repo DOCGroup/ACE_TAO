@@ -1,3 +1,19 @@
+Mon Oct 14 18:21:40 2002  Patrick J. McNerthney <ace@mcnerthney.com> 
+
+        * ace/OS.h: Added FILE_FLAG_WRITE_THROUGH defines for
+	  non-supporting operating systems and added various PIPE_*
+ 	  defines for non-supporting operating systems.
+
+        * ace/SPIPE_Connector.{h,cpp}: Added support to enable the
+	  selection of whether bytestream or message mode is used on
+ 	  Windows.  Also added support for both blocking and timeout
+ 	  connections on Windows, only non-blocking connections where
+ 	  support before.
+
+        * ace/SPIPE_Acceptor.{h.cpp}: Added support to enable the
+	  selection of whether bytestream or message mode is used on
+	  Windows.   
+
 Mon Oct 14 20:19:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ChangeLog: Removed a large chunk of duplicated dates from Oct 11
@@ -20,8 +36,6 @@ Mon Oct 14 17:23:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  contained within the Any. Using the optimization created problems 
           for Any's that are copied between different threads. Thanks to 
           Chen Jian <jchen@huawei.com> for reporting this problem.
-
-	* THANKS: Added Chen Jian <jchen@huawei.com> to the hall of fame.  
 
 Mon Oct 14  10:12:31 2002  Steve Huston  <shuston@riverace.com>
 

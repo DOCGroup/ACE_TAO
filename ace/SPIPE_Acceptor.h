@@ -63,11 +63,14 @@ public:
    *                    reused on each new named pipe instance, so only
    *                    pass a value that remains valid as long as this
    *                    object does.
+   * @param pipe_mode   Optional, ignored on non-Windows. The NT pipe
+   *                    mode used when creating the pipe.
    */
   ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
                       int reuse_addr = 1,
                       int perms = ACE_DEFAULT_FILE_PERMS,
-                      LPSECURITY_ATTRIBUTES sa = 0);
+                      LPSECURITY_ATTRIBUTES sa = 0,
+                      int pipe_mode = PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE);
 
   /// Initiate a passive-mode STREAM pipe listener.
   /**
@@ -82,6 +85,8 @@ public:
    *                    reused on each new named pipe instance, so only
    *                    pass a value that remains valid as long as this
    *                    object does.
+   * @param pipe_mode   Optional, ignored on non-Windows. The NT pipe
+   *                    mode used when creating the pipe.
    *
    * @retval 0 for success.
    * @retval -1 for failure.
@@ -89,7 +94,8 @@ public:
   int open (const ACE_SPIPE_Addr &local_sap,
             int reuse_addr = 1,
             int perms = ACE_DEFAULT_FILE_PERMS,
-            LPSECURITY_ATTRIBUTES sa = 0);
+            LPSECURITY_ATTRIBUTES sa = 0,
+            int pipe_mode = PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE);
 
   /// Close down the passive-mode STREAM pipe listener.
   int close (void);
@@ -134,6 +140,10 @@ private:
   // On Windows, the SECURITY_ATTRIBUTES specified for the initial accept
   // operation is reused on all subsequent pipe instances as well.
   LPSECURITY_ATTRIBUTES sa_;
+
+  // On Windows, the pipe mode to create the pipe in.  This can be in
+  // either a bytestream-oriented mode or a message-oriented mode.
+  DWORD pipe_mode_;
 
   // On Windows, the handle maintained in the ACE_IPC_SAP class is the
   // event handle from event_. The pipe handle is useless for telling
