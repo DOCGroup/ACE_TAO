@@ -238,48 +238,6 @@ TAO_IIOP_Server_Connection_Handler::svc (void)
   return result;
 }
 
-// Handle processing of the request residing in <input>, setting
-// <response_required> to zero if the request is for a oneway or
-// non-zero if for a two-way and <output> to any necessary response
-// (including errors).  In case of errors, -1 is returned and
-// additional information carried in <TAO_IN_ENV>.
-// The request ID is needed by handle_input. It is passed back
-// as reference.
-
-int
-TAO_IIOP_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
-                                                    TAO_OutputCDR &output,
-                                                    CORBA::Boolean &response_required,
-                                                    CORBA::ULong &request_id,
-                                                    CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_GIOP::process_server_request (this->transport (),
-                                    this->orb_core_,
-                                    input,
-                                    output,
-                                    response_required,
-                                    request_id,
-                                    ACE_TRY_ENV);
-  return 0;
-}
-
-int
-TAO_IIOP_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
-                                                   TAO_OutputCDR &output,
-                                                   CORBA::Boolean &response_required,
-                                                   CORBA::ULong &request_id,
-                                                   CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_GIOP::process_server_locate (this->transport (),
-                                   this->orb_core_,
-                                   input,
-                                   output,
-                                   response_required,
-                                   request_id,
-                                   ACE_TRY_ENV);
-  return 0;
-}
-
 void
 TAO_IIOP_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
 {

@@ -121,6 +121,9 @@ public:
   PortableServer::POA_ptr child_poa (void);
   // Accessor which returns the child poa
 
+  PortableServer::POAManager_ptr poa_manager (void);
+  // Accessor which returns the poa manager
+
 protected:
   CORBA::ORB_var orb_;
   // The ORB.

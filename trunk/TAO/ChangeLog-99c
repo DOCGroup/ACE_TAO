@@ -1,3 +1,58 @@
+Mon Jun 07 23:39:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (Servant_Upcall): The code in the
+	  destructor of POA Current must be run before the Object Adapter
+	  lock is released. With the reorganization Nanbor and I did, this
+	  was no longer true.  Therefore, the solution was to move the
+	  code from the destructor to a teardown() method which is run
+	  before the Object Adapter lock is released.
+
+	* tao/IIOP_Connect: Removed the following extra and unused
+	  functions:
+
+	  - TAO_IIOP_Server_Connection_Handler::handle_message
+	  - TAO_IIOP_Server_Connection_Handler::handle_locate
+	  - TAO_UIOP_Server_Connection_Handler::handle_message
+	  - TAO_UIOP_Server_Connection_Handler::handle_locate
+
+	* tao/GIOP: Moved the exception handling code from
+	  process_server_message() to process_server_request() and
+	  process_server_locate().  This was necessary since the two
+	  handle exceptions in different ways: process_server_request()
+	  propogates to the client in a GIOP::Reply while
+	  process_server_locate() propogates to the client in a
+	  GIOP::LocateReply.
+
+	* examples/POA/Forwarding/client.cpp (main): Fixed exception
+	  handling.
+
+	* examples/POA/Forwarding/Servant_Locator.cpp (preinvoke): The
+	  forwarding location must be specified when constructing the
+	  ForwardRequest.
+
+	* examples/POA/FindPOA/FindPOA.cpp (main): POA Manager must be
+	  activated before use.
+
+	* tao/TAO.h (TAO_ORB_Manager): Added POA Manager accessor.
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.h (AdapterActivator):
+	* tao/POA.cpp (TAO_Adapter_Activator::unknown_adapter):
+
+	  Held on to the POA Manager.  If we don't, we'll have to create a
+	  new one and then we'll have to worry about its state (remember
+	  that POA Managers are created in holding state).
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i:
+	* orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+
+	  Fixed improper use of return values from the ORB Manager.  Since
+	  the ORB Manager duplicates the data members before returning
+	  them, we must store them in vars.
+
+	* orbsvcs/tests/ImplRepo/IR_Helper.cpp (IR_Helper): Since the POA
+	  and ORB are kept as vars, we must duplicate them since keep them
+	  around in the constructor.
+
 Mon Jun  7 23:49:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:

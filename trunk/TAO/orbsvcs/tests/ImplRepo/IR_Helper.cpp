@@ -37,8 +37,8 @@ IR_Helper::IR_Helper (char *server_name,
     ir_addr_ (0),
     ping_ (new Ping_i (debug)),
     implrepo_ (0),
-    poa_ (poa),
-    orb_ (orb),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    orb_ (CORBA::ORB::_duplicate (orb)),
     debug_ (debug)
 {
   const char *exception_message = "Null Message";

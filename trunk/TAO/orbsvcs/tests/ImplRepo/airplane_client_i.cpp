@@ -58,7 +58,7 @@ Airplane_Client_i::parse_args (void)
         break;
       case 'k':  // ior provide on command line
         this->server_key_ = ACE_OS::strdup (get_opts.optarg);
-        break;  
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -63,7 +63,7 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 {
   char poa_name[] = "plane";
 
-  ACE_TRY 
+  ACE_TRY
     {
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
@@ -71,7 +71,7 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
 
       ACE_TRY_CHECK;
-    
+
       this->argc_ = argc;
       this->argv_ = argv;
 
@@ -88,11 +88,14 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      PortableServer::POA_var child_poa = this->orb_manager_.child_poa ();
+      CORBA::ORB_var orb = this->orb_manager_.orb ();
+
       if (this->use_ir_ == 1)
         {
           ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
-                                                       this->orb_manager_.child_poa (),
-                                                       this->orb_manager_.orb (),
+                                                       child_poa.in (),
+                                                       orb.in (),
                                                        TAO_debug_level),
                           -1);
 
@@ -104,8 +107,8 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
         PortableServer::string_to_ObjectId ("server");
 
       CORBA::Object_var server_obj =
-        this->orb_manager_.child_poa ()->id_to_reference (id.in (),
-                                                          ACE_TRY_ENV);
+        child_poa->id_to_reference (id.in (),
+                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (this->use_ir_ == 1)
@@ -113,10 +116,10 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
           this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-       
+
       server_str =
-        this->orb_manager_.orb ()->object_to_string (server_obj.in (),
-                                                     ACE_TRY_ENV);
+        orb->object_to_string (server_obj.in (),
+                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
@@ -134,7 +137,7 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  
+
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -166,7 +169,7 @@ Airplane_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  
+
   ACE_CHECK_RETURN (-1);
 
   return 0;

@@ -755,9 +755,16 @@ class TAO_Export TAO_Adapter_Activator : public POA_PortableServer::AdapterActiv
 {
 public:
 
+  TAO_Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
+
   CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                   const char *name,
                                   CORBA_Environment &ACE_TRY_ENV);
+
+protected:
+
+  PortableServer::POAManager_var poa_manager_;
+  // POA Manager
 };
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
