@@ -169,7 +169,7 @@ Supplier_Task::handle_output (ACE_HANDLE handle)
 int 
 main (int, char *[])
 {
-  ACE_START_TEST ("Reactors_Test");
+  ACE_START_TEST ("Reactor_Notify_Test");
 
 #if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon; 
