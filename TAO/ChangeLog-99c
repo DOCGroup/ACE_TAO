@@ -1,3 +1,9 @@
+Tue Mar 30 11:16:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp
+	  (resolve_initial_references,iioploc_string_to_object):  We don't
+	  need a char* array here.
+
 Tue Mar 30 09:51:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.cpp:
@@ -23,7 +29,7 @@ Tue Mar 30 09:51:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Mon Mar 29 22:42:31 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* tao/Connect.cpp : Used CORBA::string_dup () in handle_message ().
-	  Un-owned memory was being assigned to an auto-ptr, which caused 
+	  Un-owned memory was being assigned to an auto-ptr, which caused
 	  the INS test to fail on NT.
 	  Also added a check for TAO_debug_level.
 
@@ -44,7 +50,7 @@ Mon Mar 29 20:12:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* TAO/examples/Simple/time:
 	  Updated the following projects to contain Simple_util.*
-	  Removed the obsolete files. Thanks to Barry Hoggard 
+	  Removed the obsolete files. Thanks to Barry Hoggard
 	  <hoggard@cfx.com> for pointing this out.
 
 	  * TAO/examples/Simple/timeserver.dsp
