@@ -774,15 +774,14 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
 
       if (status== CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
-      else
-        return 0;
+      // else return 0 at the end of the function
     }
   TAO_CATCHANY
     {
       return 0;
     }
   TAO_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 ACE_INLINE CORBA_Boolean
@@ -796,15 +795,14 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
 
       if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
-      else
-        return 0;
+      // else return 0 at the end of the function
     }
   TAO_CATCHANY
     {
       return 0;
     }
   TAO_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 ACE_INLINE CORBA_Boolean
@@ -818,15 +816,14 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
 
       if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
-      else
-        return 0;
+      // else return 0 at the end of the function
     }
   TAO_CATCHANY
     {
       return 0;
     }
   TAO_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 // The following use the helper classes
