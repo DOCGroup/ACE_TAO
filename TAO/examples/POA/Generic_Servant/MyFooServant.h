@@ -38,6 +38,10 @@ public:
   virtual void simply_doit (CORBA::Environment &env);
   // Even simpler doit method
 
+  virtual void timed_operation (CORBA::ULong timeout,
+                                CORBA::Environment &env);
+  // Timed operation.
+
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown the ORB
 

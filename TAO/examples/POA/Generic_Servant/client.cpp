@@ -28,11 +28,13 @@ static char *IOR_file = 0;
 static int iterations = 1;
 static int oneway = 0;
 static int shutdown_server = 0;
+static CORBA::ULong timeout = 5;
+static int timed_operations = 0;
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:k:i:ox");
+  ACE_Get_Opt get_opts (argc, argv, "f:k:i:T:otx");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -50,8 +52,16 @@ parse_args (int argc, char **argv)
         oneway = 1;
         break;
 
+      case 't':
+        timed_operations = 1;
+        break;
+
       case 'i':
         iterations = ::atoi (get_opts.optarg);
+        break;
+
+      case 'T':
+        timeout = ACE_static_cast (CORBA::ULong, ::atoi (get_opts.optarg));
         break;
 
       case 'x':
@@ -65,6 +75,8 @@ parse_args (int argc, char **argv)
                            "-k IOR "
                            "-f IOR file "
                            "-o oneway "
+                           "-t timed operations "
+                           "-T timeout for timed operations "
                            "\n",
                            argv [0]),
                           -1);
@@ -147,17 +159,17 @@ main (int argc, char **argv)
   ACE_TRY
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                            argv, 
-                                            0, 
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            0,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
       if (parse_args_result != 0)
         return parse_args_result;
-      
+
       if (IOR == 0)
         {
           int result = read_IOR_from_file ();
@@ -166,17 +178,17 @@ main (int argc, char **argv)
         }
 
       // Get an object reference from the argument string.
-      CORBA::Object_var object = orb->string_to_object (IOR, 
+      CORBA::Object_var object = orb->string_to_object (IOR,
                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a Foo reference.
-      Foo_var foo = Foo::_narrow (object.in (), 
+      Foo_var foo = Foo::_narrow (object.in (),
                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       CORBA::String_var ior =
-        orb->object_to_string (foo.in (), 
+        orb->object_to_string (foo.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -184,22 +196,29 @@ main (int argc, char **argv)
       ACE_DEBUG ((LM_DEBUG,
                   "\nConnecting to: %s\n\n",
                   ior.in ()));
-      
+
       ACE_Profile_Timer timer;
       ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
-      
+
       // We start an ACE_Profile_Timer here...
       timer.start ();
-      
+
       CORBA::Long result = 0;
       int i = 0;
-      
+
       for (i = 0; i < iterations; i++)
         {
           if (oneway)
             {
               // Invoke the simply_doit() method of the foo reference.
               foo->simply_doit (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          else if (timed_operations)
+            {
+              // Invoke the timed_operation() method of the foo reference.
+              foo->timed_operation (timeout,
+                                    ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
           else
@@ -213,10 +232,10 @@ main (int argc, char **argv)
       // stop the timer.
       timer.stop ();
       timer.elapsed_time (elapsed_time);
-      
+
       // compute average time.
       print_stats (elapsed_time, i);
-      
+
       if (shutdown_server)
         {
           foo->shutdown (ACE_TRY_ENV);
@@ -225,9 +244,9 @@ main (int argc, char **argv)
 
       // Print the result of doit () method of the foo reference.
       ACE_DEBUG ((LM_DEBUG, "The result of doit is %d\n", result));
-      
+
       ACE_TIMEPROBE_PRINT;
-      
+
       ACE_OS::free (IOR);
     }
   ACE_CATCHANY
@@ -235,7 +254,7 @@ main (int argc, char **argv)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Error!");
       return -1;
     }
-  ACE_ENDTRY;  
+  ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
   return 0;
