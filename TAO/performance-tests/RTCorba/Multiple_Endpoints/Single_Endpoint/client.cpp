@@ -195,7 +195,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Catched exception: in Single_Endpoint client::main");
       return 1;
     }
   ACE_ENDTRY;
@@ -237,7 +237,9 @@ Client::svc (void)
               priorities[this->id_],
               native_priority));
 
- ACE_TRY_NEW_ENV
+  int i;
+
+  ACE_TRY_NEW_ENV
     {
       // Try to make sure every thread gets its own connection.
       for (int j = 0; j < 100; ++j)
@@ -254,7 +256,7 @@ Client::svc (void)
 
       ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
-      for (int i = 0; i < this->niterations_; ++i)
+      for (i = 0; i < this->niterations_; ++i)
         {
           // Record current time.
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
@@ -286,8 +288,12 @@ Client::svc (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Single_Endpoint::client: exception raised");
+      char message[100];
+      ACE_OS::sprintf (message,
+                       "Single_Endpoint::client: Exception in thread with native priority = %d, on iteration = %d",
+                       this->id_,
+                       i);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
     }
   ACE_ENDTRY;
   return 0;

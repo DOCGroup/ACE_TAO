@@ -194,7 +194,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Catched exception: in Endpoint_per_Priority client::main");
       return 1;
     }
   ACE_ENDTRY;
@@ -235,6 +235,7 @@ Client::svc (void)
               native_priority));
 
 
+  int i;
   ACE_TRY_NEW_ENV
     {
       // Set the Client Priority Policy for invocations.
@@ -294,7 +295,7 @@ Client::svc (void)
 
       ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
-      for (int i = 0; i < this->niterations_; ++i)
+      for (i = 0; i < this->niterations_; ++i)
         {
           // Record current time.
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
@@ -326,8 +327,12 @@ Client::svc (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Latency: exception raised");
+      char message[100];
+      ACE_OS::sprintf (message,
+                       "Endpoint_per_Priority::client: Exception in thread with native priority = %d, on iteration = %d",
+                       this->id_,
+                       i);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
     }
   ACE_ENDTRY;
   return 0;

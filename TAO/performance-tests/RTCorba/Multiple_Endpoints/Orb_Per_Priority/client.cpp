@@ -175,7 +175,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception in Orb per priority client:");
+                           "Orb per priority client: exception raised");
       return 1;
     }
   ACE_ENDTRY;
@@ -213,7 +213,8 @@ Client::svc (void)
               priorities[this->id_],
               native_priority));
 
- ACE_TRY_NEW_ENV
+  int i;
+  ACE_TRY_NEW_ENV
     {
       char ior[100];
       ACE_OS::sprintf (ior,
@@ -252,7 +253,7 @@ Client::svc (void)
 
       ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
-      for (int i = 0; i < this->niterations_; ++i)
+      for (i = 0; i < this->niterations_; ++i)
         {
           // Record current time.
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
@@ -290,8 +291,12 @@ Client::svc (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Orb per priority client: exception raised");
+      char message[100];
+      ACE_OS::sprintf (message,
+                       "ORB_per_Priority::client: Exception in thread with native priority = %d, on iteration = %d",
+                       this->id_,
+                       i);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
     }
   ACE_ENDTRY;
   return 0;
