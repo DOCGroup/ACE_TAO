@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="Event_Sup" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -121,6 +121,7 @@ SOURCE=.\NavWeapC.h
 # Begin Source File
 
 SOURCE=.\NavWeap.idl
+USERDEP__NAVWE="..\$(InputName).idl"	
 
 !IF  "$(CFG)" == "Event_Sup - Win32 Release"
 
@@ -131,15 +132,17 @@ InputPath=.\NavWeap.idl
 InputName=NavWeap
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+	xcopy ..\$(InputName).idl \
+	..\..\..\..\tao_idl\tao_idl $(InputName).idl \
+	
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"

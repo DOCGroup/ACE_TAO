@@ -8,11 +8,13 @@
 // = DESCRIPTION
 //    Navigation and Weapon structs for the DOVE/EventService demo.
 
-// = AUTHOR
+// = AUTHORS
 //     Michael Kircher <mk1@cec.wustl.edu>
-//
+//     Modified by
+//     Chris Gill <cdgill@cs.wustl.edu>
 // ========================================================================================================= 
 
+#include "CosTimeBase.idl"
 
 struct Navigation {
 	long position_latitude;
@@ -24,19 +26,18 @@ struct Navigation {
 	// common part
 	double utilization;
 	double overhead;
-	unsigned long arrival_time_secs;
-	unsigned long arrival_time_usecs;
-	unsigned long deadline_time_secs;
-	unsigned long deadline_time_usecs;
-	unsigned long completion_time_secs;	
-	unsigned long completion_time_usecs;	
-	unsigned long computation_time_secs;
-	unsigned long computation_time_usecs;
+	TimeBase::TimeT arrival_time;
+	TimeBase::TimeT deadline_time;
+	TimeBase::TimeT completion_time;	
+	TimeBase::TimeT computation_time;
+        unsigned long criticality;
+        unsigned long update_data;
 };
 
 
 
 struct Weapons {
+
 	unsigned long number_of_weapons;
 	string weapon1_identifier;
 	unsigned long weapon1_status;
@@ -51,13 +52,11 @@ struct Weapons {
 	// common part
 	double utilization;
 	double overhead;
-	unsigned long arrival_time_secs;
-	unsigned long arrival_time_usecs;
-	unsigned long deadline_time_secs;
-	unsigned long deadline_time_usecs;
-	unsigned long completion_time_secs;		
-	unsigned long completion_time_usecs;		
-	unsigned long computation_time_secs;
-	unsigned long computation_time_usecs;
+	TimeBase::TimeT arrival_time;
+	TimeBase::TimeT deadline_time;
+	TimeBase::TimeT completion_time;	
+	TimeBase::TimeT computation_time;
+        unsigned long criticality;
+        unsigned long update_data;
 }; 
 

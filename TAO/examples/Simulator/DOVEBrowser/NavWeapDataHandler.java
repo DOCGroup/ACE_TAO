@@ -83,19 +83,13 @@ public class NavWeapDataHandler implements DataHandler {
       return Properties.DOUBLE;
     }
         
-    public void updateJitter (int completion_time_secs,
-                              int completion_time_usecs,
-		              int computation_time_secs,
-		              int computation_time_usecs,
-		              int arrival_time_secs,
-		              int arrival_time_usecs) {
+    public void updateJitter (long completion_time,
+		              long computation_time,
+		              long arrival_time) {
 
-      latency = 1000000.0 * (double)(completion_time_secs) +
-                (double)(completion_time_usecs) -
-                1000000.0 * (double)(computation_time_secs) -
-                (double)(computation_time_usecs) -
-                1000000.0 * (double)(arrival_time_secs) -
-                (double)(arrival_time_usecs);
+      latency = (double)(completion_time) -
+                (double)(computation_time) -
+                (double)(arrival_time);
       latency = latency > 0 ? latency : 0;
 
       sample_count = sample_count + 1.0;
@@ -115,26 +109,33 @@ public class NavWeapDataHandler implements DataHandler {
       return Properties.DOUBLE;
     }
     
-    public void updateDeadlines (int deadline_time_secs, 
-                                 int deadline_time_usecs, 
-				 int completion_time_secs,
-				 int completion_time_usecs) {
+    public void updateDeadlines (long deadline_time, 
+				 long completion_time) {
 
-      double missed_ = 0.0;
-
-      // Assumes data values are already normalized
-      if ((deadline_time_secs < completion_time_secs) ||
-          ((deadline_time_secs == completion_time_secs) &&
-           (deadline_time_usecs < completion_time_usecs)))
-        {
-          missed_ = 1.0;
-	}      	
-
+      double missed_ = (deadline_time < completion_time) ? 1.0 : 0.0;
       Double temp_ = new Double (missed_);
       setChanged ();
       notifyObservers (temp_);	
     }
   }
+  class CriticalDeadlinesObservable extends DeadlinesObservable {
+    
+    public int getProperty () {
+      return Properties.DOUBLE;
+    }
+    
+    public void updateDeadlines (long deadline_time, 
+				 long completion_time,
+                                 long criticality) {
+
+      double missed_ = ((criticality > 0) &&
+                        (deadline_time < completion_time)) ? 1.0 : 0.0;
+      Double temp_ = new Double (missed_);
+      setChanged ();
+      notifyObservers (temp_);	
+    }
+  }
+
   class LatencyObservable extends DemoObservable {
     double latency = 0.0;
     double last_latency = 0.0;
@@ -143,19 +144,13 @@ public class NavWeapDataHandler implements DataHandler {
       return Properties.DOUBLE;
     }
     
-    public void updateLatency (int completion_time_secs,
-                               int completion_time_usecs,
-			       int computation_time_secs,
-			       int computation_time_usecs,
-			       int arrival_time_secs,
-			       int arrival_time_usecs) {
+    public void updateLatency (long completion_time,
+			       long computation_time,
+			       long arrival_time) {
       last_latency = latency;
-      latency = 1000000.0 * (double)(completion_time_secs) +
-                (double)(completion_time_usecs) -
-                1000000.0 * (double)(computation_time_secs) -
-                (double)(computation_time_usecs) -
-                1000000.0 * (double)(arrival_time_secs) -
-                (double)(arrival_time_usecs);
+      latency = (double)(completion_time) -
+                (double)(computation_time) -
+                (double)(arrival_time);
       latency = latency > 0 ? latency : 0;
       
       setChanged ();
@@ -165,66 +160,81 @@ public class NavWeapDataHandler implements DataHandler {
   }
   
   
-  public void update (Any any_value) {
-    
+  public void update (RtecEventComm.Event event) {
+
+    Any any_value = event.data.any_value;
+
     if (any_value.type().equal (NavigationHelper.type()))
       {
 	Navigation navigation_ = NavigationHelper.extract (any_value);
-	NavigationObservable nobs = (NavigationObservable)ObservablesTable.get ("NavigationObservable");
+
+        // if the navigation data structure's update data flag is set,
+        // update its scheduling data with actual values from the EC
+        if (navigation_.update_data > 0)
+          {
+            navigation_.arrival_time = event.header.creation_time;
+            navigation_.completion_time = event.header.ec_send_time;
+            navigation_.deadline_time += event.header.creation_time;
+          }
+
+	NavigationObservable nobs = (NavigationObservable)ObservablesTable.get ("Navigation");
 	nobs.updateNavigation (navigation_);
-	Cpu_UsageObservable cobs = (Cpu_UsageObservable)ObservablesTable.get ("Cpu_UsageObservable");
+	Cpu_UsageObservable cobs = (Cpu_UsageObservable)ObservablesTable.get ("CPU Usage");
 	cobs.updateCpu_Usage (navigation_.utilization);
-	OverheadObservable oobs = (OverheadObservable)ObservablesTable.get ("OverheadObservable");
+	OverheadObservable oobs = (OverheadObservable)ObservablesTable.get ("Overhead");
 	oobs.updateOverhead (navigation_.overhead);
-	JitterObservable jobs = (JitterObservable)ObservablesTable.get ("JitterObservable");
-	jobs.updateJitter (navigation_.completion_time_secs,
-                           navigation_.completion_time_usecs,
-			   navigation_.computation_time_secs,
-			   navigation_.computation_time_usecs,
-			   navigation_.arrival_time_secs,
-			   navigation_.arrival_time_usecs);
-	DeadlinesObservable dobs = (DeadlinesObservable)ObservablesTable.get ("DeadlinesObservable");
-	dobs.updateDeadlines (navigation_.deadline_time_secs,
-	                      navigation_.deadline_time_usecs,
-			      navigation_.completion_time_secs,
-			      navigation_.completion_time_usecs);
-	LatencyObservable lobs = (LatencyObservable)ObservablesTable.get ("LatencyObservable");
-	lobs.updateLatency (navigation_.completion_time_secs,
-	                    navigation_.completion_time_usecs,
-			    navigation_.computation_time_secs,
-			    navigation_.computation_time_usecs,
-			    navigation_.arrival_time_secs,
-			    navigation_.arrival_time_usecs);
+	JitterObservable jobs = (JitterObservable)ObservablesTable.get ("Latency Jitter (100 ns)");
+	jobs.updateJitter (navigation_.completion_time,
+			   navigation_.computation_time,
+			   navigation_.arrival_time);
+	DeadlinesObservable dobs = (DeadlinesObservable)ObservablesTable.get ("Missed Deadlines");
+	dobs.updateDeadlines (navigation_.deadline_time,
+			      navigation_.completion_time);
+	CriticalDeadlinesObservable cdobs = 
+          (CriticalDeadlinesObservable)ObservablesTable.get ("Missed Critical Deadlines");
+	cdobs.updateDeadlines (navigation_.deadline_time,
+			       navigation_.completion_time,
+			       navigation_.criticality);
+	LatencyObservable lobs = (LatencyObservable)ObservablesTable.get ("Latency (100 ns)");
+	lobs.updateLatency (navigation_.completion_time,
+			    navigation_.computation_time,
+			    navigation_.arrival_time);
 	received_events_++;
       }
     else if (any_value.type().equal (WeaponsHelper.type()))
       {
 	Weapons weapons_ = WeaponsHelper.extract (any_value);
-	WeaponsObservable wobs = (WeaponsObservable)ObservablesTable.get ("WeaponsObservable");;
+
+        // if the weapons structure's update data flag is set, update 
+        // itss scheduling data with actual values from the EC
+        if (weapons_.update_data > 0)
+          {
+            weapons_.arrival_time = event.header.creation_time;
+            weapons_.completion_time = event.header.ec_send_time;
+            weapons_.deadline_time += event.header.creation_time;
+          }
+
+	WeaponsObservable wobs = (WeaponsObservable)ObservablesTable.get ("Weapons");;
 	wobs.updateWeapons (weapons_);
-	Cpu_UsageObservable cobs = (Cpu_UsageObservable)ObservablesTable.get ("Cpu_UsageObservable");
+	Cpu_UsageObservable cobs = (Cpu_UsageObservable)ObservablesTable.get ("CPU Usage");
 	cobs.updateCpu_Usage (weapons_.utilization);
-	OverheadObservable oobs = (OverheadObservable)ObservablesTable.get ("OverheadObservable");
+	OverheadObservable oobs = (OverheadObservable)ObservablesTable.get ("Overhead");
 	oobs.updateOverhead (weapons_.overhead);
-	JitterObservable jobs = (JitterObservable)ObservablesTable.get ("JitterObservable");
-	jobs.updateJitter (weapons_.completion_time_secs,
-	                   weapons_.completion_time_usecs,
-			   weapons_.computation_time_secs,
-			   weapons_.computation_time_usecs,
-			   weapons_.arrival_time_secs,
-			   weapons_.arrival_time_usecs);
-	DeadlinesObservable dobs = (DeadlinesObservable)ObservablesTable.get ("DeadlinesObservable");
-	dobs.updateDeadlines (weapons_.deadline_time_secs,
-	                      weapons_.deadline_time_usecs,
-			      weapons_.completion_time_secs,
-			      weapons_.completion_time_usecs);
-	LatencyObservable lobs = (LatencyObservable)ObservablesTable.get ("LatencyObservable");
-	lobs.updateLatency (weapons_.completion_time_secs,
-	                    weapons_.completion_time_usecs,
-			    weapons_.computation_time_secs,
-			    weapons_.computation_time_usecs,
-			    weapons_.arrival_time_secs,
-			    weapons_.arrival_time_usecs);
+	JitterObservable jobs = (JitterObservable)ObservablesTable.get ("Latency Jitter (100 ns)");
+	jobs.updateJitter (weapons_.completion_time,
+			   weapons_.computation_time,
+			   weapons_.arrival_time);
+	DeadlinesObservable dobs = (DeadlinesObservable)ObservablesTable.get ("Missed Deadlines");
+	dobs.updateDeadlines (weapons_.deadline_time,
+			      weapons_.completion_time);
+	CriticalDeadlinesObservable cdobs = (CriticalDeadlinesObservable)ObservablesTable.get ("Missed Critical Deadlines");
+	cdobs.updateDeadlines (weapons_.deadline_time,
+			       weapons_.completion_time,
+			       weapons_.criticality);
+	LatencyObservable lobs = (LatencyObservable)ObservablesTable.get ("Latency (100 ns)");
+	lobs.updateLatency (weapons_.completion_time,
+			    weapons_.computation_time,
+			    weapons_.arrival_time);
 	received_events_++;
       }
 	else 
@@ -234,13 +244,14 @@ public class NavWeapDataHandler implements DataHandler {
   NavWeapDataHandler () {
     ObservablesTable = new java.util.Hashtable();
 
-    ObservablesTable.put ("NavigationObservable", new NavigationObservable());
-    ObservablesTable.put ("WeaponsObservable", new WeaponsObservable());
-    ObservablesTable.put ("Cpu_UsageObservable", new Cpu_UsageObservable());
-    ObservablesTable.put ("OverheadObservable", new OverheadObservable());
-    ObservablesTable.put ("JitterObservable", new JitterObservable());
-    ObservablesTable.put ("DeadlinesObservable", new DeadlinesObservable());
-    ObservablesTable.put ("LatencyObservable", new LatencyObservable()); 
+    ObservablesTable.put ("Navigation", new NavigationObservable());
+    ObservablesTable.put ("Weapons", new WeaponsObservable());
+    ObservablesTable.put ("CPU Usage", new Cpu_UsageObservable());
+    ObservablesTable.put ("Overhead", new OverheadObservable());
+    ObservablesTable.put ("Latency Jitter (100 ns)", new JitterObservable());
+    ObservablesTable.put ("Missed Deadlines", new DeadlinesObservable());
+    ObservablesTable.put ("Missed Critical Deadlines", new CriticalDeadlinesObservable());
+    ObservablesTable.put ("Latency (100 ns)", new LatencyObservable()); 
   }
   
   public java.util.Enumeration getObservablesList () {
@@ -255,9 +266,10 @@ public class NavWeapDataHandler implements DataHandler {
     DemoObservable obs = (DemoObservable)ObservablesTable.get (name);
     return obs.getProperty ();
   }
-  
 }
 
 
     
     
+
+

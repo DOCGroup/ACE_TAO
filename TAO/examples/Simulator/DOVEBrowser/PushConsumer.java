@@ -75,7 +75,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
                 {
                   try
                     {
-                      dataHandler_.update (events[i].data.any_value);
+                      dataHandler_.update (events[i]);
                     }
                   catch(org.omg.CORBA.SystemException e)
                     {
