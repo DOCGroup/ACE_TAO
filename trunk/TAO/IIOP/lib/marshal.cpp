@@ -39,6 +39,7 @@ extern "C"
 
 // cosntructor for the factory
 TAO_MarshalFactory::TAO_MarshalFactory()
+#if 0
   : m_primitive_(TAO_MARSHAL_PRIMITIVE::instance()),
     m_any_(TAO_MARSHAL_ANY::instance()),
     m_typecode_(TAO_MARSHAL_TYPECODE::instance()),
@@ -52,13 +53,44 @@ TAO_MarshalFactory::TAO_MarshalFactory()
     m_alias_(TAO_MARSHAL_ALIAS::instance()),
     m_except_(TAO_MARSHAL_EXCEPT::instance()),
     m_wstring_(TAO_MARSHAL_WSTRING::instance())
+#endif
 {
+  // initialize the mobj table
+  mobj_table_[tk_null].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_void].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_short].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_long].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_ushort].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_ulong].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_float].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_double].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_boolean].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_char].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_octet].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_any].obj_ = TAO_MARSHAL_ANY::instance();
+  mobj_table_[tk_TypeCode].obj_ = TAO_MARSHAL_TYPECODE::instance();
+  mobj_table_[tk_Principal].obj_ = TAO_MARSHAL_PRINCIPAL::instance();
+  mobj_table_[tk_objref].obj_ = TAO_MARSHAL_OBJREF::instance();
+  mobj_table_[tk_struct].obj_ = TAO_MARSHAL_STRUCT::instance();
+  mobj_table_[tk_union].obj_ = TAO_MARSHAL_UNION::instance();
+  mobj_table_[tk_enum].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_string].obj_ = TAO_MARSHAL_STRING::instance();
+  mobj_table_[tk_sequence].obj_ = TAO_MARSHAL_SEQUENCE::instance();
+  mobj_table_[tk_array].obj_ = TAO_MARSHAL_ARRAY::instance();
+  mobj_table_[tk_alias].obj_ = TAO_MARSHAL_ALIAS::instance();
+  mobj_table_[tk_except].obj_ = TAO_MARSHAL_EXCEPT::instance();
+  mobj_table_[tk_longlong].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_ulonglong].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_longdouble].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_wchar].obj_ = TAO_MARSHAL_PRIMITIVE::instance();
+  mobj_table_[tk_wstring].obj_ = TAO_MARSHAL_WSTRING::instance();
 }
 
 TAO_MarshalFactory::~TAO_MarshalFactory()
 {
 }
 
+#if 0
 // factory method
 //
 // Based on the kind of the typecode, return the appropriate marshal object
@@ -119,10 +151,11 @@ TAO_MarshalObject* TAO_MarshalFactory::make_marshal_object(CORBA_TypeCode_ptr tc
     }
   else
     {
+      env.exception (new CORBA_BAD_TYPECODE(COMPLETED_NO));
       return (TAO_MarshalObject *)0;
     }
 }
-
+#endif
 
 // define a default factory
 TAO_MarshalFactory *TAO_DEFAULT_MARSHAL_FACTORY = TAO_MARSHAL_FACTORY::instance();
