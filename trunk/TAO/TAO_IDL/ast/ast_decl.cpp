@@ -160,6 +160,9 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
   UTL_ScopedName *cn = 0;
   AST_Decl *d = 0;
 
+  // Initialize this name to 0.
+  this->pd_name = 0;
+
   // Global scope?
   if (defined_in () == 0) 
     {
@@ -182,14 +185,32 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
       if (this->pd_name == 0)
         {
           ACE_NEW (this->pd_name,
-                   UTL_ScopedName (this->local_name ()->copy (),
+                   UTL_ScopedName (this->pd_local_name->copy (),
                                    0));
         }
       else
         {
           UTL_ScopedName *conc_name = 0;
           ACE_NEW (conc_name,
-                   UTL_ScopedName (this->local_name ()->copy (),
+                   UTL_ScopedName (this->pd_local_name->copy (),
+                                   0));
+
+          this->pd_name->nconc (conc_name);
+        }
+    }
+  else
+    {
+      if (this->pd_name == 0)
+        {
+          ACE_NEW (this->pd_name,
+                   UTL_ScopedName (0,
+                                   0));
+        }
+      else
+        {
+          UTL_ScopedName *conc_name = 0;
+          ACE_NEW (conc_name,
+                   UTL_ScopedName (0,
                                    0));
 
           this->pd_name->nconc (conc_name);
@@ -387,7 +408,7 @@ AST_Decl::compute_name (const char *prefix,
 
       AST_Decl *d = ScopeAsDecl (this->defined_in ());
 
-      if (d != NULL)
+      if (d != 0)
         {
           UTL_ScopedName *cn = d->name ();
 
@@ -448,10 +469,14 @@ AST_Decl::compute_local_name (const char *prefix,
   result_str += ACE_CString (suffix);
 
   // Identifier for the resulting local name.
-  Identifier *result_id = new Identifier (result_str.c_str (),
-                                          1,
-                                          0,
-                                          I_FALSE);
+  Identifier *result_id = 0;
+  ACE_NEW_RETURN (result_id,
+                  Identifier (result_str.c_str (),
+                              1,
+                              0,
+                              I_FALSE),
+                  0);
+
   return result_id;
 }
 
@@ -476,21 +501,22 @@ AST_Decl::original_local_name (Identifier *local_name)
       name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
 
       // Assign to the Identifier variable.
-      this->pd_original_local_name = new Identifier (name_str.c_str (),
-                                                     1,
-                                                     0,
-                                                     I_FALSE);
+      ACE_NEW (this->pd_original_local_name,
+               Identifier (name_str.c_str (),
+               1,
+               0,
+               I_FALSE));
     }
   else
     {
-      this->pd_original_local_name = local_name;
+      this->pd_original_local_name = local_name->copy ();
     }
 }
 
 Identifier *
 AST_Decl::original_local_name (void)
 {
-  return pd_original_local_name;
+  return this->pd_original_local_name;
 }
 
 void
@@ -498,13 +524,13 @@ AST_Decl::add_pragmas (UTL_StrList *p)
 {
   if (p != 0) 
     {
-      if (pd_pragmas != 0)
+      if (this->pd_pragmas != 0)
         {
-          pd_pragmas->nconc (p);
+          this->pd_pragmas->nconc (p);
         }
       else
         {
-          pd_pragmas = p;
+          this->pd_pragmas = p;
         }
     }
 }
