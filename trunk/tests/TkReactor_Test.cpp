@@ -138,7 +138,7 @@ client (void *)
 // Callback for "Press Me" button.
 
 static int
-inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
+inc_count (ClientData client_data, Tcl_Interp *interp,int, const char **)
 {
   ACE_DEBUG ((LM_DEBUG,"inc_count "));
   char new_string[80];
@@ -151,7 +151,7 @@ inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
 
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   // eval (command);
-  char *varValue = Tcl_SetVar (interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
+  const char *varValue = Tcl_SetVar (interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
   if (varValue == NULL)
     return TCL_ERROR;
   return TCL_OK;
@@ -174,7 +174,7 @@ inc_tmo (ClientData client_data)
 
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   //  eval (command);
-  char *varValue = Tcl_SetVar (tcl_interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
+  const char *varValue = Tcl_SetVar (tcl_interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
   if (varValue == NULL)
     ACE_ERROR ((LM_ERROR,"Tcl_SetVar failed in inc_tmo\n"));
 
@@ -198,7 +198,7 @@ public:
 
     //    sprintf (command,"set %s %s",(char *)arg,new_string);
     //    eval (command);
-    char *varValue = Tcl_SetVar (tcl_interp,(char *)arg,new_string,TCL_LEAVE_ERR_MSG);
+    const char *varValue = Tcl_SetVar (tcl_interp,(char *)arg,new_string,TCL_LEAVE_ERR_MSG);
     if (varValue == NULL)
       ACE_ERROR_RETURN ((LM_ERROR,"Tcl_SetVar failed in handle_timeout\n"),-1);
 
