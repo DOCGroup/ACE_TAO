@@ -22,12 +22,12 @@ static int max_message_size = BUFSIZ;
 static int iterations = 0;
 
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
   // Start at argv[1]
-  ACE_Get_Opt getopt (argc, argv, "m:ui:", 1); 
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("m:ui:"), 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -41,15 +41,15 @@ parse_args (int argc, char *argv[])
       case 'u':
         // usage fallthrough
       default:
-        ACE_ERROR ((LM_ERROR, 
-		    "%n: -m max_message_size (in k) -i iterations\n%a", 
+        ACE_ERROR ((LM_ERROR,
+		    "%n: -m max_message_size (in k) -i iterations\n%a",
 		    1));
         /* NOTREACHED */
       }
 }
 
 int
-main (int argc, char **argv) 
+main (int argc, ACE_TCHAR **argv)
 {
   int user_prompt;
 
@@ -86,7 +86,7 @@ main (int argc, char **argv)
         user_prompt = 1;
       else
         user_prompt = 0;
-      
+
       // Continually read messages from stdin and log them.
 
       for (int count = 1;;)
@@ -99,7 +99,7 @@ main (int argc, char **argv)
           if (nbytes <= 0)
             break; // End of file or error.
           buf[nbytes - 1] = '\0';
-          
+
           // Quitting?
           if (user_prompt)
 	    {
@@ -113,7 +113,7 @@ main (int argc, char **argv)
           if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log_message"), -1);
 	  ACE_DEBUG ((LM_DEBUG, "finished sending message %d\n", count++));
-        } 
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, "Client done.\n"));
