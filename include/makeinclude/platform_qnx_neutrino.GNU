@@ -16,8 +16,8 @@ endif
 
 static_libs_only = 1
 
-CC      = /usr/gcc/bin/i386-nto-gcc
-CXX     = /usr/gcc/bin/i386-nto-g++
+CC      = i386-nto-gcc
+CXX     = i386-nto-g++
 CFLAGS  += -pipe -W -Wall -Wpointer-arith -Winline
 CCFLAGS += $(CFLAGS) -fno-implicit-templates
 DCFLAGS += -g
@@ -27,9 +27,9 @@ LDFLAGS +=
 LIBS    += -lsocket -lstdc++
 OCFLAGS += -O2
 PIC     = -fPIC
-AR      = /usr/gcc/bin/ar
+AR      = i386-nto-ar
 ARFLAGS = ruv
-RANLIB  = /usr/gcc/bin/ranlib
+RANLIB  = i386-nto-ranlib
 SOFLAGS = -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
