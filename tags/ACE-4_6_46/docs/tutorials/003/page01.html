@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 003</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 003</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Creating a Simple Client</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+
+<P>Now that we've seen how to create servers, let's spend just a moment
+making a client. Since this is so easy, I'm going to do all of it in this
+one page.
+
+<P>
+Kirthika says, "Here's an one paragraph abstract for a one page client app:"
+
+<UL>
+				The server is an Stream object of ACE_SOCK_Stream type. The
+				ACE_Sock_Connector does the job of actively making a connection with the
+				listening server. It does so using the server_host_address and port
+				number which are stored in the ACE_INET_Addr object.Once the
+				connection has been established, the client begins its interaction
+				with the server and bombards it with messages.
+				Note: send_n() call is used since this call sees to the issues of
+				network buffering and reliably gets the data across to the server.
+				Also, a timeout value is set to provide fault tolerance if the server
+				ever dies before the transaction is completed. The server calls a
+				close() method
+				once it reads in zero bytes during the Event_Handler::handle_input()
+				call. This
+				proves that the client has severed its connection. The server then
+				shuts down.
+</UL>
+<HR WIDTH="100%">
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=red>/* To establish a socket connection to a server, we'll need an
+  ACE_SOCK_Connector.  */</font>
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Connector.h">ace/SOCK_Connector.h</A>"
+
+<font color=red>/* Unlike the previous two tutorials, we're going to allow the user to
+  provide command line options this time.  Still, we need defaults in
+  case that isn't done.  */</font>
+static u_short SERVER_PORT = ACE_DEFAULT_SERVER_PORT;
+static const char *const SERVER_HOST = ACE_DEFAULT_SERVER_HOST;
+static const int MAX_ITERATIONS = 4;
+
+int 
+main (int argc, char *argv[])
+{
+  <font color=red>/* Accept the users's choice of hosts or use the default.  Then do
+    the same for the TCP/IP port at which the server is listening as
+    well as the number of iterations to perform.  */</font>
+  const char *server_host = argc > 1 ? argv[1] : SERVER_HOST;
+  u_short server_port = argc > 2 ? <font color=#008888>ACE_OS::atoi</font> (argv[2]) : SERVER_PORT;
+  int max_iterations = argc > 3 ? <font color=#008888>ACE_OS::atoi</font> (argv[3]) : MAX_ITERATIONS;
+
+  <font color=red>/* Build ourselves a Stream socket. This is a connected socket that
+    provides reliable end-to-end communications. We will use the
+    server object to send data to the server we connect to.  */</font>
+  ACE_SOCK_Stream server;
+
+  <font color=red>/* And we need a connector object to establish that connection. The
+    ACE_SOCK_Connector object provides all of the tools we need to
+    establish a connection once we know the server's network
+    address...  */</font>
+  ACE_SOCK_Connector connector;
+
+  <font color=red>/* Which we create with an ACE_INET_Addr object. This object is
+    given the TCP/IP port and hostname of the server we want to
+    connect to.  */</font>
+  ACE_INET_Addr addr (server_port,
+                      server_host);
+
+  <font color=red>/* So, we feed the Addr object and the Stream object to the
+    connector's connect() member function. Given this information, it
+    will establish the network connection to the server and attach
+    that connection to the server object.  */</font>
+  if (connector.connect (server, addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>open</font>"),
+                      -1);
+  
+  <font color=red>/* Just for grins, we'll send the server several messages.  */</font>
+  for (int i = 0; i &lt; max_iterations; i++)
+    {
+      char buf[BUFSIZ];
+
+      <font color=red>/* Create our message with the message number */</font>
+      <font color=#008888>ACE_OS::sprintf</font> (buf,
+                       "<font color=green>message = %d\n</font>",
+                       i + 1);
+      <font color=red>/* Send the message to the server.  We use the server object's
+        send_n() function to send all of the data at once. There is
+        also a send() function but it may not send all of the
+        data. That is due to network buffer availability and such. If
+        the send() doesn't send all of the data, it is up to you to
+        program things such that it will keep trying until all of the
+        data is sent or simply give up. The send_n() function already
+        does the "<font color=green>keep trying</font>" option for us, so we use it.
+
+        Like the send() method used in the servers we've seen, there
+        are two additional parameters you can use on the send() and
+        send_n() method calls.  The timeout parameter limits the
+        amount of time the system will attempt to send the data to the
+        peer.  The flags parameter is passed directly to the OS send()
+        system call.  See send(2) for the valid flags values.  */</font>
+      if (server.send_n (buf,
+                         <font color=#008888>ACE_OS::strlen</font> (buf)) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "<font color=green>%p\n</font>",
+                           "<font color=green>send</font>"),
+                          -1);
+      else
+        <font color=red>/* Pause for a second.  */</font>
+        <font color=#008888>ACE_OS::sleep</font> (1);
+    }
+
+  <font color=red>/* Close the connection to the server.  The servers we've created so
+    far all are based on the ACE_Reactor.  When we close(), the
+    server's reactor will see activity for the registered event
+    handler and invoke handle_input().  That, in turn, will try to
+    read from the socket but get back zero bytes.  At that point, the
+    server will know that we've closed from our side.  */</font>
+  if (server.close () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>close</font>"),
+                      -1);
+  return 0;
+}
+</PRE>
+<HR WIDTH="100%">
+
+<P>Ok, so that was pretty easy. What would be even easier would be to wrap
+all of the connection mess up in an object and overload a couple of basic
+operators to make things less network-centric. Perhaps we'll see that in
+another tutorial.
+
+<P>If you want to compile it yourself, here's the <A HREF="client.cpp">source</A>,
+the <A HREF="Makefile">Makefile</A>,
+and <A HREF="00SetEnv">Environment
+settings</A>.
+
+<P>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] </CENTER>
