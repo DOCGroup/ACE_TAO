@@ -34,15 +34,18 @@ class ACE_Export ACE_CString
   // = DESCRIPTION
   //   This class uses an <ACE_Allocator> to allocate memory.  The
   //   user can make this a persistant class by providing an
-  //   ACE_Allocator with a persistable memory pool.  NOTE: if an
-  //   instance of this class is constructed from or assigned an empty
-  //   string (with first element of '\0'), then it is _not_ allocated
-  //   new space.  Instead, its internal representation is set equal
-  //   to a global empty string.  CAUTION: in cases when ACE_CString
-  //   is constructed from provided buffer with release parameter set
-  //   to 0, ACE_CString is not guaranteed to be '\0' terminated.
-  //   This is a place holder until all compilers implement the
-  //   ANSI/ISO C++ standard String class.
+  //   ACE_Allocator with a persistable memory pool.  This class is
+  //   optimized for efficiency, so it doesn't provide any internal
+  //   locking.
+  //
+  //   NOTE: if an instance of this class is constructed from or
+  //   assigned an empty string (with first element of '\0'), then it
+  //   is _not_ allocated new space.  Instead, its internal
+  //   representation is set equal to a global empty string.
+  //
+  //   CAUTION: in cases when ACE_CString is constructed from a
+  //   provided buffer with the release parameter set to 0,
+  //   ACE_CString is not guaranteed to be '\0' terminated.
 
 public:
   static const int npos;
@@ -204,11 +207,11 @@ class ACE_Export ACE_WString
   //   This class provides a wrapper facade for C wide strings.
   //
   // = DESCRIPTION
-  //     This class uses an <ACE_Allocator> to allocate memory.  The
-  //     user can make this a persistant class by providing an
-  //     <ACE_Allocator> with a persistable memory pool.  This is a
-  //     place holder until all compilers implement the ANSI/ISO C++
-  //     standard String class.
+  //   This class uses an <ACE_Allocator> to allocate memory.  The
+  //   user can make this a persistant class by providing an
+  //   <ACE_Allocator> with a persistable memory pool.  This class is
+  //   optimized for efficiency, so it doesn't provide any internal
+  //   locking.
 public:
   static const int npos;
   // No position constant
@@ -369,10 +372,13 @@ class ACE_Export ACE_SString
   //   exists...
   //
   // = DESCRIPTION
-  //   This class is only intended for use with applications that
-  //   understand how it works.  In particular, its destructor does
-  //   not deallocate its memory when it is destroyed...  We need this
-  //   class since the <ACE_Map_Manager> requires an object that
+  //   This class is optimized for efficiency, so it doesn't provide
+  //   any internal locking.
+  //
+  //   CAUTION: This class is only intended for use with applications
+  //   that understand how it works.  In particular, its destructor
+  //   does not deallocate its memory when it is destroyed...  We need
+  //   this class since the <ACE_Map_Manager> requires an object that
   //   supports the operator == and operator !=.  This class uses an
   //   <ACE_Allocator> to allocate memory.  The user can make this a
   //   persistant class by providing an <ACE_Allocator> with a
