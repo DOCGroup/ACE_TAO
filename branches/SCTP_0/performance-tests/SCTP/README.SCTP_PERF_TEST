@@ -1,0 +1,96 @@
+Release 1.0 - January 2003
+
+Performance Test Overview
+-------------------------
+
+This directory contains performance tests for measuring round-trip
+latency statistics of ACE synchronous messaging using unmarshalled
+ACE_CDR::Octet.
+
+In terms of protocol and service type, three different tests are
+available:
+
+ * TCP over SOCK_STREAM
+ * SCTP over SOCK_STREAM
+ * SCTP over SOCK_SEQPACK
+
+All three of these tests share the same architecture, which is
+described in the following section.
+
+Test Architecture
+-----------------
+
+As mentioned above, the performance tests measure round-trip latency
+statistics.  We are talking about the round-trip between two service
+endpoints, a client and a server.  The client sends the server an
+arbitrary message with a specific length---up to 2^16 bytes---and the
+server responds with a 2-byte reply.  The client measures and records
+the time it takes to complete this exchanges.  This test is repeated
+through many iterations, and client outputs the resulting statistics.
+
+In detail,
+
+1.  The server program is started first.  It creates a passive-mode
+    socket and runs an infinite loop waiting for clients to connect.
+
+2.  The client program is started next.  It may be configured with
+    numerous parameters, which include:
+
+      * the hostname and port where the server's passive-mode socket
+        is listening,
+      * the desired message length, which may be any power of two
+        between 2^0 and 2^16,
+      * the desired number of iterations (by default 1 million)
+
+3.  The client connects to the server's passive-mode socket.  If all
+    goes well, the client and server will each end up with a data-mode
+    socket that serves as a communication endpoint.
+
+4.  The client sends an initial header message containing the intended
+    number of iterations, along with the message length (which will be
+    the same for each iteration).  Armed with this information, the
+    server spawns a separate thread to handle these iterations.
+
+5.  The client creates an in-memory data structure that serves as a
+    histogram.  The histogram is configured with a range of possible
+    round-trip latencies, and this range is divided into a number of
+    "bins".  The latency measured for each test entry will either
+    fall into one of these "bins", or it will fall outside the entire
+    range and will be logged as an outlier.
+
+6.  The client and server repeats the following interaction for each
+    test iteration.
+
+    a.  The client starts a stopwatch.
+
+    b.  The client sends the server an arbitrary message of the
+        established length.
+
+    c.  After receiving this entire message from the client, the
+        server sends the client a 2-byte reply.
+
+    d.  After receiving the 2-byte reply from the server, the client
+        stops the stopwatch.
+
+    e.  The round-trip latency, as measureed by the stopwatch, is
+        logged to the in-memory histogram.
+
+7.  After all these iterations are complete, the client disconnects
+    from the server.  The client then takes the in-memory histogram
+    and dumps its text representation to STDOUT.
+
+8.  The client exits.  The server thread dedicated to this client
+    exits.  The main thread of the server continues to run an infinite
+    loop waiting for more clients to connect to the passive-mode
+    socket.
+
+Test Executables
+----------------
+
+
+
+Test Walk-Through
+-----------------
+
+The SOCK_STREAM performance test
+
