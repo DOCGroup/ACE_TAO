@@ -23,6 +23,8 @@
 #include "tao/Pluggable.h"
 #include "tao/corbafwd.h"
 #include "tao/Typecode.h"
+#include "tao/Resource_Factory.h"
+
 #include "ace/Containers_T.h"
 
 // Forward declarations.
@@ -33,7 +35,6 @@ class TAO_ORB_Core;
 class TAO_Stub;
 class TAO_Profile;
 class TAO_MProfile;
-class TAO_Resource_Factory;
 
 typedef ACE_Unbounded_Set<TAO_Acceptor*>
         TAO_AcceptorSet;
@@ -82,9 +83,12 @@ public:
   TAO_AcceptorSetItor end (void);
 
 private:
+  int open_default (TAO_ORB_Core *orb_core);
+  // Create a default acceptor for all loaded protocols.
+
   int open_default (TAO_ORB_Core *orb_core,
-                    ACE_CString *protocol_prefix = 0);
-  // Create an acceptor with a default endpoint.
+                    TAO_ProtocolFactorySetItor &factory);
+  // Create a default acceptor using the specified protocol factory.
 
 private:
   TAO_AcceptorSet acceptors_;
