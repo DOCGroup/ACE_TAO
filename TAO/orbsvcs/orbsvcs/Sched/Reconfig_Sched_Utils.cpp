@@ -452,7 +452,10 @@ int
 TAO_MUF_Reconfig_Sched_Strategy::compare_subpriority (TAO_Reconfig_Scheduler_Entry &s,
                                                       TAO_Reconfig_Scheduler_Entry &t)
 {
-  // In MUF, priority is per criticality level: compare criticalities.
+  // @@ TO DO: add dependency hash tables to strategy, use them to look for
+  //           *direct* dependencies between two nodes.
+
+  // Compare importance.
   if (s.actual_rt_info ()->importance > t.actual_rt_info ()->importance)
     {
       return -1;
