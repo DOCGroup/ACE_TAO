@@ -52,9 +52,10 @@ PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
 PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
 PLATFORM_GTK_LDFLAGS=
 
-PLATFORM_WX_CPPFLAGS= $(shell wx-config --cflags) $(PLATFORM_GTK_CPPFLAGS)
-PLATFORM_WX_LIBS    = $(shell wx-config --libs)   $(PLATFORM_GTK_LIBS)
-PLATFORM_WX_LDFLAGS =
+# NOTE: we only support wxWindows over GTK
+PLATFORM_WX_CPPFLAGS= $(shell wx-config --cxxflags) $(PLATFORM_GTK_CPPFLAGS)
+PLATFORM_WX_LIBS    = $(shell wx-config --libs)     $(PLATFORM_GTK_LIBS)
+PLATFORM_WX_LDFLAGS = $(shell wx-config --ldflags)  $(PLATFORM_GTK_LDFLAGS)
 
 ifeq ($(insure),1)
 CC  = insure

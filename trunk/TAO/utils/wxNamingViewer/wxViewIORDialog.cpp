@@ -13,13 +13,14 @@
 #include "wx/textctrl.h"
 #include "wx/treectrl.h"
 #include "wxNamingViewer.h"
+#include "ace/SString.h"
 
 namespace  // anonymous
 {
   void create_dialog_components( wxDialog* dialog)
     {
       wxBoxSizer *topsizer = new wxBoxSizer( wxVERTICAL);
- 
+
       {
         wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
         sizer->Add(
@@ -42,7 +43,7 @@ namespace  // anonymous
                       0,
                       wxALIGN_LEFT | wxEXPAND);
       }
- 
+
       {
         wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
         sizer->Add(
@@ -65,7 +66,7 @@ namespace  // anonymous
                       0,
                       wxALIGN_LEFT | wxEXPAND);
       }
- 
+
       {
         wxTreeCtrl* profiles = new wxTreeCtrl(
                                               dialog,
@@ -80,7 +81,7 @@ namespace  // anonymous
                       wxALL | wxEXPAND,
                       5);
       }
-  
+
       wxBoxSizer* button_sizer = new wxBoxSizer( wxHORIZONTAL);
       {
         wxButton* okButton = new wxButton( dialog, wxID_OK, "OK" );
@@ -111,11 +112,11 @@ namespace  // anonymous
                     button_sizer,
                     0,
                     wxALIGN_CENTER);
- 
+
       dialog->SetSizer( topsizer);
       topsizer->SetSizeHints( dialog);
     }
- 
+
 };  // anonymous
 
 BEGIN_EVENT_TABLE( WxViewIORDialog, wxDialog)
