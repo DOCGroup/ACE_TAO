@@ -1,3 +1,9 @@
+Sat Sep  2 12:22:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/CDR_Stream.h:
+	  Define macros to initialize a LongDouble, this is needed to
+	  avoid warnings in some ORB code.
+
 Fri Sep  1 16:50:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/Configuration.cpp:
@@ -12,7 +18,7 @@ Fri Sep  1 13:25:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Checked in some fixes to ACE_Configuration sent in by
 	  Chris Hafey <chafey@stentorsoft.com>. Chris writes:
-	
+
 	  Fixed a handle leak in export_config().
           Thanks to Matthew Adams <madams@bexusa.com> for reporting the bug.
 
