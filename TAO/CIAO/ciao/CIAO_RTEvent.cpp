@@ -191,7 +191,7 @@ namespace CIAO
       CORBA::SystemException))
   {
 
-    //ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::push_event\n"));
+    ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::push_event\n"));
 
     RtecEventComm::EventSet events (1);
     events.length (1);
@@ -235,7 +235,7 @@ namespace CIAO
   RTEventServiceConsumer_impl::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    //ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::push\n"));
+    ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::push\n"));
 
     for (size_t i = 0; i < events.length (); ++i)
       {

@@ -73,6 +73,7 @@ main (int argc, char *argv[])
       for (int i = 0; i < 1001; ++i)
         {
           sat->alert (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  std::cerr << "Pushed fine... " << std::endl;
           ACE_TRY_CHECK;
         }
 
