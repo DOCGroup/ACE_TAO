@@ -101,6 +101,13 @@ AST_illegal_interface_recursion (AST_Decl *t)
     {
       d = ScopeAsDecl (i.item ());
       
+      // Exceptions cannot be recursive, but may contain a reference
+      // to the interface they are defined in.
+      if (d->node_type () == AST_Decl::NT_except)
+        {
+          return I_FALSE;
+        }
+      
       if (d == t)
         {
           return I_TRUE;
