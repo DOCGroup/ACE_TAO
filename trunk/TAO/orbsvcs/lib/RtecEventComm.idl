@@ -20,9 +20,13 @@ module RtecEventComm {
 #endif
 
   typedef long EventSourceID;
-  // TODO: Use CosTimeService?
-  typedef long Time;
   typedef long EventType;
+
+  // @@ TODO: Use CosTimeService?
+  // The current definition (double) is a TOTAL HACK, we store a long
+  // long here just because it fits....
+  typedef double Time;
+
   struct Event {
     EventSourceID source_;
     EventType type_;

@@ -1,3 +1,32 @@
+Tue Dec  2 10:25:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/corba.h: 
+	  Fixed some problems with the ACE_RETHROW macros.
+
+	* orbsvcs/lib/Makefile: 
+	* orbsvcs/lib/Timeprobe.h: 
+	* orbsvcs/lib/Timeprobe.i: 
+	* orbsvcs/lib/Timeprobe.cpp: 
+	  Added a high resolution timer facility, to measure the delays in
+	  the Event Channel and in its client.
+
+	* orbsvcs/lib/RtecEventComm.idl: 
+	  Changed the time_ field of Event to a double. It should be an
+	  structure or a long long, but double is big enough to store 
+
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
+	* orbsvcs/lib/RtecEventCommC.cpp: 
+	* orbsvcs/lib/RtecEventCommC.h: 
+	* orbsvcs/lib/RtecEventCommS.cpp: 
+	* orbsvcs/lib/RtecSchedulerC.cpp: 
+	* orbsvcs/lib/RtecSchedulerC.h: 
+	* orbsvcs/lib/RtecSchedulerC.i: 
+	* orbsvcs/lib/RtecSchedulerS.cpp: 
+	* orbsvcs/lib/RtecSchedulerS.h: 
+	  Regenerated the files using the newest IDL compiler; still some
+	  hand crafting due to inherited classes.
+
 Tue Dec  2 03:12:50 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tao/orbobj.cpp (resolve_name_service): Check for errors when

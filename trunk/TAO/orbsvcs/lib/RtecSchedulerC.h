@@ -262,8 +262,8 @@ public:
   public:
     RT_Info_out (RT_Info *&);
     RT_Info_out (RT_Info_var &);
-    RT_Info_out (const RT_Info_out &);
-    RT_Info_out &operator= (const RT_Info_out &);
+    RT_Info_out (RT_Info_out &);
+    RT_Info_out &operator= (RT_Info_out &);
     RT_Info_out &operator= (RT_Info *);
     operator RT_Info *&();
     RT_Info *&ptr (void);
@@ -506,8 +506,8 @@ static CORBA::TypeCode_ptr _tc_TASK_COUNT_MISMATCH;
   public:
     _tao__seq_RT_Info_Set_out (_tao__seq_RT_Info_Set *&);
     _tao__seq_RT_Info_Set_out (_tao__seq_RT_Info_Set_var &);
-    _tao__seq_RT_Info_Set_out (const _tao__seq_RT_Info_Set_out &);
-    _tao__seq_RT_Info_Set_out &operator= (const _tao__seq_RT_Info_Set_out &);
+    _tao__seq_RT_Info_Set_out (_tao__seq_RT_Info_Set_out &);
+    _tao__seq_RT_Info_Set_out &operator= (_tao__seq_RT_Info_Set_out &);
     _tao__seq_RT_Info_Set_out &operator= (_tao__seq_RT_Info_Set *);
     operator _tao__seq_RT_Info_Set *&();
     _tao__seq_RT_Info_Set *&ptr (void);
@@ -551,13 +551,13 @@ class Scheduler: public virtual ACE_CORBA_1 (Object)
     static Scheduler_ptr _nil (void);
     static Scheduler_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual RtecScheduler::handle_t create (const char *entry_point, CORBA::Environment &env);
-    virtual RtecScheduler::handle_t lookup (const char *entry_point, CORBA::Environment &env);
+    virtual RtecScheduler::handle_t create (const char * entry_point, CORBA::Environment &env);
+    virtual RtecScheduler::handle_t lookup (const char * entry_point, CORBA::Environment &env);
     virtual ACE_NESTED_CLASS (RtecScheduler,RT_Info) * get (ACE_NESTED_CLASS (RtecScheduler,handle_t) handle, CORBA::Environment &env);
     virtual void set (ACE_NESTED_CLASS (RtecScheduler,handle_t) handle, ACE_NESTED_CLASS (RtecScheduler,Time) time, ACE_NESTED_CLASS (RtecScheduler,Time) typical_time, ACE_NESTED_CLASS (RtecScheduler,Time) cached_time, ACE_NESTED_CLASS (RtecScheduler,Period) period, ACE_NESTED_CLASS (RtecScheduler,Importance) importance, ACE_NESTED_CLASS (RtecScheduler,Quantum) quantum, CORBA::Long threads, CORBA::Environment &env);
     virtual void add_dependency (ACE_NESTED_CLASS (RtecScheduler,handle_t) handle, ACE_NESTED_CLASS (RtecScheduler,handle_t) dependency, CORBA::Long number_of_calls, CORBA::Environment &env);
     virtual void priority (ACE_NESTED_CLASS (RtecScheduler,handle_t) handle, ACE_NESTED_CLASS (RtecScheduler,OS_Priority_out) priority, ACE_NESTED_CLASS (RtecScheduler,Sub_Priority_out) subpriority, ACE_NESTED_CLASS (RtecScheduler,Preemption_Priority_out) p_priority, CORBA::Environment &env);
-    virtual void entry_point_priority (const char *entry_point, ACE_NESTED_CLASS (RtecScheduler,OS_Priority_out) priority, ACE_NESTED_CLASS (RtecScheduler,Sub_Priority_out) subpriority, ACE_NESTED_CLASS (RtecScheduler,Preemption_Priority_out) p_priority, CORBA::Environment &env);
+    virtual void entry_point_priority (const char * entry_point, ACE_NESTED_CLASS (RtecScheduler,OS_Priority_out) priority, ACE_NESTED_CLASS (RtecScheduler,Sub_Priority_out) subpriority, ACE_NESTED_CLASS (RtecScheduler,Preemption_Priority_out) p_priority, CORBA::Environment &env);
     virtual void compute_scheduling (CORBA::Long minimum_priority, CORBA::Long maximum_priority, ACE_NESTED_CLASS (RtecScheduler,RT_Info_Set_out) infos, CORBA::Environment &env);
   protected:
     Scheduler (void); // default constructor

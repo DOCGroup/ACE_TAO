@@ -66,7 +66,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin_Dependency[] =
           TAO_ENCAP_BYTE_ORDER, // byte order
           27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
           5, 0x54696d65, 0x0,  // name = Time
-          CORBA::tk_long,
+          CORBA::tk_double,
 
         6, 0x64617461, 0x5f000000,  // name = data_
         CORBA::tk_struct, // typecode kind
@@ -143,7 +143,7 @@ RtecEventChannelAdmin::_tao__seq_DependencySet::length (CORBA::ULong length)
     RtecEventChannelAdmin::Dependency *tmp = RtecEventChannelAdmin::_tao__seq_DependencySet::allocbuf (length);
     if (tmp == 0)
       return;
-    for (int i = 0; i < this->length_; ++i)
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
     }
@@ -194,7 +194,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin__tao__seq_DependencySet[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
             5, 0x54696d65, 0x0,  // name = Time
-            CORBA::tk_long,
+            CORBA::tk_double,
 
           6, 0x64617461, 0x5f000000,  // name = data_
           CORBA::tk_struct, // typecode kind
@@ -265,7 +265,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin_DependencySet[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
             5, 0x54696d65, 0x0,  // name = Time
-            CORBA::tk_long,
+            CORBA::tk_double,
 
           6, 0x64617461, 0x5f000000,  // name = data_
           CORBA::tk_struct, // typecode kind
@@ -343,7 +343,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin_ConsumerQOS[] =
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
                 5, 0x54696d65, 0x0,  // name = Time
-                CORBA::tk_long,
+                CORBA::tk_double,
 
               6, 0x64617461, 0x5f000000,  // name = data_
               CORBA::tk_struct, // typecode kind
@@ -406,7 +406,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin_Publication[] =
           TAO_ENCAP_BYTE_ORDER, // byte order
           27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
           5, 0x54696d65, 0x0,  // name = Time
-          CORBA::tk_long,
+          CORBA::tk_double,
 
         6, 0x64617461, 0x5f000000,  // name = data_
         CORBA::tk_struct, // typecode kind
@@ -493,7 +493,7 @@ RtecEventChannelAdmin::_tao__seq_PublicationSet::length (CORBA::ULong length)
     RtecEventChannelAdmin::Publication *tmp = RtecEventChannelAdmin::_tao__seq_PublicationSet::allocbuf (length);
     if (tmp == 0)
       return;
-    for (int i = 0; i < this->length_; ++i)
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
     }
@@ -544,7 +544,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin__tao__seq_PublicationSet[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
             5, 0x54696d65, 0x0,  // name = Time
-            CORBA::tk_long,
+            CORBA::tk_double,
 
           6, 0x64617461, 0x5f000000,  // name = data_
           CORBA::tk_struct, // typecode kind
@@ -625,7 +625,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin_PublicationSet[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
             5, 0x54696d65, 0x0,  // name = Time
-            CORBA::tk_long,
+            CORBA::tk_double,
 
           6, 0x64617461, 0x5f000000,  // name = data_
           CORBA::tk_struct, // typecode kind
@@ -713,7 +713,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin_SupplierQOS[] =
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
                 5, 0x54696d65, 0x0,  // name = Time
-                CORBA::tk_long,
+                CORBA::tk_double,
 
               6, 0x64617461, 0x5f000000,  // name = data_
               CORBA::tk_struct, // typecode kind

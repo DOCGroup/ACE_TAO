@@ -79,7 +79,7 @@ static CORBA::TypeCode_ptr _tc_Disconnected;
 
   static CORBA::TypeCode_ptr _tc_EventSourceID;
 
-  typedef CORBA::Long Time;typedef CORBA::Long_out Time_out;
+  typedef CORBA::Double Time;typedef CORBA::Double_out Time_out;
 
   static CORBA::TypeCode_ptr _tc_Time;
 

@@ -149,7 +149,7 @@ RtecScheduler::_tao__seq_Dependency_Set::length (CORBA::ULong length)
     RtecScheduler::Dependency_Info *tmp = RtecScheduler::_tao__seq_Dependency_Set::allocbuf (length);
     if (tmp == 0)
       return;
-    for (int i = 0; i < this->length_; ++i)
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
     }
@@ -492,7 +492,7 @@ RtecScheduler::_tao__seq_RT_Info_Set::length (CORBA::ULong length)
     RtecScheduler::RT_Info *tmp = RtecScheduler::_tao__seq_RT_Info_Set::allocbuf (length);
     if (tmp == 0)
       return;
-    for (int i = 0; i < this->length_; ++i)
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
     }
@@ -839,7 +839,7 @@ static const TAO_Param_Data RtecScheduler_Scheduler_create_paramdata [] =
 static const TAO_Call_Data RtecScheduler_Scheduler_create_calldata = 
 {"create", 1, 2, RtecScheduler_Scheduler_create_paramdata, 0, 0};
 
-RtecScheduler::handle_t  RtecScheduler::Scheduler::create (const char *entry_point, CORBA::Environment &env)
+RtecScheduler::handle_t  RtecScheduler::Scheduler::create (const char * entry_point, CORBA::Environment &env)
 {
   RtecScheduler::handle_t retval;
   STUB_Object *istub;
@@ -864,7 +864,7 @@ static const TAO_Param_Data RtecScheduler_Scheduler_lookup_paramdata [] =
 static const TAO_Call_Data RtecScheduler_Scheduler_lookup_calldata = 
 {"lookup", 1, 2, RtecScheduler_Scheduler_lookup_paramdata, 0, 0};
 
-RtecScheduler::handle_t  RtecScheduler::Scheduler::lookup (const char *entry_point, CORBA::Environment &env)
+RtecScheduler::handle_t  RtecScheduler::Scheduler::lookup (const char * entry_point, CORBA::Environment &env)
 {
   RtecScheduler::handle_t retval;
   STUB_Object *istub;
@@ -1001,7 +1001,7 @@ static const TAO_Param_Data RtecScheduler_Scheduler_entry_point_priority_paramda
 static const TAO_Call_Data RtecScheduler_Scheduler_entry_point_priority_calldata = 
 {"entry_point_priority", 1, 5, RtecScheduler_Scheduler_entry_point_priority_paramdata, 0, 0};
 
-void  RtecScheduler::Scheduler::entry_point_priority (const char *entry_point, RtecScheduler::OS_Priority_out priority, RtecScheduler::Sub_Priority_out subpriority, RtecScheduler::Preemption_Priority_out p_priority, CORBA::Environment &env)
+void  RtecScheduler::Scheduler::entry_point_priority (const char * entry_point, RtecScheduler::OS_Priority_out priority, RtecScheduler::Sub_Priority_out subpriority, RtecScheduler::Preemption_Priority_out p_priority, CORBA::Environment &env)
 {
   STUB_Object *istub;
 

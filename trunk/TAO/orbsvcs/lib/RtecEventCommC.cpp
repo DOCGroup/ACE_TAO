@@ -53,7 +53,7 @@ static const CORBA::Long _oc_RtecEventComm_Time[] =
   TAO_ENCAP_BYTE_ORDER, // byte order
   27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
   5, 0x54696d65, 0x0,  // name = Time
-  CORBA::tk_long,
+  CORBA::tk_double,
 
 };
 static CORBA::TypeCode _tc__tc_RtecEventComm_Time (CORBA::tk_alias, sizeof (_oc_RtecEventComm_Time), (unsigned char *) &_oc_RtecEventComm_Time, CORBA::B_FALSE);
@@ -98,7 +98,7 @@ static const CORBA::Long _oc_RtecEventComm_Event[] =
       TAO_ENCAP_BYTE_ORDER, // byte order
       27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
       5, 0x54696d65, 0x0,  // name = Time
-      CORBA::tk_long,
+      CORBA::tk_double,
 
     6, 0x64617461, 0x5f000000,  // name = data_
     CORBA::tk_struct, // typecode kind
@@ -167,7 +167,7 @@ RtecEventComm::_tao__seq_EventSet::length (CORBA::ULong length)
     RtecEventComm::Event *tmp = RtecEventComm::_tao__seq_EventSet::allocbuf (length);
     if (tmp == 0)
       return;
-    for (int i = 0; i < this->length_; ++i)
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
     }
@@ -211,7 +211,7 @@ static const CORBA::Long _oc_RtecEventComm__tao__seq_EventSet[] =
         TAO_ENCAP_BYTE_ORDER, // byte order
         27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
         5, 0x54696d65, 0x0,  // name = Time
-        CORBA::tk_long,
+        CORBA::tk_double,
 
       6, 0x64617461, 0x5f000000,  // name = data_
       CORBA::tk_struct, // typecode kind
@@ -267,7 +267,7 @@ static const CORBA::Long _oc_RtecEventComm_EventSet[] =
         TAO_ENCAP_BYTE_ORDER, // byte order
         27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
         5, 0x54696d65, 0x0,  // name = Time
-        CORBA::tk_long,
+        CORBA::tk_double,
 
       6, 0x64617461, 0x5f000000,  // name = data_
       CORBA::tk_struct, // typecode kind
