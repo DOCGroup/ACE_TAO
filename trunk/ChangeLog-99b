@@ -1,3 +1,14 @@
+Mon Mar 29 20:22:44 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	* m4/features.m4:
+	  Added new M4 macro include file, and moved asynchronous IO tests
+	  to `m4/features.m4'.  The asynchronous IO tests were improved by
+	  making them run-time tests.  Cross-compiled platforms will fall
+	  back to a compile-time test.  Thanks to Alex for providing
+	  run-time tests.  The tests are based on his AIO tests found in
+	  the examples/Reactor/Proactor directory.
+
 Sun Mar 28 18:02:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
