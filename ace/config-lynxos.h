@@ -14,6 +14,8 @@
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
 
+#include <unistd.h> /* Get _POSIX_VERSION macro */
+
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -44,11 +46,11 @@
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
 #endif /* __LYNXOS_SDK_VERSION */
 
-#if !defined ( __LYNXOS_SDK_VERSION )
-  // LynxOS 3.1.0 and later need ipc_1c.h to be included before net/if.h
+#if _POSIX_VERSION >= 199506L
+  // LynxOS 3.1.0 or greater need ipc_1c.h to be included before net/if.h
   // to avoid macro conflict.
 # define ACE_NEEDS_IPC_1C_H
-#endif /* __LYNXOS_SDK_VERSION */
+#endif /* _POSIX_VERSION */
 
 #if defined (__x86__)
 # define ACE_HAS_PENTIUM
@@ -95,6 +97,7 @@
 #define ACE_HAS_STRERROR
 #define ACE_HAS_SYSV_IPC
 #define ACE_HAS_SYS_SIGLIST
+#define ACE_HAS_TERM_IOCTLS
 #define ACE_HAS_TYPENAME_KEYWORD
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 #define ACE_LACKS_CONST_TIMESPEC_PTR
@@ -132,14 +135,9 @@
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_PTHREADS
-# include <unistd.h>
 # if _POSIX_VERSION >= 199506L
-    // LynxOS 3.1.0 or greater
+    /* LynxOS 3.1.0 or greater */
 #   define ACE_HAS_PTHREADS_STD
-    // Though there's a pthread_sigmask man page, there isn't a
-    // declaration in a system header file.
-#   include <signal.h>
-    extern "C" int pthread_sigmask (int, const sigset_t *, sigset_t *);
 # else  /* LynxOS < 3.1.0 */
 #   define ACE_HAS_PTHREADS_DRAFT4
 #   define ACE_HAS_STDARG_THR_DEST
@@ -195,12 +193,6 @@
 // "changes signedness" error (OS.i and many other files)
 #define ACE_HAS_SOCKLEN_T
 
-// LSOCK.cpp uses a macro from param.h, not included
-#define ALIGNBYTES (sizeof(int) - 1)
-#define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
-
-// Requested for example: $ACE_ROOT/examples/IPC_SAP/DEV_SAP 
-#define ACE_HAS_TERM_IOCTLS
 #endif /* _POSIX_VERSION && SOCK_MAXADDRLEN */
 
 #include /**/ "ace/post.h"
