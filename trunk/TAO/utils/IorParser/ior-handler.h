@@ -33,7 +33,7 @@
 #define NUM_TAG_PROFS       "0001"
 #define IIOP_VERSION        "0001"
 
-class IOR
+struct IOR
 {
   // = TITLE
   //     This is the useful information obtained from parsing an IOR.
@@ -42,7 +42,6 @@ class IOR
   //     This structure assumes that the profile_id is
   //     TAG_INTERNET_IOP and that there is only one TaggedProfile in 
   //     the IOR.
-public:
   u_long typeIdLen;
   // The length of the type_id field of the IOR.
 
@@ -87,10 +86,10 @@ public:
   IorHandler (void);
   // Constructor.
 
-  void prettyPrintIOR (struct IOR thisIor);
+  void prettyPrintIOR (IOR thisIor);
   // Prints out additional detailed information in the IOR.
 
-  void interpretIor (char *thisIor, struct IOR *thisIorInfo);
+  void interpretIor (char *thisIor, IOR *thisIorInfo);
   // The main parsing routine.
 
   char *getIdlInterface (char *typeId);
@@ -104,7 +103,9 @@ public:
   // @@ Priya, can you please change this so that it's not a magic
   // number?!
   char stringRealIOR[400];
-  struct IOR parsedRealIOR;
+  IOR parsedRealIOR;
+  char parsedStr[MAX_IOR_FIELD_LEN];
+  char idlInterface[MAX_TYPE_ID_LEN];
 
 private:
   u_long getOctet8Field (char *readPtr, int *hexCharsRead);
