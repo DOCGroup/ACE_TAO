@@ -1,3 +1,8 @@
+Tue Feb 24 21:05:08 1998  Nagarajan Surendran  <naga@mambo.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp: Moved the main () to
+	a separate file Main.cpp
+	
 Tue Feb 24 17:45:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/orbobj.h: Removed the unnecessary = 0 on the new run method.
