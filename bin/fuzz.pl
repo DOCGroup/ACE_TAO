@@ -36,6 +36,7 @@ use Getopt::Std;
 @files_h = ();
 @files_html = ();
 @files_dsp = ();
+@files_gnu = ();
 @files_idl = ();
 @files_pl = ();
 @files_changelog = ();
@@ -100,6 +101,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.(bor)$/i) {
         push @files_bor, ($name);
+    }
+    elsif ($name =~ /\.(GNU)$/i) {
+        push @files_gnu, ($name);
     }
     elsif ($name =~ /\.(dsp|vcp)$/i) {
         push @files_dsp, ($name);
@@ -179,7 +183,7 @@ sub check_for_inline_in_cpp ()
 sub check_for_id_string ()
 {
     print "Running \$Id\$ string check\n";
-    foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc, @files_bor, 
+    foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc, @files_bor, @files_gnu,
                    @files_html, @files_idl, @files_pl, @makefile_files) {
         my $found = 0;
         if (open (FILE, $file)) {

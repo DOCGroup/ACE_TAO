@@ -1,4 +1,5 @@
 # Hey Emacs, this is a -*- Makefile -*-
+# $Id$
 
 # platform_linux_borland.GNU
 
