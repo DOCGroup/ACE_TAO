@@ -1,5 +1,0 @@
-Tue Jun 16 13:37:43 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
-
-	* mpeg_client/Command_Handler.cpp: Added code to read the iors
-	from the java GUI.
-
