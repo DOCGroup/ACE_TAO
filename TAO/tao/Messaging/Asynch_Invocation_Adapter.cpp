@@ -149,7 +149,7 @@ namespace TAO
 
     // Loose ownership of the reply dispatcher
     TAO::Asynch_Remote_Invocation asynch (
-       effective_target,
+       effective_target.in (),
        r,
        op,
        this->safe_rd_.release ());
