@@ -1,3 +1,9 @@
+Tue Jul 30 13:37:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/performance.html: 
+	* docs/Options.html: Documented that RW connection handler cannot
+	  be used with AMI.  
+
 Tue Jul 30 10:24:09 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/ORT/ORT_test_IORInterceptor.cpp (destroy):
