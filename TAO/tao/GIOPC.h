@@ -1,5 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
+
 // ================================================================
 //
 // = LIBRARY
@@ -34,6 +35,7 @@
 #include "tao/corbafwd.h"
 #include "tao/IOPC.h"
 #include "tao/Union.h"
+#include "tao/Object_KeyC.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
@@ -162,144 +164,27 @@ TAO_NAMESPACE  GIOP
     typedef TargetAddress_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-#if !defined (_GIOP_TARGETADDRESS__TAO_SEQ_OCTET_CH_)
-#define _GIOP_TARGETADDRESS__TAO_SEQ_OCTET_CH_
+    void object_key (const TAO_ObjectKey &);// set
+    const TAO_ObjectKey &object_key (void) const; // get method (read only)
+    TAO_ObjectKey &object_key (void); // get method (read/write only)
 
-    class _tao_seq_Octet;
-    class _tao_seq_Octet_var;
-    typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
+    void profile (const IOP::TaggedProfile &);// set
+    const IOP::TaggedProfile &profile (void) const; // get method (read only)
+    IOP::TaggedProfile &profile (void); // get method (read/write only)
     
-    // *************************************************************
-    // _tao_seq_Octet
-    // *************************************************************
+    void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);// set
+    const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const; // get method (read only)
+    ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void); // get method (read/write only)
     
-    class TAO_Export _tao_seq_Octet : public 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-      TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-      TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+    void _default ();
+  private:
+    CORBA::Short disc_;
+    union
     {
-    public:
-      _tao_seq_Octet (void); // default ctor
-      _tao_seq_Octet (CORBA::ULong max); // uses max size
-      _tao_seq_Octet (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        CORBA::Octet *buffer, 
-        CORBA::Boolean release=0
-      );
-      _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
-      ~_tao_seq_Octet (void); // dtor
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-      typedef _tao_seq_Octet_ptr _ptr_type;
-      typedef _tao_seq_Octet_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    
-#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
-    _tao_seq_Octet (
-        CORBA::ULong length,
-        const ACE_Message_Block* mb
-      )
-      : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
-
-  };
-  
-#endif /* end #if !defined */
-
-
-#if !defined (_GIOP_TARGETADDRESS__TAO_SEQ_OCTET___VAR_CH_)
-#define _GIOP_TARGETADDRESS__TAO_SEQ_OCTET___VAR_CH_
-
-  // *************************************************************
-  // class GIOP::TargetAddress::_tao_seq_Octet_var
-  // *************************************************************
-
-  class TAO_Export _tao_seq_Octet_var
-  {
-  public:
-    _tao_seq_Octet_var (void); // default constructor
-    _tao_seq_Octet_var (_tao_seq_Octet *);
-    _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
-    ~_tao_seq_Octet_var (void); // destructor
-    
-    _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
-    _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
-    _tao_seq_Octet *operator-> (void);
-    const _tao_seq_Octet *operator-> (void) const;
-    
-    operator const _tao_seq_Octet &() const;
-    operator _tao_seq_Octet &();
-    operator _tao_seq_Octet &() const;
-    CORBA::Octet &operator[] (CORBA::ULong index);
-    // in, inout, out, _retn 
-    const _tao_seq_Octet &in (void) const;
-    _tao_seq_Octet &inout (void);
-    _tao_seq_Octet *&out (void);
-    _tao_seq_Octet *_retn (void);
-    _tao_seq_Octet *ptr (void) const;
-
-  private:
-    _tao_seq_Octet *ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_GIOP_TARGETADDRESS__TAO_SEQ_OCTET___OUT_CH_)
-#define _GIOP_TARGETADDRESS__TAO_SEQ_OCTET___OUT_CH_
-
-  class TAO_Export _tao_seq_Octet_out
-  {
-  public:
-    _tao_seq_Octet_out (_tao_seq_Octet *&);
-    _tao_seq_Octet_out (_tao_seq_Octet_var &);
-    _tao_seq_Octet_out (const _tao_seq_Octet_out &);
-    _tao_seq_Octet_out &operator= (const _tao_seq_Octet_out &);
-    _tao_seq_Octet_out &operator= (_tao_seq_Octet *);
-    operator _tao_seq_Octet *&();
-    _tao_seq_Octet *&ptr (void);
-    _tao_seq_Octet *operator-> (void);
-    CORBA::Octet &operator[] (CORBA::ULong index);
-    
-  private:
-    _tao_seq_Octet *&ptr_;
-    // assignment from T_var not allowed
-    void operator= (const _tao_seq_Octet_var &);
-  };
-
-
-#endif /* end #if !defined */
-
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef _tao_seq_Octet _object_key_seq;
-#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
-    void object_key (const _tao_seq_Octet &);// set
-  const _tao_seq_Octet &object_key (void) const; // get method (read only)
-  _tao_seq_Octet &object_key (void); // get method (read/write only)
-
-  void profile (const IOP::TaggedProfile &);// set
-  const IOP::TaggedProfile &profile (void) const; // get method (read only)
-  IOP::TaggedProfile &profile (void); // get method (read/write only)
-
-  void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);// set
-  const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const; // get method (read only)
-  ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void); // get method (read/write only)
-
-  void _default ();
-private:
-  CORBA::Short disc_;
-  union
-  {
-    _tao_seq_Octet *object_key_;
-    IOP::TaggedProfile *profile_;
-    ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
-  } u_; // end of union
+      TAO_ObjectKey *object_key_;
+      IOP::TaggedProfile *profile_;
+      ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
+    } u_; // end of union
   // TAO extensions
   void _reset (CORBA::Short, CORBA::Boolean);
   // Frees any allocated storage
@@ -406,21 +291,6 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::IORAddressing
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::IORAddressingInfo &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::TargetAddress &); // 
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
-
-#if !defined _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_H_
-#define _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_H_
-
-TAO_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const GIOP::TargetAddress::_tao_seq_Octet &
-  );
-TAO_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    GIOP::TargetAddress::_tao_seq_Octet &
-  );
-
-#endif /* _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_H_ */
-
 
 #endif /* __ACE_INLINE__ */
 

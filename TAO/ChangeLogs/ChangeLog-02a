@@ -1,3 +1,89 @@
+Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+	
+	* tao/GIOPC.cpp
+	* tao/GIOPC.i
+	* tao/GIOPC.h: Removed some generated code for
+	  sequence<octet>. TAO has this in abundance and it would be
+	  better to reuse them.
+
+	* tao/GIOP_Server_Request.cpp
+	* tao/GIOP_Server_Request.h
+	* tao/GIOP_Server_Request.i: Removed the header parsing code from
+	  the class. It has now been moved to the right version dependant
+	  acceptor side code which will do the right parse and store the
+	  info in this class. To facilitate the holding the parsed
+	  information in this class, new methods have been added.
+
+	* tao/IIOP_Acceptor.cpp
+	* tao/IIOP_Acceptor.h
+	* tao/IIOP_Connect.cpp
+	* tao/IIOP_Connect.h
+	* tao/IIOP_Connector.cpp
+	* tao/IIOP_Connector.h
+	* tao/IIOP_Factory.cpp
+	* tao/IIOP_Factory.h
+	* tao/IIOP_Profile.cpp
+	* tao/IIOP_Profile.h
+	* tao/IIOP_Profile.i
+	* tao/IIOP_Transport.cpp
+	* tao/IIOP_Transport.h
+	* tao/Invocation.cpp
+	* tao/Invocation.h	
+	* tao/Invocation.i
+	* tao/SHMIOP_Acceptor.cpp
+	* tao/SHMIOP_Acceptor.h
+	* tao/SHMIOP_Connect.cpp
+	* tao/SHMIOP_Acceptor.i
+	* tao/SHMIOP_Connect.h
+	* tao/SHMIOP_Connect.i
+	* tao/SHMIOP_Connector.cpp
+	* tao/SHMIOP_Connector.h
+	* tao/SHMIOP_Factory.cpp
+	* tao/SHMIOP_Factory.h
+	* tao/SHMIOP_Transport.cpp
+	* tao/SHMIOP_Transport.h
+	* tao/UIOP_Transport.h
+	* tao/UIOP_Transport.cpp
+	* tao/UIOP_Profile.cpp
+	* tao/UIOP_Connector.h
+	* tao/UIOP_Connector.cpp
+	* tao/UIOP_Connect.cpp
+	* tao/UIOP_Connect.h
+	* tao/UIOP_Connect.i
+	* tao/UIOP_Acceptor.h
+	* tao/UIOP_Acceptor.cpp
+	* tao/Protocol_Factory.h
+	* tao/Pluggable.h
+	* tao/Pluggable.i
+	* tao/Pluggable.cpp: Changed the way GIOP code is handled by these
+	  classes. GIOP code was completely reentrant and so static calls
+	  were made to the GIOP code. But now the calls would be routed
+	  through a common interface. Further, changes were also made to
+	  remove the GIOP specific code from these files.
+
+
+	* tao/params.cpp
+	* tao/params.h
+	* tao/params.i
+	* tao/ORB_Core.i
+	* tao/ORB_Core.h
+	* tao/ORB_Core.cpp: Removed the command line option support for
+	  GIOPlite. The ORB's can be initilaised to use GIOPlite by
+	  loading the IIOP_Lite or UIOP_Lite factory from their service
+	  configurator file. Please see
+	  $TAO_ROOT/performance-tests/Cubit/TAO/IDL_Cubit for an example
+	  of how this is done. There is one problem however. ORB's can be
+	  initialised now with either IIOP or IIOP_Lite and not both. In
+	  other words, the user shouldn't try to load TCP/IP mapping of
+	  GIOP & GIOPlite for the same ORB. The same applies to the UNIX
+	  domain sockets mapping of GIOP & GIOPlite. 
+
+	* tao/Reply_Dispatcher.h		
+	* tao/Reply_Dispatcher.i
+	* tao/Reply_Dispatcher.cpp: Removed GIOP_Version info.  theyhave
+	  just been commented out. At a later stage we should be removing
+	  them. We shouldn't be doing any GIOP version specific processing
+	  in this piece of code.
 Wed Mar 15 17:34:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Pluggable_Messaging.cpp
