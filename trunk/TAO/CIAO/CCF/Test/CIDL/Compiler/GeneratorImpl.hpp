@@ -41,7 +41,8 @@ namespace CIDL
       virtual void
       pre (Type& c)
       {
-        cout << "composition " << c.kind () << " ";
+        //@@ TODO kind
+        cout << "composition " << "session" << " ";
       }
 
       virtual void

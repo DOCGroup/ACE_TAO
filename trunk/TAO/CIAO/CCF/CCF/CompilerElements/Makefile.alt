@@ -10,7 +10,9 @@ $(call include, $(root)/Config.rules)
 
 $(call include, $(UTILITY_ROOT)/BuildRules/Archive.pre.rules)
 
-cxx_translation_units := Introspection.cpp
+cxx_translation_units := Introspection.cpp     \
+                         PreprocessorToken.cpp \
+                         Preprocessor.cpp
 
 module_base           := CompilerElements
 module_prefix         :=

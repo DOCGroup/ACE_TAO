@@ -1,0 +1,24 @@
+# file      : Test/CompilerElements/CPP/Makefile.alt
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $Id$
+
+root = ../../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
+
+cxx_translation_units := driver.cpp 
+
+module_base           := driver
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+                         
+CXX_LINK_LIBS         += -L$(root)/CCF/CompilerElements  \
+                         -lCompilerElements              \
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.post.rules)

@@ -81,7 +81,7 @@ namespace CCF
             if (trace) cerr << "resolve: resolution process for \'"
                             << name << "\' from \'" << from << "\' failed."
                             << endl;
-            
+
             throw NotFound ();
           }
           else

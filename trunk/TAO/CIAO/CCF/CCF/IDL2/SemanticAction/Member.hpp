@@ -24,6 +24,9 @@ namespace CCF
 
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
+
+        virtual void
+        end () = 0;
       };
     }
   }

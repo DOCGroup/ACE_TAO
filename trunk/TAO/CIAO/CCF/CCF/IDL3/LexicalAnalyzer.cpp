@@ -9,7 +9,7 @@ namespace CCF
   namespace IDL3
   {
     LexicalAnalyzer::
-    LexicalAnalyzer (TokenStream<char>& is)
+    LexicalAnalyzer (CompilerElements::TokenStream<Char>& is)
         : IDL2::LexicalAnalyzer (is)
     {
       // Keywords (alphabetic order).

@@ -31,6 +31,44 @@ namespace CCF
         }
 
         void EventType::
+        begin_abstract_def (SimpleIdentifierPtr const& id)
+        {
+          if (ctx.trace ()) cerr << "abstract eventtype def " << id << endl;
+
+          SimpleName name (id->lexeme ());
+
+          if (Nameable* s = lookup (ctx.tu (), ctx.scope (), name))
+          {
+            now (dynamic_cast<AbstractEventType&>(*s));
+          }
+          else
+          {
+            now (ctx.tu ().new_node<AbstractEventType> ());
+          }
+
+          ctx.tu ().new_edge<Defines> (ctx.scope (), now (), name);
+        }
+
+        void EventType::
+        begin_abstract_fwd (SimpleIdentifierPtr const& id)
+        {
+          if (ctx.trace ()) cerr << "abstract eventtype fwd " << id << endl;
+
+          SimpleName name (id->lexeme ());
+
+          if (Nameable* s = lookup (ctx.tu (), ctx.scope (), name))
+          {
+            now (dynamic_cast<AbstractEventType&>(*s));
+          }
+          else
+          {
+            now (ctx.tu ().new_node<AbstractEventType> ());
+          }
+
+          ctx.tu ().new_edge<Mentions> (ctx.scope (), now (), name);
+        }
+
+        void EventType::
         begin_concrete_def (SimpleIdentifierPtr const& id)
         {
           if (ctx.trace ()) cerr << "concrete eventtype def " << id << endl;
@@ -52,7 +90,7 @@ namespace CCF
         void EventType::
         begin_concrete_fwd (SimpleIdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << "concrete eventtype fwd" << id << endl;
+          if (ctx.trace ()) cerr << "concrete eventtype fwd " << id << endl;
 
           SimpleName name (id->lexeme ());
 
@@ -72,6 +110,12 @@ namespace CCF
         inherits (IdentifierPtr const& id)
         {
           if (ctx.trace ()) cerr << "inherits " << id << endl;
+        }
+
+        void EventType::
+        supports (IdentifierPtr const& id)
+        {
+          if (ctx.trace ()) cerr << "supports " << id << endl;
         }
 
         void EventType::

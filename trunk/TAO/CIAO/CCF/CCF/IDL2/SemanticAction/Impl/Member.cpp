@@ -51,6 +51,12 @@ namespace CCF
               cerr << "error: invalid member declaration" << endl;
               throw;
             }
+
+            //@@ I am not handling NotUnique here. For example if
+            //   I provide module name as type then the compiler
+            //   will ICE. Think about other places it may happen
+            //   (attribute, value memebr, typeded, others?).
+            //
           }
           catch (NotFound const&)
           {
@@ -61,7 +67,7 @@ namespace CCF
           {
             cerr << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
-                 << "\' is not a type declaration" << endl;            
+                 << "\' is not a type declaration" << endl;
             cerr << "using non-type as an member type is illegal" << endl;
           }
           catch (NotComplete const& e)
@@ -86,6 +92,12 @@ namespace CCF
             ctx.tu ().new_edge<Belongs> (m, *type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), m, name);
           }
+        }
+
+        void Member::
+        end ()
+        {
+          if (ctx.trace ()) cerr << "end" << endl;
         }
       }
     }

@@ -5,16 +5,16 @@
 #ifndef CCF_IDL2_LEXICAL_ANALYZER_HPP
 #define CCF_IDL2_LEXICAL_ANALYZER_HPP
 
+//@@ I wonder what I actually use from this list.
+//
 #include <set>
 #include <map>
 #include <deque>
 #include <locale>
-#include <cctype>
 #include <string>
-#include <istream>
 
 #include "CCF/CompilerElements/TokenStream.hpp"
-
+#include "CCF/CompilerElements/PreprocessorToken.hpp"
 #include "CCF/IDL2/Token.hpp"
 
 namespace CCF
@@ -25,169 +25,28 @@ namespace CCF
     //
     //
 
-    class LexicalAnalyzer : public TokenStream<TokenPtr>
+    class LexicalAnalyzer : public CompilerElements::TokenStream<TokenPtr>
     {
     public:
       virtual
       ~LexicalAnalyzer () throw () {}
 
     public:
-      LexicalAnalyzer (TokenStream<char>& is);
+
+      typedef
+      CompilerElements::CPP::Token
+      Char;
+
+      typedef
+      std::deque<Char>
+      CharBuffer;
+
+      LexicalAnalyzer (CompilerElements::TokenStream<Char>& is);
 
       virtual TokenPtr
       next ();
 
     protected:
-      typedef
-      TokenStream<char>::int_type
-      int_type;
-
-      typedef
-      TokenStream<char>::char_type
-      char_type;
-
-      typedef
-      TokenStream<char>::traits
-      traits;
-
-      struct Char
-      {
-        Char (int_type c, unsigned long line = 0)
-            : c_ (c), line_ (line)
-        {
-        }
-
-      public:
-        bool
-        is_eof () const
-        {
-          return !traits::not_eof (c_);
-        }
-
-        bool
-        is_alpha (std::locale const& l) const
-        {
-          return std::isalpha (char_ (), l);
-        }
-
-        bool
-        is_oct_digit (std::locale const& l) const
-        {
-          char_type c (char_ ());
-
-          return std::isdigit (c, l) && c != '8' && c != '9';
-        }
-
-        bool
-        is_dec_digit (std::locale const& l) const
-        {
-          return std::isdigit (char_ (), l);
-        }
-
-        bool
-        is_hex_digit (std::locale const& l) const
-        {
-          return std::isxdigit (char_ (), l);
-        }
-
-        bool
-        is_alnum (std::locale const& l) const
-        {
-          return std::isalnum (char_ (), l);
-        }
-
-        bool
-        is_space (std::locale const& l) const
-        {
-          return std::isspace (char_ (), l);
-        }
-
-        Char
-        to_upper (std::locale const& l) const
-        {
-          return Char (std::toupper (char_ (), l), line_);
-        }
-
-      public:
-        char_type
-        char_ () const
-        {
-          return traits::to_char_type (c_);
-        }
-
-        unsigned long
-        line () const
-        {
-          return line_;
-        }
-
-      public:
-        friend bool
-        operator== (Char const& a, Char const& b)
-        {
-          return a.is_eof () && b.is_eof () || a.char_ () == b.char_ ();
-        }
-
-        friend bool
-        operator== (Char const& a, char b)
-        {
-          return !a.is_eof () && a.char_ () == b;
-        }
-
-        friend bool
-        operator== (char a, Char const& b)
-        {
-          return b == a;
-        }
-
-        friend bool
-        operator!= (Char const& a, Char const& b)
-        {
-          return !(a.is_eof () && b.is_eof () || a.char_ () == b.char_ ());
-        }
-
-        friend bool
-        operator!= (Char const& a, char b)
-        {
-          return a.is_eof () || a.char_ () != b;
-        }
-
-        friend bool
-        operator!= (char a, Char const& b)
-        {
-          return b != a;
-        }
-
-      private:
-        int_type c_;
-        unsigned long line_;
-      };
-
-
-    protected:
-      virtual Char
-      get ();
-
-      virtual Char
-      peek ();
-
-      virtual Char
-      peek_more ();
-
-      virtual void
-      ret (Char const& c);
-
-      /*
-      char_type
-      to_char_type (int_type i);
-      */
-
-      virtual void
-      cxx_comment (Char c);
-
-      virtual void
-      c_comment (Char c);
-
       virtual Char
       skip_space (Char c);
 
@@ -212,6 +71,9 @@ namespace CCF
       virtual bool
       integer_literal (Char c, TokenPtr& token);
 
+      // Literal scanners.
+      //
+      //
       class Format {};
       class Boundary {};
 
@@ -224,6 +86,70 @@ namespace CCF
       unsigned long long
       scan_integer (std::string const& s, unsigned short base)
         throw (Format, Boundary);
+
+    protected:
+      virtual Char
+      get ();
+
+      virtual Char
+      peek ();
+
+      virtual Char
+      peek_more ();
+
+      virtual void
+      ret (Char const& c);
+
+    protected:
+      // Character utility functions.
+      //
+      bool
+      is_alpha (char c) const
+      {
+        return std::isalpha (c, loc_);
+      }
+
+      bool
+      is_oct_digit (char c) const
+      {
+        return std::isdigit (c, loc_) && c != '8' && c != '9';
+      }
+
+      bool
+      is_dec_digit (char c) const
+      {
+        return std::isdigit (c, loc_);
+      }
+
+      bool
+      is_hex_digit (char c) const
+      {
+        return std::isxdigit (c, loc_);
+      }
+
+      bool
+      is_alnum (char c) const
+      {
+        return std::isalnum (c, loc_);
+      }
+
+      bool
+      is_space (char c) const
+      {
+        return std::isspace (c, loc_);
+      }
+
+      bool
+      is_eos (Char const& c) const
+      {
+        return c == Char::eos;
+      }
+
+      char
+      to_upper (char c) const
+      {
+        return std::toupper (c, loc_);
+      }
 
     protected:
       typedef
@@ -253,15 +179,7 @@ namespace CCF
       std::set<std::string>
       OperatorTable;
 
-      typedef
-      std::deque<Char>
-      CharBuffer;
-
     protected:
-
-      Char
-      get_from_stream ();
-
       bool
       read_simple_identifier (std::string& lexeme, CharBuffer& buf);
 
@@ -272,20 +190,14 @@ namespace CCF
     protected:
       std::locale loc_;
 
-      TokenStream<char>& is_;
+      CompilerElements::TokenStream<Char>& is_;
+
+      CharBuffer ibuffer_;
 
       KeywordTable keyword_table_;
       IdentifierTreeNode identifier_tree_;
       PunctuationTable punctuation_table_;
       OperatorTable operator_table_;
-
-      // line numbering mechanism
-      bool after_nl;
-      unsigned long line_;
-
-      // look ahead mechanism
-
-      CharBuffer buffer_;
     };
   }
 }

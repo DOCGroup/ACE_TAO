@@ -1,3 +1,125 @@
+Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/CompilerElements/Diagnostic.hpp:
+	* CCF/CCF/CompilerElements/TokenStream.hpp:
+
+	  Cosmetic changes.
+
+	
+	* CCF/CCF/CompilerElements/Makefile.alt:
+	* CCF/CCF/CompilerElements/Preprocessor.hpp:
+	* CCF/CCF/CompilerElements/PreprocessorToken.cpp:
+	* CCF/CCF/CompilerElements/PreprocessorToken.hpp:
+
+	  New (though not very capable) preprocessor for the time being.
+
+	
+	* CCF/CCF/IDL2/SemanticAction/Native.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Native.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Native.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Native.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Native.hpp:
+	* CCF/CCF/IDL2/Traversal/Native.cpp:
+	* CCF/CCF/IDL2/Traversal/Native.hpp:
+
+	  Added support for IDL2 native feature.
+	
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/LexicalAnalyzer.hpp:
+	* CCF/CCF/IDL2/Makefile.archive:
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction.hpp:
+	* CCF/CCF/IDL2/SemanticGraph.hpp:
+	* CCF/CCF/IDL2/Traversal.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Attribute.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Include.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Interface.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Member.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Include.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Attribute.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
+	* CCF/CCF/IDL2/SemanticGraph/Operation.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
+	* CCF/CCF/IDL2/Traversal/Fundamental.hpp:
+	* CCF/CCF/IDL2/Traversal/Makefile.alt:
+
+	  Cosmetic changes.
+
+	
+	* CCF/CCF/IDL3/SemanticAction/EventType.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.hpp:
+
+	  Added support for IDL3 eventtype feature.
+
+	
+	* CCF/CCF/IDL3/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL3/LexicalAnalyzer.hpp:
+	* CCF/CCF/IDL3/Parser.cpp:
+	* CCF/CCF/IDL3/Parser.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
+
+	  Cosmetic changes.
+
+
+	* CCF/CCF/CIDL/LexicalAnalyzer.cpp:
+	* CCF/CCF/CIDL/LexicalAnalyzer.hpp:
+	* CCF/CCF/CIDL/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/CIDL/SemanticGraph/Composition.cpp:
+	* CCF/CCF/CIDL/SemanticGraph/Composition.hpp:
+
+	  Cosmetic changes.
+
+	
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
+	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+	* CCF/Example/IDL2/CxxMapping/Makefile.alt:
+	* CCF/Example/IDL2/CxxMapping/driver.cpp:
+	* CCF/Test/Makefile.alt:
+	* CCF/Test/CIDL/Compiler/GeneratorImpl.hpp:
+	* CCF/Test/CIDL/Compiler/Makefile.alt:
+	* CCF/Test/CIDL/Compiler/driver.cpp:
+	* CCF/Test/CompilerElements/Makefile.alt:
+	* CCF/Test/CompilerElements/CPP/Makefile.alt:
+	* CCF/Test/CompilerElements/CPP/driver.cpp:
+	* CCF/Test/IDL2/Compiler/Makefile.alt:
+	* CCF/Test/IDL2/Compiler/driver.cpp:
+	* CCF/Test/IDL2/Traversal/Recreate/GeneratorImpl.hpp:
+	* CCF/Test/IDL3/Compiler/Makefile.alt:
+	* CCF/Test/IDL3/Compiler/driver.cpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
+	* CIDLC/cidlc.cpp:
+
+	  Updated to reflect changes above.
+	
+	
+	* CCF/Documentation/TODO:
+
+	  Reflected new achievements.
+
+	
 Tue Dec 30 13:53:20 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/Philosophers/Philosophers.idl:

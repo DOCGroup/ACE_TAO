@@ -9,7 +9,6 @@
 
 #include "CCF/IDL2/SemanticAction/Impl/Factory.hpp"
 
-#include "CCF/IDL3/SemanticAction/Impl/Include.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Component.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Provides.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Uses.hpp"
@@ -20,6 +19,7 @@
 #include "CCF/IDL3/SemanticAction/Impl/Home.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/HomeFactory.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp"
+#include "CCF/IDL3/SemanticAction/Impl/Include.hpp"
 
 namespace CCF
 {
@@ -105,12 +105,6 @@ namespace CCF
             return publishes_;
           }
 
-          virtual IDL2::SemanticAction::SystemInclude&
-          system_include ()
-          {
-            return system_include_;
-          }
-
           virtual SemanticAction::Uses&
           uses ()
           {
@@ -129,7 +123,6 @@ namespace CCF
           Include include_;
           Provides provides_;
           Publishes publishes_;
-          SystemInclude system_include_;
           Uses uses_;
         };
       }

@@ -34,8 +34,9 @@
 using std::cerr;
 using std::endl;
 
+using namespace CCF::CompilerElements;
 using namespace CCF::CIDL;
-using namespace SemanticGraph;
+using namespace CCF::CIDL::SemanticGraph;
 
 int
 main (int argc, char* argv[])
@@ -143,20 +144,18 @@ main (int argc, char* argv[])
       ? static_cast<std::istream&> (ifs)
       : static_cast<std::istream&> (std::cin);
 
-    CCF::InputStreamAdapter isa (is);
-    CCF::Preprocessor pp (isa);
+    InputStreamAdapter isa (is);
+    CPP::Preprocessor pp (isa);
 
     if (cl.get_value ("preprocess-only", false))
     {
       while (true)
       {
-        CCF::Preprocessor::int_type i = pp.next ();
+        CPP::Token t (pp.next ());
 
-        if (pp.eos (i)) break;
+        if (t == CPP::Token::eos) break;
 
-        CCF::Preprocessor::char_type c = pp.to_char_type (i);
-
-        std::cout << c;
+        std::cout << t;
       }
       return 0;
     }

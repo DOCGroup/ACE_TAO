@@ -32,28 +32,35 @@ namespace CCF
 
           error_handler (context, dout),
 
-          ABSTRACT   ("abstract"   ),
-          ATTRIBUTE  ("attribute"  ),
-          CONST      ("const"      ),
-          ENUM       ("enum"       ),
-          EXCEPTION  ("exception"  ),
-          FACTORY    ("factory"    ),
-          IN         ("in"         ),
-          INCLUDE    ("include"    ),
-          INOUT      ("inout"      ),
-          INTERFACE  ("interface"  ),
-          LOCAL      ("local"      ),
-          MODULE     ("module"     ),
-          ONEWAY     ("oneway"     ),
-          OUT        ("out"        ),
-          RAISES     ("raises"     ),
-          SEQUENCE   ("sequence"   ),
-          SINCLUDE   ("sinclude"   ),
-          STRUCT     ("struct"     ),
-          SUPPORTS   ("supports"   ),
-          TYPEDEF    ("typedef"    ),
-          TYPEID     ("typeid"     ),
-          TYPEPREFIX ("typeprefix" ),
+          ABSTRACT    ("abstract"   ),
+          ATTRIBUTE   ("attribute"  ),
+          BINCLUDE    ("__binclude" ),
+          CONST       ("const"      ),
+          CUSTOM      ("custom"     ),
+          ENUM        ("enum"       ),
+          EXCEPTION   ("exception"  ),
+          FACTORY     ("factory"    ),
+          IN          ("in"         ),
+          INOUT       ("inout"      ),
+          INTERFACE   ("interface"  ),
+          QINCLUDE    ("__qinclude" ),
+          LOCAL       ("local"      ),
+          MODULE      ("module"     ),
+          NATIVE      ("native"     ),
+          ONEWAY      ("oneway"     ),
+          OUT         ("out"        ),
+          PRIVATE     ("private"    ),
+          PUBLIC      ("public"     ),
+          RAISES      ("raises"     ),
+          READONLY    ("readonly"   ),
+          SEQUENCE    ("sequence"   ),
+          STRUCT      ("struct"     ),
+          SUPPORTS    ("supports"   ),
+          TRUNCATABLE ("truncatable"),
+          TYPEDEF     ("typedef"    ),
+          TYPEID      ("typeid"     ),
+          TYPEPREFIX  ("typeprefix" ),
+          VALUETYPE   ("valuetype"  ),
 
           COLON  (":"),
           COMMA  (","),
@@ -83,11 +90,20 @@ namespace CCF
           // Attribute
           //
           //
+          act_attribute_begin_ro (
+            f.attribute (), &SemanticAction::Attribute::begin_ro),
+
+          act_attribute_begin_rw (
+            f.attribute (), &SemanticAction::Attribute::begin_rw),
+
           act_attribute_type (
             f.attribute (), &SemanticAction::Attribute::type),
 
           act_attribute_name (
             f.attribute (), &SemanticAction::Attribute::name),
+
+          act_attribute_end (
+            f.attribute (), &SemanticAction::Attribute::end),
 
           // Enum
           //
@@ -117,17 +133,19 @@ namespace CCF
           act_exception_end (
             f.exception (), &SemanticAction::Exception::end),
 
+
           // Include
           //
           //
-          act_include_begin (f.include (), &SemanticAction::Include::begin),
-          act_include_end (f.include (), &SemanticAction::Include::end),
+          act_include_quote (
+            f.include (), &SemanticAction::Include::quote),
 
-          act_system_include_begin (
-            f.system_include (), &SemanticAction::SystemInclude::begin),
+          act_include_bracket (
+            f.include (), &SemanticAction::Include::bracket),
 
-          act_system_include_end (
-            f.system_include (), &SemanticAction::SystemInclude::end),
+          act_include_end (
+            f.include (), &SemanticAction::Include::end),
+
 
           // Interface
           //
@@ -173,6 +191,8 @@ namespace CCF
           act_member_name (
             f.member (), &SemanticAction::Member::name),
 
+          act_member_end (
+            f.member (), &SemanticAction::Member::end),
 
           // Module
           //
@@ -186,6 +206,16 @@ namespace CCF
             f.module (), &SemanticAction::Scope::close_scope),
 
           act_module_end (f.module (), &SemanticAction::Module::end),
+
+
+          // Native
+          //
+          //
+          act_native_name (
+            f.native (), &SemanticAction::Native::name),
+
+          act_native_end (
+            f.native (), &SemanticAction::Native::end),
 
 
           // Operation
@@ -258,7 +288,37 @@ namespace CCF
                                  &SemanticAction::TypePrefix::begin),
 
           act_type_prefix_end (f.type_prefix (),
-                               &SemanticAction::TypePrefix::end)
+                               &SemanticAction::TypePrefix::end),
+
+          // ValueType
+          //
+          //
+          act_abstract_value_type_begin_def (
+            f.value_type (), &SemanticAction::ValueType::begin_abstract_def),
+
+          act_abstract_value_type_begin_fwd (
+            f.value_type (), &SemanticAction::ValueType::begin_abstract_fwd),
+
+          act_concrete_value_type_begin_def (
+            f.value_type (), &SemanticAction::ValueType::begin_concrete_def),
+
+          act_concrete_value_type_begin_fwd (
+            f.value_type (), &SemanticAction::ValueType::begin_concrete_fwd),
+
+          act_value_type_inherits (
+            f.value_type (), &SemanticAction::ValueType::inherits),
+
+          act_value_type_supports (
+            f.value_type (), &SemanticAction::ValueType::supports),
+
+          act_value_type_open_scope (
+            f.value_type (), &SemanticAction::Scope::open_scope),
+
+          act_value_type_close_scope (
+            f.value_type (), &SemanticAction::Scope::close_scope),
+
+          act_value_type_end (
+            f.value_type (), &SemanticAction::ValueType::end)
     {
       language =
         guard
@@ -278,39 +338,45 @@ namespace CCF
         ;
       */
 
-      import =
-          include_decl
-        | system_include_decl
+      import = include_decl
         ;
 
       include_decl =
-           INCLUDE
-        >> string_literal[act_include_begin]
+           (
+               (QINCLUDE >> string_literal[act_include_quote])
+             | (BINCLUDE >> string_literal[act_include_bracket])
+           )
         >> SEMI[act_include_end]
         ;
 
-      system_include_decl =
-           SINCLUDE
-        >> string_literal[act_system_include_begin]
-        >> SEMI[act_system_include_end]
-        ;
+      // There are two classes of types: First class include
+      // interface and valuetype. Seond class include all other
+      // types like struct, etc. I wonder how I can represent it
+      // in the grammar.
+      //
 
       declaration =
           abstract_type_decl
         | const_decl
-        | enum_decl
-        | exception_decl
         | extension
         | local_type_decl
         | module_decl
-        | struct_decl
-        | typedef_
-        | type_id
-        | type_prefix
+        | type_decl
+        | type_id_decl
+        | type_prefix_decl
         | unconstrained_interface_decl
+        | concrete_value_type_decl
         ;
 
-      type_id =
+      type_decl =
+          enum_decl
+        | exception_decl
+        | native_decl
+        | struct_decl
+        | typedef_decl
+        ;
+
+      type_id_decl =
            TYPEID
         >> (
                identifier
@@ -319,7 +385,7 @@ namespace CCF
         >> SEMI[act_type_id_end]
         ;
 
-      type_prefix =
+      type_prefix_decl =
            TYPEPREFIX
         >> (
                 identifier
@@ -334,7 +400,9 @@ namespace CCF
            (
              assertion ("interface or valuetype declaration expected")
              (
-               INTERFACE >> assertion ()(abstract_interface_decl)
+                 (INTERFACE >> assertion ()(abstract_interface_decl))
+               |
+                 (VALUETYPE >> assertion ()(abstract_value_type_decl))
              )
            )[error_handler]
         ;
@@ -502,6 +570,7 @@ namespace CCF
 
       enumerator_decl = identifier[act_enum_enumerator];
 
+
       // interface
       //
       //
@@ -600,6 +669,23 @@ namespace CCF
         )[error_handler]
         ;
 
+      interface_inheritance_spec =
+           assertion ("interface name expected",
+                      f.interface (),
+                      &SemanticAction::Interface::end)
+           (
+             identifier[act_interface_inherits]
+           )
+        >> *(
+                 COMMA
+              >> assertion ("interface name expected",
+                            f.interface (),
+                            &SemanticAction::Interface::end)
+                 (
+                   identifier[act_interface_inherits]
+                 )
+            )
+        ;
 
       interface_def_trailer =
            interface_body
@@ -655,28 +741,14 @@ namespace CCF
         ;
       */
 
-
-      interface_inheritance_spec =
-           assertion ("interface name expected",
-                      f.interface (),
-                      &SemanticAction::Interface::end)
-           (
-             identifier[act_interface_inherits]
-           )
-        >> *(
-                 COMMA
-              >> assertion ("interface name expected",
-                            f.interface (),
-                            &SemanticAction::Interface::end)
-                 (
-                   identifier[act_interface_inherits]
-                 )
-            )
-        ;
-
       interface_body =
         *(
-             attribute_decl
+             const_decl
+           | type_decl
+           | type_id_decl
+           | type_prefix_decl
+
+           | attribute_decl
            | operation_decl
         )
         ;
@@ -686,10 +758,14 @@ namespace CCF
       //
       //
       attribute_decl =
-           ATTRIBUTE
+        (
+            (READONLY >> ATTRIBUTE)[act_attribute_begin_ro]
+          |
+            ATTRIBUTE[act_attribute_begin_rw]
+        )
         >> identifier[act_attribute_type]
         >> simple_identifier[act_attribute_name]
-        >> SEMI
+        >> SEMI[act_attribute_end]
         ;
 
 
@@ -725,17 +801,18 @@ namespace CCF
       //
       member_decl =
            identifier[act_member_type]
-        >> member_declarator_list
-        >> SEMI
+        >> simple_identifier[act_member_name]
+        >> *(COMMA >> simple_identifier[act_member_name])
+        >> SEMI[act_member_end]
         ;
 
-
-      member_declarator_list =
-           identifier[act_member_name]
-        >> *(
-                 COMMA
-              >> identifier[act_member_name]
-            )
+      // native
+      //
+      //
+      native_decl =
+           NATIVE
+        >> simple_identifier[act_native_name]
+        >> SEMI[act_native_end]
         ;
 
 
@@ -853,10 +930,11 @@ namespace CCF
       //
       //
 
-      typedef_ =
+      typedef_decl =
            TYPEDEF
         >> typedef_type_spec
-        >> typedef_declarator_list
+        >> simple_identifier[act_typedef_declarator]
+        >> *(COMMA >> simple_identifier[act_typedef_declarator])
         >> SEMI[act_typedef_end]
         ;
 
@@ -865,12 +943,174 @@ namespace CCF
         | SEQUENCE >> LT >> identifier[act_typedef_begin_seq] >> GT
         ;
 
-      typedef_declarator_list =
-           identifier[act_typedef_declarator]
+
+      // valuetype
+      //
+      //
+      abstract_value_type_decl =
+        guard
+        (
+            (
+                 simple_identifier
+              >> SEMI
+            )[act_abstract_value_type_begin_fwd][act_value_type_end]
+          |
+            (
+                 (
+                   simple_identifier
+                   >> COLON
+                 )[act_abstract_value_type_begin_def]
+
+              >> value_type_inheritance_spec
+              >> !(SUPPORTS >> value_type_supports_spec)
+              >> LBRACE[act_value_type_open_scope]
+              >> value_type_def_trailer
+            )
+          |
+            (
+                 (
+                           simple_identifier
+                        >> SUPPORTS
+                 )[act_abstract_value_type_begin_def]
+
+              >> value_type_supports_spec
+              >> LBRACE[act_value_type_open_scope]
+              >> value_type_def_trailer
+            )
+          |
+            (
+                 (
+                      simple_identifier
+                   >> LBRACE
+                 )[act_abstract_value_type_begin_def][act_value_type_open_scope]
+
+              >> value_type_def_trailer
+            )
+        )[error_handler]
+        ;
+
+      concrete_value_type_decl =
+        guard
+        (
+             VALUETYPE
+          >> (
+                 (
+                      simple_identifier
+                   >> SEMI
+                 )[act_concrete_value_type_begin_fwd][act_value_type_end]
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> COLON
+                      )[act_concrete_value_type_begin_def]
+
+                   >> value_type_inheritance_spec
+                   >> !(SUPPORTS >> value_type_supports_spec)
+                   >> LBRACE[act_value_type_open_scope]
+                   >> value_type_def_trailer
+                 )
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> SUPPORTS
+                      )[act_concrete_value_type_begin_def]
+
+                   >> value_type_supports_spec
+                   >> LBRACE[act_value_type_open_scope]
+                   >> value_type_def_trailer
+                 )
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> LBRACE
+                      )[act_concrete_value_type_begin_def][act_value_type_open_scope]
+
+                   >> value_type_def_trailer
+                 )
+             )
+        )[error_handler]
+        ;
+
+
+      value_type_inheritance_spec =
+           identifier[act_value_type_inherits]
         >> *(
                  COMMA
-              >> identifier[act_typedef_declarator]
+              >> identifier[act_value_type_inherits]
             )
+        ;
+
+      value_type_supports_spec =
+           identifier[act_value_type_supports]
+        >> *(
+                 COMMA
+              >> identifier[act_value_type_supports]
+            )
+        ;
+
+      value_type_def_trailer =
+           value_type_body
+        >> RBRACE[act_value_type_close_scope]
+        >> SEMI[act_value_type_end]
+        ;
+
+      value_type_body =
+        *(
+             const_decl
+           | type_decl
+           | type_id_decl
+           | type_prefix_decl
+
+           | attribute_decl
+           | operation_decl
+           | value_type_member_decl
+           | value_type_factory_decl
+        )
+        ;
+
+
+      // valuetype member
+      //
+      //
+      value_type_member_decl =
+           (PUBLIC | PRIVATE)
+        >> identifier // [act_member_type]
+        >> simple_identifier // [act_member_name]
+        >> *(COMMA >> simple_identifier /*[act_member_name]*/)
+        >> SEMI
+        ;
+
+      // valuetype factory
+      //
+      //
+      value_type_factory_decl =
+           FACTORY
+        >> simple_identifier //[act_value_type_factory_name]
+        >> LPAREN
+        >> value_type_factory_parameter_list
+        >> RPAREN
+        >> !(RAISES >> LPAREN >> value_type_factory_raises_list >> RPAREN)
+        >> SEMI
+        ;
+
+      value_type_factory_parameter_list =
+        *(
+              value_type_factory_parameter
+           >> *(COMMA >> value_type_factory_parameter)
+        )
+        ;
+
+      value_type_factory_parameter =
+           IN
+        >> (identifier >> simple_identifier) //[act_value_type_factory_parameter]
+        ;
+
+      value_type_factory_raises_list =
+           identifier //[act_value_type_factory_raises]
+        >> *(COMMA >> identifier) // [act_value_type_factory_raises])
         ;
     }
   }

@@ -23,10 +23,19 @@ namespace CCF
         ~Attribute () throw () {}
 
         virtual void
+        begin_ro () = 0;
+
+        virtual void
+        begin_rw () = 0;
+
+        virtual void
         type (IdentifierPtr const& id) = 0;
 
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
+
+        virtual void
+        end () = 0;
       };
     }
   }

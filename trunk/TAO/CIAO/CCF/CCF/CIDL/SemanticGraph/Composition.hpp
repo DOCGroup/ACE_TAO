@@ -16,41 +16,6 @@ namespace CCF
       class Composition : public virtual Scope
       {
       public:
-        class Kind
-        {
-        public:
-          static Kind const entity, process, service, session;
-
-        public:
-          operator char const* () const;
-
-          bool
-          operator== (Kind d) const
-          {
-            return v_ == d.v_;
-          }
-
-          bool
-          operator!= (Kind d) const
-          {
-            return v_ != d.v_;
-          }
-
-        private:
-          enum Value
-          {
-            entity_, process_, service_, session_
-          } v_;
-
-          Kind (Value v)
-              : v_ (v)
-          {
-          }
-        };
-
-        virtual Kind
-        kind () = 0;
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -66,12 +31,6 @@ namespace CCF
       class EntityComposition : public virtual Composition
       {
       public:
-        virtual Kind
-        kind ()
-        {
-          return Kind::entity;
-        }
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -87,12 +46,6 @@ namespace CCF
       class ProcessComposition : public virtual Composition
       {
       public:
-        virtual Kind
-        kind ()
-        {
-          return Kind::process;
-        }
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -109,12 +62,6 @@ namespace CCF
       class ServiceComposition : public virtual Composition
       {
       public:
-        virtual Kind
-        kind ()
-        {
-          return Kind::service;
-        }
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -131,12 +78,6 @@ namespace CCF
       class SessionComposition : public virtual Composition
       {
       public:
-        virtual Kind
-        kind ()
-        {
-          return Kind::session;
-        }
-
         static Introspection::TypeInfo const&
         static_type_info ();
 

@@ -9,8 +9,6 @@
 #include "CCF/IDL2/SemanticAction/Member.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Elements.hpp"
 
-using namespace std;
-
 namespace CCF
 {
   namespace IDL2
@@ -33,6 +31,9 @@ namespace CCF
 
           virtual void
           name (SimpleIdentifierPtr const& id);
+
+          virtual void
+          end ();
 
         private:
           SemanticGraph::Type* type_;

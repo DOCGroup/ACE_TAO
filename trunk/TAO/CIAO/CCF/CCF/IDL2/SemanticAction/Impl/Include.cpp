@@ -24,9 +24,6 @@ namespace CCF
         //
         //
 
-        // Include
-        //
-        //
         Include::
         ~Include () throw ()
         {
@@ -39,39 +36,18 @@ namespace CCF
         }
 
         void Include::
-        begin (StringLiteralPtr const& sl)
+        quote (StringLiteralPtr const& sl)
         {
-          if (ctx.trace ()) cerr << "include " << sl << endl;
+          if (ctx.trace ()) cerr << "__qinclude " << sl << endl;
         }
 
         void Include::
-        end ()
+        bracket (StringLiteralPtr const& sl)
         {
-          if (ctx.trace ()) cerr << "end" << endl;
+          if (ctx.trace ()) cerr << "__binclude " << sl << endl;
         }
 
-        // SystemInclude
-        //
-        //
-        SystemInclude::
-        ~SystemInclude () throw ()
-        {
-        }
-
-        SystemInclude::
-        SystemInclude (Context& c)
-            : ctx (c)
-        {
-        }
-
-        void SystemInclude::
-        begin (StringLiteralPtr const& sl)
-        {
-          if (ctx.trace ()) cerr << "include <" << sl->lexeme () << ">"
-                                 << endl;
-        }
-
-        void SystemInclude::
+        void Include::
         end ()
         {
           if (ctx.trace ()) cerr << "end" << endl;

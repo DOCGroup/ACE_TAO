@@ -24,6 +24,7 @@ translated_units := SemanticGraph/Attribute.o    \
                     SemanticGraph/Member.o       \
                     SemanticGraph/Module.o       \
                     SemanticGraph/Name.o         \
+                    SemanticGraph/Native.o       \
                     SemanticGraph/Operation.o    \
                     SemanticGraph/Sequence.o     \
                     SemanticGraph/Struct.o       \
@@ -40,6 +41,7 @@ translated_units += Traversal/Attribute.o    \
                     Traversal/Interface.o    \
                     Traversal/Member.o       \
                     Traversal/Module.o       \
+                    Traversal/Native.o       \
                     Traversal/Operation.o    \
                     Traversal/Sequence.o     \
                     Traversal/Struct.o       \
@@ -58,10 +60,12 @@ translated_units += SemanticAction/Impl/Attribute.o  \
                     SemanticAction/Impl/Interface.o  \
                     SemanticAction/Impl/Member.o     \
                     SemanticAction/Impl/Module.o     \
+                    SemanticAction/Impl/Native.o     \
                     SemanticAction/Impl/Operation.o  \
                     SemanticAction/Impl/Struct.o     \
                     SemanticAction/Impl/TypeId.o     \
-                    SemanticAction/Impl/Typedef.o
+                    SemanticAction/Impl/Typedef.o    \
+                    SemanticAction/Impl/ValueType.o
 
 module_base           := IDL2
 module_prefix         :=

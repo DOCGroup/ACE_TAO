@@ -2,75 +2,77 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-#ifndef TOKEN_STREAM_HPP
-#define TOKEN_STREAM_HPP
+#ifndef CCF_COMPILER_ELEMENTS_TOKEN_STREAM_HPP
+#define CCF_COMPILER_ELEMENTS_TOKEN_STREAM_HPP
 
 #include <string>
 #include <istream>
 
 namespace CCF
 {
-  template <typename Token>
-  class TokenStream
+  namespace CompilerElements
   {
-  public:
-    virtual Token
-    next () = 0;
-  };
-
-
-  template <>
-  class TokenStream<char>
-  {
-  public:
-    typedef
-    std::char_traits<char>
-    traits;
-
-    typedef
-    traits::int_type
-    int_type;
-
-    typedef
-    traits::char_type
-    char_type;
-
-  public:
-    virtual int_type
-    next () = 0;
-
-    char_type
-    to_char_type (int_type i)
+    template <typename Token>
+    class TokenStream
     {
-      return traits::to_char_type (i);
-    }
+    public:
+      virtual Token
+      next () = 0;
+    };
 
-    bool
-    eos (int_type i)
+    template <>
+    class TokenStream<char>
     {
-      return i == traits::eof ();
-    }
-  };
+    public:
+      typedef
+      std::char_traits<char>
+      traits;
 
-  class InputStreamAdapter : public TokenStream<char>
-  {
-  public:
-    InputStreamAdapter (std::istream& is)
-        : is_ (is)
+      typedef
+      traits::int_type
+      int_type;
+
+      typedef
+      traits::char_type
+      char_type;
+
+    public:
+      virtual int_type
+      next () = 0;
+
+      static char_type
+      to_char_type (int_type i)
+      {
+        return traits::to_char_type (i);
+      }
+
+      static int_type
+      eos ()
+      {
+        return traits::eof ();
+      }
+    };
+
+    class InputStreamAdapter : public TokenStream<char>
     {
-    }
+    public:
+      InputStreamAdapter (std::istream& is)
+          : is_ (is)
+      {
+      }
 
-  public:
+    public:
 
-    virtual int_type
-    next ()
-    {
-      return is_.get ();
-    }
+      virtual int_type
+      next ()
+      {
+        return is_.get ();
+      }
 
-  private:
-    std::istream& is_;
-  };
+    private:
+      std::istream& is_;
+    };
+  }
 }
 
-#endif //TOKEN_STREAM_HPP
+#endif // CCF_COMPILER_ELEMENTS_TOKEN_STREAM_HPP

@@ -19,7 +19,6 @@ using std::string;
 using std::ostream;
 using std::endl;
 
-
 using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
 
@@ -721,6 +720,7 @@ namespace
   struct ExplicitPortEmitter : Traversal::Attribute,
                                Traversal::Operation,
                                Traversal::HomeFactory,
+                               Traversal::HomeFinder,
                                Emitter
   {
     ExplicitPortEmitter (Context& c, ostream& os)
@@ -846,9 +846,63 @@ namespace
     {
       os << ", ";
     }
+
+    // HomeFinder.
+    //
+
+    virtual void
+    returns (SemanticGraph::HomeFinder&)
+    {
+      os << "::Components::EnterpriseComponent ";
+    }
+
+    virtual void
+    name (SemanticGraph::HomeFinder& hf)
+    {
+      os << " " << hf.name ();
+    }
+
+    virtual void
+    receives_pre (SemanticGraph::HomeFinder&)
+    {
+      os << " (";
+    }
+
+    virtual void
+    receives_post (SemanticGraph::HomeFinder&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    raises_pre (SemanticGraph::HomeFinder&)
+    {
+      os << " raises (";
+    }
+
+    virtual void
+    raises_post (SemanticGraph::HomeFinder&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    post (SemanticGraph::HomeFinder&)
+    {
+      os << ";";
+    }
+
+    virtual void
+    comma (SemanticGraph::HomeFinder&)
+    {
+      os << ", ";
+    }
   };
 
-  struct ParameterEmitter : Traversal::Parameter, public Emitter
+  struct ParameterEmitter : Traversal::InParameter,
+                            Traversal::OutParameter,
+                            Traversal::InOutParameter,
+                            public Emitter
   {
     ParameterEmitter (Context& c, ostream& os)
         : Emitter (c, os)
@@ -856,15 +910,39 @@ namespace
     }
 
     virtual void
-    pre (Type& p)
+    pre (InParameter& p)
     {
-      os << p.direction () << " ";
+      os << " in ";
     }
 
     virtual void
-    name (Type& p)
+    pre (OutParameter& p)
     {
-      os << " " << p.name ();
+      os << " out ";
+    }
+
+    virtual void
+    pre (InOutParameter& p)
+    {
+      os << " inout ";
+    }
+
+    virtual void
+    name (InParameter& p)
+    {
+      os << p.name ();
+    }
+
+    virtual void
+    name (OutParameter& p)
+    {
+      os << p.name ();
+    }
+
+    virtual void
+    name (InOutParameter& p)
+    {
+      os << p.name ();
     }
   };
 

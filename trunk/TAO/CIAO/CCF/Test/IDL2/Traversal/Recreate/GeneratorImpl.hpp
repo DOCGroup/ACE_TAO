@@ -16,6 +16,7 @@
 namespace IDL2
 {
   using namespace CCF::IDL2;
+  using namespace CCF::IDL2::SemanticGraph;
 
   using std::cout;
   using std::endl;
@@ -451,18 +452,44 @@ namespace IDL2
 
     //--
 
-    struct Parameter : Traversal::Parameter
+    struct Parameter : Traversal::InParameter,
+                       Traversal::OutParameter,
+                       Traversal::InOutParameter
     {
       virtual void
-      pre (Type& p)
+      pre (InParameter& p)
       {
-        cout << p.direction () << " ";
+        cout << " in ";
       }
 
       virtual void
-      name (Type& p)
+      pre (OutParameter& p)
       {
-        cout << " " << p.name ();
+        cout << " out ";
+      }
+
+      virtual void
+      pre (InOutParameter& p)
+      {
+        cout << " inout ";
+      }
+
+      virtual void
+      name (InParameter& p)
+      {
+        cout << p.name ();
+      }
+
+      virtual void
+      name (OutParameter& p)
+      {
+        cout << p.name ();
+      }
+
+      virtual void
+      name (InOutParameter& p)
+      {
+        cout << p.name ();
       }
     };
 

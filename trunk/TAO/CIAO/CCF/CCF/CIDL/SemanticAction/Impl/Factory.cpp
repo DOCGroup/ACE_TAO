@@ -45,6 +45,7 @@ namespace CCF
 
           // Implied translation region with CCM-related types.
           //
+          /*
           TranslationRegion& ctr (tu.new_node<TranslationRegion> ());
           tu.new_edge<ContainsImplied> (tu, ctr, ".components");
 
@@ -56,6 +57,7 @@ namespace CCF
 
           tu.new_edge<Defines> (
             cm, tu.new_node<LocalInterface> (), "EnterpriseComponent");
+          */
         }
       }
     }
