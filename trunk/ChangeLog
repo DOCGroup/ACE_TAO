@@ -1,3 +1,8 @@
+Wed Apr 09 17:04:01 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* apps/mkcsregdb/mkcsregdb.dsp: Added missing library in release
+	configuration.
+
 Wed Apr  9 08:22:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/default.rel:
