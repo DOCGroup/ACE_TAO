@@ -78,18 +78,20 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       // If we contain an anonymous sequence,
       // generate code for the sequence here.
 
-      if (bt->node_type () == AST_Decl::NT_sequence)
+      AST_Decl::NodeType nt = bt->node_type ();
+
+      // If the node is an array of anonymous sequence, we need to
+      // generate the sequence's cdr operator declaration here.
+      if (nt == AST_Decl::NT_sequence && bt->anonymous ())
         {
-          // CDR operators for sequences are now declared in the .i file,
-          // so we pass this state to the function.
-          if (this->gen_anonymous_base_type (bt,
-                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH)
-              == -1)
+          be_visitor_sequence_cdr_op_ci visitor (this->ctx_);
+
+          if (bt->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_array_cdr_op_ci::"
+                                 "be_visitor_array_cdr_op_ci::"
                                  "visit_array - "
-                                 "gen_anonymous_base_type failed\n"),
+                                 "accept on anonymous base type failed\n"),
                                 -1);
             }
         }
@@ -142,6 +144,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
                              "Base type codegen failed\n"),
                             -1);
         }
+
       *os << "}\n\n";
 
       //  Set the sub state as generating code for the input operator.
