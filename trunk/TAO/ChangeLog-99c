@@ -1,3 +1,26 @@
+Thu Sep 23 19:26:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile.av:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Latency/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	* orbsvcs/tests/AVStreams/benchmark/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/client/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
+	* orbsvcs/tests/AVStreams/server_discovery/Makefile:
+	  Separate the AV streaming service into a new library, use that
+	  library to build the examples, tests and applications that
+	  depend on the service.
+	  This isolates the rest of the system from problems in the
+	  AV/Streaming service.
+
 Thu Sep 23 14:26:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * examples/POA/RootPOA/Makefile: Moved the TAO_ROOT definition

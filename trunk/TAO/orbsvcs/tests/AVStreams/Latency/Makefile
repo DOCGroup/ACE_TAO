@@ -6,7 +6,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS = -lorbsvcs -lTAO 
+LDLIBS = -lAVsvc -lorbsvcs -lTAO 
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
