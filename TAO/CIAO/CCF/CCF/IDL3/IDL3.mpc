@@ -5,6 +5,7 @@ project(*IDL3) {
   sharedname =
   staticname = IDL3
   includes += ../..
+  libout = ..
   Source_Files {
         .
 	./SemanticGraph

@@ -1,3 +1,13 @@
+Wed Feb 18 10:11:42 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CCF/CCF/CIDL/CIDL.mpc:
+	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+	* CCF/CCF/CompilerElements/CompilerElements.mpc:
+	* CCF/CCF/IDL2/IDL2.mpc:
+	* CCF/CCF/IDL3/IDL3.mpc:
+
+	  Changed these MPC files to specify the output lib path.
+
 Wed Feb 18 14:05:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* CCF/CCF/CCF.mwc:
