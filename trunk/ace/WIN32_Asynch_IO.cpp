@@ -72,6 +72,20 @@ ACE_WIN32_Asynch_Result::priority (void) const
   ACE_NOTSUP_RETURN (0);
 }
 
+int
+ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  // Get to the platform specific implementation.
+  ACE_WIN32_Proactor *win32_proactor = ACE_dynamic_cast (ACE_WIN32_Proactor *,
+                                                         proactor);
+
+  if (win32_proactor == 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Dynamic cast to WIN32 Proactor failed\n"), -1);
+
+  // Post myself.
+  return win32_proactor->post_completion (this);
+}
+
 ACE_WIN32_Asynch_Result::~ACE_WIN32_Asynch_Result (void)
 {
 }
@@ -97,7 +111,7 @@ ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result (ACE_Handler &handler,
   this->Offset = offset;
   this->OffsetHigh = offset_high;
   this->hEvent = event;
-  
+
   ACE_UNUSED_ARG (priority);
 }
 
@@ -121,7 +135,7 @@ ACE_WIN32_Asynch_Operation::open (ACE_Handler &handler,
 
   // Register with the <proactor>.
   return this->win32_proactor_->register_handle (this->handle_,
-                                           completion_key);
+                                                 completion_key);
 }
 
 int
@@ -131,7 +145,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
-  
+
   return (int) ::CancelIo (this->handle_);
 
 #else /* Not ACE_HAS_WINNT4 && ACE_HAS_WINNT4!=0 && _MSC... */
@@ -276,7 +290,13 @@ ACE_WIN32_Asynch_Read_Stream_Result::offset_high (void) const
 int
 ACE_WIN32_Asynch_Read_Stream_Result::priority (void) const
 {
-   return ACE_WIN32_Asynch_Result::priority ();
+  return ACE_WIN32_Asynch_Result::priority ();
+}
+
+int
+ACE_WIN32_Asynch_Read_Stream_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
 // ********************************************************************
@@ -356,7 +376,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
     }
 }
 
-// Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+// Methods belong to ACE_WIN32_Asynch_Operation base class. These
 // methods are defined here to avoid VC++ warnings. They route the
 // call to the ACE_WIN32_Asynch_Operation base class.
 
@@ -406,15 +426,15 @@ ACE_WIN32_Asynch_Write_Stream_Result::handle (void) const
 }
 
 ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler &handler,
-                                              ACE_HANDLE handle,
-                                              ACE_Message_Block &message_block,
-                                              u_long bytes_to_write,
-                                              const void* act,
-                                              ACE_HANDLE event,
-                                              int priority)
+                                                                            ACE_HANDLE handle,
+                                                                            ACE_Message_Block &message_block,
+                                                                            u_long bytes_to_write,
+                                                                            const void* act,
+                                                                            ACE_HANDLE event,
+                                                                            int priority)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority),    
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority),
     bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
     handle_ (handle)
@@ -436,7 +456,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (u_long bytes_transferred,
   // Appropriately move the pointers in the message block.
   this->message_block_.rd_ptr (bytes_transferred);
 
-    // Create the interface result class.
+  // Create the interface result class.
   ACE_Asynch_Write_Stream::Result result (this);
 
   // Call the application handler.
@@ -501,9 +521,14 @@ ACE_WIN32_Asynch_Write_Stream_Result::offset_high (void) const
 int
 ACE_WIN32_Asynch_Write_Stream_Result::priority (void) const
 {
-   return ACE_WIN32_Asynch_Result::priority ();
+  return ACE_WIN32_Asynch_Result::priority ();
 }
 
+int
+ACE_WIN32_Asynch_Write_Stream_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_WIN32_Asynch_Result::post_completion (proactor);
+}
 
 // ********************************************************************
 
@@ -533,7 +558,7 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 
   // Shared write
   ssize_t return_val = this->shared_write (result);
-  
+
   // Upon errors
   if (return_val == -1)
     delete result;
@@ -549,7 +574,7 @@ int
 ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Result *result)
 {
   u_long bytes_written;
-  
+
   // Initiate the write
   int initiate_result = ::WriteFile (result->handle (),
                                      result->message_block ().rd_ptr (),
@@ -581,15 +606,15 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
     }
 }
 
-// Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+// Methods belong to ACE_WIN32_Asynch_Operation base class. These
 // methods are defined here to avoid VC++ warnings. They route the
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
 ACE_WIN32_Asynch_Write_Stream::open (ACE_Handler &handler,
-                                  ACE_HANDLE handle,
-                                  const void *completion_key,
-                                  ACE_Proactor *proactor)
+                                     ACE_HANDLE handle,
+                                     const void *completion_key,
+                                     ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
 					   handle,
@@ -716,13 +741,13 @@ ACE_WIN32_Asynch_Read_File_Result::offset_high (void) const
 int
 ACE_WIN32_Asynch_Read_File_Result::priority (void) const
 {
-   return ACE_WIN32_Asynch_Result::priority ();
+  return ACE_WIN32_Asynch_Result::priority ();
 }
 
 // The following methods belong to
 // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
 // warnings. These methods route their call to the
-// ACE_WIN32_Asynch_Read_Stream_Result base class. 
+// ACE_WIN32_Asynch_Read_Stream_Result base class.
 
 u_long
 ACE_WIN32_Asynch_Read_File_Result::bytes_to_read (void) const
@@ -740,6 +765,12 @@ ACE_HANDLE
 ACE_WIN32_Asynch_Read_File_Result::handle (void) const
 {
   return ACE_WIN32_Asynch_Read_Stream_Result::handle ();
+}
+
+int
+ACE_WIN32_Asynch_Read_File_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
 // ************************************************************
@@ -772,7 +803,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                      this->win32_proactor_->get_handle (),
                                                      priority),
                   -1);
-  
+
   // Shared read
   ssize_t return_val = this->shared_read (result);
 
@@ -799,7 +830,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                              priority);
 }
 
-// Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+// Methods belong to ACE_WIN32_Asynch_Operation base class. These
 // methods are defined here to avoid VC++ warnings. They route the
 // call to the ACE_WIN32_Asynch_Operation base class.
 
@@ -864,7 +895,7 @@ ACE_WIN32_Asynch_Write_File_Result::complete (u_long bytes_transferred,
   this->success_ = success;
   this->completion_key_ = completion_key;
   this->error_ = error;
-  
+
   // Appropriately move the pointers in the message block.
   this->message_block_.rd_ptr (bytes_transferred);
 
@@ -933,18 +964,18 @@ ACE_WIN32_Asynch_Write_File_Result::offset_high (void) const
 int
 ACE_WIN32_Asynch_Write_File_Result::priority (void) const
 {
-   return ACE_WIN32_Asynch_Result::priority ();
+  return ACE_WIN32_Asynch_Result::priority ();
 }
 
 // The following methods belong to
 // ACE_WIN32_Asynch_Write_Stream_Result. They are here to avoid VC++
 // warnings. These methods route their call to the
-// ACE_WIN32_Asynch_Write_Stream_Result base class. 
+// ACE_WIN32_Asynch_Write_Stream_Result base class.
 
 u_long
 ACE_WIN32_Asynch_Write_File_Result::bytes_to_write (void) const
 {
-	return ACE_WIN32_Asynch_Write_Stream_Result::bytes_to_write ();
+  return ACE_WIN32_Asynch_Write_Stream_Result::bytes_to_write ();
 }
 
 ACE_Message_Block &
@@ -959,6 +990,11 @@ ACE_WIN32_Asynch_Write_File_Result::handle (void) const
   return ACE_WIN32_Asynch_Write_Stream_Result::handle ();
 }
 
+int
+ACE_WIN32_Asynch_Write_File_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_WIN32_Asynch_Result::post_completion (proactor);
+}
 
 // ************************************************************
 
@@ -993,7 +1029,7 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
 
   // Shared write
   ssize_t return_val = this->shared_write (result);
-  
+
   // Upon errors
   if (return_val == -1)
     delete result;
@@ -1017,15 +1053,15 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                priority);
 }
 
-// Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+// Methods belong to ACE_WIN32_Asynch_Operation base class. These
 // methods are defined here to avoid VC++ warnings. They route the
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
 ACE_WIN32_Asynch_Write_File::open (ACE_Handler &handler,
-                                  ACE_HANDLE handle,
-                                  const void *completion_key,
-                                  ACE_Proactor *proactor)
+                                   ACE_HANDLE handle,
+                                   const void *completion_key,
+                                   ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
 					   handle,
@@ -1072,13 +1108,13 @@ ACE_WIN32_Asynch_Accept_Result::accept_handle (void) const
 }
 
 ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (ACE_Handler &handler,
-                                        ACE_HANDLE listen_handle,
-                                        ACE_HANDLE accept_handle,
-                                        ACE_Message_Block &message_block,
-                                        u_long bytes_to_read,
-                                        const void* act,
-                                        ACE_HANDLE event,
-                                        int priority)
+                                                                ACE_HANDLE listen_handle,
+                                                                ACE_HANDLE accept_handle,
+                                                                ACE_Message_Block &message_block,
+                                                                u_long bytes_to_read,
+                                                                const void* act,
+                                                                ACE_HANDLE event,
+                                                                int priority)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Accept_Result_Impl (),
     ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority),
@@ -1106,7 +1142,7 @@ ACE_WIN32_Asynch_Accept_Result::complete (u_long bytes_transferred,
 
   // Create the interface result class.
   ACE_Asynch_Accept::Result result (this);
-  
+
   // Call the application handler.
   this->handler_.handle_accept (result);
 }
@@ -1169,9 +1205,14 @@ ACE_WIN32_Asynch_Accept_Result::offset_high (void) const
 int
 ACE_WIN32_Asynch_Accept_Result::priority (void) const
 {
-   return ACE_WIN32_Asynch_Result::priority ();
+  return ACE_WIN32_Asynch_Result::priority ();
 }
 
+int
+ACE_WIN32_Asynch_Accept_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_WIN32_Asynch_Result::post_completion (proactor);
+}
 
 // ************************************************************
 
@@ -1217,7 +1258,7 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
         // Remember to close the socket down if failures occur.
         close_accept_handle = 1;
     }
-  
+
   // Common code for both WIN and POSIX.
   ACE_WIN32_Asynch_Accept_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -1258,11 +1299,11 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
     default:
       // Something else went wrong: the OVERLAPPED will not get
       // queued.
-      
+
       if (close_accept_handle == 1)
         // Close the newly created socket
         ACE_OS::closesocket (accept_handle);
-      
+
       // Cleanup dynamically allocated Asynch_Result.
       delete result;
 
@@ -1277,15 +1318,15 @@ ACE_WIN32_Asynch_Accept::~ACE_WIN32_Asynch_Accept (void)
 {
 }
 
-// Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+// Methods belong to ACE_WIN32_Asynch_Operation base class. These
 // methods are defined here to avoid VC++ warnings. They route the
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
 ACE_WIN32_Asynch_Accept::open (ACE_Handler &handler,
-                                  ACE_HANDLE handle,
-                                  const void *completion_key,
-                                  ACE_Proactor *proactor)
+                               ACE_HANDLE handle,
+                               const void *completion_key,
+                               ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
 					   handle,
@@ -1346,7 +1387,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::flags (void) const
 ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (ACE_Handler &handler,
                                                                               ACE_HANDLE socket,
                                                                               ACE_HANDLE file,
-																			  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
+                                                                              ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
                                                                               u_long bytes_to_write,
                                                                               u_long offset,
                                                                               u_long offset_high,
@@ -1393,7 +1434,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::complete (u_long bytes_transferred,
     if (trailer != 0)
     trailer->rd_ptr (this->header_and_trailer_->trailer_bytes ());
     }
-    */
+  */
 
   // Create the interface result class.
   ACE_Asynch_Transmit_File::Result result (this);
@@ -1460,9 +1501,14 @@ ACE_WIN32_Asynch_Transmit_File_Result::offset_high (void) const
 int
 ACE_WIN32_Asynch_Transmit_File_Result::priority (void) const
 {
-   return ACE_WIN32_Asynch_Result::priority ();
+  return ACE_WIN32_Asynch_Result::priority ();
 }
 
+int
+ACE_WIN32_Asynch_Transmit_File_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_WIN32_Asynch_Result::post_completion (proactor);
+}
 
 // ************************************************************
 
@@ -1475,7 +1521,7 @@ ACE_WIN32_Asynch_Transmit_File::ACE_WIN32_Asynch_Transmit_File (ACE_WIN32_Proact
 
 int
 ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
-											   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
+                                               ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
                                                u_long bytes_to_write,
                                                u_long offset,
                                                u_long offset_high,
@@ -1504,7 +1550,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers = 0;
   if (result->header_and_trailer () != 0)
     transmit_buffers = result->header_and_trailer ()->transmit_buffers ();
-  
+
   // Initiate the transmit file
   int initiate_result = ::TransmitFile ((SOCKET) result->socket (),
                                         result->file (),
@@ -1544,15 +1590,15 @@ ACE_WIN32_Asynch_Transmit_File::~ACE_WIN32_Asynch_Transmit_File (void)
 {
 }
 
-// Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+// Methods belong to ACE_WIN32_Asynch_Operation base class. These
 // methods are defined here to avoid VC++ warnings. They route the
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
 ACE_WIN32_Asynch_Transmit_File::open (ACE_Handler &handler,
-                                  ACE_HANDLE handle,
-                                  const void *completion_key,
-                                  ACE_Proactor *proactor)
+                                      ACE_HANDLE handle,
+                                      const void *completion_key,
+                                      ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
 					   handle,
@@ -1573,5 +1619,3 @@ ACE_WIN32_Asynch_Transmit_File::proactor (void) const
 }
 
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */
-
-
