@@ -18,15 +18,18 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
 				   const AVStreams::flowSpec &the_flows,
 				   CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,
 	      "Sender_StreamEndPoint::modify_QoS\n"));
   
-  // Change the underlying network QoS
-  this->change_qos (new_qos, the_flows, ACE_TRY_ENV);
+  int result =  this->change_qos (new_qos, the_flows, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
+
+  if (result != 0)
+    return 0;
+
   return 1;
 }
+
 int
 Sender_StreamEndPoint::get_callback (const char *,
                                      TAO_AV_Callback *&callback)
@@ -36,7 +39,6 @@ Sender_StreamEndPoint::get_callback (const char *,
   // for further upcalls.
   callback = &this->callback_;
   
-  // Specify a negotiator to be called when there is a change in QOS
   TAO_Negotiator *negotiator;
   ACE_NEW_RETURN (negotiator,
 		  TAO_Negotiator,
@@ -46,6 +48,7 @@ Sender_StreamEndPoint::get_callback (const char *,
   ACE_CHECK_RETURN (-1);
 
   this->set_negotiator (negotiator_obj.in ());
+
   return 0;
 }
 
@@ -120,18 +123,17 @@ Sender::fill_qos (AVStreams::streamQoS &qos)
 {
   peak_bandwidth += 100;
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"Sender::fill_qos %d\n",
-		peak_bandwidth));
-  
+  ACE_DEBUG ((LM_DEBUG,
+	      "Sender::fill_qos %d\n",
+	      peak_bandwidth));
+
   qos.length (1);
   qos [0].QoSType =  CORBA::string_dup ("Data_Receiver");
   
   qos [0].QoSParams.length (10);
   
   qos [0].QoSParams [0].property_name = CORBA::string_dup ("Service_Type");
-  qos [0].QoSParams [0].property_value <<= (CORBA::Short) ACE_SERVICETYPE_CONTROLLEDLOAD;
+  qos [0].QoSParams [0].property_value <<= (CORBA::Short) 1;//ACE_SERVICETYPE_CONTROLLEDLOAD;
   
   qos [0].QoSParams [1].property_name = CORBA::string_dup ("Token_Rate");
   qos [0].QoSParams [1].property_value <<= (CORBA::ULong) 9200 ;
@@ -248,7 +250,7 @@ Sender::init (int argc,
                                     "USER_DEFINED",
                                     "",
                                     this->protocol_.c_str (),
-                                    &addr);
+                                    0);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);
@@ -276,7 +278,7 @@ Sender::init (int argc,
 
   AVStreams::streamQoS qos;
   
-  this->fill_qos (qos);
+  //this->fill_qos (qos);
 
   // Bind/Connect the sender and receiver MMDevices.
   CORBA::Boolean bind_result =
@@ -399,22 +401,25 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
           // Reset the message block.
           this->mb_.reset ();
 	  
-	  TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str (),
-					    "IN",
-					    "USER_DEFINED",
-					    "",
-					    "QoS_UDP",
-					    0);
-	  AVStreams::flowSpec flow_spec (1);
-	  flow_spec.length (1);
-	  flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
-
-	  AVStreams::streamQoS qos;
-	  this->fill_qos (qos);
-	  this->streamctrl_->modify_QoS (qos,
-					 flow_spec,
-					 ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+	  if (this->frame_count_ == 25)
+	    {
+	      TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str (),
+						"IN",
+						"USER_DEFINED",
+						"",
+						"QoS_UDP",
+						0);
+	      AVStreams::flowSpec flow_spec (1);
+	      flow_spec.length (1);
+	      flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
+	      
+	      AVStreams::streamQoS qos;
+	      this->fill_qos (qos);
+	      this->streamctrl_->modify_QoS (qos,
+					     flow_spec,
+					     ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
+	    }
 
 	} // end while
 
