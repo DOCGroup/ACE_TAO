@@ -1,3 +1,7 @@
+Tue Oct 15 10:47:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/SPIPE_Connector.cpp: Fixed a unused variable warning. 
+
 Tue Oct 15 06:56:18 2002  Patrick J. McNerthney <ace@mcnerthney.com>  
 
 	* tests/SPIPE_Test.cpp: Added support for testing the new Windows
