@@ -1,0 +1,140 @@
+# This is a listing of the web directories and the builds contained in
+# them.
+# The types used are:
+# - WIN32    - This is the naming style used by Darrell's scripts
+#              where there are 3 files per build and Build_MMDD_HHMM.txt
+#              or Build_MMDD.txt
+# - UNIX     - This is the naming style used by Carlos's scripts, where
+#              they are named Build_MonDD_YYYY.txt or .log
+# - TIMEONLY - This is new naming scheme which is in the format
+#              YYYY_MM_DD_HH_MM.txt
+
+[Win32_DLL_Core]
+TYPE = TIMEONLY
+LIST = http://tao.doc.wustl.edu/bugzilla/Core/
+WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?core
+
+[Win32_DLL_Debug]
+TYPE = TIMEONLY 
+LIST = http://tao.doc.wustl.edu/bugzilla/DLL_Debug/
+WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_debug
+
+[Win32_DLL_Release]
+TYPE = TIMEONLY 
+LIST = http://tao.doc.wustl.edu/bugzilla/DLL_Release/ 
+WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_release
+
+[Win32_Borland]
+TYPE = TIMEONLY 
+LIST = http://tao.doc.wustl.edu/bugzilla/Borland/
+WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland
+
+[Win32_Fuzz]
+TYPE = TIMEONLY 
+LIST = http://tao.doc.wustl.edu/bugzilla/Fuzz/ 
+WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?fuzz
+
+[Win32_Unicode]
+TYPE = TIMEONLY 
+LIST = http://tao.doc.wustl.edu/bugzilla/Unicode/ 
+WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?unicode
+
+[Win32_LIB_Debug]
+TYPE = TIMEONLY 
+LIST = http://ringil.ece.uci.edu/bugzilla/lib_debug/ 
+WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_debug
+
+[Win32_LIB_Release]
+TYPE = TIMEONLY 
+LIST = http://ringil.ece.uci.edu/bugzilla/lib_release/ 
+WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_release
+
+[Win32_Legacy]
+TYPE = TIMEONLY 
+LIST = http://ringil.ece.uci.edu/bugzilla/legacy/ 
+WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?legacy
+
+[Debian_KCC]
+TYPE = TIMEONLY 
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/doc_KCC/
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?doc_KCC 
+
+[Debian_Minimum]
+TYPE = TIMEONLY 
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/ 
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Minimum
+
+[Debian_Static]
+TYPE = TIMEONLY 
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/tango_Static/ 
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?tango_Static
+
+[Debian_Full]
+TYPE = TIMEONLY 
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/sirion_Full/ 
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?sirion_Full
+
+[Debian_Core]
+TYPE = TIMEONLY 
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/ 
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Core
+
+[Debian_Unicode]
+TYPE = TIMEONLY
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/valinor_Unicode/
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?valinor_Unicode
+
+[RedHat_NoInline]
+TYPE = TIMEONLY 
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_NoInline/ 
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?maglor_NoInline
+
+[RedHat_Single_Threaded]
+TYPE = TIMEONLY 
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/curufin_SingleThreaded/ 
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?curufin_SingleThreaded
+
+[SunOS_SunCC5]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC5/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_SUNCC5
+
+[SunOS_KCC]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC3.4/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_KCC3.4
+
+[SunOS_SunCC42]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_SUNCC
+
+[SunOS_EGCS]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_EGCS/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_EGCS
+
+[Tru64_CXX]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/guajira.cs.wustl.edu_TRU64_CXX/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?guajira.cs.wustl.edu_TRU64_CXX
+
+[VxWorks_GCC]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_VXWORKS_GCC/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_VXWORKS_GCC
+
+[Lynx_I386]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_LYNX_I386/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_LYNX_I386
+
+[Lynx_PPC]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_LYNX_PPC
+
+[SunOS_GCC272]
+TYPE = TIMEONLY 
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_GCC272/ 
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_GCC272
