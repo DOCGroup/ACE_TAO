@@ -12,11 +12,11 @@ To test manually:
 
 1. Run the NamingService at a specified endpoint.
 
-        $NamingService -ORBEndPoint iiop://doc.ece.uci.edu:12345 &
+        $NamingService -m 1 -ORBEndPoint iiop://doc.ece.uci.edu:12345 &
 
 2. Run the server.
 
-        ./server STATUS &
+        ./server STATUS -ORBInitRef NameService=corbaloc:iiop:doc.ece.uci.edu:12345 &
 
         This will create a corbaloc::Status CORBA object and register
         the object reference in the Naming Service with the name
