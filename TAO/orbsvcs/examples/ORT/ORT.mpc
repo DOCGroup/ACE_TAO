@@ -5,7 +5,6 @@ project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client {
     gateway_server.cpp
     Gateway_i.cpp
     Object_Factory_i.cpp
-    Gateway_ObjRef_Factory.cpp
   }
   idl_files {
     Gateway.idl
@@ -24,6 +23,10 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client {
     sum_server_i.cpp
     Server_IORInterceptor_ORBInitializer.cpp
     Server_IORInterceptor.cpp
+    ObjectReferenceFactoryC.cpp
+  }
+  idl_files {
+    ObjectReferenceFactory.idl
   }
 }
 
