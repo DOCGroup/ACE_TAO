@@ -1,3 +1,19 @@
+Fri Jul  2 15:29:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	  Modified idl_escape_reader() to use the new
+	  idl_atoui() function. Changes to idl_atoi(),
+	  which was called from here formerly, were
+	  causing incorrect return values.
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Added a check for char values < 0 before printing
+	  char literals. If one is found, it is output as
+	  a signed integer. This handles larger values of
+	  hex and octal escape sequences in a portable and
+	  overflow-safe way.
+
 Fri Jul  2 14:50:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
