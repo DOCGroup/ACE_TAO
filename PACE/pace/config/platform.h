@@ -34,6 +34,12 @@
 # define PACE_SUNOS 0
 # define PACE_VXWORKS 0
 # define PACE_WIN32 0
+#elif defined (PACE_OSF1)
+# define PACE_HAS_POSIX DIGITAL_UNIX
+# define PACE_LINUX 0
+# define PACE_LYNXOS 0
+# define PACE_VXWORKS 0
+# define PACE_WIN32 0
 #elif defined (PACE_SUNOS)
 # define PACE_HAS_POSIX PACE_SUNOS
 # define PACE_LINUX 0
