@@ -1,0 +1,9 @@
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+ 
+all:
+	cd $(ACE_ROOT)\apps\JAWS\clients
+        $(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+	cd $(ACE_ROOT)\apps\JAWS\server
+        $(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+
