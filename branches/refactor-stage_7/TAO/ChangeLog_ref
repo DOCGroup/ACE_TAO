@@ -1,3 +1,56 @@
+Sat Oct 25 000:28:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Object.cpp:
+        * tao/Typecode.cpp:
+
+	  Added still more explicit template instantiations,
+	  for the argument template helper classes parameterized 
+	  with the above types.
+
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+
+	  Updated implementation of _downcast() and removed
+	  the now-unnecessary *_tao_obv_narrow() instances.
+
+        * tao/PortableServer/PortableServerC.cpp:
+
+	  Updated generated code for Any operators of types
+	  that are nested inside a local interface.
+
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/arg_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h:
+
+	  - Added explicit template instantiation code generation
+	    for parameters of operations associated with
+	    interface attributes.
+
+	  - Added generation of overrides (returning 0) of 
+	    Any_*_Impl::(de)marshal_value() for types that are
+	    nested inside a local interface.
+
+	  - Changed generated #ifdef guard around explicit template
+	    instantiation of sequence base class to use a string
+	    aggregated from the unaliased element type flat name and
+	    the bound (if any), thus avoiding duplicate instantiations
+	    of the base class when it is a parent of multiple unique
+	    derived sequence classes.
+
 Fri Oct 24 19:22:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Valuetype/AbstractBase_T.h:

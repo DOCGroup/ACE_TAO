@@ -55,7 +55,7 @@ be_visitor_arg_tmplinst::visit_interface (be_interface *node)
 
   switch (this->dir_)
     {
-    case _tao_INOUT:
+      case _tao_INOUT:
         *os << "," << this->linebreak_ << be_nl
             << "TAO::Objref_Traits<"  << node->name () << ">";
         break;

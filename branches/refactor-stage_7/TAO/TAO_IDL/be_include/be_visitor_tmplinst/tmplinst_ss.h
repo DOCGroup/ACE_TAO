@@ -30,6 +30,8 @@ public:
 
   virtual int visit_array (be_array *node);
 
+  virtual int visit_attribute (be_attribute *node);
+
   virtual int visit_enum (be_enum *node);
 
   virtual int visit_interface (be_interface *node);

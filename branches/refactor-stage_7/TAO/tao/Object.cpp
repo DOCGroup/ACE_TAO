@@ -996,19 +996,69 @@ TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) 
 
 template class TAO_Pseudo_Var_T<CORBA::Object>;
 template class TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>;
+
 template class TAO::Arg_Traits<CORBA::Object>;
-template class TAO::Object_Arg_Traits_T<CORBA::Object_ptr,
-                                        CORBA::Object_var,
-                                        CORBA::Object_out,
-				        TAO::Objref_Traits<CORBA::Object> >;
+template class 
+  TAO::Object_Arg_Traits_T<CORBA::Object_ptr,
+                           CORBA::Object_var,
+                           CORBA::Object_out,
+                           TAO::Objref_Traits<CORBA::Object> >;
+template class TAO::In_Object_Argument_T<CORBA::Object_ptr>;
+template class 
+  TAO::Inout_Object_Argument_T<CORBA::Object_ptr,
+                               TAO::Objref_Traits<CORBA::Object> >;
+template class TAO::Out_Object_Argument_T<CORBA::Object_ptr,
+                                          CORBA::Object_out>;
+template class TAO::Ret_Object_Argument_T<CORBA::Object_ptr,
+                                          CORBA::Object_var>;
+
+template class TAO::SArg_Traits<CORBA::Object>;
+template class TAO::Object_SArg_Traits_T<CORBA::Object_ptr,
+                                         CORBA::Object_var,
+                                         CORBA::Object_out>;
+template class TAO::In_Object_SArgument_T<CORBA::Object_ptr,
+                                          CORBA::Object_var>;
+template class TAO::Inout_Object_SArgument_T<CORBA::Object_ptr,
+                                             CORBA::Object_var>;
+template class TAO::Out_Object_SArgument_T<CORBA::Object_ptr,
+                                           CORBA::Object_var,
+                                           CORBA::Object_out>;
+template class TAO::Ret_Object_SArgument_T<CORBA::Object_ptr,
+                                           CORBA::Object_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Pseudo_Var_T<CORBA::Object>
 #pragma instantiate TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>
+
+#pragma instantiate TAO::Objref_Traits<CORBA::Object>
 #pragma instantiate TAO::Arg_Traits<CORBA::Object>
-#pragma instantiate TAO::Object_Arg_Traits_T<CORBA::Object_ptr, \
-                                             CORBA::Object_var, \
-                                             CORBA::Object_out>;
+#pragma instantiate \
+  TAO::Object_Arg_Traits_T<CORBA::Object_ptr, \
+                           CORBA::Object_var, \
+                           CORBA::Object_out, \
+                           TAO::Objref_Traits<CORBA::Object> >
+#pragma instantiate TAO::In_Object_Argument_T<CORBA::Object_ptr>
+#pragma instantiate \
+  TAO::Inout_Object_Argument_T<CORBA::Object_ptr, \
+                               TAO::Objref_Traits<CORBA::Object> >
+#pragma instantiate TAO::Out_Object_Argument_T<CORBA::Object_ptr, \
+                                               CORBA::Object_out>
+#pragma instantiate TAO::Ret_Object_Argument_T<CORBA::Object_ptr, \
+                                               CORBA::Object_var>
+
+#pragma instantiate TAO::SArg_Traits<CORBA::Object>
+#pragma instantiate TAO::Object_SArg_Traits_T<CORBA::Object_ptr, \
+                                              CORBA::Object_var, \
+                                              CORBA::Object_out>
+#pragma instantiate TAO::In_Object_SArgument_T<CORBA::Object_ptr, \
+                                               CORBA::Object_var>
+#pragma instantiate TAO::Inout_Object_SArgument_T<CORBA::Object_ptr, \
+                                                  CORBA::Object_var>
+#pragma instantiate TAO::Out_Object_SArgument_T<CORBA::Object_ptr, \
+                                                CORBA::Object_var, \
+                                                CORBA::Object_out>
+#pragma instantiate TAO::Ret_Object_SArgument_T<CORBA::Object_ptr, \
+                                                CORBA::Object_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
