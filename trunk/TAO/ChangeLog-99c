@@ -1,3 +1,28 @@
+Fri Jul  9 19:12:14 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/UIOP_Acceptor.{h,cpp} (open_i, rendezvous_point):
+	* tao/UIOP_Profile.{h,cpp}:
+
+	  Moved the rendezvous point verification method to the UIOP
+	  acceptor since it is the acceptor that should verify the
+	  rendezvous point.  Previously, the rendezvous point was checked
+	  on the client only when URL style object references were being
+	  used.  That behavior was incorrect.
+
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Comment updates.
+
+	* tao/IIOP_Connector.cpp (preconnect):
+
+	  Updated default preconnect port to be 683 instead of 9999 since
+	  the default port for CORBA 3 will be 683, as assigned by the
+	  IANA.
+
+	* tao/IIOP_Profile.cpp (parse_string):
+
+	  Updated some brittle code and added some additional error checks.
+
 Fri Jul  9 21:50:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp:
