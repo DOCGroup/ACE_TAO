@@ -4863,12 +4863,16 @@ ACE_OS::fgets (char *buf, int size, FILE *fp)
   ACE_OSCALL_RETURN (::fgets (buf, size, fp), char *, 0);
 }
 
+#if !defined (ACE_WIN32)
+// Win32 implementation of fopen(const char*, const char*)
+// is in OS.cpp.
 ACE_INLINE FILE *
 ACE_OS::fopen (const char *filename, const char *mode)
 {
   // ACE_TRACE ("ACE_OS::fopen");
   ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *, 0);
 }
+#endif /* ACE_WIN32 */
 #endif /* ACE_HAS_WINCE */
 
 ACE_INLINE int
@@ -10012,49 +10016,15 @@ ACE_OS::access (const wchar_t *path, int amode)
 #   endif /* ACE_HAS_WINCE */
 }
 
+#   if !defined (ACE_WIN32)
+// Win32 implementation of fopen(const wchar_t*, const wchar_t*)
+// is in OS.cpp.
 ACE_INLINE FILE *
 ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
-#   if !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wfopen (filename, mode), FILE *, 0);
-#   else
-  DWORD creation;
-
-  switch (mode[0])
-    {
-    case (TCHAR) 'r':
-      creation = OPEN_EXISTING;
-      break;
-    case (TCHAR) 'a':
-      creation = OPEN_ALWAYS;
-      break;
-    case (TCHAR) 'w':
-      creation = CREATE_ALWAYS;
-      break;
-    default:
-      errno = EINVAL;
-      return ACE_INVALID_HANDLE;
-    }
-  HANDLE retv = ::CreateFile (filename,
-                              GENERIC_READ | GENERIC_WRITE,
-                              FILE_SHARE_READ | FILE_SHARE_WRITE,
-                              NULL,
-                              creation,
-                              FILE_ATTRIBUTE_NORMAL,
-                              NULL);
-  if (retv == INVALID_HANDLE_VALUE)
-    {
-      errno = ::GetLastError ();
-      retv = 0;
-    }
-  // Move the file pointer to EOF if we are opening the file in append mode.
-  else if (creation == OPEN_ALWAYS)
-    {
-      ::SetFilePointer (retv, 0, 0, FILE_END);
-    }
-  return retv;
-#   endif /* ACE_HAS_WINCE */
 }
+#   endif /* ACE_WIN32 */
 
 ACE_INLINE FILE *
 ACE_OS::fdopen (ACE_HANDLE handle, const wchar_t *mode)
@@ -10849,3 +10819,48 @@ ACE_OS::isatty (ACE_HANDLE handle)
   ACE_OSCALL_RETURN (::isatty (handle), int, -1);
 # endif /* defined (ACE_LACKS_ISATTY) */
 }
+
+#if defined (ACE_WIN32)
+ACE_INLINE void
+ACE_OS::fopen_mode_to_open_mode_converter (char x, int &hmode)
+{
+    switch (x)
+      {
+      case 'r':
+        if (ACE_BIT_DISABLED (hmode, _O_RDWR))
+          {
+            ACE_CLR_BITS (hmode, _O_WRONLY);
+            ACE_SET_BITS (hmode, _O_RDONLY);
+          }
+        break;
+      case 'w':
+        if (ACE_BIT_DISABLED (hmode, _O_RDWR))
+          {
+            ACE_CLR_BITS (hmode, _O_RDONLY);
+            ACE_SET_BITS (hmode, _O_WRONLY);
+          }
+        ACE_SET_BITS (hmode, _O_CREAT | _O_TRUNC);
+        break;
+      case 'a':
+        if (ACE_BIT_DISABLED (hmode, _O_RDWR))
+          {
+            ACE_CLR_BITS (hmode, _O_RDONLY);
+            ACE_SET_BITS (hmode, _O_WRONLY);
+          }
+        ACE_SET_BITS (hmode, _O_CREAT | _O_APPEND);
+        break;
+      case '+':
+        ACE_CLR_BITS (hmode, _O_RDONLY | _O_WRONLY);
+        ACE_SET_BITS (hmode, _O_RDWR);
+        break;
+      case 't':
+        ACE_CLR_BITS (hmode, _O_BINARY);
+        ACE_SET_BITS (hmode, _O_TEXT);
+        break;
+      case 'b':
+        ACE_CLR_BITS (hmode, _O_TEXT);
+        ACE_SET_BITS (hmode, _O_BINARY);
+        break;
+      }
+}
+#endif /* ACE_WIN32 */
