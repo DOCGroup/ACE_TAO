@@ -54,19 +54,11 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 <%endfor%>
 
 <%endfor%>
-ifndef <%grouped_source_files->component_name%>
-  <%grouped_source_files->component_name%> = \
+FILES += \
 <%foreach(grouped_source_files)%>
-    <%grouped_source_file%><%fornotlast(" \\")%>
+         $(<%grouped_source_file%>)<%fornotlast(" \\")%>
 <%endfor%>
-endif # <%grouped_source_files->component_name%>
 
-<%foreach(grouped_source_files)%>
-ifneq (,$(findstring <%grouped_source_file%>, $(<%grouped_source_files->component_name%>)))
-  FILES += $(<%grouped_source_file%>)
-endif # <%grouped_source_file%>
-
-<%endfor%>
 <%else%>
 FILES = \
 <%foreach(source_files)%>
@@ -119,30 +111,31 @@ all: $(OUTPUT_DIRECTORY)
 $(OUTPUT_DIRECTORY):
 	-@mkdir -p "$(OUTPUT_DIRECTORY)"
 
-<%if(!exename)%>
-<%if(compname)%>
-CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
+<%if(sharedname || staticname || exename)%>
+<%if(libs)%>
+<%if(libpaths)%>
+LIBCHECK = $(shell for lib in <%libs%>; do for libpath in <%libpaths%>; do full="`echo $$libpath/lib$$lib.* $$libpath/$$lib.lib | tr ' ' '\012' | grep -v \* | head -1`"; if [ -r "$$full" ]; then break; else full=; fi; done; if [ -z "$$full" ]; then echo $$lib; exit; fi; done; echo 1)
 <%endif%>
+<%endif%>
+<%endif%>
+<%if(!exename)%>
+<%if(libs)%>
+<%if(libpaths)%>
 <%foreach(requires)%>
 ifeq ($(<%require%>),1)
 <%endfor%>
 <%foreach(avoids)%>
 ifneq ($(<%avoid%>),1)
 <%endfor%>
-<%foreach(comps)%>
-ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
-<%endfor%>
-<%foreach(comps)%>
-else
+ifneq ($(LIBCHECK), 1)
 <%if(staticname)%>
   LIB   =
 <%endif%>
 <%if(sharedname)%>
   SHLIB =
 <%endif%>
-  all: comp_warning
+  all: lib_warning
 endif
-<%endfor%>
 <%foreach(avoids)%>
 else
 <%if(staticname)%>
@@ -165,6 +158,8 @@ else
   all: require_warning
 endif
 <%endfor%>
+<%endif%>
+<%endif%>
 
 <%if(tagname)%>
 ifeq (,$(<%tagname%>))
@@ -231,26 +226,20 @@ endif
 endif
 <%endif%>
 <%endif%>
-
 <%if(exename)%>
-<%if(compname)%>
-CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
-<%endif%>
+<%if(libs)%>
+<%if(libpaths)%>
 <%foreach(requires)%>
 ifeq ($(<%require%>),1)
 <%endfor%>
 <%foreach(avoids)%>
 ifneq ($(<%avoid%>),1)
 <%endfor%>
-<%foreach(comps)%>
-ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
-<%endfor%>
+ifeq ($(LIBCHECK), 1)
 BIN    = $(BIN_UNCHECKED)
-<%foreach(comps)%>
 else
-  all: comp_warning
+  all: lib_warning
 endif
-<%endfor%>
 <%foreach(avoids)%>
 else
   all: avoid_warning
@@ -261,6 +250,8 @@ else
   all: require_warning
 endif
 <%endfor%>
+<%endif%>
+<%endif%>
 
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
@@ -271,57 +262,6 @@ endif
 
 <%if(sharedname || staticname)%>
 LSRC   = $(addsuffix .cpp, $(FILES))
-<%endif%>
-<%if(!comps)%>
-<%if(tagname)%>
-ifeq (,$(<%tagname%>))
-<%endif%>
-<%if(grouped_source_files)%>
-BUILD += <%grouped_source_files->component_name%>
-<%endif%>
-<%if(tagname)%>
-else
-<%foreach(tagchecks)%>
-  ifeq (<%tagcheck%>, $(findstring <%tagcheck%>, $(<%tagname%>)))
-<%endfor%>
-<%if(grouped_source_files)%>
-    BUILD += <%grouped_source_files->component_name%>
-<%endif%>
-<%foreach(tagchecks)%>
-  endif
-<%endfor%>
-endif
-<%endif%>
-<%else%>
-<%if(grouped_source_files)%>
-<%if(grouped_source_files->component_name)%>
-<%foreach(requires)%>
-ifeq ($(<%require%>),1)
-<%endfor%>
-<%foreach(avoids)%>
-ifneq ($(<%avoid%>),1)
-<%endfor%>
-<%if(sharedname)%>
-ifneq ($(SHLIB),)
-<%endif%>
-<%if(staticname)%>
-ifneq ($(LIB),)
-<%endif%>
-<%foreach(comps)%>
-ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
-<%endfor%>
-  BUILD += <%grouped_source_files->component_name%>
-<%if(staticname)%>
-endif
-<%endif%>
-<%if(sharedname)%>
-endif
-<%endif%>
-<%foreach(comps avoids requires)%>
-endif
-<%endfor%>
-<%endif%>
-<%endif%>
 <%endif%>
 
 <%if(idl_files)%>
@@ -430,12 +370,10 @@ TAO_IDLFLAGS += <%idlflags%>
 #       Local targets
 #----------------------------------------------------------------------------
 <%marker(local)%>
-<%if(comps)%>
-comp_warning:
-	@echo This project will not be built due to one of the following missing components:
-	@echo<%foreach(comps)%> <%comp%><%endfor%>
+lib_warning:
+	@echo This project will not be built due to the following missing library:
+	@echo $(LIBCHECK)
 
-<%endif%>
 <%if(requires)%>
 require_warning:
 	@echo This project will not be built due to one of the following missing features:
@@ -475,7 +413,6 @@ all: $(GENERATED_DIRTY)
 endif
 
 <%endif%>
-<%comptarget%>
 <%if(idl_files)%>
 
 <%foreach(idl_files)%>
@@ -539,7 +476,7 @@ $(BIN): $(addprefix $(VDIR), $(OBJS))
 endif
 <%endif%>
 
-realclean: clean <%compclean%>
+realclean: clean
 <%if(idl_files)%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
