@@ -17,21 +17,11 @@ Enjoy!
 *** Narrowing the lookup interface.
 *** Running the Service Type Exporter tests.
 *** TAO_Service_Type_Exporter::removing all types from the Repository.
-(5368|1) EXCEPTION, TAO_Service_Type_Exporter::remove_all_types
-(5368|1) user exception, ID 'IDL:omg.org/CosTrading/UnknownServiceType:1.0'
-Unknown name: PostScript_Printer
-(5368|1) EXCEPTION, TAO_Service_Type_Exporter::remove_all_types
-(5368|1) user exception, ID 'IDL:omg.org/CosTrading/UnknownServiceType:1.0'
-Unknown name: File_System
-(5368|1) EXCEPTION, TAO_Service_Type_Exporter::remove_all_types
-(5368|1) user exception, ID 'IDL:omg.org/CosTrading/UnknownServiceType:1.0'
-Unknown name: Printer
-(5368|1) EXCEPTION, TAO_Service_Type_Exporter::remove_all_types
-(5368|1) user exception, ID 'IDL:omg.org/CosTrading/UnknownServiceType:1.0'
-Unknown name: Plotter
-(5368|1) EXCEPTION, TAO_Service_Type_Exporter::remove_all_types
-(5368|1) user exception, ID 'IDL:omg.org/CosTrading/UnknownServiceType:1.0'
-Unknown name: Remote_IO
+Service type not yet registered: PostScript_Printer
+Service type not yet registered: File_System
+Service type not yet registered: Printer
+Service type not yet registered: Plotter
+Service type not yet registered: Remote_IO
 *** TAO_Service_Type_Exporter::adding all types to the Repository.
 *** TAO_Service_Type_Exporter::removing all types from the Repository.
 *** TAO_Service_Type_Exporter::adding all types to the Repository.
@@ -2262,7 +2252,6 @@ File_Sizes_Pending: Dynamic Property
 ------------------------------
 *** Offer Exporter tests complete.
 *** Now serving dynamic properties.
-
 
 > import_test
 
