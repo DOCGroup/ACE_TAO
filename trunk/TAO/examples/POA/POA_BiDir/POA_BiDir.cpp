@@ -162,7 +162,7 @@ main (int argc, char **argv)
            k < bidir_policy.length ();
            ++k)
         {
-          bidir_policy[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          bidir_policy[k]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
