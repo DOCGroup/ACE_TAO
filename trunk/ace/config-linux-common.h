@@ -115,6 +115,8 @@
 #elif defined (__KCC)
 # include "ace/config-kcc-common.h"
 #elif defined (__DECCXX)
+# define ACE_CONFIG_INCLUDE_CXX_COMMON
+# include "ace/config-cxx-common.h"
 #else  /* ! __GNUG__ && ! __KCC && !__DECCXX */
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
