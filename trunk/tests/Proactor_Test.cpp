@@ -315,7 +315,7 @@ MyTask::stop ()
   if (this->proactor_ != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%t) Calling End Proactor event loop\n")));
+                  ACE_TEXT ("(%t) Calling End Proactor event loop\n")));
 
       ACE_Proactor::end_event_loop ();
     }
@@ -684,9 +684,19 @@ Receiver::initiate_read_stream (void)
   if (this->rs_.read (*mb, mb->size () - 1) == -1)
     {
       mb->release ();
+#if defined (ACE_WIN32)
+      // On peer close, ReadFile will yield ERROR_NETNAME_DELETED; won't get
+      // a 0-byte read as we would if underlying calls used WSARecv.
+      if (ACE_OS::last_error () == ERROR_NETNAME_DELETED)
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT ("(%t) Receiver %d, peer closed\n"),
+                           this->index_),
+                          -1);
+#endif /* ACE_WIN32 */
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) %p\n"),
-                         ACE_TEXT ("Receiver::ACE_Asynch_Stream::read")),
+                         ACE_TEXT ("(%t) Receiver %d, %p\n"),
+                         this->index_,
+                         ACE_TEXT ("read")),
                         -1);
     }
 
@@ -715,9 +725,18 @@ Receiver::initiate_write_stream (ACE_Message_Block &mb, size_t nbytes)
   if (this->ws_.write (mb, nbytes) == -1)
     {
       mb.release ();
+#if defined (ACE_WIN32)
+      // On peer close, WriteFile will yield ERROR_NETNAME_DELETED.
+      if (ACE_OS::last_error () == ERROR_NETNAME_DELETED)
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT ("(%t) Receiver %d, peer gone\n"),
+                           this->index_),
+                          -1);
+#endif /* ACE_WIN32 */
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("Receiver::ACE_Asynch_Write_Stream::write")),
+                        ACE_TEXT ("(%t) Receiver %d, %p\n"),
+                        this->index_,
+                        ACE_TEXT ("write")),
                        -1);
     }
 
@@ -1378,9 +1397,18 @@ Sender::initiate_write_stream (void)
   if (this->ws_.write (*mb, mb->length ()) == -1)
     {
       mb->release ();
+#if defined (ACE_WIN32)
+      // On peer close, WriteFile will yield ERROR_NETNAME_DELETED.
+      if (ACE_OS::last_error () == ERROR_NETNAME_DELETED)
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT ("(%t) Sender %d, peer gone\n"),
+                           this->index_),
+                          -1);
+#endif /* ACE_WIN32 */
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("Sender::ACE_Asynch_Stream::write")),
+                        ACE_TEXT ("(%t) Sender %d, %p\n"),
+                        this->index_,
+                        ACE_TEXT ("write")),
                        -1);
     }
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
@@ -1465,9 +1493,19 @@ Sender::initiate_read_stream (void)
   if (this->rs_.read (*mb, mb->size () - 1) == -1)
     {
       mb->release ();
+#if defined (ACE_WIN32)
+      // On peer close, ReadFile will yield ERROR_NETNAME_DELETED; won't get
+      // a 0-byte read as we would if underlying calls used WSARecv.
+      if (ACE_OS::last_error () == ERROR_NETNAME_DELETED)
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT ("(%t) Receiver %d, peer closed\n"),
+                           this->index_),
+                          -1);
+#endif /* ACE_WIN32 */
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) %p\n"),
-                         ACE_TEXT ("Sender::ACE_Asynch_Read_Stream::read")),
+                         ACE_TEXT ("(%t) Sender %d, %p\n"),
+                         this->index_,
+                         ACE_TEXT ("read")),
                         -1);
     }
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
