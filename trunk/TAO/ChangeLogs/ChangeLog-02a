@@ -1,3 +1,10 @@
+Thu Nov 16 11:23:44 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Cleanup_Func_Registry.cpp (cleanup):
+
+	  Make sure that the cleanup function pointer is non-zero prior to
+	  invoking it.
+
 Thu Nov 16 09:36:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
