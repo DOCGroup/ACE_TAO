@@ -182,9 +182,10 @@ DRV_cpp_init (void)
         {
           // If no cpp flag was defined by the user, we define some
           // platform specific flags here.
-          char* option = 0;
-          ACE_NEW (option, 
-                   char[BUFSIZ]);
+          char option[BUFSIZ];
+//          char* option = 0;
+//          ACE_NEW (option, 
+//                   char[BUFSIZ]);
 
 #if defined (TAO_IDL_PREPROCESSOR_ARGS)
           cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
