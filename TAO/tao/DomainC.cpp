@@ -739,7 +739,7 @@ void *CORBA_DomainManager::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-     &ACE_NESTED_CLASS (::CORBA, DomainManager)::_narrow))
+     &CORBA_DomainManager::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
@@ -1500,7 +1500,7 @@ void *CORBA_ConstructionPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, ConstructionPolicy)::_narrow))
+      &CORBA_ConstructionPolicy::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
