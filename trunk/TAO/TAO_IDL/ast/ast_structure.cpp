@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -84,18 +84,24 @@ AST_Structure::AST_Structure()
 {
 }
 
-AST_Structure::AST_Structure (UTL_ScopedName *n, 
-                              UTL_StrList *p)
+AST_Structure::AST_Structure (UTL_ScopedName *n,
+                              UTL_StrList *p,
+                              idl_bool local,
+                              idl_bool abstract)
  : AST_Decl (AST_Decl::NT_struct, n, p),
-	 UTL_Scope (AST_Decl::NT_struct)
+   UTL_Scope (AST_Decl::NT_struct),
+   COMMON_Base (local, abstract)
 {
 }
 
 AST_Structure::AST_Structure (AST_Decl::NodeType nt,
-			                        UTL_ScopedName *n,
-			                        UTL_StrList *p)
+                              UTL_ScopedName *n,
+                              UTL_StrList *p,
+                              idl_bool local,
+                              idl_bool abstract)
  : AST_Decl(nt, n, p),
-	 UTL_Scope(nt)
+   UTL_Scope(nt),
+   COMMON_Base (local, abstract)
 {
 }
 
@@ -304,6 +310,11 @@ AST_EnumVal *AST_Structure::fe_add_enum_val(AST_EnumVal *t)
 void
 AST_Structure::dump(ostream &o)
 {
+  if (this->is_local ())
+    o << "(local) ";
+  else
+    o << "(abstract) ";
+
   o << "struct ";
   AST_Decl::dump(o);
   o << " {\n";

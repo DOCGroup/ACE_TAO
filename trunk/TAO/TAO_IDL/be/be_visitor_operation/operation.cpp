@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -64,18 +64,18 @@ be_visitor_operation::has_param_type (be_operation *node,
       // initialize an iterator to iterate thru our scope
       UTL_ScopeActiveIterator *si;
       ACE_NEW_RETURN (si,
-		      UTL_ScopeActiveIterator (node,
-					       UTL_Scope::IK_decls),
-		      0);
+                      UTL_ScopeActiveIterator (node,
+                                               UTL_Scope::IK_decls),
+                      0);
       // continue until each element is visited
       while (!si->is_done ())
-	{
-	  be_argument *bd = be_argument::narrow_from_decl (si->item ());
+        {
+          be_argument *bd = be_argument::narrow_from_decl (si->item ());
           if (bd && (bd->direction () == dir))
             return 1;
 
-	  si->next ();
-	} // end of while loop
+          si->next ();
+        } // end of while loop
       delete si;
     } // end of if
 
@@ -88,11 +88,6 @@ be_visitor_operation::has_param_type (be_operation *node,
 int
 be_visitor_operation::gen_throw_spec (be_operation *node)
 {
-  // @@ Don't generate throw spec for LC objref for now.  This may not
-  //    be the right behavior for all LC objref.
-  if (idl_global->gen_locality_constraint ())
-    return 0;
-
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   *os << be_idt_nl << "ACE_THROW_SPEC (("

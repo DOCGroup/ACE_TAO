@@ -92,8 +92,10 @@ public:
 
   // Constructor(s)
   AST_Exception ();
-  AST_Exception (UTL_ScopedName *n, 
-                 UTL_StrList *p);
+  AST_Exception (UTL_ScopedName *n,
+                 UTL_StrList *p,
+                 idl_bool local,
+                 idl_bool abstract);
 
   virtual ~AST_Exception (void);
 

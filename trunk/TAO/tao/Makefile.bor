@@ -63,7 +63,6 @@ OBJFILES = \
 	$(OBJDIR)\InconsistentTypeCodeC.obj \
 	$(OBJDIR)\Interceptor.obj \
 	$(OBJDIR)\InterceptorC.obj \
-	$(OBJDIR)\InterceptorS.obj \
 	$(OBJDIR)\InterfaceC.obj \
 	$(OBJDIR)\InterfaceS.obj \
 	$(OBJDIR)\Invocation.obj \

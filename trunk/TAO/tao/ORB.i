@@ -315,8 +315,7 @@ CORBA_ORB::_register_client_interceptor
   (PortableInterceptor::ClientRequestInterceptor_ptr ci,
    CORBA_Environment &ACE_TRY_ENV)
 {
-  if (ci == 0 ||
-      ci->_is_a ("IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0"))
+  if (ci != 0)
       {
         PortableInterceptor::ClientRequestInterceptor_var oci =
           PortableInterceptor::ClientRequestInterceptor::_duplicate (this->client_interceptor_.in ());
@@ -332,8 +331,7 @@ CORBA_ORB::_register_server_interceptor
   (PortableInterceptor::ServerRequestInterceptor_ptr si,
    CORBA_Environment &ACE_TRY_ENV)
 {
-  if (si == 0 ||
-      si->_is_a ("IDL:TAO/PortableInterceptor/ServerRequestInterceptor:1.0"))
+  if (si != 0)
       {
         PortableInterceptor::ServerRequestInterceptor_var oci =
           PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_.in ());

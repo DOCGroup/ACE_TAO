@@ -23,7 +23,10 @@ public:
   be_exception (void);
   // default constructor
 
-  be_exception (UTL_ScopedName *n, UTL_StrList *p);
+  be_exception (UTL_ScopedName *n,
+                UTL_StrList *p,
+                idl_bool local,
+                idl_bool abstract);
   // constructor
 
   // =code generation

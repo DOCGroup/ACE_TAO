@@ -91,8 +91,8 @@ public:
   // Constructor(s)
   AST_Type ();
 
-  AST_Type (AST_Decl::NodeType nt, 
-            UTL_ScopedName *n, 
+  AST_Type (AST_Decl::NodeType nt,
+            UTL_ScopedName *n,
             UTL_StrList *p);
 
   virtual ~AST_Type (void);

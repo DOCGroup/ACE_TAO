@@ -86,8 +86,10 @@ public:
   // Constructor(s)
   AST_Sequence ();
 
-  AST_Sequence (AST_Expression *max_size, 
-                AST_Type *bt);
+  AST_Sequence (AST_Expression *max_size,
+                AST_Type *bt,
+                idl_bool local,
+                idl_bool abstract);
 
   virtual ~AST_Sequence (void);
 

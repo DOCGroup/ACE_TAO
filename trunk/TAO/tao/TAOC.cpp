@@ -111,7 +111,7 @@ TAO::ClientPriorityPolicy_ptr
 TAO::ClientPriorityPolicy::_duplicate (TAO::ClientPriorityPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -458,7 +458,7 @@ TAO::BufferingConstraintPolicy_ptr
 TAO::BufferingConstraintPolicy::_duplicate (TAO::BufferingConstraintPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 

@@ -1970,14 +1970,14 @@ TAO_NAMESPACE  Messaging
 class  TAO_Messaging_ReplyHandler_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_Messaging_ReplyHandler_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_Messaging_ReplyHandler_Default_Proxy_Factory (void);
-  
+
   virtual ReplyHandler_ptr create_proxy (
       ReplyHandler_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -1985,23 +1985,23 @@ public:
 class  TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_Messaging_ReplyHandler_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   ReplyHandler_ptr create_proxy (
       ReplyHandler_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -2014,7 +2014,7 @@ protected:
   TAO_Messaging_ReplyHandler_Default_Proxy_Factory *proxy_factory_;
   int delete_proxy_factory_;
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
-  
+
 };
 
 typedef ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;

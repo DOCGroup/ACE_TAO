@@ -88,16 +88,18 @@ AST_Sequence::AST_Sequence ()
 {
 }
 
-AST_Sequence::AST_Sequence (AST_Expression *ms, 
-                            AST_Type *bt)
+AST_Sequence::AST_Sequence (AST_Expression *ms,
+                            AST_Type *bt,
+                            idl_bool local,
+                            idl_bool abstract)
  : AST_Decl(AST_Decl::NT_sequence,
-		        new UTL_ScopedName (
-				        new Identifier ("sequence", 1, 0, I_FALSE),
-				        NULL
-              ),
-		        NULL),
-	 pd_max_size(ms),
-	 pd_base_type(bt)
+            new UTL_ScopedName (new Identifier ("sequence", 1, 0, I_FALSE),
+                                NULL),
+            NULL),
+                      COMMON_Base (bt->is_local () || local,
+                                   abstract),
+                      pd_max_size(ms),
+                      pd_base_type(bt)
 {
 }
 

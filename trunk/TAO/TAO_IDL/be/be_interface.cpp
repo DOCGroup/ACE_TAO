@@ -49,10 +49,13 @@ be_interface::be_interface (UTL_ScopedName *n,
                             long nih,
                             AST_Interface **ih_flat,
                             long nih_flat,
-                            UTL_StrList *p)
-  : AST_Interface (n, ih, nih, ih_flat, nih_flat, p),
+                            UTL_StrList *p,
+                            idl_bool local,
+                            idl_bool abstract)
+  : AST_Interface (n, ih, nih, ih_flat, nih_flat, p, local, abstract),
     AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
+    COMMON_Base (local, abstract),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     strategy_ (new be_interface_default_strategy (this)),
@@ -333,14 +336,14 @@ be_interface::gen_copy_ctors_helper (be_interface* node, be_interface* base, TAO
     {
       if(first)
         {
-          *os << idl_global->impl_class_prefix () << base->flat_name () 
+          *os << idl_global->impl_class_prefix () << base->flat_name ()
               << idl_global->impl_class_suffix () << " (t)"
               << ", " << base->full_skel_name () << " (t)";
           first = 0;
         }
       else
         {
-          *os << ", " << idl_global->impl_class_prefix () << base->flat_name () 
+          *os << ", " << idl_global->impl_class_prefix () << base->flat_name ()
               << idl_global->impl_class_suffix () << " (t)"
               << ", " << base->full_skel_name () << " (t)";   ;
 
@@ -374,13 +377,13 @@ be_interface::gen_def_ctors_helper (be_interface* node, be_interface* base, TAO_
     {
       if(first)
         {
-          *os << idl_global->impl_class_prefix () << base->flat_name () 
+          *os << idl_global->impl_class_prefix () << base->flat_name ()
               << idl_global->impl_class_suffix () << " ()";
           first = 0;
         }
       else
         {
-          *os << ", " << idl_global->impl_class_prefix () << base->flat_name () 
+          *os << ", " << idl_global->impl_class_prefix () << base->flat_name ()
               << idl_global->impl_class_suffix () << " ()";
 
         }
@@ -411,8 +414,8 @@ be_interface::gen_var_defn (char* interface_name)
     interface_name = (char *) this->local_name ();
 
   // Buffer with name of the var class.
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
   ACE_OS::sprintf (namebuf,
@@ -510,20 +513,20 @@ be_interface::gen_var_impl (char *interface_local_name,
       interface_full_name = (char *) this->full_name ();
     }
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (fname, 
-                   "%s_var", 
+  ACE_OS::sprintf (fname,
+                   "%s_var",
                    interface_full_name);
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (lname, 
-                   "%s_var", 
+  ACE_OS::sprintf (lname,
+                   "%s_var",
                    interface_local_name);
 
   // retrieve a singleton instance of the code generator
@@ -544,16 +547,16 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   // default constr
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname 
+  *ci << fname << "::" << lname
       << " (void) // default constructor" << nl;
-  *ci << "  " << ": ptr_ (" << interface_local_name 
+  *ci << "  " << ": ptr_ (" << interface_local_name
       << "::_nil ())" << nl;
   *ci << "{}\n\n";
 
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << interface_local_name 
+  *ci << fname << "::" << lname << " (" << interface_local_name
       << "_ptr p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
@@ -574,9 +577,9 @@ be_interface::gen_var_impl (char *interface_local_name,
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " << "::" << interface_full_name 
+  *ci << fname << "::" << lname << " (const " << "::" << interface_full_name
       << "_var &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (" << interface_local_name 
+  *ci << "  : ptr_ (" << interface_local_name
       << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
@@ -593,7 +596,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   // assignment operator
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << interface_local_name 
+  *ci << fname << "::operator= (" << interface_local_name
       << "_ptr p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -606,7 +609,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   // assignment operator from _var
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (const " 
+  *ci << fname << "::operator= (const "
       << "::" << interface_full_name << "_var &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -614,7 +617,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << "::" << interface_full_name 
+  *ci << "this->ptr_ = " << "::" << interface_full_name
       << "::_duplicate (p.ptr ());\n";
   ci->decr_indent ();
   *ci << "}" << nl;
@@ -625,7 +628,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << "::" << interface_full_name 
+  *ci << fname << "::operator const " << "::" << interface_full_name
       << "_ptr &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -635,7 +638,7 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << "::" << interface_full_name 
+  *ci << fname << "::operator " << "::" << interface_full_name
       << "_ptr &() // cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -678,7 +681,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << "::" << interface_full_name 
+  *ci << "this->ptr_ = " << "::" << interface_full_name
       << "::_nil ();" << nl;
   *ci << "return this->ptr_;\n";
   ci->decr_indent ();
@@ -691,7 +694,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   ci->incr_indent ();
   *ci << "// yield ownership of managed obj reference" << nl;
   *ci << "::" << interface_full_name << "_ptr val = this->ptr_;" << nl;
-  *ci << "this->ptr_ = " << "::" << interface_full_name 
+  *ci << "this->ptr_ = " << "::" << interface_full_name
       << "::_nil ();" << nl;
   *ci << "return val;\n";
   ci->decr_indent ();
@@ -813,12 +816,12 @@ be_interface::gen_out_impl (char *interface_local_name,
       // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " ("  << interface_local_name 
+  *ci << fname << "::" << lname << " ("  << interface_local_name
       << "_ptr &p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = " << "::" << interface_full_name 
+  *ci << "this->ptr_ = " << "::" << interface_full_name
       << "::_nil ();\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -826,13 +829,13 @@ be_interface::gen_out_impl (char *interface_local_name,
   // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << interface_local_name 
+  *ci << fname << "::" << lname << " (" << interface_local_name
       << "_var &p) // constructor from _var" << nl;
   *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << "::" << interface_full_name 
+  *ci << "this->ptr_ = " << "::" << interface_full_name
       << "::_nil ();\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -840,20 +843,20 @@ be_interface::gen_out_impl (char *interface_local_name,
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " << "::" << interface_full_name 
+  *ci << fname << "::" << lname << " (const " << "::" << interface_full_name
       << "_out &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (ACE_const_cast (" << interface_local_name 
+  *ci << "  : ptr_ (ACE_const_cast (" << interface_local_name
       << "_out &, p).ptr_)" << nl;
   *ci << "{}\n\n";
 
       // assignment operator from _out &
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
-  *ci << fname << "::operator= (const " << "::" << interface_full_name 
+  *ci << fname << "::operator= (const " << "::" << interface_full_name
       << "_out &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = ACE_const_cast (" << interface_local_name 
+  *ci << "this->ptr_ = ACE_const_cast (" << interface_local_name
       << "_out&, p).ptr_;" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
@@ -862,11 +865,11 @@ be_interface::gen_out_impl (char *interface_local_name,
       // assignment operator from _var
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (const " << "::" << interface_full_name 
+  *ci << fname << "::operator= (const " << "::" << interface_full_name
       << "_var &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = " << "::" << interface_full_name 
+  *ci << "this->ptr_ = " << "::" << interface_full_name
       << "::_duplicate (p.ptr ());" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
@@ -875,7 +878,7 @@ be_interface::gen_out_impl (char *interface_local_name,
       // assignment operator from _ptr
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << interface_local_name 
+  *ci << fname << "::operator= (" << interface_local_name
       << "_ptr p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -887,7 +890,7 @@ be_interface::gen_out_impl (char *interface_local_name,
       // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << "::" << interface_full_name 
+  *ci << fname << "::operator " << "::" << interface_full_name
       << "_ptr &() // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1789,6 +1792,34 @@ be_interface::is_a_helper (be_interface * /*derived*/,
   return 0;
 }
 
+int
+be_interface::queryinterface_helper (be_interface *derived,
+                                     be_interface *ancestor,
+                                     TAO_OutStream *os)
+{
+  // emit the comparison code
+  *os << "(type == ACE_reinterpret_cast" << be_idt_nl
+      << "(ptr_arith_t," << be_idt_nl
+      << "&" << ancestor->full_name () << "::_narrow" << be_uidt
+      << "))" << be_nl;
+  if (derived == ancestor)
+    *os << "retv = ACE_reinterpret_cast (void*, this);" << be_uidt_nl;
+  else
+    *os << "retv = ACE_reinterpret_cast" << be_idt_nl
+        << "(" << be_idt_nl
+        << "void *," << be_nl
+        << "ACE_static_cast" << be_idt_nl
+        << "(" << be_idt_nl
+        << ancestor->full_name () << "_ptr," << be_nl
+        << "this" << be_uidt_nl
+        << ")" << be_uidt << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
+
+  *os << "else if ";
+
+  return 0;
+}
+
 
 
 int
@@ -2049,7 +2080,7 @@ TAO_CodeGen::CG_STATE
 be_interface::next_state (TAO_CodeGen::CG_STATE current_state,
                           int is_extra_state)
 {
-  return this->strategy_->next_state (current_state, is_extra_state); 
+  return this->strategy_->next_state (current_state, is_extra_state);
 }
 
 int
@@ -2081,6 +2112,7 @@ be_interface::replacement (void)
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_interface)
 IMPL_NARROW_FROM_SCOPE (be_interface)
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node <be_interface*>;

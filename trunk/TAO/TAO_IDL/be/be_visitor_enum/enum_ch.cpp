@@ -66,7 +66,7 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
       os->indent ();
       // The following ensures that the underlying enum type
       // is 32 bits
-      *os << node->local_name () 
+      *os << node->local_name ()
           << "_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF\n";
       os->decr_indent ();
       *os << "};" << be_nl;
@@ -74,22 +74,24 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
       *os << "typedef " << node->local_name () << " &" << node->local_name ()
           << "_out;\n";
 
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-      be_visitor *visitor;
-      be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (!node->is_local ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_enum_ch::"
-                             "visit_enum - "
-                             "TypeCode declaration failed\n"
-                             ), -1);
+          // by using a visitor to declare and define the TypeCode, we have the
+          // added advantage to conditionally not generate any code. This will be
+          // based on the command line options. This is still TO-DO
+          be_visitor *visitor;
+          be_visitor_context ctx (*this->ctx_);
+          ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_enum_ch::"
+                                 "visit_enum - "
+                                 "TypeCode declaration failed\n"
+                                 ), -1);
+            }
         }
-
       node->cli_hdr_gen (I_TRUE);
     }
   return 0;
@@ -99,7 +101,7 @@ int
 be_visitor_enum_ch::post_process (be_decl *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   *os << "," << be_nl;
 
   return 0;

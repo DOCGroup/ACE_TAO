@@ -7,8 +7,6 @@
 ACE_RCSID(Interceptors, server, "$Id$")
 
 const char *ior_output_file = 0;
-POA_PortableInterceptor::ServerRequestInterceptor *interceptor_impl = 0;
-PortableInterceptor::ServerRequestInterceptor_ptr interceptor = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -40,15 +38,16 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor = 0;
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Installing the Echo interceptor
-      ACE_NEW_RETURN (interceptor_impl,
-                      Echo_Server_Request_Interceptor (orb),
+      ACE_NEW_RETURN (interceptor,
+                      Echo_Server_Request_Interceptor (orb.in ()),
                       -1);
-      interceptor = interceptor_impl->_this ();
       orb->_register_server_interceptor (interceptor);
 
       CORBA::Object_var poa_object =
@@ -78,11 +77,12 @@ main (int argc, char *argv[])
 
       CORBA::Object_var test_obj =
         root_poa->id_to_reference (id.in (),
-                                    ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (test_obj, ACE_TRY_ENV);
+        Test_Interceptors::Visual::_narrow (test_obj.in (),
+                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =

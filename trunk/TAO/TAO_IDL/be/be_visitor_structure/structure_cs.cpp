@@ -42,7 +42,7 @@ be_visitor_structure_cs::~be_visitor_structure_cs (void)
 // visit the structure node and its scope
 int be_visitor_structure_cs::visit_structure (be_structure *node)
 {
-  if (!node->cli_stub_gen () && !node->imported ())
+  if (!node->cli_stub_gen () && !node->imported () && !node->is_local ())
     {
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be
@@ -63,13 +63,14 @@ int be_visitor_structure_cs::visit_structure (be_structure *node)
 
       TAO_OutStream *os = this->ctx_->stream ();
       os->indent ();
-      *os << "void "
-          << node->name () << "::_tao_any_destructor (void *x)" << be_nl
-          << "{" << be_idt_nl
-          << node->local_name () << " *tmp = ACE_static_cast ("
-          << node->local_name () << "*,x);" << be_nl
-          << "delete tmp;" << be_uidt_nl
-          << "}\n\n";
+      if (!node->is_local ())
+        *os << "void "
+            << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+            << "{" << be_idt_nl
+            << node->local_name () << " *tmp = ACE_static_cast ("
+            << node->local_name () << "*,x);" << be_nl
+            << "delete tmp;" << be_uidt_nl
+            << "}\n\n";
 
       // do any code generation required for the scope members
       // all we have to do is to visit the scope

@@ -87,7 +87,7 @@ AST_InterfaceFwd::AST_InterfaceFwd ()
 }
 
 AST_InterfaceFwd::AST_InterfaceFwd( AST_Interface *dummy,
-                                    UTL_ScopedName *n, 
+                                    UTL_ScopedName *n,
                                     UTL_StrList *p)
   : AST_Decl (AST_Decl::NT_interface_fwd, n, p)
 {
@@ -117,9 +117,9 @@ AST_InterfaceFwd::~AST_InterfaceFwd (void)
  * Private operations
  */
 
-idl_bool AST_InterfaceFwd::is_abstract_interface ()
+idl_bool AST_InterfaceFwd::is_local ()
 {
-  return this->full_definition()->is_abstract_interface();
+  return this->full_definition()->is_local ();
 }
 
 
@@ -164,8 +164,10 @@ AST_InterfaceFwd::dump(ostream &o)
     }
   else
     {
-      if (this->is_abstract_interface ())
+      if (this->is_abstract ())
         o << "abstract ";
+      else if (this->is_local ())
+        o << "local ";
       o << "interface ";
     }
   local_name()->dump(o);

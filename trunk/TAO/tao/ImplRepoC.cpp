@@ -52,11 +52,11 @@ ImplementationRepository::ServerObject_ptr ImplementationRepository::ServerObjec
   return TAO_ImplementationRepository_ServerObject_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
 }
 
-ImplementationRepository::ServerObject_ptr 
+ImplementationRepository::ServerObject_ptr
 ImplementationRepository::ServerObject::_duplicate (ServerObject_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -67,15 +67,15 @@ void ImplementationRepository::ServerObject::ping (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "ping",
@@ -119,7 +119,7 @@ void ImplementationRepository::ServerObject::ping (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -133,7 +133,7 @@ void ImplementationRepository::ServerObject::ping (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -148,10 +148,10 @@ void ImplementationRepository::ServerObject::ping (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -178,15 +178,15 @@ void ImplementationRepository::ServerObject::shutdown (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "shutdown",
@@ -230,7 +230,7 @@ void ImplementationRepository::ServerObject::shutdown (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -244,7 +244,7 @@ void ImplementationRepository::ServerObject::shutdown (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -259,10 +259,10 @@ void ImplementationRepository::ServerObject::shutdown (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -356,7 +356,7 @@ ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factor
   if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
     {
       // Its necessary to set <delete_proxy_factory_> to 1 to make sure that it
-      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is 
+      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is
       // invoked in the destructor of the class too.
       this->delete_proxy_factory_ = 1;
       delete this->proxy_factory_;
@@ -376,10 +376,10 @@ ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factor
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
     ACE_NEW_RETURN (this->proxy_factory_,
-        TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory (1), 
+        TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory (1),
          0);
-      
-    
+
+
   return this->proxy_factory_->create_proxy (proxy);
 }
 
@@ -443,10 +443,10 @@ static const CORBA::Long _oc_ImplementationRepository_EnvironmentVariable[] =
   20, ACE_NTOHL (0x456e7669), ACE_NTOHL (0x726f6e6d), ACE_NTOHL (0x656e7456), ACE_NTOHL (0x61726961), ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
   2, // member count
   5, ACE_NTOHL (0x6e616d65), ACE_NTOHL (0x0),  // name = name
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   6, ACE_NTOHL (0x76616c75), ACE_NTOHL (0x65000000),  // name = value
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_EnvironmentVariable (CORBA::tk_struct, sizeof (_oc_ImplementationRepository_EnvironmentVariable), (char *) &_oc_ImplementationRepository_EnvironmentVariable, 0, sizeof (ImplementationRepository::EnvironmentVariable));
@@ -465,7 +465,7 @@ static const CORBA::Long _oc_ImplementationRepository_Address[] =
   TAO_ENCAP_BYTE_ORDER, // byte order
   41, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x496d706c), ACE_NTOHL (0x656d656e), ACE_NTOHL (0x74617469), ACE_NTOHL (0x6f6e5265), ACE_NTOHL (0x706f7369), ACE_NTOHL (0x746f7279), ACE_NTOHL (0x2f416464), ACE_NTOHL (0x72657373), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/Address:1.0
   8, ACE_NTOHL (0x41646472), ACE_NTOHL (0x65737300),  // name = Address
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_Address (CORBA::tk_alias, sizeof (_oc_ImplementationRepository_Address), (char *) &_oc_ImplementationRepository_Address, 0, sizeof (ImplementationRepository::Address));
@@ -475,7 +475,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Address, &_tc_TAO_tc_Implementati
 TAO_NAMESPACE_END
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_
 
@@ -484,43 +484,43 @@ TAO_NAMESPACE_END
   {
     ImplementationRepository::EnvironmentVariable* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       ImplementationRepository::EnvironmentVariable *old = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     ImplementationRepository::EnvironmentVariable *tmp = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::~_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_)
 #define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_
@@ -532,30 +532,30 @@ TAO_NAMESPACE_END
 ImplementationRepository::EnvironmentList::EnvironmentList (void)
 {}
 ImplementationRepository::EnvironmentList::EnvironmentList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ImplementationRepository::EnvironmentVariable>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 ImplementationRepository::EnvironmentList::EnvironmentList (CORBA::ULong max, CORBA::ULong length, ImplementationRepository::EnvironmentVariable *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ImplementationRepository::EnvironmentVariable>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 ImplementationRepository::EnvironmentList::EnvironmentList (const EnvironmentList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ImplementationRepository::EnvironmentVariable>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 ImplementationRepository::EnvironmentList::~EnvironmentList (void) // dtor
@@ -584,10 +584,10 @@ static const CORBA::Long _oc_ImplementationRepository_EnvironmentList[] =
       20, ACE_NTOHL (0x456e7669), ACE_NTOHL (0x726f6e6d), ACE_NTOHL (0x656e7456), ACE_NTOHL (0x61726961), ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
       2, // member count
       5, ACE_NTOHL (0x6e616d65), ACE_NTOHL (0x0),  // name = name
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       6, ACE_NTOHL (0x76616c75), ACE_NTOHL (0x65000000),  // name = value
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
 
     0U,
@@ -621,7 +621,7 @@ static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
   15, ACE_NTOHL (0x53746172), ACE_NTOHL (0x7475704f), ACE_NTOHL (0x7074696f), ACE_NTOHL (0x6e730000),  // name = StartupOptions
   4, // member count
   13, ACE_NTOHL (0x636f6d6d), ACE_NTOHL (0x616e645f), ACE_NTOHL (0x6c696e65), ACE_NTOHL (0x0),  // name = command_line
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   12, ACE_NTOHL (0x656e7669), ACE_NTOHL (0x726f6e6d), ACE_NTOHL (0x656e7400),  // name = environment
   CORBA::tk_alias, // typecode kind for typedefs
@@ -639,17 +639,17 @@ static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
         20, ACE_NTOHL (0x456e7669), ACE_NTOHL (0x726f6e6d), ACE_NTOHL (0x656e7456), ACE_NTOHL (0x61726961), ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
         2, // member count
         5, ACE_NTOHL (0x6e616d65), ACE_NTOHL (0x0),  // name = name
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
         6, ACE_NTOHL (0x76616c75), ACE_NTOHL (0x65000000),  // name = value
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       0U,
 
 
   18, ACE_NTOHL (0x776f726b), ACE_NTOHL (0x696e675f), ACE_NTOHL (0x64697265), ACE_NTOHL (0x63746f72), ACE_NTOHL (0x79000000),  // name = working_directory
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   11, ACE_NTOHL (0x61637469), ACE_NTOHL (0x76617469), ACE_NTOHL (0x6f6e0000),  // name = activation
   CORBA::tk_enum, // typecode kind
@@ -682,10 +682,10 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
   18, ACE_NTOHL (0x53657276), ACE_NTOHL (0x6572496e), ACE_NTOHL (0x666f726d), ACE_NTOHL (0x6174696f), ACE_NTOHL (0x6e000000),  // name = ServerInformation
   4, // member count
   15, ACE_NTOHL (0x6c6f6769), ACE_NTOHL (0x63616c5f), ACE_NTOHL (0x73657276), ACE_NTOHL (0x65720000),  // name = logical_server
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   7, ACE_NTOHL (0x73657276), ACE_NTOHL (0x65720000),  // name = server
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   8, ACE_NTOHL (0x73746172), ACE_NTOHL (0x74757000),  // name = startup
   CORBA::tk_struct, // typecode kind
@@ -695,7 +695,7 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
     15, ACE_NTOHL (0x53746172), ACE_NTOHL (0x7475704f), ACE_NTOHL (0x7074696f), ACE_NTOHL (0x6e730000),  // name = StartupOptions
     4, // member count
     13, ACE_NTOHL (0x636f6d6d), ACE_NTOHL (0x616e645f), ACE_NTOHL (0x6c696e65), ACE_NTOHL (0x0),  // name = command_line
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
     12, ACE_NTOHL (0x656e7669), ACE_NTOHL (0x726f6e6d), ACE_NTOHL (0x656e7400),  // name = environment
     CORBA::tk_alias, // typecode kind for typedefs
@@ -713,17 +713,17 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
           20, ACE_NTOHL (0x456e7669), ACE_NTOHL (0x726f6e6d), ACE_NTOHL (0x656e7456), ACE_NTOHL (0x61726961), ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
           2, // member count
           5, ACE_NTOHL (0x6e616d65), ACE_NTOHL (0x0),  // name = name
-          CORBA::tk_string, 
+          CORBA::tk_string,
           0U, // string length
           6, ACE_NTOHL (0x76616c75), ACE_NTOHL (0x65000000),  // name = value
-          CORBA::tk_string, 
+          CORBA::tk_string,
           0U, // string length
 
         0U,
 
 
     18, ACE_NTOHL (0x776f726b), ACE_NTOHL (0x696e675f), ACE_NTOHL (0x64697265), ACE_NTOHL (0x63746f72), ACE_NTOHL (0x79000000),  // name = working_directory
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
     11, ACE_NTOHL (0x61637469), ACE_NTOHL (0x76617469), ACE_NTOHL (0x6f6e0000),  // name = activation
     CORBA::tk_enum, // typecode kind
@@ -744,7 +744,7 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
     TAO_ENCAP_BYTE_ORDER, // byte order
     41, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x496d706c), ACE_NTOHL (0x656d656e), ACE_NTOHL (0x74617469), ACE_NTOHL (0x6f6e5265), ACE_NTOHL (0x706f7369), ACE_NTOHL (0x746f7279), ACE_NTOHL (0x2f416464), ACE_NTOHL (0x72657373), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/Address:1.0
     8, ACE_NTOHL (0x41646472), ACE_NTOHL (0x65737300),  // name = Address
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
 };
@@ -761,7 +761,7 @@ void ImplementationRepository::ServerInformation::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_
 
@@ -770,43 +770,43 @@ void ImplementationRepository::ServerInformation::_tao_any_destructor (void *x)
   {
     ImplementationRepository::ServerInformation* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       ImplementationRepository::ServerInformation *old = ACE_reinterpret_cast (ImplementationRepository::ServerInformation *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     ImplementationRepository::ServerInformation *tmp = ACE_reinterpret_cast (ImplementationRepository::ServerInformation *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::~_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_
@@ -818,30 +818,30 @@ void ImplementationRepository::ServerInformation::_tao_any_destructor (void *x)
 ImplementationRepository::ServerInformationList::ServerInformationList (void)
 {}
 ImplementationRepository::ServerInformationList::ServerInformationList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ImplementationRepository::ServerInformation>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 ImplementationRepository::ServerInformationList::ServerInformationList (CORBA::ULong max, CORBA::ULong length, ImplementationRepository::ServerInformation *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ImplementationRepository::ServerInformation>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 ImplementationRepository::ServerInformationList::ServerInformationList (const ServerInformationList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ImplementationRepository::ServerInformation>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 ImplementationRepository::ServerInformationList::~ServerInformationList (void) // dtor
@@ -870,10 +870,10 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
       18, ACE_NTOHL (0x53657276), ACE_NTOHL (0x6572496e), ACE_NTOHL (0x666f726d), ACE_NTOHL (0x6174696f), ACE_NTOHL (0x6e000000),  // name = ServerInformation
       4, // member count
       15, ACE_NTOHL (0x6c6f6769), ACE_NTOHL (0x63616c5f), ACE_NTOHL (0x73657276), ACE_NTOHL (0x65720000),  // name = logical_server
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       7, ACE_NTOHL (0x73657276), ACE_NTOHL (0x65720000),  // name = server
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       8, ACE_NTOHL (0x73746172), ACE_NTOHL (0x74757000),  // name = startup
       CORBA::tk_struct, // typecode kind
@@ -883,7 +883,7 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
         15, ACE_NTOHL (0x53746172), ACE_NTOHL (0x7475704f), ACE_NTOHL (0x7074696f), ACE_NTOHL (0x6e730000),  // name = StartupOptions
         4, // member count
         13, ACE_NTOHL (0x636f6d6d), ACE_NTOHL (0x616e645f), ACE_NTOHL (0x6c696e65), ACE_NTOHL (0x0),  // name = command_line
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
         12, ACE_NTOHL (0x656e7669), ACE_NTOHL (0x726f6e6d), ACE_NTOHL (0x656e7400),  // name = environment
         CORBA::tk_alias, // typecode kind for typedefs
@@ -901,17 +901,17 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
               20, ACE_NTOHL (0x456e7669), ACE_NTOHL (0x726f6e6d), ACE_NTOHL (0x656e7456), ACE_NTOHL (0x61726961), ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
               2, // member count
               5, ACE_NTOHL (0x6e616d65), ACE_NTOHL (0x0),  // name = name
-              CORBA::tk_string, 
+              CORBA::tk_string,
               0U, // string length
               6, ACE_NTOHL (0x76616c75), ACE_NTOHL (0x65000000),  // name = value
-              CORBA::tk_string, 
+              CORBA::tk_string,
               0U, // string length
 
             0U,
 
 
         18, ACE_NTOHL (0x776f726b), ACE_NTOHL (0x696e675f), ACE_NTOHL (0x64697265), ACE_NTOHL (0x63746f72), ACE_NTOHL (0x79000000),  // name = working_directory
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
         11, ACE_NTOHL (0x61637469), ACE_NTOHL (0x76617469), ACE_NTOHL (0x6f6e0000),  // name = activation
         CORBA::tk_enum, // typecode kind
@@ -932,7 +932,7 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
         TAO_ENCAP_BYTE_ORDER, // byte order
         41, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x496d706c), ACE_NTOHL (0x656d656e), ACE_NTOHL (0x74617469), ACE_NTOHL (0x6f6e5265), ACE_NTOHL (0x706f7369), ACE_NTOHL (0x746f7279), ACE_NTOHL (0x2f416464), ACE_NTOHL (0x72657373), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/Address:1.0
         8, ACE_NTOHL (0x41646472), ACE_NTOHL (0x65737300),  // name = Address
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
 
@@ -983,11 +983,11 @@ ImplementationRepository::Administration_ptr ImplementationRepository::Administr
   return TAO_ImplementationRepository_Administration_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
 }
 
-ImplementationRepository::Administration_ptr 
+ImplementationRepository::Administration_ptr
 ImplementationRepository::Administration::_duplicate (Administration_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -1170,7 +1170,7 @@ static const CORBA::Long _oc_ImplementationRepository_Administration_CannotActiv
   15, ACE_NTOHL (0x43616e6e), ACE_NTOHL (0x6f744163), ACE_NTOHL (0x74697661), ACE_NTOHL (0x74650000),  // name = CannotActivate
   1, // member count
   7, ACE_NTOHL (0x72656173), ACE_NTOHL (0x6f6e0000),  // name = reason
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_Administration_CannotActivate (CORBA::tk_except, sizeof (_oc_ImplementationRepository_Administration_CannotActivate), (char *) &_oc_ImplementationRepository_Administration_CannotActivate, 0, sizeof (ImplementationRepository::Administration::CannotActivate));
@@ -1272,21 +1272,21 @@ void ImplementationRepository::Administration::activate_server (
     ImplementationRepository::Administration::CannotActivate
   ))
 {
-  
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_activate_server_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_ImplementationRepository_Administration_activate_server_exceptiondata [] =
   {
     {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc},
     {ImplementationRepository::Administration::_tc_CannotActivate, ImplementationRepository::Administration::CannotActivate::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "activate_server",
@@ -1330,7 +1330,7 @@ void ImplementationRepository::Administration::activate_server (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1349,7 +1349,7 @@ void ImplementationRepository::Administration::activate_server (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -1364,10 +1364,10 @@ void ImplementationRepository::Administration::activate_server (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -1397,20 +1397,20 @@ void ImplementationRepository::Administration::register_server (
     ImplementationRepository::Administration::AlreadyRegistered
   ))
 {
-  
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_register_server_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_ImplementationRepository_Administration_register_server_exceptiondata [] =
   {
     {ImplementationRepository::Administration::_tc_AlreadyRegistered, ImplementationRepository::Administration::AlreadyRegistered::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "register_server",
@@ -1454,7 +1454,7 @@ void ImplementationRepository::Administration::register_server (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1474,7 +1474,7 @@ void ImplementationRepository::Administration::register_server (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -1489,10 +1489,10 @@ void ImplementationRepository::Administration::register_server (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -1521,15 +1521,15 @@ void ImplementationRepository::Administration::reregister_server (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "reregister_server",
@@ -1573,7 +1573,7 @@ void ImplementationRepository::Administration::reregister_server (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1593,7 +1593,7 @@ void ImplementationRepository::Administration::reregister_server (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -1608,10 +1608,10 @@ void ImplementationRepository::Administration::reregister_server (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -1640,20 +1640,20 @@ void ImplementationRepository::Administration::remove_server (
     ImplementationRepository::Administration::NotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_remove_server_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_ImplementationRepository_Administration_remove_server_exceptiondata [] =
   {
     {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "remove_server",
@@ -1697,7 +1697,7 @@ void ImplementationRepository::Administration::remove_server (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1716,7 +1716,7 @@ void ImplementationRepository::Administration::remove_server (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -1731,10 +1731,10 @@ void ImplementationRepository::Administration::remove_server (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -1763,20 +1763,20 @@ void ImplementationRepository::Administration::shutdown_server (
     ImplementationRepository::Administration::NotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata [] =
   {
     {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "shutdown_server",
@@ -1820,7 +1820,7 @@ void ImplementationRepository::Administration::shutdown_server (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1839,7 +1839,7 @@ void ImplementationRepository::Administration::shutdown_server (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -1854,10 +1854,10 @@ void ImplementationRepository::Administration::shutdown_server (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -1888,20 +1888,20 @@ char * ImplementationRepository::Administration::server_is_running (
     ImplementationRepository::Administration::NotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_running_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_running_exceptiondata [] =
   {
     {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
   };
 
   CORBA::String_var _tao_safe_retval;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "server_is_running",
@@ -1945,7 +1945,7 @@ char * ImplementationRepository::Administration::server_is_running (
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -1988,10 +1988,10 @@ char * ImplementationRepository::Administration::server_is_running (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -2020,20 +2020,20 @@ void ImplementationRepository::Administration::server_is_shutting_down (
     ImplementationRepository::Administration::NotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata [] =
   {
     {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "server_is_shutting_down",
@@ -2077,7 +2077,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -2096,7 +2096,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -2111,10 +2111,10 @@ void ImplementationRepository::Administration::server_is_shutting_down (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -2144,20 +2144,20 @@ void ImplementationRepository::Administration::find (
     ImplementationRepository::Administration::NotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_find_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_ImplementationRepository_Administration_find_exceptiondata [] =
   {
     {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   ACE_NEW (info.ptr (), ImplementationRepository::ServerInformation);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
@@ -2202,13 +2202,13 @@ void ImplementationRepository::Administration::find (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
-              (_tao_out << server)              
+              (_tao_out << server)
           ))
           TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
@@ -2240,10 +2240,10 @@ void ImplementationRepository::Administration::find (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -2273,15 +2273,15 @@ void ImplementationRepository::Administration::list (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   ACE_NEW (server_list.ptr (), ImplementationRepository::ServerInformationList);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
@@ -2326,13 +2326,13 @@ void ImplementationRepository::Administration::list (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
-              (_tao_out << how_many)                            
+              (_tao_out << how_many)
           ))
           TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
@@ -2365,10 +2365,10 @@ void ImplementationRepository::Administration::list (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -2462,7 +2462,7 @@ ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Fact
   if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
     {
       // Its necessary to set <delete_proxy_factory_> to 1 to make sure that it
-      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is 
+      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is
       // invoked in the destructor of the class too.
       this->delete_proxy_factory_ = 1;
       delete this->proxy_factory_;
@@ -2482,10 +2482,10 @@ ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Fact
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
     ACE_NEW_RETURN (this->proxy_factory_,
-        TAO_ImplementationRepository_Administration_Default_Proxy_Factory (1), 
+        TAO_ImplementationRepository_Administration_Default_Proxy_Factory (1),
          0);
-      
-    
+
+
   return this->proxy_factory_->create_proxy (proxy);
 }
 
@@ -2712,11 +2712,11 @@ ImplementationRepository::ServerInformationIterator_ptr ImplementationRepository
   return TAO_ImplementationRepository_ServerInformationIterator_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
 }
 
-ImplementationRepository::ServerInformationIterator_ptr 
+ImplementationRepository::ServerInformationIterator_ptr
 ImplementationRepository::ServerInformationIterator::_duplicate (ServerInformationIterator_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -2729,15 +2729,15 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   ACE_NEW_RETURN (server_list.ptr (), ImplementationRepository::ServerInformationList, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
@@ -2782,13 +2782,13 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
-              (_tao_out << how_many)              
+              (_tao_out << how_many)
           ))
           TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 
@@ -2824,10 +2824,10 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -2854,15 +2854,15 @@ void ImplementationRepository::ServerInformationIterator::destroy (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "destroy",
@@ -2906,7 +2906,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = 131;
         // Tremporary hack until GIOP 1.2 is implemented.
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -2920,7 +2920,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -2935,10 +2935,10 @@ void ImplementationRepository::ServerInformationIterator::destroy (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -3032,7 +3032,7 @@ ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator
   if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
     {
       // Its necessary to set <delete_proxy_factory_> to 1 to make sure that it
-      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is 
+      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is
       // invoked in the destructor of the class too.
       this->delete_proxy_factory_ = 1;
       delete this->proxy_factory_;
@@ -3052,10 +3052,10 @@ ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
     ACE_NEW_RETURN (this->proxy_factory_,
-        TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory (1), 
+        TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory (1),
          0);
-      
-    
+
+
   return this->proxy_factory_->create_proxy (proxy);
 }
 
@@ -3125,7 +3125,7 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerObject_p
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        ImplementationRepository::_tc_ServerObject, 
+        ImplementationRepository::_tc_ServerObject,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -3155,7 +3155,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     {
       _tao_elem = ImplementationRepository::ServerObject::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           ImplementationRepository::_tc_ServerObject,
           1,
@@ -3652,7 +3652,7 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        ImplementationRepository::_tc_Administration, 
+        ImplementationRepository::_tc_Administration,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -3682,7 +3682,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     {
       _tao_elem = ImplementationRepository::Administration::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           ImplementationRepository::_tc_Administration,
           1,
@@ -3963,7 +3963,7 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformat
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        ImplementationRepository::_tc_ServerInformationIterator, 
+        ImplementationRepository::_tc_ServerInformationIterator,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -3993,7 +3993,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     {
       _tao_elem = ImplementationRepository::ServerInformationIterator::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           ImplementationRepository::_tc_ServerInformationIterator,
           1,
@@ -4051,7 +4051,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -4093,7 +4093,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -4105,4 +4105,3 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
-

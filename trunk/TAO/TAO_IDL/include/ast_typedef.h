@@ -85,9 +85,11 @@ public:
   // Constructor(s)
   AST_Typedef ();
 
-  AST_Typedef (AST_Type *base_type, 
-               UTL_ScopedName *n, 
-               UTL_StrList *p);
+  AST_Typedef (AST_Type *base_type,
+               UTL_ScopedName *n,
+               UTL_StrList *p,
+               idl_bool local,
+               idl_bool abstract);
 
   virtual ~AST_Typedef (void);
 

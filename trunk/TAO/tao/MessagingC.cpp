@@ -1646,7 +1646,7 @@ Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::unregister_proxy_fa
   if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
     {
       // Its necessary to set <delete_proxy_factory_> to 1 to make sure that it
-      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is 
+      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is
       // invoked in the destructor of the class too.
       this->delete_proxy_factory_ = 1;
       delete this->proxy_factory_;
@@ -1666,10 +1666,10 @@ Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::create_proxy (
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
     ACE_NEW_RETURN (this->proxy_factory_,
-        TAO_Messaging_ReplyHandler_Default_Proxy_Factory (1), 
+        TAO_Messaging_ReplyHandler_Default_Proxy_Factory (1),
          0);
-      
-    
+
+
   return this->proxy_factory_->create_proxy (proxy);
 }
 
@@ -1689,7 +1689,7 @@ Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::_stubobj (void) const
 
 Messaging::ReplyHandler_ptr
 Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
-  
+
 {
   // Obtain the real proxy stored in <base_proxy_>
   if (CORBA::is_nil (this->proxy_.in ()))
@@ -1699,10 +1699,10 @@ Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
       TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->unregister_proxy_factory ();
       this->proxy_ = ::Messaging::ReplyHandler::_unchecked_narrow (this->base_proxy_.in ());
     }
-    
+
     return this->proxy_.in ();
   }
-  
+
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
     defined (ACE_HAS_GNU_REPO)
   template class ACE_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;

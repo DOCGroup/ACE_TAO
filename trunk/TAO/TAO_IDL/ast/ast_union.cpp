@@ -89,11 +89,14 @@ AST_Union::AST_Union ()
 {
 }
 
-AST_Union::AST_Union (AST_ConcreteType *dt, 
-                      UTL_ScopedName *n, 
-                      UTL_StrList *p)
+AST_Union::AST_Union (AST_ConcreteType *dt,
+                      UTL_ScopedName *n,
+                      UTL_StrList *p,
+                      idl_bool local,
+                      idl_bool abstract)
  : AST_Decl (AST_Decl::NT_union, n, p),
-	 UTL_Scope(AST_Decl::NT_union)
+   UTL_Scope(AST_Decl::NT_union),
+   COMMON_Base (local, abstract)
 {
   AST_PredefinedType *pdt;
 

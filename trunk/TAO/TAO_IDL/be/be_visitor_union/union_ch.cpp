@@ -74,10 +74,12 @@ int be_visitor_union_ch::visit_union (be_union *node)
           << node->local_name () << " (const " << node->local_name ()
           << " &);" << be_nl
         // generate destructor
-          << "~" << node->local_name () << " (void);" << be_nl
-          << "static void _tao_any_destructor (void*);\n" << be_nl
+          << "~" << node->local_name () << " (void);" << be_nl;
+
+      if (!node->is_local ())
+        *os << "static void _tao_any_destructor (void*);\n" << be_nl;
         // generate assignment operator
-          << node->local_name () << " &operator= (const "
+      *os << node->local_name () << " &operator= (const "
           << node->local_name () << " &);\n\n";
 
       // retrieve the disriminant type
@@ -193,21 +195,24 @@ int be_visitor_union_ch::visit_union (be_union *node)
           << "Also will allocate on TRUE flag" << be_nl << be_uidt_nl;
       *os << "}; // " << node->name () << "\n\n";
 
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (!node->is_local ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_ch::"
-                             "visit_union - "
-                             "TypeCode declaration failed\n"
-                             ), -1);
+          // by using a visitor to declare and define the TypeCode, we
+          // have the added advantage to conditionally not generate
+          // any code. This will be based on the command line
+          // options. This is still TO-DO
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_union_ch::"
+                                 "visit_union - "
+                                 "TypeCode declaration failed\n"
+                                 ), -1);
+            }
         }
-
 
       os->gen_endif ();
 
