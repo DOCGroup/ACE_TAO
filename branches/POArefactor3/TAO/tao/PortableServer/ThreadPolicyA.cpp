@@ -27,6 +27,8 @@
 
 #include "ThreadPolicyC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Basic_Impl_T.h"
 
@@ -58,7 +60,7 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
   ACE_NTOHL (0x6c696379), 
   ACE_NTOHL (0x56616c75), 
   ACE_NTOHL (0x65000000),  // name = ThreadPolicyValue
-  2, // member count
+  3, // member count
   15,
   ACE_NTOHL (0x4f52425f), 
   ACE_NTOHL (0x4354524c), 
@@ -70,6 +72,12 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
   ACE_NTOHL (0x48524541), 
   ACE_NTOHL (0x445f4d4f), 
   ACE_NTOHL (0x44454c00),  // name = SINGLE_THREAD_MODEL
+  18,
+  ACE_NTOHL (0x4d41494e), 
+  ACE_NTOHL (0x5f544852), 
+  ACE_NTOHL (0x4541445f), 
+  ACE_NTOHL (0x4d4f4445), 
+  ACE_NTOHL (0x4c000000),  // name = MAIN_THREAD_MODEL
   };
 
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicyValue (
@@ -170,14 +178,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ThreadPolicy>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ThreadPolicy>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.

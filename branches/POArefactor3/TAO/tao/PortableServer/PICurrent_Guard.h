@@ -15,15 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/orbconf.h"
 
-#include "portableserver_export.h"
+#if TAO_HAS_INTERCEPTORS == 1
 
 /// Forward declarations.
 class TAO_ServerRequest;
@@ -96,7 +96,6 @@ namespace TAO
      * the thread scope, meaning that a logical copy is not enough.
      */
     const bool tsc_to_rsc_;
-
   };
 }
 

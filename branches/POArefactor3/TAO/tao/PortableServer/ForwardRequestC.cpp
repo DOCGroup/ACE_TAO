@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:301
+// be\be_codegen.cpp:302
 
 
 #include "ForwardRequestC.h"
@@ -46,7 +46,7 @@
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -54,7 +54,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::ForwardRequest::ForwardRequest (void)
@@ -89,21 +89,20 @@ PortableServer::ForwardRequest::operator= (const ::PortableServer::ForwardReques
 void PortableServer::ForwardRequest::_tao_any_destructor (void *_tao_void_pointer)
 {
   ForwardRequest *_tao_tmp_pointer =
-    static_cast<ForwardRequest*> (_tao_void_pointer);
+    static_cast<ForwardRequest *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::ForwardRequest *
 PortableServer::ForwardRequest::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/ForwardRequest:2.3", _tao_excp->_rep_id ()))
-    {
-      return dynamic_cast<ForwardRequest *> (_tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<ForwardRequest *> (_tao_excp);
+}
+
+const PortableServer::ForwardRequest *
+PortableServer::ForwardRequest::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const ForwardRequest *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::ForwardRequest::_alloc (void)
@@ -139,7 +138,7 @@ void PortableServer::ForwardRequest::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -152,7 +151,7 @@ void PortableServer::ForwardRequest::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -185,46 +184,46 @@ static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f46),
-  ACE_NTOHL (0x6f727761),
-  ACE_NTOHL (0x72645265),
-  ACE_NTOHL (0x71756573),
-  ACE_NTOHL (0x743a322e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f46), 
+  ACE_NTOHL (0x6f727761), 
+  ACE_NTOHL (0x72645265), 
+  ACE_NTOHL (0x71756573), 
+  ACE_NTOHL (0x743a322e), 
   ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/ForwardRequest:2.3
     15,
-  ACE_NTOHL (0x466f7277),
-  ACE_NTOHL (0x61726452),
-  ACE_NTOHL (0x65717565),
+  ACE_NTOHL (0x466f7277), 
+  ACE_NTOHL (0x61726452), 
+  ACE_NTOHL (0x65717565), 
   ACE_NTOHL (0x73740000),  // name = ForwardRequest
   1, // member count
     18,
-  ACE_NTOHL (0x666f7277),
-  ACE_NTOHL (0x6172645f),
-  ACE_NTOHL (0x72656665),
-  ACE_NTOHL (0x72656e63),
+  ACE_NTOHL (0x666f7277), 
+  ACE_NTOHL (0x6172645f), 
+  ACE_NTOHL (0x72656665), 
+  ACE_NTOHL (0x72656e63), 
   ACE_NTOHL (0x65000000),  // name = forward_reference
     CORBA::tk_objref,
   52, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f62),
-    ACE_NTOHL (0x6a656374),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f4f62), 
+    ACE_NTOHL (0x6a656374), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
         7,
-    ACE_NTOHL (0x4f626a65),
+    ACE_NTOHL (0x4f626a65), 
     ACE_NTOHL (0x63740000),  // name = Object
-
+    
 };
 
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ForwardRequest (
@@ -253,20 +252,13 @@ CORBA::Boolean operator<< (
   if (strm << _tao_aggregate._rep_id ())
     {
       // Now marshal the members (if any).
-      if (
+      return (
         (strm << _tao_aggregate.forward_reference.in ())
-       )
-        {
-          return 1;
-        }
-      else
-        {
-          return 0;
-        }
+       );
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -276,16 +268,9 @@ CORBA::Boolean operator>> (
   )
 {
   // Demarshal the members.
-  if (
+  return (
     (strm >> _tao_aggregate.forward_reference.out ())
-  )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  );
 }
 
 // TAO_IDL - Generated from
@@ -295,6 +280,6 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

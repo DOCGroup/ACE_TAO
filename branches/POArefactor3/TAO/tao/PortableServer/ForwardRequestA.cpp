@@ -27,11 +27,13 @@
 
 #include "ForwardRequestC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -41,12 +43,12 @@ TAO::Any_Dual_Impl_T<PortableServer::ForwardRequest>::demarshal_value (
   )
 {
   CORBA::String_var id;
-
-  if ((cdr >> id.out ()) == 0)
+  
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
-
+  
   ACE_TRY_NEW_ENV
     {
       this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -54,11 +56,11 @@ TAO::Any_Dual_Impl_T<PortableServer::ForwardRequest>::demarshal_value (
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
-
-  return 1;
+  
+  return true;
 }
 
 // Copying insertion.
@@ -130,6 +132,6 @@ CORBA::Boolean operator>>= (
         PortableServer::ForwardRequest \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

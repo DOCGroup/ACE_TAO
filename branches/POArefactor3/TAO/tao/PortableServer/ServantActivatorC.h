@@ -73,7 +73,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -92,7 +92,7 @@ namespace PortableServer
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
+  // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR__VAR_OUT_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR__VAR_OUT_CH_
@@ -142,7 +142,7 @@ namespace PortableServer
     
     static ServantActivator_ptr _nil (void)
     {
-      return (ServantActivator_ptr)0;
+      return static_cast<ServantActivator_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -250,7 +250,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Portab
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:958
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "ServantActivatorC.inl"
