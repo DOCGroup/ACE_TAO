@@ -383,6 +383,8 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
+      int retval = 0;
+
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
       if (this->orb_manager_.init_child_poa (argc,
@@ -395,7 +397,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                           -1);
       ACE_TRY_CHECK;
 
-      int retval = OPTIONS::instance()->parse_args (argc, argv);
+      retval = OPTIONS::instance()->parse_args (argc, argv);
 
       if (retval != 0)
         return retval;
