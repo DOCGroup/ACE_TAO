@@ -1,3 +1,11 @@
+Tue Aug  8 17:03:12 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+
+	  Some changes to this file meant to be checked in after
+	  the next beta release were included in the checkin
+	  below. I've reverted those for now.
+
 Tue Aug  8 15:10:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
