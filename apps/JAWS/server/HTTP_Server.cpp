@@ -7,19 +7,23 @@
 #include "IO.h"
 #include "HTTP_Server.h"
 
-// James, please make sure that you don't have "free floating" enums
-// since they will inevitably cause portability problems.
+//DONE// James, please make sure that you don't have "free floating"
+//DONE// enums since they will inevitably cause portability problems.
 
-enum 
-{ 
-  POOL = 0,
-  PER_REQUEST = 1 
-};
+class HTTP_Server_Anchor
+{
+public:
+  enum 
+  { 
+    POOL = 0,
+    PER_REQUEST = 1 
+  };
 
-enum 
-{ 
-  SYNCH = 0,
-  ASYNCH = 2 
+  enum 
+  { 
+    SYNCH = 0,
+    ASYNCH = 2 
+  };
 };
 
 void
@@ -53,15 +57,15 @@ HTTP_Server::parse_args (int argc,
 	// PER_REQUEST -> thread per request
 	// THROTTLE    -> thread per request with throttling
         if (ACE_OS::strcmp (get_opt.optarg, "POOL") == 0)
-          thr_strategy = POOL;
+          thr_strategy = HTTP_Server_Anchor::POOL;
         else if (ACE_OS::strcmp (get_opt.optarg, "PER_REQUEST") == 0)
           {
-            thr_strategy = PER_REQUEST;
+            thr_strategy = HTTP_Server_Anchor::PER_REQUEST;
             this->throttle_ = 0;
           }
         else if (ACE_OS::strcmp (get_opt.optarg, "THROTTLE") == 0)
           {
-            thr_strategy = PER_REQUEST;
+            thr_strategy = HTTP_Server_Anchor::PER_REQUEST;
             this->throttle_ = 1;
           }
 	break;
@@ -69,9 +73,9 @@ HTTP_Server::parse_args (int argc,
 	// SYNCH  -> synchronous I/O
 	// ASYNCH -> asynchronous I/O
         if (ACE_OS::strcmp (get_opt.optarg, "SYNCH") == 0)
-          io_strategy = SYNCH;
+          io_strategy = HTTP_Server_Anchor::SYNCH;
         else if (ACE_OS::strcmp (get_opt.optarg, "ASYNCH") == 0)
-          io_strategy = ASYNCH;
+          io_strategy = HTTP_Server_Anchor::ASYNCH;
 	break;
       case 'b':
 	this->backlog_ = ACE_OS::atoi (get_opt.optarg);
@@ -227,13 +231,14 @@ HTTP_Server::thread_per_request (void)
                            "%p\n", "Thread_Per_Request_Task::open"),
                           -1);
 
-      // Throttling is not allowing too many threads run away Should
-      // really use some sort of condition variable here.
+      // Throttling is not allowing too many threads to run away.
+      // Should really use some sort of condition variable here.
       if (!this->throttle_) 
 	continue;
 
       const ACE_Time_Value wait_time (0,10);
 
+      // This works because each task has only one thread.
       while (this->tm_.num_tasks_in_group (grp_id) > this->threads_)
 	this->tm_.wait (&wait_time);
     }
@@ -269,7 +274,7 @@ Thread_Per_Request_Task::open (void *args)
   else
     status = this->activate (THR_DETACHED | THR_NEW_LWP, 1, 0, -1, *grp_id, 0);
 
-  if (*grp_id == -1)
+  if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
                       -1);
   return 0;
@@ -285,6 +290,14 @@ Thread_Per_Request_Task::svc (void)
   HTTP_Handler *handler = factory.create_http_handler ();
   handler->open (this->handle_, *mb);
   mb->release ();
+  return 0;
+}
+
+void *
+Thread_Per_Request_Task::DEBUG_TPR (void *task)
+{
+  Thread_Per_Request_Task *tpr_task = (Thread_Per_Request_Task *) task;
+  tpr_task->svc ();
   return 0;
 }
 
