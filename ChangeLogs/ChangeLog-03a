@@ -1,3 +1,8 @@
+Wed Apr 24 16:08:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/rules.local.GNU: Added a rule to clean up
+	  Sunws_cache properly. Should help SunCC5_1 builds.
+
 Wed Apr 24 11:07:15 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/RMCast/Makefile (FILES): Removed a stray "\".  Thanks to
