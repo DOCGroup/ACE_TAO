@@ -26,7 +26,7 @@ class TAO_Export TAO_ORB_Manager
   //     registering servants with the POA.
 public:
   TAO_ORB_Manager (CORBA::ORB_ptr orb = 0,
-                   PortableServer::POA_ptr root_poa = 0,
+                   PortableServer::POA_ptr poa = 0,
                    PortableServer::POAManager_ptr poa_manager = 0); 
   // Constructor
 
@@ -38,7 +38,7 @@ public:
   // Returns -1 on failure
       
   int init_child_poa (int argc,
-		      char **argv,
+		      char *argv[],
 		      char *poa_name,
 		      CORBA_Environment &env);
   // Creates a child poa under the root poa with PERSISTENT and
@@ -74,14 +74,14 @@ protected:
   CORBA::ORB_var orb_;
   // The ORB.
       
-  PortableServer::POA_var root_poa_;
-  // The root POA.
+  PortableServer::POA_var poa_;
+  // The POA for this ORB.
 
   PortableServer::POA_var child_poa_;
   // Child poa under the root POA.
 
   PortableServer::POAManager_var poa_manager_;
-  // The POA manager of root_poa_.
+  // The POA manager of poa_.
 };
   
 #endif /* TAO_UTIL_H */
