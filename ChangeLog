@@ -1,3 +1,13 @@
+Thu Mar  7 08:28:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Reordering_Test.cpp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+          Replaced main with ACE_TMAIN.
+
 Wed Mar  6 21:48:15 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_linux_kcc.GNU (CCFLAGS):
