@@ -4992,6 +4992,7 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::truncate (const char *filename,
                   off_t offset)
@@ -5018,6 +5019,7 @@ ACE_OS::truncate (const char *filename,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
+#endif /* ACE_HAS_WINCE */
 
 // Accessors to PWD file.
 

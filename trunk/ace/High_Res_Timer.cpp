@@ -195,20 +195,20 @@ ACE_High_Res_Timer::dump (void) const
              global_scale_factor ()));
 #if defined (ACE_LACKS_LONGLONG_T)
   ACE_DEBUG ((LM_DEBUG,
-             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n"
-                        "end_.hi ():       %8x; end_.lo ():        %8x;\n"
-                        "total_.hi ():     %8x; total_.lo ():      %8x;\n"
-                        "start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
+             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n")
+             ASYS_TEXT ("end_.hi ():       %8x; end_.lo ():        %8x;\n")
+             ASYS_TEXT ("total_.hi ():     %8x; total_.lo ():      %8x;\n")
+             ASYS_TEXT ("start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
              start_.hi (), start_.lo (),
              end_.hi (), end_.lo (),
              total_.hi (), total_.lo (),
              start_incr_.hi (), start_incr_.lo ()));
 #else  /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG,
-             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n"
-                        "end_.hi ():       %8x; end_.lo ():        %8x;\n"
-                        "total_.hi ():     %8x; total_.lo ():      %8x;\n"
-                        "start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
+             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n")
+             ASYS_TEXT ("end_.hi ():       %8x; end_.lo ():        %8x;\n")
+             ASYS_TEXT ("total_.hi ():     %8x; total_.lo ():      %8x;\n")
+             ASYS_TEXT ("start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
              ACE_CU64_TO_CU32 (start_ >> 32),
              ACE_CU64_TO_CU32 (start_ & 0xfffffffful),
              ACE_CU64_TO_CU32 (end_ >> 32),
