@@ -51,8 +51,8 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the CDR << and >> operator declarations
-  *os << "CORBA::Boolean " << idl_global->export_macro ()
-      << " operator<< (TAO_OutputCDR &, const "; 
+  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
+      << " operator<< (TAO_OutputCDR &, const ";
   // @@ TODO: this should be done in the node, it is absurd to repeat
   // this code all over the visitors!!!!
   if (!this->ctx_->tdef ())
@@ -67,7 +67,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
     {
       *os << node->name () << "_forany &);" << be_nl;
     }
-  *os << "CORBA::Boolean " << idl_global->export_macro ()
+  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator>> (TAO_InputCDR &, ";
   if (!this->ctx_->tdef ())
     {

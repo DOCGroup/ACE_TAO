@@ -76,7 +76,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "_ptr;" << be_nl;
 
   // now generate the class definition
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->skel_export_macro ()
       << " " << namebuf << " : ";
   if (node->n_inherits () > 0)
     {

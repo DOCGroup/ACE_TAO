@@ -52,10 +52,10 @@ be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
 
   // generate the CDR << and >> operators
   os->indent ();
-  *os << "CORBA::Boolean " << idl_global->export_macro ()
+  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &); // " << be_nl;
-  *os << "CORBA::Boolean " << idl_global->export_macro ()
+  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);\n";
 

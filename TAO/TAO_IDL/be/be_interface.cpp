@@ -548,7 +548,7 @@ be_interface::gen_var_defn (char* interface_name)
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << idl_global->export_macro ()
+  *ch << "class " << idl_global->stub_export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -830,7 +830,7 @@ be_interface::gen_out_defn (char *interface_name)
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << idl_global->export_macro ()
+  *ch << "class " << idl_global->stub_export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";

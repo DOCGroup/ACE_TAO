@@ -60,7 +60,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       // generate the ifdefined macro for the union type
       os->gen_ifdef_macro (node->flatname ());
       os->indent (); // start with the current indentation level
-      *os << "class " << idl_global->export_macro () << " "
+      *os << "class " << idl_global->stub_export_macro () << " "
           << node->local_name () << ": public TAO_Base_Union " << be_nl
           << "{" << be_nl
           << "public:" << be_idt_nl

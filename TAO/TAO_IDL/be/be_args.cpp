@@ -82,6 +82,10 @@ BE_prep_arg(char *s, idl_bool)
 {
   const char arg_macro[]="export_macro=";
   const char arg_include[]="export_include=";
+  const char skel_arg_macro[]="skel_export_macro=";
+  const char skel_arg_include[]="skel_export_include=";
+  const char stub_arg_macro[]="stub_export_macro=";
+  const char stub_arg_include[]="stub_export_include=";
   const char arg_pch_include[]="pch_include=";
 #ifdef IDL_HAS_VALUETYPE
   const char obv_opt_accessor[]="obv_opt_accessor";
@@ -95,12 +99,33 @@ BE_prep_arg(char *s, idl_bool)
       if (ACE_OS::strstr (arg, arg_macro) == arg)
         {
           char* val = arg + sizeof (arg_macro) - 1;
-          idl_global->export_macro (val);
+          idl_global->skel_export_macro (val);
+          idl_global->stub_export_macro (val);
         }
       else if (ACE_OS::strstr (arg, arg_include) == arg)
         {
           char* val = arg + sizeof (arg_include) - 1;
-          idl_global->export_include (val);
+          idl_global->stub_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, skel_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (skel_arg_macro) - 1;
+          idl_global->skel_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, skel_arg_include) == arg)
+        {
+          char* val = arg + sizeof (skel_arg_include) - 1;
+          idl_global->skel_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, stub_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (stub_arg_macro) - 1;
+          idl_global->stub_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, stub_arg_include) == arg)
+        {
+          char* val = arg + sizeof (stub_arg_include) - 1;
+          idl_global->stub_export_include (val);
         }
       else if (ACE_OS::strstr (arg, arg_pch_include) == arg)
         {

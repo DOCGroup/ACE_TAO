@@ -169,15 +169,60 @@ also receives other options that are specific to it. <P>
     <td>&nbsp;</td>
   </tr>
 
+  <tr><a name="skel_export_macro">
+    <td></td>
+
+    <td><tt>skel_export_macro=</tt><i>macro_name</i></td>
+
+    <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
+        or <tt>extern</tt> keyword in the generated skeleton code (S
+        files,) this is needed for Windows/NT that requires
+        special directives to export symbols from DLLs, usually the definition
+        is just a space on unix platforms.&nbsp;</td>
+  </tr>
+
+  <tr><a name="skel_export_include">
+    <td></td>
+
+    <td><tt>skel_export_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        top of the generated server header, this is usually a good
+        place to define the server side export macro.</td>
+  </tr>
+
+  <tr><a name="stub_export_macro">
+    <td></td>
+
+    <td><tt>stub_export_macro=</tt><i>macro_name</i></td>
+
+    <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
+        or <tt>extern</tt> keyword in the generated stub code, this is
+        needed for Windows/NT that requires special directives to
+        export symbols from DLLs, usually the definition is just a
+        space on unix platforms.&nbsp;</td>
+  </tr>
+
+  <tr><a name="stub_export_include">
+    <td></td>
+
+    <td><tt>stub_export_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        top of the client header, this is usually a good place to define the export
+        macro.</td>
+  </tr>
+
   <tr><a name="export_macro">
     <td></td>
 
     <td><tt>export_macro=</tt><i>macro_name</i></td>
 
-    <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
-        or <tt>extern</tt> keyword, this is needed for Windows/NT that requires
-        special directives to export symbols from DLLs, usually the definition
-        is just a space on unix platforms.&nbsp;</td>
+    <td>This option has the same effect as issuing
+        <tt>-Wb,skel_export_macro=</tt><i>macro_name</i>
+        <tt>-Wb,stub_export_macro=</tt><i>macro_name</i>.  This option
+        is useful when building a DLL containing both stubs and
+        skeletons.</td>
   </tr>
 
   <tr><a name="export_include">
@@ -185,9 +230,10 @@ also receives other options that are specific to it. <P>
 
     <td><tt>export_include=</tt><i>include_path</i></td>
 
-    <td>The compiler will generate code to include <i>include_path</i> at the
-        top of the client header, this is usually a good place to define the export
-        macro.</td>
+    <td>This option has the same effect as specifying
+        <tt>-Wb,stub_export_include=</tt><i>include_path</t>.  This
+        option goes with the previous option to build DLL containing
+        both stubs and skeletons.</td>
   </tr>
 
   <tr><a name="pch_include">

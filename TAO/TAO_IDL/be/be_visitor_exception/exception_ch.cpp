@@ -62,7 +62,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       os->gen_ifdef_macro (node->flatname ());
 
       os->indent ();
-      *os << "class " << idl_global->export_macro ()
+      *os << "class " << idl_global->stub_export_macro ()
 	  << " " << node->local_name ()
 	  << " : public CORBA::UserException" << be_nl;
       *os << "{" << be_nl

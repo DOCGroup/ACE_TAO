@@ -370,19 +370,35 @@ public:
   static const char *be_get_server_template_inline (UTL_String *idl_file_name,
                                                     int base_name_only = 0);
 
-  virtual const char* export_macro (void) const;
-  // returns the macro name for exporting classes in Win32 DLL.
+  virtual const char* skel_export_macro (void) const;
+  // returns the macro name for exporting server side classes in Win32
+  // DLL.
 
-  virtual void export_macro (const char* s);
-  // set the macro name for export classes in Win32 DLL.
+  virtual void skel_export_macro (const char* s);
+  // set the macro name for export server side classes in Win32 DLL.
 
-  virtual const char* export_include (void) const;
-  // returns the name of the include file that contains the export
-  // macro definition.
+  virtual const char* skel_export_include (void) const;
+  // returns the name of the include file that contains the server
+  // side export macro definition.
 
-  virtual void export_include (const char* s);
-  // set the name of the include file that contains the export
-  // macro definition.
+  virtual void skel_export_include (const char* s);
+  // set the name of the include file that contains the server side
+  // export macro definition.
+
+  virtual const char* stub_export_macro (void) const;
+  // returns the macro name for exporting client side classes in Win32
+  // DLL.
+
+  virtual void stub_export_macro (const char* s);
+  // set the macro name for export client side classes in Win32 DLL.
+
+  virtual const char* stub_export_include (void) const;
+  // returns the name of the include file that contains the client
+  // side export macro definition.
+
+  virtual void stub_export_include (const char* s);
+  // set the name of the include file that contains the client side
+  // export macro definition.
 
   virtual const char* pch_include (void) const;
   // returns the name of the include file to be used for precompiled
@@ -633,8 +649,10 @@ private:
   // files (e.g. tao/corba.h)  so that #include statements can be
   // generated with ""s or <>s respectively.
 
-  char* export_macro_;
-  char* export_include_;
+  char* skel_export_macro_;
+  char* skel_export_include_;
+  char* stub_export_macro_;
+  char* stub_export_include_;
   char* pch_include_;
 
   // Client's header file name ending. Default is "C.h".

@@ -783,7 +783,7 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
   os = this->ctx_->stream ();
   os->indent (); // start with whatever indentation level we are at
 
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->skel_export_macro ()
       << " " << node->local_name ()
       << "_init : public ACE_CORBA_1 (ValueFactoryBase)" << be_nl;
 

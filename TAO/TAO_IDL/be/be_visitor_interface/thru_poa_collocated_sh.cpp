@@ -50,7 +50,7 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
 
   // output the class defn
   os->indent ();
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->skel_export_macro ()
       << " " << node->local_coll_name (be_interface::THRU_POA);
   os->incr_indent ();
   *os << " : public virtual " << node->name ();

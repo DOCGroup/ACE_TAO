@@ -66,12 +66,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
   // generate the ifdefined macro
   os->gen_ifdef_macro (node->flatname ());
 
-  // If we contain an anonymous sequence, 
+  // If we contain an anonymous sequence,
   // generate code for the sequence here.
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
-      if (this->gen_anonymous_base_type (bt, 
-                                         TAO_CodeGen::TAO_SEQUENCE_CH) 
+      if (this->gen_anonymous_base_type (bt,
+                                         TAO_CodeGen::TAO_SEQUENCE_CH)
           == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,7 +79,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
                              "visit_array - "
                              "gen_anonymous_base_type failed\n"),
                             -1);
-        }              
+        }
     }
 
   os->indent ();
@@ -312,7 +312,7 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   // for over here.
 
   os->indent (); // start with whatever was our current indent level
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->stub_export_macro ()
       << " " << varnamebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;
@@ -391,7 +391,7 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
   // generate the out definition (always in the client header)
   os->indent (); // start with whatever was our current indent level
 
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->stub_export_macro ()
       << " " << outnamebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;
@@ -455,7 +455,7 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   // for over here.
 
   os->indent (); // start with whatever was our current indent level
-  *os << "class " << idl_global->export_macro ()
+  *os << "class " << idl_global->stub_export_macro ()
       << " " << foranyname << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;
