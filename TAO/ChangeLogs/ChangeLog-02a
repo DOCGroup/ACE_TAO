@@ -78,7 +78,6 @@ Wed Nov 21 16:50:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	* orbsvcs/tests/AVStreams/Multiple_Flows:  Test multiple flows in
 	  the AV Service.
 
->>>>>>> 1.4464
 Wed Nov 21 12:52:37 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
@@ -1733,21 +1732,18 @@ Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    common file parsing code.  This way we can removed the
 	    get_rates() function.
 
-<<<<<<< ChangeLog
 	  - Invocation priorities can either be automatically
 	    calculated (as before) or can be explicitly specified
 	    through the <invocation_priorities_file> option.
 
 	* performance-tests/RTCorba/Thread_Pool/server.cpp:
-=======
-        * performance-tests/RTCorba/Thread_Pool/client.cpp:
->>>>>>> 1.4454
 
-<<<<<<< ChangeLog
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+
 	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
 	    common file parsing code.  Auto lane priorities and bands
 	    calculations were moved to readers.cpp.
-=======
+
           - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
             common file parsing code.  This way we can removed the
             get_rates() function.
@@ -1761,7 +1757,6 @@ Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
             common file parsing code.  Auto lane priorities and bands
             calculations were moved to readers.cpp.
->>>>>>> 1.4454
 
           - Lane priorities and bands can either be automatically
             calculated (as before) or can be explicitly specified
