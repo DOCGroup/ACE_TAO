@@ -4,18 +4,19 @@
 //
 // = LIBRARY
 //    performance-tests/Misc
-// 
+//
 // = FILENAME
 //    basic_perf.cpp
 //
 // = DESCRIPTION
 //    Times various simple operations.
 //
-//    With Sun C++, use -O2: make CFLAGS="-mt -O2" BIN=perf
+//    With Sun C++, use -O2: make CFLAGS="-mt -O2" BIN=basic_perf
+//    -fast seems to produce slower times.
 //
 // = AUTHOR
 //    David Levine
-// 
+//
 // ============================================================================
 
 #include "basic_func.h"
@@ -25,7 +26,12 @@
 
 static const char usage [] = "[-? |\n"
                              "            [-i <iterations> [1000000]]";
+
+// These are global.  They appear to bust the CPU cache, on an Ultra 2
+// w/Sun C++ 4.2.
 static u_int iterations = 1000000;
+Foo foo;
+Foo_v foo_v;
 
 inline
 void
@@ -43,15 +49,452 @@ inline_func ()
 // in microseconds.
 static
 inline
-float
+double
 per_iteration (const ACE_hrtime_t elapsed /* nanoseconds */)
 {
-  float ms_per_iteration = elapsed / 1000.0 / iterations;
+  double ms_per_iteration = (double) elapsed / 1000.0 / (double) iterations;
 
   // Don't print out "-0.000" or "-0.001" . . .
-  return -0.001 < ms_per_iteration  &&  ms_per_iteration < 0
+  return -0.002 < ms_per_iteration  &&  ms_per_iteration < 0.0
            ?  0.0
            :  ms_per_iteration;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Basic_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Basic_Test
+{
+public:
+  Basic_Test (ACE_High_Res_Timer &timer,
+              ACE_hrtime_t empty_iteration_time);
+  virtual ~Basic_Test ();
+
+  virtual void run () = 0;
+
+  double iteration_time ();
+
+  void print_iteration_time (const char *message);
+
+protected:
+  ACE_hrtime_t elapsed_time_;
+
+  void start_timing ()
+  {
+    timer_.reset ();
+    timer_.start ();
+  }
+
+  void stop_timing ()
+  {
+    timer_.stop ();
+    timer_.elapsed_time (elapsed_time_);
+  }
+
+private:
+  ACE_High_Res_Timer &timer_;
+  ACE_hrtime_t empty_iteration_time_;
+
+  // Require the timer reference.
+  Basic_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Basic_Test (const Basic_Test &);
+  Basic_Test &operator= (const Basic_Test &);
+};
+
+Basic_Test::Basic_Test (ACE_High_Res_Timer &timer,
+                        ACE_hrtime_t empty_iteration_time)
+  : elapsed_time_ (0),
+    timer_ (timer),
+    empty_iteration_time_ (empty_iteration_time)
+{
+}
+
+Basic_Test::~Basic_Test ()
+{
+}
+
+double
+Basic_Test::iteration_time ()
+{
+  return per_iteration (elapsed_time_ - empty_iteration_time_);
+}
+
+void
+Basic_Test::print_iteration_time (const char *message)
+{
+  ACE_DEBUG ((LM_INFO, "  %-41s %8.3f\n",
+              message,
+              this->iteration_time ()));
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Empty_Iteration_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Empty_Iteration_Test : public Basic_Test
+{
+public:
+  Empty_Iteration_Test (ACE_High_Res_Timer &timer) : Basic_Test (timer, 0) {}
+  virtual ~Empty_Iteration_Test () {};
+
+  virtual void run ();
+
+  ACE_hrtime_t empty_iteration_time () const
+    {
+      return elapsed_time_;
+    }
+
+private:
+  // Require the timer reference.
+  Empty_Iteration_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Empty_Iteration_Test (const Empty_Iteration_Test &);
+  Empty_Iteration_Test &operator= (const Empty_Iteration_Test &);
+};
+
+void
+Empty_Iteration_Test::run ()
+{
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+    }
+
+  this->stop_timing ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Inline_Call_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Inline_Call_Test : public Basic_Test
+{
+public:
+  Inline_Call_Test (ACE_High_Res_Timer &timer,
+                    ACE_hrtime_t empty_iteration_time)
+    : Basic_Test (timer, empty_iteration_time) {}
+  virtual ~Inline_Call_Test () {};
+
+  virtual void run ();
+
+private:
+  // Require the timer reference.
+  Inline_Call_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Inline_Call_Test (const Inline_Call_Test &);
+  Inline_Call_Test &operator= (const Inline_Call_Test &);
+};
+
+void
+Inline_Call_Test::run ()
+{
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      inline_func ();
+    }
+
+  this->stop_timing ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Noninline_Call_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Noninline_Call_Test : public Basic_Test
+{
+public:
+  Noninline_Call_Test (ACE_High_Res_Timer &timer,
+                       ACE_hrtime_t empty_iteration_time)
+    : Basic_Test (timer, empty_iteration_time) {}
+  virtual ~Noninline_Call_Test () {};
+
+  virtual void run ();
+
+private:
+  // Require the timer reference.
+  Noninline_Call_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Noninline_Call_Test (const Noninline_Call_Test &);
+  Noninline_Call_Test &operator= (const Noninline_Call_Test &);
+};
+
+void
+Noninline_Call_Test::run ()
+{
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      func ();
+    }
+
+  this->stop_timing ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Inline_Member_Call_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Inline_Member_Call_Test : public Basic_Test
+{
+public:
+  Inline_Member_Call_Test (ACE_High_Res_Timer &timer,
+                           ACE_hrtime_t empty_iteration_time)
+    : Basic_Test (timer, empty_iteration_time) {}
+  virtual ~Inline_Member_Call_Test () {};
+
+  virtual void run ();
+
+private:
+  // Require the timer reference.
+  Inline_Member_Call_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Inline_Member_Call_Test (const Inline_Member_Call_Test &);
+  Inline_Member_Call_Test &operator= (const Inline_Member_Call_Test &);
+};
+
+void
+Inline_Member_Call_Test::run ()
+{
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      foo.inline_func ();
+    }
+
+  this->stop_timing ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Noninline_Member_Call_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Noninline_Member_Call_Test : public Basic_Test
+{
+public:
+  Noninline_Member_Call_Test (ACE_High_Res_Timer &timer,
+                              ACE_hrtime_t empty_iteration_time)
+    : Basic_Test (timer, empty_iteration_time) {}
+  virtual ~Noninline_Member_Call_Test () {};
+
+  virtual void run ();
+
+private:
+  // Require the timer reference.
+  Noninline_Member_Call_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Noninline_Member_Call_Test (const Noninline_Member_Call_Test &);
+  Noninline_Member_Call_Test &operator= (const Noninline_Member_Call_Test &);
+};
+
+void
+Noninline_Member_Call_Test::run ()
+{
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      foo.func ();
+    }
+
+  this->stop_timing ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Inline_Member_With_Virtual_Call_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Inline_Member_With_Virtual_Call_Test : public Basic_Test
+{
+public:
+  Inline_Member_With_Virtual_Call_Test (ACE_High_Res_Timer &timer,
+                                        ACE_hrtime_t empty_iteration_time)
+    : Basic_Test (timer, empty_iteration_time) {}
+  virtual ~Inline_Member_With_Virtual_Call_Test () {};
+
+  virtual void run ();
+
+private:
+  // Require the timer reference.
+  Inline_Member_With_Virtual_Call_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Inline_Member_With_Virtual_Call_Test (
+    const Inline_Member_With_Virtual_Call_Test &);
+  Inline_Member_With_Virtual_Call_Test &operator= (
+    const Inline_Member_With_Virtual_Call_Test &);
+};
+
+void
+Inline_Member_With_Virtual_Call_Test::run ()
+{
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      foo_v.inline_func ();
+    }
+
+  this->stop_timing ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Noninline_Member_With_Virtual_Call_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Noninline_Member_With_Virtual_Call_Test : public Basic_Test
+{
+public:
+  Noninline_Member_With_Virtual_Call_Test (ACE_High_Res_Timer &timer,
+                                           ACE_hrtime_t empty_iteration_time)
+    : Basic_Test (timer, empty_iteration_time) {}
+  virtual ~Noninline_Member_With_Virtual_Call_Test () {};
+
+  virtual void run ();
+
+private:
+  // Require the timer reference.
+  Noninline_Member_With_Virtual_Call_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Noninline_Member_With_Virtual_Call_Test
+    (const Noninline_Member_With_Virtual_Call_Test &);
+  Noninline_Member_With_Virtual_Call_Test &operator=
+    (const Noninline_Member_With_Virtual_Call_Test &);
+};
+
+void
+Noninline_Member_With_Virtual_Call_Test::run ()
+{
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      foo_v.func ();
+    }
+
+  this->stop_timing ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Virtual_Member_Optimizable_Call_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Virtual_Member_Optimizable_Call_Test : public Basic_Test
+{
+public:
+  Virtual_Member_Optimizable_Call_Test (ACE_High_Res_Timer &timer,
+                                        ACE_hrtime_t empty_iteration_time)
+    : Basic_Test (timer, empty_iteration_time) {}
+  virtual ~Virtual_Member_Optimizable_Call_Test () {};
+
+  virtual void run ();
+
+private:
+  // Require the timer reference.
+  Virtual_Member_Optimizable_Call_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Virtual_Member_Optimizable_Call_Test (
+    const Virtual_Member_Optimizable_Call_Test &);
+  Virtual_Member_Optimizable_Call_Test &operator= (
+    const Virtual_Member_Optimizable_Call_Test &);
+};
+
+void
+Virtual_Member_Optimizable_Call_Test::run ()
+{
+  Foo_v &fv_o = foo_v;
+
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      fv_o.v_func ();
+    }
+
+  this->stop_timing ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Virtual_Member_Call_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class Virtual_Member_Call_Test : public Basic_Test
+{
+public:
+  Virtual_Member_Call_Test (ACE_High_Res_Timer &timer,
+                            ACE_hrtime_t empty_iteration_time)
+    : Basic_Test (timer, empty_iteration_time) {}
+  virtual ~Virtual_Member_Call_Test () {};
+
+  virtual void run ();
+
+private:
+  // Require the timer reference.
+  Virtual_Member_Call_Test ();
+
+  // Force construction of independent instances by prohibiting copying.
+  Virtual_Member_Call_Test (const Virtual_Member_Call_Test &);
+  Virtual_Member_Call_Test &operator= (const Virtual_Member_Call_Test &);
+};
+
+void
+Virtual_Member_Call_Test::run ()
+{
+  Foo_v *fv;
+  if (iterations < 2)
+    {
+      fv = new Foo_v;
+    }
+  else
+    {
+      fv = new Foo_d_v;
+    }
+
+  this->start_timing ();
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      fv->v_func ();
+    }
+
+  this->stop_timing ();
+
+  delete fv;
+  fv = 0;
 }
 
 
@@ -64,12 +507,6 @@ static
 unsigned int
 get_options (int argc, char *argv [])
 {
-  if (argv == 0)
-    {
-      // VxWorks doesn't necessarily have a non-zero argv.
-      return 0;
-    }
-
   ACE_Get_Opt get_opt (argc, argv, "i:?");
   int opt;
   int temp;
@@ -133,124 +570,78 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_INFO, "%u iterations\n", iterations));
 
 
+  // Use one timer for all the tests.  No particular reason why.
   ACE_High_Res_Timer timer;
-  ACE_hrtime_t iteration_time,
-               inline_call_time,
-               noninline_call_time,
-               inline_member_time,
-               noninline_member_time,
-               inline_member_v_time,
-               noninline_member_v_time,
-               virtual_member_v_time;
-  u_int i;
 
-  ACE_hrtime_t start, stop;
+  // Calculate the time for an "empty iteration", and subtract it
+  // from each test time.
+  ACE_hrtime_t iteration_time;
 
-  timer.reset ();
-  timer.start ();
-  start = ACE_OS::gethrtime ();
-  for (i = 0; i < iterations; ++i)
-    {
-    }
-  stop = ACE_OS::gethrtime ();
-  timer.stop ();
-  timer.elapsed_time (iteration_time);
+  Empty_Iteration_Test empty_iteration_test (timer);
+  empty_iteration_test.run ();
   ACE_DEBUG ((LM_INFO, "An empty iteration costs %8.3f microseconds.\n\n",
-              per_iteration (iteration_time)));
+              empty_iteration_test.iteration_time ()));
+  iteration_time = empty_iteration_test.empty_iteration_time ();
 
-  timer.reset ();
-  timer.start ();
-  for (i = 0; i < iterations; ++i)
-    {
-      inline_func ();
-    }
-  timer.stop ();
-  timer.elapsed_time (inline_call_time);
 
-  timer.reset ();
-  timer.start ();
-  for (i = 0; i < iterations; ++i)
-    {
-      func ();
-    }
-  timer.stop ();
-  timer.elapsed_time (noninline_call_time);
+  // Run the real tests . . .
+  Inline_Call_Test inline_call_test (timer, iteration_time);
+  inline_call_test.run ();
 
-  Foo foo;
-  timer.reset ();
-  timer.start ();
-  for (i = 0; i < iterations; ++i)
-    {
-      foo.inline_func ();
-    }
-  timer.stop ();
-  timer.elapsed_time (inline_member_time);
+  Noninline_Call_Test noninline_call_test (timer, iteration_time);
+  noninline_call_test.run ();
 
-  timer.reset ();
-  timer.start ();
-  for (i = 0; i < iterations; ++i)
-    {
-      foo.func ();
-    }
-  timer.stop ();
-  timer.elapsed_time (noninline_member_time);
+  Inline_Member_Call_Test inline_member_call_test (timer, iteration_time);
+  inline_member_call_test.run ();
 
-  Foo_v foo_v;
-  timer.reset ();
-  timer.start ();
-  for (i = 0; i < iterations; ++i)
-    {
-      foo_v.inline_func ();
-    }
-  timer.stop ();
-  timer.elapsed_time (inline_member_v_time);
+  Noninline_Member_Call_Test noninline_member_call_test (
+      timer, iteration_time);
+  noninline_member_call_test.run ();
 
-  timer.reset ();
-  timer.start ();
-  for (i = 0; i < iterations; ++i)
-    {
-      foo_v.func ();
-    }
-  timer.stop ();
-  timer.elapsed_time (noninline_member_v_time);
+  Inline_Member_With_Virtual_Call_Test
+    inline_member_with_virtual_call_test (timer, iteration_time);
+  inline_member_with_virtual_call_test.run ();
 
-  Foo_v &fv = foo_v;
-  timer.reset ();
-  timer.start ();
-  for (i = 0; i < iterations; ++i)
-    {
-      fv.v_func ();
-    }
-  timer.stop ();
-  timer.elapsed_time (virtual_member_v_time);
+  Noninline_Member_With_Virtual_Call_Test
+    noninline_member_with_virtual_call_test (timer, iteration_time);
+  noninline_member_with_virtual_call_test.run ();
 
+  Virtual_Member_Optimizable_Call_Test
+    virtual_member_optimizable_call_test (timer, iteration_time);
+  virtual_member_optimizable_call_test.run ();
+
+  Virtual_Member_Call_Test virtual_member_call_test (timer, iteration_time);
+  virtual_member_call_test.run ();
+
+
+  // Print results . . .
   ACE_DEBUG ((LM_INFO, "operation                              "
                   "time, microseconds\n"));
   ACE_DEBUG ((LM_INFO, "=========                              "
                   "=================="));
 
   ACE_DEBUG ((LM_INFO, "\nglobal function calls:\n"));
-  ACE_DEBUG ((LM_INFO, "  inline function call                      %8.3f\n",
-                  per_iteration (inline_call_time - iteration_time)));
-  ACE_DEBUG ((LM_INFO, "  non-inline function call                  %8.3f\n",
-                  per_iteration (noninline_call_time - iteration_time)));
+  inline_call_test.print_iteration_time ("inline function call");
+  noninline_call_test.print_iteration_time ("non-inline function call");
 
   ACE_DEBUG ((LM_INFO, "\nmember function calls:\n"));
-  ACE_DEBUG ((LM_INFO, "  inline member function call               %8.3f\n",
-                  per_iteration (inline_member_time - iteration_time)));
-  ACE_DEBUG ((LM_INFO, "  non-inline member function call           %8.3f\n",
-                  per_iteration (noninline_member_time - iteration_time)));
+  inline_member_call_test.print_iteration_time (
+    "inline member function call");
+  noninline_member_call_test.print_iteration_time (
+    "non-inline member function call");
 
   ACE_DEBUG ((LM_INFO, "\nmember function calls, class has a virtual "
                        "function:\n"));
-  ACE_DEBUG ((LM_INFO, "  inline member function with/virtual call  %8.3f\n",
-                  per_iteration (inline_member_v_time - iteration_time)));
-  ACE_DEBUG ((LM_INFO, "  noninline member function w/virtual call  %8.3f\n",
-                  per_iteration (noninline_member_v_time - iteration_time)));
+  inline_member_with_virtual_call_test.print_iteration_time (
+    "inline member function with virtual call");
+  noninline_member_with_virtual_call_test.print_iteration_time (
+    "non-inline member function w/virtual call");
 
   ACE_DEBUG ((LM_INFO, "\nvirtual member function calls:\n"));
-  ACE_DEBUG ((LM_INFO, "  virtual member function call              %8.3f\n",
-                  per_iteration (virtual_member_v_time - iteration_time)));
+  virtual_member_optimizable_call_test.print_iteration_time (
+    "virtual member function call, optimizable");
+  virtual_member_call_test.print_iteration_time (
+    "virtual member function call");
 
   return 0;
 }
