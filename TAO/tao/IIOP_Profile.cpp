@@ -28,6 +28,7 @@ TAO_IIOP_Profile::object_key_delimiter (void) const
 }
 
 
+
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Version &version,
@@ -130,6 +131,7 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 // -1 -> error
 //  0 -> can't understand this version
 //  1 -> success.
+
 int
 TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
 {
@@ -277,20 +279,28 @@ TAO_IIOP_Profile::parse_string (const char *string,
   CORBA::ULong length_host = 0;
 
   // Length of <char *cp>
-  CORBA::ULong length_cp = ACE_OS::strlen ((const char *)okd) + sizeof (def_port);
+  CORBA::ULong length_cp = 
+    ACE_OS::strlen ((const char *)okd) + sizeof (def_port);
   
   char *cp = CORBA::string_alloc (length_cp);
 
   if (cp_pos == 0)
+    
     {
       // No host/port delimiter! Dont raise an exception. Use the
       // default port No. 683
       ACE_OS::strcpy (cp, def_port);
       ACE_OS::strcat (cp, okd);
-
-      length = ACE_OS::strlen ((const char *)cp) - ACE_OS::strlen ((const char *)okd) - 1;
+     
+      length = 
+        ACE_OS::strlen ((const char *)cp) - 
+        ACE_OS::strlen ((const char *)okd) -
+        1;
       
-      length_host = ACE_OS::strlen (start) + sizeof (def_port) - ACE_OS::strlen (cp) -1;
+      length_host = 
+        ACE_OS::strlen (start) + 
+        sizeof (def_port) - 
+        ACE_OS::strlen (cp) -1;
     }
   else
     {
@@ -308,7 +318,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
   this->port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
   
   tmp = CORBA::string_alloc (length_host);
-      
+
   ACE_OS::strncpy (tmp.inout (), start, length_host);
   tmp[length_host] = '\0';
   
@@ -318,8 +328,30 @@ TAO_IIOP_Profile::parse_string (const char *string,
   
   if (ACE_OS::strcmp (this->host_.in (), "") == 0)
     {
+      char tmp_host [MAXHOSTNAMELEN + 1];
+
       // If no host is specified: assign the default host : the local host.
-      host_addr.get_host_name (ACE_const_cast (char *, this->host_.in ()), sizeof (this->host_));
+      if (host_addr.get_host_name (tmp_host,
+                                   sizeof (tmp_host)) != 0)
+      {
+        const char *tmp = host_addr.get_host_addr ();
+        if (tmp == 0)
+          {
+            if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nTAO (%P|%t) ")
+                          ACE_TEXT ("IIOP_Profile::parse_string ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot determine hostname")));
+            return -1;
+          }
+        else
+          this->host_ = tmp;
+      }
+      else
+        {
+          this->host_ = (const char *) tmp_host;
+        }
     }
   
   if (this->object_addr_.set (this->port_,
@@ -328,16 +360,18 @@ TAO_IIOP_Profile::parse_string (const char *string,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Error Occured !")
                       ACE_TEXT ("TAO (%P|%t) IIOP_Profile::parse_string - \n")
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
       return -1;
     }
-
+  
   start = ++okd;  // increment past the object key separator
-
+  
   TAO_POA::decode_string_to_sequence (this->object_key_, start);
-
+      
   return 1;
 }
 
