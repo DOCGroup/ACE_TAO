@@ -69,15 +69,15 @@ public:
   friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> 
+  typedef ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
           ITERATOR;
-  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> 
+  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
           REVERSE_ITERATOR;
 
    // = STL-style iterator typedefs.
-  typedef ITERATOR 
+  typedef ITERATOR
           iterator;
-  typedef REVERSE_ITERATOR 
+  typedef REVERSE_ITERATOR
           reverse_iterator;
 
   // = Initialization and termination methods.
@@ -187,7 +187,7 @@ public:
   MAP &map (void);
   // The map managed by the Cache_Map_Manager.
 
-  CACHING_STRATEGY *caching_strategy (void);
+  CACHING_STRATEGY &caching_strategy (void);
   // The caching strategy used on the cache.
 
 protected:
@@ -216,9 +216,9 @@ class ACE_Cache_Map_Iterator
 public:
 
   // = Traits.
-  typedef ACE_Reference_Pair<KEY, VALUE> 
+  typedef ACE_Reference_Pair<KEY, VALUE>
           value_type;
-  typedef ACE_Pair <VALUE, ATTRIBUTES> 
+  typedef ACE_Pair <VALUE, ATTRIBUTES>
           CACHE_VALUE;
   // The actual value mapped to the key in the cache. The <attributes>
   // are used by the strategy and is transperant to the cache user.
@@ -234,7 +234,7 @@ public:
 
   // = Iteration methods.
 
-  ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION, 
+  ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION,
                           CACHING_STRATEGY, ATTRIBUTES> &operator=
       (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
                                     CACHING_STRATEGY, ATTRIBUTES> &rhs);

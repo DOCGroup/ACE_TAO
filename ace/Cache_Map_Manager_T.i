@@ -7,7 +7,7 @@
 template <T_1> ACE_INLINE int
 ACE_Cache_Map_Manager<T_2>::purge (void)
 {
-  return this->caching_strategy ()->clear_cache (this->map_);
+  return this->caching_strategy ().clear_cache (this->map_);
 }
 
 template <T_1> ACE_INLINE size_t
@@ -28,10 +28,10 @@ ACE_Cache_Map_Manager<T_2>::map (void)
   return this->map_;
 }
 
-template <T_1> ACE_INLINE CACHING_STRATEGY *
+template <T_1> ACE_INLINE CACHING_STRATEGY &
 ACE_Cache_Map_Manager<T_2>::caching_strategy (void)
 {
-  return this->caching_strategy_;
+  return *this->caching_strategy_;
 }
 
 template <T_1> ACE_INLINE ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>
@@ -92,13 +92,13 @@ ACE_Cache_Map_Iterator<T_2>::operator== (const ACE_Cache_Map_Iterator<T_2> &rhs)
 template <T_1> ACE_INLINE int
 ACE_Cache_Map_Iterator<T_2>::operator!= (const ACE_Cache_Map_Iterator<T_2> &rhs) const
 {
-  return this->iterator_implementation_ != rhs.iterator_implementation_; 
+  return this->iterator_implementation_ != rhs.iterator_implementation_;
 }
 
 template <T_1> ACE_INLINE ACE_Reference_Pair<KEY, VALUE>
 ACE_Cache_Map_Iterator<T_2>::operator* (void) const
 {
-  value_type retn ((*this->iterator_implementation_).ext_id_, 
+  value_type retn ((*this->iterator_implementation_).ext_id_,
                    (*this->iterator_implementation_).int_id_.first ());
   return retn;
 }
@@ -151,7 +151,7 @@ ACE_Cache_Map_Iterator<T_2>::ACE_Cache_Map_Iterator (const IMPLEMENTATION &itera
 }
 
 template <T_1> ACE_INLINE IMPLEMENTATION &
-ACE_Cache_Map_Iterator<T_2>::iterator_implementation (void) 
+ACE_Cache_Map_Iterator<T_2>::iterator_implementation (void)
 {
   return this->iterator_implementation_;
 }
@@ -197,7 +197,7 @@ ACE_Cache_Map_Reverse_Iterator<T_2>::operator!= (const ACE_Cache_Map_Reverse_Ite
 template <T_1> ACE_INLINE ACE_Reference_Pair<KEY, VALUE>
 ACE_Cache_Map_Reverse_Iterator<T_2>::operator* (void) const
 {
-  value_type retv ((*this->reverse_iterator_implementation_).ext_id_, 
+  value_type retv ((*this->reverse_iterator_implementation_).ext_id_,
                    (*this->reverse_iterator_implementation_).int_id_.first ());
   return retv;
 }
