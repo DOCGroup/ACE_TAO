@@ -1,7 +1,8 @@
-Fri Nov 19 17:30:45 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
+Fri Nov 19 17:43:31 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 
 	  Added Log to the build
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp: 
 
 Thu Nov 18 22:32:55 1999  Marina Spivak  <marina@cs.wustl.edu>
 

@@ -2,6 +2,7 @@
 
 #include "Log_Constraint_Visitors.h"
 
+
 TAO_Log_Constraint_Evaluator::
 TAO_Log_Constraint_Evaluator (DsLogAdmin::LogRecord &rec)
   :rec_ (rec)
@@ -40,10 +41,18 @@ visit_property (TAO_Property_Constraint* literal)
                             CORBA::NO_MEMORY ());
           ACE_TRY_CHECK;
 
-          if (prop_index == 0)
-            *value <<= (CORBA::ULong)this->rec_.id;
-          else
-            *value <<= (CORBA::ULong)this->rec_.time;
+          #if defined (ACE_LACKS_LONGLONG_T)
+             if (prop_index == 0)
+               *value <<= ACE_U64_TO_U32  (this->rec_.id);
+             else
+               *value <<= ACE_U64_TO_U32  (this->rec_.time);
+          #else
+
+             if (prop_index == 0)
+               *value <<= ACE_static_cast (ACE_UINT32, (this->rec_.id));
+             else
+               *value <<= ACE_static_cast (ACE_UINT32, (this->rec_.time));
+          #endif
         }
       ACE_CATCHANY
         {
