@@ -1,3 +1,31 @@
+Fri Mar 27 04:45:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.h: Added two pure virtual functions
+	  _register_collocation and _get_collocated_servant to CORBA_ORB
+	  class so the derived classes have their own implementations.
+	  (resolve_poa,resolve_poa_current): Changed these two functions
+	  from private methods to protected methods.  I need to access
+	  them from IIOP_ORB.
+
+	* tao/IIOP_ORB.{h,cpp} (_register_collocation): Added this new
+	  method to record connection end points an IIOP ORB owns.
+	  (_get_collocated_servant): Added this new method which uses a
+	  passed in STUB_Object to determine whether a requested object is
+	  collocated or not.  If it's a collocated object, returns the
+	  servant of that object and we can use that to create a
+	  collocated object reference.
+	  (object_to_string): Added code to register object end point with
+	  IIOP ORB.
+	  (iiop_string_to_object): Added code to check whether a requested
+	  object is collocated or not and return a collocated object if it
+	  fits to do so.
+
+	* tao/ORB_Core.cpp (preconnect): Added code to register success
+	  preconnections to IIOP's end point repository.
+
+	* tao/decode.cpp (TAO_Marshal_ObjRef::decode): Added code to
+	  optimize against collocation objects.
+
 Thu Mar 27 10:57:02 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEMIB: New version of the DOVE
