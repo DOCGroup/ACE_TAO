@@ -229,7 +229,7 @@ ACE_Token_Manager::release_token (ACE_Tokens *&token)
         {
           errno = ENOENT;
           ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Token Manager could not release %s:%d\n"),
-                      ASYS_MULTIBYTE_STRING (token->name ()), token->type ()));
+                      ASYS_ONLY_MULTIBYTE_STRING (token->name ()), token->type ()));
           // @@ bad
         }
       else
