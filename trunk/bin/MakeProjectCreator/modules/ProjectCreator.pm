@@ -423,8 +423,7 @@ sub parse_line {
         elsif ($comp eq 'specific') {
           my(@types) = split(/\s*,\s*/, $name);
           ($status, $errorString) = $self->parse_scope(
-                       $ih, $values[1], \@types, \%validNames,
-                       $self->{'type_specific_assign'}->{$self->{'pctype'}});
+                       $ih, $values[1], \@types, \%validNames);
         }
         elsif ($comp eq 'define_custom') {
           ($status, $errorString) = $self->parse_define_custom($ih, $name);
@@ -804,13 +803,11 @@ sub handle_scoped_end {
   my($flags) = shift;
 
   foreach my $type (@$types) {
-    if (defined $self->{'type_specific_assign'}->{$type}) {
-      foreach my $key (keys %$flags) {
-        $self->{'type_specific_assign'}->{$type}->{$key} = $$flags{$key};
-      }
+    if (!defined $self->{'type_specific_assign'}->{$type}) {
+      $self->{'type_specific_assign'}->{$type} = {};
     }
-    else {
-      $self->{'type_specific_assign'}->{$type} = $flags;
+    foreach my $key (keys %$flags) {
+      $self->{'type_specific_assign'}->{$type}->{$key} = $$flags{$key};
     }
   }
 }
