@@ -1,3 +1,12 @@
+Mon Oct 13 10:24:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp: 
+
+	  Changed the names of the interceptors. Since these classes are
+	  memory managed by the TAO_Refcounted_LocalObject, no need to
+	  delete them. 
+
 Mon Oct 13 08:58:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/PSS/Makefile.parser:
