@@ -1,3 +1,9 @@
+Fri Jun  8 13:45:54 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp (get_attributes):
+
+	  Release the X.509 certificate structure on error.  Fixes a leak.
+
 Fri Jun 08 07:30:08 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (ssliop_open_i):
