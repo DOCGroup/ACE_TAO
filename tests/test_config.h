@@ -30,7 +30,7 @@
 #endif /* ACE_WIN32 */
 
 #define ACE_START_TEST(NAME) \
-  const char *program = argv ? argv[0] : NAME; \
+  const char *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
@@ -42,10 +42,31 @@
 
 #define ACE_NEW_THREAD \
 do {\
-  ACE_Log_Msg::instance()->msg_ostream (ace_file_stream.output_file ()); \
-  ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); \
-  ACE_Log_Msg::instance()->set_flags (ACE_Log_Msg::OSTREAM); \
+  ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()); \
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); \
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM); \
 } while (0)
+
+#define ACE_APPEND_LOG(NAME) \
+  const char *program = NAME; \
+  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
+  if (ace_file_stream.set_output (program, 1) != 0) \
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %T\n", program));
+
+#define ACE_END_LOG \
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n\n", program)); \
+  ace_file_stream.close ();
+
+#define ACE_INIT_LOG(NAME) \
+  char temp[BUFSIZ]; \
+  ACE_OS::sprintf (temp, "%s%s%s", \
+		   ACE_LOG_DIRECTORY, \
+		   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR), \
+		   ".log"); \
+  ACE_DEBUG ((LM_DEBUG, "Deleting old log file %s (if any)\n\n", temp)); \
+  ACE_OS::unlink (temp); 
+
 
 const int ACE_NS_MAX_ENTRIES = 2000;
 const int ACE_MAX_TIMERS = 4;
@@ -59,28 +80,26 @@ class ACE_Test_Output
 public:
   ACE_Test_Output (void);
   ~ACE_Test_Output (void);
-  int set_output (const char *filename);
+  int set_output (const char *filename, int append = 0);
   ofstream *output_file (void);
   void close (void);
 
 private:
-  ofstream *output_file_;
+  ofstream output_file_;
 };
 
 static ACE_Test_Output ace_file_stream;
 
 ACE_Test_Output::ACE_Test_Output (void)
-  : output_file_ (0) 
 { 
 }
 
 ACE_Test_Output::~ACE_Test_Output (void) 
 { 
-  delete this->output_file_; 
 }
 
 int 
-ACE_Test_Output::set_output (const char *filename)
+ACE_Test_Output::set_output (const char *filename, int append)
 {
   char temp[BUFSIZ];
   // Ignore the error value since the directory may already exist.
@@ -90,21 +109,31 @@ ACE_Test_Output::set_output (const char *filename)
 		   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR),
 		   ".log");
 
-  ACE_NEW_RETURN (this->output_file_, ofstream (temp), -1);
-  ACE_NEW_THREAD;
+  int flags = ios::out;
+  if (append)
+    flags |= ios::app;
+
+  this->output_file_.open (temp, flags);
+  if (this->output_file_.bad ())
+    return -1;
+
+  ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()); 
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); 
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM); 
+
   return 0;
 }
 
 ofstream *
 ACE_Test_Output::output_file (void) 
 { 
-  return this->output_file_; 
+  return &this->output_file_; 
 }
   
 void 
 ACE_Test_Output::close (void) 
 { 
-  this->output_file_->flush (); 
-  this->output_file_->close (); 
+  this->output_file_.flush (); 
+  this->output_file_.close (); 
 }
 #endif /* ACE_TEST_CONFIG_H */
