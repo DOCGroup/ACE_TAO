@@ -741,6 +741,13 @@ ACE_Strategy_Connector<SH, PR_CO_2>::~ACE_Strategy_Connector (void)
 {
   ACE_TRACE ("ACE_Strategy_Connector<SH, PR_CO_2>::~ACE_Strategy_Connector");
 
+  // Close down
+  this->close ();
+}
+
+template <class SH, PR_CO_1> int
+ACE_Strategy_Connector<SH, PR_CO_2>::close (void)
+{
   if (this->delete_creation_strategy_)
     delete this->creation_strategy_;
   this->delete_creation_strategy_ = 0;
@@ -755,6 +762,8 @@ ACE_Strategy_Connector<SH, PR_CO_2>::~ACE_Strategy_Connector (void)
     delete this->concurrency_strategy_;
   this->delete_concurrency_strategy_ = 0;
   this->concurrency_strategy_ = 0;
+
+  return SUPER::close ();
 }
 
 template <class SH, PR_CO_1> int
