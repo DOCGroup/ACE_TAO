@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Service): namingexe, naming_serv, lifecycle, utils {
+project(*Service): namingexe, utils {
   Source_Files {
     Logger_i.cpp
     Logging_Service.cpp
@@ -9,7 +9,7 @@ project(*Service): namingexe, naming_serv, lifecycle, utils {
   }
 }
 
-project(*Test): namingexe, lifecycle {
+project(*Test): namingexe, utils {
   Source_Files {
     Logging_Test.cpp
     Logging_Test_i.cpp

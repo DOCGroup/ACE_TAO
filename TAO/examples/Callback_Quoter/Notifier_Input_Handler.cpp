@@ -58,12 +58,11 @@ Notifier_Input_Handler::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
-  PortableServer::POA_var child_poa = this->orb_manager_.child_poa ();
 
-  this->naming_server_.init (orb.in (),
-                             child_poa.in ());
+  if (this->naming_server_.init (orb.in ()) == -1) 
+    return -1;
+             
   // create the name for the naming service
-
   CosNaming::Name notifier_obj_name (1);
   notifier_obj_name.length (1);
   notifier_obj_name[0].id = CORBA::string_dup ("Notifier");

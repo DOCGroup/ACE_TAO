@@ -20,7 +20,7 @@
 #include "Event_Comm_i.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingS.h"
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 
 class Notifier_Server
 {
@@ -61,9 +61,8 @@ private:
   CosNaming::NamingContext_var naming_context_;
   // Naming context for the naming service.
 
-  TAO_Naming_Server naming_server_;
-  // An instance of the name server, wherein the naming context
-  // containing the factory of objects will be registered.
+  TAO_Naming_Client naming_server_;
+  // helper class for getting access to Naming Service.
 };
 
 #define NOTIFIER_BIND_NAME "Notifier"

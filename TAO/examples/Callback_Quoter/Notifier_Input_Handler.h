@@ -21,9 +21,10 @@
 
 #include "Notifier_i.h"
 #include "NotifierS.h"
+#include "ace/Event_Handler.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingS.h"
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 
 class Notifier_Input_Handler : public ACE_Event_Handler
 {
@@ -78,9 +79,8 @@ private:
   CosNaming::NamingContext_var naming_context_;
   // Naming context for the naming service.
 
-  TAO_Naming_Server naming_server_;
-  // An instance of the name server, wherein the naming context
-  // containg the factory of objects will be registered.
+  TAO_Naming_Client naming_server_;
+  // helper class for getting access to Naming Service.
 
   Notifier_i notifier_i_;
   // The servant object registered with the orb.

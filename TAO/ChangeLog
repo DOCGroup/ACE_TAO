@@ -1,3 +1,20 @@
+Mon Mar 14 12:22:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Callback_Quoter/Callback_Quoter.mpc:
+	* examples/Event_Comm/Event_Comm.mpc:
+	* examples/Logging/Logging.mpc:
+
+	  Changed to inherit from naming instead of naming_serv.
+
+	* examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+	* examples/Callback_Quoter/Notifier_Input_Handler.h:
+	* examples/Event_Comm/Notifier_Server.cpp:
+	* examples/Event_Comm/Notifier_Server.h:
+	* examples/Logging/Logging_Service_i.cpp:
+	* examples/Logging/Logging_Service_i.h:
+
+	  Changed to use TAO_Naming_Client instead of TAO_Naming_Server.
+
 Mon Mar 14 12:05:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Simple/bank/bank.mpc:
