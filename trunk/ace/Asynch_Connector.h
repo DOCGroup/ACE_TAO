@@ -45,8 +45,6 @@ class ACE_Asynch_Connector : public ACE_Handler
 {
 public:
 
-  static const  ACE_INET_Addr  inet_addr_any_;
-
   /// A do nothing constructor.
   ACE_Asynch_Connector (void);
 
@@ -61,8 +59,9 @@ public:
                     int validate_new_connection = 0);
   
   /// This initiates a new asynchronous connect
-  virtual int connect (const ACE_INET_Addr & remote_sap,
-                       const ACE_INET_Addr & local_sap = inet_addr_any_,
+  virtual int connect (const ACE_INET_Addr &remote_sap,
+                       const ACE_INET_Addr &local_sap =
+                                   ACE_INET_Addr ((u_short)0),
                        int reuse_addr = 1,
                        const void *act = 0);
 
