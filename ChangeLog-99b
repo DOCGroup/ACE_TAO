@@ -1,3 +1,16 @@
+Thu Jul  1 21:49:39 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* ace/Containers_T.i,h,cpp
+	  Added reset () methods to the derived classes of
+	  ACE_Double_Linked_List_Iterator because the behavior of the base 
+	  class's version was not sufficient (and would cause way fun
+	  segfaults when used). 
+	
+	* tests/Map_Manager_Test.cpp 
+	* tests/DLList_Test.cpp
+	  ACE_const_cast'ed some string literals to char *'s to appease
+	  the evil monstrosity that is SC 5.0. 
+
 Wed Jun 30 18:11:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.i (strncasecmp):

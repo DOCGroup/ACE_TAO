@@ -797,6 +797,15 @@ ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (ACE_Double_
   // the list
 }
 
+template <class T> void
+ACE_Double_Linked_List_Iterator<T>::reset (ACE_Double_Linked_List<T> &dll)
+{
+  this->ACE_Double_Linked_List_Iterator_Base <T>::reset (dll);
+  this->current_ = ACE_static_cast (T*, dll.head_->next_);
+  // Advance current_ out of the null area and onto the first item in
+  // the list
+}
+
 template <class T> int
 ACE_Double_Linked_List_Iterator<T>::first (void)
 {
@@ -883,6 +892,15 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Reverse_Iterator)
 ACE_Double_Linked_List_Reverse_Iterator<T>::ACE_Double_Linked_List_Reverse_Iterator (ACE_Double_Linked_List<T> &dll)
   : ACE_Double_Linked_List_Iterator_Base <T> (dll)
 {
+  this->current_ = ACE_static_cast (T*, dll.head_->prev_);
+  // Advance current_ out of the null area and onto the last item in
+  // the list
+}
+
+template <class T> void
+ACE_Double_Linked_List_Reverse_Iterator<T>::reset (ACE_Double_Linked_List<T> &dll)
+{
+  this->ACE_Double_Linked_List_Iterator_Base <T>::reset (dll);
   this->current_ = ACE_static_cast (T*, dll.head_->prev_);
   // Advance current_ out of the null area and onto the last item in
   // the list

@@ -620,6 +620,15 @@ public:
   // = Initialization method.
   ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &);
 
+  void reset (ACE_Double_Linked_List<T> &);
+  // Retasks the iterator to iterate over a new
+  // Double_Linked_List. This allows clients to reuse an iterator
+  // without incurring the constructor overhead. If you do use this,
+  // be aware that if there are more than one reference to this
+  // iterator, the other "clients" may be very bothered when their
+  // iterator changes.
+  // @@ Here be dragons. Comments?
+
   int first (void);
   // Move to the first element in the list.  Returns 0 if the
   // list is empty, else 1.
@@ -673,6 +682,15 @@ class ACE_Double_Linked_List_Reverse_Iterator : public ACE_Double_Linked_List_It
 public:
   // = Initialization method.
   ACE_Double_Linked_List_Reverse_Iterator (ACE_Double_Linked_List<T> &);
+
+  void reset (ACE_Double_Linked_List<T> &);
+  // Retasks the iterator to iterate over a new
+  // Double_Linked_List. This allows clients to reuse an iterator
+  // without incurring the constructor overhead. If you do use this,
+  // be aware that if there are more than one reference to this
+  // iterator, the other "clients" may be very bothered when their
+  // iterator changes.
+  // @@ Here be dragons. Comments?
 
   int first (void);
   // Move to the first element in the list.  Returns 0 if the
@@ -864,6 +882,7 @@ class ACE_DLList : public ACE_DLList_Base
   friend class ACE_DLList_Reverse_Iterator<T>;
 
 public:
+
   void operator= (ACE_DLList<T> &l);
   // Delegates to ACE_Double_Linked_List.
 
@@ -926,6 +945,15 @@ public:
   // = Initialization method.
   ACE_DLList_Iterator (ACE_DLList<T> &l);
 
+  void reset (ACE_DLList<T> &l);
+  // Retasks the iterator to iterate over a new
+  // Double_Linked_List. This allows clients to reuse an iterator
+  // without incurring the constructor overhead. If you do use this,
+  // be aware that if there are more than one reference to this
+  // iterator, the other "clients" may be very bothered when their
+  // iterator changes.
+  // @@ Here be dragons. Comments?
+
   // = Iteration methods.
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
@@ -969,6 +997,15 @@ public:
 
   // = Initialization method.
   ACE_DLList_Reverse_Iterator (ACE_DLList<T> &l);
+
+  void reset (ACE_DLList<T> &l);
+  // Retasks the iterator to iterate over a new
+  // Double_Linked_List. This allows clients to reuse an iterator
+  // without incurring the constructor overhead. If you do use this,
+  // be aware that if there are more than one reference to this
+  // iterator, the other "clients" may be very bothered when their
+  // iterator changes.
+  // @@ Here be dragons. Comments?
 
   // = Iteration methods.
   int advance (void);
