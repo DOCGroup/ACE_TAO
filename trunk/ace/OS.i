@@ -526,7 +526,9 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 #elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::fstat_f (handle, stp), int, -1);
 #else
-  ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
+  // Don't put a "::" in front of fstat() since it's defined as a
+  // macro on some platforms, e.g., Solaris for Intel.
+  ACE_OSCALL_RETURN (fstat (handle, stp), int, -1);
 #endif /* defined (ACE_PSOS) */
 }
 
