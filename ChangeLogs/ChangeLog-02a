@@ -1,3 +1,11 @@
+Sun Nov 19 15:26:56 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/sslconf.h
+	  (ACE_DEFAULT_SSL_CERT_FILE, ACE_DEFAULT_SSL_CERT_DIR):
+
+	  On Win32, do not use UNIX-specific directories in certificate
+	  paths.
+
 Sun Nov 19 10:37:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/ace_dll.dsp:
