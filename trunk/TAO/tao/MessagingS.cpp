@@ -1416,7 +1416,7 @@ TAO_Messaging_Poller_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_is_a",  &POA_Messaging::Poller::_is_a_skel},
       {"is_ready",      &POA_Messaging::Poller::is_ready_skel},
       {"_get_target",   &POA_Messaging::Poller::_get_target_skel},

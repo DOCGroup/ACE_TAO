@@ -62,11 +62,11 @@ TAO_CORBA_DomainManager_Perfect_Hash_OpTable::lookup (const char *str, unsigned 
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_is_a",  &POA_CORBA::DomainManager::_is_a_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_non_existent",  &POA_CORBA::DomainManager::_non_existent_skel},
-      {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0},
       {"get_domain_policy", 	&POA_CORBA::DomainManager::get_domain_policy_skel},
     };
 
@@ -304,11 +304,11 @@ TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::lookup (const char *str, unsi
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_is_a",  &POA_CORBA::ConstructionPolicy::_is_a_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_non_existent",  &POA_CORBA::ConstructionPolicy::_non_existent_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"make_domain_manager", 	&POA_CORBA::ConstructionPolicy::make_domain_manager_skel},
     };
 

@@ -70,16 +70,16 @@ TAO_PortableServer_ThreadPolicy_Perfect_Hash_OpTable::lookup (const char *str, u
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"copy", 	&POA_PortableServer::ThreadPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::ThreadPolicy::_is_a_skel},
-      {"",},
+      {"",0},
       {"destroy", 	&POA_PortableServer::ThreadPolicy::destroy_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_value", 	&POA_PortableServer::ThreadPolicy::_get_value_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::ThreadPolicy::_non_existent_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_policy_type", 	&POA_PortableServer::ThreadPolicy::_get_policy_type_skel},
     };
 
@@ -357,16 +357,16 @@ TAO_PortableServer_LifespanPolicy_Perfect_Hash_OpTable::lookup (const char *str,
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"copy", 	&POA_PortableServer::LifespanPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::LifespanPolicy::_is_a_skel},
-      {"",},
+      {"",0},
       {"destroy", 	&POA_PortableServer::LifespanPolicy::destroy_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_value", 	&POA_PortableServer::LifespanPolicy::_get_value_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::LifespanPolicy::_non_existent_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_policy_type", 	&POA_PortableServer::LifespanPolicy::_get_policy_type_skel},
     };
 
@@ -642,16 +642,16 @@ TAO_PortableServer_IdUniquenessPolicy_Perfect_Hash_OpTable::lookup (const char *
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"copy", 	&POA_PortableServer::IdUniquenessPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::IdUniquenessPolicy::_is_a_skel},
-      {"",},
+      {"",0},
       {"destroy", 	&POA_PortableServer::IdUniquenessPolicy::destroy_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_value", 	&POA_PortableServer::IdUniquenessPolicy::_get_value_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::IdUniquenessPolicy::_non_existent_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_policy_type", 	&POA_PortableServer::IdUniquenessPolicy::_get_policy_type_skel},
     };
 
@@ -927,16 +927,16 @@ TAO_PortableServer_IdAssignmentPolicy_Perfect_Hash_OpTable::lookup (const char *
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"copy", 	&POA_PortableServer::IdAssignmentPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::IdAssignmentPolicy::_is_a_skel},
-      {"",},
+      {"",0},
       {"destroy", 	&POA_PortableServer::IdAssignmentPolicy::destroy_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_value", 	&POA_PortableServer::IdAssignmentPolicy::_get_value_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::IdAssignmentPolicy::_non_existent_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_policy_type", 	&POA_PortableServer::IdAssignmentPolicy::_get_policy_type_skel},
     };
 
@@ -1214,16 +1214,16 @@ TAO_PortableServer_ImplicitActivationPolicy_Perfect_Hash_OpTable::lookup (const 
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"copy", 	&POA_PortableServer::ImplicitActivationPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::ImplicitActivationPolicy::_is_a_skel},
-      {"",},
+      {"",0},
       {"destroy", 	&POA_PortableServer::ImplicitActivationPolicy::destroy_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_value", 	&POA_PortableServer::ImplicitActivationPolicy::_get_value_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::ImplicitActivationPolicy::_non_existent_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_policy_type", 	&POA_PortableServer::ImplicitActivationPolicy::_get_policy_type_skel},
     };
 
@@ -1499,16 +1499,16 @@ TAO_PortableServer_ServantRetentionPolicy_Perfect_Hash_OpTable::lookup (const ch
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"copy", 	&POA_PortableServer::ServantRetentionPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::ServantRetentionPolicy::_is_a_skel},
-      {"",},
+      {"",0},
       {"destroy", 	&POA_PortableServer::ServantRetentionPolicy::destroy_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_value", 	&POA_PortableServer::ServantRetentionPolicy::_get_value_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::ServantRetentionPolicy::_non_existent_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_policy_type", 	&POA_PortableServer::ServantRetentionPolicy::_get_policy_type_skel},
     };
 
@@ -1784,16 +1784,16 @@ TAO_PortableServer_RequestProcessingPolicy_Perfect_Hash_OpTable::lookup (const c
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"copy", 	&POA_PortableServer::RequestProcessingPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::RequestProcessingPolicy::_is_a_skel},
-      {"",},
+      {"",0},
       {"destroy", 	&POA_PortableServer::RequestProcessingPolicy::destroy_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_value", 	&POA_PortableServer::RequestProcessingPolicy::_get_value_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::RequestProcessingPolicy::_non_existent_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"_get_policy_type", 	&POA_PortableServer::RequestProcessingPolicy::_get_policy_type_skel},
     };
 
