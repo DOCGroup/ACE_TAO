@@ -19,8 +19,6 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 #### ACE_COMPONENTS support.
 ####
 FILES += \
-	Event_Handler\
-	Event_Handler_T\
 	FlReactor\
 	POSIX_Proactor\
 	Priority_Reactor\
@@ -61,172 +59,6 @@ clean:
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-
-.obj/Event_Handler.o .obj/Event_Handler.o .obj/Event_Handler.o .obj/Event_Handler.o: Event_Handler.cpp \
- Event_Handler.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS/OS_Errno.h \
- $(ACE_ROOT)/ace/OS/OS_Export.h \
- $(ACE_ROOT)/ace/OS/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS/OS_String.h \
- $(ACE_ROOT)/ace/OS/Basic_Types.h \
- $(ACE_ROOT)/ace/OS/Basic_Types.i \
- $(ACE_ROOT)/ace/OS/OS_String.inl \
- $(ACE_ROOT)/ace/OS/OS_Memory.h \
- $(ACE_ROOT)/ace/OS/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS/OS_TLI.h \
- $(ACE_ROOT)/ace/OS/OS_TLI.inl \
- $(ACE_ROOT)/ace/Default_Constants.h \
- $(ACE_ROOT)/ace/OS/Global_Macros.h \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/OS/OS.i \
- $(ACE_ROOT)/ace/Utils/Flag_Manip.h \
- $(ACE_ROOT)/ace/Utils/Flag_Manip.i \
- $(ACE_ROOT)/ace/OS/Handle_Ops.h \
- $(ACE_ROOT)/ace/OS/Handle_Ops.i \
- $(ACE_ROOT)/ace/Utils/Lib_Find.h \
- $(ACE_ROOT)/ace/Utils/Lib_Find.i \
- $(ACE_ROOT)/ace/Utils/Init_ACE.h \
- $(ACE_ROOT)/ace/Utils/Init_ACE.i \
- $(ACE_ROOT)/ace/Connection/Sock_Connect.h \
- $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- Event_Handler.i \
- $(ACE_ROOT)/ace/Utils/Message_Block.h \
- $(ACE_ROOT)/ace/Memory/Malloc.h \
- $(ACE_ROOT)/ace/Memory/Malloc.i \
- $(ACE_ROOT)/ace/Memory/Malloc_T.h \
- $(ACE_ROOT)/ace/Threads/Synch.h \
- $(ACE_ROOT)/ace/Threads/Synch.i \
- $(ACE_ROOT)/ace/Threads/Synch_T.h \
- $(ACE_ROOT)/ace/Threads/Synch_T.i \
- $(ACE_ROOT)/ace/Threads/Thread.h \
- $(ACE_ROOT)/ace/Threads/Thread_Adapter.h \
- $(ACE_ROOT)/ace/OS/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl \
- $(ACE_ROOT)/ace/OS/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Threads/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Threads/Thread.i \
- $(ACE_ROOT)/ace/Threads/Synch_T.cpp \
- $(ACE_ROOT)/ace/Logging/Log_Msg.h \
- $(ACE_ROOT)/ace/Logging/Log_Record.h \
- $(ACE_ROOT)/ace/Logging/Log_Priority.h \
- $(ACE_ROOT)/ace/Logging/Log_Record.i \
- $(ACE_ROOT)/ace/Memory/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Memory/Malloc_Base.h \
- $(ACE_ROOT)/ace/Memory/Malloc_Allocator.i \
- $(ACE_ROOT)/ace/Utils/Templates/Free_List.h \
- $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
- $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
- $(ACE_ROOT)/ace/Memory/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory/Memory_Pool.h \
- $(ACE_ROOT)/ace/IPC/Signal.h \
- $(ACE_ROOT)/ace/IPC/Signal.i \
- $(ACE_ROOT)/ace/Memory/Mem_Map.h \
- $(ACE_ROOT)/ace/Memory/Mem_Map.i \
- $(ACE_ROOT)/ace/IPC/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/IPC/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/IPC/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/IPC/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Utils/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Utils/Templates/Node.h \
- $(ACE_ROOT)/ace/Utils/Templates/Node.cpp \
- $(ACE_ROOT)/ace/Utils/Unbounded_Set.inl \
- $(ACE_ROOT)/ace/Utils/Unbounded_Set.cpp \
- $(ACE_ROOT)/ace/Memory/Memory_Pool.i \
- $(ACE_ROOT)/ace/Utils/Message_Block.i \
- $(ACE_ROOT)/ace/Utils/Templates/Message_Block_T.h \
- $(ACE_ROOT)/ace/Utils/Templates/Message_Block_T.i \
- $(ACE_ROOT)/ace/Utils/Templates/Message_Block_T.cpp \
- Reactor.h \
- $(ACE_ROOT)/ace/OS/Handle_Set.h \
- $(ACE_ROOT)/ace/OS/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
- $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer/Timer_Queue_T.cpp \
- Reactor.i \
- Reactor_Impl.h \
- $(ACE_ROOT)/ace/Threads/Thread_Manager.h \
- $(ACE_ROOT)/ace/Utils/Unbounded_Queue.h \
- $(ACE_ROOT)/ace/Utils/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Utils/Unbounded_Queue.cpp \
- $(ACE_ROOT)/ace/Utils/Containers.h \
- $(ACE_ROOT)/ace/Utils/Containers.i \
- $(ACE_ROOT)/ace/Utils/Templates/Containers_T.h \
- $(ACE_ROOT)/ace/Utils/Templates/Array_Base.h \
- $(ACE_ROOT)/ace/Utils/Templates/Array_Base.inl \
- $(ACE_ROOT)/ace/Utils/Templates/Array_Base.cpp \
- $(ACE_ROOT)/ace/Utils/Templates/Containers_T.i \
- $(ACE_ROOT)/ace/Utils/Templates/Containers_T.cpp \
- $(ACE_ROOT)/ace/Utils/Templates/Singleton.h \
- $(ACE_ROOT)/ace/Utils/Templates/Singleton.i \
- $(ACE_ROOT)/ace/Utils/Templates/Singleton.cpp \
- $(ACE_ROOT)/ace/Utils/Object_Manager.h \
- $(ACE_ROOT)/ace/Utils/Object_Manager.i \
- $(ACE_ROOT)/ace/Utils/Templates/Managed_Object.h \
- $(ACE_ROOT)/ace/Utils/Templates/Managed_Object.i \
- $(ACE_ROOT)/ace/Utils/Templates/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Threads/Thread_Manager.i
-
-.obj/Event_Handler_T.o .obj/Event_Handler_T.o .obj/Event_Handler_T.o .obj/Event_Handler_T.o: Event_Handler_T.cpp \
- Event_Handler_T.h \
- $(ACE_ROOT)/ace/pre.h \
- Event_Handler.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS/OS_Errno.h \
- $(ACE_ROOT)/ace/OS/OS_Export.h \
- $(ACE_ROOT)/ace/OS/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS/OS_String.h \
- $(ACE_ROOT)/ace/OS/Basic_Types.h \
- $(ACE_ROOT)/ace/OS/Basic_Types.i \
- $(ACE_ROOT)/ace/OS/OS_String.inl \
- $(ACE_ROOT)/ace/OS/OS_Memory.h \
- $(ACE_ROOT)/ace/OS/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS/OS_TLI.h \
- $(ACE_ROOT)/ace/OS/OS_TLI.inl \
- $(ACE_ROOT)/ace/Default_Constants.h \
- $(ACE_ROOT)/ace/OS/Global_Macros.h \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/OS/OS.i \
- $(ACE_ROOT)/ace/Utils/Flag_Manip.h \
- $(ACE_ROOT)/ace/Utils/Flag_Manip.i \
- $(ACE_ROOT)/ace/OS/Handle_Ops.h \
- $(ACE_ROOT)/ace/OS/Handle_Ops.i \
- $(ACE_ROOT)/ace/Utils/Lib_Find.h \
- $(ACE_ROOT)/ace/Utils/Lib_Find.i \
- $(ACE_ROOT)/ace/Utils/Init_ACE.h \
- $(ACE_ROOT)/ace/Utils/Init_ACE.i \
- $(ACE_ROOT)/ace/Connection/Sock_Connect.h \
- $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- Event_Handler.i \
- Event_Handler_T.i \
- Event_Handler_T.cpp
 
 .obj/FlReactor.o .obj/FlReactor.o .obj/FlReactor.o .obj/FlReactor.o: FlReactor.cpp \
  FlReactor.h \
@@ -288,8 +120,8 @@ clean:
  $(ACE_ROOT)/ace/Logging/Log_Record.h \
  $(ACE_ROOT)/ace/Logging/Log_Priority.h \
  $(ACE_ROOT)/ace/Logging/Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
@@ -390,8 +222,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.i \
@@ -543,8 +375,8 @@ clean:
  $(ACE_ROOT)/ace/Logging/Log_Record.h \
  $(ACE_ROOT)/ace/Logging/Log_Priority.h \
  $(ACE_ROOT)/ace/Logging/Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
@@ -682,8 +514,8 @@ clean:
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.i \
@@ -830,8 +662,8 @@ clean:
  $(ACE_ROOT)/ace/Logging/Log_Record.h \
  $(ACE_ROOT)/ace/Logging/Log_Priority.h \
  $(ACE_ROOT)/ace/Logging/Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
@@ -929,8 +761,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.i \
@@ -1024,7 +856,7 @@ clean:
  Reactor_Notification_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Streams/Notification_Strategy.h \
- Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1061,7 +893,7 @@ clean:
  $(ACE_ROOT)/ace/Connection/Sock_Connect.h \
  $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Streams/Notification_Strategy.inl \
  Reactor_Notification_Strategy.inl \
  Reactor.h \
@@ -1156,8 +988,8 @@ clean:
  $(ACE_ROOT)/ace/Logging/Log_Record.h \
  $(ACE_ROOT)/ace/Logging/Log_Priority.h \
  $(ACE_ROOT)/ace/Logging/Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
@@ -1265,8 +1097,8 @@ clean:
  $(ACE_ROOT)/ace/Logging/Log_Record.h \
  $(ACE_ROOT)/ace/Logging/Log_Priority.h \
  $(ACE_ROOT)/ace/Logging/Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
@@ -1358,8 +1190,8 @@ clean:
  $(ACE_ROOT)/ace/Logging/Log_Record.h \
  $(ACE_ROOT)/ace/Logging/Log_Priority.h \
  $(ACE_ROOT)/ace/Logging/Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
@@ -1461,8 +1293,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.i \
@@ -1562,8 +1394,8 @@ clean:
  Select_Reactor_T.h \
  Select_Reactor_Base.h \
  $(ACE_ROOT)/ace/IPC/Signal.h \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
@@ -1654,8 +1486,8 @@ clean:
  $(ACE_ROOT)/ace/Logging/Log_Record.h \
  $(ACE_ROOT)/ace/Logging/Log_Priority.h \
  $(ACE_ROOT)/ace/Logging/Log_Record.i \
- Event_Handler.h \
- Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Timer/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.h \
@@ -1741,7 +1573,7 @@ clean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS/OS.i \
  $(ACE_ROOT)/ace/Connection/WIN32_Asynch_IO.h \
- Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Utils/Flag_Manip.h \
  $(ACE_ROOT)/ace/Utils/Flag_Manip.i \
@@ -1754,6 +1586,6 @@ clean:
  $(ACE_ROOT)/ace/Connection/Sock_Connect.h \
  $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- Event_Handler.i
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -135,8 +135,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -348,8 +348,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -526,8 +526,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -647,8 +647,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -759,8 +759,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -869,8 +869,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -980,8 +980,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -1133,8 +1133,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -1209,8 +1209,8 @@ clean:
  Malloc.h \
  Malloc.i \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -1314,8 +1314,8 @@ clean:
  $(ACE_ROOT)/ace/Connection/Sock_Connect.h \
  $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/Threads/Synch.h \
  $(ACE_ROOT)/ace/Threads/Synch.i \
@@ -1432,8 +1432,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -1520,8 +1520,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -1609,8 +1609,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -1697,8 +1697,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \
@@ -1797,8 +1797,8 @@ clean:
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Mem_Map.h \

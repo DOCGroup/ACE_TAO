@@ -113,8 +113,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  $(ACE_ROOT)/ace/Timer/Timer_Queue_T.i \

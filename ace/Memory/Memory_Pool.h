@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Demux/Event_Handler.h"
+#include "ace/Event_Handler/Event_Handler.h"
 #include "ace/IPC/Signal.h"
 #include "ace/Memory/Mem_Map.h"
 #if !defined (ACE_WIN32)

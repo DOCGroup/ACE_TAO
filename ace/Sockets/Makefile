@@ -94,7 +94,13 @@ clean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS/OS.i \
  $(ACE_ROOT)/ace/Utils/Flag_Manip.i \
- IPC_SAP.i
+ IPC_SAP.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.o: LSOCK_Acceptor.cpp \
  LSOCK_Acceptor.h \
@@ -155,7 +161,13 @@ clean:
  LSOCK_Stream.h \
  LSOCK.h \
  LSOCK.i \
- LSOCK_Stream.i
+ LSOCK_Stream.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.o: LSOCK_CODgram.cpp \
  LSOCK_CODgram.h \
@@ -210,7 +222,13 @@ clean:
  $(ACE_ROOT)/ace/IPC/INET_Addr.h \
  $(ACE_ROOT)/ace/IPC/INET_Addr.i \
  SOCK_CODgram.i \
- LSOCK_CODgram.i
+ LSOCK_CODgram.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK_Connector.o .obj/LSOCK_Connector.o .obj/LSOCK_Connector.o .obj/LSOCK_Connector.o: LSOCK_Connector.cpp \
  LSOCK_Connector.h \
@@ -272,7 +290,13 @@ clean:
  LSOCK.h \
  LSOCK.i \
  LSOCK_Stream.i \
- LSOCK_Connector.i
+ LSOCK_Connector.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK.o .obj/LSOCK.o .obj/LSOCK.o .obj/LSOCK.o: LSOCK.cpp \
  LSOCK.h \
@@ -319,7 +343,13 @@ clean:
  IPC_SAP.h \
  IPC_SAP.i \
  SOCK.i \
- LSOCK.i
+ LSOCK.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.o: LSOCK_Dgram.cpp \
  LSOCK_Dgram.h \
@@ -372,7 +402,13 @@ clean:
  SOCK_Dgram.i \
  LSOCK.h \
  LSOCK.i \
- LSOCK_Dgram.i
+ LSOCK_Dgram.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl
 
 .obj/LSOCK_Stream.o .obj/LSOCK_Stream.o .obj/LSOCK_Stream.o .obj/LSOCK_Stream.o: LSOCK_Stream.cpp \
  LSOCK_Stream.h \
@@ -429,7 +465,13 @@ clean:
  $(ACE_ROOT)/ace/IPC/UNIX_Addr.i \
  LSOCK.h \
  LSOCK.i \
- LSOCK_Stream.i
+ LSOCK_Stream.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl
 
 .obj/SOCK_Acceptor.o .obj/SOCK_Acceptor.o .obj/SOCK_Acceptor.o .obj/SOCK_Acceptor.o: SOCK_Acceptor.cpp \
  SOCK_Acceptor.h \
@@ -484,6 +526,12 @@ clean:
  SOCK_Stream.i \
  $(ACE_ROOT)/ace/Timer/Time_Value.h \
  SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/OS/OS_QoS.h \
  $(ACE_ROOT)/ace/Threads/Synch.h \
  $(ACE_ROOT)/ace/Threads/Synch.i \
@@ -492,16 +540,10 @@ clean:
  $(ACE_ROOT)/ace/Threads/Thread.h \
  $(ACE_ROOT)/ace/Threads/Thread_Adapter.h \
  $(ACE_ROOT)/ace/OS/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/OS/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Threads/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Threads/Thread.i \
- $(ACE_ROOT)/ace/Threads/Synch_T.cpp \
- $(ACE_ROOT)/ace/Logging/Log_Msg.h \
- $(ACE_ROOT)/ace/Logging/Log_Record.h \
- $(ACE_ROOT)/ace/Logging/Log_Priority.h \
- $(ACE_ROOT)/ace/Logging/Log_Record.i
+ $(ACE_ROOT)/ace/Threads/Synch_T.cpp
 
 .obj/SOCK_CODgram.o .obj/SOCK_CODgram.o .obj/SOCK_CODgram.o .obj/SOCK_CODgram.o: SOCK_CODgram.cpp \
  SOCK_CODgram.h \
@@ -552,7 +594,13 @@ clean:
  SOCK_IO.i \
  $(ACE_ROOT)/ace/IPC/INET_Addr.h \
  $(ACE_ROOT)/ace/IPC/INET_Addr.i \
- SOCK_CODgram.i
+ SOCK_CODgram.i \
+ $(ACE_ROOT)/ace/Logging/Log_Msg.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.h \
+ $(ACE_ROOT)/ace/Logging/Log_Priority.h \
+ $(ACE_ROOT)/ace/Logging/Log_Record.i \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS/OS_Log_Msg_Attributes.inl
 
 .obj/SOCK_Connector.o .obj/SOCK_Connector.o .obj/SOCK_Connector.o .obj/SOCK_Connector.o: SOCK_Connector.cpp \
  SOCK_Connector.h \

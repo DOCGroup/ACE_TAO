@@ -30,7 +30,7 @@ class ACE_Reactor_Impl;
 #include "ace/Timer/Timer_Queue.h"
 
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
-#include "ace/Demux/Event_Handler.h"
+#include "ace/Event_Handler/Event_Handler.h"
 
 // We are using 4 or 5 signal classes, we could forward declare
 // them.... But Timer_Queue_T.h includes Signal.h, so I don't think
