@@ -1804,8 +1804,8 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
 			     ACE_DEFAULT_FILE_PERMS, count);
       return (int) s->sema_ == -1 ? -1 : 0;
     }
-#endif /*ACE_LACKS_NAMED_POSIX_SEM */
   else
+#endif /*ACE_LACKS_NAMED_POSIX_SEM */
     {
       s->name_ = 0;
       ACE_NEW_RETURN (s->sema_, sem_t, -1);
@@ -2074,7 +2074,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       while (s->count_ == 0)
 	if (ACE_OS::cond_timedwait (&s->count_nonzero_,
 				    &s->lock_,
-				    *tv) == -1)
+				    &tv) == -1)
 	  {
 	    error = errno;
 	    result = -2; // -2 means that we need to release the mutex.
