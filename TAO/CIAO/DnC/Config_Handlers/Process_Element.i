@@ -10,6 +10,7 @@
 //=====================================================================
 
 #include "Process_Element.h"
+#include <iostream>
 
 template <typename VALUE, typename DATA, typename OBJECT>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
@@ -17,7 +18,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 DOMNodeIterator* iter,
                                 VALUE value,
                                 DATA& data,
-                                Process_Function <OBJECT, DATA> func,
+                                Process_Function <OBJECT, DATA>* func,
                                 REFMAP& id_map)
 {
   // the number of attributes
@@ -33,7 +34,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
       // if xmi::id is given process the element and bind the value
       if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
         {
-          func (iter, data);
+          (*func) (iter, data);
           id_map.bind (aceattrnodevalue, value);
         }
       // if href is given find out the referenced position
@@ -72,8 +73,8 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
              true);
           href_iter->nextNode ();
 
-          static_cast< Process_Member_Function<OBJECT, DATA>* > (&func)->doc(href_doc);
-          func (iter, data);
+          static_cast< Process_Member_Function<OBJECT, DATA>* > (func)->doc(href_doc);
+          (*func) (iter, data);
         }
     }
 }
@@ -81,12 +82,12 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
 // This function only works for calling static process_ methods
 template <typename DATA, typename VALUE, typename OBJECT>
  void process_element (DOMNode* node,
-                      DOMDocument* doc,
-                      DOMNodeIterator* iter,
-                      DATA& data,
-                      VALUE val,
-                      Process_Function <OBJECT, DATA> func,
-                      REFMAP& id_map)
+                       DOMDocument* doc,
+                       DOMNodeIterator* iter,
+                       DATA& data,
+                       VALUE val,
+                       Process_Function <OBJECT, DATA>* func,
+                       REFMAP& id_map)
 {
   // fetch attributes
   DOMNamedNodeMap* named_node_map = node->getAttributes ();
@@ -96,7 +97,7 @@ template <typename DATA, typename VALUE, typename OBJECT>
   if (length == 1)
     {
       // call directly the static process_ method
-      func (iter, data);
+      (*func) (iter, data);
     }
   else if (length > 1)
     {
@@ -111,7 +112,7 @@ template <typename SEQUENCE, typename DATA, typename OBJECT>
                                  DOMDocument* doc,
                                  DOMNodeIterator* iter,
                                  SEQUENCE& seq,
-                                 Process_Function <OBJECT, DATA> func,
+                                 Process_Function <OBJECT, DATA>* func,
                                  REFMAP& id_map)
 {
   if (node->hasAttributes ())
