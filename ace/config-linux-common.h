@@ -32,8 +32,10 @@
 // First the machine specific part
 
 #if defined (__alpha)
+# if __GLIBC_MINOR__ < 2
   // This is necessary on Alphas with glibc 2.0.7-13.
 # define ACE_POLL_IS_BROKEN
+# endif
 #elif defined (__powerpc__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
