@@ -175,11 +175,11 @@ TAO_CodeGen::start_client_header (const char *fname)
         {
           // Include Messaging skeleton file.
           this->gen_standard_include (this->client_header_,
-                                      "tao/Messaging.h");
+                                      "tao/Messaging/Messaging.h");
 
           // Including Asynch Invocation file.
           this->gen_standard_include (this->client_header_,
-                                      "tao/Asynch_Invocation.h");
+                                      "tao/Messaging/Twoway_Asynch_Invocation.h");
         }
 
       // Include the smart proxy base class if smart proxies are enabled.
@@ -430,9 +430,9 @@ TAO_CodeGen::start_server_header (const char *fname)
         {
           // Include Messaging skeleton file.
           this->gen_standard_include (this->server_header_,
-                                      "tao/PortableServer/MessagingS.h");
+                                      "tao/Messaging/MessagingS.h");
           this->gen_standard_include (this->server_header_,
-                                      "tao/Asynch_Invocation.h");
+                                      "tao/Messaging/Twoway_Asynch_Invocation.h");
         }
 
       // We must include all the skeleton headers corresponding to
