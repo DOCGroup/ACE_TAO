@@ -1,3 +1,20 @@
+Tue Apr 20 19:05:02 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+
+          Added a new load monitor in the TAO load balancing
+          service.
+
+          This monitor reports the CPU load in terms of utilization
+          percentage.
+
+          Right now, i have got implementations for Linux versions
+          and i am in the process of writing Windows version of the same.
+
+          Thanks to Ossama Othman <ossama@dre.vanderbilt.edu> for
+          working with me in this.
+
 Tue Apr 20 13:35:24 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/performance-tests/LoadBalancing/LBPerf:
