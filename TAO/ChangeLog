@@ -1,3 +1,9 @@
+Mon Apr 12 13:54:32 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/FTORB.mpc:
+
+          Made the FT_ClientORB project depend upon ace_uuid.
+
 Mon Apr 12 13:36:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * utils/NamingViewer/NamingViewer.mpc:

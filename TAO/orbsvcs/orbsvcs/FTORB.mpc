@@ -31,6 +31,7 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
   dynamicflags = TAO_FT_CLIENTORB_BUILD_DLL
   tagchecks   += FT_ClientORB
   libs        += TAO_FTORB_Utils
+  requires    += ace_uuid
 
   IDL_Files {
   }
