@@ -91,3 +91,12 @@ Notify_Reactive_Dispatcher::dispatch_event (
       ACE_CHECK;
     }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Set<TAO_Notify_Dispatcher *>;
+template class ACE_Unbounded_Set_Iterator<TAO_Notify_Dispatcher *>;
+//template class 
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Set<TAO_Notify_Dispatcher *>
+#pragma instantiate  ACE_Unbounded_Set_Iterator<TAO_Notify_Dispatcher *>;
+#endif
