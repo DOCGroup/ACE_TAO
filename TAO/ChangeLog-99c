@@ -1,3 +1,12 @@
+Sat Feb 20 21:09:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/bank/AccountManager_i.cpp (AccountManager_i): 
+	* examples/Simple/bank/Bank_Client_i.cpp:
+	* examples/Simple/bank/Bank_Client_i.h:
+	* examples/Simple/bank/client.cpp:
+	* examples/Simple/bank/server.cpp:
+	Made changes to the TAO_TRY macros
+
 Sat Feb 20 15:55:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Param_Test/Makefile: moved TAO_IDLFLAGS override to
