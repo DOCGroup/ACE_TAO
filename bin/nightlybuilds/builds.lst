@@ -99,6 +99,11 @@ TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/valinor_Unicode/
 WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?valinor_Unicode
 
+[Debian_GCC_3.0]
+TYPE = TIMEONLY
+LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/valinor_GCC_3.0/
+WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?valinor_GCC_3.0
+
 [RedHat_NoInline]
 TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_NoInline/
