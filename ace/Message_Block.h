@@ -343,7 +343,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   // = Internal initialization methods.
   ACE_Message_Block (size_t size,
                      ACE_Message_Type type,
@@ -510,7 +510,7 @@ public:
   ACE_Allocator *data_block_allocator (void) const;
   // Get the allocator used to create this object
 
-private:
+protected:
   ACE_Data_Block *release_i (void);
   // Internal release implementation
 
