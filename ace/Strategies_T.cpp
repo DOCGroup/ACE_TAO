@@ -608,13 +608,13 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
 
       // Actively establish the connection.  This is a timed blocking
       // connect.
-      if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
-                                                       remote_addr,
-                                                       timeout,
-                                                       local_addr,
-                                                       reuse_addr,
-                                                       flags,
-                                                       perms) == -1)
+      if (this->new_connection (sh,
+                                remote_addr,
+                                timeout,
+                                local_addr,
+                                reuse_addr,
+                                flags,
+                                perms) == -1)
         {
           // If connect() failed because of timeouts, we have to
           // reject the connection entirely. This is necessary since
@@ -629,8 +629,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
         {
           // Insert the new SVC_HANDLER instance into the cache.
           if (this->connection_map_.bind (search_addr,
-                                            sh,
-                                            entry) == -1)
+                                          sh,
+                                          entry) == -1)
             return -1;
 
           // Set the recycler and the recycling act

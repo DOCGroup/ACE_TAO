@@ -1,4 +1,11 @@
-Fri Jul 23 00:07:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Jul 23 03:10:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp (find_or_create_svc_handler_i):
+	* ace/Cached_Connect_Strategy_T.cpp (cached_connect):
+
+	  I had added the new_connection() method that lets go of the lock
+	  for the duration of the connect(), but forgot to use it in the
+	  above functions ;)  It should be fine now.
 
 	* tests/Cached_Conn_Test.cpp (cached_connect):
 	* tests/Cached_Accept_Conn_Test.cpp (cached_connect):
