@@ -35,9 +35,9 @@ Wed Apr 21 15:35:44 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Apr 21 14:59:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/OS.cpp (ACE_OS_Object_Manager::fini): disabled
-          ACE_{recursive/thread}_mutex_destroy () calls, because
-          the failed on LynxOS in forked children.  The prevents
+        * ace/OS.cpp (ACE_OS_Object_Manager::fini): on LynxOS only,
+          disabled ACE_{recursive/thread}_mutex_destroy () calls, because
+          they failed on LynxOS in forked children.  The prevents
           the failure message from being printed, with no apparent
           ill effect.
 
