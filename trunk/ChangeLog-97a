@@ -1,5 +1,9 @@
 Thu May 15 00:26:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Threads/thread_specific.cpp (worker): Changes
+	  size_t i back to int i to avoid a signed/unsigned complaint.
+	  Thanks to David Levine for reporting this.
+
 	* ace/config-chorus.h: Added ACE_LACKS_MPROTECT,
  	  ACE_HAS_IP_MULTICAST, and ACE_LACKS_SOCKETPAIR to the Chorus
  	  port.  Thanks to Wei Chiang <chiang@erebor.tele.nokia.fi> for

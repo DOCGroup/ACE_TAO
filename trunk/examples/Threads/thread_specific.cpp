@@ -96,7 +96,7 @@ worker (void *c)
   if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
-  for (size_t i = 0; i < count; i++)
+  for (int i = 0; i < count; i++)
     {
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));

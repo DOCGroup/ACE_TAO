@@ -750,7 +750,7 @@ protected:
   ACE_Reactor_Token token_;
   // Synchronization token for the MT_SAFE ACE_Reactor.
 
-x#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE)
   ACE_Reactor_Notify notify_handler_;
   // Callback object that unblocks the ACE_Reactor if it's sleeping.
 
