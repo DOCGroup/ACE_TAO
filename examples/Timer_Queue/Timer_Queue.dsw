@@ -12,7 +12,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TQTD
+    Project_Dep_Name TQTDDLL
     End Project Dependency
 }}}
 
@@ -27,13 +27,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TQTD
+    Project_Dep_Name TQTDDLL
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TQTD"=.\TQTD.dsp - Package Owner=<4>
+Project: "TQTDDLL"=.\TQTDDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -54,7 +54,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TQTD
+    Project_Dep_Name TQTDDLL
     End Project Dependency
 }}}
 

@@ -1,3 +1,13 @@
+Thu Apr 24 07:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/TQTD.dsp:
+        * examples/Timer_Queue/TQTDDLL.dsp:
+          Removed TQTD.dsp and added TQTDDLL.dsp. Show in the name we build a
+          dll.
+
+        * examples/Timer_Queue/Timer_Queue.dsw:
+          Updated because of name change
+
 Wed Apr 23 18:19:07 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/iosfwd.h:
