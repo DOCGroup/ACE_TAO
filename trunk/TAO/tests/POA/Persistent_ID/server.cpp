@@ -57,20 +57,26 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::method (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("POACurrent");
+    this->orb_->resolve_initial_references ("POACurrent"
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   PortableServer::Current_var current =
-    PortableServer::Current::_narrow (obj.in ());
+    PortableServer::Current::_narrow (obj.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   PortableServer::POA_var poa =
-    current->get_POA ();
+    current->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   CORBA::String_var poa_name =
-    poa->the_name ();
+    poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "Method invoked on servant in POA = %s\n",
