@@ -30,5 +30,18 @@ namespace CIAO
                                      toconfig.value);
 
     }
+
+    Property
+    Property_Handler::get_property (
+      const Deployment::Property& src)
+    {
+      ::XMLSchema::string< char > name ((src.name));
+      Any value (Any_Handler::get_any (src.value));
+
+      Property prop (name,value);
+
+      return prop;
+    }
+
   }
 }

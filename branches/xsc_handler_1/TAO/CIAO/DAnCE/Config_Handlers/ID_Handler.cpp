@@ -36,6 +36,15 @@ namespace CIAO
       
     }
 
+    ImplementationDependency
+    ID_Handler::impl_dependency (
+      const Deployment::ImplementationDependency& src)
+    {
+      XMLSchema::string< char > reqtype ((src.requiredType));
+      ImplementationDependency id (reqtype);
+      return id;
+    }
+
   }
 
 }

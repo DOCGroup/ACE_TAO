@@ -34,6 +34,23 @@ namespace CIAO
       Any_Handler::extract_into_any (desc.resourceValue (),
                                      toconfig.resourceValue);
     }
+    
+    ConnectionResourceDeploymentDescription
+    CRDD_Handler::connection_resource_depl_desc (
+      const ::Deployment::ConnectionResourceDeploymentDescription& src)
+    {
+      XMLSchema::string< char > tname ((src.targetName));
+      XMLSchema::string< char > reqname ((src.requirementName));
+      XMLSchema::string< char > resname ((src.resourceName));
+      Any resval (Any_Handler::get_any (src.resourceValue));
+      
+      ConnectionResourceDeploymentDescription crdd (
+                                              tname,
+                                              reqname,
+                                              resname,
+                                              resval);
+      return crdd;
+    }
 
   }
 }

@@ -58,6 +58,10 @@ namespace CIAO
         static void instance_resource_deployment_descr (
              const InstanceResourceDeploymentDescription& desc,
              Deployment::InstanceResourceDeploymentDescription& toconfig);
+        
+        static InstanceResourceDeploymentDescription
+        instance_resource_deployment_descr (
+          const Deployment::InstanceResourceDeploymentDescription& src);
 
     };
   }

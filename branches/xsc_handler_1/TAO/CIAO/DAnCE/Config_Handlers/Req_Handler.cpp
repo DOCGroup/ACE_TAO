@@ -30,15 +30,25 @@ namespace CIAO
 
       //Map the XSC Req's property into the next
       //position in the IDL Req's sequence.
-#if 0
       /// @@ MAJO:
       Property_Handler prophandler;
       toconfig.property.length (toconfig.property.length () + 1);
       Property_Handler::get_property (
-        toconfig.property[toconfig.property.length () - 1],
-        desc.property ());
-#endif /*if 0*/
+        desc.property (),
+        toconfig.property[toconfig.property.length () - 1]);
     }
+    
+    Requirement
+    Req_Handler::get_requirement (
+                         const Deployment::Requirement& src)
+    {
+      XMLSchema::string< char > name ((src.name));
+      XMLSchema::string< char > res ((src.resourceType));
+      Property prop (
+          Property_Handler::get_property (src.property[0]));
+      Requirement req (name,res,prop);
 
+      return req;
+    }
   }
 }

@@ -46,9 +46,11 @@ namespace CIAO{
               
       ////This method takes a <CIAO::Config_Handlers::DataType>
       ///and returns the corresponding CORBA::TypeCode.
-      void
-      get_DataType (CORBA::TypeCode_ptr& type,
-                    DataType& desc);
+      static void
+      data_type (CORBA::TypeCode_ptr& type,
+                    const DataType& desc);
+
+      static DataType data_type (const CORBA::TypeCode_ptr& type);
     };
 
  }

@@ -3,7 +3,7 @@
 #include "cdp.hpp"
 #include "ciao/Deployment_DataC.h"
 #include "Property_Handler.h"
-#include "Singleton_IDREF_Map.h"
+
 
 ACE_RCSID (DAnCE,
            ADD_Handler,
@@ -81,11 +81,11 @@ namespace CIAO
            ++scb)
         {
           CORBA::ULong l =
-            dest.location.length ();
+            dest.source.length ();
 
-          dest.location.length (l + 1);
+          dest.source.length (l + 1);
 
-          dest.location[l] = scb->c_str ();
+          dest.source[l] = scb->c_str ();
         }
 
       // @@TODO: See this loop is repeated
@@ -111,9 +111,7 @@ namespace CIAO
         {
           ACE_CString cstr (src.id ().c_str ());
 
-          bool retval =
-            Singleton_IDREF_Map::instance ()->bind_ref (cstr,
-                                                        pos);
+          bool retval = bind_ref (cstr,pos);
           if (!retval)
             {
               return false;
@@ -144,6 +142,94 @@ namespace CIAO
 
       return true;
     }
+    
+    ArtifactDeploymentDescription
+    ADD_Handler::artifact_deployment_descr (
+        const Deployment::ArtifactDeploymentDescription &src)
+    {
+      XMLSchema::string< char > name ((src.name));
+      XMLSchema::string< char > node ((src.node));
+      
+      ArtifactDeploymentDescription add (name,node);
+      
+      size_t total = src.location.length ();
+      for (size_t i = 0; i < total; ++i)
+        {
+          XMLSchema::string< char > curr ((src.location[i]));
+          add.add_location (curr);
+        }
+        
+      total = src.source.length ();
+      for (size_t i = 0; i < total; ++i)
+        {
+          XMLSchema::string< char > curr ((src.source[i]));
+          add.add_source (curr);
+        }  
+      
+      total = src.execParameter.length ();
+      for (size_t i = 0; i < total; ++i)
+        {
+          add.add_execParameter (
+            Property_Handler::get_property (src.execParameter[i])
+          );
+        }
+        
+      return add;       
+    }
+
+
+    bool
+    ADD_Handler::bind_ref (ACE_CString& id, size_t index)
+    {
+      int retval =
+        idref_map_.bind (id, index);
+      
+      pos_map_.bind (index,id);
+
+      if (retval < 0)
+        return false;
+
+      return true;
+    }
+
+    bool
+    ADD_Handler::find_ref (const ACE_CString& id, size_t val)
+    {
+      int retval =
+        idref_map_.find (id, val);
+
+      if (retval < 0)
+        return false;
+
+      return true;
+    }
+    
+    bool
+    ADD_Handler::find_ref (const size_t id, ACE_CString& val)
+    {
+      int retval =
+        pos_map_.find (id,val);
+
+      if (retval < 0)
+        return false;
+
+      return true;
+    }
+
+    bool
+    ADD_Handler::unbind_refs (void)
+    {
+      int retval =
+        idref_map_.unbind_all ();
+ 
+      pos_map_.unbind_all ();
+   
+      if (retval < 0)
+        return false;
+
+      return true;
+    }
+    
 
   }
 

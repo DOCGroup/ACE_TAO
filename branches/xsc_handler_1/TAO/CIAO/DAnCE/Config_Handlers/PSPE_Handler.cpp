@@ -48,6 +48,49 @@ namespace CIAO
         {
           dest.provider = 0;
         }
+      
+      if (src.kind () == CCMComponentPortKind::Facet)
+        dest.kind = Deployment::Facet;
+      if (src.kind () == CCMComponentPortKind::SimplexReceptacle)
+        dest.kind = Deployment::SimplexReceptacle;
+      if (src.kind () == CCMComponentPortKind::MultiplexReceptacle)
+        dest.kind = Deployment::MultiplexReceptacle;
+      if (src.kind () == CCMComponentPortKind::EventEmitter)
+        dest.kind = Deployment::EventEmitter;
+      if (src.kind () == CCMComponentPortKind::EventPublisher)
+        dest.kind = Deployment::EventPublisher;
+      if (src.kind () == CCMComponentPortKind::EventConsumer)
+        dest.kind = Deployment::EventConsumer;
     }
+
+    PlanSubcomponentPortEndpoint
+    PSPE_Handler::sub_component_port_endpoint (
+      const Deployment::PlanSubcomponentPortEndpoint &src)
+    {/*MAJO
+      XMLSchema::string< char > pname ((src.portName));
+      XMLSchema::string< char > tval  ("true");
+      XMLSchema::string< char > prov  ("");
+
+      if (src.provider)
+        prov = tval;
+
+      PlanSubcomponentPortEndpoint pspe (pname,CCMComponentPortKind::Facet);
+      pspe.provider (prov);
+      
+      if (src.kind == ::Deployment::Facet)
+        pspe.kind (CCMComponentPortKind::Facet);
+      if (src.kind == ::Deployment::SimplexReceptacle)
+        pspe.kind (CCMComponentPortKind::SimplexReceptacle);
+      if (src.kind == ::Deployment::MultiplexReceptacle)
+        cpd.kind (CCMComponentPortKind::MultiplexReceptacle);
+      if (src.kind == ::Deployment::EventEmitter)
+        pspe.kind (CCMComponentPortKind::EventEmitter);
+      if (src.kind == ::Deployment::EventPublisher)
+        pspe.kind (CCMComponentPortKind::EventPublisher);
+      if (src.kind == ::Deployment::EventConsumer)
+        pspe.kind (CCMComponentPortKind::EventConsumer);
+
+      return pspe;*/
+    } 
   }
 }

@@ -19,11 +19,20 @@ namespace CIAO
       // DataType_Handler.
 
       // @@ There is a lurking bug here.
-#if 0
-      DataType_Handler dtypehandler;
+//#if 0
       CORBA::TypeCode_ptr tcptr = toconfig.type.in ();
-      dtypehandler.get_DataType (tcptr,desc.type ());
-#endif /*if 0*/
+      DataType_Handler::data_type (tcptr,desc.type ());
+//#endif /*if 0*/
+    }
+
+    ComponentPropertyDescription 
+    ComponentPropertyDescription_Handler::component_property_description (
+      const ::Deployment::ComponentPropertyDescription &src)
+    {
+      XMLSchema::string< char > name ((src.name));
+      DataType dt (DataType_Handler::data_type (src.type));
+      ComponentPropertyDescription cpd (name,dt);
+      return cpd;
     }
 
   }

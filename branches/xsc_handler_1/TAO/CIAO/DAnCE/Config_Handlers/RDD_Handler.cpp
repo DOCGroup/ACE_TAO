@@ -24,6 +24,19 @@ namespace CIAO
 
     }
 
+    ResourceDeploymentDescription
+    RDD_Handler::resource_deployment_descr (
+      const ::Deployment::ResourceDeploymentDescription &src)
+    {
+      XMLSchema::string< char > reqname ((src.requirementName));
+      XMLSchema::string< char > resname ((src.resourceName));
+      Any resval (Any_Handler::get_any (src.resourceValue));
+
+      ResourceDeploymentDescription rdd (reqname,resname,resval);
+      return rdd;
+    }
+
+
   }
 
 }

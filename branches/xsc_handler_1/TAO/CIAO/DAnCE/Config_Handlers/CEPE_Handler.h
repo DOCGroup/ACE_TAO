@@ -48,6 +48,11 @@ namespace CIAO
       static bool external_port_endpoints (
         const PlanConnectionDescription &src,
         ::Deployment::ComponentExternalPortEndpoints &dest);
+      
+      static ComponentExternalPortEndpoint
+      external_port_endpoint (
+        const ::Deployment::ComponentExternalPortEndpoint &src);
+        
     private:
       static void external_port_endpoint (
         const ComponentExternalPortEndpoint &src,
