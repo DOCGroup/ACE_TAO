@@ -1,3 +1,14 @@
+Thu Jun 28 15:12:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp: 
+	* tao/GIOP_Message_Base.i: Moved the get_queued_data () from the
+	  .i  file to the .cpp file. 
+
+	* tao/Incoming_Message_Queue.h: #include'd a file.
+	* tao/Makefile: Added new files.
+	* tao/Resume_Handle.inl: Added the ACE_INLINE macros to the
+	  methods defined in this file.
+	
 Thu Jun 28 09:30:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp:
