@@ -4,6 +4,9 @@ Sun Jun 28 21:33:48 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_SYNCH_MUTEX so that it will compile with g++
           (and be correct :-).
 
+        * tests/OctetSeq/OctetSeq.cpp (main): changed loop index
+          i from u_int to int to avoid signed/unsigned comparison.
+
 Sun Jun 28 16:10:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tests/NestedUpcalls/Triangle_Test/Makefile: Added
