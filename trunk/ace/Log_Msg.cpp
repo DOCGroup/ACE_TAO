@@ -941,7 +941,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                           }
 #elif !defined (ACE_HAS_WINCE)
                         ACE_OS::sprintf (bp,
-                                         ASYS_TEXT ("%s: <unknown error> = %d"),
+                                         ASYS_TEXT ("<unknown error> = %d"),
                                          errno);
 #endif /* ACE_WIN32 */
                       }

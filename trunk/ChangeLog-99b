@@ -1,3 +1,9 @@
+Wed Oct  6 21:36:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Forgot to remove a stray %s.
+	  Thanks to Kitty Krishnakumar <kitty@neo.shinko.co.jp> for
+ 	  reporting this.
+
 Wed Oct 06 16:42:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Reactor/Misc/Misc.dsw:
