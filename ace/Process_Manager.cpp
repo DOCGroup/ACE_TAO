@@ -254,7 +254,7 @@ ACE_Process_Manager::close (void)
 #if !defined (ACE_WIN32)
   if (this->reactor ())
     {
-      this->reactor ()->remove_handler (this, 0);
+      this->reactor ()->remove_handler (SIGCHLD, (ACE_Sig_Action *) 0);
       this->reactor (0);
     }
 #endif /*  !ACE_WIN32  */
