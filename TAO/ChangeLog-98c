@@ -1,3 +1,13 @@
+Sun Jan 11 14:09:48 1998    <coryan@MILONGA>
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp: 
+	* orbsvcs/Event_Service/CORBA_Utils_T.cpp: 
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Adapted so they compile with the new POA mapping.
+
 Sun Jan 11 11:33:36 1998    <coryan@MILONGA>
 
 	* tao/connect.cpp: 

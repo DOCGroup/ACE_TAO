@@ -330,14 +330,12 @@ Latency_Supplier::Latency_Supplier (const u_int total_messages,
     supplier_ (new Supplier (this)),
     consumer_ (new Consumer (this))
 {
-  CORBA::Object::_duplicate (this->supplier_);
-  CORBA::Object::_duplicate (this->consumer_);
 }
 
 Latency_Supplier::~Latency_Supplier (void)
 {
-  CORBA::release (this->supplier_);
-  CORBA::release (this->consumer_);
+  delete this->consumer_;
+  delete this->supplier_;
 }
 
 int
@@ -873,7 +871,7 @@ main (int argc, char *argv [])
       for (i = 0; i < consumers; ++i)
 	{
 	  consumer [i]->print_stats ();
-	  CORBA::release (consumer [i]);
+	  delete consumer [i];
 	  TAO_CHECK_ENV;
 	}
       delete [] consumer;
