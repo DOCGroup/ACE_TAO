@@ -1,3 +1,11 @@
+Mon Aug 28 18:04:17 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ace/ace_lib.dsp:
+	* ace/ace_dll.dsp:
+
+	  Added additional #include ../PACE search directories
+	  to project settings.
+
 Mon Aug 28 17:43:00 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ace/config-win32.h:
