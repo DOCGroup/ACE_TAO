@@ -1,7 +1,14 @@
+Thu Jun 08 14:17:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process_Manager.{h,cpp} (close_singleton):
+	* ace/Service_Config.cpp (close_singletons): Applied Tom Arbuckle's
+	  <arbuckle@uran.informatik.uni-bonn.de> patch to clean up
+	  Process_Manager singleton at program exit.
+
 Thu Jun  8 13:00:38 2000  Toshio Hori <toshi@etl.go.jp>
 
 	* ace/Stream.h (class ACE_Stream): Added support for an insert()
-	  and replace() to make it easier to insert and update the 
+	  and replace() to make it easier to insert and update the
 	  contents of an ACE_Stream.
 
 Thu Jun  8 09:52:36 2000  Joe Hoffert  <joeh@cs.wustl.edu>
