@@ -1,3 +1,29 @@
+Mon May 06 16:31:14 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout): 
+	* examples/Reactor/WFMO_Reactor/APC.cpp (handle_signal): 
+
+	  Make sure to remove handlers from the reactor if they are not
+	  going to be around when the reactor closes down.
+
+	* examples/Reactor/WFMO_Reactor/Handle_Close.cpp: Reactor creation
+	  was buggy and the wrong reactor's event loop was being run.
+
+	* examples/Reactor/WFMO_Reactor/Talker.cpp: STDIN handler was not
+	  getting cleaned up properly.  Also, Proactor was not getting
+	  removed properly from the Reactor.
+
+	* examples/Reactor/WFMO_Reactor/Network_Events.cpp: Network
+	  listener was not getting cleaned up properly.
+
+	* examples/Reactor/WFMO_Reactor/Multithreading.cpp (Task_Handler):
+	  Fixed an "out of bounds" error where a "for" loop that was going
+	  from 1 to n rather than from 0 to n-1. Also, added a debug
+	  statement.
+
+	* examples/Reactor/WFMO_Reactor/run_test.pl: Redirected some of
+	  the output from STDERR to STDOUT.
+
 Mon May 06 15:45:35 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/parser/debug_validator/Debug_Validator.dsp: Fixed

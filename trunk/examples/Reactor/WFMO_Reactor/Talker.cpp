@@ -232,6 +232,9 @@ public:
   int svc (void);
   // Thread runs here as an active object.
 
+  int handle_close (ACE_HANDLE,
+                    ACE_Reactor_Mask);
+
 private:
   static void handler (int signum);
   // Handle a ^C.  (Do nothing, this just illustrates how we can catch
@@ -520,6 +523,14 @@ STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 }
 
 int
+STDIN_Handler::handle_close (ACE_HANDLE,
+                             ACE_Reactor_Mask)
+{
+  delete this;
+  return 0;
+}
+
+int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Let the proactor know that it will be used with Reactor
@@ -540,10 +551,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        "peer_handler", errno), 0);
 
   // Open active object for reading from stdin.
-  STDIN_Handler stdin_handler (peer_handler);
+  STDIN_Handler *stdin_handler =
+    new STDIN_Handler (peer_handler);
 
   // Spawn thread.
-  if (stdin_handler.open () == -1)
+  if (stdin_handler->open () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p open failed, errno = %d.\n",
                        "stdin_handler", errno), 0);
@@ -560,7 +572,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Remove proactor with Reactor.
   if (ACE_Reactor::instance ()->remove_handler
-      (ACE_Proactor::instance (), ACE_Event_Handler::DONT_CALL) != 0)
+      (ACE_Proactor::instance ()->implementation (), ACE_Event_Handler::DONT_CALL) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p failed to register Proactor.\n",
                        argv[0]), -1);
 
