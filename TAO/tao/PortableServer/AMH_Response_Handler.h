@@ -15,6 +15,8 @@
 #include "tao/Service_Context.h"
 #include "ace/Synch_T.h"
 
+#include "portableserver_export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -45,7 +47,7 @@ class TAO_ServerRequest;
  *
  */
 
-class TAO_Export TAO_AMH_Response_Handler
+class TAO_PortableServer_Export TAO_AMH_Response_Handler
 {
 public:
   

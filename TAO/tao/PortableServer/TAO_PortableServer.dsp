@@ -160,6 +160,10 @@ SOURCE=.\Active_Object_Map.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AMH_Response_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Collocated_Object.cpp
 # End Source File
 # Begin Source File
@@ -289,6 +293,10 @@ SOURCE=.\ThruPOA_Object_Proxy_Impl.cpp
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AMH_Response_Handler.h
 # End Source File
 # Begin Source File
 
