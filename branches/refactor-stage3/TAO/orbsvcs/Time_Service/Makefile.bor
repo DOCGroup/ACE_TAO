@@ -1,0 +1,9 @@
+#
+# Makefile for building the Time Service
+#
+
+MAKEFILES = \
+	Time_Service_Server.bor \
+	Time_Service_Clerk.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

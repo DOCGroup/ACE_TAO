@@ -1,0 +1,29 @@
+project(RTSched) : orbsvcslib, core {
+  depends    += CosNaming TAO_Svc_Utils PortableServer
+  sharedname  = TAO_RTSched
+  libs       += TAO_CosNaming TAO_Svc_Utils TAO_PortableServer TAO
+  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=Sched/sched_export.h
+  dllflags    = TAO_RTSCHED_BUILD_DLL
+  tagchecks   = Sched
+  include_dir = orbsvcs
+
+  IDL_Files {
+    RtecScheduler.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    Sched {
+      RtecSchedulerC.cpp
+      RtecSchedulerS.cpp
+      Scheduler_Factory.cpp
+      Runtime_Scheduler.cpp
+      Scheduler_Utilities.cpp
+      Sched
+    }
+  }
+
+  // To avoid picking up RTSchedEvent.rc as well, explicitly list the files.
+  Resource_Files {
+    RTSched.rc
+  }
+}

@@ -1,0 +1,3 @@
+project(POA Non Servant Upcalls): server {
+  exename = Non_Servant_Upcalls
+}

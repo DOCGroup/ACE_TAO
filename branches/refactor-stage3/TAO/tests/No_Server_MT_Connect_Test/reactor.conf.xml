@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<!-- Converted from ./tests/No_Server_MT_Connect_Test/reactor.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
+ <static id="Client_Strategy_Factory" params="-ORBConnectStrategy Reactive"/>
+</ACE_Svc_Conf>

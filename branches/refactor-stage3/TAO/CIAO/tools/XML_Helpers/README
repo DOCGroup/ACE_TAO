@@ -1,0 +1,16 @@
+  $Id$
+
+This directory containers a collection of XML Helper classes to aid
+the parsing and manupilation of various XML descriptors in CIAO.
+
+Some of the classes under this directory should probably be kept under
+ACEXML/common/.  But let's worry about that later.
+
+
+CIAO::XMLHelper
+  Cascadable_DocHandler
+
+The following files implement a test program for Cascadable_DocHandler:
+
+  Svcconf_Handler.*
+  main.cpp
