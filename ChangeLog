@@ -1,3 +1,8 @@
+Thu Nov  6 10:20:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS/server/HTTP_Server.cpp:
+          Added include of Signal.h.
+
 Thu Nov  6 07:57:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Static_Object_Lock.h:
