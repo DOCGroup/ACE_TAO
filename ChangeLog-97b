@@ -1,5 +1,8 @@
 Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.h: define ACE_NOTREACHED as empty on DEC_CXX (and
+	  on ghs instead of VXWORKS).
+
 	* tests/TSS_Test.cpp (worker): convert void *c to long if
 	  ACE_HAS_64BIT_LONGS to avoid DEC cxx compiler warning.
 
