@@ -72,7 +72,7 @@ implement and reason about!
 	Yes, that's exactly right.  If you look at the files, they all
 contain ifdef's for features that aren't included in the
 ./include/makeinclude/wrapper_macros.GNU file.  To make this more
-obvious, I've enclosed the following message in the INSTALL file:
+obvious, I've enclosed the following message in the ACE-INSTALL.html file:
 
 	* Sun OS 4.1.x
 
