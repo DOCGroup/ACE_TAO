@@ -183,11 +183,10 @@ pace_getlogin_r (char * name, size_t namesize)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return getlogin_r (name, namesize);
-# else /* !PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LAKCS_POSIX_PTHREAD_SEMANTICS);
-# endif /* !PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
-
 
 PACE_INLINE
 pid_t
@@ -328,11 +327,11 @@ pace_ttyname_r (int fildes,
                 char * name,
                 size_t namesize)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+#if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return ttyname_r (fildes, name, namesize);
-# else /* !PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_POSIX_PTHREAD_SEMANTICS);
-# endif /* !PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+#else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+#endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
 
 PACE_INLINE

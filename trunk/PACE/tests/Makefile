@@ -20,7 +20,6 @@ ifeq ($(PACE_SYSNAME),)
 endif # ! PACE_SYSNAME
 
 VPATH:=common:arpa:config:netinet:sys
-CFLAGS += -Dsunos
 
 # List of platforms and uname -s values
 # =====================================
@@ -40,11 +39,30 @@ CFLAGS += -Dsunos
 
 # Solaris is POSIX - change this when the platform directories get
 # squared away
-#ifeq ($(PACE_SYSNAME),SunOS || $(PACE_SYSNAME),Linux)
+
 ifeq ($(PACE_SYSNAME),SunOS)
 VPATH :=.:posix:$(VPATH)
-#INCLDIRS += -I$(PACE_ROOT)/pace/posix
-INCLDIRS += -I/usr/include -I$(PACE_ROOT)/pace/posix
+CFLAGS += -DPACE_SUNOS
+endif
+
+ifeq ($(PACE_SYSNAME),NT)
+VPATH :=.:win32:$(VPATH)
+CFLAGS += -DPACE_WIN32
+endif
+
+ifeq ($(PACE_SYSNAME),LynxOS)
+VPATH :=.:posix:$(VPATH)
+CFLAGS += -DPACE_LYNXOS
+endif
+
+ifeq ($(PACE_SYSNAME),VxWorks)
+VPATH :=.:vxworks:$(VPATH)
+CFLAGS += -DPACE_VXWORKS
+endif
+
+ifeq ($(PACE_SYSNAME),Linux)
+VPATH :=.:posix:$(VPATH)
+CFLAGS += -DPACE_LINUX
 endif
 
 #----------------------------------------------------------------------------

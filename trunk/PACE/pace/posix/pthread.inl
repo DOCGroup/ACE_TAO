@@ -169,7 +169,8 @@ PACE_INLINE
 void
 pace_pthread_cleanup_pop (int execute)
 {
-  return pthread_cleanup_pop (execute);
+  pthread_cleanup_pop (execute);
+  return;
 }
 
 PACE_INLINE

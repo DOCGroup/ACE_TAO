@@ -1,3 +1,24 @@
+Wed Jun 21 18:42:22 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/tests/Makefile:
+
+	  Copied changes Joe made to pace/pace/Makefile regarding
+	  platform definitions.
+
+	* pace/config/config.h (PACE_HAS_EXTENSIONS):
+	* pace/pace/posix/dirent.inl
+	* pace/pace/posix/grp.inl
+	* pace/pace/posix/mman.inl
+	* pace/pace/posix/pwd.inl
+	* pace/pace/posix/signal.inl
+	* pace/pace/posix/stdio.inl
+	* pace/pace/posix/stdlib.inl
+	* pace/pace/posix/string.inl
+	* pace/pace/posix/types.h
+	* pace/pace/config/utility.h
+
+	  Removed deprecated definitions and non-posix functions.
+
 Wed Jun 21 13:15:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/posix/stdio.inl (pace_setbuf):

@@ -85,18 +85,7 @@ extern "C" {
 
   PACE_INLINE int pace_fseek (FILE * stream, long offset, int whence);
 
-  PACE_INLINE int pace_fseek (FILE * stream, pace_off_t offset, int whence);
-  /* Not in POSIX spec. */
-
   PACE_INLINE long pace_ftell (FILE * stream);
-
-  PACE_INLINE pace_off_t pace_ftello (FILE * stream);
-  /* Not in POSIX spec. */
-
-  PACE_INLINE size_t pace_fwrite (const void * ptr,
-  /* Not in POSIX spec. */        size_t size,
-                                  size_t number_of_items,
-                                  FILE * stream);
 
   PACE_INLINE int pace_ftrylockfile (FILE * file);
   /* Requires PACE_HAS_REENTRANT. */
@@ -115,9 +104,6 @@ extern "C" {
   /* Requires PACE_HAS_REENTRANT. */
 
   PACE_INLINE char *pace_gets (char * s);
-
-  PACE_INLINE int pace_getw (FILE * stream);
-  /* Not in POSIX spec. */
 
   PACE_INLINE void pace_perror (const char * s);
 
@@ -140,9 +126,6 @@ extern "C" {
   /* Requires PACE_HAS_REENTRANT. */
 
   PACE_INLINE int pace_puts (const char * s);
-
-  PACE_INLINE int pace_putw (int w, FILE * stream);
-  /* Not in POSIX spec. */
 
   PACE_INLINE int pace_remove (const char * path);
 
