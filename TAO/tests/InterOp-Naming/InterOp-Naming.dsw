@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "INS_client"=".\INS_client.dsp" - Package Owner=<4>
+Project: "InterOp Naming Client"=".\client.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "INS_server"=".\INS_server.dsp" - Package Owner=<4>
+Project: "InterOp Naming Server"=".\server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
