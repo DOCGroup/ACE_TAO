@@ -42,7 +42,7 @@ MyFooServantLocator::~MyFooServantLocator ()
 PortableServer::Servant
 MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr /* poa_ptr */,
-                                const char */*operation*/,
+                                const char * /*operation*/,
                                 PortableServer::ServantLocator::Cookie & /* cookie */,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
