@@ -801,33 +801,36 @@ public:
   // = TAO extension
   static CORBA::Exception *_alloc (void);
 
+  virtual CORBA::TypeCode_ptr _type (void) const;
+
 }; // exception FT::InterfaceNotFound
 
 class TAO_Export FT_ObjectGroupNotFound : public CORBA::UserException
 {
 public:
-FT_ObjectGroupNotFound (void); // default ctor
-FT_ObjectGroupNotFound (const FT_ObjectGroupNotFound &); // copy ctor
-~FT_ObjectGroupNotFound (void);
-static void _tao_any_destructor (void*);
-FT_ObjectGroupNotFound &operator= (const FT_ObjectGroupNotFound &);
+  FT_ObjectGroupNotFound (void); // default ctor
+  FT_ObjectGroupNotFound (const FT_ObjectGroupNotFound &); // copy ctor
+  ~FT_ObjectGroupNotFound (void);
+  static void _tao_any_destructor (void*);
+  FT_ObjectGroupNotFound &operator= (const FT_ObjectGroupNotFound &);
 
 
-virtual void _raise (void);
+  virtual void _raise (void);
 
-virtual void _tao_encode (
-    TAO_OutputCDR &,
+  virtual void _tao_encode (
+                          TAO_OutputCDR &,
     CORBA::Environment &) const;
 virtual void _tao_decode (
-    TAO_InputCDR &,
+                          TAO_InputCDR &,
     CORBA::Environment &);
 
-static FT_ObjectGroupNotFound *_downcast (CORBA::Exception *);
+  static FT_ObjectGroupNotFound *_downcast (CORBA::Exception *);
 
 
-// = TAO extension
-static CORBA::Exception *_alloc (void);
+  // = TAO extension
+  static CORBA::Exception *_alloc (void);
 
+  virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::ObjectGroupNotFound
 
 class TAO_Export FT_MemberNotFound : public CORBA::UserException
@@ -856,6 +859,8 @@ static FT_MemberNotFound *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
+
+virtual CORBA::TypeCode_ptr _type (void) const;
 
 }; // exception FT::MemberNotFound
 
@@ -887,7 +892,7 @@ static FT_ObjectNotFound *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::ObjectNotFound
 
 
@@ -917,7 +922,7 @@ static FT_MemberAlreadyPresent *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::MemberAlreadyPresent
 
 
@@ -947,6 +952,7 @@ static FT_BadReplicationStyle *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
+virtual CORBA::TypeCode_ptr _type (void) const;
 
 }; // exception FT::BadReplicationStyle
 
@@ -978,7 +984,7 @@ static FT_ObjectNotCreated *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::ObjectNotCreated
 
 
@@ -1007,7 +1013,7 @@ static FT_ObjectNotAdded *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::ObjectNotAdded
 
 
@@ -1038,7 +1044,7 @@ static FT_PrimaryNotSet *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::PrimaryNotSet
 
 
@@ -1074,7 +1080,7 @@ FT_UnsupportedProperty (
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::UnsupportedProperty
 
 
@@ -1110,7 +1116,7 @@ FT_InvalidProperty (
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::InvalidProperty
 
 
@@ -1146,7 +1152,7 @@ FT_NoFactory (
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::NoFactory
 
 
@@ -1180,7 +1186,7 @@ FT_InvalidCriteria (
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::InvalidCriteria
 
 
@@ -1214,7 +1220,7 @@ FT_CannotMeetCriteria (
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::CannotMeetCriteria
 
 
@@ -2224,7 +2230,7 @@ static FT_NoStateAvailable *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::NoStateAvailable
 
 
@@ -2254,7 +2260,7 @@ static FT_InvalidState *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::InvalidState
 
 
@@ -2285,7 +2291,7 @@ static FT_NoUpdateAvailable *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::NoUpdateAvailable
 
 
@@ -2317,7 +2323,7 @@ static FT_InvalidUpdate *_downcast (CORBA::Exception *);
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
-
+virtual CORBA::TypeCode_ptr _type (void) const;
 }; // exception FT::InvalidUpdate
 
 

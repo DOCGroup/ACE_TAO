@@ -1,3 +1,12 @@
+Thu Aug 10 16:30:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/FT_Service/FT_CORBA_ServiceC.h (UserException):
+	* orbsvcs/FT_Service/FT_CORBA_ServiceC.cpp:
+	  Changed the class member from TypeCode to repository id.
+	  Also changed the base class constructors to take a
+	  repository id argument insead of a TypeCode. Basically the
+	  continuation of Jeff's changes.
+
 Thu Aug 10 13:58:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
@@ -26,7 +35,7 @@ Thu Aug 10 13:58:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Changes to TAO exceptions.
 
-	  Changed the class member from TypeCode to repository id. 
+	  Changed the class member from TypeCode to repository id.
 	  Also changed the base class constructors to take a
 	  repository id argument insead of a TypeCode. This will make
 	  exception construction more lightweight and help deal with
@@ -60,7 +69,7 @@ Thu Aug 10 11:16:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  response flag was changed from TAO::SYNC_WITH_TARGET to
 	  TAO_TWOWAY_RESPONSE_FLAG, as it is in operation_cs.cpp.
 	  Finally, cosmetic indenting changes were made to code
-	  generation of the entire operation. Thanks to 
+	  generation of the entire operation. Thanks to
 	  Craig Rodrigues <rodrigc@mediaone.net> for reporting
 	  this bug.
 
@@ -74,7 +83,7 @@ Thu Aug 10 11:10:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  not guarded by a check for an imported node, so if this
 	  typedef of a typedef is included from another IDL file,
 	  the extra code was generated in both files. The check
-	  has now been added. Thanks to Jean-Christophe Dubois 
+	  has now been added. Thanks to Jean-Christophe Dubois
 	  <jcd@one.com> for reporting this bug.
 
 Thu Aug 10 11:05:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -84,7 +93,7 @@ Thu Aug 10 11:05:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  In the usage message output, the sub-options for the
 	  generation of implementation classes were getting put
 	  under the smart proxies option, instead of under the
-	  implementation class option. Thanks to 
+	  implementation class option. Thanks to
 	  Craig Rodrigues <rodrigc@mediaone.net> for pointing
 	  this out.
 
