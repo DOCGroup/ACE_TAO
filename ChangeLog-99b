@@ -1,3 +1,9 @@
+Tue Apr  6 16:07:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.cpp (get_thread_id): If we have recursive mutexes then
+ 	  it's not possible to get the id of the thread that's currently
+ 	  holding the mutex.  Thanks to David for reporting this.
+
 Tue Apr  6 15:50:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/exceptions.html: 
@@ -5,13 +11,13 @@ Tue Apr  6 15:50:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Apr  6 15:25:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ace/High_Res_Timer.{h,i,cpp}: On Win32, don't call calibrate
-          if we cannot get the scale factor.  Instead, just automatically
-          fall back on ACE_OS::gettimeofday ().  
+        * ace/High_Res_Timer.{h,i,cpp}: On Win32, don't call calibrate if
+ 	  we cannot get the scale factor.  Instead, just automatically
+ 	  fall back on ACE_OS::gettimeofday ().
 
           Also added another static variable to represent the conditions
-          where the global scale factor is not set yet or high resolution
-          timers are not supported.
+ 	  where the global scale factor is not set yet or high resolution
+ 	  timers are not supported.
 
 Tue Apr 06 15:14:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
