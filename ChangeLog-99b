@@ -1,3 +1,11 @@
+Wed Jan 27 14:50:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Service_Configurator/Misc/main.cpp: Changed to open the
+	  Service_Config object with ignore_static_svc set to 0.  That
+	  allows this example to use static service.  (By default, static
+	  services are not loaded.)  Thanks to Arturo Montes
+	  <mitosys@colomsat.com.co> for reporting this.
+
 Wed Jan 27 13:47:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU: use
