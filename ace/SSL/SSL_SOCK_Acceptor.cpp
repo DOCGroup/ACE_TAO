@@ -104,8 +104,8 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           // platforms. If SSL_accept failed outright, though, don't
           // bother checking more. This can happen if the socket gets
           // closed during the handshake.
-          if (status == -1 &&
-              ACE_OS::set_errno_to_last_error () == EWOULDBLOCK)
+          if (ACE_OS::set_errno_to_last_error () == EWOULDBLOCK &&
+              status == -1)
             {
               // Although the SSL_ERROR_WANT_READ/WRITE isn't getting
               // set correctly, the read/write state should be valid.
