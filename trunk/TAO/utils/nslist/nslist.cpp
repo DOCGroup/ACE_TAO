@@ -53,7 +53,7 @@ get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
 static void
 display_endpoint_info (CORBA::Object_ptr obj)
 {
-  if ( obj == CORBA::Object::_nil ()) 
+  if ( CORBA::Object::is_nil (obj)) 
      {
        ACE_DEBUG ((LM_DEBUG, "Nil\n"));
        return;

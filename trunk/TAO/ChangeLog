@@ -1,3 +1,15 @@
+Sat Aug  7 18:08:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* utils/catior/catior.cpp:
+
+	  Removed direct inclusion of <ctype.h>. This file already
+	  includes ace/os_include/os_ctype.h. If LynxOS has problems, then
+	  the problem is elsewhere. 
+	
+	* utils/nslist/nslist.cpp:
+
+	  Used Object::is_nil () instead of _nil (). 
+
 Fri Aug  6 15:44:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/TAO_Service/Makefile.am:
