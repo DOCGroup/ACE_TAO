@@ -121,7 +121,7 @@ private:
   // Id of this timer (used to cancel timers before they expire).
 };
 
-template <class TYPE, class FUNCTOR, class LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Queue_Iterator_T
   // = TITLE
   //     Generic interface for iterating over a subclass of
@@ -154,7 +154,7 @@ public:
   // Returns the node at the current position in the sequence
 };
 
-template <class TYPE, class FUNCTOR, class LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Queue_T
   // = TITLE 
   //      Provides an interface to timers.
@@ -166,7 +166,7 @@ class ACE_Timer_Queue_T
 {
 public: 
 
-  typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> ITERATOR;
+  typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> ITERATOR;
   // Type of Iterator
 
   // = Initialization and termination methods.
@@ -255,7 +255,7 @@ public:
   void timer_skew (const ACE_Time_Value &skew);
   const ACE_Time_Value &timer_skew (void) const;
 
-  LOCK &mutex (void); 
+  ACE_LOCK &mutex (void); 
   // Synchronization variable used by the queue
 
   FUNCTOR &upcall_functor (void);
@@ -286,7 +286,7 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
   // Factory method that frees a previously allocated node.
 
-  LOCK mutex_; 
+  ACE_LOCK mutex_; 
   // Synchronization variable for <ACE_Timer_Queue>.
 
   ACE_Free_List<ACE_Timer_Node_T<TYPE> > *free_list_;
@@ -313,11 +313,11 @@ private:
   // Adjusts for timer skew in various clocks.
 
   // = Don't allow these operations for now.
-  ACE_Timer_Queue_T (const ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> &);
-  void operator= (const ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> &);
+  ACE_Timer_Queue_T (const ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> &);
+  void operator= (const ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> &);
 };
 
-template <class LOCK>
+template <class ACE_LOCK>
 class ACE_Event_Handler_Handle_Timeout_Upcall
   // = TITLE 
   //      Functor for Timer_Queues.
@@ -328,8 +328,8 @@ class ACE_Event_Handler_Handle_Timeout_Upcall
 {
 public:
   typedef ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                            ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
-                            LOCK>
+                            ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
+                            ACE_LOCK>
           TIMER_QUEUE;
   
   int timeout (TIMER_QUEUE &timer_queue,

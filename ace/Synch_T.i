@@ -6,31 +6,31 @@
 #include "ace/Thread.h"
 
 // Explicitly destroy the lock.
-template <class LOCKING_MECHANISM> ACE_INLINE int 
-ACE_Lock_Adapter<LOCKING_MECHANISM>::remove (void)
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::remove (void)
 {
   return this->lock_.remove ();
 }
 
 // Block the thread until the lock is acquired.
-template <class LOCKING_MECHANISM> ACE_INLINE int 
-ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire (void)
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire (void)
 {
   return this->lock_.acquire ();
 }
 
 // Conditionally acquire the lock (i.e., won't block).
 
-template <class LOCKING_MECHANISM> ACE_INLINE int
-ACE_Lock_Adapter<LOCKING_MECHANISM>::tryacquire (void)
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire (void)
 {
   return this->lock_.tryacquire ();
 }
 
 // Release the lock.
 
-template <class LOCKING_MECHANISM> ACE_INLINE int 
-ACE_Lock_Adapter<LOCKING_MECHANISM>::release (void)
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::release (void)
 {
   return this->lock_.release ();
 }
@@ -39,8 +39,8 @@ ACE_Lock_Adapter<LOCKING_MECHANISM>::release (void)
 // mechanism doesn't support read locks then this just calls
 // <acquire>.
 
-template <class LOCKING_MECHANISM> ACE_INLINE int 
-ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire_read (void)
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_read (void)
 {
   return this->lock_.acquire_read ();
 }
@@ -49,8 +49,8 @@ ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire_read (void)
 // mechanism doesn't support read locks then this just calls
 // <acquire>.
 
-template <class LOCKING_MECHANISM> ACE_INLINE int 
-ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire_write (void)
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_write (void)
 {
   return this->lock_.acquire_write ();
 }
@@ -58,8 +58,8 @@ ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire_write (void)
 // Conditionally acquire a read lock.  If the locking mechanism
 // doesn't support read locks then this just calls <acquire>.
 
-template <class LOCKING_MECHANISM> ACE_INLINE int
-ACE_Lock_Adapter<LOCKING_MECHANISM>::tryacquire_read (void)
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_read (void)
 {
   return this->lock_.tryacquire_read ();
 }
@@ -67,132 +67,132 @@ ACE_Lock_Adapter<LOCKING_MECHANISM>::tryacquire_read (void)
 // Conditionally acquire a write lock.  If the locking mechanism
 // doesn't support write locks then this just calls <acquire>.
 
-template <class LOCKING_MECHANISM> ACE_INLINE int
-ACE_Lock_Adapter<LOCKING_MECHANISM>::tryacquire_write (void)
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_write (void)
 {
   return this->lock_.tryacquire_write ();
 }
 
-template <class LOCK, class TYPE> ACE_INLINE
-ACE_Atomic_Op<LOCK, TYPE>::ACE_Atomic_Op (const ACE_Atomic_Op<LOCK, TYPE> &rhs)
+template <class ACE_LOCK, class TYPE> ACE_INLINE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::ACE_Atomic_Op");
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
   *this = rhs; // Invoke the assignment operator.
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE 
-ACE_Atomic_Op<LOCK, TYPE>::operator++ (void)
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ (void)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator++");
-  ACE_Guard<LOCK> m (this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++");
+  ACE_Guard<ACE_LOCK> m (this->lock_);
   return ++this->value_;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE 
-ACE_Atomic_Op<LOCK, TYPE>::operator++ (int)
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ (int)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator++");
-  ACE_Guard<LOCK> m (this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++");
+  ACE_Guard<ACE_LOCK> m (this->lock_);
   return this->value_++;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<LOCK, TYPE>::operator+= (const TYPE i)
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+= (const TYPE i)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator+=");
-  ACE_Guard<LOCK> m (this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+=");
+  ACE_Guard<ACE_LOCK> m (this->lock_);
   return this->value_ += i;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<LOCK, TYPE>::operator-- (void)
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-- (void)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator--");
-  ACE_Guard<LOCK> m (this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator--");
+  ACE_Guard<ACE_LOCK> m (this->lock_);
   return --this->value_;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<LOCK, TYPE>::operator-- (int)
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-- (int)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator--");
-  ACE_Guard<LOCK> m (this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator--");
+  ACE_Guard<ACE_LOCK> m (this->lock_);
   return this->value_--;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<LOCK, TYPE>::operator-= (const TYPE i)
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-= (const TYPE i)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator-=");
-  ACE_Guard<LOCK> m (this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-=");
+  ACE_Guard<ACE_LOCK> m (this->lock_);
   return this->value_ -= i;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<LOCK, TYPE>::operator== (const TYPE i) const
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE i) const
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator==");
-  ACE_Guard<LOCK> m ((LOCK &) this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator==");
+  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
   return this->value_ == i;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op<LOCK, TYPE>::operator>= (const TYPE i) const
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE i) const
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator>=");
-  ACE_Guard<LOCK> m ((LOCK &) this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>=");
+  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
   return this->value_ >= i;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE 
-ACE_Atomic_Op<LOCK, TYPE>::operator> (const TYPE rhs) const
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator> (const TYPE rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator>");
-  ACE_Guard<LOCK> m ((LOCK &) this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>");
+  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
   return this->value_ > rhs;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE 
-ACE_Atomic_Op<LOCK, TYPE>::operator<= (const TYPE rhs) const
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<= (const TYPE rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator<=");
-  ACE_Guard<LOCK> m ((LOCK &) this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<=");
+  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
   return this->value_ <= rhs;
 }
 
-template <class LOCK, class TYPE> ACE_INLINE TYPE 
-ACE_Atomic_Op<LOCK, TYPE>::operator< (const TYPE rhs) const
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator< (const TYPE rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator<");
-  ACE_Guard<LOCK> m ((LOCK &) this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<");
+  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
   return this->value_ < rhs;
 }
 
-template <class LOCK, class TYPE> void
-ACE_Atomic_Op<LOCK, TYPE>::operator= (const ACE_Atomic_Op<LOCK, TYPE> &rhs)
+template <class ACE_LOCK, class TYPE> void
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator=");
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator=");
   if (&rhs == this)
     return; // Avoid deadlock...
-  ACE_Guard<LOCK> m (this->lock_);
+  ACE_Guard<ACE_LOCK> m (this->lock_);
   // This will call ACE_Atomic_Op::TYPE(), which will ensure the value
   // of <rhs> is acquired atomically.
   this->value_ = rhs; 
 }
 
-template <class LOCK, class TYPE> ACE_INLINE
-ACE_Atomic_Op<LOCK, TYPE>::operator TYPE () const
+template <class ACE_LOCK, class TYPE> ACE_INLINE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator TYPE () const
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator TYPE");
-  ACE_Guard<LOCK> m ((LOCK &) this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator TYPE");
+  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
   return this->value_;    
 }
 
-template <class LOCK, class TYPE> ACE_INLINE void
-ACE_Atomic_Op<LOCK, TYPE>::operator= (const TYPE i)
+template <class ACE_LOCK, class TYPE> ACE_INLINE void
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE i)
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::operator=");
-  ACE_Guard<LOCK> m (this->lock_);
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator=");
+  ACE_Guard<ACE_LOCK> m (this->lock_);
   this->value_ = i;
 }
 #if defined (ACE_HAS_THREADS)
