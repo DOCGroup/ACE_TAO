@@ -32,6 +32,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/GIOP.h"
+#include "tao/CDR.h"
 
 // Forward Decls
 class TAO_Transport;
@@ -179,7 +180,7 @@ protected:
 
   TAO_GIOP_MessageHeader message_header_;
   CORBA::ULong current_offset_;
-  ACE_Message_Block payload_;
+  TAO_InputCDR input_;
   // This keep the state of the current message, to enable
   // non-blocking reads.
 };

@@ -1,3 +1,22 @@
+Sat Jun  5 12:58:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h:
+	* tao/GIOP.cpp:
+	* tao/GIOP.h:
+	* tao/IIOP_Connect.cpp:
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Transport.cpp:	
+	* tao/UIOP_Connect.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Transport.cpp:
+	  Removed several memory allocations from the critical path, they
+	  were introduced in the flurry of changes to support asynch
+	  messaging and pluggable protocols.
+
+	* tao/MessagingS_T.cpp:
+	* tao/DomainS_T.i:
+	  Removed several uses of TAO_ORB_Core_instance()
+
 Sat Jun 05 06:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp
