@@ -1,3 +1,13 @@
+Mon Dec 13 19:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Semaphore_Test.cpp (worker):
+          Changed the way we compare if the acquire failed. Use a intermediate
+          long as in the test_timeout function to handle the case when
+          the acquire returns a little bit earlier than we expected. This
+          fixes the incorrect test failure with Interix and MinGW. Thanks for
+          Steven Frare <stevefr at avaya dot com> for sorting this out
+          and supplying a patch
+
 Mon Dec 13 10:34:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	From Roland Mueb <Roland dot Meub at avaya dot tenovis dot com>:
