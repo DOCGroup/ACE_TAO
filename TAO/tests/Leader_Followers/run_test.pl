@@ -115,7 +115,7 @@ print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
                        " -o $iorfile -e 5" .
-                       "$cwd$DIR_SEPARATOR" .
+                       " -ORBSvcConf $cwd$DIR_SEPARATOR" .
                        "multi_threaded_event_loop.conf");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {

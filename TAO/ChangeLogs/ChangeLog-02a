@@ -1,3 +1,8 @@
+Tue Apr 18 22:43:52 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Leader_Followers/run_test.pl:
+	  Add a missing -ORBSvcConf option.
+
 Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO/TAO_IDL/ast/ast_generator.cpp:
