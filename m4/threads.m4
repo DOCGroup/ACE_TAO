@@ -51,6 +51,9 @@ dnl Check if compiler accepts specific flag to enable threads
     ace_save_CXXFLAGS="$CXXFLAGS"
     ace_save_CFLAGS="$CFLAGS"
 
+    CXXFLAGS="$CXXFLAGS -mt"
+    CFLAGS="$CFLAGS -mt"
+
     ACE_CACHE_CHECK(if compiler can use -mt flag,
       ace_cv_feature_has_mt_flag,
       [
