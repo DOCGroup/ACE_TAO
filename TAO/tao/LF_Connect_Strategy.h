@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Leader_Follower_Connect_Strategy.h
+ *  @file LF_Connect_Strategy.h
  *
  *  $Id$
  *
@@ -52,5 +52,5 @@ public:
 };
 
 
-
+#include "ace/post.h"
 #endif /*TAO_LF_CONNECT_STRATEGY_H*/
