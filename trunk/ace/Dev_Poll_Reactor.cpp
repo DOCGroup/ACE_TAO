@@ -1976,13 +1976,12 @@ ACE_Dev_Poll_Reactor::cancel_timer (ACE_Event_Handler *event_handler,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::cancel_timer");
 
-  // Lock must be held when calling this method.
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-  if (this->timer_queue_ != 0)
-    return this->timer_queue_->cancel (event_handler,
-                                       dont_call_handle_close);
-
-  return 0;
+  return (this->timer_queue_ == 0
+          ? 0
+          : this->timer_queue_->cancel (event_handler,
+                                        dont_call_handle_close));
 }
 
 int
@@ -1990,13 +1989,15 @@ ACE_Dev_Poll_Reactor::cancel_timer (long timer_id,
                                     const void **arg,
                                     int dont_call_handle_close)
 {
-  // Lock must be held when calling this method.
-
   ACE_TRACE ("ACE_Dev_Poll_Reactor::cancel_timer");
 
-  return this->timer_queue_->cancel (timer_id,
-                                     arg,
-                                     dont_call_handle_close);
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
+  return (this->timer_queue_ == 0
+          ? 0
+          : this->timer_queue_->cancel (timer_id,
+                                        arg,
+                                        dont_call_handle_close));
 }
 
 int
