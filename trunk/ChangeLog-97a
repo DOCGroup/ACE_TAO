@@ -1,3 +1,12 @@
+Mon Apr 28 18:53:58 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/OS.h: Added ACE_DEFAULT_TIMER_WHEEL_SIZE and 
+	  ACE_DEFAULT_TIMER_WHEEL_RESOLUTION constants.
+	
+	* ace/Timer_Wheel_T.h: switched to use these constants
+	  
+	* tests/Timer_Queue_Test.cpp: switched to use these constants
+
 Mon Apr 28 18:35:39 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Timer_Wheel: added a new strategy for Timer Queues, one 
