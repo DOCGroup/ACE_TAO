@@ -93,8 +93,7 @@ main (int argc, char *argv[])
                         "Token Service",
                         1));
 
-          char thr_logging_port[] = "-p " ACE_DEFAULT_THR_LOGGING_SERVER_PORT_S
-            TR;
+          char thr_logging_port[] = "-p " ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR;
           l_argv[0] = thr_logging_port;
           l_argv[1] = 0;
           ACE_Service_Object_Ptr sp_5 =
