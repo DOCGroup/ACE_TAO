@@ -4136,12 +4136,39 @@ TAO_POA::TAO_FT_Servant_Tagged_Properties::TAO_FT_Servant_Tagged_Properties (voi
   // no-op
 }
 
-CORBA::Boolean
+TAO_POA::TAO_FT_Servant_Tagged_Properties::TAO_FT_Servant_Tagged_Properties (const FT_TagFTGroupTaggedComponent &group_info)
+  :is_primary (0)
+{
+  this->tagged_properties_ = group_info;
+}
+
+int
 TAO_POA::set_group_primary_member (const CORBA::Object &member,
                                    const FT_TagFTGroupTaggedComponent &group_info)
 {
-  if (this->servant_property_map_ (member,
+  TAO_FT_Servant_Tagged_Properties properties (group_info);
+
+  // Set the primary flag
+  properties.is_primary_ = 1;
+
+  return this->servant_property_map_.bind  (member,
+                                            properties);
 }
+
+int
+TAO_POA::set_group_info (const CORBA::Object &member,
+                                   const FT_TagFTGroupTaggedComponent &group_info)
+{
+  TAO_FT_Servant_Tagged_Properties properties (group_info);
+
+  return this->servant_property_map_.bind  (member,
+                                            properties);
+}
+
+int
+
+
+
 #endif /*TAO_HAS_FT_CORBA == 1*/
 
 #endif /*TAO_HAS_MINIMUM_POA == 0 */
