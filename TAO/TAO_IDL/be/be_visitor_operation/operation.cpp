@@ -1075,8 +1075,20 @@ be_visitor_operation::gen_marshal_and_invoke (
           );
         }
 
+      AST_Decl::NodeType nt = bt->base_node_type ();
+      AST_PredefinedType *pdt = 0;
+      AST_PredefinedType::PredefinedType pt = AST_PredefinedType::PT_void;
+
+      if (nt == AST_Decl::NT_pre_defined)
+        {
+          pdt = AST_PredefinedType::narrow_from_decl (bt);
+          pt = pdt->pt ();
+        }
+
       if (bt->size_type () == AST_Type::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
+          || nt == AST_Decl::NT_array
+          || (nt == AST_Decl::NT_pre_defined 
+              && pt == AST_PredefinedType::PT_object))
         {
           *os << " _tao_retval_info =" << be_idt_nl
               << "_tao_retval._retn ();" << be_uidt_nl
