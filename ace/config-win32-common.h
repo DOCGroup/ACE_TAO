@@ -124,6 +124,9 @@
 // iostream header lacks ipfx (), isfx (), etc., declarations
 #define ACE_LACKS_IOSTREAM_FX
 
+// Template specialization is supported
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 	#define ACE_NTRACE 1
