@@ -3537,8 +3537,17 @@ int const ACE_NUM_DESCRIPTORS = 10;
      [])
     ;;
   *)
-    dnl /dev/poll character device
-    dnl TODO add test
+    AS_IF([test "$cross_compiling" = no],
+      [
+       dnl AC_CHECK_FILE cannot be run when cross-compiling.
+
+       dnl Check if /dev/poll character device file exists and is
+       dnl readable.
+       AC_CHECK_FILE([/dev/poll],
+                     [AC_DEFINE([ACE_HAS_DEV_POLL])],
+                     [])
+      ],
+      [])
     ;;
 esac
 
@@ -7190,7 +7199,7 @@ ACE_CACHE_CHECK([for ACE_IOStream support],
 #include "ace/IOStream.cpp"
         ],
         [
-         int a=0; a += 1;
+         int a = 0; a += 1;
         ],
         [
          ace_cv_feature_ace_iostream=yes
