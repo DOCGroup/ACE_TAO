@@ -54,6 +54,4 @@ namespace TAO
 
 }
 
-#include "ace/post.h"
-
 #endif  /* TAO_BE_VISITOR_ENUM_TYPECODE_H */
