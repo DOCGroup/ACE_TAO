@@ -1,9 +1,13 @@
+Thu Aug 03 10:23:04 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * VERSION: updated for next beta, manually.
+
 Wed Aug  2 14:43:08 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* include/makeinclude/rules.common.GNU:
-	  Changed VPATH:= to VPATH+= so it wouldn't
-	  trounce on other VPATH assignments. This
-	  fix enables TAO to comile clean on top of PACE.
+        * include/makeinclude/rules.common.GNU:
+          Changed VPATH:= to VPATH+= so it wouldn't
+          trounce on other VPATH assignments. This
+          fix enables TAO to comile clean on top of PACE.
 
 Sat Jul 29 09:39:24 2000  David L. Levine <levine@cs.wustl.edu>
 
