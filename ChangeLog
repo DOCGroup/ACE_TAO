@@ -1,3 +1,12 @@
+Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+         * ace/QoS/QoS_Session.h:
+         * ace/QoS/QoS_Session_Impl.h:
+         * ace/QoS/QoS_Session_Impl.cpp:
+         * ace/QoS/QoS_Session_Impl.i: Added methods to set the source host
+           and port that is used to populate the TSpec for the
+           sending_qos.
+
 Tue Jun 24 13:10:25 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.cpp (cached_connect): Added
@@ -1365,4 +1374,3 @@ Mon Jun 16 22:24:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           <douglas.a.stuart@boeing.com> for reporting the problem.
 
         * THANKS: Added Doug A Stuart to the hall of fame.
-
