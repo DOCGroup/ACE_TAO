@@ -39,8 +39,8 @@ test (void *args)
       // that mutex timeouts are working.
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = trying timed acquire on "
-                            "iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = trying timed acquire on ")
+                  ACE_TEXT ("iteration %d\n"),
                   i));
 
       ACE_Time_Value delta (1, 0);  // One second timeout
