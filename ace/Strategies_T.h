@@ -5,18 +5,19 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//   ACE_Strategies_T.h 
+//   ACE_Strategies_T.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_STRATEGIES_T_H)
 #define ACE_STRATEGIES_T_H
 
+#include "ace/Strategies.h"
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Synch_Options.h"
@@ -26,7 +27,7 @@ template <class SVC_HANDLER>
 class ACE_Creation_Strategy
   // = TITLE
   //     Defines the interface for specifying a creation strategy for
-  //     a SVC_HANDLER.  
+  //     a SVC_HANDLER.
   //
   // = DESCRIPTION
   //     The default behavior is to make a new SVC_HANDLER.  However,
@@ -69,7 +70,7 @@ class ACE_Singleton_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
   // = TITLE
   //     Defines the interface for specifying a creation strategy for
   //     a <SVC_HANDLER> that always returns the same <SVC_HANDLER> (i.e.,
-  //     it's a Singleton).  
+  //     it's a Singleton).
   //
   // = DESCRIPTION
   //     Note that this class takes over the ownership of the
@@ -83,7 +84,7 @@ public:
   int open (SVC_HANDLER *,
 	    ACE_Thread_Manager * = 0);
   virtual ~ACE_Singleton_Strategy (void);
-  
+
   // = Factory method.
   virtual int make_svc_handler (SVC_HANDLER *&);
   // Create a Singleton SVC_HANDLER by always returning the same
@@ -95,7 +96,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-protected:  
+protected:
   SVC_HANDLER *svc_handler_;
   // Pointer to the Singleton svc_handler.
 };
@@ -209,7 +210,7 @@ public:
   // Initialize the strategy.
 
   virtual int open (ACE_Reactor *reactor,
-		    ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK, 
+		    ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
 		    int flags = 0);
   // Initialize the strategy.
 
@@ -233,7 +234,7 @@ protected:
 
   ACE_Reactor *reactor_;
   // Pointer to the Reactor we'll use to register the <SVC_HANDLER>.
-  
+
   ACE_Reactor_Mask mask_;
   // The mask that we pass to the <Reactor> when we register the
   // <SVC_HANDLER>.
@@ -270,7 +271,7 @@ public:
 		    long thr_flags,
 		    size_t n_threads = 1);
   // Initialize the strategy.
-  
+
   virtual ~ACE_Thread_Strategy (void);
 
   // = Factory method.
@@ -325,7 +326,7 @@ public:
 		    ACE_Event_Handler *acceptor = 0,
 		    ACE_Reactor * = 0);
   // Initialize the strategy.
-  
+
   virtual ~ACE_Process_Strategy (void);
 
   // = Factory method.
@@ -347,7 +348,7 @@ protected:
 
   size_t n_processes_;
   // Number of processes to spawn.
-  
+
   ACE_Event_Handler *acceptor_;
   // This is the <Acceptor> in the parent is listening on.  We need to
   // make sure that we remove it from the Reactor and close it down in
@@ -360,7 +361,7 @@ protected:
 };
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-class ACE_Accept_Strategy 
+class ACE_Accept_Strategy
   // = TITLE
   //     Defines the interface for specifying a passive connection
   //     acceptance strategy for a SVC_HANDLER.
@@ -379,7 +380,7 @@ public:
                        ACE_Reactor *reactor = ACE_Reactor::instance ());
   // Initialize the <peer_acceptor_> with <local_addr>.
 
-  virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr, 
+  virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
 		    int restart = 0);
   // Initialize the <peer_acceptor_> with <local_addr>.
 
@@ -394,7 +395,7 @@ public:
   // = Factory method.
   virtual int accept_svc_handler (SVC_HANDLER *);
   // The default behavior delegates to the <accept> method of the
-  // PEER_ACCEPTOR. 
+  // PEER_ACCEPTOR.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -403,21 +404,21 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  ACE_PEER_ACCEPTOR acceptor_;     
+  ACE_PEER_ACCEPTOR acceptor_;
   // Factory that establishes connections passively.
-  
+
   ACE_Reactor *reactor_;
   // Pointer to the reactor used by the Acceptor.
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
-class ACE_Connect_Strategy 
+class ACE_Connect_Strategy
   // = TITLE
-  //     Defines the interface for specifying an active 
+  //     Defines the interface for specifying an active
   //     connection establishment strategy for a SVC_HANDLER.
   //
   // = DESCRIPTION
-  //     This class provides a strategy that manages active 
+  //     This class provides a strategy that manages active
   //     connection establishment to a server.
 {
 public:
@@ -494,7 +495,7 @@ protected:
 template <class SVC_HANDLER>
 class ACE_NOOP_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
   // = TITLE
-  // 
+  //
   //     Implements a no-op creation strategy in order to defer
   //     decisions regarding creation to some later point in time, such
   //     as in connect or accept strategy.
@@ -513,7 +514,7 @@ template <class ADDR_T>
 class ACE_Hash_Addr
   // = TITLE
   //     Internal class to compute hash values on addresses in
-  //     <ACE_Cached_Connect_Strategy>.  
+  //     <ACE_Cached_Connect_Strategy>.
   //
   // = DESCRIPTION
   //
@@ -528,11 +529,11 @@ public:
 
   ACE_Hash_Addr (const ADDR_T &a);
   // Pre-compute hash value.
-  
+
   ACE_Hash_Addr (const ADDR_T &a, int recyclable);
   // Pre-compute hash value.
-  
-  u_long hash (void) const;		
+
+  u_long hash (void) const;
   // Computes and returns hash value.  This "caches" the hash value to
   // improve performance.
 
@@ -548,7 +549,7 @@ private:
   // This is the method that actually performs the non-cached hash
   // computation.  It should typically be specialized.
 
-  u_long hash_value_;		
+  u_long hash_value_;
   // Pre-computed hash-value.
 
   int recyclable_;
@@ -560,14 +561,14 @@ private:
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
-class ACE_Cached_Connect_Strategy 
+class ACE_Cached_Connect_Strategy
   : public ACE_Connection_Recycling_Strategy,
     public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
   // = TITLE
   //     A connection strategy which caches connections to peers
   //     (represented by <SVC_HANDLER> instances), thereby allowing
   //     subsequent re-use of unused, but available, connections.
-  //     
+  //
   // = DESCRIPTION
   //     <ACE_Cached_Connect_Strategy> is intended to be used as a
   //     plug-in connection strategy for <ACE_Strategy_Connector>.
@@ -634,7 +635,7 @@ private:
   typedef ACE_Hash_Map_Iterator <ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP_ITERATOR;
   typedef ACE_Hash_Map_Entry<ADDRESS, SVC_HANDLER *> CONNECTION_MAP_ENTRY;
 
-  CONNECTION_MAP connection_cache_;  
+  CONNECTION_MAP connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
 
   MUTEX lock_;
