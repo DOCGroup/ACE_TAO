@@ -1,3 +1,15 @@
+Thu Mar  1 18:51:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+
+          Disabled generation of _var and _out classes for
+          anonymous sequences and arrays (those not declared in an 
+          IDL file via a typedef), as required by the spec. 
+          This closes [BUGID:677].
+
 Thu Mar  1 15:54:54 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
