@@ -23,6 +23,9 @@ Mon Oct 13 12:58:01 1997  David L. Levine  <levine@cs.wustl.edu>
 	  initializers to match declaration order.  (spawn_i): added
 	  ACE_UNUSED_ARG (t_handle) without WTHREADS.
 
+	* ace/Thread_Manager.cpp (wait): moved all of the "join" block
+	  inside the #ifndef VXWORKS so that it compiles on VxWorks.
+
 	* ace/Strategies_T.cpp (ACE_NOOP_Creation_Strategy<SVC_HANDLER>::
 	  make_svc_handler): removed unused arg declaration to avoid
 	  compiler warning.
