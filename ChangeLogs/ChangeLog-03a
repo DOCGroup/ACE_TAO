@@ -1,3 +1,11 @@
+Tue Mar 27 19:54:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Disable POA/On_Demand_Loading and POA/Loader for Linux/KCC
+          builds, because that compiler has problems with destructors
+          after dynamic loading.
+          Also add the new Hello test to the nightly regression tests.
+
 Tue Mar 27 19:43:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/platform_linux.GNU:
