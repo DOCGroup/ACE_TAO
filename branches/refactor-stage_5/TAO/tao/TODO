@@ -24,7 +24,7 @@
 
 . Work on connection timeout
 
-. Work on exception list for interceptoss in operation_details.cpp
+. Work on exception list for interceptors in operation_details.cpp
 
 . Remove tao_queryinterface
 
@@ -38,8 +38,6 @@
 
 . Multiprofile IOR and fallback in case of failure
 
+. Interaction between abstract interfaces and collocation.
 
-
-
-
-
+. Interaction between location forward and collocation.
