@@ -1,13 +1,14 @@
 ACKNOWLEDGEMENTS
 
 ACE and TAO have been deeply influenced and improved by the following
-members of my research group at Washington University:
+members of my research group at Washington University and at the
+University of California at Irvine.
 
 Everett Anderson <eea1@cec.wustl.edu>
 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 Shawn Atkins <sma1@cs.wustl.edu>
 Matt Braun <mjb2@cs.wustl.edu>
-Darrell Brunsch <brunsch@cs.wustl.edu>
+Darrell Brunsch <brunsch@uci.edu>
 Chris Cleeland <chris@cs.wustl.edu>
 Mayur Deshpande <mayur@ics.uci.edu>
 Eric Ding <qnd1@cs.wustl.edu>
@@ -32,8 +33,8 @@ Sumedh Mungee <sumedh@cs.wustl.edu>
 Balachandran Natarajan <bala@cs.wustl.edu>
 Kirthika Parameswaran <kirthika@cs.wustl.edu>
 Krishnakumar Pathayapura <krish@cs.wustl.edu>
-Carlos O'Ryan <coryan@cs.wustl.edu>
-Ossama Othman <othman@cs.wustl.edu>
+Carlos O'Ryan <coryan@uci.edu>
+Ossama Othman <ossama@uci.edu>
 Jeff Parsons <parsons@cs.wustl.edu>
 Irfan Pyarali <irfan@cs.wustl.edu>
 Marina Spivak <marina@cs.wustl.edu>
@@ -1225,7 +1226,7 @@ Richard Hardgrave <hardgrav@ttd.teradyne.com>
 Mark Drijver <mdrijver@remedy.nl>
 Guy Bolton King <guy_bolton_king@non.agilent.com>
 Carlton Teel <teel@signal-analysis.com>
-Alexandre Cervieri <alexandre.cervieri@terra.com.br> 
+Alexandre Cervieri <alexandre.cervieri@terra.com.br>
 Darren Griffith <darren.griffith@esecurityinc.com>
 Sam Mok <sam.mok@westwave.com>
 Josh Curry <Josh.Curry@lipper.reuters.com>
@@ -1236,7 +1237,7 @@ Corey Trager <corey.trager@tradingtechnologies.com>
 Kirat Singh <kirat.singh@gs.com>
 Oleg Pavliv <oleg_pavliv@yahoo.com>
 Frederick Niemi <fniemi@cisco.com>
-Vsevolod Novikov <novikov@ci.nnov.ru> 
+Vsevolod Novikov <novikov@ci.nnov.ru>
 Andrew Munro <Andrew.Munro@Australia.Boeing.com>
 Nicolas Huynh <HUYNH_Nicolas@cena.fr>
 Kevin Burge <kcburge@systemware-inc.com>
@@ -1253,7 +1254,29 @@ Steve Witten <steve_witten@hp.com>
 Gil Rapaport <grapaport@comgates.co.il>
 Boris Temkin <borist@allcharge.com>
 Steve Perkins <steve@steveperkins.net>
-Heping He <heping@research.bell-labs.com>
+Jerry Thomas <jto@consegna.co.uk>
+cuma <cuma@dslab.csie.ncu.edu.tw>
+Ron Heald <rheald@nrao.edu>
+Andrew Finnell <Andrew.Finnell@esecurityinc.com>
+Dan Levi <DanL@webmap.com>
+Rob Andzik <andzik@rtlogic.com>
+James Maynard <James.Maynard@ot.com.au>
+Francois Rioux <rioux01@gel.ulaval.ca>
+Ophir Bleiberg <ophir@personeta.com>
+Allen Kelly <akelly@postx.com>
+Victor Pitchouc <pitchouc@tlsoft.ru>
+Srikanth Vedire <srvedire@yahoo.com>
+J Shane Culpepper <pepper@channelogics.com>
+Benn Howard <Benn_Howard@raytheon.com>
+Steffen Hieber <Steffen.Hieber@erl9.siemens.de>
+Craig L. Ching <cching@mqsoftware.com>
+Ben Howard <Ben_Howard@raytheon.com>
+Rich Newman <RNewman@directv.com>
+Kelly F. Hickel <kfh@mqsoftware.com>
+David Trusty <david.trusty@westwave.com>
+Burkhard Neppert <b.neppert@dr-staedtler.de>
+Crawford Lodge <crawford.lodge@xmlglobal.com> 
+Scott Gaa <scott_a_gaa@md.northgrum.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
