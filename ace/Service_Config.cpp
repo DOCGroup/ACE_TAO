@@ -57,8 +57,8 @@ int ACE_Service_Config::signum_ = SIGHUP;
 // Name of file used to store messages.
 LPCTSTR ACE_Service_Config::logger_key_ = ACE_DEFAULT_LOGGER_KEY;
 
-// The ACE_Service_Manager static service object is now defined
-// by the ACE_Object_Manager, in Object_Manager.cpp.
+// The ACE_Service_Manager static service object is now defined by the
+// ACE_Object_Manager, in Object_Manager.cpp.
 
 // List of statically configured services.
 
@@ -141,11 +141,11 @@ ACE_Service_Config::remove (const ASYS_TCHAR svc_name[])
   return ACE_Service_Repository::instance ()->remove (svc_name);
 }
 
-// Suspend SVC_NAME.  Note that this will not unlink the service from
-// the daemon if it was dynamically linked, it will mark it as being
-// suspended in the Service Repository and call the suspend() member
-// function on the appropriate ACE_Service_Object.  A service can be
-// resumed later on by calling the RESUME() member function...
+// Suspend <svc_name>.  Note that this will not unlink the service
+// from the daemon if it was dynamically linked, it will mark it as
+// being suspended in the Service Repository and call the <suspend>
+// member function on the appropriate <ACE_Service_Object>.  A service
+// can be resumed later on by calling the <resume> method...
 
 int
 ACE_Service_Config::suspend (const ASYS_TCHAR svc_name[])
@@ -165,7 +165,7 @@ ACE_Service_Config::resume (const ASYS_TCHAR svc_name[])
 }
 
 // Initialize the Service Repository.  Note that this *must* be
-// performed in the constructor (rather than open()) since otherwise
+// performed in the constructor (rather than <open>) since otherwise
 // the repository will not be properly initialized to allow static
 // configuration of services...
 
@@ -185,10 +185,31 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   ACE_Reactor::instance ();
 }
 
+int
+ACE_Service_Config::init_svc_conf_file_queue (void)
+{
+  if (ACE_Service_Config::svc_conf_file_queue_ == 0)
+    {
+      ACE_NEW_RETURN (ACE_Service_Config::svc_conf_file_queue_,
+                      ACE_SVC_QUEUE,
+                      -1);
+
+      // Load the default "svc.conf" entry here.
+      if (ACE_Service_Config::svc_queue_->enqueue_tail
+          (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           "enqueue_tail"),
+                          -1);
+    }
+
+  return 0;
+}
+
 // Handle the command-line options intended for the
 // ACE_Service_Config.
 
-void
+int
 ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Config::parse_args");
@@ -197,18 +218,8 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
                       ASYS_TEXT ("bdf:k:nys:S:"),
                       1); // Start at argv[1].
 
-  if (ACE_Service_Config::svc_conf_file_queue_ == 0)
-    {
-      ACE_NEW (ACE_Service_Config::svc_conf_file_queue_,
-               ACE_SVC_QUEUE);
-
-      // Load the default "svc.conf" entry here.
-      if (ACE_Service_Config::svc_queue_->enqueue_tail
-          (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    "enqueue_tail"));
-    }
+  if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
+    return -1;
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -222,9 +233,10 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
       case 'f':
         if (ACE_Service_Config::svc_queue_->enqueue_tail
             (ACE_CString (getopt.optarg)) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      "enqueue_tail"));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ASYS_TEXT ("%p\n"),
+                             "enqueue_tail"),
+                            -1);
         break;
       case 'k':
         ACE_Service_Config::logger_key_ =
@@ -247,28 +259,34 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
           if (ACE_Reactor::instance ()->register_handler
               (ACE_Service_Config::signum_,
                ACE_Service_Config::signal_handler_) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT ("cannot obtain signal handler\n")));
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ASYS_TEXT ("cannot obtain signal handler\n")),
+                              -1);
 #endif /* ACE_LACKS_UNIX_SIGNALS */
           break;
         }
       case 'S':
         if (ACE_Service_Config::svc_queue_ == 0)
-          ACE_NEW (ACE_Service_Config::svc_queue_,
-                   ACE_SVC_QUEUE);
+          ACE_NEW_RETURN (ACE_Service_Config::svc_queue_,
+                          ACE_SVC_QUEUE,
+                          -1);
 
         if (ACE_Service_Config::svc_queue_->enqueue_tail
             (ACE_CString (getopt.optarg)) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      "enqueue_tail"));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ASYS_TEXT ("%p\n"),
+                             "enqueue_tail"),
+                            -1);
         break;
       default:
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%c is not a ACE_Service_Config option\n"),
-                    c));
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%c is not a ACE_Service_Config option\n"),
+                           c),
+                          -1);
         break;
       }
+
+  return 0;
 }
 
 // Initialize and activate a statically linked service.
@@ -522,18 +540,8 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
   int retval = 0;
   ACE_TRACE ("ACE_Service_Config::open");
 
-  if (ACE_Service_Config::svc_conf_file_queue_ == 0)
-    {
-      ACE_NEW (ACE_Service_Config::svc_conf_file_queue_,
-               ACE_SVC_QUEUE);
-
-      // Load the default "svc.conf" entry here.
-      if (ACE_Service_Config::svc_queue_->enqueue_tail
-          (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    "enqueue_tail"));
-    }
+  if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
+    return -1;
 
   // Clear the LM_DEBUG bit from log messages if appropriate
   if (ACE::debug ())
@@ -613,7 +621,8 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.
     ACE_ERROR ((LM_ERROR, 
-                ASYS_TEXT ("%p\n"), program_name));
+                ASYS_TEXT ("%p\n"),
+                program_name));
 }
 
 // Signal handling API to trigger dynamic reconfiguration.
@@ -672,9 +681,9 @@ ACE_Service_Config::run_reactor_event_loop (void)
   return ACE_Reactor::run_event_loop ();
 }
 
-// Run the event loop until the <ACE_Reactor::handle_events>
-// method returns -1, the <end_reactor_event_loop> method
-// is invoked, or the <ACE_Time_Value> expires.
+// Run the event loop until the <ACE_Reactor::handle_events> method
+// returns -1, the <end_reactor_event_loop> method is invoked, or the
+// <ACE_Time_Value> expires.
 
 int
 ACE_Service_Config::run_reactor_event_loop (ACE_Time_Value &tv)
@@ -707,8 +716,8 @@ ACE_Service_Config::close (void)
   ACE_TRACE ("ACE_Service_Config::close");
 
   // ACE_Service_Config must be deleted before the Singletons are
-  // closed so that an object's fini() method may reference a
-  // valid ACE_Reactor.
+  // closed so that an object's fini() method may reference a valid
+  // ACE_Reactor.
   ACE_Service_Config::close_svcs ();
 
   // The Singletons can be used independently of the services.
@@ -764,7 +773,6 @@ ACE_Service_Config::close_singletons (void)
 }
 
 // Perform user-specified close activities and remove dynamic memory.
-
 
 ACE_Service_Config::~ACE_Service_Config (void)
 {
