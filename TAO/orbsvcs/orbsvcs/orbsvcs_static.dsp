@@ -218,10 +218,6 @@ SOURCE=.\Event\EC_Busy_Lock.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Command.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Conjunction_Filter.cpp
 # End Source File
 # Begin Source File
@@ -282,10 +278,6 @@ SOURCE=.\Event\EC_ProxyPushSupplier_Set.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_ProxyPushSupplier_Set_T.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ProxySupplier.cpp
 # End Source File
 # Begin Source File
@@ -339,10 +331,6 @@ SOURCE=.\Event_Utilities.cpp
 # Begin Source File
 
 SOURCE=.\CosEvent\EventChannel_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\GPlot_File.cpp
 # End Source File
 # Begin Source File
 
@@ -2551,6 +2539,11 @@ SOURCE=.\CosPropertyServiceS_T.cpp
 # Begin Source File
 
 SOURCE=.\CosTradingS_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_ProxyPushSupplier_Set_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
