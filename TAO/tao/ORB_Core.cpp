@@ -124,23 +124,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 }
 
 int
-TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref,
-                                TAO_IOR_LookupTable &table)
-{
-  int slot = init_ref.find ("=");
-  if (slot == ACE_CString::npos)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to parse -ORBInitRef parameter\n"),
-                      -1);
-
-  ACE_CString object_id = init_ref.substr (0, slot);
-  ACE_CString ior = init_ref.substr (slot + 1);
-
-  // Add the objectID-IOR to the table and return the status.
-  return table.add_ior (object_id, ior);
-}
-
-int
 TAO_ORB_Core::init (int &argc, char *argv[])
 {
   // Right now, this code expects to begin parsing in argv[1] rather
@@ -159,12 +142,17 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   //
   // Prepare a copy of the argument vector for the service configurator.
 
-  char **svc_config_argv;
-  // @@ depricated
+  char **svc_config_argv = 0;
+
+  // @@ deprecated
   int old_style_endpoint = 0;
 
   int svc_config_argc = 0;
-  ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], 0);
+
+  // @@ Memory leak occurs here if we return with an error or with an
+  //    exception later on in this method!
+  //          -Ossama
+  ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], -1);
 
   // Be certain to copy the program name so that service configurator
   // has something to skip!
@@ -190,14 +178,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
-
-  // Table for <ObjectID>:<IOR> mapping specified on commandline
-  // using ORBInitRef.
-  TAO_IOR_LookupTable *ior_lookup_table = 0;
-
-  ACE_NEW_RETURN (ior_lookup_table,
-                  TAO_IOR_LookupTable,
-                  -1);
 
   // List of comma separated prefixes from ORBDefaultInitRef.
   ACE_CString default_init_ref;
@@ -412,11 +392,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             ACE_CString (TAO_OBJID_NAMESERVICE) +
             ACE_CString ('=') +
             ACE_CString (current_arg);
-          if (this->add_to_ior_table (init_ref,
-                                      *ior_lookup_table) != 0)
+          if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) Unable to add the Name "
-                               "Service IOR to the lookup table.\n"),
+                               "Service IOR <%s> to the lookup table.\n",
+                               current_arg),
                               -1);
 
           arg_shifter.consume_arg ();
@@ -451,11 +431,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             ACE_CString ('=') +
             ACE_CString (current_arg);
 
-            if (this->add_to_ior_table (init_ref,
-                                        *ior_lookup_table) != 0)
+            if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "TAO (%P|%t) Unable to add the Trading "
-                                 "Service IOR to the lookup table.\n"),
+                                 "Service IOR <%s> to the lookup table.\n",
+                                 current_arg),
                                 -1);
 
           arg_shifter.consume_arg ();
@@ -489,12 +469,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             ACE_CString ('=') +
             ACE_CString (current_arg);
 
-            if (this->add_to_ior_table (init_ref,
-                                        *ior_lookup_table) != 0)
+            if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "TAO (%P|%t) Unable to add the "
-                                 "Implmentation Repository IOR to "
-                                 "the lookup table.\n"),
+                                 "Implementation Repository IOR <%s> to "
+                                 "the lookup table.\n",
+                                 current_arg),
                                 -1);
 
           arg_shifter.consume_arg ();
@@ -728,11 +708,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBInitRef")))
         {
-          ACE_CString init_ref = current_arg;
-          if (this->add_to_ior_table (init_ref,
-                                      *ior_lookup_table) != 0)
+          ACE_CString init_ref (current_arg);
+          if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to add IOR to the Table\n"),
+                               "Unable to add initial reference:\n"
+                               "%s\n"
+                               "to the initial reference lookup table.\n",
+                               current_arg),
                               -1);
 
           arg_shifter.consume_arg ();
@@ -923,9 +905,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       // Add the endpoint
       this->orb_params ()->endpoints (iiop_endpoint);
     }
-
-  // Set the IOR Table.
-  this->orb_params ()->ior_lookup_table (ior_lookup_table);
 
   // Set the list of prefixes from -ORBDefaultInitRef.
   this->orb_params ()->default_init_ref (default_init_ref);

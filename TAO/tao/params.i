@@ -151,13 +151,7 @@ TAO_ORB_Parameters::implrepo_service_port (void) const
 ACE_INLINE TAO_IOR_LookupTable *
 TAO_ORB_Parameters::ior_lookup_table (void)
 {
-  return this->ior_lookup_table_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::ior_lookup_table (TAO_IOR_LookupTable *table)
-{
-  this->ior_lookup_table_ = table;
+  return &(this->ior_lookup_table_);
 }
 
 ACE_INLINE void

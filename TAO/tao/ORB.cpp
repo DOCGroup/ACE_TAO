@@ -1974,6 +1974,8 @@ CORBA::ORB_init (int &argc,
   // Check for errors and return 0 if error.
   if (result == -1)
     {
+      delete oc;
+
       ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::ORB::_nil ());
     }
 
@@ -1984,9 +1986,13 @@ CORBA::ORB_init (int &argc,
 
   // Before returning remember to store the ORB into the table...
   if (TAO_ORB_Table::instance ()->bind (orbid, oc) != 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                       CORBA::COMPLETED_NO),
-                      CORBA::ORB::_nil ());
+    {
+      delete oc;
+
+      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                        CORBA::ORB::_nil ());
+    }
 
   // Return a duplicate since the ORB_Core should release the last
   // reference to the ORB.
