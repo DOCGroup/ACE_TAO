@@ -1,3 +1,15 @@
+Wed Nov 12 11:21:55 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where relative definitions wouldn't be properly
+          processed on Windows depending on where mwc.pl was run.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a bug in a warning message.  The wrong project name was
+          being displayed.
+
 Wed Nov 12 16:44:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>"
 
         * ace/OS_NS_sys_time.inl:
@@ -71,34 +83,34 @@ Wed Nov 12 07:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov 11 18:48:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Map_Manager_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
 
-	  Renamed the variable ENTRY to MAP_ENTRY since it was clashing
-	  with system headers.
+          Renamed the variable ENTRY to MAP_ENTRY since it was clashing
+          with system headers.
 
 Tue Nov 11 18:02:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TSS_T.cpp (ts_object):
+        * ace/TSS_T.cpp (ts_object):
 
-	  Added the change "Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi
-	  <kobi@mivzak.com>"  back into the repo. The actual problem lay
-	  elsewhere. Please see below.
+          Added the change "Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi
+          <kobi@mivzak.com>"  back into the repo. The actual problem lay
+          elsewhere. Please see below.
 
 
-	  The double checked locking optimization in ts_init () was the
-	  culprit. After grabbing the lock, if the check for null pointer
-	  fails, meaning it was already allocated, just return 0 instead
-	  of a -1. This should fix most of the runtime problems that we
-	  saw in the builds today.
+          The double checked locking optimization in ts_init () was the
+          culprit. After grabbing the lock, if the check for null pointer
+          fails, meaning it was already allocated, just return 0 instead
+          of a -1. This should fix most of the runtime problems that we
+          saw in the builds today.
 
 Tue Nov 11 17:25:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TSS_T.cpp:
+        * ace/TSS_T.cpp:
 
-	  Reverting the change "Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi
-	  <kobi@mivzak.com>". The change is so benign that the problem is
-	  elsewhere. Thic change just triggered something else. Reverting
-	  this since our daily builds can run properly.
+          Reverting the change "Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi
+          <kobi@mivzak.com>". The change is so benign that the problem is
+          elsewhere. Thic change just triggered something else. Reverting
+          this since our daily builds can run properly.
 
 Tue Nov 11 12:20:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
