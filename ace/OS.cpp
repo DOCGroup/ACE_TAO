@@ -1982,7 +1982,7 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
       // Don't bother to check <in_use_> if the program is shutting
       // down.  Doing so will cause a new ACE_TSS object getting
       // created again.
-      if (! ACE_OS_Object_Manager::shutting_down ()
+      if (!ACE_OS_Object_Manager::shutting_down ()
           && ! tss_keys ()->test_and_clear (info.key_))
         --info.thread_count_;
 
@@ -2406,6 +2406,25 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
 void *
+ACE_Thread_Hook::start (ACE_THR_FUNC func,
+                        void *arg)
+{
+  return (func) (arg);
+}
+
+ACE_Thread_Hook *
+ACE_Thread_Hook::thread_hook (ACE_Thread_Hook *hook)
+{
+  return ACE_OS_Object_Manager::thread_hook (hook);
+}
+
+ACE_Thread_Hook *
+ACE_Thread_Hook::thread_hook (void)
+{
+  return ACE_OS_Object_Manager::thread_hook ();
+}
+
+void *
 ACE_Thread_Adapter::invoke (void)
 {
   // Inherit the logging features if the parent thread has an
@@ -2478,14 +2497,21 @@ ACE_Thread_Adapter::invoke (void)
     {
       ACE_SEH_TRY
         {
+          ACE_Thread_Hook *hook =
+            ACE_OS_Object_Manager::thread_hook ();
+
+          if (hook)
+            // Invoke the start hook to give the user a chance to
+            // perform some initialization processing before the
+            // <func> is invoked.
+            status = hook->start (func, arg);
+          else
+            status = (*func) (arg);  // Call thread entry point.
+
 #if defined (ACE_PSOS)
-          // pSOS thread functions do not return a value
+          // pSOS thread functions do not return a value.
           status = 0;
-          (*func) (arg);  // Call thread entry point.
-#else /* ! ACE_PSOS */
-          // Call thread entry point.
-          status = (void*) (*func) (arg);
-#endif /* ! ACE_PSOS */
+#endif /* ACE_PSOS */
         }
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
@@ -2499,7 +2525,8 @@ ACE_Thread_Adapter::invoke (void)
 
   ACE_SEH_FINALLY
     {
-// If we changed this to 1, change the respective if in Task::svc_run to 0
+      // If we changed this to 1, change the respective if in
+      // Task::svc_run to 0.
 #if 0
       // Call the <Task->close> hook.
       if (func == ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
@@ -2515,7 +2542,7 @@ ACE_Thread_Adapter::invoke (void)
           // (called later by <ACE_Thread_Manager::exit>.
           thr_mgr_ptr->at_exit (task_ptr, 0, 0);
         }
-#endif
+#endif /* 0 */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
@@ -2527,15 +2554,15 @@ ACE_Thread_Adapter::invoke (void)
       ACE_OS::cleanup_tss (0 /* not main thread */);
 
 # if defined (ACE_WIN32)
-      // Exit the thread.  Allow CWinThread-destructor to be
-      // invoked from AfxEndThread.  _endthreadex will be called
-      // from AfxEndThread so don't exit the thread now if we are
-      // running an MFC thread.
+      // Exit the thread.  Allow CWinThread-destructor to be invoked
+      // from AfxEndThread.  _endthreadex will be called from
+      // AfxEndThread so don't exit the thread now if we are running
+      // an MFC thread.
 #   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
       if (using_afx != -1)
         {
           if (using_afx)
-            ::AfxEndThread ((DWORD)status);
+            ::AfxEndThread ((DWORD) status);
           else
             ACE_ENDTHREADEX (status);
         }
@@ -6465,18 +6492,20 @@ ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ = 0;
 void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
 
-ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
-  // default_mask_ isn't initialized, because it's defined by init ().
-  : exit_info_ ()
+ACE_OS_Object_Manager::ACE_OS_Object_Manager (void)
+  // default_mask_ isn't initialized, because it's defined by <init>.
+  : thread_hook_ (0),
+    exit_info_ ()
 {
   // If instance_ was not 0, then another ACE_OS_Object_Manager has
-  // already been instantiated (it is likely to be one initialized by way
-  // of library/DLL loading).  Let this one go through construction in
-  // case there really is a good reason for it (like, ACE is a static/archive
-  // library, and this one is the non-static instance (with
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, or the user has a good reason for
-  // creating a separate one) but the original one will be the one retrieved
-  // from calls to ACE_Object_Manager::instance().
+  // already been instantiated (it is likely to be one initialized by
+  // way of library/DLL loading).  Let this one go through
+  // construction in case there really is a good reason for it (like,
+  // ACE is a static/archive library, and this one is the non-static
+  // instance (with ACE_HAS_NONSTATIC_OBJECT_MANAGER, or the user has
+  // a good reason for creating a separate one) but the original one
+  // will be the one retrieved from calls to
+  // ACE_Object_Manager::instance().
 
   // Be sure that no further instances are created via instance ().
   if (instance_ == 0)
@@ -6485,7 +6514,7 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
   init ();
 }
 
-ACE_OS_Object_Manager::~ACE_OS_Object_Manager ()
+ACE_OS_Object_Manager::~ACE_OS_Object_Manager (void)
 {
   dynamically_allocated_ = 0;   // Don't delete this again in fini()
   fini ();
@@ -6497,12 +6526,27 @@ ACE_OS_Object_Manager::default_mask (void)
   return ACE_OS_Object_Manager::instance ()->default_mask_;
 }
 
+ACE_Thread_Hook *
+ACE_OS_Object_Manager::thread_hook (void)
+{
+  return ACE_OS_Object_Manager::instance ()->thread_hook_;
+}
+
+ACE_Thread_Hook *
+ACE_OS_Object_Manager::thread_hook (ACE_Thread_Hook *new_thread_hook)
+{
+  ACE_OS_Object_Manager *os_om = ACE_OS_Object_Manager::instance ();
+  ACE_Thread_Hook *old_hook = os_om->thread_hook_;
+  os_om->thread_hook_ = new_thread_hook;
+  return old_hook;
+}
+
 ACE_OS_Object_Manager *
 ACE_OS_Object_Manager::instance (void)
 {
   // This function should be called during construction of static
-  // instances, or before any other threads have been created in
-  // the process.  So, it's not thread safe.
+  // instances, or before any other threads have been created in the
+  // process.  So, it's not thread safe.
 
   if (instance_ == 0)
     {
@@ -6763,15 +6807,17 @@ ACE_OS_Object_Manager::print_error_message (u_int line_number, LPCTSTR message)
 int
 ACE_OS_Object_Manager::starting_up (void)
 {
-  return ACE_OS_Object_Manager::instance_  ?
-    instance_->starting_up_i ()  :  1;
+  return ACE_OS_Object_Manager::instance_  
+    ? instance_->starting_up_i () 
+    : 1;
 }
 
 int
 ACE_OS_Object_Manager::shutting_down (void)
 {
-  return ACE_OS_Object_Manager::instance_  ?
-    instance_->shutting_down_i ()  :  1;
+  return ACE_OS_Object_Manager::instance_  
+    ? instance_->shutting_down_i () 
+    : 1;
 }
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)

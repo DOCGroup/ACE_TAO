@@ -4870,6 +4870,31 @@ private:
   // destructor and has no friends.
 };
 
+class ACE_Export ACE_Thread_Hook
+{
+  // = TITLE
+  //     This class makes it possible to provide user-defined "start"
+  //     hooks that are called before the thread entry point function
+  //     is invoked.
+
+public:
+  virtual void *start (ACE_THR_FUNC func,
+                       void *arg);
+  // This method can be overridden in a subclass to customize this
+  // pre-function call "hook" invocation that can perform
+  // initialization processing before the thread entry point <func>
+  // method is called back.  The <func> and <arg> passed into the
+  // start hook are the same as those passed by the application that
+  // spawned the thread.
+
+  static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *hook);
+  // sets the system wide thread hook, returns the previous thread
+  // hook or 0 if none is set.
+
+  static ACE_Thread_Hook *thread_hook (void);
+  // Returns the current system thread hook.
+};
+
 class ACE_Export ACE_Thread_Control
 {
   // = TITLE
@@ -6863,7 +6888,6 @@ extern "C"
 void
 ACE_OS_Object_Manager_Internal_Exit_Hook (void);
 
-
 class ACE_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
 {
 public:
@@ -6874,12 +6898,13 @@ public:
   // Explicitly destroy.
 
   static int starting_up (void);
-  // Returns 1 before the ACE_OS_Object_Manager has been constructed.
-  // See ACE_Object_Manager::starting_up () for more information.
+  // Returns 1 before the <ACE_OS_Object_Manager> has been
+  // constructed.  See <ACE_Object_Manager::starting_up> for more
+  // information.
 
   static int shutting_down (void);
-  // Returns 1 after the ACE_OS_Object_Manager has been destroyed.
-  // See ACE_Object_Manager::shutting_down () for more information.
+  // Returns 1 after the <ACE_OS_Object_Manager> has been destroyed.
+  // See <ACE_Object_Manager::shutting_down> for more information.
 
   enum Preallocated_Object
     {
@@ -6905,18 +6930,25 @@ public:
   // Unique identifiers for preallocated objects.
 
   static sigset_t *default_mask (void);
-  // Accesses a default signal set used, for example, in ACE_Sig_Guard
-  // methods.
+  // Accesses a default signal set used, for example, in
+  // <ACE_Sig_Guard> methods.
+
+  static ACE_Thread_Hook *thread_hook (void);
+  // Returns the current thread hook for the process.
+
+  static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
+  // Returns the existing thread hook and assign a <new_thread_hook>.
 
 public:
-  // Application code should not use these explicitly, so they're
-  // hidden here.  They're public so that the ACE_Object_Manager can
-  // be constructed/destructed in main () with
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER.
-  ACE_OS_Object_Manager ();
+  // = Applications shouldn't use these so they're hidden here.
+
+  // They're public so that the <ACE_Object_Manager> can be
+  // constructed/destructed in <main> with
+  // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
+  ACE_OS_Object_Manager (void);
   // Constructor.
 
-  ~ACE_OS_Object_Manager ();
+  ~ACE_OS_Object_Manager (void);
   // Destructor.
 
 private:
@@ -6931,6 +6963,9 @@ private:
 
   sigset_t *default_mask_;
   // Default signal set used, for example, in ACE_Sig_Guard.
+
+  ACE_Thread_Hook *thread_hook_;
+  // Thread hook that's used by this process.
 
   ACE_OS_Exit_Info exit_info_;
   // For at_exit support.

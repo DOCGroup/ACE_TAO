@@ -1,3 +1,18 @@
+Thu Sep 30 16:55:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Task_Test.cpp (main): Added a short example illustrating
+	  how the new ACE_Thread_Hook mechanism works.
+
+	* ace/OS.cpp: Added new support for the thread_hook to
+ 	  ACE_OS_Object_Manager.
+
+	* ace/OS.cpp (invoke): Added support for a virtual "start_hook()"
+	  method in a new ACE_Thread_Hook class.  This makes it possible
+ 	  for users to subclass ACE_Thread_Hook perform initialization
+ 	  operations before the thread entry point method is called back.
+  	  Thanks to Chris Hafey <chris@stentorsoft.com> for this
+ 	  suggestion.
+
 Thu Sep 30 20:40:42 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* bin/run_all_list.pm:
