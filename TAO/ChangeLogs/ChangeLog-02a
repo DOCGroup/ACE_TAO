@@ -1,3 +1,13 @@
+Sun Jan 20 15:56:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/OBV/Any/Any.dsw:
+        * tests/OBV/Any/client.dsp:
+        * tests/OBV/Any/server.dsp:
+
+          Added some files to server.dsp. Also recreated client.dsp 
+          and added it again to the workspace, since the original
+          project file wouldn't load.
+
 Sun Jan 20 09:44:12 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup.dsp:
