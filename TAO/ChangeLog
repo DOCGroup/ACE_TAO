@@ -1,3 +1,10 @@
+Fri Apr 23 22:38:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Benchmark/client.cpp:
+
+	  Include "ace/OS_NS_errno.h" to pull in ACE_OS::last_error()
+	  function prototype.
+
 Fri Apr 23 22:16:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Event/Mcast/Common/Gateway_EC.cpp:

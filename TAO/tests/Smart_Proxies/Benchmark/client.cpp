@@ -24,8 +24,11 @@
 #include "ace/Stats.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_errno.h"
 
-ACE_RCSID(Benchmark, client, "$Id$")
+ACE_RCSID (Benchmark,
+           client,
+           "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 5;
