@@ -38,7 +38,12 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
-#include "ace/If_Then_Else.h"
+
+#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
+  // MSVC++ 6 can't handle partial template specializations so fall
+  // back on an unsigned char typedef.
+# include "ace/If_Then_Else.h"
+#endif  /* _MSC_VER < 1300 */
 
 
 class ACE_Message_Block;
