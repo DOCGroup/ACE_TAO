@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -15,23 +15,27 @@ endif
 LDLIBS = -lTAO
 
 PROG_SRCS = \
-	InterOp_test.cpp \
+        InterOp_test.cpp \
 
 SRC = $(PROG_SRCS)
 
 SIMPLE_CLT_OBJS = \
-		InterOp_test.o \
-		../../../examples/Simple/bank/.obj/BankC.o \
-		../../../examples/Simple/bank/.obj/BankS.o	
+                InterOp_test.o \
+                ../../../examples/Simple/bank/.obj/BankC.o \
+                ../../../examples/Simple/bank/.obj/BankS.o
 
-BIN = InterOp_test
-
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
+BIN2 = InterOp_test
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Naming
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -43,7 +47,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 
@@ -51,10 +55,12 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/examples/Simple/bank
 
-InterOp_test:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
-		$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+InterOp_test: $(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-realclean: clean
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
