@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Controller_exec.h"
+#include "CIAO_common.h"
 
 /// Default constructor.
 MyImpl::Controller_exec_i::Controller_exec_i ()
@@ -19,7 +20,7 @@ MyImpl::Controller_exec_i::perform_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   // This simply performs some measurements and print out the result.
 
-
+  ACE_DEBUG ((LM_DEBUG, "PERFORM TEST\n"));
 }
 
 // Operations from Components::SessionComponent
@@ -29,7 +30,8 @@ MyImpl::Controller_exec_i::set_session_context (Components::SessionContext_ptr c
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Controller_exec_i::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::Controller_exec_i::set_session_context\n"));
 
   this->context_ =
     Priority_Test::CCM_Controller_Context::_narrow (ctx
@@ -46,7 +48,8 @@ MyImpl::Controller_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Controller_exec_i::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::Controller_exec_i::ccm_activate\n"));
 }
 
 void
@@ -54,7 +57,8 @@ MyImpl::Controller_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Controller_exec_i::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::Controller_exec_i::ccm_passivate\n"));
 }
 
 void
@@ -62,7 +66,8 @@ MyImpl::Controller_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Controller_exec_i::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::Controller_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.
@@ -91,5 +96,7 @@ MyImpl::Controller_Home_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
 extern "C" CONTROLLER_EXEC_Export ::Components::HomeExecutorBase_ptr
 createControllerHome_Impl (void)
 {
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "extern \"C\" ::createControllerHome_Impl\n"));
   return new MyImpl::Controller_Home_exec_i;
 }

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "IOB_Worker_exec.h"
+#include "CIAO_common.h"
 
 /// Default constructor.
 MyImpl::IOB_Worker_exec::IOB_Worker_exec ()
@@ -44,7 +45,8 @@ MyImpl::IOB_Worker_exec::set_session_context (Components::SessionContext_ptr ctx
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::IOB_Worker_exec::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::IOB_Worker_exec::set_session_context\n"));
 
   this->context_ =
     Priority_Test::CCM_Worker_Context::_narrow (ctx
@@ -61,7 +63,8 @@ MyImpl::IOB_Worker_exec::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::IOB_Worker_exec::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::IOB_Worker_exec::ccm_activate\n"));
 }
 
 void
@@ -69,7 +72,8 @@ MyImpl::IOB_Worker_exec::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::IOB_Worker_exec::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::IOB_Worker_exec::ccm_passivate\n"));
 }
 
 void
@@ -77,7 +81,8 @@ MyImpl::IOB_Worker_exec::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::IOB_Worker_exec::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::IOB_Worker_exec::ccm_remove\n"));
 }
 
 /// Default ctor.
