@@ -19,7 +19,7 @@
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 
 #include <list>
-#include "Trader_Base.h"
+#include "Trader.h"
 #include "Monitor.h"
 
 typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;

@@ -20,7 +20,7 @@
 #define TAO_TRADER_H
 
 // ACE includes
-#include "Trader_Base.h"
+#include "Trader.h"
 #include "Monitor.h"
 #include "Service_Type_Map.h"
 

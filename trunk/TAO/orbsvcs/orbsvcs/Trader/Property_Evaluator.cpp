@@ -1,7 +1,7 @@
 // File: Property_Evaluator.cpp
 // $Id$
 
-#include "Trader_Base.h"
+#include "Trader.h"
 #include "Property_Evaluator.h"
 
 // Constructor

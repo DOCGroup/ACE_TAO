@@ -20,7 +20,7 @@
 
 #include "Link.h"
 #include "Locking.h"
-#include "Trader_Base.h"
+#include "Trader.h"
 
 template <class TRADER, class MAP_LOCK_TYPE>  
 TAO_Link<TRADER,MAP_LOCK_TYPE>::TAO_Link (TRADER &trader)

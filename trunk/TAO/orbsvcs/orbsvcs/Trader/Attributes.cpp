@@ -5,7 +5,7 @@
 #define TAO_ATTRIBUTES_C
 
 #include "Attributes.h"
-#include "Trader_Base.h"
+#include "Trader.h"
 
 TAO_Support_Attributes_Impl::TAO_Support_Attributes_Impl (TAO_Trader_Base &trader)
   : trader_ (trader),

@@ -17,7 +17,6 @@
 #ifndef ACE_OFFER_MODIFIER_H
 #define ACE_OFFER_MODIFIER_H
 
-#include "Trader_Base.h"
 #include <set>
 #include <map>
 
