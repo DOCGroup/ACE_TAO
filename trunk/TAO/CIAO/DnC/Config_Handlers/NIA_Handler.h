@@ -62,7 +62,10 @@ namespace CIAO
       ~NIA_Handler();
 
       /// Process the package configuration
-      void process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
+      void static 
+	process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
+
+    protected:
 
       /// Process the name attribute
       void process_name (const XMLCh* name, ::Deployment::NamedImplementationArtifact &nia);

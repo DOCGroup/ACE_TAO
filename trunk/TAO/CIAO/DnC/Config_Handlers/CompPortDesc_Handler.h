@@ -62,8 +62,10 @@ namespace CIAO
       ~CompPortDesc_Handler();
 
       /// Process the package configuration
-      void process_ComponentPortDescription (::Deployment::ComponentPortDescription &compportdesc);
+      void static
+	process_ComponentPortDescription (::Deployment::ComponentPortDescription &compportdesc);
 
+    protected:
       /// Process the label attribute
       void process_name (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc);
 

@@ -30,6 +30,11 @@ namespace Deployment
   class DnC_Dump 
   {
   public:
+    /// Dump functions for CORBA sequences
+    static void DnC_Dump::dump (const char* caption, const ::CORBA::StringSeq &str_seq);
+    template <typename SEQUENCE>
+      void dump_sequence (const char* caption, const SEQUENCE &seq);
+
     /// A whole slew of overloaded dump routines for different IDL data types.
 
     static void dump (const ::Deployment::AssemblyConnectionDescription &acd);
@@ -72,6 +77,11 @@ namespace Deployment
 
     static void dump (const ::Deployment::Domain &domain);
 
+    static void dump (const ::Deployment::Capability &capability);
+
+    static void dump (const ::Deployment::ImplementationArtifactDescriptor &iad);
+
+    static void dump (const ::Deployment::ImplementationRequiremenet &ir);
     ///   ... Zillions of such things ....
 
    private:

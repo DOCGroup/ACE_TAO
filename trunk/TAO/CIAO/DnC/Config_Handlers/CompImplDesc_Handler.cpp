@@ -127,10 +127,15 @@ namespace CIAO
               // increase the length of the sequence
               CORBA::ULong i (cid.capability.length ());
               cid.capability.length (i + 1);
+<<<<<<< CompImplDesc_Handler.cpp
+              
+	      CAP_Handler::process_Capability (cid.capability[i]);
+=======
 
               // delegate the populating process
               CAP_Handler::process_Capability (this->iter_,
                                                cid.capability[i]);
+>>>>>>> 1.6
             }
           else if (node_name == XStr (ACE_TEXT ("implements")))
             {
