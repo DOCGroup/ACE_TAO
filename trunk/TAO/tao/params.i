@@ -76,7 +76,7 @@ TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::addr (ACE_INET_Addr &addr)
+TAO_ORB_Parameters::addr (const ACE_INET_Addr &addr)
 {
   this->addr_ = addr;
 }
@@ -88,12 +88,12 @@ TAO_ORB_Parameters::addr (void)
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::name_service_ior (CORBA::String &ns)
+TAO_ORB_Parameters::name_service_ior (CORBA::String ns)
 {
   this->name_service_ior_ = ns;
 }
 
-ACE_INLINE const CORBA::String &
+ACE_INLINE CORBA::String
 TAO_ORB_Parameters::name_service_ior (void)
 {
   return this->name_service_ior_;

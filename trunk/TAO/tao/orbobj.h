@@ -32,6 +32,7 @@
 
 #include "tao/corba.h"
 #include "tao/connect.h"
+#include "tao/orb.h"
 
 class ACE_Svc_Export CORBA_ORB : public IUnknown
   // = TITLE

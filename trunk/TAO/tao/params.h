@@ -48,16 +48,16 @@ public:
   LOCAL_INLINE ~TAO_ORB_Parameters (void);
   // Destructor
   
-  LOCAL_INLINE void addr (ACE_INET_Addr &addr);
+  LOCAL_INLINE void addr (const ACE_INET_Addr &addr);
   // Set the address on which we're listening.
 
   LOCAL_INLINE const ACE_INET_Addr &addr (void);
   // Get the address on which we're listening.
 
-  LOCAL_INLINE void name_service_ior (CORBA::String &ns);
+  LOCAL_INLINE void name_service_ior (CORBA::String ns);
   // Set the IOR of our name service.
 
-  LOCAL_INLINE const CORBA::String &name_service_ior (void);
+  LOCAL_INLINE CORBA::String name_service_ior (void);
   // Get the IOR of our name service.
 
 private:
