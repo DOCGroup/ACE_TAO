@@ -9,13 +9,13 @@
 
 #define ACE_HAS_MINIMAL_ACE_OS
 
+// Only instantiate the ACE_OS_Object_Manager.
+#define ACE_MAIN_OBJECT_MANAGER \
+  ACE_OS_Object_Manager ace_os_object_manager;
+
 #if defined (ACE_HAS_TSS_EMULATION)
 # undef ACE_HAS_TSS_EMULATION
 #endif /* ACE_HAS_TSS_EMULATION */
-
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
-# undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if !defined(ACE_USE_THREAD_MANAGER_ADAPTER)
   // To prevent use of ACE_Thread_Exit functions in
