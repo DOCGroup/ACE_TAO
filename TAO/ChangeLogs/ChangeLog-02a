@@ -1,13 +1,22 @@
+Sun Apr  1 18:59:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/MessagingC.h:
+        * tao/diffs/MessagingC.h.diff:
+          Removed unused and undefined but exported CDR operators for
+          Messaging::ExceptionHolder::_tao_seq_Octet, this is obviously a
+          problem in the IDL compiler!  However, I should have noticed
+          that it was removed in previous versions of this file.
+
 Sun Apr  1 20:43:18 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/client.cpp
-	* performance-tests/POA/Demux/demux_test_client.cpp
-	* performance-tests/Pluggable/PP_Test_Client.cpp
-	* performance-tests/Latency/st_client.cpp
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+        * performance-tests/Thruput/TAO/client.cpp
+        * performance-tests/POA/Demux/demux_test_client.cpp
+        * performance-tests/Pluggable/PP_Test_Client.cpp
+        * performance-tests/Latency/st_client.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
 
-	More ACE_TRY_ENV Fuzz script errors.
+        More ACE_TRY_ENV Fuzz script errors.
 
 Sun Apr  1 18:35:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
