@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Default_Constants.h"
 #include "ace/Global_Macros.h"
 #include "ace/Pair_T.h"
 
