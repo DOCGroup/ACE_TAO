@@ -366,6 +366,21 @@ ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
     }
 }
 
+template <class T> ACE_Unbounded_Queue_Iterator<T>
+ACE_Unbounded_Queue<T>::begin (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Queue<T>::begin");
+  return ACE_Unbounded_Queue_Iterator<T> (*this);
+}
+
+template <class T> ACE_Unbounded_Queue_Iterator<T>
+ACE_Unbounded_Queue<T>::end (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Queue<T>::end");
+  return ACE_Unbounded_Queue_Iterator<T> (*this, 1);
+}
+
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Queue)
 
 template <class T> void
@@ -596,8 +611,8 @@ ACE_Unbounded_Queue_Iterator<T>::dump (void) const
 }
 
 template <class T>
-ACE_Unbounded_Queue_Iterator<T>::ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q)
-    : current_ (q.head_->next_),
+ACE_Unbounded_Queue_Iterator<T>::ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q, int end)
+    : current_ (end == 0 ? q.head_->next_ : q.head_ ),
       queue_ (q)
 {
 // ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::ACE_Unbounded_Queue_Iterator");

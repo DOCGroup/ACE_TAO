@@ -376,7 +376,7 @@ class ACE_Unbounded_Queue_Iterator
   //     Implement an iterator over an unbounded queue.
 public:
   // = Initialization method.
-  ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &);
+  ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q, int end = 0);
 
   // = Iteration methods.
 
@@ -480,6 +480,10 @@ public:
 
   void dump (void) const;
   // Dump the state of an object.
+
+  // = STL-styled unidirectional iterator factory.
+  ACE_Unbounded_Queue_Iterator<T> begin (void);
+  ACE_Unbounded_Queue_Iterator<T> end (void);
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
