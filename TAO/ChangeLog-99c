@@ -1,3 +1,7 @@
+Sat Jul 31 16:02:49 1999  coryan  <coryan@cs.wustl.edu>
+
+        * TAO version 1.0 released.
+
 Fri Jul 30 20:47:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
