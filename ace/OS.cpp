@@ -1430,6 +1430,15 @@ spa (FUNCPTR entry, ...)
          fprintf (stderr, "spa(): number of arguments limited to %d\n",
                   MAX_ARGS);
      }
+   else
+     {
+       // fill unused argv slots with 0 to get rid of leftovers
+       // from previous invocations
+              for ( ; argc <= MAX_ARGS; ++argc)
+                {
+                  argv[argc] = 0;
+                }
+     }
 
    int ret = ::sp (entry, argc, (int) argv, 0, 0, 0, 0, 0, 0, 0);
    va_end (pvar);
