@@ -185,16 +185,6 @@ sub generate_doxy_files {
     rename $name_with_whitespace, $name_without_whitespace;
   }
   close FIND;
-  
-  open(FIND, "find man -type f -print |") or die "Can't run find\n";
-  while (<FIND>) {
-    chop;
-    my $name_with_whitespace = $_;
-    next unless ($name_with_whitespace =~ /\s/);
-    my $name_without_whitespace = $name_with_whitespace;
-    $name_without_whitespace =~ s/\s+//g;
-    rename $name_with_whitespace, $name_without_whitespace;
-  }
 }
 
 sub run_doxy {
