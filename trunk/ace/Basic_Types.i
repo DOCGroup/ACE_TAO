@@ -94,6 +94,7 @@ ACE_U_LongLong::operator= (const ACE_U_LongLong &n)
 {
   hi_ = n.hi_;
   lo_ = n.lo_;
+
   return *this;
 }
 
@@ -102,6 +103,7 @@ ACE_U_LongLong::operator+ (const ACE_U_LongLong &n) const
 {
   ACE_U_LongLong ret (lo_ + n.lo_, hi_ + n.hi_);
   if (ret.lo_ < n.lo_) /* carry */ ++ret.hi_;
+
   return ret;
 }
 
@@ -110,7 +112,132 @@ ACE_U_LongLong::operator- (const ACE_U_LongLong &n) const
 {
   ACE_U_LongLong ret (lo_ - n.lo_, hi_ - n.hi_);
   if (lo_ < n.lo_) /* borrow */ --ret.hi_;
+
   return ret;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator<< (const u_int n) const
+{
+  const ACE_UINT32 carry_mask = lo_ >> (32 - n);
+  ACE_U_LongLong ret (n < 32  ?  lo_ << n  :  0,
+                      n < 32  ?  (hi_ << n) | carry_mask  :  carry_mask);
+
+  return ret;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator<<= (const u_int n)
+{
+  const ACE_UINT32 carry_mask = lo_ >> (32 - n);
+  hi_ = n < 32  ?  (hi_ << n) | carry_mask  :  carry_mask;
+
+  // g++ 2.7.2.3/Solaris 2.5.1 doesn't modify lo_ if shifted by 32.
+  lo_ = n < 32  ?  lo_ << n  :  0;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator>> (const u_int n) const
+{
+  const ACE_UINT32 carry_mask = hi_ << (32 - n);
+  ACE_U_LongLong ret (n < 32  ?  (lo_ >> n) | carry_mask  :  0,
+                      n < 32  ?  hi_ >> n  :  0);
+
+  return ret;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator>>= (const u_int n)
+{
+  const ACE_UINT32 carry_mask = hi_ << (32 - n);
+  lo_ = n < 32  ?  (lo_ >> n) | carry_mask  :  carry_mask;
+  hi_ = n < 32  ?  hi_ >> n  :  0;
+
+  return *this;
+}
+
+ACE_INLINE double
+ACE_U_LongLong::operator/ (const double n) const
+{
+  // See the derivation above in operator/ (const ACE_UINT32).
+
+  return ((double) 0xffffffffu - n + 1.0) / n * hi_  +
+         (double) hi_  +  (double) lo_ / n;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator+= (const ACE_U_LongLong &n)
+{
+  hi_ += n.hi_;
+  lo_ += n.lo_;
+  if (lo_ < n.lo_) /* carry */ ++hi_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator*= (const ACE_UINT32 n)
+{
+  // Save the current lo_.
+  const ACE_UINT32 lo = lo_;
+
+  lo_ = 0;
+  if (n == 0)
+    hi_ = 0;
+
+  // Repeatedly add in the lo_ value that was saved above.
+  for (ACE_UINT32 i = 0; i < n; ++i)
+    operator+= (lo);
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator-= (const ACE_U_LongLong &n)
+{
+  hi_ -= n.hi_;
+  if (lo_ < n.lo_) /* borrow */ --hi_;
+  lo_ -= n.lo_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator++ ()
+{
+  ++lo_;
+  if (lo_ == 0) /* carry */ ++hi_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator-- ()
+{
+  if (lo_ == 0) /* borrow */ --hi_;
+  --lo_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator|= (const ACE_U_LongLong n)
+{
+  lo_ |= n.lo_;
+  hi_ |= n.hi_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator&= (const ACE_U_LongLong n)
+{
+  lo_ &= n.lo_;
+  hi_ &= n.hi_;
+
+  return *this;
 }
 
 ACE_INLINE ACE_UINT32
@@ -142,47 +269,55 @@ ACE_U_LongLong::operator% (const ACE_UINT32 n) const
   return ((0xffffffff - n + 1)  % n * hi_  +  lo_ % n) % n;
 }
 
-ACE_INLINE double
-ACE_U_LongLong::operator/ (const double n) const
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator| (const ACE_INT32 n) const
 {
-  // See the derivation above in operator/ (const ACE_UINT32).
+  return lo_ | n;
+}
 
-  return ((double) 0xffffffffu - n + 1.0) / n * hi_  +
-         (double) hi_  +  (double) lo_ / n;
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator& (const ACE_INT32 n) const
+{
+  return lo_ & n;
 }
 
 ACE_INLINE ACE_U_LongLong &
-ACE_U_LongLong::operator+= (const ACE_U_LongLong &n)
+ACE_U_LongLong::operator*= (const ACE_INT32 n)
 {
-  hi_ += n.hi_;
-  lo_ += n.lo_;
-  if (lo_ < n.lo_) /* carry */ ++hi_;
-  return *this;
+  return operator*= ((ACE_UINT32) n);
 }
 
-ACE_INLINE ACE_U_LongLong &
-ACE_U_LongLong::operator-= (const ACE_U_LongLong &n)
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const ACE_INT32 n) const
 {
-  hi_ -= n.hi_;
-  if (lo_ < n.lo_) /* borrow */ --hi_;
-  lo_ -= n.lo_;
-  return *this;
+  return operator/ ((ACE_UINT32) n);
 }
 
-ACE_INLINE ACE_U_LongLong &
-ACE_U_LongLong::operator++ ()
+#if ACE_SIZEOF_INT == 4
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const u_long n) const
 {
-  ++lo_;
-  if (lo_ == 0) /* carry */ ++hi_;
-  return *this;
+  return operator/ ((ACE_UINT32) n);
 }
 
-ACE_INLINE ACE_U_LongLong &
-ACE_U_LongLong::operator-- ()
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const long n) const
 {
-  if (lo_ == 0) /* borrow */ --hi_;
-  --lo_;
-  return *this;
+  return operator/ ((ACE_UINT32) n);
 }
+
+#else  /* ACE_SIZEOF_INT != 4 */
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const u_int n) const
+{
+  return operator/ ((ACE_UINT32) n);
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const int n) const
+{
+  return operator/ ((ACE_UINT32) n);
+}
+#endif /* ACE_SIZEOF_INT != 4 */
 
 #endif /* ACE_LACKS_LONGLONG_T */

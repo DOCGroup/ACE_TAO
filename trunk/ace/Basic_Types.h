@@ -207,13 +207,12 @@
 
     ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
     ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
+    ACE_U_LongLong &operator*= (const ACE_UINT32);
 
-    // Note that the following take ACE_UINT32 arguments.  These are
-    // typical use cases, and easy to implement.  But, they limit
-    // the return values to 32 bits as well.  There are no checks
-    // for overflow.
-    ACE_UINT32 operator/ (const ACE_UINT32) const;
-    ACE_UINT32 operator% (const ACE_UINT32) const;
+    ACE_U_LongLong operator<< (const u_int) const;
+    ACE_U_LongLong &operator<<= (const u_int);
+    ACE_U_LongLong operator>> (const u_int) const;
+    ACE_U_LongLong &operator>>= (const u_int);
 
     double operator/ (const double) const;
 
@@ -221,6 +220,33 @@
     ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
     ACE_U_LongLong &operator++ ();
     ACE_U_LongLong &operator-- ();
+    ACE_U_LongLong &operator|= (const ACE_U_LongLong);
+    ACE_U_LongLong &operator&= (const ACE_U_LongLong);
+
+    // Note that the following take ACE_UINT32 arguments.  These are
+    // typical use cases, and easy to implement.  But, they limit the
+    // return values to 32 bits as well.  There are no checks for
+    // overflow.
+    ACE_UINT32 operator/ (const ACE_UINT32) const;
+    ACE_UINT32 operator% (const ACE_UINT32) const;
+
+    // The following only operate on the lower 32 bits (they take only
+    // 32 bit arguments).
+    ACE_UINT32 operator| (const ACE_INT32) const;
+    ACE_UINT32 operator& (const ACE_INT32) const;
+
+    // The following operators convert their arguments to
+    // ACE_UINT32.  So, there may be information loss if they are
+    // used.
+    ACE_U_LongLong &operator*= (const ACE_INT32);
+    ACE_UINT32 operator/ (const ACE_INT32) const;
+#if ACE_SIZEOF_INT == 4
+    ACE_UINT32 operator/ (const u_long) const;
+    ACE_UINT32 operator/ (const long) const;
+#else  /* ACE_SIZEOF_INT != 4 */
+    ACE_UINT32 operator/ (const u_int) const;
+    ACE_UINT32 operator/ (const int) const;
+#endif /* ACE_SIZEOF_INT != 4 */
 
     // = Helper methods.
     void output (FILE * = stdout) const;
