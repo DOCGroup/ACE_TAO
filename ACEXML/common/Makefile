@@ -28,7 +28,7 @@ DEFS    = $(addsuffix .h,$(FILES))
 LSRC    = $(addsuffix .cpp,$(FILES))
 
 LIBS   += $(ACELIB)
-CCFLAGS += -I ..
+CCFLAGS += -I..
 
 BUILD   = $(VLIB) $(VSHLIB)
 

@@ -14,7 +14,7 @@ FILES	= Print_Handler \
 
 SRC   	= $(addsuffix .cpp,$(FILES))
 OBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
-CCFLAGS += -I ../..
+CCFLAGS += -I../..
 
 BIN   	= main
 

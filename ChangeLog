@@ -1,3 +1,22 @@
+Fri Jan 25 12:01:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  The following changes fixed SunCC5.1 compilation errors.
+
+	* XML/common/Makefile:
+	* XML/parser/parser/Makefile:
+	* XML/tests/Makefile:
+	* XML/examples/SAXPrint/Makefile: Removed extra spaces for -I
+	  flags.
+
+	* XML/common/Attributes_Def_Builder.h: Removed a redundant comma.
+
+	* XML/common/NamespaceSupport.i: Changed
+	  ACE_TEMPLATE_METHOD_SPECIALIZATION to
+	  ACE_TEMPLATE_SPECIALIZATION.
+
+	* XML/tests/NamespaceSupport_Test.cpp: String literals needed to
+	  be assigned to const char *.
+
 Fri Jan 25 09:42:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace_dll.dsp:
