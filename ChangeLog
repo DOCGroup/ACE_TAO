@@ -1,3 +1,10 @@
+Sun Jul 25 17:04:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Dev_Poll_Reactor_Test.cpp (server_worker):
+
+	  Removed extern "C" declaration for this function.  Sun C++ 5.5
+	  whines about it.
+
 Sun Jul 25 23:18:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release:
@@ -11,7 +18,7 @@ Sun Jul 25 22:16:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* bin/make_release:
 
 	  Fixed some simple mistakes which prevented the release form
-	  happening. 
+	  happening.
 
 Sun Jul 25 22:13:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
