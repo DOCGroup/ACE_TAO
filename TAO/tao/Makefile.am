@@ -1,5 +1,7 @@
 ##  Process this file with automake to create Makefile.in
 
+includedir = @includedir@/tao
+
 ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
