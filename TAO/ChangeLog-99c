@@ -1,9 +1,17 @@
+Thu Aug 05 14:38:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.cpp (be_interface_type_strategy):
+	* TAO_IDL/be/be_interface.cpp (be_interface_type_strategy,
+	  compute_coll_names,full_coll_name,local_coll_name): Some fixes
+	  to the collocation name computations got erased during recent
+	  AMI merge.
+
 Thu Aug  5 12:46:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp (DRV_usage): Improved the IDL compiler
 	  documentation for the -Ge option.  Thanks to Paul Calabrese
  	  <calabrese_p@ociweb.com> for suggesting this.
-  
+
 Thu Aug  5 12:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp
