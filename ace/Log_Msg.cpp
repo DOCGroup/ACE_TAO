@@ -851,7 +851,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                     ACE_Log_Msg::msg_off_ =  bp - this->msg_;
 
                     type = SKIP_SPRINTF;
-                    (*va_arg (argp, PTF))();
+                    ACE_reinterpret_cast (PTF, va_arg (argp, long))();
 
                     if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT))
                       {
