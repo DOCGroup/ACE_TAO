@@ -768,7 +768,7 @@ TAO_SFP::read_simple_frame (void)
       ACE_INET_Addr sender;
       char *buf;
       ACE_NEW_RETURN (buf,
-                      char [this->frame_header_len_+CDR::MAX_ALIGNMENT],
+                      char [this->frame_header_len_+ACE_CDR::MAX_ALIGNMENT],
                       0);
       ssize_t n =this->dgram_.recv (buf,
                                     this->frame_header_len_,
@@ -782,8 +782,8 @@ TAO_SFP::read_simple_frame (void)
         ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame - not able to peek\n"),0);
       // print the buffer.
       //      DUMP_BUF (buf,n);
-      ACE_Message_Block mb (n+CDR::MAX_ALIGNMENT);
-      CDR::mb_align (&mb);
+      ACE_Message_Block mb (n+ACE_CDR::MAX_ALIGNMENT);
+      ACE_CDR::mb_align (&mb);
       int result
         = mb.copy (buf,n);
       if (result == -1)
@@ -826,8 +826,8 @@ TAO_SFP::read_simple_frame (void)
           ACE_DEBUG ((LM_DEBUG,"fragmented frame:0th fragment\n"));
           this->more_fragments_ = 1;
           // read the frame info.
-          ACE_Message_Block frame_info_mb (message_len-this->frame_header_len_+CDR::MAX_ALIGNMENT);
-          CDR::mb_align (&frame_info_mb);
+          ACE_Message_Block frame_info_mb (message_len-this->frame_header_len_+ACE_CDR::MAX_ALIGNMENT);
+          ACE_CDR::mb_align (&frame_info_mb);
           frame_info_mb.copy (message_block->rd_ptr (),
                               message_block->length ());
           // print the buffer.
@@ -902,7 +902,7 @@ TAO_SFP::read_fragment (void)
       ACE_INET_Addr sender;
       char *buf;
       ACE_NEW_RETURN (buf,
-                      char [this->fragment_len_+CDR::MAX_ALIGNMENT],
+                      char [this->fragment_len_+ACE_CDR::MAX_ALIGNMENT],
                       0);
       ssize_t n =this->dgram_.recv (buf,
                                     this->fragment_len_,
@@ -916,8 +916,8 @@ TAO_SFP::read_fragment (void)
         ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame - not able to peek\n"),0);
       // print the buffer.
       DUMP_BUF (buf,n);
-      ACE_Message_Block mb (n+CDR::MAX_ALIGNMENT);
-      CDR::mb_align (&mb);
+      ACE_Message_Block mb (n+ACE_CDR::MAX_ALIGNMENT);
+      ACE_CDR::mb_align (&mb);
       int result
         = mb.copy (buf,n);
       if (result == -1)
