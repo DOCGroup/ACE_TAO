@@ -1,3 +1,11 @@
+Tue May 11 14:10:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-osf-4.0.h: added #define of ACE_NEW_THROWS_EXCEPTIONS,
+          if exception handling is enabled.
+
+        * tests/New_Fail_Test.cpp: removed workaround for DEC cxx,
+          and modified error message to mention ACE_NEW_THROWS_EXCEPTIONS.
+
 Tue May 11 12:02:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-win32-common.h: set __ACE_INLINE__ to 1 if
