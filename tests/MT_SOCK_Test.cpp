@@ -178,8 +178,8 @@ server (void *arg)
 		    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
 
 		  // Close endpoint.
-// 		  if (new_stream.close () == -1) 
-// 		    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+ 		  if (new_stream.close () == -1) 
+ 		    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 
 		  break;
 		}
