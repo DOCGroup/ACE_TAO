@@ -1,3 +1,10 @@
+Wed May 10 15:57:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsw:
+          More tweaking of the project files.
+
 Wed May 10 14:44:54 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsw:
