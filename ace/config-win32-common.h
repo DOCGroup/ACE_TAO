@@ -190,6 +190,9 @@ typedef unsigned __int64 ACE_UINT64;
                 #endif /* (_MSC_VER > 1020) */
         #endif /* _MSC_VER */
 
+        // Microsoft's auto_ptr in standard cpp library doesn't have reset ().
+        #define ACE_AUTO_PTR_LACKS_RESET
+
         // ace/iostream.h does not work with the standard cpp library (yet).
         #if !defined (ACE_USES_OLD_IOSTREAMS)
                 #define ACE_LACKS_ACE_IOSTREAM
