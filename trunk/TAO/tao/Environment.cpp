@@ -193,13 +193,11 @@ CORBA::Environment::print_exception (const char *info,
 
       ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
 
-      // @@ get rid of this logic, and rely on some member function on
-      // Exception to say if it's user or system exception.
+      CORBA::SystemException *x2 =
+        CORBA_SystemException::_narrow (this->exception_);
 
-      if (this->exception_type () == CORBA::SYSTEM_EXCEPTION)
+      if (x2 != 0)
         {
-          CORBA::SystemException *x2 =
-            CORBA_SystemException::_narrow (this->exception_);
 
           // @@ there are a other few "user exceptions" in the CORBA
           // scope, they're not all standard/system exceptions ... really

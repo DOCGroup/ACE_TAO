@@ -94,6 +94,46 @@ CORBA_Exception::_is_a (const char* repository_id) const
   return (ACE_OS::strcmp (repository_id, "IDL:omg.org/CORBA/Exception:1.0")==0);
 }
 
+void
+CORBA_Exception::print_exception (const char *info,
+                                  FILE *) const
+{
+  const char *id = this->_id ();
+
+  ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
+
+  CORBA::SystemException *x2 =
+    CORBA_SystemException::_narrow (ACE_const_cast (CORBA_Exception *,this));
+
+  if (x2 != 0)
+    {
+
+      // @@ there are a other few "user exceptions" in the CORBA
+      // scope, they're not all standard/system exceptions ... really
+      // need to either compare exhaustively against all those IDs
+      // (yeech) or (preferably) to represent the exception type
+      // directly in the exception value so it can be queried.
+
+      ACE_DEBUG ((LM_ERROR,
+                  "(%P|%t) system exception, ID '%s'\n",
+                  id));
+      ACE_DEBUG ((LM_ERROR,
+                  "(%P|%t) minor code = %x, completed = %s\n",
+                  x2->minor (),
+                  (x2->completed () == CORBA::COMPLETED_YES) ? "YES" :
+                  (x2->completed () == CORBA::COMPLETED_NO) ? "NO" :
+                  (x2->completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                  "garbage"));
+    }
+  else
+    // @@ we can use the exception's typecode to dump all the data
+    // held within it ...
+
+    ACE_DEBUG ((LM_ERROR,
+                "(%P|%t) user exception, ID '%s'\n",
+                id));
+}
+
 CORBA::ULong
 CORBA_Exception::_incr_refcnt (void)
 {

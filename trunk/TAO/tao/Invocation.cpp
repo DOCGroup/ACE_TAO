@@ -373,7 +373,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   ACE_CATCH (CORBA_SystemException, ex)
     {
       // Handle the exception for this level here and throw it out again.
-      ACE_TRY_ENV.print_exception ("invoke, location forward (decode)");
+      ACE_PRINT_EXCEPTION (ex, "invoke, location forward (decode)");
       transport->close_conn ();
       ACE_RETHROW;
     }
