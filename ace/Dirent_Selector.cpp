@@ -40,7 +40,7 @@ ACE_Dirent_Selector::close (void)
 {
   for (--n_; n_ >= 0; --n_)
     {
-      ACE_OS::free (this->namelist_[n_].d_name);
+      ACE_OS::free (this->namelist_[n_]->d_name);
       ACE_OS::free (this->namelist_[n_]);
     }
 
