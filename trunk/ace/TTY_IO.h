@@ -50,18 +50,24 @@ public:
 
   struct Serial_Params
   {
+        // Common params
     int baudrate;
     int parityenb;
     const char *paritymode;
     int databits;
     int stopbits;
     int readtimeoutmsec;
-    int ctsenb;
-    int rcvenb;
+    int ctsenb;  // CTS & RTS are the same under unix
     int rtsenb;  // enable & set rts mode (win32)
     int xinenb;  // enable xon/xoff  reception
     int xoutenb;  // enable xon/xoff transmission
-    int xonlim;  // min bytes in input buffer before xon 
+
+    // Posix - unix variant
+    int modem;
+    int rcvenb;
+
+    //Win32
+    int xonlim;  // min bytes in input buffer before xon
     int xofflim; // max bytes in input buffer before xoff
   };
 
