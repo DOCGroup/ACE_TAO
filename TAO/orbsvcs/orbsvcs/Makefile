@@ -36,16 +36,16 @@ ifndef TAO_ORBSVCS
 		   NativeCosEvent \
                    CosEvent \
 		   RTOLDEvent \
-		   RTSchedEvent \
-                   EventLog \
-                   RTEventLog \
-		   NotifyLog
+		   RTSchedEvent
+#                   EventLog \
+#                   RTEventLog \
+#		   NotifyLog
   endif #corba_messaging
 
   TAO_ORBSVCS += Concurrency \
 		 Trader \
-		 Log \
 		 AV
+#		 Log
 
   ifeq ($(minimum_corba),0)
       ifneq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
