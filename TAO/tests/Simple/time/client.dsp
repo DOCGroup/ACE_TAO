@@ -402,7 +402,7 @@ DEP_CPP_CLIEN=\
 	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_CLIEN=\
-	".\client_impl.h"\
+	".\Client_impl.h"\
 	".\TimeC.h"\
 	
 
@@ -413,7 +413,7 @@ NODEP_CPP_CLIEN=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_i.cpp
+SOURCE=.\Client_i.cpp
 
 !IF  "$(CFG)" == "Simple Time Client - Win32 Release"
 
@@ -954,7 +954,7 @@ NODEP_CPP_TIMES=\
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\client_i.h
+SOURCE=.\Client_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

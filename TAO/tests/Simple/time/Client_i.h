@@ -7,7 +7,7 @@
 //    TAO/tests/Simple
 //
 // = FILENAME
-//    client_i.h
+//    Client_i.h
 //
 // = DESCRIPTION
 //    This class implements a simple CORBA client that access a Time
@@ -20,7 +20,7 @@
 
 #include "TimeC.h"
 
-class client_i
+class Client_i
 {
   // = TITLE
   //     Simple Client implementation.
@@ -31,10 +31,10 @@ class client_i
   //     it down.
 public:
   // = Initialization and termination methods.
-  client_i (void);
+  Client_i (void);
   // Constructor.
 
-  ~client_i (void);
+  ~Client_i (void);
   // Destructor.
 
   int run (void);
