@@ -1,3 +1,8 @@
+Sun Dec 30 19:34:26 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.cpp: 
+          Fixed a compile error in Static build.
+	
 Sun Dec 30 17:02:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/drv_preproc_ifr.cpp: 
