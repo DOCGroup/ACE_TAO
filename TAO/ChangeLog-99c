@@ -1,3 +1,9 @@
+Thu Jun 10 09:41:06 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/Sequence_T.{i, cpp}:
+
+	  Fixed incorrect number of parameters passed to templates. 
+
 Thu Jun 10 08:12:14 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/MessageC.cpp:
