@@ -3,14 +3,15 @@
 #
 
 DIRS = \
-        FaultTolerance \
+	FaultTolerance \
 	Event \
 	EC_Throughput \
 	EC_Multiple \
 	EC_Basic \
 	EC_Mcast \
 	EC_Custom_Marshal \
-        Event_Latency \
-        Property
+	Event_Latency \
+	Property \
+	Trading
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
