@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_FT_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_FT_BUILD_DLL" /D "TAO_ORBSVCS_HAS_FT" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_FT_BUILD_DLL" /D "TAO_ORBSVCS_HAS_FT" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -157,6 +157,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_ClientRequest_Interceptor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FT_CORBA_ORBC.cpp
 # ADD CPP /GR
 # End Source File
@@ -200,6 +204,10 @@ SOURCE=.\FaultTolerance\FT_Service_Callbacks.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ClientRequest_Interceptor.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\FT_CORBA_ORBC.h
@@ -267,6 +275,10 @@ SOURCE=.\FaultTolerance\FT_IOGR_Property.i
 # Begin Source File
 
 SOURCE=.\FaultTolerance\FT_Policy_i.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_Policy_i.inl
 # End Source File
 # Begin Source File
 
