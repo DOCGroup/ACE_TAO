@@ -1,3 +1,11 @@
+Wed Apr 21 18:05:19 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+
+          Made some changes to address some errors associated with
+          emulated exception builds.
+
 Wed Apr 21 11:08:22 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/LoadBalancer/LoadMonitor.cpp:
