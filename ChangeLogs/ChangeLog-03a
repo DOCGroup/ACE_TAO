@@ -1,3 +1,8 @@
+Wed Sep 05 12:00:42 2001  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix4_g++.GNU: Sets ACE_AIX_VERS rather
+          than separate major/minor; see entry below for further info.
+
 Wed Sep 05 11:52:39 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix5.1.h: New config file for AIX 5L, version 5.1,
