@@ -1,3 +1,9 @@
+Tue Jul 30 15:45:23 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/SOCK_Dgram.h: Fixed the comment for send(), which had a
+	  cut and paste error.  Thanks to Jeff Wilson
+ 	  <wilsonj@cs.ecs.baylor.edu> for reporting this.
+
 Tue Jul 30 14:09:35 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/tests.mpc:

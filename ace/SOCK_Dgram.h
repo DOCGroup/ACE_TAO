@@ -137,7 +137,7 @@ public:
                 const ACE_Time_Value *timeout) const;
 
   /**
-   * Wait up to <timeout> amount of time to receive a datagram into
+   * Wait up to <timeout> amount of time to send a datagram to
    * <buf>.  The <ACE_Time_Value> indicates how long to blocking
    * trying to receive.  If <timeout> == 0, the caller will block
    * until action is possible, else will wait until the relative time
