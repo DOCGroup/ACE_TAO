@@ -194,7 +194,7 @@ TAO_Property_Evaluator(const CosTrading::PropertySeq& props,
 {
   if (this->dp_cache_ != 0)
     {
-      for (int i = 0; i < this->props_.length (); i++)
+      for (CORBA::ULong i = 0; i < this->props_.length (); i++)
         this->dp_cache_[i] = 0;
     }
 }
@@ -209,7 +209,7 @@ TAO_Property_Evaluator(CosTrading::Offer& offer,
 {
   if (this->dp_cache_ != 0)
     {
-      for (int i = 0; i < this->props_.length (); i++)
+      for (CORBA::ULong i = 0; i < this->props_.length (); i++)
         this->dp_cache_[i] = 0;
     }
 }
@@ -217,7 +217,7 @@ TAO_Property_Evaluator(CosTrading::Offer& offer,
 TAO_Property_Evaluator::~TAO_Property_Evaluator (void)
 {
   // Clean up the results of any dynamic properties.
-  for (int i = 0; i < this->props_.length (); i++)
+  for (CORBA::ULong i = 0; i < this->props_.length (); i++)
     {
       if (this->dp_cache_[i] != 0)
         delete this->dp_cache_[i];
@@ -1325,7 +1325,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer& source,
   destination.reference = source.reference->_duplicate (source.reference);
   if (this->policy_ == CosTrading::Lookup::some)
     {
-      for (int i = 0; i < length; i++)
+      for (CORBA::ULong i = 0; i < length; i++)
 	{
 	  if (this->policy_ == CosTrading::Lookup::all)
 	    prop_queue.enqueue_tail (&s_props[i]);
