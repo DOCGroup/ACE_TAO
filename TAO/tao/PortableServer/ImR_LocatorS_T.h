@@ -19,8 +19,12 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_IMPLREPOS_T_H_
-#define _TAO_IDL_IMPLREPOS_T_H_
+
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:597
+
+#ifndef _TAO_IDL_IMR_LOCATORS_T_H_
+#define _TAO_IDL_IMR_LOCATORS_T_H_
 
 #include "ace/pre.h"
 #if defined(_MSC_VER)
@@ -33,20 +37,23 @@
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_ImplementationRepository
 {
+  // TAO_IDL - Generated from
+  // be/be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class  ServerObject_tie : public ServerObject
+  class  Locator_tie : public Locator
   {
   public:
-    ServerObject_tie (T &t);
+    Locator_tie (T &t);
     // the T& ctor
-    ServerObject_tie (T &t, PortableServer::POA_ptr poa);
+    Locator_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    ServerObject_tie (T *tp, CORBA::Boolean release=1);
+    Locator_tie (T *tp, CORBA::Boolean release=1);
     // ctor taking pointer and an ownership flag
-    ServerObject_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+    Locator_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
     // ctor with T*, ownership flag and a POA
-    ~ServerObject_tie (void);
+    ~Locator_tie (void);
     // dtor
     
     // TIE specific functions
@@ -65,65 +72,68 @@ TAO_NAMESPACE  POA_ImplementationRepository
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
-    void ping (
-        
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    void activate_server_in_location (
+        const char * server,
+        const char * location
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
+        , ImplementationRepository::NotFound
+        , ImplementationRepository::CannotActivate
       ));
     
-        void shutdown (
-        
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void remove_server_in_location (
+        const char * server,
+        const char * location
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
+        , ImplementationRepository::NotFound
       ));
     
-      private:
-    T *ptr_;
-    PortableServer::POA_var poa_;
-    CORBA::Boolean rel_;
+        void shutdown_server_in_location (
+        const char * server,
+        const char * location
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , ImplementationRepository::NotFound
+      ));
     
-    // copy and assignment are not allowed
-    ServerObject_tie (const ServerObject_tie &);
-    void operator= (const ServerObject_tie &);
-  };
-
-  // TIE class: Refer to CORBA v2.2, Section 20.34.4
-  template <class T>
-  class  Administration_tie : public Administration
-  {
-  public:
-    Administration_tie (T &t);
-    // the T& ctor
-    Administration_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    Administration_tie (T *tp, CORBA::Boolean release=1);
-    // ctor taking pointer and an ownership flag
-    Administration_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
-    // ctor with T*, ownership flag and a POA
-    ~Administration_tie (void);
-    // dtor
+        void server_is_shutting_down_in_location (
+        const char * server,
+        const char * location
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , ImplementationRepository::NotFound
+      ));
     
-    // TIE specific functions
-    T *_tied_object (void);
-    // return the underlying object
-    void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release=1);
-    // set the underlying object and the ownership flag
-    CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner (CORBA::Boolean b);
-    // set the ownership
+        CORBA::ULong register_activator (
+        const char * location,
+        CORBA::Object_ptr object_ref
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , ImplementationRepository::AlreadyRegistered
+      ));
     
-    // overridden ServantBase operations
-    PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
-    void activate_server (
+        CORBA::ULong unregister_activator (
+        const char * location,
+        CORBA::Object_ptr object_ref
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , ImplementationRepository::NotFound
+      ));
+    
+        void activate_server (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -227,85 +237,31 @@ TAO_NAMESPACE  POA_ImplementationRepository
     CORBA::Boolean rel_;
     
     // copy and assignment are not allowed
-    Administration_tie (const Administration_tie &);
-    void operator= (const Administration_tie &);
-  };
-
-  // TIE class: Refer to CORBA v2.2, Section 20.34.4
-  template <class T>
-  class  ServerInformationIterator_tie : public ServerInformationIterator
-  {
-  public:
-    ServerInformationIterator_tie (T &t);
-    // the T& ctor
-    ServerInformationIterator_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ServerInformationIterator_tie (T *tp, CORBA::Boolean release=1);
-    // ctor taking pointer and an ownership flag
-    ServerInformationIterator_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
-    // ctor with T*, ownership flag and a POA
-    ~ServerInformationIterator_tie (void);
-    // dtor
-    
-    // TIE specific functions
-    T *_tied_object (void);
-    // return the underlying object
-    void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release=1);
-    // set the underlying object and the ownership flag
-    CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner (CORBA::Boolean b);
-    // set the ownership
-    
-    // overridden ServantBase operations
-    PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
-    CORBA::Boolean next_n (
-        CORBA::ULong how_many,
-        ImplementationRepository::ServerInformationList_out server_list
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-        void destroy (
-        
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-      private:
-    T *ptr_;
-    PortableServer::POA_var poa_;
-    CORBA::Boolean rel_;
-    
-    // copy and assignment are not allowed
-    ServerInformationIterator_tie (const ServerInformationIterator_tie &);
-    void operator= (const ServerInformationIterator_tie &);
+    Locator_tie (const Locator_tie &);
+    void operator= (const Locator_tie &);
   };
 
 }
 TAO_NAMESPACE_CLOSE // module ImplementationRepository
 #endif /* ACE_HAS_USING_KEYWORD */
 
+
+// TAO_IDL - Generated from 
+// be/be_codegen.cpp:1135
+
+
 #if defined (__ACE_INLINE__)
-#include "ImplRepoS_T.i"
+#include "ImR_LocatorS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ImplRepoS_T.cpp"
+#include "ImR_LocatorS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ImplRepoS_T.cpp")
+#pragma implementation ("ImR_LocatorS_T.cpp")
 #endif /* defined REQUIRED PRAGMA */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

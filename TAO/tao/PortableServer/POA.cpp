@@ -8,8 +8,7 @@ ACE_RCSID (TAO_PortableServer,
 // ImplRepo related.
 //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-# include "tao/PortableServer/ImplRepoS.h"
-# include "tao/PortableServer/ImplRepoC.h"
+# include "tao/PortableServer/ImR_LocatorC.h"
 # include "tao/PortableServer/ImplRepo_i.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -3513,7 +3512,8 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
                     ior.c_str ()));
 
       obj =
-        this->orb_core_.orb ()->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
+        this->orb_core_.orb ()->string_to_object (ior.c_str ()
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (obj);
 
       return obj;
@@ -3893,7 +3893,7 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
   if (CORBA::is_nil (imr.in ()))
-    return;
+      return;
 
   TAO_POA *root_poa = this->object_adapter ().root_poa ();
   ACE_NEW_THROW_EX (this->server_object_,
@@ -3953,19 +3953,29 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::String_var curr_addr (svr_str);
 
-  ImplementationRepository::Administration_var imr_admin =
-    ImplementationRepository::Administration::_narrow (imr.in ()ACE_ENV_ARG_PARAMETER);
+  ImplementationRepository::Locator_var imr_locator =
+    ImplementationRepository::Locator::_narrow (imr.in ()
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  if (imr_locator.in () == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Couldnt narrow down the ImR interface\n"));
+      return;
+    }
+
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Informing IMR that we are running at: %s\n", curr_addr.in ()));
+    ACE_DEBUG ((LM_DEBUG,
+                "Informing IMR that we are running at: %s\n",
+                curr_addr.in ()));
 
   ACE_TRY
     {
-      imr_admin->server_is_running (this->name ().c_str (),
-                                    curr_addr.in (),
-                                    svr.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+      imr_locator->server_is_running (this->name ().c_str (),
+                                      curr_addr.in (),
+                                      svr.in ()
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -4003,11 +4013,13 @@ TAO_POA::imr_notify_shutdown (void)
   ACE_TRY_NEW_ENV
     {
       // Get the IMR's administrative object and call shutting_down on it
-      ImplementationRepository::Administration_var imr_admin =
-        ImplementationRepository::Administration::_narrow (imr.in ()ACE_ENV_ARG_PARAMETER);
+      ImplementationRepository::Locator_var imr_locator =
+        ImplementationRepository::Locator::_narrow (imr.in ()
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      imr_admin->server_is_shutting_down (this->the_name ()ACE_ENV_ARG_PARAMETER);
+      imr_locator->server_is_shutting_down (this->the_name ()
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
