@@ -31,14 +31,14 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
+                 orb_core),
     host_ (),
     port_ (0),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
-    orb_core_ (orb_core),
     tagged_profile_ ()
 {
   this->set (addr);
@@ -50,14 +50,14 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
+                 orb_core),
     host_ (),
     port_ (port),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0),
-    orb_core_ (orb_core)
+    hint_ (0)
 {
   if (host != 0)
     this->host_ = host;
@@ -66,28 +66,28 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
+                 orb_core),
     host_ (),
     port_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    orb_core_ (orb_core)
+    hint_ (0)
 {
   this->parse_string (string, ACE_TRY_ENV);
   ACE_CHECK;
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
+                 orb_core),
     host_ (),
     port_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    orb_core_ (orb_core)
+    hint_ (0)
 {
 }
 
@@ -96,7 +96,7 @@ TAO_IIOP_Profile::set (const ACE_INET_Addr &addr)
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
 
-  if (this->orb_core_->orb_params ()->use_dotted_decimal_addresses ()
+  if (this->orb_core ()->orb_params ()->use_dotted_decimal_addresses ()
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
       const char *tmp = addr.get_host_addr ();
@@ -440,11 +440,11 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   // Create the encapsulation....
   TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
                        TAO_ENCAP_BYTE_ORDER,
-                       this->orb_core_->output_cdr_buffer_allocator (),
-                       this->orb_core_->output_cdr_dblock_allocator (),
-                       this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                       this->orb_core_->to_iso8859 (),
-                       this->orb_core_->to_unicode ());
+                       this->orb_core ()->output_cdr_buffer_allocator (),
+                       this->orb_core ()->output_cdr_dblock_allocator (),
+                       this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                       this->orb_core ()->to_iso8859 (),
+                       this->orb_core ()->to_unicode ());
 
 
   // Create the profile body
@@ -470,11 +470,11 @@ TAO_IIOP_Profile::create_tagged_profile (void)
       // Create the encapsulation....
       TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
                            TAO_ENCAP_BYTE_ORDER,
-                           this->orb_core_->output_cdr_buffer_allocator (),
-                           this->orb_core_->output_cdr_dblock_allocator (),
-                           this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                           this->orb_core_->to_iso8859 (),
-                           this->orb_core_->to_unicode ());
+                           this->orb_core ()->output_cdr_buffer_allocator (),
+                           this->orb_core ()->output_cdr_dblock_allocator (),
+                           this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                           this->orb_core ()->to_iso8859 (),
+                           this->orb_core ()->to_unicode ());
 
       // Create the profile body
       this->create_profile_body (encap);

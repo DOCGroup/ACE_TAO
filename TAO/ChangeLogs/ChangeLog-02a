@@ -1,3 +1,22 @@
+Fri Sep  8 10:43:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Profile.h:
+	* tao/Profile.cpp: Added a data member to hold the cached copy of
+	  the TAO_ORB_Core pointer with a member function to return the
+	  pointer. Made a change to the constructor of the TAO_Profile
+	  class to take in a TAO_ORB_Core pointer.
+
+	* tao/IIOP_Profile.h
+	* tao/IIOP_Profile.cpp:
+	* tao/UIOP_Profile.h:
+	* tao/UIOP_Profile.cpp:
+	* tao/SHMIOP_Profile.h:
+	* tao/SHMIOP_Profile.cpp: Removed the data member storing the
+	  ORB_Core pointer, as it is now available through
+	  TAO_Profile.  Also made changes to the constructors to pass the
+	  TAO_ORB_Core pointer to its base class to initialise the base
+	  class properly.
+
 Thu Sep  7 23:03:27 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Acceptor_Filter.h:

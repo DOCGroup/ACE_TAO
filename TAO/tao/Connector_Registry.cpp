@@ -351,7 +351,8 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 
       TAO_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
-                      TAO_Unknown_Profile (tag),
+                      TAO_Unknown_Profile (tag,
+                                           cdr.orb_core ()),
                       0);
       if (pfile->decode (cdr) == -1)
         {

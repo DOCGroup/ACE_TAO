@@ -135,13 +135,13 @@ public:
   // Reset the hint's value.
 
   IOP::TaggedProfile &create_tagged_profile (void);
-  // Please see the Profile.h for the documentation of this method 
+  // Please see the Profile.h for the documentation of this method
 
 private:
 
   void create_profile_body (TAO_OutputCDR &cdr) const;
   // Create an encapsulation of the struct ProfileBody in <cdr>
-  
+
   TAO_GIOP_Version version_;
   // UIOP version number.
 
@@ -159,9 +159,6 @@ private:
   TAO_MProfile *forward_to_;
   // list of profiles which we should try forwarding on.
 
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
-  
   IOP::TaggedProfile tagged_profile_;
   // Our tagged profile info
 };
