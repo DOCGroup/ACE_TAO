@@ -59,6 +59,7 @@ server: $(addprefix $(VDIR),$(SVR_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_IFR_CLNT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
+	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
 
 #----------------------------------------------------------------------------
 #       Dependencies

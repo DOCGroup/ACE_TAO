@@ -52,10 +52,11 @@ TAO_FT_LIBS = -lTAO_FaultTolerance -lTAO_CosNotification -lTAO_CosNaming -lTAO_S
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
-Manager:$(addprefix $(VDIR),$(MANAGER_OBJS))
+Manager: $(addprefix $(VDIR),$(MANAGER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
+	-$(RM) $(BIN_UNCHECKED)
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

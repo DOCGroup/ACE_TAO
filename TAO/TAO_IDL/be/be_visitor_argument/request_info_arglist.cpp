@@ -78,17 +78,6 @@ int be_visitor_args_request_info_arglist::visit_argument (be_argument *node)
 int be_visitor_args_request_info_arglist::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
 
   switch (this->direction ())
     {
@@ -118,17 +107,6 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
 int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
 
   switch (this->direction ())
     {
@@ -220,17 +198,6 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
 
   // Check if the type is an any.
   if (node->pt () == AST_PredefinedType::PT_any)
@@ -303,17 +270,6 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
 int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
 
   switch (this->direction ())
     {
@@ -381,17 +337,6 @@ int be_visitor_args_request_info_arglist::visit_string (be_string *node)
 int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
 
   switch (this->direction ())
     {
@@ -421,17 +366,6 @@ int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
 int be_visitor_args_request_info_arglist::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
 
   switch (this->direction ())
     {

@@ -6,9 +6,9 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LSRC = CosEvent_Service.cpp
+SRC = CosEvent_Service.cpp
 
-ES_OBJS=$(LSRC:.cpp=.o)
+ES_OBJS=$(SRC:.cpp=.o)
 
 LDLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
@@ -38,6 +38,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+realclean: clean
+	-$(RM) $(BIN_UNCHECKED)
 
 #----------------------------------------------------------------------------
 #       Dependencies
