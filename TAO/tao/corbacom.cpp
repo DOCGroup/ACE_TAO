@@ -1,8 +1,8 @@
-// @(#)corbacom.cpp	1.1 95/08/31
+// @(#)corbacom.cpp     1.1 95/08/31
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// ORB:		support for primitive data types
+// ORB:         support for primitive data types
 
 #include "tao/corba.h"
 
@@ -15,7 +15,7 @@ CORBA::string_copy (const CORBA::Char *str)
   if (!str)
     return 0;
 
-  CORBA::String	retval = CORBA::string_alloc (ACE_OS::strlen (str));
+  CORBA::String retval = CORBA::string_alloc (ACE_OS::strlen (str));
   // clear the contents of the allocated string
   ACE_OS::memset(retval, '\0', ACE_OS::strlen (str));
 
@@ -56,7 +56,7 @@ CORBA::String_var::operator= (const CORBA::String_var& r)
   return *this;
 }
 
-#if defined(VXWORKS) && defined(ghs)
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
 // NOTE: assuming that these don't exist unless they're declared in
 // that header file ...
 
@@ -74,13 +74,13 @@ extern "C" CORBA::WChar *
 wscpy (CORBA::WChar *dest,
        const CORBA::WChar *src)
 {
-  CORBA::WChar	*retval = dest;
+  CORBA::WChar  *retval = dest;
 
   while ((*dest++ = *src++) != 0)
     continue;
   return retval;
 }
-#endif	/* VXWORKS &&  ghs */
+#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 // Wide Character string utility support; this can need to be
 // integrated with the ORB's own memory allocation subsystem.
@@ -97,13 +97,13 @@ CORBA::wstring_copy (const CORBA::WChar *const str)
   if (*str)
     return 0;
 
-#if defined(VXWORKS) && defined(ghs)
-  CORBA::WString	retval = CORBA::wstring_alloc (wslen (str));
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+  CORBA::WString retval = CORBA::wstring_alloc (wslen (str));
   return wscpy (retval, str);
-#else
+#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
   CORBA::WString retval = CORBA::wstring_alloc (ACE_OS::strlen (str));
   return ACE_OS::strcpy (retval, str);
-#endif
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 }
 
 void
