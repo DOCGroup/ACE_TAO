@@ -1,0 +1,11 @@
+NAME = Receiver
+
+OBJFILES = $(OBJDIR)\Receiver.obj
+
+CFLAGS = $(ACE_CFLAGS) $(ACE_RMCAST_CFLAGS)
+
+LIBFILES = $(ACE_LIB) $(ACE_RMCAST_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

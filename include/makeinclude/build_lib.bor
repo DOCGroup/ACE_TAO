@@ -1,15 +1,15 @@
 #
-# Rules for building a static library
+# Rules	for building a static library
 #
 # Inputs:
 # ~~~~~~~
 # NAME - undecorated name of target
-# CFLAGS - extra compiler flags for building target
-# CPPDIR - list of directories containing source files
+# CFLAGS - extra compiler flags	for building target
+# CPPDIR - list	of directories containing source files
 # OBJFILES - list of (non-system) object files
 # LIBFILES - list of (non-system) libraries
 # PASCAL - if defined means link dll against pascal run-time library
-# DEBUG - if defined means building with debug information
+# DEBUG	- if defined means building with debug information
 #
 
 !include <$(ACE_ROOT)\include\makeinclude\decorator.bor>
@@ -23,13 +23,13 @@ all: $(TARGET)
 $(TARGET): $(OBJFILES)
 	@$(MAKE_BINDIR)
 	$(AR) $(LIB_LFLAGS) $(TARGET) @&&!
-	+-$(**: = &^
+	+-$(**:	= &^
 	+-)
 !
 
 !include <$(ACE_ROOT)\include\makeinclude\clean.bor>
 
-INSTALL_TYPES = lib includes
+INSTALL_TYPES =	lib includes
 
 !include <$(ACE_ROOT)\include\makeinclude\install.bor>
 
@@ -38,7 +38,7 @@ INSTALL_TYPES = lib includes
 !endif
 
 !ifdef CDIR
-.path.c = $(CDIR)
+.path.c	= $(CDIR)
 !endif
 
 .path.obj = $(OBJDIR)
