@@ -23,6 +23,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 CPP_SRCS += \
 	IORC \
+	IORA \
 	IORManip_Loader \
 	IORManipulation
 
