@@ -254,7 +254,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
         -1);
     }
 
-  CORBA::String_var tmp = CORBA::string_alloc (cp - start + 1);
+  CORBA::String_var tmp = CORBA::string_alloc (cp - start);
 
   for (cp = tmp.inout (); *start != ':'; *cp++ = *start++)
     continue;
@@ -400,8 +400,7 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &)
                   1 /* colon separator */ +
                   5 /* port number */ +
                   1 /* object key separator */ +
-                  ACE_OS::strlen (key) +
-                  1 /* zero terminator */);
+                  ACE_OS::strlen (key));
 
   CORBA::String buf = CORBA::string_alloc (buflen);
 

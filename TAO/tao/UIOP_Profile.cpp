@@ -144,7 +144,7 @@ TAO_UIOP_Profile::parse_string (const char *string,
 
   CORBA::ULong length = cp - start;
 
-  CORBA::String_var rendezvous = CORBA::string_alloc (1 + length);
+  CORBA::String_var rendezvous = CORBA::string_alloc (length);
 
   ACE_OS::strncpy (rendezvous.inout (), start, length);
   rendezvous[length] = '\0';
@@ -304,8 +304,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                   1 /* `@' character */ +
                   ACE_OS::strlen (this->rendezvous_point ()) +
                   1 /* object key separator */ +
-                  ACE_OS::strlen (key) +
-                  1 /* zero terminator */);
+                  ACE_OS::strlen (key));
 
   CORBA::String buf = CORBA::string_alloc (buflen);
 
