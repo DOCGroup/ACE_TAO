@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for the server-side of the primary Reactor tests
 #----------------------------------------------------------------------------
@@ -24,8 +24,7 @@ FILES	= Handle_L_Dgram \
 	  Handle_L_SPIPE \
 	  Handle_Thr_Stream
 
-SRC   	= $(addsuffix .cpp,$(BIN))
-OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
+PSRC   	= $(addsuffix .cpp,$(BIN))
 
 LSRC	= $(addsuffix .cpp,$(FILES))
  
