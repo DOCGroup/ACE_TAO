@@ -1,10 +1,7 @@
-Tue Mar 09 11:21:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Mar  9 12:59:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Block.h: For some reason, default ctor and operator=
-	  must be declared private instead of protected if they are not to
-	  be accessable.  Otherwise, VC complains.
-
-Tue Mar  9 10:21:51 1999  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+	* docs/ACE-subsets.html: Updated the subsets to reflect what's
+ 	  actually in the ACE Makefile.
 
 	* ace/Message_Block.h: Changed the private section in both
  	  ACE_Message_Block and ACE_Data_Block to protected allowing
@@ -15,6 +12,12 @@ Tue Mar  9 10:21:51 1999  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 	* ace/Message_Block: Added new reference counting accessor methods
  	  to Message_Block and Data_Block.  Thanks to Alexander Davidovich
  	  <sasha@ms.com> for suggesting this.
+
+Tue Mar 09 11:21:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Message_Block.h: For some reason, default ctor and operator=
+	  must be declared private instead of protected if they are not to
+	  be accessable.  Otherwise, VC complains.
 
 Tue Mar 09 01:06:44 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
