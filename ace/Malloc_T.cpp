@@ -141,7 +141,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
                                      rounded_bytes,
                                      first_time);
   if (this->cb_ptr_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT (" (%P|%t) %p\n"),  ASYS_TEXT ("init_acquire failed")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT (" (%P|%t) %p\n"),
+                       ASYS_TEXT ("init_acquire failed")),
+                      -1);
   else if (first_time)
     {
       // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%P|%t) first time in, control block = %u\n"), this->cb_ptr_));
@@ -180,7 +183,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
 #else
           p->s_.size_ = (rounded_bytes - sizeof *this->cb_ptr_)
             / sizeof (ACE_Malloc_Header);
-#endif
+#endif /* (__hpux) && defined (__LP64__) */
 
           AMS (++this->cb_ptr_->malloc_stats_.nchunks_);
           AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
@@ -201,7 +204,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name)
                                                ACE_DIRECTORY_SEPARATOR_CHAR))
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc");
-  this->open ();
+  if (this->open () == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p",
+                "ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc"));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -213,7 +219,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
                                                        ACE_DIRECTORY_SEPARATOR_CHAR))
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc");
-  this->open ();
+  if (this->open () == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p",
+                "ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc"));
 }
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
@@ -225,7 +234,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
     lock_ (lock_name)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc");
-  this->open ();
+  if (this->open () == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p",
+                "ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc"));
 }
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
@@ -264,6 +276,9 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> void *
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc");
+
+  if (this->cb_ptr_ == 0)
+    return 0;
 
   // Round up request to a multiple of the ACE_Malloc_Header size.
   size_t nunits =
@@ -322,7 +337,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
               currp = this->cb_ptr_->freep_;
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT (" (%P|%t) %p\n"),  ASYS_TEXT ("malloc")), 0);
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ASYS_TEXT (" (%P|%t) %p\n"),
+                               ASYS_TEXT ("malloc")),
+                              0);
         }
     }
 }

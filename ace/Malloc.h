@@ -92,13 +92,12 @@ union ACE_Export ACE_Malloc_Header
     //    list or in use.
   public:
 #if defined (ACE_HAS_BASED_POINTER_MALLOC)
-   ACE_Based_Pointer<ACE_Malloc_Header> *next_block_;
+    ACE_Based_Pointer<ACE_Malloc_Header> *next_block_;
+    // Points to next block if on free list.
 #else 
-   ACE_Malloc_Header *next_block_;
-#endif /* ACE_HAS_BASED_POINTER_MALLOC */
-
     ACE_Malloc_Header *next_block_;
     // Points to next block if on free list.
+#endif /* ACE_HAS_BASED_POINTER_MALLOC */
 
     size_t size_;
     // Size of this block.
