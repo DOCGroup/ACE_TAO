@@ -34,10 +34,12 @@
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::tm;
-# if defined (ACE_WIN32)
+# if !defined (ACE_HAS_DINKUM_STL)
+#  if defined (ACE_WIN32)
 using std::_timezone;
-# else
+#  else
 using std::timezone;
+#  endif
 # endif
 using std::difftime;
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
