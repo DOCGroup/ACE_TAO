@@ -20,6 +20,10 @@
 #include "orbsvcs/CosTradingS.h"
 #include "Attributes.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 template <class IF>
 class TAO_ORBSVCS_Export TAO_Trader_Components : public virtual IF
 {
@@ -161,5 +165,9 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Attributes_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* TAO_ATTRIBUTES_T_H */
