@@ -1,3 +1,15 @@
+Wed May 26 10:14:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager.*
+
+          Fixed the compiling errors. More functinality will be
+          added soon.
+
+        * DnC/DomainApplicationManager/Deployment_Configuration.*
+
+          Added this helper class to deal with deployment topology
+          data file.
+
 Tue May 25 22:40:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Core/NodeApp_CB_Impl.cpp:
