@@ -1,3 +1,7 @@
+Tue May 07 17:42:16 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i: Added missing "\".
+
 Tue May  7 16:45:13 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/ACE.cpp (handle_timed_complete):
