@@ -260,8 +260,11 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
     {
       // Error, entry not found in map.
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p %d not found in map\n"),
-                        ASYS_TEXT ("find"), handle), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("%p %d not found in map\n"),
+                         ASYS_TEXT ("find"),
+                         handle),
+                        -1);
     }
 
   // Try to remove from ACE_Timer_Queue but if it's not there we
