@@ -1,3 +1,14 @@
+Tue Sep 22 16:59:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB.cpp (CORBA_ORB): Changed
+	  leader_follower_info_.leader_thread_ID_ = 0;
+
+	  to
+
+	  leader_follower_info_.leader_thread_ID_ = ACE_OS::NULL_thread;
+
+	  Thanks to Alan Scheinine <scheinin@crs4.it> for reporting this.
+
 Tue Sep 22 16:16:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Updated dependencies for many Makefiles.
