@@ -1,11 +1,12 @@
 // $Id$
 
 #include "testS.h"
-#include "ace/Get_Opt.h"
-#include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
+#include "tao/ORB_Core.h"
+#include "tao/Policy_Set.h"
+#include "ace/Get_Opt.h"
 
 class Test_i : public POA_Test
 {
@@ -92,8 +93,8 @@ check_default_server_protocol (CORBA::ORB_ptr orb
   // is no standard way to access ORB default policies).
   CORBA::Policy_var server_protocol =
     orb->orb_core ()->get_default_policies ()->get_policy (
-                                                           RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
-                                                           ACE_ENV_ARG_PARAMETER);
+      RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   RTCORBA::ServerProtocolPolicy_var policy =

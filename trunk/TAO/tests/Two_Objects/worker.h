@@ -1,13 +1,12 @@
-
+// -*- C++ -*-
 //
 // $Id$
-//
 
 
 #ifndef TAO_TWO_OBJECTS_WORKER_H
 #define TAO_TWO_OBJECTS_WORKER_H
 
-#include "tao/ORB_Core.h"
+#include "tao/ORB.h"
 #include "ace/Task.h"
 
 //   Use the ACE_Task_Base class to run server threads
@@ -29,4 +28,4 @@ private:
   int timeout_;
 };
 
-#endif /*TAO_TWO_OBJECTS_WORKER_H*/
+#endif  /* TAO_TWO_OBJECTS_WORKER_H */
