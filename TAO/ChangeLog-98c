@@ -1,3 +1,8 @@
+Sun Sep 20 22:14:46 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* README: *** empty log message ***
+	  file added.
+
 Sun Sep 20 21:20:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
 	* TAO/orbsvcs/orbsvcs/CosNaming.idl: added comments.
@@ -11,20 +16,20 @@ Sun Sep 20 21:20:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 	<root_> flag, which can be set in the constructor to identify a
 	root context.
 
-1998-09-20  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+#1998-09-20  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* TAO/tests/Simple/bank : Checked in the final versions of the following files :
-        	/Account_i.cpp
-        	/Account_i.h
-        	/AccountManager_i.cpp
-        	/AccountManager_i.h
-        	/Server_i.cpp
-        	/Server_i.h
-        	/Client_i.cpp
-        	/Client_i.h
-        	/server.cpp
-        	/client.cpp
-        	/Bank.idl
+#	* TAO/tests/Simple/bank : Checked in the final versions of the following files :
+#        	/Account_i.cpp
+#       	/Account_i.h
+#        	/AccountManager_i.cpp
+#        	/AccountManager_i.h
+#        	/Server_i.cpp
+#        	/Server_i.h
+#        	/Client_i.cpp
+#        	/Client_i.h
+#        	/server.cpp
+#        	/client.cpp
+#        	/Bank.idl
 
 Sun Sep 20 20:38:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
