@@ -10,12 +10,12 @@
 #include "CDR.h"
 #include "Any_SystemException.h"
 #include "CORBA_String.h"
+#include "Any_Dual_Impl_T.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/streams.h"
 #include "ace/Malloc.h"
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"
@@ -1101,7 +1101,7 @@ static CORBA::Long tc_buf_CORBA[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
 
   static CORBA::TypeCode_ptr *type_code_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
-                                            &CORBA::_tc_ ## name,
+      &CORBA::_tc_ ## name,
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
       &CORBA::_tc_null};
@@ -1349,3 +1349,100 @@ STANDARD_EXCEPTION_LIST
 TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 {}
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
+
+// Specializations for CORBA::Exception Any operators.
+
+ACE_TEMPLATE_SPECIALIZATION
+TAO::Any_Dual_Impl_T<CORBA::Exception>::Any_Dual_Impl_T (
+    _tao_destructor destructor,
+    CORBA::TypeCode_ptr tc,
+    const CORBA::Exception & val
+  )
+  : Any_Impl (destructor,
+              tc)
+{
+  this->value_ = val._tao_duplicate ();
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
+{
+  ACE_TRY_NEW_ENV
+    {
+      this->value_->_tao_encode (cdr
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      return 1;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
+{
+  ACE_TRY_NEW_ENV
+    {
+      this->value_->_tao_decode (cdr
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      return 1;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+// This should never get called since we don't have extraction operators
+// for CORBA::Exception, but it is here to sidestep the constructor call
+// in the unspecialized version that causes a problem with compilers that
+// require explicit instantiation
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<CORBA::Exception>::extract (
+    const CORBA::Any &,
+    _tao_destructor,
+    CORBA::TypeCode_ptr,
+    const CORBA::Exception *&
+  )
+{
+  return 0;
+}
+
+// =======================================================================
+
+// Insertion of CORBA::Exception - copying.
+void
+operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
+{
+  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (
+      any,
+      CORBA::Exception::_tao_any_destructor,
+      exception._type (),
+      exception
+    );
+}
+
+// Insertion of CORBA::Exception - non-copying.
+void
+operator<<= (CORBA::Any &any, CORBA::Exception *exception)
+{
+  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert (
+      any,
+      CORBA::Exception::_tao_any_destructor,
+      exception->_type (),
+      exception
+    );
+}
+

@@ -477,6 +477,9 @@ public:
 };
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::Exception &);
+TAO_Export void operator<<= (CORBA::Any &, CORBA::Exception *);
+
 #if defined (__ACE_INLINE__)
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */

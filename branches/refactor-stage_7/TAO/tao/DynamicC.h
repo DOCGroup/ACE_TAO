@@ -40,6 +40,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/StringSeqC.h"
+#include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 #include "tao/TAO_Export.h"
 #include "tao/Sequence.h"

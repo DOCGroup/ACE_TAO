@@ -48,6 +48,7 @@
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
 #include "tao/Any.h"
+#include "tao/Exception.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

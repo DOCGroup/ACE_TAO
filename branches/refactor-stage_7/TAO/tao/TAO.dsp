@@ -180,8 +180,16 @@ SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Any_Impl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Any_SystemException.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Unknown_IDL_Type.cpp
 # End Source File
 # Begin Source File
 
@@ -1107,6 +1115,10 @@ SOURCE=.\Any_Dual_Impl_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Any_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Any_Impl_T.h
 # End Source File
 # Begin Source File
@@ -1120,6 +1132,10 @@ SOURCE=.\Any_Special_Impl_T.h
 # Begin Source File
 
 SOURCE=.\Any_SystemException.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Unknown_IDL_Type.h
 # End Source File
 # Begin Source File
 

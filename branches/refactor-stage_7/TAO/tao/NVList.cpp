@@ -11,6 +11,8 @@
 #include "Typecode.h"
 #include "Marshal.h"
 #include "CORBA_String.h"
+#include "Any_Impl.h"
+
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)

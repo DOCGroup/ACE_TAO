@@ -36,7 +36,7 @@ namespace TAO
   void
   NamedValue_Argument::interceptor_result (CORBA::Any *any)
   {
-    (*any) <<= this->x_->value ();
+    (*any) <<= *this->x_->value ();
   }
 
   // ========================================================================

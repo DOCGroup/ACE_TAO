@@ -1,3 +1,54 @@
+Mon Sep  8 18:24:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Impl.cpp:
+        * tao/Any_Impl.h:
+        * tao/Any_Unknown_IDL_Type.cpp:
+        * tao/Any_Unknown_IDL_Type.h:
+	* tao/TAO.dsp:
+	* tao/Makefile.tao:
+	* tao/Makefile.bor:
+
+  	  Added new files to contain the removal of classes Any_Impl
+	  and TAO_Unknown_IDL_Type from Any.*.
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any.i
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Array_Impl_T.h:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.h:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.h:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Impl_T.h:
+        * tao/Any_Special_Basic_Impl_T.cpp:
+        * tao/Any_Special_Basic_Impl_T.h:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.h:
+        * tao/Any_SystemException.cpp:
+        * tao/Any_SystemException.h:
+        * tao/CDR_Encaps_Codec.cpp:
+        * tao/DynamicC.h:
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/MProfile.cpp:
+        * tao/NVList.cpp:
+        * tao/NVList.h:
+        * tao/Service_Context.cpp:
+        * tao/Tagged_Components.cpp:
+        * tao/Typecode.cpp:
+
+	  Changes pursuant to the new files above, mostly changes
+	  in the include structure.
+
+        * tao/DynamicInterface/DII_Arguments.cpp:
+
+	  Fixed a typo.
+
 Mon Sep  8 11:21:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/NVList.cpp:

@@ -15,18 +15,22 @@
 #include "Typecode.h"
 #include "Environment.h"
 #include "Any.h"
+#include "Any_Impl.h"
 #include "Exception.h"
 #include "Marshal.h"
 #include "CORBA_String.h"
 #include "CDR.h"
 #include "debug.h"
+#include "Any_Unknown_IDL_Type.h"
+
 #include "ace/Malloc_Base.h"
 #include "ace/Null_Mutex.h"
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+    || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #  include "tao/Sequence_T.h"
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION || ACE_HAS_TEMPLATE_INSTANTIATION_PRAGM */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
