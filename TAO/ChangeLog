@@ -1,3 +1,154 @@
+Thu Jan  9 18:51:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Acceptor_Filter.h:
+        * tao/Adapter.cpp:
+        * tao/Adapter.h:
+        * tao/Any.h:
+        * tao/Bounds.pidl:
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/BoundsC.i:
+        * tao/CONV_FRAME.pidl:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CONV_FRAMEC.i:
+        * tao/Current.pidl:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.i:
+        * tao/Domain.pidl:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/Dynamic.pidl:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/DynamicC.i:
+        * tao/Exception.cpp:
+        * tao/GIOP.pidl:
+        * tao/GIOPC.cpp:
+        * tao/GIOPC.h:
+        * tao/GIOPC.i:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Locate_Header.h:
+        * tao/GIOP_Message_Locate_Header.i:
+        * tao/IIOP.pidl:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
+        * tao/IIOPC.i:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.i:
+        * tao/IOP.pidl:
+        * tao/IOPS.cpp:
+        * tao/IOPS.h:
+        * tao/IOPS.i:
+        * tao/IOPS_T.cpp:
+        * tao/IOPS_T.h:
+        * tao/IOPS_T.i:
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+        * tao/Messaging_PolicyValue.pidl:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/Messaging_PolicyValueC.i:
+        * tao/Messaging_SyncScope.pidl:
+        * tao/Messaging_SyncScopeC.cpp:
+        * tao/Messaging_SyncScopeC.h:
+        * tao/Messaging_SyncScopeC.i:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/ObjectReferenceTemplate.pidl:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/ObjectReferenceTemplateC.i:
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.h:
+        * tao/Object_KeyC.i:
+        * tao/OctetSeq.pidl:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
+        * tao/Policy.pidl:
+        * tao/Policy_Forward.pidl:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Policy_ForwardC.i:
+        * tao/Pollable.pidl:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/StringSeq.pidl:
+        * tao/StringSeqC.cpp:
+        * tao/StringSeqC.h:
+        * tao/StringSeqC.i:
+        * tao/TAO.pidl:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i:
+        * tao/Tagged_Profile.h:
+        * tao/Tagged_Profile.i:
+        * tao/TimeBase.pidl:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.i:
+        * tao/Transport_Acceptor.h:
+        * tao/WrongTransaction.pidl:
+        * tao/WrongTransactionC.cpp:
+        * tao/WrongTransactionC.h:
+        * tao/WrongTransactionC.i:
+        * tao/corbafwd.h:
+        * tao/target_specification.h:
+        * tao/target_specification.i:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+        * tao/PortableServer/Default_Acceptor_Filter.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/Servant_Base.i:
+        * tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_POA.h:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Acceptor.h:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/DIOP_Profile.i:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/SHMIOP_Profile.i:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.h:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Strategies/UIOP_Profile.i:
+
+	  Regenerated hand-crafted files, and replaced flat
+	  names with scoped names for some identifiers.
+
+	* ObjectIdList.pidl:
+
+  	  New file, empty as of now, which will contain
+	  typedefs for CORBA::ORB::ObjectId and
+	  CORBA::ORB::ObjectIdList. The file will be
+	  included in orb.idl.
+
 Wed Jan  8 22:43:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.h:
