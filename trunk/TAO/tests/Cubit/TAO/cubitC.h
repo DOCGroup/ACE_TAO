@@ -97,3 +97,5 @@ extern const CORBA_Char *Cubit__id;		// type ID
 #endif	// VC++
 
 #endif	// _CUBIT_HH
+
+

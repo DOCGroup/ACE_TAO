@@ -244,6 +244,78 @@ Cubit::Cubit_cube_struct (Cubit_Many &values,
 
 static const CORBA_Long _oc_Cubit_oneof [] = 
 {
+<<<<<<< cubitC.cpp
+   1,          // byte order flag (TRICKY)
+   1, 0,       // omitted repository/type ID
+   1, 0,       // omitted struct name, "oneof"
+   
+   //
+   // discriminant typecode:
+   //
+   tk_enum,    // tk_enum
+   72,         // encapsulation length
+   
+     1,          // byte order flag (TRICKY)
+     1, 0,       // omitted repository/type ID
+     1, 0,       // omitted enum name, "discrim"
+     6,          // 5 elements in the enum
+   
+     1, 0,       // omitted member name, "e_0th"
+     1, 0,       // omitted member name, "e_1st"
+     1, 0,       // omitted member name, "e_2nd"
+     1, 0,       // omitted member name, "e_3rd" 
+     1, 0,       // omitted member name, "e_4th" 
+     1, 0,       // omitted member name, "e_5th" 
+   
+   4,       	// default member index (zero based)
+   5,       	// number of union members
+   
+   // the 1st union branch arm
+   e_0th,       // member label value
+   1, 0,        // omitted member name, "o"
+   tk_octet,    // member typecode
+   
+   // the 2nd union branch arm
+   e_1st,      // member label value
+   1, 0,       // omitted member name, "s"
+   tk_short,   // member typecode
+   
+   // the 3rd union branch arm
+   e_2nd,      // member label value
+   1, 0,       // omitted member name, "l"
+   tk_long,    // member typecode
+   
+   // the 4th union branch arm
+   e_3rd,      // member label value
+   1, 0,       // omitted member name, "cm"
+   
+   // the 4th union member typecode
+   tk_struct,  // tk_struct
+   60,         // encap length
+   
+   1,          // byte order flag (TRICKY)
+   1, 0,       // omitted repository/type ID
+   1, 0,       // omitted struct name, "Many"
+   3,          // three struct members
+   
+   // First structure element
+   1, 0,       // omitted member name, "o"
+   tk_octet,   // member type, tk_octet
+   
+   // Second structure element
+   1, 0,       // omitted member name, "l"
+   tk_long,    // member type, tk_long
+   
+   // Third structure element
+   1, 0,       // omitted member name, "s"
+   tk_short,   // member type, tk_short
+   
+   // the 5th union branch arm
+   4,          // the 5th member label value
+   1, 0,       // omitted member name, "cm"
+   ~0,         // indirected typecode (~0)
+   -88         // offset to struct "Many" typecode
+=======
   1,          // byte order flag (TRICKY)
   1, 0,       // omitted repository/type ID
   1, 0,       // omitted struct name, "oneof"
@@ -314,6 +386,7 @@ static const CORBA_Long _oc_Cubit_oneof [] =
   1, 0,       // omitted member name, "cm"
   ~0,         // indirected typecode (~0)
   -88         // offset to struct "Many" typecode
+>>>>>>> 1.4
 };
 
 static CORBA_TypeCode _tc_Cubit_oneof (tk_union,
