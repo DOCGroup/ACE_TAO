@@ -150,18 +150,15 @@ PSRC=$(addsuffix .cpp,$(BIN))
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  ifeq ($(LYNXTARGET),)
+ifeq ($(LYNXTARGET),)
+  BIN += CDR_Array_Test
+  BUILD += CDR_Array_Test
+else
+  #### LynxOS:  but only with 3.1.0 or later.
+  ifneq ($(VERSION),3.0.0)
     BIN += CDR_Array_Test
     BUILD += CDR_Array_Test
-  else
-    #### LynxOS:  but only with 3.1.0 or later.  (Pre-3.0.0 has
-    #### ACE_GNUG_PRE_2_8 == 1.)
-    ifneq ($(VERSION),3.0.0)
-      BIN += CDR_Array_Test
-      BUILD += CDR_Array_Test
-    endif # > 3.0.0
-  endif
+  endif # > 3.0.0
 endif
 
 ifeq ($(shared_libs),1)
@@ -171,11 +168,9 @@ ifeq ($(shared_libs),1)
   BIN += Framework_Component_Test
 endif  # shared_libs
 
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  ifneq ($(rmcast),0)
-    DIRS += RMCast
-  endif # rmcast
-endif # ACE_HAS_GNUG_PRE_2_8
+ifneq ($(rmcast),0)
+  DIRS += RMCast
+endif # rmcast
 
 ifeq ($(ssl),1)
   DIRS += SSL
