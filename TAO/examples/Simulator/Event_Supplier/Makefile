@@ -54,6 +54,13 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)#-H
 
 #.PRECIOUS:$(IDL_HDR) $(IDL_SRC)
 
+NavWeap.idl: ../NavWeap.idl
+	@cp -p $< .
+
+realclean: clean
+	-/bin/rm -rf NavWeap.idl NavWeap[CS].* NavWeap[CS]_T.*
+
+
 Event_Sup: $(addprefix $(VDIR),$(EVENT_SUP_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
