@@ -1,3 +1,10 @@
+Thu Aug 24 16:26:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+
+	  Allocation of option string got changed to stack from heap.
+	  It has been put back to heap allocation.
+
 Thu Aug 24 12:51:34 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.i (client_exposed_fixed_policies): Fixed typo.
