@@ -29,13 +29,9 @@
 
 namespace CIAO
 {
-  // @@ Jai, isn't this like a factory base instaed of a servant base?
-  // Why are inheriting from RefCountServantBase? Makes less sense to
-  // me.
   template <typename COMP_SERVANT>
   class Dynamic_Component_Servant
-    : public virtual Dynamic_Component_Servant_Base,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual Dynamic_Component_Servant_Base
   {
   public:
     virtual PortableServer::Servant create (void);
