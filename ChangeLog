@@ -1,4 +1,12 @@
-Thu Apr 15 13:29:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Apr 15 12:33:27 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Changed the way we do a lib check. Instead of using the shell we use
+          normal make rules. Another advantage is that we now give all libraries
+          we are missing instead of the first one. Thanks to
+          Martin Corino <mcorino@remedy.nl> for changing this.
+
+Thu Apr 15 12:29:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/check_build_logs:
         * bin/show_log_dir.pl:
