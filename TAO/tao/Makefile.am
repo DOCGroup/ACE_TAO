@@ -1023,6 +1023,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/ORT_Adapter.cpp \
   PortableServer/ORT_Adapter_Factory.cpp \
   PortableServer/Object_Adapter.cpp \
+  PortableServer/Object_Adapter_Factory.cpp \
   PortableServer/Operation_Table.cpp \
   PortableServer/PICurrent_Guard.cpp \
   PortableServer/POA.cpp \
@@ -1066,6 +1067,7 @@ nobase_include_HEADERS += \
   PortableServer/ORT_Adapter.h \
   PortableServer/ORT_Adapter_Factory.h \
   PortableServer/Object_Adapter.h \
+  PortableServer/Object_Adapter_Factory.h \
   PortableServer/Operation_Table.h \
   PortableServer/PICurrent_Guard.h \
   PortableServer/POA.h \

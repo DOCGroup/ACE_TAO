@@ -1,3 +1,18 @@
+Sun Jan  9 11:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.{h,cpp}:
+        * tao/PortableServer/Object_Adapter_Factory.{h,cpp}:
+          Moved TAO_Object_Adapter_Factory to its own file
+
+        * tao/PortableServer/PortableServer.cpp:
+          Added include of Object_Adapter_Factory.h
+
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.h:
+          Include Object_Adapter_Factory.h instead of Object_Adapter.h
+
+        * tao/Makefile.am:
+          Updated for change above
+
 Sun Jan  9 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Default_Acceptor_Filter.cpp:

@@ -878,25 +878,6 @@ private:
 
 // ****************************************************************
 
-class TAO_PortableServer_Export TAO_Object_Adapter_Factory : public TAO_Adapter_Factory
-{
-public:
-  /// Constructor
-  TAO_Object_Adapter_Factory (void);
-
-  // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
-  // details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
-
-  virtual int init (int argc,
-                    ACE_TCHAR* argv[]);
-};
-
-ACE_STATIC_SVC_DECLARE (TAO_Object_Adapter_Factory)
-ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
-
-// ****************************************************************
-
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
