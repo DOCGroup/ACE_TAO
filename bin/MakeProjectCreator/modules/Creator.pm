@@ -544,14 +544,19 @@ sub process_assignment_sub {
   my($nval)   = $self->get_assignment($name, $assign);
 
   if (defined $nval) {
-    my($parts) = $self->create_array($nval);
-    $nval = '';
-    foreach my $part (@$parts) {
-      if ($part ne $value && $part ne '') {
-        $nval .= "$part ";
-      }
+    ## Remove double quotes if there are any
+    $value =~ s/^\"(.*)\"$/$1/;
+
+    ## Escape any regular expression special characters
+    $value = $self->escape_regex_special($value);
+
+    if ($nval =~ /$value/) {
+      ## Search for the first occurrence and remove it
+      $nval =~ s/$value//;
+
+      ## Reset the value
+      $self->process_assignment($name, $nval, $assign);
     }
-    $self->process_assignment($name, $nval, $assign);
   }
 }
 
