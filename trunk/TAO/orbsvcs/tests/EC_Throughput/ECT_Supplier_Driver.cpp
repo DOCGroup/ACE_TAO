@@ -198,7 +198,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
 void
 ECT_Supplier_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -215,8 +215,8 @@ ECT_Supplier_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr 
                                     this->event_a_,
                                     this->event_b_,
                                     channel,
-                                    _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+                                    TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
@@ -230,12 +230,12 @@ ECT_Supplier_Driver::activate_suppliers (CORBA::Environment &)
 }
 
 void
-ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &_env)
+ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->suppliers_[i]->disconnect (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 

@@ -53,7 +53,7 @@ TAO_NamingContext::_default_POA (CORBA::Environment &/*env*/)
 
 CosNaming::NamingContext_ptr
 TAO_NamingContext::get_context (const CosNaming::Name &name,
-                               CORBA::Environment &_env)
+                               CORBA::Environment &TAO_IN_ENV)
 {
   // The naming context we will return.
   CosNaming::NamingContext_var result =
@@ -120,7 +120,7 @@ TAO_NamingContext::get_context (const CosNaming::Name &name,
 void
 TAO_NamingContext::bind (const CosNaming::Name& n,
                         CORBA::Object_ptr obj,
-                        CORBA::Environment &_env)
+                        CORBA::Environment &TAO_IN_ENV)
 {
   ACE_GUARD_THROW (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
@@ -174,7 +174,7 @@ TAO_NamingContext::bind (const CosNaming::Name& n,
 void
 TAO_NamingContext::rebind (const CosNaming::Name& n,
                           CORBA::Object_ptr obj,
-                          CORBA::Environment &_env)
+                          CORBA::Environment &TAO_IN_ENV)
 {
   ACE_GUARD_THROW (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
@@ -232,7 +232,7 @@ TAO_NamingContext::rebind (const CosNaming::Name& n,
 void
 TAO_NamingContext::bind_context (const CosNaming::Name &n,
                                 CosNaming::NamingContext_ptr nc,
-                                CORBA::Environment &_env)
+                                CORBA::Environment &TAO_IN_ENV)
 {
   ACE_GUARD_THROW (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
@@ -286,7 +286,7 @@ TAO_NamingContext::bind_context (const CosNaming::Name &n,
 void
 TAO_NamingContext::rebind_context (const CosNaming::Name &n,
                                   CosNaming::NamingContext_ptr nc,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
 {
   ACE_GUARD_THROW (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
@@ -340,7 +340,7 @@ TAO_NamingContext::rebind_context (const CosNaming::Name &n,
 
 CORBA::Object_ptr
 TAO_NamingContext::resolve (const CosNaming::Name& n,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   CORBA::Object_ptr result = CORBA::Object::_nil ();
   ACE_GUARD_THROW_RETURN (ACE_Lock, ace_mon, *this->lock_,
@@ -414,7 +414,7 @@ TAO_NamingContext::resolve (const CosNaming::Name& n,
              + 1);
           // If there are any exceptions, they will propagate up.
           return context->resolve (rest_of_name,
-                                   _env);
+                                   TAO_IN_ENV);
         }
     }
   // If the name we had to resolve was simple, we just need to return
@@ -425,7 +425,7 @@ TAO_NamingContext::resolve (const CosNaming::Name& n,
 
 void
 TAO_NamingContext::unbind (const CosNaming::Name& n,
-                          CORBA::Environment &_env)
+                          CORBA::Environment &TAO_IN_ENV)
 {
   ACE_GUARD_THROW (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
@@ -473,7 +473,7 @@ TAO_NamingContext::unbind (const CosNaming::Name& n,
 }
 
 CosNaming::NamingContext_ptr
-TAO_NamingContext::new_context (CORBA::Environment &_env)
+TAO_NamingContext::new_context (CORBA::Environment &TAO_IN_ENV)
 {
   ACE_GUARD_THROW_RETURN (ACE_Lock,
                           ace_mon,
@@ -520,13 +520,13 @@ TAO_NamingContext::new_context (CORBA::Environment &_env)
 
 CosNaming::NamingContext_ptr
 TAO_NamingContext::bind_new_context (const CosNaming::Name& n,
-                                    CORBA::Environment &_env)
+                                    CORBA::Environment &TAO_IN_ENV)
 {
   CosNaming::NamingContext_var result =
     CosNaming::NamingContext::_nil ();
 
-  result = new_context (_env);
-  TAO_CHECK_ENV_RETURN (_env, CosNaming::NamingContext::_nil ());
+  result = new_context (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, CosNaming::NamingContext::_nil ());
 
   TAO_TRY
     {
@@ -537,7 +537,7 @@ TAO_NamingContext::bind_new_context (const CosNaming::Name& n,
     }
   TAO_CATCHANY
     {
-      result->destroy (_env);
+      result->destroy (TAO_IN_ENV);
       TAO_RETHROW_RETURN (CosNaming::NamingContext::_nil ());
     }
   TAO_ENDTRY;
@@ -546,7 +546,7 @@ TAO_NamingContext::bind_new_context (const CosNaming::Name& n,
 }
 
 void
-TAO_NamingContext::destroy (CORBA::Environment &_env)
+TAO_NamingContext::destroy (CORBA::Environment &TAO_IN_ENV)
 {
   {
     ACE_GUARD_THROW (ACE_Lock,
@@ -594,7 +594,7 @@ void
 TAO_NamingContext::list (CORBA::ULong how_many,
                         CosNaming::BindingList_out bl,
                         CosNaming::BindingIterator_out bi,
-                        CORBA::Environment &_env)
+                        CORBA::Environment &TAO_IN_ENV)
 {
   // Allocate nil out parameters in case we won't be able to complete
   // the operation.
@@ -689,7 +689,7 @@ TAO_NamingContext::list (CORBA::ULong how_many,
 void
 TAO_NamingContext::list_helper (TAO_BindingIterator* &bind_iter,
                                TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter,
-                               CORBA::Environment &_env)
+                               CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -730,7 +730,7 @@ TAO_BindingIterator::_default_POA (CORBA::Environment &/*env*/)
 
 CORBA::Boolean
 TAO_BindingIterator::next_one (CosNaming::Binding_out b,
-                              CORBA::Environment &_env)
+                              CORBA::Environment &TAO_IN_ENV)
 {
   CosNaming::Binding *binding;
 
@@ -792,7 +792,7 @@ TAO_NamingContext::populate_binding (TAO_NamingContext::HASH_MAP::ENTRY *hash_en
 CORBA::Boolean
 TAO_BindingIterator::next_n (CORBA::ULong how_many,
                             CosNaming::BindingList_out bl,
-                            CORBA::Environment &_env)
+                            CORBA::Environment &TAO_IN_ENV)
 {
   // We perform an allocation before obtaining the lock so that an out
   // parameter is allocated in case we fail to obtain the lock.
@@ -840,7 +840,7 @@ TAO_BindingIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_BindingIterator::destroy (CORBA::Environment &_env)
+TAO_BindingIterator::destroy (CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {

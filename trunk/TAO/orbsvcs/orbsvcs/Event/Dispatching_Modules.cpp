@@ -232,9 +232,9 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
 
 void
 ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
-                                        CORBA::Environment &_env)
+                                        CORBA::Environment &TAO_IN_ENV)
 {
-  down_->connected (consumer, _env);
+  down_->connected (consumer, TAO_IN_ENV);
 
   // This code does dynamic allocation of channel dispatch threads.
   // It requires that consumer's priorities are known at connection
@@ -245,7 +245,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
   // We have to tell the lower portions of the channel about the
   // consumer first.  This is so that any changes to the consumer's
   // qos will take effect when we get the dispatch priority.
-  down_->connected (consumer, _env);
+  down_->connected (consumer, TAO_IN_ENV);
 
   RtecScheduler::OS_Priority priority =
     ACE_Scheduler::instance ().preemption_priority (consumer->qos ().rt_info_);
@@ -327,7 +327,7 @@ ACE_ES_Priority_Dispatching::disconnected (ACE_Push_Consumer_Proxy *consumer)
 // <request> has been dynamically allocated by the filtering module.
 void
 ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
-                                   CORBA::Environment &_env)
+                                   CORBA::Environment &TAO_IN_ENV)
 {
   ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE);
 
@@ -344,9 +344,9 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
          thread_priority,
          subpriority,
          preemption_priority,
-         _env);
+         TAO_IN_ENV);
       ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_OBTAINED);
-      if (_env.exception ())
+      if (TAO_IN_ENV.exception ())
         {
           return;
         }
@@ -723,10 +723,10 @@ ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
 
 void
 ACE_ES_RTU_Dispatching::push (ACE_ES_Dispatch_Request *request,
-                              CORBA::Environment &_env)
+                              CORBA::Environment &TAO_IN_ENV)
 {
   // First enqueue the message in the proper queue.
-  ACE_ES_Priority_Dispatching::push (request, _env);
+  ACE_ES_Priority_Dispatching::push (request, TAO_IN_ENV);
 
   // If the current event is higher priority (lower value) than the
   // current running task, then tell the task to preempt itself.

@@ -191,12 +191,12 @@ void
 TAO_Support_Attributes_i::
 type_repos (CosTrading::TypeRepository_ptr new_value)
 {
-  CORBA::Environment _env;
+  CORBA::Environment TAO_IN_ENV;
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
   this->type_repos_ = new_value;
   this->service_type_repos_ =
-    CosTradingRepos::ServiceTypeRepository::_narrow (new_value, _env);
+    CosTradingRepos::ServiceTypeRepository::_narrow (new_value, TAO_IN_ENV);
 }
 
 CosTradingRepos::ServiceTypeRepository_ptr

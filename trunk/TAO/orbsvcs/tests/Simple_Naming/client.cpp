@@ -35,10 +35,10 @@ public:
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id, CORBA::Environment &_env);
+  void id (CORBA::Short id, CORBA::Environment &TAO_IN_ENV);
   // Sets id.
 
-  CORBA::Short id (CORBA::Environment &_env);
+  CORBA::Short id (CORBA::Environment &TAO_IN_ENV);
   // Gets id.
 
 private:
@@ -55,13 +55,13 @@ My_Test_Object::~My_Test_Object (void)
 }
 
 CORBA::Short
-My_Test_Object::id (CORBA::Environment &_env)
+My_Test_Object::id (CORBA::Environment &TAO_IN_ENV)
 {
   return id_;
 }
 
 void
-My_Test_Object::id (CORBA::Short id, CORBA::Environment &_env)
+My_Test_Object::id (CORBA::Short id, CORBA::Environment &TAO_IN_ENV)
 {
   id_ = id;
 }
@@ -749,7 +749,7 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
 
 void
 Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context,
-                                    CORBA::Environment &_env)
+                                    CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -776,7 +776,7 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context,
 
 void
 Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
-                                     CORBA::Environment &_env)
+                                     CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -808,7 +808,7 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
 
 void
 Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
-                                      CORBA::Environment &_env)
+                                      CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -840,7 +840,7 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
 
 void
 Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
-                                 CORBA::Environment &_env)
+                                 CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -878,7 +878,7 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
 
 void
 Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -919,7 +919,7 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context,
 
 void
 Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -1119,7 +1119,7 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
 
 void
 Destroy_Test::not_empty_test (CosNaming::NamingContext_var &ref,
-                                    CORBA::Environment &_env)
+                                    CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -1142,7 +1142,7 @@ Destroy_Test::not_empty_test (CosNaming::NamingContext_var &ref,
 
 void
 Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref,
-                                    CORBA::Environment &_env)
+                                    CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {

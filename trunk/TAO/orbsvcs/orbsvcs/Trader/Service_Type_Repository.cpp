@@ -52,7 +52,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
 TAO_Service_Type_Repository::
-incarnation (CORBA::Environment& _env)
+incarnation (CORBA::Environment& TAO_IN_ENV)
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
   if (this->lock_->acquire_read () == -1)
@@ -76,7 +76,7 @@ add_type (const char * name,
           const char * if_name,
           const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
           const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
-          CORBA::Environment& _env)
+          CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -108,20 +108,20 @@ add_type (const char * name,
                       this->incarnation_);
 
   // make sure all property names are valid and appear only once.
-  this->validate_properties (prop_map, props, _env);
-  TAO_CHECK_ENV_RETURN (_env, this->incarnation_);
+  this->validate_properties (prop_map, props, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, this->incarnation_);
 
   // check that all super_types exist, and none are duplicated.
-  this->validate_supertypes (super_map, super_types, _env);
-  TAO_CHECK_ENV_RETURN (_env, this->incarnation_);
+  this->validate_supertypes (super_map, super_types, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, this->incarnation_);
 
   // NOTE: I don't really know a way to do this without an Interface
   // Repository, since the Interface Repository IDs don't contain
   // information about supertypes.
   //
   // make sure interface name is legal.
-  //  this->validate_interface (if_name, super_types, _env);
-  //  TAO_CHECK_ENV_RETURN(_env, this->incarnation);
+  //  this->validate_interface (if_name, super_types, TAO_IN_ENV);
+  //  TAO_CHECK_ENV_RETURN(TAO_IN_ENV, this->incarnation);
   //
   // Instead, we do this:
   //
@@ -131,8 +131,8 @@ add_type (const char * name,
 
   // collect and make sure that properties of all supertypes and this type
   // are compatible.  We can use prop_map and super_types_map for the job.
-  this->validate_inheritance (prop_map, super_types, _env);
-  TAO_CHECK_ENV_RETURN (_env, this->incarnation_);
+  this->validate_inheritance (prop_map, super_types, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, this->incarnation_);
 
   // we can now use prop_map to construct a sequence of all properties the
   // this type.
@@ -158,7 +158,7 @@ add_type (const char * name,
 
 void
 TAO_Service_Type_Repository::remove_type (const char * name,
-                                          CORBA::Environment& _env)
+                                          CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -187,7 +187,7 @@ TAO_Service_Type_Repository::remove_type (const char * name,
 CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq*
 TAO_Service_Type_Repository::
 list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes& which_types,
-            CORBA::Environment& _env)
+            CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_READ_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -229,7 +229,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes&
 CosTradingRepos::ServiceTypeRepository::TypeStruct*
 TAO_Service_Type_Repository::
 describe_type (const char * name,
-               CORBA::Environment& _env)
+               CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
@@ -275,7 +275,7 @@ describe_type (const char * name,
 CosTradingRepos::ServiceTypeRepository::TypeStruct*
 TAO_Service_Type_Repository::
 fully_describe_type (const char * name,
-                     CORBA::Environment& _env)
+                     CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
@@ -314,7 +314,7 @@ fully_describe_type (const char * name,
 void
 TAO_Service_Type_Repository::
 mask_type (const char * name,
-           CORBA::Environment& _env)
+           CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -344,7 +344,7 @@ mask_type (const char * name,
 void
 TAO_Service_Type_Repository::
 unmask_type (const char * name,
-             CORBA::Environment& _env)
+             CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::IllegalServiceType,
                   CosTrading::UnknownServiceType,
@@ -457,7 +457,7 @@ void
 TAO_Service_Type_Repository::
 validate_properties (Prop_Map& prop_map,
                      const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
-                     CORBA::Environment& _env)
+                     CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
                    CosTrading::DuplicatePropertyName))
 {
@@ -482,7 +482,7 @@ void
 TAO_Service_Type_Repository::
 validate_supertypes (Service_Type_Map& super_map,
                      const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
-                     CORBA::Environment& _env)
+                     CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CosTrading::IllegalServiceType,
                   CosTrading::UnknownServiceType,
                   CosTrading::DuplicatePropertyName))
@@ -510,7 +510,7 @@ void
 TAO_Service_Type_Repository::
 validate_inheritance (Prop_Map& prop_map,
                       const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
-                      CORBA::Environment& _env)
+                      CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition))
 {
   CORBA::ULong num_super_types = super_types.length ();
@@ -549,7 +549,7 @@ validate_inheritance (Prop_Map& prop_map,
                 property_in_map = *existing_prop->int_id_;
 
               CORBA::TypeCode_ptr prop_type = property_in_map.value_type.in ();
-              if (! super_props[j].value_type->equal (prop_type, _env) ||
+              if (! super_props[j].value_type->equal (prop_type, TAO_IN_ENV) ||
                   super_props[j].mode > property_in_map.mode)
                 {
                   TAO_THROW (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition

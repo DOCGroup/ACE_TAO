@@ -46,7 +46,7 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                            RtecScheduler::Scheduler_ptr lcl_sched,
                            const char* lcl_name,
                            const char* rmt_name,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   this->rmt_ec_ = 
     RtecEventChannelAdmin::EventChannel::_duplicate (rmt_ec);
@@ -54,8 +54,8 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
 
   this->rmt_info_ = 
-    rmt_sched->create (rmt_name, _env);
-  if (_env.exception () != 0) return;
+    rmt_sched->create (rmt_name, TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   // @@ TODO Many things are hard-coded in the RT_Info here.
 
@@ -72,12 +72,12 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                   time,
                   0,
                   RtecScheduler::OPERATION,
-                  _env);
-  if (_env.exception () != 0) return;
+                  TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   this->lcl_info_ =
-    lcl_sched->create (lcl_name, _env);
-  if (_env.exception () != 0) return;
+    lcl_sched->create (lcl_name, TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   lcl_sched->set (this->lcl_info_,
                   RtecScheduler::VERY_HIGH_CRITICALITY,
@@ -87,8 +87,8 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                   time,
                   1,
                   RtecScheduler::REMOTE_DEPENDANT,
-                  _env);
-  if (_env.exception () != 0) return;
+                  TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
 }
 
@@ -334,10 +334,10 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
 }
 
 int
-TAO_EC_Gateway_IIOP::shutdown (CORBA::Environment& _env)
+TAO_EC_Gateway_IIOP::shutdown (CORBA::Environment& TAO_IN_ENV)
 {
-  this->close (_env);
-  if (_env.exception () == 0) return -1;
+  this->close (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () == 0) return -1;
 
   this->lcl_ec_ = 0;
   this->rmt_ec_ = 0;

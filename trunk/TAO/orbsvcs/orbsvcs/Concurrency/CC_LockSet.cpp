@@ -54,7 +54,7 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
 // Initialization.
 
 void
-CC_LockSet::Init (CORBA::Environment &_env)
+CC_LockSet::Init (CORBA::Environment &TAO_IN_ENV)
 {
   // Set the mode of the statically allocated locks
   lock_[CC_IR] = 0;
@@ -91,7 +91,7 @@ CORBA::Boolean CC_LockSet::compatible (CC_LockModeEnum mr)
 
 void
 CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
-                  CORBA::Environment &_env)
+                  CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
 
@@ -111,7 +111,7 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
 
 CORBA::Boolean
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
-                      CORBA::Environment &_env)
+                      CORBA::Environment &TAO_IN_ENV)
 {
   CC_LockModeEnum lm = lmconvert (mode);
 
@@ -151,7 +151,7 @@ CC_LockSet::lmconvert (CosConcurrencyControl::lock_mode mode)
 
 void
 CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
-                    CORBA::Environment &_env)
+                    CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::unlock\n"));
@@ -204,7 +204,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
 void
 CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
                          CosConcurrencyControl::lock_mode new_mode,
-                         CORBA::Environment &_env)
+                         CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::change_mode\n"));
@@ -217,7 +217,7 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
         TAO_THROW (CosConcurrencyControl::LockNotHeld());
       else if (this->change_mode_i (lm_held, lm_new)==1)
         {
-          this->unlock (held_mode, _env);
+          this->unlock (held_mode, TAO_IN_ENV);
           TAO_CHECK_ENV;
 
           if (semaphore_.acquire () == -1)

@@ -59,7 +59,7 @@ Airplane_Server_i::parse_args (void)
 }
 
 int
-Airplane_Server_i::init (int argc, char** argv, CORBA::Environment& _env)
+Airplane_Server_i::init (int argc, char** argv, CORBA::Environment& TAO_IN_ENV)
 {
   char poa_name[] = "plane";
 

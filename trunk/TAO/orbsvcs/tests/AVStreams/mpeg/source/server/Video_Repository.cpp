@@ -26,7 +26,7 @@ CORBA::Any*
 TAO_Video_Repository::evalDP (const char* name,
                               CORBA::TypeCode_ptr returned_type,
                               const CORBA::Any& extra_info,
-			      CORBA::Environment& _env)
+			      CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_Video_Repository::evalDP:%s\n",name));

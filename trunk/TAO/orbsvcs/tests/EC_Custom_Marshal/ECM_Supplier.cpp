@@ -290,7 +290,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
 
 void
 ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -304,8 +304,8 @@ ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
                                     this->event_b_,
                                     this->event_period_,
                                     channel,
-                                    _env);
-      if (_env.exception () != 0) return;
+                                    TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
@@ -319,12 +319,12 @@ ECMS_Driver::activate_suppliers (CORBA::Environment &)
 }
 
 void
-ECMS_Driver::disconnect_suppliers (CORBA::Environment &_env)
+ECMS_Driver::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (_env);
-      if (_env.exception () != 0) return;
+      this->suppliers_[i]->disconnect (TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
@@ -431,7 +431,7 @@ Test_Supplier::connect (const char* name,
                         int event_b,
                         int event_period,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment &_env)
+                        CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -504,13 +504,13 @@ Test_Supplier::connect (const char* name,
 }
 
 void
-Test_Supplier::disconnect (CORBA::Environment &_env)
+Test_Supplier::disconnect (CORBA::Environment &TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (_env);
-  if (_env.exception () != 0) return;
+  this->consumer_proxy_->disconnect_push_consumer (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   this->consumer_proxy_ = 0;
 }
@@ -522,7 +522,7 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (CORBA::Environment& _env)
+Test_Supplier::disconnect_push_supplier (CORBA::Environment& TAO_IN_ENV)
 {
 }
 

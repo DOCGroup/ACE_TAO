@@ -50,13 +50,13 @@ TAO_CosEC_PushConsumerWrapper::~TAO_CosEC_PushConsumerWrapper ()
 
 void
 TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set,
-                                     CORBA::Environment &_env)
+                                     CORBA::Environment &TAO_IN_ENV)
 {
   for (CORBA::ULong i = 0;
        i < set.length ();
        ++i)
     this->consumer_->push (set[i].data.any_value,
-                           _env);
+                           TAO_IN_ENV);
 }
 
 void
@@ -132,8 +132,8 @@ void TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushCon
     TAO_THROW_ENV (CORBA::BAD_PARAM (CORBA::COMPLETED_NO),
                    TAO_TRY_ENV);
 
-  CORBA::Environment &_env = TAO_TRY_ENV;
-  // @@ The ACE_NEW_THROW macro uses TAO_THROW which assumes an _env declared.
+  CORBA::Environment &TAO_IN_ENV = TAO_TRY_ENV;
+  // @@ The ACE_NEW_THROW macro uses TAO_THROW which assumes an TAO_IN_ENV declared.
   // what i need here is an ACE_NEW_THROW_ENV macro.
 
   ACE_NEW_THROW (this->wrapper_,

@@ -631,7 +631,7 @@ Test_ECG::run (int argc, char* argv[])
 RtecEventChannelAdmin::EventChannel_ptr
 Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
                   const char* process_name,
-                  CORBA::Environment &_env)
+                  CORBA::Environment &TAO_IN_ENV)
 {
   const int bufsize = 512;
   char buf[bufsize];
@@ -643,27 +643,27 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
   channel_name[0].id = CORBA::string_dup (buf);
 
   CORBA::Object_var ec_ptr =
-    naming_context->resolve (channel_name, _env);
-  if (_env.exception () != 0 || CORBA::is_nil (ec_ptr.in ()))
+    naming_context->resolve (channel_name, TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0 || CORBA::is_nil (ec_ptr.in ()))
     return RtecEventChannelAdmin::EventChannel::_nil ();
 
   return RtecEventChannelAdmin::EventChannel::_narrow (ec_ptr.in (),
-                                                       _env);
+                                                       TAO_IN_ENV);
 }
 
 void
-Test_ECG::disconnect_suppliers (CORBA::Environment &_env)
+Test_ECG::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->hp_suppliers_ + this->lp_suppliers_; ++i)
     {
-      this->suppliers_[i]->close (_env);
-      if (_env.exception () != 0) return;
+      this->suppliers_[i]->close (TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
 void
 Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-                             CORBA::Environment &_env)
+                             CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -723,18 +723,18 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 }
 
 void
-Test_ECG::disconnect_consumers (CORBA::Environment &_env)
+Test_ECG::disconnect_consumers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
-      this->consumers_[i]->close (_env);
-      if (_env.exception () != 0) return;
+      this->consumers_[i]->close (TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
 void
 Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-                              CORBA::Environment &_env)
+                              CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -783,7 +783,7 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 
 void
 Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-                             CORBA::Environment &_env)
+                             CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -839,7 +839,7 @@ void
 Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
                        RtecEventChannelAdmin::EventChannel_ptr remote_ec,
                        RtecScheduler::Scheduler_ptr remote_sch,
-                       CORBA::Environment &_env)
+                       CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -881,25 +881,25 @@ void
 Test_ECG::push_supplier (void * /* cookie */,
                          RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
                          const RtecEventComm::EventSet &events,
-                         CORBA::Environment & _env)
+                         CORBA::Environment & TAO_IN_ENV)
 {
   this->wait_until_ready ();
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) events sent by supplier\n"));
   // @@ TODO we could keep somekind of stats here...
   if (!this->short_circuit_)
     {
-      consumer->push (events, _env);
+      consumer->push (events, TAO_IN_ENV);
     }
   else
     {
       int i = 0;
-      for (; i < this->hp_consumers_ && !_env.exception (); ++i)
+      for (; i < this->hp_consumers_ && !TAO_IN_ENV.exception (); ++i)
         {
-          this->consumers_[i]->push (events, _env);
+          this->consumers_[i]->push (events, TAO_IN_ENV);
         }
-      for (; i < this->hp_consumers_ + this->lp_consumers_ && !_env.exception (); ++i)
+      for (; i < this->hp_consumers_ + this->lp_consumers_ && !TAO_IN_ENV.exception (); ++i)
         {
-          this->consumers_[i]->push (events, _env);
+          this->consumers_[i]->push (events, TAO_IN_ENV);
         }
     }
 }
@@ -1002,7 +1002,7 @@ Test_ECG::wait_until_ready (void)
 void
 Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
                              RtecEventComm::PushConsumer_ptr consumer,
-                             CORBA::Environment& _env)
+                             CORBA::Environment& TAO_IN_ENV)
 {
 
   this->running_suppliers_--;
@@ -1021,7 +1021,7 @@ Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
       s.header.ec_recv_time = ORBSVCS_Time::zero;
       s.header.ec_send_time = ORBSVCS_Time::zero;
       s.header.type = ACE_ES_EVENT_SHUTDOWN;
-      consumer->push (shutdown, _env);
+      consumer->push (shutdown, TAO_IN_ENV);
     }
 }
 
@@ -1043,14 +1043,14 @@ Test_ECG::shutdown_consumer (int id)
 }
 
 int
-Test_ECG::shutdown (CORBA::Environment& _env)
+Test_ECG::shutdown (CORBA::Environment& TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the multiple EC test\n"));
 
   if (this->rmt_name_ != 0)
     {
-      this->ecg_.shutdown (_env);
-      if (_env.exception () != 0) return -1;
+      this->ecg_.shutdown (TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return -1;
     }
 
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
@@ -1304,7 +1304,7 @@ Test_Supplier::open (const char* name,
                      int message_count,
                      const RtecScheduler::Period_t& rate,
                      RtecEventChannelAdmin::EventChannel_ptr ec,
-                     CORBA::Environment &_env)
+                     CORBA::Environment &TAO_IN_ENV)
 {
   this->event_a_ = event_a;
   this->event_b_ = event_b;
@@ -1378,12 +1378,12 @@ Test_Supplier::open (const char* name,
 }
 
 void
-Test_Supplier::close (CORBA::Environment &_env)
+Test_Supplier::close (CORBA::Environment &TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (_env);
+  this->consumer_proxy_->disconnect_push_consumer (TAO_IN_ENV);
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
@@ -1392,7 +1392,7 @@ void
 Test_Supplier::activate (const char* name,
                          const RtecScheduler::Period_t& rate,
                          RtecEventChannelAdmin::EventChannel_ptr ec,
-                         CORBA::Environment &_env)
+                         CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -1467,7 +1467,7 @@ Test_Supplier::activate (const char* name,
 
 void
 Test_Supplier::push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment& _env)
+                     CORBA::Environment& TAO_IN_ENV)
 {
 #if 0
    const int bufsize = 128;
@@ -1510,11 +1510,11 @@ Test_Supplier::push (const RtecEventComm::EventSet& events,
 
       if (this->message_count_ < 0)
         {
-          //this->supplier_proxy_->disconnect_push_supplier (_env);
-          //if (_env.exception () != 0) return;
+          //this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);
+          //if (TAO_IN_ENV.exception () != 0) return;
           this->test_->shutdown_supplier (this->cookie_,
                                           this->consumer_proxy_.in (),
-                                          _env);
+                                          TAO_IN_ENV);
         }
       if (this->message_count_ % 2 == 0)
         {
@@ -1529,16 +1529,16 @@ Test_Supplier::push (const RtecEventComm::EventSet& events,
   this->test_->push_supplier (this->cookie_,
                               this->consumer_proxy_.in (),
                               sent,
-                              _env);
+                              TAO_IN_ENV);
 }
 
 void
-Test_Supplier::disconnect_push_supplier (CORBA::Environment& _env)
+Test_Supplier::disconnect_push_supplier (CORBA::Environment& TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (_env);
+  this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);
 }
 
 void
@@ -1564,7 +1564,7 @@ void
 Test_Consumer::open (const char* name,
                      int event_a, int event_b,
                      RtecEventChannelAdmin::EventChannel_ptr ec,
-                     CORBA::Environment& _env)
+                     CORBA::Environment& TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -1623,22 +1623,22 @@ Test_Consumer::open (const char* name,
 }
 
 void
-Test_Consumer::close (CORBA::Environment &_env)
+Test_Consumer::close (CORBA::Environment &TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (_env);
+  this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void
 Test_Consumer::push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+                     CORBA::Environment &TAO_IN_ENV)
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-  this->test_->push_consumer (this->cookie_, arrival, events, _env);
+  this->test_->push_consumer (this->cookie_, arrival, events, TAO_IN_ENV);
 }
 
 void

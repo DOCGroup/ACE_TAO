@@ -28,26 +28,26 @@ MMDevice_Exporter_i::connections (void) const
 
 // CORBA::Object_ptr
 // MMDevice_Exporter_i::
-// audio_mmdevice_reference_ (CORBA_Environment &_env)
+// audio_mmdevice_reference_ (CORBA_Environment &TAO_IN_ENV)
 // {
 //   return this->audio_mmdevice_;
 // }
 
 // CORBA::Object_ptr
 // MMDevice_Exporter_i::
-// video_mmdevice_reference_ (CORBA_Environment &_env)
+// video_mmdevice_reference_ (CORBA_Environment &TAO_IN_ENV)
 // {
 //   return this->video_mmdevice_;
 // }
 
  CORBA::Object_ptr 
-MMDevice_Exporter_i::get_audio_mmdevice (CORBA_Environment &_env)
+MMDevice_Exporter_i::get_audio_mmdevice (CORBA_Environment &TAO_IN_ENV)
 {
   return CORBA::Object::_duplicate (this->audio_mmdevice_);
 }
 
 CORBA::Object_ptr 
-MMDevice_Exporter_i::get_video_mmdevice (CORBA_Environment &_env)
+MMDevice_Exporter_i::get_video_mmdevice (CORBA_Environment &TAO_IN_ENV)
 {
   return CORBA::Object::_duplicate (this->video_mmdevice_);
 }
@@ -602,14 +602,14 @@ AV_Server::run (CORBA::Environment& env){
 }
 
 void
-AV_Server::export_properties (CORBA::Environment& _env)
+AV_Server::export_properties (CORBA::Environment& TAO_IN_ENV)
 {
-  CORBA::Object_ptr mmdevice_object_ptr = this->mmdevice_exporter_->_this (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  CORBA::Object_ptr mmdevice_object_ptr = this->mmdevice_exporter_->_this (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   CosPropertyService::PropertySet_ptr mmdevice_prop_set =
-  CosPropertyService::PropertySet::_narrow (mmdevice_object_ptr, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  CosPropertyService::PropertySet::_narrow (mmdevice_object_ptr, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // Instantiate the property exporter helper class.
   TAO_Property_Exporter mmdevice_prop_exporter (this->trader_, mmdevice_prop_set);
@@ -625,15 +625,15 @@ AV_Server::export_properties (CORBA::Environment& _env)
 			  (CosTrading::ServiceTypeName) MMDEVICE_SERVICE_TYPE,
                           this->prop_seq_,
                           mmdevice_super_types,
-			  _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+			  TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
  
 
 }
 
 int
-AV_Server::resolve_trader (CORBA::Environment& _env)
+AV_Server::resolve_trader (CORBA::Environment& TAO_IN_ENV)
 {
   if (this->trader_.ptr () == 0)
     {
@@ -651,12 +651,12 @@ AV_Server::resolve_trader (CORBA::Environment& _env)
 
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
-      this->trader_ = CosTrading::Lookup::_narrow (trading_obj.in (), _env);
-      TAO_CHECK_ENV_RETURN (_env, -1);
+      this->trader_ = CosTrading::Lookup::_narrow (trading_obj.in (), TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
 
       // Add property definitions to the service type.
       CORBA::ULong offset = this->mmdevice_exporter_->define_properties (this->prop_seq_);
-      //      TAO_CHECK_ENV_RETURN (_env,-1);
+      //      TAO_CHECK_ENV_RETURN (TAO_IN_ENV,-1);
       offset += this->mach_props_.define_properties (this->prop_seq_, offset);
       this->video_rep_.define_properties (this->prop_seq_, offset);
     }

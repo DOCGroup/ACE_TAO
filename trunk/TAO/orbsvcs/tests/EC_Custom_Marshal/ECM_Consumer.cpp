@@ -177,7 +177,7 @@ void
 Driver::push_consumer (void* consumer_cookie,
                        ACE_hrtime_t arrival,
                        const RtecEventComm::EventSet& events,
-                       CORBA::Environment &_env)
+                       CORBA::Environment &TAO_IN_ENV)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -237,8 +237,8 @@ Driver::push_consumer (void* consumer_cookie,
       TAO_InputCDR cdr (mb, byte_order);
 
       ECM_IDLData::Info info;
-      cdr.decode (ECM_IDLData::_tc_Info, &info, 0, _env);
-      if (_env.exception () != 0) return;
+      cdr.decode (ECM_IDLData::_tc_Info, &info, 0, TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
 
       ECM_Data other;
       cdr >> other;
@@ -267,7 +267,7 @@ Driver::push_consumer (void* consumer_cookie,
 
 void
 Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
@@ -281,18 +281,18 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
                                     this->event_a_,
                                     this->event_b_,
                                     channel,
-                                    _env);
-      if (_env.exception () != 0) return;
+                                    TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
 void
-Driver::disconnect_consumers (CORBA::Environment &_env)
+Driver::disconnect_consumers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (_env);
-      if (_env.exception () != 0) return;
+      this->consumers_[i]->disconnect (TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
@@ -376,14 +376,14 @@ void
 Test_Consumer::connect (const char* name,
                         int event_a, int event_b,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment& _env)
+                        CORBA::Environment& TAO_IN_ENV)
 {
   RtecScheduler::Scheduler_ptr server =
     ACE_Scheduler_Factory::server ();
 
   RtecScheduler::handle_t rt_info =
-    server->create (name, _env);
-  if (_env.exception () != 0) return;
+    server->create (name, TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -398,8 +398,8 @@ Test_Consumer::connect (const char* name,
                time,
                0,
                RtecScheduler::OPERATION,
-               _env);
-  if (_env.exception () != 0) return;
+               TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -409,40 +409,40 @@ Test_Consumer::connect (const char* name,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (_env);
-  if (_env.exception () != 0) return;
+    ec->for_consumers (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (_env);
-  if (_env.exception () != 0) return;
+    consumer_admin->obtain_push_supplier (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
-  RtecEventComm::PushConsumer_var objref = this->_this (_env);
-  if (_env.exception () != 0) return;
+  RtecEventComm::PushConsumer_var objref = this->_this (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS (),
-                                                _env);
-  if (_env.exception () != 0) return;
+                                                TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 }
 
 void
-Test_Consumer::disconnect (CORBA::Environment &_env)
+Test_Consumer::disconnect (CORBA::Environment &TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (_env);
-  if (_env.exception () != 0) return;
+  this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0) return;
 
   this->supplier_proxy_ = 0;
 }
 
 void
 Test_Consumer::push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+                     CORBA::Environment &TAO_IN_ENV)
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-  this->driver_->push_consumer (this->cookie_, arrival, events, _env);
+  this->driver_->push_consumer (this->cookie_, arrival, events, TAO_IN_ENV);
 }
 
 void

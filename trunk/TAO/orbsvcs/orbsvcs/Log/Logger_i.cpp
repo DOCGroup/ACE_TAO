@@ -28,7 +28,7 @@ Logger_Factory_i::~Logger_Factory_i (void)
 
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
-                               CORBA::Environment &_env)
+                               CORBA::Environment &TAO_IN_ENV)
 {
   Logger_i *result;
   // If name is already in the map, <find> will assign <result> to the
@@ -70,7 +70,7 @@ Logger_Factory_i::make_logger (const char *name,
   // registration attempt.
   // @@ Matt, this code doesn't seem right.  Can you please check with
   // Irfan and Carlos about whether this is the right thing to do?
-  return result->_this (_env);
+  return result->_this (TAO_IN_ENV);
 }
 
 Logger_i::Logger_i (const char *name)
@@ -120,30 +120,30 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 
 void
 Logger_i::log (const Logger::Log_Record &log_rec,
-               CORBA::Environment &_env)
+               CORBA::Environment &TAO_IN_ENV)
 {
-  this->logv (log_rec, verbosity_level_, _env);
+  this->logv (log_rec, verbosity_level_, TAO_IN_ENV);
 }
 
 void
 Logger_i::log2 (const Logger::Log_Record &log_rec,
-               CORBA::Environment &_env)
+               CORBA::Environment &TAO_IN_ENV)
 {
-  this->logv (log_rec, verbosity_level_, _env);
+  this->logv (log_rec, verbosity_level_, TAO_IN_ENV);
 }
 
 void
 Logger_i::logv2 (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity,
-               CORBA::Environment &_env)
+               CORBA::Environment &TAO_IN_ENV)
 {
-  this->logv (log_rec, verbosity, _env);
+  this->logv (log_rec, verbosity, TAO_IN_ENV);
 }
 
 void
 Logger_i::logv (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity,
-               CORBA::Environment &_env)
+               CORBA::Environment &TAO_IN_ENV)
 {
   ACE_Time_Value temp (log_rec.time);
 

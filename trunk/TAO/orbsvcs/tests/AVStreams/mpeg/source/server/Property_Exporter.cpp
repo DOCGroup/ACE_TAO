@@ -23,7 +23,7 @@ public:
   virtual CORBA::Any* evalDP (const char* name,
                               CORBA::TypeCode_ptr returned_type,
                               const CORBA::Any& extra_info,
-			      CORBA::Environment& _env)
+			      CORBA::Environment& TAO_IN_ENV)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
   // Call back to the Property Service interface. The Property
   // Service reference is contained in the extra_info -- an
@@ -50,7 +50,7 @@ CORBA::Any*
 DP_Adapter::evalDP (const char* name,
                     CORBA::TypeCode_ptr returned_type,
                     const CORBA::Any& extra_info,
-		    CORBA::Environment& _env)
+		    CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   TAO_TRY
@@ -188,7 +188,7 @@ add_dynamic_property (const char* name,
 CosTrading::OfferId
 TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
 			       const CosTrading::ServiceTypeName type,
-			       CORBA::Environment& _env)
+			       CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		   CosTrading::Register::InvalidObjectRef, 
 		   CosTrading::IllegalServiceType, 
@@ -200,18 +200,18 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
 		   CosTrading::MissingMandatoryProperty, 
 		   CosTrading::DuplicatePropertyName))
 {
-  CosTrading::Register_var reg = this->lookup_->register_if (_env);
-  TAO_CHECK_ENV_RETURN (_env, 0);
+  CosTrading::Register_var reg = this->lookup_->register_if (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
 
   // Export the offer to the trader under the given type.
   CosTrading::OfferId offer_id = 0;
   this->tprops_.length (this->tcount_);
-  offer_id = reg->export (object_ref, type, this->tprops_, _env);
-  TAO_CHECK_ENV_RETURN (_env, 0);
+  offer_id = reg->export (object_ref, type, this->tprops_, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
 
   this->pprops_.length (this->pcount_);
-  this->prop_set_->define_properties (this->pprops_, _env);
-  TAO_CHECK_ENV_RETURN (_env, offer_id);
+  this->prop_set_->define_properties (this->pprops_, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, offer_id);
   
   return offer_id;
 }
@@ -221,7 +221,7 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
 			       const CosTrading::ServiceTypeName type,
 			       const TRADING_REPOS::PropStructSeq& props,
 			       const TRADING_REPOS::ServiceTypeNameSeq& stypes,
-			       CORBA::Environment& _env)
+			       CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosTrading::IllegalServiceType, 
 		   TRADING_REPOS::ServiceTypeExists, 
@@ -249,18 +249,18 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
       TAO_CHECK_ENV;
 
       /***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****/
-      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (_env);
+      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (TAO_IN_ENV);
       ACE_DEBUG ((LM_DEBUG, "Attempting add_type.\n"));
       CosTradingRepos::ServiceTypeRepository_var str =
-	CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
+	CosTradingRepos::ServiceTypeRepository::_narrow (obj, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
 
       str->add_type (type,
 		     object_ref->_interface_repository_id (),
 		     props,
 		     stypes,
-		     _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);      
+		     TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);      
       /***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****/
       
       // Attempt to export the offer.
@@ -271,13 +271,13 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
     }
   TAO_CATCH (CosTrading::UnknownServiceType, excp)    
     {      
-      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (_env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
+      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
 
       ACE_DEBUG ((LM_DEBUG, "Export failed. Attempting add_type.\n"));
       CosTradingRepos::ServiceTypeRepository_var str =
-	CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
+	CosTradingRepos::ServiceTypeRepository::_narrow (obj, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
       
       // If the ServiceTypeName wasn't found, we'll have to add the
       // type to the Service Type repository ourselves.
@@ -285,13 +285,13 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
 		     object_ref->_interface_repository_id (),
 		     props,
 		     stypes,
-		     _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
+		     TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
 
       // Now we'll try again to register the offer.
       ACE_DEBUG ((LM_DEBUG, "Attempting export again.\n"));
-      offer_id = reg->export (object_ref, type, this->tprops_, _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
+      offer_id = reg->export (object_ref, type, this->tprops_, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
     }
   TAO_CATCHANY
     {
@@ -367,7 +367,7 @@ TAO_Property_Modifier::modify_property (const char* name, const Any& value)
 
 void
 TAO_Property_Modifier::commit (CosTrading::OfferId id,
-			       CORBA::Environment& _env)
+			       CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosPropertyService::MultipleExceptions,
 		   CosTrading::NotImplemented, 
@@ -387,17 +387,17 @@ TAO_Property_Modifier::commit (CosTrading::OfferId id,
   this->pdelete_.length (this->pdcount_);
   this->pmodify_.length (this->pmcount_);
 
-  CosTrading::Register_var reg = this->lookup_->register_if (_env);
-  TAO_CHECK_ENV_RETURN (_env,);
+  CosTrading::Register_var reg = this->lookup_->register_if (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,);
   
-  reg->modify (id, this->tdelete_, this->tmodify_, _env);
-  TAO_CHECK_ENV_RETURN (_env,);
+  reg->modify (id, this->tdelete_, this->tmodify_, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,);
 
-  this->prop_set_->define_properties (this->pmodify_, _env);
-  TAO_CHECK_ENV_RETURN (_env,);
+  this->prop_set_->define_properties (this->pmodify_, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,);
 
-  this->prop_set_->delete_properties (this->pdelete_, _env);
-  TAO_CHECK_ENV_RETURN (_env,);
+  this->prop_set_->delete_properties (this->pdelete_, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,);
 }
 
 

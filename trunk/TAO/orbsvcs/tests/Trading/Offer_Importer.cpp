@@ -12,7 +12,7 @@ TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
 }
 
 void
-TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
+TAO_Offer_Importer::perform_queries (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -34,12 +34,12 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
   policies.return_card (16*NUM_OFFERS);
   policies.link_follow_rule (CosTrading::always);
 
-  this->perform_queries_with_policies (policies, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->perform_queries_with_policies (policies, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
-TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
+TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -63,16 +63,16 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
 
   if (this->verbose_)
     ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
-  CosTrading::Link_var link_if = this->lookup_->link_if (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  CosTrading::Link_var link_if = this->lookup_->link_if (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   if (this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG, "Obtaining references to traders directly"
                   " linked to the root trader.\n"));
     }
-  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   if (link_name_seq->length () > 0)
     {
@@ -83,25 +83,25 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
         }
 
       CosTrading::Link::LinkInfo_var link_info =
-        link_if->describe_link (link_name_seq[0], _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+        link_if->describe_link (link_name_seq[0], TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
       CosTrading::Lookup_var lookup_if;
 #ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
-      CORBA::Object_var obj = orb->string_to_object (link_info->target, _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
-      lookup_if = CosTrading::Lookup::_narrow (obj.in (), _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      CORBA::Object_var obj = orb->string_to_object (link_info->target, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+      lookup_if = CosTrading::Lookup::_narrow (obj.in (), TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 #else
       lookup_if = CosTrading::Lookup::_duplicate (link_info->target.in ());
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
-      CosTrading::Link_var link_if2 = lookup_if->link_if (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      CosTrading::Link_var link_if2 = lookup_if->link_if (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
-      CosTrading::LinkNameSeq_var link_name_seq2 = link_if2->list_links (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      CosTrading::LinkNameSeq_var link_name_seq2 = link_if2->list_links (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
       if (link_name_seq2->length () > 0)
         {
@@ -127,8 +127,8 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
               policies.starting_trader (new CosTrading::TraderName
                                         (2, 2, trader_name, 1));
 
-              this->perform_queries_with_policies (policies, _env);
-              TAO_CHECK_ENV_RETURN_VOID (_env);
+              this->perform_queries_with_policies (policies, TAO_IN_ENV);
+              TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
             }
         }
       else
@@ -148,7 +148,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
 void
 TAO_Offer_Importer::
 perform_queries_with_policies (const TAO_Policy_Manager& policies,
-                               CORBA::Environment& _env)
+                               CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -238,7 +238,7 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
 void
 TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
                                      CosTrading::OfferIterator_ptr offer_iterator,
-                                     CORBA::Environment& _env) const
+                                     CORBA::Environment& TAO_IN_ENV) const
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TRY

@@ -95,7 +95,7 @@ int
 IR_Helper::register_server (const char *comm_line, 
                             const char *environment, 
                             const char *working_dir, 
-                            CORBA_Environment &_env)
+                            CORBA_Environment &TAO_IN_ENV)
 {
   TAO_TRY 
     {
@@ -131,9 +131,9 @@ IR_Helper::register_server (const char *comm_line,
 }
 
 int
-IR_Helper::read_ir_ior (CORBA_Environment &_env)
+IR_Helper::read_ir_ior (CORBA_Environment &TAO_IN_ENV)
 {
-  ACE_UNUSED_ARG (_env);
+  ACE_UNUSED_ARG (TAO_IN_ENV);
   
   // Open the file for reading.
   // @@ Hard-coded name is bad.  Need to fix.
@@ -158,7 +158,7 @@ IR_Helper::read_ir_ior (CORBA_Environment &_env)
 
 
 void
-IR_Helper::notify_startup (CORBA_Environment &_env)
+IR_Helper::notify_startup (CORBA_Environment &TAO_IN_ENV)
 {
   // Get our host and port and convert it to something we can use.
   ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
@@ -185,7 +185,7 @@ IR_Helper::notify_startup (CORBA_Environment &_env)
 
 // Notify the IR that the server has been shut down.
 void 
-IR_Helper::notify_shutdown (CORBA_Environment &_env)
+IR_Helper::notify_shutdown (CORBA_Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -201,7 +201,7 @@ IR_Helper::notify_shutdown (CORBA_Environment &_env)
 
 
 void
-IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &_env)
+IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV)
 {
   IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
   IIOP_Object *implrepo_obj = ACE_dynamic_cast (IIOP_Object *, this->implrepo_->_stubobj ());
