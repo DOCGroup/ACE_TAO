@@ -1,3 +1,47 @@
+Mon Nov 23 01:20:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Object.cpp (do_static_call): Made the method native
+	  exception safe so it will not return prematurely and will try
+	  out all the forwarding profiles one by one.
+
+	* tao/Invocation.cpp (invoke): Make sure all the invoke method
+	  doesn't send back GIOP MessageError back to server.  They should
+	  be taken care of in TAO_GIOP::recv_request.  Also made these
+	  invoke methods native exception safe so the connections get
+	  closed down properly and error messages gets generated as
+	  directed.
+
+	* tao/try_macros.h: Added more "exception" handling macros for
+	  TAO's internal use.  The motivation is to reuse the
+ 	  CORBA_Environment passed in to TAO's internal function to avoid
+	  declaring more env variables and copying exceptions between
+	  these variables.  
+
+	* tao/GIOP.{h,cpp}: The following changes are needed to make sure
+	  we differentiate receiving a GIOP MessageError from something
+	  goes wrong when receiving a request.  It also makes sure that
+	  the ORB doesn't send out MessageError unnecessarily.
+
+	  (make_error): Removed unused method.
+	  (GIOP::MessageType): Added CommunicationError to further
+	  classify errors.
+	  (send_error): Changed the server type from
+	  <TAO_Client_Connection_Handler *&> to <TAO_SVC_HANDLER *&>
+	  because this method is not used by clients only.
+	  (recv_request): Made sure the proper error status get returned
+	  in various stages.  Prevented it from sending sendsuperfluous
+	  MessageError back to its party.  Only GIOP header receiving
+	  errors can trigger that.
+	  (parse_header_std): Changed from returning MessageError to -1.
+	  If something goes wrong here, it doesn't mean we received a
+	  MessageError message.
+	
+	* tao/Connect.cpp (handle_input): Made sure we differentiate the
+	  real GIOP MessageError and other cases when errors occur in
+	  receiving a request.  Also make sure the server won't throw
+	  unnecessary exception in any case when receiving requests.
+	  Otherwise, the server may crash because of a rogue link.
+
 Sun Nov 22 18:20:11 1998 Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
