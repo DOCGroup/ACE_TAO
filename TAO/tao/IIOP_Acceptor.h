@@ -34,6 +34,11 @@ typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
 
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
+  // = TITLE
+  //   @@ Fred, please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Fred, please fill in here.
 public:
   // TAO_IIOP_Acceptor (ACE_INET_Addr &addr);
   // Create Acceptor object using addr.
@@ -48,15 +53,15 @@ public:
   // create profile object for this Acceptor using the SAP
   // (service access point, Host and Port) and object_key.
 
-  virtual ACE_Event_Handler* acceptor (void);
+  virtual ACE_Event_Handler *acceptor (void);
   // Return the underlying acceptor object, ACE_Acceptor
 
 private:
-
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
+  //   @@ Fred, please fill in here.
 
   CORBA::ULong tag_;
-
+  //   @@ Fred, please fill in here.
 };
 
 #endif  /* TAO_IIOP_ACCEPTOR_H */

@@ -13,7 +13,7 @@
 //     IIOP profile specific processing
 //
 // = AUTHOR
-//     Fred Kuhns
+//     Fred Kuhns <fredk@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -30,6 +30,12 @@ class TAO_Client_Connection_Handler;
 // TAO IIOP_Profile concrete Profile definitions
 class TAO_Export TAO_IIOP_Profile : public TAO_Profile
 {
+  // = TITLE
+  //   @@ Fred, please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Fred, please fill in here.
+
 public:
   enum
     {
@@ -37,46 +43,56 @@ public:
       DEF_IIOP_MINOR = 0
     };
 
-  static const char *prefix ();
-  // return the char string prefix
+  static const char *prefix (void);
+  // Return the char string prefix.
 
-  TAO_IIOP_Profile (const ACE_INET_Addr& addr,
+  TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                     const char *object_key);
+  //   @@ Fred, please fill in here.
 
-  TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                    const TAO_ObjectKey& object_key);
+  TAO_IIOP_Profile (const ACE_INET_Addr &addr,
+                    const TAO_ObjectKey &object_key);
+  //   @@ Fred, please fill in here.
 
-  TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                    const Version& version,
+  TAO_IIOP_Profile (const ACE_INET_Addr &addr,
+                    const Version &version,
                     const char *object_key);
+  //   @@ Fred, please fill in here.
 
-  TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                    const Version& version,
-                    const TAO_ObjectKey& object_key);
+  TAO_IIOP_Profile (const ACE_INET_Addr &addr,
+                    const Version &version,
+                    const TAO_ObjectKey &object_key);
+  //   @@ Fred, please fill in here.
 
-  TAO_IIOP_Profile (const char* host,
+  TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
-                    const TAO_ObjectKey& object_key,
-		    const ACE_INET_Addr& addr);
+                    const TAO_ObjectKey &object_key,
+		    const ACE_INET_Addr &addr);
+  //   @@ Fred, please fill in here.
 
-  TAO_IIOP_Profile (const char* host,
+  TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
-                    const TAO_ObjectKey& object_key);
+                    const TAO_ObjectKey &object_key);
+  //   @@ Fred, please fill in here.
 
-  TAO_IIOP_Profile (const char* host,
+  TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
-                    const Version& version,
-                    const TAO_ObjectKey& object_key);
+                    const Version &version,
+                    const TAO_ObjectKey &object_key);
+  //   @@ Fred, please fill in here.
 
-  TAO_IIOP_Profile (const char* string,
+  TAO_IIOP_Profile (const char *string,
                     CORBA::Environment &env);
-  // crate object using string as ior
+  // Create object using string as ior.
 
   TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile);
+  //   @@ Fred, please fill in here.
 
   TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile);
-  
-  TAO_IIOP_Profile (const Version& version);
+  //   @@ Fred, please fill in here.
+
+  TAO_IIOP_Profile (const Version &version);
+  //   @@ Fred, please fill in here.
 
   TAO_IIOP_Profile (void);
   // All of the various creator methods ...
@@ -110,11 +126,13 @@ public:
 
   CORBA::TypeCode::traverse_status encode (TAO_OutputCDR *&stream,
                                            CORBA::Environment &env);
+  //   @@ Fred, please fill in here.
 
   const TAO_ObjectKey &object_key (void) const;
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
-  // @@ depricated
+  // @@ deprecated
   TAO_ObjectKey *_key (CORBA::Environment &env);
+  //   @@ Fred, please fill in here.
 
   virtual void fwd_profiles (TAO_MProfile *mprofiles);
   // object will assume ownership for this object!!
@@ -124,57 +142,84 @@ public:
 
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
                                 CORBA::Environment &env);
-
+  //   @@ Fred, please fill in here.
 
   CORBA::ULong hash (CORBA::ULong max,
                      CORBA::Environment &env);
+  //   @@ Fred, please fill in here.
 
-  char *addr_to_string(void);
+  char *addr_to_string (void);
+  //   @@ Fred, please fill in here.
 
   ACE_Addr &object_addr (const ACE_Addr *addr);
-  ACE_Addr &object_addr (void);
+  //   @@ Fred, please fill in here.
 
+  ACE_Addr &object_addr (void);
+  //   @@ Fred, please fill in here.
+
+  // @@ Fred, are you sure you want to return a char * here or a const char *?
   char *host (void);
+  //   @@ Fred, please fill in here.
+
+  // @@ Fred, are you sure you want to return a char * here or a const char *?
   char *host (const char *h);
+  //   @@ Fred, please fill in here.
 
   CORBA::UShort port (void);
-  CORBA::UShort port (CORBA::UShort p);
+  //   @@ Fred, please fill in here.
 
+  CORBA::UShort port (CORBA::UShort p);
+  //   @@ Fred, please fill in here.
+
+  // @@ Fred, are you sure you want to return a Version * here or a const Version *?
   Version *version (void);
+  //   @@ Fred, please fill in here.
+
   Version *version (Version *v);
+  //   @@ Fred, please fill in here.
 
   TAO_Client_Connection_Handler *&hint (void);
+  //   @@ Fred, please fill in here.
+
   void reset_hint (void);
+  //   @@ Fred, please fill in here.
 
   TAO_Profile *_nil (void);
+  //   @@ Fred, please fill in here.
+
   TAO_IIOP_Profile &operator= (const TAO_IIOP_Profile &src);
+  //   @@ Fred, please fill in here.
 
   virtual CORBA::ULong _incr_refcnt (void);
-  virtual CORBA::ULong _decr_refcnt (void);
+  //   @@ Fred, please fill in here.
 
-  // @@ Move these to privte when decode is done!
+  virtual CORBA::ULong _decr_refcnt (void);
+  //   @@ Fred, please fill in here.
+
+  // @@ Move these to private when decode is done!
   char *host_;
   // Maybe just a <char*> to reduce memory allocation..
   CORBA::UShort port_;
   // TCP port number
 
 private:
-  int set (const ACE_INET_Addr& addr);
+  int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
 
+  // @@ Fred, please rename this to "forward_profiles"
   virtual TAO_MProfile *fwd_profiles (void);
   // this object keeps ownership of this object
   // NOT THREAD SAFE
 
   void create_body (void);
-  // does the work for add_profile.
+  // Does the work for <add_profile>.
 
 private:
   CORBA::ULong tag_;
-  // The tag, 
+  // The tag.
 
   TAO_opaque body_;
-  // marshaled profile (CDR).
+  // Marshaled profile (CDR).
 
   Version version_;
   // IIOP version number.
@@ -187,16 +232,16 @@ private:
   // invocations, etc.
   
   TAO_Client_Connection_Handler *hint_;
+  //   @@ Fred, please fill in here.
 
   ACE_SYNCH_MUTEX refcount_lock_;
-  // Mutex to protect reference count
+  // Mutex to protect reference count.
 
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
 
   TAO_MProfile *fwd_profiles_;
   // list of profiles which we should try forwarding on.
-
 };
 
 #endif  /* TAO_IIOP_PROFILE_H */

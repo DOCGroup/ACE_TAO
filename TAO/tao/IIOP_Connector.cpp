@@ -28,22 +28,26 @@ TAO_IIOP_Connector::tag (void)
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : tag_(TAO_IOP_TAG_INTERNET_IOP),
-    base_connector_()
+    base_connector_ ()
 {
 }
 
 TAO_Transport *
-TAO_IIOP_Connector::connect(TAO_Profile *profile, CORBA::Environment &env)
+TAO_IIOP_Connector::connect (TAO_Profile *profile,
+                             CORBA::Environment &env)
 {
   if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
-    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), env, 0);
-
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                          env,
+                          0);
   TAO_IIOP_Profile *iiop_profile =
-    ACE_dynamic_cast(TAO_IIOP_Profile*,profile);
+    ACE_dynamic_cast (TAO_IIOP_Profile *,
+                      profile);
 
   if (iiop_profile == 0)
-    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), env, 0);
-
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                          env,
+                          0);
 
 // Establish the connection and get back a <Client_Connection_Handler>.
 // @@ We do not have the ORB core
@@ -73,22 +77,26 @@ TAO_IIOP_Connector::connect(TAO_Profile *profile, CORBA::Environment &env)
 //    }
 //  else
 //#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
+
   // @@ think about making this a friend class!  FRED
   const ACE_INET_Addr &oa =
-    ACE_dynamic_cast (const ACE_INET_Addr &, iiop_profile->object_addr ());
+    ACE_dynamic_cast (const ACE_INET_Addr &,
+                      iiop_profile->object_addr ());
 
   if (base_connector_.connect (iiop_profile->hint (), oa) == -1)
-  { // Give users a clue to the problem.
-    if (TAO_orbdebug)
-      ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
-                  "%s failed (%p)\n",
-                  __FILE__,
-                  __LINE__,
-                  profile->addr_to_string (),
-                  "errno"));
+    { // Give users a clue to the problem.
+      if (TAO_orbdebug)
+        ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
+                    "%s failed (%p)\n",
+                    __FILE__,
+                    __LINE__,
+                    profile->addr_to_string (),
+                    "errno"));
 
-    TAO_THROW_ENV_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), env, 0);
-  }
+      TAO_THROW_ENV_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO),
+                            env,
+                            0);
+    }
 
   // the connect call will set the hint () stored in the Profile
   // object.
@@ -108,14 +116,14 @@ TAO_IIOP_Connector::open(TAO_Resource_Factory *trf, ACE_Reactor *reactor)
 }
 
 int
-TAO_IIOP_Connector::close ()
+TAO_IIOP_Connector::close (void)
 {
   this->base_connector_.close ();
   return 0;
 }
 
 int
-TAO_IIOP_Connector::preconnect(char* preconnections)
+TAO_IIOP_Connector::preconnect (char* preconnections)
 {
 #if 0
   if (preconnections)
@@ -126,6 +134,7 @@ TAO_IIOP_Connector::preconnect(char* preconnections)
 
       char *nextptr = 0;
       char *where = 0;
+
       for (where = ACE::strsplit_r (preconnections, ",", nextptr);
            where != 0;
            where = ACE::strsplit_r (0, ",", nextptr))
