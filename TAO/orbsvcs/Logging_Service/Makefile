@@ -15,7 +15,9 @@ BIN2 = Logging_Service
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Log,$(findstring Log,$(TAO_ORBSVCS)))
   ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-    BIN = $(BIN2)
+    ifeq ($(minimum_corba),0)
+      BIN = $(BIN2)
+    endif # minimum_corba
   endif # Naming
 endif # Log
 

@@ -1,3 +1,9 @@
+Wed Apr 19 15:19:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/LifeCycle_Service/Makefile:
+	* orbsvcs/Logging_Service/Makefile:
+	  Missed in the last round of changes.
+
 Wed Apr 19 15:47:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp:
