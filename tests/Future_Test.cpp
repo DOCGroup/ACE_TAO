@@ -284,7 +284,6 @@ Scheduler::work (u_long newparam, int newcount)
 static int n_loops = 100;
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Future<const char *>;
 template class ACE_Future<u_long>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
