@@ -1,3 +1,8 @@
+Thu Aug 28 03:46:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Utils/Utils.mpc:
+          Added missing mpc file.
+
 Wed Aug 27 17:37:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc 
