@@ -43,7 +43,8 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "usage: %n [-d (don't release mutex)] [-c (child process)] [-n mutex name] \n"));
+              ASYS_TEXT ("usage: %n [-d (don't release mutex)] ")
+              ASYS_TEXT ("[-c (child process)] [-n mutex name] \n")));
   ACE_OS::exit (1);
 }
 
@@ -85,17 +86,17 @@ acquire_release (void)
   ACE_ASSERT (mutex.acquire () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P) Mutex acquired %s\n",
+              ASYS_TEXT ("(%P) Mutex acquired %s\n"),
               mutex_name));
   ACE_DEBUG ((LM_DEBUG,
-              "(%P) Working....\n"));
+              ASYS_TEXT ("(%P) Working....\n")));
   // work
   ACE_OS::sleep (2);
   // Check if we need to release the mutex
   if (release_mutex == 1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P) Releasing the mutex %s\n",
+                  ASYS_TEXT ("(%P) Releasing the mutex %s\n"),
                   mutex_name));
       ACE_ASSERT (mutex.release () == 0);
     }
@@ -110,7 +111,8 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 
   ACE_START_TEST (ASYS_TEXT ("Process_Mutex_Test"));
-  ACE_ERROR ((LM_INFO, ASYS_TEXT ("fork is not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
 #else  /* ! ACE_LACKS_FORK */
 
@@ -131,12 +133,14 @@ main (int argc, ASYS_TCHAR *argv[])
       ACE_Process_Options options;
       if (release_mutex == 0)
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                              ACE_TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
+                              ACE_TEXT ("Process_Mutex_Test")
+                                ACE_PLATFORM_EXE_SUFFIX
                               ACE_TEXT (" -c -n %s -d"),
                               ACE_WIDE_STRING (mutex_name));
       else
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                              ACE_TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
+                              ACE_TEXT ("Process_Mutex_Test")
+                                ACE_PLATFORM_EXE_SUFFIX
                               ACE_TEXT (" -c -n %s"),
                               ACE_WIDE_STRING (mutex_name));
 
@@ -148,8 +152,11 @@ main (int argc, ASYS_TCHAR *argv[])
         {
           ACE_ASSERT (servers[i].spawn (options) != -1);
           ACE_DEBUG ((LM_DEBUG,
-                      "Server forked with pid = %d.\n",
+                      ASYS_TEXT ("Server forked with pid = %d.\n"),
                       servers[i].getpid ()));
+
+          // Give the server a chance to start . . .
+          ACE_OS::sleep (1);
         }
 
       for (i = 0; i < processes; i++)
@@ -157,7 +164,7 @@ main (int argc, ASYS_TCHAR *argv[])
           // Wait for the process we created to exit.
           ACE_ASSERT (servers[i].wait () != -1);
           ACE_DEBUG ((LM_DEBUG,
-                      "Server %d finished\n",
+                      ASYS_TEXT ("Server %d finished\n"),
                       servers[i].getpid ()));
         }
 
