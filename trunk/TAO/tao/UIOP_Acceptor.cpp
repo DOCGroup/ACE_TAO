@@ -31,11 +31,6 @@
 
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 
-
-#if !defined(__ACE_INLINE__)
-#include "tao/UIOP_Acceptor.i"
-#endif /* __ACE_INLINE__ */
-
 // ****************************************************************
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
@@ -365,8 +360,13 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                 ACE_static_cast (CORBA::Short,
                                  ACE_OS::atoi (value.c_str ()));
 
-              if (corba_priority > 0 && corba_priority < 32767)
+              if (corba_priority >= 0
+                  /* && corba_priority < 32768 */)
                 {
+                  // priority_ and corba_priority will always be less
+                  // than 32768 since CORBA::Short is a signed 16 bit
+                  // integer.
+
                   this->priority_ = corba_priority;
                 }
               else

@@ -106,10 +106,6 @@ private:
   // occurs.
 };
 
-#  if defined(__ACE_INLINE__)
-#    include "tao/UIOP_Acceptor.i"
-#  endif /* __ACE_INLINE__ */
-
 # endif /* TAO_HAS_UIOP */
 
 #endif  /* TAO_UIOP_ACCEPTOR_H */
