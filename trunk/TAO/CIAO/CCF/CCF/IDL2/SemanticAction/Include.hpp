@@ -28,6 +28,19 @@ namespace CCF
         virtual void
         end () = 0;
       };
+
+      class SystemInclude
+      {
+      public:
+        virtual
+        ~SystemInclude () throw () {}
+
+        virtual void
+        begin (StringLiteralPtr const& sl) = 0;
+
+        virtual void
+        end () = 0;
+      };
     }
   }
 }

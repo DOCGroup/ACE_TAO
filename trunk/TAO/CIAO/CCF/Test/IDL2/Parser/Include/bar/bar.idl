@@ -1,0 +1,7 @@
+// file      : CCF/Test/IDL2/Include/bar/bar.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+#include "baz.idl"
+#include "../foo/foo.idl"
+

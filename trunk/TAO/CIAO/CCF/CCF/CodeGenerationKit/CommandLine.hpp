@@ -119,33 +119,6 @@ public:
     }
   }
 
-  // Arguments
-  //
-  //
-
-  typedef
-  std::vector<std::string>
-  Arguments;
-
-  typedef
-  Arguments::const_iterator
-  ArgumentIterator;
-
-  ArgumentIterator
-  argument_begin () const
-  {
-    return arguments.begin ();
-  }
-
-
-  ArgumentIterator
-  argument_end () const
-  {
-    return arguments.end ();
-  }
-
-
-public:
 
   struct Option
   {
@@ -164,12 +137,68 @@ public:
     {
     }
 
+    std::string
+    name () const
+    {
+      return name_;
+    }
+
+    std::string
+    value () const
+    {
+      return value_;
+    }
+
     OptionType  type_;
     std::string name_;
     std::string value_;
   };
 
+  typedef
+  std::vector<Option>
+  Options;
 
+  typedef
+  Options::const_iterator
+  OptionsIterator;
+
+  OptionsIterator
+  options_begin () const
+  {
+    return options.begin ();
+  }
+
+  OptionsIterator
+  options_end () const
+  {
+    return options.end ();
+  }
+
+  // Arguments
+  //
+  //
+
+  typedef
+  std::vector<std::string>
+  Arguments;
+
+  typedef
+  Arguments::const_iterator
+  ArgumentsIterator;
+
+  ArgumentsIterator
+  arguments_begin () const
+  {
+    return arguments.begin ();
+  }
+
+  ArgumentsIterator
+  arguments_end () const
+  {
+    return arguments.end ();
+  }
+
+public:
 
   struct OptionNamePredicat
   {
@@ -186,14 +215,6 @@ public:
   private:
     std::string const name_;
   };
-
-  typedef
-  std::vector<Option>
-  Options;
-
-  typedef
-  std::vector<std::string>
-  Arguments;
 
   std::string command;
   Options     options;
