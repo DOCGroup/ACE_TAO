@@ -94,40 +94,40 @@ main (int argc, char *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
+  ACE_START_TEST ("DLL_Test");
+
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
     defined (__hpux) 
-
-  ACE_START_TEST ("DLL_Test");
-
-  ACE_DLL dll;
-
-  int retval = dll.open (OBJ_PREFIX "DLL_Test" OBJ_SUFFIX);
+      
+      ACE_DLL dll;
+    
+    int retval = dll.open (OBJ_PREFIX "DLL_Test" OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
 		       dll.error ()),
                       -1);
-
+  
   TC f = (TC) dll.symbol ("get_hello");
-
+  
   if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
 		       dll.error ()),
                       -1);
-
+  
   auto_ptr<Hello> my_hello (f ());
-
+  
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();
   my_hello->say_next ();
-
+  
 #else
   ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
 #endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
-
+  
   ACE_END_TEST;
   return 0;
 }
