@@ -51,7 +51,7 @@ protected:
   virtual void *forward ();
 
   // Send the buffered log records using a gather-write operation.
-  virtual int send (ACE_Message_Block *blocks[], size_t &count);
+  virtual int send (ACE_Message_Block *chunk[], size_t &count);
 
   // Entry point into forwarder thread of control.
   static void *run_svc (void *arg);
@@ -149,7 +149,7 @@ void *CLD_Handler::run_svc (void *arg) {
 
 
 void *CLD_Handler::forward () {
-  ACE_Message_Block *blocks[ACE_IOV_MAX];
+  ACE_Message_Block *chunk[ACE_IOV_MAX];
   size_t message_index = 0;
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
   ACE_Time_Value timeout;
@@ -170,32 +170,32 @@ void *CLD_Handler::forward () {
       if (mblk->size () == 0 
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
         { mblk->release (); break; }
-      blocks[message_index] = mblk;
+      chunk[message_index] = mblk;
       ++message_index;
     }
     if (message_index >= ACE_IOV_MAX ||
         (ACE_OS::gettimeofday () - time_of_last_send
          >= FLUSH_TIMEOUT)) {
-      if (send (blocks, message_index) == -1) break;
+      if (send (chunk, message_index) == -1) break;
       time_of_last_send = ACE_OS::gettimeofday ();
     }
   }
 
-  if (message_index > 0) send (blocks, message_index);
+  if (message_index > 0) send (chunk, message_index);
   msg_queue_.close ();
   no_sigpipe.restore_action (SIGPIPE, original_action);
   return 0;
 }
 
 
-int CLD_Handler::send (ACE_Message_Block *blocks[], size_t &count) {
+int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
   iovec iov[ACE_IOV_MAX];
   size_t iov_size;
   int result = 0;
 
   for (iov_size = 0; iov_size < count; ++iov_size) {
-    iov[iov_size].iov_base = blocks[iov_size]->rd_ptr ();
-    iov[iov_size].iov_len = blocks[iov_size]->length ();
+    iov[iov_size].iov_base = chunk[iov_size]->rd_ptr ();
+    iov[iov_size].iov_len = chunk[iov_size]->length ();
   }
   while (peer ().sendv_n (iov, iov_size) == -1)
     if (connector_->reconnect () == -1) {
@@ -204,7 +204,7 @@ int CLD_Handler::send (ACE_Message_Block *blocks[], size_t &count) {
     }
 
   while (iov_size > 0) {
-    blocks[--iov_size]->release (); blocks[iov_size] = 0;
+    chunk[--iov_size]->release (); chunk[iov_size] = 0;
   }
   count = iov_size;
   return result;
