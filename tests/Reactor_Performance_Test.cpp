@@ -262,14 +262,10 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 	      et.system_time));  
 }
 
-#endif /* ACE_HAS_THREADS */
-
 int 
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Reactor_Performance_Test");
-
-#if defined (ACE_HAS_THREADS) 
 
   ACE_Get_Opt getopt (argc, argv, "swc:l:", 1);
   for (int c; (c = getopt ()) != -1; )
@@ -338,10 +334,6 @@ main (int argc, char *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-#else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */
-
   ACE_END_TEST;
   return 0;
 }
@@ -377,3 +369,18 @@ template class ACE_Auto_Array_Ptr <ACE_INET_Addr>;
 #pragma instantiate ACE_Auto_Basic_Array_Ptr <ACE_INET_Addr>
 #pragma instantiate ACE_Auto_Array_Ptr <ACE_INET_Addr>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+int
+main (int, char *[])
+{
+  ACE_START_TEST ("Reactor_Performance_Test");
+
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+
+  ACE_END_TEST;
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */
+
+
