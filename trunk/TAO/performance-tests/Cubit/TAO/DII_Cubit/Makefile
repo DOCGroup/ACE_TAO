@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -15,14 +15,14 @@ endif # ! TAO_ROOT
 DIRS    = ../IDL_Cubit
 
 LDLIBS = ../IDL_Cubit/.obj/cubitC.o \
-	 ../IDL_Cubit/.obj/cubitS.o \
-	 -lorbsvcs -lTAO
+         ../IDL_Cubit/.obj/cubitS.o \
+         -lorbsvcs -lTAO
 
 PROG_SRCS = client.cpp
 
 LSRC = $(PROG_SRCS)
 
-CUBIT_CLT_OBJS = client.o 
+CUBIT_CLT_OBJS = client.o
 
 CFLAGS += -I../IDL_Cubit
 
@@ -32,7 +32,7 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -44,23 +44,30 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs \
-	   -L$(TAO_ROOT)/tao \
-	   -L$(TAO_ROOT)/orbsvcs/Naming_Service
+           -L$(TAO_ROOT)/tao \
+           -L$(TAO_ROOT)/orbsvcs/Naming_Service
+
+ifeq ($(CXX),cxx)
+  ifeq ($(findstring ptrepository,$(CCFLAGS)),ptrepository)
+    #### Digital Unix 4.0
+    CCFLAGS += -ptr ../IDL_Cubit/ptrepository
+  endif # CCFLAGS contains ptrepository
+endif # cxx
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 .PRECIOUS: cubitC.cpp cubitS.cpp cubitC.h cubitS.h
 
-client:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
+client: $(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ../IDL_Cubit/server:
 	cd ../IDL_Cubit; $(MAKE) BUILD=server
-	
+
 realclean: clean
 	-/bin/rm -rf cubitC.* cubitS.* cubitS_T.*
 
