@@ -1,3 +1,7 @@
+Wed Feb 10 18:55:09 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * Changed Stub.i, set_fwd_profiles () so it doesn't
+	  complain about fwd_profiles which are themselves forwarded.
+
 Wed Feb 10 17:17:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_decl.cpp: 
