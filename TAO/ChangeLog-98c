@@ -1,5 +1,8 @@
 Sun Feb 15 16:15:49 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the -f <cubit_factory_key> to -f <cubit_factory_ior_file>. Reads the ior from that file.
+	
+
 	* tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -o <ior_output_file> 
 	option to output the cubit factory ior to a file.
 
