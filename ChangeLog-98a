@@ -1,21 +1,8 @@
-Wed Dec 31 16:25:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+Wed Dec 31 17:32:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Env_Value_T.*: Added a new template (ACE_Env_Value) which is
- 	  a typesafe encapsulation of environment variables with the ability
- 	  to provide a value to be used as a default if the variable isn't
- 	  set.  An example of its use can be seen in the corresponding test,
- 	  tests/Env_Value_Test.cpp.  Thanks to Carlos O'Ryan for giving me
- 	  the seed that started this.
-
-	* tests/Env_Value_Test.cpp: Added test for the new template added
- 	  above.
-
-	* tests/Makefile: Added new Env_Value_Test test to the Makefile.
-	
-	* ace/OS.{h,i} (strtod): Added new function for converting strings
- 	  to doubles.
-
-Wed Dec 31 14:56:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* apps/Gateway/Peer/Peer: Moved the Peer_Acceptor into the Peer.h
+ 	  file and updated the documentation to clarify what's going on
+ 	  better.
 
 	* examples/Reactor/Dgram/: Enhanced the examples to make sure they
  	  close() the dgram endpoint when the object is removed from the
@@ -27,6 +14,23 @@ Wed Dec 31 14:56:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Local_Name_Space_T.h: Updated the documentation for class
  	  ACE_Name_Space_Map to make it more clear.
+
+Wed Dec 31 16:25:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/Env_Value_T.*: Added a new template (ACE_Env_Value) which is
+ 	  a typesafe encapsulation of environment variables with the
+ 	  ability to provide a value to be used as a default if the
+ 	  variable isn't set.  An example of its use can be seen in the
+ 	  corresponding test, tests/Env_Value_Test.cpp.  Thanks to Carlos
+ 	  O'Ryan for giving me the seed that started this.
+
+	* tests/Env_Value_Test.cpp: Added test for the new template added
+ 	  above.
+
+	* tests/Makefile: Added new Env_Value_Test test to the Makefile.
+	
+	* ace/OS.{h,i} (strtod): Added new function for converting strings
+ 	  to doubles.
 
 Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
