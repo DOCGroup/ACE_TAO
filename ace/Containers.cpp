@@ -153,7 +153,8 @@ ACE_Unbounded_Stack<T>::delete_all_nodes (void)
     {
       ACE_Node<T> *temp = this->head_->next_;
       this->head_->next_ = temp->next_;
-      ACE_DES_FREE (temp, this->allocator_->free, ACE_Node<T>);
+      temp->ACE_Node<T>::~ACE_Node ();
+      this->allocator_->free (temp);
     }
 
   this->cur_size_ = 0;
@@ -218,7 +219,9 @@ ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack (void)
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack");
 
   this->delete_all_nodes ();
-  ACE_DES_FREE (this->head_, this->allocator_->free, ACE_Node<T>);
+  this->head_->ACE_Node<T>::~ACE_Node ();
+  this->allocator_->free (this->head_);
+  this->head_ = 0;
 }
 
 template<class T> int
@@ -250,7 +253,8 @@ ACE_Unbounded_Stack<T>::pop (T &item)
       item = temp->item_;
       this->head_->next_ = temp->next_;
 
-      ACE_DES_FREE (temp, this->allocator_->free, ACE_Node<T>);
+      temp->ACE_Node<T>::~ACE_Node ();
+      this->allocator_->free (temp);
       this->cur_size_--;
       return 0;
     }
@@ -306,7 +310,8 @@ ACE_Unbounded_Stack<T>::remove (const T &item)
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
       this->cur_size_--;
-      ACE_DES_FREE (temp, this->allocator_->free, ACE_Node<T>);
+      temp->ACE_Node<T>::~ACE_Node ();
+      this->allocator_->free (temp);
       return 0;
     }
 }
@@ -406,7 +411,8 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
 
-      ACE_DES_FREE (temp, this->allocator_->free, ACE_Node<T>);
+      temp->ACE_Node<T>::~ACE_Node ();
+      this->allocator_->free (temp);
       this->cur_size_--;
     }
 
@@ -420,7 +426,8 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
 
   this->delete_nodes ();
-  ACE_DES_FREE (this->head_, this->allocator_->free, ACE_Node<T>);
+  this->head_->ACE_Node<T>::~ACE_Node ();
+  this->allocator_->free (this->head_);
   this->head_ = 0;
 }
 
@@ -481,7 +488,8 @@ ACE_Unbounded_Queue<T>::dequeue_head (T &item)
 
   item = temp->item_;
   this->head_->next_ = temp->next_;
-  ACE_DES_FREE (temp, this->allocator_->free, ACE_Node<T>);
+  temp->ACE_Node<T>::~ACE_Node ();
+  this->allocator_->free (temp);
   --this->cur_size_;
   return 0;
 }
@@ -1136,7 +1144,8 @@ ACE_Unbounded_Set<T>::delete_nodes (void)
     {
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
-      ACE_DES_FREE (temp, this->allocator_->free, ACE_Node<T>);
+      temp->ACE_Node<T>::ACE_Node ();
+      this->allocator_->free (temp);
       this->cur_size_--;
     }
 
@@ -1152,7 +1161,8 @@ ACE_Unbounded_Set<T>::~ACE_Unbounded_Set (void)
   this->delete_nodes ();
 
   // Delete the dummy node.
-  ACE_DES_FREE (this->head_, this->allocator_->free, ACE_Node<T>);
+  this->head_->ACE_Node<T>::~ACE_Node ();
+  this->allocator_->free (this->head_);
   this->head_ = 0;
 }
 
@@ -1254,7 +1264,8 @@ ACE_Unbounded_Set<T>::remove (const T &item)
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
       this->cur_size_--;
-      ACE_DES_FREE (temp, this->allocator_->free, ACE_Node<T>);
+      temp->ACE_Node<T>::ACE_Node ();
+      this->allocator_->free (temp);
       return 0;
     }
 }
