@@ -19,8 +19,6 @@ TAO_Security_ORBInitializer::pre_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ This is busted.  TAO_ORBInitInfo should do proper reference
-  //    counting.
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // allocate_tss_slot_id() TAO extension.
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
@@ -34,7 +32,7 @@ TAO_Security_ORBInitializer::pre_init (
                     "(%P|%t) Security_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+                    "(%P|%t)   \"TAO_ORBInitInfo_ptr.\"\n"));
 
       ACE_THROW (CORBA::INTERNAL ());
     }
