@@ -1,3 +1,10 @@
+Wed Dec 20 15:19:50 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/config.h:
+
+	  Added PACE_HAS_POSIX_SOCK_UOF for upcoming socket
+	  implementation.
+
 Thu Dec 19 11:40:00 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace\win32\unistd.c:
