@@ -250,6 +250,7 @@ TAO_IIOP_Acceptor::close (void)
 
 int
 TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+                         ACE_Reactor *reactor,
                          int major,
                          int minor,
                          const char *address,
@@ -309,7 +310,8 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                     1) != 0)
         return -1;
       else
-        return this->open_i (addr);
+        return this->open_i (addr,
+                             reactor);
     }
   else if (port_separator_loc == 0)
     {
@@ -355,11 +357,13 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->addrs_[0].set (addr) != 0)
     return -1;
 
-  return this->open_i (addr);
+  return this->open_i (addr,
+                       reactor);
 }
 
 int
 TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                 ACE_Reactor *reactor,
                                  int major,
                                  int minor,
                                  const char *options)
@@ -404,11 +408,13 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                 1) != 0)
     return -1;
 
-  return this->open_i (addr);
+  return this->open_i (addr,
+                       reactor);
 }
 
 int
-TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
+TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
+                           ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_IIOP_CREATION_STRATEGY (this->orb_core_,
@@ -429,7 +435,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
     {
       // don't care, i.e., let the OS choose an ephemeral port
       if (this->base_acceptor_.open (addr,
-                                     this->orb_core_->reactor (this),
+                                     reactor,
                                      this->creation_strategy_,
                                      this->accept_strategy_,
                                      this->concurrency_strategy_) == -1)
@@ -459,7 +465,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
           // Now try to actually open on that port
           a.set_port_number (p);
           if (this->base_acceptor_.open (a,
-                                         this->orb_core_->reactor (this),
+                                         reactor,
                                          this->creation_strategy_,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_) != -1)

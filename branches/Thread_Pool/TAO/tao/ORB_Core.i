@@ -234,12 +234,6 @@ TAO_ORB_Core::connector_registry (void)
   return TAO_OC_RETRIEVE (connector_registry);
 }
 
-ACE_INLINE TAO_Acceptor_Registry *
-TAO_ORB_Core::acceptor_registry (void)
-{
-  return TAO_OC_RETRIEVE (acceptor_registry);
-}
-
 ACE_INLINE TAO_Parser_Registry *
 TAO_ORB_Core::parser_registry (void)
 {

@@ -196,6 +196,7 @@ TAO_SHMIOP_Acceptor::close (void)
 
 int
 TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+                           ACE_Reactor *reactor,
                            int major,
                            int minor,
                            const char *port,
@@ -216,11 +217,13 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (port)
     this->address_.set (port);
 
-  return this->open_i (orb_core);
+  return this->open_i (orb_core,
+                       reactor);
 }
 
 int
 TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                   ACE_Reactor *reactor,
                                    int major,
                                    int minor,
                                    const char *options)
@@ -241,7 +244,8 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   this->host_ = this->address_.get_host_name ();
 
-  return this->open_i (orb_core);
+  return this->open_i (orb_core,
+                       reactor);
 }
 
 int
@@ -255,7 +259,8 @@ TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix,
 }
 
 int
-TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
+TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
+                             ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 
@@ -276,7 +281,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
   // We only accept connection on localhost.
   //  ACE_INET_Addr local_addr (addr.get_port_number (), ACE_TEXT ("localhost"));
   if (this->base_acceptor_.open (this->address_,
-                                 this->orb_core_->reactor (this),
+                                 reactor,
                                  this->creation_strategy_,
                                  this->accept_strategy_,
                                  this->concurrency_strategy_) == -1)
@@ -321,7 +326,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
   (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
   // This avoids having child processes acquire the listen socket thereby
   // denying the server the opportunity to restart on a well-known endpoint.
-  // This does not affect the aberrent behavior on Win32 platforms. 
+  // This does not affect the aberrent behavior on Win32 platforms.
 
   if (TAO_debug_level > 5)
     {

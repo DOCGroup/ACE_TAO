@@ -511,7 +511,6 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 
   TAO_Stub* stub = this->orb_core_->create_stub (this->type_id.in (),
                                                  this->base_profiles_,
-                                                 this->orb_core_.get (),
                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
@@ -688,7 +687,7 @@ TAO_Stub::buffering_constraint (void)
       TAO_Policy_Current &policy_current =
         this->orb_core_->policy_current ();
 
-      result = 
+      result =
         policy_current.get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
     }
 
@@ -701,7 +700,7 @@ TAO_Stub::buffering_constraint (void)
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
         {
-          result = 
+          result =
             policy_manager->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
         }
     }

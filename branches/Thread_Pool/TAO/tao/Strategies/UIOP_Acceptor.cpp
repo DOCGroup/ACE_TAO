@@ -221,6 +221,7 @@ TAO_UIOP_Acceptor::close (void)
 
 int
 TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+                         ACE_Reactor *reactor,
                          int major,
                          int minor,
                          const char *address,
@@ -243,11 +244,13 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
   else
-    return this->open_i (address);
+    return this->open_i (address,
+                         reactor);
 }
 
 int
 TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                 ACE_Reactor *reactor,
                                  int major,
                                  int minor,
                                  const char *options)
@@ -273,11 +276,13 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (tempname.get () == 0)
     return -1;
 
-  return this->open_i (tempname.get ());
+  return this->open_i (tempname.get (),
+                       reactor);
 }
 
 int
-TAO_UIOP_Acceptor::open_i (const char *rendezvous)
+TAO_UIOP_Acceptor::open_i (const char *rendezvous,
+                           ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_UIOP_CREATION_STRATEGY (this->orb_core_,
@@ -298,7 +303,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous)
   this->rendezvous_point (addr, rendezvous);
 
   if (this->base_acceptor_.open (addr,
-                                 this->orb_core_->reactor (this),
+                                 reactor,
                                  this->creation_strategy_,
                                  this->accept_strategy_,
                                  this->concurrency_strategy_) == -1)

@@ -4,6 +4,7 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "tao/Pluggable.h"
 #include "Priority_Mapping_Manager.h"
 #include "tao/debug.h"
@@ -46,10 +47,10 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
   RTCORBA::PriorityMapping *pm =
     mapping_manager.in ()->mapping ();
 
-  TAO_Acceptor_Registry *ac =
-    this->orb_->orb_core ()->acceptor_registry ();
+  TAO_Acceptor_Registry &ac =
+    this->orb_->orb_core ()->lane_resources ().acceptor_registry ();
 
-  for (TAO_AcceptorSetIterator i = ac->begin (); i != ac->end (); ++i)
+  for (TAO_AcceptorSetIterator i = ac.begin (); i != ac.end (); ++i)
     {
       int priority =
         ACE_Sched_Params::priority_min (this->policy_);

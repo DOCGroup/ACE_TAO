@@ -65,11 +65,13 @@ public:
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.
   virtual int open (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
                             const char *options = 0);
@@ -84,7 +86,8 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 private:
-  int open_i (const char *rendezvous);
+  int open_i (const char *rendezvous,
+              ACE_Reactor *reactor);
   // Implement the common part of the open*() methods
 
   void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);

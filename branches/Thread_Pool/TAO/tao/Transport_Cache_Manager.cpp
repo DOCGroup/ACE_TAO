@@ -18,16 +18,13 @@ ACE_RCSID (TAO,
            Transport_Cache_Manager,
            "$Id$")
 
-
-TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (
-                                         TAO_Resource_Factory* rf)
-  : percent_ (rf->purge_percentage ()),
-    purging_strategy_ (rf->create_purging_strategy ()),
+TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core)
+  : percent_ (orb_core.resource_factory ()->purge_percentage ()),
+    purging_strategy_ (orb_core.resource_factory ()->create_purging_strategy ()),
     cache_map_ (),
-    cache_lock_ (0)
+    cache_lock_ (orb_core.resource_factory ()->create_cached_connection_lock ())
 {
 }
-
 
 TAO_Transport_Cache_Manager::~TAO_Transport_Cache_Manager (void)
 {
@@ -37,32 +34,6 @@ TAO_Transport_Cache_Manager::~TAO_Transport_Cache_Manager (void)
   // Delete the purging strategy
   delete this->purging_strategy_;
 }
-
-int
-TAO_Transport_Cache_Manager::open (TAO_ORB_Core *orb_core,
-                                    size_t size)
-{
-  if (this->purging_strategy_ == 0)
-    {
-      return -1;
-    }
-
-  // Create the cache_lock
-  this->cache_lock_ =
-    orb_core->resource_factory ()->create_cached_connection_lock ();
-
-  if (this->cache_lock_ == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) ERROR TAO_Transport_Cache_Manager::open: "),
-                         ACE_TEXT ("Lock creation error\n")),
-                        -1);
-    }
-
-  // Now open the cache map
-  return this->cache_map_.open (size);
-}
-
 
 int
 TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
