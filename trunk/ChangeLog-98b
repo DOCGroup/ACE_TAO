@@ -7,6 +7,10 @@ Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux-lxpthreads.h: removed commented-out
           ACE_LACKS_{COND,MUTEX}ATTR_PSHARED #defines.
 
+        * ace/config-sunos5.5-{sunc++-4.x,g++}.h: removed
+          commented-out ACE_LACKS_{COND,MUTEX}ATTR_PSHARED.  Enabled
+          ACE_HAS_CLOCK_GETTIME, because we always link with -lposix4.
+
 Tue May 19 10:05:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/SString.cpp (strlen): Renamed ACE_WString::wstrlen to
