@@ -47,7 +47,7 @@ Video_Sig_Handler::register_handler (void)
   // Register signal handler object.  Note that NULL_MASK is used to
   // keep the ACE_Reactor from calling us back on the "/dev/null"
   // descriptor.
-  if (ACE_Reactor::instance ()->register_handler 
+  if (TAO_ORB_Core_instance ()->reactor ()->register_handler 
       (this, ACE_Event_Handler::NULL_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "%p\n", 
@@ -62,7 +62,7 @@ Video_Sig_Handler::register_handler (void)
   sig_set.sig_add (SIGALRM);  
 
   // Register the signal handler object to catch the signals.
-  if (ACE_Reactor::instance ()->register_handler (sig_set, 
+  if (TAO_ORB_Core_instance ()->reactor ()->register_handler (sig_set, 
                                                   this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "%p\n", 
@@ -278,7 +278,7 @@ Video_Server::init (int ctr_fd,
   int result;
 
   // Associate the default ACE_Reactor instance as the reactor .
-  this->reactor_ = ACE_Reactor::instance ();
+  this->reactor_ = TAO_ORB_Core_instance ()->reactor ();
 
   // Create the control,data and signal handlers.
   ACE_NEW_RETURN (this->control_handler_, 
