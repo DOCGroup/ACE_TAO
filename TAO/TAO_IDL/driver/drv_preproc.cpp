@@ -420,12 +420,31 @@ DRV_pre_proc(const char *myfile)
            << GTDEVEL(": wait for child process failed\n");
       return;
     }
-  if (status != 0)
+  if (WIFEXITED ((status)))
     {
+      // child terminated normally?
+      if (WEXITSTATUS ((status)) != 0)
+        {
+          errno = WEXITSTATUS ((status));
+
+          cerr << idl_global->prog_name()
+               << GTDEVEL(": preprocessor ")
+               << arglist[0]
+               << GTDEVEL(" returned with an error\n");
+
+          ACE_OS::exit (1);
+        }
+    }
+  else
+    {
+      // child didn't call exit(); perhaps it received a signal?
+      errno = EINTR;
+
       cerr << idl_global->prog_name()
            << GTDEVEL(": preprocessor ")
            << arglist[0]
-           << GTDEVEL(" returned with an error\n");
+           << GTDEVEL(" appears to have been interrupted\n");
+
       ACE_OS::exit (1);
     }
   // TODO: Manage problems in the pre-processor, in the previous
