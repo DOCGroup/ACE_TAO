@@ -44,7 +44,7 @@ namespace TAO
     public:
       virtual ~Servant_Retention_Strategy (void);
 
-      virtual void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list);
+      virtual void strategy_init (TAO_POA *poa);
 
       virtual bool is_servant_in_map (PortableServer::Servant servant,
                                       int &wait_occurred_restart_call) = 0;

@@ -59,7 +59,7 @@ namespace TAO
     public:
       virtual ~Request_Processing_Strategy (void);
 
-      void strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list);
+      void strategy_init(TAO_POA *poa);
 
       virtual
       PortableServer::ServantManager_ptr

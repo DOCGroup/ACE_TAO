@@ -17,7 +17,7 @@ namespace TAO
     }
 
     void
-    Id_Assignment_Strategy::strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list)
+    Id_Assignment_Strategy::strategy_init(TAO_POA *poa)
     {
       // dependent on type create the correct strategy.
     }

@@ -42,7 +42,8 @@ namespace TAO
     public:
       Active_Policy_Strategies();
 
-      void update (Cached_Policies &policies
+      void update (Cached_Policies &policies,
+                   TAO_POA* poa
                    ACE_ENV_ARG_DECL);
 
       Thread_Strategy *thread_strategy (void) const;
@@ -67,6 +68,10 @@ namespace TAO
     };
   }
 }
+
+#if defined (__ACE_INLINE__)
+# include "Active_Policy_Strategies.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H */

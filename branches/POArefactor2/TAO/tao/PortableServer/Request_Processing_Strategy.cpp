@@ -31,7 +31,7 @@ namespace TAO
     }
 
     void
-    Request_Processing_Strategy::strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list)
+    Request_Processing_Strategy::strategy_init(TAO_POA *poa)
     {
       poa_ = poa;
       // dependent on type create the correct strategy.
@@ -118,6 +118,7 @@ namespace TAO
 
     Default_Servant_Request_Processing_Strategy::~Default_Servant_Request_Processing_Strategy (void)
     {
+      this->default_servant_ = 0;
     }
 
     PortableServer::ServantManager_ptr

@@ -25,8 +25,7 @@ namespace TAO
   {
       void
       Servant_Retention_Strategy::strategy_init (
-        TAO_POA *poa,
-        CORBA::PolicyList *policy_list)
+        TAO_POA *poa)
       {
         poa_ = poa;
         // dependent on type create the correct strategy.

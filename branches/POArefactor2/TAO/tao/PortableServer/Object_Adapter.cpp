@@ -664,17 +664,22 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-// @@Johnny handle this
   // Specify the implicit activation policy since it should
   // be different from the default.  Note that merge_policy
   // takes a const reference and makes its own copy of the
   // policy.  (Otherwise, we'd have to allocate the policy
   // on the heap.)
-/*  TAO_Implicit_Activation_Policy
-    implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
+  PortableServer::ImplicitActivationPolicy_var implicit_activation_policy =
+    TAO::Portable_Server::Policy_Creator<
+          TAO::Portable_Server::ImplicitActivationPolicyFactory,
+          ::PortableServer::ImplicitActivationPolicy,
+          ::PortableServer::ImplicitActivationPolicyValue>::create (
+            "ImplicitActivationPolicyFactory",
+            TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,
+            PortableServer::IMPLICIT_ACTIVATION);
 
-  policies.merge_policy (&implicit_activation_policy
-                         ACE_ENV_ARG_PARAMETER);*/
+  policies.merge_policy (implicit_activation_policy.in()
+                         ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Merge policies from the ORB level.

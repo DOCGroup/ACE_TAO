@@ -21,12 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
-
 namespace TAO
 {
   namespace Portable_Server
@@ -37,8 +31,7 @@ namespace TAO
     public:
       virtual ~Policy_Strategy (void) {};
 
-      virtual void strategy_init(TAO_POA *poa,
-                                 CORBA::PolicyList *policy_list) = 0;
+      virtual void strategy_init(TAO_POA *poa) = 0;
     };
   }
 }

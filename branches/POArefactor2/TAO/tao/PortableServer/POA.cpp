@@ -268,7 +268,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Set the active strategies to be used by this POA
-  this->active_policy_strategies_.update (this->cached_policies_
+  this->active_policy_strategies_.update (this->cached_policies_,
+                                          this
                                           ACE_ENV_ARG_PARAMETER);
 
   // Set the folded name of this POA.

@@ -1,3 +1,35 @@
+Wed Oct 13 10:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Activation_Strategy.{h,cpp,inl}:
+          Moved accessor methods to the new inline file
+
+        * tao/PortableServer/*Strategy.{h,cpp}:
+          Removed the policy list parameter of the strategy_init method. Some
+          policies need to have data from the POA, at this moment just pass
+          the POA pointer, later we can reduce this even more
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Changed creation of implicit_activation_policy
+
+        * tao/PortableServer/POA.cpp:
+          Pass the this to the update method of the active_policy_strategies
+
+        * tao/PortableServer/Upcall_Wrapper.h:
+        * tao/PortableServer/ServerInterceptorAdapter.h:
+          Reduced includes
+
+Wed Oct 13 08:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Activation_Strategy.h:
+          Added allow_implicit_activation method and implemented this for both
+          types.
+
+        * tao/PortableServer/Active_Policy_Strategies.{h,cpp}:
+          Added Activation_Strategy.
+
+        * tao/PortableServer/POA.cpp:
+          Fixed type in comment
+
 Wed Oct 13 08:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Key_Adapters.{h,cpp}:

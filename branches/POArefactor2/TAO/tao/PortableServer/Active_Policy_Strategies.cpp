@@ -17,6 +17,10 @@
 #include "Id_Uniqueness_Strategy.h"
 #include "Activation_Strategy.h"
 
+#if !defined (__ACE_INLINE__)
+# include "Active_Policy_Strategies.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID(PortableServer,
           Active_Policy_Strategies,
           "$Id$")
@@ -36,7 +40,8 @@ namespace TAO
     }
 
     void
-    Active_Policy_Strategies::update (Cached_Policies &policies
+    Active_Policy_Strategies::update (Cached_Policies &policies,
+                                      TAO_POA* poa
                                       ACE_ENV_ARG_DECL)
     {
       // This has to changed into having a factory that checks this and loads the correct strategy
@@ -48,6 +53,8 @@ namespace TAO
       {
         ACE_NEW (thread_strategy_, Single_Thread_Strategy);
       }
+
+      thread_strategy_->strategy_init (poa);
 
       switch (policies.request_processing())
       {
@@ -80,6 +87,8 @@ namespace TAO
         }
       }
 
+      request_processing_strategy_->strategy_init (poa);
+
       switch (policies.id_assignment())
       {
         case ::PortableServer::USER_ID :
@@ -93,6 +102,8 @@ namespace TAO
           break;
         }
       }
+
+      id_assignment_strategy_->strategy_init (poa);
 
       switch (policies.id_uniqueness())
       {
@@ -108,6 +119,8 @@ namespace TAO
         }
       }
 
+      id_uniqueness_strategy_->strategy_init (poa);
+
       switch (policies.lifespan())
       {
         case ::PortableServer::TRANSIENT :
@@ -122,6 +135,8 @@ namespace TAO
         }
       }
 
+      lifespan_strategy_->strategy_init (poa);
+
       switch (policies.implicit_activation())
       {
         case ::PortableServer::IMPLICIT_ACTIVATION :
@@ -135,42 +150,8 @@ namespace TAO
           break;
         }
       }
-    }
 
-    Thread_Strategy*
-    Active_Policy_Strategies::thread_strategy (void) const
-    {
-      return thread_strategy_;
-    }
-
-    Request_Processing_Strategy*
-    Active_Policy_Strategies::request_processing_strategy (void) const
-    {
-      return request_processing_strategy_;
-    }
-
-    Id_Assignment_Strategy *
-    Active_Policy_Strategies::id_assignment_strategy (void) const
-    {
-      return id_assignment_strategy_;
-    }
-
-    Id_Uniqueness_Strategy *
-    Active_Policy_Strategies::id_uniqueness_strategy (void) const
-    {
-      return id_uniqueness_strategy_;
-    }
-
-    Lifespan_Strategy*
-    Active_Policy_Strategies::lifespan_strategy (void) const
-    {
-      return lifespan_strategy_;
-    }
-
-    Activation_Strategy*
-    Active_Policy_Strategies::activation_strategy (void) const
-    {
-      return activation_strategy_;
+      activation_strategy_->strategy_init (poa);
     }
   }
 }

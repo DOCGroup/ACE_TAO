@@ -40,7 +40,7 @@ namespace TAO
     public:
       virtual ~Activation_Strategy (void) {};
 
-      void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list)
+      void strategy_init (TAO_POA *poa)
       {
         // dependent on type create the correct strategy.
       }

@@ -36,12 +36,6 @@ namespace TAO
 //  typedef TAO_Objref_Var_T<ObjectKey> ObjectKey_var;
 }
 
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
-
 class ServerObject_i;
 
 namespace TAO
@@ -56,7 +50,7 @@ namespace TAO
 
       virtual ~Lifespan_Strategy (void);
 
-      void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list);
+      void strategy_init (TAO_POA *poa);
 
       void create (const char *name,
                    const TAO::ObjectKey &key);

@@ -18,7 +18,7 @@ namespace TAO
     }
 
     void
-    Id_Uniqueness_Strategy::strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list)
+    Id_Uniqueness_Strategy::strategy_init(TAO_POA *poa)
     {
       // dependent on type create the correct strategy.
     }
@@ -37,7 +37,7 @@ namespace TAO
     }
 
     void
-    Unique_Id_Uniqueness_Strategy::strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list)
+    Unique_Id_Uniqueness_Strategy::strategy_init(TAO_POA *poa)
     {
       poa_ = poa;
     }

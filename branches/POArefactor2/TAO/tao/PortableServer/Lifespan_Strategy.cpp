@@ -33,7 +33,7 @@ namespace TAO
     }
 
     void
-    Lifespan_Strategy::strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list)
+    Lifespan_Strategy::strategy_init (TAO_POA *poa)
     {
       poa_ = poa;
     }

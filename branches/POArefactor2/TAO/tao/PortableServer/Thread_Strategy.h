@@ -53,8 +53,7 @@ namespace TAO
 
       // @@ Johnny, its not clear what initialization this is going to
       // do. My $0.02
-      void strategy_init (TAO_POA *poa,
-                          CORBA::PolicyList *policy_list);
+      void strategy_init (TAO_POA *poa);
     };
 
     class TAO_PortableServer_Export Single_Thread_Strategy :
