@@ -33,6 +33,7 @@ Options::Options ()
   , ping_interval_ (0, 200)
   , service_ (0)
   , startup_timeout_ (5)
+  , readonly_ (0)
 {
 }
 
@@ -92,6 +93,12 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             }
 
           this->debug_ = ACE_OS::atoi (shifter.get_current ());
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (), 
+                                   ACE_TEXT ("-l")) == 0)
+        {
+          // Lock the database
+          this->readonly_ = 1;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (), 
                                    ACE_TEXT ("-m")) == 0)
@@ -290,6 +297,7 @@ Options::print_usage (void) const
               "\n"
               "  -c command  Runs service commands ('install' or 'remove')\n"
               "  -d level    Sets the debug level\n"
+              "  -l          Lock the database\n"
               "  -m [0/1]    Turn on(1)/off(0) multicast (default: 1)\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
               "  -p file     Use file for storing/loading settings\n"
@@ -659,7 +667,15 @@ Options::multicast (void) const
   return this->multicast_;
 }
 
-
+/**
+ * @retval 0 Normal operation.
+ * @retval 1 Do not let server info be modified.
+ */
+int 
+Options::readonly (void) const
+{
+  return this->readonly_;
+}
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton <Options, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

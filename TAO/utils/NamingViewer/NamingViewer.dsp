@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=NamingViewer - Win32 Debug
+CFG=NamingViewer - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=NamingViewer - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "NamingViewer.mak" CFG="NamingViewer - Win32 Debug"
+!MESSAGE NMAKE /f "NamingViewer.mak" CFG="NamingViewer - Win32 MFC Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "NamingViewer - Win32 Release" (based on "Win32 (x86) Application")
-!MESSAGE "NamingViewer - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "NamingViewer - Win32 MFC Release" (based on "Win32 (x86) Application")
+!MESSAGE "NamingViewer - Win32 MFC Debug" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "NamingViewer - Win32 Release"
+!IF  "$(CFG)" == "NamingViewer - Win32 MFC Release"
 
 # PROP BASE Use_MFC 6
 # PROP BASE Use_Debug_Libraries 0
@@ -55,7 +55,7 @@ LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
 # ADD LINK32 TAO_PortableServer.lib tao.lib ace.lib TAO_CosNaming.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../tao/PortableServer" /libpath:"../../tao" /libpath:"../../../ace" /libpath:"../../orbsvcs/orbsvcs"
 
-!ELSEIF  "$(CFG)" == "NamingViewer - Win32 Debug"
+!ELSEIF  "$(CFG)" == "NamingViewer - Win32 MFC Debug"
 
 # PROP BASE Use_MFC 6
 # PROP BASE Use_Debug_Libraries 1
@@ -85,8 +85,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "NamingViewer - Win32 Release"
-# Name "NamingViewer - Win32 Debug"
+# Name "NamingViewer - Win32 MFC Release"
+# Name "NamingViewer - Win32 MFC Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

@@ -56,8 +56,8 @@ $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
 
-if ($tao_imr != 0) {
-    print STDERR "ERROR: tao_imr (add) returned $tao_imr\n";
+if ($taoimr != 0) {
+    print STDERR "ERROR: tao_imr (add) returned $taoimr\n";
     ++$errors;
 }
 
@@ -70,8 +70,8 @@ $TAO_IMR->Arguments ("-ORBInitRef ImplRepoService=file://$imr_ior"
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
 
-if ($tao_imr != 0) {
-    print STDERR "ERROR: tao_imr (ior) returned $tao_imr\n";
+if ($taoimr != 0) {
+    print STDERR "ERROR: tao_imr (ior) returned $taoimr\n";
     ++$errors;
 }
 
@@ -96,8 +96,8 @@ $TAO_IMR->Arguments ("-ORBInitRef ImplRepoService=file://$imr_ior shutdown "
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
 
-if ($tao_imr != 0) {
-    print STDERR "ERROR: tao_imr (shutdown) returned $tao_imr\n";
+if ($taoimr != 0) {
+    print STDERR "ERROR: tao_imr (shutdown) returned $taoimr\n";
     ++$errors;
 }
 
