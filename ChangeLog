@@ -1,3 +1,18 @@
+Tue Oct 28 07:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Added GNU variable pipes. When this is not set, it defaults to 0.
+          When it is 1, it results in adding -pipe to the CFLAGS.
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Only set pipes to 1, the new code in wrapper_macros.GNU will add
+          the needed compiler flag
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          When running the Tornado compiler on Win32 we can use pipes, so
+          when pipes is not set, set it to 1. Also don't add the compiler
+          flag anymore, this is done in wrapper_macros.GNU
+
 Mon Oct 27 16:00:19 2003  Steve Huston  <shuston@riverace.com>
 
 	* ACEXML/common/ZipCharStream.cpp: Silence HP aC++ warnings about
