@@ -1,3 +1,7 @@
+Thu Feb 15 14:57:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* ace/Thread_Manager.i: Fixed typo in ACE_Thread_Descriptor::get_next.
+
 Thu Feb 15 11:33:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/Refcounted_Auto_Ptr_Test.cpp (main): Always call ACE_OS::exit(0)
