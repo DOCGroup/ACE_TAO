@@ -1,3 +1,12 @@
+Wed Feb 24 17:40:49 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/combine: 
+	* docs/tutorials/colorize: 
+	A few enhancements to make the colorization better.  Also, when
+	#include "ace/something.h" is seen by the colorizer, it will
+	create a link to ../../../ace/something.h.  That should give
+	direct links from the tutorial pages to the ACE headers.
+
 Wed Feb 24 16:56:51 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/017/barrier2.cpp: Added this to show how you can
