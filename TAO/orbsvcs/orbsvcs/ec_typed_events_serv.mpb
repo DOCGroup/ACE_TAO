@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(ec_typed_events) {
+feature(ec_typed_events) : dynamicinterface, ifr_client {
   macros   += TAO_HAS_TYPED_EVENT_CHANNEL
 
   Source_Files(ORBSVCS_COMPONENTS) {
