@@ -1,3 +1,10 @@
+Mon May 12 08:16:38 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-freebsd*.h: added support for FreeBSD 2.1.7R.
+	  Thanks to Satoshi Ueno <satoshi.ueno@gs.com> for figuring
+	  out the differences and to Nanbor Wang <nw1@cs.wustl.edu>
+	  for updating the config files.
+
 Sun May 11 17:36:59 1997    <harrison@samba.cs.wustl.edu>
 
 	* tests/{Pipe_Test.cpp, Process_Mutex_Test.cpp,
