@@ -594,7 +594,7 @@ public:
   // Delete the properties whose names were given to the
   // constructor. Ensure we don't delete mandatory properties.
 
-  void merge_properties (CosTrading::PropertySeq& modifies,
+  void merge_properties (const CosTrading::PropertySeq& modifies,
                          CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
                      CosTrading::DuplicatePropertyName,
@@ -606,7 +606,7 @@ public:
   // destination with the source's value. This class claims the memory
   // in the modifies sequence.
 
-  void affect_change (void);
+  void affect_change (const CosTrading::PropertySeq& modifies);
   // Return a reference to the Offer with the changes affected.
 
 private:
@@ -634,9 +634,6 @@ private:
   TAO_String_Set readonly_, mandatory_;
   // The set of readonly and mandatory property names in the offer's
   // type.
-
-  CosTrading::PropertySeq merge_props_;
-  // Sequence of properties to merge with the original.
 
   CosTrading::Offer* offer_;
   // A reference to the offer undergoing change.

@@ -946,11 +946,12 @@ export (CORBA::Object_ptr reference,
   //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
   //  CosTrading::Property* pbuf = hack_seq->get_buffer (1);
 
-  CosTrading::PropertySeq* hack_seq =
-    ACE_const_cast (CosTrading::PropertySeq*, &properties);
-  CosTrading::Property* pbuf = hack_seq->get_buffer (0);
-  offer->properties.replace (plength, plength, pbuf, 0);
-  offer->properties._allocate_buffer (plength);
+  //  CosTrading::PropertySeq* hack_seq =
+  //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
+  //  CosTrading::Property* pbuf = hack_seq->get_buffer (0);  
+  //  offer->properties.replace (plength, plength, pbuf, 0);
+  //  offer->properties._allocate_buffer (plength);
+  offer->properties = properties;
   offer->reference = reference->_duplicate (reference);
 
   // Insert the offer into the underlying type map.
@@ -999,9 +1000,9 @@ describe (const char *id,
   offer_info->type = CORBA::string_dup (type);
 
   // Let the offer_info prop_seq "borrow" the sequence of properties.
-  CORBA::ULong length = offer->properties.length ();
-  CosTrading::Property* prop_buf = offer->properties.get_buffer ();
-  offer_info->properties.replace (length, length, prop_buf, 0);
+  //CORBA::ULong length = offer->properties.length ();
+  //  CosTrading::Property* prop_buf = offer->properties.get_buffer ();
+  offer_info->properties = offer->properties;
 
   return offer_info;
 }
@@ -1050,20 +1051,17 @@ modify (const char *id,
       TAO_CHECK_ENV_RETURN_VOID (_env);
       TAO_Offer_Modifier offer_mod (type, type_struct.in (), offer);
 
-      CosTrading::PropertySeq* prop_seq =
-        ACE_const_cast (CosTrading::PropertySeq*, &modify_list);
-
       // Delete, add, and change properties of the offer.
       offer_mod.delete_properties (del_list, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
 
-      offer_mod.merge_properties (*prop_seq, _env);
+      offer_mod.merge_properties (modify_list, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
 
       // Alter our reference to the offer. We do this last, since the
       // spec says: modify either suceeds completely or fails
       // completely.
-      offer_mod.affect_change ();
+      offer_mod.affect_change (modify_list);
     }
 }
 
