@@ -215,12 +215,12 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
 
 ACE_INLINE
 CORBA_ORB_var::CORBA_ORB_var (void) // default constructor
-	: ptr_ (CORBA_ORB::_nil ())
+        : ptr_ (CORBA_ORB::_nil ())
 {}
 
 ACE_INLINE
 CORBA_ORB_var::CORBA_ORB_var (CORBA::ORB_ptr p)
-	: ptr_ (p)
+        : ptr_ (p)
 {}
 
 ACE_INLINE CORBA::ORB_ptr
@@ -231,7 +231,7 @@ CORBA_ORB_var::ptr (void) const
 
 ACE_INLINE
 CORBA_ORB_var::CORBA_ORB_var (const CORBA_ORB_var &p) // copy constructor
-	: ptr_ (CORBA_ORB::_duplicate (p.ptr ()))
+        : ptr_ (CORBA_ORB::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -312,14 +312,14 @@ CORBA_ORB_var::_retn (void)
 
 ACE_INLINE
 CORBA_ORB_out::CORBA_ORB_out (CORBA::ORB_ptr &p)
-	: ptr_ (p)
+        : ptr_ (p)
 {
   this->ptr_ = CORBA_ORB::_nil ();
 }
 
 ACE_INLINE
 CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_var &p) // constructor from _var
-	: ptr_ (p.out ())
+        : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = CORBA_ORB::_nil ();
@@ -327,7 +327,7 @@ CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_var &p) // constructor from _var
 
 ACE_INLINE
 CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_out &p) // copy constructor
-	: ptr_ (p.ptr_)
+        : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE CORBA_ORB_out &

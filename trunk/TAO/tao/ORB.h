@@ -960,6 +960,12 @@ private:
   CORBA::ORB_ptr &ptr_;
 };
 
+#if 0
+#if defined (__ACE_INLINE__)
+# include "tao/ORB.i"
+#endif /* __ACE_INLINE__ */
+#endif
+
 // Signature of a skeleton for every operation of an interface.
 typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
                              void *, // object_ptr

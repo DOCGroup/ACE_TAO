@@ -172,16 +172,16 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/default_server.h"
 
 #include "tao/NVList.h"
-#include "tao/Object.h"
 #include "tao/Principal.h"
 #include "tao/Request.h"
+#include "tao/Stub.h"
+#include "tao/Object.h"
 #include "tao/Server_Request.h"
 #include "tao/Typecode.h"
 
 // Marshaling
 #include "tao/Marshal.h"
 #include "tao/CDR.h"
-#include "tao/Stub.h"
 
 #include "tao/POA.h"
 
@@ -217,11 +217,15 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/NVList.i"
 #include "tao/Any.i"
 #include "tao/Stub.i"
+#include "tao/Object.i"
 #endif /* 0 */
 
-#include "tao/Object.i"
 #include "tao/ORB.i"
+
+#if 0 /* These are now #included by their .h/.cpp files. */
 #include "tao/Marshal.i"
+#endif /* 0 */
+
 #include "tao/CDR.i"
 #include "tao/GIOP.i"
 

@@ -3,9 +3,13 @@
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// ORB:		CORBA_Object operations
+// ORB:         CORBA_Object operations
 
 #include "tao/corba.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/Object.i"
+#endif /* ! __ACE_INLINE__ */
 
 // GET_INTERFACE ... send a simple call to the object, it returns
 // an InterfaceDef objref.
@@ -112,7 +116,7 @@ static const TAO_Call_Data Object_is_a_calldata =
 
 CORBA::Boolean
 CORBA_Object::_is_a (const CORBA::Char *type_id,
-		     CORBA::Environment &env)
+                     CORBA::Environment &env)
 {
   // If the object is collocated then try locally....
   if (this->is_collocated_ && this->servant_ != 0)
@@ -123,7 +127,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
   STUB_Object *istub;
 
   if (QueryInterface (IID_STUB_Object,
-		      (void **) &istub) != TAO_NOERROR)
+                      (void **) &istub) != TAO_NOERROR)
     {
       env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return CORBA::B_FALSE;
@@ -202,10 +206,10 @@ CORBA::ImplementationDef_ptr
 CORBA_Object::_get_implementation (CORBA::Environment &env)
 {
   STUB_Object *istub;
-  CORBA::ImplementationDef_ptr	retval = 0;
+  CORBA::ImplementationDef_ptr  retval = 0;
 
   if (QueryInterface (IID_STUB_Object,
-		      (void **) &istub) != TAO_NOERROR)
+                      (void **) &istub) != TAO_NOERROR)
     {
       env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return retval;
@@ -239,7 +243,7 @@ CORBA_Object::_non_existent (CORBA::Environment &env)
   STUB_Object *istub;
 
   if (QueryInterface (IID_STUB_Object,
-		      (void **) &istub) != TAO_NOERROR)
+                      (void **) &istub) != TAO_NOERROR)
     {
       env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return CORBA::B_FALSE;
@@ -283,7 +287,7 @@ CORBA_Object::_hash (CORBA::ULong maximum,
   STUB_Object *istub;
 
   if (QueryInterface (IID_STUB_Object,
-		      (void **) &istub) != TAO_NOERROR)
+                      (void **) &istub) != TAO_NOERROR)
     {
       env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return CORBA::B_FALSE;
@@ -312,7 +316,7 @@ CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
     }
 
   if (QueryInterface (IID_STUB_Object,
-		      (void **) &istub) != TAO_NOERROR)
+                      (void **) &istub) != TAO_NOERROR)
     {
       env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return CORBA::B_FALSE;
@@ -330,7 +334,7 @@ CORBA::Object::_key (CORBA::Environment &env)
   STUB_Object *istub;
 
   if (QueryInterface (IID_STUB_Object,
-		      (void **) &istub) != TAO_NOERROR)
+                      (void **) &istub) != TAO_NOERROR)
     {
       env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return 0;
