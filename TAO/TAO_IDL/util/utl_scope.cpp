@@ -1131,6 +1131,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
             {
               Identifier *id = 0;
               AST_Decl::NodeType nt = d->node_type ();
+
               if (nt == AST_Decl::NT_typedef)
                 {
                   AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
@@ -1143,12 +1144,36 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                   id = e->head ();
                 }
 
-              // We don't want to add a reference in some other scope.  
+              // All the stuff below needs to be done while we are
+              // in the scope we started with.  
               if (scope_offset == 0)
                 {
                   add_to_referenced (d, 
                                      I_FALSE,
                                      id);
+
+                  AST_Type *t = AST_Type::narrow_from_decl (d);
+
+                  // Are we a type, rather than an identifier?
+                  if (t != NULL)
+                    {
+                      UTL_Scope *s = ScopeAsDecl (this)->defined_in ();
+
+                      if (s != NULL)
+                        {
+                          AST_Decl *parent = ScopeAsDecl (s);
+
+                          // If the scope we are defined in is itself inside
+                          // an interface or valuetype, then we should also
+                          // be exported to the interface (or valuetype) scope.
+                          if (parent->node_type () == AST_Decl::NT_interface)
+                            {
+                              s->add_to_referenced (d,
+                                                    I_FALSE,
+                                                    d->local_name ());
+                            }
+                        }
+                    }
                 }
             }
 
@@ -1267,11 +1292,11 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
         {
           s->add_to_referenced (e, 
                                 recursive, 
-                                0);
+                                id);
         }
     }
 
-  // Add the identifier arg, if non-null to its list.
+  // Add the identifier arg, if non-null, to the identifier list.
   if (id)
     {
       if (pd_name_referenced_allocated == pd_name_referenced_used)
