@@ -176,6 +176,7 @@ ifeq ($(CPU),SIMNT)
   BINXSYM_NAME = xsym
   CFLAGS += -U__WINNT -UWIN32 -U__WINNT__ -UWINNT -U__MINGW32__ -U_WIN32 \
             -U__WIN32 -U__WIN32__ -U__WIN32 -B$(GCCLIB_DIR) -DCPU=SIMNT
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION) 
   TOOLENV = simpc
 else
 ifeq ($(CPU),PENTIUMPRO)
