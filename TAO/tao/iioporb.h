@@ -43,12 +43,12 @@ public:
   ~IIOP_ORB (void);
   // destructor
 
-  CORBA::Object_ptr string_to_object (CORBA::String str,
-				     CORBA::Environment &env);
+  CORBA::Object_ptr string_to_object (const CORBA::String str,
+                                      CORBA::Environment &env);
   // Get an object reference from the IOR string
 
   CORBA::String object_to_string (CORBA::Object_ptr obj,
-				 CORBA::Environment &env);
+                                  CORBA::Environment &env);
   // Convert an object reference to an IOR stringified form
 
   HRESULT __stdcall QueryInterface (REFIID riid, 

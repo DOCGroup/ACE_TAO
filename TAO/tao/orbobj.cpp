@@ -375,8 +375,9 @@ CORBA_ORB::resolve_name_service (void)
 
   if (name_service_ior != 0)
     {
+      CORBA::Environment env;
       this->name_service_ =
-        this->string_to_object (name_service_ior);
+        this->string_to_object (name_service_ior, env);
       return this->name_service_;
     }
 

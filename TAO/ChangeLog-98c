@@ -1,17 +1,10 @@
-Wed Nov  5 22:38:08 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+Wed Nov  5 23:44:42 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Thruput_test/client.cpp (main): 
-	* tests/Thruput_test/server.cpp (main): Fixed missing declarations
- 	and unused variables and labels.  Fixed uninitialized and unused
- 	variables.
+	* tao/{orbobj,iioporb}.h: Made the first parameter to
+ 	  string_to_object() a const CORBA::String rather than just a
+ 	  CORBA::String.
 
-	* tests/Thruput_test/ttcp_i.cpp (ttcp_sequence_i): 
-	* tests/Thruput_test/ttcp_i.h (class ttcp_sequence_i): Change to
- 	use POA.  
-
-Wed Nov  5 22:46:47 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-
-	* tao/params.i (addr): Fixed a bug where we should have been using
+	* tao/params (addr): Fixed a bug where we should have been using
  	  const ACE_INET_Addr & rather than just ACE_INET_Addr &.
 
 	* tao/orbobj: Began adding the hooks for a multicast-based
@@ -27,7 +20,19 @@ Wed Nov  5 22:46:47 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* tao/params: Changed the signature of TAO_ORB_Parameters::addr()
  	  to return a const ACE_INET_Addr & rather than an ACE_INET_Addr.
 
+	* tao/params: Added new get/set name_service_port() methods to
+ 	  get/set the name service multicast port.
+
 Wed Nov  5 22:38:08 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* tests/Thruput_test/client.cpp (main): 
+	* tests/Thruput_test/server.cpp (main): Fixed missing declarations
+ 	and unused variables and labels.  Fixed uninitialized and unused
+ 	variables.
+
+	* tests/Thruput_test/ttcp_i.cpp (ttcp_sequence_i): 
+	* tests/Thruput_test/ttcp_i.h (class ttcp_sequence_i): Change to
+ 	use POA.  
 
 	* tests/Cubit/TAO/DII_Cubit/README (server): Changed comment on
  	how to start the server to indicate the use of "-d" to see the
