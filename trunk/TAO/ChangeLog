@@ -1,3 +1,19 @@
+Wed Jun 18 14:01:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.inl:
+
+	  Changed signature of the const cast operator from T const *& to
+	  T * const &, which eliminates warnings on Irix. Thanks to 
+	  Michael Rice <MichaelARice@knology.net> for coming up with this
+	  Irix-compatible suggestion.
+
+        * tao/Seq_Var_T.h:
+
+	  Cosmetic changes.
+
 Wed Jun 18 13:08:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):

@@ -39,9 +39,9 @@ public:
   T *operator-> (void);
   const T *operator-> (void) const;
 
-  operator const T &() const;
-  operator T &();
-  operator T &() const;
+  operator const T & () const;
+  operator T & ();
+  operator T & () const;
 
   // in, inout, out, _retn
   const T & in (void) const;

@@ -37,7 +37,7 @@ TAO_Pseudo_Var_T<T>::operator= (T * p)
 
 template <typename T>
 ACE_INLINE
-TAO_Pseudo_Var_T<T>::operator T const *& () const
+TAO_Pseudo_Var_T<T>::operator T * const & () const
 {
   return this->ptr_;
 }
