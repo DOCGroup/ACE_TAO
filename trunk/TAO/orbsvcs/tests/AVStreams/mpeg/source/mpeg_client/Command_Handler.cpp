@@ -1236,12 +1236,14 @@ Command_Handler::stop_playing (void)
       /* notify AS and/or VS */
       if (audioSocket >= 0 && precmd == CmdPLAY && rtplay)
         {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
           int cmdsn = htonl(shared->cmdsn);
           AudioWrite(&tmp, 1);
           AudioWrite(&cmdsn, 4);
         }
       if (videoSocket >= 0)
         {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
           // CORBA call
           TAO_TRY
             {
@@ -1258,8 +1260,10 @@ Command_Handler::stop_playing (void)
             }
           TAO_ENDTRY;
         }
-    
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+          
       /* stop timer and sleep for a while */
+      cerr << "stopping timer" << endl;
       stop_timer();
       usleep(100000);
 
