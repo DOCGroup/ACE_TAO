@@ -133,8 +133,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->memory_pool_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("cb_ptr_ = %x"), this->cb_ptr_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("cb_ptr_ = %@\n"), this->cb_ptr_));
   this->cb_ptr_->dump ();
 #if defined (ACE_HAS_MALLOC_STATS)
   if (this->cb_ptr_ != 0)
@@ -162,7 +161,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats (void) const
        currp = currp->next_block_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) ptr = %u, MALLOC_HEADER units = %d, byte units = %d\n"),
+                  ACE_LIB_TEXT ("(%P|%t) ptr = %@, MALLOC_HEADER units = %d, byte units = %d\n"),
                   currp,
                   currp->size_,
                   currp->size_ * sizeof (MALLOC_HEADER)));
@@ -210,7 +209,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
                       -1);
   else if (first_time)
     {
-      // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) first time in, control block = %u\n"), this->cb_ptr_));
+      // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) first time in, control block = %@\n"), this->cb_ptr_));
 
       MALLOC_HEADER::init_ptr (&this->cb_ptr_->freep_,
                                &this->cb_ptr_->base_,
