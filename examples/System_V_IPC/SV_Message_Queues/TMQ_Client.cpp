@@ -2,6 +2,7 @@
 
 #include "ace/Typed_SV_Message_Queue.h"
 #include "ace/streams.h"
+#include "ace/Log_Msg.h"
 #include "test.h"
 
 ACE_RCSID(SV_Message_Queues, TMQ_Client, "$Id$")

@@ -3,6 +3,7 @@
 // Test the ACE_Get_Opt class.
 
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_get_opt, "$Id$")
 

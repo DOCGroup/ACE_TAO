@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/SPIPE_Acceptor.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
 

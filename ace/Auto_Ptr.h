@@ -20,7 +20,7 @@
 #define ACE_AUTO_PTR_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/DEV_Addr.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/DEV_Addr.i"

@@ -22,6 +22,7 @@
 #include "Options.h"
 #include "SMR_Server.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 static char *
 tstamp (void)

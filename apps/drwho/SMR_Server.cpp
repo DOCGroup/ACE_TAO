@@ -2,6 +2,7 @@
 
 #include "Options.h"
 #include "SMR_Server.h"
+#include "ace/Log_Msg.h"
 
 SMR_Server::SMR_Server (short port_number)
 {

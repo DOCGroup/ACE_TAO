@@ -3,6 +3,7 @@
 // Defines the Internet domain address family address format.
 
 #include "ace/INET_Addr.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INET_Addr.i"

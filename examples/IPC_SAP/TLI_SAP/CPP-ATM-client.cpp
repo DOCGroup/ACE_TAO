@@ -2,7 +2,8 @@
 
 #include "ace/TLI_Connector.h"
 #include "ace/ATM_QoS.h"                              
-#include "ace/ATM_Addr.h"                              
+#include "ace/ATM_Addr.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(TLI_SAP, CPP_ATM_client, "$Id$")
 

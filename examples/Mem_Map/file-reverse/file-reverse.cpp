@@ -4,6 +4,7 @@
 // wrapper.  It is SO easy to do compared with alternatives!
 
 #include "ace/Mem_Map.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(file_reverse, file_reverse, "$Id$")
 

@@ -1,8 +1,7 @@
 // $Id$
 
-/* -*- C++ -*- */
-
 #include "ace/SV_Semaphore_Simple.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Semaphore_Simple.i"

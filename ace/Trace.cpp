@@ -13,6 +13,7 @@ ACE_RCSID(ace, Trace, "$Id$")
 #define ACE_NTRACE 1
 
 #include "ace/Trace.h"
+#include "ace/Log_Msg.h"
 
 // = Static initialization.
 

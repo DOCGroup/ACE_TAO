@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/SV_Shared_Memory.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SV_Shared_Memory.i"

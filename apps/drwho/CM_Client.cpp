@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "Multicast_Manager.h"
 #include "CM_Client.h"
+#include "ace/Log_Msg.h"
 
 // Creates and binds a UDP socket...
 

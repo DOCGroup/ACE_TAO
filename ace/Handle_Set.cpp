@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Handle_Set.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Handle_Set.i"

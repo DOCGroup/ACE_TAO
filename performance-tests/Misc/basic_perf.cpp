@@ -23,6 +23,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, basic_perf, "$Id$")
 

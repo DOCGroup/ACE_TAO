@@ -16,6 +16,8 @@
 //
 // ============================================================================
 
+#include "ace/Log_Msg.h"
+
 #include "Options.h"
 #include "SML_Client.h"
 #include "SMR_Client.h"

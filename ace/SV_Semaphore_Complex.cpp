@@ -1,9 +1,8 @@
 // SV_Semaphore_Complex.cpp
 // $Id$
 
-/* -*- C++ -*- */
-
 #include "ace/SV_Semaphore_Complex.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Semaphore_Complex.i"

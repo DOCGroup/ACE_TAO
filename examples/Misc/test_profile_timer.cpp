@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Profile_Timer.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_profile_timer, "$Id$")
 

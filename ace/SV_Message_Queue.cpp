@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/SV_Message_Queue.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Message_Queue.i"

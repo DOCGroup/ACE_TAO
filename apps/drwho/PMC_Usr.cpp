@@ -4,6 +4,7 @@
 #include "SL_Client.h"
 #include "PMC_Usr.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 int
 PMC_Usr::encode (char *packet, int &packet_length)

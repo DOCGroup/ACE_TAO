@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Log_Msg, test_callback, "$Id$")
 

@@ -2,6 +2,7 @@
 
 #include "ace/OS.h"
 #include "ace/streams.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_time_value, "$Id$")
 

@@ -6201,18 +6201,13 @@ dnl
 dnl SECTION 13: checks for system services
 dnl
 
-dnl Some circular dependency problems occur
-dnl ACE_HAS_SIGNAL_SAFE_OS_CALLS is defined.  Until this is rectified,
-dnl don't run the ACE_SYS_RESTARTABLE_SYSCALLS test.
-dnl    -Ossama
-dnl 
 dnl Do not run this test if we are using a cross-compiler.
-dnl if test "$cross_compiling" != yes; then
-dnl   ACE_SYS_RESTARTABLE_SYSCALLS
-dnl   if test "$ac_cv_sys_restartable_syscalls" = yes; then
-dnl     AC_DEFINE(ACE_HAS_SIGNAL_SAFE_OS_CALLS)
-dnl   fi
-dnl fi
+if test "$cross_compiling" != yes; then
+  ACE_SYS_RESTARTABLE_SYSCALLS
+  if test "$ac_cv_sys_restartable_syscalls" = yes; then
+    AC_DEFINE(ACE_HAS_SIGNAL_SAFE_OS_CALLS)
+  fi
+fi
 
 dnl Check if platform defines ctime() as a macro
 ACE_CACHE_CHECK(for ctime() macro,
