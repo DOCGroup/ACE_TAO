@@ -1,6 +1,7 @@
 Wed Sep 30 02:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/README: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h: 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp: 
