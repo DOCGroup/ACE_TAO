@@ -1,48 +1,57 @@
+Thu Mar 20 07:23:48 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Removed -dynamic_only and -static_only options and made "dynamic
+          only" the default.  I added a -static option that will allow the
+          user to generate static projects in addition to dynamic projects.
+
 Thu Mar 20 07:09:54 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp: The wrong remove_handler() method was
-	  being used in the ACE_Process_Manager::close() method.  Changed
- 	  this to use the remove_handler() that removes the SIGCHLD
- 	  handler.  Thanks to Carsten Prescher
-	  <carsten.prescher@sysde.eads.net> for this fix.
+        * ace/Process_Manager.cpp: The wrong remove_handler() method was
+          being used in the ACE_Process_Manager::close() method.  Changed
+          this to use the remove_handler() that removes the SIGCHLD
+          handler.  Thanks to Carsten Prescher
+          <carsten.prescher@sysde.eads.net> for this fix.
 
 Wed Mar 19 18:27:08 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu:
-	* Kokyu/Default_Dispatcher_Impl.cpp:
-	* Kokyu/Default_Dispatcher_Impl.h:
-	* Kokyu/Default_Dispatcher_Impl.i:
-	* Kokyu/Dispatcher_Impl.cpp:
-	* Kokyu/Dispatcher_Impl.h:
-	* Kokyu/Dispatcher_Impl.i:
-	* Kokyu/Dispatcher_Task.cpp:
-	* Kokyu/Dispatcher_Task.h:
-	* Kokyu/Dispatcher_Task.i:
-	* Kokyu/Kokyu.cpp:
-	* Kokyu/Kokyu.dsw:
-	* Kokyu/Kokyu.h:
-	* Kokyu/Kokyu.i:
-	* Kokyu/Kokyu.cpp:
-	* Kokyu/Kokyu.dsw:
-	* Kokyu/Kokyu.mpc:
-	* Kokyu/Kokyu_DLL.dsp:
-	* Kokyu/Kokyu_Static.dsp:
-	* Kokyu/Makefile:
-	* Kokyu/kokyu_export.h:
-	* Kokyu/tests:
-	* Kokyu/tests/EDF:
-	* Kokyu/tests/EDF/EDF.dsp:
-	* Kokyu/tests/EDF/EDF.dsw:
-	* Kokyu/tests/EDF/Makefile:
-	* Kokyu/tests/EDF/test.cpp:
-	* Kokyu/tests/FIFO:
-	* Kokyu/tests/FIFO/FIFO.dsp:
-	* Kokyu/tests/FIFO/FIFO.dsw:
-	* Kokyu/tests/FIFO/Makefile:
-	* Kokyu/tests/FIFO/test.cpp:
+        * Kokyu:
+        * Kokyu/Default_Dispatcher_Impl.cpp:
+        * Kokyu/Default_Dispatcher_Impl.h:
+        * Kokyu/Default_Dispatcher_Impl.i:
+        * Kokyu/Dispatcher_Impl.cpp:
+        * Kokyu/Dispatcher_Impl.h:
+        * Kokyu/Dispatcher_Impl.i:
+        * Kokyu/Dispatcher_Task.cpp:
+        * Kokyu/Dispatcher_Task.h:
+        * Kokyu/Dispatcher_Task.i:
+        * Kokyu/Kokyu.cpp:
+        * Kokyu/Kokyu.dsw:
+        * Kokyu/Kokyu.h:
+        * Kokyu/Kokyu.i:
+        * Kokyu/Kokyu.cpp:
+        * Kokyu/Kokyu.dsw:
+        * Kokyu/Kokyu.mpc:
+        * Kokyu/Kokyu_DLL.dsp:
+        * Kokyu/Kokyu_Static.dsp:
+        * Kokyu/Makefile:
+        * Kokyu/kokyu_export.h:
+        * Kokyu/tests:
+        * Kokyu/tests/EDF:
+        * Kokyu/tests/EDF/EDF.dsp:
+        * Kokyu/tests/EDF/EDF.dsw:
+        * Kokyu/tests/EDF/Makefile:
+        * Kokyu/tests/EDF/test.cpp:
+        * Kokyu/tests/FIFO:
+        * Kokyu/tests/FIFO/FIFO.dsp:
+        * Kokyu/tests/FIFO/FIFO.dsw:
+        * Kokyu/tests/FIFO/Makefile:
+        * Kokyu/tests/FIFO/test.cpp:
 
-	  First Kokyu release.
-	
+          First Kokyu release.
+
 Wed Mar 19 12:08:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_irix6.x_sgic++.GNU:
