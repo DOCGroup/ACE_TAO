@@ -169,22 +169,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  Event_Logging_Service service;
-
-  if (service.startup (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failed to start the Event Logging Service.\n"),
-                      1);
-
-  if (service.run () == -1)
+  ACE_TRY
     {
-      service.shutdown ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Failed to run the Telecom Log Service.\n"),
-                        1);
-    }
+      Event_Logging_Service service;
 
-  service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      service.startup (argc,
+                       argv
+                       ACE_ENV_ARG_PARAMETER);
+
+      ACE_TRY_CHECK;
+
+      if (service.run () == -1)
+        {
+          service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Failed to run the Telecom Log Service.\n"),
+                            1);
+
+          ACE_TRY_CHECK;
+        }
+
+      service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // no -op
+    }
+  ACE_ENDTRY;
 
   return 0;
 }
