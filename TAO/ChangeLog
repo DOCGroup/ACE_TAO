@@ -1,3 +1,13 @@
+Sun May 23 14:00:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        
+          Added leading double colons to the generation of scoped
+          names for the argument list, in the stub head and source
+          files, and to the generation of the operation name in
+          the stub source file.
+
 Sun May 23 12:03:04 2004  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/util/utl_global.cpp:
