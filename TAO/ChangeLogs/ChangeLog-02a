@@ -1,13 +1,13 @@
 Mon Aug 14 15:42:45 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp : 
+	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
 	  Corrected a typo.
 
-	* orbsvcs/IFR_Service/TCF_Loader.h   : 
-	* orbsvcs/IFR_Service/TCF_Loader.cpp : 
+	* orbsvcs/IFR_Service/TCF_Loader.h   :
+	* orbsvcs/IFR_Service/TCF_Loader.cpp :
 	  Changed the signature of create_object () to go accordingly with
 	  the change in Object_Loader.h
-	
+
 Mon Aug 14 12:34:28 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
@@ -20,13 +20,13 @@ Mon Aug 14 12:34:28 2000  Ossama Othman  <ossama@uci.edu>
 
 Mon Aug 14 12:32:22 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.h: 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: 
+	* orbsvcs/Naming_Service/Naming_Service.h:
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
 	  Corrected some misplaced braces.
 
 Mon Aug 14 10:44:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ChangeLog: 
+	* ChangeLog:
 	  Corrected some formatting.
 
 Mon Aug 14 11:03:08 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
@@ -34,44 +34,44 @@ Mon Aug 14 11:03:08 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tests/Exposed_Policies/server.cpp:
 	* tests/Exposed_Policies/client.cpp:
 	  Extended test code to test all the client exposed policies.
-	
-	* tao/Profile.cpp (policies): 
+
+	* tao/Profile.cpp (policies):
 	  Removed some commented code.
 
 Mon Aug 14 10:23:01 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Stub.cpp (exposed_client_protocol): 
-	
-	* tao/Stub.cpp (exposed_priority_banded_connection): 
-	  Fixed "typo bug". The result was passed to the _narrow method 
+	* tao/Stub.cpp (exposed_client_protocol):
+
+	* tao/Stub.cpp (exposed_priority_banded_connection):
+	  Fixed "typo bug". The result was passed to the _narrow method
 	  instead of the policy that had to be narrowed.
 
-	* tao/POA.cpp (client_exposed_policies): 
+	* tao/POA.cpp (client_exposed_policies):
 	  Changed <client_exposed_policies> constructor, and
 	  setted the length of the policy list, (before it was
 	  set just the max size in the constructor but not the
 	  size of the list).
 
-	* tao/POA.cpp (client_exposed_policies): 
+	* tao/POA.cpp (client_exposed_policies):
 	  Fixed bug in the test that check wether an object
 	  priority is valid or not. The condition was reversed
 	  i.e. it was if (object_priority != TAO_INVALID_PRIORITY)
 	  instead of if (object_priority == TAO_INVALID_PRIORITY).
-	
-	* tao/Stub.cpp (Stub): 
+
+	* tao/Stub.cpp (Stub):
 	  Added code to set the Stub pointer in the Profiles.
 	  This is needed because it is thru the stub that the
 	  profile get access to the policy list.
-	
-	* tao/MProfile.i (policy_list): 
+
+	* tao/MProfile.i (policy_list):
 	  Added policy list intialization. (The creation of
 	  the PolicyList should be guarded my multiple thread
 	  trying to invoking the method at the same time)
 
-	* tao/Profile.cpp (policies): 
+	* tao/Profile.cpp (policies):
           Added byte order field in the CDR encapsualtion used to store
 	  the client exposed policies.
-	
+
           Fixed memory leak caused by a missing buffer allocation.
 
 Mon Aug 14 08:25:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -83,42 +83,42 @@ Mon Aug 14 08:25:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sun Aug 13 09:23:02 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IOR_LookupTable.cpp (find_ior): 
+	* tao/IOR_LookupTable.cpp (find_ior):
           Added the function del_ior () to remove the object name
           from the table. Thanks to JM Strauss <jms97@club-internet.fr>
 	  for reporting the errors that cropped up because of not committing
-	  these files. 
-	
+	  these files.
+
 Sun Aug 13 09:07:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IOR_LookupTable.h (TAO_IOR_LookupTable): 
+	* tao/IOR_LookupTable.h (TAO_IOR_LookupTable):
 	  Added the function del_ior () to remove the object name
 	  from the table.
 
 Sat Aug 12 10:26:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-        * tao/ORB.h: 
+        * tao/ORB.h:
 	  Remove unused argc_ and argv_ fields.  The argv_
 	  declaration was baking builds on NT.
 
 Sat Aug 12 10:21:09 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * tao/Object_Loader.h (TAO_Object_Loader): 
+        * tao/Object_Loader.h (TAO_Object_Loader):
 	  Changed the signature of create_object so that argc and argv can
 	  also be passed.
 
 Sat Aug 12 09:34:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * tao/ORB.h (CORBA_ORB): 
+        * tao/ORB.h (CORBA_ORB):
   	  Added the signature of _tao_del_from_IOR_table.
-		
+
 Fri Aug 11 12:03:41 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
-	
+
         * orbsvcs/orbsvcs/Makefile.CosNaming :
-        * orbsvcs/orbsvcs/Makefile.CosEvent  : 
+        * orbsvcs/orbsvcs/Makefile.CosEvent  :
 	  Modified to add the new files CEC_Event_Loader.* and Naming_Loader.*
 
-        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp: 
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
 	  Moved the initialization code to TAO_CEC_Event_Loader::init () and
 	  calling the same from here to avoid code repetition.
 
@@ -135,25 +135,25 @@ Fri Aug 11 11:40:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * orbsvcs/TAO_Service/Makefile:
         * orbsvcs/TAO_Service/README:
-        * orbsvcs/TAO_Service/TAO_Service.cpp: 
-	  Added a generic server which allows us to test the successful 
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+	  Added a generic server which allows us to test the successful
 	  (un)loading of the services.
 
-        * orbsvcs/TAO_Service/svc.conf: 
-	  Sample svc.conf file which has commented entries to (un)load 
+        * orbsvcs/TAO_Service/svc.conf:
+	  Sample svc.conf file which has commented entries to (un)load
 	  both Naming Service and Event Service.
-	
+
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
-        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp: 
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
 	  This class helps (un)load the Event Service dynamically using
 	  the service config file.
-	
 
-        * tao/ORB.cpp (_tao_del_from_IOR_table): 
-	  A new function 
+
+        * tao/ORB.cpp (_tao_del_from_IOR_table):
+	  A new function
 	  int _tao_del_from_IOR_table (const ACE_CString &object_id) is
           added to remove a mapping ObjectID->IOR from the table.
-	
+
         * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
         * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
           This class helps (un)load the Naming Service dynamically
