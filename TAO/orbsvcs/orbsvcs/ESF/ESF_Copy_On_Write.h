@@ -24,8 +24,10 @@ class TAO_ESF_Copy_On_Write_Collection
 public:
   TAO_ESF_Copy_On_Write_Collection (void);
 
-  /// Increment and decrement the reference count
+  /// Increment the reference count
   CORBA::ULong _incr_refcnt (void);
+
+  /// Decrement the reference count
   CORBA::ULong _decr_refcnt (void);
 
   /// The actual collection
@@ -41,7 +43,7 @@ private:
 /**
  * @class TAO_ESF_Copy_On_Write_Read_Guard
  *
- * @brief TAO_ESF_Copy_On_Guard
+ * @brief TAO_ESF_Copy_On_Write_Read_Guard
  *
  * This helper class atomically increments the reference count of
  * a TAO_ESF_Copy_On_Write_Collection and reads the current
@@ -70,7 +72,7 @@ private:
 /**
  * @class TAO_ESF_Copy_On_Write_Write_Guard
  *
- * @brief TAO_ESF_Copy_On_Write_Guard
+ * @brief TAO_ESF_Copy_On_Write_Write_Guard
  *
  * This helper class atomically increments the reference count of
  * a TAO_ESF_Copy_On_Write_Collection and reads the current
