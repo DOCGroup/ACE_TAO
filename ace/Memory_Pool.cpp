@@ -1057,8 +1057,7 @@ int
 ACE_Pagefile_Memory_Pool::unmap (void)
 {
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind 
-    (this->local_cb_.mapped_base_,
-     this->local_cb_.sh_.mapped_size_);
+    (this->local_cb_.mapped_base_);
   // Cleanup cached pool pointer.
   this->shared_cb_ = 0;
 
