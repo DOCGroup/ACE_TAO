@@ -4,8 +4,6 @@ Tue Oct 14 20:27:28 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 	  Added a debug message to find out who terminates the reactor
 	  thread.
 
-Tue Oct 14 20:13:12 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
-
 	* tests/Priority_Reactor_Test.cpp: 
 	  The children could not connect sometimes, this will cause the
 	  test to hang, waiting for those failed connections.
