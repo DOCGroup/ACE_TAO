@@ -26,7 +26,6 @@ wait() as a now-protected method.  The result would allow you to treat
 the Barrier object almost as a "synchronization guard".
 <HR>
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#ifndef</font> <font color=purple>BARRIER_H</font>
@@ -42,49 +41,48 @@ the Barrier object almost as a "synchronization guard".
 class Barrier
 {
 public:
-        <font color=red>// Basic constructor and destructor.  If you only need to</font>
-        <font color=red>// synch the start of your threads, you can safely delete your </font>
-        <font color=red>// Barrier object after invoking done().  Of course, you</font>
-        <font color=red>// should be careful to only delete the object once!</font>
-    Barrier(void);
-    ~Barrier(void);
+  <font color=red>// Basic constructor and destructor.  If you only need to synch the</font>
+  <font color=red>// start of your threads, you can safely delete your Barrier object</font>
+  <font color=red>// after invoking done().  Of course, you should be careful to only</font>
+  <font color=red>// delete the object once!</font>
+  Barrier (void);
+  ~Barrier (void);
 
-        <font color=red>// Set and get the number of threads that the barrier will</font>
-        <font color=red>// manage.  If you add or remove threads to your application</font>
-        <font color=red>// at run-time you can use the mutator to reflect that</font>
-        <font color=red>// change.  Note, however, that you can only do that from the</font>
-        <font color=red>// thread which first created the Barrier.  (This is a</font>
-        <font color=red>// limitation of my Barrier object, not the ACE_Barrier.)</font>
-        <font color=red>// The optional _wait parameter will cause wait() to be</font>
-        <font color=red>// invoked if there is already a valid threads value.</font>
-    int threads( u_int _threads, int _wait = 0);
-    u_int threads(void);
+  <font color=red>// Set and get the number of threads that the barrier will manage.</font>
+  <font color=red>// If you add or remove threads to your application at run-time you</font>
+  <font color=red>// can use the mutator to reflect that change.  Note, however, that</font>
+  <font color=red>// you can only do that from the thread which first created the</font>
+  <font color=red>// Barrier.  (This is a limitation of my Barrier object, not the</font>
+  <font color=red>// ACE_Barrier.)  The optional _wait parameter will cause wait() to</font>
+  <font color=red>// be invoked if there is already a valid threads value.</font>
+  int threads (u_int threads, int wait = 0);
+  u_int threads (void);
 
-        <font color=red>// Wait for all threads to reach the point where this is</font>
-        <font color=red>// invoked.  Because of the snappy way in which ACE_Barrier is </font>
-        <font color=red>// implemented, you can invoke these back-to-back with no ill-effects.</font>
-    int wait(void);
+  <font color=red>// Wait for all threads to reach the point where this is invoked.</font>
+  <font color=red>// Because of the snappy way in which ACE_Barrier is implemented,</font>
+  <font color=red>// you can invoke these back-to-back with no ill-effects.</font>
+  int wait (void);
 
-        <font color=red>// done() will invoke wait().  Before returning though, it</font>
-        <font color=red>// will delete the barrier_ pointer below to reclaim some memory.</font>
-    int done(void);
+  <font color=red>// done() will invoke wait().  Before returning though, it will</font>
+  <font color=red>// delete the barrier_ pointer below to reclaim some memory.</font>
+  int done (void);
     
 protected:
-        <font color=red>// The number of threads we're synching</font>
-    ACE_Atomic_Op&lt;ACE_Mutex,u_int> threads_;
+  <font color=red>// The number of threads we're synching</font>
+  ACE_Atomic_Op&lt;ACE_Mutex,u_int> threads_;
 
-        <font color=red>// The ACE_Barrier that does all of the work</font>
-    ACE_Barrier * barrier_;
+  <font color=red>// The ACE_Barrier that does all of the work</font>
+  ACE_Barrier *barrier_;
 
-        <font color=red>// The thread which created the Barrier in the first place.</font>
-        <font color=red>// Only this thread can change the threads_ value.</font>
-    ACE_thread_t  owner_;
+  <font color=red>// The thread which created the Barrier in the first place.  Only</font>
+  <font color=red>// this thread can change the threads_ value.</font>
+  ACE_thread_t owner_;
 
-        <font color=red>// An internal method that constructs the barrier_ as needed.</font>
-    int make_barrier( int _wait );
+  <font color=red>// An internal method that constructs the barrier_ as needed.</font>
+  int make_barrier (int wait);
 };
     
-<font color=blue>#endif</font> <font color=red>// BARRIER_H</font>
+<font color=blue>#endif</font> <font color=red>/* BARRIER_H */</font>
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>

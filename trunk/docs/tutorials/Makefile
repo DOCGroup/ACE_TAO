@@ -1,7 +1,7 @@
 
 # $Id$
 
-all clean realclean : #
+all clean realclean UNSHAR SHAR HTML : #
 	for i in * ; do \
 		[ -f $$i/Makefile ] || continue ; \
 		( cd $$i ; $(MAKE) $@ ) ; \
