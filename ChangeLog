@@ -1,3 +1,8 @@
+Sat Feb 21 15:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Synch-Benchmarks/synch_driver.cpp:
+	  Fixed compile problem in wchar build.
+
 Sat Feb 21 08:33:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/DEV_IO.i (recv_n):
@@ -27,18 +32,18 @@ Fri Feb 20 18:21:39 2004  Steve Huston  <shuston@riverace.com>
 
 Fri Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/CDR_Base.{h,cpp} (NonNative LongLong and LongDouble): 
+	* ace/CDR_Base.{h,cpp} (NonNative LongLong and LongDouble):
 
-	  Added assignment operators for these two types. 
+	  Added assignment operators for these two types.
 
-	* ace/CDR_Stream.cpp (read_16): 
+	* ace/CDR_Stream.cpp (read_16):
 
 	  The function for reading a longdouble was adjusting and aligning
 	  the buffer to longlong size rather than to longdouble size.
 
 Fri Feb 20 17:12:14 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* bin/tao_other_tests.lst: 
+	* bin/tao_other_tests.lst:
 
 	  Modified script to run Pluggable and Simple_Two_Stage tests with
 	  SCTP_SEQ transport protocol only when the SCTP config flag is
