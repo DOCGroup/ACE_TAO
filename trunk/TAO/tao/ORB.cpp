@@ -682,17 +682,17 @@ CORBA_ORB::multicast_query (char *buf,
     ACE_HTONS (my_addr.get_port_number ());
 
   // Length of data to be sent. This is sent as a header.
-  CORBA::Short data_len =
-    sizeof (ACE_UINT16) + ACE_OS::strlen (service_name);
-
+  CORBA::Short data_len =  
+    ACE_HTONS (sizeof (ACE_UINT16) + ACE_OS::strlen (service_name));
+  
   // Vector to be sent.
   const int iovcnt = 3;
   iovec iovp[iovcnt];
-
+  
   // The length of data to be sent.
   iovp[0].iov_base = (char *) &data_len;
   iovp[0].iov_len  = sizeof (CORBA::Short);
-
+  
   // The port at which we are listening.
   iovp[1].iov_base = (char *) &response_port;
   iovp[1].iov_len  = sizeof (ACE_UINT16);
@@ -741,7 +741,7 @@ CORBA_ORB::multicast_query (char *buf,
                          timeout);
   // Close socket now.
   stream.close ();
-
+  
   // Check for errors.
   if (n_bytes == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
