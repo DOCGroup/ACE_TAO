@@ -1,3 +1,9 @@
+Thu Feb  3 10:31:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Disable the new event channel with old versions of g++, they are
+          too busted to even try to get them to work.
+
 Wed Feb  2 19:15:09 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp: Added the two filters Carlos
@@ -5,37 +11,37 @@ Wed Feb  2 19:15:09 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Feb  2 17:49:33 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/index.html:
 
-	  Updated the "Notes from a Real World Pluggable Protocol
-	  Implementation" section so that it no longer states that changes
-	  to ACE and TAO were necessary.  Changes to ACE and TAO weren't
-	  necessary for that implementation.
+          Updated the "Notes from a Real World Pluggable Protocol
+          Implementation" section so that it no longer states that changes
+          to ACE and TAO were necessary.  Changes to ACE and TAO weren't
+          necessary for that implementation.
 
 Wed Feb  2 19:17:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/pluggable_protocols/index.html: Updated the documentation
-	  to clarify the conditions under which a pluggable protocol can
- 	  be developed without affecting ACE+TAO.  Thanks to Gilbert
- 	  Grosdidier <Gilbert.Grosdidier@in2p3.fr> for motivating this.
+        * docs/pluggable_protocols/index.html: Updated the documentation
+          to clarify the conditions under which a pluggable protocol can
+          be developed without affecting ACE+TAO.  Thanks to Gilbert
+          Grosdidier <Gilbert.Grosdidier@in2p3.fr> for motivating this.
 
 Wed Feb  2 17:29:34 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	  One more fix to this file. Nothing was breaking, but
-	  it was pointed out, again by Christopher Kohlhoff
-	  <chris@kohlhoff.com> that, even though the members
-	  with multiple case labels were getting generated only
-	  once, the encapsulated length was calculated as if
-	  they were included more than once.
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          One more fix to this file. Nothing was breaking, but
+          it was pointed out, again by Christopher Kohlhoff
+          <chris@kohlhoff.com> that, even though the members
+          with multiple case labels were getting generated only
+          once, the encapsulated length was calculated as if
+          they were included more than once.
 
 Wed Feb  2 14:14:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	  Fixed race condition during shutdown.  The EC can die before the
-	  supplier has a chance to disconnect.  In that case when trying
-	  to disconnect the supplier receives an exception that should be
-	  ignored.
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+          Fixed race condition during shutdown.  The EC can die before the
+          supplier has a chance to disconnect.  In that case when trying
+          to disconnect the supplier receives an exception that should be
+          ignored.
 
 Wed Feb  2 13:12:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
