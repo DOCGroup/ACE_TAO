@@ -1,9 +1,23 @@
+Mon Nov 23 21:14:22 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/DLL.h (ACE_DLL): Set the default of close_on_destruction to
+	  1 instead of 0.
+
+	* ace/DLL.cpp (~ACE_DLL): In the close operation, made a check for 
+	  whether the close_on_destruction_ flag was equal to 1 instead of
+	  0.
+
+	* ace/DLL.cpp (get_handle): Made the close_on_destruction_ flag
+	  equal to 0 when it gets orphaned as now the new owner has to
+	  explicitly close the library.
+	
 Mon Nov 23 20:29:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/DLL: Cleaned up the comments and also fixed an unnecessary
  	  check to see if dll_name == 0.
 
 Mon Nov 23 10:20:22 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
 	* ace/DLL.h: Added a comment which specified that by default the 
 	  library would be closed before the ACE_DLL object gets 
 	  destroyed.
