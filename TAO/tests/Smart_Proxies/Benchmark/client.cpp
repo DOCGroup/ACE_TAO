@@ -23,6 +23,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Benchmark, client, "$Id$")
 
