@@ -1,3 +1,7 @@
+Fri Apr 24 00:18:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.1.15 released.
+
 Thu Apr 23 18:50:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * TAO_IDL/ast_enum.h,
