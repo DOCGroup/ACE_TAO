@@ -1,0 +1,1 @@
+client -S 67108864 -f m -l $1 -L temp -q $2 -d $3
