@@ -413,131 +413,131 @@ CORBA_DynEnum_out::operator-> (void)
 #endif /* end #if !defined */
 
 // *************************************************************
-// Inline operations for class NameValuePair_var
+// Inline operations for class CORBA_NameValuePair_var
 // *************************************************************
 
 ACE_INLINE
-NameValuePair_var::NameValuePair_var (void) // default constructor
+CORBA_NameValuePair_var::CORBA_NameValuePair_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-NameValuePair_var::NameValuePair_var (NameValuePair *p)
+CORBA_NameValuePair_var::CORBA_NameValuePair_var (CORBA_NameValuePair *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-NameValuePair_var::NameValuePair_var (const NameValuePair_var &p) // copy constructor
+CORBA_NameValuePair_var::CORBA_NameValuePair_var (const CORBA_NameValuePair_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new NameValuePair(*p.ptr_);
+    this->ptr_ = new CORBA_NameValuePair(*p.ptr_);
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-NameValuePair_var::~NameValuePair_var (void) // destructor
+CORBA_NameValuePair_var::~CORBA_NameValuePair_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE NameValuePair_var &
-NameValuePair_var::operator= (NameValuePair *p)
+ACE_INLINE CORBA_NameValuePair_var &
+CORBA_NameValuePair_var::operator= (CORBA_NameValuePair *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE NameValuePair_var &
-NameValuePair_var::operator= (const NameValuePair_var &p)
+ACE_INLINE CORBA_NameValuePair_var &
+CORBA_NameValuePair_var::operator= (const CORBA_NameValuePair_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new NameValuePair (*p.ptr_);
+    this->ptr_ = new CORBA_NameValuePair (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const NameValuePair *
-NameValuePair_var::operator-> (void) const
+ACE_INLINE const CORBA_NameValuePair *
+CORBA_NameValuePair_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePair *
-NameValuePair_var::operator-> (void)
+ACE_INLINE CORBA_NameValuePair *
+CORBA_NameValuePair_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-NameValuePair_var::operator const NameValuePair &() const // cast
+CORBA_NameValuePair_var::operator const CORBA_NameValuePair &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-NameValuePair_var::operator NameValuePair &() // cast 
+CORBA_NameValuePair_var::operator CORBA_NameValuePair &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-NameValuePair_var::operator NameValuePair &() const// cast 
+CORBA_NameValuePair_var::operator CORBA_NameValuePair &() const// cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const NameValuePair &
-NameValuePair_var::in (void) const
+ACE_INLINE const CORBA_NameValuePair &
+CORBA_NameValuePair_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE NameValuePair &
-NameValuePair_var::inout (void)
+ACE_INLINE CORBA_NameValuePair &
+CORBA_NameValuePair_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE NameValuePair *&
-NameValuePair_var::out (void)
+ACE_INLINE CORBA_NameValuePair *&
+CORBA_NameValuePair_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePair *
-NameValuePair_var::_retn (void)
+ACE_INLINE CORBA_NameValuePair *
+CORBA_NameValuePair_var::_retn (void)
 {
-  NameValuePair *tmp = this->ptr_;
+  CORBA_NameValuePair *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE NameValuePair *
-NameValuePair_var::ptr (void) const
+ACE_INLINE CORBA_NameValuePair *
+CORBA_NameValuePair_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class NameValuePair_out
+// Inline operations for class CORBA_NameValuePair_out
 // *************************************************************
 
 ACE_INLINE
-NameValuePair_out::NameValuePair_out (NameValuePair *&p)
+CORBA_NameValuePair_out::CORBA_NameValuePair_out (CORBA_NameValuePair *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-NameValuePair_out::NameValuePair_out (NameValuePair_var &p) // constructor from _var
+CORBA_NameValuePair_out::CORBA_NameValuePair_out (CORBA_NameValuePair_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -545,174 +545,174 @@ NameValuePair_out::NameValuePair_out (NameValuePair_var &p) // constructor from 
 }
 
 ACE_INLINE
-NameValuePair_out::NameValuePair_out (const NameValuePair_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (NameValuePair_out&,p).ptr_)
+CORBA_NameValuePair_out::CORBA_NameValuePair_out (const CORBA_NameValuePair_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_NameValuePair_out&,p).ptr_)
 {}
 
-ACE_INLINE NameValuePair_out &
-NameValuePair_out::operator= (const NameValuePair_out &p)
+ACE_INLINE CORBA_NameValuePair_out &
+CORBA_NameValuePair_out::operator= (const CORBA_NameValuePair_out &p)
 {
-  this->ptr_ = ACE_const_cast (NameValuePair_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (CORBA_NameValuePair_out&,p).ptr_;
   return *this;
 }
 
-ACE_INLINE NameValuePair_out &
-NameValuePair_out::operator= (NameValuePair *p)
+ACE_INLINE CORBA_NameValuePair_out &
+CORBA_NameValuePair_out::operator= (CORBA_NameValuePair *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-NameValuePair_out::operator NameValuePair *&() // cast
+CORBA_NameValuePair_out::operator CORBA_NameValuePair *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePair *&
-NameValuePair_out::ptr (void) // ptr
+ACE_INLINE CORBA_NameValuePair *&
+CORBA_NameValuePair_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePair *
-NameValuePair_out::operator-> (void)
+ACE_INLINE CORBA_NameValuePair *
+CORBA_NameValuePair_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class NameValuePairSeq_var
+// Inline operations for class CORBA_NameValuePairSeq_var
 // *************************************************************
 
 ACE_INLINE
-NameValuePairSeq_var::NameValuePairSeq_var (void) // default constructor
+CORBA_NameValuePairSeq_var::CORBA_NameValuePairSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-NameValuePairSeq_var::NameValuePairSeq_var (NameValuePairSeq *p)
+CORBA_NameValuePairSeq_var::CORBA_NameValuePairSeq_var (CORBA_NameValuePairSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-NameValuePairSeq_var::NameValuePairSeq_var (const NameValuePairSeq_var &p) // copy constructor
+CORBA_NameValuePairSeq_var::CORBA_NameValuePairSeq_var (const CORBA_NameValuePairSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new NameValuePairSeq(*p.ptr_);
+    this->ptr_ = new CORBA_NameValuePairSeq(*p.ptr_);
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-NameValuePairSeq_var::~NameValuePairSeq_var (void) // destructor
+CORBA_NameValuePairSeq_var::~CORBA_NameValuePairSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE NameValuePairSeq_var &
-NameValuePairSeq_var::operator= (NameValuePairSeq *p)
+ACE_INLINE CORBA_NameValuePairSeq_var &
+CORBA_NameValuePairSeq_var::operator= (CORBA_NameValuePairSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE NameValuePairSeq_var &
-NameValuePairSeq_var::operator= (const NameValuePairSeq_var &p) // deep copy
+ACE_INLINE CORBA_NameValuePairSeq_var &
+CORBA_NameValuePairSeq_var::operator= (const CORBA_NameValuePairSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new NameValuePairSeq (*p.ptr_);
+    this->ptr_ = new CORBA_NameValuePairSeq (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const NameValuePairSeq *
-NameValuePairSeq_var::operator-> (void) const
+ACE_INLINE const CORBA_NameValuePairSeq *
+CORBA_NameValuePairSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePairSeq *
-NameValuePairSeq_var::operator-> (void)
+ACE_INLINE CORBA_NameValuePairSeq *
+CORBA_NameValuePairSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-NameValuePairSeq_var::operator const NameValuePairSeq &() const // cast
+CORBA_NameValuePairSeq_var::operator const CORBA_NameValuePairSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-NameValuePairSeq_var::operator NameValuePairSeq &() // cast 
+CORBA_NameValuePairSeq_var::operator CORBA_NameValuePairSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-NameValuePairSeq_var::operator NameValuePairSeq &() const// cast 
+CORBA_NameValuePairSeq_var::operator CORBA_NameValuePairSeq &() const// cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE NameValuePair &
-NameValuePairSeq_var::operator[] (CORBA::ULong index)
+ACE_INLINE CORBA_NameValuePair &
+CORBA_NameValuePairSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const NameValuePairSeq &
-NameValuePairSeq_var::in (void) const
+ACE_INLINE const CORBA_NameValuePairSeq &
+CORBA_NameValuePairSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE NameValuePairSeq &
-NameValuePairSeq_var::inout (void)
+ACE_INLINE CORBA_NameValuePairSeq &
+CORBA_NameValuePairSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE NameValuePairSeq *&
-NameValuePairSeq_var::out (void)
+ACE_INLINE CORBA_NameValuePairSeq *&
+CORBA_NameValuePairSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePairSeq *
-NameValuePairSeq_var::_retn (void)
+ACE_INLINE CORBA_NameValuePairSeq *
+CORBA_NameValuePairSeq_var::_retn (void)
 {
-  NameValuePairSeq *tmp = this->ptr_;
+  CORBA_NameValuePairSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE NameValuePairSeq *
-NameValuePairSeq_var::ptr (void) const
+ACE_INLINE CORBA_NameValuePairSeq *
+CORBA_NameValuePairSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class NameValuePairSeq_out
+// Inline operations for class CORBA_NameValuePairSeq_out
 // *************************************************************
 
 ACE_INLINE
-NameValuePairSeq_out::NameValuePairSeq_out (NameValuePairSeq *&p)
+CORBA_NameValuePairSeq_out::CORBA_NameValuePairSeq_out (CORBA_NameValuePairSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-NameValuePairSeq_out::NameValuePairSeq_out (NameValuePairSeq_var &p) // constructor from _var
+CORBA_NameValuePairSeq_out::CORBA_NameValuePairSeq_out (CORBA_NameValuePairSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -720,44 +720,44 @@ NameValuePairSeq_out::NameValuePairSeq_out (NameValuePairSeq_var &p) // construc
 }
 
 ACE_INLINE
-NameValuePairSeq_out::NameValuePairSeq_out (const NameValuePairSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (NameValuePairSeq_out&,p).ptr_)
+CORBA_NameValuePairSeq_out::CORBA_NameValuePairSeq_out (const CORBA_NameValuePairSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_NameValuePairSeq_out&,p).ptr_)
 {}
 
-ACE_INLINE NameValuePairSeq_out &
-NameValuePairSeq_out::operator= (const NameValuePairSeq_out &p)
+ACE_INLINE CORBA_NameValuePairSeq_out &
+CORBA_NameValuePairSeq_out::operator= (const CORBA_NameValuePairSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (NameValuePairSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (CORBA_NameValuePairSeq_out&,p).ptr_;
   return *this;
 }
 
-ACE_INLINE NameValuePairSeq_out &
-NameValuePairSeq_out::operator= (NameValuePairSeq *p)
+ACE_INLINE CORBA_NameValuePairSeq_out &
+CORBA_NameValuePairSeq_out::operator= (CORBA_NameValuePairSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-NameValuePairSeq_out::operator NameValuePairSeq *&() // cast
+CORBA_NameValuePairSeq_out::operator CORBA_NameValuePairSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePairSeq *&
-NameValuePairSeq_out::ptr (void) // ptr
+ACE_INLINE CORBA_NameValuePairSeq *&
+CORBA_NameValuePairSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePairSeq *
-NameValuePairSeq_out::operator-> (void)
+ACE_INLINE CORBA_NameValuePairSeq *
+CORBA_NameValuePairSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE NameValuePair &
-NameValuePairSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE CORBA_NameValuePair &
+CORBA_NameValuePairSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -1137,137 +1137,137 @@ CORBA_DynUnion_out::operator-> (void)
 #endif /* end #if !defined */
 
 // *************************************************************
-// Inline operations for class AnySeq_var
+// Inline operations for class CORBA_AnySeq_var
 // *************************************************************
 
 ACE_INLINE
-AnySeq_var::AnySeq_var (void) // default constructor
+CORBA_AnySeq_var::CORBA_AnySeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-AnySeq_var::AnySeq_var (AnySeq *p)
+CORBA_AnySeq_var::CORBA_AnySeq_var (CORBA_AnySeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-AnySeq_var::AnySeq_var (const AnySeq_var &p) // copy constructor
+CORBA_AnySeq_var::CORBA_AnySeq_var (const CORBA_AnySeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new AnySeq(*p.ptr_);
+    this->ptr_ = new CORBA_AnySeq(*p.ptr_);
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-AnySeq_var::~AnySeq_var (void) // destructor
+CORBA_AnySeq_var::~CORBA_AnySeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE AnySeq_var &
-AnySeq_var::operator= (AnySeq *p)
+ACE_INLINE CORBA_AnySeq_var &
+CORBA_AnySeq_var::operator= (CORBA_AnySeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE AnySeq_var &
-AnySeq_var::operator= (const AnySeq_var &p) // deep copy
+ACE_INLINE CORBA_AnySeq_var &
+CORBA_AnySeq_var::operator= (const CORBA_AnySeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new AnySeq (*p.ptr_);
+    this->ptr_ = new CORBA_AnySeq (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const AnySeq *
-AnySeq_var::operator-> (void) const
+ACE_INLINE const CORBA_AnySeq *
+CORBA_AnySeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE AnySeq *
-AnySeq_var::operator-> (void)
+ACE_INLINE CORBA_AnySeq *
+CORBA_AnySeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-AnySeq_var::operator const AnySeq &() const // cast
+CORBA_AnySeq_var::operator const CORBA_AnySeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-AnySeq_var::operator AnySeq &() // cast 
+CORBA_AnySeq_var::operator CORBA_AnySeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-AnySeq_var::operator AnySeq &() const// cast 
+CORBA_AnySeq_var::operator CORBA_AnySeq &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE CORBA::Any &
-AnySeq_var::operator[] (CORBA::ULong index)
+CORBA_AnySeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const AnySeq &
-AnySeq_var::in (void) const
+ACE_INLINE const CORBA_AnySeq &
+CORBA_AnySeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE AnySeq &
-AnySeq_var::inout (void)
+ACE_INLINE CORBA_AnySeq &
+CORBA_AnySeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE AnySeq *&
-AnySeq_var::out (void)
+ACE_INLINE CORBA_AnySeq *&
+CORBA_AnySeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE AnySeq *
-AnySeq_var::_retn (void)
+ACE_INLINE CORBA_AnySeq *
+CORBA_AnySeq_var::_retn (void)
 {
-  AnySeq *tmp = this->ptr_;
+  CORBA_AnySeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE AnySeq *
-AnySeq_var::ptr (void) const
+ACE_INLINE CORBA_AnySeq *
+CORBA_AnySeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class AnySeq_out
+// Inline operations for class CORBA_AnySeq_out
 // *************************************************************
 
 ACE_INLINE
-AnySeq_out::AnySeq_out (AnySeq *&p)
+CORBA_AnySeq_out::CORBA_AnySeq_out (CORBA_AnySeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-AnySeq_out::AnySeq_out (AnySeq_var &p) // constructor from _var
+CORBA_AnySeq_out::CORBA_AnySeq_out (CORBA_AnySeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -1275,44 +1275,44 @@ AnySeq_out::AnySeq_out (AnySeq_var &p) // constructor from _var
 }
 
 ACE_INLINE
-AnySeq_out::AnySeq_out (const AnySeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (AnySeq_out&,p).ptr_)
+CORBA_AnySeq_out::CORBA_AnySeq_out (const CORBA_AnySeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_AnySeq_out&,p).ptr_)
 {}
 
-ACE_INLINE AnySeq_out &
-AnySeq_out::operator= (const AnySeq_out &p)
+ACE_INLINE CORBA_AnySeq_out &
+CORBA_AnySeq_out::operator= (const CORBA_AnySeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (AnySeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (CORBA_AnySeq_out&,p).ptr_;
   return *this;
 }
 
-ACE_INLINE AnySeq_out &
-AnySeq_out::operator= (AnySeq *p)
+ACE_INLINE CORBA_AnySeq_out &
+CORBA_AnySeq_out::operator= (CORBA_AnySeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-AnySeq_out::operator AnySeq *&() // cast
+CORBA_AnySeq_out::operator CORBA_AnySeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE AnySeq *&
-AnySeq_out::ptr (void) // ptr
+ACE_INLINE CORBA_AnySeq *&
+CORBA_AnySeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE AnySeq *
-AnySeq_out::operator-> (void)
+ACE_INLINE CORBA_AnySeq *
+CORBA_AnySeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::Any &
-AnySeq_out::operator[] (CORBA::ULong index)
+CORBA_AnySeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }

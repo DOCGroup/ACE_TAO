@@ -858,7 +858,7 @@ POA_CORBA::_tao_collocated_DynStruct::current_member_kind (
   );
 }
 
-NameValuePairSeq *
+CORBA::NameValuePairSeq *
 POA_CORBA::_tao_collocated_DynStruct::get_members (
     CORBA::Environment &_tao_environment
    )
@@ -870,7 +870,7 @@ POA_CORBA::_tao_collocated_DynStruct::get_members (
 
 void
 POA_CORBA::_tao_collocated_DynStruct::set_members (
-    const NameValuePairSeq & value,
+    const CORBA::NameValuePairSeq & value,
     CORBA::Environment &_tao_environment
    )
 {
@@ -1198,7 +1198,7 @@ POA_CORBA::_tao_collocated_DynSequence::length (
   );
 }
 
-AnySeq *
+CORBA_AnySeq *
 POA_CORBA::_tao_collocated_DynSequence::get_elements (
     CORBA::Environment &_tao_environment
    )
@@ -1210,7 +1210,7 @@ POA_CORBA::_tao_collocated_DynSequence::get_elements (
 
 void
 POA_CORBA::_tao_collocated_DynSequence::set_elements (
-    const AnySeq & value,
+    const CORBA_AnySeq & value,
     CORBA::Environment &_tao_environment
    )
 {
@@ -1326,7 +1326,7 @@ CORBA::Boolean POA_CORBA::_tao_collocated_DynArray::_is_a (
     );
 }
 
-AnySeq *
+CORBA_AnySeq *
 POA_CORBA::_tao_collocated_DynArray::get_elements (
     CORBA::Environment &_tao_environment
    )
@@ -1338,7 +1338,7 @@ POA_CORBA::_tao_collocated_DynArray::get_elements (
 
 void
 POA_CORBA::_tao_collocated_DynArray::set_elements (
-    const AnySeq & value,
+    const CORBA_AnySeq & value,
     CORBA::Environment &_tao_environment
    )
 {

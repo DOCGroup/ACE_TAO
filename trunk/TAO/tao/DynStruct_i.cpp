@@ -101,7 +101,7 @@ TAO_DynStruct_i::~TAO_DynStruct_i (void)
 //////////////////////////////////////////////////////////////////////////
 // Functions specific to DynStruct
 
-FieldName
+CORBA::FieldName
 TAO_DynStruct_i::current_member_name (CORBA::Environment &)
 {
   return CORBA::string_dup (this->type_.in ()->member_name (this->index_));
@@ -116,14 +116,14 @@ TAO_DynStruct_i::current_member_kind (CORBA::Environment& env)
                                 env);
 }
 
-NameValuePairSeq*
+CORBA::NameValuePairSeq*
 TAO_DynStruct_i::get_members (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::ULong length = this->da_members_.size ();
 
-  NameValuePairSeq* members;
+  CORBA::NameValuePairSeq* members;
   ACE_NEW_THROW_EX (members,
-                    NameValuePairSeq (length),
+                    CORBA::NameValuePairSeq (length),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -144,7 +144,7 @@ TAO_DynStruct_i::get_members (CORBA::Environment& ACE_TRY_ENV)
 }
 
 void
-TAO_DynStruct_i::set_members (const NameValuePairSeq& value,
+TAO_DynStruct_i::set_members (const CORBA::NameValuePairSeq& value,
                               CORBA::Environment& env)
 {
   CORBA::ULong length = value.length ();

@@ -1363,13 +1363,13 @@ public:
         CORBA::Environment::default_environment ()
      ) = 0;
 
-  virtual NameValuePairSeq * get_members (
+  virtual CORBA::NameValuePairSeq * get_members (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
 
   virtual void set_members (
-      const NameValuePairSeq & value,
+      const CORBA::NameValuePairSeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
@@ -1416,12 +1416,12 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
-  virtual NameValuePairSeq * get_members (
+  virtual CORBA::NameValuePairSeq * get_members (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
   virtual void set_members (
-      const NameValuePairSeq & value,
+      const CORBA::NameValuePairSeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
@@ -1590,13 +1590,13 @@ public:
         CORBA::Environment::default_environment ()
      ) = 0;
 
-  virtual AnySeq * get_elements (
+  virtual CORBA_AnySeq * get_elements (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
 
   virtual void set_elements (
-      const AnySeq & value,
+      const CORBA_AnySeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
@@ -1652,12 +1652,12 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
-  virtual AnySeq * get_elements (
+  virtual CORBA_AnySeq * get_elements (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
   virtual void set_elements (
-      const AnySeq & value,
+      const CORBA_AnySeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
@@ -1683,13 +1683,13 @@ public:
   virtual void* _downcast (
       const char* logical_type_id
     );
-  virtual AnySeq * get_elements (
+  virtual CORBA_AnySeq * get_elements (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
 
   virtual void set_elements (
-      const AnySeq & value,
+      const CORBA_AnySeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
@@ -1728,12 +1728,12 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
-  virtual AnySeq * get_elements (
+  virtual CORBA_AnySeq * get_elements (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
   virtual void set_elements (
-      const AnySeq & value,
+      const CORBA_AnySeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
