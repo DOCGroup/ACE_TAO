@@ -17,7 +17,8 @@ OBJFILES = \
 	$(OBJDIR)\Server_Info.obj \
 	$(OBJDIR)\Server_Repository.obj \
 	$(OBJDIR)\Repository_Configuration.obj \
-	$(OBJDIR)\XML_ContentHandler.obj
+        $(OBJDIR)\XML_ContentHandler.obj \
+        $(OBJDIR)\NT_Service.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
