@@ -1,3 +1,13 @@
+Tue Mar 25 08:22:03 2003  Ossama Othman  <ossama@uci.edu>
+
+	* m4/ace.m4:
+	* m4/compiler.m4:
+	* m4/platform.m4:
+
+	  Applied Steve's change below to the remaining 'test -n/-z
+	  "$GXX"' instances.  Addresses some problems in non-GNU compiler
+	  builds.
+
 Fri Mar 21 23:17:26 2003  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Changed <test -n "$GXX"> to <test "$GXX" = yes> to

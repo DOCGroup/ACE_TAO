@@ -37,7 +37,7 @@ dnl  AC_BEFORE([$0], [AM_PROG_LIBTOOL])
 
  AC_REQUIRE([ACE_COMPILATION_OPTIONS])
 
- if test -n "$GXX"; then
+ if test "$GXX" = yes; then
 dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
 changequote(, )dnl
    if $CXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
@@ -75,7 +75,7 @@ changequote([, ])dnl
  dnl                user override them.
  dnl    WERROR    - Compiler flag that converts warnings to errors
 
- if test -n "$GXX"; then
+ if test "$GXX" = yes; then
     WERROR="-Werror"
  fi
 
@@ -128,7 +128,7 @@ changequote([, ])dnl
          CPPFLAGS="$CPPFLAGS -qlanglvl=ansi"
          ;;
        *)
-         if test -n "$GXX"; then
+         if test "$GXX" = yes; then
            ACE_CXXFLAGS="-mcpu=common"
          fi
          ;;
@@ -143,7 +143,7 @@ changequote([, ])dnl
          OCXXFLAGS="-qarch=ppc -qtune=604"
          ;;
        *)
-         if test -n "$GXX"; then
+         if test "$GXX" = yes; then
            ACE_CXXFLAGS="-mcpu=common"
          fi
          ;;
@@ -162,7 +162,7 @@ changequote([, ])dnl
          OCXXFLAGS=""
          ;;
        *)
-         if test -n "$GXX"; then
+         if test "$GXX" = yes; then
            ACE_CXXFLAGS="$ACE_CXXFLAGS"
          fi
          ;;
@@ -171,7 +171,7 @@ changequote([, ])dnl
    *freebsd*)
      case "$CXX" in
        *)
-         if test -n "$GXX"; then       
+         if test "$GXX" = yes; then       
            CXXFLAGS="$CXXFLAGS"
            ACE_CXXFLAGS="$ACE_CXXFLAGS -w -fno-strict-prototypes"
            DCXXFLAGS=""
@@ -232,7 +232,7 @@ changequote([, ])dnl
          fi
          ;;
        *)
-         if test -n "$GXX"; then
+         if test "$GXX" = yes; then
            ACE_CXXFLAGS="$ACE_CXXFLAGS -w"
          fi
          ;;
@@ -264,7 +264,7 @@ changequote([, ])dnl
    *linux*)
      case "$CXX" in
        *)
-         if test -n "$GXX"; then
+         if test "$GXX" = yes; then
            CXXFLAGS="$CXXFLAGS"
            ACE_CXXFLAGS="$ACE_CXXFLAGS"
            DCXXFLAGS="$DCXXFLAGS"
@@ -342,14 +342,14 @@ changequote([, ])dnl
  esac
 
  dnl Additional flags
- if test -n "$GXX"; then
+ if test "$GXX" = yes; then
    ACE_CXXFLAGS="$ACE_CXXFLAGS -W -Wall -Wpointer-arith"
 dnl    if test "$ace_user_enable_repo" = no; then
 dnl      ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
 dnl    fi
  fi
 
- if test -n "$GCC"; then
+ if test "$GCC" = yes; then
    ACE_CFLAGS="$ACE_CFLAGS -W -Wall -Wpointer-arith"
  fi
 ])
