@@ -161,7 +161,7 @@ SOURCE=.\cubitS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\svr.cpp
+SOURCE=.\server.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -174,6 +174,10 @@ SOURCE=.\cubit_i.h
 # Begin Source File
 
 SOURCE=.\cubitS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\server.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
