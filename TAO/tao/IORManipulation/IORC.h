@@ -40,6 +40,7 @@
 #include "tao/Exception.h"
 #include "tao/Object.h"
 #include "tao/Sequence.h"
+#include "tao/Any_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

@@ -1,3 +1,10 @@
+Tue Mar 25 10:54:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/IORManipulation/IORC.h:
+
+          Added include of Any_T.h needed for builds with inlining
+          enabled.
+
 Mon Mar 24 18:15:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
