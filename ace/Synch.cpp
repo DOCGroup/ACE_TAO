@@ -28,6 +28,10 @@ ACE_Adaptive_Lock::ACE_Adaptive_Lock (void)
 {
 }
 
+ACE_Adaptive_Lock::~ACE_Adaptive_Lock (void)
+{
+}
+
 int
 ACE_Adaptive_Lock::remove (void)
 {
