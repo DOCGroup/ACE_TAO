@@ -177,6 +177,7 @@ noinst_PROGRAMS = \
   MT_SOCK_Test \
   Multicast_Test \
   Multihomed_INET_Addr_Test \
+  Network_Adapters_Test \
   NonBlocking_Conn_Test \
   Notify_Performance_Test \
   Object_Manager_Test \
@@ -406,6 +407,9 @@ Multicast_Test_SOURCES = Multicast_Test.cpp
 Multihomed_INET_Addr_Test_SOURCES = Multihomed_INET_Addr_Test.cpp
 
 Naming_Test_SOURCES = Naming_Test.cpp
+
+Network_Adapters_Test_SOURCES = \
+  Network_Adapters_Test.cpp Network_Adapters_Test.h
 
 NonBlocking_Conn_Test_SOURCES = \
   NonBlocking_Conn_Test.cpp NonBlocking_Conn_Test.h
