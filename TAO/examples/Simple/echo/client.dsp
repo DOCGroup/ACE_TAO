@@ -93,7 +93,7 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Client_i.cpp
+SOURCE=.\Echo_Client_i.cpp
 # End Source File
 # Begin Source File
 
@@ -103,13 +103,17 @@ SOURCE=.\EchoC.cpp
 
 SOURCE=.\EchoS.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\Simple_util.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Client_i.h
+SOURCE=.\Echo_Client_i.h
 # End Source File
 # Begin Source File
 
@@ -122,6 +126,10 @@ SOURCE=.\EchoS.h
 # Begin Source File
 
 SOURCE=.\EchoS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\Simple_util.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
