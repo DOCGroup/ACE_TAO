@@ -55,6 +55,7 @@ BIN =   Aio_Platform_Test \
         Mem_Map_Test \
         MM_Shared_Memory_Test \
         MT_Reactor_Timer_Test \
+        MT_Reactor_Upcall_Test \
         MT_SOCK_Test \
         Message_Block_Test \
         Message_Queue_Test \

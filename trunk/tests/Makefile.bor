@@ -57,6 +57,7 @@ NAMES = \
 	Message_Queue_Test_Ex \
 	MM_Shared_Memory_Test \
 	MT_Reactor_Timer_Test \
+	MT_Reactor_Upcall_Test \
 	MT_SOCK_Test \
 	Naming_Test \
 	New_Fail_Test \

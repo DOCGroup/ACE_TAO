@@ -32,6 +32,7 @@ DISABLED/Signal_Test
 Sigset_Ops_Test
 Timer_Queue_Test
 DISABLED/MT_Reactor_Timer_Test
+DISABLED/MT_Reactor_Upcall_Test
 SOCK_Connector_Test
 LynxOS/SOCK_Send_Recv_Test
 Task_Test
