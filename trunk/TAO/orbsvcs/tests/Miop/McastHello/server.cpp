@@ -3,6 +3,7 @@
 #include "McastHello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "orbsvcs/PortableGroup/MIOP.h"
 
 ACE_RCSID (McastHello,
            server,
@@ -78,6 +79,8 @@ main (int argc, char *argv[])
 
       // Get the group IOR.
       CORBA::String_var ior = CORBA::string_dup (group_ior);
+
+
       CORBA::Object_var group1 =
         orb->string_to_object (ior.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
