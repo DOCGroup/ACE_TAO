@@ -1,50 +1,55 @@
+Tue Jul 11 19:31:13 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * pace/stdio.h: fixed copy+paste error in comment:
+          tmpfile instead of sscanf.
+
 Tue Jul 11 4:28:00 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* rules.common.GNU:
-	  Added functionality so that PACE_SYSVER on Linux is in the
-	  same format as LINUX_VERSION_CODE from the Linux source code.
-	  For example, Linux version 2.2.12 -> 0x02020C == 131596
+        * rules.common.GNU:
+          Added functionality so that PACE_SYSVER on Linux is in the
+          same format as LINUX_VERSION_CODE from the Linux source code.
+          For example, Linux version 2.2.12 -> 0x02020C == 131596
 
 Tue Jul 11 10:24:03 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
-        * tests/Makefile: 
+        * tests/Makefile:
           Changed to always include the PACE library. This was causing
           problems for functions that are never inlined when inlining
           is enabled.
 
 Mon Jul 10 13:47:25 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/stddef.h
-	* pace/stdio.h
-	* pace/string.h
-	* pace/unistd.h
-	  Changed to new format, all functions should now be
-	  declared in pace/
+        * pace/stddef.h
+        * pace/stdio.h
+        * pace/string.h
+        * pace/unistd.h
+          Changed to new format, all functions should now be
+          declared in pace/
 
-	* pace/mqueue.h
-	* pace/emulation/mqueue*
-	  Emulated mqueue for linux. Curently there is no support for
-	  mq_notify, and there is a race condition if two procs try to
-	  create the same queue at the same time.
+        * pace/mqueue.h
+        * pace/emulation/mqueue*
+          Emulated mqueue for linux. Curently there is no support for
+          mq_notify, and there is a race condition if two procs try to
+          create the same queue at the same time.
 
-	* pace/stdio.h
-	* pace/posix/stdio.inl
-	* pace/unistd.h
-	* pace/posix/unistd.inl
-	  Moved ctermid back to where it should be (stdio).
+        * pace/stdio.h
+        * pace/posix/stdio.inl
+        * pace/unistd.h
+        * pace/posix/unistd.inl
+          Moved ctermid back to where it should be (stdio).
 
-	* pace/string.h
-	* pace/posix/string.inl
-	  Added mem* functions (e.g. memset), since they are C std.
+        * pace/string.h
+        * pace/posix/string.inl
+          Added mem* functions (e.g. memset), since they are C std.
 
-	* pace/time.h
-	* pace/posix/time.inl
-	  ENOSYSed clock_* and timer_* functions for Linux, although
-	  emulation may be possible.
+        * pace/time.h
+        * pace/posix/time.inl
+          ENOSYSed clock_* and timer_* functions for Linux, although
+          emulation may be possible.
 
-	* pace/posix/pthread.inl
-	  ENOSYSed many functions not supported on Linux. Linux should
-	  build clean now for the moment.
+        * pace/posix/pthread.inl
+          ENOSYSed many functions not supported on Linux. Linux should
+          build clean now for the moment.
 
 Mon Jul 10 08:50:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -121,42 +126,42 @@ Fri Jul  7 17:24:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 Fri Jul  7 17:22:56 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/aio.h:
-	* pace/posix/aio.h:
-	* pace/assert.h:
-	* pace/posix/assert.h:
-	* pace/ctype.h:
-	* pace/posix/ctype.h:
-	* pace/dirent.h:
-	* pace/posix/dirent.h:
-	* pace/fcntl.h:
-	* pace/posix/fcntl.h:
-	* pace/grp.h:
-	* pace/posix/grp.h:
-	* pace/math.h:
-	* pace/posix/math.h:
-	* pace/mqueue.h:
-	* pace/posix/mqueue.h:
-	* pace/pthread.h:
-	* pace/posix/pthread.h:
-	* pace/pwd.h:
-	* pace/posix/pwd.h:
-	* pace/sched.h:
-	* pace/posix/sched.h:
-	* pace/semaphore.h:
-	* pace/posix/semaphore.h:
-	* pace/setjmp.h:
-	* pace/posix/setjmp.h:
-	* pace/signal.h:
-	* pace/posix/signal.h:
+        * pace/aio.h:
+        * pace/posix/aio.h:
+        * pace/assert.h:
+        * pace/posix/assert.h:
+        * pace/ctype.h:
+        * pace/posix/ctype.h:
+        * pace/dirent.h:
+        * pace/posix/dirent.h:
+        * pace/fcntl.h:
+        * pace/posix/fcntl.h:
+        * pace/grp.h:
+        * pace/posix/grp.h:
+        * pace/math.h:
+        * pace/posix/math.h:
+        * pace/mqueue.h:
+        * pace/posix/mqueue.h:
+        * pace/pthread.h:
+        * pace/posix/pthread.h:
+        * pace/pwd.h:
+        * pace/posix/pwd.h:
+        * pace/sched.h:
+        * pace/posix/sched.h:
+        * pace/semaphore.h:
+        * pace/posix/semaphore.h:
+        * pace/setjmp.h:
+        * pace/posix/setjmp.h:
+        * pace/signal.h:
+        * pace/posix/signal.h:
 
-	  Changed the protection includes. Eg:
-	    ROOT directory PACE_ASSERT_H
-	    POSIX directory PACE_ASSERT_H_POSIX.
+          Changed the protection includes. Eg:
+            ROOT directory PACE_ASSERT_H
+            POSIX directory PACE_ASSERT_H_POSIX.
 
-	  Changed the #if defined (PACE_HAS_POSIX) to #if PACE_HAS_POSIX
-	  per our recent conversation regarding all macros being assigned a
-	  value.
+          Changed the #if defined (PACE_HAS_POSIX) to #if PACE_HAS_POSIX
+          per our recent conversation regarding all macros being assigned a
+          value.
 
           Moved the prototype function signatures to the root directory *.h file.
 
