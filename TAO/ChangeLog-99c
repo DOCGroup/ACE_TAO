@@ -33,6 +33,9 @@ Thu May 20 15:22:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Also, cleaned up the POA Current implementation class.  There
 	  were many extra methods that not used in the new scheme.
 
+	  Thanks to Jon Biggar <jon@biggar.org> for pointing out that the
+	  original scheme was not compliant.
+
 	* examples/POA/DSI:
 
 	  - Changed access to POA Current.  Previously, we use to ask the
