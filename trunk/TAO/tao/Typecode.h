@@ -67,7 +67,7 @@ public:
     Bounds (void);
 
     virtual void _raise (void);
-    Bounds* _narrow (CORBA_Exception *ex);
+    static Bounds* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
 
@@ -77,7 +77,7 @@ public:
     BadKind (void);
 
     virtual void _raise (void);
-    BadKind* _narrow (CORBA_Exception *ex);
+    static BadKind* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
 
