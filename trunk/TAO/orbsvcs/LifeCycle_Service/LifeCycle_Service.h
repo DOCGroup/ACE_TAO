@@ -39,10 +39,10 @@ public:
 
   int init (int argc,
             char *argv[],
-            CORBA::Environment& env);
+            CORBA::Environment& ACE_TRY_ENV);
   // Initialize the Server state - parsing arguments and ...
 
-  int run (CORBA::Environment& env);
+  int run (CORBA::Environment& ACE_TRY_ENV);
   // Run the orb.
 
   u_int parse_args (void);

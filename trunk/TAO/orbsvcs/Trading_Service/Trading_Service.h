@@ -56,10 +56,10 @@ public:
   ~Trading_Service (void);
   // Destructor
 
-  int init (int argc, char* argv[]);
+  int init (int argc, char* argv[], CORBA::Environment &ACE_TRY_ENV);
   // Initialize the Trading Service with arguments.
 
-  int run (void);
+  int run (CORBA::Environment &ACE_TRY_ENV);
   // Run the Trading Service.
 
   int shutdown (void);
@@ -69,7 +69,7 @@ private:
   int init_multicast_server (void);
   // Enable the Trading Service to answer multicast requests for its IOR.
 
-  int bootstrap_to_federation (void);
+  int bootstrap_to_federation (CORBA::Environment &ACE_TRY_ENV);
   // Bootstrap to another trader, and attach to its trader network.
 
   int parse_args (int& argc, char *argv[]);

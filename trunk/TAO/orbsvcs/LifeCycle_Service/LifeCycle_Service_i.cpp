@@ -33,19 +33,17 @@ Life_Cycle_Service_i::~Life_Cycle_Service_i (void)
 
 
 CORBA::Boolean
-Life_Cycle_Service_i::supports (const CosLifeCycle::Key &factory_key,
-                                       CORBA::Environment &TAO_IN_ENV_there)
+Life_Cycle_Service_i::supports (const CosLifeCycle::Key &,
+                                       CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (factory_key);
-  ACE_UNUSED_ARG (TAO_IN_ENV_there);
   return 0;
 }
 
 CORBA::Object_ptr
 Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
                                             const CosLifeCycle::Criteria &the_criteria,
-                                            CORBA::Environment &TAO_IN_ENV_there)
+                                            CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,
                        CosLifeCycle::InvalidCriteria,
@@ -61,12 +59,8 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
 
       ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
 
-      CORBA::String filter = criteria_Evaluator.getFilter (TAO_IN_ENV_there);
-
-      if (TAO_IN_ENV_there.exception() != 0)
-	{
-	  return 0;
-	}
+      CORBA::String filter = criteria_Evaluator.getFilter (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",filter));
 
@@ -87,24 +81,25 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
 
       // Check if it is a valid Generic Factory reference
       if (CORBA::is_nil (genericFactoryObj_ptr))
-	{ // throw a NoFactory exception
-	  TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));
-	  return 0;
-	}
+        ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
       else
 	{
-	  CORBA::Environment env_here;
-
-	  CosLifeCycle::GenericFactory_var genericFactory_var =
-	    CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr,
-					    env_here);
-
-	  // see if there is an exception, if yes then throw the NoFactory exception
-	  if (env_here.exception () != 0) // throw a NoFactory exception
-	    {
-	      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));
-	      return 0;
+          CosLifeCycle::GenericFactory_var genericFactory_var;
+          ACE_TRY
+            {
+              genericFactory_var =
+                CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr,
+                                                       ACE_TRY_ENV);
+              // ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              // see if there is an exception, if yes then throw the
+              // NoFactory exception throw a NoFactory exception
+	      ACE_TRY_THROW (CosLifeCycle::NoFactory (factory_key));
 	    }
+          ACE_ENDTRY;
+          ACE_CHECK_RETURN (0);
 
 	  if (CORBA::is_nil (genericFactory_var.in()))
 	    ACE_ERROR_RETURN ((LM_ERROR,
@@ -116,7 +111,8 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
 	  // Now retrieve the Object obj ref corresponding to the key.
 	  CORBA::Object_var object_var = genericFactory_var->create_object (factory_key,
 									    the_criteria,
-									    TAO_IN_ENV_there);
+                                                                            ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Life_Cycle_Service_i::create_object: Forwarded request.\n"));
