@@ -2,13 +2,13 @@
 
 #include "ace/Env_Value_T.h"
 #include "ace/Read_Buffer.h"
-#include "client_i.h"
+#include "Cubit_Client.h"
 #include "orbsvcs/CosNamingC.h"
 
 #include "tao/Timeprobe.h"
 #include "RTI_IO.h"
 
-ACE_RCSID(IDL_Cubit, client_i, "$Id$")
+ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

@@ -21,8 +21,8 @@ PROG_SRCS = Cubit_Server.cpp \
             collocation_test.cpp \
 	    client.cpp \
 	    Cubit_Client.cpp \
-	    RTI_IO.cpp
-	    tmplinst.cpp 
+	    RTI_IO.cpp \
+	    tmplinst.cpp \
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
