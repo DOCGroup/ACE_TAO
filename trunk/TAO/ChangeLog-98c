@@ -1,3 +1,8 @@
+Wed Jan  6 07:44:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/DynStruct_i.cpp: 
+	  Removed the last use (hopefully) of ACE_Array<>
+
 Wed Jan 06 02:58:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * TAO_Examples.dsw
