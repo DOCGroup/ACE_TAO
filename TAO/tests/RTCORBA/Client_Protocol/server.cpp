@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
-
+#include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
 
 class Test_i : public POA_Test

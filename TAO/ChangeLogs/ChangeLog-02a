@@ -1,7 +1,19 @@
+Thu Jun 21 21:06:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tests/RTCORBA/Client_Protocol/server.cpp:
+	* tests/RTCORBA/Client_Propagated/server.cpp:
+	* tests/RTCORBA/Explicit_Binding/server.cpp:
+	* tests/RTCORBA/Private_Connection/server.cpp:
+	* tests/RTCORBA/Server_Protocol/server.cpp:
+	* tests/RTCORBA/Thread_Pool/server.cpp:
+
+	  Added RTPortableServer.h include to statically link in the
+	  RTPOA for static builds.
+
 Thu Jun 21 20:38:47 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tests/RTCORBA/Explicit_Binding/server.dsp:
-          
+
           Forgot to add changed DSP file from previous Explicit_Binding
           checkin.
 
@@ -11,12 +23,12 @@ Wed Jun 21 13:00:31 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/PortableServer/PAO.h:
 	* tao/PortableServer/PortableServerC.h:
 
-	  Set inheritance from PortableServer::POA in class TAO_POA to be virtual.   
+	  Set inheritance from PortableServer::POA in class TAO_POA to be virtual.
 
 	  Added new method (_tao_poa_downcast) to safely downcast instances of
 	  PortableServer::POA to TAO_POA. This method has to be used instead
-	  of ACE_dynamic_cast for downcasting the POA. 
-	
+	  of ACE_dynamic_cast for downcasting the POA.
+
 Thu Jun 21 12:57:34 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * docs/ec_options.html:
@@ -38,10 +50,10 @@ Thu Jun 21 09:47:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * tests/RTCORBA/Explicit_Binding/server.cpp:
         * tests/RTCORBA/Explicit_Binding/Makefile:
         * tests/RTCORBA/Explicit_Binding/svc.conf:
-          
+
           Added RTCORBA libraries to server program for MSVC.  Technically,
           the server doesn't need them, but it makes the usage consistent
-          with want is begin done on other operating systems and it's 
+          with want is begin done on other operating systems and it's
           less confusing.  Also, client needed proper svc.conf entry
           for RTCORBA to work right.
 
@@ -51,10 +63,10 @@ Thu Jun 21 09:47:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu Jun 21 07:49:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
-        * examples/OBV/Simple_util.h:                       
-        * examples/Persistent_Grid/Simple_util.h:           
-        * examples/Simple/Simple_util.h:                    
-                                                            
+        * examples/OBV/Simple_util.h:
+        * examples/Persistent_Grid/Simple_util.h:
+        * examples/Simple/Simple_util.h:
+
           Added ()'s around file name in the pragma implemenation directive.
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
@@ -75,13 +87,13 @@ Thu Jun 21 07:49:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 Thu Jun 21 06:52:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
-	  Updated dependencies. 
+	  Updated dependencies.
 
 Wed Jun 20 19:20:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/run_test.pl: 
-	* tests/RTCORBA/Banded_Connections/bands.unix: 
-	
+	* tests/RTCORBA/Banded_Connections/run_test.pl:
+	* tests/RTCORBA/Banded_Connections/bands.unix:
+
 	  There was a change in priority ranges between Solaris 5.7 and
 	  5.8. For the SCHED_OTHER policy, the ranges are:
 
@@ -99,7 +111,7 @@ Wed Jun 20 18:45:40 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Single_Endpoint/Makefile:
 
 	  Updated Makefiles to fix the static builds.
-	
+
 Wed Jun 20 17:37:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAnyFactory.cpp:

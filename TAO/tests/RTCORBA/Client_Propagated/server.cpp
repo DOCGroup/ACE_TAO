@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 
 class Test_i : public POA_Test
 {
