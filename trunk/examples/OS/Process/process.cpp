@@ -112,7 +112,7 @@ test_more (void)
 
   ACE_ProcessEx new_process;
   ACE_Process_Options options;
-  options.path (executable);
+  options.command_line (executable);
   options.set_handles (infile);
 
   if (new_process.start (options) == -1)
@@ -133,7 +133,7 @@ static void
 test_date (void)
 {
   ACE_Process_Options options;
-  options.path (DATE_PATH);
+  options.command_line (DATE_PATH);
 
   // Try to create a new process running date.
   ACE_ProcessEx new_process;
@@ -153,8 +153,7 @@ static void
 test_ls (void)
 {
   ACE_Process_Options options;
-  options.path (LS_PATH);
-  options.cl_options ("-al");
+  options.command_line ("%s -al", LS_PATH);
   
   ACE_ProcessEx new_process;
   if (new_process.start (options) == -1)
@@ -192,13 +191,13 @@ win32_test_ls (void)
 			  TRUE,
 			  DUPLICATE_SAME_ACCESS))
     {
-      ACE_ERROR ((LM_ERROR, "%p duplicate failed.\n", "test_cp"));
+      ACE_ERROR ((LM_ERROR, "%p duplicate failed.\n", "test_ls"));
       return;
     }
 
   BOOL fork_result = 
-    ::CreateProcess (0,
-		     "c:\\Utils\\bin\\ls.exe -l",
+    ::CreateProcess ("c:\\Utils\\bin\\ls.exe",
+		     "-a",
 		     NULL, // No process attributes.
 		     NULL, // No thread attributes.
 		     TRUE, // Allow handle inheritance.
@@ -211,7 +210,7 @@ win32_test_ls (void)
   ::CloseHandle (startup_info.hStdOutput);
 
   if (fork_result == 0)
-    ACE_ERROR ((LM_ERROR, "%p.\n", "test_cp"));
+    ACE_ERROR ((LM_ERROR, "%p CreateProcess failed.\n", "test_ls"));
   else
     {
       ::WaitForSingleObject (process_info.hProcess, INFINITE);
@@ -298,7 +297,7 @@ win32_spawn_environment_process (void)
 		     TRUE, // Allow handle inheritance.
 		     NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
 		     environment, // Environment.
-		     //"d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\", // Current directory to start in.
+		     //"d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\",
 		     0,
 		     &startup_info,
 		     &process_info);
@@ -320,9 +319,10 @@ static void
 test_setenv (const char *argv0)
 {
   ACE_Process_Options options;
-  options.setenv ("ACE_PROCESS_TEST", "here's a really large number: %u", 0 - 1);
-  options.path (argv0);
-  options.cl_options ("-g");
+  //  options.setenv ("ACE_PROCESS_TEST", "here's a really large number: %u", 0 - 1);
+  options.setenv ("ACE_PROCESS_TEST= here's a large number %u", 0 - 1);
+  options.setenv ("ACE_PROCESS_TEST2", "ophilli");
+  options.command_line ("%s -g", argv0);
   ACE_ProcessEx process;
   if (process.start (options) == -1)
     {
@@ -370,8 +370,7 @@ main (int argc, char *argv[])
   if (run_all)
     {
       ACE_Process_Options options;
-      options.path (argv[0]);
-      options.cl_options ("-d -l -e running");
+      options.command_line ("%s -d -l -s", argv[0]);
       ACE_ProcessEx process;
       if (process.start (options) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
@@ -388,8 +387,11 @@ main (int argc, char *argv[])
     {
       ACE_DEBUG ((LM_DEBUG, "checking ACE_PROCESS_TEST\n"));
       char *value = ACE_OS::getenv ("ACE_PROCESS_TEST");
-      ACE_DEBUG ((LM_DEBUG, "ACE_PROCESS_TEST = %s.\n",
-		  value == 0 ? "no value" : value));
+      char *value2 = ACE_OS::getenv ("ACE_PROCESS_TEST2");
+      ACE_DEBUG ((LM_DEBUG, "ACE_PROCESS_TEST = %s.\n"
+		  "ACE_PROCESS_TEST2 = %s.\n",
+		  value == 0 ? "no value" : value,
+		  value2 == 0 ? "no value" : value2));
     }
 
   if (run_ls)
