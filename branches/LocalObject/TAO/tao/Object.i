@@ -70,7 +70,7 @@ ACE_INLINE void
 CORBA::release (CORBA_Object_ptr obj)
 {
   if (obj)
-    obj->_decr_refcnt ();
+    obj->_remove_ref ();
 }
 
 // DII hook to objref

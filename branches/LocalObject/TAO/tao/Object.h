@@ -197,14 +197,14 @@ public:
 #endif /* __GNUC__ */
   // Useful for template programming.
 
-  // = TAO extensions
-
   // = Reference count managment.
-  CORBA::ULong _incr_refcnt (void);
+  virtual void _add_ref (void);
   // Increment the reference count.
 
-  CORBA::ULong _decr_refcnt (void);
+  virtual void _remove_ref (void);
   // Decrement the reference count.
+
+  // = TAO extensions
 
   CORBA_Object (TAO_Stub *p = 0,
                 TAO_ServantBase *servant = 0,
@@ -219,6 +219,13 @@ public:
   // the object
 
 protected:
+  // = Internal Reference count managment.
+  CORBA::ULong _incr_refcnt (void);
+  // Increment the reference count.
+
+  CORBA::ULong _decr_refcnt (void);
+  // Decrement the reference count.
+
   TAO_ServantBase *servant_;
   // Servant pointer.  It is 0 except for collocated objects.
 

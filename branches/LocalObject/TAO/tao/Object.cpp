@@ -49,6 +49,18 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
 }
 
 void
+CORBA_Object::_add_ref (void)
+{
+  this->incr_refcnt ();
+}
+
+void
+CORBA_Object::_remove_ref (void)
+{
+  this->decr_refcnt ();
+}
+
+void
 CORBA_Object::_tao_any_destructor (void *x)
 {
   CORBA_Object_ptr tmp = ACE_static_cast(CORBA_Object_ptr,x);
