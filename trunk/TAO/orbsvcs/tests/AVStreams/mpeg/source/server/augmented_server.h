@@ -110,7 +110,7 @@ public:
 class MMDevice_Exporter_i
   : public POA_MMDevice_Exporter,
     public TAO_Exportable,
-    public TAO_PropertySet<POA_CosPropertyService::PropertySet>
+    public TAO_PropertySet
 {
 public:
   CORBA_Object_ptr audio_mmdevice_;
