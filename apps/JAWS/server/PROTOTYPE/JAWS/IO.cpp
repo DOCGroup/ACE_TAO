@@ -22,6 +22,7 @@ JAWS_IO::~JAWS_IO (void)
 {
 }
 
+#if 0
 ACE_HANDLE
 JAWS_IO::handle (void)
 {
@@ -40,8 +41,16 @@ JAWS_IO::handler (JAWS_IO_Handler *handler)
   this->handler_ = handler;
 }
 
+void
+JAWS_IO::acceptor (JAWS_IO_Acceptor *acceptor)
+{
+  this->acceptor_ = acceptor;
+}
+#endif /* 0 */
+
 JAWS_Synch_IO::JAWS_Synch_IO (void)
 {
+  this->acceptor_ = JAWS_IO_Synch_Acceptor_Singleton::instance ();
 }
 
 JAWS_Synch_IO::~JAWS_Synch_IO (void)
@@ -50,36 +59,37 @@ JAWS_Synch_IO::~JAWS_Synch_IO (void)
 }
 
 void
-JAWS_Synch_IO::accept (ACE_INET_Addr *addr)
+JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh)
 {
-  // HACK
-  ACE_UNUSED_ARG (addr);
   ACE_SOCK_Stream new_stream;
   if (this->acceptor_->accept (new_stream) == -1)
-    this->handler_->accept_error ();
+    ioh->accept_error ();
   else
-    this->handler_->accept_complete ();
+    ioh->accept_complete (new_stream.get_handle ());
 }
 
 void
-JAWS_Synch_IO::read (ACE_Message_Block &mb,
+JAWS_Synch_IO::read (JAWS_IO_Handler *ioh,
+                     ACE_Message_Block &mb,
                      int size)
 {
   ACE_SOCK_Stream stream;
-  stream.set_handle (this->handle_);
+
+  stream.set_handle (ioh->handle ());
   int result = stream.recv (mb.wr_ptr (), size);
 
   if (result <= 0)
-    this->handler_->read_error ();
+    ioh->read_error ();
   else
     {
       mb.wr_ptr (result);
-      this->handler_->read_complete (mb);
+      ioh->read_complete (mb);
     }
 }
 
 void
-JAWS_Synch_IO::receive_file (const char *filename,
+JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
+                             const char *filename,
                              void *initial_data,
                              int initial_data_length,
                              int entire_length)
@@ -91,27 +101,29 @@ JAWS_Synch_IO::receive_file (const char *filename,
   if (result == ACE_Filecache_Handle::SUCCESS)
     {
       ACE_SOCK_Stream stream;
-      stream.set_handle (this->handle_);
+      stream.set_handle (ioh->handle ());
 
       int bytes_to_memcpy = ACE_MIN (entire_length, initial_data_length);
       ACE_OS::memcpy (handle.address (), initial_data, bytes_to_memcpy);
 
       int bytes_to_read = entire_length - bytes_to_memcpy;
 
-      int bytes = stream.recv_n ((char *) handle.address () + initial_data_length,
+      int bytes = stream.recv_n ((char *)
+                                 handle.address () + initial_data_length,
                                  bytes_to_read);
       if (bytes == bytes_to_read)
-        this->handler_->receive_file_complete ();
+        ioh->receive_file_complete ();
       else
         result = -1;
     }
 
   if (result != ACE_Filecache_Handle::SUCCESS)
-    this->handler_->receive_file_error (result);
+    ioh->receive_file_error (result);
 }
 
 void
-JAWS_Synch_IO::transmit_file (const char *filename,
+JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
+                              const char *filename,
                               const char *header,
                               int header_size,
                               const char *trailer,
@@ -125,7 +137,7 @@ JAWS_Synch_IO::transmit_file (const char *filename,
     {
 #if defined (ACE_JAWS_BASELINE)
       ACE_SOCK_Stream stream;
-      stream.set_handle (this->handle_);
+      stream.set_handle (ioh->handle ());
 
       if ((stream.send_n (header, header_size) == header_size)
           && ((u_long) stream.send_n (handle.address (), handle.size ())
@@ -157,39 +169,42 @@ JAWS_Synch_IO::transmit_file (const char *filename,
           iov[iovcnt].iov_len = trailer_size;
           iovcnt++;
         }
-      if (ACE_OS::writev (this->handle_, iov, iovcnt) < 0)
+      if (ACE_OS::writev (ioh->handle (), iov, iovcnt) < 0)
         result = -1;
       else
-        this->handler_->transmit_file_complete ();
+        ioh->transmit_file_complete ();
 #endif /* ACE_JAWS_BASELINE */
     }
 
   if (result != ACE_Filecache_Handle::SUCCESS)
-    this->handler_->transmit_file_error (result);
+    ioh->transmit_file_error (result);
 }
 
 void
-JAWS_Synch_IO::send_confirmation_message (const char *buffer,
+JAWS_Synch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
+                                          const char *buffer,
                                           int length)
 {
-  this->send_message (buffer, length);
-  this->handler_->confirmation_message_complete ();
+  this->send_message (ioh, buffer, length);
+  ioh->confirmation_message_complete ();
 }
 
 void
-JAWS_Synch_IO::send_error_message (const char *buffer,
+JAWS_Synch_IO::send_error_message (JAWS_IO_Handler *ioh,
+                                   const char *buffer,
                                    int length)
 {
-  this->send_message (buffer, length);
-  this->handler_->error_message_complete ();
+  this->send_message (ioh, buffer, length);
+  ioh->error_message_complete ();
 }
 
 void
-JAWS_Synch_IO::send_message (const char *buffer,
+JAWS_Synch_IO::send_message (JAWS_IO_Handler *ioh,
+                             const char *buffer,
                              int length)
 {
   ACE_SOCK_Stream stream;
-  stream.set_handle (this->handle_);
+  stream.set_handle (ioh->handle ());
   stream.send_n (buffer, length);
 }
 
@@ -427,3 +442,9 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
 // #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 // #pragma instantiate ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>
 // #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate  ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -10,6 +10,11 @@ JAWS_Pipeline_Abstract_Handler<TYPE>::JAWS_Pipeline_Abstract_Handler (void)
 {
 }
 
+template <class TYPE>
+JAWS_Pipeline_Abstract_Handler<TYPE>::~JAWS_Pipeline_Abstract_Handler (void)
+{
+}
+
 template <class TYPE> int
 JAWS_Pipeline_Abstract_Handler<TYPE>::put (ACE_Message_Block *mb,
                                            ACE_Time_Value *tv)
@@ -19,6 +24,8 @@ JAWS_Pipeline_Abstract_Handler<TYPE>::put (ACE_Message_Block *mb,
 
   int status = this->handle_put (data, tv);
 
+  // If handle_put() is successful, we continue to the next stage of the
+  // pipeline.  Otherwise, we return.
   return (status != -1) ? this->put_next (mb, tv) : -1;
 }
 
