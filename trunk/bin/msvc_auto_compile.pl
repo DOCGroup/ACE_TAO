@@ -144,6 +144,8 @@ sub Build_Core ()
         @core_list = ($ACE_ROOT."\\ace\\ace_lib.dsp",
                       $ACE_ROOT."\\apps\\gperf\\src\\gperf_lib.dsp",
                       $ACE_ROOT."\\apps\\gperf\\src\\gperf.dsp",
+                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_BE_LIB.dsp",
+                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_FE_LIB.dsp",
                       $ACE_ROOT."\\TAO\\TAO_IDL\\tao_idl_static.dsp",
                       $ACE_ROOT."\\TAO\\tao\\TAO_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\Svc_Utils_Static.dsp",
