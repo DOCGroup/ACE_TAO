@@ -1,5 +1,7 @@
 Thu Jan  8 19:50:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* man: Updated all the manual pages.
+
 	* ace/Log_Msg: Added changes to allow the logging of custom built
  	  log records.  The main reason for these changes is to allow code
  	  to handle the logging of out of memory conditions without
