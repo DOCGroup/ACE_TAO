@@ -1,3 +1,10 @@
+Thu May 16 16:39:01 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* TAo/tests/TAO_tests.dsw
+	* TAO/tests/ORT/client.dsp
+	* TAO/tests/ORT/server.dsp
+	  Created new dsp files and inserted them in the TAO_tests workspace.
+ 
 Thu May 16 15:29:33 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (open):
