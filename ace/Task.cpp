@@ -124,6 +124,20 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
 {
 }
 
+// Wait for all threads running in a task to exit.
+int 
+ACE_Task_Base::wait (void)
+{
+  ACE_TRACE ("ACE_Task_Base::wait");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  if (this->thr_count_ <= 0)
+    return 0;
+  else
+    return this->thr_mgr ()->wait_task (this);
+}
+
 // Suspend a task.
 int 
 ACE_Task_Base::suspend (void)
@@ -186,12 +200,12 @@ ACE_Task_Base::activate (long flags,
 #else
   {
     // Keep the compiler from complaining.
-    n_threads = n_threads;
-    force_active = force_active;
-    priority = priority;
-    grp_id = grp_id;
-    task = task;
-    flags = flags; 
+    ACE_UNUSED_ARG (n_threads);
+    ACE_UNUSED_ARG (force_active);
+    ACE_UNUSED_ARG (priority);
+    ACE_UNUSED_ARG (grp_id);
+    ACE_UNUSED_ARG (task);
+    ACE_UNUSED_ARG (flags);
     errno = EINVAL;
     return -1;
   }

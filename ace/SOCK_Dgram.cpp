@@ -19,7 +19,9 @@ ACE_SOCK_Dgram::dump (void) const
 // returns the number of bytes read.
 
 ssize_t
-ACE_SOCK_Dgram::recv (iovec *io_vec, ACE_Addr &addr, int flags) const
+ACE_SOCK_Dgram::recv (iovec *io_vec, 
+		      ACE_Addr &addr, 
+		      int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
 #if defined (FIONREAD)
@@ -59,7 +61,8 @@ ACE_SOCK_Dgram::recv (iovec *io_vec, ACE_Addr &addr, int flags) const
 // to a portnumber.
 
 int
-ACE_SOCK_Dgram::shared_open (const ACE_Addr &local, int protocol_family)
+ACE_SOCK_Dgram::shared_open (const ACE_Addr &local, 
+			     int protocol_family)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
   int error = 0;
@@ -281,3 +284,25 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 }
 
 #endif /* ACE_HAS_MSG */
+
+ssize_t 
+ACE_SOCK_Dgram::recv (void *buf, 
+		      size_t n, 
+		      ACE_Addr &addr, 
+		      int flags, 
+		      const ACE_Time_Value *timeout) const
+{
+  ACE_Handle_Set handle_set;
+  handle_set.reset ();
+  handle_set.set_bit (this->get_handle ());
+
+  // Check the status of the current socket.
+  int result = ACE_OS::select (int (this->get_handle ()) + 1,
+			       handle_set,
+			       0, 0, 
+			       timeout);
+  if (result <= 0) // Other error or timeout.
+    return result;
+  else  // Goes fine, call <recv> to get data
+    return this->recv (buf, n, addr, flags);
+}

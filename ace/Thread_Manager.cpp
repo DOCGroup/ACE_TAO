@@ -437,6 +437,14 @@ ACE_Thread_Manager::remove_thr (int i)
   }
 
 int
+ACE_Thread_Manager::join_thr (int i)
+{
+  ACE_TRACE ("ACE_Thread_Manager::join_thr");
+
+  ACE_THR_OP (ACE_Thread::join, ACE_THR_TERMINATED);
+}
+
+int
 ACE_Thread_Manager::suspend_thr (int i)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_thr");
@@ -713,6 +721,16 @@ ACE_Thread_Manager::cancel_all (void)
   return this->apply_all (THR_FUNC (&ACE_Thread_Manager::cancel_thr));
 }
 
+// Wait for group of threads
+
+int 
+ACE_Thread_Manager::wait_grp (int grp_id)
+{
+  ACE_TRACE ("ACE_Thread_Manager::wait_grp");
+
+  return this->apply_grp (THR_FUNC (&ACE_Thread_Manager::join_thr));
+}
+
 // Must be called when thread goes out of scope to clean up its table
 // slot.
 
@@ -764,37 +782,6 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
   return 0;
 }
 
-// Wait for task  
-int 
-ACE_Thread_Manager::wait_task (ACE_Task_Base *task,
-			       const ACE_Time_Value *timeout)
-{
-  // This method will be implemented in the future.  The way we
-  // thought about it is by adding a linked list of pointers to
-  // ACE_Condition_Thread_Mutex, where one will be allocated
-  // dynaminclly when needed. Broadcasting the waiters will be done
-  // in a similar manner to what's done today. When a thread is
-  // removed (in remove_thr()) we'll check whether it is last in its
-  // task and whether "somebody" is waiting for this task to end, if
-  // so we'll broadcast the waiters.
-
-  task = task;
-  timeout = timeout;
-  ACE_NOTSUP_RETURN (-1);
-}
-
-// Wait for group of threads
-int 
-ACE_Thread_Manager::wait_group (int grp_id, 
-				const ACE_Time_Value *timeout)
-{
-  // This method will be implemented in the future. See the above
-  // comment.
-  grp_id = grp_id;
-  timeout = timeout;
-  ACE_NOTSUP_RETURN (-1);
-}
-
 int
 ACE_Thread_Manager::apply_task (ACE_Task_Base *task, 
 				THR_FUNC func,
@@ -811,6 +798,23 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
       result = -1;
 
   return result;
+}
+
+// Wait for task  
+int 
+ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
+{
+  // This method will be implemented in the future.  The way we
+  // thought about it is by adding a linked list of pointers to
+  // ACE_Condition_Thread_Mutex, where one will be allocated
+  // dynamically when needed.  Broadcasting the waiters will be done
+  // in a similar manner to what's done today. When a thread is
+  // removed (in remove_thr()) we'll check whether it is last in its
+  // task and whether "somebody" is waiting for this task to end, if
+  // so we'll broadcast the waiters.
+
+  return this->apply_task (task, 
+			   THR_FUNC (&ACE_Thread_Manager::join_thr));
 }
 
 // Suspend a task
