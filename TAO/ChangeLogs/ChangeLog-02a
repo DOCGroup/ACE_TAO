@@ -1,3 +1,13 @@
+Mon Jun 24 18:47:41 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/Sequence.i: Remove unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
+	  macros, since the explicit specialization is already done in Sequence.h.  
+	  According to Section 14.7.3.5 (Explicit Specialization) of the
+	  C++ Standard, "Definitions of members of an explicitly specialized class 
+	  are defined in the same manner as members of normal classes, and not
+	  using the explicit specialization syntax."  Fixes build problems on
+	  Solaris and Borland compilers.
+
 Wed Jun 19 14:34:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Removed the #define,
