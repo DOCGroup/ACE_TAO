@@ -1,3 +1,16 @@
+Mon Sep 14 13:41:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Fixed qsort() and bsearch() so they work correctly for
+ 	  MVS.  Thanks to Chuck Gehr for reporting this.
+
+	* ace/config-mvs.h: Added 
+	
+	  #define ACE_HAS_DIRENT
+	  #define ACE_LACKS_READDIR_R
+
+	  so that things will work correctly for MVS.  Thanks to Chuck
+ 	  Gehr for reporting this.
+
 Mon Sep 14 10:11:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_ce_dll.dsp: Added Select_Reactor_Base.cpp and removed
