@@ -1,29 +1,47 @@
+Mon Jul 13 22:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * Dynamic_Priority_Test.cpp: swapped "const" and "static"
+          qualifiers so that "static" appears first.
+          (run_performance_test): initialized random_int to 0 to avoid
+          g++ warning.
+
+        * ace/Message_Queue_T.h: on VxWorks, added forward declaration
+          of class ACE_Message_Queue_Vx.
+
+        * ace/Message_Queue_T.cpp (create_Vx_message_queue): added
+          template <ACE_SYNCH_DECL>.
+
+Mon Jul 13 16:37:07 1998  Chris D. Gill  <cdgill@tango.cs.wustl.edu>
+
+        * Message_Queue_T.cpp:
+        refined dynamic queues based on performance test results
+
 Mon Jul 13 16:35:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/Message_Block.{cpp, h, i}
-	  ace/Message_Queue_T.{cpp, h}:
+        * ace/Message_Block.{cpp, h, i}
+          ace/Message_Queue_T.{cpp, h}:
 
           Removed automatic deletion of beyond messages, replaced this
-	  with a remove_messages method to be called by an external 
-	  "reaper" if at all.  Reorganized dynamic message queues
-	  to remove sources of overhead, especially in checking
-	  message status while refreshing the queue: added separate
-	  head and tail pointers for pending, late, and beyond late
+          with a remove_messages method to be called by an external
+          "reaper" if at all.  Reorganized dynamic message queues
+          to remove sources of overhead, especially in checking
+          message status while refreshing the queue: added separate
+          head and tail pointers for pending, late, and beyond late
           protions of queue: only move these pointers, not messages
-	  (except at enqueue).
-	
-	* tests/Dynamic_Priority_Test.cpp:
+          (except at enqueue).
 
-	  Added performance tests for static and dynamic queues
-	  which do best case, worst case, and randomized ordering
+        * tests/Dynamic_Priority_Test.cpp:
+
+          Added performance tests for static and dynamic queues
+          which do best case, worst case, and randomized ordering
           of messages, presenting each ordering to all queues
-	  and clocking enqueue and dequeue performance.
-	
+          and clocking enqueue and dequeue performance.
+
 Mon Jul 13 11:11:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Svc_Handler.h (ACE_SYNCH_USE>): Changed type of member
- 	  <dynamic_> to int.  Thanks to Zoran Ivanovic
- 	  <zorani@pathcom.com> for pointing this out.
+        * ace/Svc_Handler.h (ACE_SYNCH_USE>): Changed type of member
+          <dynamic_> to int.  Thanks to Zoran Ivanovic
+          <zorani@pathcom.com> for pointing this out.
 
 Sun Jul 12 13:25:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
