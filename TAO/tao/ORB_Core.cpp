@@ -520,11 +520,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   if (preconnections)
     this->preconnect (preconnections);
 
-  // Port not specified: find one for the user
-  if (port == 0)
-    return this_orb->open ();
-  else
-    return 0;
+  return 0;
 }
 
 int

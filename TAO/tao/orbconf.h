@@ -105,7 +105,7 @@
 
 // The default starting port number for TAO servers.
 #if !defined (TAO_DEFAULT_SERVER_PORT)
-#define TAO_DEFAULT_SERVER_PORT 10015
+#define TAO_DEFAULT_SERVER_PORT 0
 #endif /* TAO_DEFAULT_SERVER_PORT */
 
 // TAO's max buffer size
