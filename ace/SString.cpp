@@ -679,6 +679,32 @@ ACE_WString::char_rep (void) const
     }
 }
 
+// Get the underlying pointer as an ASCII char.
+
+ACE_USHORT16 *
+ACE_WString::ushort_rep (void) const
+{
+  ACE_TRACE ("ACE_WString::char_rep");
+  if (this->len_ <= 0)
+    return 0;
+  else
+    {
+      ACE_USHORT16 *t;
+
+      ACE_NEW_RETURN (t,
+                      ACE_USHORT16[this->len_ + 1],
+                      0);
+
+      for (size_t i = 0; i < this->len_; i++)
+        // Note that this cast may lose data if wide chars are
+        // actually used!
+        t[i] = (ACE_USHORT16)this->rep_[i];
+
+      t[this->len_] = 0;
+      return t;
+    }
+}
+
 // Constructor that actually copies memory.
 
 ACE_WString::ACE_WString (const char *s,
@@ -795,6 +821,38 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
       this->rep_[this->len_] = 0;
     }
 }
+
+#if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
+ACE_WString::ACE_WString (const ACE_USHORT16 *s,
+                          size_t len,
+                          ACE_Allocator *alloc)
+{
+  ACE_TRACE ("ACE_WString::ACE_WString");
+
+  if (this->allocator_ == 0)
+    this->allocator_ = ACE_Allocator::instance ();
+
+  if (s == 0)
+    {
+      this->len_ = 0;
+      this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+        ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
+      this->rep_[this->len_] = 0;
+    }
+  else
+    {
+      this->len_ = len;
+      this->rep_ = (ACE_WSTRING_TYPE *) this->allocator_->malloc
+        ((this->len_ + 1) * sizeof (ACE_WSTRING_TYPE));
+
+      for (size_t i = 0; i <= len; ++i)
+        this->rep_[i] = (const ACE_WSTRING_TYPE) s[i];
+
+      // null terminate
+      this->rep_[this->len_] = 0;
+    }
+}
+#endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
 // Constructor that allocates empty memory
 
@@ -981,4 +1039,3 @@ ACE_WString::strstr (const ACE_WSTRING_TYPE *s1,
 
   return 0;
 }
-

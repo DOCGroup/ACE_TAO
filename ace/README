@@ -930,6 +930,10 @@ ACE_NEEDS_SCHED_H                       Platform needs to #include
                                         <sched.h>
                                         to get thread scheduling
                                         defs.
+ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a separate type, 
+                                        then ACE_WString doesn't have a constructor that
+                                        understands an ACE_USHORT16 string.  So this 
+                                        macro enables one. (mostly used my ACE Name Space).
 ----------------------------------------
 
 The following is a partial list of where some of these macros are used
