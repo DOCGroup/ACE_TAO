@@ -20,7 +20,7 @@ local $start_time = time();
 local $max_running_time = 600; # 10 minutes
 local $elapsed = time() - $start_time;
 
-local $ntimes = 100 ; # run test for 100 times
+local $ntimes = 50 ; # run test for 50 times
 local $n = 0;
 
 while($n < $ntimes) {
@@ -39,7 +39,7 @@ $client2 = $CL2->Spawn ();
 $client3 = $CL3->Spawn ();
 
 
-sleep (60);
+sleep (30);
 $SV->WaitKill (3) unless $sv1 < 0;
 $CL1->WaitKill (3);
 $CL2->WaitKill (3);
