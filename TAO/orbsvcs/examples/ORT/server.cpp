@@ -2,6 +2,7 @@
 
 #include "sum_server_i.h"
 #include "Server_IORInterceptor_ORBInitializer.h"
+#include "tao/ORBInitializer_Registry.h"
 
 #include "ace/Get_Opt.h"
 
