@@ -7,6 +7,14 @@
 #define ACE_CONFIG_BORLAND_COMMON_H
 #include "ace/pre.h"
 
+#define ACE_HAS_CUSTOM_EXPORT_MACROS
+#define ACE_Proper_Export_Flag __declspec (dllexport)
+#define ACE_Proper_Import_Flag __declspec (dllimport)
+#define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
+#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
+#define ACE_IMPORT_SINGLETON_DECLARATION(T) template class __declspec (dllimport) T
+#define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllimport) SINGLETON_TYPE <CLASS, LOCK>;
+
 # if (__BORLANDC__ == 0x540)
 // The linker in C++Builder 4 has trouble with the large number of DLL
 // function exports created when you compile without inline functions.
@@ -39,7 +47,7 @@
 # define ACE_EXPORT_NESTED_CLASSES 1
 # define ACE_HAS_ANSI_CASTS 1
 # define ACE_HAS_CPLUSPLUS_HEADERS 1
-# define ACE_HAS_EXCEPTIONS 
+# define ACE_HAS_EXCEPTIONS
 # define ACE_HAS_EXPLICIT_KEYWORD 1
 # define ACE_HAS_GNU_CSTRING_H 1
 # define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION 1
@@ -71,7 +79,7 @@
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Lu")
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-# define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 0 
+# define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 0
 
 # define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
