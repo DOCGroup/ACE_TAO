@@ -28,14 +28,14 @@ TAO_LB_ReplicaLocator::preinvoke (
   if (this->load_balancer_ == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  CORBA::Object_ptr replica =
+  CORBA::Object_var replica =
     this->load_balancer_->replica (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // Throw a forward exception to force the client to redirect its
   // requests to the Replica chosen by the LoadBalancer.
   ACE_THROW_RETURN (PortableServer::ForwardRequest (
-                      CORBA::Object::_duplicate (replica)),
+                      CORBA::Object::_duplicate (replica._retn ())),
                     0);
 }
 
