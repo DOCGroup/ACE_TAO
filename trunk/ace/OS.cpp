@@ -853,6 +853,13 @@ public:
   ACE_TSS_Info (void);
   // Default constructor
 
+  int key_in_use (void) const { return thread_count_ != -1; }
+  // Returns 1 if the key is in use, 0 if not.
+
+  void key_in_use (int flag) { thread_count_ = flag == 0  ?  -1  :  1; }
+  // Mark the key as being in use if the flag is non-zero, or
+  // not in use if the flag is 0.
+
   int operator== (const ACE_TSS_Info &);
   // Check for equality.
 
@@ -872,8 +879,9 @@ private:
   void *tss_obj_;
   // Pointer to ACE_TSS<xxx> instance that has/will allocate the key.
 
-  u_int thread_count_;
-  // Count of threads that are using this key.
+  int thread_count_;
+  // Count of threads that are using this key.  Contains -1 when the
+  // key is not in use.
 
   friend class ACE_TSS_Cleanup;
 };
@@ -884,7 +892,7 @@ ACE_TSS_Info::ACE_TSS_Info (ACE_thread_key_t key,
   : key_ (key),
     destructor_ (dest),
     tss_obj_ (tss_inst),
-    thread_count_ (0)
+    thread_count_ (-1)
 {
 // ACE_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
 }
@@ -970,7 +978,7 @@ private:
     {
 #if defined (ACE_HAS_64BIT_LONGS)
       ACE_BITS_PER_WORD = 64,
-#elif ULONG_MAX	== 4294967295UL
+#elif ULONG_MAX == 4294967295UL
       ACE_BITS_PER_WORD = 32,
 #else
 #error ACE_TSS_Keys only supports 32 or 64 bit longs.
@@ -1131,7 +1139,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
          iter.next (key_info) != 0;
          iter.advance ())
       {
-        if (key_info->key_ == ACE_OS::NULL_key) continue;
+        if (! key_info->key_in_use ()) continue;
 
         // If the key's ACE_TSS_Info in-use bit for this thread was set,
         // unset it and decrement the key's thread_count_.
@@ -1323,6 +1331,9 @@ ACE_TSS_Cleanup::detach (void *inst)
     return -1;
   else if (ref_cnt == 0)
     {
+      // Mark the key as no longer being used.
+      key_info->key_in_use (0);
+
 #if defined (ACE_WIN32)
       ::TlsFree (key_info->key_);
 #else
@@ -1349,7 +1360,10 @@ ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
       // Retrieve the key's ACE_TSS_Info and increment its thread_count_.
       ACE_KEY_INDEX (key_index, key);
       ACE_TSS_Info &key_info = this->table_ [key_index];
-      ++key_info.thread_count_;
+      if (key_info.thread_count_ == -1)
+        key_info.key_in_use (1);
+      else
+        ++key_info.thread_count_;
     }
 }
 
@@ -1497,10 +1511,8 @@ ACE_Thread_Adapter::invoke (void)
   // Delete ourselves since we don't need <this> anymore.
   delete (void *) this;
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
   void *status = 0;
 
-#if 1
   ACE_SEH_TRY {
     status = (void*) (*func) (arg);  // Call thread entry point.
   }
@@ -1511,11 +1523,8 @@ ACE_Thread_Adapter::invoke (void)
     // so that we can make sure to clean up correctly when the thread
     // exits.
   }
-#else  /* 0 */
-  status = (void*) (*func) (arg);  // Call thread entry point.
-#endif /* 0 */
 
-  // Call the Task->close () hook before calling TSS destructors.
+  // Call the Task->close () hook.
   if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
     {
       ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
@@ -1532,7 +1541,6 @@ ACE_Thread_Adapter::invoke (void)
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
   // Call TSS destructors.
   ACE_OS::cleanup_tss (0 /* not main thread */);
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   // Exit the thread.
@@ -1546,26 +1554,9 @@ ACE_Thread_Adapter::invoke (void)
     ::AfxEndThread ((DWORD)status);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
-  return status;
-#else
-  void *result = (void *) (*func) (arg);  // Call thread entry point.
-
-  // Call the Task->close () hook.
-  if (func == ACE_Task_Base::svc_run)
-    {
-      ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
-      ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
-
-      // This calls the <Task->close> hook.
-      task_ptr->cleanup (task_ptr, 0);
-
-      // This prevents a second invocation of the cleanup code (called
-      // later by ACE_Thread_Manager::exit()).
-      thr_mgr_ptr->at_exit (task_ptr, NULL, 0);
-    }
-
-  return result;
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
+
+  return status;
 }
 
 ACE_Cleanup::~ACE_Cleanup ()
