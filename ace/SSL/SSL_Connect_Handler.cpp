@@ -54,13 +54,12 @@ ACE_SSL_Connect_Handler::ssl_connect (void)
   // Specifically data meant to be handled by SSL_read() could end up
   // being handled by the SSL_connect() call below, resulting in an SSL
   // protocol error (i.e. "SSL_ERROR_SSL" error status).  The
-  // following check prevents the race condition.
+  // following check avoids the race condition.
   if (SSL_is_init_finished (this->ssl_stream_.ssl ()))
     return 0;
 
   // The SSL_connect() call is wrapped in a do/while(SSL_pending())
-  // loop to force a full SSL record (SSL is a record-oriented
-  // protocol, not a stream-oriented one) to be read prior to
+  // loop to force the SSL buffer to be flushed read prior to
   // returning to the Reactor.  This is necessary to avoid some subtle
   // problems where data from another record is potentially handled
   // before the current record is fully handled.
@@ -74,6 +73,7 @@ ACE_SSL_Connect_Handler::ssl_connect (void)
           // Start out with non-blocking disabled on the SSL stream.
           this->ssl_stream_.disable (ACE_NONBLOCK);
 
+          // Active connection completed.
           return 0;
 
         case SSL_ERROR_WANT_WRITE:
@@ -101,6 +101,9 @@ ACE_SSL_Connect_Handler::ssl_connect (void)
         }
     }
   while (::SSL_pending (this->ssl_stream_.ssl ()));
+
+  // Completed flushing the SSL buffer, but SSL active connection is
+  // still pending completion.
 
   return 0;
 }

@@ -39,8 +39,25 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
 
   int status = ::SSL_connect (new_stream.ssl ());
 
-  if (::SSL_get_error (new_stream.ssl (), status) != SSL_ERROR_NONE)
+  switch (::SSL_get_error (new_stream.ssl (), status))
     {
+    case SSL_ERROR_NONE:
+      break;
+
+    case SSL_ERROR_ZERO_RETURN:
+      // The peer has notified us that it is shutting down via
+      // the SSL "close_notify" message so we need to
+      // shutdown, too.
+      (void) new_stream.close ();
+
+      return -1;
+
+    case SSL_ERROR_SYSCALL:
+      // On some platforms (e.g. MS Windows) OpenSSL does not store
+      // the last error in errno so explicitly do so.
+      ACE_OS::set_errno_to_last_error ();
+
+    default:
       ACE_SSL_Context::report_error ();
 
       return -1;
@@ -145,7 +162,6 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           ACE_OS::set_errno_to_last_error ();
 
         default:
-
           ACE_SSL_Context::report_error ();
 
           (void) this->reactor_->remove_handler (&eh, reactor_mask);
@@ -187,7 +203,12 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                 perms,
                                 protocol_family,
                                 protocol) == -1)
-    return -1;
+    {
+      if (errno == EWOULDBLOCK)
+        new_stream.ACE_SSL_SOCK::set_handle (new_stream.peer ().get_handle ());
+
+      return -1;
+    }
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
@@ -226,7 +247,12 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                 perms,
                                 protocol_family,
                                 protocol) == -1)
-    return -1;
+    {
+      if (errno == EWOULDBLOCK)
+        new_stream.ACE_SSL_SOCK::set_handle (new_stream.peer ().get_handle ());
+
+      return -1;
+    }
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 

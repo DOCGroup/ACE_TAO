@@ -6,9 +6,9 @@
  *
  *  $Id$
  *
- *  @author John Heitmann
- *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ *  @author John Heitmann
  */
 //=============================================================================
 
@@ -181,7 +181,8 @@ public:
   ssize_t send_n (const void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout) const;
+                  const ACE_Time_Value *timeout,
+                  size_t *bytes_transferred = 0) const;
 
   /**
    * Try to recv exactly <len> bytes into <buf> (uses
@@ -197,7 +198,8 @@ public:
   ssize_t recv_n (void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout) const;
+                  const ACE_Time_Value *timeout,
+                  size_t *bytes_transferred = 0) const;
   //@}
 
   /**
