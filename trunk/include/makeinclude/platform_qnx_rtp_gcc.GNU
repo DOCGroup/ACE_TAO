@@ -35,6 +35,7 @@ CC      = gcc
 CXX     = g++
 
 CFLAGS  += -pipe -W -Wall -Wpointer-arith -DACE_NTO_VERS=$(nto_version)
+CPPFLAGS += -DACE_NTO_VERS=$(nto_version)
 
 DLD     = $(CXX)
 LD      = $(CXX)
