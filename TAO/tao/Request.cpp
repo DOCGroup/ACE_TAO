@@ -34,6 +34,13 @@ CORBA_Request::_decr_refcnt (void)
   return 0;
 }
 
+void
+CORBA::release (CORBA::Request_ptr req)
+{
+  if (req)
+    req->_decr_refcnt ();
+}
+
 CORBA_Request*
 CORBA_Request::_nil (void)
 {
