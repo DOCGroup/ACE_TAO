@@ -35,6 +35,7 @@ suppress umr _lwp_in_syscall; _thrp_suspend
 ####
 suppress umr __sigprocmask; _thrp_exit; _t_cancel; _thr_exit_common
 suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; thr_yield
+suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; _qswtch
 
 ####
 #### With Solaris 2.5.1, time (and other) functions apparently hold
