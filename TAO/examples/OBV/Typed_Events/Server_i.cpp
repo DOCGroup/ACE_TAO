@@ -28,11 +28,11 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
   // This one not. Event behaves as an abstract base,
   // so we should't receive it (see header file)
 
-  TAO_OBV_REGISTER_FACTORY (Temperature_factory);
-  TAO_OBV_REGISTER_FACTORY (Position_factory);
-  TAO_OBV_REGISTER_FACTORY (Log_Msg_factory);
-  TAO_OBV_REGISTER_FACTORY (Event_List_factory);
-  TAO_OBV_REGISTER_FACTORY (Event_List_Link_factory);
+  TAO_OBV_REGISTER_FACTORY (Temperature_factory, Temperature);
+  TAO_OBV_REGISTER_FACTORY (Position_factory, Position);
+  TAO_OBV_REGISTER_FACTORY (Log_Msg_factory, Log_Msg);
+  TAO_OBV_REGISTER_FACTORY (Event_List_factory, Event_List);
+  TAO_OBV_REGISTER_FACTORY (Event_List_Link_factory, Event_List_Link);
 
   // This list is returned by get_critical_events ().
   alarms = new Event_List_impl;

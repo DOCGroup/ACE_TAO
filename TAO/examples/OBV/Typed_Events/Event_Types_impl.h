@@ -74,7 +74,7 @@ class Event_impl : public virtual OBV_Event,
 // exists while we don't make a factory for it (and don't register one).
 
 #ifdef is_certainly_not_defined
-class Event_factory : public Event_init
+class Event_factory : public CORBA::ValueFactoryBase
 {
  public:
 
@@ -124,7 +124,7 @@ public:
   // in IDL in a derived class is not allowed.
 };
 
-class Temperature_factory : public Temperature_init
+class Temperature_factory : public CORBA::ValueFactoryBase
 {
   friend class Temperature;
  public:
@@ -156,7 +156,7 @@ public:
   virtual void do_print (TAO_ENV_SINGLE_ARG_DECL);
 };
 
-class Position_factory : public Position_init
+class Position_factory : public CORBA::ValueFactoryBase
 {
   friend class Position;
  public:
@@ -181,7 +181,7 @@ public:
   virtual void do_print (TAO_ENV_SINGLE_ARG_DECL);
 };
 
-class Log_Msg_factory : public Log_Msg_init
+class Log_Msg_factory : public CORBA::ValueFactoryBase
 {
   friend class Log_Msg;
  public:
@@ -220,7 +220,7 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
 };
 
 
-class Event_List_Link_factory : public Event_List_Link_init
+class Event_List_Link_factory : public CORBA::ValueFactoryBase
 {
   friend class Event_List_Link;
  private:
@@ -258,7 +258,7 @@ class Event_List_impl : public virtual OBV_Event_List,
 };
 
 
-class Event_List_factory : public Event_List_init
+class Event_List_factory : public CORBA::ValueFactoryBase
 {
   friend class Event_List;
  private:
@@ -321,7 +321,7 @@ public:
   virtual void do_print (TAO_ENV_SINGLE_ARG_DECL);
 };
 
-class Temperature_Criterion_factory : public Temperature_Criterion_init
+class Temperature_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Temperature;
 private:
@@ -347,7 +347,7 @@ public:
   virtual void do_print (TAO_ENV_SINGLE_ARG_DECL);
 };
 
-class Position_Criterion_factory : public Position_Criterion_init
+class Position_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Position;
 private:
@@ -369,7 +369,7 @@ public:
   virtual void do_print (TAO_ENV_SINGLE_ARG_DECL);
 };
 
-class Log_Msg_Criterion_factory : public Log_Msg_Criterion_init
+class Log_Msg_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Log_Msg;
 private:
