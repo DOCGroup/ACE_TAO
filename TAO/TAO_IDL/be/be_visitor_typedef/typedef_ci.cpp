@@ -138,13 +138,24 @@ be_visitor_typedef_ci::visit_array (be_array *node)
   // This doesn't catch 'typedef of a typedef' if the node is
   // imported, so we check for that below before generating 
   // any code.
-  if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      // Typedef of a typedef.
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  if (bt->node_type () == AST_Decl::NT_array) // direct typedef of a base node
-                                              // type
+  // Is our base type an array node? If so, generate code for that array node.
+  // In the first layer of typedef for an array, cli_hdr_gen() causes us to
+  // skip all the code reached from the first branch. Then the ELSE branch is
+  // skipped and we fail to generate any typedefs for that node. Adding the
+  // check for cli_hdr_gen() to the IF statement keeps it in. Subsequent
+  // layers of typedef, if any, assign the context alias to bt, so we go
+  // straight to the ELSE branch.
+  if (bt->node_type () == AST_Decl::NT_array && bt->cli_inline_gen () == 0)
     {
       // let the base class visitor handle this case
       if (this->be_visitor_typedef::visit_array (node) == -1)
@@ -152,8 +163,8 @@ be_visitor_typedef_ci::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ci::"
                              "visit_array - "
-                             "base class visitor failed \n"
-                             ),  -1);
+                             "base class visitor failed \n"),  
+                            -1);
         }
     }
   else
