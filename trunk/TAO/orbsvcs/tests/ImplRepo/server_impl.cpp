@@ -98,6 +98,10 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
           CORBA::Object_var server_object =  
             this->orb_manager_.orb ()->string_to_object (server_str, env);
 
+          Implementation_Repository::INET_Addr server_addr;
+          ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->addr ();
+          server_addr.port_ = my_addr.get_port_number ();
+
           CORBA::Object_var ping_object = 
             this->orb_manager_.orb ()->string_to_object (ping_str, env);
 
@@ -117,18 +121,23 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
                               -1);
           
 
-          CORBA::String newior = ImplRepo->server_is_running ("simpserv", 
-                                                                  server_object, 
-                                                                  ping_object, 
-                                                                  TAO_TRY_ENV);
+          Implementation_Repository::INET_Addr new_addr = 
+            ImplRepo->server_is_running ("simpserv", 
+                                         server_addr,
+                                         ping_object, 
+                                         TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
+          IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, server_object->_stubobj ());
+          // @@ Only same host for now
+          iiop_obj->profile.port = new_addr.port_;
+
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", newior));
+            ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (server_object, TAO_TRY_ENV)));
 
           if (this->ior_output_file_)
             {
-              ACE_OS::fprintf (this->ior_output_file_, "%s", newior);
+              ACE_OS::fprintf (this->ior_output_file_, "%s", this->orb_manager_.orb ()->object_to_string (server_object, TAO_TRY_ENV));
               ACE_OS::fclose (this->ior_output_file_);
             }
         }
