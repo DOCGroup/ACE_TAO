@@ -1,3 +1,16 @@
+Wed Jan 14 09:47:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* */*_Static.ds[p,w]:
+
+	  All teh Win32 static projects and workspaces have been
+	  removed. Please use MPC to generate them. 
+
+Wed Jan 14 07:32:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ACE-INSTALL.html:
+
+	  Thanks to Johnny Willemsen for spotting a typo in the file.
+
 Tue Jan 13 22:42:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Makefile (RELEASE_FILES):
