@@ -628,6 +628,9 @@ TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const Portable
         }
     }
 
+  if (result == -1)
+    entry = 0;
+
   return result;
 }
 
@@ -641,8 +644,8 @@ TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (const Portabl
 {
   int result = this->active_object_map_->id_hint_strategy_->find (system_id,
                                                                   entry);
-  if (result == 0
-      && user_id == entry->user_id_)
+  if (result == 0 &&
+      user_id == entry->user_id_)
     {
       if (entry->deactivated_)
         result = -1;
@@ -665,6 +668,9 @@ TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (const Portabl
             servant = entry->servant_;
         }
     }
+
+  if (result == -1)
+    entry = 0;
 
   return result;
 }
