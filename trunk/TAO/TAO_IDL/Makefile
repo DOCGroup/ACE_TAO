@@ -200,9 +200,9 @@ lex.yy.cpp.target:
 		sed -e "s/yy/tao_yy/g" \
 		    -e "s/YY/TAO_YY/g" \
 		    -e "s@#include <unistd\.h>@#include \"ace/OS.h\"@" \
-		    -e "s@#include <@#include /**/ <@" \
+		    -e "/#include </d" \
 		    -e "s@ECHO@TAO_YY_ECHO@" \
-		    -e 's/\$$Hea''der.*\$$/$$Id$$/' > fe/lex.yy.cpp
+		    -e 's/\$$Hea''der.*\$$/$$I''d$$/' > fe/lex.yy.cpp
 
 tags:
 	rm -f TAGS
