@@ -1,3 +1,60 @@
+Thu May 10 18:37:41 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Asynch_IO.cpp (ACE_POSIX_Asynch_Result ctor): Added
+          initializers for bytes_transferred_ and error_. Thanks to
+          Itzhak Briskman <ibriskman@ndsisrael.com> for this fix.
+
+        * THANKS: Added Itzhak Briskman to the Hall of Fame.
+          Updated David Brock's email address.
+
+        * ace/SString.cpp (ACE_CString::substring): If requesting a substring
+          longer than the string is, return only what's left. Thanks to
+          David Brock <dbrock@momsdesk.com> for reporting this.
+
+        * tests/SString_Test.cpp: Add a substring extraction test to catch
+          the above problem (returning a substring with more than is left
+          in the original string).
+
+        * ace/Process_Mutex.{h cpp inl}: Changed the "uses mutex" vs
+          "uses SV_Semaphore_Complex" decision to make use of a private
+          macro defined in Process_Mutex.h. Further, the platforms that
+          use mutexes are now Win32, PSOS, Pthreads, Sthreads.
+
+        * ace/config-sunos5.6.h:
+        * ace/config-hpux-11.00.h: Added ACE_HAS_SHM_OPEN since these
+          platforms support shm_open, and ACE_Mutex wants to use it for
+          cross-process mutexes.
+
+        * ace/Proactor.h: Updated handle_events comments to note that the
+          ACE_Time_Value is relative and is updated before return.
+
+        * ace/Synch.(h cpp) (ACE_Mutex): Added ACE_HAS_PTHREADS and
+          ACE_HAS_STHREADS to the platforms which handle inter-process mutex
+          by allocating it in shared memory.
+
+        * tests/Process_Mutex_Test.cpp: Made the child process create an
+          exclusive access file after acquiring the mutex and delete it
+          before releasing. If the file can't be created, it means the
+          mutex is acquired twice, and that's a no-no.
+          When the parent is checking child process exit, also check the
+          status - if the child exited with something other than 0 status,
+          note that so the test procedure will see a LM_ERROR in the log
+          and flag it.
+
+        * tests/MEM_Stream_Test.cpp: Changed some debug text to match the
+          function it is in.
+
+        * ace/Parse_Node.{h cpp}: Handle dynamic libraries using ACE_DLL,
+          not ACE_OS::dlopen, etc. and handles. This is a proper refactoring
+          of the code (ACE_DLL didn't exist when this was first written)
+          and is needed to properly support dynamic services on AIX.
+
+        * ace/DLL.cpp (open): (AIX only) If the dlopen fails and we're
+          trying to open an archive lib, tack on "(shr.o)" and retry
+          with the RTLD_MEMBER option set in the mode. This is to
+          properly support AIX shared libraries which get built as
+          .o files and loaded into an archive.
+
 Thu May 10 16:12:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/ACE.cpp (timestamp): The abbreviation of thursday should be
@@ -119,7 +176,6 @@ Fri May  4 15:42:20 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-<<<<<<< ChangeLog
         * ace/OS.h: Changed the typedefs of uid_t, gid_t, and mode_t to
           match those in standard POSIX.  Thanks to Gonzalo Diethelm
           <Gonzalo.Diethelm@sonda.com> for reporting this.
@@ -134,16 +190,6 @@ Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
         * examples/Misc/test_read_buffer.cpp (main): Changed <int> to
           <ACE_HANDLE> so this will work properly on Win32 platforms.
           Thanks to Johnny Willemsen for reporting the problem.
-=======
-        * ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
-          users to control whether wide character strings use the "L"
-          prefix via their config.h files.  Thanks to Albert Wijnja for
-          this fix.
-
-        * examples/Misc/test_read_buffer.cpp (main): Changed <int> to
-          <ACE_HANDLE> so this will work properly on Win32 platforms.
-          Thanks to Johnny Willemsen for reporting the problem.
->>>>>>> 4.1974
 
         * examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
           Thanks to Johnny Willemsen for reporting the problem.
@@ -241,21 +287,23 @@ Wed May 02 05:40:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed May  2 06:31:46 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-        * ace/Makefile: Make it possible to set where the QTDIR is located.
-          Thanks to Thomas Groth <groth.th@nord-com.net> for this
-          enhancement.
+	* ace/Makefile: Make it possible to set where the QTDIR is located.
+	  Thanks to Thomas Groth <groth.th@nord-com.net> for this
+ 	  enhancement.
+
+Tue May  1 21:38:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * ace/Process.cpp (spawn): When an application running with user
-          ID=0 (i.e. root) spawns a new process using
-          ACE_Process_Manager::spawn(), which in turn calls
-          ACE_Process::spawn() and tries to set a user ID and a group ID
-          for the new process different from root/other, the call to
-          setreuid() succeedes but the call to setregid() made thereafter
-          fails, because the process has no longer UID=0 and thus it
-          cannot change to a different group.  To fix this, it was
-          necessary to swap the order of the calls to setreuid() and
-          setregid().  Thanks to Ramiro Penataro <penataro@ll.iac.es> for
-          reporting this.
+	  ID=0 (i.e. root) spawns a new process using
+ 	  ACE_Process_Manager::spawn(), which in turn calls
+ 	  ACE_Process::spawn() and tries to set a user ID and a group ID
+ 	  for the new process different from root/other, the call to
+ 	  setreuid() succeedes but the call to setregid() made thereafter
+ 	  fails, because the process has no longer UID=0 and thus it
+ 	  cannot change to a different group.  To fix this, it was
+ 	  necessary to swap the order of the calls to setreuid() and
+ 	  setregid().  Thanks to Ramiro Penataro <penataro@ll.iac.es> for
+ 	  reporting this.
 
 Tue May  1 11:05:48 2001  Ossama Othman  <ossama@uci.edu>
 

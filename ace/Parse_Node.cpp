@@ -328,7 +328,6 @@ ACE_Location_Node::dump (void) const
 
 ACE_Location_Node::ACE_Location_Node (void)
   : pathname_ (0),
-    handle_ (0),
     symbol_ (0)
 {
   ACE_TRACE ("ACE_Location_Node::ACE_Location_Node");
@@ -337,6 +336,13 @@ ACE_Location_Node::ACE_Location_Node (void)
 ACE_Location_Node::~ACE_Location_Node (void)
 {
   ACE_TRACE ("ACE_Location_Node::~ACE_Location_Node");
+}
+
+ACE_SHLIB_HANDLE
+ACE_Location_Node::handle (void)
+{
+  ACE_TRACE ("ACE_Location_Node::handle");
+  return this->dll_.get_handle (1);         // Caller now owns the handle
 }
 
 const ACE_TCHAR *
@@ -354,20 +360,6 @@ ACE_Location_Node::pathname (const ACE_TCHAR *p)
 }
 
 void
-ACE_Location_Node::handle (const ACE_SHLIB_HANDLE h)
-{
-  ACE_TRACE ("ACE_Location_Node::handle");
-  this->handle_ = h;
-}
-
-ACE_SHLIB_HANDLE
-ACE_Location_Node::handle (void) const
-{
-  ACE_TRACE ("ACE_Location_Node::handle");
-  return this->handle_;
-}
-
-void
 ACE_Location_Node::set_symbol (void *s)
 {
   ACE_TRACE ("ACE_Location_Node::set_symbol");
@@ -381,48 +373,25 @@ ACE_Location_Node::dispose (void) const
   return this->must_delete_;
 }
 
-ACE_SHLIB_HANDLE
-ACE_Location_Node::open_handle (void)
+int
+ACE_Location_Node::open_dll (void)
 {
-  ACE_TRACE ("ACE_Location_Node::open_handle");
+  ACE_TRACE ("ACE_Location_Node::open_dll");
 
-  ACE_TCHAR dl_pathname[MAXPATHLEN + 1];
-
-  // Transform the pathname into the appropriate dynamic link library
-  // by searching the ACE_LD_SEARCH_PATH.
-  int result = ACE_Lib_Find::ldfind (this->pathname (),
-                                     dl_pathname,
-                                     (sizeof dl_pathname / sizeof (ACE_TCHAR)));
-
-  // Check for errors
-  if (result != 0)
-    return 0;
-
-  // Set the handle
-  this->handle (ACE_OS::dlopen (dl_pathname));
-
-  if (this->handle () == 0)
+  if (-1 == this->dll_.open (this->pathname ()))
     {
       ace_yyerrno++;
 
+      ACE_TCHAR *errmsg = this->dll_.error ();
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("dlopen failed for %s"),
-                  dl_pathname));
-
-      ACE_TCHAR *errmsg = ACE_OS::dlerror ();
-
-      if (errmsg != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT (": %s\n"),
-                           errmsg),
-                          0);
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("\n")),
-                          0);
+                  ACE_LIB_TEXT ("ACE_DLL::open failed for %s: %s\n"),
+                  this->pathname (),
+                  errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
+      return -1;
     }
-  else
-    return this->handle ();
+
+  return 0;
+
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Object_Node)
@@ -446,34 +415,23 @@ void *
 ACE_Object_Node::symbol (ACE_Service_Object_Exterminator *)
 {
   ACE_TRACE ("ACE_Object_Node::symbol");
-  if (this->open_handle () != 0)
+  if (this->open_dll () == 0)
     {
       ACE_TCHAR *object_name = ACE_const_cast (ACE_TCHAR *, this->object_name_);
 
-      this->symbol_ = (void *)
-        ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                       object_name);
-
+      this->symbol_ = this->dll_.symbol (object_name);
       if (this->symbol_ == 0)
         {
           ace_yyerrno++;
 
+          ACE_TCHAR *errmsg = this->dll_.error ();
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("dlsym failed for object %s\n"),
-                      object_name));
-
-          ACE_TCHAR *errmsg = ACE_OS::dlerror ();
-
-          if (errmsg != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT (": %s\n"),
-                               errmsg),
-                              0);
-          else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("\n")),
-                              0);
+                      ACE_LIB_TEXT ("ACE_DLL::symbol failed for object %s: %s\n"),
+                      object_name,
+                      errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
+          return 0;
         }
+
       return this->symbol_;
     }
 
@@ -507,7 +465,7 @@ void *
 ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 {
   ACE_TRACE ("ACE_Function_Node::symbol");
-  if (this->open_handle () != 0)
+  if (this->open_dll () == 0)
     {
       void *(*func) (ACE_Service_Object_Exterminator *) = 0;
       this->symbol_ = 0;
@@ -530,9 +488,7 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       // close to (or, at least claim to conform with) the standard
       // did not complain about this as an illegal pointer conversion.
       long temp_ptr =
-        ACE_reinterpret_cast(long,
-                             ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                                            function_name));
+        ACE_reinterpret_cast(long, this->dll_.symbol (function_name));
       func = ACE_reinterpret_cast(void *(*)(ACE_Service_Object_Exterminator *),
                                   temp_ptr);
 
@@ -544,21 +500,13 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
             {
               ace_yyerrno++;
 
+              ACE_TCHAR *errmsg = this->dll_.error ();
               ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("dlsym failed for function %s\n"),
-                          function_name));
-
-              ACE_TCHAR *errmsg = ACE_OS::dlerror ();
-
-              if (errmsg != 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_LIB_TEXT (": %s\n"),
-                                   errmsg),
-                                  0);
-              else
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_LIB_TEXT ("\n")),
-                                  0);
+                          ACE_LIB_TEXT ("ACE_DLL::symbol failed for function %s: %s\n"),
+                          function_name,
+                          errmsg ? errmsg :
+                                   ACE_LIB_TEXT ("no error reported")));
+              return 0;
             }
         }
       // Invoke the factory function and record it's return value.

@@ -253,19 +253,21 @@ public:
 			    int dont_call_handle_close = 1);
 
   /**
-   * Dispatch a single set of events.  If <wait_time> elapses before
-   * any events occur, return 0.  Return 1 on success i.e., when a
-   * completion is dispatched, non-zero (-1) on errors and errno is
-   * set accordingly.
+   * Dispatch a single set of events, waiting up to a specified time limit
+   * if necessary.
+   * @param wait_time the time to wait for an event to occur. This is
+   * a relative time. On successful return, the time is updated to
+   * reflect the amount of time spent waiting for event(s) to occur.
+   * @return Returns 0 if no events occur before the wait_time expires.
+   * Returns 1 when a completion is dispatched. On error, returns -1
+   * and sets errno accordingly.
    */
   virtual int handle_events (ACE_Time_Value &wait_time);
 
   /**
    * Block indefinitely until at least one event is dispatched.
-   * Dispatch a single set of events.  If <wait_time> elapses before
-   * any events occur, return 0.  Return 1 on success i.e., when a
-   * completion is dispatched, non-zero (-1) on errors and errno is
-   * set accordingly.
+   * @return Returns 1 when a completion is dispatched. On error, returns -1
+   * and sets errno accordingly.
    */
   virtual int handle_events (void);
 
