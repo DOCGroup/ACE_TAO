@@ -1,3 +1,9 @@
+Fri Jan 16 23:25:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Tests.bor:
+
+	  New test to the borland makefiles.
+
 Fri Jan 16 23:21:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/run_test.lst:
