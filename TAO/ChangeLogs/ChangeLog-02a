@@ -1,3 +1,9 @@
+Tue Mar 26 12:21:41 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+	  Fixed minor documentation errors, thanks to Johnny Willemsen
+	  <johnny.willemsen@meco.nl> for pointing them out.
+
 Tue Mar 26 10:23:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs.CosNotification.dsp:
@@ -29,7 +35,7 @@ Tue Mar 26 07:26:00 2002  Si Mong Park  <spark@ociweb.com>
 
 Mon Mar 25 16:00:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp: 
+        * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
           Changed format specifier for size_t type from %d to %u.
           Thanks to Craig Rodrigues for this fix.
 
@@ -107,7 +113,7 @@ Sun Mar 24 13:39:00 2002  Si Mong Park  <spark@ociweb.com>
         * TAO/orbsvcs/orbsvcs/IOR_Multicast.cpp:
         * TAO/orbsvcs/orbsvcs/Scheduler_Factory.cpp:
         * TAO/orbsvcs/orbsvcs/Log/Log_i.cpp:
-        * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp: 
+        * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
         * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
         * TAO/orbsvcs/orbsvcs/Sched/Scheduler.cpp:
           Updated/changed to be wide-character build compatible.
@@ -302,7 +308,7 @@ Thu Mar 21 15:45:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
           In copy constructor and assignment operator, added check for
           existence of source Any's message block before creating our
           own with ACE_NEW. This makes for more consistent behavior in
-          the value() method. Thanks to Alex Hornby <alex@anvil.co.uk> 
+          the value() method. Thanks to Alex Hornby <alex@anvil.co.uk>
           for sending in the patch.
 
 Thu Mar 21 12:20:25 2002  Jeff Parsons <parsons@cs.wustl.edu>
