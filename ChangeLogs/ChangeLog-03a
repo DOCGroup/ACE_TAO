@@ -882,7 +882,8 @@ Mon Jan 20 20:32:55 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
         * ace/Log_Msg.cpp (log): Added a '}' at line 1531 to fix a
           nasty compiler bug on Digital UNIX.  Thanks to Igor Pisarenko
-          <Igor.Pisarenko@computershare.com.au> for reporting this.
+          <Igor.Pisarenko@computershare.com.au> and
+          Pit Linnartz <Pit.Linnartz@t-mobile.de> for reporting this.
 
 Tue Jan 21 19:29:04 2003  Heather Drury  <drury_h@ociweb.com>
 
