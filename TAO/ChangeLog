@@ -1,3 +1,10 @@
+Thu Sep 11 14:01:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+
+          Added more template specializations to placate explicit
+          template instantiation builds.
+
 Thu Sep 11 08:32:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
