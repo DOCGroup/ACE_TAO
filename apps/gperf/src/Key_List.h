@@ -62,7 +62,7 @@ public:
   Key_List (void);
   ~Key_List (void);
   int keyword_list_length (void);
-  u_int max_key_length (void);
+  int max_key_length (void);
   void reorder (void);
   void sort (void);
   int read_keys (void);
@@ -121,7 +121,7 @@ private:
   char *include_src;		
   // C source code to be included verbatim. 
 
-  u_int max_key_len;		
+  int max_key_len;		
   // Maximum length of the longest keyword. 
 
   int min_key_len;		
