@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="Conn_Test" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -194,7 +194,6 @@ DEP_CPP_CONN_=\
 	"..\ace\SOCK_Stream.i"\
 	"..\ace\SString.h"\
 	"..\ace\SString.i"\
-	"..\ace\stdcpp.h"\
 	"..\ace\Strategies.h"\
 	"..\ace\Strategies_T.cpp"\
 	"..\ace\Strategies_T.h"\
@@ -236,6 +235,9 @@ DEP_CPP_CONN_=\
 	"..\ace\ws2tcpip.h"\
 	".\Conn_Test.h"\
 	".\test_config.h"\
+	
+NODEP_CPP_CONN_=\
+	"..\ace\stdcpp.h"\
 	
 
 !ENDIF 
