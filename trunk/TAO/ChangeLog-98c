@@ -1,5 +1,8 @@
 1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* examples/Simple/echo/Client_i.h (class Client_i):
+	initialized the use_naimg_service variable to 1.
+
 	* examples/Simple/echo/Client_i.cpp:
 	changed the names of the variables needed for the naming_service.
 
