@@ -1,3 +1,85 @@
+Wed Oct 23 10:26:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp
+        * TAO_IDL/be/be_visitor_argument/argument.cpp
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+        * TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp
+
+	  Modified code generation to generate the typedef name for 
+	  typedef'd strings, along with the typedef name for the
+	  corresponding _var and _out classes, when used in operation
+	  parameters and inside generated function bodies. Generated
+	  constructors for exceptions with typedef'd string members
+	  were not changed - there seems to be no way to make happy
+	  all the compilers we support. Thanks to Goran Stojsic
+	  <goran.stojsic@etk.ericsson.se> for pointing out that
+	  generating char* for typedef'd strings in operations
+ 	  parameters will prevent the application from using the
+	  typedef name, since the compiler will report that a pure
+	  virtual skeleton method was not overridden in such a case.
+	  This fix will probably cause numerous headaches, but it is
+	  the Right Thing (TM) to do, so the problems will be dealt
+	  with as they appear.
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h
+        * orbsvcs/orbsvcs/Log/Log_i.cpp
+        * orbsvcs/orbsvcs/Log/Log_i.h
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h
+        * orbsvcs/orbsvcs/Security/PrincipalAuthenticator.cpp
+        * orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h
+        * orbsvcs/orbsvcs/Trader/Trader.cpp
+        * orbsvcs/orbsvcs/Trader/Trader.h
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.h
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.h
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp
+        * Examples/Load_Balancing/Identity_Client.cpp
+        * Examples/Load_Balancing/Load_Balancer_i.cpp
+        * Examples/Load_Balancing/Load_Balancer_i.h
+        * Examples/Load_Balancing_persistent/Identity_Client.cpp
+        * Examples/Load_Balancing_persistent/Load_Balancer_i.cpp
+        * Examples/Load_Balancing_persistent/Load_Balancer_i.h
+        * Examples/OBV/Typed_Events/Event_Types_impl.cpp
+        * tests/Param_Test/param_test_i.cpp
+        * tests/Param_Test/param_test_i.h
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp
+        * orbsvcs/tests/Property/client.cpp
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp
+        * orbsvcs/tests/Trading/Offer_Importer.cpp
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp
+        * orbsvcs/tests/Trading/Simple_Dynamic.cpp
+        * orbsvcs/tests/Trading/Simple_Dynamic.h
+
+	  Application files modified to use string typedef names
+	  instead of char*.
+
 Tue Oct 22 23:31:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.dsp: Added proper include paths for
