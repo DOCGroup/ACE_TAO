@@ -129,7 +129,7 @@ TAO_Time_Service_Clerk::get_time (void)
 
   time = (CORBA::ULongLong) (ACE_static_cast (CORBA::ULongLong,
                                               ACE_OS::gettimeofday ().sec ()) * 
-                             ACE_static_cast (CORBA::ULongLong, 
+                             ACE_static_cast (ACE_UINT32,
                                               10000000) +
                              ACE_static_cast (CORBA::ULongLong, 
                                               ACE_OS::gettimeofday ().usec () * 10))
