@@ -1,3 +1,7 @@
+Fri Apr 02 23:25:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Version.h: added.
+
 Fri Apr 02 15:42:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/svc.conf{,.static}:
