@@ -459,7 +459,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << "ACE_CHECK;" << be_nl;
 
   // Prepare the request header
-  *os << "CORBA::Long flag = ";
+  *os << "CORBA::Short flag = ";
 
   switch (node->flags ())
     {
