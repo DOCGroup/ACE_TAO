@@ -1,3 +1,10 @@
+Wed May 28 16:37:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,i} (ACE_Time_Value): added default constructor,
+	  which does not call normalize ().  ACE_Time_Value::normalize ()
+	  was showing up as a relatively minor, but signficant hot
+	  spot in Event Channel latency tests.
+
 Wed May 28 16:02:53 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* ace/OS.i: Changes to strdup and getpid for CHORUS, as per Wei
