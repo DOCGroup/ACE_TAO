@@ -623,6 +623,9 @@ private:
   static ACE_Thread_Manager *thr_mgr_;
   // Pointer to a process-wide <ACE_Thread_Manager>.
 
+  static int instantiated_;
+  // Flag indicating whether the <thr_mgr_> contains a valid ptr or not.
+
   static int delete_thr_mgr_;
   // Must delete the <thr_mgr_> if non-0.
 };

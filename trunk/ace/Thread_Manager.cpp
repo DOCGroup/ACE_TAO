@@ -17,6 +17,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)
 // Process-wide Thread Manager.
 ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
 
+// Flag that ensures accessing <thr_mgr_> is an MP safe op.
+int ACE_Thread_Manager::instantiated_ = 0;
+
 // Controls whether the Thread_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
 int ACE_Thread_Manager::delete_thr_mgr_ = 0;
@@ -216,16 +219,17 @@ ACE_Thread_Manager::instance (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::instance");
 
-  if (ACE_Thread_Manager::thr_mgr_ == 0)
+  if (ACE_Thread_Manager::instantiated_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                                 *ACE_Static_Object_Lock::instance (), 0));
 
-      if (ACE_Thread_Manager::thr_mgr_ == 0)
+      if (ACE_Thread_Manager::instantiated_ == 0)
         {
           ACE_NEW_RETURN (ACE_Thread_Manager::thr_mgr_, ACE_Thread_Manager, 0);
           ACE_Thread_Manager::delete_thr_mgr_ = 1;
+          ACE_Thread_Manager::instantiated_ = -1;
         }
     }
 
@@ -244,6 +248,9 @@ ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
   ACE_Thread_Manager::delete_thr_mgr_ = 0;
 
   ACE_Thread_Manager::thr_mgr_ = tm;
+
+  ACE_Thread_Manager::instantiated_ = (tm != 0 ? -1 : 0);
+  
   return t;
 }
 
@@ -260,6 +267,7 @@ ACE_Thread_Manager::close_singleton (void)
       // First, we clean up the thread descriptor list.
       ACE_Thread_Manager::thr_mgr_->close ();
       delete ACE_Thread_Manager::thr_mgr_;
+      ACE_Thread_Manager::instantiated_= 0;
       ACE_Thread_Manager::thr_mgr_ = 0;
       ACE_Thread_Manager::delete_thr_mgr_ = 0;
     }

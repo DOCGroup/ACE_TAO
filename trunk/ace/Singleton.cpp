@@ -38,6 +38,20 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance_i (void)
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
+template <class TYPE, class ACE_LOCK> int &
+ACE_Singleton<TYPE, ACE_LOCK>::completion_flag (void)
+{
+#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  // Pointer to the completion flag.  This works around a bug with
+  // G++ and it's (mis-)handling of templates and statics...
+  static int completion_flag_ = 0;
+
+  return completion_flag_;
+#else
+  return ACE_Singleton<TYPE, ACE_LOCK>::completion_flag_;
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+}
+
 template <class TYPE, class ACE_LOCK> TYPE *
 ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
 {
@@ -46,8 +60,11 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
   ACE_Singleton<TYPE, ACE_LOCK> *&singleton =
     ACE_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
+  int &completion =
+    ACE_Singleton<TYPE, ACE_LOCK>::completion_flag ();
+
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (completion == 0)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       if (ACE_Object_Manager::starting_up () ||
@@ -58,7 +75,10 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
           // Or, the ACE_Object_Manager instance has been destroyed,
           // so the preallocated lock is not available.
 #endif /* ACE_MT_SAFE */
-          ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+          ACE_NEW_RETURN (singleton,
+                          (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+          completion = -1;
+          // Mark the completion status.
 
           // Register for destruction with ACE_Object_Manager.
           ACE_Object_Manager::at_exit (singleton);
@@ -75,10 +95,13 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
-          if (singleton == 0)
+          if (completion == 0)
             {
               ACE_NEW_RETURN (singleton,
                               (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+              
+              completion = -1;
+              // Mark the completion status.
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
@@ -94,6 +117,7 @@ template <class TYPE, class ACE_LOCK> void
 ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
 {
   delete this;
+  ACE_Singleton<TYPE, ACE_LOCK>::completion_flag () = 0;
   ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
 }
 
@@ -101,6 +125,10 @@ ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
 // Pointer to the Singleton instance.
 template <class TYPE, class ACE_LOCK> ACE_Singleton<TYPE, ACE_LOCK> *
 ACE_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
+
+// Completion status.
+template <class TYPE, class ACE_LOCK> int
+ACE_Singleton<TYPE, ACE_LOCK>::completion_flag_ = 0;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
 template <class TYPE, class ACE_LOCK> void
@@ -129,6 +157,20 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i (void)
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
+template <class TYPE, class ACE_LOCK> int &
+ACE_TSS_Singleton<TYPE, ACE_LOCK>::completion_flag (void)
+{
+#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  // Pointer to the completion flag.  This works around a bug with
+  // G++ and it's (mis-)handling of templates and statics...
+  static int completion_flag_ = 0;
+
+  return completion_flag_;
+#else
+  return ACE_TSS_Singleton<TYPE, ACE_LOCK>::completion_flag_;
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+}
+
 template <class TYPE, class ACE_LOCK> TYPE *
 ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
 {
@@ -137,8 +179,11 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
   ACE_TSS_Singleton<TYPE, ACE_LOCK> *&singleton =
     ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
+  int &completion = 
+    ACE_TSS_Singleton<TYPE, ACE_LOCK>::completion_flag ();
+
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (completion == 0)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       if (ACE_Object_Manager::starting_up () ||
@@ -150,6 +195,9 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
           // so the preallocated lock is not available.
 #endif /* ACE_MT_SAFE */
           ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
+
+          completion = -1;
+          // Mark completion status.
 
           // Register for destruction with ACE_Object_Manager.
           ACE_Object_Manager::at_exit (singleton);
@@ -166,10 +214,13 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
-          if (singleton == 0)
+          if (completion == 0)
             {
               ACE_NEW_RETURN (singleton,
                               (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
+
+              completion = -1;
+              // Mark completion status.
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);

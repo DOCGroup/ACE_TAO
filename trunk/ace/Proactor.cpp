@@ -17,6 +17,7 @@
 
 // Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
+int ACE_Proactor::instantiated_ = 0;
 
 // Controls whether the Proactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
@@ -237,15 +238,16 @@ ACE_Proactor::instance (size_t threads)
 {
   ACE_TRACE ("ACE_Proactor::instance");
 
-  if (ACE_Proactor::proactor_ == 0)
+  if (ACE_Proactor::instantiated_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
 				*ACE_Static_Object_Lock::instance (), 0));
 
-      if (ACE_Proactor::proactor_ == 0)
+      if (ACE_Proactor::instantiated_ == 0)
 	{
 	  ACE_NEW_RETURN (ACE_Proactor::proactor_, ACE_Proactor (threads), 0);
+          ACE_Proactor::instantiated_ = -1;
 	  ACE_Proactor::delete_proactor_ = 1;
 	}
     }
@@ -265,6 +267,7 @@ ACE_Proactor::instance (ACE_Proactor *r)
   ACE_Proactor::delete_proactor_ = 0;
 
   ACE_Proactor::proactor_ = r;
+  ACE_Proactor::instantiated_ = (r != 0 ? -1 : 0);
   return t;
 }
 
@@ -279,6 +282,7 @@ ACE_Proactor::close_singleton (void)
   if (ACE_Proactor::delete_proactor_)
     {
       delete ACE_Proactor::proactor_;
+      ACE_Proactor::instantiated_ = 0;
       ACE_Proactor::proactor_ = 0;
       ACE_Proactor::delete_proactor_ = 0;
     }
