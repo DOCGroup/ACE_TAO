@@ -1,3 +1,8 @@
+Thu Jan 16 16:25:45 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Added a TAO/orbsvcs/tests/EC_MT_Mcast
+	  test to the daily builds. 
+
 Thu Jan 16 12:27:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* COPYING: Extended the validity of the copyright notice from 2002
