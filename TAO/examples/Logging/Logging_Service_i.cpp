@@ -83,8 +83,10 @@ Logger_Server::init (int argc,
 		str.in ()));
 
     // Initialize the naming service
-  if (this->init_naming_service (ACE_TRY_ENV) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    int ret = this->init_naming_service (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (-1);
+    if (ret != 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "init_naming_service"),
 		      -1);
@@ -127,7 +129,9 @@ Logger_Server::init_naming_service (CORBA::Environment& ACE_TRY_ENV)
 int
 Logger_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
+  int ret = this->orb_manager_.run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Logger_Server::run"),
                       -1);
