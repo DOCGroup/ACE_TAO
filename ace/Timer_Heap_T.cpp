@@ -19,6 +19,7 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Heap_Iterator_T (ACE_T
   : timer_heap_ (heap)
 {
   ACE_TRACE ("ACE_Timer_Heap_Iterator::ACE_Timer_Heap_Iterator");
+  this->first();
 }
 
 

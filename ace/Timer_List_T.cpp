@@ -11,9 +11,9 @@
 
 template <class TYPE, class FUNCTOR, class LOCK>
 ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &list)
-  : timer_list_ (list),
-    position_ (NULL)
+  : timer_list_ (list)
 {
+  this->first();
   // Nothing
 }
 
