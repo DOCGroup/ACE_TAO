@@ -604,12 +604,4 @@ template class ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_SYNCH_RW_MUTEX>;
-
-#if defined (ACE_HAS_THREADS)
-  template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-#else
-  // These are specialized in libACE if ACE doesn't have threads.
-#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

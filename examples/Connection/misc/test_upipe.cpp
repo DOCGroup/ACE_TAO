@@ -185,14 +185,6 @@ template class ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Client_Service>;
 template class ACE_Thread_Strategy<Server_Service>;
-
-#if defined (ACE_HAS_THREADS)
-  template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-#else
-  // These are specialized in libACE if ACE doesn't have threads.
-#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else

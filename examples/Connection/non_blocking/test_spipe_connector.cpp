@@ -32,14 +32,6 @@ template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_S
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>;
 template class IPC_Client<PEER_HANDLER, ACE_SPIPE_CONNECTOR>;
 template class Peer_Handler<ACE_SPIPE_STREAM>;
-
-#if defined (ACE_HAS_THREADS)
-  template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-#else
-  // These are specialized in libACE if ACE doesn't have threads.
-#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else
