@@ -32,7 +32,7 @@ namespace TAO_PG
   /**
    * @return true if successful, false otherwise
    */
-  CORBA::Boolean get_property_value (
+  TAO_PortableGroup_Export CORBA::Boolean get_property_value (
     const PortableGroup::Name & property_name,
     const PortableGroup::Properties & properties,
     PortableGroup::Value & property_value);
@@ -43,8 +43,9 @@ namespace TAO_PG
    * If no property is overridden, the override in question will be
    * appended to the "properties" list.
    */
-  void override_properties (const PortableGroup::Properties & overrides,
-                            PortableGroup::Properties &properties);
+  TAO_PortableGroup_Export void override_properties (
+    const PortableGroup::Properties & overrides,
+    PortableGroup::Properties &properties);
 
 };
 

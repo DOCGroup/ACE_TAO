@@ -44,7 +44,7 @@ module CosLoadBalancing
   /// Types used for obtaining and/or reporting loads
   typedef unsigned long LoadId;
   struct Load {
-    LoadId identifier;
+    LoadId id;
     float value;
   };
   typedef sequence<Load> LoadList;
@@ -81,21 +81,40 @@ module CosLoadBalancing
 
     Properties get_properties ();
 
+    // Report loads at given location to the Strategy.
     void push_loads (in PortableGroup::Location the_location,
                      in LoadList loads)
       raises (LocationNotFound,
               StrategyNotAdaptive);
 
+    // Return the next member from the given object group which will
+    // requests will be forward to.
     Object next_member (in PortableGroup::ObjectGroup object_group,
                         in LoadManager load_manager)
       raises (PortableGroup::ObjectGroupNotFound,
               PortableGroup::MemberNotFound);
+
+    // Ask the Strategy to analyze loads, and enable or disable alerts
+    // at object group members residing at appropriate locations.
+    oneway void analyze_loads (in LoadManager load_manager);
+
+    // The given loads at the given location should no longer be
+    // considered when performing load analysis.
+    void location_removed (in PortableGroup::Location the_location)
+      raises (LocationNotFound);
   };
 
-  interface Alertable
+  struct StrategyInfo
   {
-    // Forward requests back to the load manager.
-    void alert (in Object load_manager);
+    
+    Properties props;
+  };
+
+  interface LoadAlert
+  {
+    // Forward requests back to the load manager via the object group
+    // reference.
+    void alert (in Object object_group);
 
     // Stop forwarding requests, and begin accepting them again.
     void disable_alert ();
@@ -125,8 +144,7 @@ module CosLoadBalancing
     // For the PUSH load monitoring style.
     void push_loads (in PortableGroup::Location the_location,
                      in LoadList loads)
-      raises (LocationNotFound,
-              StrategyNotAdaptive);
+      raises (StrategyNotAdaptive);
 
     // The following load monitor methods are only used for the PULL
     // load monitoring style.
@@ -140,8 +158,9 @@ module CosLoadBalancing
     void remove_load_monitor (in PortableGroup::Location the_location)
       raises (LocationNotFound);
 
-    void register_redirector (in PortableGroup::ObjectGroup object_group,
-                              in PortableGroup::Location the_location)
+    void register_alerter (in PortableGroup::ObjectGroup object_group,
+                           in PortableGroup::Location the_location,
+                           in Object alert)
       raises (LocationNotFound);
   };
 

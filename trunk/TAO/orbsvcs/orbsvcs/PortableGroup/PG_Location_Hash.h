@@ -29,7 +29,7 @@
  *
  * @brief Hash function object for generating a hash for a Location.
  */
-class TAO_PG_Location_Hash
+class TAO_PortableGroup_Export TAO_PG_Location_Hash
 {
 
 public:
