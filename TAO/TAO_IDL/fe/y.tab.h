@@ -1,4 +1,5 @@
 // $Id$
+
 typedef union
 #ifdef __cplusplus
 	TAO_YYSTYPE
