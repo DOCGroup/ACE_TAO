@@ -57,7 +57,7 @@ changequote(, )dnl
 TAO_VERSION=`head -1 ${srcdir}/VERSION | sed 's/.*version \([0-9.]*\).*/\1/'`
 changequote([, ])dnl
 
-AM_INIT_AUTOMAKE("$TAO_PACKAGE", "$TAO_VERSION-aceconf-0.5", )
+AM_INIT_AUTOMAKE("$TAO_PACKAGE", "$TAO_VERSION", )
 
 dnl Generate a header file with all settings.
 dnl AM_CONFIG_HEADER(tao/config.h)
