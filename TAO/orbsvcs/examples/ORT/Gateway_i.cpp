@@ -42,11 +42,11 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   ACE_CHECK;
 
   // Use the IfR interfaces to query the NVList for this object...
-  CORBA::InterfaceDef_var interface =
+  CORBA::InterfaceDef_var target_interface =
     target_object->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (CORBA::is_nil (interface.in ()))
+  if (CORBA::is_nil (target_interface.in ()))
     {
       ///
     }
@@ -56,7 +56,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
     request->operation ();
 
   CORBA::Contained_var contained_operation =
-    interface->lookup (operation_name.in ());
+    target_interface->lookup (operation_name.in ());
 
   CORBA::OperationDef_var operation =
     CORBA::OperationDef::_narrow (contained_operation.in ());

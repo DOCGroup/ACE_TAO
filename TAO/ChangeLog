@@ -1,3 +1,9 @@
+Wed Feb  5 09:44:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ORT/Gateway_i.cpp:
+          Renamed local variable interface to target_interface to resolve
+          clash with MingW interface macro.
+
 Wed Feb  5 08:51:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/PSS/PSDL_Node_Visitor.cpp:
