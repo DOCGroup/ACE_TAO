@@ -152,6 +152,12 @@ CORBA_LocalObject::_request (const CORBA::Char *
                     0);
 }
 
+CORBA::Object_ptr
+CORBA_LocalObject::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
 CORBA_InterfaceDef_ptr
 CORBA_LocalObject::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
