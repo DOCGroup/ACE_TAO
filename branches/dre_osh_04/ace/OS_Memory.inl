@@ -5,9 +5,8 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* !ACE_LACKS_SBRK */
 
-namespace ACE_OS {
 ACE_INLINE void *
-sbrk (int brk)
+ACE_OS::sbrk (int brk)
 {
 #if defined (ACE_LACKS_SBRK)
   ACE_UNUSED_ARG (brk);
@@ -16,4 +15,3 @@ sbrk (int brk)
   ACE_OSCALL_RETURN (::sbrk (brk), void *, 0);
 #endif /* VXWORKS */
 }
-} /* namespace ACE_OS */
