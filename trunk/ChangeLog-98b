@@ -6,14 +6,16 @@ Fri Aug 21 22:26:54 1998  Steve Huston  <shuston@riverace.com>
 
 Fri Aug 21 22:13:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/OS.i (thr_cancel, thr_setcanceltype): added #else
+        * ace/OS.i (thr_cancel, thr_setcancelstate, thr_setcanceltype,
+          thr_testcancel): added #else
           case, with ACE_NOTSUP (-1), to the various threads
           types.  It catches
           ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL.  Thanks
           to Naga for reporting this.
 
-        * ace/OS.i (thr_setcanceltype): don't support if
-          ACE_LACKS_PTHREAD_CANCEL.  Thanks to Naga for reporting this.
+        * ace/OS.i (thr_setcancelstate, thr_setcanceltype, thr_testcancel):
+          don't support if ACE_LACKS_PTHREAD_CANCEL.  Thanks to Naga for
+          reporting this.
 
         * ace/config-chorus.h: added ACE_LACKS_PTHREAD_CANCEL.
           Thanks to Naga, again.
