@@ -16,6 +16,10 @@ Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
           Message_Queue_Notifications_Test.cpp to
           Message_Queue_Notifications_Test.
 
+        * ace/config-lynxos.h: added ACE_LACKS_FORK, on PowerPC only.
+          For unknown reasons, all of the ACE tests that fork fail on
+          our PowerPC platform.
+
 Mon Oct 26 01:49:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Env_Value_Test.cpp (main): Changed argv and envp to type
