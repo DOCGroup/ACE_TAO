@@ -24,7 +24,6 @@
 #include "tao/debug.h"
 #include "tao/TAO_Internal.h"
 #include "tao/CDR.h"
-#include "tao/Marshal.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
@@ -1178,9 +1177,6 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 
       // initialize the system TypeCodes
       TAO_TypeCodes::init ();
-
-      // initialize the factory for marshaling
-      TAO_Marshal::init ();
 
       // initialize the system exceptions
       TAO_Exceptions::init (ACE_TRY_ENV);

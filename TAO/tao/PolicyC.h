@@ -20,6 +20,7 @@
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"
+#include "tao/Exception.h"
 #include "tao/Sequence.h"
 
 class TAO_Export CORBA_PolicyError : public CORBA::UserException

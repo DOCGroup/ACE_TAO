@@ -8,6 +8,7 @@
 
 #include "tao/DynUnion_i.h"
 #include "tao/InconsistentTypeCodeC.h"
+#include "tao/Marshal.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class DU_Extractor<CORBA::Short>;
@@ -344,9 +345,10 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   TAO_InputCDR disc_cdr (disc_mb,
                          disc_any->_tao_byte_order ());
 
-  out_cdr.append (disc_tc,
-                  &disc_cdr,
-                  ACE_TRY_ENV);
+  (void) TAO_Marshal_Object::perform_append (disc_tc,
+                                             &disc_cdr,
+                                             &out_cdr,
+                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // Add the member to the CDR stream.
@@ -365,9 +367,10 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   TAO_InputCDR member_cdr (member_mb,
                            member_any->_tao_byte_order ());
 
-  out_cdr.append (member_tc,
-                  &member_cdr,
-                  ACE_TRY_ENV);
+  (void) TAO_Marshal_Object::perform_append (member_tc,
+                                             &member_cdr,
+                                             &out_cdr,
+                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // Make the Any.
@@ -2136,7 +2139,11 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
                                                        ACE_TRY_ENV);
   ACE_CHECK;
 
-  cdr.skip (disc_tc);
+  // Move to the next field in the CDR stream.
+  (void) TAO_Marshal_Object::perform_skip (disc_tc,
+                                           &cdr,
+                                           ACE_TRY_ENV);
+  ACE_TRY_CHECK;
 
   CORBA::ULong count = any.type ()->member_count (ACE_TRY_ENV);
   ACE_CHECK;

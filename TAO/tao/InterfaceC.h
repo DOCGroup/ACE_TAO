@@ -19,7 +19,8 @@
 #include "tao/Object.h"
 #include "tao/varout.h"
 #include "tao/Managed_Types.h"
-#include "tao/Sequence_T.h"
+#include "tao/Sequence.h"
+#include "tao/Typecode.h"
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 

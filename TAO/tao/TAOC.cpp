@@ -10,6 +10,7 @@
 #include "tao/TAOC.h"
 
 #include "tao/TAOS.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/TAOC.i"

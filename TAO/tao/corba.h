@@ -49,7 +49,6 @@
 #include "tao/Typecode.h"
 
 #include "tao/varout.h"
-#include "tao/Marshal.h"
 #include "tao/singletons.h"
 #include "tao/CDR.h"
 

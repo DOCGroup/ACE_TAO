@@ -13,6 +13,7 @@
 #include "tao/ORB.h"
 #include "tao/Timeprobe.h"
 #include "tao/Any.h"
+#include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
 
@@ -250,7 +251,7 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
       if (this->retval_)
         {
           CORBA::TypeCode_var tc = this->retval_->type ();
-                if (this->retval_->any_owns_data ())
+          if (this->retval_->any_owns_data ())
             {
               this->retval_->_tao_encode (*this->outgoing_,
                                           this->orb_core_,
@@ -261,8 +262,10 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
             {
               TAO_InputCDR cdr (this->retval_->_tao_get_cdr (),
                                 this->retval_->_tao_byte_order ());
-              (void) this->outgoing_->append (tc.in (), &cdr,
-                                              ACE_TRY_ENV);
+              (void) TAO_Marshal_Object::perform_append (tc.in (),
+                                                         &cdr,
+                                                         this->outgoing_,
+                                                         ACE_TRY_ENV);
               ACE_CHECK;
             }
         }
@@ -286,7 +289,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 {
   // Construct our reply generator
   TAO_Pluggable_Reply_Params reply_params;
-  
+
   // We put all the info that we have in to this <reply_params> and
   // call the <write_reply_header> in the
   // pluggable_messaging_interface. One point to be noted however is
@@ -294,7 +297,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
   // delegated us to do work on its behalf. But we would be calling
   // back. As we dont have a LOCK or any such things we can call
   // pluggable_messaging guys again. We would be on the same thread of
-  // invocation. So *theoratically* there should not be a problem. 
+  // invocation. So *theoratically* there should not be a problem.
   reply_params.request_id_ = this->request_id_;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -306,7 +309,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 
   // Pass in the service context
   reply_params.service_context_notowned (&this->service_info_);
-  
+
   // Forward exception only.
   if (!CORBA::is_nil (this->forward_location_.in ()))
     {
@@ -347,15 +350,17 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
       // We are checking for NO exception. If there was a NO_EXCEPTION
       // type the IDL compiler would marshall the return values, the
       // out & inout parameters in to the stream <*this->output>
-      
+
       // In this special case we only marshall the exception type
-      CORBA::TypeCode_ptr except_tc;
-      except_tc = this->exception_->type ();
+      CORBA::TypeCode_ptr except_tc = this->exception_->type ();
 
       // we use the any's ACE_Message_Block
       TAO_InputCDR cdr (this->exception_->_tao_get_cdr (),
                         this->exception_->_tao_byte_order ());
-      (void) this->outgoing_->append (except_tc, &cdr, ACE_TRY_ENV);
+      (void) TAO_Marshal_Object::perform_append (except_tc,
+                                                 &cdr,
+                                                 this->outgoing_,
+                                                 ACE_TRY_ENV);
     }
 }
 
@@ -381,14 +386,14 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   reply_params.request_id_ = this->request_id_;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  reply_params.params_ = 0;  
+  reply_params.params_ = 0;
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 
   reply_params.svc_ctx_.length (0);
 
   // Pass in the service context
   reply_params.service_context_notowned (& reply_params.svc_ctx_);
-  
+
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
 
   // Construct a REPLY header.

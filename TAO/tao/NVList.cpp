@@ -11,6 +11,8 @@
 #include "tao/ORB.h"
 #include "tao/BoundsC.h"
 #include "tao/debug.h"
+#include "tao/Typecode.h"
+#include "tao/Marshal.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -338,9 +340,10 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
                           arg));
             }
           CORBA::TypeCode_var tc = nv->value ()->type ();
-          cdr.append (tc.in (),
-                      this->incoming_,
-                      ACE_TRY_ENV);
+          (void) TAO_Marshal_Object::perform_append (tc.in (),
+                                                     this->incoming_,
+                                                     &cdr,
+                                                     ACE_TRY_ENV);
           ACE_CHECK;
         }
 

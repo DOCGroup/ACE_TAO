@@ -14,6 +14,7 @@
 #include "tao/Server_Request.h"
 #include "tao/POA_CORBA.h"
 #include "tao/ORB.h"
+#include "tao/Typecode.h"
 
 class TAO_CORBA_DomainManager_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
