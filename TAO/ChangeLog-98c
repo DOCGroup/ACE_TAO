@@ -47,6 +47,9 @@ Fri Dec 25 18:26:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  This change also effected some functions in ORB.cpp,
  	  ORB_Core.cpp, and poa_T.cpp.
 
+	* tao/default_server.cpp (parse_args): Added new option
+ 	  -ORBuniqueidpolicyreversedemuxstrategy.
+
 Fri Dec 25 18:27:21 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_array.cpp
