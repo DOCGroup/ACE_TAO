@@ -1,3 +1,10 @@
+Thu Oct 14 16:10:19 2004  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp:
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+          Added explicit static template member instantiations.
+
 Wed Oct 13 13:13:39 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/examples/ImR/Combined_Service/run_test.pl:

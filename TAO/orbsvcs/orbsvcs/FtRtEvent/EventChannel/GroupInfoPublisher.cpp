@@ -157,3 +157,12 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr info)
   info_ = info;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex> *ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex>::singleton_;
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
