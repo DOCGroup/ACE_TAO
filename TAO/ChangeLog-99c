@@ -1,3 +1,15 @@
+Mon Jul 26 17:11:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Connect.cpp (handle_input):
+	* tao/UIOP_Connect.cpp (handle_input):
+
+	  Take out all the information from the <message_state> and reset
+	  it so that nested upcall on the same transport can be handled.
+
+	* tao/GIOP.h (TAO_GIOP::process_server_message): Changed method
+	  interface to take message_type and giop_version instead of
+	  TAO_GIOP_Message_State.
+
 Mon Jul 26 16:08:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_module.cpp:
@@ -29,7 +41,7 @@ Mon Jul 26 15:30:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* skip.cpp:
 	* ValueBase.i:
 	* Typecode.i:
-	  Minor mods to get rid of MSVC level 4 warnings, mostly casting 
+	  Minor mods to get rid of MSVC level 4 warnings, mostly casting
 	  return values from integer to CORBA::Boolean and the like
 
 	* Typecode.h:
