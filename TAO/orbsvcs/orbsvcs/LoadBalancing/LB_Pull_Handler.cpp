@@ -42,6 +42,11 @@ TAO_LB_Pull_Handler::handle_timeout (
               location->load_list =
                 location->load_monitor->current_load (ACE_TRY_ENV);
               ACE_TRY_CHECK;
+
+//               ACE_DEBUG ((LM_DEBUG,
+//                           "LOCATION = %s\tLOAD = %f\n",
+//                           (*i).ext_id_[0].id.in (),
+//                           location->load_list[0].value));
             }
           ACE_CATCHANY
             {
