@@ -3,6 +3,10 @@ Mon Jan 04 16:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/CosEvent/Event_Channel_i.cpp (for_consumers):
           added missing ; at end of statement.
 
+        * TAO_IDL/Makefile: with GreenHills gcx, added -w to CCFLAGS
+          to suppress many warnings about TAO_YY_BREAK statements being
+          unreachable.
+
 Mon Jan  4 14:29:49 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
