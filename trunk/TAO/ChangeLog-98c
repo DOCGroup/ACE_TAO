@@ -1,5 +1,8 @@
 Wed Nov 19 19:04:53 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
+	* tao/decode.cpp (decode): Added a cast so that compiler would
+ 	know which operator to call.
+
 	* orbsvcs/bin/Naming_Service/svr.cpp (handle_input): Change port
  	number received to host byte order.  Minor changes.
 

@@ -598,7 +598,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
               dmsg2 ("detected new v%d.%d IIOP profile",
                      profile->iiop_version.major,
                      profile->iiop_version.minor);
-              objdata->type_id = 0;
+              objdata->type_id = (const char *) 0;
               objdata->Release ();
               objdata = 0;
               continue;
