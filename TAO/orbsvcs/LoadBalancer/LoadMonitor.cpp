@@ -1,7 +1,7 @@
 #include "Push_Handler.h"
 #include "Monitor_Signal_Handler.h"
 
-#include "orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h"
+#include "orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h"
 #include "orbsvcs/orbsvcs/LoadBalancing/LB_conf.h"
 
 #include "tao/ORB_Core.h"
@@ -168,9 +168,9 @@ get_load_monitor (CORBA::ORB_ptr orb,
 
       if (ACE_OS::strcasecmp (::mtype, "CPU") == 0)
         {
-          TAO_LB_CPU_Monitor * monitor = 0;
+          TAO_LB_CPU_Load_Average_Monitor * monitor = 0;
           ACE_NEW_THROW_EX (monitor,
-                            TAO_LB_CPU_Monitor (::location_id,
+                            TAO_LB_CPU_Load_Average_Monitor (::location_id,
                                                 ::location_kind),
                             CORBA::NO_MEMORY ());
           ACE_CHECK_RETURN (CosLoadBalancing::LoadMonitor::_nil ());
