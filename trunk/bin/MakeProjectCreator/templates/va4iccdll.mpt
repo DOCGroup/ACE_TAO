@@ -1,4 +1,5 @@
 conditional_include "idl_compiler_win32"
+conditional_include "common"
 
 common_defines  = _WINDOWS WIN32
 type_is_dynamic = 1
