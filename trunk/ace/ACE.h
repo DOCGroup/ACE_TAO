@@ -1,17 +1,25 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
- *  @file    ACE.h
+ * @file    ACE.h
  *
- *  $Id$
+ * $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ * This file contains value added ACE functions that extend the
+ * behavior of the UNIX and Win32 OS calls.
+ *
+ * All these ACE static functions are consolidated in a single place
+ * in order to manage the namespace better.  These functions are put
+ * here rather than in @c ACE_OS in order to separate concerns.
+ *
+ * @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
 
 #ifndef ACE_ACE_H
 #define ACE_ACE_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -55,13 +63,11 @@ class ACE_Handle_Set;
 /**
  * @namespace ACE
  *
- * @brief Contains value added ACE functions that extend the behavior
- * of the UNIX and Win32 OS calls.
+ * @brief The namespace containing the ACE framework itself.
  *
- * This namespace consolidates all these ACE static functions in a
- * single place in order to manage the namespace better.  These
- * functions are put here rather than in ACE_OS in order to separate
- * concerns.
+ * The ACE namespace contains all types (classes, structures,
+ * typedefs, etc), and global functions and variables in the ACE
+ * framework.
  */
 namespace ACE
 {
@@ -98,26 +104,26 @@ namespace ACE
    *
    * Notes on common parameters:
    *
-   * <handle> is the connected endpoint that will be used for I/O.
+   * @a handle is the connected endpoint that will be used for I/O.
    *
-   * <buf> is the buffer to write from or receive into.
+   * @a buf is the buffer to write from or receive into.
    *
-   * <len> is the number of bytes to transfer.
+   * @a len is the number of bytes to transfer.
    *
-   * The <timeout> parameter in the following methods indicates how
-   * long to blocking trying to transfer data.  If <timeout> == 0,
+   * The @a timeout parameter in the following methods indicates how
+   * long to blocking trying to transfer data.  If @a timeout == 0,
    * then the call behaves as a normal send/recv call, i.e., for
    * blocking sockets, the call will block until action is possible;
-   * for non-blocking sockets, EWOULDBLOCK will be returned if no
+   * for non-blocking sockets, @c EWOULDBLOCK will be returned if no
    * action is immediately possible.
    *
-   * If <timeout> != 0, the call will wait until the relative time
-   * specified in *<timeout> elapses.
+   * If @a timeout != 0, the call will wait until the relative time
+   * specified in  @a *timeout elapses.
    *
    * The "_n()" I/O methods keep looping until all the data has been
    * transferred.  These methods also work for sockets in non-blocking
-   * mode i.e., they keep looping on EWOULDBLOCK.  <timeout> is used
-   * to make sure we keep making progress, i.e., the same timeout
+   * mode i.e., they keep looping on @c EWOULDBLOCK.  @a timeout is
+   * used to make sure we keep making progress, i.e., the same timeout
    * value is used for every I/O operation in the loop and the timeout
    * is not counted down.
    *
@@ -125,21 +131,21 @@ namespace ACE
    * from the non "_n()" methods and are specified as follows:
    *
    * - On complete transfer, the number of bytes transferred is returned.
-   * - On timeout, -1 is returned, errno == ETIME.
-   * - On error, -1 is returned, errno is set to appropriate error.
-   * - On EOF, 0 is returned, errno is irrelevant.
+   * - On timeout, -1 is returned, @c errno == @c ETIME.
+   * - On error, -1 is returned, @c errno is set to appropriate error.
+   * - On @c EOF, 0 is returned, @c errno is irrelevant.
    *
    * On partial transfers, i.e., if any data is transferred before
-   * timeout/error/EOF, <bytes_transferred> will contain the number of
-   * bytes transferred.
+   * timeout / error / @c EOF, @a bytes_transferred> will contain the
+   * number of bytes transferred.
    *
-   * Methods with <iovec> parameter are I/O vector variants of the I/O
-   * operations.
+   * Methods with @a iovec parameter are I/O vector variants of the
+   * I/O operations.
    *
-   * Methods with the extra <flags> argument will always result in
-   * <send> getting called. Methods without the extra <flags> argument
-   * will result in <send> getting called on Win32 platforms, and
-   * <write> getting called on non-Win32 platforms.
+   * Methods with the extra @a flags argument will always result in
+   * @c send getting called. Methods without the extra @a flags
+   * argument will result in @c send getting called on Win32
+   * platforms, and @c write getting called on non-Win32 platforms.
    */
   //@{
   extern ACE_Export ssize_t recv (ACE_HANDLE handle,
@@ -359,7 +365,7 @@ namespace ACE
                                              int restart);
 
   /**
-   * Wait up to @a timeout> amount of time to complete an actively
+   * Wait up to @a timeout amount of time to complete an actively
    * established non-blocking connection.  If @a is_tli is non-0 then
    * we are being called by a TLI wrapper (which behaves slightly
    * differently from a socket wrapper).
@@ -386,19 +392,19 @@ namespace ACE
   // = String functions
 #if !defined (ACE_HAS_WINCE)
   /**
-   * Return a dynamically allocated duplicate of <str>, substituting
-   * the environment variable if <str[0] == '$'>.  Note that the
-   * pointer is allocated with <ACE_OS::malloc> and must be freed by
-   * <ACE_OS::free>.
+   * Return a dynamically allocated duplicate of @a str, substituting
+   * the environment variable if @c str[0] @c == @c '$'.  Note that
+   * the pointer is allocated with @c ACE_OS::malloc and must be freed
+   * by @c ACE_OS::free.
    */
   extern ACE_Export ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
 #endif /* ACE_HAS_WINCE */
 
   /// Returns a pointer to the "end" of the string, i.e., the character
-  /// past the '\0'.
+  /// past the @c '\0'.
   extern ACE_Export const char *strend (const char *s);
 
-  /// This method is just like @c strdup>, except that it uses
+  /// This method is just like @c strdup, except that it uses
   /// @c operator @c new rather than @c malloc.  If @a s is NULL
   /// returns NULL rather than segfaulting.
   extern ACE_Export char *strnew (const char *s);
@@ -571,7 +577,7 @@ namespace ACE
   /// WinSock error. If so returns true, false otherwise.
   /// @internal
   extern ACE_Export bool is_sock_error (int error);
-  
+
   /**
    * Checks if process with <pid> is still alive.  Returns 1 if it is
    * still alive, 0 if it isn't alive, and -1 if something weird
@@ -810,4 +816,5 @@ namespace ACE
 #endif /* acelog2 */
 
 #include /**/ "ace/post.h"
+
 #endif  /* ACE_ACE_H */
