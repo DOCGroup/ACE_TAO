@@ -35,7 +35,7 @@ TAO_RT_ORB_Loader::init (int argc,
   // Set defaults.
   int priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
   int network_priority_mapping_type = TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
-  long sched_policy = THR_SCHED_DEFAULT;
+  long sched_policy = -1;
   long scope_policy = THR_SCOPE_PROCESS;
   int curarg = 0;
 
@@ -75,13 +75,13 @@ TAO_RT_ORB_Loader::init (int argc,
 
             if (ACE_OS::strcasecmp (name,
                                     ACE_LIB_TEXT("SCHED_OTHER")) == 0)
-              sched_policy = THR_SCHED_DEFAULT;
+              sched_policy = ACE_SCHED_OTHER;
             else if (ACE_OS::strcasecmp (name,
                                          ACE_LIB_TEXT("SCHED_FIFO")) == 0)
-              sched_policy = THR_SCHED_FIFO;
+              sched_policy = ACE_SCHED_FIFO;
             else if (ACE_OS::strcasecmp (name,
                                          ACE_LIB_TEXT("SCHED_RR")) == 0)
-              sched_policy = THR_SCHED_RR;
+              sched_policy = ACE_SCHED_RR;
             else
               ACE_DEBUG ((LM_DEBUG,
                           ACE_LIB_TEXT("RT_ORB_Loader - unknown argument")
@@ -133,6 +133,12 @@ TAO_RT_ORB_Loader::init (int argc,
                         argv[curarg]));
           }
       }
+
+  if (sched_policy == -1) {
+    ACE_ERROR_RETURN( (LM_ERROR,
+		       ACE_LIB_TEXT("(%N,%l) -ORBSchedPolicy not defined.\n") ), 
+		     -1);
+  }
 
   // Register the ORB initializer.
   ACE_TRY_NEW_ENV

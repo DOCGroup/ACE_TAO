@@ -30,6 +30,7 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
+#include "ace/Sched_Params.h"
 
 static const char *rt_poa_factory_name = "TAO_RT_POA";
 static const char *rt_poa_factory_directive = "dynamic TAO_RT_POA Service_Object * TAO_RTPortableServer:_make_TAO_RT_Object_Adapter_Factory()";
@@ -41,8 +42,25 @@ TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
   : priority_mapping_type_ (priority_mapping_type),
     network_priority_mapping_type_ (network_priority_mapping_type),
     sched_policy_ (sched_policy),
+    sched_policy_flags_ (0),
     scope_policy_ (scope_policy)
 {
+  switch (sched_policy_)
+    {
+    case ACE_SCHED_RR:
+      sched_policy_flags_ = THR_SCHED_RR;
+      break;
+    case ACE_SCHED_FIFO:
+      sched_policy_flags_ = THR_SCHED_FIFO;
+      break;
+    case ACE_SCHED_OTHER:
+      sched_policy_flags_ = THR_SCHED_DEFAULT;
+      break;
+    default:
+      ACE_DEBUG((LM_DEBUG, ACE_LIB_TEXT("(%N,%l) Unknown sched_policy value.\nDefaulting to THR_SCHED_DEFAULT for sched_policy_flags_.\n") ));
+      sched_policy_flags_ = THR_SCHED_DEFAULT;
+      break;
+    }
 }
 
 void
@@ -83,29 +101,22 @@ TAO_RT_ORBInitializer::pre_init (
   TAO_RT_Protocols_Hooks::set_server_protocols_hook
     (TAO_ServerProtocolPolicy::hook);
 
-  // Conversion.
-  long sched_policy = ACE_SCHED_OTHER;
-  if (this->sched_policy_ == THR_SCHED_FIFO)
-    sched_policy = ACE_SCHED_FIFO;
-  else if (this->sched_policy_ == THR_SCHED_RR)
-    sched_policy = ACE_SCHED_RR;
-
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm;
   switch (this->priority_mapping_type_)
     {
     case TAO_PRIORITY_MAPPING_CONTINUOUS:
       ACE_NEW (pm,
-               TAO_Continuous_Priority_Mapping (sched_policy));
+               TAO_Continuous_Priority_Mapping (this->sched_policy_));
       break;
     case TAO_PRIORITY_MAPPING_LINEAR:
       ACE_NEW (pm,
-               TAO_Linear_Priority_Mapping (sched_policy));
+               TAO_Linear_Priority_Mapping (this->sched_policy_));
       break;
     default:
     case TAO_PRIORITY_MAPPING_DIRECT:
       ACE_NEW (pm,
-               TAO_Direct_Priority_Mapping (sched_policy));
+               TAO_Direct_Priority_Mapping (this->sched_policy_));
       break;
     }
 
@@ -136,7 +147,7 @@ TAO_RT_ORBInitializer::pre_init (
     default:
     case TAO_NETWORK_PRIORITY_MAPPING_LINEAR:
       ACE_NEW (npm,
-               TAO_Linear_Network_Priority_Mapping (sched_policy));
+               TAO_Linear_Network_Priority_Mapping (this->sched_policy_));
       break;
     }
 
@@ -215,7 +226,42 @@ TAO_RT_ORBInitializer::pre_init (
   ACE_CHECK;
 
   tao_info->orb_core ()->orb_params ()->scope_policy (this->scope_policy_);
-  tao_info->orb_core ()->orb_params ()->sched_policy (this->sched_policy_);
+
+  /* We need to store sched_policy_flags_ and not sched_policy_ in the
+   * orb_params(), because in TAO_Thread_Lane::create_dynamic_threads(),
+   * the flags are passed to ACE_Task_Base::activate() in order to set
+   * the priority.
+   */
+  tao_info->orb_core ()->orb_params ()->sched_policy (this->sched_policy_flags_);
+
+  /* Based on what the scheduling policy is, set the priority to the lowest
+   * priority for that scheduling policy.  We need to do this in order to
+   * set the pthread policy for pthread_setschedparam().
+   * Also, we want the pthread policy and priority to be set to a sensible
+   * value, since the post_invoke() operation in the RT-POA will reset the
+   * CORBA priority to what it was before an incoming request.
+   */
+  int priority;
+  ACE_hthread_t thr_id;
+  ACE_Thread::self(thr_id);
+
+  int result = ACE_OS::thr_getprio(thr_id, priority);
+  if ( result != 0 ) {
+     ACE_ERROR ((LM_ERROR, "(%N,%l) ACE_OS::thr_getprio failed, priority %d errno: %d %m\n", priority, errno));
+     return;
+  }
+
+  int priority_min = ACE_Sched_Params::priority_min(this->sched_policy_);
+  int priority_max = ACE_Sched_Params::priority_max(this->sched_policy_);
+  if(priority < priority_min || priority > priority_max) {  // Check this
+     priority = priority_min;
+  }
+
+  result = ACE_OS::thr_setprio(thr_id, priority, this->sched_policy_);
+  if ( result != 0 ) {
+     ACE_ERROR ((LM_ERROR, "(%N,%l) ACE_OS::thr_setprio failed, priority %d errno: %d %m\n", priority, errno));
+  }
+
 }
 
 void
