@@ -1,3 +1,10 @@
+Fri Mar  11 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Logging/Use_Multiple_Sinks.cpp:
+        * examples/APG/Logging/Use_Ostream.cpp:
+        * examples/APG/Logging/LogManager.h:
+          Changed _MSC_VER checks
+
 Fri Mar  11 10:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc.h:
