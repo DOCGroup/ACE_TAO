@@ -1,3 +1,11 @@
+Sun Nov 28 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant.mpb:
+          Made it possible to overrule the commands for the cidlc compiler, just as
+          with TAO_IDL. Needed for cross builds like VxWorks
+
 Sat Nov 27 14:51:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
