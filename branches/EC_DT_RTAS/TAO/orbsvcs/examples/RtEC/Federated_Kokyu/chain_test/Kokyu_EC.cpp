@@ -1,16 +1,19 @@
 // $Id$
 
+#include "orbsvcs/Sched/Reconfig_Scheduler.h"
+#include "orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Kokyu_Factory.h"
+#include "ace/OS_NS_strings.h" //for ACE_OS::strcasecmp
+#include "ace/OS_NS_sys_time.h" // for ACE_OS::gettimeofday
+
+#include "Kokyu/Dispatch_Deferrer.h"
+
 #include "Kokyu_EC.h"
-#include <orbsvcs/Sched/Reconfig_Scheduler.h>
-#include <orbsvcs/Runtime_Scheduler.h>
-#include <orbsvcs/Event_Service_Constants.h>
-#include <orbsvcs/Event_Utilities.h>
-#include <orbsvcs/Scheduler_Factory.h>
-#include <orbsvcs/Event/EC_Event_Channel.h>
-#include <orbsvcs/Event/EC_Default_Factory.h>
-#include <orbsvcs/Event/EC_Kokyu_Factory.h>
-#include <ace/OS_NS_strings.h> //for ACE_OS::strcasecmp
-#include <ace/OS_NS_sys_time.h> // for ACE_OS::gettimeofday
 
 namespace {
 
@@ -494,7 +497,9 @@ Reactor_Task::initialize(void)
 
   this->react_ = reactor;
   */
-  this->react_ = ACE_Reactor::instance();
+  //this->react_ = ACE_Reactor::instance();
+  this->react_ = Kokyu::Dispatch_Deferrer::Singleton_Reactor::instance();
+  //assume reactor is already opened!
 
   this->initialized_ = 1;
 
