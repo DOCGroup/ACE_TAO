@@ -1,5 +1,6 @@
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -24,6 +25,7 @@
 #include "ace/Env_Value_T.h"
 #include "ace/Read_Buffer.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 // Since we don't yet have an interface repository or dynamic-Any, we
 // just get the info from the IDL-generated files, since we're mainly
@@ -32,8 +34,8 @@
 
 ACE_RCSID(DII_Cubit, client, "$Id$")
 
-// Some constants used below.
-const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
+  // Some constants used below.
+  const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
 const char *DEFAULT_FACTORY_IOR = "ior00";
 const int SMALL_OCTET_SEQ_LENGTH = 16;
 const int LARGE_OCTET_SEQ_LENGTH = 4096;
@@ -43,30 +45,30 @@ const int NUMBER_OF_TESTS = 10;
 
 // Some macros for env checks used identically in each operation.
 #define CUBIT_CHECK_ENV_RETURN_VOID(PRINT_STRING) \
-  if (this->env_.exception () != 0) \
-    { \
-      this->error_count_++; \
-      this->env_.print_exception (PRINT_STRING); \
-      return; \
-    }
+if (this->env_.exception () != 0) \
+{ \
+    this->error_count_++; \
+ this->env_.print_exception (PRINT_STRING); \
+ return; \
+}
 
 #define CUBIT_CHECK_ENV_RELEASE_RETURN_VOID(REQ, PRINT_STRING) \
-  if (this->env_.exception () != 0) \
-    { \
-      this->error_count_++; \
-      this->env_.print_exception (PRINT_STRING); \
-      CORBA::release (REQ); \
-      return; \
-    }
+if (this->env_.exception () != 0) \
+{ \
+    this->error_count_++; \
+ this->env_.print_exception (PRINT_STRING); \
+ CORBA::release (REQ); \
+ return; \
+}
 
 #define REQUEST_CHECK_ENV_RETURN_VOID(REQ, PRINT_STRING) \
-  if (REQ->env ()->exception () != 0) \
-    { \
-      this->error_count_++; \
-      REQ->env ()->print_exception (PRINT_STRING); \
-      CORBA::release (REQ); \
-      return; \
-    }
+if (REQ->env ()->exception () != 0) \
+{ \
+    this->error_count_++; \
+ REQ->env ()->print_exception (PRINT_STRING); \
+ CORBA::release (REQ); \
+ return; \
+}
 
 class DII_Cubit_Client 
 {
@@ -173,6 +175,10 @@ private:
 
   ACE_HANDLE f_handle_;
   // File handle to read the IOR.
+
+  TAO_Naming_Client my_name_client_;
+  // An instance of the name client used for resolving the factory
+  // objects.
 };
 
 // Constructor
@@ -325,15 +331,23 @@ DII_Cubit_Client::init_naming_service (void)
 {
   TAO_TRY
     {
-      // Get the naming service from the orb.
-      CORBA::Object_var naming_obj =
-        this->orb_var_->resolve_initial_references ("NameService");
-
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
-
+      // Initialize the naming services
+      if (my_name_client_.init (orb_var_, argc_, argv_) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
+      /*
+	// Get the naming service from the orb.
+	CORBA::Object_var naming_obj =
+	this->orb_var_->resolve_initial_references ("NameService");
+	
+	if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+	" (%P|%t) Unable to resolve the Name Service.\n"),
+	-1);
+      */
+      
       // Build a Name object.
       CosNaming::Name cubit_factory_name (2);
       cubit_factory_name.length (2);
@@ -342,7 +356,7 @@ DII_Cubit_Client::init_naming_service (void)
 
       // Build up the <resolve> operation using the DII!
       CORBA::Request_ptr req =
-        naming_obj->_request ("resolve", TAO_TRY_ENV);
+        my_name_client_->_request ("resolve", TAO_TRY_ENV);
 
       TAO_CHECK_ENV;
 
@@ -369,7 +383,7 @@ DII_Cubit_Client::init_naming_service (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not resolve cubit factory in Naming service <%s>\n"),
                           -1);
-   }
+    }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("DII_Cubit_Client::init_naming_service");
