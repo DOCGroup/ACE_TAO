@@ -1,7 +1,8 @@
 This module shows how to modify the default TAO Resource Factory to do
 something user specific.  In this example, the reactor() accessor is
-modified to provide the ORB with an instance of the WFMO_Reactor
-instead of the regular Select_Reactor.  
+modified to provide the ORB with an instance of the ACE_WFMO_Reactor
+instead of the regular ACE_Select_Reactor.  You could also configure
+the ACE_XtReactor here, as well.
 
 To use this altered resource factory in the Explicit_Activation
 example, please specify the -ORBsvcconf alternate.conf as a additional
