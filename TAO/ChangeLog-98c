@@ -1,66 +1,72 @@
+Wed Jul 22 11:15:07 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp (compute_scheduling):
+          dereference infos (with ptr ()) before comparing it with 0.
+          No more visits from Mr. SIGSEGV.
+
 Wed Jul 22 11:09:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_si.cpp: 
-	  The in_multiple_inheritance() method was generated for the wrong
-	  class.
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+          The in_multiple_inheritance() method was generated for the wrong
+          class.
 
 Wed Jul 22 10:07:17 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Any.cpp: 
-	* tao/CurrentC.cpp: 
-	* tao/IIOP_Object.cpp: 
-	* tao/NVList.cpp: 
-	* tao/POAC.cpp: 
-	* tao/Server_Request.cpp: 
-	* tao/append.cpp: 
-	* tao/decode.cpp: 
-	* tao/deep_copy.cpp: 
-	* tao/deep_free.cpp: 
-	* tao/encode.cpp: 
-	* tao/skip.cpp: 
-	  Callers to Any::type should be careful to release the
-	  TypeCode_ptr it returns.
+        * tao/Any.cpp:
+        * tao/CurrentC.cpp:
+        * tao/IIOP_Object.cpp:
+        * tao/NVList.cpp:
+        * tao/POAC.cpp:
+        * tao/Server_Request.cpp:
+        * tao/append.cpp:
+        * tao/decode.cpp:
+        * tao/deep_copy.cpp:
+        * tao/deep_free.cpp:
+        * tao/encode.cpp:
+        * tao/skip.cpp:
+          Callers to Any::type should be careful to release the
+          TypeCode_ptr it returns.
 
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp: 
-	  The >>= was using Any::type() but not realeasing the memory that
-	  method returns.  We stick the result into a _var.  I also added
-	  a small optimization: for some types the >>= operator uses
-	  replace() to change the contents of the Any (thus minimizing
-	  future memory allocation and demarshalling), but it reused the
-	  Any typecode, usually obtained from the wire; now we use the
-	  global Typecode, in an attempt to free memory ASAP inside the
-	  ORB.
-	
-	* docs/Options.html: 
-	  The info about the -ORBpoalock default value was wrong.
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+          The >>= was using Any::type() but not realeasing the memory that
+          method returns.  We stick the result into a _var.  I also added
+          a small optimization: for some types the >>= operator uses
+          replace() to change the contents of the Any (thus minimizing
+          future memory allocation and demarshalling), but it reused the
+          Any typecode, usually obtained from the wire; now we use the
+          global Typecode, in an attempt to free memory ASAP inside the
+          ORB.
+
+        * docs/Options.html:
+          The info about the -ORBpoalock default value was wrong.
 
 Wed Jul 22 08:56:34 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface.h
-	  TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h
+          TAO_IDL/be/be_interface.cpp:
 
-	Added a data member (called in_mult_inheritance_) and
-	corresponding set/get methods for determining if an
-	interface node is involved in some form of multiple inheritance
-	either directly or indirectly thru its ancestors. We make use of
-	the template method "traverse_inheritance_graph" by passing a new
-	helper method called "in_mult_inheritance_helper".
+        Added a data member (called in_mult_inheritance_) and
+        corresponding set/get methods for determining if an
+        interface node is involved in some form of multiple inheritance
+        either directly or indirectly thru its ancestors. We make use of
+        the template method "traverse_inheritance_graph" by passing a new
+        helper method called "in_mult_inheritance_helper".
 
-	* TAO_IDL/be_visitor_interface/{interface_sh, interface_si}.cpp:
-	Added code to generate the inline method on the skeleton class
-	that indicates if we are directly or indirectly involved in some
-	form of multiple inheritance.
+        * TAO_IDL/be_visitor_interface/{interface_sh, interface_si}.cpp:
+        Added code to generate the inline method on the skeleton class
+        that indicates if we are directly or indirectly involved in some
+        form of multiple inheritance.
 
 Wed Jul 22 00:29:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	  Fixed problem in TIMEPROBE initialization.
+        * tao/Invocation.cpp:
+          Fixed problem in TIMEPROBE initialization.
 
 Tue Jul 21 22:05:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
