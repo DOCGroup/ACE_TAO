@@ -1,3 +1,15 @@
+Thu May 09 12:12:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/apps/svcconf/Svcconf.h:
+	* ACEXML/apps/svcconf/Svcconf.cpp:
+	* ACEXML/apps/svcconf/Svcconf_Handler.h:
+	* ACEXML/apps/svcconf/Svcconf_Handler.cpp: Commented out the code
+	  if XML-based Service Configurator is not used.
+
+	* ACEXML/apps/svcconf/Makefile:
+	* ACEXML/apps/svcconf/XML_Svc_Conf_Parser.dsp: Removed ACEXML from
+	  the list of include path to be consistent with other projects.
+
 Thu May 09 10:53:51 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/XML_Common.dsp: One more mis-merged project file.

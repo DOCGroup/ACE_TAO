@@ -16,9 +16,10 @@
 
 #include "ace/pre.h"
 #include "ace/XML_Svc_Conf.h"
-#include "parser/parser/Parser.h"
+#include "ACEXML/parser/parser/Parser.h"
 #include "Svcconf_Handler.h"
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
 
 class ACEXML_Svcconf_Parser : public ACE_XML_Svc_Conf
 {
@@ -41,6 +42,8 @@ protected:
   ACEXML_InputSource input_stream_;
   ACEXML_Env env_;
 };
+
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 
 #include "ace/post.h"
 #endif /* ACEXML_SVCCONF_H */
