@@ -43,6 +43,31 @@ Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	* include/makeinclude/platform_osf1_4.0.GNU: minor cleanup, incl.
 	  addition of -use_ld_input to SOFLAGS.
 
+	* tests/Future_Test.cpp,examples/Threads/future[12].cpp
+	  (Method_Object_Name): removed extraneous ";" after function
+	  definition.
+
+	* netsvcs/lib/Base_Optimizer.h: adding missing, default "public"
+	  access specifier.
+
+	* apps/JAWS/Server/HTTP_Config.h: added "class" to friend HTTP_Config
+	  declaration in HTTP_Config_Info.
+
+	* examples/IPC_SAP/TLI_SAP/ftp-client.cpp: removed unused variable
+	  "MAXLINE".
+
+	* examples/IPC_SAP/TLI_SAP/db-server.cpp (main): wrapped "return 0"
+	  with ACE_NOTREACHED.
+
+	* examples/Reactor/Misc/test_timer_queue.cpp (handle_timeout):
+	  convert void *arg to long if ACE_HAS_64BIT_LONGS.
+
+	* examples/Service_Configurator/IPC-tests/client/
+	  local_fifo_client_test.cpp: removed unused variable BUF_LEN.
+
+	* examples/Shared_Malloc/test_persistence.cpp:
+	  removed unused Employee ostream << operator.
+
 Wed Oct 15 01:48:36 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Containers.{h,i,cpp}: 
