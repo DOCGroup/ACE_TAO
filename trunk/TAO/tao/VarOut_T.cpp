@@ -4,14 +4,13 @@
 #define TAO_VAROUT_T_C
 
 #include "tao/VarOut_T.h"
-#include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           VarOut_T, 
+ACE_RCSID (tao,
+           VarOut_T,
            "$Id$")
 
 template<typename T>
@@ -19,7 +18,7 @@ TAO_Var_Base_T<T>::TAO_Var_Base_T (const TAO_Var_Base_T<T> & p)
 {
   if (p.ptr_)
     {
-      ACE_NEW (this->ptr_, 
+      ACE_NEW (this->ptr_,
                T (*p.ptr_));
     }
   else
@@ -47,7 +46,7 @@ TAO_Fixed_Var_T<T>::operator= (const TAO_Fixed_Var_T<T> & p)
           ACE_NEW_RETURN (deep_copy,
                           T (*p.ptr_),
                           *this);
-          
+
           if (deep_copy != 0)
             {
               T * tmp = deep_copy;
@@ -57,7 +56,7 @@ TAO_Fixed_Var_T<T>::operator= (const TAO_Fixed_Var_T<T> & p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -73,7 +72,7 @@ TAO_Fixed_Var_T<T>::operator= (const T & p)
                     T (p),
                     *this);
   }
-  
+
   return *this;
 }
 
@@ -96,7 +95,7 @@ TAO_Var_Var_T<T>::operator= (const TAO_Var_Var_T<T> & p)
           ACE_NEW_RETURN (deep_copy,
                           T (*p.ptr_),
                           *this);
-          
+
           if (deep_copy != 0)
             {
               T * tmp = deep_copy;
@@ -106,7 +105,7 @@ TAO_Var_Var_T<T>::operator= (const TAO_Var_Var_T<T> & p)
             }
         }
     }
-  
+
   return *this;
 }
 

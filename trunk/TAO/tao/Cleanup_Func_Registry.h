@@ -6,12 +6,13 @@
  *
  *  $Id$
  *
- *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // ===================================================================
 
 #ifndef TAO_CLEANUP_FUNC_REGISTRY_H
 #define TAO_CLEANUP_FUNC_REGISTRY_H
+
 #include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
@@ -21,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Array_Base.h"
-#include "ace/OS.h"  // for ACE_CLEANUP_FUNC
 
 /**
  * @class TAO_Cleanup_Func_Registry
