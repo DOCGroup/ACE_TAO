@@ -1,3 +1,13 @@
+Wed Nov 21 13:35:50 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	Fixes supplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	  TAO_StreamEndpoint::modify_QoS() now calls 
+	  TAO_StreamEndpoint::change_qos().  TAO_Basic_StreamCtrl::modify_QoS()
+	  functionality moved to TAO_StreamCtrl::modify_QoS().
+	  TAO_StreamCtrl::modify_QoS() now operates on all flows if an empty
+	  flowspec is specified.
+
 Wed Nov 21 07:01:04 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/client.cpp (main): 

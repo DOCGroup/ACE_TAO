@@ -220,64 +220,13 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &flow_spec,
 // Changes the QoS associated with the stream
 // Empty the_spec means apply operation to all flows
 CORBA::Boolean
-TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & new_qos,
-                                  const AVStreams::flowSpec &flowspec,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & /*new_qos*/,
+                                  const AVStreams::flowSpec &/*flowspec*/,
+                                  CORBA::Environment &/*ACE_TRY_ENV*/)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed))
 {
-  ACE_TRY
-    {
-      if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,	
-		    "TAO_Basic_StreamCtrl::modify_QoS\n"));
-      
-      AVStreams::flowSpec in_flowspec;
-      AVStreams::flowSpec out_flowspec;
-      
-      in_flowspec.length (0);
-      out_flowspec.length (0);
-
-      int in_index = 0;
-      int out_index = 0;
-
-      for (u_int i=0;i < flowspec.length ();i++)
-	{
-	  TAO_Forward_FlowSpec_Entry entry;
-	  entry.parse (flowspec [i].in ());
-	  int direction = entry.direction ();
-	  if (direction == 0)
-	    {
-	      in_flowspec.length (in_index + 1);
-	      in_flowspec [in_index++] = CORBA::string_dup (entry.entry_to_string ());
-	    }
-	  else
-	    {
-	      out_flowspec.length (out_index + 1);
-	      out_flowspec [out_index++] = CORBA::string_dup (entry.entry_to_string ());
-	    }
-	}
-
-      if (in_flowspec.length () != 0)
-	{
-	  this->vdev_a_->modify_QoS (new_qos, in_flowspec, ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
-
-      if (out_flowspec.length () != 0)
-	{
-	  this->vdev_b_->modify_QoS (new_qos, out_flowspec, ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
-	}
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Basic_StreamCtrl::modify_QoS");
-      return 0;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
   return 1;
 }
 
@@ -1419,7 +1368,7 @@ TAO_StreamCtrl::get_related_vdev (AVStreams::MMDevice_ptr adev,
 }
 
 CORBA::Boolean
-TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &the_qos,
+TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
                             const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -1438,8 +1387,77 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &the_qos,
     }
   else
     {
-      TAO_Basic_StreamCtrl::modify_QoS (the_qos, the_spec, ACE_TRY_ENV);
+      ACE_TRY
+	{
+	  
+	  AVStreams::flowSpec in_flowspec;
+	  AVStreams::flowSpec out_flowspec;
+	  
+	  in_flowspec.length (0);
+	  out_flowspec.length (0);
+	  
+	  int in_index = 0;
+	  int out_index = 0;
+	  
+	  AVStreams::flowSpec flowspec;
+	  if (the_spec.length () == 0)
+	    {
+	      // Apply modify_qos to all the flows
+	      flowspec = this->flows_;
+	      MMDevice_Map_Iterator iterator (this->mmdevice_a_map_);
+	      MMDevice_Map::ENTRY *entry = 0;
+	      for (;iterator.next (entry) !=  0;iterator.advance ())
+		{
+		  flowspec = entry->int_id_.flowspec_;
+		}
+	    }
+	  else
+	    {
+	      flowspec = the_spec;
+	    }
+	  
+	  if (TAO_debug_level > 0)
+	    ACE_DEBUG ((LM_DEBUG,	
+			"TAO_StreamCtrl::modify_QoS\n"));
+	  
+
+	  for (u_int i=0;i < flowspec.length ();i++)
+	    {
+	      TAO_Forward_FlowSpec_Entry entry;
+	      entry.parse (flowspec [i].in ());
+	      int direction = entry.direction ();
+	      if (direction == 0)
+		{
+		  in_flowspec.length (in_index + 1);
+		  in_flowspec [in_index++] = CORBA::string_dup (entry.entry_to_string ());
+		}
+	      else
+		{
+		  out_flowspec.length (out_index + 1);
+		  out_flowspec [out_index++] = CORBA::string_dup (entry.entry_to_string ());
+		}
+	    }
+
+	  if (in_flowspec.length () != 0)
+	    {
+	      this->vdev_a_->modify_QoS (new_qos, in_flowspec, ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
+	    }
+
+	  if (out_flowspec.length () != 0)
+	    {
+	      this->vdev_b_->modify_QoS (new_qos, out_flowspec, ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
+	    }
+	}
+      ACE_CATCHANY
+	{
+	  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_StreamCtrl::modify_QoS");
+	  return 0;
+	}
+      ACE_ENDTRY;
       ACE_CHECK_RETURN (0);
+
     }
   return 1;
 }
@@ -2289,9 +2307,9 @@ TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
 
 // Refers to modification of transport QoS.
 CORBA::Boolean
-TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &/* new_qos */,
-                                const AVStreams::flowSpec &/* the_flows */,
-                                CORBA::Environment &/* ACE_TRY_ENV */)
+TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
+                                const AVStreams::flowSpec &the_flows,
+                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed))
@@ -2299,6 +2317,13 @@ TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &/* new_qos */,
   if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,
 	      "TAO_StreamEndPoint::modify_QoS\n"));
+
+  int result =  this->change_qos (new_qos, the_flows, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+  if (result != 0)
+    return 0;
+  
   return 1;
 
 }
