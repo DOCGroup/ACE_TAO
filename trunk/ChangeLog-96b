@@ -1,3 +1,28 @@
+Wed Oct 30 00:30:00 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* Registry: Add a Name Service implementation to ACE based on
+ 	  Win32 Registry. The ACE_Registry interface is inspired by the
+ 	  interface specified in the CORBA Naming Service Specification.
+  	  The implementation is done through Win32 Reg*() functions.
+  	  Other than providing an OO wrapper for the Win32 Reg*()
+ 	  functions, ACE_Registry provides an abstraction for iteration
+ 	  over the elements of the Registry.
+
+
+	* ace/Local_Name_Space_T.cpp: Moved SEH out of methods of
+	  Name_Space_Map to the methods of Local_Name_Space. Some of the
+	  calls to Local_Name_Space methods used the allocator to either
+	  malloc or find or free shared memory. Adding SEH to these
+	  methods ensured that any exception raised due to remapping would
+	  be caught and handled appropriately. 
+
+	  Also, to fool the stupid MFC compiler, we added _i methods so
+	  that it stopped bitching about destructors not getting called
+	  correctly. 
+
+	* Added three new tests to /examples/Naming. Thanks to Lothar for
+	  providing these tests.  
+
 Tue Oct 29 00:02:44 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
 	* ace/config-win32-msvc4.0.h: Defined the STRICT symbol based on a
