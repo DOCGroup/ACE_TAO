@@ -1,3 +1,9 @@
+Tue Sep  3 17:12:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.cpp (num_processors_online):
+
+	  Fixed ACE_TRACE macro.
+
 Tue Sep  3 16:38:47 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/ace_dll.dsp:
