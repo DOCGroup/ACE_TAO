@@ -132,7 +132,7 @@ CORBA::DefinitionKind CORBA_IRObject::def_kind (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -184,7 +184,7 @@ void CORBA_IRObject::destroy (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -310,7 +310,7 @@ char * CORBA_Contained::id (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -363,7 +363,7 @@ void CORBA_Contained::id (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -416,7 +416,7 @@ char * CORBA_Contained::name (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -469,7 +469,7 @@ void CORBA_Contained::name (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -522,7 +522,7 @@ char * CORBA_Contained::version (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -575,7 +575,7 @@ void CORBA_Contained::version (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -628,7 +628,7 @@ CORBA_Container_ptr CORBA_Contained::defined_in (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -680,7 +680,7 @@ char * CORBA_Contained::absolute_name (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -732,7 +732,7 @@ CORBA_Repository_ptr CORBA_Contained::containing_repository (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -829,7 +829,7 @@ CORBA_Contained::Description * CORBA_Contained::describe (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -884,7 +884,7 @@ void CORBA_Contained::move (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2051,7 +2051,7 @@ CORBA_Contained_ptr CORBA_Container::lookup (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2111,7 +2111,7 @@ CORBA_ContainedSeq * CORBA_Container::contents (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2175,7 +2175,7 @@ CORBA_ContainedSeq * CORBA_Container::lookup_name (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2446,7 +2446,7 @@ CORBA_Container::DescriptionSeq * CORBA_Container::describe_contents (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2510,7 +2510,7 @@ CORBA_ModuleDef_ptr CORBA_Container::create_module (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2575,7 +2575,7 @@ CORBA_ConstantDef_ptr CORBA_Container::create_constant (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2641,7 +2641,7 @@ CORBA_StructDef_ptr CORBA_Container::create_struct (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2707,7 +2707,7 @@ CORBA_UnionDef_ptr CORBA_Container::create_union (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2773,7 +2773,7 @@ CORBA_EnumDef_ptr CORBA_Container::create_enum (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2838,7 +2838,7 @@ CORBA_AliasDef_ptr CORBA_Container::create_alias (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2903,7 +2903,7 @@ CORBA_InterfaceDef_ptr CORBA_Container::create_interface (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -2974,7 +2974,7 @@ CORBA_ValueDef_ptr CORBA_Container::create_value (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3045,7 +3045,7 @@ CORBA_ValueBoxDef_ptr CORBA_Container::create_value_box (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3110,7 +3110,7 @@ CORBA_ExceptionDef_ptr CORBA_Container::create_exception (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3238,7 +3238,7 @@ CORBA::TypeCode_ptr CORBA_IDLType::type (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3391,7 +3391,7 @@ CORBA_Contained_ptr CORBA_Repository::lookup_id (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3450,7 +3450,7 @@ CORBA_PrimitiveDef_ptr CORBA_Repository::get_primitive (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3509,7 +3509,7 @@ CORBA_StringDef_ptr CORBA_Repository::create_string (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3568,7 +3568,7 @@ CORBA_WstringDef_ptr CORBA_Repository::create_wstring (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3628,7 +3628,7 @@ CORBA_SequenceDef_ptr CORBA_Repository::create_sequence (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3689,7 +3689,7 @@ CORBA_ArrayDef_ptr CORBA_Repository::create_array (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3750,7 +3750,7 @@ CORBA_FixedDef_ptr CORBA_Repository::create_fixed (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -3994,7 +3994,7 @@ CORBA::TypeCode_ptr CORBA_ConstantDef::type (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4046,7 +4046,7 @@ CORBA_IDLType_ptr CORBA_ConstantDef::type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4099,7 +4099,7 @@ void CORBA_ConstantDef::type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4152,7 +4152,7 @@ CORBA_Any * CORBA_ConstantDef::value (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4206,7 +4206,7 @@ void CORBA_ConstantDef::value (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4501,7 +4501,7 @@ CORBA_StructMemberSeq * CORBA_StructDef::members (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4555,7 +4555,7 @@ void CORBA_StructDef::members (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4679,7 +4679,7 @@ CORBA::TypeCode_ptr CORBA_UnionDef::discriminator_type (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4731,7 +4731,7 @@ CORBA_IDLType_ptr CORBA_UnionDef::discriminator_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4784,7 +4784,7 @@ void CORBA_UnionDef::discriminator_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4837,7 +4837,7 @@ CORBA_UnionMemberSeq * CORBA_UnionDef::members (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -4891,7 +4891,7 @@ void CORBA_UnionDef::members (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5015,7 +5015,7 @@ CORBA_EnumMemberSeq * CORBA_EnumDef::members (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5069,7 +5069,7 @@ void CORBA_EnumDef::members (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5192,7 +5192,7 @@ CORBA_IDLType_ptr CORBA_AliasDef::original_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5245,7 +5245,7 @@ void CORBA_AliasDef::original_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5368,7 +5368,7 @@ CORBA::PrimitiveKind CORBA_PrimitiveDef::kind (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5488,7 +5488,7 @@ CORBA::ULong CORBA_StringDef::bound (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5541,7 +5541,7 @@ void CORBA_StringDef::bound (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5662,7 +5662,7 @@ CORBA::ULong CORBA_WstringDef::bound (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5715,7 +5715,7 @@ void CORBA_WstringDef::bound (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5836,7 +5836,7 @@ CORBA::UShort CORBA_FixedDef::digits (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5889,7 +5889,7 @@ void CORBA_FixedDef::digits (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5942,7 +5942,7 @@ CORBA::Short CORBA_FixedDef::scale (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -5995,7 +5995,7 @@ void CORBA_FixedDef::scale (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6116,7 +6116,7 @@ CORBA::ULong CORBA_SequenceDef::bound (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6169,7 +6169,7 @@ void CORBA_SequenceDef::bound (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6222,7 +6222,7 @@ CORBA::TypeCode_ptr CORBA_SequenceDef::element_type (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6274,7 +6274,7 @@ CORBA_IDLType_ptr CORBA_SequenceDef::element_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6327,7 +6327,7 @@ void CORBA_SequenceDef::element_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6448,7 +6448,7 @@ CORBA::ULong CORBA_ArrayDef::length (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6501,7 +6501,7 @@ void CORBA_ArrayDef::length (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6554,7 +6554,7 @@ CORBA::TypeCode_ptr CORBA_ArrayDef::element_type (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6606,7 +6606,7 @@ CORBA_IDLType_ptr CORBA_ArrayDef::element_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6659,7 +6659,7 @@ void CORBA_ArrayDef::element_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6780,7 +6780,7 @@ CORBA::TypeCode_ptr CORBA_ExceptionDef::type (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6832,7 +6832,7 @@ CORBA_StructMemberSeq * CORBA_ExceptionDef::members (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -6886,7 +6886,7 @@ void CORBA_ExceptionDef::members (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -7073,7 +7073,7 @@ CORBA::TypeCode_ptr CORBA_AttributeDef::type (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -7125,7 +7125,7 @@ CORBA_IDLType_ptr CORBA_AttributeDef::type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -7178,7 +7178,7 @@ void CORBA_AttributeDef::type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -7231,7 +7231,7 @@ CORBA::AttributeMode CORBA_AttributeDef::mode (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -7284,7 +7284,7 @@ void CORBA_AttributeDef::mode (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8073,7 +8073,7 @@ CORBA::TypeCode_ptr CORBA_OperationDef::result (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8125,7 +8125,7 @@ CORBA_IDLType_ptr CORBA_OperationDef::result_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8178,7 +8178,7 @@ void CORBA_OperationDef::result_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8231,7 +8231,7 @@ CORBA_ParDescriptionSeq * CORBA_OperationDef::params (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8285,7 +8285,7 @@ void CORBA_OperationDef::params (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8338,7 +8338,7 @@ CORBA::OperationMode CORBA_OperationDef::mode (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8391,7 +8391,7 @@ void CORBA_OperationDef::mode (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8444,7 +8444,7 @@ CORBA_ContextIdSeq * CORBA_OperationDef::contexts (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8498,7 +8498,7 @@ void CORBA_OperationDef::contexts (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8551,7 +8551,7 @@ CORBA_ExceptionDefSeq * CORBA_OperationDef::exceptions (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -8605,7 +8605,7 @@ void CORBA_OperationDef::exceptions (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -9446,7 +9446,7 @@ CORBA_InterfaceDefSeq * CORBA_InterfaceDef::base_interfaces (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -9500,7 +9500,7 @@ void CORBA_InterfaceDef::base_interfaces (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -9554,7 +9554,7 @@ CORBA::Boolean CORBA_InterfaceDef::is_a (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -9953,7 +9953,7 @@ CORBA_InterfaceDef::FullInterfaceDescription * CORBA_InterfaceDef::describe_inte
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10010,7 +10010,7 @@ CORBA_AttributeDef_ptr CORBA_InterfaceDef::create_attribute (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10080,7 +10080,7 @@ CORBA_OperationDef_ptr CORBA_InterfaceDef::create_operation (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10543,7 +10543,7 @@ CORBA::TypeCode_ptr CORBA_ValueMemberDef::type (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10595,7 +10595,7 @@ CORBA_IDLType_ptr CORBA_ValueMemberDef::type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10648,7 +10648,7 @@ void CORBA_ValueMemberDef::type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10701,7 +10701,7 @@ CORBA::Visibility CORBA_ValueMemberDef::access (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10754,7 +10754,7 @@ void CORBA_ValueMemberDef::access (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10875,7 +10875,7 @@ CORBA_InterfaceDef_ptr CORBA_ValueDef::supported_interface (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10928,7 +10928,7 @@ void CORBA_ValueDef::supported_interface (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -10981,7 +10981,7 @@ CORBA_InitializerSeq * CORBA_ValueDef::initializers (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11035,7 +11035,7 @@ void CORBA_ValueDef::initializers (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11088,7 +11088,7 @@ CORBA_ValueDef_ptr CORBA_ValueDef::base_value (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11141,7 +11141,7 @@ void CORBA_ValueDef::base_value (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11194,7 +11194,7 @@ CORBA_ValueDefSeq * CORBA_ValueDef::abstract_base_values (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11248,7 +11248,7 @@ void CORBA_ValueDef::abstract_base_values (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11301,7 +11301,7 @@ CORBA::Boolean CORBA_ValueDef::is_abstract (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11354,7 +11354,7 @@ void CORBA_ValueDef::is_abstract (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11407,7 +11407,7 @@ CORBA::Boolean CORBA_ValueDef::is_custom (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11460,7 +11460,7 @@ void CORBA_ValueDef::is_custom (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11513,7 +11513,7 @@ CORBA::Boolean CORBA_ValueDef::is_truncatable (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11566,7 +11566,7 @@ void CORBA_ValueDef::is_truncatable (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -11620,7 +11620,7 @@ CORBA::Boolean CORBA_ValueDef::is_a (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -12185,7 +12185,7 @@ CORBA_ValueDef::FullValueDescription * CORBA_ValueDef::describe_value (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -12242,7 +12242,7 @@ CORBA_ValueMemberDef_ptr CORBA_ValueDef::create_value_member (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -12309,7 +12309,7 @@ CORBA_AttributeDef_ptr CORBA_ValueDef::create_attribute (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -12379,7 +12379,7 @@ CORBA_OperationDef_ptr CORBA_ValueDef::create_operation (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -12609,7 +12609,7 @@ CORBA_IDLType_ptr CORBA_ValueBoxDef::original_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
@@ -12662,7 +12662,7 @@ void CORBA_ValueBoxDef::original_type_def (
     CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA_SystemException
+    CORBA::SystemException
   ))
 {
   
