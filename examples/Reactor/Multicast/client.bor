@@ -1,0 +1,14 @@
+#
+# Makefile for building the multicast client
+#
+
+NAME = client
+
+OBJFILES = \
+	$(OBJDIR)\Log_Wrapper.obj \
+	$(OBJDIR)\client.obj
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+

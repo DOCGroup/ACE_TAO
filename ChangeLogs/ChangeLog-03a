@@ -1,3 +1,8 @@
+Wed Nov 29 09:41:51 2000  Johnny Willemsen <jwillemsen@remedy.nl>
+        * examples/Reactor/Multicast/*.bor
+          Added Borland C++ Builder specific makefiles. Thanks to
+          Albert Wijna <albert.wijnja@meco.nl> for creating these.
+
 Tue Nov 28 15:39:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
