@@ -63,7 +63,7 @@ TAO_Policy_Manager::starting_trader (CosTrading::TraderName* name)
 {
   CosTrading::Policy& policy =
     this->fetch_next_policy (TAO_Policies::STARTING_TRADER);  
-  //  policy.value <<= *name;  
+  policy.value <<= *name;  
 }
 
 void
@@ -96,7 +96,7 @@ TAO_Policy_Manager::request_id (CosTrading::Admin::OctetSeq* request_id)
 {
   CosTrading::Policy& policy =
     this->fetch_next_policy (TAO_Policies::REQUEST_ID);  
-  //  policy.value <<= *request_id
+  policy.value <<= *request_id;
 }
 
 TAO_Policy_Manager::operator const CosTrading::PolicySeq& (void) const
