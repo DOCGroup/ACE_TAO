@@ -3138,10 +3138,10 @@ TAO_POA_Current::~TAO_POA_Current (void)
   if (this->cookie_ != 0)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      ACE_TRY_EX (LOCATOR)
         {
           PortableServer::POA_var poa = this->get_POA (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX (LOCATOR);
 
           this->poa_impl_->servant_locator_->postinvoke (this->object_id (),
                                                          poa.in (),
@@ -3149,7 +3149,7 @@ TAO_POA_Current::~TAO_POA_Current (void)
                                                          this->cookie_,
                                                          this->servant_,
                                                          ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX (LOCATOR);
         }
       ACE_CATCHANY
         {
@@ -3169,12 +3169,12 @@ TAO_POA_Current::~TAO_POA_Current (void)
       if (new_count == 0)
         {
           ACE_DECLARE_NEW_CORBA_ENV;
-          ACE_TRY
+          ACE_TRY_EX (SERVANT)
             {
               this->poa_impl_->cleanup_servant (this->active_object_map_entry_,
                                                 ACE_TRY_ENV);
 
-              ACE_TRY_CHECK;
+              ACE_TRY_CHECK_EX (SERVANT);
             }
           ACE_CATCHANY
             {
