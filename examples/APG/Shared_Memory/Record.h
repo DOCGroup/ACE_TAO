@@ -8,7 +8,7 @@
 #ifndef __RECORD_H_
 #define __RECORD_H_
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Based_Pointer_T.h"
 
 // Listing 11 code/ch17

@@ -5,7 +5,7 @@
 #define GRAPHABLE_ELEMENT_H
 
 #include "Name_Binding.h"
-#include "list"
+#include <list>
 
 // A helper class that knows how to sort two ACE_Name_Binding objects
 // which contain temperature metrics. The value stored in the binding

@@ -57,3 +57,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 // Listing 2
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_TSS<SecurityContext>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<SecurityContext>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

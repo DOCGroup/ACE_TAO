@@ -1,3 +1,46 @@
+Fri Jan  2 18:07:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Active_Objects/AO.cpp:
+	* examples/APG/Active_Objects/AO2.cpp:
+	* examples/APG/Containers/Stacks.cpp:
+	* examples/APG/Containers/Queues.cpp:
+	* examples/APG/Containers/Array.cpp:
+	* examples/APG/Containers/Sets.cpp:
+	* examples/APG/Containers/Hash_Map_Hash.cpp:
+	* examples/APG/Containers/Allocator.cpp:
+	* examples/APG/Proactor/HA_Proactive_Status.cpp:
+	* examples/APG/Reactor/Client.cpp:
+	* examples/APG/Shared_Memory/Hash_Map.cpp:
+	* examples/APG/Shared_Memory/Pool_Growth.cpp:
+	* examples/APG/Threads/Condition_Variables.cpp:
+	* examples/APG/Threads/Message_Queue.cpp:
+	* examples/APG/ThreadManagement/Start_Hook.cpp:
+	* examples/APG/ThreadPools/Futures.cpp:
+	* examples/APG/ThreadPools/LF_ThreadPool.cpp:
+	* examples/APG/ThreadPools/ThreadPool.cpp: Added missing template
+	  instantiations. Corrected #pragma instantiate directives.
+
+	* examples/APG/Config/ARGV_Example.cpp:
+	* examples/APG/Reactor/HAStatus.cpp:
+	* examples/APG/Reactor/HAStatus-AC.cpp: Added #include
+	  "ace/os_include/os_netdb.h" to get MAXHOSTNAMELEN.
+
+	* examples/APG/Naming/Graphable_Element.h: Corrected include for
+	  list<> to be <list>, not "list".
+
+	* examples/APG/Naming/Graphable_Element.cpp: Removed this file. It
+	  only had template instantiations in it, for list<> and friends.
+	  We're not even going to try this with explicit instantiation.
+
+	* examples/APG/Shared_Memory/Record.h: Changed #include "ace/OS.h"
+	  to "ace/OS_NS_string.h".
+
+	* examples/APG/Signals/SigAction.cpp: Account for platforms that
+	  require the signal handler to be extern "C".
+
+	* examples/APG/Makefile: Only build the Naming directory if using
+	  implicit template instantiation. See above for rationale.
+
 Fri Jan  2 13:00:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/APG/Sockets/sockets.mpc:
