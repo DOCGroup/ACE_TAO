@@ -1,3 +1,8 @@
+Wed Aug  1 11:32:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/UIOP_Connection_Handler.cpp:Fixed a compile error
+	  with g++.  
+
 Wed Aug  1 09:36:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
