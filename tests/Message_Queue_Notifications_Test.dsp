@@ -1,27 +1,27 @@
-# Microsoft Developer Studio Project File - Name="Message_Queue_Notifications_Test.cpp" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Message_Queue_Notifications_Test" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=Message_Queue_Notifications_Test.cpp - Win32 Debug
+CFG=Message_Queue_Notifications_Test - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Message_Queue_Notifications_Test.cpp.mak".
+!MESSAGE NMAKE /f "Message_Queue_Notifications_Test.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Message_Queue_Notifications_Test.cpp.mak"\
- CFG="Message_Queue_Notifications_Test.cpp - Win32 Debug"
+!MESSAGE NMAKE /f "Message_Queue_Notifications_Test.mak"\
+ CFG="Message_Queue_Notifications_Test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Message_Queue_Notifications_Test.cpp - Win32 Debug" (based on\
+!MESSAGE "Message_Queue_Notifications_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "Message_Queue_Notifications_Test.cpp - Win32 Alpha Debug" (based on\
+!MESSAGE "Message_Queue_Notifications_Test - Win32 Alpha Debug" (based on\
  "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
@@ -29,21 +29,21 @@ CFG=Message_Queue_Notifications_Test.cpp - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
-!IF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Debug"
+!IF  "$(CFG)" == "Message_Queue_Notifications_Test - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Message_"
-# PROP BASE Intermediate_Dir "Message_"
-# PROP BASE Target_Dir ""
+# PROP BASE Output_Dir ".\Message_Queue_Notifications_Test\Debug"
+# PROP BASE Intermediate_Dir ".\Message_Queue_Notifications_Test\Debug"
+# PROP BASE Target_Dir ".\Message_Queue_Notifications_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
 # PROP Intermediate_Dir ".\DLL\Debug"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
+# PROP Target_Dir ".\Message_Queue_Notifications_Test"
 CPP=cl.exe
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
@@ -53,26 +53,26 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\ace"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\ace"
 
-!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test - Win32 Alpha Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Message_"
-# PROP BASE Intermediate_Dir "Message_"
+# PROP BASE Output_Dir "Message_Queue_Notifications_Test\Alpha Debug"
+# PROP BASE Intermediate_Dir "Message_Queue_Notifications_Test\Alpha Debug"
 # PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
+# PROP BASE Target_Dir "Message_Queue_Notifications_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
+# PROP Target_Dir "Message_Queue_Notifications_Test"
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /FD /MTd /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /MDd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -81,25 +81,25 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\ace"
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\ace"
+# ADD BASE LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\ace"
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Message_Queue_Notifications_Test.cpp - Win32 Debug"
-# Name "Message_Queue_Notifications_Test.cpp - Win32 Alpha Debug"
+# Name "Message_Queue_Notifications_Test - Win32 Debug"
+# Name "Message_Queue_Notifications_Test - Win32 Alpha Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\Message_Queue_Notifications_Test.cpp.cpp
+SOURCE=.\Message_Queue_Notifications_Test.cpp
 
-!IF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Debug"
+!IF  "$(CFG)" == "Message_Queue_Notifications_Test - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test - Win32 Alpha Debug"
 
 DEP_CPP_MESSA=\
 	"..\ace\ACE.h"\
@@ -123,6 +123,8 @@ DEP_CPP_MESSA=\
 	"..\ace\Handle_Set.i"\
 	"..\ace\Hash_Map_Manager.cpp"\
 	"..\ace\Hash_Map_Manager.h"\
+	"..\ace\High_Res_Timer.h"\
+	"..\ace\High_Res_Timer.i"\
 	"..\ace\IO_Cntl_Msg.h"\
 	"..\ace\Log_Msg.h"\
 	"..\ace\Log_Priority.h"\
@@ -152,6 +154,8 @@ DEP_CPP_MESSA=\
 	"..\ace\Object_Manager.i"\
 	"..\ace\OS.h"\
 	"..\ace\OS.i"\
+	"..\ace\Profile_Timer.h"\
+	"..\ace\Profile_Timer.i"\
 	"..\ace\Reactor.h"\
 	"..\ace\Reactor.i"\
 	"..\ace\Reactor_Impl.h"\
@@ -194,6 +198,7 @@ DEP_CPP_MESSA=\
 	"..\ace\Thread.i"\
 	"..\ace\Thread_Manager.h"\
 	"..\ace\Thread_Manager.i"\
+	"..\ace\Time_Value.h"\
 	"..\ace\Timer_Queue.h"\
 	"..\ace\Timer_Queue_T.cpp"\
 	"..\ace\Timer_Queue_T.h"\
