@@ -100,6 +100,10 @@
 
 #define ACE_LOG_MSG ACE_Log_Msg::instance ()
 
+// Forward declaration
+
+class ACE_Thread_Descriptor;
+
 class ACE_Export ACE_Log_Msg 
   // = TITLE
   //     Provides a variable length argument message logging
@@ -235,13 +239,9 @@ public:
   int trace_active (void);
   void trace_active (int value);
 
-  // = Get/set the current thread state.
-  ACE_Thread_State *thr_state (void);
-  void thr_state (ACE_Thread_State *);
-
-  // = Get/set the current thread ACE_hthread_t.
-  ACE_hthread_t *thr_handle (void);
-  void thr_handle (ACE_hthread_t *);
+  // = Get/set the current thread descriptor.
+  ACE_Thread_Descriptor *thr_desc (void) const;
+  void thr_desc (ACE_Thread_Descriptor *);
 
   // = Stop/start/query tracing status on a per-thread basis...
   void stop_tracing (void);
@@ -340,23 +340,17 @@ private:
   int trace_depth_;
   // Depth of the nesting for printing traces.
 
-  ACE_hthread_t *thr_handle_;
-  // If we're running in the context of an <ACE_Thread_Manager> this
-  // will point to the <thr_handle_> field in the
-  // <ACE_Thread_Descriptor>.  Threads can use this to rapidly
-  // determine their real ACE_hthread_t.
-
   int trace_active_;
   // Are we already within an ACE_Trace constructor call?
 
   int tracing_enabled_;
   // Are we allowing tracing in this thread?
 
-  ACE_Thread_State *thr_state_;
+  ACE_Thread_Descriptor *thr_desc_;
   // If we're running in the context of an <ACE_Thread_Manager> this
-  // will point to the <thr_state_> field in the
-  // <ACE_Thread_Descriptor>.  Threads can use this to rapidly
-  // determine if they've got a cancellation pending.
+  // will point to the thread descriptor adapter which holds the
+  // thread descriptor of the thread.  This can be used to repidly
+  // access all thread data kept in <ACE_Thread_Descriptor>.
 
   u_long priority_mask_;
   // Keeps track of all the <ACE_Log_Priority> values that are

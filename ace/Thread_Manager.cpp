@@ -22,7 +22,7 @@ ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
 int ACE_Thread_Manager::delete_thr_mgr_ = 0;
 
 void
-ACE_Thread_Manager::dump (void) const
+ACE_Thread_Manager::dump (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::dump");
   // Cast away const-ness of this in order to use its non-const lock_.
@@ -32,11 +32,12 @@ ACE_Thread_Manager::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
-  ACE_DEBUG ((LM_DEBUG, "\nmax_table_size_ = %d", this->max_table_size_));
-  ACE_DEBUG ((LM_DEBUG, "\ncurrent_count_ = %d", this->current_count_));
+  ACE_DEBUG ((LM_DEBUG, "\ncurrent_count_ = %d", this->thr_list_.size ()));
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    this->thr_table_[i].dump ();
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
+  for (; ! iter.done (); iter.advance ())
+    iter.next ()->dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -88,116 +89,79 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
 
 // The following macro simplifies subsequence code.
 #define ACE_FIND(OP,INDEX) \
-  int INDEX = OP; \
-  if (INDEX == -1) return -1
+  ACE_Thread_Descriptor *INDEX = OP; \
 
-int
-ACE_Thread_Manager::thread_descriptor (ACE_thread_t thr_id,
-                                       ACE_Thread_Descriptor &descriptor)
+ACE_Thread_Descriptor *
+ACE_Thread_Manager::thread_desc_self (void)
 {
-  ACE_TRACE ("ACE_Thread_Manager::thread_descriptor");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  // This method must be called with lock held.
 
-  ACE_FIND (this->find_thread (thr_id), index);
-  descriptor = this->thr_table_[index];
-  return 0;
+  // Try to get it from cache.
+  ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
+
+  // Wasn't in the cache, so we'll have to look it up and cache it.
+  if (desc == 0) 
+    { 
+      ACE_thread_t id = ACE_OS::thr_self ();
+      
+      desc = this->find_thread (id);
+
+      if (desc != 0)            // thread descriptor adapter might not have been
+                                // put into the list yet.
+        // Update the TSS cache. 
+        ACE_LOG_MSG->thr_desc (desc);
+    } 
+  return desc;
 }
 
-
-int
-ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle,
-                                        ACE_Thread_Descriptor &descriptor)
+ACE_Thread_Descriptor *
+ACE_Thread_Manager::thread_descriptor (ACE_thread_t thr_id)
 {
-  // @@ This will probably not work right on Win32 for app. programmers since
-  // the Thread_Manager now returns a "duplicated handle" and it's not
-  // the one stored in the thread descriptor table.  Therefore, be sure to
-  // use the thread handle inside thread manager, not the one returned by
-  // thread manager.
+  ACE_TRACE ("ACE_Thread_Manager::thread_descriptor");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
+  ACE_FIND (this->find_thread (thr_id), ptr);
+  return ptr;
+}
+
+ACE_Thread_Descriptor *
+ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle)
+{
   ACE_TRACE ("ACE_Thread_Manager::hthread_descriptor");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  ACE_FIND (this->find_hthread (thr_handle), index);
-  descriptor = this->thr_table_[index];
-  return 0;
+  ACE_FIND (this->find_hthread (thr_handle), ptr);
+  return ptr;
 }
 
 // Return the thread descriptor (indexed by ACE_hthread_t).
 
-int
+int 
 ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 {
-  // @@ We can get this information from TSS directly after my change.
-
-  ACE_TRACE ("ACE_Thread_Manager::thr_self");
+  ACE_TRACE ("ACE_Thread_Manager::thr_self");  
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  // Try to get the cached HANDLE out of TSS to avoid lookup.
-  ACE_hthread_t *handle = ACE_LOG_MSG->thr_handle ();
+  ACE_Thread_Descriptor *desc =
+    this->thread_desc_self ();
 
-  // Wasn't in the cache, so we'll have to look it up and cache it.
-  if (handle == 0)
-    {
-      ACE_thread_t id = ACE_OS::thr_self ();
+  if (desc == 0)
+    return -1;
+  else
+    desc->self (self);
 
-      ACE_FIND (this->find_thread (id), index);
-      handle = &this->thr_table_[index].thr_handle_;
-
-      // Update the TSS cache.
-      ACE_LOG_MSG->thr_handle (handle);
-    }
-  self = *handle;
-  return 0;
-}
-
-int
-ACE_Thread_Manager::resize (size_t size)
-{
-  // @@ We probably won't need this anymore after changing to use TSS.
-
-  ACE_TRACE ("ACE_Thread_Manager::resize");
-  ACE_Thread_Descriptor *temp;
-
-  ACE_NEW_RETURN (temp, ACE_Thread_Descriptor[size], -1);
-
-  for (size_t i = 0; i < this->max_table_size_; i++)
-    temp[i] = this->thr_table_[i]; // Structure assignment.
-
-  this->max_table_size_ = size;
-
-  delete [] this->thr_table_;
-  this->thr_table_ = temp;
-
-  return 0;
-}
-
-// Create and initialize the table to keep track of the thread pool.
-
-int
-ACE_Thread_Manager::open (size_t size)
-{
-  ACE_TRACE ("ACE_Thread_Manager::open");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-
-  if (this->max_table_size_ < size)
-    this->resize (size);
   return 0;
 }
 
 // Initialize the synchronization variables.
 
-ACE_Thread_Manager::ACE_Thread_Manager (size_t size)
-  : thr_table_ (0),
-    max_table_size_ (0),
-    current_count_ (0),
-    grp_id_ (1)
+ACE_Thread_Manager::ACE_Thread_Manager (void)
+  : grp_id_ (1)
 #if defined (ACE_HAS_THREADS)
     , zero_cond_ (lock_)
 #endif /* ACE_HAS_THREADS */
 {
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
-  if (this->open (size) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread_Manager"));
 }
 
 ACE_Thread_Manager *
@@ -260,13 +224,9 @@ ACE_Thread_Manager::close (void)
   ACE_TRACE ("ACE_Thread_Manager::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (this->thr_table_ != 0)
-    {
-      delete [] this->thr_table_;
-      this->thr_table_ = 0;
-      this->max_table_size_ = 0;
-      this->current_count_ = 0;
-    }
+  // @@ Clear out thr_list_ here.  Have to iterate thru each of
+  // list entry.
+
   return 0;
 }
 
@@ -280,7 +240,7 @@ ACE_Thread_Manager::~ACE_Thread_Manager (void)
 extern "C" void
 ACE_Thread_Exit_cleanup (void *instance, void *)
 {
-  ACE_TRACE ("ACE_Thread_Exit::cleanup");
+  ACE_TRACE ("ACE_Thread_Exit_cleanup");
 
   delete (ACE_TSS_TYPE (ACE_Thread_Exit) *) instance;
 }
@@ -311,13 +271,13 @@ ACE_Thread_Exit::instance (void)
   if (instance_ == 0)
     {
       ACE_MT (ACE_Thread_Mutex *lock =
-        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
-          (ACE_Object_Manager::ACE_THREAD_EXIT_LOCK);
-        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
+              ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+                (ACE_Object_Manager::ACE_THREAD_EXIT_LOCK);
+              ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
       if (instance_ == 0)
         {
-          ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Thread_Exit), 0);
+           ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Thread_Exit), 0);
 
           // Register for destruction with ACE_Object_Manager.
 #if defined ACE_HAS_SIG_C_FUNC
@@ -421,7 +381,7 @@ ace_thread_manager_adapter (void *args)
 
   ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
 
-  // NOTE: this preprocessor directive should match the one in above
+  // NOTE: this preprocessor directive should match the one in above 
   // ACE_Thread_Exit::instance ().  With the Xavier Pthreads package,
   // the exit_hook in TSS causes a seg fault.  So, this works around
   // that by creating exit_hook on the stack.
@@ -445,6 +405,12 @@ ace_thread_manager_adapter (void *args)
   // <exit_hook>.
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
+  // @@@@@@@@@@ Try to insert thread descriptor here.  Notice we can't guarantee
+  // whether this thread or the main thread will insert thread descriptor first,
+  // we'll need to check whether there is already an entry in the list.  If it does,
+  // we'll just bail out without addind anything.  Otherwise, add an entry with
+  // only thread_id field filled.
+
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
@@ -462,15 +428,15 @@ ace_thread_manager_adapter (void *args)
 // @@ Consider duping the handles so that users can have something
 // to manipulate if they want.
 
-int
-ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
-                             void *args,
-                             long flags,
-                             ACE_thread_t *t_id,
+int 
+ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func, 
+                             void *args, 
+                             long flags, 
+                             ACE_thread_t *t_id, 
                              ACE_hthread_t *t_handle,
                              long priority,
                              int grp_id,
-                             void *stack,
+                             void *stack, 
                              size_t stack_size,
                              ACE_Task_Base *task)
 {
@@ -512,20 +478,26 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       // @@ How are thread handles implemented on AIX?  Do they
       // also need to be duplicated?
       if (t_handle != 0)
-        (void) ::DuplicateHandle (::GetCurrentProcess (),
+        (void) ::DuplicateHandle (::GetCurrentProcess (), 
                                   thr_handle,
                                   ::GetCurrentProcess (),
                                   t_handle,
-                                  0,
+                                  0, 
                                   TRUE,
                                   DUPLICATE_SAME_ACCESS);
 #else
       ACE_UNUSED_ARG (t_handle);
 #endif /* ACE_HAS_WTHREADS */
+      
+  // @@@@@@@@@@ Try to insert thread descriptor here.  Notice we can't guarantee
+  // whether this thread or the main thread will insert thread descriptor first,
+  // we'll need to check whether there is already an entry in the list.  If there
+  // is, then, the spawned thread has got ahead of us.  We'll still need to fill
+  // in the blanks.
 
       return this->append_thr (*t_id,
-                               thr_handle,
-                               ACE_THR_SPAWNED,
+                               thr_handle, 
+                               ACE_THR_SPAWNED, 
                                grp_id,
                                task,
                                flags);
@@ -535,15 +507,15 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 // Create a new thread running <func>.  *Must* be called with the
 // <lock_> held...
 
-int
-ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
-                           void *args,
-                           long flags,
-                           ACE_thread_t *t_id,
+int 
+ACE_Thread_Manager::spawn (ACE_THR_FUNC func, 
+                           void *args, 
+                           long flags, 
+                           ACE_thread_t *t_id, 
                            ACE_hthread_t *t_handle,
                            long priority,
                            int grp_id,
-                           void *stack,
+                           void *stack, 
                            size_t stack_size)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn");
@@ -552,7 +524,7 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
   if (grp_id == -1)
     grp_id = this->grp_id_++; // Increment the group id.
 
-  if (this->spawn_i (func, args, flags, t_id, t_handle,
+  if (this->spawn_i (func, args, flags, t_id, t_handle, 
                      priority, grp_id, stack, stack_size) == -1)
     return -1;
   else
@@ -561,10 +533,10 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
 
 // Create N new threads running FUNC.
 
-int
-ACE_Thread_Manager::spawn_n (size_t n,
-                             ACE_THR_FUNC func,
-                             void *args,
+int 
+ACE_Thread_Manager::spawn_n (size_t n, 
+                             ACE_THR_FUNC func, 
+                             void *args, 
                              long flags,
                              long priority,
                              int grp_id,
@@ -585,9 +557,9 @@ ACE_Thread_Manager::spawn_n (size_t n,
                          args,
                          flags,
                          0,
-                         thread_handles == 0 ? 0 : &thread_handles[i],
+                         thread_handles == 0 ? 0 : &thread_handles[i], 
                          priority,
-                         grp_id,
+                         grp_id, 
                          0,
                          0,
                          task) == -1)
@@ -599,12 +571,12 @@ ACE_Thread_Manager::spawn_n (size_t n,
 
 // Create N new threads running FUNC.
 
-int
+int 
 ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
-                             size_t n,
-                             ACE_THR_FUNC func,
+                             size_t n, 
+                             ACE_THR_FUNC func, 
                              void *args,
-                             long flags,
+                             long flags, 
                              long priority,
                              int grp_id,
                              void *stack[],
@@ -621,14 +593,14 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
     {
       // @@ What should happen if this fails?! e.g., should we try to
       // cancel the other threads that we've already spawned or what?
-      if (this->spawn_i (func,
-                         args,
-                         flags,
-                         thread_ids == 0 ? 0 : &thread_ids[i],
-                         thread_handles == 0 ? 0 : &thread_handles[i],
-                         priority,
-                         grp_id,
-                         stack == 0 ? 0 : stack[i],
+      if (this->spawn_i (func, 
+                         args, 
+                         flags, 
+                         thread_ids == 0 ? 0 : &thread_ids[i], 
+                         thread_handles == 0 ? 0 : &thread_handles[i], 
+                         priority, 
+                         grp_id, 
+                         stack == 0 ? 0 : stack[i], 
                          stack_size == 0 ? 0 : stack_size[i]) == -1)
         return -1;
     }
@@ -640,12 +612,12 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
 // Must be called with locks held.
 
 int
-ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
+ACE_Thread_Manager::append_thr (ACE_thread_t t_id, 
                                 ACE_hthread_t t_handle,
                                 ACE_Thread_State thr_state,
                                 int grp_id,
                                 ACE_Task_Base *task,
-                                long flags)
+				long flags)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
   // @@ This code will need to be replaced with a loop that will
@@ -655,85 +627,80 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   // Note that at some point we should use an "in situ" free list that
   // is woven through the table...
 
-  // Try to resize the array to twice its existing size if we run out
-  // of space...
-  if (this->current_count_ >= this->max_table_size_
-      && this->resize (this->max_table_size_ * 2) == -1)
-    return -1;
-  else
-    {
-      ACE_Thread_Descriptor &thr_desc =
-        this->thr_table_[this->current_count_];
+  // Create a new thread descriptor entry.
+  ACE_Thread_Descriptor *thr_desc;
+  ACE_NEW_RETURN (thr_desc, ACE_Thread_Descriptor, -1);
 
-      thr_desc.thr_id_ = t_id;
-      thr_desc.thr_handle_ = t_handle;
-      thr_desc.grp_id_ = grp_id;
-      thr_desc.thr_state_ = thr_state;
-      thr_desc.task_ = task;
-      thr_desc.cleanup_info_.cleanup_hook_ = 0;
-      thr_desc.cleanup_info_.object_ = 0;
-      thr_desc.cleanup_info_.param_ = 0;
-      thr_desc.flags_ = flags;
+  thr_desc->thr_id_ = t_id;
+  thr_desc->thr_handle_ = t_handle;
+  thr_desc->grp_id_ = grp_id;
+  thr_desc->thr_state_ = thr_state;
+  thr_desc->task_ = task;
+  thr_desc->cleanup_info_.cleanup_hook_ = 0;
+  thr_desc->cleanup_info_.object_ = 0;
+  thr_desc->cleanup_info_.param_ = 0;
+  thr_desc->flags_ = flags;
 
-      this->current_count_++;
-      return 0;
-    }
+  this->thr_list_.insert_head (thr_desc);
+  return 0;
 }
 
 // Return the thread descriptor (indexed by ACE_hthread_t).
 
-int
+ACE_Thread_Descriptor *
 ACE_Thread_Manager::find_hthread (ACE_hthread_t h_id)
 {
-  ACE_TRACE ("ACE_Thread_Descriptor::find_hthread");
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (ACE_OS::thr_cmp (h_id, this->thr_table_[i].thr_handle_))
-      return i;
-
-  return -1;
+  for ( ; ! iter.done (); iter.advance ())
+    if (iter.next ()->thr_handle_ == h_id)
+      return iter.next ();
+  return 0;
 }
 
 // Locate the index in the table associated with <t_id>.  Must be
 // called with the lock held.
 
-int
+ACE_Thread_Descriptor *
 ACE_Thread_Manager::find_thread (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::find_thread");
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (ACE_OS::thr_equal (t_id, this->thr_table_[i].thr_id_))
-      return i;
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  return -1;
+  for (; ! iter.done (); iter.advance ())
+    if (iter.next ()->thr_id_ == t_id)
+      return iter.next ();
+  return 0;
 }
 
 // Insert a thread into the pool (checks for duplicates and doesn't
 // allow them to be inserted twice).
 
 int
-ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
+ACE_Thread_Manager::insert_thr (ACE_thread_t t_id, 
                                 ACE_hthread_t t_handle,
                                 int grp_id,
-                                long flags)
+				long flags)
 {
   ACE_TRACE ("ACE_Thread_Manager::insert_thr");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if we're already registered...
-  if (this->find_thread (t_id) != -1)
+  if (this->find_thread (t_id) != 0 )
     return -1;
 
   if (grp_id == -1)
     grp_id = this->grp_id_++;
-
+    
   if (this->append_thr (t_id,
-                        t_handle,
+			t_handle, 
                         ACE_THR_SPAWNED,
                         grp_id,
-                        0,
-                        flags) == -1)
+			0,
+			flags) == -1)
     return -1;
   else
     return grp_id;
@@ -750,14 +717,16 @@ ACE_Thread_Manager::run_thread_exit_hooks (int i)
   // @@ Currently, we have just one hook.  This should clearly be
   // generalized to support an arbitrary number of hooks.
 
-  if (this->thr_table_[i].cleanup_info_.cleanup_hook_ != 0)
+  ACE_Thread_Descriptor *td = this->thread_desc_self ();
+  if (td != 0 && td->cleanup_info.cleanup_hook_ != 0)
     {
-      (*this->thr_table_[i].cleanup_info_.cleanup_hook_)
-        (this->thr_table_[i].cleanup_info_.object_,
-         this->thr_table_[i].cleanup_info_.param_);
+      (*td->cleanup_info_.cleanup_hook_) 
+        (td->cleanup_info_.object_,
+         td->cleanup_info_.param_);
 
-      this->thr_table_[i].cleanup_info_.cleanup_hook_ = 0;
+      td->cleanup_info_.cleanup_hook_ = 0;
     }
+  ACE_UNUSED_ARG (i);
 #else
   ACE_UNUSED_ARG (i);
 #endif // 0
@@ -766,45 +735,41 @@ ACE_Thread_Manager::run_thread_exit_hooks (int i)
 // Remove a thread from the pool.  Must be called with locks held.
 
 void
-ACE_Thread_Manager::remove_thr (int i)
+ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
-  this->current_count_--;
-  if (this->current_count_ > 0)
-    // Compact the table by moving the last item into the slot vacated
-    // by the index being removed (this is a structure assignment).
-    this->thr_table_[i] = this->thr_table_[this->current_count_];
-
+  this->thr_list_.remove (td);
+  delete td;
 #if defined (ACE_HAS_THREADS)
   // Tell all waiters when there are no more threads left in the pool.
-  if (this->current_count_ == 0)
+  if (this->thr_list_.size () == 0)
     this->zero_cond_.broadcast ();
 #endif /* ACE_HAS_THREADS */
 }
 
 // Factor out some common behavior to simplify the following methods.
 #define ACE_THR_OP(OP,STATE) \
-  int result = OP (this->thr_table_[i].thr_handle_); \
+  int result = OP (td->thr_handle_); \
   if (result != 0) { \
-    this->remove_thr (i); \
+    this->remove_thr (td); \
     errno = result; \
     return -1; \
   } \
   else { \
-    this->thr_table_[i].thr_state_ = STATE; \
+    td->thr_state_ = STATE; \
     return 0; \
   }
 
 int
-ACE_Thread_Manager::join_thr (int i)
+ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::join_thr");
 
-  int result = ACE_Thread::join (this->thr_table_[i].thr_handle_);
+  int result = ACE_Thread::join (td->thr_handle_);
   if (result != 0)
     {
-      this->remove_thr (i);
+      this->remove_thr (td);
       errno = result;
       return -1;
     }
@@ -812,7 +777,7 @@ ACE_Thread_Manager::join_thr (int i)
 }
 
 int
-ACE_Thread_Manager::suspend_thr (int i)
+ACE_Thread_Manager::suspend_thr (ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_thr");
 
@@ -820,7 +785,7 @@ ACE_Thread_Manager::suspend_thr (int i)
 }
 
 int
-ACE_Thread_Manager::resume_thr (int i)
+ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_thr");
 
@@ -828,45 +793,46 @@ ACE_Thread_Manager::resume_thr (int i)
 }
 
 int
-ACE_Thread_Manager::cancel_thr (int i)
+ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_thr");
-  this->thr_table_[i].thr_state_ = ACE_THR_CANCELLED;
+  // Don't really know how to handle thread cancel.
+  td->thr_state_ = ACE_THR_CANCELLED;
   return 0;
 }
 
 int
-ACE_Thread_Manager::kill_thr (int i, int arg)
+ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
 
   int signum = (int) arg;
 
-  int result = ACE_Thread::kill ((ACE_thread_t) this->thr_table_[i].thr_id_,
+  int result = ACE_Thread::kill ((ACE_thread_t) td->thr_id_,
                                  signum);
 
   if (result != 0)
-    {
+    { 
       // We need to save this across calls to remove_thr() since that
       // call may reset errno.
       int error = errno;
 
-      this->remove_thr (i);
-      errno = error;
-      return -1;
-    }
-  else
-    return 0;
+      //      this->remove_thr (td);
+      errno = error; 
+      return -1; 
+    } 
+  else 
+    return 0; 
 }
 
 #define ACE_EXECUTE_OP(OP) \
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \
-  ACE_FIND (this->find_thread (t_id), index); \
-  return OP (index);
+  ACE_FIND (this->find_thread (t_id), ptr); \
+  return OP (ptr);
 
 // Suspend a single thread.
 
-int
+int 
 ACE_Thread_Manager::suspend (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend");
@@ -875,7 +841,7 @@ ACE_Thread_Manager::suspend (ACE_thread_t t_id)
 
 // Resume a single thread.
 
-int
+int 
 ACE_Thread_Manager::resume (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume");
@@ -884,7 +850,7 @@ ACE_Thread_Manager::resume (ACE_thread_t t_id)
 
 // Cancel a single thread.
 
-int
+int 
 ACE_Thread_Manager::cancel (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel");
@@ -893,7 +859,7 @@ ACE_Thread_Manager::cancel (ACE_thread_t t_id)
 
 // Send a signal to a single thread.
 
-int
+int 
 ACE_Thread_Manager::kill (ACE_thread_t t_id, int signum)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill");
@@ -901,42 +867,34 @@ ACE_Thread_Manager::kill (ACE_thread_t t_id, int signum)
 }
 
 int
-ACE_Thread_Manager::check_state (ACE_Thread_State state,
-                                 ACE_thread_t id)
+ACE_Thread_Manager::check_state (ACE_Thread_State state, 
+                                 ACE_thread_t id) 
 {
   ACE_TRACE ("ACE_Thread_Manager::check_state");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_Thread_State *thr_state = 0;
+  ACE_Thread_State thr_state;
 #if 0
   int self_check = ACE_OS::thr_equal (id, ACE_OS::thr_self ());
 
   // If we're checking the state of our thread, try to get the cached
   // value out of TSS to avoid lookup.
-  if (self_check)
-    thr_state = ACE_LOG_MSG->thr_state ();
-
-  // Wasn't in the cache, so we'll have to look it up.
-  if (thr_state == 0)
-    {
-      ACE_FIND (this->find_thread (id), index);
-      thr_state = &this->thr_table_[index].thr_state_;
-
-      if (self_check) // Update the TSS cache.
-        ACE_LOG_MSG->thr_state (thr_state);
-    }
+  if (self_check) 
+    thr_state = this->thread_desc_self ()->thr_state_;
 #else
-   // Turn off caching for the time being until we figure out
+   // Turn off caching for the time being until we figure out 
    // how to do it correctly in the face of deletions...
-  ACE_FIND (this->find_thread (id), index);
-  thr_state = &this->thr_table_[index].thr_state_;
+  ACE_FIND (this->find_thread (id), ptr);
+  if (ptr == 0)
+    return 0;
+  thr_state = ptr->thr_state_;
 #endif /* 0 */
-  return *thr_state == state;
+  return thr_state == state;
 }
 
 // Test if a single thread is suspended.
 
-int
+int 
 ACE_Thread_Manager::testsuspend (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::testsuspend");
@@ -945,7 +903,7 @@ ACE_Thread_Manager::testsuspend (ACE_thread_t t_id)
 
 // Test if a single thread is active (i.e., resumed).
 
-int
+int 
 ACE_Thread_Manager::testresume (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::testresume");
@@ -954,7 +912,7 @@ ACE_Thread_Manager::testresume (ACE_thread_t t_id)
 
 // Test if a single thread is cancelled.
 
-int
+int 
 ACE_Thread_Manager::testcancel (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::testcancel");
@@ -963,34 +921,34 @@ ACE_Thread_Manager::testcancel (ACE_thread_t t_id)
 
 // Get group ids for a particular thread id.
 
-int
+int 
 ACE_Thread_Manager::get_grp (ACE_thread_t t_id, int &grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::get_grp");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_FIND (this->find_thread (t_id), index);
-  grp_id = this->thr_table_[index].grp_id_;
+  ACE_FIND (this->find_thread (t_id), ptr);
+  grp_id = ptr->grp_id_;
   return 0;
 }
 
 // Set group ids for a particular thread id.
 
-int
+int 
 ACE_Thread_Manager::set_grp (ACE_thread_t t_id, int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::set_grp");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_FIND (this->find_thread (t_id), index);
-  this->thr_table_[index].grp_id_ = grp_id;
+  ACE_FIND (this->find_thread (t_id), ptr);
+  ptr->grp_id_ = grp_id;
   return 0;
 }
 
 // Suspend a group of threads.
 
 int
-ACE_Thread_Manager::apply_grp (int grp_id,
+ACE_Thread_Manager::apply_grp (int grp_id, 
                                THR_FUNC func,
                                int arg)
 {
@@ -998,50 +956,52 @@ ACE_Thread_Manager::apply_grp (int grp_id,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
-
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (this->thr_table_[i].grp_id_ == grp_id
-        && (this->*func)(i, arg) == -1)
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
+  
+  for (; ! iter.done (); iter.advance ())
+    if (iter.next ()->grp_id_ == grp_id
+        && (this->*func) (iter.next (), arg) == -1)
       result = -1;
 
   return result;
 }
 
-int
+int 
 ACE_Thread_Manager::suspend_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_grp");
-  return this->apply_grp (grp_id,
+  return this->apply_grp (grp_id, 
                           THR_FUNC (&ACE_Thread_Manager::suspend_thr));
 }
 
 // Resume a group of threads.
 
-int
+int 
 ACE_Thread_Manager::resume_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_grp");
-  return this->apply_grp (grp_id,
+  return this->apply_grp (grp_id, 
                           THR_FUNC (&ACE_Thread_Manager::resume_thr));
 }
 
 // Kill a group of threads.
 
-int
+int 
 ACE_Thread_Manager::kill_grp (int grp_id, int signum)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_grp");
-  return this->apply_grp (grp_id,
+  return this->apply_grp (grp_id, 
                           THR_FUNC (&ACE_Thread_Manager::kill_thr), signum);
 }
 
 // Cancel a group of threads.
 
-int
+int 
 ACE_Thread_Manager::cancel_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_grp");
-  return this->apply_grp (grp_id,
+  return this->apply_grp (grp_id, 
                           THR_FUNC (&ACE_Thread_Manager::cancel_thr));
 }
 
@@ -1052,9 +1012,11 @@ ACE_Thread_Manager::apply_all (THR_FUNC func, int arg)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if ((this->*func)(i, arg) == -1)
+  for (; ! iter.done (); iter.advance ())
+    if ((this->*func)(iter.next (), arg) == -1)
       result = -1;
 
   return result;
@@ -1062,28 +1024,28 @@ ACE_Thread_Manager::apply_all (THR_FUNC func, int arg)
 
 // Resume all threads that are suspended.
 
-int
+int 
 ACE_Thread_Manager::resume_all (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_all");
   return this->apply_all (THR_FUNC (&ACE_Thread_Manager::resume_thr));
 }
 
-int
+int 
 ACE_Thread_Manager::suspend_all (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_all");
   return this->apply_all (THR_FUNC (&ACE_Thread_Manager::suspend_thr));
 }
 
-int
+int 
 ACE_Thread_Manager::kill_all (int sig)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_all");
   return this->apply_all (&ACE_Thread_Manager::kill_thr, sig);
 }
 
-int
+int 
 ACE_Thread_Manager::cancel_all (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_all");
@@ -1092,7 +1054,7 @@ ACE_Thread_Manager::cancel_all (void)
 
 // Wait for group of threads
 
-int
+int 
 ACE_Thread_Manager::wait_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait_grp");
@@ -1106,16 +1068,16 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    copy_table = new ACE_Thread_Descriptor [this->current_count_];
+    copy_table = new ACE_Thread_Descriptor [this->thr_list_.size ()];  
 
-    for (size_t i = 0; i < this->current_count_; i++)
-      if (this->thr_table_[i].grp_id_ == grp_id)
-        {
-          copy_table[copy_count] = this->thr_table_[i];
-          copy_count++;
-        }
+    ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+      iter (this->thr_list_);
+
+    for (; ! iter.done (); iter.advance ())
+      if (iter.next ()->grp_id_ == grp_id)
+          copy_table[copy_count++] = *iter.next ();
   }
-
+  
   // Now to do the actual work
   int result = 0;
 
@@ -1124,26 +1086,22 @@ ACE_Thread_Manager::wait_grp (int grp_id)
        i++)
     if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
       result = -1;
-
+  
   delete [] copy_table;
 
   return result;
 }
 
-int
+int 
 ACE_Thread_Manager::at_exit (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  // Locate thread id.
-  int i = this->find_thread (ACE_Thread::self ());
-
-  if (i != -1)
-    return this->thr_table_[i].at_exit (object, cleanup_hook, param);
-  else
-    return -1;
+  return this->thread_desc_self ()->at_exit (object,
+                                             cleanup_hook,
+                                             param);
 }
 
 // Must be called when thread goes out of scope to clean up its table
@@ -1154,51 +1112,42 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
 
-  int i;
   ACE_Cleanup_Info cleanup_info;
 
   // Just hold onto the guard while finding this thread's id and
   // copying the exit hook.
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
-
+    ACE_Thread_Descriptor *td = this->thread_desc_self ();
     // Locate thread id.
-    i = this->find_thread (ACE_Thread::self ());
-
-    if (i != -1)
+    if (td != 0)
       {
-        // @@ Currently, we have just one hook.  This should clearly
-        // be generalized to support an arbitrary number of hooks.
+	// @@ Currently, we have just one hook.  This should clearly
+	// be generalized to support an arbitrary number of hooks.
 
-        if (this->thr_table_[i].cleanup_info_.cleanup_hook_ != 0)
-          {
-            // Copy the hook so that we can call it after releasing
-            // the guard.
-            cleanup_info = this->thr_table_[i].cleanup_info_;
-            this->thr_table_[i].cleanup_info_.cleanup_hook_ = 0;
-          }
-
-        // @@ I still don't know how to distinguish threads that
-        // fall off the end or exit normally from those that are
-        // joined explicitly by user.  Hopefully, after we put
-        // ACE_Thread_Descriptor addresses into TSS, we can find a
-        // way to solve this.
+	if (td->cleanup_info_.cleanup_hook_ != 0)
+	  {
+	    // Copy the hook so that we can call it after releasing
+	    // the guard.
+	    cleanup_info = td->cleanup_info_;
+	    td->cleanup_info_.cleanup_hook_ = 0;
+	  }
 
 #if !defined (VXWORKS)
-        // Threads created with THR_DAEMON shouldn't exist here,
-        // but just to be safe, let's put it here.
-        if (((this->thr_table_[i].flags_ & (THR_DETACHED | THR_DAEMON)) == 0) ||
-            (this->thr_table_[i].flags_ & (THR_JOINABLE != 0)))
-          {
-            // Mark thread as terminated.
-            this->thr_table_[i].thr_state_ = ACE_THR_TERMINATED;
+	// Threads created with THR_DAEMON shouldn't exist here,
+	// but just to be safe, let's put it here.
+	if (((td->flags_ & (THR_DETACHED | THR_DAEMON)) == 0) ||
+	    (td->flags_ & (THR_JOINABLE != 0)))
+	  {
+	    // Mark thread as terminated.
+	    td->thr_state_ = ACE_THR_TERMINATED;
             this->terminated_thr_queue_.enqueue_tail
-              (this->thr_table_[i]);
-          }
-#endif /* VXWORKS */
+              (*td);
+	  }
+#endif /* VXWORKS */        
 
         // Remove thread descriptor from the table.
-        this->remove_thr (i);
+        this->remove_thr (td);
       }
     // Release the guard.
   }
@@ -1206,7 +1155,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
   // Call the cleanup hook.
   if (cleanup_info.cleanup_hook_ != 0)
     (*cleanup_info.cleanup_hook_) (cleanup_info.object_,
-                                   cleanup_info.param_);
+				   cleanup_info.param_);
 
   if (do_thr_exit)
     {
@@ -1236,9 +1185,9 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    threads_waited_on = this->current_count_;
+    threads_waited_on = this->thr_list_.size ();
 
-    while (this->current_count_ > 0)
+    while (this->thr_list_.size () > 0)
       if (this->zero_cond_.wait (timeout) == -1)
         return -1;
   } // Let go of the guard, giving other threads a chance to run.
@@ -1264,9 +1213,10 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 
     ACE_Thread_Descriptor item;
 
-    while (!this->terminated_thr_queue_.dequeue_head (item))
-        ACE_Thread::join (item.thr_handle_);
+    while (! this->terminated_thr_queue_.dequeue_head (item))
+	ACE_Thread::join (item.thr_handle_);
   }
+
 #endif /* VXWORKS */
 #else
   ACE_UNUSED_ARG (timeout);
@@ -1276,7 +1226,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 }
 
 int
-ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
+ACE_Thread_Manager::apply_task (ACE_Task_Base *task, 
                                 THR_FUNC func,
                                 int arg)
 {
@@ -1284,17 +1234,19 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (this->thr_table_[i].task_ == task
-        && (this->*func)(i, arg) == -1)
+  for (; ! iter.done (); iter.advance ())
+    if (iter.next ()->task_ == task
+        && (this->*func) (iter.next (), arg) == -1)
       result = -1;
 
   return result;
 }
 
-// Wait for task
-int
+// Wait for task  
+int 
 ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 {
   int copy_count = 0;
@@ -1307,62 +1259,65 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
     ACE_NEW_RETURN (copy_table,
-                    ACE_Thread_Descriptor [this->current_count_],
+                    ACE_Thread_Descriptor [this->thr_list_.size ()],
                     -1);
 
-    for (size_t i = 0; i < this->current_count_; i++)
-      if (this->thr_table_[i].task_ == task)
+    ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+      iter (this->thr_list_);
+
+    for (; ! iter.done (); iter.advance ())
+      if (iter.next ()->task_ == task)
         {
-          copy_table[copy_count] = this->thr_table_[i];
+          copy_table[copy_count] = *iter.next ();
           copy_count++;
         }
   }
-
+  
   // Now to do the actual work
   int result = 0;
 
   for (int i = 0; i < copy_count && result != -1; i++)
     if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
       result = -1;
-
+  
   delete [] copy_table;
 
   return result;
 }
 
 // Suspend a task
-int
+int  
 ACE_Thread_Manager::suspend_task (ACE_Task_Base *task)
-{
+{ 
   ACE_TRACE ("ACE_Thread_Manager::suspend_task");
-  return this->apply_task (task,
+  return this->apply_task (task, 
                            THR_FUNC (&ACE_Thread_Manager::suspend_thr));
 }
 
 // Resume a task.
-int
+int  
 ACE_Thread_Manager::resume_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_task");
-  return this->apply_task (task,
+  return this->apply_task (task, 
                            THR_FUNC (&ACE_Thread_Manager::resume_thr));
 }
 
 // Kill a task.
-int
+int  
 ACE_Thread_Manager::kill_task (ACE_Task_Base *task, int /* signum */)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_task");
-  return this->apply_task (task,
+  return this->apply_task (task, 
                            THR_FUNC (&ACE_Thread_Manager::kill_thr));
 }
 
 // Cancel a task.
-int
+int  
 ACE_Thread_Manager::cancel_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_task");
-  return this->apply_task (task,
+  return this->apply_task (task, 
                            THR_FUNC (&ACE_Thread_Manager::cancel_thr));
 }
 
@@ -1370,35 +1325,36 @@ ACE_Thread_Manager::cancel_task (ACE_Task_Base *task)
 // beginning of the table up to an index.  Must be called with the
 // lock held.
 
-int
-ACE_Thread_Manager::find_task (ACE_Task_Base *task,
-                               int index)
+ACE_Thread_Descriptor *
+ACE_Thread_Manager::find_task (ACE_Task_Base *task, int index)
 {
   ACE_TRACE ("ACE_Thread_Manager::find_task");
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  if (index == -1)
-      index = current_count_;
+  for (int i = 0; i < index && ! iter.done (); iter.advance (), i++)
+    if (task == iter.next ()->task_)
+      return iter.next ();
 
-  for (int i = 0; i < index; i++)
-    if (task == this->thr_table_[i].task_)
-      return i;
-
-  return -1;
+  return 0;
 }
 
-// Returns the number of ACE_Task in a group.
+// Returns the number of ACE_Task in a group. 
 
-int
+int 
 ACE_Thread_Manager::num_tasks_in_group (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::num_tasks_in_group");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int tasks_count = 0;
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (this->thr_table_[i].grp_id_ == grp_id
-        && this->find_task (thr_table_[i].task_, i) == -1)
+  for (size_t i = 0; ! iter.done (); iter.advance (), i++)
+    if (iter.next ()->grp_id_ == grp_id
+        && this->find_task (iter.next ()->task_, i) ==
+        0)
       tasks_count++;
 
   return tasks_count;
@@ -1406,16 +1362,18 @@ ACE_Thread_Manager::num_tasks_in_group (int grp_id)
 
 // Returns the number of threads in an ACE_Task.
 
-int
+int 
 ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::num_threads_in_task");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int threads_count = 0;
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (this->thr_table_[i].task_ == task)
+  for (; ! iter.done (); iter.advance ())
+    if (iter.next ()->task_ == task)
       threads_count++;
 
   return threads_count;
@@ -1423,8 +1381,8 @@ ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
 
 // Returns in task_list a list of ACE_Tasks in a group.
 
-int
-ACE_Thread_Manager::task_list (int grp_id,
+int 
+ACE_Thread_Manager::task_list (int grp_id, 
                                ACE_Task_Base *task_list[],
                                size_t n)
 {
@@ -1433,13 +1391,15 @@ ACE_Thread_Manager::task_list (int grp_id,
 
   ACE_Task_Base **task_list_iterator = task_list;
   size_t task_list_count = 0;
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (task_list_count < n
-        && this->thr_table_[i].grp_id_ == grp_id
-        && this->find_task (thr_table_[i].task_, i) == -1)
+  for (size_t i = 0; task_list_count < n && ! iter.done ();
+       iter.advance (), i++)
+    if (iter.next ()->grp_id_ == grp_id
+        && this->find_task (iter.next ()->task_, i) == 0)
       {
-        task_list_iterator[task_list_count] = this->thr_table_[i].task_;
+        task_list_iterator[task_list_count] = iter.next ()->task_;
         task_list_count++;
       }
 
@@ -1448,22 +1408,23 @@ ACE_Thread_Manager::task_list (int grp_id,
 
 // Returns in thread_list a list of thread ids in an ACE_Task.
 
-int
-ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
+int 
+ACE_Thread_Manager::thread_list (ACE_Task_Base *task, 
                                  ACE_thread_t thread_list[],
                                  size_t n)
 {
   ACE_TRACE ("ACE_Thread_Manager::thread_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_thread_t *thread_list_iterator = thread_list;
-  size_t thread_list_count = 0;
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
+  size_t thread_count = 0;
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (thread_list_count < n && this->thr_table_[i].task_ == task)
+  for (; thread_count < n && ! iter.done (); iter.advance ())
+    if (iter.next ()->task_ == task)
       {
-        thread_list_iterator[thread_list_count] = this->thr_table_[i].thr_id_;
-        thread_list_count++;
+        thread_list[thread_count] = iter.next ()->thr_id_;
+        thread_count ++;
       }
 
   return 0;
@@ -1471,49 +1432,50 @@ ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
 
 // Returns in thread_list a list of thread handles in an ACE_Task.
 
-int
-ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
+int 
+ACE_Thread_Manager::hthread_list (ACE_Task_Base *task, 
                                   ACE_hthread_t hthread_list[],
                                   size_t n)
 {
   ACE_TRACE ("ACE_Thread_Manager::thread_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_hthread_t *hthread_list_iterator = hthread_list;
-  size_t hthread_list_count = 0;
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
+  size_t hthread_count = 0;
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (this->thr_table_[i].task_ == task
-        && hthread_list_count < n)
+  for (; hthread_count < n && ! iter.done (); iter.advance ())
+    if (iter.next ()->task_ == task)
       {
-        hthread_list_iterator[hthread_list_count] =
-          this->thr_table_[i].thr_handle_;
-        hthread_list_count++;
+        hthread_list[hthread_count] = iter.next ()->thr_handle_;
+        hthread_count ++;
       }
 
   return 0;
 }
 
-int
+int 
 ACE_Thread_Manager::set_grp (ACE_Task_Base *task, int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::set_grp");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+    iter (this->thr_list_);
 
-  for (size_t i = 0; i < this->current_count_; i++)
-    if (this->thr_table_[i].task_ == task)
-      this->thr_table_[i].grp_id_ = grp_id;
+  for ( ; ! iter.done (); iter.advance ())
+    if (iter.next ()->task_ == task)
+      iter.next ()->grp_id_ = grp_id;
   return 0;
 }
 
-int
+int 
 ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::get_grp");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_FIND (this->find_task (task), index);
-  grp_id = this->thr_table_[index].grp_id_;
+  ACE_FIND (this->find_task (task), ptr);
+  grp_id = ptr->grp_id_;
   return 0;
 }
 
@@ -1527,17 +1489,17 @@ int
 ACE_Thread_Control::insert (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Thread_Control::insert");
-
+ 
   ACE_hthread_t t_id;
   ACE_Thread::self (t_id);
   this->tm_ = tm;
-
+ 
   return this->tm_->insert_thr (ACE_Thread::self (), t_id);
 }
 
 // Initialize the thread controller.
 
-ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
+ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t, 
                                         int insert)
   : tm_ (t),
     status_ (0)
@@ -1591,6 +1553,8 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>;
 template class ACE_Node<ACE_Thread_Descriptor>;
 #endif /* VXWORKS */
+template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 #if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   // This doesn't necessarily belong here, but it's a convenient place for it.
   template class ACE_TSS<ACE_Dynamic>;
@@ -1602,6 +1566,8 @@ template class ACE_Node<ACE_Thread_Descriptor>;
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor>
 #endif /* VXWORKS */
+  #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
+  $pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
 #if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   // This doesn't necessarily belong here, but it's a convenient place for it.
   #pragma instantiate ACE_TSS<ACE_Dynamic>
