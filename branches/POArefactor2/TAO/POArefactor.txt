@@ -1,3 +1,14 @@
+Fri Nov 26 08:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/On_Demand_Loading/Servant_Manager.h:
+          Added include of Servant_Base.h
+
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+          Fixed unused variable warning
+
+        * tests/UNKNOWN_Exception/server.cpp:
+          Replaced _tao_poa_downcast with a dynamic cast
+
 Thu Nov 25 18:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/RequestProcessingStrategyAOMOnly.h:
