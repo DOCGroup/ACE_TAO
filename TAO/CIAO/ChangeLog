@@ -1,3 +1,9 @@
+Fri Jun 11 14:15:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+
+          Made some cosmetic changes.
+
 Fri Jun 11 13:07:35 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:
