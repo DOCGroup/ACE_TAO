@@ -2,7 +2,7 @@ Tue Apr 10 12:37:38 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.cpp (verify_orb_configuration):
 
-	  If the ORB is configured to use URL style IORs then thrown an
+	  If the ORB is configured to use URL style IORs then throw an
 	  exception since tagged components cannot be embedded in a URL
 	  style IOR.
 
