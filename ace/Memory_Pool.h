@@ -571,10 +571,10 @@ public:
   // Round up to the chunk size required by the operation system
 
   // = Don't need this methods here ...
-  int sync (ssize_t len = -1, int flags = MS_SYNC) { return 0; }
-  int sync (void *addr, size_t len, int flags = MS_SYNC) { return 0; }
-  int protect (ssize_t len = -1, int prot = PROT_RDWR) { return 0; };
-  int protect (void *addr, size_t len, int prot = PROT_RDWR) { return 0; }
+  int sync (ssize_t = -1, int = MS_SYNC);
+  int sync (void *, size_t, int = MS_SYNC);
+  int protect (ssize_t = -1, int = PROT_RDWR);
+  int protect (void *, size_t, int = PROT_RDWR);
   void dump (void) const {}
 
 protected:
