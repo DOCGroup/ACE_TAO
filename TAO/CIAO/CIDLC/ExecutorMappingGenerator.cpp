@@ -55,7 +55,7 @@ namespace
     bool
     add (UnconstrainedInterface& i)
     {
-      return interfaces_.insert (&i).second;
+      return interfaces_.insert (std::make_pair(&i, true)).second;
     }
 
     bool
@@ -83,6 +83,35 @@ namespace
       return interfaces_.find (&i) != interfaces_.end ();
     }
 
+    // The next two functions help to keep track of forward
+    // declarations for LEM. The non-const version should be
+    // used in emitter (note that it changed the flag to false).
+    // The const version should be used in module re-opener.
+    //
+    bool
+    find_fwd (UnconstrainedInterface& i)
+    {
+      Interfaces::iterator it (interfaces_.find (&i));
+
+      if (it == interfaces_.end ()) return false;
+
+      if (it->second)
+      {
+        it->second = false;
+        return true;
+      }
+
+      return false;
+    }
+
+    bool
+    find_fwd (UnconstrainedInterface& i) const
+    {
+      Interfaces::const_iterator it (interfaces_.find (&i));
+
+      return it != interfaces_.end () && it->second;
+    }
+
     bool
     find (Composition& c) const
     {
@@ -92,7 +121,7 @@ namespace
   private:
     typedef std::set<Home*> Homes;
     typedef std::set<Component*> Components;
-    typedef std::set<UnconstrainedInterface*> Interfaces;
+    typedef std::map<UnconstrainedInterface*, bool> Interfaces;
     typedef std::set<Composition*> Compositions;
 
     TranslationUnit& tu_;
@@ -1148,10 +1177,10 @@ namespace
   private:
 
     template <typename T>
-    struct Finder : T, Traverser
+    struct Finder : T
     {
       Finder (Context& c, bool& r)
-          : Traverser (c), r_ (r)
+          : ctx (c), r_ (r)
       {
       }
 
@@ -1162,6 +1191,28 @@ namespace
       }
 
     private:
+      Context& ctx;
+      bool& r_;
+    };
+
+
+    struct InterfaceFwdFinder : Traversal::UnconstrainedInterface
+    {
+      InterfaceFwdFinder (Context const& c, bool& r)
+          : ctx (c), r_ (r)
+      {
+      }
+
+      virtual void
+      traverse (Type& i)
+      {
+        // Make sure we use const version of find_fwd.
+        //
+        if (ctx.find_fwd (i)) r_ = true;
+      }
+
+    private:
+      Context const& ctx;
       bool& r_;
     };
 
@@ -1172,13 +1223,16 @@ namespace
 
       Traversal::Module module;
       Traversal::Defines defines;
+      Traversal::Mentions mentions;
 
       module.edge_traverser (defines);
+      module.edge_traverser (mentions);
 
       //@@ MSVC bug: interface is considered to be an alias for a struct.
       //
       Finder<Traversal::Composition> composition (ctx, r);
       Finder<Traversal::UnconstrainedInterface> interface_ (ctx, r);
+      InterfaceFwdFinder interface_fwd (ctx, r);
       Finder<Traversal::Component> component (ctx, r);
       Finder<Traversal::Home> home (ctx, r);
 
@@ -1188,9 +1242,31 @@ namespace
       defines.node_traverser (component);
       defines.node_traverser (home);
 
+      mentions.node_traverser (interface_fwd);
+
       module.traverse (m);
 
       return r;
+    }
+  };
+
+  //
+  //
+  //
+  struct InterfaceFwdEmitter : Traversal::UnconstrainedInterface, Emitter
+  {
+    InterfaceFwdEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+    virtual void
+    traverse (Type& i)
+    {
+      if (ctx.find_fwd (i))
+      {
+        os << "local interface CCM_" << i.name () << ";";
+      }
     }
   };
 
@@ -1209,6 +1285,10 @@ namespace
     {
       if (ctx.find (i))
       {
+        // No need to emit forward declarations anymore.
+        //
+        ctx.find_fwd (i);
+
         Traversal::UnconstrainedInterface::traverse (i);
       }
     }
@@ -1777,7 +1857,9 @@ generate (CommandLine const& cl,
     // Layer 3
     //
     Traversal::Defines defines;
+    Traversal::Mentions mentions;
     root.edge_traverser (defines);
+    root.edge_traverser (mentions);
 
     //--
     ModuleEmitter module (ctx, os);
@@ -1785,6 +1867,7 @@ generate (CommandLine const& cl,
     CompositionEmitter composition (ctx, os);
 
     InterfaceEmitter interface_ (ctx, os);
+    InterfaceFwdEmitter interface_fwd (ctx, os);
 
     MonolithEmitter component_monolith (ctx, os);
     ContextEmitter component_context (ctx, os);
@@ -1798,6 +1881,7 @@ generate (CommandLine const& cl,
     defines.node_traverser (composition);
 
     defines.node_traverser (interface_);
+    mentions.node_traverser (interface_fwd);
 
     defines.node_traverser (component_monolith);
     defines.node_traverser (component_context);
@@ -1818,6 +1902,7 @@ generate (CommandLine const& cl,
     Traversal::Defines home_explicit_defines;
 
     module.edge_traverser (defines);
+    module.edge_traverser (mentions);
 
     composition.edge_traverser (composition_defines);
 
