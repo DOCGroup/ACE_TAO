@@ -1,3 +1,9 @@
+Thu Nov 05 04:03:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (multicast_to_service): Make sure that the multicast
+ 	  sockets are closed properly no matter how the function exits.
+  	  Thanks to Achim Stindt <stindt@inobis.de> for reporting this.
+
 Wed Nov 04 22:46:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Operation_Table.cpp: Added a timeprobe table.
