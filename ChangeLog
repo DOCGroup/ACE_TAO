@@ -1,3 +1,11 @@
+Fri Jan  7 19:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Found that Unbounded_Set_Test was not listed, added this
+
+        * tests/run_test.lst:
+          Removed Unbounded_Set_Test_Ex, but added Unbounded_Set_Test
+
 Fri Jan  7 15:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.i:
