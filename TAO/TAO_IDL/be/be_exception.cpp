@@ -93,9 +93,15 @@ be_exception::gen_typecode (void)
   cs->indent (); // start from whatever indentation level we were at
 
   *cs << "CORBA::tk_except, // typecode kind" << nl;
-  *cs << this->tc_size () << ", // encapsulation length\n";
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
   // now emit the encapsulation
-  return this->gen_encapsulation ();
+  cs->incr_indent (0);
+  if (this->gen_encapsulation () == -1)
+    {
+      return -1;
+    }
+  cs->decr_indent ();
+  return 0;
 }
 
 // generate encapsulation
