@@ -6,6 +6,7 @@ Wed Jul 22 11:55:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  also broken, we use TypeCode::equal() instead; thanks to Darrell
 	  Brunsch for reporting this.
 
+	* tao/Server_Request.cpp: 
 	* tao/NVList.cpp: 
 	  We were passing a TypeCode_var without calling .in() first,
 	  thansk to Seth B. Widoff for catching up this one.
