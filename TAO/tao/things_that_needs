@@ -1,6 +1,0 @@
-- GIOP lite
-- other transports
-- Why does the rd_ptr () not align when
-  we use a cdr allocator from ORB_Core??
-- Fix faults test
-- write a new test as Carlos suggested

@@ -8,6 +8,8 @@
 #include "Client_Strategy_Factory.h"
 #include "Wait_Strategy.h"
 #include "Transport_Mux_Strategy.h"
+#include "Stub.h"
+#include "Sync_Strategies.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
@@ -45,6 +47,22 @@ TAO_Transport::~TAO_Transport (void)
   delete this->buffering_queue_;
 }
 
+ssize_t
+TAO_Transport::send_or_buffer (TAO_Stub *stub,
+                               int two_way,
+                               const ACE_Message_Block *message_block,
+                               const ACE_Time_Value *max_wait_time)
+{
+  if (stub == 0 || two_way)
+    return this->send (message_block, max_wait_time);
+
+  TAO_Sync_Strategy &sync_strategy = stub->sync_strategy ();
+
+  return sync_strategy.send (*this,
+                             *stub,
+                             message_block,
+                             max_wait_time);
+}
 
 ssize_t
 TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)

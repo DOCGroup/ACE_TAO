@@ -43,6 +43,78 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
  *
  * The transport object is created in the Service handler
  * constructor and deleted in the Service Handler's destructor!!
+ *
+ * The main responsability of a Transport object is to encapsulate a
+ * connection, and provide a transport independent way to send and
+ * receive data.  Since TAO is heavily based on the Reactor for all if
+ * not all its I/O the Transport class is usually implemented with a
+ * helper Connection Handler that adapts the generic Transport
+ * interface to the Reactor types.
+ *
+ * <H3>The outgoing data path:</H3>
+ *
+ * One of the responsabilities of the TAO_Transport class is to send
+ * out GIOP messages as efficiently as possible.  In most cases
+ * messages are put out in FIFO order, the transport object will put
+ * out the message using a single system call and return control to
+ * the application.  However, for oneways and AMI requests it may be
+ * more efficient (or required if the SYNC_NONE policy is in effect)
+ * to queue the messages until a large enough data set can be put out.
+ * Also, large messages may not be sent out without blocking, and in
+ * some applications blocking for I/O is unacceptable.
+ *
+ * Therefore, the Transport class may need to use a queue to
+ * temporarily hold the messages, and, in some configurations, it may
+ * need to use the Reactor to concurrently drain such queues.
+ *
+ * <H4>Out of order messages:</H4> TAO provides explicit policies to
+ * send 'urgent' messages.  Such messages may put at the head of the
+ * queue. However, they cannot be sent immediately because the
+ * transport may already be sending another message in a reactive
+ * fashion.
+ *
+ * Consequently, the Transport must also keep a
+ * <TT>current_message</TT>, if the current message is not null any
+ * new messages must be queued.  Only once the current message is
+ * completely sent we can take a message out of the queue.
+ *
+ * <H4>Waiting threads:</H4> One or more threads can be blocked
+ * waiting for the connection to completely send the message.
+ * The thread should return as soon as its message has been sent, so a
+ * per-thread condition is required.  This suggest that simply using a
+ * ACE_Message_Queue would not be enough:  there is a significant
+ * amount of ancillary information, to keep on each message that the
+ * Message_Block class does not provide room for.
+ *
+ * Also some applications may choose, for performance reasons or to
+ * avoid complex concurrency scenarios due to nested upcalls, to
+ * using blocking I/O
+ * block the 
+ *
+ * <H4>Timeouts:</H4> Some or all messages could have a timeout period
+ * attached to them.  The timeout source could either be some
+ * high-level policy or maybe some strategy to prevent denial of
+ * service attacks.  In any case the timeouts are per-message, and
+ * later messages could have shorter timeouts.
+ * In fact, some kind of scheduling (such as EDF) could be required in
+ * a few applications.
+ *
+ * <H4>Conclusions:</H4> The outgoing data path consist in several
+ * components:
+ * - A queue of pending messages
+ * - A message currently being transmitted
+ * - A per-message waiting
+ * 
+ *   
+ * <H3>The incoming data path:</H3>
+ *
+ * @todo Document the incoming data path design forces.
+ *
+ *
+ * <B>See Also:</B>
+ *
+ * http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
+ * 
  */
 class TAO_Export TAO_Transport
 {
@@ -76,11 +148,6 @@ public:
   /// This method provides a way to gain access to the underlying event
   /// handler used by the reactor.
   virtual ACE_Event_Handler *event_handler (void) = 0;
-
-  virtual ssize_t send (TAO_Stub *stub,
-                        int two_way,
-                        const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0) = 0;
 
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0,
@@ -162,6 +229,11 @@ public:
 
   /// Return the Wait strategy used by the Transport.
   TAO_Wait_Strategy *wait_strategy (void) const;
+
+  ssize_t send_or_buffer (TAO_Stub *stub,
+                          int two_way,
+                          const ACE_Message_Block *mblk,
+                          const ACE_Time_Value *s = 0);
 
   /**
    * Read and process the message on the connection. If <block> is 1,

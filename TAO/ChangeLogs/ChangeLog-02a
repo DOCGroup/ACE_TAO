@@ -1,3 +1,29 @@
+Wed Jan 24 17:00:52 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Transport.h:
+	  Document the design for the new treatment of outgoing data,
+	  basically it should supports non-blocking (reactive) I/O, queued
+	  messages, urgent data, per-message timeouts and multiple threads
+	  waiting on outgoing messages (ala Leader/Followers).
+
+	* tao/Transport.h:
+	* tao/Transport.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.h:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.h:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	  Factored out common code into the TAO_Transport class.
+
+	* tao/things_that_needs:
+	  Removed spurious file
+
+	* docs/pluggable_protocols/index.html:
+	  Fixed my homepage.
+
 Wed Jan 24 18:09:12 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Domain/TAO_Domain.dsp:
