@@ -1,3 +1,30 @@
+Fri Sep  5 20:51:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Bind_Dispatcher_Guard.h:
+
+          Added TAO_Export macro to the class declaration.
+
+        * tao/Messaging/Asynch_Invocation.h:
+
+          Change export macro from TAO_Export to TAO_Messaging_Export.
+
+        * tao/Messaging/Makefile:
+
+          Removed duplicate entry for link library.
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+
+          Cosmetic changes.
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.h:
+
+          Added export macro.
+
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/Messaging/TAO_Messaging.dsp:
+
+          Turned on RTTI.
+
 Fri Sep  5 16:13:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp: Fixed a simple error

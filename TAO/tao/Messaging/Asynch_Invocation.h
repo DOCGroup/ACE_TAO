@@ -15,6 +15,7 @@
 #include "ace/pre.h"
 
 #include "tao/Synch_Invocation.h"
+#include "messaging_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +37,8 @@ namespace TAO
 {
   class Profile_Transport_Resolver;
 
-  class TAO_Export Asynch_Remote_Invocation : protected Synch_Twoway_Invocation
+  class TAO_Messaging_Export Asynch_Remote_Invocation 
+    : protected Synch_Twoway_Invocation
   {
   public:
     Asynch_Remote_Invocation (CORBA::Object_ptr otarget,

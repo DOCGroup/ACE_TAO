@@ -164,6 +164,10 @@ SOURCE=.\AMH_Response_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocated_Object_Proxy_Broker.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
@@ -334,6 +338,10 @@ SOURCE=.\Active_Object_Map.h
 # Begin Source File
 
 SOURCE=.\AMH_Response_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocated_Object_Proxy_Broker.h
 # End Source File
 # Begin Source File
 
