@@ -75,10 +75,9 @@ public:
   // Decrement the reference count.
 
   virtual CORBA::Boolean set_property (
-      CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Object_ptr ior
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       TAO_IOP::Invalid_IOR
@@ -87,10 +86,9 @@ public:
 
   virtual CORBA::Boolean set_primary (
       CORBA::Object_ptr ior1,
-      CORBA::Object_ptr ior2,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Object_ptr ior2
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       TAO_IOP::NotFound,
@@ -99,10 +97,9 @@ public:
   // Set <ior1> as  primary which is a part of <ior2>
 
   virtual CORBA::Object_ptr get_primary (
-      CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-      )
+      CORBA::Object_ptr ior
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
@@ -110,10 +107,9 @@ public:
   // Get the primary member from the IOGR <ior>
 
   virtual CORBA::Boolean is_primary_set (
-      CORBA::Object_ptr ior,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::Object_ptr ior
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));

@@ -27,7 +27,7 @@ template<class Target> class TAO_ESF_Worker;
  *
  * @brief Implement the Copy_On_Read protocol
  *
- * 
+ *
  * The class is parametric on the kind of collection and locking
  * mechanism used.
  */
@@ -40,15 +40,15 @@ public:
   TAO_ESF_Copy_On_Read (const COLLECTION &collection);
 
   // = The TAO_ESF_Proxy_Collection methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker,
-                         CORBA::Environment &ACE_TRY_ENV);
-  virtual void connected (PROXY *proxy,
-                          CORBA::Environment &ACE_TRY_ENV);
-  virtual void reconnected (PROXY *proxy,
-                            CORBA::Environment &ACE_TRY_ENV);
-  virtual void disconnected (PROXY *proxy,
-                             CORBA::Environment &ACE_TRY_ENV);
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  virtual void for_each (TAO_ESF_Worker<PROXY> *worker
+                         TAO_ENV_ARG_DECL);
+  virtual void connected (PROXY *proxy
+                          TAO_ENV_ARG_DECL);
+  virtual void reconnected (PROXY *proxy
+                            TAO_ENV_ARG_DECL);
+  virtual void disconnected (PROXY *proxy
+                             TAO_ENV_ARG_DECL);
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   COLLECTION collection_;

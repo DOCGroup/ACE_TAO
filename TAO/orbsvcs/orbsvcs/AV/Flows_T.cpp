@@ -27,8 +27,8 @@ TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (const char *flowname)
       CORBA::Any flowname_any;
       flowname_any <<= flowname;
       this->define_property ("Flow",
-                             flowname_any,
-                             ACE_TRY_ENV);
+                             flowname_any
+                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -62,8 +62,8 @@ TAO_FDev<T_Producer, T_Consumer>::flowname (const char *flow_name)
       CORBA::Any flowname_any;
       flowname_any <<= flow_name;
       this->define_property ("Flow",
-                             flowname_any,
-                             ACE_TRY_ENV);
+                             flowname_any
+                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -80,8 +80,8 @@ AVStreams::FlowProducer_ptr
 TAO_FDev<T_Producer, T_Consumer>::create_producer (AVStreams::FlowConnection_ptr the_requester,
                                                    AVStreams::QoS & the_qos,
                                                    CORBA::Boolean_out met_qos,
-                                                   char *& named_fdev,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+                                                   char *& named_fdev
+                                                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::streamOpFailed,
                    AVStreams::streamOpDenied,
@@ -92,8 +92,8 @@ TAO_FDev<T_Producer, T_Consumer>::create_producer (AVStreams::FlowConnection_ptr
   return this->make_producer (the_requester,
                               the_qos,
                               met_qos,
-                              named_fdev,
-                              ACE_TRY_ENV);
+                              named_fdev
+                              TAO_ENV_ARG_PARAMETER);
 }
 
 template <class T_Producer, class T_Consumer>
@@ -102,8 +102,8 @@ AVStreams::FlowProducer_ptr
 TAO_FDev<T_Producer, T_Consumer>::make_producer (AVStreams::FlowConnection_ptr /* the_requester */,
                                                  AVStreams::QoS & /* the_qos */,
                                                  CORBA::Boolean_out /* met_qos */,
-                                                 char *& /* named_fdev */,
-                                                 CORBA::Environment &ACE_TRY_ENV)
+                                                 char *& /* named_fdev */
+                                                 TAO_ENV_ARG_DECL)
 {
   AVStreams::FlowProducer_ptr producer = AVStreams::FlowProducer::_nil ();
   ACE_TRY
@@ -114,7 +114,7 @@ TAO_FDev<T_Producer, T_Consumer>::make_producer (AVStreams::FlowConnection_ptr /
                       T_Producer,
                       0);
       this->producer_list_.insert_tail (producer_i);
-      producer = producer_i->_this (ACE_TRY_ENV);
+      producer = producer_i->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -133,8 +133,8 @@ AVStreams::FlowConsumer_ptr
 TAO_FDev<T_Producer, T_Consumer>::make_consumer (AVStreams::FlowConnection_ptr /* the_requester */,
                                                  AVStreams::QoS & /* the_qos */,
                                                  CORBA::Boolean_out /* met_qos */,
-                                                 char *& /* named_fdev */,
-                                                 CORBA::Environment &ACE_TRY_ENV)
+                                                 char *& /* named_fdev */
+                                                 TAO_ENV_ARG_DECL)
 {
   AVStreams::FlowConsumer_ptr consumer = AVStreams::FlowConsumer::_nil ();
   ACE_TRY
@@ -145,7 +145,7 @@ TAO_FDev<T_Producer, T_Consumer>::make_consumer (AVStreams::FlowConnection_ptr /
                       T_Consumer,
                       0);
       this->consumer_list_.insert_tail (consumer_i);
-      consumer = consumer_i->_this (ACE_TRY_ENV);
+      consumer = consumer_i->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -163,8 +163,8 @@ AVStreams::FlowConsumer_ptr
 TAO_FDev<T_Producer, T_Consumer>::create_consumer (AVStreams::FlowConnection_ptr the_requester,
                                                    AVStreams::QoS & the_qos,
                                                    CORBA::Boolean_out met_qos,
-                                                   char *& named_fdev,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+                                                   char *& named_fdev
+                                                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::streamOpFailed,
                    AVStreams::streamOpDenied,
@@ -174,8 +174,8 @@ TAO_FDev<T_Producer, T_Consumer>::create_consumer (AVStreams::FlowConnection_ptr
   return this->make_consumer (the_requester,
                               the_qos,
                               met_qos,
-                              named_fdev,
-                              ACE_TRY_ENV);
+                              named_fdev
+                              TAO_ENV_ARG_PARAMETER);
 }
 
 template <class T_Producer, class T_Consumer>
@@ -183,8 +183,8 @@ template <class T_Producer, class T_Consumer>
 AVStreams::FlowConnection_ptr
 TAO_FDev<T_Producer, T_Consumer>::bind (AVStreams::FDev_ptr peer_device,
                                         AVStreams::QoS & the_qos,
-                                        CORBA::Boolean_out is_met,
-                                        CORBA::Environment &ACE_TRY_ENV)
+                                        CORBA::Boolean_out is_met
+                                        TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::streamOpFailed,
                    AVStreams::QoSRequestFailed))
@@ -192,7 +192,6 @@ TAO_FDev<T_Producer, T_Consumer>::bind (AVStreams::FDev_ptr peer_device,
   ACE_UNUSED_ARG (peer_device);
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   return 0;
 }
@@ -202,8 +201,8 @@ template <class T_Producer, class T_Consumer>
 AVStreams::FlowConnection_ptr
 TAO_FDev<T_Producer, T_Consumer>::bind_mcast (AVStreams::FDev_ptr first_peer,
                                               AVStreams::QoS & the_qos,
-                                              CORBA::Boolean_out is_met,
-                                              CORBA::Environment &ACE_TRY_ENV)
+                                              CORBA::Boolean_out is_met
+                                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::streamOpFailed,
                    AVStreams::QoSRequestFailed))
@@ -211,7 +210,6 @@ TAO_FDev<T_Producer, T_Consumer>::bind_mcast (AVStreams::FDev_ptr first_peer,
   ACE_UNUSED_ARG (first_peer);
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   return 0;
 }
@@ -219,8 +217,8 @@ TAO_FDev<T_Producer, T_Consumer>::bind_mcast (AVStreams::FDev_ptr first_peer,
 template <class T_Producer, class T_Consumer>
 void
 TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep */,
-                                           const char * /* fdev_name */,
-                                           CORBA::Environment &/*ACE_TRY_ENV*/)
+                                           const char * /* fdev_name */
+                                           TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notSupported))
 {

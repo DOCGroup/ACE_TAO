@@ -67,15 +67,15 @@ Grid_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       // Make the Grid.
 
       Grid_ptr grid = client->make_grid (width_,
-                                         height_,
-                                         ACE_TRY_ENV);
+                                         height_
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -90,21 +90,21 @@ Grid_Client_i::run (const char *name,
               // Set a value on the grid
               grid->set (index_,
                          ctr,
-                         (value_ + ctr),
-                         ACE_TRY_ENV);
+                         (value_ + ctr)
+                         TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
-              
+
             }
         }
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Setting a value for the grid\n"));
-      
+
       ACE_TRY_CHECK;
-      
+
       if (client.shutdown () == 1) {
-        client->shutdown (ACE_TRY_ENV);
-	ACE_TRY_CHECK;
+        client->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
       }
 
     }

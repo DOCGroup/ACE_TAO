@@ -62,21 +62,21 @@ TAO_CEC_MT_Dispatching::shutdown (void)
 
 void
 TAO_CEC_MT_Dispatching::push (TAO_CEC_ProxyPushSupplier* proxy,
-                              const CORBA::Any& event,
-                              CORBA::Environment& ACE_TRY_ENV)
+                              const CORBA::Any& event
+                              TAO_ENV_ARG_DECL)
 {
   CORBA::Any event_copy = event;
-  this->push_nocopy (proxy, event_copy, ACE_TRY_ENV);
+  this->push_nocopy (proxy, event_copy TAO_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_CEC_MT_Dispatching::push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                                     CORBA::Any& event,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA::Any& event
+                                     TAO_ENV_ARG_DECL)
 {
   // Double checked locking....
   if (this->active_ == 0)
     this->activate ();
 
-  this->task_.push (proxy, event, ACE_TRY_ENV);
+  this->task_.push (proxy, event TAO_ENV_ARG_PARAMETER);
 }

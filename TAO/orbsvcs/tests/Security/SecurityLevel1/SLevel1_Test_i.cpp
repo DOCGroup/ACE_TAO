@@ -14,7 +14,7 @@ SLevel1_Server_i::SLevel1_Server_i (CORBA::ORB_ptr orb,
 }
 
 CORBA::Boolean
-SLevel1_Server_i::authorize_level1 (CORBA::Environment &ACE_TRY_ENV)
+SLevel1_Server_i::authorize_level1 (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -42,8 +42,8 @@ SLevel1_Server_i::authorize_level1 (CORBA::Environment &ACE_TRY_ENV)
   /// the attribute type/s that we want and the return parameter is the
   /// value/s of the attribute type/s that we want.
   Security::AttributeList_var attribute_list =
-    this->ss_current_->get_attributes (attribute_type_list,
-                                       ACE_TRY_ENV);
+    this->ss_current_->get_attributes (attribute_type_list
+                                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   /// Just a preliminary check to see if we received something or
@@ -217,8 +217,8 @@ SLevel1_Server_i::create_check_cert ()
 }
 
 void
-SLevel1_Server_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+SLevel1_Server_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

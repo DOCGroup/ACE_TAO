@@ -79,7 +79,7 @@ DynamicAny::DynAny_var::operator const ::DynamicAny::DynAny_ptr &() const // cas
   return this->ptr_;
 }
 
-DynamicAny::DynAny_var::operator ::DynamicAny::DynAny_ptr &() // cast 
+DynamicAny::DynAny_var::operator ::DynamicAny::DynAny_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -139,11 +139,11 @@ DynamicAny::DynAny_var::tao_nil (void)
 
 ::DynamicAny::DynAny_ptr
 DynamicAny::DynAny_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynAny::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynAny::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -224,16 +224,16 @@ DynamicAny::DynAny::~DynAny (void)
 {}
 
 DynamicAny::DynAny_ptr DynamicAny::DynAny::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynAny::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynAny::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynAny_ptr DynamicAny::DynAny::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -271,7 +271,7 @@ void *DynamicAny::DynAny::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -327,16 +327,16 @@ void DynamicAny::DynAny::InvalidValue::_raise ()
 }
 
 void DynamicAny::DynAny::InvalidValue::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void DynamicAny::DynAny::InvalidValue::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -395,16 +395,16 @@ void DynamicAny::DynAny::TypeMismatch::_raise ()
 }
 
 void DynamicAny::DynAny::TypeMismatch::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void DynamicAny::DynAny::TypeMismatch::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -468,7 +468,7 @@ DynamicAny::DynFixed_var::operator const ::DynamicAny::DynFixed_ptr &() const //
   return this->ptr_;
 }
 
-DynamicAny::DynFixed_var::operator ::DynamicAny::DynFixed_ptr &() // cast 
+DynamicAny::DynFixed_var::operator ::DynamicAny::DynFixed_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -528,11 +528,11 @@ DynamicAny::DynFixed_var::tao_nil (void)
 
 ::DynamicAny::DynFixed_ptr
 DynamicAny::DynFixed_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynFixed::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynFixed::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -613,16 +613,16 @@ DynamicAny::DynFixed::~DynFixed (void)
 {}
 
 DynamicAny::DynFixed_ptr DynamicAny::DynFixed::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynFixed::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynFixed::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynFixed_ptr DynamicAny::DynFixed::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -672,7 +672,7 @@ void *DynamicAny::DynFixed::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -733,7 +733,7 @@ DynamicAny::DynEnum_var::operator const ::DynamicAny::DynEnum_ptr &() const // c
   return this->ptr_;
 }
 
-DynamicAny::DynEnum_var::operator ::DynamicAny::DynEnum_ptr &() // cast 
+DynamicAny::DynEnum_var::operator ::DynamicAny::DynEnum_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -793,11 +793,11 @@ DynamicAny::DynEnum_var::tao_nil (void)
 
 ::DynamicAny::DynEnum_ptr
 DynamicAny::DynEnum_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynEnum::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynEnum::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -878,16 +878,16 @@ DynamicAny::DynEnum::~DynEnum (void)
 {}
 
 DynamicAny::DynEnum_ptr DynamicAny::DynEnum::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynEnum::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynEnum::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynEnum_ptr DynamicAny::DynEnum::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -937,7 +937,7 @@ void *DynamicAny::DynEnum::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -952,19 +952,19 @@ static const CORBA::Long _oc_DynamicAny_FieldName[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   29,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x44796e61), 
-  ACE_NTOHL (0x6d696341), 
-  ACE_NTOHL (0x6e792f46), 
-  ACE_NTOHL (0x69656c64), 
-  ACE_NTOHL (0x4e616d65), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d696341),
+  ACE_NTOHL (0x6e792f46),
+  ACE_NTOHL (0x69656c64),
+  ACE_NTOHL (0x4e616d65),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:DynamicAny/FieldName:1.0
   10,
-  ACE_NTOHL (0x4669656c), 
-  ACE_NTOHL (0x644e616d), 
+  ACE_NTOHL (0x4669656c),
+  ACE_NTOHL (0x644e616d),
   ACE_NTOHL (0x65000000),  // name = FieldName
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 
@@ -985,19 +985,19 @@ static const CORBA::Long _oc_DynamicAny_NameValuePair[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x44796e61), 
-  ACE_NTOHL (0x6d696341), 
-  ACE_NTOHL (0x6e792f4e), 
-  ACE_NTOHL (0x616d6556), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x50616972), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d696341),
+  ACE_NTOHL (0x6e792f4e),
+  ACE_NTOHL (0x616d6556),
+  ACE_NTOHL (0x616c7565),
+  ACE_NTOHL (0x50616972),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:DynamicAny/NameValuePair:1.0
   14,
-  ACE_NTOHL (0x4e616d65), 
-  ACE_NTOHL (0x56616c75), 
-  ACE_NTOHL (0x65506169), 
+  ACE_NTOHL (0x4e616d65),
+  ACE_NTOHL (0x56616c75),
+  ACE_NTOHL (0x65506169),
   ACE_NTOHL (0x72000000),  // name = NameValuePair
   2, // member count
   3,
@@ -1006,23 +1006,23 @@ static const CORBA::Long _oc_DynamicAny_NameValuePair[] =
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     29,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x44796e61), 
-    ACE_NTOHL (0x6d696341), 
-    ACE_NTOHL (0x6e792f46), 
-    ACE_NTOHL (0x69656c64), 
-    ACE_NTOHL (0x4e616d65), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x44796e61),
+    ACE_NTOHL (0x6d696341),
+    ACE_NTOHL (0x6e792f46),
+    ACE_NTOHL (0x69656c64),
+    ACE_NTOHL (0x4e616d65),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:DynamicAny/FieldName:1.0
     10,
-    ACE_NTOHL (0x4669656c), 
-    ACE_NTOHL (0x644e616d), 
+    ACE_NTOHL (0x4669656c),
+    ACE_NTOHL (0x644e616d),
     ACE_NTOHL (0x65000000),  // name = FieldName
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   6,
-  ACE_NTOHL (0x76616c75), 
+  ACE_NTOHL (0x76616c75),
   ACE_NTOHL (0x65000000),  // name = value
   CORBA::tk_any,
 
@@ -1049,7 +1049,7 @@ void DynamicAny::NameValuePair::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEVALUEPAIRSEQ_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEVALUEPAIRSEQ_CS_
 
@@ -1058,43 +1058,43 @@ void DynamicAny::NameValuePair::_tao_any_destructor (void *x)
   {
     DynamicAny::NameValuePair* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       DynamicAny::NameValuePair *old = ACE_reinterpret_cast (DynamicAny::NameValuePair *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     DynamicAny::NameValuePair *tmp = ACE_reinterpret_cast (DynamicAny::NameValuePair *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::~_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ_CS_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ_CS_
@@ -1106,30 +1106,30 @@ void DynamicAny::NameValuePair::_tao_any_destructor (void *x)
 DynamicAny::NameValuePairSeq::NameValuePairSeq (void)
 {}
 DynamicAny::NameValuePairSeq::NameValuePairSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<DynamicAny::NameValuePair>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 DynamicAny::NameValuePairSeq::NameValuePairSeq (CORBA::ULong max, CORBA::ULong length, DynamicAny::NameValuePair *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<DynamicAny::NameValuePair>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 DynamicAny::NameValuePairSeq::NameValuePairSeq (const NameValuePairSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<DynamicAny::NameValuePair>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 DynamicAny::NameValuePairSeq::~NameValuePairSeq (void) // dtor
@@ -1147,20 +1147,20 @@ static const CORBA::Long _oc_DynamicAny_NameValuePairSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x44796e61), 
-  ACE_NTOHL (0x6d696341), 
-  ACE_NTOHL (0x6e792f4e), 
-  ACE_NTOHL (0x616d6556), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x50616972), 
-  ACE_NTOHL (0x5365713a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d696341),
+  ACE_NTOHL (0x6e792f4e),
+  ACE_NTOHL (0x616d6556),
+  ACE_NTOHL (0x616c7565),
+  ACE_NTOHL (0x50616972),
+  ACE_NTOHL (0x5365713a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:DynamicAny/NameValuePairSeq:1.0
   17,
-  ACE_NTOHL (0x4e616d65), 
-  ACE_NTOHL (0x56616c75), 
-  ACE_NTOHL (0x65506169), 
-  ACE_NTOHL (0x72536571), 
+  ACE_NTOHL (0x4e616d65),
+  ACE_NTOHL (0x56616c75),
+  ACE_NTOHL (0x65506169),
+  ACE_NTOHL (0x72536571),
   ACE_NTOHL (0x0),  // name = NameValuePairSeq
   CORBA::tk_sequence, // typecode kind
   180, // encapsulation length
@@ -1169,19 +1169,19 @@ static const CORBA::Long _oc_DynamicAny_NameValuePairSeq[] =
     164, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       33,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x44796e61), 
-      ACE_NTOHL (0x6d696341), 
-      ACE_NTOHL (0x6e792f4e), 
-      ACE_NTOHL (0x616d6556), 
-      ACE_NTOHL (0x616c7565), 
-      ACE_NTOHL (0x50616972), 
-      ACE_NTOHL (0x3a312e30), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x44796e61),
+      ACE_NTOHL (0x6d696341),
+      ACE_NTOHL (0x6e792f4e),
+      ACE_NTOHL (0x616d6556),
+      ACE_NTOHL (0x616c7565),
+      ACE_NTOHL (0x50616972),
+      ACE_NTOHL (0x3a312e30),
       ACE_NTOHL (0x0),  // repository ID = IDL:DynamicAny/NameValuePair:1.0
       14,
-      ACE_NTOHL (0x4e616d65), 
-      ACE_NTOHL (0x56616c75), 
-      ACE_NTOHL (0x65506169), 
+      ACE_NTOHL (0x4e616d65),
+      ACE_NTOHL (0x56616c75),
+      ACE_NTOHL (0x65506169),
       ACE_NTOHL (0x72000000),  // name = NameValuePair
       2, // member count
       3,
@@ -1190,23 +1190,23 @@ static const CORBA::Long _oc_DynamicAny_NameValuePairSeq[] =
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         29,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x44796e61), 
-        ACE_NTOHL (0x6d696341), 
-        ACE_NTOHL (0x6e792f46), 
-        ACE_NTOHL (0x69656c64), 
-        ACE_NTOHL (0x4e616d65), 
-        ACE_NTOHL (0x3a312e30), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x44796e61),
+        ACE_NTOHL (0x6d696341),
+        ACE_NTOHL (0x6e792f46),
+        ACE_NTOHL (0x69656c64),
+        ACE_NTOHL (0x4e616d65),
+        ACE_NTOHL (0x3a312e30),
         ACE_NTOHL (0x0),  // repository ID = IDL:DynamicAny/FieldName:1.0
         10,
-        ACE_NTOHL (0x4669656c), 
-        ACE_NTOHL (0x644e616d), 
+        ACE_NTOHL (0x4669656c),
+        ACE_NTOHL (0x644e616d),
         ACE_NTOHL (0x65000000),  // name = FieldName
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       6,
-      ACE_NTOHL (0x76616c75), 
+      ACE_NTOHL (0x76616c75),
       ACE_NTOHL (0x65000000),  // name = value
       CORBA::tk_any,
 
@@ -1230,7 +1230,7 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_
 
@@ -1239,43 +1239,43 @@ TAO_NAMESPACE_END
   {
     DynamicAny::NameDynAnyPair* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       DynamicAny::NameDynAnyPair *old = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     DynamicAny::NameDynAnyPair *tmp = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::~_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_
@@ -1287,30 +1287,30 @@ TAO_NAMESPACE_END
 DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (void)
 {}
 DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<DynamicAny::NameDynAnyPair>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (CORBA::ULong max, CORBA::ULong length, DynamicAny::NameDynAnyPair *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<DynamicAny::NameDynAnyPair>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (const NameDynAnyPairSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<DynamicAny::NameDynAnyPair>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 DynamicAny::NameDynAnyPairSeq::~NameDynAnyPairSeq (void) // dtor
@@ -1374,7 +1374,7 @@ DynamicAny::DynStruct_var::operator const ::DynamicAny::DynStruct_ptr &() const 
   return this->ptr_;
 }
 
-DynamicAny::DynStruct_var::operator ::DynamicAny::DynStruct_ptr &() // cast 
+DynamicAny::DynStruct_var::operator ::DynamicAny::DynStruct_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1434,11 +1434,11 @@ DynamicAny::DynStruct_var::tao_nil (void)
 
 ::DynamicAny::DynStruct_ptr
 DynamicAny::DynStruct_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynStruct::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynStruct::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1519,16 +1519,16 @@ DynamicAny::DynStruct::~DynStruct (void)
 {}
 
 DynamicAny::DynStruct_ptr DynamicAny::DynStruct::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynStruct::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynStruct::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynStruct_ptr DynamicAny::DynStruct::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1578,7 +1578,7 @@ void *DynamicAny::DynStruct::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1639,7 +1639,7 @@ DynamicAny::DynUnion_var::operator const ::DynamicAny::DynUnion_ptr &() const //
   return this->ptr_;
 }
 
-DynamicAny::DynUnion_var::operator ::DynamicAny::DynUnion_ptr &() // cast 
+DynamicAny::DynUnion_var::operator ::DynamicAny::DynUnion_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1699,11 +1699,11 @@ DynamicAny::DynUnion_var::tao_nil (void)
 
 ::DynamicAny::DynUnion_ptr
 DynamicAny::DynUnion_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynUnion::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynUnion::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1784,16 +1784,16 @@ DynamicAny::DynUnion::~DynUnion (void)
 {}
 
 DynamicAny::DynUnion_ptr DynamicAny::DynUnion::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynUnion::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynUnion::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynUnion_ptr DynamicAny::DynUnion::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1843,7 +1843,7 @@ void *DynamicAny::DynUnion::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1856,7 +1856,7 @@ const char* DynamicAny::DynUnion::_interface_repository_id (void) const
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_ANYSEQ_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_ANYSEQ_CS_
 
@@ -1865,43 +1865,43 @@ const char* DynamicAny::DynUnion::_interface_repository_id (void) const
   {
     CORBA::Any* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       CORBA::Any *old = ACE_reinterpret_cast (CORBA::Any *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_DynamicAny_AnySeq::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     CORBA::Any *tmp = ACE_reinterpret_cast (CORBA::Any *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_DynamicAny_AnySeq::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::~_TAO_Unbounded_Sequence_DynamicAny_AnySeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMICANY_ANYSEQ_CS_)
 #define _DYNAMICANY_ANYSEQ_CS_
@@ -1913,30 +1913,30 @@ const char* DynamicAny::DynUnion::_interface_repository_id (void) const
 DynamicAny::AnySeq::AnySeq (void)
 {}
 DynamicAny::AnySeq::AnySeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_AnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Any>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 DynamicAny::AnySeq::AnySeq (CORBA::ULong max, CORBA::ULong length, CORBA::Any *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_AnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Any>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 DynamicAny::AnySeq::AnySeq (const AnySeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_AnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Any>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 DynamicAny::AnySeq::~AnySeq (void) // dtor
@@ -1954,15 +1954,15 @@ static const CORBA::Long _oc_DynamicAny_AnySeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   26,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x44796e61), 
-  ACE_NTOHL (0x6d696341), 
-  ACE_NTOHL (0x6e792f41), 
-  ACE_NTOHL (0x6e795365), 
-  ACE_NTOHL (0x713a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d696341),
+  ACE_NTOHL (0x6e792f41),
+  ACE_NTOHL (0x6e795365),
+  ACE_NTOHL (0x713a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:DynamicAny/AnySeq:1.0
   7,
-  ACE_NTOHL (0x416e7953), 
+  ACE_NTOHL (0x416e7953),
   ACE_NTOHL (0x65710000),  // name = AnySeq
   CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -1988,7 +1988,7 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CS_
 
@@ -1998,7 +1998,7 @@ TAO_NAMESPACE_END
   {
     DynamicAny::DynAny **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       DynamicAny::DynAny **old = ACE_reinterpret_cast (DynamicAny::DynAny**, this->buffer_);
@@ -2013,7 +2013,7 @@ TAO_NAMESPACE_END
               tmp[i] = old[i];
             }
         }
-      
+
       if (this->release_)
         {
           delete[] old;
@@ -2021,50 +2021,50 @@ TAO_NAMESPACE_END
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     DynamicAny::DynAny **tmp = ACE_reinterpret_cast (DynamicAny::DynAny**, this->buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
         tmp[i] = DynamicAny::DynAny::_nil ();
       }
-    
+
     _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::freebuf (tmp);
     this->buffer_ = 0;
   }
-  
+
   DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::~_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (void)
   {
     this->_deallocate_buffer ();
   }
-  
+
   void
   DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     DynamicAny::DynAny **tmp = ACE_reinterpret_cast (DynamicAny::DynAny**, this->buffer_);
-    
+
     for (CORBA::ULong i = nl; i < ol; ++i)
       {
         CORBA::release (tmp[i]);
         tmp[i] = DynamicAny::DynAny::_nil ();
       }
   }
-  
-  void 
+
+  void
   DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_downcast (
       void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
+      CORBA_Object *src
+      TAO_ENV_ARG_DECL
     )
   {
     DynamicAny::DynAny **tmp = ACE_static_cast (DynamicAny::DynAny**, target);
-    *tmp = DynamicAny::DynAny::_narrow (src, ACE_TRY_ENV);
+    *tmp = DynamicAny::DynAny::_narrow (src TAO_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -2074,11 +2074,11 @@ TAO_NAMESPACE_END
     DynamicAny::DynAny **tmp = ACE_static_cast (DynamicAny::DynAny**, src);
     return *tmp;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMICANY_DYNANYSEQ_CS_)
 #define _DYNAMICANY_DYNANYSEQ_CS_
@@ -2090,30 +2090,30 @@ TAO_NAMESPACE_END
 DynamicAny::DynAnySeq::DynAnySeq (void)
 {}
 DynamicAny::DynAnySeq::DynAnySeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<DynamicAny::DynAny,DynamicAny::DynAny_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 DynamicAny::DynAnySeq::DynAnySeq (CORBA::ULong max, CORBA::ULong length, DynamicAny::DynAny_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<DynamicAny::DynAny,DynamicAny::DynAny_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 DynamicAny::DynAnySeq::DynAnySeq (const DynAnySeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<DynamicAny::DynAny,DynamicAny::DynAny_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 DynamicAny::DynAnySeq::~DynAnySeq (void) // dtor
@@ -2177,7 +2177,7 @@ DynamicAny::DynSequence_var::operator const ::DynamicAny::DynSequence_ptr &() co
   return this->ptr_;
 }
 
-DynamicAny::DynSequence_var::operator ::DynamicAny::DynSequence_ptr &() // cast 
+DynamicAny::DynSequence_var::operator ::DynamicAny::DynSequence_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2237,11 +2237,11 @@ DynamicAny::DynSequence_var::tao_nil (void)
 
 ::DynamicAny::DynSequence_ptr
 DynamicAny::DynSequence_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynSequence::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynSequence::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2322,16 +2322,16 @@ DynamicAny::DynSequence::~DynSequence (void)
 {}
 
 DynamicAny::DynSequence_ptr DynamicAny::DynSequence::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynSequence::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynSequence::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynSequence_ptr DynamicAny::DynSequence::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2381,7 +2381,7 @@ void *DynamicAny::DynSequence::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -2442,7 +2442,7 @@ DynamicAny::DynArray_var::operator const ::DynamicAny::DynArray_ptr &() const //
   return this->ptr_;
 }
 
-DynamicAny::DynArray_var::operator ::DynamicAny::DynArray_ptr &() // cast 
+DynamicAny::DynArray_var::operator ::DynamicAny::DynArray_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2502,11 +2502,11 @@ DynamicAny::DynArray_var::tao_nil (void)
 
 ::DynamicAny::DynArray_ptr
 DynamicAny::DynArray_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynArray::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynArray::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2587,16 +2587,16 @@ DynamicAny::DynArray::~DynArray (void)
 {}
 
 DynamicAny::DynArray_ptr DynamicAny::DynArray::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynArray::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynArray::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynArray_ptr DynamicAny::DynArray::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2646,7 +2646,7 @@ void *DynamicAny::DynArray::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -2707,7 +2707,7 @@ DynamicAny::DynValue_var::operator const ::DynamicAny::DynValue_ptr &() const //
   return this->ptr_;
 }
 
-DynamicAny::DynValue_var::operator ::DynamicAny::DynValue_ptr &() // cast 
+DynamicAny::DynValue_var::operator ::DynamicAny::DynValue_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2767,11 +2767,11 @@ DynamicAny::DynValue_var::tao_nil (void)
 
 ::DynamicAny::DynValue_ptr
 DynamicAny::DynValue_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynValue::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynValue::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2852,16 +2852,16 @@ DynamicAny::DynValue::~DynValue (void)
 {}
 
 DynamicAny::DynValue_ptr DynamicAny::DynValue::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynValue::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynValue::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynValue_ptr DynamicAny::DynValue::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2911,7 +2911,7 @@ void *DynamicAny::DynValue::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -2972,7 +2972,7 @@ DynamicAny::DynAnyFactory_var::operator const ::DynamicAny::DynAnyFactory_ptr &(
   return this->ptr_;
 }
 
-DynamicAny::DynAnyFactory_var::operator ::DynamicAny::DynAnyFactory_ptr &() // cast 
+DynamicAny::DynAnyFactory_var::operator ::DynamicAny::DynAnyFactory_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3032,11 +3032,11 @@ DynamicAny::DynAnyFactory_var::tao_nil (void)
 
 ::DynamicAny::DynAnyFactory_ptr
 DynamicAny::DynAnyFactory_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynAnyFactory::_narrow (p, ACE_TRY_ENV);
+  return ::DynamicAny::DynAnyFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3117,16 +3117,16 @@ DynamicAny::DynAnyFactory::~DynAnyFactory (void)
 {}
 
 DynamicAny::DynAnyFactory_ptr DynamicAny::DynAnyFactory::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return DynAnyFactory::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return DynAnyFactory::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynAnyFactory_ptr DynamicAny::DynAnyFactory::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3164,7 +3164,7 @@ void *DynamicAny::DynAnyFactory::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3220,16 +3220,16 @@ void DynamicAny::DynAnyFactory::InconsistentTypeCode::_raise ()
 }
 
 void DynamicAny::DynAnyFactory::InconsistentTypeCode::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void DynamicAny::DynAnyFactory::InconsistentTypeCode::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -3300,13 +3300,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::NameVa
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_NameValuePair, ACE_TRY_ENV);
+
+    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_NameValuePair TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -3391,13 +3391,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::NameVa
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_NameValuePairSeq, ACE_TRY_ENV);
+
+    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_NameValuePairSeq TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -3496,13 +3496,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::AnySeq
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_AnySeq, ACE_TRY_ENV);
+
+    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_AnySeq TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -3600,7 +3600,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -3642,7 +3642,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;

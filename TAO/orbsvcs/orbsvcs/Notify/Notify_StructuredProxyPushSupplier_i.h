@@ -53,8 +53,8 @@ class TAO_Notify_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_No
   // Destructor
 
   virtual void connect_structured_push_consumer (
-    CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyComm::StructuredPushConsumer_ptr push_consumer
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -63,24 +63,24 @@ class TAO_Notify_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_No
   ));
 
   virtual void disconnect_structured_push_supplier (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
   // Shutdown.
 
  protected:
   // = Helper methods
-  void shutdown_i (CORBA::Environment &ACE_TRY_ENV);
+  void shutdown_i (TAO_ENV_SINGLE_ARG_DECL);
   // Shutdown
 
-  virtual void dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
+  virtual void dispatch_event_i (TAO_Notify_Event &event TAO_ENV_ARG_DECL);
   // Deliver the event to the consumer.
 
-  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
+  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL);
   // Deliver the update to the consumer.
 
   // = Data Members

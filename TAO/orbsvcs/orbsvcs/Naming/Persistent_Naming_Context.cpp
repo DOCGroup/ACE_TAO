@@ -70,8 +70,8 @@ TAO_Persistent_Bindings_Map::find (const char *id,
     return -1;
   else
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      obj = orb_->string_to_object (entry.ref_, ACE_TRY_ENV);
+      TAO_ENV_DECLARE_NEW_ENV;
+      obj = orb_->string_to_object (entry.ref_ TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       type = entry.type_;
 
@@ -163,8 +163,8 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
                                           int rebind)
 {
   // Obtain a stringified ior of <obj> (i.e., the representation we can store).
-  ACE_DECLARE_NEW_CORBA_ENV;
-  CORBA::String_var ref = orb_->object_to_string (obj, ACE_TRY_ENV);
+  TAO_ENV_DECLARE_NEW_ENV;
+  CORBA::String_var ref = orb_->object_to_string (obj TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Calculate and allocate the memory we need to store this name to
@@ -322,8 +322,8 @@ CosNaming::NamingContext_ptr
 TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                  const char *poa_id,
                                                  size_t context_size,
-                                                 TAO_Persistent_Context_Index * ind,
-                                                 CORBA::Environment &ACE_TRY_ENV)
+                                                 TAO_Persistent_Context_Index * ind
+                                                 TAO_ENV_ARG_DECL)
 {
   // Store the stub we will return here.
   CosNaming::NamingContext_var result;
@@ -376,11 +376,11 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
     PortableServer::string_to_ObjectId (poa_id);
 
   poa->activate_object_with_id (id.in (),
-                                context,
-                                ACE_TRY_ENV);
+                                context
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (result._retn ());
 
-  result = context->_this (ACE_TRY_ENV);
+  result = context->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   // Everything went smoothly, without errors - we don't need any cleanup.
@@ -390,7 +390,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 }
 
 CosNaming::NamingContext_ptr
-TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
+TAO_Persistent_Naming_Context::new_context (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
@@ -415,8 +415,8 @@ TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
     make_new_context (this->poa_.in (),
                       poa_id,
                       this->persistent_context_->total_size (),
-                      this->index_,
-                      ACE_TRY_ENV);
+                      this->index_
+                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   return result._retn ();
@@ -425,8 +425,8 @@ TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
                                      CosNaming::BindingList_out &bl,
-                                     CosNaming::BindingIterator_out &bi,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CosNaming::BindingIterator_out &bi
+                                     TAO_ENV_ARG_DECL)
 {
   // Allocate nil out parameters in case we won't be able to complete
   // the operation.
@@ -515,7 +515,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 
       // Increment reference count on this Naming Context, so it doesn't get
       // deleted before the BindingIterator servant gets deleted.
-      interface_->_add_ref (ACE_TRY_ENV);
+      interface_->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Register with the POA.
@@ -528,11 +528,11 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
         PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
-                                           bind_iter,
-                                           ACE_TRY_ENV);
+                                           bind_iter
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      bi = bind_iter->_this (ACE_TRY_ENV);
+      bi = bind_iter->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

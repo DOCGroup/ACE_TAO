@@ -104,7 +104,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   *os << node->local_name () << "(";
 
   if (!be_global->exception_support ())
-    *os << "CORBA::Environment &ACE_TRY_ENV";
+    *os << "TAO_ENV_SINGLE_ARG_DECL";
 
   *os << ")" << be_uidt;
 
@@ -175,7 +175,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "CORBA::String_var type_id;" << be_nl << be_nl
       << "if ((_tao_in >> type_id.inout ()) == 0)" << be_nl
       << "  {" << be_nl
-      << "    // Could not demarshal the exception id, raise an local" << be_nl
+      << "    // Could not demarshal the exception id, raise a local" << be_nl
       << "    // CORBA::MARSHAL" << be_nl;
 
   if (be_global->use_raw_throw ())
@@ -213,8 +213,8 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
     }
 
   *os << "CORBA::SystemException* exception =" << be_idt_nl
-      << "TAO_Exceptions::create_system_exception (type_id.in ()," << be_idt_nl
-      << "ACE_TRY_ENV);" << be_uidt_nl << be_uidt_nl
+      << "TAO_Exceptions::create_system_exception (type_id.in ()" << be_idt_nl
+      << "TAO_ENV_ARG_PARAMETER);" << be_uidt_nl << be_uidt_nl
       << "ACE_CHECK;" << be_nl << be_nl;
   *os << "if (exception == 0)" << be_idt_nl
       << " {" << be_idt_nl
@@ -225,12 +225,9 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "}"<< be_uidt_nl
       << "exception->minor (minor);" << be_nl
       << "exception->completed (CORBA::CompletionStatus (completion));" << be_nl
-
-      << "// @@ There should be a better way to raise this exception!" << be_nl
-      << "//    This code works for both native and emulated exceptions," << be_nl
-      << "//    but it is ugly." << be_nl
-      << "ACE_TRY_ENV.exception (exception);" << be_nl
-      << "// We can not use ACE_THROW here." << be_nl
+      << be_nl
+      << "// Raise the exception." << be_nl
+      << "TAO_ENV_RAISE (exception);" << be_nl << be_nl
       << "return;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl;
 
@@ -271,16 +268,11 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
               << be_uidt_nl;
         }
 
-      *os << "exception->_tao_decode (_tao_in, ACE_TRY_ENV);" << be_nl
-          << "ACE_CHECK;\n" << be_nl;
+      *os << "exception->_tao_decode (_tao_in TAO_ENV_ARG_PARAMETER);" << be_nl
+          << "ACE_CHECK;\n" << be_nl << be_nl;
 
-      *os << "// @@ There should be a better way to raise this exception!"
-          << be_nl
-          << "//    This code works for both native and emulated exceptions,"
-          << be_nl
-          << "//    but it is ugly." << be_nl
-          << "ACE_TRY_ENV.exception (exception); // Can't use ACE_THROW here."
-          << be_nl
+      *os << "// Raise the exception." << be_nl
+          << "TAO_ENV_RAISE (exception);" << be_nl << be_nl
           << "return;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
 

@@ -39,9 +39,9 @@ public:
   CEC_Counting_Consumer (const char* name);
   // Constructor
 
-  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
   void dump_results (int expected_count, int tolerance);
@@ -50,10 +50,10 @@ public:
 
   // = The CosEventComm::PushConsumer methods
 
-  virtual void push (const CORBA::Any& events,
-                     CORBA::Environment &_env)
+  virtual void push (const CORBA::Any& events
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -85,21 +85,21 @@ public:
   CEC_Pull_Counting_Consumer (const char* name);
   // Constructor
 
-  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
   void dump_results (int expected_count, int tolerance);
   // Print out an error message if the event count is too far from the
   // expected count.
 
-  CORBA::Any *pull (CORBA::Environment &ACE_TRY_ENV);
-  CORBA::Any *try_pull (CORBA::Boolean_out has_event,
-                        CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Any *pull (TAO_ENV_SINGLE_ARG_DECL);
+  CORBA::Any *try_pull (CORBA::Boolean_out has_event
+                        TAO_ENV_ARG_DECL);
 
   // = The CosEventComm::PullConsumer methods
-  virtual void disconnect_pull_consumer (CORBA::Environment &)
+  virtual void disconnect_pull_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -132,7 +132,7 @@ public:
   void stop (void);
   CORBA::ULong pull_count (void);
 
-  void run (CORBA::Environment &ACE_TRY_ENV);
+  void run (TAO_ENV_SINGLE_ARG_DECL);
   // Run a single iteration of the test
 
 private:

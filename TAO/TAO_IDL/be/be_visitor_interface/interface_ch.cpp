@@ -52,7 +52,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // == STEP 1:  generate the class name and class names we inherit ==
 
       // Generate the ifdefined macro for  the _ptr type.
-      os->gen_ifdef_macro (node->flat_name (), 
+      os->gen_ifdef_macro (node->flat_name (),
                            "_ptr");
 
 
@@ -62,7 +62,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Forward declaration.
       *os << "class " << node->local_name () << ";" << be_nl;
       // Generate the _ptr declaration.
-      *os << "typedef " << node->local_name () << " *" 
+      *os << "typedef " << node->local_name () << " *"
           << node->local_name () << "_ptr;" << be_nl;
 
       os->gen_endif ();
@@ -76,14 +76,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_ch::"
                              "visit_interface - "
-                             "codegen for _var failed\n"), 
+                             "codegen for _var failed\n"),
                             -1);
         }
 
       os->gen_endif ();
 
       // Generate the ifdef macro for the _out class.
-      os->gen_ifdef_macro (node->flat_name (), 
+      os->gen_ifdef_macro (node->flat_name (),
                            "_out");
 
       // Generate the _out declaration.
@@ -100,7 +100,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // The above code could have been executed by the forward declaration
-  // as long as it wasn't imported. The code below can only be 
+  // as long as it wasn't imported. The code below can only be
   // executed by an interface definition, also non-imported.
   if (node->imported ())
     {
@@ -117,7 +117,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "class " << node->base_proxy_impl_name () << ";" << be_nl
           << "class " << node->remote_proxy_impl_name () << ";" << be_nl
           << "class " << node->base_proxy_broker_name () << ";" << be_nl
-          << "class " << node->remote_proxy_broker_name () << ";" 
+          << "class " << node->remote_proxy_broker_name () << ";"
           << be_nl << be_nl;
     }
 
@@ -133,10 +133,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       for (i = 0; i < node->n_inherits (); i++)
         {
-          *os << "public virtual " 
+          *os << "public virtual "
               << node->inherits ()[i]->name ();
 
-          if (i < node->n_inherits () - 1) 
+          if (i < node->n_inherits () - 1)
             {
               // Node has multiple inheritance, so put a comma.
               *os << "," << be_nl;
@@ -161,9 +161,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // but we must protect against certain versions of g++.
       << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
       << be_idt_nl
-      << "typedef " << node->local_name () << "_ptr _ptr_type;" 
+      << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;" 
+      << "typedef " << node->local_name () << "_var _var_type;"
       << be_uidt_nl
       << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl;
 
@@ -176,20 +176,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
       << "_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "CORBA::Object_ptr obj" << be_nl
+      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  // There's no need for an _unchecked_narrow for locality 
+  // There's no need for an _unchecked_narrow for locality
   // constrained object.
   *os << "static " << node->local_name () << "_ptr "
       << "_unchecked_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "CORBA::Object_ptr obj" << be_nl
+      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // This method is defined in the header file to workaround old
@@ -222,10 +218,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (! node->is_local ())
     {
       *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-          << "const CORBA::Char *type_id, " << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()"
-          << be_uidt << be_uidt_nl
+          << "const CORBA::Char *type_id" << be_nl
+          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
     }
 
@@ -241,7 +235,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Add the Proxy Broker member variable.
       *os << "private:" << be_idt_nl
-          << node->base_proxy_broker_name () << " *" 
+          << node->base_proxy_broker_name () << " *"
           << "the" << node->base_proxy_broker_name ()
           << "_;" << be_nl <<  be_uidt_nl;
     }
@@ -253,14 +247,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Generate the "protected" constructor so that users cannot
       // instantiate us.
 
-      *os << node->local_name () << " (int collocated = 0);" 
+      *os << node->local_name () << " (int collocated = 0);"
           << be_nl << be_nl;
 
-      *os << "// These methods travese the inheritance tree and set the" 
+      *os << "// These methods travese the inheritance tree and set the"
           << be_nl
-          << "// parents piece of the given class in the right mode" 
+          << "// parents piece of the given class in the right mode"
           << be_nl
-          << "virtual void " << node->flat_name () 
+          << "virtual void " << node->flat_name ()
           << "_setup_collocation (int collocated);" << be_nl << be_nl;
     }
   else
@@ -278,21 +272,21 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << ");" << be_uidt_nl << be_nl;
 
       // Friends declarations.
-      *os << "friend class " << node->remote_proxy_impl_name () << ";" 
+      *os << "friend class " << node->remote_proxy_impl_name () << ";"
           << be_nl
-          << "friend class " << node->thru_poa_proxy_impl_name () << ";" 
+          << "friend class " << node->thru_poa_proxy_impl_name () << ";"
           << be_nl
-          << "friend class " << node->direct_proxy_impl_name () << ";" 
+          << "friend class " << node->direct_proxy_impl_name () << ";"
           << be_nl << be_nl;
     }
   // Protected destructor.
-  *os << "virtual ~" << node->local_name () << " (void);" 
+  *os << "virtual ~" << node->local_name () << " (void);"
       << be_uidt_nl << be_nl;
 
   // private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
   *os << "private:" << be_idt_nl;
-  *os << node->local_name () << " (const " 
+  *os << node->local_name () << " (const "
       << node->local_name () << " &);"
       << be_nl
       << "void operator= (const " << node->local_name () << " &);";
@@ -401,7 +395,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                              "(%N:%l) be_visitor_interface_ch::"
                              "visit_interface - "
                              "TypeCode declaration failed\n"
-                             ), 
+                             ),
                             -1);
         }
     }

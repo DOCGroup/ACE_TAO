@@ -64,21 +64,21 @@ public:
   // Add an offer of type <type> and generate a CosTrading::OfferId
   // for it. Returns 0 on failure.
 
-  int remove_offer (const CosTrading::OfferId offer_id,
-                    CORBA::Environment& _ACE_TRY_ENV)
+  int remove_offer (const CosTrading::OfferId offer_id
+                    TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
 
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
-                                   CORBA::Environment& ACE_TRY_ENV)
+  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
   // Lookup an offer whose offer_id is <offer_id>, and return
   // it. Otherwise, throw the appropriate exception.
 
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
-                                   char*& type_name,
-                                   CORBA::Environment& ACE_TRY_ENV)
+                                   char*& type_name
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
   // Lookup an offer whose OfferId is <offer_id> and return in
@@ -130,8 +130,8 @@ private:
 
   static void parse_offer_id (const CosTrading::OfferId offer_id,
                               char* &service_type,
-                              CORBA::ULong& id,
-                              CORBA::Environment& ACE_TRY_ENV)
+                              CORBA::ULong& id
+                              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CosTrading::IllegalOfferId));
   // Take in a previously generated offer id and return the type
   // and id that were used to generate the offer id.

@@ -299,11 +299,11 @@ TAO::BufferingConstraintPolicy_var::tao_nil (void)
 
 ::TAO::BufferingConstraintPolicy_ptr
 TAO::BufferingConstraintPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::TAO::BufferingConstraintPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::TAO::BufferingConstraintPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -383,16 +383,16 @@ TAO::BufferingConstraintPolicy::~BufferingConstraintPolicy (void)
 {}
 
 TAO::BufferingConstraintPolicy_ptr TAO::BufferingConstraintPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return BufferingConstraintPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return BufferingConstraintPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 TAO::BufferingConstraintPolicy_ptr TAO::BufferingConstraintPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -551,7 +551,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO::BufferingCons
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (TAO::_tc_BufferingConstraint, ACE_TRY_ENV);
+      type->equivalent (TAO::_tc_BufferingConstraint TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

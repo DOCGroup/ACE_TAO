@@ -19,7 +19,7 @@
 #include "testS.h"
 
 class Callback_i : public virtual POA_Callback,
-		   public virtual PortableServer::RefCountServantBase
+                   public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   A callback object to the "client"
@@ -32,11 +32,11 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Safe way to shutdown
 
-  void callback_method (CORBA::Environment &ACE_TRY_ENV)
+  void callback_method (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The callback method
 
@@ -46,7 +46,7 @@ private:
 };
 
 class Simple_Server_i : public virtual POA_Simple_Server,
-			public virtual PortableServer::RefCountServantBase
+                        public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Simpler Server implementation
@@ -59,15 +59,15 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Boolean do_callback,
-                           CORBA::Environment&)
+  CORBA::Long test_method (CORBA::Boolean do_callback
+                           TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void callback_object (Callback_ptr callback,
-                        CORBA::Environment&)
+  void callback_object (Callback_ptr callback
+                        TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -41,8 +41,8 @@ Session_Control::~Session_Control (void)
 }
 
 void
-Session_Control::session_finished (CORBA::Boolean success,
-                                   CORBA::Environment &ACE_TRY_ENV)
+Session_Control::session_finished (CORBA::Boolean success
+                                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -63,12 +63,12 @@ Session_Control::session_finished (CORBA::Boolean success,
   if (session_count_ == 0)
     {
       PortableServer::POA_var poa =
-        this->_default_POA (ACE_TRY_ENV);
+        this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       PortableServer::ObjectId_var oid =
-        poa->servant_to_id (this, ACE_TRY_ENV);
+        poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+      poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 

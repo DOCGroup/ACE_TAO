@@ -25,22 +25,22 @@ public:
   Reply_Handler (void);
 
   // = The skeleton methods
-  virtual void receive_data (CORBA::Environment &ACE_TRY_ENV)
+  virtual void receive_data (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void receive_data_excep (Test::AMI_AMI_BufferingExceptionHolder *holder,
-                                   CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void sync (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void sync_excep (Test::AMI_AMI_BufferingExceptionHolder *holder,
-                           CORBA::Environment &ACE_TRY_ENV)
+  virtual void receive_data_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void sync (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown_excep (Test::AMI_AMI_BufferingExceptionHolder *holder,
-                               CORBA::Environment &ACE_TRY_ENV)
+  virtual void sync_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
+                           TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
+                               TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

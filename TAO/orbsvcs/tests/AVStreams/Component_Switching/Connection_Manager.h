@@ -47,43 +47,43 @@ public:
   // Initialize this class.
 
   void bind_to_receivers (const ACE_CString &sender_name,
-                          AVStreams::MMDevice_ptr sender,
-                          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                          AVStreams::MMDevice_ptr sender
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Method that binds the sender to the Naming Service and retreives
   // the references of any registered receivers.
 
-  void connect_to_receivers (CORBA::Environment& ACE_TRY_ENV = TAO_default_environment ());
+  void connect_to_receivers (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Connect to the receivers that we found.
 
   void bind_to_sender (const ACE_CString &sender_name,
                        const ACE_CString &receiver_name,
-                       AVStreams::MMDevice_ptr receiver,
-                       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                       AVStreams::MMDevice_ptr receiver
+                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Bind receiver to the sender.
 
-  void connect_to_sender (CORBA::Environment& ACE_TRY_ENV = TAO_default_environment ());
+  void connect_to_sender (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Connect to the sender that we found.
 
-  void destroy (CORBA::Environment & = TAO_default_environment ());
+  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Destroy all streams.
 
-  void destroy (const ACE_CString &flowname,
-                CORBA::Environment & = TAO_default_environment ());
+  void destroy (const ACE_CString &flowname
+                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Destroy streams associated with <flowname>.
 
-  void unbind_sender (const ACE_CString &sender_name, 
-		      AVStreams::MMDevice_ptr sender_mmdevice,
-		      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()) ;
+  void unbind_sender (const ACE_CString &sender_name,
+                      AVStreams::MMDevice_ptr sender_mmdevice
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS) ;
   // Unbind the sender from the Naming Service
 
-  void unbind_receiver (const ACE_CString &sender_name, 
-			const ACE_CString &receiver_name, 
-			AVStreams::MMDevice_ptr receiver_mmdevice);
+  void unbind_receiver (const ACE_CString &sender_name,
+                        const ACE_CString &receiver_name,
+                        AVStreams::MMDevice_ptr receiver_mmdevice);
   // Unbind the Receiver from the Naming Service
 
   void add_streamctrl (const ACE_CString &flowname,
-                       TAO_StreamEndPoint *endpoint,
-                       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                       TAO_StreamEndPoint *endpoint
+                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Add new streamctrl.
 
   // Map of receivers.
@@ -111,10 +111,10 @@ public:
 
 protected:
 
-  void find_receivers (CORBA::Environment &ACE_TRY_ENV);
+  void find_receivers (TAO_ENV_SINGLE_ARG_DECL);
 
-  void add_to_receivers (CosNaming::BindingList &binding_list,
-                         CORBA::Environment& ACE_TRY_ENV);
+  void add_to_receivers (CosNaming::BindingList &binding_list
+                         TAO_ENV_ARG_DECL);
 
   TAO_Naming_Client naming_client_;
   // The Naming Service client.

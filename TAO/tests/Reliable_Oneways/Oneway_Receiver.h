@@ -25,13 +25,13 @@ public:
   Oneway_Receiver (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void raise_no_permission (CORBA::Environment &ACE_TRY_ENV)
+  virtual void raise_no_permission (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV)
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual Test::Shutdown_Helper_ptr get_shutdown_helper (CORBA::Environment &ACE_TRY_ENV)
+  virtual Test::Shutdown_Helper_ptr get_shutdown_helper (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

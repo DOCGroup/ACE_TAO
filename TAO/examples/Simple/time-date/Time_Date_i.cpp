@@ -21,8 +21,8 @@ Time_Date_i::~Time_Date_i (void)
 // Obtain the time and date in binary format.
 
 void
-Time_Date_i::bin_date (CORBA::Long_out time_date,
-                       CORBA::Environment &)
+Time_Date_i::bin_date (CORBA::Long_out time_date
+                       TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   time_date = ACE_OS::time (0);
@@ -30,9 +30,9 @@ Time_Date_i::bin_date (CORBA::Long_out time_date,
 
 // Obtain the time and date in string format.
 
-void 
-Time_Date_i::str_date (CORBA::String_out time_date,
-                       CORBA::Environment &)
+void
+Time_Date_i::str_date (CORBA::String_out time_date
+                       TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const time_t time = ACE_OS::time (0);
@@ -40,7 +40,7 @@ Time_Date_i::str_date (CORBA::String_out time_date,
   time_date = CORBA::string_dup (ACE_OS::ctime (&time));
 }
 
-void 
+void
 Time_Date_i::orb (CORBA::ORB_ptr orb_ptr)
 {
    orb_var_ = CORBA::ORB::_duplicate (orb_ptr);

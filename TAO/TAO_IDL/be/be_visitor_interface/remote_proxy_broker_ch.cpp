@@ -51,8 +51,8 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
   *os << "virtual " << node->base_proxy_impl_name () << " &" << "select_proxy ("
       << be_idt << be_idt_nl;
 
-  *os << node->local_name () << " *object," << be_nl
-      << "CORBA_Environment &ACE_TRY_ENV" << be_uidt_nl
+  *os << node->local_name () << " *object" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "private:" << be_idt_nl

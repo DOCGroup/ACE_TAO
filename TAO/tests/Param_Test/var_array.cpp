@@ -45,8 +45,8 @@ Test_Var_Array::opname (void) const
 }
 
 void
-Test_Var_Array::dii_req_invoke (CORBA::Request *req,
-                                CORBA::Environment &ACE_TRY_ENV)
+Test_Var_Array::dii_req_invoke (CORBA::Request *req
+                                TAO_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= Param_Test::Var_Array_forany (this->in_);
   req->add_inout_arg ("s2") <<= Param_Test::Var_Array_forany (this->inout_);
@@ -54,7 +54,7 @@ Test_Var_Array::dii_req_invoke (CORBA::Request *req,
 
   req->set_return_type (Param_Test::_tc_Var_Array);
 
-  req->invoke (ACE_TRY_ENV);
+  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Param_Test::Var_Array_forany forany;
@@ -63,21 +63,21 @@ Test_Var_Array::dii_req_invoke (CORBA::Request *req,
   this->ret_ = Param_Test::Var_Array_dup (forany.in ());
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1, ACE_TRY_ENV);
+    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= forany;
   Param_Test::Var_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2, ACE_TRY_ENV);
+    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= forany;
   this->out_ = Param_Test::Var_Array_dup (forany.in ());
 }
 
 int
-Test_Var_Array::init_parameters (Param_Test_ptr ,
-                                 CORBA::Environment &)
+Test_Var_Array::init_parameters (Param_Test_ptr
+                                 TAO_ENV_ARG_DECL_NOT_USED)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -103,16 +103,16 @@ Test_Var_Array::reset_parameters (void)
 }
 
 int
-Test_Var_Array::run_sii_test (Param_Test_ptr objref,
-                              CORBA::Environment &ACE_TRY_ENV)
+Test_Var_Array::run_sii_test (Param_Test_ptr objref
+                              TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       Param_Test::Var_Array_out out_arr (this->out_.out ());
       this->ret_ = objref->test_var_array (this->in_,
                                            this->inout_,
-                                           out_arr,
-                                           ACE_TRY_ENV);
+                                           out_arr
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;

@@ -57,16 +57,16 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "",
-                         ACE_TRY_ENV);
+                         ""
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
        CORBA::Object_var object =
-        orb->string_to_object (ior,
-                               ACE_TRY_ENV);
+        orb->string_to_object (ior
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // To use the smart proxy it is necessary to allocate the
@@ -77,28 +77,28 @@ main (int argc, char *argv[])
       // proxy designer who now can manage the lifetime of the object
       // much surely.
       Smart_Test_Factory *test_factory = 0;
-      ACE_NEW_RETURN (test_factory, 
+      ACE_NEW_RETURN (test_factory,
                       Smart_Test_Factory,
                       -1);
 
-      // To make KAI Compiler happy as it considers <test_factory> to be 
+      // To make KAI Compiler happy as it considers <test_factory> to be
       // an unused variable.
       ACE_UNUSED_ARG (test_factory);
 
       Test_var server =
-        Test::_narrow (object.in (),
-                       ACE_TRY_ENV);
+        Test::_narrow (object.in ()
+                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Object reference <%s> is nil\n",
                            ior),
                           1);
-      
+
       server->method (0);
 
-      server->shutdown (ACE_TRY_ENV);
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
     }

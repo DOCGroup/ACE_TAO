@@ -13,22 +13,22 @@ AMI_Buffering_Admin::AMI_Buffering_Admin (CORBA::ORB_ptr orb)
 }
 
 CORBA::ULong
-AMI_Buffering_Admin::request_count (CORBA::Environment &)
+AMI_Buffering_Admin::request_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->request_count_;
 }
 
 CORBA::ULong
-AMI_Buffering_Admin::bytes_received_count (CORBA::Environment &)
+AMI_Buffering_Admin::bytes_received_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->bytes_received_count_;
 }
 
 void
-AMI_Buffering_Admin::request_received (CORBA::ULong payload_length,
-                                          CORBA::Environment &)
+AMI_Buffering_Admin::request_received (CORBA::ULong payload_length
+                                          TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->request_count_++;
@@ -36,14 +36,14 @@ AMI_Buffering_Admin::request_received (CORBA::ULong payload_length,
 }
 
 void
-AMI_Buffering_Admin::flush (CORBA::Environment &)
+AMI_Buffering_Admin::flush (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-AMI_Buffering_Admin::shutdown (CORBA::Environment &ACE_TRY_ENV)
+AMI_Buffering_Admin::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

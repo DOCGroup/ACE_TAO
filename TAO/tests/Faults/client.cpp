@@ -71,11 +71,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -84,25 +84,25 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+        Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -116,14 +116,14 @@ main (int argc, char *argv[])
       Callback_i callback_impl (orb.in ());
 
       Callback_var callback =
-        callback_impl._this (ACE_TRY_ENV);
+        callback_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i != niterations; ++i)
         {
           CORBA::Long r =
-            server->test_method (0, 0, callback.in (),
-                                 ACE_TRY_ENV);
+            server->test_method (0, 0, callback.in ()
+                                 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (r != 0)
@@ -138,7 +138,7 @@ main (int argc, char *argv[])
         {
           ACE_TRY_EX(ABORT)
             {
-              server->shutdown_now (0, ACE_TRY_ENV);
+              server->shutdown_now (0 TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK_EX(ABORT);
             }
           ACE_CATCH (CORBA::COMM_FAILURE, comm_failure)
@@ -153,7 +153,7 @@ main (int argc, char *argv[])
         {
           ACE_TRY_EX(CRASH)
             {
-              server->shutdown_now (1, ACE_TRY_ENV);
+              server->shutdown_now (1 TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK_EX(CRASH);
             }
           ACE_CATCH (CORBA::COMM_FAILURE, comm_failure)
@@ -166,25 +166,25 @@ main (int argc, char *argv[])
         }
       else if (do_suicide)
         {
-          (void) server->test_method (1, 0, callback.in (),
-                                      ACE_TRY_ENV);
+          (void) server->test_method (1, 0, callback.in ()
+                                      TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_DEBUG ((LM_DEBUG, "ERROR: client should have aborted\n"));
         }
       else if (do_self_shutdown)
         {
-          (void) server->test_method (1, 1, callback.in (),
-                                      ACE_TRY_ENV);
+          (void) server->test_method (1, 1, callback.in ()
+                                      TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       if (do_shutdown)
         {
-          server->shutdown (ACE_TRY_ENV);
+          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

@@ -36,7 +36,7 @@ Initiator_i::~Initiator_i (void)
 }
 
 void
-Initiator_i::foo_object_B (CORBA::Environment &ACE_TRY_ENV)
+Initiator_i::foo_object_B (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -44,8 +44,8 @@ Initiator_i::foo_object_B (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_TRY
     {
-      this->object_B_var_->foo (this->object_A_var_.in (),
-                                ACE_TRY_ENV);
+      this->object_B_var_->foo (this->object_A_var_.in ()
+                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Initiator_i::foo_object_B: Returned from call.\n"));

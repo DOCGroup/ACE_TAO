@@ -11,7 +11,7 @@ Client_Worker::Client_Worker (Simple_Server_ptr server,
 }
 
 void
-Client_Worker::validate_connection (CORBA::Environment &ACE_TRY_ENV)
+Client_Worker::validate_connection (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
@@ -21,7 +21,7 @@ Client_Worker::validate_connection (CORBA::Environment &ACE_TRY_ENV)
    {
       ACE_TRY
         {
-          this->server_->test_method (j, ACE_TRY_ENV);
+          this->server_->test_method (j TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           if(TAO_debug_level > 0)
             ACE_DEBUG (( LM_DEBUG,
@@ -37,17 +37,17 @@ Client_Worker::validate_connection (CORBA::Environment &ACE_TRY_ENV)
 int
 Client_Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       // Validate connections befire doing any actual work..
-      this->validate_connection (ACE_TRY_ENV);
+      this->validate_connection (TAO_ENV_SINGLE_ARG_PARAMETER);
        ACE_TRY_CHECK;
 
        for (int i = 0; i < this->niterations_; ++i)
          {
-           this->server_->test_method (i, ACE_TRY_ENV);
+           this->server_->test_method (i TAO_ENV_ARG_PARAMETER);
            ACE_TRY_CHECK;
 
            if (TAO_debug_level > 0)

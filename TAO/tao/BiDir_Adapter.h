@@ -42,13 +42,13 @@ public:
   /// Activate the BiDirGIOP library
   virtual int activate (CORBA::ORB_ptr,
                         int argc,
-                        char *argv [],
-                        CORBA::Environment &ACE_TRY_ENV)
+                        char *argv []
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   virtual int parse_policy (TAO_ORB_Core *orb_core,
-                            CORBA::Policy_ptr policy,
-                            CORBA::Environment &ACE_TRY_ENV)
+                            CORBA::Policy_ptr policy
+                            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

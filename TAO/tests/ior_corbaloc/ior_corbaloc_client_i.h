@@ -35,14 +35,14 @@ class IOR_corbaloc_Client_i
   //
 
  public:
-  // = COnstructor and destructor.
+  // = Constructor and destructor.
   IOR_corbaloc_Client_i (void);
   ~IOR_corbaloc_Client_i (void);
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Execute the client example code.
 
-  int init (int& argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
+  int init (int& argc, char *argv[] TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Initialize the client communication endpoint with the server.
 
  private:

@@ -105,12 +105,12 @@
   void
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_downcast (
       void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
+      CORBA_Object *src
+      TAO_ENV_ARG_DECL
     )
   {
     PortableServer::POA **tmp = ACE_static_cast (PortableServer::POA**, target);
-    *tmp = PortableServer::POA::_narrow (src, ACE_TRY_ENV);
+    *tmp = PortableServer::POA::_narrow (src TAO_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -314,8 +314,8 @@ void PortableServer::ForwardRequest::_raise ()
 }
 
 void PortableServer::ForwardRequest::_tao_encode (
-    TAO_OutputCDR &cdr,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &cdr
+    TAO_ENV_ARG_DECL
   ) const
 {
   if (cdr << *this)
@@ -327,8 +327,8 @@ void PortableServer::ForwardRequest::_tao_encode (
 }
 
 void PortableServer::ForwardRequest::_tao_decode (
-    TAO_InputCDR &cdr,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &cdr
+    TAO_ENV_ARG_DECL
   )
 {
   if (cdr >> *this)
@@ -610,11 +610,11 @@ PortableServer::ThreadPolicy_var::tao_nil (void)
 
 ::PortableServer::ThreadPolicy_ptr
 PortableServer::ThreadPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::ThreadPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::ThreadPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -695,16 +695,16 @@ PortableServer::ThreadPolicy::~ThreadPolicy (void)
 {}
 
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return ThreadPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return ThreadPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -922,11 +922,11 @@ PortableServer::LifespanPolicy_var::tao_nil (void)
 
 ::PortableServer::LifespanPolicy_ptr
 PortableServer::LifespanPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::LifespanPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::LifespanPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1007,16 +1007,16 @@ PortableServer::LifespanPolicy::~LifespanPolicy (void)
 {}
 
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return LifespanPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return LifespanPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1234,11 +1234,11 @@ PortableServer::IdUniquenessPolicy_var::tao_nil (void)
 
 ::PortableServer::IdUniquenessPolicy_ptr
 PortableServer::IdUniquenessPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::IdUniquenessPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::IdUniquenessPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1319,16 +1319,16 @@ PortableServer::IdUniquenessPolicy::~IdUniquenessPolicy (void)
 {}
 
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return IdUniquenessPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return IdUniquenessPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1545,11 +1545,11 @@ PortableServer::IdAssignmentPolicy_var::tao_nil (void)
 
 ::PortableServer::IdAssignmentPolicy_ptr
 PortableServer::IdAssignmentPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::IdAssignmentPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::IdAssignmentPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1630,16 +1630,16 @@ PortableServer::IdAssignmentPolicy::~IdAssignmentPolicy (void)
 {}
 
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return IdAssignmentPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return IdAssignmentPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1868,11 +1868,11 @@ PortableServer::ImplicitActivationPolicy_var::tao_nil (void)
 
 ::PortableServer::ImplicitActivationPolicy_ptr
 PortableServer::ImplicitActivationPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::ImplicitActivationPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::ImplicitActivationPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1953,16 +1953,16 @@ PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void)
 {}
 
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return ImplicitActivationPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return ImplicitActivationPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2181,11 +2181,11 @@ PortableServer::ServantRetentionPolicy_var::tao_nil (void)
 
 ::PortableServer::ServantRetentionPolicy_ptr
 PortableServer::ServantRetentionPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::ServantRetentionPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::ServantRetentionPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2266,16 +2266,16 @@ PortableServer::ServantRetentionPolicy::~ServantRetentionPolicy (void)
 {}
 
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return ServantRetentionPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return ServantRetentionPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2508,11 +2508,11 @@ PortableServer::RequestProcessingPolicy_var::tao_nil (void)
 
 ::PortableServer::RequestProcessingPolicy_ptr
 PortableServer::RequestProcessingPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::RequestProcessingPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::RequestProcessingPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2593,16 +2593,16 @@ PortableServer::RequestProcessingPolicy::~RequestProcessingPolicy (void)
 {}
 
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return RequestProcessingPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return RequestProcessingPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2775,11 +2775,11 @@ PortableServer::POAManager_var::tao_nil (void)
 
 ::PortableServer::POAManager_ptr
 PortableServer::POAManager_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::POAManager::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::POAManager::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2860,16 +2860,16 @@ PortableServer::POAManager::~POAManager (void)
 {}
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return POAManager::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return POAManager::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2963,16 +2963,16 @@ void PortableServer::POAManager::AdapterInactive::_raise ()
 }
 
 void PortableServer::POAManager::AdapterInactive::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POAManager::AdapterInactive::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -3098,11 +3098,11 @@ PortableServer::AdapterActivator_var::tao_nil (void)
 
 ::PortableServer::AdapterActivator_ptr
 PortableServer::AdapterActivator_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::AdapterActivator::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::AdapterActivator::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3183,16 +3183,16 @@ PortableServer::AdapterActivator::~AdapterActivator (void)
 {}
 
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return AdapterActivator::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return AdapterActivator::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3351,11 +3351,11 @@ PortableServer::ServantManager_var::tao_nil (void)
 
 ::PortableServer::ServantManager_ptr
 PortableServer::ServantManager_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::ServantManager::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::ServantManager::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3436,16 +3436,16 @@ PortableServer::ServantManager::~ServantManager (void)
 {}
 
 PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return ServantManager::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return ServantManager::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ServantManager_ptr PortableServer::ServantManager::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3604,11 +3604,11 @@ PortableServer::ServantActivator_var::tao_nil (void)
 
 ::PortableServer::ServantActivator_ptr
 PortableServer::ServantActivator_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::ServantActivator::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::ServantActivator::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3689,16 +3689,16 @@ PortableServer::ServantActivator::~ServantActivator (void)
 {}
 
 PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return ServantActivator::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return ServantActivator::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3869,11 +3869,11 @@ PortableServer::ServantLocator_var::tao_nil (void)
 
 ::PortableServer::ServantLocator_ptr
 PortableServer::ServantLocator_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::ServantLocator::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::ServantLocator::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3954,16 +3954,16 @@ PortableServer::ServantLocator::~ServantLocator (void)
 {}
 
 PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return ServantLocator::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return ServantLocator::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -4136,11 +4136,11 @@ PortableServer::POA_var::tao_nil (void)
 
 ::PortableServer::POA_ptr
 PortableServer::POA_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::POA::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::POA::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -4221,16 +4221,16 @@ PortableServer::POA::~POA (void)
 {}
 
 PortableServer::POA_ptr PortableServer::POA::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return POA::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return POA::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr PortableServer::POA::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -4324,16 +4324,16 @@ void PortableServer::POA::AdapterAlreadyExists::_raise ()
 }
 
 void PortableServer::POA::AdapterAlreadyExists::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::AdapterAlreadyExists::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4392,16 +4392,16 @@ void PortableServer::POA::AdapterNonExistent::_raise ()
 }
 
 void PortableServer::POA::AdapterNonExistent::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::AdapterNonExistent::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4462,16 +4462,16 @@ void PortableServer::POA::InvalidPolicy::_raise ()
 }
 
 void PortableServer::POA::InvalidPolicy::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::InvalidPolicy::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4540,16 +4540,16 @@ void PortableServer::POA::NoServant::_raise ()
 }
 
 void PortableServer::POA::NoServant::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::NoServant::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4610,16 +4610,16 @@ void PortableServer::POA::ObjectAlreadyActive::_raise ()
 }
 
 void PortableServer::POA::ObjectAlreadyActive::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::ObjectAlreadyActive::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4678,16 +4678,16 @@ void PortableServer::POA::ObjectNotActive::_raise ()
 }
 
 void PortableServer::POA::ObjectNotActive::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::ObjectNotActive::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4746,16 +4746,16 @@ void PortableServer::POA::ServantAlreadyActive::_raise ()
 }
 
 void PortableServer::POA::ServantAlreadyActive::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::ServantAlreadyActive::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4814,16 +4814,16 @@ void PortableServer::POA::ServantNotActive::_raise ()
 }
 
 void PortableServer::POA::ServantNotActive::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::ServantNotActive::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4882,16 +4882,16 @@ void PortableServer::POA::WrongAdapter::_raise ()
 }
 
 void PortableServer::POA::WrongAdapter::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::WrongAdapter::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -4950,16 +4950,16 @@ void PortableServer::POA::WrongPolicy::_raise ()
 }
 
 void PortableServer::POA::WrongPolicy::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::POA::WrongPolicy::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -5083,11 +5083,11 @@ PortableServer::Current_var::tao_nil (void)
 
 ::PortableServer::Current_ptr
 PortableServer::Current_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::PortableServer::Current::_narrow (p, ACE_TRY_ENV);
+  return ::PortableServer::Current::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -5168,16 +5168,16 @@ PortableServer::Current::~Current (void)
 {}
 
 PortableServer::Current_ptr PortableServer::Current::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return Current::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return Current::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Current_ptr PortableServer::Current::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -5283,16 +5283,16 @@ void PortableServer::Current::NoContext::_raise ()
 }
 
 void PortableServer::Current::NoContext::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void PortableServer::Current::NoContext::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -5375,7 +5375,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Ob
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ObjectId, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ObjectId TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5463,7 +5463,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Fo
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ForwardRequest, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ForwardRequest TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5534,7 +5534,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ThreadPo
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ThreadPolicyValue, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ThreadPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5583,7 +5583,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Lifespan
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_LifespanPolicyValue, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_LifespanPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5630,7 +5630,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdUnique
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_IdUniquenessPolicyValue, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_IdUniquenessPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5677,7 +5677,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdAssign
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_IdAssignmentPolicyValue, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_IdAssignmentPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5726,7 +5726,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Implicit
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ImplicitActivationPolicyValue, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ImplicitActivationPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5773,7 +5773,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantR
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ServantRetentionPolicyValue, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_ServantRetentionPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5820,7 +5820,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::RequestP
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableServer::_tc_RequestProcessingPolicyValue, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_RequestProcessingPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

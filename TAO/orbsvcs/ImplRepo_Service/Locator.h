@@ -42,8 +42,8 @@ public:
   ImR_Locator (ImplRepo_i *repo);
 
   /// Locate the appropriate IOR.
-  char * locate (const char *object_key,
-                 CORBA::Environment &ACE_TRY_ENV)
+  char * locate (const char *object_key
+                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
 
 private:

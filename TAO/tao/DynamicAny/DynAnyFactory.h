@@ -32,8 +32,8 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_DynamicAny_Export TAO_DynAnyFactory 
-  : public virtual DynamicAny::DynAnyFactory, 
+class TAO_DynamicAny_Export TAO_DynAnyFactory
+  : public virtual DynamicAny::DynAnyFactory,
     public virtual TAO_Local_RefCounted_Object
 {
   // = DESCRIPTION
@@ -44,41 +44,39 @@ public:
   TAO_DynAnyFactory (void);
   // Constructor.
 
-  static CORBA::TCKind unalias (CORBA_TypeCode_ptr tc,
-                                CORBA::Environment &ACE_TRY_ENV);
+  static CORBA::TCKind unalias (CORBA_TypeCode_ptr tc
+                                TAO_ENV_ARG_DECL);
   // Obtain the kind of object, after all aliasing has been removed.
 
-  static CORBA_TypeCode_ptr strip_alias (CORBA_TypeCode_ptr tc,
-                                         CORBA::Environment &ACE_TRY_ENV);
+  static CORBA_TypeCode_ptr strip_alias (CORBA_TypeCode_ptr tc
+                                         TAO_ENV_ARG_DECL);
   // Same as above, but returns type code instead of TCKind. Caller
   // must release the return value.
 
   static DynamicAny::DynAny_ptr
-     make_dyn_any (const CORBA_Any &any,
-                   CORBA::Environment &ACE_TRY_ENV);
+     make_dyn_any (const CORBA_Any &any
+                   TAO_ENV_ARG_DECL);
   // Create the correct type of DynAny object for <any>.
 
   static DynamicAny::DynAny_ptr
-     make_dyn_any (CORBA::TypeCode_ptr tc,
-                   CORBA::Environment &ACE_TRY_ENV);
+     make_dyn_any (CORBA::TypeCode_ptr tc
+                   TAO_ENV_ARG_DECL);
   // Create the correct type of DynAny object for <tc>
 
   // = The DynamicAnyFactory methods.
   virtual DynamicAny::DynAny_ptr create_dyn_any (
-      const CORBA::Any & value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::Any & value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAnyFactory::InconsistentTypeCode
       ));
 
   virtual DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
-      CORBA::TypeCode_ptr type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::TypeCode_ptr type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAnyFactory::InconsistentTypeCode

@@ -19,8 +19,6 @@ TAO_RT_PolicyFactory::create_policy (
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
-  TAO_ENV_ARG_DEFN;
-
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
     {
       ACE_NEW_THROW_EX (policy,

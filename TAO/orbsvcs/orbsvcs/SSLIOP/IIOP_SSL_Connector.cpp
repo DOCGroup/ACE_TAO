@@ -118,8 +118,8 @@ TAO_IIOP_SSL_Connector::close (void)
 int
 TAO_IIOP_SSL_Connector::connect (
   TAO_GIOP_Invocation *invocation,
-  TAO_Transport_Descriptor_Interface *desc,
-  CORBA::Environment &)
+  TAO_Transport_Descriptor_Interface *desc
+  TAO_ENV_ARG_DECL_NOT_USED)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,

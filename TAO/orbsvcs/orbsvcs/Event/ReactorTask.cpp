@@ -75,7 +75,7 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period_t &period)
     case 0:
       // @@ TODO handle exceptions
       {
-        ACE_DECLARE_NEW_CORBA_ENV;
+        TAO_ENV_DECLARE_NEW_ENV;
         ACE_TRY
           {
 #if 1
@@ -89,8 +89,8 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period_t &period)
                RtecScheduler::VERY_LOW_IMPORTANCE,
                ORBSVCS_Time::zero (),
                1,
-               RtecScheduler::OPERATION,
-               ACE_TRY_ENV);
+               RtecScheduler::OPERATION
+                TAO_ENV_ARG_PARAMETER);
 #else
             ACE_Scheduler_Factory::server()->set
               (rt_info_,
@@ -102,8 +102,8 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period_t &period)
                RtecScheduler::VERY_LOW_IMPORTANCE,
                ORBSVCS_Time::zero (),
                1,
-               RtecScheduler::OPERATION,
-               ACE_TRY_ENV);
+               RtecScheduler::OPERATION
+                TAO_ENV_ARG_PARAMETER);
 #endif
             ACE_TRY_CHECK;
           }

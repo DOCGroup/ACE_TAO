@@ -34,10 +34,10 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void remote_call (CORBA::Environment &)
+  void remote_call (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:

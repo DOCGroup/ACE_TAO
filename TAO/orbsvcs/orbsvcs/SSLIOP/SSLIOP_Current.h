@@ -63,7 +63,7 @@ public:
   /// Return the peer certificate associated with the current
   /// request.
   virtual SSLIOP::ASN_1_Cert * get_peer_certificate (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      SSLIOP::Current::NoContext));
 
@@ -75,7 +75,7 @@ public:
   /// certficate.  However, the certificate chain on the server side
   /// does NOT contain the peer (client) certificate.
   virtual SSLIOP::SSL_Cert * get_peer_certificate_chain (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      SSLIOP::Current::NoContext));
 
@@ -84,7 +84,7 @@ public:
   /// means of determining whether or not SSL session state is
   /// available.
   virtual CORBA::Boolean no_context (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the TSS slot ID assigned to this object.
@@ -117,16 +117,14 @@ public:
   static TAO_SSLIOP_Current_ptr _duplicate (TAO_SSLIOP_Current_ptr obj);
 
   static TAO_SSLIOP_Current_ptr _narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   static TAO_SSLIOP_Current_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   static TAO_SSLIOP_Current_ptr _nil (void)
     {
@@ -198,8 +196,8 @@ public:
   static void tao_release (TAO_SSLIOP_Current_ptr);
   static TAO_SSLIOP_Current_ptr tao_nil (void);
   static TAO_SSLIOP_Current_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 

@@ -47,16 +47,16 @@ public:
   RND_Consumer (RND_Driver *driver);
   // Constructor
 
-  void push (const RtecEventComm::EventSet &event,
-             CORBA::Environment &ACE_TRY_ENV)
+  void push (const RtecEventComm::EventSet &event
+             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+                const RtecEventChannelAdmin::ConsumerQOS &qos
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
 
 protected:
   RND_Driver *driver_;
@@ -82,8 +82,8 @@ class RND_Timer : public RND_Consumer
 public:
   RND_Timer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event,
-             CORBA::Environment &ACE_TRY_ENV)
+  void push (const RtecEventComm::EventSet &event
+             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -110,16 +110,16 @@ public:
   // Constructor
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+                const RtecEventChannelAdmin::SupplierQOS &qos
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
 
-  void push_new_event (CORBA::Environment &ACE_TRY_ENV);
-  void push (RtecEventComm::EventSet &event,
-             CORBA::Environment &ACE_TRY_ENV);
+  void push_new_event (TAO_ENV_SINGLE_ARG_DECL);
+  void push (RtecEventComm::EventSet &event
+             TAO_ENV_ARG_DECL);
   // Push a single event...
 
-  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual int svc (void);
@@ -152,12 +152,12 @@ public:
   int run (int argc, char *argv[]);
   // Run the test
 
-  void timer (const RtecEventComm::Event &e,
-              CORBA::Environment &ACE_TRY_ENV);
+  void timer (const RtecEventComm::Event &e
+              TAO_ENV_ARG_DECL);
   // The main timer has expired
 
-  void event (const RtecEventComm::Event &e,
-              CORBA::Environment &ACE_TRY_ENV);
+  void event (const RtecEventComm::Event &e
+              TAO_ENV_ARG_DECL);
   // One of the consumers has received an event
 
 private:

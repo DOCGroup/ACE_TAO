@@ -66,7 +66,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -75,11 +75,11 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+        Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -95,12 +95,12 @@ main (int argc, char *argv[])
 
       if (test_user_exception == 1)
         {
-          server->raise_user_exception (ACE_TRY_ENV);
+          server->raise_user_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else if (test_system_exception == 1)
         {
-          server->raise_system_exception (ACE_TRY_ENV);
+          server->raise_system_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else
@@ -116,8 +116,8 @@ main (int argc, char *argv[])
                 server->test_method (i,
                                      the_in_structure,
                                      the_out_structure.out (),
-                                     name.inout (),
-                                     ACE_TRY_ENV);
+                                     name.inout ()
+                                     TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               if (TAO_debug_level > 0)
@@ -145,7 +145,7 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          server->shutdown (ACE_TRY_ENV);
+          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -93,7 +93,7 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                                  const char *my_name)
 {
   entry_point (my_name);
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // No scheduling for this test...
@@ -110,20 +110,20 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 
       // = Connect as a consumer.
       this->consumer_admin_ =
-        channel_admin_->for_consumers (ACE_TRY_ENV);
+        channel_admin_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->suppliers_ =
-        consumer_admin_->obtain_push_supplier (ACE_TRY_ENV);
+        consumer_admin_->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventComm::PushConsumer_var objref =
-        this->_this (ACE_TRY_ENV);
+        this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->suppliers_->connect_push_consumer (objref.in (),
-                                               dependencies.get_ConsumerQOS (),
-                                               ACE_TRY_ENV);
+                                               dependencies.get_ConsumerQOS ()
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR, se)
@@ -144,36 +144,36 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 void
-Latency_Consumer::close (CORBA::Environment &ACE_TRY_ENV)
+Latency_Consumer::close (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) %s closing down.\n",
               this->entry_point ()));
 
-  this->suppliers_->disconnect_push_supplier (ACE_TRY_ENV);
+  this->suppliers_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, ACE_TRY_ENV);
+    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Latency_Consumer::disconnect_push_consumer (CORBA::Environment &)
+Latency_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Consumer received disconnect from channel.\n"));
 }
 
 void
-Latency_Consumer::push (const RtecEventComm::EventSet &events,
-                        CORBA::Environment &)
+Latency_Consumer::push (const RtecEventComm::EventSet &events
+                        TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
@@ -354,10 +354,10 @@ Latency_Supplier::Supplier::Supplier (Latency_Supplier* impl)
 
 void
 Latency_Supplier::Supplier::disconnect_push_supplier (
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->impl_->disconnect_push_supplier (ACE_TRY_ENV);
+  this->impl_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 Latency_Supplier::Consumer::Consumer (Latency_Supplier* impl)
@@ -367,19 +367,19 @@ Latency_Supplier::Consumer::Consumer (Latency_Supplier* impl)
 
 void
 Latency_Supplier::Consumer::disconnect_push_consumer (
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->impl_->disconnect_push_consumer (ACE_TRY_ENV);
+  this->impl_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 Latency_Supplier::Consumer::push (
-    const RtecEventComm::EventSet &events,
-    CORBA::Environment &ACE_TRY_ENV)
+    const RtecEventComm::EventSet &events
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->impl_->push (events, ACE_TRY_ENV);
+  this->impl_->push (events TAO_ENV_ARG_PARAMETER);
 }
 
 // ************************************************************
@@ -403,7 +403,7 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
 {
   this->entry_point (name);
   master_ = master;
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       this->channel_admin_ =
@@ -421,20 +421,20 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
 
       // = Connect as a supplier.
       this->supplier_admin_ =
-        channel_admin_->for_suppliers (ACE_TRY_ENV);
+        channel_admin_->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->consumers_ =
-        supplier_admin_->obtain_push_consumer (ACE_TRY_ENV);
+        supplier_admin_->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventComm::PushSupplier_var objref =
-        this->supplier_._this (ACE_TRY_ENV);
+        this->supplier_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       consumers_->connect_push_supplier (objref.in (),
-                                         publications.get_SupplierQOS (),
-                                         ACE_TRY_ENV);
+                                         publications.get_SupplierQOS ()
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -448,53 +448,53 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 void
-Latency_Supplier::close (CORBA::Environment &ACE_TRY_ENV)
+Latency_Supplier::close (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) %s closing down.\n",
               this->entry_point ()));
 
-  this->suppliers_->disconnect_push_supplier (ACE_TRY_ENV);
+  this->suppliers_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->consumers_->disconnect_push_consumer (ACE_TRY_ENV);
+  this->consumers_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   {
     PortableServer::POA_var poa =
-      this->supplier_._default_POA (ACE_TRY_ENV);
+      this->supplier_._default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
     PortableServer::ObjectId_var id =
-      poa->servant_to_id (&this->supplier_, ACE_TRY_ENV);
+      poa->servant_to_id (&this->supplier_ TAO_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    poa->deactivate_object (id.in (), ACE_TRY_ENV);
+    poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
   {
     PortableServer::POA_var poa =
-      this->consumer_._default_POA (ACE_TRY_ENV);
+      this->consumer_._default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
     PortableServer::ObjectId_var id =
-      poa->servant_to_id (&this->consumer_, ACE_TRY_ENV);
+      poa->servant_to_id (&this->consumer_ TAO_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    poa->deactivate_object (id.in (), ACE_TRY_ENV);
+    poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 }
 
 void
-Latency_Supplier::disconnect_push_consumer (CORBA::Environment &)
+Latency_Supplier::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Supplier-consumer received disconnect from channel.\n"));
 }
 
 void
-Latency_Supplier::disconnect_push_supplier (CORBA::Environment &)
+Latency_Supplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, "Supplier received disconnect from channel.\n"));
 }
@@ -508,7 +508,7 @@ Latency_Supplier::start_generating_events (void)
                                          ACE_CU64_TO_CU32 (now) % 1000000000 /
                                            1000));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       ACE_Time_Value tv_timeout (0, timeout_interval * 1000);
@@ -534,19 +534,19 @@ Latency_Supplier::start_generating_events (void)
 
       // = Connect as a consumer.
       consumer_admin_ =
-        channel_admin_->for_consumers (ACE_TRY_ENV);
+        channel_admin_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       suppliers_ =
-        consumer_admin_->obtain_push_supplier (ACE_TRY_ENV);
+        consumer_admin_->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventComm::PushConsumer_var objref =
-        this->consumer_._this (ACE_TRY_ENV);
+        this->consumer_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->suppliers_->connect_push_consumer (objref.in (),
-                                               dependencies.get_ConsumerQOS (),
-                                               ACE_TRY_ENV);
+                                               dependencies.get_ConsumerQOS ()
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -561,8 +561,8 @@ Latency_Supplier::start_generating_events (void)
 }
 
 void
-Latency_Supplier::push (const RtecEventComm::EventSet &events,
-                        CORBA::Environment &ACE_TRY_ENV)
+Latency_Supplier::push (const RtecEventComm::EventSet &events
+                        TAO_ENV_ARG_DECL)
 {
   // ACE_DEBUG ((LM_DEBUG, "Latency_Supplier::push - "));
 
@@ -606,7 +606,7 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
                     {
                       // This constructor is fast.
                       const RtecEventComm::EventSet es (1, 1, &event);
-                      consumer [cons]->push (es, ACE_TRY_ENV);
+                      consumer [cons]->push (es TAO_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
                     }
                 }
@@ -626,7 +626,7 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
                   RtecEventComm::EventSet events (1);
                   events.length (1);
                   events[0] = event;
-                  consumers_->push (events, ACE_TRY_ENV);
+                  consumers_->push (events TAO_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   ACE_TIMEPROBE (EVENT_LATENCY_SUPPLIER_ENDS_PUSHING_EVENT);
@@ -682,7 +682,7 @@ Latency_Supplier::shutdown (void)
       return;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       if (master_)
@@ -696,7 +696,7 @@ Latency_Supplier::shutdown (void)
           RtecEventComm::EventSet events (1);
           events.length (1);
           events[0] = event;
-          consumers_->push (events, ACE_TRY_ENV);
+          consumers_->push (events TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -857,16 +857,16 @@ main (int argc, char *argv [])
 
   u_int i;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -875,18 +875,18 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
+        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -895,7 +895,7 @@ main (int argc, char *argv [])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (get_options (argc, argv))
@@ -911,22 +911,22 @@ main (int argc, char *argv [])
       channel_name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (channel_name, ACE_TRY_ENV);
+        naming_context->resolve (channel_name TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
-                                                      ACE_TRY_ENV);
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
+                                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #else
       TAO_EC_Event_Channel_Attributes attr(root_poa.in (),
                                            root_poa.in ());
       TAO_EC_Event_Channel ec_impl  (attr);
-      ec_impl.activate (ACE_TRY_ENV);
+      ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        ec_impl._this (ACE_TRY_ENV);
+        ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif /* 0 */
 
@@ -990,13 +990,13 @@ main (int argc, char *argv [])
 
       for (i = 0; i < suppliers; ++i)
         {
-          supplier[i]->close (ACE_TRY_ENV);
+          supplier[i]->close (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       for (i = 0; i < consumers; ++i)
         {
-          consumer [i]->close (ACE_TRY_ENV);
+          consumer [i]->close (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -1014,12 +1014,12 @@ main (int argc, char *argv [])
         }
       delete [] consumer;
 
-      ec->destroy (ACE_TRY_ENV);
+      ec->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_TIMEPROBE_PRINT;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

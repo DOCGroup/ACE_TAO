@@ -92,10 +92,10 @@ public:
   /// function is not CORBA compliant.
   virtual ACE_CString _info (void) const = 0;
 
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const = 0;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &) = 0;
+  virtual void _tao_encode (TAO_OutputCDR &cdr
+                            TAO_ENV_ARG_DECL_NOT_USED) const = 0;
+  virtual void _tao_decode (TAO_InputCDR &cdr
+                            TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
   /// Used in the non-copying Any insertion operator.
   static void _tao_any_destructor (void *);
@@ -226,10 +226,10 @@ public:
   /// function is not CORBA compliant.
   virtual ACE_CString _info (void) const;
 
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &);
+  virtual void _tao_encode (TAO_OutputCDR &cdr
+                            TAO_ENV_ARG_DECL_NOT_USED) const;
+  virtual void _tao_decode (TAO_InputCDR &cdr
+                            TAO_ENV_ARG_DECL_NOT_USED);
 
   /// Helper to create a minor status value.
   static CORBA::ULong _tao_minor_code (u_int location,
@@ -342,30 +342,26 @@ public:
   static void make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                                       const char *name,
                                       char *buf,
-                                      size_t buflen,
-                                      CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ());
+                                      size_t buflen
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Make the TypeCode for the CORBA::UnknownUserException standard
   /// exception.
-  static void make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-                                          CORBA_Environment &ACE_TRY_ENV =
-                                            TAO_default_environment ());
+  static void make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
+                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Runtime initialization of all standard exception typecodes.
   /// Called from <CORBA::ORB_init>.
-  static void init (CORBA_Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());
+  static void init (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Runtime finalization of all standard exception typecodes.
   static void fini (void);
 
   /// Create a CORBA::SystemException given the interface repository ID.
   static CORBA_SystemException *create_system_exception (
-      const char *id,
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      const char *id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /**
    * This global allocator is used to initialize system exception

@@ -55,15 +55,15 @@ Event_Service::run (int argc, char* argv[])
     {
       // Initialize ORB.
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv) == -1)
         return 1;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA",
-                                               ACE_TRY_ENV);
+        this->orb_->resolve_initial_references("RootPOA"
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -71,18 +71,18 @@ Event_Service::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService", ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -90,7 +90,7 @@ Event_Service::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecScheduler::Scheduler_var scheduler;
@@ -112,22 +112,22 @@ Event_Service::run (int argc, char* argv[])
                               ACE_Config_Scheduler,
                               1);
 
-              scheduler = this->sched_impl_->_this (ACE_TRY_ENV);
+              scheduler = this->sched_impl_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // Register the servant with the Naming Context....
-              naming_context->rebind (schedule_name, scheduler.in (),
-                                      ACE_TRY_ENV);
+              naming_context->rebind (schedule_name, scheduler.in ()
+                                      TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else
             {
               CORBA::Object_var tmp =
-                naming_context->resolve (schedule_name, ACE_TRY_ENV);
+                naming_context->resolve (schedule_name TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              scheduler = RtecScheduler::Scheduler::_narrow (tmp.in (),
-                                                             ACE_TRY_ENV);
+              scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
+                                                             TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -143,7 +143,7 @@ Event_Service::run (int argc, char* argv[])
                             TAO_EC_Event_Channel (attr),
                             1);
             this->ec_impl_ = ec;
-            ec->activate (ACE_TRY_ENV);
+            ec->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
           break;
@@ -182,23 +182,23 @@ Event_Service::run (int argc, char* argv[])
       // forward all the requests to the underlying EC
       // implementation.
       RtecEventChannelAdmin::EventChannel_var ec =
-        this->_this (ACE_TRY_ENV);
+        this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
-        this->orb_->object_to_string (ec.in (), ACE_TRY_ENV);
+        this->orb_->object_to_string (ec.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->ior_file_name_ != 0)
         {
-	  FILE *output_file= ACE_OS::fopen (this->ior_file_name_, "w");
-	  if (output_file == 0)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "Cannot open output file for writing IOR: %s",
-			       this->ior_file_name_),
-			      1);
-	  ACE_OS::fprintf (output_file, "%s", str.in ());
-	  ACE_OS::fclose (output_file);
+          FILE *output_file= ACE_OS::fopen (this->ior_file_name_, "w");
+          if (output_file == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               this->ior_file_name_),
+                              1);
+          ACE_OS::fprintf (output_file, "%s", str.in ());
+          ACE_OS::fclose (output_file);
         }
 
       if (this->pid_file_name_ != 0)
@@ -219,19 +219,19 @@ Event_Service::run (int argc, char* argv[])
       CosNaming::Name channel_name (1);
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup (this->service_name_);
-      naming_context->rebind (channel_name, ec.in (), ACE_TRY_ENV);
+      naming_context->rebind (channel_name, ec.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "%s; running event service\n", __FILE__));
-      this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      naming_context->unbind (channel_name, ACE_TRY_ENV);
+      naming_context->unbind (channel_name TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (scheduler.in ()))
         {
-          naming_context->unbind (schedule_name, ACE_TRY_ENV);
+          naming_context->unbind (schedule_name TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -337,48 +337,48 @@ Event_Service::parse_args (int argc, char *argv [])
 
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-Event_Service::for_consumers (CORBA::Environment &ACE_TRY_ENV)
+Event_Service::for_consumers (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->ec_impl_->for_consumers (ACE_TRY_ENV);
+  return this->ec_impl_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-Event_Service::for_suppliers (CORBA::Environment &ACE_TRY_ENV)
+Event_Service::for_suppliers (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->ec_impl_->for_suppliers (ACE_TRY_ENV);
+  return this->ec_impl_->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-Event_Service::destroy (CORBA::Environment &ACE_TRY_ENV)
+Event_Service::destroy (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->ec_impl_->destroy (ACE_TRY_ENV);
+  this->ec_impl_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->orb_->shutdown ();
 }
 
 RtecEventChannelAdmin::Observer_Handle
-Event_Service::append_observer (RtecEventChannelAdmin::Observer_ptr observer,
-                                CORBA::Environment &ACE_TRY_ENV)
+Event_Service::append_observer (RtecEventChannelAdmin::Observer_ptr observer
+                                TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
-  return this->ec_impl_->append_observer (observer, ACE_TRY_ENV);
+  return this->ec_impl_->append_observer (observer TAO_ENV_ARG_PARAMETER);
 }
 
 void
-Event_Service::remove_observer (RtecEventChannelAdmin::Observer_Handle handle,
-                                CORBA::Environment &ACE_TRY_ENV)
+Event_Service::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
+                                TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
-  this->ec_impl_->remove_observer (handle, ACE_TRY_ENV);
+  this->ec_impl_->remove_observer (handle TAO_ENV_ARG_PARAMETER);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

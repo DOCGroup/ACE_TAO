@@ -8,8 +8,8 @@
  *
  *   Interface for the TAO pluggable protocol framework.
  *
- *
- *  @author  Fred Kuhns <fredk@cs.wustl.edu>  Ossama Othman <ossama@uci.edu>
+ *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
@@ -65,8 +65,8 @@ public:
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
-            int ignore_address,
-            CORBA::Environment &ACE_TRY_ENV)
+            int ignore_address
+            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Close all open acceptors.
@@ -118,8 +118,8 @@ private:
               ACE_Reactor *reactor,
               ACE_CString &address,
               TAO_ProtocolFactorySetItor &factory,
-              int ignore_address,
-              CORBA::Environment &ACE_TRY_ENV);
+              int ignore_address
+              TAO_ENV_ARG_DECL);
 
 private:
   // The acceptor registry should not be copied.

@@ -130,8 +130,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
 int
 TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
     TAO_OutputCDR & output,
-    TAO_Pluggable_Reply_Params_Base &reply,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    TAO_Pluggable_Reply_Params_Base &reply
+    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -35,8 +35,8 @@ class TAO_Export TAO_ORBInitializer_Registry
 {
   friend class TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>;
   friend void PortableInterceptor::register_orb_initializer (
-                  PortableInterceptor::ORBInitializer_ptr init,
-                                  CORBA::Environment &);
+                  PortableInterceptor::ORBInitializer_ptr init
+                                  TAO_ENV_ARG_DECL_NOT_USED);
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
@@ -54,18 +54,18 @@ protected:
   ///< Register an ORBInitializer with the underlying ORBInitializer
   ///< array.
   void register_orb_initializer (
-    PortableInterceptor::ORBInitializer_ptr init,
-    CORBA::Environment &ACE_TRY_ENV);
+    PortableInterceptor::ORBInitializer_ptr init
+    TAO_ENV_ARG_DECL);
 
   /// Begin initialization of all registered ORBInitializers before
   /// the ORB itself is initialized.
-  void pre_init (PortableInterceptor::ORBInitInfo_ptr info,
-                 CORBA::Environment &ACE_TRY_ENV);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info
+                 TAO_ENV_ARG_DECL);
 
   /// Complete initialization of all registered ORBInitializers after
   /// the ORB has been initialized.
-  void post_init (PortableInterceptor::ORBInitInfo_ptr info,
-                  CORBA::Environment &ACE_TRY_ENV);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info
+                  TAO_ENV_ARG_DECL);
 
   /// Return a unique singleton instance.
   static TAO_ORBInitializer_Registry *instance (void);

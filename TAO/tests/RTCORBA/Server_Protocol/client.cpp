@@ -39,18 +39,18 @@ main (int argc, char *argv[])
     {
       // Initialize and obtain reference to the Test object.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_var server =
-        Test::_narrow (object.in (), ACE_TRY_ENV);
+        Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -62,13 +62,13 @@ main (int argc, char *argv[])
         }
 
       // Make an invocation on the obtained Test object.
-      server->shutdown (ACE_TRY_ENV);
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

@@ -123,8 +123,8 @@ TAO_SSLIOP_Connector::close (void)
 
 int
 TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
-                               TAO_Transport_Descriptor_Interface *desc,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               TAO_Transport_Descriptor_Interface *desc
+                               TAO_ENV_ARG_DECL)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -150,13 +150,13 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   // Check if the user overrode the default establishment of trust
   // policy for the current object.
   CORBA::Policy_var policy =
-    invocation->stub ()->get_policy (Security::SecEstablishTrustPolicy,
-                                     ACE_TRY_ENV);
+    invocation->stub ()->get_policy (Security::SecEstablishTrustPolicy
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   SecurityLevel2::EstablishTrustPolicy_var trust_policy =
-    SecurityLevel2::EstablishTrustPolicy::_narrow (policy.in (),
-                                                   ACE_TRY_ENV);
+    SecurityLevel2::EstablishTrustPolicy::_narrow (policy.in ()
+                                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // We use a pointer and temporary to make it obvious to determine
@@ -167,7 +167,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   Security::EstablishTrust tmp_trust = { 0 , 0 };
   if (!CORBA::is_nil (trust_policy.in ()))
     {
-      tmp_trust = trust_policy->trust (ACE_TRY_ENV);
+      tmp_trust = trust_policy->trust (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       trust = &tmp_trust;
@@ -196,13 +196,13 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   // Check if the user overrode the default Quality-of-Protection for
   // the current object.
-  policy = invocation->stub ()->get_policy (Security::SecQOPPolicy,
-                                            ACE_TRY_ENV);
+  policy = invocation->stub ()->get_policy (Security::SecQOPPolicy
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   SecurityLevel2::QOPPolicy_var qop_policy =
-    SecurityLevel2::QOPPolicy::_narrow (policy.in (),
-                                        ACE_TRY_ENV);
+    SecurityLevel2::QOPPolicy::_narrow (policy.in ()
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Temporary variable used to avoid overwriting the default value
@@ -211,7 +211,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   if (!CORBA::is_nil (qop_policy.in ()))
     {
-      Security::QOP qop = qop_policy->qop (ACE_TRY_ENV);
+      Security::QOP qop = qop_policy->qop (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (qop == Security::SecQOPNoProtection)
@@ -253,8 +253,8 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
           int result = this->ssliop_connect (ssl_endpoint,
                                              trust,
                                              invocation,
-                                             desc,
-                                             ACE_TRY_ENV);
+                                             desc
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           if (result != 0)
@@ -262,15 +262,15 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
         }
 
       return this->iiop_connect (ssl_endpoint,
-                                 invocation,
-                                 ACE_TRY_ENV);
+                                 invocation
+                                 TAO_ENV_ARG_PARAMETER);
     }
 
   return this->ssliop_connect (ssl_endpoint,
                                trust,
                                invocation,
-                               desc,
-                               ACE_TRY_ENV);
+                               desc
+                               TAO_ENV_ARG_PARAMETER);
 }
 
 
@@ -293,7 +293,7 @@ TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_SSLIOP_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
+TAO_SSLIOP_Connector::make_profile (TAO_ENV_SINGLE_ARG_DECL)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -316,8 +316,8 @@ TAO_SSLIOP_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
 
 int
 TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
-                                    TAO_GIOP_Invocation *invocation,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                    TAO_GIOP_Invocation *invocation
+                                    TAO_ENV_ARG_DECL)
 {
   const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
@@ -351,16 +351,16 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
   // Note that the IIOP-only transport descriptor is used!
   return this->TAO_IIOP_SSL_Connector::connect (invocation,
-                                                &iiop_desc,
-                                                ACE_TRY_ENV);
+                                                &iiop_desc
+                                                TAO_ENV_ARG_PARAMETER);
 }
 
 int
 TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                                       Security::EstablishTrust *trust,
                                       TAO_GIOP_Invocation *invocation,
-                                      TAO_Transport_Descriptor_Interface *desc,
-                                      CORBA::Environment &ACE_TRY_ENV)
+                                      TAO_Transport_Descriptor_Interface *desc
+                                      TAO_ENV_ARG_DECL)
 {
   TAO_Transport *&transport = invocation->transport ();
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();

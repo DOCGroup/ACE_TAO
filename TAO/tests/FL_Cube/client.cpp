@@ -39,8 +39,8 @@ public:
   void show (void);
   // Call show on all the window objects
 
-  void parse_args (int argc, char *argv[],
-                   CORBA::Environment &ACE_TRY_ENV);
+  void parse_args (int argc, char *argv[]
+                   TAO_ENV_ARG_DECL);
 
 private:
   static void x_cb (Fl_Widget *widget, void* cookie);
@@ -68,7 +68,7 @@ int main (int argc, char* argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Fl_Window window (300, 100);
@@ -81,14 +81,14 @@ int main (int argc, char* argv[])
 
       client.show ();
 
-      client.parse_args (argc, argv, ACE_TRY_ENV);
+      client.parse_args (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Fl::run ();
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Catched exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
@@ -149,7 +149,7 @@ Client::x_changed (void)
   ACE_TRY_NEW_ENV
     {
       CORBA::Long x = CORBA::Long (this->x_roller_->value ());
-      this->server_->set_x_angle (x, ACE_TRY_ENV);
+      this->server_->set_x_angle (x TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -165,7 +165,7 @@ Client::y_changed (void)
   ACE_TRY_NEW_ENV
     {
       CORBA::Long y = CORBA::Long (this->y_roller_->value ());
-      this->server_->set_y_angle (y, ACE_TRY_ENV);
+      this->server_->set_y_angle (y TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -176,8 +176,8 @@ Client::y_changed (void)
 }
 
 void
-Client::parse_args (int argc, char *argv[],
-                    CORBA::Environment &ACE_TRY_ENV)
+Client::parse_args (int argc, char *argv[]
+                    TAO_ENV_ARG_DECL)
 {
   const char *ior = "file://test.ior";
 
@@ -200,11 +200,11 @@ Client::parse_args (int argc, char *argv[],
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior, ACE_TRY_ENV);
+    this->orb_->string_to_object (ior TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->server_ =
-    Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+    Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 #endif /* ACE_HAS_FL */

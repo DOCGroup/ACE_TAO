@@ -39,7 +39,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -52,25 +52,25 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "test_orb",
-                                            ACE_TRY_ENV);
+                                            "test_orb"
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -79,10 +79,10 @@ main (int argc, char *argv[])
                           -1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -90,11 +90,11 @@ main (int argc, char *argv[])
 
       test_i server_impl (orb.in ());
 
-      obj = server_impl._this (ACE_TRY_ENV);
+      obj = server_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FOO::test_var server = FOO::test::_narrow (obj.in (),
-                                                 ACE_TRY_ENV);
+      FOO::test_var server = FOO::test::_narrow (obj.in ()
+                                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -104,7 +104,7 @@ main (int argc, char *argv[])
                           -1);
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in (), ACE_TRY_ENV);
+        orb->object_to_string (server.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_INFO, "FOO::test: <%s>\n", ior.in ()));
@@ -123,7 +123,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_INFO, "Event loop finished.\n"));

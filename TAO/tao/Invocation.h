@@ -99,8 +99,8 @@ public:
    * established *OR* all profiles have been tried.  In that case it
    * raises the CORBA::TRANSIENT exception.
    */
-  void prepare_header (CORBA::Octet response_flags,
-                       CORBA_Environment &ACE_TRY_ENV)
+  void prepare_header (CORBA::Octet response_flags
+                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Accessor to the request ServiceContextList.  Only valid when
@@ -130,16 +130,16 @@ public:
 
   /// Establishes a connection to the remote server, initializes
   /// the GIOP headers in the output CDR.
-  void start (CORBA_Environment &ACE_TRY_ENV)
+  void start (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Called by the invocation endpoint selector for each selected
   /// endpoint.
-  int perform_call (TAO_Transport_Descriptor_Interface &desc,
-                    CORBA::Environment &ACE_TRY_ENV);
+  int perform_call (TAO_Transport_Descriptor_Interface &desc
+                    TAO_ENV_ARG_DECL);
 
   /// Dynamically allocate \param inconsistent_policies_ PolicyList.
-  void init_inconsistent_policies (CORBA_Environment &ACE_TRY_ENV)
+  void init_inconsistent_policies (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return PolicyList stored in \param inconsistent_policies_ and
@@ -156,8 +156,8 @@ public:
    * forward_reference() method in this class.
    * It returns TAO_INVOKE_RESTART unless an exception is raised.
    */
-  int location_forward (CORBA::Object_ptr forward,
-                        CORBA::Environment &ACE_TRY_ENV)
+  int location_forward (CORBA::Object_ptr forward
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the object reference returned in the LOCATION_FORWARD
@@ -217,8 +217,8 @@ protected:
    * that the server closed the connection simply to release
    * resources.
    */
-  int invoke (CORBA::Boolean is_synchronous,
-              CORBA_Environment &ACE_TRY_ENV)
+  int invoke (CORBA::Boolean is_synchronous
+              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -229,8 +229,8 @@ protected:
    * by invoking the forward_reference() method in this class.
    * It returns TAO_INVOKE_RESTART unless an exception is raised.
    */
-  int location_forward (TAO_InputCDR &inp_stream,
-                        CORBA::Environment &ACE_TRY_ENV)
+  int location_forward (TAO_InputCDR &inp_stream
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -241,8 +241,8 @@ protected:
    * The forward object reference can be retrieved by invoking the
    * forward_reference() method in this class.
    */
-  void location_forward_i (TAO_Stub *stubobj,
-                           CORBA::Environment &ACE_TRY_ENV)
+  void location_forward_i (TAO_Stub *stubobj
+                           TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -366,8 +366,8 @@ protected:
 
   /// Implementation of the invoke() methods, handles the basic
   /// send/reply code and the system exceptions.
-  int invoke_i (CORBA::Boolean is_locate_request,
-                CORBA::Environment &ACE_TRY_ENV)
+  int invoke_i (CORBA::Boolean is_locate_request
+                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Reply dispatcher for the current synchronous invocation.
@@ -404,7 +404,7 @@ public:
 
   /// Establishes a connection to the remote server, initializes
   /// the GIOP headers in the output CDR.
-  void start (CORBA_Environment &ACE_TRY_ENV)
+  void start (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -414,8 +414,8 @@ public:
    * footprint of the generated stubs.
    */
   int invoke (TAO_Exception_Data *excepts,
-              CORBA::ULong except_count,
-              CORBA_Environment &ACE_TRY_ENV)
+              CORBA::ULong except_count
+              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::Exception));
 
   /**
@@ -452,11 +452,11 @@ public:
 
   /// Establishes a connection to the remote server, initializes
   /// the GIOP headers in the output CDR.
-  void start (CORBA_Environment &ACE_TRY_ENV)
+  void start (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Send request, without blocking for any response.
-  int invoke (CORBA_Environment &ACE_TRY_ENV)
+  int invoke (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Accessor for private member.
@@ -488,11 +488,11 @@ public:
 
   /// Establishes a connection to the remote server, initializes
   /// the GIOP headers in the output CDR.
-  void start (CORBA_Environment &ACE_TRY_ENV)
+  void start (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Send request, without blocking for any response.
-  int invoke (CORBA_Environment &ACE_TRY_ENV)
+  int invoke (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

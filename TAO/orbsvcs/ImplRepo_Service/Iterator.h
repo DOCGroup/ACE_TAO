@@ -24,7 +24,7 @@
  * @brief The Iterator for servers in the ImR.
  *
  */
-class ImR_Iterator 
+class ImR_Iterator
   : public POA_ImplementationRepository::ServerInformationIterator
 {
 public:
@@ -40,15 +40,13 @@ public:
   /// false.
   virtual CORBA::Boolean next_n (
       CORBA::ULong how_many,
-      ImplementationRepository::ServerInformationList_out server_list,
-      CORBA::Environment &ACE_TRY_ENV 
-        = CORBA::Environment::default_environment ()
+      ImplementationRepository::ServerInformationList_out server_list
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroys the iterator.
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV 
-                          = CORBA::Environment::default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

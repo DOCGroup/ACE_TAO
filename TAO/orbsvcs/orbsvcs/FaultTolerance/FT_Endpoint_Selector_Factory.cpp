@@ -19,8 +19,8 @@ TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory (void)
 
 
 TAO_Invocation_Endpoint_Selector *
-TAO_FT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *,
-                                                CORBA::Environment &ACE_TRY_ENV)
+TAO_FT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *
+                                                TAO_ENV_ARG_DECL)
 {
   if (this->ft_endpoint_selector_ == 0)
     {

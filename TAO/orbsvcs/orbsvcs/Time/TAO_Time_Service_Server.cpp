@@ -19,7 +19,7 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 // inaccuracy in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
+TAO_Time_Service_Server::universal_time (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -31,7 +31,7 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
   // broadcast by the WWV radio station of the National Bureau of
   // Standards deliver time that is easier to handle in this
   // representation. UTC time is defined as :
-  // 
+  //
   //  Time Units : 100 nanosecs
   //  Base Time  : 15th October 1582 00:00:00
   //  Approximate range : AD 30,000
@@ -74,7 +74,7 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::secure_universal_time (CORBA::Environment &ACE_TRY_ENV)
+TAO_Time_Service_Server::secure_universal_time (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -86,8 +86,8 @@ TAO_Time_Service_Server::secure_universal_time (CORBA::Environment &ACE_TRY_ENV)
 CosTime::UTO_ptr
 TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                                              TimeBase::InaccuracyT inaccuracy,
-                                             TimeBase::TdfT tdf,
-                                             CORBA::Environment &ACE_TRY_ENV)
+                                             TimeBase::TdfT tdf
+                                             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -106,8 +106,8 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 // This creates a new UTO given a time in the UtcT form.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
-                                       CORBA::Environment &ACE_TRY_ENV)
+TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc
+                                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -125,8 +125,8 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
 
 CosTime::TIO_ptr
 TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
-                                       TimeBase::TimeT upper,
-                                       CORBA::Environment &ACE_TRY_ENV)
+                                       TimeBase::TimeT upper
+                                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;

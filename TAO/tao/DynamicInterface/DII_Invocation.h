@@ -54,9 +54,8 @@ public:
                            int byte_order = TAO_ENCAP_BYTE_ORDER);
   // Constructor.
 
-  int invoke (CORBA::ExceptionList_ptr exceptions,
-              CORBA_Environment &ACE_TRY_ENV =
-                TAO_default_environment ())
+  int invoke (CORBA::ExceptionList_ptr exceptions
+              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException));
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
@@ -85,14 +84,13 @@ public:
                                     int byte_order = TAO_ENCAP_BYTE_ORDER);
   // Constructor.
 
-  int invoke (CORBA_Environment &TAO_IN_ENV =
-                    TAO_default_environment ())
+  int invoke (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
 
 private:
-  int invoke_i (CORBA::Environment &ACE_TRY_ENV)
+  int invoke_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Implementation of the invoke() methods, handles the basic
   // send/reply code and the system exceptions.

@@ -80,7 +80,7 @@ CORBA_TypeCodeFactory_var::operator const ::CORBA_TypeCodeFactory_ptr &() const 
   return this->ptr_;
 }
 
-CORBA_TypeCodeFactory_var::operator ::CORBA_TypeCodeFactory_ptr &() // cast 
+CORBA_TypeCodeFactory_var::operator ::CORBA_TypeCodeFactory_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -140,11 +140,11 @@ CORBA_TypeCodeFactory_var::tao_nil (void)
 
 ::CORBA_TypeCodeFactory_ptr
 CORBA_TypeCodeFactory_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::CORBA_TypeCodeFactory::_narrow (p, ACE_TRY_ENV);
+  return ::CORBA_TypeCodeFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -225,16 +225,16 @@ CORBA_TypeCodeFactory::~CORBA_TypeCodeFactory (void)
 {}
 
 CORBA_TypeCodeFactory_ptr CORBA_TypeCodeFactory::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return CORBA_TypeCodeFactory::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return CORBA_TypeCodeFactory::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA_TypeCodeFactory_ptr CORBA_TypeCodeFactory::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -272,7 +272,7 @@ void *CORBA_TypeCodeFactory::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;

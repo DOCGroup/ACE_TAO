@@ -42,9 +42,9 @@ public:
   // = The RtecEventComm::PushSupplier methods
 
   void activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                 int period,
-                 CORBA::Environment &ACE_TRY_ENV);
-  void deactivate (CORBA::Environment &ACE_TRY_ENV);
+                 int period
+                 TAO_ENV_ARG_DECL);
+  void deactivate (TAO_ENV_SINGLE_ARG_DECL);
   // Connect as a consumer to receive a TIMEOUT every <period>
   // milliseconds.
   // The class pushes an event (in its supplier role) every time it
@@ -54,22 +54,22 @@ public:
                 int published_source,
                 int published_type,
                 int event_source,
-                int event_type,
-                CORBA::Environment &ACE_TRY_ENV);
+                int event_type
+                TAO_ENV_ARG_DECL);
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+                const RtecEventChannelAdmin::SupplierQOS &qos
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
-  void push (const RtecEventComm::EventSet& events,
-             CORBA::Environment &_env)
+  void push (const RtecEventComm::EventSet& events
+             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (CORBA::Environment &)
+  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The Consumer side methods.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -108,7 +108,7 @@ public:
   void stop (void);
   CORBA::ULong push_count (void);
 
-  void run (CORBA::Environment &ACE_TRY_ENV);
+  void run (TAO_ENV_SINGLE_ARG_DECL);
   // Run a single iteration of the test
 
 private:

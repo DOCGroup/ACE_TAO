@@ -21,7 +21,7 @@
 // ============================================================================
 
 
-#include	"be.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -180,12 +180,10 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
     {
       // Pseudo objects do not require these methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl
-	        << "void* target," << be_nl
-	        << "CORBA_Object *src," << be_nl
-	        << "CORBA_Environment &ACE_TRY_ENV = "  << be_idt_nl
-	        << "TAO_default_environment ()"
-	        << be_uidt << be_uidt_nl
-	        << ");" << be_uidt_nl;
+                << "void* target," << be_nl
+                << "CORBA_Object *src" << be_nl
+                << "TAO_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
+                << ");" << be_uidt_nl;
 
       *os << "virtual CORBA_Object* _upcast (void *src) const;";
     }

@@ -33,8 +33,8 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void shutdown (CORBA::Boolean is_clean,
-                 CORBA::Environment &ACE_TRY_ENV)
+  void shutdown (CORBA::Boolean is_clean
+                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The callback method
 
@@ -58,15 +58,15 @@ public:
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback,
                            CORBA::Boolean is_clean,
-                           Callback_ptr callback,
-                           CORBA::Environment&)
+                           Callback_ptr callback
+                           TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown_now (CORBA::Boolean is_clean,
-                     CORBA::Environment&)
+  void shutdown_now (CORBA::Boolean is_clean
+                     TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -90,15 +90,15 @@ public:
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback,
                            CORBA::Boolean is_clean,
-                           Callback_ptr callback,
-                           CORBA::Environment&)
+                           Callback_ptr callback
+                           TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown_now (CORBA::Boolean is_clean,
-                     CORBA::Environment&)
+  void shutdown_now (CORBA::Boolean is_clean
+                     TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

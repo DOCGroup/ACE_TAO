@@ -13,7 +13,8 @@ PortableServer::Servant
 Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
                                            PortableServer::POA_ptr,
                                            const char *,
-                                           void * & cookie )
+                                           void * & cookie
+                                           TAO_ENV_ARG_DECL_NOT_USED)
   throw (CORBA::SystemException, PortableServer::ForwardRequest)
 {
 
@@ -47,7 +48,8 @@ Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId &,
                                             PortableServer::POA_ptr,
                                             const char *,
                                             void * cookie,
-                                            PortableServer::Servant servant)
+                                            PortableServer::Servant servant
+                                            TAO_ENV_ARG_DECL_NOT_USED)
   throw (CORBA::SystemException)
 {
 

@@ -44,15 +44,15 @@ Test_Fixed_Array::opname (void) const
 }
 
 void
-Test_Fixed_Array::dii_req_invoke (CORBA::Request *req,
-                                  CORBA::Environment &ACE_TRY_ENV)
+Test_Fixed_Array::dii_req_invoke (CORBA::Request *req
+                                  TAO_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= Param_Test::Fixed_Array_forany (this->in_);
   req->add_inout_arg ("s2") <<= Param_Test::Fixed_Array_forany (this->inout_);
   req->add_out_arg ("s3") <<= Param_Test::Fixed_Array_forany (this->out_);
   req->set_return_type (Param_Test::_tc_Fixed_Array);
 
-  req->invoke (ACE_TRY_ENV);
+  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Param_Test::Fixed_Array_forany forany;
@@ -60,13 +60,13 @@ Test_Fixed_Array::dii_req_invoke (CORBA::Request *req,
   Param_Test::Fixed_Array_copy (this->ret_, forany.in ());
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1, ACE_TRY_ENV);
+    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *arg2->value () >>= forany;
   Param_Test::Fixed_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2, ACE_TRY_ENV);
+    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   Param_Test::Fixed_Array_forany out_any (this->out_);
   *arg3->value () >>= forany;
@@ -74,13 +74,12 @@ Test_Fixed_Array::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/,
-                                   CORBA::Environment &/*env*/)
+Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
+                                   TAO_ENV_ARG_DECL_NOT_USED/*env*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
   //ACE_UNUSED_ARG (objref);
-  //ACE_UNUSED_ARG (env);
 
   for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
     {
@@ -107,15 +106,15 @@ Test_Fixed_Array::reset_parameters (void)
 }
 
 int
-Test_Fixed_Array::run_sii_test (Param_Test_ptr objref,
-                                CORBA::Environment &ACE_TRY_ENV)
+Test_Fixed_Array::run_sii_test (Param_Test_ptr objref
+                                TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       this->ret_ = objref->test_fixed_array (this->in_,
                                              this->inout_,
-                                             this->out_,
-                                             ACE_TRY_ENV);
+                                             this->out_
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;

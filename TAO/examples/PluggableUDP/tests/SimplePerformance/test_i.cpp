@@ -10,7 +10,7 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 }
 
 void
-Simple_Server_i::sendCharSeq (const Char_Seq &, CORBA::Environment&)
+Simple_Server_i::sendCharSeq (const Char_Seq & TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Simple_Server_count++;
@@ -18,7 +18,7 @@ Simple_Server_i::sendCharSeq (const Char_Seq &, CORBA::Environment&)
 }
 
 void
-Simple_Server_i::sendOctetSeq (const Octet_Seq &, CORBA::Environment&)
+Simple_Server_i::sendOctetSeq (const Octet_Seq & TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Simple_Server_count++;
@@ -26,8 +26,8 @@ Simple_Server_i::sendOctetSeq (const Octet_Seq &, CORBA::Environment&)
 }
 
 CORBA::Long
-Simple_Server_i::get_number (CORBA::Long, 
-                             CORBA::Environment&)
+Simple_Server_i::get_number (CORBA::Long
+                             TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Long tmp = Simple_Server_count;
@@ -36,20 +36,20 @@ Simple_Server_i::get_number (CORBA::Long,
 }
 
 void
-Simple_Server_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Simple_Server_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Simple_Server_i::shutdown\n"));
   ACE_TRY
     {
-      this->orb_->shutdown (0, ACE_TRY_ENV);
+      this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
     }
   ACE_ENDTRY;
 }

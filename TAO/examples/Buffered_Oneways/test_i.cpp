@@ -10,8 +10,8 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::method (CORBA::ULong request_number,
-                CORBA::Environment &)
+test_i::method (CORBA::ULong request_number
+                TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -20,9 +20,9 @@ test_i::method (CORBA::ULong request_number,
 }
 
 void
-test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0,
-                        ACE_TRY_ENV);
+  this->orb_->shutdown (0
+                        TAO_ENV_ARG_PARAMETER);
 }

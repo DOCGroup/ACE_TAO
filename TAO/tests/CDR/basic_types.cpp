@@ -61,8 +61,6 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
 {
   for (int i = 0; i < n; ++i)
     {
-      CORBA::Environment env;
-
       if (cdr.write_octet (test_types.o) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "write_octet[%d] failed\n",
@@ -112,8 +110,6 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
   CORBA::Short xs;
   CORBA::Long xl;
   CORBA::Any any;
-
-  CORBA::Environment env;
 
   for (int i = 0; i < n; ++i)
     {
@@ -216,8 +212,8 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0,
-                                            ACE_TRY_ENV);
+                                            0
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Get_Opt get_opt (argc, argv, "dn:l:");

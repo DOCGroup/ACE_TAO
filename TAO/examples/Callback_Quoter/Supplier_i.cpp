@@ -153,15 +153,15 @@ int
 Supplier::send_market_status (const char *stock_name,
                               long value)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
 
       // Make the RMI.
       this->notifier_->market_status (stock_name,
-                                      value,
-                                      ACE_TRY_ENV);
+                                      value
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -228,15 +228,15 @@ Supplier::via_naming_service (void)
       notifier_ref_name[0].id = CORBA::string_dup ("Notifier");
 
       CORBA::Object_var notifier_obj =
-        this->naming_services_client_->resolve (notifier_ref_name,
-                                                ACE_TRY_ENV);
+        this->naming_services_client_->resolve (notifier_ref_name
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-        Notifier::_narrow (notifier_obj.in (),
-                           ACE_TRY_ENV);
+        Notifier::_narrow (notifier_obj.in ()
+                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -269,8 +269,8 @@ Supplier::init (int argc, char **argv)
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    0,
-                                    ACE_TRY_ENV);
+                                    0
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
@@ -293,8 +293,8 @@ Supplier::init (int argc, char **argv)
                            this->argv_[0]),
                           -1);
       CORBA::Object_var notifier_object =
-        this->orb_->string_to_object (this->ior_,
-                                      ACE_TRY_ENV);
+        this->orb_->string_to_object (this->ior_
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (notifier_object.in ()))
@@ -304,8 +304,8 @@ Supplier::init (int argc, char **argv)
                           -1);
       // The downcasting from CORBA::Object_var to Notifier_var is
       // done using the <_narrow> method.
-      this->notifier_ = Notifier::_narrow (notifier_object.in (),
-                                           ACE_TRY_ENV);
+      this->notifier_ = Notifier::_narrow (notifier_object.in ()
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)

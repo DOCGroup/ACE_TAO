@@ -49,7 +49,7 @@
  * <CORBA::UnknownUserException> that contains the exception inside
  * an Any.
  */
-class TAO_DynamicInterface_Export CORBA_UnknownUserException 
+class TAO_DynamicInterface_Export CORBA_UnknownUserException
   : public CORBA_UserException
 {
 public:
@@ -73,10 +73,10 @@ public:
   /// To throw an UnknownUserException of this type.
   virtual void _raise (void);
 
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &);
+  virtual void _tao_encode (TAO_OutputCDR &cdr
+                            TAO_ENV_ARG_DECL) const;
+  virtual void _tao_decode (TAO_InputCDR &cdr
+                            TAO_ENV_ARG_DECL);
 
   /// Narrow to an UnknowUserException.
   static CORBA_UnknownUserException *_downcast (CORBA_Exception *ex);

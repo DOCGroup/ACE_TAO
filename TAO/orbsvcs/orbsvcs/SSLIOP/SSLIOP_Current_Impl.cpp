@@ -21,8 +21,8 @@ TAO_SSLIOP_Current_Impl::~TAO_SSLIOP_Current_Impl (void)
 
 Security::AttributeList *
 TAO_SSLIOP_Current_Impl::get_attributes (
-    const Security::AttributeTypeList &attributes,
-    CORBA::Environment &ACE_TRY_ENV)
+    const Security::AttributeTypeList &attributes
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong len = attributes.length ();
@@ -129,7 +129,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
 
 SecurityLevel2::ReceivedCredentials_ptr
 TAO_SSLIOP_Current_Impl::received_credentials (
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (

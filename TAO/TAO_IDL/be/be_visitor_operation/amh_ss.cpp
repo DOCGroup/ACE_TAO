@@ -69,21 +69,21 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request," << be_nl
       << "void *_tao_object_reference, " << be_nl
-      << "void * /* context */, " << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void * /* context */ " << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the argument
   // types is "native", we do not generate any skeleton
-  // last argument - is always CORBA::Environment.
+  // last argument - is always TAO_ENV_ARG_PARAMETER.
   *os << "{" << be_idt_nl;
-  
+
   *os << "// foo" << be_uidt_nl;
-  
+
   *os << "}" << be_nl << be_nl;
 
 
   // see <be_visitor_operation_ss::visit_operation> for more info
-      
+
   return 0;
 }

@@ -115,8 +115,8 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   // Initialize data components.
 
   int parse_args (int argc,

@@ -25,10 +25,10 @@ public:
   Receiver_Factory (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual Test::Receiver_ptr create_receiver (CORBA::Environment &ACE_TRY_ENV)
+  virtual Test::Receiver_ptr create_receiver (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -13,20 +13,20 @@ class Manager
   // Ctor
 
   int init (int argc,
-            char *argv[],
-            CORBA::Environment & ACE_TRY_ENV);
+            char *argv[]
+            TAO_ENV_ARG_DECL);
 
   // Initialize the ORB, POA etc.
 
-  int init_register_name_service (CORBA::Environment &ACE_TRY_ENV);
+  int init_register_name_service (TAO_ENV_SINGLE_ARG_DECL);
   // Initialize the Name service, tegister the combined IOR with it
 
-  int activate_servant (CORBA::Environment &ACE_TRY_ENV);
+  int activate_servant (TAO_ENV_SINGLE_ARG_DECL);
   // Activate the servant etc.
 
-  int make_iors_register (CORBA::Environment &);
+  int make_iors_register (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the  ORB event loop..
  private:
   CORBA::ORB_var orb_;

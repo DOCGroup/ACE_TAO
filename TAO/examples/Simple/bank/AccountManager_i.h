@@ -54,18 +54,18 @@ public:
   // Destructor.
 
   virtual Bank::Account_ptr open (const char *name,
-                                  CORBA::Float initial_balance,
-                                  CORBA::Environment &_env)
+                                  CORBA::Float initial_balance
+                                  TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the Account interface with the given name from the server.
   // Put the initial balance specified in the new account.
 
-  virtual void close (Bank::Account_ptr,
-                      CORBA::Environment &env)
+  virtual void close (Bank::Account_ptr
+                      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Close the given account.
 
-  virtual void shutdown (CORBA::Environment &env)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the server.
 

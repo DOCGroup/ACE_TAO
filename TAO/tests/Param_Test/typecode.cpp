@@ -43,8 +43,8 @@ Test_TypeCode::opname (void) const
 }
 
 void
-Test_TypeCode::dii_req_invoke (CORBA::Request *req,
-                               CORBA::Environment &ACE_TRY_ENV)
+Test_TypeCode::dii_req_invoke (CORBA::Request *req
+                               TAO_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -52,7 +52,7 @@ Test_TypeCode::dii_req_invoke (CORBA::Request *req,
 
   req->set_return_type (CORBA::_tc_TypeCode);
 
-  req->invoke (ACE_TRY_ENV);
+  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_ptr tmp;
@@ -60,21 +60,21 @@ Test_TypeCode::dii_req_invoke (CORBA::Request *req,
   this->ret_ = CORBA::TypeCode::_duplicate (tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1, ACE_TRY_ENV);
+    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = CORBA::TypeCode::_duplicate (tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2, ACE_TRY_ENV);
+    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = CORBA::TypeCode::_duplicate (tmp);
 }
 
 int
-Test_TypeCode::init_parameters (Param_Test_ptr,
-                                CORBA::Environment &)
+Test_TypeCode::init_parameters (Param_Test_ptr
+                                TAO_ENV_ARG_DECL_NOT_USED)
 {
   static CORBA::TypeCode_ptr tc_table [] =
     {
@@ -115,20 +115,20 @@ Test_TypeCode::reset_parameters (void)
 }
 
 int
-Test_TypeCode::run_sii_test (Param_Test_ptr objref,
-                             CORBA::Environment &ACE_TRY_ENV)
+Test_TypeCode::run_sii_test (Param_Test_ptr objref
+                             TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      this->init_parameters (objref, ACE_TRY_ENV);
+      this->init_parameters (objref TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_out out (this->out_);
 
       this->ret_ = objref->test_typecode (this->in_.in (),
                                           this->inout_.inout (),
-                                          out,
-                                          ACE_TRY_ENV);
+                                          out
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;
@@ -146,22 +146,22 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref,
 CORBA::Boolean
 Test_TypeCode::check_validity (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean one, two, three;
 
-      one = this->in_.in ()->equal (this->inout_.in (),
-                                    ACE_TRY_ENV);
+      one = this->in_.in ()->equal (this->inout_.in ()
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      two = this->in_.in ()->equal (this->out_.in (),
-                                    ACE_TRY_ENV);
+      two = this->in_.in ()->equal (this->out_.in ()
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      three = this->in_.in ()->equal (this->ret_.in (),
-                                      ACE_TRY_ENV);
+      three = this->in_.in ()->equal (this->ret_.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (one && two && three)

@@ -129,7 +129,7 @@ TAO_FlowSpec_Entry::set_protocol (void)
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"UDP") == 0)
           this->protocol_ = TAO_AV_Core::TAO_AV_UDP;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"QoS_UDP") == 0)
-	this->protocol_ = TAO_AV_Core::TAO_AV_QOS_UDP;
+        this->protocol_ = TAO_AV_Core::TAO_AV_QOS_UDP;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL5") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_AAL5;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL3_4") == 0)

@@ -62,29 +62,25 @@
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
     CORBA::PolicyType policy_type (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     CORBA::Policy_ptr copy (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));

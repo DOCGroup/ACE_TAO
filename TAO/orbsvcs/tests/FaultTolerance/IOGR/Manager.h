@@ -43,18 +43,18 @@ public:
   // Ctor
 
   void init (int argc,
-             char *argv[],
-             CORBA::Environment & ACE_TRY_ENV);
+             char *argv[]
+             TAO_ENV_ARG_DECL);
 
   // Initialize the ORB, POA etc.
 
-  int make_merged_iors (CORBA::Environment &);
+  int make_merged_iors (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Merges the different IORS
 
-  int set_properties (CORBA::Environment &);
+  int set_properties (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Sets the properties for the profiles
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the  ORB event loop..
 
   int write_to_file (void);

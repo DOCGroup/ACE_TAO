@@ -11,13 +11,13 @@
 ACE_RCSID(FL_Cube, test_i, "$Id$")
 
 LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)
-                                  
+
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 void
-LCD_Display_imp::shutdown (CORBA::Environment&)
+LCD_Display_imp::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -26,9 +26,9 @@ LCD_Display_imp::shutdown (CORBA::Environment&)
   this->orb_->destroy ();
 }
 
-void 
-LCD_Display_imp::send_val (CORBA::Long val, 
-                           CORBA::Environment &)
+void
+LCD_Display_imp::send_val (CORBA::Long val
+                           TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

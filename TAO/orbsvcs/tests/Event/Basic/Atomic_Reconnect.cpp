@@ -18,24 +18,24 @@ main (int argc, char* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -46,11 +46,11 @@ main (int argc, char* argv[])
       attributes.supplier_reconnect = 1;
 
       TAO_EC_Event_Channel ec_impl (attributes);
-      ec_impl.activate (ACE_TRY_ENV);
+      ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_TRY_ENV);
+        ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -58,12 +58,12 @@ main (int argc, char* argv[])
 
       // Obtain the consumer admin..
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_TRY_ENV);
+        event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the supplier admin..
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_TRY_ENV);
+        event_channel->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -75,16 +75,16 @@ main (int argc, char* argv[])
                          event_source,
                          event_type,
                          event_source,
-                         event_type,
-                         ACE_TRY_ENV);
+                         event_type
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       supplier1.connect (supplier_admin.in (),
                          event_source,
                          event_type + 1,
                          event_source,
-                         event_type + 1,
-                         ACE_TRY_ENV);
+                         event_type + 1
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -107,8 +107,8 @@ main (int argc, char* argv[])
       consumer_qos01.insert (event_source, event_type + 1, 0);
 
       consumer01.connect (consumer_admin.in (),
-                          consumer_qos01.get_ConsumerQOS (),
-                          ACE_TRY_ENV);
+                          consumer_qos01.get_ConsumerQOS ()
+                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Consumer consumer0 ("Consumer/0", event_type);
@@ -116,8 +116,8 @@ main (int argc, char* argv[])
       // connnect to the event channel....
 
       consumer0.connect (consumer_admin.in (),
-                         consumer_qos0.get_ConsumerQOS (),
-                         ACE_TRY_ENV);
+                         consumer_qos0.get_ConsumerQOS ()
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Consumer consumer1 ("Consumer/1", event_type);
@@ -125,8 +125,8 @@ main (int argc, char* argv[])
       // connnect to the event channel....
 
       consumer1.connect (consumer_admin.in (),
-                         consumer_qos1.get_ConsumerQOS (),
-                         ACE_TRY_ENV);
+                         consumer_qos1.get_ConsumerQOS ()
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -145,25 +145,25 @@ main (int argc, char* argv[])
         {
           ACE_Time_Value tv (0, 10000);
           consumer0.connect (consumer_admin.in (),
-                             consumer_qos0.get_ConsumerQOS (),
-                             ACE_TRY_ENV);
+                             consumer_qos0.get_ConsumerQOS ()
+                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           consumer1.connect (consumer_admin.in (),
-                             consumer_qos1.get_ConsumerQOS (),
-                             ACE_TRY_ENV);
+                             consumer_qos1.get_ConsumerQOS ()
+                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           if (i % 2 == 0)
             {
               consumer01.connect (consumer_admin.in (),
-                                  consumer_qos0.get_ConsumerQOS (),
-                                  ACE_TRY_ENV);
+                                  consumer_qos0.get_ConsumerQOS ()
+                                  TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else
             {
               consumer01.connect (consumer_admin.in (),
-                                  consumer_qos01.get_ConsumerQOS (),
-                                  ACE_TRY_ENV);
+                                  consumer_qos01.get_ConsumerQOS ()
+                                  TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -180,28 +180,28 @@ main (int argc, char* argv[])
 
       // Cleanup..
 
-      consumer01.disconnect (ACE_TRY_ENV);
+      consumer01.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer1.disconnect (ACE_TRY_ENV);
+      consumer1.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer0.disconnect (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // ****************************************************************
-
-      supplier1.disconnect (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      supplier0.disconnect (ACE_TRY_ENV);
+      consumer0.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      event_channel->destroy (ACE_TRY_ENV);
+      supplier1.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      supplier0.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      poa->destroy (1, 1, ACE_TRY_ENV);
+      event_channel->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // ****************************************************************
+
+      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -290,8 +290,8 @@ Consumer::dump_results (int base_count,
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events,
-                CORBA::Environment &)
+Consumer::push (const RtecEventComm::EventSet& events
+                TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)

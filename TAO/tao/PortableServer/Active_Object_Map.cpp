@@ -83,8 +83,8 @@ TAO_Active_Object_Map::set_system_id_size
 TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
                                               int unique_id_policy,
                                               int persistent_id_policy,
-                                              const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
-                                              CORBA_Environment &ACE_TRY_ENV)
+                                              const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters
+                                              TAO_ENV_ARG_DECL)
   : user_id_map_ (0),
     servant_map_ (0),
     id_uniqueness_strategy_ (0),

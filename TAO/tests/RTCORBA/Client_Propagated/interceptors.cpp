@@ -70,14 +70,13 @@ Client_Request_Interceptor::receive_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
   ACE_TRY
     {
       // Try to get the RTCorbaPriority context.  If its not there,
       // report the fact via an exception.
       IOP::ServiceContext_var sc =
-        ri->get_reply_service_context (IOP::RTCorbaPriority, ACE_TRY_ENV);
+        ri->get_reply_service_context (IOP::RTCorbaPriority TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -109,25 +108,24 @@ Client_Request_Interceptor::receive_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
-                                    this->orb_id_.in (),
-                                    ACE_TRY_ENV);
+                                    this->orb_id_.in ()
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var operation = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (ACE_TRY_ENV);
+  CORBA::Object_var target = ri->target (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (target.in (), ACE_TRY_ENV);
+    this->orb_->object_to_string (target.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -141,6 +139,6 @@ Client_Request_Interceptor::receive_exception (
   // Try to get the RTCorbaPriority context.  If its not there,
   // report the fact via an exception.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (IOP::RTCorbaPriority, ACE_TRY_ENV);
+    ri->get_reply_service_context (IOP::RTCorbaPriority TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

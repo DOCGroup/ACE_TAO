@@ -58,25 +58,25 @@ public:
    * types and mcast groups) and the class registers itself with the
    * reactor.
    */
-  int open (RtecEventChannelAdmin::EventChannel_ptr ec,
-            CORBA::Environment &env = TAO_default_environment ());
+  int open (RtecEventChannelAdmin::EventChannel_ptr ec
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Remove ourselves from the event channel, unsubscribe from the
    * multicast groups, close the sockets and unsubscribe from the
    * reactor.
    */
-  int close (CORBA::Environment &env = TAO_default_environment ());
+  int close (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Reactor callbacks
   virtual int handle_input (ACE_HANDLE fd);
 
   /// The Observer methods
-  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                        CORBA::Environment &env = TAO_default_environment ())
+  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
-                        CORBA::Environment &env = TAO_default_environment ())
+  void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -99,14 +99,12 @@ public:
 
     // The Observer methods
     virtual void update_consumer (
-        const RtecEventChannelAdmin::ConsumerQOS& sub,
-        CORBA::Environment &env =
-            TAO_default_environment ())
+        const RtecEventChannelAdmin::ConsumerQOS& sub
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
     virtual void update_supplier (
-        const RtecEventChannelAdmin::SupplierQOS& pub,
-        CORBA::Environment &env =
-            TAO_default_environment ())
+        const RtecEventChannelAdmin::SupplierQOS& pub
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -135,8 +133,8 @@ private:
 
   void compute_required_subscriptions (
         const RtecEventChannelAdmin::ConsumerQOS& sub,
-              Address_Set& multicast_addresses,
-              CORBA::Environment &ACE_TRY_ENV)
+              Address_Set& multicast_addresses
+              TAO_ENV_ARG_DECL)
               ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Delete the list of multicast addresses that we need not

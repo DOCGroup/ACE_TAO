@@ -91,10 +91,10 @@ AdminProperties_Test::parse_args(int argc, char *argv[])
 }
 
 void
-AdminProperties_Test::init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV)
+AdminProperties_Test::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
 {
   // init base class
-  Notify_Test_Client::init (argc, argv, ACE_TRY_ENV);
+  Notify_Test_Client::init (argc, argv TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ChannelID id;
@@ -118,8 +118,8 @@ AdminProperties_Test::init (int argc, char *argv [], CORBA::Environment &ACE_TRY
 
   ec_ = notify_factory_->create_channel (initial_qos_,
                                          initial_admin_,
-                                         id,
-                                         ACE_TRY_ENV);
+                                         id
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
@@ -128,33 +128,33 @@ AdminProperties_Test::init (int argc, char *argv [], CORBA::Environment &ACE_TRY
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
-    ec_->new_for_suppliers (this->ifgop_, adminid, ACE_TRY_ENV);
+    ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
-    ec_->new_for_consumers (this->ifgop_, adminid, ACE_TRY_ENV);
+    ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 }
 
 void
-AdminProperties_Test::run_test (CORBA::Environment &ACE_TRY_ENV)
+AdminProperties_Test::run_test (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->create_suppliers (ACE_TRY_ENV);
+  this->create_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->create_consumers (ACE_TRY_ENV);
+  this->create_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->send_events (ACE_TRY_ENV);
+  this->send_events (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-AdminProperties_Test::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
+AdminProperties_Test::create_suppliers (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -170,10 +170,10 @@ AdminProperties_Test::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
       for (index = 0; index < this->suppliers_; ++index)
         {
           supplier = new TAO_Notify_StructuredPushSupplier ();
-          supplier->init (root_poa_.in (), ACE_TRY_ENV);
+          supplier->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          supplier->connect (this->supplier_admin_.in (), ACE_TRY_ENV);
+          supplier->connect (this->supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -186,7 +186,7 @@ AdminProperties_Test::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-AdminProperties_Test::create_consumers (CORBA::Environment &ACE_TRY_ENV)
+AdminProperties_Test::create_consumers (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -202,10 +202,10 @@ AdminProperties_Test::create_consumers (CORBA::Environment &ACE_TRY_ENV)
       for (index = 0; index < this->consumers_; ++index)
         {
           consumer = new TAO_Notify_StructuredPushConsumer ();
-          consumer->init (root_poa_.in (), ACE_TRY_ENV);
+          consumer->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          consumer->connect (this->consumer_admin_.in (), ACE_TRY_ENV);
+          consumer->connect (this->consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -218,7 +218,7 @@ AdminProperties_Test::create_consumers (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-AdminProperties_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
+AdminProperties_Test::send_events (TAO_ENV_SINGLE_ARG_DECL)
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -255,10 +255,10 @@ AdminProperties_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Notify_StructuredPushSupplier *supplier =
     new TAO_Notify_StructuredPushSupplier ();
-  supplier->init (root_poa_.in (), ACE_TRY_ENV);
+  supplier->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  supplier->connect (this->supplier_admin_.in (), ACE_TRY_ENV);
+  supplier->connect (this->supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   int i = 0;
@@ -271,7 +271,7 @@ AdminProperties_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
           // any
           event.remainder_of_body <<= (CORBA::Long)i;
 
-          supplier->send_event (event, ACE_TRY_ENV);
+          supplier->send_event (event TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -294,11 +294,11 @@ main (int argc, char* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      test.init (argc, argv,
-                 ACE_TRY_ENV); //Init the Client
+      test.init (argc, argv
+                 TAO_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 
-      test.run_test (ACE_TRY_ENV);
+      test.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)

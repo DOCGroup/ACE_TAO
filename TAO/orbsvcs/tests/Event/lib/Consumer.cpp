@@ -22,21 +22,21 @@ void
 EC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     const RtecEventChannelAdmin::ConsumerQOS& qos,
-    int shutdown_event_type,
-    CORBA::Environment &ACE_TRY_ENV)
+    int shutdown_event_type
+    TAO_ENV_ARG_DECL)
 {
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
+    consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->connect (qos, shutdown_event_type, ACE_TRY_ENV);
+  this->connect (qos, shutdown_event_type TAO_ENV_ARG_PARAMETER);
 }
 
 void
 EC_Consumer::connect (
     const RtecEventChannelAdmin::ConsumerQOS& qos,
-    int shutdown_event_type,
-    CORBA::Environment &ACE_TRY_ENV)
+    int shutdown_event_type
+    TAO_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return; // @@ Throw?
@@ -45,14 +45,14 @@ EC_Consumer::connect (
 
   if (CORBA::is_nil (this->myself_.in ()))
     {
-      this->myself_ = this->_this (ACE_TRY_ENV);
+      this->myself_ = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   this->is_active_ = 1;
 
   this->supplier_proxy_->connect_push_consumer (this->myself_.in (),
-                                                qos,
-                                                ACE_TRY_ENV);
+                                                qos
+                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -63,12 +63,12 @@ EC_Consumer::connected (void) const
 }
 
 void
-EC_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
+EC_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+  this->supplier_proxy_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
@@ -76,19 +76,19 @@ EC_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-EC_Consumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
+EC_Consumer::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (!this->is_active_)
     return;
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, ACE_TRY_ENV);
+    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->myself_ = RtecEventComm::PushConsumer::_nil ();
   this->is_active_ = 0;
@@ -108,11 +108,11 @@ EC_Consumer::accumulate (ACE_Throughput_Stats& throughput) const
 }
 
 void
-EC_Consumer::push (const RtecEventComm::EventSet& events,
-                   CORBA::Environment &ACE_TRY_ENV)
+EC_Consumer::push (const RtecEventComm::EventSet& events
+                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->driver_->consumer_push (this->cookie_, events, ACE_TRY_ENV);
+  this->driver_->consumer_push (this->cookie_, events TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (events.length () == 0)
@@ -149,16 +149,16 @@ EC_Consumer::push (const RtecEventComm::EventSet& events,
                                 now - creation);
 
       if (e.header.type == this->shutdown_event_type_)
-        this->driver_->consumer_shutdown (this->cookie_, ACE_TRY_ENV);
+        this->driver_->consumer_shutdown (this->cookie_ TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-EC_Consumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+EC_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->driver_->consumer_disconnect (this->cookie_, ACE_TRY_ENV);
+  this->driver_->consumer_disconnect (this->cookie_ TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();

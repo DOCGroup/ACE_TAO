@@ -66,15 +66,15 @@ parse_args (int argc, char **argv)
 }
 
 void
-do_calls (Foo_ptr foo,
-          CORBA::Environment &ACE_TRY_ENV)
+do_calls (Foo_ptr foo
+          TAO_ENV_ARG_DECL)
 {
   for (int j = 1; j <= servers; j++)
     {
       for (int i = 1; i <= iterations; i++)
         {
           // Invoke the doit() method of the foo reference.
-          CORBA::Long result = foo->doit (ACE_TRY_ENV);
+          CORBA::Long result = foo->doit (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           // Print the result of doit () method of the foo reference.
@@ -88,7 +88,7 @@ do_calls (Foo_ptr foo,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Asking server to forward next time\n"));
-          foo->forward (ACE_TRY_ENV);
+          foo->forward (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -98,12 +98,12 @@ do_calls (Foo_ptr foo,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
@@ -114,19 +114,19 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR, ACE_TRY_ENV);
+        orb->string_to_object (IOR TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a Foo reference.
       Foo_var foo =
-        Foo::_narrow (object.in (), ACE_TRY_ENV);
+        Foo::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      do_calls (foo.in (),
-                ACE_TRY_ENV);
+      do_calls (foo.in ()
+                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      foo->shutdown (ACE_TRY_ENV);
+      foo->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -115,13 +115,13 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   // Initialize data components.
 
   void bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
-                         const ACE_CString &mmdevice_name,
-                         CORBA::Environment &ACE_TRY_ENV);
+                         const ACE_CString &mmdevice_name
+                         TAO_ENV_ARG_DECL);
   // Resolve the reference of the mmdevice from the naming service.
 
   TAO_StreamCtrl *receiver_streamctrl (void);

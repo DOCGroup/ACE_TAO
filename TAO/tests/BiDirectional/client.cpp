@@ -44,11 +44,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -57,11 +57,11 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Policies for the childPOA to be created.
@@ -72,8 +72,8 @@ main (int argc, char *argv[])
       pol <<= BiDirPolicy::BOTH;
       policies[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-                            pol,
-                            ACE_TRY_ENV);
+                            pol
+                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create POA as child of RootPOA with the above policies.  This POA
@@ -82,8 +82,8 @@ main (int argc, char *argv[])
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("childPOA",
                               poa_manager.in (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creation of childPOA is over. Destroy the Policy objects.
@@ -91,22 +91,22 @@ main (int argc, char *argv[])
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (ACE_TRY_ENV);
+          policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+        Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -121,17 +121,17 @@ main (int argc, char *argv[])
       Callback_i callback_impl (orb.in ());
 
       Callback_var callback =
-        callback_impl._this (ACE_TRY_ENV);
+        callback_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Send the calback object to the server
-      server->callback_object (callback.in (),
-                               ACE_TRY_ENV);
+      server->callback_object (callback.in ()
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // A  method to kickstart callbacks from the server
       CORBA::Long r =
-        server->test_method (1, ACE_TRY_ENV);
+        server->test_method (1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (r != 0)
@@ -141,17 +141,17 @@ main (int argc, char *argv[])
                       r));
         }
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

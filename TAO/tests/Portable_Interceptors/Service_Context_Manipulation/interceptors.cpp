@@ -65,25 +65,24 @@ Echo_Client_Request_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
-                                    this->orb_id_.in (),
-                                    ACE_TRY_ENV);
+                                    this->orb_id_.in ()
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var operation = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (ACE_TRY_ENV);
+  CORBA::Object_var target = ri->target (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (target.in (), ACE_TRY_ENV);
+    this->orb_->object_to_string (target.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -106,12 +105,12 @@ Echo_Client_Request_Interceptor::send_request (
   sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0, ACE_TRY_ENV);
+  ri->add_request_service_context (sc, 0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Check that the request service context can be retrieved.
   IOP::ServiceContext_var sc2 =
-    ri->get_request_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_request_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf2 =
@@ -134,25 +133,24 @@ Echo_Client_Request_Interceptor::receive_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
-                                    this->orb_id_.in (),
-                                    ACE_TRY_ENV);
+                                    this->orb_id_.in ()
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var operation = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (ACE_TRY_ENV);
+  CORBA::Object_var target = ri->target (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (target.in (), ACE_TRY_ENV);
+    this->orb_->object_to_string (target.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -165,7 +163,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   // Check that the reply service context was received as
   // expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_reply_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf =
@@ -183,7 +181,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 
   // Check that no one has messed with the request service context.
   IOP::ServiceContext_var sc2 =
-    ri->get_request_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_request_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf2 =
@@ -218,25 +216,24 @@ Echo_Client_Request_Interceptor::receive_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
-                                    this->orb_id_.in (),
-                                    ACE_TRY_ENV);
+                                    this->orb_id_.in ()
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var operation = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (ACE_TRY_ENV);
+  CORBA::Object_var target = ri->target (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (target.in (), ACE_TRY_ENV);
+    this->orb_->object_to_string (target.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -249,7 +246,7 @@ Echo_Client_Request_Interceptor::receive_exception (
   // Check that the reply service context was received as
   // expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_reply_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf =
@@ -267,7 +264,7 @@ Echo_Client_Request_Interceptor::receive_exception (
 
   // Check that no one has messed with the request service context.
   IOP::ServiceContext_var sc2 =
-    ri->get_request_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_request_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf2 =
@@ -326,9 +323,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var operation = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -345,7 +341,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   IOP::ServiceId id = ::service_id;
   IOP::ServiceContext_var sc =
-    ri->get_request_service_context (id, ACE_TRY_ENV);
+    ri->get_request_service_context (id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf =
@@ -375,7 +371,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   scc.context_data.replace (string_len, string_len, buff, 1);
 
   // Add this context to the service context list.
-  ri->add_reply_service_context (scc, 0, ACE_TRY_ENV);
+  ri->add_reply_service_context (scc, 0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -396,9 +392,8 @@ Echo_Server_Request_Interceptor::send_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var operation = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -408,7 +403,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_reply_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf = ACE_reinterpret_cast (const char *,
@@ -427,7 +422,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
   // Check that the request service context hasn't been changed.
   IOP::ServiceContext_var sc2 =
-    ri->get_request_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_request_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf2 = ACE_reinterpret_cast (const char *,
@@ -451,9 +446,8 @@ Echo_Server_Request_Interceptor::send_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var operation = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -463,7 +457,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_reply_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf = ACE_reinterpret_cast (const char *,
@@ -482,7 +476,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   // Check that the request service context hasn't been changed.
   IOP::ServiceContext_var sc2 =
-    ri->get_request_service_context (::service_id, ACE_TRY_ENV);
+    ri->get_request_service_context (::service_id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const char *buf2 = ACE_reinterpret_cast (const char *,

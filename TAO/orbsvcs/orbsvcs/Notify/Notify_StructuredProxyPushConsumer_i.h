@@ -57,8 +57,8 @@ public:
 
   // = interface methods
   virtual void connect_structured_push_supplier (
-    CosNotifyComm::StructuredPushSupplier_ptr push_supplier,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyComm::StructuredPushSupplier_ptr push_supplier
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -66,8 +66,8 @@ public:
   ));
 
 virtual void push_structured_event (
-    const CosNotification::StructuredEvent & notification,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::StructuredEvent & notification
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -75,7 +75,7 @@ virtual void push_structured_event (
   ));
 
   virtual void disconnect_structured_push_consumer (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -83,7 +83,7 @@ virtual void push_structured_event (
 
 protected:
   // = Helper methods
- virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
+ virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL);
   // dispatch updates to the supplier.
 
   // = Data members

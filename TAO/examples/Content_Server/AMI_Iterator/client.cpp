@@ -12,20 +12,20 @@ ACE_RCSID (AMI_Iterator, client, "$Id$")
 
 // Obtain reference to Iterator_Factory
 Web_Server::Iterator_Factory_ptr
-get_iterator (CORBA::ORB_ptr orb,
-              CORBA::Environment &ACE_TRY_ENV);
+get_iterator (CORBA::ORB_ptr orb
+              TAO_ENV_ARG_DECL);
 
 // Perform file requests
 void invoke_requests (int argc,
                       char *argv[],
                       int *request_count,
-                      Web_Server::Iterator_Factory_ptr f,
-                      CORBA::Environment &ACE_TRY_ENV);
+                      Web_Server::Iterator_Factory_ptr f
+                      TAO_ENV_ARG_DECL);
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       if (argc < 2)
@@ -36,29 +36,29 @@ main (int argc, char *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Mighty ORB",
-                                            ACE_TRY_ENV);
+                                            "Mighty ORB"
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the Root POA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Activate the POA manager.
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
-      mgr->activate (ACE_TRY_ENV);
+      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get an Iterator_Factory reference.
       Web_Server::Iterator_Factory_var factory =
-        ::get_iterator (orb.in (),
-                        ACE_TRY_ENV);
+        ::get_iterator (orb.in ()
+                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -79,8 +79,8 @@ main (int argc, char *argv[])
       ::invoke_requests (argc,
                          argv,
                          &request_count,
-                         factory.in (),
-                         ACE_TRY_ENV);
+                         factory.in ()
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Run the ORB event loop.
@@ -88,22 +88,22 @@ main (int argc, char *argv[])
         {
           CORBA::Boolean more_work;
 
-          more_work = orb->work_pending (ACE_TRY_ENV);
+          more_work = orb->work_pending (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (more_work)
             {
-              orb->perform_work (ACE_TRY_ENV);
+              orb->perform_work (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else
             ACE_OS::sleep (tv);
         }
 
-      orb->shutdown (0, ACE_TRY_ENV);
+      orb->shutdown (0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (Web_Server::Error_Result, exc)
@@ -130,20 +130,20 @@ main (int argc, char *argv[])
 }
 
 Web_Server::Iterator_Factory_ptr
-get_iterator (CORBA::ORB_ptr o,
-              CORBA::Environment &ACE_TRY_ENV)
+get_iterator (CORBA::ORB_ptr o
+              TAO_ENV_ARG_DECL)
 {
   CORBA::ORB_var orb = CORBA::ORB::_duplicate (o);
 
   // Get a reference to the Name Service.
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("NameService",
-                                     ACE_TRY_ENV);
+    orb->resolve_initial_references ("NameService"
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   // Narrow to a Naming Context
   CosNaming::NamingContext_var nc =
-    CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
+    CosNaming::NamingContext::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   if (CORBA::is_nil (obj.in ()))
@@ -159,7 +159,7 @@ get_iterator (CORBA::ORB_ptr o,
   name[0].id = CORBA::string_dup ("Iterator_Factory");
   name[0].kind = CORBA::string_dup ("");
 
-  obj = nc->resolve (name, ACE_TRY_ENV);
+  obj = nc->resolve (name TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   Web_Server::Iterator_Factory_ptr factory =
@@ -171,8 +171,8 @@ get_iterator (CORBA::ORB_ptr o,
 void invoke_requests (int argc,
                       char *argv[],
                       int *request_count,
-                      Web_Server::Iterator_Factory_ptr f,
-                      CORBA::Environment &ACE_TRY_ENV)
+                      Web_Server::Iterator_Factory_ptr f
+                      TAO_ENV_ARG_DECL)
 {
   Web_Server::Iterator_Factory_var factory =
     Web_Server::Iterator_Factory::_duplicate (f);
@@ -194,8 +194,8 @@ void invoke_requests (int argc,
       // This ends up being an AMI call, so it won't block.
       handler->run (request_count,
                     argv[i + 1],
-                    factory.in (),
-                    ACE_TRY_ENV);
+                    factory.in ()
+                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

@@ -34,8 +34,8 @@ public:
   // Constructor.
 
   void init (CORBA::ORB_ptr the_orb,
-             LoadBalancing::LoadBalancer_ptr balancer,
-             CORBA::Environment &ACE_TRY_ENV);
+             LoadBalancing::LoadBalancer_ptr balancer
+             TAO_ENV_ARG_DECL);
 
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void *arg);
@@ -44,13 +44,13 @@ public:
   void request_received (void);
   // A request has been received
 
-  void request_rejected (CORBA::Environment &ACE_TRY_ENV);
+  void request_rejected (TAO_ENV_SINGLE_ARG_DECL);
   // A request has been rejected, take appropriate action
 
-  virtual void high_load_advisory (CORBA::Environment &ACE_TRY_ENV)
+  virtual void high_load_advisory (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void nominal_load_advisory (CORBA::Environment &ACE_TRY_ENV)
+  virtual void nominal_load_advisory (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Object_ptr replica (void);

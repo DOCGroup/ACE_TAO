@@ -25,9 +25,9 @@ CORBA_Context::~CORBA_Context (void)
 CORBA::ULong
 CORBA_Context::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
-                    ace_mon, 
-                    this->refcount_lock_, 
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    ace_mon,
+                    this->refcount_lock_,
                     0);
 
   return refcount_++;
@@ -37,9 +37,9 @@ CORBA::ULong
 CORBA_Context::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
-                      ace_mon, 
-                      this->refcount_lock_, 
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      ace_mon,
+                      this->refcount_lock_,
                       0);
 
     this->refcount_--;
@@ -55,7 +55,7 @@ CORBA_Context::_decr_refcnt (void)
 }
 
 const char *
-CORBA_Context::context_name (CORBA::Environment &ACE_TRY_ENV) const
+CORBA_Context::context_name (TAO_ENV_SINGLE_ARG_DECL) const
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
@@ -63,7 +63,7 @@ CORBA_Context::context_name (CORBA::Environment &ACE_TRY_ENV) const
 }
 
 CORBA_Context_ptr
-CORBA_Context::parent (CORBA::Environment &ACE_TRY_ENV) const
+CORBA_Context::parent (TAO_ENV_SINGLE_ARG_DECL) const
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
@@ -72,8 +72,8 @@ CORBA_Context::parent (CORBA::Environment &ACE_TRY_ENV) const
 
 void
 CORBA_Context::create_child (const char * /* child_ctx_name */,
-                             CORBA_Context_out /* child_ctx */,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA_Context_out /* child_ctx */
+                             TAO_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -81,24 +81,24 @@ CORBA_Context::create_child (const char * /* child_ctx_name */,
 
 void
 CORBA_Context::set_one_value (const char * /* propname */,
-                              const CORBA_Any & /* propvalue */,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              const CORBA_Any & /* propvalue */
+                              TAO_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
 }
 
 void
-CORBA_Context::set_values (CORBA::NVList_ptr,
-                           CORBA::Environment &ACE_TRY_ENV)
+CORBA_Context::set_values (CORBA::NVList_ptr
+                           TAO_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
 }
 
 void
-CORBA_Context::delete_values (const char * /* propname */,
-                              CORBA::Environment &ACE_TRY_ENV)
+CORBA_Context::delete_values (const char * /* propname */
+                              TAO_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -108,8 +108,8 @@ void
 CORBA_Context::get_values (const char * /* start_scope */,
                            CORBA::Flags /* op_flags */,
                            const char * /* pattern */,
-                           CORBA::NVList_ptr & /* values */,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::NVList_ptr & /* values */
+                           TAO_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -153,14 +153,14 @@ CORBA_ContextList::add_consume (char *ctx)
 }
 
 char *
-CORBA_ContextList::item (CORBA::ULong slot,
-                         CORBA::Environment &ACE_TRY_ENV)
+CORBA_ContextList::item (CORBA::ULong slot
+                         TAO_ENV_ARG_DECL)
 {
   char **ctx = 0;
 
   if (this->ctx_list_.get (ctx, slot) == -1)
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                         0);
     }
   else
@@ -170,8 +170,8 @@ CORBA_ContextList::item (CORBA::ULong slot,
 }
 
 void
-CORBA_ContextList::remove (CORBA::ULong,
-                           CORBA::Environment &ACE_TRY_ENV)
+CORBA_ContextList::remove (CORBA::ULong
+                           TAO_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }

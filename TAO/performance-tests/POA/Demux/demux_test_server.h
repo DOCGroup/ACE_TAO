@@ -39,10 +39,10 @@ public:
   ~Demux_Test_Server (void);
   // dtor
 
-  int run (CORBA::Environment &);
+  int run (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Execute client code.
 
-  int init (int argc, char **argv, CORBA::Environment &);
+  int init (int argc, char **argv TAO_ENV_ARG_DECL_NOT_USED);
   // Initialize the communication endpoint with server.
 
   int calculate_avg_latency (void);

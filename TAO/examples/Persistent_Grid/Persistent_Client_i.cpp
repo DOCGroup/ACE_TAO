@@ -58,42 +58,42 @@ Persistent_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       // Make the Grid.
       Grid_ptr grid = client->make_grid (width_,
-                                         height_,
-                                         ACE_TRY_ENV);
+                                         height_
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid succesfully\n"));
-      
+
 
       for (CORBA::Short index_ = 0; index_ < height_; index_++)
         {
           for (CORBA::Short ctr = 0; ctr < width_; ctr++)
             {
               CORBA::Long ret_val = grid->get (index_,
-                                               ctr,
-                                               ACE_TRY_ENV);
+                                               ctr
+                                               TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,
                           "Grid value [%d][%d] =  %d \n",index_, ctr,ret_val));
             }
         }
-                
+
       if (client.shutdown () == 1) {
-        client->shutdown (ACE_TRY_ENV);
-	ACE_TRY_CHECK;
+        client->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
       }
 
       if (this->remove_ == 1) {
-        client->cleanup (ACE_TRY_ENV);
-	ACE_TRY_CHECK;
+        client->cleanup (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
       }
     }
   ACE_CATCH (CORBA::UserException, range_ex)

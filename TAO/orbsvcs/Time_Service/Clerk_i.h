@@ -51,11 +51,11 @@ public:
   // Set of available Time servers.
 
   int init (int argc,
-            char *argv[],
-            CORBA::Environment &env);
+            char *argv[]
+            TAO_ENV_ARG_DECL);
   // Initialize the Clerk state - parsing arguments and waiting.
 
-  int run (CORBA::Environment &env);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the orb.
 
 private:

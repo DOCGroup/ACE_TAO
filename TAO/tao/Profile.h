@@ -78,20 +78,20 @@ public:
   TAO_Tagged_Components& tagged_components (void);
 
   /// Add the given tagged component to the profile.
-  void add_tagged_component (const IOP::TaggedComponent &component,
-                             CORBA::Environment &ACE_TRY_ENV);
+  void add_tagged_component (const IOP::TaggedComponent &component
+                             TAO_ENV_ARG_DECL);
 
   /// The object key delimiter.
   virtual char object_key_delimiter (void) const = 0;
 
   /// Initialize this object using the given input string.
   /// Supports URL style of object references
-  virtual void parse_string (const char *string,
-                             CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void parse_string (const char *string
+                             TAO_ENV_ARG_DECL) = 0;
 
   /// Return a string representation for this profile.  client must
   /// deallocate memory.
-  virtual char* to_string (CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual char* to_string (TAO_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Initialize this object using the given CDR octet string.
   virtual int decode (TAO_InputCDR& cdr) = 0;
@@ -131,8 +131,8 @@ public:
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual CORBA::ULong hash (CORBA::ULong max
+                             TAO_ENV_ARG_DECL) = 0;
 
   /**
    * This method is used to get the IOP::TaggedProfile. The profile
@@ -146,11 +146,11 @@ public:
 
   /// This method sets the client exposed policies, i.e., the ones
   /// propagated in the IOR, for this profile.
-  virtual void policies (CORBA::PolicyList *policy_list,
-                         CORBA::Environment &ACE_TRY_ENV);
+  virtual void policies (CORBA::PolicyList *policy_list
+                         TAO_ENV_ARG_DECL);
 
   /// Accessor for the client exposed policies of this profile.
-  virtual CORBA::PolicyList&  policies (CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::PolicyList&  policies (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Sets the TAO_Stub to which this profile is associated.
   virtual void the_stub (TAO_Stub *stub);
@@ -165,11 +165,11 @@ private:
 
   /// Verify that the current ORB's configuration supports tagged
   /// components in IORs.
-  void verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV);
+  void verify_orb_configuration (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Verify that the given profile supports tagged components,
   /// i.e. is not a GIOP 1.0 profile.
-  void verify_profile_version (CORBA::Environment &ACE_TRY_ENV);
+  void verify_profile_version (TAO_ENV_SINGLE_ARG_DECL);
 
   // Profiles should not be copied!
   ACE_UNIMPLEMENTED_FUNC (TAO_Profile (const TAO_Profile&))
@@ -241,10 +241,10 @@ public:
                        TAO_ORB_Core *orb_core);
 
   // = The TAO_Profile methods look above
-  virtual void parse_string (const char *string,
-                             CORBA::Environment &ACE_TRY_ENV);
+  virtual void parse_string (const char *string
+                             TAO_ENV_ARG_DECL);
   virtual char object_key_delimiter (void) const;
-  virtual char* to_string (CORBA::Environment &ACE_TRY_ENV);
+  virtual char* to_string (TAO_ENV_SINGLE_ARG_DECL);
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual int encode_endpoints (void);
@@ -253,8 +253,8 @@ public:
   virtual TAO_Endpoint *endpoint (void);
   virtual size_t endpoint_count (void);
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
-  virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::ULong hash (CORBA::ULong max
+                             TAO_ENV_ARG_DECL);
   virtual IOP::TaggedProfile &create_tagged_profile (void);
 
 private:

@@ -19,45 +19,45 @@ TAO_ModuleDef_i::~TAO_ModuleDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_ModuleDef_i::def_kind (CORBA::Environment &)
+TAO_ModuleDef_i::def_kind (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Module;
 }
 
 void 
-TAO_ModuleDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_ModuleDef_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->destroy_i (ACE_TRY_ENV);
+  this->destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void 
-TAO_ModuleDef_i::destroy_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_ModuleDef_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our members.
-  TAO_Container_i::destroy_i (ACE_TRY_ENV);
+  TAO_Container_i::destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
     
   // Destroy ourself.
-  TAO_Contained_i::destroy_i (ACE_TRY_ENV);
+  TAO_Contained_i::destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 CORBA_Contained::Description *
-TAO_ModuleDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+TAO_ModuleDef_i::describe (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->describe_i (ACE_TRY_ENV);
+  return this->describe_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA_Contained::Description *
-TAO_ModuleDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_ModuleDef_i::describe_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA_Contained::Description *desc_ptr = 0;
@@ -68,15 +68,15 @@ TAO_ModuleDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA_Contained::Description_var retval = desc_ptr;
 
-  retval->kind = this->def_kind (ACE_TRY_ENV);
+  retval->kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA_ModuleDescription md;
 
-  md.name = this->name_i (ACE_TRY_ENV);
+  md.name = this->name_i (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  md.id = this->id_i (ACE_TRY_ENV);
+  md.id = this->id_i (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_TString container_id;
@@ -87,7 +87,7 @@ TAO_ModuleDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
 
   md.defined_in = container_id.c_str ();
 
-  md.version = this->version_i (ACE_TRY_ENV);
+  md.version = this->version_i (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   retval->value <<= md;

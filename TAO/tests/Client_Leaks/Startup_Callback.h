@@ -32,8 +32,8 @@ public:
   int process_has_started (Test::Process_out the_process);
 
   // = The skeleton methods
-  virtual void started (Test::Process_ptr the_process,
-                        CORBA::Environment &ACE_TRY_ENV)
+  virtual void started (Test::Process_ptr the_process
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -75,8 +75,8 @@ class TAO_Notify_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotify
              const CosNotification::QoSProperties& initial_qos,
              const CosNotification::AdminProperties& initial_admin,
              PortableServer::POA_ptr default_POA,
-             PortableServer::POA_ptr my_POA,
-             CORBA::Environment &ACE_TRY_ENV);
+             PortableServer::POA_ptr my_POA
+             TAO_ENV_ARG_DECL);
   // Initialize this object.
   // checks if the <initial_qos> and <initial admin> are valid.
   // creates default filter, consumer admin and supplier admin.
@@ -85,7 +85,7 @@ class TAO_Notify_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotify
   PortableServer::POA_ptr get_default_POA (void);
   // Get the default POA.
 
-  CosNotifyChannelAdmin::EventChannel_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  CosNotifyChannelAdmin::EventChannel_ptr get_ref (TAO_ENV_SINGLE_ARG_DECL);
   // Get the CORBA object for this servant
 
   TAO_Notify_Event_Manager* get_event_manager (void);
@@ -98,34 +98,34 @@ class TAO_Notify_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotify
   void supplier_admin_destroyed (CosNotifyChannelAdmin::AdminID SA_ID);
   // This id is no longer in use.It can be reused by <supplier_admin_ids_>.
 
-  void unregister_listener (TAO_Notify_EventListener* group_listener, CORBA::Environment &ACE_TRY_ENV);
+  void unregister_listener (TAO_Notify_EventListener* group_listener TAO_ENV_ARG_DECL);
   // Consumer Admin's are Group Listeners that are registered automatically with the EC when a ConsumerAdmin
   // is created. When a consumer is destroyed, it asks the EC to unregister itself.
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyFilter::FilterFactory_ptr default_filter_factory (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -133,8 +133,8 @@ virtual CosNotifyFilter::FilterFactory_ptr default_filter_factory (
 
 virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr new_for_consumers (
     CosNotifyChannelAdmin::InterFilterGroupOperator op,
-    CosNotifyChannelAdmin::AdminID_out id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::AdminID_out id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -142,16 +142,16 @@ virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr new_for_consumers (
 
 virtual CosNotifyChannelAdmin::SupplierAdmin_ptr new_for_suppliers (
     CosNotifyChannelAdmin::InterFilterGroupOperator op,
-    CosNotifyChannelAdmin::AdminID_out id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::AdminID_out id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr get_consumeradmin (
-    CosNotifyChannelAdmin::AdminID id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::AdminID id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -159,8 +159,8 @@ virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr get_consumeradmin (
   ));
 
 virtual CosNotifyChannelAdmin::SupplierAdmin_ptr get_supplieradmin (
-    CosNotifyChannelAdmin::AdminID id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::AdminID id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -168,29 +168,29 @@ virtual CosNotifyChannelAdmin::SupplierAdmin_ptr get_supplieradmin (
   ));
 
 virtual CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotification::QoSProperties * get_qos (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual void set_qos (
-    const CosNotification::QoSProperties & qos,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::QoSProperties & qos
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -199,8 +199,8 @@ virtual CosNotification::QoSProperties * get_qos (
 
   virtual void validate_qos (
     const CosNotification::QoSProperties & required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotification::NamedPropertyRangeSeq_out available_qos
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -208,15 +208,15 @@ virtual CosNotification::QoSProperties * get_qos (
   ));
 
   virtual CosNotification::AdminProperties * get_admin (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual void set_admin (
-    const CosNotification::AdminProperties & admin,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::AdminProperties & admin
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -224,21 +224,21 @@ virtual CosNotification::QoSProperties * get_qos (
   ));
 
   virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual void destroy (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException

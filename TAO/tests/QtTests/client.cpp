@@ -24,21 +24,21 @@ main (int argc, char *argv[])
   QApplication app (argc, argv);
   TAO_QtResource_Factory::set_context (&app);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Client client (orb.in (), app);
 
-      client.parse_args (argc, argv, ACE_TRY_ENV);
+      client.parse_args (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creates the Qt widgets
-      client.create_widgets (ACE_TRY_ENV);
+      client.create_widgets (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This may look a bit suspect, but Qt wants the manager widget
@@ -74,8 +74,8 @@ Client::~Client (void)
 
 void
 Client::parse_args (int argc,
-                    char *argv[],
-                    CORBA::Environment &ACE_TRY_ENV)
+                    char *argv[]
+                    TAO_ENV_ARG_DECL)
 {
   const char *ior = "file://test.ior";
 
@@ -98,11 +98,11 @@ Client::parse_args (int argc,
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior, ACE_TRY_ENV);
+    this->orb_->string_to_object (ior TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->server_ =
-    LCD_Display::_narrow (object.in (), ACE_TRY_ENV);
+    LCD_Display::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil(this->server_.in ()))
@@ -113,7 +113,7 @@ Client::parse_args (int argc,
 }
 
 void
-Client::create_widgets (CORBA::Environment &/*ACE_TRY_ENV*/)
+Client::create_widgets (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
 {
   // Ewsize the box
   this->box_.resize (200,120);

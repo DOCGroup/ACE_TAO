@@ -36,23 +36,23 @@ parse_args (int argc, char *argv[])
 }
 
 void
-run_test (Test_Interceptors::Visual_ptr server,
-          CORBA::Environment &ACE_TRY_ENV)
+run_test (Test_Interceptors::Visual_ptr server
+          TAO_ENV_ARG_DECL)
 {
 
-  server->normal (10, ACE_TRY_ENV);
+  server->normal (10 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "\"normal\" operation done\n"));
 
-  server->nothing (ACE_TRY_ENV);
+  server->nothing (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "\"nothing\" operation done\n"));
 
   ACE_TRY
     {
-      server->user (ACE_TRY_ENV);
+      server->user (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (Test_Interceptors::Silly, userex)
@@ -64,7 +64,7 @@ run_test (Test_Interceptors::Visual_ptr server,
 
   ACE_TRY_EX (SYS)
     {
-      server->system (ACE_TRY_ENV);
+      server->system (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (SYS);
     }
   ACE_CATCH (CORBA::INV_OBJREF, sysex)
@@ -88,23 +88,23 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (object.in (), ACE_TRY_ENV);
+        Test_Interceptors::Visual::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -115,10 +115,10 @@ main (int argc, char *argv[])
                             1);
         }
 
-      run_test (server.in (), ACE_TRY_ENV);
+      run_test (server.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      server->shutdown (ACE_TRY_ENV);
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

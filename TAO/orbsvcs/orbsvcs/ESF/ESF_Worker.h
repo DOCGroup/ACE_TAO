@@ -34,8 +34,8 @@ public:
   virtual ~TAO_ESF_Worker (void);
 
   /// Callback interface.
-  virtual void work (Object *object,
-                     CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void work (Object *object
+                     TAO_ENV_ARG_DECL) = 0;
 };
 
 #if defined (__ACE_INLINE__)

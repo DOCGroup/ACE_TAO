@@ -18,10 +18,10 @@ Server_Task::Server_Task (ACE_Thread_Manager *thr_mgr,
 int
 Server_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      this->orb_->run (this->running_time_, ACE_TRY_ENV);
+      this->orb_->run (this->running_time_ TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

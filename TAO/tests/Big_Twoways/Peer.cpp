@@ -20,8 +20,8 @@ Peer::create_session (Test::Session_Control_ptr control,
                       CORBA::ULong payload_size,
                       CORBA::ULong thread_count,
                       CORBA::ULong message_count,
-                      CORBA::ULong peer_count,
-                      CORBA::Environment &ACE_TRY_ENV)
+                      CORBA::ULong peer_count
+                      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Session *session_impl;
@@ -35,11 +35,11 @@ Peer::create_session (Test::Session_Control_ptr control,
   ACE_CHECK_RETURN (Test::Session::_nil ());
   PortableServer::ServantBase_var transfer_ownership (session_impl);
 
-  return session_impl->_this (ACE_TRY_ENV);
+  return session_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-Peer::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Peer::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -47,5 +47,5 @@ Peer::shutdown (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, shutting down ORB\n"));
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

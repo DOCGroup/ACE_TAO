@@ -20,12 +20,12 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                            RtecScheduler::Scheduler_ptr rmt_sched,
                            RtecScheduler::Scheduler_ptr lcl_sched,
                            const char* lcl_name,
-                           const char* rmt_name,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           const char* rmt_name
+                           TAO_ENV_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  this->init_i (rmt_ec, lcl_ec, ACE_TRY_ENV);
+  this->init_i (rmt_ec, lcl_ec TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ Should we throw a system exception here?
@@ -36,7 +36,7 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
     ACE_THROW (CORBA::BAD_PARAM ());
 
   this->rmt_info_ =
-    rmt_sched->create (rmt_name, ACE_TRY_ENV);
+    rmt_sched->create (rmt_name TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ TODO Many things are hard-coded in the RT_Info here.
@@ -53,12 +53,12 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                   RtecScheduler::VERY_LOW_IMPORTANCE,
                   time,
                   0,
-                  RtecScheduler::OPERATION,
-                  ACE_TRY_ENV);
+                  RtecScheduler::OPERATION
+                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->lcl_info_ =
-    lcl_sched->create (lcl_name, ACE_TRY_ENV);
+    lcl_sched->create (lcl_name TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   tv = ACE_Time_Value (0, 500);
@@ -70,7 +70,7 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                   RtecScheduler::VERY_LOW_IMPORTANCE,
                   time,
                   1,
-                  RtecScheduler::REMOTE_DEPENDANT,
-                  ACE_TRY_ENV);
+                  RtecScheduler::REMOTE_DEPENDANT
+                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

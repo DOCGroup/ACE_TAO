@@ -23,7 +23,9 @@
 #include "idl_extern.h"
 #include "be.h"
 
-ACE_RCSID(be, be_typedef, "$Id$")
+ACE_RCSID (be,
+           be_typedef,
+           "$Id$")
 
 be_typedef::be_typedef (void)
 {
@@ -34,15 +36,16 @@ be_typedef::be_typedef (AST_Type *bt,
                         UTL_StrList *p,
                         idl_bool local,
                         idl_bool abstract)
-  : AST_Typedef (bt, 
-                 n, 
-                 p, 
-                 bt->is_local () || local, 
+  : AST_Typedef (bt,
+                 n,
+                 p,
+                 bt->is_local () || local,
                  abstract),
-    AST_Decl (AST_Decl::NT_typedef, 
-              n, 
+    AST_Decl (AST_Decl::NT_typedef,
+              n,
               p),
-    COMMON_Base (bt->is_local () || local, 
+
+    COMMON_Base (bt->is_local () || local,
                  abstract)
 {
 }
@@ -74,7 +77,7 @@ be_typedef::compute_size_type (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_typedef::compute_size_type - "
-                         "bad base type\n"), 
+                         "bad base type\n"),
                         -1);
     }
 
@@ -87,7 +90,7 @@ be_typedef::compute_size_type (void)
   return 0;
 }
 
-AST_Decl::NodeType 
+AST_Decl::NodeType
 be_typedef::base_node_type (void) const
 {
   be_typedef *td = ACE_const_cast (be_typedef *, this);

@@ -17,16 +17,16 @@ public:
 
   /// Implement the CORBA methods
   //@{
-  void set_callback (Test::Callback_ptr callback,
-                     CORBA::Environment &)
+  void set_callback (Test::Callback_ptr callback
+                     TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void request (Test::TimeStamp,
-                const Test::Payload &,
-                CORBA::Environment &)
+                const Test::Payload &
+                TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}

@@ -21,10 +21,9 @@ Server_Request_Interceptor::receive_request_service_contexts (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri, ACE_TRY_ENV);
+    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -69,10 +68,9 @@ Server_Request_Interceptor::receive_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri, ACE_TRY_ENV);
+    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -89,10 +87,9 @@ Server_Request_Interceptor::send_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri, ACE_TRY_ENV);
+    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -108,7 +105,7 @@ Server_Request_Interceptor::send_reply (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
+        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test::TestScenario scenario;
@@ -150,10 +147,9 @@ Server_Request_Interceptor::send_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri, ACE_TRY_ENV);
+    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -169,7 +165,7 @@ Server_Request_Interceptor::send_exception (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
+        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test::TestScenario scenario;
@@ -184,12 +180,12 @@ Server_Request_Interceptor::send_exception (
           switch (scenario)
             {
             case 4:
-              exception = ri->sending_exception (ACE_TRY_ENV);
+              exception = ri->sending_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               tc = exception->type ();
 
-              id = tc->id (ACE_TRY_ENV);
+              id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               if (ACE_OS_String::strcmp (id, "IDL:Test/X:1.0") == 0)
@@ -235,10 +231,9 @@ Server_Request_Interceptor::send_other (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri, ACE_TRY_ENV);
+    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -253,10 +248,10 @@ Server_Request_Interceptor::send_other (
 
 CORBA::Boolean
 Server_Request_Interceptor::server_side_test (
-  PortableInterceptor::ServerRequestInfo_ptr info,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ServerRequestInfo_ptr info
+  TAO_ENV_ARG_DECL)
 {
-  CORBA::String_var op = info->operation (ACE_TRY_ENV);
+  CORBA::String_var op = info->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return ACE_OS_String::strcmp (op.in (), "server_test") == 0 ? 1 : 0;

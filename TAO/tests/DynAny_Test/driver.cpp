@@ -60,7 +60,7 @@ Driver::~Driver (void)
   if (this->orb_.in () != 0)
     {
       this->orb_->shutdown ();
-      this->orb_->destroy (); 
+      this->orb_->destroy ();
     }
 }
 
@@ -73,8 +73,8 @@ Driver::init (int argc, char* argv[])
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    "local",
-                                    ACE_TRY_ENV);
+                                    "local"
+                                    TAO_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 

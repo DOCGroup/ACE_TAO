@@ -40,16 +40,16 @@ static const CORBA::Long _oc_TimeBase_TimeT[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f54696d), 
-  ACE_NTOHL (0x65543a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f54696d),
+  ACE_NTOHL (0x65543a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
   6,
-  ACE_NTOHL (0x54696d65), 
+  ACE_NTOHL (0x54696d65),
   ACE_NTOHL (0x54000000),  // name = TimeT
   CORBA::tk_ulonglong,
 
@@ -72,34 +72,34 @@ static const CORBA::Long _oc_TimeBase_InaccuracyT[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f496e61), 
-  ACE_NTOHL (0x63637572), 
-  ACE_NTOHL (0x61637954), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f496e61),
+  ACE_NTOHL (0x63637572),
+  ACE_NTOHL (0x61637954),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/TimeBase/InaccuracyT:1.0
   12,
-  ACE_NTOHL (0x496e6163), 
-  ACE_NTOHL (0x63757261), 
+  ACE_NTOHL (0x496e6163),
+  ACE_NTOHL (0x63757261),
   ACE_NTOHL (0x63795400),  // name = InaccuracyT
   CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
     6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
     CORBA::tk_ulonglong,
 
@@ -123,16 +123,16 @@ static const CORBA::Long _oc_TimeBase_TdfT[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f546466), 
-  ACE_NTOHL (0x543a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f546466),
+  ACE_NTOHL (0x543a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/TdfT:1.0
   5,
-  ACE_NTOHL (0x54646654), 
+  ACE_NTOHL (0x54646654),
   ACE_NTOHL (0x0),  // name = TdfT
   CORBA::tk_short,
 
@@ -155,46 +155,46 @@ static const CORBA::Long _oc_TimeBase_UtcT[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f557463), 
-  ACE_NTOHL (0x543a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f557463),
+  ACE_NTOHL (0x543a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/UtcT:1.0
   5,
-  ACE_NTOHL (0x55746354), 
+  ACE_NTOHL (0x55746354),
   ACE_NTOHL (0x0),  // name = UtcT
   4, // member count
   5,
-  ACE_NTOHL (0x74696d65), 
+  ACE_NTOHL (0x74696d65),
   ACE_NTOHL (0x0),  // name = time
   CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
     6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
     CORBA::tk_ulonglong,
 
 
   8,
-  ACE_NTOHL (0x696e6163), 
+  ACE_NTOHL (0x696e6163),
   ACE_NTOHL (0x636c6f00),  // name = inacclo
   CORBA::tk_ulong,
 
   8,
-  ACE_NTOHL (0x696e6163), 
+  ACE_NTOHL (0x696e6163),
   ACE_NTOHL (0x63686900),  // name = inacchi
   CORBA::tk_ushort,
 
@@ -204,16 +204,16 @@ static const CORBA::Long _oc_TimeBase_UtcT[] =
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f546466), 
-    ACE_NTOHL (0x543a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f546466),
+    ACE_NTOHL (0x543a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/TdfT:1.0
     5,
-    ACE_NTOHL (0x54646654), 
+    ACE_NTOHL (0x54646654),
     ACE_NTOHL (0x0),  // name = TdfT
     CORBA::tk_short,
 
@@ -243,60 +243,60 @@ static const CORBA::Long _oc_TimeBase_IntervalT[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f496e74), 
-  ACE_NTOHL (0x65727661), 
-  ACE_NTOHL (0x6c543a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f496e74),
+  ACE_NTOHL (0x65727661),
+  ACE_NTOHL (0x6c543a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/IntervalT:1.0
   10,
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x7276616c), 
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x7276616c),
   ACE_NTOHL (0x54000000),  // name = IntervalT
   2, // member count
   12,
-  ACE_NTOHL (0x6c6f7765), 
-  ACE_NTOHL (0x725f626f), 
+  ACE_NTOHL (0x6c6f7765),
+  ACE_NTOHL (0x725f626f),
   ACE_NTOHL (0x756e6400),  // name = lower_bound
   CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
     6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
     CORBA::tk_ulonglong,
 
 
   12,
-  ACE_NTOHL (0x75707065), 
-  ACE_NTOHL (0x725f626f), 
+  ACE_NTOHL (0x75707065),
+  ACE_NTOHL (0x725f626f),
   ACE_NTOHL (0x756e6400),  // name = upper_bound
   CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
     6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
     CORBA::tk_ulonglong,
 
@@ -358,13 +358,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TimeBase::UtcT *&_
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result = type->equivalent (TimeBase::_tc_UtcT, ACE_TRY_ENV);
+
+    CORBA::Boolean result = type->equivalent (TimeBase::_tc_UtcT TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -441,13 +441,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TimeBase::Interval
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result = type->equivalent (TimeBase::_tc_IntervalT, ACE_TRY_ENV);
+
+    CORBA::Boolean result = type->equivalent (TimeBase::_tc_IntervalT TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(

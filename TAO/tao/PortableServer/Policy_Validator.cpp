@@ -31,29 +31,29 @@ TAO_POA_Policy_Validator::add_validator (TAO_POA_Policy_Validator *validator)
 
 
 void
-TAO_POA_Policy_Validator::validate (TAO_Policy_Set &policies,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Policy_Validator::validate (TAO_Policy_Set &policies
+                                    TAO_ENV_ARG_DECL)
 {
-  this->validate_impl (policies, ACE_TRY_ENV);
+  this->validate_impl (policies TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->next_ != 0)
     {
-      this->next_->validate (policies, ACE_TRY_ENV);
+      this->next_->validate (policies TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-TAO_POA_Policy_Validator::merge_policies (TAO_Policy_Set &policies,
-                                          CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Policy_Validator::merge_policies (TAO_Policy_Set &policies
+                                          TAO_ENV_ARG_DECL)
 {
-  this->merge_policies_impl (policies, ACE_TRY_ENV);
+  this->merge_policies_impl (policies TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->next_ != 0)
     {
-      this->next_->merge_policies (policies, ACE_TRY_ENV);
+      this->next_->merge_policies (policies TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

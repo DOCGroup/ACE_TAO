@@ -30,7 +30,7 @@
 #include "dynamicinterface_export.h"
 #include "ace/Service_Config.h"
 
-class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl 
+class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
   : public TAO_Dynamic_Adapter
 {
   // = TITLE
@@ -38,7 +38,7 @@ class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
   //
   // = DESCRIPTION
   //    Concrete subclass of TAO_Dynamic_Adapter
-  //    in the TAO library. This class helps implement various 
+  //    in the TAO library. This class helps implement various
   //    functions in the CORBA namespace relating to DII/DSI
   //    invocations.
   //
@@ -55,15 +55,13 @@ public:
                                CORBA::NamedValue_ptr result,
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags,
-                               CORBA_Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ());
+                               CORBA::Flags req_flags
+                               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
-                                      const char *op,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ());
+                                      const char *op
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
@@ -81,9 +79,8 @@ public:
 
   // CORBA::ORB::create_exception_list.
 
-  virtual void create_exception_list (CORBA::ExceptionList_ptr &list,
-                                      CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ());
+  virtual void create_exception_list (CORBA::ExceptionList_ptr &list
+                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // Used to force the initialization of the ORB code.
   static int Initializer (void);
@@ -97,13 +94,13 @@ ACE_FACTORY_DECLARE (TAO_DynamicInterface, TAO_Dynamic_Adapter_Impl)
 typedef int (*TAO_Module_Initializer) (void);
 
 static TAO_Module_Initializer
-TAO_Requires_Request_Factory_Initializer = 
+TAO_Requires_Request_Factory_Initializer =
   &TAO_Dynamic_Adapter_Impl::Initializer;
 
 #else
 
 static int
-TAO_Requires_Request_Factory_Initializer = 
+TAO_Requires_Request_Factory_Initializer =
   TAO_Dynamic_Adapter_Impl::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */

@@ -58,18 +58,18 @@ public:
   ~CC_Lock (void);
   // Deletes the lock
 
-  void lock (CORBA::Environment &env);
+  void lock (TAO_ENV_SINGLE_ARG_DECL);
   // Acquires this lock. Blocks until lock is obtained
 
-  CORBA::Boolean try_lock (CORBA::Environment &env);
+  CORBA::Boolean try_lock (TAO_ENV_SINGLE_ARG_DECL);
   // Tries to acquire this lock. If it is not possible to acquire the
   // lock, false is returned
 
-  void unlock (CORBA::Environment &env);
+  void unlock (TAO_ENV_SINGLE_ARG_DECL);
   // Releases this lock.
 
-  void change_mode (CosConcurrencyControl::lock_mode new_mode,
-                   CORBA::Environment &env);
+  void change_mode (CosConcurrencyControl::lock_mode new_mode
+                   TAO_ENV_ARG_DECL);
   // Changes the mode of this lock.
 
   void set_mode (CosConcurrencyControl::lock_mode mode);
@@ -125,7 +125,7 @@ public:
   void First(void);
   // Reset the iterator to the first element
 
-  void Next(CORBA::Environment &_env);
+  void Next(TAO_ENV_SINGLE_ARG_DECL);
   // Advance the iterator to the next element
   // Throws exception if out of range
 

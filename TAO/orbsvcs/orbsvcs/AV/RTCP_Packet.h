@@ -1,4 +1,5 @@
 // $Id$
+
 #ifndef RTCP_PACKET_INCLUDE
 #define RTCP_PACKET_INCLUDE
 
@@ -394,4 +395,3 @@ private:
 
 #include "ace/post.h"
 #endif  /*  RTCP_PACKET_INCLUDE  */
-

@@ -47,8 +47,8 @@ public:
   ~TAO_Notify_Constraint_Interpreter (void);
   // Destructor
 
-  void build_tree (const char* constraints,
-                   CORBA::Environment& ACE_TRY_ENV)
+  void build_tree (const char* constraints
+                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CosNotifyFilter::InvalidConstraint,
                      CORBA::NO_MEMORY));
   // This constructor builds an expression tree representing the

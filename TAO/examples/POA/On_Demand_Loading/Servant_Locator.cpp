@@ -39,8 +39,6 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   // Convert ObjectID to String.
 
   CORBA::String_var s =

@@ -35,17 +35,15 @@ TAO_Messaging_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
-
-  this->register_policy_factories (info,
-                                   ACE_TRY_ENV);
+  this->register_policy_factories (info
+                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_Messaging_ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ORBInitInfo_ptr info
+  TAO_ENV_ARG_DECL)
 {
   // Register the Messaging policy factories.
 
@@ -74,91 +72,91 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
 
   type = TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   type = TAO_BUFFERING_CONSTRAINT_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   type = TAO_MESSAGING_REBIND_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 
   type = TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_ROUTING_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_MAX_HOPS_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in (),
-                                 ACE_TRY_ENV);
+                                 this->policy_factory_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

@@ -26,7 +26,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
 
 int
 Receiver_StreamEndPoint::set_protocol_object (const char * flowname,
-					      TAO_AV_Protocol_Object *object)
+                                              TAO_AV_Protocol_Object *object)
 {
   // Set the sender protocol object corresponding to the transport
   // protocol selected.
@@ -70,17 +70,17 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 
       frame = frame->cont ();
     }
-  
+
   // Read from the file into a message block.
   int n = ACE_OS::fread (this->mb_.wr_ptr (),
-			 1,
-			 this->mb_.size (),
-			 RECEIVER::instance ()->input_file ());
-  
+                         1,
+                         this->mb_.size (),
+                         RECEIVER::instance ()->input_file ());
+
   if (n < 0)
             ACE_DEBUG ((LM_DEBUG,
-			"Receiver::receive_frame fread failed\n"));
-  
+                        "Receiver::receive_frame fread failed\n"));
+
   if (n == 0)
     {
       // At end of file break the loop and end the sender.
@@ -89,15 +89,15 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   else
     {
       this->mb_.wr_ptr (n);
-      
+
       // Send frame.
       int result =
-	RECEIVER::instance ()->protocol_object ()->send_frame (&this->mb_);
-      
+        RECEIVER::instance ()->protocol_object ()->send_frame (&this->mb_);
+
       if (result < 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Send Frame Failed\n"));
-      
+        ACE_DEBUG ((LM_DEBUG,
+                    "Send Frame Failed\n"));
+
       // Reset the message block.
       this->mb_.reset ();
     }
@@ -117,18 +117,18 @@ Receiver_Callback::handle_destroy (void)
   if (count < 2)
     {
       ACE_TRY_NEW_ENV
-	{
-	  TAO_AV_CORE::instance ()->orb ()->shutdown (0,
-						      ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
+        {
+          TAO_AV_CORE::instance ()->orb ()->shutdown (0
+                                                      TAO_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
       ACE_CATCHANY
-	{
-	  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			       "Receiver_Callback::handle_destroy Failed\n");
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Receiver_Callback::handle_destroy Failed\n");
       return -1;
-      
-	}
+
+        }
 
       ACE_ENDTRY;
     }
@@ -160,7 +160,7 @@ Receiver::protocol_object (TAO_AV_Protocol_Object *object)
 
 int
 Receiver::parse_args (int argc,
-		      char **argv)
+                      char **argv)
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "f:r:d");
@@ -189,8 +189,8 @@ Receiver::parse_args (int argc,
 
 int
 Receiver::init (int argc,
-                char ** argv,
-                CORBA::Environment &ACE_TRY_ENV)
+                char ** argv
+                TAO_ENV_ARG_DECL)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -205,7 +205,7 @@ Receiver::init (int argc,
                       argv);
   if (result != 0)
     return result;
-  
+
   // Open file to read.
   this->input_file_ =
     ACE_OS::fopen (this->filename_.c_str (),
@@ -230,7 +230,7 @@ Receiver::init (int argc,
     this->mmdevice_;
 
   CORBA::Object_var mmdevice =
-    this->mmdevice_->_this (ACE_TRY_ENV);
+    this->mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Register the mmdevice with the naming service.
@@ -248,8 +248,8 @@ Receiver::init (int argc,
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
-                                mmdevice.in (),
-                                ACE_TRY_ENV);
+                                mmdevice.in ()
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -278,32 +278,32 @@ main (int argc,
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA",
-                                           ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_TRY_ENV);
+        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (ACE_TRY_ENV);
+      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the AVStreams components.
-      TAO_AV_CORE::instance ()->init (orb.in (), root_poa.in (), ACE_TRY_ENV);
+      TAO_AV_CORE::instance ()->init (orb.in (), root_poa.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       // Make sure we have a valid <output_file>
       output_file = ACE_OS::fopen (output_file_name,
                                    "w");
@@ -319,24 +319,24 @@ main (int argc,
 
       int result =
         RECEIVER::instance ()->init (argc,
-				     argv,
-				     ACE_TRY_ENV);
+                                     argv
+                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       //        // Start sending data.
-      //        result = SENDER::instance ()->pace_data (ACE_TRY_ENV);
+      //        result = SENDER::instance ()->pace_data (TAO_ENV_SINGLE_ARG_PARAMETER);
       //        ACE_TRY_CHECK;
-      
+
       if (result != 0)
         return result;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       // Hack for now....
       ACE_OS::sleep (1);
-      
-      //orb->destroy (ACE_TRY_ENV);
+
+      //orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

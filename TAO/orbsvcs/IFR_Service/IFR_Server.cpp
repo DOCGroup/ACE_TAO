@@ -12,10 +12,10 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "TAO Interface Repository\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      int status = server.init (argc, argv, ACE_TRY_ENV);
+      int status = server.init (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == -1)
@@ -24,10 +24,10 @@ main (int argc, char *argv[])
         }
       else
         {
-          server.run (ACE_TRY_ENV);
+          server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          status = server.fini (ACE_TRY_ENV);
+          status = server.fini (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (status == -1)

@@ -49,7 +49,7 @@ TAO_Notify_MT_Worker_Task::init_task (TAO_Notify_AdminProperties* const admin_pr
 }
 
 void
-TAO_Notify_MT_Worker_Task::shutdown (CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_MT_Worker_Task::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
 {
   // Put a shutdown message in the task queue and wait here till all
   // threads exit.
@@ -64,8 +64,8 @@ TAO_Notify_MT_Worker_Task::close (u_long)
 
   TAO_Notify_Shutdown_Command * mb = new TAO_Notify_Shutdown_Command ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->process_event (mb, ACE_TRY_ENV);
+  TAO_ENV_DECLARE_NEW_ENV;
+  this->process_event (mb TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // We can not wait for ourselves to quit
@@ -83,10 +83,10 @@ TAO_Notify_MT_Worker_Task::close (u_long)
 }
 
 int
-TAO_Notify_MT_Worker_Task::process_event (TAO_Notify_Command *mb, CORBA::Environment& ACE_TRY_ENV, ACE_Time_Value *tv)
+TAO_Notify_MT_Worker_Task::process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DECL, ACE_Time_Value *tv)
 {
   // Execute the buffering strategy.
-  this->buffering_strategy_->execute (this->msg_queue (), mb, ACE_TRY_ENV, tv);
+  this->buffering_strategy_->execute (this->msg_queue (), mb TAO_ENV_ARG_PARAMETER, tv);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -122,7 +122,7 @@ TAO_Notify_MT_Worker_Task::svc (void)
               continue;
             }
 
-          int result = command->execute (ACE_TRY_ENV);
+          int result = command->execute (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_Message_Block::release (mb);
@@ -148,7 +148,7 @@ TAO_Notify_Shutdown_Command::TAO_Notify_Shutdown_Command (void)
 }
 
 int
-TAO_Notify_Shutdown_Command::execute (CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_Shutdown_Command::execute (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
 {
   return -1;
 }

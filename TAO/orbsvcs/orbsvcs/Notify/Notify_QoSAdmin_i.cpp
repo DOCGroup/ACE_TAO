@@ -26,7 +26,7 @@ TAO_Notify_QoSAdmin_i::~TAO_Notify_QoSAdmin_i (void)
 }
 
 CosNotification::QoSProperties * TAO_Notify_QoSAdmin_i::get_qos (
-    CORBA::Environment & ///ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
        CORBA::SystemException
@@ -37,8 +37,8 @@ CosNotification::QoSProperties * TAO_Notify_QoSAdmin_i::get_qos (
 }
 
 void
-TAO_Notify_QoSAdmin_i::set_qos (const CosNotification::QoSProperties & qos,
-    CORBA::Environment & ACE_TRY_ENV
+TAO_Notify_QoSAdmin_i::set_qos (const CosNotification::QoSProperties & qos
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -112,8 +112,8 @@ TAO_Notify_QoSAdmin_i::set_qos (const CosNotification::QoSProperties & qos,
 void
 TAO_Notify_QoSAdmin_i::validate_qos (
     const CosNotification::QoSProperties & /*required_qos*/,
-    CosNotification::NamedPropertyRangeSeq_out /*available_qos*/,
-    CORBA::Environment & //ACE_TRY_ENV
+    CosNotification::NamedPropertyRangeSeq_out /*available_qos*/
+    TAO_ENV_ARG_DECL_NOT_USED //TAO_ENV_SINGLE_ARG_PARAMETER
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,

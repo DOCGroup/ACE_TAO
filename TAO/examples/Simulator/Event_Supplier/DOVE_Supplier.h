@@ -77,7 +77,7 @@ private:
 
   public:
 
-    virtual void disconnect_push_supplier (CORBA::Environment &)
+    virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }

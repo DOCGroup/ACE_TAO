@@ -38,16 +38,16 @@ TAO_CEC_Event_Loader::~TAO_CEC_Event_Loader (void)
 int
 TAO_CEC_Event_Loader::init (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       this->orb_=
-        CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        this->create_object (this->orb_.in (), argc, argv, ACE_TRY_ENV);
+        this->create_object (this->orb_.in (), argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -62,8 +62,8 @@ TAO_CEC_Event_Loader::init (int argc, char *argv[])
 
 CORBA::Object_ptr
 TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
-                                     int argc, char *argv[],
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     int argc, char *argv[]
+                                     TAO_ENV_ARG_DECL)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -125,15 +125,15 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       // POA initialization and activation ...
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -151,17 +151,17 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                                                  this->factory_,
                                                  this->terminate_flag_);
 
-      this->ec_impl_->activate (ACE_TRY_ENV);
+      this->ec_impl_->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosEventChannelAdmin::EventChannel_var event_channel =
-        this->ec_impl_->_this (ACE_TRY_ENV);
+        this->ec_impl_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ior_file != 0)
         {
           CORBA::String_var ior =
-            orb->object_to_string (event_channel.in (), ACE_TRY_ENV);
+            orb->object_to_string (event_channel.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           FILE *file = ACE_OS::fopen (ior_file, "w");
           ACE_OS::fprintf (file, "%s\n", ior.in ());
@@ -175,13 +175,13 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       if (this->bind_to_naming_service_)
         {
           CORBA::Object_var obj =
-            orb->resolve_initial_references ("NameService",
-                                             ACE_TRY_ENV);
+            orb->resolve_initial_references ("NameService"
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->naming_context_ =
-            CosNaming::NamingContext::_narrow (obj.in (),
-                                               ACE_TRY_ENV);
+            CosNaming::NamingContext::_narrow (obj.in ()
+                                               TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->channel_name_.length (1);
@@ -190,15 +190,15 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           if (use_rebind)
             {
               this->naming_context_->rebind (this->channel_name_,
-                                      event_channel.in (),
-                                      ACE_TRY_ENV);
+                                      event_channel.in ()
+                                      TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else
             {
               this->naming_context_->bind (this->channel_name_,
-                                    event_channel.in (),
-                                    ACE_TRY_ENV);
+                                    event_channel.in ()
+                                    TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -219,30 +219,30 @@ TAO_CEC_Event_Loader::fini (void)
   //   + Since it was activated with _this() you have to do the
   //   canonical:
   //     get_object_id
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Release the resources of the Event Channel
-      this->ec_impl_->destroy (ACE_TRY_ENV);
+      this->ec_impl_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Deactivate the EC
       PortableServer::POA_var poa =
-        this->ec_impl_->_default_POA (ACE_TRY_ENV);
+        this->ec_impl_->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (this->ec_impl_, ACE_TRY_ENV);
+        poa->servant_to_id (this->ec_impl_ TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Unbind the Naming Service
       if (this->bind_to_naming_service_)
         {
-          this->naming_context_->unbind (this->channel_name_,
-                                         ACE_TRY_ENV);
+          this->naming_context_->unbind (this->channel_name_
+                                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 

@@ -43,16 +43,16 @@ ECT_Consumer_Driver::~ECT_Consumer_Driver (void)
 int
 ECT_Consumer_Driver::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA",
-                                               ACE_TRY_ENV);
+        this->orb_->resolve_initial_references("RootPOA"
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -61,11 +61,11 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv))
@@ -124,8 +124,8 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
         }
 
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService",
-                                                ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("NameService"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -134,7 +134,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::Name schedule_name (1);
@@ -142,13 +142,13 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
       CORBA::Object_var sched_obj =
-        naming_context->resolve (schedule_name, ACE_TRY_ENV);
+        naming_context->resolve (schedule_name TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (sched_obj.in ()))
         return 1;
       RtecScheduler::Scheduler_var scheduler =
-        RtecScheduler::Scheduler::_narrow (sched_obj.in (),
-                                           ACE_TRY_ENV);
+        RtecScheduler::Scheduler::_narrow (sched_obj.in ()
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::Name name (1);
@@ -156,21 +156,21 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name, ACE_TRY_ENV);
+        naming_context->resolve (name TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
-        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
-                                                                ACE_TRY_ENV);
+        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
+                                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->connect_consumers (scheduler.in (), channel.in (), ACE_TRY_ENV);
+      this->connect_consumers (scheduler.in (), channel.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
@@ -179,7 +179,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       for (;;)
         {
           ACE_Time_Value tv (1, 0);
-          this->orb_->perform_work (tv, ACE_TRY_ENV);
+          this->orb_->perform_work (tv TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
           if (this->active_count_ <= 0)
@@ -189,19 +189,19 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->disconnect_consumers (ACE_TRY_ENV);
+      this->disconnect_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->shutdown_event_channel_ != 0)
         {
-          channel->destroy (ACE_TRY_ENV);
+          channel->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->orb_->destroy (ACE_TRY_ENV);
+      this->orb_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
@@ -217,8 +217,8 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
 }
 
 void
-ECT_Consumer_Driver::shutdown_consumer (void*,
-                                        CORBA::Environment &)
+ECT_Consumer_Driver::shutdown_consumer (void*
+                                        TAO_ENV_ARG_DECL_NOT_USED)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -233,8 +233,8 @@ ECT_Consumer_Driver::shutdown_consumer (void*,
 void
 ECT_Consumer_Driver::connect_consumers
      (RtecScheduler::Scheduler_ptr scheduler,
-      RtecEventChannelAdmin::EventChannel_ptr channel,
-      CORBA::Environment &ACE_TRY_ENV)
+      RtecEventChannelAdmin::EventChannel_ptr channel
+      TAO_ENV_ARG_DECL)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -254,8 +254,8 @@ ECT_Consumer_Driver::connect_consumers
                                     buf,
                                     this->type_start_,
                                     this->type_count_,
-                                    channel,
-                                    ACE_TRY_ENV);
+                                    channel
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -278,11 +278,11 @@ ECT_Consumer_Driver::dump_results (void)
 }
 
 void
-ECT_Consumer_Driver::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
+ECT_Consumer_Driver::disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (ACE_TRY_ENV);
+      this->consumers_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       delete this->consumers_[i];

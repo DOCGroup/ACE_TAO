@@ -45,8 +45,8 @@ Test_Big_Union::opname (void) const
 }
 
 void
-Test_Big_Union::dii_req_invoke (CORBA::Request *req,
-                                CORBA::Environment &ACE_TRY_ENV)
+Test_Big_Union::dii_req_invoke (CORBA::Request *req
+                                TAO_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -54,7 +54,7 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req,
 
   req->set_return_type (Param_Test::_tc_Big_Union);
 
-  req->invoke (ACE_TRY_ENV);
+  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Param_Test::Big_Union *tmp;
@@ -62,26 +62,26 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req,
   this->ret_ = new Param_Test::Big_Union (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1, ACE_TRY_ENV);
+    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = *tmp;
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2, ACE_TRY_ENV);
+    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Big_Union (*tmp);
 }
 
 int
-Test_Big_Union::init_parameters (Param_Test_ptr objref,
-                                 CORBA::Environment &ACE_TRY_ENV)
+Test_Big_Union::init_parameters (Param_Test_ptr objref
+                                 TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       // get access to a Coffee Object
-      this->cobj_ = objref->make_coffee (ACE_TRY_ENV);
+      this->cobj_ = objref->make_coffee (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->reset_parameters ();
@@ -228,15 +228,15 @@ Test_Big_Union::reset_parameters (void)
 }
 
 int
-Test_Big_Union::run_sii_test (Param_Test_ptr objref,
-                              CORBA::Environment &ACE_TRY_ENV)
+Test_Big_Union::run_sii_test (Param_Test_ptr objref
+                              TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       this->ret_ = objref->test_big_union (this->in_,
                                            this->inout_,
-                                           this->out_,
-                                           ACE_TRY_ENV);
+                                           this->out_
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;
@@ -286,7 +286,7 @@ Test_Big_Union::check_validity (void)
       break;
     case 1:
       {
-        ACE_DECLARE_NEW_CORBA_ENV;
+        TAO_ENV_DECLARE_NEW_ENV;
         ACE_TRY
           {
             Coffee_ptr in    = this->in_.the_interface ();
@@ -301,16 +301,16 @@ Test_Big_Union::check_validity (void)
               return 0;
 
             Coffee::Desc_var in_desc =
-              in->description (ACE_TRY_ENV);
+              in->description (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
             Coffee::Desc_var inout_desc =
-              inout->description (ACE_TRY_ENV);
+              inout->description (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
             Coffee::Desc_var out_desc =
-              out->description (ACE_TRY_ENV);
+              out->description (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
             Coffee::Desc_var ret_desc =
-              ret->description (ACE_TRY_ENV);
+              ret->description (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             if (ACE_OS::strcmp (in_desc->name.in (),

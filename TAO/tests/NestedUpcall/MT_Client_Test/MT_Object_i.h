@@ -36,8 +36,8 @@ public:
   // Destructor.
 
   virtual CORBA::Long yadda (CORBA::Long hop_count,
-                             MT_Object_ptr partner,
-                             CORBA::Environment &_tao_environment)
+                             MT_Object_ptr partner
+                             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };

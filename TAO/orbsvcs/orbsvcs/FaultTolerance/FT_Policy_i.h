@@ -60,8 +60,8 @@ public:
   TAO_FT_Request_Duration_Policy (const TAO_FT_Request_Duration_Policy &rhs);
   // Copy constructor.
 
-  static CORBA::Policy_ptr create (const CORBA::Any& val,
-                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  static CORBA::Policy_ptr create (const CORBA::Any& val
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
@@ -69,19 +69,19 @@ public:
   // Returns a copy of <this>.
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_value (CORBA::Environment &ACE_TRY_ENV)
+  virtual TimeBase::TimeT request_duration_value (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Policy_ptr copy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void set_time_value (ACE_Time_Value &time_value);
@@ -114,8 +114,8 @@ public:
   TAO_FT_Heart_Beat_Policy (const TAO_FT_Heart_Beat_Policy &rhs);
   // Copy constructor.
 
-  static CORBA::Policy_ptr create (const CORBA::Any& val,
-                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  static CORBA::Policy_ptr create (const CORBA::Any& val
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
@@ -123,19 +123,19 @@ public:
   // Returns a copy of <this>.
 
   // = The FT::HeartBeatPolicy methods
-  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (CORBA::Environment &ACE_TRY_ENV)
+  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Policy_ptr copy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void set_time_value (ACE_Time_Value &time_value,
@@ -177,9 +177,8 @@ public:
       const TAO_FT_Heart_Beat_Enabled_Policy &rhs);
   // Copy constructor.
 
-  static CORBA::Policy_ptr create (const CORBA::Any& val,
-                                   CORBA::Environment &ACE_TRY_ENV =
-                                   TAO_default_environment ());
+  static CORBA::Policy_ptr create (const CORBA::Any& val
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
@@ -188,19 +187,19 @@ public:
 
   // = The FT::HeartBeatPolicy methods
   virtual CORBA::Boolean heartbeat_enabled_policy_value (
-      CORBA::Environment &ACE_TRY_ENV)
+      TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Policy_ptr copy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -136,8 +136,8 @@ TAO_RT_ORB_Loader::init (int argc,
       ACE_TRY_CHECK;
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -44,7 +44,7 @@ public:
   // Initialize the <Load_Balancing_Service>: initializes the ORB, parses
   // arguments, creates a servant ...
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the server.
 
 private:

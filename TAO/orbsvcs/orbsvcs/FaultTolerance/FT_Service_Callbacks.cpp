@@ -158,8 +158,8 @@ void
 TAO_FT_Service_Callbacks::service_context_list (
     TAO_Stub *&stub,
     IOP::ServiceContextList &service_list,
-    CORBA::Boolean restart,
-    CORBA::Environment  &ACE_TRY_ENV)
+    CORBA::Boolean restart
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -170,14 +170,14 @@ TAO_FT_Service_Callbacks::service_context_list (
     {
       // Pack the group version service context
       this->group_version_service_context (stub,
-                                           service_list,
-                                           ACE_TRY_ENV);
+                                           service_list
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Pack the request service context
       this->request_service_context (stub,
-                                     service_list,
-                                     ACE_TRY_ENV);
+                                     service_list
+                                     TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -187,8 +187,8 @@ TAO_FT_Service_Callbacks::service_context_list (
 void
 TAO_FT_Service_Callbacks::request_service_context (
     TAO_Stub *&stub,
-    IOP::ServiceContextList &service_list,
-    CORBA::Environment &ACE_TRY_ENV)
+    IOP::ServiceContextList &service_list
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_OutputCDR cdr;
@@ -210,8 +210,8 @@ TAO_FT_Service_Callbacks::request_service_context (
 
   // Check whether the FT::RequestDurationPolicy has been set
   CORBA::Policy_var policy =
-    stub->get_policy (FT::REQUEST_DURATION_POLICY,
-                      ACE_TRY_ENV);
+    stub->get_policy (FT::REQUEST_DURATION_POLICY
+                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ There are two possibilities a) Duration policy has not been
@@ -231,7 +231,7 @@ TAO_FT_Service_Callbacks::request_service_context (
         FT::RequestDurationPolicy::_narrow (policy.in ());
 
       exp_time =
-        duration_policy->request_duration_value (ACE_TRY_ENV);
+        duration_policy->request_duration_value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   else
@@ -288,8 +288,8 @@ TAO_FT_Service_Callbacks::request_service_context (
 void
 TAO_FT_Service_Callbacks::group_version_service_context (
     TAO_Stub *&stub,
-    IOP::ServiceContextList &service_list,
-    CORBA::Environment &ACE_TRY_ENV)
+    IOP::ServiceContextList &service_list
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_OutputCDR cdr;
@@ -368,8 +368,8 @@ TAO_FT_Service_Callbacks::get_object_group_version (TAO_Profile *profile)
 int
 TAO_FT_Service_Callbacks::raise_comm_failure (
     TAO_GIOP_Invocation *invoke,
-    TAO_Profile *profile,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_Profile *profile
+    TAO_ENV_ARG_DECL)
 {
   if (this->restart_policy_check (
           invoke->request_service_context ().service_info (),
@@ -402,8 +402,8 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
 int
 TAO_FT_Service_Callbacks::raise_transient_failure (
     TAO_GIOP_Invocation *invoke,
-    TAO_Profile *profile,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_Profile *profile
+    TAO_ENV_ARG_DECL)
 {
   if (restart_policy_check (
         invoke->request_service_context ().service_info (),

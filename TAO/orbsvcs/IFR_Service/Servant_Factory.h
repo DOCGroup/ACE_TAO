@@ -46,29 +46,29 @@ public:
   IFR_Servant_Factory (TAO_Repository_i *repo);
   // constructor
 
-  TAO_IDLType_i *create_idltype (ACE_Configuration_Section_Key key,
-                                 CORBA::Environment &ACE_TRY_ENV);
+  TAO_IDLType_i *create_idltype (ACE_Configuration_Section_Key key
+                                 TAO_ENV_ARG_DECL);
   // For internal use - faster than creating an object reference and
   // sending a request, and can call utility functions not in IDL.
 
-  TAO_Contained_i *create_contained (ACE_Configuration_Section_Key key,
-                                     CORBA::Environment &ACE_TRY_ENV);
+  TAO_Contained_i *create_contained (ACE_Configuration_Section_Key key
+                                     TAO_ENV_ARG_DECL);
   // For internal use - faster than creating an object reference and
   // sending a request, and can call utility functions not in IDL.
 
-  TAO_Container_i *create_container (ACE_Configuration_Section_Key key,
-                                     CORBA::Environment &ACE_TRY_ENV);
+  TAO_Container_i *create_container (ACE_Configuration_Section_Key key
+                                     TAO_ENV_ARG_DECL);
   // For internal use - faster than creating an object reference and
   // sending a request, and can call utility functions not in IDL.
 
   PortableServer::Servant create_tie (ACE_Configuration_Section_Key key,
-                                      PortableServer::POA_ptr poa,
-                                      CORBA::Environment &ACE_TRY_ENV);
+                                      PortableServer::POA_ptr poa
+                                      TAO_ENV_ARG_DECL);
   // Used by the servant locator to create a servant.
 
   CORBA::Object_ptr create_objref (CORBA::DefinitionKind def_kind,
-                                   const char *obj_id,
-                                   CORBA::Environment &ACE_TRY_ENV);
+                                   const char *obj_id
+                                   TAO_ENV_ARG_DECL);
   // Used to create return values.
 private:
   TAO_Repository_i *repo_;

@@ -32,28 +32,28 @@ public:
   {
   public:
     Entry (CORBA::ORB_ptr orb,
-           PortableServer::POA_ptr poa,
-           CORBA::Environment &);
+           PortableServer::POA_ptr poa
+           TAO_ENV_ARG_DECL_NOT_USED);
     ~Entry (void);
 
-    virtual void invoke (CORBA::ServerRequest_ptr request,
-                         CORBA::Environment &env);
+    virtual void invoke (CORBA::ServerRequest_ptr request
+                         TAO_ENV_ARG_DECL);
     // The invoke() method receives requests issued to any CORBA
     // object incarnated by the DSI servant and performs the
     // processing necessary to execute the request.
 
     virtual CORBA::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
-                                                    PortableServer::POA_ptr poa,
-                                                    CORBA::Environment &env);
+                                                    PortableServer::POA_ptr poa
+                                                    TAO_ENV_ARG_DECL);
     // The _primary_interface() method receives an ObjectId value and
     // a POA_ptr as input parameters and returns a valid RepositoryId
     // representing the most-derived interface for that oid.
 
-    virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
+    virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
     // Returns the default POA for this servant.
 
-    virtual void is_a (CORBA::ServerRequest_ptr request,
-                       CORBA::Environment &env);
+    virtual void is_a (CORBA::ServerRequest_ptr request
+                       TAO_ENV_ARG_DECL);
     // Handles the _is_a call
 
   protected:
@@ -71,36 +71,36 @@ public:
   {
   public:
     Agent (CORBA::ORB_ptr orb,
-           PortableServer::POA_ptr poa,
-           CORBA::Environment &);
+           PortableServer::POA_ptr poa
+           TAO_ENV_ARG_DECL_NOT_USED);
     ~Agent (void);
 
     virtual Database::Entry_ptr create_entry (const char *key,
                                               const char *entry_type,
-                                              const Database::NVPairSequence &initial_attributes,
-                                              CORBA::Environment &env)
+                                              const Database::NVPairSequence &initial_attributes
+                                              TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Database::Unknown_Type,
                        Database::Duplicate_Key));
 
     virtual Database::Entry_ptr find_entry (const char *key,
-                                            const char *entry_type,
-                                            CORBA::Environment &env)
+                                            const char *entry_type
+                                            TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Database::Unknown_Type,
                        Database::Not_Found));
 
     virtual void destroy_entry (const char *key,
-                                const char *entry_type,
-                                CORBA::Environment &env)
+                                const char *entry_type
+                                TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Database::Unknown_Type,
                        Database::Unknown_Key));
 
-    virtual void shutdown (CORBA::Environment &env)
+    virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
+    virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
     // Returns the default POA for this servant.
 
   protected:

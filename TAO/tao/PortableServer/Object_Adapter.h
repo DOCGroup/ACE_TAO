@@ -73,14 +73,14 @@ public:
   TAO_POA_Current (void);
   // Constructor
 
-  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV)
+  PortableServer::POA_ptr get_POA (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::Current::NoContext));
   // Returns the POA on which the current request is being invoked.
   // Can raise the <CORBA::NoContext> exception if this function is
   // not invoked in the context of an upcall.
 
-  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV)
+  PortableServer::ObjectId *get_object_id (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::Current::NoContext));
   // Returns the object id of the current request being invoked.  Can
@@ -119,13 +119,13 @@ public:
 
   friend class TAO_POA;
 
-  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV)
+  PortableServer::POA_ptr get_POA (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::Current::NoContext));
   // Return pointer to the invoking POA.  Raises the
   // <CORBA::NoContext> exception.
 
-  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV)
+  PortableServer::ObjectId *get_object_id (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::Current::NoContext));
   // Return pointer to the object id through which this was invoked.
@@ -233,22 +233,22 @@ public:
 
   int dispatch_servant (const TAO_ObjectKey &key,
                         TAO_ServerRequest &req,
-                        CORBA::Object_out forward_to,
-                        CORBA_Environment &ACE_TRY_ENV);
+                        CORBA::Object_out forward_to
+                        TAO_ENV_ARG_DECL);
 
-  int locate_servant (const TAO_ObjectKey &key,
-                      CORBA_Environment &ACE_TRY_ENV);
+  int locate_servant (const TAO_ObjectKey &key
+                      TAO_ENV_ARG_DECL);
 
   TAO_SERVANT_LOCATION find_servant (const TAO_ObjectKey &key,
-                                     PortableServer::Servant &servant,
-                                     CORBA_Environment &ACE_TRY_ENV);
+                                     PortableServer::Servant &servant
+                                     TAO_ENV_ARG_DECL);
 
   int find_poa (const poa_name &system_name,
                 CORBA::Boolean activate_it,
                 CORBA::Boolean root,
                 const TAO_Temporary_Creation_Time &poa_creation_time,
-                TAO_POA *&poa,
-                CORBA_Environment &ACE_TRY_ENV);
+                TAO_POA *&poa
+                TAO_ENV_ARG_DECL);
 
   int bind_poa (const poa_name &folded_name,
                 TAO_POA *poa,
@@ -259,8 +259,8 @@ public:
                   const poa_name &system_name);
 
   int activate_poa (const poa_name &folded_name,
-                    TAO_POA *&poa,
-                    CORBA_Environment &ACE_TRY_ENV);
+                    TAO_POA *&poa
+                    TAO_ENV_ARG_DECL);
 
   ACE_Lock &lock (void);
 
@@ -294,21 +294,21 @@ public:
   void servant_dispatcher (TAO_Servant_Dispatcher *dispatcher);
 
   /// Initialize the default set of POA policies.
-  void init_default_policies (TAO_POA_Policy_Set &policies,
-                              CORBA::Environment &ACE_TRY_ENV);
+  void init_default_policies (TAO_POA_Policy_Set &policies
+                              TAO_ENV_ARG_DECL);
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (CORBA::Environment &ACE_TRY_ENV);
-  virtual void close (int wait_for_completion,
-                      CORBA::Environment &ACE_TRY_ENV);
-  virtual void check_close (int wait_for_completion,
-                            CORBA::Environment &ACE_TRY_ENV);
+  virtual void open (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void close (int wait_for_completion
+                      TAO_ENV_ARG_DECL);
+  virtual void check_close (int wait_for_completion
+                            TAO_ENV_ARG_DECL);
   virtual int priority (void) const;
   virtual int dispatch (TAO_ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Object_out foward_to
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual const char *name (void) const;
   virtual CORBA::Object_ptr root (void);
@@ -317,32 +317,32 @@ public:
 
 protected:
 
-  int locate_servant_i (const TAO_ObjectKey &key,
-                        CORBA_Environment &ACE_TRY_ENV);
+  int locate_servant_i (const TAO_ObjectKey &key
+                        TAO_ENV_ARG_DECL);
 
   TAO_SERVANT_LOCATION find_servant_i (const TAO_ObjectKey &key,
-                                       PortableServer::Servant &servant,
-                                       CORBA_Environment &ACE_TRY_ENV);
+                                       PortableServer::Servant &servant
+                                       TAO_ENV_ARG_DECL);
 
   void dispatch_servant_i (const TAO_ObjectKey &key,
                            TAO_ServerRequest &req,
-                           void *context,
-                           CORBA_Environment &ACE_TRY_ENV);
+                           void *context
+                           TAO_ENV_ARG_DECL);
 
   void locate_poa (const TAO_ObjectKey &key,
                    PortableServer::ObjectId &id,
-                   TAO_POA *&poa,
-                   CORBA_Environment &ACE_TRY_ENV);
+                   TAO_POA *&poa
+                   TAO_ENV_ARG_DECL);
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
                           const TAO_Temporary_Creation_Time &poa_creation_time,
-                          TAO_POA *&poa,
-                          CORBA_Environment &ACE_TRY_ENV);
+                          TAO_POA *&poa
+                          TAO_ENV_ARG_DECL);
 
   int find_persistent_poa (const poa_name &system_name,
-                           TAO_POA *&poa,
-                           CORBA_Environment &ACE_TRY_ENV);
+                           TAO_POA *&poa
+                           TAO_ENV_ARG_DECL);
 
   int bind_transient_poa (TAO_POA *poa,
                           poa_name_out system_name);
@@ -356,7 +356,7 @@ protected:
   int unbind_persistent_poa (const poa_name &folded_name,
                              const poa_name &system_name);
 
-  void set_default_server_protocol_policy (CORBA::Environment &ACE_TRY_ENV);
+  void set_default_server_protocol_policy (TAO_ENV_SINGLE_ARG_DECL);
 
   static ACE_Lock *create_lock (int enable_locking,
                                 TAO_SYNCH_MUTEX &thread_lock);
@@ -376,8 +376,8 @@ public:
     virtual ~Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa,
-                                     CORBA_Environment &ACE_TRY_ENV) = 0;
+                                     TAO_POA *&poa
+                                     TAO_ENV_ARG_DECL) = 0;
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_POA *poa,
@@ -409,8 +409,8 @@ public:
     virtual ~Active_Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa,
-                                     CORBA_Environment &ACE_TRY_ENV);
+                                     TAO_POA *&poa
+                                     TAO_ENV_ARG_DECL);
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_POA *poa,
@@ -443,8 +443,8 @@ public:
     virtual ~No_Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa,
-                                     CORBA_Environment &ACE_TRY_ENV);
+                                     TAO_POA *&poa
+                                     TAO_ENV_ARG_DECL);
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_POA *poa,
@@ -633,12 +633,12 @@ public:
 
     int prepare_for_upcall (const TAO_ObjectKey &key,
                             const char *operation,
-                            CORBA::Object_out forward_to,
-                            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                            CORBA::Object_out forward_to
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
     // Locate POA and servant.
 
-    TAO_POA *lookup_POA (const TAO_ObjectKey &key,
-                         CORBA::Environment &ACE_TRY_ENV);
+    TAO_POA *lookup_POA (const TAO_ObjectKey &key
+                         TAO_ENV_ARG_DECL);
     // Locate POA.
 
     TAO_POA &poa (void) const;
@@ -689,7 +689,7 @@ public:
   protected:
 
     void servant_locator_cleanup (void);
-    void single_threaded_poa_setup (CORBA::Environment &ACE_TRY_ENV);
+    void single_threaded_poa_setup (TAO_ENV_SINGLE_ARG_DECL);
     void single_threaded_poa_cleanup (void);
     void servant_cleanup (void);
     void poa_cleanup (void);

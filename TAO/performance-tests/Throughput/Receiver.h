@@ -25,11 +25,11 @@ public:
   Receiver (void);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Message &message,
-                             CORBA::Environment &ACE_TRY_ENV)
+  virtual void receive_data (const Test::Message &message
+                             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void done (CORBA::Environment &ACE_TRY_ENV)
+  virtual void done (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

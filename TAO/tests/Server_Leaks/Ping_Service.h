@@ -25,10 +25,10 @@ public:
   Ping_Service (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void ping (CORBA::Environment &ACE_TRY_ENV)
+  virtual void ping (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

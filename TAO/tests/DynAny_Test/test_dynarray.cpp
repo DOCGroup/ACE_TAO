@@ -57,13 +57,13 @@ Test_DynArray::run_test (void)
                  "testing: constructor(Any)/insert/get/seek/rewind/current_component\n"));
 
       CORBA::Object_var factory_obj =
-        this->orb_->resolve_initial_references ("DynAnyFactory",
-                                                ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("DynAnyFactory"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DynamicAny::DynAnyFactory_var dynany_factory =
-        DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
-                                            ACE_TRY_ENV);
+        DynamicAny::DynAnyFactory::_narrow (factory_obj.in ()
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (dynany_factory.in ()))
@@ -76,25 +76,25 @@ Test_DynArray::run_test (void)
       CORBA::Any in_any1;
       in_any1 <<= ta;
       DynamicAny::DynAny_var dp1 =
-        dynany_factory->create_dyn_any (in_any1,
-                                        ACE_TRY_ENV);
+        dynany_factory->create_dyn_any (in_any1
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      DynamicAny::DynArray_var fa1 = DynamicAny::DynArray::_narrow (dp1.in (),
-                                                        ACE_TRY_ENV);
+      DynamicAny::DynArray_var fa1 = DynamicAny::DynArray::_narrow (dp1.in ()
+                                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      fa1->seek (1,
-                 ACE_TRY_ENV);
+      fa1->seek (1
+                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      fa1->insert_long (data.m_long1,
-                        ACE_TRY_ENV);
+      fa1->insert_long (data.m_long1
+                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      fa1->rewind (ACE_TRY_ENV);
+      fa1->rewind (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Long l_out1 = data.m_long2;
-      fa1->seek (1,
-                 ACE_TRY_ENV);
+      fa1->seek (1
+                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      l_out1 = fa1->get_long (ACE_TRY_ENV);
+      l_out1 = fa1->get_long (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (l_out1 == data.m_long1)
@@ -111,13 +111,13 @@ Test_DynArray::run_test (void)
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       DynamicAny::DynAny_var ftc1_base =
-        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_array,
-                                                       ACE_TRY_ENV);
+        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_array
+                                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DynamicAny::DynArray_var ftc1 =
-        DynamicAny::DynArray::_narrow (ftc1_base.in (),
-                                       ACE_TRY_ENV);
+        DynamicAny::DynArray::_narrow (ftc1_base.in ()
+                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ftc1.in ()))
@@ -130,10 +130,10 @@ Test_DynArray::run_test (void)
       ta[1] = data.m_long1;
       CORBA::Any in_any2;
       in_any2 <<= ta;
-      ftc1->from_any (in_any2,
-                      ACE_TRY_ENV);
+      ftc1->from_any (in_any2
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::Any_var out_any1 = ftc1->to_any (ACE_TRY_ENV);
+      CORBA::Any_var out_any1 = ftc1->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       DynAnyTests::test_array_forany ta_out;
       out_any1.in () >>= ta_out;
@@ -157,10 +157,10 @@ Test_DynArray::run_test (void)
       in_any3 <<= data.m_long1;
       as_in[0] = in_any3;
       as_in[1] = in_any3;
-      ftc1->set_elements (as_in,
-                          ACE_TRY_ENV);
+      ftc1->set_elements (as_in
+                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      DynamicAny::AnySeq_var as_out = ftc1->get_elements (ACE_TRY_ENV);
+      DynamicAny::AnySeq_var as_out = ftc1->get_elements (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA_Any out_any2 = as_out[1U];
       CORBA::Long l_out2;
@@ -176,9 +176,9 @@ Test_DynArray::run_test (void)
           ++this->error_count_;
         }
 
-      fa1->destroy (ACE_TRY_ENV);
+      fa1->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ftc1->destroy (ACE_TRY_ENV);
+      ftc1->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

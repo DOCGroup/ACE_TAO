@@ -23,8 +23,8 @@ class ImplRepo_i;
  *
  * @brief Implementation Repository Forwarder
  *
- * This class is provides a ServantLocator implementation that 
- * is used to handle arbitrary calls and forward them to the 
+ * This class is provides a ServantLocator implementation that
+ * is used to handle arbitrary calls and forward them to the
  * correct place.
  */
 class ImR_Forwarder: public PortableServer::ServantLocator

@@ -12,7 +12,7 @@ Account_i::Account_i (void)
 }
 
 Account_i::Account_i (const char *name,
-		      CORBA::Float balance)
+                      CORBA::Float balance)
 
   : balance_ (balance),
     name_ (CORBA::string_dup (name))
@@ -37,23 +37,23 @@ Account_i::orb (CORBA::ORB_ptr o)
 // Return the current balance on the server.
 
 CORBA::Float
-Account_i::balance (CORBA::Environment &)
+Account_i::balance (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return balance_;
 }
 
 void
-Account_i::deposit (CORBA::Float deposit,
-		    CORBA::Environment &)
+Account_i::deposit (CORBA::Float deposit
+                    TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   balance_ += deposit;
 }
 
 void
-Account_i::withdraw (CORBA::Float withdrawl,
-		     CORBA::Environment &ACE_TRY_ENV)
+Account_i::withdraw (CORBA::Float withdrawl
+                     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Bank::Account::Overdraft))
 {
@@ -64,15 +64,15 @@ Account_i::withdraw (CORBA::Float withdrawl,
 }
 
 char *
-Account_i::name (CORBA::Environment &)
+Account_i::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
-Account_i::name (const char *name,
-		 CORBA::Environment &)
+Account_i::name (const char *name
+                 TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->name_ = CORBA::string_dup (name);

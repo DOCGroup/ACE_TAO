@@ -25,10 +25,10 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (CORBA::Environment &ACE_TRY_ENV)
+  virtual char * get_string (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Gateway_UDP.h
  *
@@ -135,8 +136,8 @@ public:
    */
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecUDPAdmin::AddrServer_ptr addr_server,
-             TAO_ECG_UDP_Out_Endpoint *endpoint,
-             CORBA::Environment &env = TAO_default_environment ());
+             TAO_ECG_UDP_Out_Endpoint *endpoint
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * The sender may need to fragment the message, otherwise the
@@ -149,21 +150,20 @@ public:
 
   /// Disconnect and shutdown the sender, no further connections will
   /// work unless init() is called again.
-  void shutdown (CORBA::Environment & = TAO_default_environment ());
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Connect (or reconnect) to the EC with the given subscriptions.
-  void open (RtecEventChannelAdmin::ConsumerQOS &sub,
-             CORBA::Environment &env = TAO_default_environment ());
+  void open (RtecEventChannelAdmin::ConsumerQOS &sub
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Disconnect from the EC, but reconnection is still possible.
-  void close (CORBA::Environment &env = TAO_default_environment ());
+  void close (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// The PushConsumer methods.
-  virtual void disconnect_push_consumer (CORBA::Environment & =
-                                             TAO_default_environment ())
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void push (const RtecEventComm::EventSet &events,
-                     CORBA::Environment & = TAO_default_environment ())
+  virtual void push (const RtecEventComm::EventSet &events
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -183,8 +183,8 @@ private:
                       CORBA::ULong fragment_id,
                       CORBA::ULong fragment_count,
                       iovec iov[],
-                      int iovcnt,
-                      CORBA::Environment &env = TAO_default_environment ());
+                      int iovcnt
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Count the number of fragments that will be required to send the
@@ -348,8 +348,8 @@ public:
   char* fragment_buffer (CORBA::ULong fragment_offset);
 
   /// Decode the events, the message must be complete.
-  void decode (RtecEventComm::EventSet& event,
-               CORBA::Environment &env = TAO_default_environment ());
+  void decode (RtecEventComm::EventSet& event
+               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Increment the timeout counter...
   void inc_timeout (void);
@@ -446,18 +446,18 @@ public:
              RtecUDPAdmin::AddrServer_ptr addr_server,
              ACE_Reactor *reactor,
              const ACE_Time_Value &expire_interval,
-             int max_timeout,
-             CORBA::Environment &env = TAO_default_environment ());
+             int max_timeout
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Disconnect and shutdown the gateway, no further connectsions
-  void shutdown (CORBA::Environment & = TAO_default_environment ());
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Connect to the EC using the given publications lists.
-  void open (RtecEventChannelAdmin::SupplierQOS& pub,
-             CORBA::Environment &env = TAO_default_environment ());
+  void open (RtecEventChannelAdmin::SupplierQOS& pub
+             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Disconnect to the EC.
-  virtual void close (CORBA::Environment &env = TAO_default_environment ());
+  virtual void close (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * The Event_Handlers call this method when data is available at the
@@ -472,14 +472,13 @@ public:
                       const void* act);
 
   // The PushSupplier method.
-  virtual void disconnect_push_supplier (CORBA::Environment & =
-                                             TAO_default_environment ())
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Call the RtecUDPAdmin::AddrServer
   void get_addr (const RtecEventComm::EventHeader& header,
-                 RtecUDPAdmin::UDP_Addr_out addr,
-                 CORBA::Environment &env = TAO_default_environment ());
+                 RtecUDPAdmin::UDP_Addr_out addr
+                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
 private:
   /// The remote and the local EC, so we can reconnect when the list changes.

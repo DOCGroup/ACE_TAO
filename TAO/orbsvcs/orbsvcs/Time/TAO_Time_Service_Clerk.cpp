@@ -37,7 +37,7 @@ TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
 // in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::universal_time (CORBA::Environment &ACE_TRY_ENV)
+TAO_Time_Service_Clerk::universal_time (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -59,7 +59,7 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &ACE_TRY_ENV)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &ACE_TRY_ENV)
+TAO_Time_Service_Clerk::secure_universal_time (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -71,8 +71,8 @@ TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &ACE_TRY_ENV)
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
-                                            TimeBase::TdfT tdf,
-                                            CORBA::Environment &ACE_TRY_ENV)
+                                            TimeBase::TdfT tdf
+                                            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -89,8 +89,8 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
 // This creates a new UTO given a time in the UtcT form.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc,
-                                      CORBA::Environment &ACE_TRY_ENV)
+TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc
+                                      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -115,8 +115,8 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc,
 
 CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
-                                      TimeBase::TimeT upper,
-                                      CORBA::Environment &ACE_TRY_ENV)
+                                      TimeBase::TimeT upper
+                                      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;

@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* MD5.H - header file for MD5C.C
  */
 
@@ -46,4 +47,3 @@ void MD5Final (unsigned char digest[16], MD5_CTX *context);
 #ifdef __cplusplus
 }
 #endif
-

@@ -34,9 +34,8 @@ ServerRequestInterceptor::receive_request_service_contexts (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
@@ -51,7 +50,7 @@ ServerRequestInterceptor::receive_request_service_contexts (
 
   ACE_TRY
     {
-      ri->set_slot (this->slot_id_, data, ACE_TRY_ENV);
+      ri->set_slot (this->slot_id_, data TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
@@ -89,9 +88,8 @@ ServerRequestInterceptor::send_reply (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
@@ -104,7 +102,7 @@ ServerRequestInterceptor::send_reply (
       // Retrieve the data stored in the RSC.  This data should be
       // different from the original data stored into the RSC by the
       // receive_request_service_contexts() interception point.
-      data = ri->get_slot (this->slot_id_, ACE_TRY_ENV);
+      data = ri->get_slot (this->slot_id_ TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)

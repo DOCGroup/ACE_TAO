@@ -63,8 +63,8 @@ parse_args (int argc, char **argv)
 }
 
 PortableServer::POA_ptr
-setup_poa (PortableServer::POA_ptr root_poa,
-           CORBA::Environment &ACE_TRY_ENV)
+setup_poa (PortableServer::POA_ptr root_poa
+           TAO_ENV_ARG_DECL)
 {
   // Policies for the childPOA to be created.
   CORBA::PolicyList policies (2);
@@ -72,18 +72,18 @@ setup_poa (PortableServer::POA_ptr root_poa,
 
   // Tell the POA to use a servant manager.
   policies[0] =
-    root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER,
-                                                ACE_TRY_ENV);
+    root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
+                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Allow implicit activation.
   policies[1] =
-    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
-                                                 ACE_TRY_ENV);
+    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (ACE_TRY_ENV);
+    root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Create POA as child of RootPOA with the above policies.  This POA
@@ -91,8 +91,8 @@ setup_poa (PortableServer::POA_ptr root_poa,
   PortableServer::POA_var child_poa =
     root_poa->create_POA ("childPOA",
                           poa_manager.in (),
-                          policies,
-                          ACE_TRY_ENV);
+                          policies
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Creation of childPOAs is over. Destroy the Policy objects.
@@ -100,7 +100,7 @@ setup_poa (PortableServer::POA_ptr root_poa,
        i < policies.length ();
        ++i)
     {
-      policies[i]->destroy (ACE_TRY_ENV);
+      policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (PortableServer::POA::_nil ());
     }
 
@@ -109,15 +109,15 @@ setup_poa (PortableServer::POA_ptr root_poa,
 
 MyFooServantActivator *
 create_servant_manager (CORBA::ORB_ptr orb,
-                        PortableServer::POA_ptr child_poa,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        PortableServer::POA_ptr child_poa
+                        TAO_ENV_ARG_DECL)
 {
   CORBA::Object_var forward_to;
   if (forward_to_ior)
     {
       forward_to =
-        orb->string_to_object (forward_to_ior,
-                               ACE_TRY_ENV);
+        orb->string_to_object (forward_to_ior
+                               TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -128,17 +128,17 @@ create_servant_manager (CORBA::ORB_ptr orb,
                   0);
 
   // Set MyFooServantActivator to be the servant activator.
-  child_poa->set_servant_manager (activator,
-                                  ACE_TRY_ENV);
+  child_poa->set_servant_manager (activator
+                                  TAO_ENV_ARG_PARAMETER);
   // For the code above, we're using the CORBA 3.0 servant manager
   // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
   // use the following code in place of the previous line:
   //
-  // PortableServer::ServantManager_var servant_activator = 
+  // PortableServer::ServantManager_var servant_activator =
   //   activator->_this ();
   //
   // child_poa->set_servant_manager (servant_activator.in (),
-  //                                 ACE_TRY_ENV);
+  //                                 TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   MyFooServant *servant = 0;
@@ -152,12 +152,12 @@ create_servant_manager (CORBA::ORB_ptr orb,
   PortableServer::ServantBase_var servant_var (servant);
 
   Foo_var foo =
-    servant->_this (ACE_TRY_ENV);
+    servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::String_var ior =
-    orb->object_to_string (foo.in (),
-                           ACE_TRY_ENV);
+    orb->object_to_string (foo.in ()
+                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
@@ -183,51 +183,51 @@ main (int argc,
   if (result == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
-        setup_poa (root_poa.in (),
-                   ACE_TRY_ENV);
+        setup_poa (root_poa.in ()
+                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::ServantManager_var manager =
         create_servant_manager (orb.in (),
-                                child_poa.in (),
-                                ACE_TRY_ENV);
+                                child_poa.in ()
+                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -102,8 +102,8 @@ Results::print_stats (void)
 }
 
 void
-Results::print_exception (const char * /* call_name */,
-                          CORBA::Environment &)
+Results::print_exception (const char * /* call_name */
+                          TAO_ENV_ARG_DECL_NOT_USED)
 {
   //ACE_PRINT_EXCEPTION (call_name);
 }

@@ -23,8 +23,8 @@ void TAO_Base_Sequence::_shrink_buffer (CORBA::ULong, CORBA::ULong)
 
 void
 TAO_Base_Sequence::_downcast (void*,
-                              CORBA_Object*,
-                              CORBA_Environment &)
+                              CORBA_Object*
+                              TAO_ENV_ARG_DECL_NOT_USED)
 {
   // default is no op.
   // @@ TODO Maybe throw an exception?
@@ -197,7 +197,7 @@ TAO_Unbounded_String_Sequence::get_buffer (CORBA::Boolean orphan)
         {
           result = allocbuf (this->length_);
           this->buffer_ = result;
-	        this->release_ = 1;
+                this->release_ = 1;
         }
       else
         {
@@ -432,7 +432,7 @@ TAO_Unbounded_WString_Sequence::get_buffer (CORBA::Boolean orphan)
         {
           result = allocbuf (this->length_);
           this->buffer_ = result;
-	        this->release_ = 1;
+                this->release_ = 1;
         }
       else
         {

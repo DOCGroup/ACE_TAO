@@ -49,7 +49,7 @@ int
 main (int argc,
       char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   Manager manager;
 
@@ -57,20 +57,20 @@ main (int argc,
     {
       // Initilaize the ORB, POA etc.
       manager.init (argc,
-                    argv,
-                    ACE_TRY_ENV);
+                    argv
+                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
         return -1;
 
-      manager.activate_servant (ACE_TRY_ENV);
+      manager.activate_servant (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      manager.make_iors_register (ACE_TRY_ENV);
+      manager.make_iors_register (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      manager.run (ACE_TRY_ENV);
+      manager.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -93,31 +93,31 @@ Manager::Manager (void)
 
 int
 Manager::init (int argc,
-               char *argv[],
-               CORBA::Environment &ACE_TRY_ENV)
+               char *argv[]
+               TAO_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                0,
-                                ACE_TRY_ENV);
+                                0
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
-    this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+    this->orb_->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa_var =
-    PortableServer::POA::_narrow (obj_var.in (), ACE_TRY_ENV);
+    PortableServer::POA::_narrow (obj_var.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager_var =
-    root_poa_var->the_POAManager (ACE_TRY_ENV);
+    root_poa_var->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  poa_manager_var->activate (ACE_TRY_ENV);
+  poa_manager_var->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Policies for the childPOA to be created.
@@ -127,26 +127,26 @@ Manager::init (int argc,
   // The next two policies are common to both
   // Id Assignment Policy
   policies[0] =
-    root_poa_var->create_id_assignment_policy (PortableServer::USER_ID,
-                                               ACE_TRY_ENV);
+    root_poa_var->create_id_assignment_policy (PortableServer::USER_ID
+                                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Lifespan policy
   policies[1] =
-    root_poa_var->create_lifespan_policy (PortableServer::PERSISTENT,
-                                          ACE_TRY_ENV);
+    root_poa_var->create_lifespan_policy (PortableServer::PERSISTENT
+                                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Tell the POA to use a servant manager
   policies[2] =
-    root_poa_var->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER,
-                                                    ACE_TRY_ENV);
+    root_poa_var->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
+                                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Servant Retention Policy -> Use a locator
   policies[3] =
-    root_poa_var->create_servant_retention_policy (PortableServer::NON_RETAIN,
-                                                   ACE_TRY_ENV);
+    root_poa_var->create_servant_retention_policy (PortableServer::NON_RETAIN
+                                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_CString name = "newPOA";
@@ -154,8 +154,8 @@ Manager::init (int argc,
   new_poa_var_ =
     root_poa_var->create_POA (name.c_str (),
                               poa_manager_var.in (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Creation of childPOAs is over. Destroy the Policy objects.
@@ -164,7 +164,7 @@ Manager::init (int argc,
        ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_TRY_ENV);
+      policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -173,7 +173,7 @@ Manager::init (int argc,
 
 
 int
-Manager::activate_servant (CORBA::Environment &ACE_TRY_ENV)
+Manager::activate_servant (TAO_ENV_SINGLE_ARG_DECL)
 {
 
   ACE_NEW_THROW_EX (this->servant_locator_,
@@ -185,8 +185,8 @@ Manager::activate_servant (CORBA::Environment &ACE_TRY_ENV)
 
   // Set ServantLocator object as the servant Manager of
   // secondPOA.
-  this->new_poa_var_->set_servant_manager (this->servant_locator_,
-                                           ACE_TRY_ENV);
+  this->new_poa_var_->set_servant_manager (this->servant_locator_
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Try to create a reference with user created ID in new_poa
@@ -197,7 +197,7 @@ Manager::activate_servant (CORBA::Environment &ACE_TRY_ENV)
 
   this->new_manager_ior_ =
     new_poa_var_->create_reference_with_id (second_foo_oid_var.in (),
-                                            "IDL:Simple_Server:1.0", ACE_TRY_ENV);
+                                            "IDL:Simple_Server:1.0" TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -205,18 +205,18 @@ Manager::activate_servant (CORBA::Environment &ACE_TRY_ENV)
 
 
 int
-Manager::make_iors_register (CORBA::Environment &ACE_TRY_ENV)
+Manager::make_iors_register (TAO_ENV_SINGLE_ARG_DECL)
 {
   // First  server
   CORBA::Object_var object_primary =
-    this->orb_->string_to_object (first_ior,
-                                  ACE_TRY_ENV);
+    this->orb_->string_to_object (first_ior
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   //Second server
   CORBA::Object_var object_secondary =
-    this->orb_->string_to_object (second_ior,
-                                  ACE_TRY_ENV);
+    this->orb_->string_to_object (second_ior
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (third_ior == 0)
@@ -224,19 +224,19 @@ Manager::make_iors_register (CORBA::Environment &ACE_TRY_ENV)
                 "Here is the culprit \n"));
   // Third Server
   CORBA::Object_var object_tertiary =
-    this->orb_->string_to_object (third_ior,
-                                  ACE_TRY_ENV);
+    this->orb_->string_to_object (third_ior
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA_Object_ptr IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                            0,
-                                            ACE_TRY_ENV);
+                                            0
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM, ACE_TRY_ENV);
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 
@@ -249,7 +249,7 @@ Manager::make_iors_register (CORBA::Environment &ACE_TRY_ENV)
 
   // Create a merged set 1;
   CORBA_Object_var merged_set1 =
-    iorm->merge_iors (iors, ACE_TRY_ENV);
+    iorm->merge_iors (iors TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (object_secondary.in () == 0)
@@ -268,7 +268,7 @@ Manager::make_iors_register (CORBA::Environment &ACE_TRY_ENV)
 
   // Create merged set 2
   CORBA_Object_var merged_set2 =
-    iorm->merge_iors (iors_again, ACE_TRY_ENV);
+    iorm->merge_iors (iors_again TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::String_var iorref1 =
@@ -293,9 +293,9 @@ Manager::make_iors_register (CORBA::Environment &ACE_TRY_ENV)
 
 
 int
-Manager::run (CORBA::Environment &ACE_TRY_ENV)
+Manager::run (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->orb_->run (ACE_TRY_ENV);
+  this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;

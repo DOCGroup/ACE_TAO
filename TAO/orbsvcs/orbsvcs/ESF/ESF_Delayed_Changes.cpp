@@ -45,15 +45,15 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    for_each (TAO_ESF_Worker<PROXY> *worker,
-              CORBA::Environment &ACE_TRY_ENV)
+    for_each (TAO_ESF_Worker<PROXY> *worker
+              TAO_ENV_ARG_DECL)
 {
   ACE_GUARD (Busy_Lock, ace_mon, this->lock_);
 
   ITERATOR end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
-      worker->work (*i, ACE_TRY_ENV);
+      worker->work (*i TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
   }
@@ -107,8 +107,8 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
-    connected (PROXY *proxy,
-               CORBA::Environment &ACE_TRY_ENV)
+    connected (PROXY *proxy
+               TAO_ENV_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
@@ -118,7 +118,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
   if (this->busy_count_ == 0)
     {
       // We can add the object immediately
-      this->connected_i (proxy, ACE_TRY_ENV);
+      this->connected_i (proxy TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
   else
@@ -134,8 +134,8 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
 
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
-    reconnected (PROXY *proxy,
-                 CORBA::Environment &ACE_TRY_ENV)
+    reconnected (PROXY *proxy
+                 TAO_ENV_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
@@ -145,7 +145,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
   if (this->busy_count_ == 0)
     {
       // We can reconnect the object immediately
-      this->reconnected_i (proxy, ACE_TRY_ENV);
+      this->reconnected_i (proxy TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
   else
@@ -161,8 +161,8 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
 
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
-    disconnected (PROXY *proxy,
-                  CORBA::Environment &ACE_TRY_ENV)
+    disconnected (PROXY *proxy
+                  TAO_ENV_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
@@ -171,7 +171,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
   if (this->busy_count_ == 0)
     {
       // We can remove the object immediately
-      this->disconnected_i (proxy, ACE_TRY_ENV);
+      this->disconnected_i (proxy TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
   else
@@ -187,7 +187,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
 
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
-    shutdown (CORBA::Environment &ACE_TRY_ENV)
+    shutdown (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
@@ -196,7 +196,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
   if (this->busy_count_ == 0)
     {
       // We can shutdown the object immediately
-      this->shutdown_i (ACE_TRY_ENV);
+      this->shutdown_i (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   else

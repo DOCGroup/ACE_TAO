@@ -50,8 +50,8 @@ public:
   // Execute test code.
 
 private:
-  void populate (CORBA::Environment &ACE_TRY_ENV);
-  void query (CORBA::Environment &ACE_TRY_ENV);
+  void populate (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void query (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // The two IFR tests.
 
   int parse_args (int argc,

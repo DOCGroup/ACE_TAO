@@ -51,11 +51,11 @@ public:
   // Destructor
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment& env);
+            char **argv
+            TAO_ENV_ARG_DECL);
   // Initialize the Cubit_Server state - parsing arguments and ...
 
-  int run (CORBA::Environment& env);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the orb
 
 private:

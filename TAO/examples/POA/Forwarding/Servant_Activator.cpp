@@ -19,10 +19,8 @@ MyFooServantActivator::incarnate (const PortableServer::ObjectId &,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
-  this->orb_->shutdown (0,
-                        ACE_TRY_ENV);
+  this->orb_->shutdown (0
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Throw forward exception
@@ -45,7 +43,7 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &,
 }
 
 void
-MyFooServantActivator::forward_requests (CORBA::Environment &ACE_TRY_ENV)
+MyFooServantActivator::forward_requests (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->forward_to_.in ()))
     ACE_THROW (Foo::Cannot_Forward ());

@@ -20,7 +20,7 @@ ACE_RCSID(Generic_Servant, MyFooServant, "$Id$")
 
 // Constructor
 MyFooServant::MyFooServant (CORBA::ORB_ptr orb,
-			    PortableServer::POA_ptr poa,
+                            PortableServer::POA_ptr poa,
                             CORBA::Long value)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
@@ -35,27 +35,27 @@ MyFooServant::~MyFooServant (void)
 
 // Return the Default POA of this Servant
 PortableServer::POA_ptr
-MyFooServant::_default_POA (CORBA::Environment &/*env*/)
+MyFooServant::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 CORBA::Long
-MyFooServant::doit (CORBA::Environment &/*env*/)
+MyFooServant::doit (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
 
 void
-MyFooServant::simply_doit (CORBA::Environment &/*env*/)
+MyFooServant::simply_doit (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-MyFooServant::timed_operation (CORBA::ULong timeout,
-                               CORBA::Environment &)
+MyFooServant::timed_operation (CORBA::ULong timeout
+                               TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -69,10 +69,10 @@ MyFooServant::timed_operation (CORBA::ULong timeout,
 }
 
 void
-MyFooServant::shutdown (CORBA::Environment &ACE_TRY_ENV)
+MyFooServant::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

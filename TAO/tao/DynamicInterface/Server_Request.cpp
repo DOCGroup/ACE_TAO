@@ -77,8 +77,8 @@ CORBA_ServerRequest::~CORBA_ServerRequest (void)
 // Unmarshal in/inout params, and set up to marshal the appropriate
 // inout/out/return values later on.
 void
-CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list,
-                                CORBA::Environment &ACE_TRY_ENV)
+CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list
+                                TAO_ENV_ARG_DECL)
 {
   // arguments() must be called before either of these.
   if (this->params_ != 0 || this->exception_ != 0)
@@ -91,8 +91,8 @@ CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list,
 
   this->params_->_tao_incoming_cdr (this->orb_server_request_.incoming (),
                                     CORBA::ARG_IN | CORBA::ARG_INOUT,
-                                    this->lazy_evaluation_,
-                                    ACE_TRY_ENV);
+                                    this->lazy_evaluation_
+                                    TAO_ENV_ARG_PARAMETER);
 
   // Pass this alignment back to the TAO_ServerRequest.
   this->orb_server_request_.dsi_nvlist_align (
@@ -104,8 +104,8 @@ CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list,
 // but not both of them.  Results can be reported (at most once)
 // only after the parameter list has been provided (maybe empty).
 void
-CORBA_ServerRequest::set_result (const CORBA::Any &value,
-                                 CORBA::Environment &ACE_TRY_ENV)
+CORBA_ServerRequest::set_result (const CORBA::Any &value
+                                 TAO_ENV_ARG_DECL)
 {
   // Setting a result when another result already exists or if an exception
   // exists or before the args have been processeed is an error.
@@ -120,7 +120,7 @@ CORBA_ServerRequest::set_result (const CORBA::Any &value,
   ACE_CHECK;
 }
 
-  // NOTE: if "ACE_TRY_ENV" is set, there has been a system exception,
+  // NOTE: if "TAO_ENV_SINGLE_ARG_PARAMETER" is set, there has been a system exception,
   // and it will take precedence over exceptions reported using the
   // set_exception() mechanism of the ServerRequest, which we assume
   // the application writer will use to report only user exceptions.
@@ -129,8 +129,8 @@ CORBA_ServerRequest::set_result (const CORBA::Any &value,
 
 // Store the exception value.
 void
-CORBA_ServerRequest::set_exception (const CORBA::Any &value,
-                                    CORBA::Environment &ACE_TRY_ENV)
+CORBA_ServerRequest::set_exception (const CORBA::Any &value
+                                    TAO_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = value.type ();
 
@@ -152,7 +152,7 @@ CORBA_ServerRequest::set_exception (const CORBA::Any &value,
 // This method will be utilized by the DSI servant to marshal outgoing
 // parameters.
 void
-CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
+CORBA_ServerRequest::dsi_marshal (TAO_ENV_SINGLE_ARG_DECL)
 {
   // There was a user exception, no need to marshal any parameters.
   if (this->sent_gateway_exception_)
@@ -175,8 +175,8 @@ CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
         {
           this->retval_->_tao_encode (
                              this->orb_server_request_.outgoing (),
-                             this->orb_server_request_.orb_core (),
-                             ACE_TRY_ENV
+                             this->orb_server_request_.orb_core ()
+                             TAO_ENV_ARG_PARAMETER
                            );
           ACE_CHECK;
         }
@@ -187,8 +187,8 @@ CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
           this->params_->_tao_encode (
                              this->orb_server_request_.outgoing (),
                              this->orb_server_request_.orb_core (),
-                             CORBA::ARG_INOUT | CORBA::ARG_OUT,
-                             ACE_TRY_ENV
+                             CORBA::ARG_INOUT | CORBA::ARG_OUT
+                             TAO_ENV_ARG_PARAMETER
                            );
           ACE_CHECK;
         }
@@ -203,8 +203,8 @@ CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
 
       this->exception_->_tao_encode (
                             this->orb_server_request_.outgoing (),
-                            this->orb_server_request_.orb_core (),
-                            ACE_TRY_ENV
+                            this->orb_server_request_.orb_core ()
+                            TAO_ENV_ARG_PARAMETER
                           );
       ACE_CHECK;
     }

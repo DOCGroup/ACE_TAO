@@ -32,10 +32,10 @@ public:
 
   // = The Simple_Server methods.
   CORBA::Long echo (CORBA::Long x,
-                    CORBA::Long msecs,
-                    CORBA::Environment&)
+                    CORBA::Long msecs
+                    TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

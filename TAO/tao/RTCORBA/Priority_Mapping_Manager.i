@@ -118,11 +118,11 @@ TAO_Priority_Mapping_Manager_var::nil (void)
 
 ACE_INLINE ::TAO_Priority_Mapping_Manager_ptr
 TAO_Priority_Mapping_Manager_var::narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::TAO_Priority_Mapping_Manager::_narrow (p, ACE_TRY_ENV);
+  return ::TAO_Priority_Mapping_Manager::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

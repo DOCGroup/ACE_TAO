@@ -56,10 +56,10 @@ public:
   virtual int init_task (TAO_Notify_AdminProperties* const admin_properties);
   // Init the task
 
-  virtual void shutdown (CORBA::Environment& ACE_TRY_ENV);
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
   // shutdown this task.
 
-  virtual int process_event (TAO_Notify_Command *mb, CORBA::Environment& ACE_TRY_ENV, ACE_Time_Value *tv = 0);
+  virtual int process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DECL, ACE_Time_Value *tv = 0);
   // Process the command.
 
  protected:
@@ -97,7 +97,7 @@ class TAO_Notify_Export TAO_Notify_Shutdown_Command : public TAO_Notify_Command
 
   TAO_Notify_Shutdown_Command (void);
 
-  virtual int execute (CORBA::Environment& ACE_TRY_ENV);
+  virtual int execute (TAO_ENV_SINGLE_ARG_DECL);
   // Returns -1. This signals worker threads to finish servicing requests.
 };
 

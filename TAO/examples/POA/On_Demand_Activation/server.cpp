@@ -100,12 +100,12 @@ write_iors_to_file (const char *first_ior,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
@@ -114,19 +114,19 @@ main (int argc, char **argv)
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the Object reference to a POA reference
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POAManager of RootPOA
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -135,24 +135,24 @@ main (int argc, char **argv)
 
       // ID Assignment Policy
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID, ACE_TRY_ENV);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Lifespan Policy
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT, ACE_TRY_ENV);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Request Processing Policy
       policies[2] =
-        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER, ACE_TRY_ENV);
+        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var first_poa;
       {
         // Servant Retention Policy
         policies[3] =
-          root_poa->create_servant_retention_policy (PortableServer::RETAIN, ACE_TRY_ENV);
+          root_poa->create_servant_retention_policy (PortableServer::RETAIN TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         ACE_CString name = "firstPOA";
@@ -161,8 +161,8 @@ main (int argc, char **argv)
         // firstPOA will use SERVANT_ACTIVATOR because of RETAIN policy.
         first_poa = root_poa->create_POA (name.c_str (),
                                           poa_manager.in (),
-                                          policies,
-                                          ACE_TRY_ENV);
+                                          policies
+                                          TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
       }
@@ -171,7 +171,7 @@ main (int argc, char **argv)
       {
         // Servant Retention Policy
         policies[3] =
-          root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN, ACE_TRY_ENV);
+          root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         ACE_CString name = "secondPOA";
@@ -181,8 +181,8 @@ main (int argc, char **argv)
         // policy.
         second_poa = root_poa->create_POA (name.c_str (),
                                            poa_manager.in (),
-                                           policies,
-                                           ACE_TRY_ENV);
+                                           policies
+                                           TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
       }
@@ -194,7 +194,7 @@ main (int argc, char **argv)
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_TRY_ENV);
+          policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -206,17 +206,17 @@ main (int argc, char **argv)
 
       // Set MyFooServantActivator object as the servant_manager of
       // firstPOA.
-      first_poa->set_servant_manager (activator,
-                                      ACE_TRY_ENV);
+      first_poa->set_servant_manager (activator
+                                      TAO_ENV_ARG_PARAMETER);
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
       // use the following code in place of the previous line:
       //
-      // PortableServer::ServantManager_var servant_activator = 
+      // PortableServer::ServantManager_var servant_activator =
       //   activator->_this ();
-      // 
+      //
       // first_poa->set_servant_manager (servant_activator.in (),
-      //                                 ACE_TRY_ENV);
+      //                                 TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create a reference with user created ID in firstPOA which uses
@@ -226,7 +226,7 @@ main (int argc, char **argv)
         PortableServer::string_to_ObjectId ("firstFoo");
 
       CORBA::Object_var first_foo =
-        first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0", ACE_TRY_ENV);
+        first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Allocate the servant activator.
@@ -237,8 +237,8 @@ main (int argc, char **argv)
 
       // Set MyFooServantLocator object as the servant Manager of
       // secondPOA.
-      second_poa->set_servant_manager (locator,
-                                       ACE_TRY_ENV);
+      second_poa->set_servant_manager (locator
+                                       TAO_ENV_ARG_PARAMETER);
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
       // use the following code in place of the previous line:
@@ -247,7 +247,7 @@ main (int argc, char **argv)
       //   locator->_this ();
       //
       // second_poa->set_servant_manager (servant_locator.in (),
-      //                                  ACE_TRY_ENV);
+      //                                  TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to create a reference with user created ID in second_poa
@@ -258,19 +258,19 @@ main (int argc, char **argv)
 
       CORBA::Object_var second_foo =
         second_poa->create_reference_with_id (second_foo_oid.in (),
-                                              "IDL:Foo:1.0", ACE_TRY_ENV);
+                                              "IDL:Foo:1.0" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Invoke object_to_string on the references created in firstPOA and
       // secondPOA.
 
       CORBA::String_var first_foo_ior =
-        orb->object_to_string (first_foo.in (), ACE_TRY_ENV);
+        orb->object_to_string (first_foo.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       CORBA::String_var second_foo_ior =
-        orb->object_to_string (second_foo.in (), ACE_TRY_ENV);
+        orb->object_to_string (second_foo.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Print the ior's of first_foo and second_foo.
@@ -285,11 +285,11 @@ main (int argc, char **argv)
         return write_result;
 
       // Set the poa_manager state to active, ready to process requests.
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Run the ORB.
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

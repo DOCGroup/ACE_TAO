@@ -15,8 +15,8 @@ class TT_Info
 public:
 
   static void dump_properties (const CosTrading::PropertySeq& prop_seq,
-                               CORBA::Boolean print_dynamic = 1,
-                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                               CORBA::Boolean print_dynamic = 1
+                               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // Dump the contents of this property sequence.
 
   enum INTERFACES
@@ -37,7 +37,7 @@ public:
 
     Remote_Output (void) {}
 
-    virtual void confirm (CORBA::Environment &)
+    virtual void confirm (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -50,7 +50,7 @@ public:
 
     Printer (void) {}
 
-    virtual void confirm (CORBA::Environment &)
+    virtual void confirm (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -62,7 +62,7 @@ public:
   public:
     Plotter (void) {}
 
-    virtual void confirm (CORBA::Environment &)
+    virtual void confirm (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -74,7 +74,7 @@ public:
   public:
     File_System (void) {}
 
-    virtual void confirm (CORBA::Environment &)
+    virtual void confirm (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -86,7 +86,7 @@ public:
   public:
     PostScript_Printer (void) {}
 
-    virtual void confirm (CORBA::Environment &)
+    virtual void confirm (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -178,20 +178,20 @@ public:
 
 class TT_Parse_Args
   // = TITLE
-  // Utility to parse the command-line arguments to the trading service tests. 
+  // Utility to parse the command-line arguments to the trading service tests.
 {
   public:
-  
+
   TT_Parse_Args (int& argc, char** argv);
 
   ~TT_Parse_Args ();
-  
+
   int federated () const;
   // True if the test should test the federated features of the trading
   // service.
 
   int quiet () const;
-  // True if the tests should supress all but the most essential output. 
+  // True if the tests should supress all but the most essential output.
 
   char* ior () const;
   // Not null if the test user supplied an explicit ior.
@@ -199,7 +199,7 @@ class TT_Parse_Args
   private:
 
   int federated_, quiet_;
-  char* ior_; 
+  char* ior_;
 };
 
 #endif /* TAO_TRADER_TEST_UTILS_H */

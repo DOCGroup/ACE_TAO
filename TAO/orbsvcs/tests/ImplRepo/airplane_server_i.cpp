@@ -55,7 +55,7 @@ Airplane_Server_i::parse_args (void)
 }
 
 int
-Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
+Airplane_Server_i::init (int argc, char** argv TAO_ENV_ARG_DECL)
 {
   // Since the Implementation Repository keys off of the POA name, we need
   // to use the SERVER_NAME as the POA's name.
@@ -64,7 +64,7 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
   ACE_TRY
     {
       // Initialize the ORB
-      this->orb_ = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      this->orb_ = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Save pointers to the command line arguments
@@ -79,8 +79,8 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA",
-                                                ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("RootPOA"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check the POA object.
@@ -91,11 +91,11 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 
       // Narrow the object to a POA.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_Manager.
-      this->poa_manager_ = root_poa->the_POAManager (ACE_TRY_ENV);
+      this->poa_manager_ = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // We now need to create a POA with the persistent and user_id policies,
@@ -105,32 +105,32 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
       policies.length (2);
 
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID,
-                                               ACE_TRY_ENV);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK
 
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
-                                          ACE_TRY_ENV);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->airplane_poa_ =
         root_poa->create_POA (poa_name,
                               this->poa_manager_.in (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creation of the new POA is over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_TRY_ENV);
+          policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       // Make sure the POA manager is activated.
-      this->poa_manager_->activate (ACE_TRY_ENV);
+      this->poa_manager_->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_NEW_RETURN (this->server_impl_,
@@ -141,31 +141,31 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
         PortableServer::string_to_ObjectId ("server");
 
       this->airplane_poa_->activate_object_with_id (server_id.in (),
-                                                    this->server_impl_,
-                                                    ACE_TRY_ENV);
+                                                    this->server_impl_
+                                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var server_obj =
-        this->airplane_poa_->id_to_reference (server_id.in (),
-                                              ACE_TRY_ENV);
+        this->airplane_poa_->id_to_reference (server_id.in ()
+                                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create an IOR from the server object.
       CORBA::String_var server_str =
-        this->orb_->object_to_string (server_obj.in (),
-                                      ACE_TRY_ENV);
+        this->orb_->object_to_string (server_obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", server_str.in ()));
 
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable",
-                                                ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("IORTable"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+        IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -173,7 +173,7 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
         }
       else
         {
-          adapter->bind (poa_name, server_str.in (), ACE_TRY_ENV);
+          adapter->bind (poa_name, server_str.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -196,11 +196,11 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-Airplane_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
+Airplane_Server_i::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
-      this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -221,7 +221,7 @@ Airplane_Server_i::~Airplane_Server_i (void)
     {
     if (!CORBA::is_nil (this->airplane_poa_.in ()))
       {
-        this->airplane_poa_->destroy (1, 1, ACE_TRY_ENV);
+        this->airplane_poa_->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     }

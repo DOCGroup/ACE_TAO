@@ -34,8 +34,8 @@ public:
   int all_sessions_finished (void) const;
 
   // = The skeleton methods
-  virtual void session_finished (CORBA::Boolean success,
-                                 CORBA::Environment &ACE_TRY_ENV)
+  virtual void session_finished (CORBA::Boolean success
+                                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

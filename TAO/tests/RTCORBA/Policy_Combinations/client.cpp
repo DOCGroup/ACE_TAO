@@ -64,8 +64,8 @@ main (int argc, char **argv)
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result =
@@ -93,53 +93,53 @@ main (int argc, char **argv)
         return result;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTCurrent",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RTCurrent"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in (),
-                                   ACE_TRY_ENV);
+        RTCORBA::Current::_narrow (object.in ()
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       default_thread_priority =
-        current->the_priority (ACE_TRY_ENV);
+        current->the_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       object =
-        orb->string_to_object (ior,
-                               ACE_TRY_ENV);
+        orb->string_to_object (ior
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test_var test =
-        test::_narrow (object.in (),
-                       ACE_TRY_ENV);
+        test::_narrow (object.in ()
+                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i < iterations; i++)
         {
-          current->the_priority (default_thread_priority,
-                                 ACE_TRY_ENV);
+          current->the_priority (default_thread_priority
+                                 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::Short priority =
-            test->method (ACE_TRY_ENV);
+            test->method (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (priority != TAO_INVALID_PRIORITY)
             {
-              current->the_priority (priority,
-                                     ACE_TRY_ENV);
+              current->the_priority (priority
+                                     TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              test->prioritized_method (ACE_TRY_ENV);
+              test->prioritized_method (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_TRY_ENV);
+          test->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -33,7 +33,7 @@
  * to use the TypeCodeFactory. This is the derived class
  * that contains the actual implementations.
  */
-class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Adapter_Impl 
+class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Adapter_Impl
   : public TAO_TypeCodeFactory_Adapter
 {
 public:
@@ -42,93 +42,82 @@ public:
   virtual CORBA::TypeCode_ptr create_struct_tc (
       const char *id,
       const char *name,
-      const CORBA_StructMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const CORBA_StructMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_union_tc (
       const char *id,
       const char *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA_UnionMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const CORBA_UnionMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_enum_tc (
       const char *id,
       const char *name,
-      const CORBA_EnumMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const CORBA_EnumMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_alias_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr original_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      CORBA::TypeCode_ptr original_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_exception_tc (
       const char *id,
       const char *name,
-      const CORBA_StructMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const CORBA_StructMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_interface_tc (
       const char *id,
-      const char *name,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const char *name
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_string_tc (
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_wstring_tc (
-      CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      CORBA::ULong bound
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_fixed_tc (
       CORBA::UShort digits,
-      CORBA::UShort scale,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      CORBA::UShort scale
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_sequence_tc (
       CORBA::ULong bound,
-      CORBA::TypeCode_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      CORBA::TypeCode_ptr element_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_array_tc (
       CORBA::ULong length,
-      CORBA::TypeCode_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      CORBA::TypeCode_ptr element_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_value_tc (
@@ -136,50 +125,44 @@ public:
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA_ValueMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const CORBA_ValueMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_value_box_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr boxed_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      CORBA::TypeCode_ptr boxed_type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_native_tc (
       const char *id,
-      const char *name,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const char *name
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_recursive_tc (
-      const char *id,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const char *id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char *id,
-      const char *name,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const char *name
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_local_interface_tc (
       const char *id,
-      const char *name,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )  
+      const char *name
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Used to force the initialization of the ORB code.
@@ -194,13 +177,13 @@ ACE_FACTORY_DECLARE (TAO_TypeCodeFactory, TAO_TypeCodeFactory_Adapter_Impl)
 typedef int (*TAO_Module_Initializer) (void);
 
 static TAO_Module_Initializer
-TAO_Requires_TypeCodeFactory_Initializer = 
+TAO_Requires_TypeCodeFactory_Initializer =
   &TAO_TypeCodeFactory_Adapter_Impl::Initializer;
 
 #else
 
 static int
-TAO_Requires_TypeCodeFactory_Initializer = 
+TAO_Requires_TypeCodeFactory_Initializer =
   TAO_TypeCodeFactory_Adapter_Impl::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */

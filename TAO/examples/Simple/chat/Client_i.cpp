@@ -36,8 +36,8 @@ Client_i::~Client_i (void)
       (TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR ((LM_ERROR,
-		       "%p\n",
-		       "remove_stdin_handler"));
+                       "%p\n",
+                       "remove_stdin_handler"));
 }
 
 int
@@ -50,22 +50,22 @@ Client_i::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'n':  // get the users nickname
-	this->nickname_ = get_opts.optarg;
-	break;
+        this->nickname_ = get_opts.optarg;
+        break;
 
       case 'f':  // get the file name to write to
         this->ior_file_name_ = get_opts.optarg;
-	break;
+        break;
 
       default: // display help for use of the serve
       case '?':  // display help for use of the server.
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "usage:  %s"
-			   " [-n <your_nick_name>]"
-			   " [-f <ior_input_file>]"
-			   "\n",
-			   argv [0]),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " [-n <your_nick_name>]"
+                           " [-f <ior_input_file>]"
+                           "\n",
+                           argv [0]),
+                          -1);
       }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -87,8 +87,8 @@ Client_i::init (int argc, char *argv[])
       // Retrieve the ORB.
       this->orb_manager_.init (argc,
                                argv,
-                               0,
-                               ACE_TRY_ENV);
+                               0
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb = this->orb_manager_.orb ();
@@ -98,24 +98,24 @@ Client_i::init (int argc, char *argv[])
 
       // read the ior from file
       if (this->read_ior (this->ior_file_name_) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "could not read the ior from the file: <%s>\n",
-			   this->ior_file_name_),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "could not read the ior from the file: <%s>\n",
+                           this->ior_file_name_),
+                          -1);
 
       CORBA::Object_var server_object =
-	orb->string_to_object (this->ior_,
-                               ACE_TRY_ENV);
+        orb->string_to_object (this->ior_
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "invalid ior <%s>\n",
-			   this->ior_),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "invalid ior <%s>\n",
+                           this->ior_),
+                          -1);
 
-      this->server_ = Broadcaster::_narrow (server_object.in (),
-					    ACE_TRY_ENV);
+      this->server_ = Broadcaster::_narrow (server_object.in ()
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -134,9 +134,9 @@ Client_i::init (int argc, char *argv[])
        TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_stdin_handler"),
-		      -1);
+                       "%p\n",
+                       "register_stdin_handler"),
+                      -1);
   return 0;
 }
 
@@ -144,28 +144,28 @@ int
 Client_i::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "\n============= Simple Chat =================\n"
-	      "========== type 'quit' to exit  ===========\n"));
+              "\n============= Simple Chat =================\n"
+              "========== type 'quit' to exit  ===========\n"));
 
   ACE_TRY_NEW_ENV
     {
       PortableServer::POAManager_var poa_manager =
         this->orb_manager_.poa_manager ();
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->receiver_var_ =
-	this->receiver_i_._this (ACE_TRY_ENV);
+        this->receiver_i_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Register ourselves with the server.
       server_->add (this->receiver_var_.in (),
-		    this->nickname_,
-		    ACE_TRY_ENV);
+                    this->nickname_
+                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Run the ORB.
-      this->orb_manager_.run (ACE_TRY_ENV);
+      this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -191,22 +191,22 @@ Client_i::handle_input (ACE_HANDLE)
     {
       // Check if the user wants to quit.
       if (ACE_OS::strncmp (buf,
-			   QUIT_STRING,
-			   ACE_OS::strlen (QUIT_STRING)) == 0)
-	{
-	  // Remove ourselves from the server.
-	  this->server_->remove (this->receiver_var_.in ());
-	  this->receiver_i_.shutdown (ACE_TRY_ENV);
+                           QUIT_STRING,
+                           ACE_OS::strlen (QUIT_STRING)) == 0)
+        {
+          // Remove ourselves from the server.
+          this->server_->remove (this->receiver_var_.in ());
+          this->receiver_i_.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 
-	  ACE_TRY_CHECK;
-	  return 0;
-	}
+          ACE_TRY_CHECK;
+          return 0;
+        }
 
       // Call the server function <say> to pass the string typed by
       // the server.
       this->server_->say (this->receiver_var_.in (),
-			  buf,
-			  ACE_TRY_ENV);
+                          buf
+                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -228,18 +228,18 @@ Client_i::read_ior (const char *filename)
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to open %s for writing: %p\n",
-		       filename,
-		       "invalid handle"),
-		      -1);
+                       "Unable to open %s for writing: %p\n",
+                       filename,
+                       "invalid handle"),
+                      -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
   char *data = ior_buffer.read ();
 
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to read ior: %p\n"),
-		      -1);
+                       "Unable to read ior: %p\n"),
+                      -1);
 
   this->ior_ = ACE_OS::strdup (data);
   ior_buffer.alloc ()->free (data);
@@ -248,8 +248,8 @@ Client_i::read_ior (const char *filename)
 
   if (this->ior_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "failed to read ior from file\n",
-		       ""),
-		      -1);
+                       "failed to read ior from file\n",
+                       ""),
+                      -1);
   return 0;
 }

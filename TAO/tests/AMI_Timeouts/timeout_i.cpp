@@ -29,8 +29,8 @@ Timeout_i::~Timeout_i ()
 }
 
 void
-Timeout_i::sendTimeToWait (CORBA::Long msec,
-                           CORBA::Environment &)
+Timeout_i::sendTimeToWait (CORBA::Long msec
+                           TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG,
@@ -48,7 +48,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec,
 }
 
 void
-Timeout_i::shutdown (CORBA::Environment &)
+Timeout_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   orb_->shutdown ();
@@ -72,7 +72,7 @@ TimeoutHandler_i::~TimeoutHandler_i ()
 }
 
 void
-TimeoutHandler_i::sendTimeToWait (CORBA::Environment &)
+TimeoutHandler_i::sendTimeToWait (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -82,15 +82,15 @@ TimeoutHandler_i::sendTimeToWait (CORBA::Environment &)
 }
 
 void
-TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutObjExceptionHolder *excep_holder,
-                                        CORBA::Environment &ACE_TRY_ENV)
+TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutObjExceptionHolder *excep_holder
+                                        TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   timer_.stop ();
 
   ACE_TRY
     {
-      excep_holder->raise_sendTimeToWait (ACE_TRY_ENV);
+      excep_holder->raise_sendTimeToWait (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TIMEOUT, timeout)

@@ -1,3 +1,12 @@
+Sat Dec  8 11:47:37 2001  Ossama Othman  <ossama@uci.edu>
+
+	* Merged the corba-env-clean CVS branch.  This merge cleans up all
+	  uses of the CORBA::Environment parameter.  The TAO_ENV_* macros
+	  are used instead, thus making it easier for users to deal with
+	  code that supports both emulated and native exceptions.  Many
+	  thanks to Oliver Kellogg <Oliver.Kellogg@t-online.de> for making
+	  all of the changes!
+
 Thu Dec  7 17:39:14 2001  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/tests/ORB_init/Portspan/portspan.dsp
@@ -253,6 +262,19 @@ Tue Dec 04 08:16:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 	* orbsvcs/performance-tests/EC_Scalability/client.cpp:
 	  Fixed signed/unsigned comparison warning.
 
+Mon Dec  3 19:12:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/orbconf.h:
+          Documented the TAO_ENV_* macros using Doxygen
+
+          Add new macro to generate code only if the build is using
+          CORBA::Environment arguments.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+          My change was not that great after all, it generated warnings on
+	  the Linux build with exceptions enabled.  I have fixed the
+	  problem by taking advantage of a TAO_ENV_EMIT_CODE macro.
+	
 Mon Dec  3 16:27:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/Makefile:
@@ -354,6 +376,16 @@ Mon Dec  3 14:32:05 2001  Ossama Othman  <ossama@uci.edu>
 	  override in place to be protected.  Thanks to Gaoyan Xie
 	  <gxie@eecs.wsu.edu> for asking a question that made it obvious
 	  that this feature was missing.
+
+Mon Dec 03 13:51:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+          Use a different technique to deal with plaforms with and without
+	  exception handling.  This does not require #ifdefs in	this code,
+	  and it actually may improve performance.
+
+        * tao/PortableServer/POA.cpp:
+          Clear warning about unused variable
 
 Mon Dec  3 11:43:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 

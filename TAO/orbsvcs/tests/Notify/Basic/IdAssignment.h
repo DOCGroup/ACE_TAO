@@ -25,19 +25,19 @@ public:
   ~IdAssignment ();
 
   int parse_args(int argc, char *argv[]);
-  void init(int argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
-  void run_test(CORBA::Environment &ACE_TRY_ENV);
+  void init(int argc, char *argv[] TAO_ENV_ARG_DECL);
+  void run_test(TAO_ENV_SINGLE_ARG_DECL);
 
 private:
-  CosNotifyChannelAdmin::ChannelID create_ec(CORBA::Environment &ACE_TRY_ENV);
-  void destroy_ec(CosNotifyChannelAdmin::ChannelID id,
-                  CORBA::Environment &ACE_TRY_ENV);
+  CosNotifyChannelAdmin::ChannelID create_ec(TAO_ENV_SINGLE_ARG_DECL);
+  void destroy_ec(CosNotifyChannelAdmin::ChannelID id
+                  TAO_ENV_ARG_DECL);
 
-  CosNotifyChannelAdmin::AdminID create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id, CORBA::Environment &ACE_TRY_ENV);
-  CosNotifyChannelAdmin::AdminID create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id, CORBA::Environment &ACE_TRY_ENV);
+  CosNotifyChannelAdmin::AdminID create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id TAO_ENV_ARG_DECL);
+  CosNotifyChannelAdmin::AdminID create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id TAO_ENV_ARG_DECL);
 
-  void destroy_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id, CosNotifyChannelAdmin::AdminID admin_id, CORBA::Environment &ACE_TRY_ENV);
-  void destroy_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id, CosNotifyChannelAdmin::AdminID admin_id, CORBA::Environment &ACE_TRY_ENV);
+  void destroy_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id, CosNotifyChannelAdmin::AdminID admin_id TAO_ENV_ARG_DECL);
+  void destroy_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id, CosNotifyChannelAdmin::AdminID admin_id TAO_ENV_ARG_DECL);
 
   // = Data members
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;

@@ -63,7 +63,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
   // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO server-side ORB initialization code.
   // -----------------------------------------------------------------
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Add one to the new argc since "dummy" is being added to the
@@ -87,15 +87,15 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.get_buffer (),
-                                    0,
-                                    ACE_TRY_ENV);
+                                    0
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -104,23 +104,23 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                           1);
 
       this->poa_ =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->poa_manager_ = this->poa_->the_POAManager (ACE_TRY_ENV);
+      this->poa_manager_ = this->poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->poa_manager_->activate (ACE_TRY_ENV);
+      this->poa_manager_->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (::parse_args (new_argc, new_argv.get_buffer ()) != 0)
         return -1;
 
-      CORBA::Object_var obj = this->servant_._this (ACE_TRY_ENV);
+      CORBA::Object_var obj = this->servant_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (obj.in (), ACE_TRY_ENV);
+        this->orb_->object_to_string (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -165,13 +165,13 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 int
 Test_Server_Module::fini (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Make sure the ORB is destroyed.
       if (!CORBA::is_nil (this->orb_.in ()))
         {
-          this->orb_->destroy (ACE_TRY_ENV);
+          this->orb_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -201,11 +201,11 @@ Test_Server_Module::fini (void)
 int
 Test_Server_Module::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Run the ORB event loop in its own thread.
-      this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

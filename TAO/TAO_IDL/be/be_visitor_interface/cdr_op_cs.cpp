@@ -41,8 +41,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 {
   // No CDR operations for local interfaces.
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_stub_cdr_op_gen () 
-      || node->imported () 
+  if (node->cli_stub_cdr_op_gen ()
+      || node->imported ()
       || node->is_local ())
     {
       return 0;
@@ -90,8 +90,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   *os << "_tao_objref =" << be_idt_nl
       << node->full_name () << "::_unchecked_narrow ("
       << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << "obj.in ()" << be_nl
+      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl;
   *os << "ACE_TRY_CHECK;" << be_nl;
   *os << "return 1;" << be_uidt_nl;
