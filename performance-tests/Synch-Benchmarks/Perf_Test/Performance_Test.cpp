@@ -89,19 +89,19 @@ Performance_Test::run_test (void)
               rate,
               (1.0e6 / rate) / synch_count));
   performance_test_options.print_results ();
-
-  // Allow thread(s) to finish up.
-  ACE_Thread_Manager::instance ()->resume_all ();
-
-  // Wait for all the threads to exit.
-  ACE_Thread_Manager::instance ()->wait ();
-  performance_test_options.init ();
   return 0;
 }
 
 int
 Performance_Test::post_run_test (void)
 {
+  // Allow thread(s) to finish up.
+  ACE_Thread_Manager::instance ()->resume_all ();
+
+  // Wait for all the threads to exit.
+  ACE_Thread_Manager::instance ()->wait ();
+  performance_test_options.init ();
+
   return 0;
 }
 

@@ -66,11 +66,6 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
   return 0;
 }
 
-Benchmark_Performance_Test_Base::Benchmark_Performance_Test_Base (void)
-  : Benchmark_Base (Benchmark_Base::PERFORMANCE)
-{
-}
-
 #if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
 /* static */
 MT_INT Thr_ID::thread_id_ (0);

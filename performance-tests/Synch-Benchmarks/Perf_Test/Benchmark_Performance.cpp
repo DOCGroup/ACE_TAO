@@ -15,6 +15,11 @@ int buffer;
 /* static */
 sig_atomic_t Benchmark_Performance::done_ = 0;
 
+Benchmark_Performance_Test_Base::Benchmark_Performance_Test_Base (void)
+  : Benchmark_Base (Benchmark_Base::PERFORMANCE)
+{
+}
+
 sig_atomic_t
 Benchmark_Performance::done (void)
 {
