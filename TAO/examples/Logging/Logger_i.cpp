@@ -120,17 +120,17 @@ Logger_i::log (const Logger::Log_Record &log_rec
 }
 
 void
-Logger_i::log2 (const Logger::Log_Record &log_rec
-               ACE_ENV_ARG_DECL)
+Logger_i::log_twoway (const Logger::Log_Record &log_rec
+                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->logv (log_rec, verbosity_level_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
-Logger_i::logv2 (const Logger::Log_Record &log_rec,
-               Logger::Verbosity_Level verbosity
-               ACE_ENV_ARG_DECL)
+Logger_i::logv_twoway (const Logger::Log_Record &log_rec,
+                       Logger::Verbosity_Level verbosity
+                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->logv (log_rec, verbosity ACE_ENV_ARG_PARAMETER);
