@@ -33,7 +33,7 @@
 //
 
 #include	"cubit.hh"		// for stubs ...
-#include	<corba/toa.hh>		// ... and skeletons
+#include	<corba/boa.hh>		// ... and skeletons
 
 #include	<corba/debug.hh>		// ... and debugging
 

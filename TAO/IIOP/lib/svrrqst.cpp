@@ -252,10 +252,10 @@ IIOP_ServerRequest::orb ()
     return _orb;
 }
 
-TOA_ptr
+BOA_ptr
 __stdcall
 IIOP_ServerRequest::oa ()
 {
-    return _toa;
+    return _boa;
 }
 

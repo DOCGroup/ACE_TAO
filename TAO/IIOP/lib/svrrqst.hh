@@ -15,7 +15,7 @@
 
 typedef class CORBA_ServerRequest *CORBA_ServerRequest_ptr;
 typedef class CORBA_ORB *CORBA_ORB_ptr;
-typedef class TOA *TOA_ptr;
+typedef class BOA *BOA_ptr;
 
 void                              CORBA_release (CORBA_ServerRequest_ptr req);
 CORBA_Boolean                     CORBA_is_nil (CORBA_ServerRequest_ptr req);
@@ -68,12 +68,12 @@ class _EXPCLASS CORBA_ServerRequest : public IUnknown
     // this stuff is a catastrophic error since this is all part of
     // the basic CORBA Object Model.
     //
-    // XXX should not be not assuming all OAs implement the TOA API !!
+    // XXX should not be not assuming all OAs implement the BOA API !!
     //
     virtual CORBA_Principal_ptr __stdcall	caller () = 0;
     virtual CORBA_Object_ptr __stdcall		target () = 0;
     virtual CORBA_String __stdcall		op_name () = 0;
-    virtual TOA_ptr __stdcall			oa () = 0;
+    virtual BOA_ptr __stdcall			oa () = 0;
     virtual CORBA_ORB_ptr __stdcall		orb () = 0;
 };
 
@@ -88,14 +88,14 @@ class _EXPCLASS IIOP_ServerRequest : public CORBA_ServerRequest
 				IIOP_ServerRequest (
 				    CDR			*msg,
 				    CORBA_ORB_ptr	the_orb,
-				    TOA_ptr		the_toa
+				    BOA_ptr		the_boa
 				)
 				: _incoming (msg), _params (0), _retval (0),
 					_exception (0),
 					_ex_type (NO_EXCEPTION),
 					_refcount (1),
 					_orb (the_orb),
-					_toa (the_toa)
+					_boa (the_boa)
 				{ }
 
 				virtual ~IIOP_ServerRequest ();
@@ -126,7 +126,7 @@ class _EXPCLASS IIOP_ServerRequest : public CORBA_ServerRequest
     CORBA_Principal_ptr __stdcall	caller ();
     CORBA_Object_ptr __stdcall		target ();
     CORBA_ORB_ptr __stdcall		orb ();
-    TOA_ptr __stdcall			oa ();
+    BOA_ptr __stdcall			oa ();
 
     //
     // Stuff required for COM IUnknown support
@@ -155,6 +155,6 @@ class _EXPCLASS IIOP_ServerRequest : public CORBA_ServerRequest
   private:
     unsigned			_refcount;
     CORBA_ORB_ptr		_orb;
-    TOA_ptr			_toa;
+    BOA_ptr			_boa;
 };
 #endif
