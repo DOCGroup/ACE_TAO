@@ -80,6 +80,8 @@ public class ClientTest
 
 	System.out.println("Unbind  (five, six, seven):  " + proxy.unbind("five"));
 
+	res = proxy.resolve("five");
+
 	System.out.println("Resolve (five)            :  " + (String)res.elementAt(1) + " " 
 			                                   + (String)res.elementAt(2));
 	System.out.println("Binding (fiction, us, you):  " + proxy.bind("fiction", "us", "you"));
