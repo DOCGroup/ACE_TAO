@@ -267,9 +267,10 @@ Test_Any::check_validity (void)
     {
       for (size_t i = 0; i < Param_Test::DIM1; i ++)
         {
-          size_t square = i * i;
-          if (array_in[i] != i ||
-              array_out[i] != i ||
+          ssize_t ii = i;
+          ssize_t square = i * i;
+          if (array_in[i] != ii ||
+              array_out[i] != ii ||
               array_inout[i] != square ||
               array_ret[i] != square)
             return 0;
@@ -283,7 +284,7 @@ Test_Any::check_validity (void)
     {
       for (size_t i = 0; i < bdss_in->length (); i ++)
         {
-          size_t square = i * i;
+          ssize_t square = i * i;
           if ((*bdss_in)[i] != (*bdss_out)[i] ||
               (*bdss_inout)[i] != square ||
               (*bdss_inout)[i] != (*bdss_ret)[i])
