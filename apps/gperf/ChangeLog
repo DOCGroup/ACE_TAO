@@ -1,3 +1,8 @@
+Tue May  4 14:24:27 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Options.cpp (parse_args): Removed %a flag from -v option and
+	used ACE_OS::exit (0) instead. 
+
 Mon Apr 26 15:42:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tests/test-{1,2,3,4,5}.exp:
