@@ -31,7 +31,8 @@ Wed Sep  1 20:27:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 Wed Sep  1 21:17:17 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tao/default_resource.{h,cpp}: Added support for ORBReactorType
-	  option for TkReactor.
+	  option for TkReactor.  Thanks to Philipp Slusallek
+ 	  <slusallek@graphics.stanford.edu> for reporting this.
 
 Wed Sep  1 20:27:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
