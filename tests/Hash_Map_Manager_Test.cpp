@@ -76,23 +76,36 @@ class Dumb_String
 {
 public:
   Dumb_String (char *s = 0);
+  // Default constructor
+
   Dumb_String (const Dumb_String &ds);
+  // Copy constructor
 
   ~Dumb_String (void);
+  // Default destructor
 
-  u_long hash (void) const;
+  inline u_long hash (void) const;
+  // To satisfy Hash_Map_Manager
 
-  int operator== (char const * s) const;
-  int operator== (const Dumb_String &ds) const;
+  inline int operator== (const Dumb_String &ds) const;
+  // To satisfy Hash_Map_Manager
 
-  char * operator= (const Dumb_String &ds);
+  inline char * operator= (const Dumb_String &ds);
+  // To satisfy Hash_Map_Manager
 
-  operator char * (void) const;
+  inline int operator== (char const * s) const;
+  inline operator char * (void) const;
+  // These make life a little easier
 
 private:
   char * s_;
+  // the string
+
   int &copy_;
+  // reference counter
+
   int junk_;
+  // default reference counter initializer
 };
 
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<Dumb_String, Dumb_String>
