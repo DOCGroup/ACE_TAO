@@ -1,3 +1,37 @@
+Thu Jan 10 17:43:22 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTCORBAEvent:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.inl:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.cpp:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.inl:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp:
+	  Add new dispatching strategy based on RT-CORBA.  Still
+	  work-in-progress.
+
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Makefile:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Consumer.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Consumer.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.inl:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Receive_Task.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Receive_Task.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Send_Task.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Send_Task.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Servant_var.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Servant_var.inl:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Servant_var.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Supplier.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Supplier.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/driver.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.supplier_filter_null.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.supplier_filter_per_supplier.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/run_supplier_filtering.sh:
+	  Add new performance test to measure latency in the colocated
+	  case.
+
 Thu Jan 10 12:48:02 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tests/Two_Objects/worker.cpp:
