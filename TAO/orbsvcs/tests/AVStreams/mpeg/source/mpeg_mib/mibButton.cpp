@@ -144,7 +144,7 @@ int mib_load_Button(mib_Widget *thisw, mib_Buffer *fin)
 
   if (!strcmp(res,"label"))
   {
-    vallen = strlen(val);
+    vallen =ACE_OS::strlen (val);
     if (vallen < 2)
       return 0;
     val[vallen-1] = '\0';
@@ -167,7 +167,7 @@ int mib_load_Button(mib_Widget *thisw, mib_Buffer *fin)
   if (!got_line)
     return 0;
 
-  if (strcmp(res,"EndWidget"))
+  if (ACE_OS::strcmp (res,"EndWidget"))
     return 0;
 
   return 1;

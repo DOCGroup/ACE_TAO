@@ -62,16 +62,16 @@ int session_num = 0;
 static void int_handler(int sig)
 {
   /*
-  fprintf(stderr, "process %d killed by sig %d\n", getpid(), sig);
+  fprintf(stderr, "process %d killed by sig %d\n",ACE_OS::getpid (), sig);
   */
-  exit(0);
+  ACE_OS::exit (0);
 }
 
 static void on_exit_routine(void)
 {
-  if (parentpid != getpid()) {
+  if (parentpid !=ACE_OS::getpid ()) {
     /*
-    fprintf(stderr, "process %d exiting...\n", getpid());
+    fprintf(stderr, "process %d exiting...\n",ACE_OS::getpid ());
     */
     return;
   }
@@ -88,7 +88,7 @@ static void clear_child(int sig)
   int pid;
   int status;
   
-  while ((pid = waitpid(-1, &status, WNOHANG)) > 0)
+  while ((pid = ACE_OS::waitpid (-1, &status, WNOHANG)) > 0)
   {
     session_num --;
     
@@ -141,13 +141,13 @@ main(int argc, char *argv[])
       live_audio = 1;
     }
     else if (!strcmp(argv[i], "-rm")) {
-      unlink(VCR_UNIX_PORT);
+      ACE_OS::unlink (VCR_UNIX_PORT);
     }
     else if (!strncmp(argv[i], "-he", 3)) {
       fprintf(stderr, "Usage: %s [-rt] [-nrt] [-rm]\n", argv[0]);
       fprintf(stderr, "          [-d#int(clock drift in ppm)]\n");
       fprintf(stderr, "          [-s#int(limit on number of sessions)]\n");
-      exit(1);
+      ACE_OS::exit (1);
     }
   }
   if (drift_ppm) {
@@ -162,7 +162,7 @@ main(int argc, char *argv[])
   setsignal(SIGTERM, int_handler);
   setsignal(SIGALRM, SIG_IGN);
   
-  parentpid = getpid();
+  parentpid =ACE_OS::getpid ();
 
   atexit(on_exit_routine);
 
@@ -203,10 +203,10 @@ main(int argc, char *argv[])
 
     if (ComGetConnPair(&cfd, &dfd, &max_pkt_size) == -1) continue;
     
-    if ((serverpid = fork()) == -1)
+    if ((serverpid = ACE_OS::fork ()) == -1)
     {
-      perror("VCRS error on creating service process");
-      exit(1);
+     ACE_OS::perror ("VCRS error on creating service process");
+      ACE_OS::exit (1);
     }
     session_num ++;
     if (serverpid > 0)  /* parent process for forking servers */
@@ -220,17 +220,17 @@ main(int argc, char *argv[])
       if (session_num > session_limit) {
 	time_t t;
 	char *buf;
-	t = time(NULL);
-	buf = ctime(&t);
+	t =ACE_OS::time (NULL);
+	buf = ACE_OS::ctime (&t);
 	buf[strlen(buf) - 1] = 0;
         fprintf(stderr, "VCRS: %s, session_limit %d, session_number %d\n",
 		buf, session_limit, session_num);
       }
       
-      if ((val = read(cfd, &cmd, 1)) < 0)
+      if ((val = ACE_OS::read (cfd, &cmd, 1)) < 0)
       {
-        perror("VCRS fails to read command from service socket");
-        exit(1);
+       ACE_OS::perror ("VCRS fails to read command from service socket");
+        ACE_OS::exit (1);
       }
       if (val == 0) {
 	fprintf(stderr, "Remote client has closed connection.\n");
@@ -258,7 +258,7 @@ main(int argc, char *argv[])
         AudioServer(cfd, dfd, rttag, max_pkt_size);
 	fprintf(stderr, "Weird: audio server returned.\n");
       }
-      exit(1);
+      ACE_OS::exit (1);
     }
   }
 }

@@ -202,7 +202,7 @@ int mib_load_Menu(mib_Widget *thisw, mib_Buffer *fin)
     {
       if (!mib_read_line(fin, res, val))
 	return 0;
-      vallen = strlen(val);
+      vallen =ACE_OS::strlen (val);
       if (vallen < 2)
 	return 0;
       val[vallen-1] = '\0';
@@ -243,7 +243,7 @@ int mib_load_Menu(mib_Widget *thisw, mib_Buffer *fin)
 
   if (!mib_read_line(fin, res, val))
     return 0;
-  if (strcmp(res,"EndWidget"))
+  if (ACE_OS::strcmp (res,"EndWidget"))
     return 0;
 
   return 1;

@@ -22,11 +22,11 @@ Audio_Child_Process::init (int argc,
   else if (max_pkt_size == 0)
     max_pkt_size = 1024 * 1024;
     
-  AUDIO_GLOBAL::instance ()->start_time = time(NULL);
+  AUDIO_GLOBAL::instance ()->start_time =ACE_OS::time (NULL);
 
-  AUDIO_GLOBAL::instance ()->fbpara = (AudioFeedBackPara *)malloc(FBBUF_SIZE);
+  AUDIO_GLOBAL::instance ()->fbpara = (AudioFeedBackPara *)ACE_OS::malloc(FBBUF_SIZE);
   if (AUDIO_GLOBAL::instance ()->fbpara == NULL) {
-    perror("AS failed to allocate mem for fbpara");
+   ACE_OS::perror ("AS failed to allocate mem for fbpara");
     return (-1);
   }
 
@@ -34,10 +34,10 @@ Audio_Child_Process::init (int argc,
   if (AUDIO_GLOBAL::instance ()->databuf_size > DATABUF_SIZE)
     AUDIO_GLOBAL::instance ()->databuf_size = DATABUF_SIZE;
   
-  AUDIO_GLOBAL::instance ()->pktbuf = (AudioPacket *)malloc(sizeof(AudioPacket) + 
+  AUDIO_GLOBAL::instance ()->pktbuf = (AudioPacket *)ACE_OS::malloc(sizeof(AudioPacket) + 
                                                      AUDIO_GLOBAL::instance ()->databuf_size);
   if (AUDIO_GLOBAL::instance ()->pktbuf == NULL) {
-    perror("AS failed to allocate mem for pktbuf");
+   ACE_OS::perror ("AS failed to allocate mem for pktbuf");
     return(-1);
   }
 }

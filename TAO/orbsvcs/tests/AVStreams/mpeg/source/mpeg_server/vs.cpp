@@ -61,7 +61,7 @@ static int CmdRead(char *buf, int psize)
   if (res == 0) return(1);
   if (res == -1) {
     fprintf(stderr, "VS error on read VIDEO_SINGLETON::instance ()->cmdSocket, size %d", psize);
-    perror("");
+   ACE_OS::perror ("");
     return(-1);
   }
   return 0;
@@ -71,19 +71,19 @@ static void CmdWrite(char *buf, int size)
 {
   int res = wait_write_bytes(VIDEO_SINGLETON::instance ()->serviceSocket, buf, size);
   if (res == -1) {
-    if (errno != EPIPE) perror("VS writes to VIDEO_SINGLETON::instance ()->serviceSocket");
-    exit(errno != EPIPE);
+    if (errno != EPIPE)ACE_OS::perror ("VS writes to VIDEO_SINGLETON::instance ()->serviceSocket");
+    ACE_OS::exit (errno != EPIPE);
   }
 }
 
 int FBread(char * buf, int size)
 { int res;
   while ((res = (VIDEO_SINGLETON::instance ()->conn_tag >= 0 ? wait_read_bytes(VIDEO_SINGLETON::instance ()->videoSocket, buf, size) :
-		 read(VIDEO_SINGLETON::instance ()->videoSocket, buf, size))) == -1)
+		 ACE_OS::read (VIDEO_SINGLETON::instance ()->videoSocket, buf, size))) == -1)
   {
     if (errno == EINTR) {errno = 0; continue; }
-    if (errno == EPIPE || errno == ECONNRESET) exit(0);
-    perror("VS reads Feedback VIDEO_SINGLETON::instance ()->packet");
+    if (errno == EPIPE || errno == ECONNRESET) ACE_OS::exit (0);
+   ACE_OS::perror ("VS reads Feedback VIDEO_SINGLETON::instance ()->packet");
     return -1;
   }
   if (res < size) {
@@ -174,18 +174,18 @@ int send_to_network(int timeToUse)
 
       segsize = min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg);
       if (VIDEO_SINGLETON::instance ()->conn_tag != 0) {  /* VIDEO_SINGLETON::instance ()->packet stream */
-	while ((sentsize = write(VIDEO_SINGLETON::instance ()->videoSocket, (char *)msg, segsize)) == -1) {
+	while ((sentsize = ACE_OS::write (VIDEO_SINGLETON::instance ()->videoSocket, (char *)msg, segsize)) == -1) {
 	  if (errno == EINTR)
 	    continue;
 	  if (errno == ENOBUFS) {
 	    if (resent) {
-	      perror("Warning, pkt discarded because");
+	     ACE_OS::perror ("Warning, pkt discarded because");
 	      sent = -1;
 	      break;
 	    }
 	    else {
 	      resent = 1;
-	      perror("VS to sleep 5ms");
+	     ACE_OS::perror ("VS to sleep 5ms");
 	      usleep(5000);
 	      continue;
 	    }
@@ -193,9 +193,9 @@ int send_to_network(int timeToUse)
 	  if (errno != EPIPE) {
 	    fprintf(stderr, "VS error on send VIDEO_SINGLETON::instance ()->packet %d of size %d ",
 		    VIDEO_SINGLETON::instance ()->msgsn-1, min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg));
-	    perror("");
+	   ACE_OS::perror ("");
 	  }
-	  exit(errno != EPIPE);
+	  ACE_OS::exit (errno != EPIPE);
 	}
       }
       else {
@@ -204,9 +204,9 @@ int send_to_network(int timeToUse)
 	  if (errno != EPIPE) {
 	    fprintf(stderr, "VS error on send VIDEO_SINGLETON::instance ()->packet %d of size %d ",
 		    VIDEO_SINGLETON::instance ()->msgsn-1, min(size, VIDEO_SINGLETON::instance ()->msgsize)+sizeof(*msg));
-	    perror("");
+	   ACE_OS::perror ("");
 	  }
-	  exit(errno != EPIPE);
+	  ACE_OS::exit (errno != EPIPE);
 	}
       }
       if (sentsize < segsize) {
@@ -462,14 +462,14 @@ int SendPicture(int * frame)
 static int ReadInfoFromFile(void)
 {
   int fd = -1, i;
-  int fnlen = strlen(VIDEO_SINGLETON::instance ()->videoFile);
+  int fnlen =ACE_OS::strlen (VIDEO_SINGLETON::instance ()->videoFile);
 
   strcpy(&VIDEO_SINGLETON::instance ()->videoFile[fnlen], ".Info");
   fd = open(VIDEO_SINGLETON::instance ()->videoFile, O_RDONLY);
   if (fd == -1)
   {
     fprintf(stderr, "Reminder: VS fails to open %s for read, ", VIDEO_SINGLETON::instance ()->videoFile);
-    perror("try create one");
+   ACE_OS::perror ("try create one");
     goto fail_ReadInfoFromFile;
   }
   read_int(fd, &i);
@@ -507,39 +507,39 @@ static int ReadInfoFromFile(void)
   memset(VIDEO_SINGLETON::instance ()->pattern, 0, PATTERN_SIZE);
   read_bytes(fd, VIDEO_SINGLETON::instance ()->pattern, VIDEO_SINGLETON::instance ()->patternSize);
 #ifdef STAT
-  VIDEO_SINGLETON::instance ()->framesSent = (char *)malloc((VIDEO_SINGLETON::instance ()->numF + 7)>>3);
+  VIDEO_SINGLETON::instance ()->framesSent = (char *)ACE_OS::malloc((VIDEO_SINGLETON::instance ()->numF + 7)>>3);
   if (VIDEO_SINGLETON::instance ()->framesSent == NULL)
   {
     fprintf(stderr, "Error: VS fails to alloc mem for VIDEO_SINGLETON::instance ()->framesSent for %d frames", VIDEO_SINGLETON::instance ()->numF);
-    perror("");
-    exit(1);
+   ACE_OS::perror ("");
+    ACE_OS::exit (1);
   }
 #endif
-  VIDEO_SINGLETON::instance ()->systemHeader = (struct Video_Global::SystemHeader *)malloc(sizeof(struct Video_Global::SystemHeader) * VIDEO_SINGLETON::instance ()->numS);
+  VIDEO_SINGLETON::instance ()->systemHeader = (struct Video_Global::SystemHeader *)ACE_OS::malloc(sizeof(struct Video_Global::SystemHeader) * VIDEO_SINGLETON::instance ()->numS);
   if (VIDEO_SINGLETON::instance ()->systemHeader == NULL)
   {
-    perror("Error: VS error on malloc VIDEO_SINGLETON::instance ()->SystemHeader");
-    exit(1);
+   ACE_OS::perror ("Error: VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->SystemHeader");
+    ACE_OS::exit (1);
   }
-  VIDEO_SINGLETON::instance ()->gopTable = (struct Video_Global::GopTable *)malloc(sizeof(struct Video_Global::GopTable) * VIDEO_SINGLETON::instance ()->numG);
+  VIDEO_SINGLETON::instance ()->gopTable = (struct Video_Global::GopTable *)ACE_OS::malloc(sizeof(struct Video_Global::GopTable) * VIDEO_SINGLETON::instance ()->numG);
   if (VIDEO_SINGLETON::instance ()->gopTable == NULL)
   {
-    perror("Error: VS error on malloc GopHeader");
-    exit(1);
+   ACE_OS::perror ("Error: VS error on ACE_OS::malloc GopHeader");
+    ACE_OS::exit (1);
   }
-  VIDEO_SINGLETON::instance ()->frameTable = (struct Video_Global::FrameTable *)malloc(sizeof(Video_Global::FrameTable) * VIDEO_SINGLETON::instance ()->numF);
+  VIDEO_SINGLETON::instance ()->frameTable = (struct Video_Global::FrameTable *)ACE_OS::malloc(sizeof(Video_Global::FrameTable) * VIDEO_SINGLETON::instance ()->numF);
   if (VIDEO_SINGLETON::instance ()->frameTable == NULL)
   {
-    perror("Error: VS error on malloc VIDEO_SINGLETON::instance ()->frameTable");
-    exit(1);
+   ACE_OS::perror ("Error: VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->frameTable");
+    ACE_OS::exit (1);
   }
   VIDEO_SINGLETON::instance ()->packetBufSize = VIDEO_SINGLETON::instance ()->maxS + VIDEO_SINGLETON::instance ()->maxG + max(VIDEO_SINGLETON::instance ()->maxI, max(VIDEO_SINGLETON::instance ()->maxP, VIDEO_SINGLETON::instance ()->maxB));
-  VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
+  VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)ACE_OS::malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
 				 VIDEO_SINGLETON::instance ()->packetBufSize);
   if (VIDEO_SINGLETON::instance ()->packet == NULL)	
   {	
-    perror("Error: VS error on malloc VIDEO_SINGLETON::instance ()->packet buffer");
-    exit(1);
+   ACE_OS::perror ("Error: VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->packet buffer");
+    ACE_OS::exit (1);
   }
   VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)((char *)VIDEO_SINGLETON::instance ()->packet + sizeof(VideoMessage));
 
@@ -564,7 +564,7 @@ static int ReadInfoFromFile(void)
     read_short(fd, (short *)&VIDEO_SINGLETON::instance ()->frameTable[i].size);
   }
 
-  close(fd);
+  ACE_OS::close (fd);
   /*
   fprintf(stderr, "Read Info from %s\n", VIDEO_SINGLETON::instance ()->videoFile);
   */
@@ -572,7 +572,7 @@ static int ReadInfoFromFile(void)
   return 0;
  fail_ReadInfoFromFile:
   if (fd >= 0)
-    close(fd);
+    ACE_OS::close (fd);
   VIDEO_SINGLETON::instance ()->videoFile[fnlen] = 0;
   /*
   fprintf(stderr, "To scan Info from %s\n", VIDEO_SINGLETON::instance ()->videoFile);
@@ -583,14 +583,14 @@ static int ReadInfoFromFile(void)
 static void WriteInfoToFile(void)
 {
   int fd = -1, i;
-  int fnlen = strlen(VIDEO_SINGLETON::instance ()->videoFile);
+  int fnlen =ACE_OS::strlen (VIDEO_SINGLETON::instance ()->videoFile);
 
   strcpy(&VIDEO_SINGLETON::instance ()->videoFile[fnlen], ".Info");
   fd = open(VIDEO_SINGLETON::instance ()->videoFile, O_WRONLY | O_CREAT, 0444);
   if (fd == -1)
   {
     fprintf(stderr, "VS fails to open %s for write", VIDEO_SINGLETON::instance ()->videoFile);
-    perror("");
+   ACE_OS::perror ("");
     goto fail_WriteInfoToFile;
   }
   write_int(fd, VIDEO_SINGLETON::instance ()->fileSize);
@@ -641,12 +641,12 @@ static void WriteInfoToFile(void)
     write_short(fd, VIDEO_SINGLETON::instance ()->frameTable[i].size);
   }
 
-  close(fd);
+  ACE_OS::close (fd);
   VIDEO_SINGLETON::instance ()->videoFile[fnlen] = 0;
   return;
  fail_WriteInfoToFile:
   if (fd >= 0)
-    close(fd);
+    ACE_OS::close (fd);
   VIDEO_SINGLETON::instance ()->videoFile[fnlen] = 0;
   return;
 }
@@ -655,7 +655,7 @@ static void WriteInfoToFile(void)
 #define nextByte  {fileptr ++; \
 		   if (fread(&nb, 1, 1, fp) == 0) \
 		   { \
-		     perror("VS Crossed EOF or error while scanning"); \
+		    ACE_OS::perror ("VS Crossed EOF or error while scanning"); \
 		     return 1; \
 		   } }
 
@@ -664,7 +664,7 @@ static void WriteInfoToFile(void)
 #define nextByte  {int val; fileptr ++; \
 		   if ((val = getc(VIDEO_SINGLETON::instance ()->fp)) == EOF) \
 		   {\
-		     perror("Crossed EOF or error while scanning"); \
+		    ACE_OS::perror ("Crossed EOF or error while scanning"); \
 		     return 1; \
 		   } nb = val;}
 
@@ -708,13 +708,13 @@ static int init_MPEG1_video_file(void)
   if (VIDEO_SINGLETON::instance ()->fp == NULL)
   {
     fprintf(stderr, "error on opening video file %s", VIDEO_SINGLETON::instance ()->videoFile);
-    perror("");
+   ACE_OS::perror ("");
     return 2;
   }
   if (fseek(VIDEO_SINGLETON::instance ()->fp, 0, 2) == -1)
   {
     fprintf(stderr, "File %s not seekable", VIDEO_SINGLETON::instance ()->videoFile);
-    perror("");
+   ACE_OS::perror ("");
     return 3;
   }
   VIDEO_SINGLETON::instance ()->fileSize = ftell(VIDEO_SINGLETON::instance ()->fp);
@@ -816,31 +816,31 @@ static int init_MPEG1_video_file(void)
     }
 
 #ifdef STAT
-    VIDEO_SINGLETON::instance ()->framesSent = (char *)malloc((VIDEO_SINGLETON::instance ()->numF + 7)>>3);
+    VIDEO_SINGLETON::instance ()->framesSent = (char *)ACE_OS::malloc((VIDEO_SINGLETON::instance ()->numF + 7)>>3);
     if (VIDEO_SINGLETON::instance ()->framesSent == NULL)
     {
       fprintf(stderr, "VS fails to alloc mem for VIDEO_SINGLETON::instance ()->framesSent for %d frames", VIDEO_SINGLETON::instance ()->numF);
-      perror("");
+     ACE_OS::perror ("");
       return 6;
     }
 #endif
 
-    VIDEO_SINGLETON::instance ()->systemHeader = (struct Video_Global::SystemHeader *)malloc(sizeof(struct Video_Global::SystemHeader) * VIDEO_SINGLETON::instance ()->numS);
+    VIDEO_SINGLETON::instance ()->systemHeader = (struct Video_Global::SystemHeader *)ACE_OS::malloc(sizeof(struct Video_Global::SystemHeader) * VIDEO_SINGLETON::instance ()->numS);
     if (VIDEO_SINGLETON::instance ()->systemHeader == NULL)
     {
-      perror("VS error on malloc VIDEO_SINGLETON::instance ()->SystemHeader");
+     ACE_OS::perror ("VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->SystemHeader");
       return 7;
     }
-    VIDEO_SINGLETON::instance ()->gopTable = (struct Video_Global::GopTable *)malloc(sizeof(struct Video_Global::GopTable) * VIDEO_SINGLETON::instance ()->numG);
+    VIDEO_SINGLETON::instance ()->gopTable = (struct Video_Global::GopTable *)ACE_OS::malloc(sizeof(struct Video_Global::GopTable) * VIDEO_SINGLETON::instance ()->numG);
     if (VIDEO_SINGLETON::instance ()->gopTable == NULL)
     {
-      perror("VS error on malloc GopHeader");
+     ACE_OS::perror ("VS error on ACE_OS::malloc GopHeader");
       return 8;
     }
-    VIDEO_SINGLETON::instance ()->frameTable = (struct Video_Global::FrameTable *)malloc(sizeof(Video_Global::FrameTable) * VIDEO_SINGLETON::instance ()->numF);
+    VIDEO_SINGLETON::instance ()->frameTable = (struct Video_Global::FrameTable *)ACE_OS::malloc(sizeof(Video_Global::FrameTable) * VIDEO_SINGLETON::instance ()->numF);
     if (VIDEO_SINGLETON::instance ()->frameTable == NULL)
     {
-      perror("VS error on malloc VIDEO_SINGLETON::instance ()->frameTable");
+     ACE_OS::perror ("VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->frameTable");
       return 9;
     }
 
@@ -943,11 +943,11 @@ static int init_MPEG1_video_file(void)
       VIDEO_SINGLETON::instance ()->minG = min(VIDEO_SINGLETON::instance ()->minG, VIDEO_SINGLETON::instance ()->gopTable[gopptr].headerSize);
     }
     VIDEO_SINGLETON::instance ()->packetBufSize = VIDEO_SINGLETON::instance ()->maxS + VIDEO_SINGLETON::instance ()->maxG + max(VIDEO_SINGLETON::instance ()->maxI, max(VIDEO_SINGLETON::instance ()->maxP, VIDEO_SINGLETON::instance ()->maxB));
-    VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
+    VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)ACE_OS::malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
 				   VIDEO_SINGLETON::instance ()->packetBufSize);
     if (VIDEO_SINGLETON::instance ()->packet == NULL)
     {
-      perror("VS error on malloc VIDEO_SINGLETON::instance ()->packet buffer");
+     ACE_OS::perror ("VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->packet buffer");
       return 10;
     }
     VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)((char *)VIDEO_SINGLETON::instance ()->packet + sizeof(VideoMessage));
@@ -1033,12 +1033,12 @@ static int init_MPEG1_video_file(void)
 #endif
   {
     VIDEO_SINGLETON::instance ()->firstPatternSize = VIDEO_SINGLETON::instance ()->gopTable[0].totalFrames;
-    VIDEO_SINGLETON::instance ()->firstSendPattern = (char *)malloc(VIDEO_SINGLETON::instance ()->firstPatternSize);
+    VIDEO_SINGLETON::instance ()->firstSendPattern = (char *)ACE_OS::malloc(VIDEO_SINGLETON::instance ()->firstPatternSize);
     if (VIDEO_SINGLETON::instance ()->firstSendPattern == NULL)
     {
       fprintf(stderr, "VS failed to allocate VIDEO_SINGLETON::instance ()->firstVIDEO_SINGLETON::instance ()->SendVIDEO_SINGLETON::Instance ()->Pattern for %d frames",
 	      VIDEO_SINGLETON::instance ()->firstPatternSize);
-      perror("");
+     ACE_OS::perror ("");
       return 11;
     }
   }
@@ -1082,7 +1082,7 @@ static int init_MPEG1_video_file(void)
 	      para.version / 100, para.version % 100);
     }
     write_string(VIDEO_SINGLETON::instance ()->serviceSocket, errmsg);
-    exit(0);
+    ACE_OS::exit (0);
   }
   VIDEO_SINGLETON::instance ()->cmdsn = para.sn;
   /*
@@ -1113,12 +1113,12 @@ static int init_MPEG1_video_file(void)
     VIDEO_SINGLETON::instance ()->pattern[0] = 'I';
     VIDEO_SINGLETON::instance ()->pattern[1] = 0;
     VIDEO_SINGLETON::instance ()->packetBufSize = VIDEO_SINGLETON::instance ()->verticalSize * VIDEO_SINGLETON::instance ()->horizontalSize * 3;
-    VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
+    VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)ACE_OS::malloc(sizeof(VideoMessage) + sizeof(VideoPacket) +
 				   VIDEO_SINGLETON::instance ()->packetBufSize);
     if (VIDEO_SINGLETON::instance ()->packet == NULL)	
     {
-      perror("Error: VS error on malloc VIDEO_SINGLETON::instance ()->packet buffer");
-      exit(1);
+     ACE_OS::perror ("Error: VS error on ACE_OS::malloc VIDEO_SINGLETON::instance ()->packet buffer");
+      ACE_OS::exit (1);
     }
     VIDEO_SINGLETON::instance ()->packet = (VideoPacket *)((char *)VIDEO_SINGLETON::instance ()->packet + sizeof(VideoMessage));
 
@@ -1205,7 +1205,7 @@ static int init_MPEG1_video_file(void)
 	  failureType == 101 ? "live MPEG2 not supported" :
           errmsg;
     write_string(VIDEO_SINGLETON::instance ()->serviceSocket, msg);
-    exit(0);
+    ACE_OS::exit (0);
   }
 }
 
@@ -1501,7 +1501,7 @@ void GetFeedBack()
   if (!timerOn) return;
 
   VIDEO_SINGLETON::instance ()->needHeader = para.needHeader;
-  memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
+  ACE_OS::memcpy (VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
   if (para.addFrames <= 0 || timerAdjust < MAX_TIMER_ADJUST)
   {
     timerAdjust += para.addFrames * SPEEDUP_INV_SCALE;
@@ -1581,8 +1581,8 @@ static int FastVideoPlay(void)
                       "PLAYVIDEO:select EINTR signal \n"));
           continue;
         }
-      perror("Error - VS select between service and video sockets");
-      exit(1);
+     ACE_OS::perror ("Error - VS select between service and video sockets");
+      ACE_OS::exit (1);
       
     }
     if (FD_ISSET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask))   /* stop */
@@ -1639,13 +1639,13 @@ void ComputeFirstSendPattern(float limit)
 {
   char * buf = VIDEO_SINGLETON::instance ()->firstSendPattern;
   int len = VIDEO_SINGLETON::instance ()->firstPatternSize;
-  char * pat = (char *)malloc(len);
+  char * pat = (char *)ACE_OS::malloc(len);
   int f;
 
   if (pat == NULL) {
     fprintf(stderr, "VS error on allocating %d bytes for computing first SP", len);
-    perror("");
-    exit(1);
+   ACE_OS::perror ("");
+    ACE_OS::exit (1);
   }
   for (f = 0; f < len; f ++) {
     pat[f] = VIDEO_SINGLETON::instance ()->frameTable[f].type;
@@ -1675,7 +1675,7 @@ void ComputeFirstSendPattern(float limit)
   }
   fputc('\n', stderr);
   */
-  free(pat);
+  ACE_OS::free (pat);
 }
 
  int PLAYliveVideo(PLAYpara * para)
@@ -1727,9 +1727,9 @@ void ComputeFirstSendPattern(float limit)
     {
       if (errno == EINTR)
         continue;
-      perror("Error - VS select between service and video sockets");
+     ACE_OS::perror ("Error - VS select between service and video sockets");
       StopPlayLiveVideo();
-      exit(1);
+      ACE_OS::exit (1);
       
     }
     if (FD_ISSET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask))   /* stop */
@@ -1859,7 +1859,7 @@ static int PLAYvideo()
   timerFrame = para.nextFrame;
   timerGroup = FrameToGroup(&timerFrame);
   timerHeader = VIDEO_SINGLETON::instance ()->gopTable[timerGroup].systemHeader;
-  memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
+  ACE_OS::memcpy (VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
   result = SendReferences(timerGroup, timerFrame);
   if (result < 0)
     return result;
@@ -1972,8 +1972,8 @@ static int PLAYvideo()
                       "PLAYVideo:Select interrupted coninuing..\n"));
           continue;
         }
-      perror("Error - VS select between service and video sockets");
-      exit(1);
+     ACE_OS::perror ("Error - VS select between service and video sockets");
+      ACE_OS::exit (1);
       
     }
     if (FD_ISSET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask))   /* stop, speed change, loop swap */
@@ -2082,7 +2082,7 @@ static void on_exit_routine(void)
   /*
   if (!VIDEO_SINGLETON::instance ()->normalExit) {
     fprintf(stderr, "VS exitting abnormally, dump core...\n");
-    kill(getpid(), SIGSEGV);
+    ACE_OS::kill (getpid(), SIGSEGV);
     usleep(2000000);
   }
   */
@@ -2094,8 +2094,8 @@ static void on_exit_routine(void)
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
       struct hostent *hp;
-      time_t val = time(NULL);
-      char * buf = ctime(&VIDEO_SINGLETON::instance ()->start_time);
+      time_t val =ACE_OS::time (NULL);
+      char * buf = ACE_OS::ctime (&VIDEO_SINGLETON::instance ()->start_time);
       
       hp = gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
       buf[strlen(buf)-1] = 0;
@@ -2126,7 +2126,7 @@ int VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
   */
   VIDEO_SINGLETON::instance ()->msgsize -= sizeof(VideoMessage);
   
-  VIDEO_SINGLETON::instance ()->start_time = time(NULL);
+  VIDEO_SINGLETON::instance ()->start_time =ACE_OS::time (NULL);
 
   atexit(on_exit_routine);
 
@@ -2187,7 +2187,7 @@ int VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
       fprintf(stderr, "a session closed.\n");
       VIDEO_SINGLETON::instance ()->normalExit =1;
       */
-      //      exit(0);
+      //      ACE_OS::exit (0);
       return 0;
       break;
     case CmdSTATstream:

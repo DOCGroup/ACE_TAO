@@ -140,7 +140,7 @@ int mib_load_TextBig(mib_Widget *thisw, mib_Buffer *fin)
   if (!mib_read_line(fin, res, val))
     return 0;
 
-  if (strcmp(res,"EndWidget"))
+  if (ACE_OS::strcmp (res,"EndWidget"))
     return 0;
 
   return 1;
