@@ -9,14 +9,22 @@ ACE_RCSID(ace, DLL, "$Id$")
 // Implementation of the methods which provide an abstraction of
 // dynamically linked library.
 
-ACE_DLL::ACE_DLL (void)
+// The close_on_destruction flag feature is added on object constuction.
+ACE_DLL::ACE_DLL (int close_on_destruction)
 {
-  // No-op
+  // This flag closes the library automagically on destruction of the object.
+  // The default value is zero.
+  this->close_mode_ = close_on_destruction;
 }
   
+// The library is closed before the class gets destroyed depending
+// on the close_on_destruction value specified which is stored in close_mode_.
+
 ACE_DLL::~ACE_DLL (void)
 {
-  // No-op
+  // CLose the library only if it hasnt been already.
+  if (this->close_mode_ == 0 && this->handle_ !=0)
+    this->close ();
 }
   
 // This method opens the library based on the mode specified using the
@@ -29,6 +37,7 @@ ACE_DLL::~ACE_DLL (void)
 //               object is first loaded.
 //  RTLD_GLOBAL  The object symbols are made available for the
 //               relocation processing of any other object. 
+
 int 
 ACE_DLL::open (ACE_DL_TYPE dll_name,
                int mode)
@@ -57,7 +66,17 @@ ACE_DLL::symbol (ACE_DL_TYPE sym_name)
 int 
 ACE_DLL::close (void)
 {
-  return ACE_OS::dlclose (this->handle_);
+  // The handle is checked to see whether the library is closed already.
+  // If not, it is closed an dthe handle is made 0 which portrays that it is
+  // closed.
+  if (this->handle_ != 0)
+    {
+      int retval = ACE_OS::dlclose (this->handle_);
+      this->handle_ = 0;
+      return retval;
+    }
+  else
+    return 0;
 }
 
 // This method is used on error in an library operation.
@@ -66,4 +85,4 @@ char *
 ACE_DLL::error (void)
 {
   return ACE_OS::dlerror();
-}
+} 

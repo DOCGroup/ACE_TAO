@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -37,8 +36,10 @@ class ACE_Export ACE_DLL
 public:
   // = Initialization and termination methods.
 
-  ACE_DLL (void);
+  ACE_DLL ( int close_on_detruction = 0);
   // Initialization.
+  // The close_on_destruction flag is a feature which closes the 
+  // library automagically before the class object is destroyed.
  
   ~ACE_DLL (void);
   // Called when object is destroyed.
@@ -55,7 +56,7 @@ public:
   //               object is first loaded.
   //  RTLD_GLOBAL  The object symbols are made available for the
   //               relocation processing of any other object. 
-
+  
   void *symbol (ACE_DL_TYPE sym_name);
   // The symbol reference is returned corresponding to the symbol
   // name.
@@ -69,6 +70,10 @@ public:
 private:
   ACE_SHLIB_HANDLE handle_;
   // This is the reference to the library.
+  
+  int close_mode_;
+  // This is the flag representing the special close_on_destruction feature.
+  
 };
 
 #endif /* ACE_DLL_H */
