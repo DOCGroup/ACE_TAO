@@ -1,3 +1,9 @@
+Mon Apr  7 19:20:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp (visit_eventtype):
+
+	  Fixed resetting of context states in this method.
+
 Mon Apr  7 16:53:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynCommon.cpp (get_any):
