@@ -47,16 +47,12 @@ public:
   int parse_args (int argc, char* argv[]);
   // Parse svc.conf arguments
 
+  // = Check Client_Strategy_Factory.h for the documentation of the
+  //   following methods.
   ACE_Lock* create_profile_lock (void);
-  // create the lock for the forwarding Profile used by
-  // the TAO_GIOP_Invocation::location_forward and the
-  // TAO_GIOP_Invocation::start
-
   TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_ORB_Core *orb_core);
-  // Create the correct client request muxing strategy.
-
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
-  // Create the correct client wait-for-reply strategy.
+  virtual ACE_Lock *create_cached_connector_lock (void);
 
 private:
   enum Lock_Type
@@ -86,6 +82,9 @@ private:
 
   Wait_Strategy wait_strategy_;
   // The wait-for-reply strategy.
+
+  Lock_Type cached_connector_lock_type_;
+  // Type of lock used by the cached connector.
 };
 
 #if defined (__ACE_INLINE__)

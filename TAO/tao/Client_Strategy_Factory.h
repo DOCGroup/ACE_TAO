@@ -54,6 +54,9 @@ public:
 
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   // Create the correct client <wait_for_reply> strategy.
+
+  virtual ACE_Lock *create_cached_connector_lock (void);
+  // Create the lock to be used by the cached connector.
 };
 
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */
