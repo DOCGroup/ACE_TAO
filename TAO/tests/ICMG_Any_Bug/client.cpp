@@ -7,7 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "Hello.h"
 
-ACE_RCSID(ICMG_Any_Bug, client, "$Id$");
+ACE_RCSID(ICMG_Any_Bug, client, "$Id$")
 
 const char *ior = "file://test.ior";
 

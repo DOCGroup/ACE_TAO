@@ -1,3 +1,10 @@
+Tue Dec 30 13:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BD_String_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.h:
+          Removed not needed ; after c++ namespace closure.
+
 Tue Dec 30 13:36:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
