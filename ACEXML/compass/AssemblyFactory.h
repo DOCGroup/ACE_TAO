@@ -18,7 +18,7 @@
 
 namespace Deployment
 {
-
+  class Assembly;
   typedef ACE_Hash_Map_Entry<ACEXML_String,
                              Assembly*> COOKIE;
 
@@ -43,6 +43,7 @@ namespace Deployment
   class Compass_Export AssemblyFactory
   {
   public:
+
     friend class ACE_Singleton<AssemblyFactory, ACE_SYNCH_MUTEX>;
 
     Cookie create(const Location& assembly_loc)
@@ -53,13 +54,17 @@ namespace Deployment
 
     void destroy(const Cookie& c)
       ACE_THROW_SPEC ((InvalidAssembly, RemoveFailure));
+
   protected:
     AssemblyFactory();
     ~AssemblyFactory();
     AssemblyFactory (const AssemblyFactory&);
     AssemblyFactory& operator= (const AssemblyFactory&);
+
   private:
+
     COOKIES_MANAGER cookies_;
+
   };
   typedef ACE_Singleton<AssemblyFactory, ACE_SYNCH_MUTEX> ASSEMBLY_FACTORY;
 }

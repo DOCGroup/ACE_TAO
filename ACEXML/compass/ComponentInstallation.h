@@ -61,6 +61,7 @@ namespace Deployment
   private:
 
     Package_Manager packages_;
+
   };
   typedef ACE_Singleton<ComponentInstallation, ACE_SYNCH_MUTEX> COMP_INSTALL;
 
