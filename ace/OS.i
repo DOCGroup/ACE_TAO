@@ -6421,6 +6421,100 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 #endif /* ACE_WIN32 */
 }
 
+#if ! defined (ACE_WIN32) && ! defined (ACE_HAS_LONGLONG_T)
+ACE_INLINE int
+ACE_U_LongLong::operator== (const ACE_U_LongLong &ll) const
+{
+  return hi_ == ll.hi_  &&  lo_ == ll.lo_;
+}
+
+ACE_INLINE int
+ACE_U_LongLong::operator< (const ACE_U_LongLong &ll) const
+{
+  return hi_ < ll.hi_  &&  lo_ < ll.lo_;
+}
+
+ACE_INLINE int
+ACE_U_LongLong::operator<= (const ACE_U_LongLong &ll) const
+{
+  return hi_ <= ll.hi_  &&  lo_ <= ll.lo_;
+}
+
+ACE_INLINE int
+ACE_U_LongLong::operator> (const ACE_U_LongLong &ll) const
+{
+  return hi_ > ll.hi_  &&  lo_ > ll.lo_;
+}
+
+ACE_INLINE int
+ACE_U_LongLong::operator>= (const ACE_U_LongLong &ll) const
+{
+  return hi_ >= ll.hi_  &&  lo_ >= ll.lo_;
+}
+
+ACE_INLINE
+ACE_U_LongLong::ACE_U_LongLong (const ACE_U_LongLong &ll)
+  : hi_ (ll.hi_),
+    lo_ (ll.lo_)
+{
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator= (const ACE_U_LongLong &ll)
+{
+  hi_ = ll.hi_;
+  lo_ = ll.lo_;
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll) const
+{
+  ACE_U_LongLong ret (lo_ + ll.lo_, hi_ + ll.hi_);
+
+  if (ret.lo_ < ll.lo_) ++ret.hi_; /* carry to ll.hi_ */
+
+  return ret;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
+{
+  ACE_U_LongLong ret (lo_ - ll.lo_, hi_ - ll.hi_);
+
+  if (lo_ < ll.lo_) --ret.hi_; /* borrow from ll.hi_ */
+
+  return ret;
+}
+
+ACE_INLINE u_long
+ACE_U_LongLong::operator/ (const u_long ul) const
+{
+  return hi_ / ul * ULONG_MAX + lo_ / ul;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator+= (const ACE_U_LongLong &ll)
+{
+  hi_ += ll.hi_;
+  lo_ += ll.lo_;
+  if (lo_ < ll.lo_) ++hi_; /* carry to hi_ */
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator-= (const ACE_U_LongLong &ll)
+{
+  hi_ -= ll.hi_;
+  if (lo_ < ll.lo_) --hi_; /* borrow from hi_ */
+  lo_ -= ll.lo_;
+
+  return *this;
+}
+
+#endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
+
 #if !defined (ACE_HAS_PENTIUM) || !defined (__GNUC__)
 ACE_INLINE ACE_hrtime_t 
 ACE_OS::gethrtime (void)
