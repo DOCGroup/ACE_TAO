@@ -1,3 +1,10 @@
+Tue Oct 03 12:53:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* bin/run_all_list.pm:
+
+	  Disabled Connection Purging test, and enabled Exposed
+	  Policies test.
+
 Tue Oct  3 10:52:24 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
