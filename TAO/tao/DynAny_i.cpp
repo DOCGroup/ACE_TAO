@@ -400,7 +400,8 @@ void
 TAO_DynAny_i::insert_string (const char * value,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TCKind kind = this->value_.type ()->kind (ACE_TRY_ENV);
+  CORBA::TCKind kind = TAO_DynAny_i::unalias (this->value_.type (),
+                                              ACE_TRY_ENV);
   ACE_CHECK;
 
   if (kind == CORBA::tk_string)
@@ -417,7 +418,8 @@ void
 TAO_DynAny_i::insert_reference (CORBA::Object_ptr value,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TCKind kind = this->value_.type ()->kind (ACE_TRY_ENV);
+  CORBA::TCKind kind = TAO_DynAny_i::unalias (this->value_.type (),
+                                              ACE_TRY_ENV);
   ACE_CHECK;
 
   if (kind == CORBA::tk_objref)
@@ -434,7 +436,8 @@ void
 TAO_DynAny_i::insert_typecode (CORBA::TypeCode_ptr value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TCKind kind = this->value_.type ()->kind (ACE_TRY_ENV);
+  CORBA::TCKind kind = TAO_DynAny_i::unalias (this->value_.type (),
+                                              ACE_TRY_ENV);
   ACE_CHECK;
 
   if (kind == CORBA::tk_TypeCode)
@@ -506,7 +509,8 @@ void
 TAO_DynAny_i::insert_any (const CORBA::Any& value,
                           CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TCKind kind = this->value_.type ()->kind (ACE_TRY_ENV);
+  CORBA::TCKind kind = TAO_DynAny_i::unalias (this->value_.type (),
+                                              ACE_TRY_ENV);
   ACE_CHECK;
 
   if (kind == CORBA::tk_any)
