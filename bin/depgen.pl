@@ -18,7 +18,12 @@ use Cwd;
 use Config;
 use File::Basename;
 
-unshift(@INC, getExecutePath($0) . '/DependencyGenerator');
+if ( $^O eq 'VMS' ) {
+  require VMS::Filespec;
+  import VMS::Filespec qw(unixpath);
+}
+
+unshift(@INC, getExecutePath($0) . 'DependencyGenerator');
 
 require DependencyEditor;
 
@@ -38,18 +43,31 @@ my(%defaults) = ('UNIX'    => ['gnu'],
 # ************************************************************
 # Subroutine Section
 # ************************************************************
-
 sub which {
-  my($prog) = shift;
-  my($exec) = $prog;
-
-  if (defined $ENV{'PATH'}) {
-    my($envSep) = $Config{'path_sep'};
-    foreach my $part (split(/$envSep/, $ENV{'PATH'})) {
-      $part .= "/$prog";
-      if ( -x $part ) {
-        $exec = $part;
-        last;
+  my($prog)   = shift;
+  my($exec)   = $prog;
+  my($part)   = '';
+  if ( $^O eq 'VMS' ) {
+    my($envSep) = ';';
+    if (defined $ENV{'PATH'}) {
+      foreach $part (split(/$envSep/, $ENV{'PATH'})) {
+        $part .= "$prog";
+        if ( -x $part ) {
+          $exec = $part;
+          last;
+        }
+      }
+    }
+  }
+  else  {
+    my($envSep) = ($^O eq 'MSWin32' ? ';' : ':');
+    if (defined $ENV{'PATH'}) {
+      foreach $part (split(/$envSep/, $ENV{'PATH'})) {
+        $part .= "/$prog";
+        if ( -x $part ) {
+          $exec = $part;
+          last;
+        }
       }
     }
   }
@@ -62,25 +80,46 @@ sub getExecutePath {
   my($prog) = shift;
   my($loc)  = '';
 
-  if ($prog ne basename($prog)) {
-    if ($prog =~ /^[\/\\]/ ||
-        $prog =~ /^[A-Za-z]:[\/\\]?/) {
-      $loc = dirname($prog);
+  if ( $^O eq 'VMS' ) {
+    if ($prog ne basename($prog)) {
+      my($dir) = unixpath( dirname($prog) );
+      if ($prog =~ /^[\/\\]/) {
+        $loc = $dir;
+      }
+      else {
+        $loc = unixpath(getcwd()) . $dir;
+      }
     }
     else {
-      $loc = getcwd() . '/' . dirname($prog);
+      $loc = unixpath( dirname(which($prog)) );
     }
-  }
-  else {
-    $loc = dirname(which($prog));
-  }
 
-  if ($loc eq '.') {
-    $loc = getcwd();
-  }
+    if ($loc eq '.') {
+      $loc = unixpath( getcwd() );
+    }
+  } else {
+    if ($prog ne basename($prog)) {
+      if ($prog =~ /^[\/\\]/ ||
+          $prog =~ /^[A-Za-z]:[\/\\]?/) {
+        $loc = dirname($prog);
+      }
+      else {
+        $loc = getcwd() . '/' . dirname($prog);
+      }
+    }
+    else {
+      $loc = dirname(which($prog));
+    }
 
-  if ($loc ne '') {
-    $loc .= '/';
+    $loc =~ s/\/\.$//;
+
+    if ($loc eq '.') {
+      $loc = getcwd();
+    }
+
+    if ($loc ne '') {
+      $loc .= '/';
+    }
   }
 
   return $loc;
