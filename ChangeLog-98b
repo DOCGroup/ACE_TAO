@@ -1,7 +1,7 @@
 Thu Oct 29 17:36:29 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/Semaphore_Test: Removed the timed acquire stuff from
-          th worker thread and the display at the end of the test.
+          the worker thread and the display at the end of the test.
           Now it shouldn't output the confusing "100% of threads
           timed out" message on platforms without timed acquire.
 
