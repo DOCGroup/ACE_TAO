@@ -1,3 +1,9 @@
+Tue May  4 17:37:30 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Web_Crawler/Options.cpp (parse_args): 
+	  Change the default options from "www.cs.wustl.edu" to
+	  "tao.cs.wustl.edu".
+
 Tue May 04 16:24:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}: Added deprecation comments to methods that
