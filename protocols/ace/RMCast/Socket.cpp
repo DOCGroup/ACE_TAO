@@ -6,8 +6,6 @@
 #include "ace/OS_NS_string.h"
 
 #include "ace/Unbounded_Queue.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Condition_T.h"
 
 #include "Stack.h"
 #include "Protocol.h"

@@ -225,9 +225,11 @@ namespace ACE_RMCast
   private:
     Map hold_;
     Mutex mutex_;
+    Condition cond_;
 
     unsigned long nrtm_timer_;
 
+    bool stop_;
     ACE_Thread_Manager tracker_mgr_;
   };
 

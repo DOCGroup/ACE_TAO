@@ -12,6 +12,7 @@ namespace ACE_RMCast
 
   Retransmit::
   Retransmit ()
+      : cond_ (mutex_), stop_ (false)
   {
   }
 
@@ -26,7 +27,12 @@ namespace ACE_RMCast
   void Retransmit::
   out_stop ()
   {
-    tracker_mgr_.cancel_all (1);
+    {
+      Lock l (mutex_);
+      stop_ = true;
+      cond_.signal ();
+    }
+
     tracker_mgr_.wait ();
 
     Element::out_stop ();
@@ -108,25 +114,40 @@ namespace ACE_RMCast
   {
     while (true)
     {
-      {
-        Lock l (mutex_);
+      Lock l (mutex_);
 
-        for (Queue::iterator i (queue_); !i.done ();)
+      for (Queue::iterator i (queue_); !i.done ();)
+      {
+        if ((*i).int_id_.inc () >= 60)
         {
-          if ((*i).int_id_.inc () >= 60)
-          {
-            u64 sn ((*i).ext_id_);
-            i.advance ();
-            queue_.unbind (sn);
-          }
-          else
-          {
-            i.advance ();
-          }
+          u64 sn ((*i).ext_id_);
+          i.advance ();
+          queue_.unbind (sn);
+        }
+        else
+        {
+          i.advance ();
         }
       }
 
-      ACE_OS::sleep (tick);
+      // Go to sleep but watch for "manual cancellation" request.
+      //
+      ACE_Time_Value time (ACE_OS::gettimeofday ());
+      time += tick;
+
+      while (!stop_)
+      {
+        if (cond_.wait (&time) == -1)
+        {
+          if (errno != ETIME)
+            abort ();
+          else
+            break;
+        }
+      }
+
+      if (stop_)
+        break;
     }
   }
 }
