@@ -1,3 +1,10 @@
+Wed Aug 22 12:04:04 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/WFMO_Reactor.h (ACE_WFMO_Reactor): Clarified that the
+	  work_pending() method isn't implemented and suggest what to do
+ 	  for a workaround.  Thanks to Michelangelo Riccobene
+ 	  (michelangelo.riccobene@marconi.com) for reporting this.
+
 Wed Aug 22 10:38:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/nightlybuilds/print_config.pl:
