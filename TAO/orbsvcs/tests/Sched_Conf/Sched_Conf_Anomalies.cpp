@@ -220,13 +220,14 @@ main (int argc, char *argv[])
 			   "the TAO_Naming_Client. \n"),
 			  -1);
       
-      if (ACE_Scheduler_Factory::use_config (my_name_client.get_context (),
+      CosNaming::NamingContext_var context =
+        my_name_client.get_context ();
+
+      if (ACE_Scheduler_Factory::use_config (context.in (),
 					     service_name) < 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             " (%P|%t) Unable to bind to the scheduling service.\n"),
-                            1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to bind to the scheduling service.\n"),
+                          1);
 
       // create and initialize RT_Infos in the scheduler,
       // make second half of array depend on first half.

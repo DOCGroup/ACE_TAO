@@ -1,3 +1,18 @@
+Fri Sep 10 14:05:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.cpp,
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp,
+	* orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp,
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp: Updated this
+	  code to store the result of the new get_context() implementation
+ 	  described below into a _var so that it'll be cleaned up
+ 	  properly.
+  
+	* orbsvcs/orbsvcs/Naming/Naming_Utils: Changed the implementation
+	  of get_context() so that it _duplicate()s the pointer to enable
+ 	  it to be stored into a *_var.  Thanks to Timothy Canham
+ 	  <Timothy.Canham@jpl.nasa.gov> for suggesting this.
+
 Fri Sep 10 16:11:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POAC.h: Added LocalityConstrainedServantBase to the

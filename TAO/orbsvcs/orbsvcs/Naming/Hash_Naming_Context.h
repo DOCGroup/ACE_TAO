@@ -190,9 +190,9 @@ protected:
   CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name,
                                             CORBA::Environment &_env);
   // <get_context> is used by methods that need to resolve a compound
-  // name before performing the actual operation (e.g., bind,
-  // unbind, etc.)  <get_context> takes a full name (including the
-  // last component that doesn't need to be resolved), and returns a
+  // name before performing the actual operation (e.g., bind, unbind,
+  // etc.)  <get_context> takes a full name (including the last
+  // component that doesn't need to be resolved), and returns a
   // pointer to the target context.
 
   TAO_Bindings_Map *context_;

@@ -99,9 +99,12 @@ FactoryDriver::start (int argc, char *argv [])
                            "the TAO_Naming_Client. \n"),
                           1);
 
+      CosNaming::NamingContext_var context =
+        naming_client_.get_context ();
+
       if (factory_servant_->init (root_poa_.in (),
                                   child_poa_name_,
-                                  naming_client_.get_context (),
+                                  context.in (),
                                  ACE_TRY_ENV) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Unable to initialize "
