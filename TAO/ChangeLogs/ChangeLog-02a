@@ -10,17 +10,20 @@ Wed Mar 28 17:24:57 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/tests/ImplRepo/NameService/Makefile : Added
 	libTAO_PortableServer and libTAO_IORTable to LinkList to make QNX
-	happy.
+	happy. Thanks to Thomas Groth <groth.th@nord-com.net> for the 
+    suggestion.
 
 Wed Mar 28 17:12:06 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/examples/Log/test/Makefile : Added libTAO_DynamicAny and
-	libTAO_IORTable to LinkList to make QNX happy.
+	libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas 
+    Groth <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:54:47 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/examples/Log/Client/Makefile: Added libTAO_DynamicAny to
-	LinkList to make QNX happy.
+	LinkList to make QNX happy. Thanks to Thomas Groth 
+    <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:51:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
