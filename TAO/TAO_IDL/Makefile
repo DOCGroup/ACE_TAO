@@ -36,7 +36,8 @@ else  # ! CROSS-COMPILE
 MKLIST = \
 	Makefile.FE \
 	Makefile.BE \
-	Makefile.EXE
+	Makefile.EXE \
+	Makefile.dependencies
 
 all debug profile optimize install deinstall clean realclean clobber depend:
 ifeq (Windows,$(findstring Windows,$(OS)))
