@@ -1,5 +1,10 @@
 Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tao/corbacom.h: Moved the CORBA_SEQUENCE stuff back into the
+ 	  header file since it wasn't linking correctly...
+
+	* tao/TAO_IDL: Changed all uses of do_call() to do_static_call().
+
         * tao: Made lots of minor enhancements to formatting and style.
 
 	* tao: Removed the invoke.cpp file and moved its functionality
