@@ -117,13 +117,13 @@ the following:
   <li>Start clients and pass them the above IOR<br>
   <li>Clients will use the IOR, which will automatically go through the IMR<br>
   <li>The IMR will start the server if it is not already running<br>
-  <li>At any time when the server is not currently in use by a client, it can be shut down
-    using <strong>tao_imr<br>
-    </strong><em>Example:</em><code> tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior shutdown
-    plane<br>
+  <li>At any time when the server is not currently in use by a client, it can be 
+      shut down using <strong>tao_imr<br></strong><em>Example:</em><code> tao_imr 
+      -ORBInitRef ImplRepoService=file://implrepo.ior shutdown plane<br>
     </code>
-  <li>After the server isn't needed anymore, it can be removed from the IMR database using <strong>tao_imr<br>
-    </strong><em>Example:<code> </em>tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior remove plane</code>
+  <li>After the server isn't needed anymore, it can be removed from the IMR database 
+      using <strong>tao_imr<br></strong><em>Example:<code> </em>tao_imr -ORBInitRef 
+      ImplRepoService=file://implrepo.ior remove plane</code>
 </ol>
 
 @subsection serverresponsibilities So what does the server need to do?
@@ -143,20 +143,21 @@ is that each server must have unique persistent POA names.
 Each server can have one of three different types of activation modes:
 
 <ul>
-  <li>NORMAL is the default.  The server can be started via tao_imr, the command line, and
-      with client requests.
-  <li>MANUAL specifies that the server shouldn't be  activated with a client request but can 
-      be activated through tao_imr or via the command line.  
-  <li>PER_CLIENT specifies that each request to the ImplRepo will result in a new server 
-      process started up.  Because clients cache the forwarded reference, there is one server 
-      per client (more or less).  There are some exceptions, such as if the original IOR
-      is used in different threads (each thread would get a different server).  <b>Note:</b>
-      The Implementation Repository doesn't store any information about the started servers
-      in this mode, so it cannot be used to shut down the servers.  So the servers must 
-      have an alternative way of shutting down. 
-  <li>AUTO_START specifies that a server should be activated when the Implementation Repository
-      is started.  tao_imr also has an autostart command to activate all servers marked 
-      AUTO_START
+  <li>NORMAL is the default.  The server can be started via tao_imr, the command 
+      line, and with client requests.
+  <li>MANUAL specifies that the server shouldn't be  activated with a client request 
+      but can be activated through tao_imr or via the command line.  
+  <li>PER_CLIENT specifies that each request to the ImplRepo will result in a new 
+      server process started up.  Because clients cache the forwarded reference, 
+      there is one server per client (more or less).  There are some exceptions, 
+      such as if the original IOR is used in different threads (each thread would 
+      get a different server).  <b>Note:</b> The Implementation Repository doesn't 
+      store any information about the started servers in this mode, so it cannot be 
+      used to shut down the servers.  So the servers must have an alternative way of 
+      shutting down. 
+  <li>AUTO_START specifies that a server should be activated when the Implementation 
+      Repository is started.  tao_imr also has an autostart command to activate all 
+      servers marked AUTO_START
 </ul>
 
 @subsection taoimrior Using the tao_imr ior command
@@ -233,17 +234,19 @@ or in a Perl script by adding<br>
 	use Sys::Hostname;<br>
 	$hostname = hostname();<br>
 
-There are even specific port numbers, assigned to the OMG by the IANA, which can be used for
-this purpose. They are 683 (for IIOP) and 684 (for IIOP SSL). For more information about this,
-see <a href="http://www.iana.org/">http://www.iana.org/</a> and <a href="http://www.isi.edu/in-notes/iana/assignments/port-numbers">
-http://www.isi.edu/in-notes/iana/assignments/port-numbers</a>.
-<br><br>
+There are even specific port numbers, assigned to the OMG by the IONA, which can be 
+used for this purpose. They are 683 (for IIOP) and 684 (for IIOP SSL). For more 
+information about this, see <a href="http://www.iana.org/">http://www.iana.org/</a> 
+and <a href="http://www.isi.edu/in-notes/iana/assignments/port-numbers">
+http://www.isi.edu/in-notes/iana/assignments/port-numbers</a>.<br><br>
 <li>
-Pass the IMR a filename to use for the backing store, specified by the command line option<br>
+Pass the IMR a filename to use for the backing store, specified by the command line 
+option<br>
 
 -p (filename)<br>
 
-This option must be used the first and every subsequent time the persistent IMR is started up.
+This option must be used the first and every subsequent time the persistent IMR is 
+started up.
 
 </ul>
 */
@@ -251,73 +254,51 @@ This option must be used the first and every subsequent time the persistent IMR 
 /**
 @page ntservice Running as an NT service
 
-These conditions must be met:
+The ImplRepo_Service.exe can now also function as a Windows NT Service.  The
+-c option can be used to install and remove the service (this requires
+Administrator access on the machine).  
 
-<ol>
-<li> The user must be logged in as administrator, or have administrative 
-priveleges (in order to register an NT service).
-<li> ACE_ROOT must be set to the ACE_wrappers directory in the system 
-environment. 
-<li> ACE_ROOT/bin must be in the system path.
-</ol>
+@note When using the ImplRepo_Service as a service, it must have all of its 
+required ACE/TAO DLL's in the path or in the same directory.  For example, 
+the run_test.pl copies ImplRepo_Service.exe to the ACE_wrappers@\bin 
+directory before using "-c install".
 
-To set the options for the TAO NT ImplRepo Sevice, go to the Services icon
-in the Settings group under the start menu (start menu -> settings ->
-services). There, highlight "TAO NT ImplRepo Service", which is the name
-used by the ImplRepo Service when it is registered. After it's
-highlighted, you should see at the bottom of the dialog box an area to
-specify options for ImplRepo_Service.exe. Just enter the options you wish in 
-that edit box and everything should just work. However, some options, such as
--ORBDebugLevel, won't work since an NT service can't write output to
-standard out.
+The service can be then started either from the Windows NT "Services" Admin
+Tool or via the "net" program on the command line: 
 
-@subsetion syntax Syntax
+<CODE>net start "TAO Implementation Repository"</CODE>
 
-C:@\@> NT_ImplRepo_Service [-i value] [-r] [-s] [-k] [-t n] [-d]
+The Implementation Repository supports start and stop but not pause.
 
-Optional Command-line Arguments
+@subsection serviceopts Service Options
 
-- -i value Install this program as an NT service, with specified startup
-- -r       Remove this program from the Service Manager
-- -s       Start the service
-- -k       Kill the service
-- -t value Set startup for an existing service
-- -d       Debug; run as a regular application
+When installing the Implementation Repository as a service, there isn't an
+opportunity to specify any command line options.  So if you want to specify
+that the ImplRepo_Service should output to a file or set the debug level to 2,
+for example, you will have to manually edit the registry to do this.
 
+The magic key for extra options to pass to the Implementation Repository is
+<B>SYSTEM\CurrentControlSet\Services\TAOImplRepo\Parameters\ORBOptions</B> 
+under <B>HKEY_LOCAL_MACHINE</B>.  This value should be a MULTI_SZ value with
+each parameter in separate strings.  Since it is a MULTI_SZ, you will need to
+use regedt32.exe to add this, since regedit.exe doesn't support MULTI_SZ types
+yet.  
 
-Usage
+So let's say you want to up the debug level to 2 and record the output to the
+C:@\ImplRepo.log file.  First you will have to install the ImplRepo_Service
+as a service to create the TAOImplRepo subkey under Services.  Now fire up 
+regedt32 and browse to the TAOImplRepo key.  The Parameters key under 
+TAOImplRepo will now need to be created.  And now you can create the 
+"ORBOptions" value in Parameters.  Now when the multi-string editor pops up,
+add the following on separate lines:
 
-To see different stages of an NT service application, you have to run the 
-program several times, with different options.  Please note: run with only 
-one option at a time.
+- -ORBLogFile
+- C:@\ImplRepo.log
+- -ORBDebugLevel
+- 2
 
-First, you must initialize the service in the NT Service Control Manager 
-database.  Run NT_ImplRepo_Service with -in, where n is	one of the following 
-startup options:
-
-<ul>
-  <li>#define SERVICE_SYSTEM_START    0x00000001
-  <li>#define SERVICE_AUTO_START      0x00000002
-  <li>#define SERVICE_DEMAND_START    0x00000003
-  <li>#define SERVICE_DISABLED        0x00000004
-</ul>
-
-If only -i is specified, SERVICE_DEMAND_START is default option.
-
-Now you are ready to run the actual service. Run NT_ImplRepo_Service again, 
-this time with -s option. If the service starts successfully, it will ring 
-the system bell every second or so until the service is stopped.
-
-To stop service execution, run NT_ImplRepo_Service with the -k option.
-
-To remove the service from the Service Control Manager database, run 
-NT_ImplRepo_Service with -r.
-
-In addition, once you have initialized this service (by using the -i option) 
-you can change its startup type to one of the other values above.  To do 
-this, run NT_ImplRepo_Service with -tn option. n is as explained above for -i.
-
-In order to debug the service's execution itself, use the -d option.
+And when the ImplRepo_Service is run as a service (and only when it runs as
+a service) it will use these options.
 
 */
 
