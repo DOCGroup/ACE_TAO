@@ -2355,8 +2355,8 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #else
   if (s->name_)
     {
-      ACE_OS::free ((void *) s->name_);
       ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_unlink (s->name_), result), int, -1, result);
+      ACE_OS::free ((void *) s->name_);
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_close (s->sema_), ace_result_), int, -1);
     }
 #   endif /*  ACE_LACKS_NAMED_POSIX_SEM */
@@ -2439,7 +2439,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
           if (ACE_OS::ftruncate (fd,
                                  sizeof (ACE_sema_t)) == -1)
             return -1;
-          s->name_ = ACE_OS::strnew (name);
+          s->name_ = ACE_OS::strdup (name);
           if (s->name_ == 0)
             return -1;
         }
@@ -2458,7 +2458,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
         return -1;
       if (s->name_
           // Only initialize it if we're the one who created it
-          && if (::sem_init (s->sema_, USYNC_THREAD, count) != 0))
+          && ::sem_init (s->sema_, USYNC_THREAD, count) != 0)
         return -1;
       return 0;
     }
@@ -5556,7 +5556,7 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
     // This is a macro on some platforms, e.g., CHORUS!
     *data = pthread_getspecific (key);
 #else
-    *data = ::pthread_getspecific (key);
+    *data = pthread_getspecific (key);
 #endif /* pthread_getspecific */
 #   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
     return 0;
