@@ -69,8 +69,10 @@ class ACE_Export ACE_U_LongLong;
 // Definition per POSIX.
 typedef struct timespec
 {
-  time_t tv_sec; // Seconds
-  long tv_nsec; // Nanoseconds
+  /// Seconds
+  time_t tv_sec;
+  /// Nanoseconds
+  long tv_nsec;
 } timespec_t;
 # elif defined (ACE_HAS_BROKEN_POSIX_TIME)
 // OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
@@ -105,7 +107,7 @@ public:
    * not intended for use with <select> or other calls that may have
    * *their own* implementation-specific maximum time representations.
    * Its primary use is in time computations such as those used by the
-   * dynamic subpriority strategies in the <ACE_Dynamic_Message_Queue>
+   * dynamic subpriority strategies in the ACE_Dynamic_Message_Queue
    * class.
    */
   static const ACE_Time_Value max_time;
@@ -119,48 +121,49 @@ public:
   ACE_Time_Value (long sec, long usec = 0);
 
   // = Methods for converting to/from various time formats.
-  /// Construct the <ACE_Time_Value> from a <timeval>.
+
+  /// Construct the ACE_Time_Value from a timeval.
   ACE_Time_Value (const struct timeval &t);
 
-  ///  Initializes the <ACE_Time_Value> object from a <timespec_t>.
+  /// Construct the ACE_Time_Value object from a timespec_t.
   ACE_Time_Value (const timespec_t &t);
 
 # if defined (ACE_WIN32)
-  ///  Initializes the ACE_Time_Value object from a Win32 FILETIME
+  /// Construct the ACE_Time_Value object from a Win32 FILETIME
   ACE_Time_Value (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
-  /// Construct a <Time_Value> from two <long>s.
+  /// Initializes the ACE_Time_Value from two longs.
   void set (long sec, long usec);
 
-  /// Construct a <Time_Value> from a <double>, which is assumed to be
+  /// Initializes the ACE_Time_Value from a double, which is assumed to be
   /// in second format, with any remainder treated as microseconds.
   void set (double d);
 
-  /// Construct a <Time_Value> from a <timeval>.
+  /// Initializes the ACE_Time_Value from a timeval.
   void set (const timeval &t);
 
-  /// Initializes the <Time_Value> object from a <timespec_t>.
+  /// Initializes the ACE_Time_Value object from a timespec_t.
   void set (const timespec_t &t);
 
 # if defined (ACE_WIN32)
-  ///  Initializes the <Time_Value> object from a <timespec_t>.
+  ///  Initializes the ACE_Time_Value object from a Win32 FILETIME.
   void set (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
-  /// Converts from <Time_Value> format into milli-seconds format.
+  /// Converts from ACE_Time_Value format into milli-seconds format.
   long msec (void) const;
 
-  /// Converts from milli-seconds format into <Time_Value> format.
+  /// Converts from milli-seconds format into ACE_Time_Value format.
   void msec (long);
 
-  /// Returns the value of the object as a <timespec_t>.
+  /// Returns the value of the object as a timespec_t.
   operator timespec_t () const;
 
-  /// Returns the value of the object as a <timeval>.
+  /// Returns the value of the object as a timeval.
   operator timeval () const;
 
-  /// Returns a pointer to the object as a <timeval>.
+  /// Returns a pointer to the object as a timeval.
   operator const timeval *() const;
 
 # if defined (ACE_WIN32)
@@ -182,26 +185,44 @@ public:
   /// Set microseconds.
   void usec (long usec);
 
-  // = The following arithmetic methods operate on <Time_Value>s.
+  // = The following arithmetic methods operate on ACE_Time_Value's.
 
-  /// Add <tv> to this.
+  /// Add @a tv to this.
   ACE_Time_Value &operator += (const ACE_Time_Value &tv);
 
-  /// Subtract <tv> to this.
+  /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
 
-  /// Multiply the time value by the <d> factor, which must be >= 0.
+  /// Multiply the time value by the @a d factor, which must be >= 0.
   ACE_Time_Value &operator *= (double d);
 
-  /// Increment microseconds (the only reason this is here is
-  /// to allow the use of ACE_Atomic_Op with ACE_Time_Value).
-  ACE_Time_Value operator++ (int);  // Postfix advance
-  ACE_Time_Value &operator++ (void);  // Prefix advance
+  /**
+   * Increment microseconds as postfix.
+   * @note The only reason this is here is to allow the use of ACE_Atomic_Op
+   * with ACE_Time_Value.
+   */
+  ACE_Time_Value operator++ (int);
 
-  /// Decrement microseconds (the only reason this is here is
-  /// to allow the use of ACE_Atomic_Op with ACE_Time_Value).
-  ACE_Time_Value operator-- (int);  // Postfix dec
-  ACE_Time_Value &operator-- (void);  // Prefix dec
+  /**
+   * Increment microseconds as prefix.
+   * @note The only reason this is here is to allow the use of ACE_Atomic_Op
+   * with ACE_Time_Value.
+   */
+  ACE_Time_Value &operator++ (void);
+
+  /**
+   * Decrement microseconds as postfix.
+   * @note The only reason this is here is to allow the use of ACE_Atomic_Op
+   * with ACE_Time_Value.
+   */
+  ACE_Time_Value operator-- (int);
+
+  /**
+   * Decrement microseconds as prefix.
+   * @note The only reason this is here is to allow the use of ACE_Atomic_Op
+   * with ACE_Time_Value.
+   */
+  ACE_Time_Value &operator-- (void);
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
   friend ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
@@ -211,36 +232,38 @@ public:
   friend ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                                   const ACE_Time_Value &tv2);
 
-  /// True if tv1 < tv2.
+  /// True if @a tv1 < @a tv2.
   friend ACE_OS_Export int operator < (const ACE_Time_Value &tv1,
                                        const ACE_Time_Value &tv2);
 
-  /// True if tv1 > tv2.
+  /// True if @a tv1 > @a tv2.
   friend ACE_OS_Export int operator > (const ACE_Time_Value &tv1,
                                        const ACE_Time_Value &tv2);
 
-  /// True if tv1 <= tv2.
+  /// True if @a tv1 <= @a tv2.
   friend ACE_OS_Export int operator <= (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
-  /// True if tv1 >= tv2.
+  /// True if @a tv1 >= @a tv2.
   friend ACE_OS_Export int operator >= (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
-  /// True if tv1 == tv2.
+  /// True if @a tv1 == @a tv2.
   friend ACE_OS_Export int operator == (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
-  /// True if tv1 != tv2.
+  /// True if @a tv1 != @a tv2.
   friend ACE_OS_Export int operator != (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
-  /// Multiplies the time value by <d>
+  //@{
+  /// Multiplies the time value by @a d
   friend ACE_OS_Export ACE_Time_Value operator * (double d,
                                                   const ACE_Time_Value &tv);
 
   friend ACE_OS_Export ACE_Time_Value operator * (const ACE_Time_Value &tv,
                                                   double d);
+  //@}
 
   /// Dump is a no-op.
   /**
@@ -264,7 +287,7 @@ private:
   /// Put the timevalue into a canonical form.
   void normalize (void);
 
-  /// Store the values as a <timeval>.
+  /// Store the values as a timeval.
   timeval tv_;
 };
 
