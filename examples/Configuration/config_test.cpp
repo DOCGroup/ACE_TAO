@@ -237,12 +237,12 @@ int test_io(ACE_Configuration* config)
     return -8;
   }
   // Export it to a file
-  if(config->export("config.ini"))
+  if(config->export_config("config.ini"))
   {
     return -9;
   }
   // reimport
-  if(config->import("config.ini"))
+  if(config->import_config("config.ini"))
   {
     return -10;
   }

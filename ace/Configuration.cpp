@@ -257,7 +257,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
 }
 
 int 
-ACE_Configuration::_export (const ASYS_TCHAR* filename)
+ACE_Configuration::export_config (const ASYS_TCHAR* filename)
 {
   FILE* out = ACE_OS::fopen (filename, "w");
   if (!out)
@@ -269,7 +269,7 @@ ACE_Configuration::_export (const ASYS_TCHAR* filename)
 }
 
 int 
-ACE_Configuration::_import (const ASYS_TCHAR* filename)
+ACE_Configuration::import_config (const ASYS_TCHAR* filename)
 {
   FILE* in = ACE_OS::fopen (filename, "r");
   if (!in)
@@ -325,7 +325,7 @@ ACE_Configuration::_import (const ASYS_TCHAR* filename)
         }
     }
 
-  if (::ferror (in))
+  if (ferror (in))
     return -1;
 
   return 0;

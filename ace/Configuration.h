@@ -210,11 +210,11 @@ public:
   // subsections are created.  Returns 0 on success, non zero on error
   // The path consists of sections separated by the backslash '\'
 
-  int _export (const ASYS_TCHAR* filename);
+  int export_config (const ASYS_TCHAR* filename);
   // exports the configuration database to filename.  if <filename> is 
   // alredy present, it is overwritten
 
-  int _import (const ASYS_TCHAR* filename);
+  int import_config (const ASYS_TCHAR* filename);
   // imports the configuration database from filename.  Any existing data
   // is not removed.
 
