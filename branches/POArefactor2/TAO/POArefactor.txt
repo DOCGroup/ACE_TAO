@@ -1,3 +1,10 @@
+Wed Nov 24 07:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Moved the error about the missing IORInterceptor Adapter Factory
+          to the add_interceptor method, on the ior_interceptor_adapter() the
+          error was given also when we don't use IORInterceptor
+
 Tue Nov 23 14:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/*C.{h,cpp,inl}:

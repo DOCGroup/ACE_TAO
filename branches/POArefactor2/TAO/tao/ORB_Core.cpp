@@ -2651,6 +2651,11 @@ TAO_ORB_Core::add_interceptor (
     }
   else
     {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ORB Core unable to find the IORInterceptor ")
+                  ACE_TEXT ("Adapter Factory instance")));
+
       ACE_THROW (CORBA::INTERNAL ());
     }
 }
@@ -2680,13 +2685,6 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                   this->ior_interceptor_adapter_ =
                     ior_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
-                }
-              else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("(%P|%t) %p\n"),
-                              ACE_TEXT ("ORB Core unable to find the IORInterceptor ")
-                              ACE_TEXT ("Adapter Factory instance")));
                 }
             }
           ACE_CATCHANY
