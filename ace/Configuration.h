@@ -6,22 +6,13 @@
  *
  *  $Id$
  *
- *  @author Chris Hafey <chafey@stentor.com>
+ *  @author Chris Hafey <chris@stentorsoft.com>
  *
  *  The ACE configuration API provides a portable abstraction for
  *  program configuration.  The API supports a tree based hierarchy
  *  of configuration sections.  Each section contains other sections
  *  or values.  Values may contain string, unsigned integer and
  *  binary data.
- *
- * @todo
- *  - Redo the import/export mechanism to support different file formats
- *  - Add locking for thread safety.
- *  - Need to investigate what happens if memory mapped file gets mapped to
- *    a location different than it was created with.
- *  - Add dynamic buffer when importing.  currently it will not allow
- *    importing of values greater than a fixed ammount (4096 bytes)
- *  - Replace unsigned int with a type that is fixed accross platforms.
  *
  */
 //=============================================================================
@@ -59,6 +50,11 @@
  * Implementations subclass this base class to represent a
  * section key.
  *
+ * @todo
+ *  - Add locking for thread safety.
+ *  - Need to investigate what happens if memory mapped file gets mapped to
+ *    a location different than it was created with.
+ *  - Replace unsigned int with a type that is fixed accross platforms.
  *
  */
 class ACE_Export ACE_Section_Key_Internal
@@ -80,15 +76,15 @@ protected:
   u_int ref_count_;
 };
 
-  /**
-   * @class ACE_Configuration_Section_Key
-   *
-   * @brief Referenced counted wrapper for <ACE_Section_Key_Internal>.
-   *
-   * Reference counted wrapper class for the abstract internal
-   * section key.  A user gets one of these to represent a section
-   * in the configuration database.
-   */
+/**
+ * @class ACE_Configuration_Section_Key
+ *
+ * @brief Referenced counted wrapper for <ACE_Section_Key_Internal>.
+ *
+ * Reference counted wrapper class for the abstract internal
+ * section key.  A user gets one of these to represent a section
+ * in the configuration database.
+ */
 class ACE_Export ACE_Configuration_Section_Key
 {
   friend class ACE_Configuration;
@@ -131,11 +127,6 @@ public:
     INTEGER,
     BINARY,
     INVALID
-  };
-
-  enum {
-    /// Max size of name.
-    MAX_NAME_LEN = 255
   };
 
   /// destructor
@@ -233,9 +224,10 @@ public:
    * data type in <type>.  Returns 0 on success (entry is found),
    * -1 on error
    */
-  virtual int find_value (const ACE_Configuration_Section_Key& key,
-                          const ACE_TCHAR* name,
-                          VALUETYPE& type) = 0;
+  virtual int find_value(const ACE_Configuration_Section_Key& key,
+                         const ACE_TCHAR* name,
+                         VALUETYPE& type) = 0;
+
 
   /// Removes the the value <name> from <key>.  returns non zero on
   /// error.
@@ -253,76 +245,41 @@ public:
                    ACE_Configuration_Section_Key& key_out,
                    int create = 1);
 
+  /**
+   * Determine if the contents of this object is the same as the 
+   * contents of the object on the right hand side.
+   * Returns 1 (True) if they are equal and 0 (False) if they are not equal
+   */
+  int operator==(const ACE_Configuration& rhs) const;
 
-  /// Exports the configuration database to filename.  If <filename> is
-  /// alredy present, it is overwritten. * See note below
-  virtual int export_config (const ACE_TCHAR* filename);
-
-  /// Imports the configuration database from filename.  Any existing
-  /// data is not removed. * See note below
-  virtual int import_config (const ACE_TCHAR* filename);
-
-  /// Imports the configuration database from filename as strings.
-  /// Allows non-typed values. (no #, dword: hex:, etc. prefixes) and
-  /// skips whitespace (tabs and spaces) as in standard .ini and .conf
-  /// files. Values (to right of equal sign) can be double quote
-  /// delimited to embed tabs and spaces in the string.
-  /// Caller must convert string to type.
-  /// A corresponding export_config is not supported.
-  ///
-  /// This method allows for lines in the .ini or .conf file like this:
-  /// 
-  /// TimeToLive     =    100
-  /// Delay          =    FALSE
-  /// Flags          =    FF34
-  /// Heading        =    "ACE - Adaptive Communication Environment"
-  /// 
-  /// (note leading whitespace (tabs) in examples below)
-  /// 
-  /// 		SeekIndex  =  14
-  /// 		TraceLevel = 6      # Can comment lines like this
-  ///             Justification = left_justified
-  /// 
-  /// The caller can then retrieve the string with the regular
-  /// <get_string_value> function and convert the string to the
-  /// desired data type.
-
-  virtual int import_config_as_strings (const ACE_TCHAR *filename);
-
-  // Note - The above import/export routines have the following bugs/limitations
-  //   1) Strings with embedded newlines cause the import to fail
-  //   2) Strings with embedded quotes " cause the import to fail
-  //   3) Importing/exporting for values in the root section does not work
-  // If you are interested in working on this, please let me know and we can
-  // discuss the details.  chafey@stentor.com
+  /**
+   * Determine if the contents of this object are different from the 
+   * contents of the object on the right hand side.
+   * Returns 0 (False) if they are equal and 1 (True) if they are not equal
+   */
+  int operator!=(const ACE_Configuration& rhs) const {return !(*this == rhs);}
 
 protected:
   /// Default ctor
   ACE_Configuration (void);
-
-  /// Skips whitespace
-  const ACE_TCHAR *skip_whitespace (const ACE_TCHAR *src);
 
   /// resolves the internal key from a section key
   ACE_Section_Key_Internal* get_internal_key
     (const ACE_Configuration_Section_Key& key);
 
   /**
-   * tests to see if <name> is valid.  <name> must be < MAX_NAME_LEN characters
+   * tests to see if <name> is valid.  <name> must be < 255 characters
    * and not contain the path separator '\', brackets [] or = (maybe
    * just restrict to alphanumeric?) returns non zero if name is not
    * valid
    */
   int validate_name (const ACE_TCHAR* name);
 
-  /// Used when exporting a configuration to a file
-  int export_section (const ACE_Configuration_Section_Key& section,
-                      const ACE_TString& path,
-                      FILE* out);
-
   // Not used
   ACE_Configuration (const ACE_Configuration& rhs);
   ACE_Configuration& operator= (const ACE_Configuration& rhs);
+
+
   ACE_Configuration_Section_Key root_;
 };
 
@@ -438,6 +395,9 @@ public:
   static HKEY resolve_key (HKEY hKey,
                            const ACE_TCHAR* path,
                            int create = 1);
+
+    virtual int operator==(const ACE_Configuration_Win32Registry& rhs) const{return true;}
+    virtual int operator!=(const ACE_Configuration_Win32Registry& rhs) const{return true;}
 
 protected:
 
@@ -766,7 +726,6 @@ private:
   ACE_Allocator *allocator_;
   SECTION_MAP *index_;
   int default_map_size_;
-  int persistent_;
 };
 
 #include "ace/post.h"
