@@ -40,8 +40,6 @@ namespace ACE_RMCast
     recv (void* buf, size_t s);
 
   private:
-    using Element::send;
-
     virtual void
     recv (Message_ptr m);
 

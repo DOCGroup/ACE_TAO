@@ -1,3 +1,10 @@
+Thu Feb 24 21:05:42 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Socket.h:
+	* protocols/ace/RMCast/Socket.cpp: Removed class-scope
+	using-declaration for VxWorks can't handle it.
+
+
 Wed Feb 23 13:53:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/acedefaults.mpb:
