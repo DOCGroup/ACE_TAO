@@ -213,7 +213,7 @@ CORBA_Policy::CORBA_Policy (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA::Object (objref, _tao_collocated, servant)
+  : CORBA_Object (objref, _tao_collocated, servant)
 {
   this->CORBA_Policy_setup_collocation (_tao_collocated);
 }
