@@ -748,7 +748,7 @@ idd.implementationRef, "DeploymentPlan", &DeploymentPlan::implementation);
     int value = spe.instanceRef;
 
     // DnC_Dump::desc("ComponentImplementationDescription").assemblyImpl[i].connection[j].internalEndpoint[k].instanceRef;
-    ACE_DEBUG ((LM_DEBUG, "       Instance: %s \n",
+    ACE_DEBUG ((LM_DEBUG, "%sinstance: %s \n", Dump_Obj::indent (),
                 Dump_Obj::desc<Deployment::ComponentAssemblyDescription>("ComponentAssemblyDescription").instance[value].name.in ()));
     
     /*
@@ -842,6 +842,13 @@ idd.implementationRef, "DeploymentPlan", &DeploymentPlan::implementation);
     Dump_Obj dump_obj("SubcomponentPropertyReference");
 
     dump ("propertyName", spr.propertyName);
+    int value = spr.instanceRef;
+
+    // DnC_Dump::desc("ComponentImplementationDescription").assemblyImpl[i].connection[j].internalEndpoint[k].instanceRef;
+    ACE_DEBUG ((LM_DEBUG, "%sinstance: %s \n", Dump_Obj::indent (),
+                Dump_Obj::desc<Deployment::ComponentAssemblyDescription>("ComponentAssemblyDescription").instance[value].name.in ()));
+
+
     // TODO:
     //  CID->CAD->APM->SPE
     //  CAD->instance is referred by APM->delegatesTo->instanceRef
@@ -933,7 +940,7 @@ idd.implementationRef, "DeploymentPlan", &DeploymentPlan::implementation);
   void DnC_Dump::dump (
         const ::Deployment::ComponentImplementationDescription &cid)
   {
-    Dump_Obj dump_obj("ComponentImplementationDescription", cid);
+    Dump_Obj dump_obj("ComponentImplementationDescription");
 
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);
