@@ -27,6 +27,12 @@ Tue Mar 27 19:15:36 2001  Carlos O'Ryan  <coryan@uci.edu>
         * ace/Unbounded_Queue.h:
           Add required #include for Chorus builds.
 
+Tue Mar 27 15:28:56 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/ACE.cpp (handle_ready): Don't try to dereference through
+	  a NULL timeout pointer!  Thanks to Przemyslaw Marciniak
+ 	  <pmarciniak@lucent.com> for reporting this.
+
 Tue Mar 27 10:08:44 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Select_Reactor_Base.h:
