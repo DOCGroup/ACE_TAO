@@ -1,3 +1,7 @@
+Sat Feb 17 08:33:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* File_Manager.cpp: Fixed several unreachable statements.
+
 Thu Feb 15 06:00:12 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* server.cpp: Renamed tstamp to time_stamp to avoid conflicts with
