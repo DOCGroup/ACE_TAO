@@ -822,5 +822,10 @@ enum TAO_Policy_Scope
 #  define TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY 1
 #endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
+/// By default we use multicast lookup
+#if !defined(TAO_DEFAULT_INIT_REFERENCE_INITIALIZER)
+#  define TAO_DEFAULT_INIT_REFERENCE_INITIALIZER "mcast://:::"
+#endif /* TAO_DEFAULT_INIT_REFERENCE_INITIALIZER */
+
 #include "ace/post.h"
 #endif  /* TAO_ORBCONF_H */

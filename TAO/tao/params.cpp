@@ -14,7 +14,7 @@ ACE_RCSID (tao,
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : endpoints_list_ (),
     mcast_discovery_endpoint_ (),
-    default_init_ref_ ("mcast://:::"),
+    default_init_ref_ (TAO_DEFAULT_INIT_REFERENCE_INITIALIZER),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     nodelay_ (1),

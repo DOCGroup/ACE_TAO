@@ -1,3 +1,11 @@
+Thu Apr 10 06:27:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/orbconf.h:
+	* tao/params.cpp: Added a compile time option to configure the
+	  DefaultInitRef. It was hardcoded to mcast://::: 
+
+	  Thanks to Carlos O'Ryan for the patch. This shold fix BUG 1488. 
+
 Thu Apr 10 000:08:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO_Static.dsp:
