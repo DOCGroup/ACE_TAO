@@ -154,7 +154,7 @@ endif
 LDFLAGS         += -xildoff
 
 OCFLAGS         += -O
-PIC             = -PIC
+PIC             = -KPIC
 AR              = CC
 ARFLAGS         = -xar -o
 RANLIB          = echo
