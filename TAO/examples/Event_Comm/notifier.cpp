@@ -26,6 +26,8 @@ private:
 
   Notifier_Handler *nh_;
   // Handler for CORBA Notifier.
+
+  //  Notifier_Input_Handler *ih_;
 };
 
 int
@@ -48,6 +50,7 @@ Notifier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 
 void
 Notifier::run (void)
+
 {
   if (ACE_Reactor::run_event_loop () == -1)
     ACE_ERROR ((LM_ERROR,
@@ -56,7 +59,7 @@ Notifier::run (void)
 }
 
 Notifier::Notifier (int argc, char *argv[])
-  : ih_ (0),
+  : //ih_ (0),
     nh_ (0)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -66,8 +69,8 @@ Notifier::Notifier (int argc, char *argv[])
   ACE_NEW (this->nh_,
 	   Notifier_Handler (argv[0],
 			     "notifier"));
-  ACE_NEW (this->ih_,
-	   Notifier_Input_Handler (this->nh_));
+  //ACE_NEW (this->ih_,
+  //   Notifier_Input_Handler (this->nh_));
 
   if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR,

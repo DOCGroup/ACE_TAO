@@ -27,6 +27,9 @@ private:
 
   Supplier_Input_Handler *ih_;
   // Handler for keyboard input.
+
+  Notifier_Handler *nh_;
+  // The notifier handler.
 };
 
 int
@@ -62,6 +65,7 @@ Supplier::Supplier (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
 	      "no config file, using static binding\n"));
 
+  ACE_NEW (this->nh_, Notifier_Handler());
   ACE_NEW (this->ih_,
 	   Supplier_Input_Handler (this->nh_));
 

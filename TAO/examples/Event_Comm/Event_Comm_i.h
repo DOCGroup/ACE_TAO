@@ -24,8 +24,9 @@
 #include "ace/Map_Manager.h"
 #include "ace/Synch.h"
 #include "ace/SString.h"
+#include "Event_CommS.h"
 
-class Consumer_i
+class Consumer_i : public POA_Event_Comm :: Consumer
 {
   // = TITLE
   //   Defines the implementation class for event <Consumers>.
@@ -37,12 +38,14 @@ public:
   ~Consumer_i (void);
   // Destructor.
 
-  virtual void push (const Event_Comm::Event &event,
-		     CORBA::Environment &IT_env);
+  virtual void push (
+        const Event_Comm::Event & event,
+        CORBA::Environment &TAO_TRY_ENV);
   // Pass the <event> to the <Consumer>.
 
-  virtual void disconnect (const char *reason,
-			   CORBA::Environment &IT_env);
+  virtual void disconnect (
+        const char * reason,
+        CORBA::Environment &TAO_TRY_ENV);
   // Disconnect the <Consumer> from the <Notifier>,
   // giving it the <reason>.
 };
@@ -50,7 +53,7 @@ public:
 // Forward reference.
 class Consumer_Entry;
 
-class Notifier_i
+class Notifier_i : public POA_Event_Comm :: Notifier
 {
   // = TITLE
   //   Defines the implementation class for event <Notifiers>.
@@ -63,24 +66,25 @@ public:
   Notifier_i (size_t size_hint = Notifier_i::DEFAULT_SIZE);
   // Initialize a Notifier_i object with the specified size hint.
 
-  void disconnect (const char *reason,
-		   CORBA::Environment &IT_env);
+  virtual void disconnect (const char *reason,
+		   CORBA::Environment &TAO_TRY_ENV);
   // Disconnect all the receivers, giving them the <reason>.
 
-  void push (const Event_Comm::Event &event,
-	     CORBA::Environment &IT_env);
+  virtual void push (const Event_Comm::Event &event,
+	     CORBA::Environment &TAO_TRY_ENV);
   // Send the <event> to all the consumers who have subscribed
   // and who match the filtering criteria.
 
-  void subscribe (Event_Comm::Consumer *consumer,
-		  const char *filtering_criteria,
-		  CORBA::Environment &IT_env);
+   virtual void subscribe (
+        Event_Comm::Consumer_ptr Consumer,
+        const char * filtering_criteria,
+        CORBA::Environment &TAO_TRY_ENV);
   // Subscribe the <Consumer> to receive events that match
   // <filtering_criteria> applied by the <Notifier>.
 
-  void unsubscribe (Event_Comm::Consumer *consumer,
+ void unsubscribe (Event_Comm::Consumer *consumer,
 		    const char *filtering_criteria,
-		    CORBA::Environment &IT_env);
+		    CORBA::Environment &TAO_TRY_ENV);
   // Unsubscribe the <Consumer>.
 
 private:

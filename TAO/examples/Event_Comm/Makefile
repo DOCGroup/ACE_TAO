@@ -28,20 +28,25 @@ LSRC = $(IDL_SRC) $(PROG_SRCS)
 
 CONSUMER_OBJS = Event_CommC.o \
                 Event_CommS.o \
-	        Consumer_Handler.o \
-		Consumer_Input_Handler.o \
-	        Event_Comm_i.o
+		Consumer_Handler.o \
+	      	Consumer_Input_Handler.o \
+	        Event_Comm_i.o \
+		consumer.o
 
 SUPPLIER_OBJS = Event_CommC.o \
 		Event_CommS.o \
 		Supplier_Input_Handler.o \
-	        Event_Comm_i.o
+	        Event_Comm_i.o \
+		Notifier_Handler.o \
+		supplier.o
 
 NOTIFIER_OBJS = Notifier_Handler.o \
+		notifier.o
 
-BIN = consumer \
+BIN = supplier \
       notifier \
-      supplier
+      consumer
+
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))

@@ -22,7 +22,7 @@
 // Forward declaration.
 class Consumer_Handler;
 
-class Input_Handler : public ACE_Service_Object
+class Consumer_Input_Handler : public ACE_Service_Object
 {
   // = TITLE
   //   Handles input events generated from a keyboard.
