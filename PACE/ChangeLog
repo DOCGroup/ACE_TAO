@@ -1,3 +1,8 @@
+Mon Jan 15 10:32:19 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * pace/setjmp.h:
+          The 'extern "C"' block was closed twice, making KCC unhappy.
+
 Mon Jan 15 10:20:55 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * pace/posix/socket.c:
