@@ -70,7 +70,10 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
 
-  // = Reactor event loop management methods.
+  // = Reactor event loop management methods.  
+  
+  // Note that these method ONLY work on the "Singleton Reactor,"
+  // i.e., the one returned from <ACE_Reactor::instance>.
   static int run_event_loop (void);
   static int run_alertable_event_loop (void);
   // Run the event loop until the
