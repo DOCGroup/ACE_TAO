@@ -15,7 +15,9 @@ static size_t count = 10;
 static void 
 my_signal_function (int sig)
 {
-  ACE_DEBUG ((LM_DEBUG, "Executed non-ACE signal handler for sig %S\n", sig));
+  ACE_DEBUG ((LM_DEBUG,
+              "Executed non-ACE signal handler for signal %S\n",
+              sig));
 }
 
 class My_Handler : public ACE_Event_Handler
@@ -25,13 +27,14 @@ public:
 			     siginfo_t *,
 			     ucontext_t *)
   {
-    ACE_DEBUG ((LM_DEBUG, "Executed ACE signal handler for sig %S, count = %d\n", 
-		sig, count));
-
+    ACE_DEBUG ((LM_DEBUG,
+                "Executed ACE signal handler for signal %S, count = %d\n", 
+		sig,
+                count));
     count--;
 
     if (count == 0)
-      ACE_Reactor::end_event_loop();
+      ACE_Reactor::end_event_loop ();
 
     return 0;
   }
@@ -39,7 +42,9 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &,
 			      const void *arg)
   {
-    ACE_DEBUG ((LM_DEBUG, "%s\n", (const char *) arg));
+    ACE_DEBUG ((LM_DEBUG,
+                "%s\n",
+                (const char *) arg));
     return 0;
   }
 };
@@ -47,39 +52,58 @@ public:
 int 
 main (int, char *argv[])
 {
-  // The following sets up a service configurator - mostly used to get
-  // a reactor for the process.
-  ACE_Service_Config my_config (argv[0]);
-
-  // ----- First you need a handler for the timeout -----
+  // First you need a handler for the timeout.
   My_Handler my_handler;
 
-  // ----- Now set up the timer -----
+  // Now set up the timer.
 
   // This is the timeout period in seconds.
   ACE_Time_Value period (2);
 
-  if (my_config.reactor ()->schedule_timer (&my_handler, 
-					    "hello", period, period) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "schedule_timer"), -1);
+  if (ACE_Reactor::instance ()->schedule_timer 
+      (&my_handler, 
+       "hello",
+       period,
+       period) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "%p\n",
+                       "schedule_timer"),
+                      -1);
 
-  // ----- Set up an ACE signal handler -----
+  // Set up an ACE signal handler.
 
-  if (my_config.reactor ()->register_handler (SIGINT, &my_handler) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "register_handler"), -1);
+  if (ACE_Reactor::instance ()->register_handler 
+      (SIGINT,
+       &my_handler) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "%p\n",
+                       "register_handler"),
+                      -1);
 
-  // ----- Set up a non-ACE signal handler -----
-  ACE_Sig_Action sig ((ACE_SignalHandler) my_signal_function, SIGQUIT);
+  // Set up a non-ACE signal handler.  When this goes off, the Reactor
+  // should return from its <run_event_loop> method.
+  ACE_Sig_Action sig ((ACE_SignalHandler) my_signal_function,
+                      SIGQUIT);
   ACE_UNUSED_ARG (sig);
 
-  // This just executes the reactor events until my_handler tells us
-  // we are finished.
   ACE_DEBUG ((LM_DEBUG, 
 	      "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
+  // This call executes the reactor events until we're finished.
   int result = ACE_Reactor::run_event_loop ();
 
-  ACE_DEBUG ((LM_DEBUG, "result = %d\n", result));
+  ACE_DEBUG ((LM_DEBUG,
+              "result = %d\n",
+              result));
 
+  // Make sure to remove my_handler before exiting main() since
+  // otherwise weird things can happen...
+  if (ACE_Reactor::instance ()->remove_handler
+      (&my_handler,
+       ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "%p\n",
+                       "remove_handler"),
+                      -1);
   return 0;
 }
