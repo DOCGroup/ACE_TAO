@@ -1,3 +1,21 @@
+Wed May 23 11:45:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+          Added code to pad the end of a string inserted into the
+          typecode, to keep the total length a multiple of 4 bytes,
+          as it is done with typecode generation in the IDL compiler.
+
+          Also added code to consolidate the message block before
+          calling the typecode constructor. Typecodes constructed
+          from a message block large enough to be chained were returning
+          garbage values from some accessors. Thanks to Arturo Josè 
+          Montes Sinning <mitosys@colomsat.net.co> and to Philippe
+          Merle <Philippe.Merle@lifl.fr> for simultaneously discovering
+          this bug, and to Carlos for seeing the fix right away.
+
+
 Wed May 23 11:37:02 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * docs/Options.html:
