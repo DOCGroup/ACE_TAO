@@ -90,8 +90,8 @@ to compile all of the programs, and
 to remove all the files that were generated during compilation.
 
 There are also individual Makefiles for each separate example program.
-These makefiles have a ".mak" suffix. For example, Logging_Client.mak
-is the makefile for the Logging_Client program.
+These makefiles have a ".mak" suffix. For example, display_logfile.mak
+is the makefile for the display_logfile program.
 
 All of the files in these directories are copyright Addison Wesley,
 and they come with absolutely no warranty whatsoever.  Permission is
