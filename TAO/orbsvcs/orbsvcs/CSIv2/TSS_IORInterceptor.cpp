@@ -34,7 +34,7 @@ TAO::TSS_IORInterceptor::establish_components (
 {
   IOP::TaggedComponent tc;
 
-  tc.component_id = IOP::TAG_CSI_SEC_MECH_LIST;
+  tc.tag = IOP::TAG_CSI_SEC_MECH_LIST;
 
   CSIIOP::CompoundSecMechList component;
 
@@ -49,13 +49,22 @@ TAO::TSS_IORInterceptor::establish_components (
 
   mech.target_requires =
     CSIIOP::Security::Integrity
-                | Security::Confidentiality
-  mech.transport_mech;
+    | Security::Confidentiality;
+
+  // SSLIOP-specific TaggedComponent information.
+  IOP::TaggedComponent & transport_mech = mech.transport_mech;
+  transport_mech.tag = IOP::TAG_TLS_SEC_TRANS;
+
+  CSIIOP::TLS_SEC_TRANS tls_component;
+  tls_component.target_supports = ;
+  tls_component.target_requires = ;
+  tls_component_addresses = ;
+
   mech.as_context_mech;
   mech.sas_context_mech;
 
   // TAO currently only supports CSIv2 over IIOP.
-  info->add_ior_component_to_profile (component,
+  info->add_ior_component_to_profile (tc,
                                       IOP::TAG_INTERNET_IOP
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -53,6 +53,8 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (Security::QOP qop,
     handler_state_ (),
     timeout_ (timeout)
 {
+  // --- CSIv1 ---
+
   // Clear all bits in the SSLIOP::SSL association option fields.
   this->ssl_component_.target_supports = 0;
   this->ssl_component_.target_requires = 0;
@@ -78,6 +80,33 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (Security::QOP qop,
   if (qop == Security::SecQOPNoProtection)
     ACE_SET_BITS (this->ssl_component_.target_supports,
                   Security::NoProtection);
+
+
+  // --- CSIv2 ---
+
+  // Clear all bits in the CSIIOP::TLS_SEC_TRANS association option
+  // fields.
+  this->csiv2_component_.target_supports = 0;
+  this->csiv2_component_.target_requires = 0;
+
+  // SSLIOP requires these CSIIOP::AssociationOptions by default.
+  ACE_SET_BITS (this->csiv2_component_.target_requires,
+                CSIIOP::Integrity
+                | CSIIOP::Confidentiality
+                | CSIIOP::NoDelegation);
+
+  // SSLIOP supports these CSIIOP::AssociationOptions by default.
+  ACE_SET_BITS (this->csiv2_component_.target_supports,
+                CSIIOP::Integrity
+                | CSIIOP::Confidentiality
+                | CSIIOP::EstablishTrustInTarget
+                | CSIIOP::NoDelegation);
+
+  // @@ This should go away once we support setting security
+  //    association options through policies.
+  if (qop == CSIIOP::SecQOPNoProtection)
+    ACE_SET_BITS (this->csiv2_component_.target_supports,
+                  CSIIOP::NoProtection);
 }
 
 TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
@@ -158,8 +187,8 @@ TAO_SSLIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
-      this->orb_core_->codeset_manager()->
-	set_codeset(pfile->tagged_components());
+      this->orb_core_->codeset_manager ()->
+	set_codeset (pfile->tagged_components());
 
       IOP::TaggedComponent component;
       component.tag = SSLIOP::TAG_SSL_SEC_TRANS;
@@ -179,7 +208,7 @@ TAO_SSLIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
       // TAO extension, replace the contents of the octet sequence with
       // the CDR stream
-      CORBA::ULong length = cdr.total_length ();
+      const CORBA::ULong length = cdr.total_length ();
       component.component_data.length (length);
       CORBA::Octet *buf = component.component_data.get_buffer ();
       for (const ACE_Message_Block *i = cdr.begin ();
@@ -425,7 +454,7 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // this->ssl_component_.port is initialized to zero or it is set in
   // this->parse_options().
   if (addr.set (this->ssl_component_.port,
-                ACE_static_cast(ACE_UINT32, INADDR_ANY),
+                ACE_static_cast (ACE_UINT32, INADDR_ANY),
                 1) != 0)
     return -1;
 
@@ -441,9 +470,9 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  int giop_lite = 0;
   // Explicitly disable GIOPlite support since it introduces security
   // holes.
+  const int giop_lite = 0;
 
   if (TAO_SSLIOP_Util::setup_handler_state (this->orb_core_,
                                             &(this->tcp_properties_),
@@ -498,11 +527,11 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
   // the user if provided.
   this->ssl_component_.port = ssl_address.get_port_number ();
 
-  (void) this->ssl_acceptor_.acceptor().enable (ACE_CLOEXEC);
   // This avoids having child processes acquire the listen socket
   // thereby denying the server the opportunity to restart on a
   // well-known endpoint.  This does not affect the aberrent behavior
   // on Win32 platforms.
+  (void) this->ssl_acceptor_.acceptor ().enable (ACE_CLOEXEC);
 
   if (TAO_debug_level > 5)
     {
@@ -684,4 +713,15 @@ TAO_SSLIOP_Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
     }
 
   return 0;
+}
+
+void
+TAO_SSLIOP_Acceptor::init_csiv2_component (CSIIOP::TLS_SEC_TRANS & c)
+{
+  c.target_supports = ;
+  c.target_requires = ;
+
+  CSIIOP::TransportAddressList & a = c.addresses;
+
+  a.length (this->endpoint_count_)
 }
