@@ -380,7 +380,7 @@ ACE_Process_Options::setenv_i (LPTSTR assignment, int len)
 
   // Copy the new environment string.
   ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
-                  assignment, len);
+                  assignment, len * sizeof (TCHAR));
 
   // Update the argv array.
   environment_argv_[environment_argv_index_++] =
