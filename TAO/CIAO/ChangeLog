@@ -1,3 +1,20 @@
+Mon May  3 22:44:09 2004  George Edwards  <g.edwards@vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+
+          Fixed ComponentPortDescription struct to comply with new spec.
+
+        * DnC/Deployment.mpc:
+
+          Added DnC_Dump.cpp to Deployment_stub project.
+
+        * DnC/DnC_Dump.h:
+        * DnC/DnC_Dump.cpp:
+
+          Added dump functions for PackageConfiguration,
+          ComponentPackageDescription, PackagedComponentImplementation,
+          ComponentPortDescription, and ComponentPropertyDescription.
+
 Sat May  1 22:37:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Makefile:
