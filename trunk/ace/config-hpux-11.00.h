@@ -297,6 +297,9 @@
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 
+// Platform's sigaction() function takes const sigaction* as 2nd parameter.
+#define ACE_HAS_SIGACTION_CONSTP2
+
 // Platform supports SVR4 extended signals
 #define ACE_HAS_SIGINFO_T
 
