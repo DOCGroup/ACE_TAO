@@ -1,28 +1,27 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   BasicLog_i.h
-//
-// = DESCRIPTION
-//   Implementation of the DsLogAdmin::BasicLog interface.
-//
-// = AUTHOR
-//   Matthew Braun <mjb2@cs.wustl.edu>
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   BasicLog_i.h
+ *
+ *  $Id$
+ *
+ *  Implementation of the DsLogAdmin::BasicLog interface.
+ *
+ *
+ *  @author Matthew Braun <mjb2@cs.wustl.edu>
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *  @David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
-#ifndef TLS_BASICLOG_I_H
-#define TLS_BASICLOG_I_H
+
+#ifndef TAO_TLS_BASICLOG_I_H
+#define TAO_TLS_BASICLOG_I_H
+
 #include "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"                                                                                                                                                                                                                                                                                                                       
+#include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
 #include "log_export.h"
 
@@ -44,46 +43,55 @@ class LogMgr_i;
 using DsLogAdmin::wrap;
 #endif /* (_MSC_VER) && (_MSC_VER == 1100) */
 
-class TAO_Log_Export BasicLog_i : public Log_i,
-                                  public POA_DsLogAdmin::BasicLog,
-                                  public virtual PortableServer::RefCountServantBase
+/**
+ * @class BasicLog_i
+ *
+ * @brief BasicLog_i
+ *
+ * The class supports the @c destroy> method to destroy the Log.
+ */
+class TAO_Log_Export BasicLog_i
+  : public Log_i,
+    public POA_DsLogAdmin::BasicLog,
+    public virtual PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //   BasicLog_i
-  // = DESCRIPTION
-  //   The class supports the <destroy> method to destroy the Log.
-  //
 public:
-  // = Initialization and Termination.
+  /// Constructor
   BasicLog_i (LogMgr_i &logmgr_i,
               DsLogAdmin::LogMgr_ptr factory,
               DsLogAdmin::LogId id,
               DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
               CORBA::ULongLong max_size = 0,
               ACE_Reactor *reactor = ACE_Reactor::instance ());
-  // Constructor
 
-  ~BasicLog_i ();
-  // Destructor.
-
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id 
+  /// Duplicate the log.
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id
                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Duplicate the log.
 
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id 
+  /// Duplicate the log specifying an id.
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id
                                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Duplicate the log specifying an id.
 
-  void
-  destroy (ACE_ENV_SINGLE_ARG_DECL)
+  /// Destroy the log object and all contained records.
+  void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Destroy the log object and all contained records.
 
- protected:
+protected:
+
+  /// Destructor.
+  /**
+   * Protected destructor to enforce proper memory management through
+   * reference counting.
+   */
+  ~BasicLog_i (void);
+
+protected:
+
+  /// Used to access the hash map that holds all the Logs created.
   LogMgr_i &logmgr_i_;
-  // Used to access the hash map that holds all the Logs created.
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -91,4 +99,5 @@ public:
 #endif /* _MSC_VER */
 
 #include "ace/post.h"
-#endif /* TLS_BASICLOG_I_H */
+
+#endif /* TAO_TLS_BASICLOG_I_H */
