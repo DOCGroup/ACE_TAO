@@ -3,12 +3,14 @@
 ACE_RCSID(Echo, Server_i, "$Id$")
 
 // Constructor.
+
 Notifier_Server::Notifier_Server (void)
 {
   // no-op.
 }
 
 // Destructor.
+
 Notifier_Server::~Notifier_Server (void)
 {
   // no-op.
@@ -22,7 +24,8 @@ Notifier_Server::close (void)
       // Name the object.
       CosNaming::Name notifier_obj_name (1);
       notifier_obj_name.length (1);
-      notifier_obj_name[0].id = CORBA::string_dup (NOTIFIER_BIND_NAME);
+      notifier_obj_name[0].id =
+	CORBA::string_dup (NOTIFIER_BIND_NAME);
 
       this->naming_server_->unbind (notifier_obj_name,
 				    TAO_TRY_ENV);
@@ -131,7 +134,8 @@ Notifier_Server::run (CORBA::Environment &TAO_TRY_ENV)
   return 0;
 }
 
-ACE_Reactor* Notifier_Server::reactor(void)
+ACE_Reactor *
+Notifier_Server::reactor (void)
 {
   return TAO_ORB_Core_instance ()->reactor ();
 }

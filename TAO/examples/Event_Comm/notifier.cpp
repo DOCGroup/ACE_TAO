@@ -39,7 +39,7 @@ Notifier::handle_signal (int signum, siginfo_t *, ucontext_t *)
               "got signal in handle_signal %S\n",
               signum));
 
-  // tell the <Notifier_Server> to shut down the ORB.
+  // Tell the <Notifier_Server> to shut down the ORB.
   ns_.close ();
   return 0;
 }
@@ -80,7 +80,7 @@ Notifier::Notifier (int argc, char *argv[])
 
 Notifier::~Notifier (void)
 {
-  // cleanup.
+  // Cleanup.
   this->ns_.close ();
 }
 

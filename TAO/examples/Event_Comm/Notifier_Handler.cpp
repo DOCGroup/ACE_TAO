@@ -46,8 +46,6 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
     }
 }
 
-
-
 // Init function.
 
 int
@@ -69,16 +67,11 @@ Notifier_Handler::init (int argc, char *argv[])
                            "the TAO_Naming_Client. \n"),
                           -1);
 
-      ACE_DEBUG ((LM_DEBUG,
-		  "after naming_client init \n"));
-
       CosNaming::Name notifier_ref_name (1);
       notifier_ref_name.length (1);
       notifier_ref_name[0].id =
       CORBA::string_dup (NOTIFIER_BIND_NAME);
 
-      ACE_DEBUG ((LM_DEBUG,
-		  "after using CosNaming::Name\n"));
 
       CORBA::Object_var notifier_obj =
        this->naming_client_->resolve (notifier_ref_name,
@@ -86,16 +79,15 @@ Notifier_Handler::init (int argc, char *argv[])
       TAO_CHECK_ENV;
 
 
-      ACE_DEBUG ((LM_DEBUG,
-		  "after naming_client resolve \n"));
       // The CORBA::Object_var object is downcast to Echo_var using
       // the <_narrow> method.
       this->notifier_ =
          Event_Comm::Notifier::_narrow (notifier_obj.in (),
 					TAO_TRY_ENV);
-      ACE_DEBUG ((LM_DEBUG,
-		  "after notifier\n"));
       TAO_CHECK_ENV;
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "Notifier initialized.. \n"));
 
   }
  TAO_CATCHANY

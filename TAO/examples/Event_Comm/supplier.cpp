@@ -11,8 +11,8 @@ class Supplier : public ACE_Event_Handler
   //   Supplier driver for the TAO Publish/Subscribe example.
   //
   // = DESCRIPTION
-  //    This class starts up the <Supplier_Input_Handler> and <Notifier_Handler>
-  //    objects.
+  //    This class starts up the <Supplier_Input_Handler> and
+  //    <Notifier_Handler> objects.
 public:
   // Initialization and Termination methods.
   Supplier (void);
@@ -28,7 +28,10 @@ public:
   // Execute the supplier.
 
 private:
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  virtual int handle_signal (int signum,
+			     siginfo_t *,
+			     ucontext_t *);
+  // Handle shutdown signals.
 
   Supplier_Input_Handler ih_;
   // Handler for keyboard input.
@@ -38,9 +41,6 @@ private:
 };
 
 Supplier::Supplier (void)
-  :nh_ (),
-   ih_ ()
-
 {
   // No-Op.
 }
@@ -86,13 +86,12 @@ Supplier::init (int argc, char *argv[])
 		       "%p\n",
 		       "Supplier Input handler did not init\n"), -1);
 
-  if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGINT,
+						  this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "register_handler"), -1);
 }
-
-
 
 int
 main (int argc, char *argv[])
