@@ -300,11 +300,11 @@ CORBA_ORB::get_service_information (CORBA::ServiceType /* service_type */,
 }
 
 void
-CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
+CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &nv,
                                CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_NEW (nv,
+           CORBA::NamedValue);
 }
 
 void
