@@ -232,7 +232,14 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any & any,
     {
       // If no match, either the Any contains the default member or the
       // type code was bad.
-      CORBA::Long default_index = this->type_->default_index (ACE_TRY_ENV);
+
+      // default_index() does not work with aliased type codes.
+      CORBA::TypeCode_var unaliased_tc =
+        TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                        ACE_TRY_ENV);
+      ACE_CHECK;
+
+      CORBA::Long default_index = unaliased_tc->default_index (ACE_TRY_ENV);
       ACE_CHECK;
 
       if (default_index == -1)
@@ -342,6 +349,12 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
   CORBA_Any_ptr label_any = 0;
   CORBA::ULong i;
 
+  // member_label() does not work with aliased type codes.
+  CORBA::TypeCode_var ulaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
   for (i = 0; i < length; ++i)
     {
       label_any = this->type_->member_label (i,
@@ -366,9 +379,15 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
                                       ACE_TRY_ENV);
       ACE_CHECK;
 
+      // member_type() does not work with aliased type codes.
+      CORBA::TypeCode_var unaliased_tc =
+        TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                        ACE_TRY_ENV);
+      ACE_CHECK;
+
       CORBA::TypeCode_var member_tc = 
-        this->type_->member_type (i,
-                                  ACE_TRY_ENV);
+        unaliased_tc->member_type (i,
+                                   ACE_TRY_ENV);
       ACE_CHECK;
 
       this->member_->destroy (ACE_TRY_ENV);
@@ -387,8 +406,14 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
     }
   else
     {
+      // default_index() does not work with aliased type codes.
+      CORBA::TypeCode_var unaliased_tc =
+        TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                        ACE_TRY_ENV);
+      ACE_CHECK;
+
       // If no match, either the default member or no member is active.
-      CORBA::Long default_index = this->type_->default_index (ACE_TRY_ENV);
+      CORBA::Long default_index = unaliased_tc->default_index (ACE_TRY_ENV);
       ACE_CHECK;
 
       if (default_index == -1)
@@ -429,7 +454,13 @@ TAO_DynUnion_i::set_to_default_member (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
 
-  CORBA::Long default_index = this->type_->default_index (ACE_TRY_ENV);
+  // default_index() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::Long default_index = unaliased_tc->default_index (ACE_TRY_ENV);
   ACE_CHECK;
 
   if (default_index == -1)
@@ -443,8 +474,8 @@ TAO_DynUnion_i::set_to_default_member (CORBA::Environment &ACE_TRY_ENV)
                                             default_index);
 
       CORBA::TypeCode_var default_tc = 
-        this->type_->member_type (index,
-                                  ACE_TRY_ENV);
+        unaliased_tc->member_type (index,
+                                   ACE_TRY_ENV);
       ACE_CHECK;
 
       this->member_->destroy (ACE_TRY_ENV);
@@ -474,7 +505,13 @@ TAO_DynUnion_i::set_to_no_active_member (CORBA::Environment& ACE_TRY_ENV)
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
 
-  CORBA::Long default_index = this->type_->default_index (ACE_TRY_ENV);
+  // default_index() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::Long default_index = unaliased_tc->default_index (ACE_TRY_ENV);
   ACE_CHECK;
   
   // Throw an exception is there is an explicit default case or if all

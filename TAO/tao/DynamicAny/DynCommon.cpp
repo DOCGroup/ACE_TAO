@@ -396,19 +396,22 @@ TAO_DynCommon::insert_string (const char * value,
     }
   else
     {
-      this->check_type (CORBA::_tc_string,
-                        ACE_TRY_ENV);
+      CORBA::TypeCode_var unaliased_tc = 
+        this->check_type_and_unalias (CORBA::_tc_string,
+                                      ACE_TRY_ENV);
       ACE_CHECK;
 
-      CORBA::ULong length = this->type_->length (ACE_TRY_ENV);
+      CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (length > 0 && length < ACE_OS::strlen (value))
+      if (bound > 0 && bound < ACE_OS::strlen (value))
         {
           ACE_THROW (DynamicAny::DynAny::InvalidValue ());
         }
       
-      this->any_ <<= value;
+      this->any_ <<= CORBA::Any::from_string (ACE_const_cast (char *,
+                                                              value),
+                                              bound);
     }
 }
 
@@ -437,9 +440,14 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value,
     }
   else
     {
-      this->check_type (CORBA::_tc_Object,
-                        ACE_TRY_ENV);
+      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in (),
+                                                       ACE_TRY_ENV);
       ACE_CHECK;
+
+      if (kind != CORBA::tk_objref)
+        {
+          ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+        }
       
       this->any_ <<= value;
     }
@@ -635,19 +643,22 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value,
     }
   else
     {
-      this->check_type (CORBA::_tc_wstring,
-                        ACE_TRY_ENV);
+      CORBA::TypeCode_var unaliased_tc =
+        this->check_type_and_unalias (CORBA::_tc_wstring,
+                                      ACE_TRY_ENV);
       ACE_CHECK;
 
-      CORBA::ULong length = this->type_->length (ACE_TRY_ENV);
+      CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (length > 0 && length < ACE_OS::wslen (value))
+      if (bound > 0 && bound < ACE_OS::wslen (value))
         {
           ACE_THROW (DynamicAny::DynAny::InvalidValue ());
         }
       
-      this->any_ <<= value;
+      this->any_ <<= CORBA::Any::from_wstring (ACE_const_cast (CORBA::WChar *,
+                                                               value),
+                                               bound);
     }
 }
 
@@ -1065,13 +1076,14 @@ TAO_DynCommon::get_string (CORBA::Environment &ACE_TRY_ENV)
       // @@@ (JP) Someday try to find a way to avoid checking for
       // type code equivalence twice without risking a throw of
       // BadKind.
-      this->check_type (CORBA::_tc_string,
-                        ACE_TRY_ENV);
+      CORBA::TypeCode_var unaliased_tc = 
+        this->check_type_and_unalias (CORBA::_tc_string,
+                                      ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      char *retval;
+      char *retval = 0;
 
-      CORBA::ULong bound = this->type_->length (ACE_TRY_ENV);
+      CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       
       (void) (this->any_ >>= CORBA::Any::to_string (retval,
@@ -1317,13 +1329,14 @@ TAO_DynCommon::get_wstring (CORBA::Environment &ACE_TRY_ENV)
       // @@@ (JP) Someday try to find a way to avoid checking for
       // type code equivalence twice without risking a throw of
       // BadKind.
-      this->check_type (CORBA::_tc_wstring,
-                        ACE_TRY_ENV);
+      CORBA::TypeCode_var unaliased_tc =
+        this->check_type_and_unalias (CORBA::_tc_wstring,
+                                      ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::WChar *retval;
+      CORBA::WChar *retval = 0;
 
-      CORBA::ULong bound = this->type_->length (ACE_TRY_ENV);
+      CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       
       (void) (this->any_ >>= CORBA::Any::to_wstring (retval,
@@ -1539,7 +1552,8 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
   CORBA::TypeCode_var tc = component->type (ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::TCKind tk = tc->kind (ACE_TRY_ENV);
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc,
+                                                 ACE_TRY_ENV);
   ACE_CHECK;
 
   switch (tk)
@@ -1634,6 +1648,10 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
         tmp->_remove_ref ();
         break;
       }
+    case CORBA::tk_fixed:
+    case CORBA::tk_value:
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      break;
     default:
       {
         TAO_DynAny_i *tmp = TAO_DynAny_i::_narrow (component,
@@ -1713,5 +1731,21 @@ TAO_DynCommon::check_type (CORBA::TypeCode_ptr tc,
     {
       ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
     }
+}
+
+CORBA::TypeCode_ptr
+TAO_DynCommon::check_type_and_unalias (CORBA::TypeCode_ptr tc,
+                                       CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch
+    ))
+{
+  this->check_type (tc,
+                    ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return TAO_DynAnyFactory::strip_alias (tc,
+                                         ACE_TRY_ENV);
 }
 

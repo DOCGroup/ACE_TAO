@@ -55,6 +55,7 @@ TAO_DynStruct_i::init (const CORBA_Any& any,
 
   this->type_ = tc;
 
+  // Member_count works with aliased type codes.
   CORBA::ULong numfields = this->type_->member_count (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -80,11 +81,17 @@ TAO_DynStruct_i::init (const CORBA_Any& any,
       cdr >> str.out ();
     }
 
+  // member_type() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
   for (CORBA::ULong i = 0; i < numfields; i++)
     {
       CORBA::TypeCode_var field_tc =
-        this->type_->member_type (i,
-                                  ACE_TRY_ENV);
+        unaliased_tc->member_type (i,
+                                   ACE_TRY_ENV);
       ACE_CHECK;
 
       // This Any constructor is a TAO extension.
@@ -208,6 +215,7 @@ TAO_DynStruct_i::current_member_name (CORBA::Environment &ACE_TRY_ENV)
                         0);
     }
 
+  // Member_name works with aliased type codes.
   const char *name =
     this->type_->member_name (this->current_position_, 
                               ACE_TRY_ENV);
@@ -321,11 +329,17 @@ TAO_DynStruct_i::set_members (const DynamicAny::NameValuePairSeq & values,
   CORBA::TypeCode_var my_tc;
   CORBA::Boolean equivalent;
 
+  // member_type() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       // Check for type and name match.
-      my_tc = this->type_->member_type (i, 
-                                        ACE_TRY_ENV);
+      my_tc = unaliased_tc->member_type (i, 
+                                         ACE_TRY_ENV);
       ACE_CHECK;
 
       value_tc = values[i].value.type ();
@@ -423,11 +437,17 @@ TAO_DynStruct_i::set_members_as_dyn_any (
   CORBA::TypeCode_var my_tc;
   CORBA::Boolean equivalent;
 
+  // member_type() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       // Check for type and name match.
-      my_tc = this->type_->member_type (i, 
-                                        ACE_TRY_ENV);
+      my_tc = unaliased_tc->member_type (i, 
+                                         ACE_TRY_ENV);
       ACE_CHECK;
 
       value_tc = values[i].value->type (ACE_TRY_ENV);
