@@ -30,8 +30,14 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 #       Include macros and targets
 #----------------------------------------------------------------------------
 <%marker(macros)%>
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(!exename)%>
+<%if(avoids)%>
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+<%else%>
+<%if(requires)%>
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+<%endif%>
+<%endif%>
 <%if(comps)%>
 
 <%if(compname)%>
@@ -99,6 +105,7 @@ endif
 <%endif%>
 <%endif%>
 
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
@@ -228,22 +235,22 @@ ADDITIONAL_IDL_TARGETS =
 <%foreach(idl_files)%>
 <%if(flag_overrides(idl_file, idlgendir))%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
-<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h: <%idl_file%>
+<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>S.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
 <%else%>
 <%if(idlgendir)%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextension(idl_file)%>C.h
-<%idlgendir%>/<%basenoextension(idl_file)%>C.h: <%idl_file%>
+<%idlgendir%>/<%basenoextension(idl_file)%>C.h <%idlgendir%>/<%basenoextension(idl_file)%>C.cpp <%idlgendir%>/<%basenoextension(idl_file)%>S.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
 <%else%>
 # IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
-<%noextension(idl_file)%>C.h: <%idl_file%>
+<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
 <%else%>
 <%if(flag_overrides(idl_file, idlflags))%>
-<%noextension(idl_file)%>C.h: <%idl_file%>
+<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp: <%idl_file%>
 	$(TAO_IDL) <%flag_overrides(idl_file, idlflags)%> $^
 <%endif%>
 <%endif%>

@@ -211,7 +211,7 @@ SOURCE=.\<%source_file%>
 SOURCE=.\<%template_file%>
 <%endfor%>
 <%foreach(idl_files)%>
-SOURCE=.\<%idl_file%>
+SOURCE=<%idl_file%>
 
 <%foreach(platforms)%>
 <%foreach(configurations)%>
@@ -220,24 +220,11 @@ SOURCE=.\<%idl_file%>
 InputPath=.\<%idl_file%>
 InputName=<%basenoextension(idl_file)%>
 InputDir=<%dirname(idl_file)%>
-<%if(flag_overrides(idl_file, idlgendir))%>
-OutDir=<%flag_overrides(idl_file, idlgendir)%>
-<%else%>
-<%if(idlgendir)%>
-OutDir=<%idlgendir%>
-<%else%>
-<%if(dirname_found)%>
-OutDir=$(InputDir)
-<%else%>
-OutDir=.
-<%endif%>
-<%endif%>
-<%endif%>
 
-"$(OutDir)\$(InputName)C.h"	"$(OutDir)\$(InputName)C.i"	"$(OutDir)\$(InputName)C.cpp"	"$(OutDir)\$(InputName)S.h"	"$(OutDir)\$(InputName)S.i"	"$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)C.h"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)C.i"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)C.cpp"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)S.h"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)S.i"	"<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	<<tempfile.bat
 	@echo off
-	<%idl_compiler("$(ACE_ROOT)\\bin\\tao_idl")%> -o $(OutDir) <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>
+	<%idl_compiler("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>
 <<
 
 <%endfor%>

@@ -897,13 +897,20 @@ sub sift_files {
 
   ## Now deal with the saved files
   if (defined $saved[0]) {
-    my($pjname) = $self->escape_regex_special(
-                           $self->get_assignment('project_name'));
-    foreach my $save (@saved) {
-      my($file) = $self->escape_regex_special($save);
-      if ($pjname =~ /$file/ || $file =~ /$pjname/) {
-        if (!$self->already_added($array, $file)) {
-          push(@$array, $file);
+    if ($#saved == 0) {
+      ## Theres only one rc file, take it
+      push(@$array, $saved[0]);
+    }
+    else {
+      my($pjname) = $self->escape_regex_special(
+                             $self->transform_file_name(
+                               $self->get_assignment('project_name')));
+      foreach my $save (@saved) {
+        my($file) = $self->escape_regex_special($save);
+        if ($pjname =~ /$file/ || $file =~ /$pjname/) {
+          if (!$self->already_added($array, $file)) {
+            push(@$array, $file);
+          }
         }
       }
     }
