@@ -11,7 +11,7 @@
 ACE_RCSID(Timeout, test_i, "$Id$")
 
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 
 }
