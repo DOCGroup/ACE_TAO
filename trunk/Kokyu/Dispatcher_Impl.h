@@ -35,7 +35,9 @@ namespace Kokyu
   {
   public:
     /// Configure the dispatcher.
-    int init (const ConfigInfoSet&);
+    int init (const Dispatcher_Attributes&);
+
+    int activate ();
 
     /// dispatch a command (eg. event) based on the QoS supplied.
     int dispatch (const Dispatch_Command*,
@@ -51,10 +53,11 @@ namespace Kokyu
     //instead make them private and use the template method
     //pattern - "Virtually Yours" article in CUJ Experts Forum
 
-    virtual int init_i (const ConfigInfoSet&) =0;
+    virtual int init_i (const Dispatcher_Attributes&) =0;
     virtual int dispatch_i (const Dispatch_Command*,
                             const QoSDescriptor&) =0;
     virtual int shutdown_i () =0;
+    virtual int activate_i () =0;
 
   };
 } //end of namespace

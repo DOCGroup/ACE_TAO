@@ -13,4 +13,9 @@ namespace Kokyu
    Dispatch_Command::~Dispatch_Command (void)
    {
    }
+
+  Dispatcher_Attributes::Dispatcher_Attributes ()
+    :immediate_activation_ (0)
+  {
+  }
 }
