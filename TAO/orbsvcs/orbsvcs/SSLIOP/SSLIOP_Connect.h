@@ -82,8 +82,8 @@ protected:
 // ****************************************************************
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Server_Connection_Handler
-  : public TAO_Connection_Handler,
-    public TAO_SSLIOP_Connection_Handler
+  : public TAO_SSLIOP_Connection_Handler,
+    public TAO_Connection_Handler
 {
   // = TITLE
   //   Handles requests on a single connection in a server.
@@ -167,8 +167,8 @@ protected:
 // ****************************************************************
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Client_Connection_Handler
-  : public TAO_Connection_Handler,
-    public TAO_SSLIOP_Connection_Handler
+  : public TAO_SSLIOP_Connection_Handler,
+    public TAO_Connection_Handler
 {
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the

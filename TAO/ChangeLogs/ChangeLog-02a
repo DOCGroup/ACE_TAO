@@ -1,3 +1,22 @@
+Mon Nov 20 00:50:14 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+
+	  Re-arranged inheritance order to match order in base member
+	  initializer lists.  This corrects several "will be re-ordered to
+	  match inheritance order" warnings.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+
+	  Fixed unused argument warning in
+	  TAO_SSLIOP_Client_Connection_Handler constructor.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (post_init):
+
+	  Corrected "better conversion" warnings related to passing "_var"
+	  variable as a "_ptr" argument by using the "_var::in()"
+	  accessor.
+
 Mon Nov 20 00:12:28 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptor.i
