@@ -578,6 +578,23 @@ ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::poa_current (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
+
+  if (CORBA::is_nil (this->poa_current_.in ()))
+    {
+      ACE_TRY_NEW_ENV
+        {
+          // @@ This is a hack.  FIXME!
+          // This forces the POACurrent to be initialized.
+          CORBA::Object_var root = this->root_poa (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          return CORBA::Object::_nil ();
+        }
+      ACE_ENDTRY;
+    }
+
   return CORBA::Object::_duplicate (this->poa_current_.in ());
 }
 
