@@ -8,6 +8,23 @@
 // template class ACE_RB_Tree_Node<EXT_ID, INT_ID> //
 /////////////////////////////////////////////////////
 
+// No-op, to avoid accident use.
+template <class EXT_ID, class INT_ID>
+ACE_INLINE void *
+ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator new (size_t)
+{
+  return (void*)0;
+}
+
+// No-op, to avoid accident use.
+template <class EXT_ID, class INT_ID>
+ACE_INLINE void
+ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator delete(void *)
+{
+  // No-Op
+}
+
+
 // Key accessor.
 
 template <class EXT_ID, class INT_ID>
@@ -1145,3 +1162,5 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next (ACE_
 
   return 0;
 }
+
+
