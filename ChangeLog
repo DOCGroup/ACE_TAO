@@ -1,3 +1,11 @@
+Fri Oct 18 14:52:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/display_logfile.cpp: Added necessary explicit
+          template instantiations.
+
 Fri Oct 18 13:21:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/Timer_Queue_Test.cpp,
