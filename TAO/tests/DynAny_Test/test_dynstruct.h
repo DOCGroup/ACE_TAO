@@ -12,7 +12,7 @@
 //    Header file for class to test DynStruct.
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -32,8 +32,8 @@ public:
   int run_test (void);
 
 private:
-  char* test_name_;
   CORBA::ORB_var orb_;
+  char* test_name_;
   CORBA::ULong error_count_;
 };
 

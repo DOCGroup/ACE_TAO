@@ -12,7 +12,7 @@
 //    Implementation of the DynStruct basic test
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -21,8 +21,8 @@
 #include "data.h"
 
 Test_DynStruct::Test_DynStruct (CORBA::ORB_var orb)
-  : test_name_ (CORBA::string_dup ("test_dynstruct")),
-    orb_ (orb),
+  : orb_ (orb),
+    test_name_ (CORBA::string_dup ("test_dynstruct")),
     error_count_ (0)
 {
 }

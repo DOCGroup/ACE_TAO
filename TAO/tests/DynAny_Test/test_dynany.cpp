@@ -12,7 +12,7 @@
 //    Implementation of the basic test for simple DynAnys
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
