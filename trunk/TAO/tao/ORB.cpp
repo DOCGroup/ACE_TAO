@@ -1606,10 +1606,6 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  PortableServer::POA_var root_poa =
-    this->orb_core_->root_poa_reference (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
   switch (type)
     {
 

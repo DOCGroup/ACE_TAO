@@ -8,7 +8,7 @@ module IOP
 {
   typedef unsigned long ProfileId;
   const ProfileId TAG_INTERNET_IOP = 0;
-  const ProfileId TAG_MULTIPLE_COMPONENTS = 0;
+  const ProfileId TAG_MULTIPLE_COMPONENTS = 1;
 
   struct TaggedProfile {
     ProfileId       tag;
@@ -76,11 +76,11 @@ module IOP
 
   // The following are defined in the ptc/2000-04-04:
   // Fault Tolerant CORBA Specification, V1.0
-  const ComponentId TAG_FT_GROUP = 27; 
-  const ComponentId TAG_FT_PRIMARY = 28; 
-  const ComponentId TAG_FT_HEARTBEAT_ENABLED = 29; 
-  const ServiceId FT_GROUP_VERSION = 12; 
-  const ServiceId FT_REQUEST = 13; 
+  const ComponentId TAG_FT_GROUP = 27;
+  const ComponentId TAG_FT_PRIMARY = 28;
+  const ComponentId TAG_FT_HEARTBEAT_ENABLED = 29;
+  const ServiceId FT_GROUP_VERSION = 12;
+  const ServiceId FT_REQUEST = 13;
 
 };
 
