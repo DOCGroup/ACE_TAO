@@ -14,9 +14,9 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Stream)
 
 ACE_UPIPE_Stream::ACE_UPIPE_Stream (void)
-  : remaining_ (0),
-    reference_count_ (0),
-    mb_last_ (0)
+  : mb_last_ (0),
+    remaining_ (0),
+    reference_count_ (0)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::ACE_UPIPE_STREAM");
 }

@@ -112,11 +112,48 @@ ACE::ldfind (const char *filename,
 	     size_t maxlen)
 {
   ACE_TRACE ("ACE::ldfind");
-  if (ACE_OS::strchr (filename, ACE_DIRECTORY_SEPARATOR_CHAR) != 0)
+  
+  char searchfilename[MAXPATHLEN];
+
+  // Determine, whether the default-suffix for shared libraries needs
+  // to be appended.
+
+  if (ACE_OS::strstr (filename, ACE_DLL_SUFFIX) != 0)
+    // Use the filename as provided since it has a suffix.
+    ACE_OS::strncpy (searchfilename, filename, sizeof searchfilename);
+  else 
+    {
+      if (ACE_OS::strlen (filename) 
+	  + ACE_OS::strlen (ACE_DLL_SUFFIX) 
+	  + 1 >= sizeof searchfilename) 
+	{
+	  errno = ENOMEM;
+	  return -1;
+	} 
+      else 
+	::sprintf (searchfilename, "%s%s", filename, ACE_DLL_SUFFIX);
+    }
+
+  if (ACE_OS::strcmp (searchfilename 
+		      + ACE_OS::strlen(searchfilename) - ACE_OS::strlen (ACE_DLL_SUFFIX), 
+		      ACE_DLL_SUFFIX))
+    ACE_ERROR ((LM_NOTICE, 
+		"CAUTION: improper name for a shared library on this patform: %s\n", 
+		searchfilename));
+  
+  if (ACE_OS::strchr (searchfilename, ACE_DIRECTORY_SEPARATOR_CHAR) != 0)
     {
       // Use absolute pathname.
-      ACE_OS::strncpy (pathname, filename, maxlen);
-      return 0;
+      if (ACE_OS::strlen (searchfilename) >= maxlen) 
+	{
+	  errno = ENOMEM;
+	  return -1;
+	} 
+      else 
+	{
+	  ACE_OS::strncpy (pathname, searchfilename, maxlen);
+	  return 0;
+	}
     }
   else
     {
@@ -126,14 +163,14 @@ ACE::ldfind (const char *filename,
       if (ld_path != 0 && (ld_path = ACE_OS::strdup (ld_path)) != 0)
 	{
 	  // Look at each dynamic lib directory in the search path.
-	  char *path_entry = ACE_OS::strtok (ld_path,
+	  char *path_entry = ACE_OS::strtok (ld_path, 
 					     ACE_LD_SEARCH_PATH_SEPARATOR_STR);
       
 	  int result = 0;
 
 	  while (path_entry != 0)
 	    {
-	      if (ACE_OS::strlen (path_entry) + 1 + ACE_OS::strlen (filename) >= maxlen)
+	      if (ACE_OS::strlen (path_entry) + 1 + ACE_OS::strlen (searchfilename) >= maxlen)
 		{
 		  errno = ENOMEM;
 		  result = -1;
@@ -142,7 +179,7 @@ ACE::ldfind (const char *filename,
 	      ACE_OS::sprintf (pathname, "%s%c%s", 
 			       path_entry,
 			       ACE_DIRECTORY_SEPARATOR_CHAR, 
-			       filename);
+			       searchfilename);
 
 	      if (ACE_OS::access (pathname, R_OK) == 0)
 		break;

@@ -40,7 +40,8 @@ static const long max_queue = LONG_MAX;
 static void *
 consumer (void *args)
 {
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH>*) args;
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
+
   u_long cur_priority = 27;
   int local_count = 0;
 
@@ -85,7 +86,7 @@ consumer (void *args)
 static void *
 producer (void *args)
 {
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH>*) args;
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
 
   // Insert thread into thr_mgr.
   ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());

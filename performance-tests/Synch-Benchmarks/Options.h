@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* Option manager for ustreams */
+// Option manager for performance tests.
 
 #if !defined (_OPTIONS_H)
 #define _OPTIONS_H
@@ -84,41 +84,41 @@ public:
   int    do_zero_copy (void);
   void   print_results (void);
 
-  ACE_Atomic_Op<ACE_Thread_Mutex, size_t> msg_count;        /* Keep track of number of messages atomically */
-  int *thr_work_count;  /* Count activity per-thread */
-  int thr_wc_size;	     /* Max number of threads */
+  ACE_Atomic_Op<ACE_Thread_Mutex, size_t> msg_count;        // Keep track of number of messages atomically.
+  int *thr_work_count;  // Count activity per-thread.
+  int thr_wc_size;	     // Max number of threads.
 
 private:
-  ACE_Profile_Timer _itimer;	        /* Keep track of time */
-  char		*_service_entry;        /* Name of the shared object file and shared object */
-  char		*_mapped_file;          /* Name of the mapped file */
-  char		*_pipe_addr;            /* Name of the STREAM pipe */
-  size_t	_sleep_time;            /* Time to sleep */
-  size_t	_n_lwps;                /* Number of LWPs */
-  size_t	_thr_count;             /* Number of threads to spawn */
-  long		_t_flags;               /* Flags to thr_create() */
-  size_t	_high_water_mark;       /* ACE_Queue high water mark */
-  size_t	_low_water_mark;        /* ACE_Queue low water mark */
-  size_t	_msg_size;              /* Size of a message */
-  size_t	_initial_queue_length;  /* Initial number of items in the queue */
-  size_t	_logical_connections;   /* Number of logical connections */
-  size_t	_physical_connections;  /* Number of physical connections */
-  size_t	_iterations;            /* Number of iterations to run the test program */
-  int		_generate;              /* Generate the data */
-  int		_udp;                   /* Use UDP format */
-  int		_debugging;             /* Extra debugging info */
-  int		_verbosity;             /* Extra verbose messages */
-  int		_ack;                   /* Do an acknowledgement */
-  int		_checksum;              /* Is checksumming enabled? */
-  int		_xdr;                   /* Is xdr conversion enabled? */
-  int		_free_memory;           /* Are we freeing up memory? */
-  int		_zero_copy;             /* Implement a zero-copy driver? */
-  int		_print_summary;         /* Print a summary of the results only */
-  int		_consecutive_ports;     /* Number of consecutive messages from same port */
-  int		_eager_exit;            /* Exit eagerly, without cleaning up */
+  ACE_Profile_Timer _itimer;	        // Keep track of time.
+  char		*_service_entry;        // Name of the shared object file and shared object.
+  char		*_mapped_file;          // Name of the mapped file.
+  char		*_pipe_addr;            // Name of the STREAM pipe.
+  size_t	_sleep_time;            // Time to sleep.
+  size_t	_n_lwps;                // Number of LWPs.
+  size_t	_thr_count;             // Number of threads to spawn.
+  long		_t_flags;               // Flags to thr_create().
+  size_t	_high_water_mark;       // ACE_Queue high water mark.
+  size_t	_low_water_mark;        // ACE_Queue low water mark.
+  size_t	_msg_size;              // Size of a message.
+  size_t	_initial_queue_length;  // Initial number of items in the queue.
+  size_t	_logical_connections;   // Number of logical connections.
+  size_t	_physical_connections;  // Number of physical connections.
+  size_t	_iterations;            // Number of iterations to run the test program.
+  int		_generate;              // Generate the data.
+  int		_udp;                   // Use UDP format.
+  int		_debugging;             // Extra debugging info.
+  int		_verbosity;             // Extra verbose messages.
+  int		_ack;                   // Do an acknowledgement.
+  int		_checksum;              // Is checksumming enabled?.
+  int		_xdr;                   // Is xdr conversion enabled?.
+  int		_free_memory;           // Are we freeing up memory?.
+  int		_zero_copy;             // Implement a zero-copy driver?.
+  int		_print_summary;         // Print a summary of the results only.
+  int		_consecutive_ports;     // Number of consecutive messages from same port.
+  int		_eager_exit;            // Exit eagerly, without cleaning up.
 };
 
-/* Make this available to any code that wants to see it! */
+// Make this available to any code that wants to see it!
 extern Options options;
 
 #include "Options.i"

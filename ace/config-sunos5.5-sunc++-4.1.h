@@ -11,7 +11,7 @@
 
 // Note that SunC++ 4.1 fixes template bugs that prevented earlier
 // versions from supporting template typedefs correctly.
-#define ACE_HAS_TEMPLATE_TYPEDEFS
+// #define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			

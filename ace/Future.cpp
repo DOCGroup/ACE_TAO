@@ -33,8 +33,8 @@ ACE_Future_Rep<T>::dump (void) const
 
 template <class T> 
 ACE_Future_Rep<T>::ACE_Future_Rep (void)
-  : ref_count_ (0),
-    value_ (0),
+  : value_ (0),
+    ref_count_ (0),
     value_ready_ (this->value_ready_mutex_)
 {
 }

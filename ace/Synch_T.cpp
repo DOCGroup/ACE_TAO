@@ -310,7 +310,7 @@ ACE_TSS<TYPE>::ts_get (void) const
   if (this->once_ == 0)
     {
       // Insure that we are serialized!
-      ACE_GUARD_RETURN (ACE_Mutex, ace_mon_2, (ACE_Mutex &) this->keylock_, 0);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->keylock_, 0);
 
       // Use the Double-Check pattern to make sure we only create the
       // key once!
