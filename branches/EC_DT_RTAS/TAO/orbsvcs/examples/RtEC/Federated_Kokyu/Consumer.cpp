@@ -2,6 +2,7 @@
 
 #include "Consumer.h"
 #include "Supplier.h"
+#include "Service_Handler.h"
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Time_Value.h"
@@ -18,15 +19,17 @@
 
 ACE_RCSID(EC_Examples, Consumer, "$Id$")
 
-Consumer::Consumer (Supplier *fwddest)
+Consumer::Consumer (Supplier *fwddest, Service_Handler * handler)
   : worktime_(0,0),
-    fwddest_(fwddest)
+    fwddest_(fwddest),
+    handler_(handler)
 {
 }
 
-Consumer::Consumer (ACE_Time_Value& worktime, Supplier *fwddest)
+Consumer::Consumer (ACE_Time_Value& worktime, Supplier *fwddest, Service_Handler *handler)
   : worktime_(worktime),
-    fwddest_(fwddest)
+    fwddest_(fwddest),
+    handler_(handler)
 {
 }
 
@@ -44,6 +47,11 @@ Consumer::push (const RtecEventComm::EventSet& events
 
   ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t) we received event type %d\n",
               events[0].header.type));
+
+  if (this->handler_ != 0)
+    {
+      this->handler_->handle_service_start(events ACE_ENV_ARG_PARAMETER);
+    }
 
   //@BT INSTRUMENT with event ID: EVENT_WORK_START Measure time
   //when work triggered by event starts.
@@ -138,6 +146,11 @@ Consumer::push (const RtecEventComm::EventSet& events
       //trigger next subtask
       this->fwddest_->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
     }
+
+  if (this->handler_ != 0)
+    {
+      this->handler_->handle_service_stop(events ACE_ENV_ARG_PARAMETER);
+    }
 }
 
 void
@@ -162,6 +175,18 @@ RtecScheduler::handle_t
 Consumer::rt_info(void) const
 {
   return rt_info_;
+}
+
+void
+Consumer::handler(Service_Handler * handler)
+{
+  this->handler_ = handler;
+}
+
+Service_Handler *
+Consumer::handler(void) const
+{
+  return this->handler_;
 }
 
 // ****************************************************************

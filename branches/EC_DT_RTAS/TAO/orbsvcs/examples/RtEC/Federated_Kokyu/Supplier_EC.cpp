@@ -219,7 +219,7 @@ main (int argc, char* argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
         {
@@ -232,32 +232,33 @@ main (int argc, char* argv[])
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // ****************************************************************
 
       Supplier_EC supplier_ec;
-      if (supplier_ec.init(sched_type.c_str(), poa.in()) == -1) {
-        ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
-      }
+      if (supplier_ec.init(sched_type.c_str(), poa.in()) == -1)
+        {
+          ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
+        }
 
       supplier_ec.init_gateway(orb.in(),
                                poa.in(),
                                "file://consumer_ec.ior" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // ****************************************************************
       RtEventChannelAdmin::RtSchedEventChannel_var supplier_ec_ior =
         supplier_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior = orb->object_to_string(supplier_ec_ior.in()
                                                     ACE_ENV_ARG_PARAMETER);
@@ -273,7 +274,7 @@ main (int argc, char* argv[])
       ACE_OS::thr_setprio (thr_handle, prio);
 
       supplier_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
       //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
@@ -295,7 +296,7 @@ main (int argc, char* argv[])
 
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // ****************************************************************
 
