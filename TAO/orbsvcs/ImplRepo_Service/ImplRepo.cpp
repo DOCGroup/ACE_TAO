@@ -52,11 +52,14 @@ run_standalone (void)
   return 0;
 }
 
+#if defined (ACE_WIN32)
 ACE_NT_SERVICE_DEFINE (service, ImR_NT_Service, IMR_SERVICE_NAME);
+#endif /* ACE_WIN32 */
 
 int
 run_service (void)
 {
+#if defined (ACE_WIN32)
   // @todo: Update me
 
   // If we get here, we either run the app in debug mode (-d) or are
@@ -68,6 +71,9 @@ run_service (void)
     ACE_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
 
   return ret;
+#else /* ACE_WIN32 */
+  return 1;
+#endif /* ACE_WIN32 */
 }
 
 int
