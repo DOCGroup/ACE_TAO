@@ -1,5 +1,12 @@
 Fri Jul 14 19:06:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
+        * ../include/makeinclude/wrappermacros.GNU:
+          Added -DPACE_HAS_ALL_POSIX_FUNCS to flags.
+
+        * pace/pthread.h:
+        * pace/unistd.h:
+          Removed a duplicate closing }.
+
 	* pace/pthread.h:
 	  Added (void) in arguments to pointers to functions
 	  which were otherwise interpreted as (...) args.
