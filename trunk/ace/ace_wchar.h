@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    unicode.h
-//
-// = AUTHOR
-//    Darrell Brunsch
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    unicode.h
+ *
+ *  $Id$
+ *
+ *  @author Darrell Brunsch
+ */
+//=============================================================================
+
 
 #ifndef ACE_WCHAR_H
 #define ACE_WCHAR_H
@@ -112,68 +109,72 @@ typedef char ACE_TCHAR;
 #endif /* ACE_LEGACY_MODE */
 
 #if defined ACE_HAS_WCHAR
+/**
+ * @class ACE_Wide_To_Ascii
+ *
+ * @brief A lightweight wchar* to char* string conversion class.
+ *
+ * The purpose of this class is to perform conversion from
+ * wchar* to char* strings.  It is not intended for general
+ * purpose use.
+ */
 class ACE_Wide_To_Ascii
 {
-  // = TITLE
-  //     A lightweight wchar* to char* string conversion class.
-  //
-  // = DESCRIPTION
-  //     The purpose of this class is to perform conversion from
-  //     wchar* to char* strings.  It is not intended for general
-  //     purpose use.
 public:
+  /// Ctor must take a wchar string.
   ACE_Wide_To_Ascii (const wchar_t *s);
-  // Ctor must take a wchar string.
 
+  /// Dtor will free up the memory.
   ~ACE_Wide_To_Ascii (void);
-  // Dtor will free up the memory.
 
+  /// Return the internal char* representation.
   char *char_rep (void);
-  // Return the internal char* representation.
 
+  /// Converts an wchar_t string to ascii and returns a new string.
   static char *convert (const wchar_t *wstr);
-  // Converts an wchar_t string to ascii and returns a new string.
 
 private:
+  /// Internal pointer to the converted string.
   char *s_;
-  // Internal pointer to the converted string.
 
+  /// Disallow these operation.
   ACE_Wide_To_Ascii (void);
   ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &);
   ACE_Wide_To_Ascii& operator= (ACE_Wide_To_Ascii &);
-  // Disallow these operation.
 };
 
+/**
+ * @class ACE_Ascii_To_Wide
+ *
+ * @brief A lightweight char* to wchar* string conversion class.
+ *
+ * The purpose of this class is to perform conversion from
+ * char* to wchar* strings.  It is not intended for general
+ * purpose use.
+ */
 class ACE_Ascii_To_Wide
 {
-  // = TITLE
-  //     A lightweight char* to wchar* string conversion class.
-  //
-  // = DESCRIPTION
-  //     The purpose of this class is to perform conversion from
-  //     char* to wchar* strings.  It is not intended for general
-  //     purpose use.
 public:
+  /// Ctor must take a wchar string.
   ACE_Ascii_To_Wide (const char *s);
-  // Ctor must take a wchar string.
 
+  /// Dtor will free up the memory.
   ~ACE_Ascii_To_Wide (void);
-  // Dtor will free up the memory.
 
+  /// Return the internal wchar* representation.
   wchar_t *wchar_rep (void);
-  // Return the internal wchar* representation.
 
+  /// Converts an char string to unicode/wide and returns a new string.
   static wchar_t *convert (const char *str);
-  // Converts an char string to unicode/wide and returns a new string.
 
 private:
+  /// Internal pointer to the converted string.
   wchar_t *s_;
-  // Internal pointer to the converted string.
 
+  /// Disallow these operation.
   ACE_Ascii_To_Wide (void);
   ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &);
   ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &);
-  // Disallow these operation.
 };
 
 #if defined (ACE_LEGACY_MODE)

@@ -1,9 +1,16 @@
+Wed Nov  1 14:11:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/*.h:
+          Change all the header files to generate better docs with
+          Doxygen.  Thanks to Darrell for his wonderful script to automate
+          this process.
+
 Tue Oct 31 19:01:19 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): Added
-	  a comment explaining why we don't go to heroic lengths to recv()
- 	  all the data if it fails after the second recv().  Thanks to
- 	  Steve Sivier <Steven.Sivier@Eng.Sun.COM> for motivating this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (handle_input): Added
+          a comment explaining why we don't go to heroic lengths to recv()
+          all the data if it fails after the second recv().  Thanks to
+          Steve Sivier <Steven.Sivier@Eng.Sun.COM> for motivating this.
 
 Tue Oct 31 14:21:11 2000  David L. Levine <levine@cs.wustl.edu>
 

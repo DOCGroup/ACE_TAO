@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//   Strategies.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Strategies.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_STRATEGIES_H
 #define ACE_STRATEGIES_H
@@ -27,15 +24,17 @@
 // Forward decls.
 class ACE_Reactor;
 
+/**
+ * @class ACE_Notification_Strategy
+ *
+ * @brief Abstract class used for notifing an interested party
+ *
+ * A vehicle for extending the behavior of ACE_Message_Queue wrt
+ * notification *without subclassing*.  Thus, it's an example of
+ * the Bridge/Strategy patterns.
+ */
 class ACE_Export ACE_Notification_Strategy
 {
-  // = TITLE
-  //     Abstract class used for notifing an interested party
-  //
-  // = DESCRIPTION
-  //     A vehicle for extending the behavior of ACE_Message_Queue wrt
-  //     notification *without subclassing*.  Thus, it's an example of
-  //     the Bridge/Strategy patterns.
 public:
   ACE_Notification_Strategy (ACE_Event_Handler *eh,
                              ACE_Reactor_Mask mask);
@@ -58,21 +57,23 @@ protected:
   ACE_Reactor_Mask mask_;
 };
 
+/**
+ * @class ACE_Reactor_Notification_Strategy
+ *
+ * @brief Used to notify an ACE_Reactor
+ *
+ * Integrates the <ACE_Message_Queue> notification into the
+ * <ACE_Reactor::notify> method.
+ */
 class ACE_Export ACE_Reactor_Notification_Strategy : public ACE_Notification_Strategy
 {
-  // = TITLE
-  //     Used to notify an ACE_Reactor
-  //
-  // = DESCRIPTION
-  //     Integrates the <ACE_Message_Queue> notification into the
-  //     <ACE_Reactor::notify> method.
 public:
   ACE_Reactor_Notification_Strategy (ACE_Reactor *reactor,
                                      ACE_Event_Handler *eh,
                                      ACE_Reactor_Mask mask);
 
+  /// Default dtor.
   virtual ~ACE_Reactor_Notification_Strategy (void);
-  // Default dtor.
 
   virtual int notify (void);
 
@@ -87,101 +88,104 @@ protected:
   ACE_Reactor *reactor_;
 };
 
+/**
+ * @class ACE_Connection_Recycling_Strategy
+ *
+ * @brief Defines the interface for a connection recycler.
+ */
 class ACE_Export ACE_Connection_Recycling_Strategy
 {
-  // = TITLE
-  //     Defines the interface for a connection recycler.
 public:
+  /// Virtual Destructor
   virtual ~ACE_Connection_Recycling_Strategy (void);
-  // Virtual Destructor
 
+  /// Remove from cache.
   virtual int purge (const void *recycling_act) = 0;
-  // Remove from cache.
 
+  /// Add to cache.
   virtual int cache (const void *recycling_act) = 0;
-  // Add to cache.
 
   virtual int recycle_state (const void *recycling_act,
                              ACE_Recyclable_State new_state) = 0;
 
+  /// Get/Set <recycle_state>.
   virtual ACE_Recyclable_State recycle_state (const void *recycling_act) const = 0;
-  // Get/Set <recycle_state>.
 
+  /// Mark as closed.
   virtual int mark_as_closed (const void *recycling_act) = 0;
-  // Mark as closed.
 
+  /// Mark as closed.(non-locking version)
   virtual int mark_as_closed_i (const void *recycling_act) = 0;
-  // Mark as closed.(non-locking version)
 
+  /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
   virtual int cleanup_hint (const void *recycling_act,
                             void **act_holder = 0) = 0;
-  // Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
 
 protected:
+  /// Default ctor.
   ACE_Connection_Recycling_Strategy (void);
-  // Default ctor.
 };
 
 class ACE_Export ACE_Recyclable
 {
 public:
+  /// Destructor.
   virtual ~ACE_Recyclable (void);
-  // Destructor.
 
   // = Set/Get the recyclable bit
   ACE_Recyclable_State recycle_state (void) const;
   void recycle_state (ACE_Recyclable_State new_state);
 
 protected:
+  /// Protected constructor.
   ACE_Recyclable (ACE_Recyclable_State initial_state);
-  // Protected constructor.
 
+  /// Our state.
   ACE_Recyclable_State recycle_state_;
-  // Our state.
 };
 
 class ACE_Export ACE_Hashable
 {
 public:
+  /// Destructor.
   virtual ~ACE_Hashable (void);
-  // Destructor.
 
+  /// Computes and returns hash value.  This "caches" the hash value to
+  /// improve performance.
   virtual u_long hash (void) const;
-  // Computes and returns hash value.  This "caches" the hash value to
-  // improve performance.
 
 protected:
+  /// Protected constructor.
   ACE_Hashable (void);
-  // Protected constructor.
 
+  /// This is the method that actually performs the non-cached hash
+  /// computation.
   virtual u_long hash_i (void) const = 0;
-  // This is the method that actually performs the non-cached hash
-  // computation.
 
+  /// Pre-computed hash-value.
   u_long hash_value_;
-  // Pre-computed hash-value.
 
 };
 
 class ACE_Export ACE_Refcountable
 {
 public:
+  /// Destructor.
   virtual ~ACE_Refcountable (void);
-  // Destructor.
 
   // = Increment/Decrement refcount
   int increment (void);
   int decrement (void);
 
+  /// Returns the current refcount.
   int refcount (void) const;
-  // Returns the current refcount.
 
 protected:
+  /// Protected constructor.
   ACE_Refcountable (int refcount);
-  // Protected constructor.
 
+  /// Current refcount.
   int refcount_;
-  // Current refcount.
 };
 
 // This needs to come here to avoid circular dependencies.

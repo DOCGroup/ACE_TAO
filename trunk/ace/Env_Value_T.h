@@ -1,19 +1,19 @@
 /* This may look like C, but it's really -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE
-//
-// = DESCRIPTION
-//    Template to encapsulate getting a value from an environment variable
-//    and using a supplied default value if not in the environment.
-//
-// = AUTHOR
-//    Chris Cleeland (derived from work by Carlos O'Ryan)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Env_Value_T.h
+ *
+ *  $Id$
+ *
+ *  Template to encapsulate getting a value from an environment variable
+ *  and using a supplied default value if not in the environment.
+ *
+ *
+ *  @author Chris Cleeland (derived from work by Carlos O'Ryan)
+ */
+//=============================================================================
+
 
 #ifndef ACE_ENV_VALUE_T_H
 #define ACE_ENV_VALUE_T_H
@@ -25,45 +25,48 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Env_Value
+ *
+ * @brief Enviroment Variable Value
+ *
+ * Reads a variable from the user enviroment, providing a default
+ * value.
+ * = AUTHOR
+ * Chris Cleeland, Carlos O'Ryan
+ */
 template <class T>
 class ACE_Env_Value
 {
-  // = TITLE
-  //    Enviroment Variable Value
-  //
-  // = DESCRIPTION
-  //    Reads a variable from the user enviroment, providing a default
-  //    value.
-  //
-  // = AUTHOR
-  //    Chris Cleeland, Carlos O'Ryan
 public:
+  /**
+   * Default constructor which isn't bound to a specific environment
+   * variable name or a default value.  Before being useful it must
+   * <open>'d.
+   */
   ACE_Env_Value (void);
-  // Default constructor which isn't bound to a specific environment
-  // variable name or a default value.  Before being useful it must
-  // <open>'d.
 
+  /// Constructor that calls <open>.
   ACE_Env_Value (const ACE_TCHAR *varname,
                  const T &vardefault);
-  // Constructor that calls <open>.
 
+  /// Destroy the value.
   ~ACE_Env_Value (void);
-  // Destroy the value.
 
+  /// Returns the value as type T.
   operator T (void);
-  // Returns the value as type T.
 
+  /// The constructor, read <varname> from the enviroment, using
+  /// <vardefault> as its value if it is not defined.
   void open (const ACE_TCHAR *varname, const T &defval);
-  // The constructor, read <varname> from the enviroment, using
-  // <vardefault> as its value if it is not defined.
 
+  /// Returns the name of the variable being tracked.
   const ACE_TCHAR *varname (void) const;
-  // Returns the name of the variable being tracked.
 
 private:
+  /// Disallow copying and assignment.
   ACE_UNIMPLEMENTED_FUNC (ACE_Env_Value(const ACE_Env_Value<T> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Env_Value<T> operator=(const ACE_Env_Value<T> &))
-  // Disallow copying and assignment.
 
   void fetch_value (void);
 

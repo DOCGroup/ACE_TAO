@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Malloc.h
-//
-// = AUTHOR
-//    Doug Schmidt and Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Malloc.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt and Irfan Pyarali
+ */
+//=============================================================================
+
 
 #ifndef ACE_MALLOC_H
 #define ACE_MALLOC_H
@@ -200,21 +197,20 @@ typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 
 ***********************************************************/
 
+/// This keeps stats on the usage of the memory manager.
 struct ACE_Export ACE_Malloc_Stats
-// TITLE
-//    This keeps stats on the usage of the memory manager.
 {
   ACE_Malloc_Stats (void);
   void dump (void) const;
 
+  /// Coarse-grained unit of allocation.
   ACE_INT nchunks_;
-  // Coarse-grained unit of allocation.
 
+  /// Fine-grained unit of allocation.
   ACE_INT nblocks_;
-  // Fine-grained unit of allocation.
 
+  /// Number of blocks in use
   ACE_INT ninuse_;
-  // Number of blocks in use
 };
 #define ACE_MALLOC_STATS(X) X
 #else
@@ -244,40 +240,45 @@ struct ACE_Export ACE_Malloc_Stats
                                 : (((ACE_MALLOC_PADDING / ACE_MALLOC_ALIGN) + 1) \
                                    * ACE_MALLOC_ALIGN))
 
+/**
+ * @class ACE_Control_Block
+ *
+ * @brief This information is stored in memory allocated by the <Memory_Pool>.
+ *
+ * This class defines the "old" control block class for use in
+ * ACE_Malloc_T.  This control block implementation is
+ * considerable more efficient than the "position independent"
+ * one below (ACE_PI_Control_Block) but if you are going to use
+ * it to construct a ACE_Malloc_T and access the memory from
+ * several different processes, you must "map" the underlying
+ * memory pool to the same address.
+ */
 class ACE_Export ACE_Control_Block
 {
-  // = TITLE
-  //    This information is stored in memory allocated by the <Memory_Pool>.
-  //
-  // = DESCRIPTION
-  //    This class defines the "old" control block class for use in
-  //    ACE_Malloc_T.  This control block implementation is
-  //    considerable more efficient than the "position independent"
-  //    one below (ACE_PI_Control_Block) but if you are going to use
-  //    it to construct a ACE_Malloc_T and access the memory from
-  //    several different processes, you must "map" the underlying
-  //    memory pool to the same address.
 public:
 
+  /**
+   * @class ACE_Malloc_Header
+   *
+   * @brief This is the control block header.  It's used by <ACE_Malloc>
+   * to keep track of each chunk of data when it's in the free
+   * list or in use.
+   */
   class ACE_Export ACE_Malloc_Header
   {
-    // = TITLE
-    //    This is the control block header.  It's used by <ACE_Malloc>
-    //    to keep track of each chunk of data when it's in the free
-    //    list or in use.
   public:
     ACE_Malloc_Header (void);
 
+    /// Points to next block if on free list.
     ACE_Malloc_Header *next_block_;
-    // Points to next block if on free list.
 
+    /// Initialize a malloc header pointer.
     static void init_ptr (ACE_Malloc_Header **ptr,
                           ACE_Malloc_Header *init,
                           void *base_addr);
-    // Initialize a malloc header pointer.
 
+    /// Size of this header control block.
     size_t size_;
-    // Size of this header control block.
 
 #if defined (ACE_MALLOC_PADDING_SIZE) && (ACE_MALLOC_PADDING_SIZE == 0)
     // No padding required.
@@ -290,62 +291,64 @@ public:
     long padding_[ACE_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_MALLOC_PADDING_SIZE];
 #endif /* ACE_MALLOC_PADDING_SIZE && ACE_MALLOC_PADDING_SIZE == 0 */
 
+    /// Dump the state of the object.
     void dump (void) const;
-    // Dump the state of the object.
   };
 
+  /**
+   * @class ACE_Name_Node
+   *
+   * @brief This class supports "named memory regions" within <ACE_Malloc>.
+   *
+   * Internally, the named memory regions are stored as a
+   * doubly-linked list within the <Memory_Pool>.  This makes
+   * it easy to iterate over the items in the list in both FIFO
+   * and LIFO order.
+   */
   class ACE_Export ACE_Name_Node
   {
-    // = TITLE
-    //    This class supports "named memory regions" within <ACE_Malloc>.
-    //
-    // = DESCRIPTION
-    //   Internally, the named memory regions are stored as a
-    //   doubly-linked list within the <Memory_Pool>.  This makes
-    //   it easy to iterate over the items in the list in both FIFO
-    //   and LIFO order.
   public:
     // = Initialization methods.
+    /// Constructor.
     ACE_Name_Node (const char *name,
                    char *name_ptr,
                    char *pointer,
                    ACE_Name_Node *head);
-    // Constructor.
 
+    /// Copy constructor.
     ACE_Name_Node (const ACE_Name_Node &);
-    // Copy constructor.
 
+    /// Constructor.
     ACE_Name_Node (void);
-    // Constructor.
 
+    /// Constructor.
     ~ACE_Name_Node (void);
-    // Constructor.
 
+    /// Initialize a name node pointer.
     static void init_ptr (ACE_Name_Node **ptr,
                           ACE_Name_Node *init,
                           void *base_addr);
-    // Initialize a name node pointer.
 
+    /// Return a pointer to the name of this node.
     const char *name (void) const;
-    // Return a pointer to the name of this node.
 
+    /// Assign a name;
     void name (const char *);
-    // Assign a name;
 
+    /// Name of the Node.
     char *name_;
-    // Name of the Node.
 
+    /// Pointer to the contents.
     char *pointer_;
-    // Pointer to the contents.
 
+    /// Pointer to the next node in the doubly-linked list.
     ACE_Name_Node *next_;
-    // Pointer to the next node in the doubly-linked list.
 
+    /// Pointer to the previous node in the doubly-linked list.
     ACE_Name_Node *prev_;
-    // Pointer to the previous node in the doubly-linked list.
 
+    /// Dump the state of the object.
     void dump (void) const;
-    // Dump the state of the object.
   };
 
   static void print_alignment_info (void);

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Stream_Modules.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Stream_Modules.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 // This needs to go outside of the #if !defined() block.  Don't ask...
 #include "ace/Task.h"
@@ -25,17 +22,20 @@
 #define ACE_STREAM_MODULES
 #include "ace/pre.h"
 
+/**
+ * @class ACE_Stream_Head
+ *
+ * @brief Standard module that acts as the head of a ustream.
+ */
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE>
 {
-  // = TITLE
-  //    Standard module that acts as the head of a ustream.
 public:
+  /// Construction
   ACE_Stream_Head (void);
-  // Construction
 
+  /// Destruction
   ~ACE_Stream_Head (void);
-  // Destruction
 
   // = ACE_Task hooks
   virtual int open (void *a = 0);
@@ -48,29 +48,32 @@ public:
   virtual int info (ACE_TCHAR **info_string, size_t length) const;
   virtual int fini (void);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Performs canonical flushing at the ACE_Stream Head.
   int control (ACE_Message_Block *);
   int canonical_flush (ACE_Message_Block *);
-  // Performs canonical flushing at the ACE_Stream Head.
 };
 
+/**
+ * @class ACE_Stream_Tail
+ *
+ * @brief Standard module that acts as the head of a ustream.
+ */
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE>
 {
-  // = TITLE
-  //    Standard module that acts as the head of a ustream.
 public:
+  /// Construction
   ACE_Stream_Tail (void);
-  // Construction
 
+  /// Destruction
   ~ACE_Stream_Tail (void);
-  // Destruction
 
   // = ACE_Task hooks
   virtual int open (void *a = 0);
@@ -83,30 +86,33 @@ public:
   virtual int info (ACE_TCHAR **info_string, size_t length) const;
   virtual int fini (void);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Performs canonical flushing at the ACE_Stream tail.
   int control (ACE_Message_Block *);
   int canonical_flush (ACE_Message_Block *);
-  // Performs canonical flushing at the ACE_Stream tail.
 };
 
+/**
+ * @class ACE_Thru_Task
+ *
+ * @brief Standard module that acts as a "no op", simply passing on all
+ * data to its adjacent neighbor.
+ */
 template <ACE_SYNCH_DECL>
 class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_USE>
 {
-  // = TITLE
-  //    Standard module that acts as a "no op", simply passing on all
-  //    data to its adjacent neighbor.
 public:
+  /// Construction
   ACE_Thru_Task (void);
-  // Construction
 
+  /// Destruction
   ~ACE_Thru_Task (void);
-  // Destruction
 
   // = ACE_Task hooks
   virtual int open (void *a = 0);
@@ -119,11 +125,11 @@ public:
   virtual int info (ACE_TCHAR **info_string, size_t length) const;
   virtual int fini (void);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

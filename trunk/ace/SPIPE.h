@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    SPIPE.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SPIPE.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SPIPE_H
 #define ACE_SPIPE_H
@@ -26,39 +23,44 @@
 
 #include "ace/SPIPE_Addr.h"
 
+/**
+ * @class ACE_SPIPE
+ *
+ * @brief Defines the member functions for the base class of the
+ * ACE_SPIPE abstraction.
+ */
 class ACE_Export ACE_SPIPE : public ACE_IPC_SAP
 {
-  // = TITLE
-  //     Defines the member functions for the base class of the
-  //     ACE_SPIPE abstraction.
 public:
+  /// Close down the STREAM pipe without removing the rendezvous point.
   int close (void);
-  // Close down the STREAM pipe without removing the rendezvous point.
 
+  /// Close down the STREAM pipe and remove the rendezvous point from
+  /// the file system.
   int remove (void);
-  // Close down the STREAM pipe and remove the rendezvous point from
-  // the file system.
 
+  /// Return the local address of this endpoint.
   int get_local_addr (ACE_SPIPE_Addr &) const;
-  // Return the local address of this endpoint.
 
+  /**
+   * Disable signal <signum>
+   * This is here to prevent Win32 from
+   * disabling SPIPE using socket calls
+   */
   int disable (int signum) const ;
-  // Disable signal <signum>
-  // This is here to prevent Win32 from
-  // disabling SPIPE using socket calls
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Ensure that this class is an abstract base class
   ACE_SPIPE (void);
-  // Ensure that this class is an abstract base class
 
+  /// Our local address.
   ACE_SPIPE_Addr local_addr_;
-  // Our local address.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

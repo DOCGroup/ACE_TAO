@@ -1,18 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Log_Msg_Backend.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Log_Msg_Backend.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_LOG_MSG_BACKEND_H
 #define ACE_LOG_MSG_BACKEND_H
@@ -26,8 +23,10 @@
 
 class ACE_Log_Record;
 
-/// Define the interface for ACE_Log_Msg backend strategies.
 /**
+ * @class ACE_Log_Msg_Backend
+ *
+ * @brief Define the interface for ACE_Log_Msg backend strategies.
  *
  * The ACE_Log_Msg class can log to multiple backend strategies, for
  * example, some send messages to a remote logger, others dump to a

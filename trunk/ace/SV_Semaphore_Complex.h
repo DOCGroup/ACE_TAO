@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//     ACE_SV_Semaphore_Complex.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     ACE_SV_Semaphore_Complex.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SV_SEMAPHORE_COMPLEX_H
 #define ACE_SV_SEMAPHORE_COMPLEX_H
@@ -24,37 +21,37 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_SV_Semaphore_Complex
+ *
+ * @brief This is a more complex semaphore wrapper that handles race
+ * conditions for initialization correctly...
+ *
+ * This code is a port to C++, inspired by: W. Richard Stevens
+ * from his book: UNIX Network Programming (Prentice Hall, ISBN
+ * 0-13-949876-1 - 1990).  We provide a simpler and easier to
+ * understand interface to the System V Semaphore system calls.
+ * We create and use a 2 + n-member set for the requested
+ * <ACE_SV_Semaphore_Complex>. The first member, [0], is a
+ * counter used to know when all processes have finished with
+ * the <ACE_SV_Semaphore_Complex>.  The counter is initialized
+ * to a large number, decremented on every create or open and
+ * incremented on every close. This way we can use the "adjust"
+ * feature provided by System V so that any process that exit's
+ * without calling <close> is accounted for. It doesn't help us
+ * if the last process does this (as we have no way of getting
+ * control to remove the <ACE_SV_Semaphore_Complex>) but it
+ * will work if any process other than the last does an exit
+ * (intentional or unintentional).
+ * The second member, [1], of the semaphore is used as a lock
+ * variable to avoid any race conditions in the <create> and
+ * <close> functions.
+ * The members beyond [1] are actual semaphore values in the
+ * array of semaphores, which may be sized by the user in the
+ * constructor.
+ */
 class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
 {
-  // = TITLE
-  //     This is a more complex semaphore wrapper that handles race
-  //     conditions for initialization correctly...
-  //
-  // = DESCRIPTION
-  //      This code is a port to C++, inspired by: W. Richard Stevens
-  //      from his book: UNIX Network Programming (Prentice Hall, ISBN
-  //      0-13-949876-1 - 1990).  We provide a simpler and easier to
-  //      understand interface to the System V Semaphore system calls.
-  //      We create and use a 2 + n-member set for the requested
-  //      <ACE_SV_Semaphore_Complex>. The first member, [0], is a
-  //      counter used to know when all processes have finished with
-  //      the <ACE_SV_Semaphore_Complex>.  The counter is initialized
-  //      to a large number, decremented on every create or open and
-  //      incremented on every close. This way we can use the "adjust"
-  //      feature provided by System V so that any process that exit's
-  //      without calling <close> is accounted for. It doesn't help us
-  //      if the last process does this (as we have no way of getting
-  //      control to remove the <ACE_SV_Semaphore_Complex>) but it
-  //      will work if any process other than the last does an exit
-  //      (intentional or unintentional).
-  //
-  //      The second member, [1], of the semaphore is used as a lock
-  //      variable to avoid any race conditions in the <create> and
-  //      <close> functions.
-  //
-  //      The members beyond [1] are actual semaphore values in the
-  //      array of semaphores, which may be sized by the user in the
-  //      constructor.
 public:
   enum
   {
@@ -76,51 +73,53 @@ public:
                             int perms = ACE_DEFAULT_FILE_PERMS);
   ~ACE_SV_Semaphore_Complex (void);
 
+  /// Open or create an array of SV_Semaphores.  We return 0 if all is
+  /// OK, else -1.
   int open (const char *name,
             int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
             int perms = ACE_DEFAULT_FILE_PERMS);
-  // Open or create an array of SV_Semaphores.  We return 0 if all is
-  // OK, else -1.
 
+  /// Open or create an array of SV_Semaphores.  We return 0 if all is
+  /// OK, else -1.
   int open (key_t key,
             int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
             int perms = ACE_DEFAULT_FILE_PERMS);
-  // Open or create an array of SV_Semaphores.  We return 0 if all is
-  // OK, else -1.
 
+  /**
+   * Close an ACE_SV_Semaphore. Unlike the <remove> method, this
+   * method is for a process to call before it exits, when it is done
+   * with the ACE_SV_Semaphore. We "decrement" the counter of
+   * processes using the ACE_SV_Semaphore, and if this was the last
+   * one, we can remove the ACE_SV_Semaphore.
+   */
   int close (void);
-  // Close an ACE_SV_Semaphore. Unlike the <remove> method, this
-  // method is for a process to call before it exits, when it is done
-  // with the ACE_SV_Semaphore. We "decrement" the counter of
-  // processes using the ACE_SV_Semaphore, and if this was the last
-  // one, we can remove the ACE_SV_Semaphore.
 
   // = Semaphore acquire and release methods.
 
+  /// Acquire the semaphore.
   int acquire (u_short n = 0, int flags = 0) const;
-  // Acquire the semaphore.
 
+  /// Acquire a semaphore for reading.
   int acquire_read (u_short n = 0, int flags = 0) const;
-  // Acquire a semaphore for reading.
 
+  /// Acquire a semaphore for writing
   int acquire_write (u_short n = 0, int flags = 0) const;
-  // Acquire a semaphore for writing
 
+  /// Try to acquire the semaphore.
   int tryacquire (u_short n = 0, int flags = 0) const;
-  // Try to acquire the semaphore.
 
+  /// Try to acquire the semaphore for reading.
   int tryacquire_read (u_short n = 0, int flags = 0) const;
-  // Try to acquire the semaphore for reading.
 
+  /// Try to acquire the semaphore for writing.
   int tryacquire_write (u_short n = 0, int flags = 0) const;
-  // Try to acquire the semaphore for writing.
 
+  /// Release the semaphore.
   int release (u_short n = 0, int flags = 0) const;
-  // Release the semaphore.
 
   // = Semaphore operation methods.
   int op (int val, u_short n = 0, int flags = 0) const;
@@ -134,11 +133,11 @@ public:
   ACE_USING ACE_SV_Semaphore_Simple::get_id;
   ACE_USING ACE_SV_Semaphore_Simple::remove;
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
   static const int BIGCOUNT_;

@@ -1,20 +1,17 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ace
-//
-// = FILENAME
-//   config-all.h
-//
-// = AUTHOR
-//   (Originally in OS.h)
-//   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
-//   <stophph@diku.dk>, and a cast of thousands...
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   config-all.h
+ *
+ *  $Id$
+ *
+ *  @author (Originally in OS.h)Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Jesper S. M|ller<stophph@diku.dk>
+ *  @author and a cast of thousands...
+ */
+//=============================================================================
+
 
 #ifndef ACE_CONFIG_ALL_H
 #define ACE_CONFIG_ALL_H

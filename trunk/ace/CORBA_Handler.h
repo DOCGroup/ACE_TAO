@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    CORBA_Handler.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
-//    Irfan Pyarali (irfan@wuerl.wustl.edu).
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CORBA_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ *  @author Irfan Pyarali (irfan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef ACE_CORBA_HANDLER_H
 #define ACE_CORBA_HANDLER_H
@@ -35,60 +32,68 @@
 #undef EXCEPTIONS
 #undef WANT_ORBIX_FDS
 
+/**
+ * @class ACE_CORBA_Handler
+ *
+ * @brief Handle Orbix requests in conjunction with ACE.
+ *
+ * Note, do *NOT* inherit from this class!  Instead, use the
+ * <ACE_MT_CORBA_HAndler> and <ACE_ST_CORBA_Handler> as
+ * Singletons.
+ */
 class ACE_Export ACE_CORBA_Handler : public ACE_Service_Object
 {
-  // = TITLE
-  //     Handle Orbix requests in conjunction with ACE.
-  //
-  // = DESCRIPTION
-  //     Note, do *NOT* inherit from this class!  Instead, use the
-  //     <ACE_MT_CORBA_HAndler> and <ACE_ST_CORBA_Handler> as
-  //     Singletons.
 public:
   // = Activation and deactivation methods.
 
+  /**
+   * Activate and register <service_name> with the Orbix daemon.  If
+   * <marker_name> and <service_location> are != 0 then do a "putit"
+   * to register this service with orbixd.  This method also
+   * increments the reference count of active services using the
+   * ACE_ST_CORBA_Handler.
+   */
   virtual int activate_service (const char *service_name,
                                 const char *marker_name = 0,
                                 const char *service_location = 0);
-  // Activate and register <service_name> with the Orbix daemon.  If
-  // <marker_name> and <service_location> are != 0 then do a "putit"
-  // to register this service with orbixd.  This method also
-  // increments the reference count of active services using the
-  // ACE_ST_CORBA_Handler.
 
+  /**
+   * Decrement the reference count and free up all the
+   * resources if this is the last service to be using
+   * the ACE_ST_CORBA_Handler...
+   */
   virtual int deactivate_service (const char *service_name = 0,
                                   const char *marker_name = 0);
-  // Decrement the reference count and free up all the
-  // resources if this is the last service to be using
-  // the ACE_ST_CORBA_Handler...
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Make this into an "abstract" class...
   ACE_CORBA_Handler (void);
-  // Make this into an "abstract" class...
 
+  /// Note virtual destructor...
   virtual ~ACE_CORBA_Handler (void);
-  // Note virtual destructor...
 
+  /**
+   * Register <service_name> by doing a "putit" to register the
+   * <service_name> using the <marker_name> at <service_location> with
+   * orbixd.
+   */
   virtual int register_service (const char *service_name,
                                 const char *marker_name,
                                 const char *service_location);
-  // Register <service_name> by doing a "putit" to register the
-  // <service_name> using the <marker_name> at <service_location> with
-  // orbixd.
 
+  /// Register <service_name> by doing a "putit" to register
+  /// <service_name> using the <marker_name> with orbixd.
   virtual int remove_service (const char *service_name,
                               const char *marker_name = 0);
-  // Register <service_name> by doing a "putit" to register
-  // <service_name> using the <marker_name> with orbixd.
 
+  /// Keep track of the number of active CORBA_Handlers.
   ssize_t reference_count_;
-  // Keep track of the number of active CORBA_Handlers.
 
 private:
   // = Disallow assignment and initialization.
@@ -96,71 +101,73 @@ private:
   const ACE_CORBA_Handler &operator= (const ACE_CORBA_Handler &rhs);
 };
 
+/**
+ * @class ACE_ST_CORBA_Handler
+ *
+ * @brief Handle single-threaded Orbix requests in conjunction with the
+ * <ACE_Reactor>.
+ *
+ * You should NOT use this class unless you've got a VERY old
+ * version of Orbix that only supports single-threading.  If
+ * you're using a more recent version of Orbix use the
+ * <ACE_MT_CORBA_Handler>.
+ */
 class ACE_Export ACE_ST_CORBA_Handler : public ACE_CORBA_Handler
 {
-  // = TITLE
-  //     Handle single-threaded Orbix requests in conjunction with the
-  //     <ACE_Reactor>.
-  // 
-  // = DESCRIPTION
-  //     You should NOT use this class unless you've got a VERY old
-  //     version of Orbix that only supports single-threading.  If
-  //     you're using a more recent version of Orbix use the
-  //     <ACE_MT_CORBA_Handler>.
 public:
   // = Singleton access point.
+  /// Returns a Singleton.
   static ACE_CORBA_Handler *instance (void);
-  // Returns a Singleton.
 
   // = Demuxing hook.
+  /// Process the next Orbix event.
   virtual int handle_input (ACE_HANDLE);
-  // Process the next Orbix event.
 
   // = Dynamic linking hooks.
+  /// Atomically suspend all the threads associated with the <thr_mgr>.
   virtual int suspend (void);
-  // Atomically suspend all the threads associated with the <thr_mgr>.
 
+  /// Atomically resume all the threads associated with the <thr_mgr>.
   virtual int resume (void);
-  // Atomically resume all the threads associated with the <thr_mgr>.
 
   // = Iterations dictate # of <processNextEvent> calls per-callback.
+  /// Get the current iteration.
   size_t iterations (void);
-  // Get the current iteration.
 
+  /// Set the current iteration.
   void iterations (size_t);
-  // Set the current iteration.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Preinitialize any descriptors that Orbix is using.  This is
+  /// called in <instance>.
   void get_orbix_descriptors (void);
-  // Preinitialize any descriptors that Orbix is using.  This is
-  // called in <instance>.
 
+  /// Constructors (ensure Singleton...).
   ACE_ST_CORBA_Handler (void);
-  // Constructors (ensure Singleton...).
 
+  /// Destructor cleans up resources.
   virtual ~ACE_ST_CORBA_Handler (void);
-  // Destructor cleans up resources.
 
+  /// Insert a descriptor into the ACE_Reactor that Orbix has just added.
   static void insert_handle (ACE_HANDLE);
-  // Insert a descriptor into the ACE_Reactor that Orbix has just added.
 
+  /// Remove a descriptor from the ACE_Reactor that Orbix has just deleted.
   static void remove_handle (ACE_HANDLE);
-  // Remove a descriptor from the ACE_Reactor that Orbix has just deleted.
 
+  /// Clean up the singleton at program rundown.
   static void instance_cleaner (void *object, void *param);
-  // Clean up the singleton at program rundown.
 
+  /// ACE_ST_CORBA_Handler is a singleton object.
   static ACE_ST_CORBA_Handler *instance_;
-  // ACE_ST_CORBA_Handler is a singleton object.
 
+  /// Number of iterations to process per <processNextEvent> call.
   size_t iterations_;
-  // Number of iterations to process per <processNextEvent> call.
 
   // If the user has complete control of all Orbix callback processing and
   // really, really knows how to handle all of the involved interworkings,
@@ -178,72 +185,72 @@ protected:
 
 #if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)
 
+/**
+ * @class ACE_MT_CORBA_Handler
+ *
+ * @brief Handle multi-threaded Orbix requests in conjunction with the
+ * <ACE_Reactor>.
+ *
+ * If you are using MT-Orbix (which has been the default Orbix
+ * for years) you should use this class rather than
+ * <ACE_ST_CORBA_Handler>.  See
+ * www.cs.wustl.edu/~schmidt/COOTS-96.ps.gz
+ * for an explanation of what this class does for Orbix.
+ */
 class ACE_Export ACE_MT_CORBA_Handler : public ACE_CORBA_Handler, public ACE_CORBA_1 (ThreadFilter)
 {
-  // = TITLE
-  //     Handle multi-threaded Orbix requests in conjunction with the
-  //     <ACE_Reactor>.
-  //
-  // = DESCRIPTION
-  //     If you are using MT-Orbix (which has been the default Orbix
-  //     for years) you should use this class rather than
-  //     <ACE_ST_CORBA_Handler>.  See
-  //
-  //     www.cs.wustl.edu/~schmidt/COOTS-96.ps.gz
-  //
-  //     for an explanation of what this class does for Orbix.
 public:
   // = Singleton access point.
+  /// Returns a Singleton.
   static ACE_CORBA_Handler *instance (void);
-  // Returns a Singleton.
 
   // = Demuxing hook.
+  /// Process the next Orbix event.
   virtual int handle_input (ACE_HANDLE);
-  // Process the next Orbix event.
 
   // = Threading hook.
+  /// Set the Thread_Manager used by ACE_MT_CORBA_Handler
   void thr_mgr (ACE_Thread_Manager *tm);
-  // Set the Thread_Manager used by ACE_MT_CORBA_Handler
 
+  /// Get the Thread_Manager used by ACE_MT_CORBA_Handler
   ACE_Thread_Manager *thr_mgr (void) const;
-  // Get the Thread_Manager used by ACE_MT_CORBA_Handler
 
   // = Dynamic linking hooks.
+  /// Atomically suspend all the threads associated with the <thr_mgr>.
   virtual int suspend (void);
-  // Atomically suspend all the threads associated with the <thr_mgr>.
 
+  /// Atomically resume all the threads associated with the <thr_mgr>.
   virtual int resume (void);
-  // Atomically resume all the threads associated with the <thr_mgr>.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// function executed by new thread
   static void *process_events (void *);
-  // function executed by new thread
 
+  /// Constructors (ensure Singleton...).
   ACE_MT_CORBA_Handler (void);
-  // Constructors (ensure Singleton...).
 
+  /// Destructor cleans up resources.
   virtual ~ACE_MT_CORBA_Handler (void);
-  // Destructor cleans up resources.
 
+  /// Take the incoming request and pass it to <handle_input> through
+  /// the Reactor.
   virtual int inRequestPreMarshal (ACE_CORBA_1 (Request) &r,
                                    ACE_CORBA_1 (Environment) &IT_env = ACE_CORBA_1 (default_environment));
-  // Take the incoming request and pass it to <handle_input> through
-  // the Reactor.
 
+  /// ACE_MT_CORBA_Handler is a singleton object.
   static ACE_MT_CORBA_Handler *instance_;
-  // ACE_MT_CORBA_Handler is a singleton object.
 
+  /// Event demultiplexor used by ACE_ST_CORBA_Handler.
   ACE_Thread_Manager *thr_mgr_;
-  // Event demultiplexor used by ACE_ST_CORBA_Handler.
 
+  /// Used to send CORBA::Requests through the server
   ACE_Pipe pipe_;
-  // Used to send CORBA::Requests through the server
 };
 #endif /* ACE_HAS_MT_ORBIX */
 

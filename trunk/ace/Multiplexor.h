@@ -1,23 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Multiplexor.h
-//
-// = DESCRIPTION
-//     Define the ACE_Driver and ACE_Multiplexor container classes.
-//     Note that these classes have never been implemented due to lack
-//     of need.
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Multiplexor.h
+ *
+ *  $Id$
+ *
+ *   Define the ACE_Driver and ACE_Multiplexor container classes.
+ *   Note that these classes have never been implemented due to lack
+ *   of need.
+ *
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_MULTIPLEXOR_H
 #define ACE_MULTIPLEXOR_H
@@ -34,13 +31,13 @@
 #if defined (ACE_HAS_THREADS)
 
 #if 0
+/**
+ * @class ACE_Driver
+ *
+ *
+ */
 class ACE_Export ACE_Driver
 {
-  // = TITLE
-  //
-  //
-  // = DESCRIPTION
-  //
 public:
   ACE_Driver (void);
   ~ACE_Driver (void);
@@ -50,12 +47,13 @@ public:
   virtual int unlink_from_below (ACE_Module *);
 };
 
+/**
+ * @class ACE_Multiplexor
+ *
+ *
+ */
 class ACE_Export ACE_Multiplexor
 {
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
 public:
   // = Constructors and destructors
   ACE_Multiplexor (void);

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    MEM_Addr.h
-//
-// = AUTHOR
-//    Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MEM_Addr.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_MEM_ADDR_H
 #define ACE_MEM_ADDR_H
@@ -26,115 +23,122 @@
 
 #include "ace/INET_Addr.h"
 
+/**
+ * @class ACE_MEM_Addr
+ *
+ * @brief Defines a C++ wrapper facade for the shared memory transport
+ * address family format.
+ */
 class ACE_Export ACE_MEM_Addr : public ACE_Addr
 {
-  // = TITLE
-  //    Defines a C++ wrapper facade for the shared memory transport
-  //    address family format.
 public:
   // = Initialization methods.
+  /// Default constructor.
   ACE_MEM_Addr (void);
-  // Default constructor.
 
+  /// Copy constructor.
   ACE_MEM_Addr (const ACE_MEM_Addr &);
-  // Copy constructor.
 
+  /// Creates an <ACE_INET_Addr> from a <port_number> and the remote
+  /// <host_name>.
   ACE_MEM_Addr (u_short port_number);
-  // Creates an <ACE_INET_Addr> from a <port_number> and the remote
-  // <host_name>.
 
+  /// Creates an <ACE_INET_Addr> from a <port_name>.
   ACE_EXPLICIT ACE_MEM_Addr (const ACE_TCHAR port_name[]);
-  // Creates an <ACE_INET_Addr> from a <port_name>.
 
+  /// Default dtor.
   ~ACE_MEM_Addr (void);
-  // Default dtor.
 
   // = Direct initialization methods.
 
+  /// default initialization routine.
   int initialize_local (u_short port);
-  // default initialization routine.
 
+  /// Check if <sap> designate an enpoint withing the same host.
   int same_host (const ACE_INET_Addr& sap);
-  // Check if <sap> designate an enpoint withing the same host.
 
   // These methods are useful after the object has been constructed.
 
+  /**
+   * Initializes an <ACE_INET_Addr> from a <port_number> and the
+   * remote <host_name>.  If <encode> is enabled then <port_number> is
+   * converted into network byte order, otherwise it is assumed to be
+   * in network byte order already and are passed straight through.
+   */
   int set (u_short port_number,
            int encode = 1);
-  // Initializes an <ACE_INET_Addr> from a <port_number> and the
-  // remote <host_name>.  If <encode> is enabled then <port_number> is
-  // converted into network byte order, otherwise it is assumed to be
-  // in network byte order already and are passed straight through.
 
+  /// Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
+  /// <port_name>, the remote <host_name>, and the <protocol>.
   int set (const ACE_TCHAR port_name[]);
-  // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
-  // <port_name>, the remote <host_name>, and the <protocol>.
 
+  /// Return a pointer to the underlying network address.
   virtual void *get_addr (void) const;
-  // Return a pointer to the underlying network address.
 
+  /// Set a pointer to the address.
   virtual void set_addr (void *, int len);
-  // Set a pointer to the address.
 
+  /// Transform the external <ACE_INET_Addr> address into string
+  /// format.
   virtual int addr_to_string (ACE_TCHAR buffer[],
                               size_t size,
                               int ipaddr_format = 1) const;
-  // Transform the external <ACE_INET_Addr> address into string
-  // format.
 
+  /// Initializes the external <ACE_INET_Addr> from the <address>.
   virtual int string_to_addr (const ACE_TCHAR address[]);
-  // Initializes the external <ACE_INET_Addr> from the <address>.
 
+  /// Sets the port number.
   void set_port_number (u_short,
                         int encode = 1);
-  // Sets the port number.
 
+  /// Return the port number, converting it into host byte order.
   u_short get_port_number (void) const;
-  // Return the port number, converting it into host byte order.
 
+  /// Return the character representation of the hostname.
   int get_host_name (ACE_TCHAR hostname[],
                      size_t hostnamelen) const;
-  // Return the character representation of the hostname.
 
+  /**
+   * Return the character representation of the hostname (this version
+   * is non-reentrant since it returns a pointer to a static data
+   * area).
+   */
   const char *get_host_name (void) const;
-  // Return the character representation of the hostname (this version
-  // is non-reentrant since it returns a pointer to a static data
-  // area).
 
+  /// Return the "dotted decimal" external address.
   const char *get_host_addr (void) const;
-  // Return the "dotted decimal" external address.
 
+  /// Return the 4-byte external IP address, converting it into host byte
+  /// order.
   ACE_UINT32 get_ip_address (void) const;
-  // Return the 4-byte external IP address, converting it into host byte
-  // order.
 
   const ACE_INET_Addr &get_remote_addr (void) const;
   const ACE_INET_Addr &get_local_addr (void) const;
 
+  /// Compare two addresses for equality.  The addresses are considered
+  /// equal if they contain the same IP address and port number.
   int operator == (const ACE_MEM_Addr &SAP) const;
   int operator == (const ACE_INET_Addr &SAP) const;
-  // Compare two addresses for equality.  The addresses are considered
-  // equal if they contain the same IP address and port number.
 
+  /// Compare two addresses for inequality.
   int operator != (const ACE_MEM_Addr &SAP) const;
   int operator != (const ACE_INET_Addr &SAP) const;
-  // Compare two addresses for inequality.
 
+  /// Computes and returns hash value.
   virtual u_long hash (void) const;
-  // Computes and returns hash value.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// External INET addr used for identifying host.
   ACE_INET_Addr external_;
-  // External INET addr used for identifying host.
 
+  /// Internal INET addr for accepting/connecting.
   ACE_INET_Addr internal_;
-  // Internal INET addr for accepting/connecting.
 };
 
 #if defined (__ACE_INLINE__)

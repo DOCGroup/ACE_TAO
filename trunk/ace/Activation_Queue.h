@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Activation_Queue.h
-//
-// = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Activation_Queue.h
+ *
+ *  $Id$
+ *
+ *  @author Andres Kruse <Andres.Kruse@cern.ch>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_ACTIVATION_QUEUE_H
 #define ACE_ACTIVATION_QUEUE_H
@@ -29,25 +26,27 @@
 #include "ace/Method_Request.h"
 
 // Be compatible with the terminology in the POSA2 book!
-#define ACE_Activation_List ACE_Activation_Queue 
+#define ACE_Activation_List ACE_Activation_Queue
 
+/**
+ * @class ACE_Activation_Queue
+ *
+ * @brief Reifies a method into a request.  Subclasses typically
+ * represent necessary state and behavior.
+ *
+ * A <Method_Request> is inserted in the <Activation_Queue>,
+ * where it is subsequently removed by the <Scheduler>, which
+ * invokes its <call> method..
+ */
 class ACE_Export ACE_Activation_Queue
 {
-  // = TITLE
-  //     Reifies a method into a request.  Subclasses typically
-  //     represent necessary state and behavior.
-  //
-  // = DESCRIPTION
-  //     A <Method_Request> is inserted in the <Activation_Queue>,
-  //     where it is subsequently removed by the <Scheduler>, which
-  //     invokes its <call> method..
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Activation_Queue (void);
-  // Destructor.
 
   // = Activate Queue operations.
 
@@ -58,35 +57,35 @@ public:
   // or if the time specified in timeout elapses, (in which case errno
   // = EWOULDBLOCK).
 
+  /// Dequeue the next available <Method_Request>.
   ACE_Method_Request *dequeue (ACE_Time_Value *tv = 0);
-  // Dequeue the next available <Method_Request>.
 
+  /// Enqueue the <Method_Request> in priority order.  The priority is
+  /// determined by the <priority> method of the <new_message_request>.
   int enqueue (ACE_Method_Request *new_method_request,
                ACE_Time_Value *tv = 0);
-  // Enqueue the <Method_Request> in priority order.  The priority is
-  // determined by the <priority> method of the <new_message_request>.
 
+  /// Get the current number of method objects in the queue.
   int method_count (void) const;
-  // Get the current number of method objects in the queue.
 
+  /// Returns 1 if the queue is empty, 0 otherwise.
   int is_empty (void) const;
-  // Returns 1 if the queue is empty, 0 otherwise.
 
+  /// Returns 1 if the queue is full, 0 otherwise.
   int is_full (void) const;
-  // Returns 1 if the queue is full, 0 otherwise.
 
+  /// Dump the state of an request.
   void dump (void) const;
-  // Dump the state of an request.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Stores the <Method_Requests>.
   ACE_Message_Queue<ACE_SYNCH> *queue_;
-  // Stores the <Method_Requests>.
 
+  /// Keeps track of whether we need to delete the queue.
   int delete_queue_;
-  // Keeps track of whether we need to delete the queue.
 };
 
 #if defined (__ACE_INLINE__)
@@ -95,4 +94,3 @@ protected:
 
 #include "ace/post.h"
 #endif /* ACE_ACTIVATION_QUEUE_H */
-

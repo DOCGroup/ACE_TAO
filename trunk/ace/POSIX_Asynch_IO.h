@@ -1,28 +1,22 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//
-//    ace
-//
-// = FILENAME
-//
-//    POSIX_Asynch_IO.h
-//
-// = DESCRIPTION
-//
-//    The implementation classes for POSIX implementation of Asynch
-//    Operations are defined here in this file.
-//
-// = AUTHOR
-//
-//    Irfan Pyarali (irfan@cs.wustl.edu),
-//    Tim Harrison (harrison@cs.wustl.edu) and
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    POSIX_Asynch_IO.h
+ *
+ *  $Id$
+ *
+ *
+ *  The implementation classes for POSIX implementation of Asynch
+ *  Operations are defined here in this file.
+ *
+ *
+ *  @author Irfan Pyarali (irfan@cs.wustl.edu)
+ *  @author Tim Harrison (harrison@cs.wustl.edu)
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_POSIX_ASYNCH_IO_H
 #define ACE_POSIX_ASYNCH_IO_H
@@ -43,59 +37,69 @@ class ACE_POSIX_SIG_Proactor;
 class ACE_POSIX_AIOCB_Proactor;
 class ACE_Proactor_Impl;
 
+/**
+ * @class ACE_POSIX_Asynch_Result
+ *
+ * This class provides concrete implementation for <ACE_Asynch_Result>
+ * for POSIX4 platforms. This class extends <aiocb> and makes it more
+ * useful.
+ */
 class ACE_Export ACE_POSIX_Asynch_Result : public virtual ACE_Asynch_Result_Impl,
                                            public aiocb
 {
-  // = TITLE
-  //     This class provides concrete implementation for
-  //     <ACE_Asynch_Result> for POSIX4 platforms. This class extends
-  //     <aiocb> and makes it more useful.
 public:
+  /// Number of bytes transferred by the operation.
   u_long bytes_transferred (void) const;
-  // Number of bytes transferred by the operation.
 
+  /// ACT associated with the operation.
   const void *act (void) const;
-  // ACT associated with the operation.
 
+  /// Did the operation succeed?
   int success (void) const;
-  // Did the operation succeed?
 
+  /**
+   * This is the ACT associated with the handle on which the
+   * Asynch_Operation takes place.
+   *
+   * @@ This is not implemented for POSIX4 platforms.
+   *
+   */
   const void *completion_key (void) const;
-  // This is the ACT associated with the handle on which the
-  // Asynch_Operation takes place.
-  //
-  // @@ This is not implemented for POSIX4 platforms.
-  //
 
+  /// Error value if the operation fail.
   u_long error (void) const;
-  // Error value if the operation fail.
 
+  /// This returns ACE_INVALID_HANDLE on POSIX4 platforms.
   ACE_HANDLE event (void) const;
-  // This returns ACE_INVALID_HANDLE on POSIX4 platforms.
 
+  /**
+   * This really make sense only when doing file I/O.
+   *
+   * @@ On POSIX4-Unix, offset_high should be supported using
+   *     aiocb64.
+   *
+   */
   u_long offset (void) const;
   u_long offset_high (void) const;
-  // This really make sense only when doing file I/O.
-  //
-  // @@ On POSIX4-Unix, offset_high should be supported using
-  //     aiocb64.
-  //
 
+  /// Priority of the operation.
   int priority (void) const;
-  // Priority of the operation.
 
+  /**
+   * POSIX4 realtime signal number to be used for the
+   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue <aio_> calls.
+   */
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
-  // default, SIGRTMIN is used to issue <aio_> calls.
-  
-  int post_completion (ACE_Proactor_Impl *proactor);
-  // Post <this> to the Proactor.
 
+  /// Post <this> to the Proactor.
+  int post_completion (ACE_Proactor_Impl *proactor);
+
+  /// Destructor.
   virtual ~ACE_POSIX_Asynch_Result (void);
-  // Destructor.
 
 protected:
+  /// Constructor. <Event> is not used on POSIX.
   ACE_POSIX_Asynch_Result (ACE_Handler &handler,
                            const void* act,
                            ACE_HANDLE event,
@@ -103,95 +107,104 @@ protected:
                            u_long offset_high,
                            int priority,
                            int signal_number);
-  // Constructor. <Event> is not used on POSIX.
 
+  /// Handler that will be called back.
   ACE_Handler &handler_;
-  // Handler that will be called back.
 
+  /**
+   * ACT for this operation.
+   * We could use <aiocb::aio_sigevent.sigev_value.sival_ptr> for
+   * this. But it doesnot provide the constness, so this may be
+   * better.
+   */
   const void *act_;
-  // ACT for this operation.
-  // We could use <aiocb::aio_sigevent.sigev_value.sival_ptr> for
-  // this. But it doesnot provide the constness, so this may be
-  // better.
 
+  /// Bytes transferred by this operation.
   u_long bytes_transferred_;
-  // Bytes transferred by this operation.
 
+  /// Success indicator.
   int success_;
-  // Success indicator.
 
+  /// ACT associated with handle.
   const void *completion_key_;
-  // ACT associated with handle.
 
+  /// Error if operation failed.
   u_long error_;
-  // Error if operation failed.
 };
 
+/**
+ * @class ACE_POSIX_Asynch_Operation
+ *
+ * @brief This class abstracts out the common things needed for
+ * implementing <Asynch_Operation> for POSIX platforms. Specific
+ * implementations such as <POSIX_AIOCB_Asynch_Operation> and
+ * <POSIX_SIG_Asynch_Operation>, can derive from this class.
+ */
 class ACE_Export ACE_POSIX_Asynch_Operation : public virtual ACE_Asynch_Operation_Impl
 {
-  // = TITLE
-  //     This class abstracts out the common things needed for
-  //     implementing <Asynch_Operation> for POSIX platforms. Specific
-  //     implementations such as <POSIX_AIOCB_Asynch_Operation> and
-  //     <POSIX_SIG_Asynch_Operation>, can derive from this class.
 public:
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle. No need for the Proactor since the sub classes
+   * will know the correct implementation Proactor class, since this
+   * Operation class itself was created by the correct implementation
+   * Proactor class.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle. No need for the Proactor since the sub classes
-  // will know the correct implementation Proactor class, since this
-  // Operation class itself was created by the correct implementation
-  // Proactor class.
 
+  /// Check the documentation for <ACE_Asynch_Operation::cancel>.
   int cancel (void);
-  // Check the documentation for <ACE_Asynch_Operation::cancel>.
 
   // = Access methods.
 
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 protected:
+  /// No op contructor.
   ACE_POSIX_Asynch_Operation (void);
-  // No op contructor.
 
+  /// Destructor.
   virtual ~ACE_POSIX_Asynch_Operation (void);
-  // Destructor.
 
+  /// Proactor that this Asynch IO will be registered with.
   ACE_Proactor *proactor_;
-  // Proactor that this Asynch IO will be registered with.
 
+  /// Handler that will receive the callback.
   ACE_Handler *handler_;
-  // Handler that will receive the callback.
 
+  /// I/O handle used for reading.
   ACE_HANDLE handle_;
-  // I/O handle used for reading.
 };
 
+/**
+ * @class ACE_POSIX_AIOCB_Asynch_Operation
+ *
+ * @brief This class implements <ACE_Asynch_Operation> for <AIOCB>
+ * (Asynchronous I/O Control Blocks) based implementation of
+ * Proactor.
+ */
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Operation : public virtual ACE_POSIX_Asynch_Operation
 {
-  // = TITLE
-  //     This class implements <ACE_Asynch_Operation> for <AIOCB>
-  //     (Asynchronous I/O Control Blocks) based implementation of
-  //     Proactor.
 public:
+  /// Return the underlying Proactor implementation.
   ACE_POSIX_AIOCB_Proactor *posix_proactor (void) const;
-  // Return the underlying Proactor implementation.
- 
+
 protected:
+  /// Contructor.
   ACE_POSIX_AIOCB_Asynch_Operation (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Contructor.
 
+  /// Destructor.
   virtual ~ACE_POSIX_AIOCB_Asynch_Operation (void);
-  // Destructor.
 
-  virtual int register_and_start_aio (ACE_POSIX_Asynch_Result *result, 
+  /// <op> means operation : 0 - read , 1 - write.
+  virtual int register_and_start_aio (ACE_POSIX_Asynch_Result *result,
                                       int op);
-  // <op> means operation : 0 - read , 1 - write.
 
   // This call is for the POSIX implementation. This method is used by
   // <ACE_Asynch_Operation> to store some information with the
@@ -201,105 +214,121 @@ protected:
   // are slots available or no. Passing a valid ptr stores the ptr
   // with the Proactor.
 
+  /**
+   * It is easy to get this specific implementation proactor here,
+   * since it is the one that creates the correct POSIX_Asynch_*
+   * objects. We can use this to get to the implementation proactor
+   * directly.
+   */
   ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor_;
-  // It is easy to get this specific implementation proactor here,
-  // since it is the one that creates the correct POSIX_Asynch_*
-  // objects. We can use this to get to the implementation proactor
-  // directly.
 };
 
+/**
+ * @class ACE_POSIX_SIG_Asynch_Operation
+ *
+ * @brief This class implements <ACE_Asynch_Operation> for Realtime
+ * Signal (<sigtimedwait>) based implementation of Proactor.
+ */
 class ACE_Export ACE_POSIX_SIG_Asynch_Operation : public virtual ACE_POSIX_Asynch_Operation
 {
-  // = TITLE
-  //     This class implements <ACE_Asynch_Operation> for Realtime
-  //     Signal (<sigtimedwait>) based implementation of Proactor.
 public:
+  /// Return the  underlying Proactor implemetation.
   ACE_POSIX_SIG_Proactor *posix_proactor (void) const;
-  // Return the  underlying Proactor implemetation.
 
 protected:
+  /// Contructor.
   ACE_POSIX_SIG_Asynch_Operation (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-  // Contructor.
 
+  /// Destructor.
   virtual ~ACE_POSIX_SIG_Asynch_Operation (void);
-  // Destructor.
 
+  /**
+   * It is easy to get this specific implementation proactor here,
+   * since it is the one that creates the correct POSIX_Asynch_*
+   * objects. We can use this to get to the implementation proactor
+   * directly.
+   */
   ACE_POSIX_SIG_Proactor *posix_sig_proactor_;
-  // It is easy to get this specific implementation proactor here,
-  // since it is the one that creates the correct POSIX_Asynch_*
-  // objects. We can use this to get to the implementation proactor
-  // directly.
 };
 
+/**
+ * @class ACE_POSIX_Asynch_Read_Stream_Result
+ *
+ * @brief This class provides concrete implementation for
+ *    <ACE_Asynch_Read_Stream::Result> class for POSIX platforms.
+ */
 class ACE_Export ACE_POSIX_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
                                                        public ACE_POSIX_Asynch_Result
 {
-  // = TITLE
-  //     This class provides concrete implementation for
-  //     <ACE_Asynch_Read_Stream::Result> class for POSIX platforms.
 
+  /// Factory classes willl have special permissions.
   friend class ACE_POSIX_AIOCB_Asynch_Read_Stream;
   friend class ACE_POSIX_SIG_Asynch_Read_Stream;
-  // Factory classes willl have special permissions.
-  
+
+  /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
-  // The Proactor constructs the Result class for faking results.
 
 public:
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous read.
   u_long bytes_to_read (void) const;
-  // The number of bytes which were requested at the start of the
-  // asynchronous read.
 
+  /// Message block which contains the read data.
   ACE_Message_Block &message_block (void) const;
-  // Message block which contains the read data.
 
+  /// I/O handle used for reading.
   ACE_HANDLE handle (void) const;
-  // I/O handle used for reading.
-  
+
   // = Base class operations. These operations are here to kill
   //   dominance warnings. These methods call the base class methods.
 
+  /// Number of bytes transferred by the operation.
   u_long bytes_transferred (void) const;
-  // Number of bytes transferred by the operation.
 
+  /// ACT associated with the operation.
   const void *act (void) const;
-  // ACT associated with the operation.
 
+  /// Did the operation succeed?
   int success (void) const;
-  // Did the operation succeed?
 
+  /**
+   * This is the ACT associated with the handle on which the
+   * Asynch_Operation takes place.
+   *
+   * @@ This is not implemented for POSIX4 platforms.
+   *
+   */
   const void *completion_key (void) const;
-  // This is the ACT associated with the handle on which the
-  // Asynch_Operation takes place.
-  //
-  // @@ This is not implemented for POSIX4 platforms.
-  //
 
+  /// Error value if the operation fail.
   u_long error (void) const;
-  // Error value if the operation fail.
 
+  /// This returns ACE_INVALID_HANDLE.
   ACE_HANDLE event (void) const;
-  // This returns ACE_INVALID_HANDLE.
 
+  /**
+   * This really make sense only when doing file I/O.
+   *
+   * @@ On POSIX4-Unix, offset_high should be supported using
+   *     aiocb64.
+   *
+   */
   u_long offset (void) const;
   u_long offset_high (void) const;
-  // This really make sense only when doing file I/O.
-  //
-  // @@ On POSIX4-Unix, offset_high should be supported using
-  //     aiocb64.
-  //
 
+  /// The priority of the asynchronous operation.
   int priority (void) const;
-  // The priority of the asynchronous operation.
 
+  /**
+   * POSIX4 realtime signal number to be used for the
+   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * on non-POSIX4 systems and returns 0.
+   */
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
-  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
-  // on non-POSIX4 systems and returns 0.
 
+  /// Post <this> to the Proactor.
   int post_completion (ACE_Proactor_Impl *proactor);
-  // Post <this> to the Proactor.
 
 protected:
   ACE_POSIX_Asynch_Read_Stream_Result (ACE_Handler &handler,
@@ -312,197 +341,216 @@ protected:
                                        int signal_number);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Read_Stream factory.
-  
+
+  /// Get the data copied to this class, before calling application
+  /// handler.
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
-  // Get the data copied to this class, before calling application
-  // handler.
 
+  /// Destrcutor.
   virtual ~ACE_POSIX_Asynch_Read_Stream_Result (void);
-  // Destrcutor.
 
   // aiocb::aio_nbytes
   // Bytes requested when the asynchronous read was initiated.
 
+  /// Message block for reading the data into.
   ACE_Message_Block &message_block_;
-  // Message block for reading the data into.
 
   // aiocb::aio_filedes
   // I/O handle used for reading.
 };
 
+/**
+ * @class ACE_POSIX_AIOCB_Asynch_Read_Stream
+ *
+ * This class implements <ACE_Asynch_Read_Stream> for <AIOCB>
+ * (Asynchronous I/O Control Blocks) based implementation of Proactor.
+ *
+ */
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
                                                       public ACE_POSIX_AIOCB_Asynch_Operation
 {
-  // = TITLE
-  //     This class implements <ACE_Asynch_Read_Stream> for <AIOCB>
-  //     (Asynchronous I/O Control Blocks) based implementation of
-  //      Proactor.
 public:
+  /// Constructor.
   ACE_POSIX_AIOCB_Asynch_Read_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Constructor.
 
+  /// This starts off an asynchronous read.  Upto <bytes_to_read> will
+  /// be read and stored in the <message_block>.
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
             int priority,
             int signal_number = 0);
-  // This starts off an asynchronous read.  Upto <bytes_to_read> will
-  // be read and stored in the <message_block>.
 
+  /// Destructor.
   virtual ~ACE_POSIX_AIOCB_Asynch_Read_Stream (void);
-  // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 protected:
+  /// This is the method which does the real work and is there so that
+  /// the ACE_Asynch_Read_File class can use it too.
   int shared_read (ACE_POSIX_Asynch_Read_Stream_Result *result);
-  // This is the method which does the real work and is there so that
-  // the ACE_Asynch_Read_File class can use it too.
 };
 
 
+/**
+ * @class ACE_POSIX_SIG_Asynch_Read_Stream
+ *
+ * @brief This class implements <ACE_Asynch_Read_Stream> for Realtime
+ *     Signal (<sigtimedwait>) based implementation of Proactor.
+ */
 class ACE_Export ACE_POSIX_SIG_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
                                                     public ACE_POSIX_SIG_Asynch_Operation
 {
-  // = TITLE
-  //     This class implements <ACE_Asynch_Read_Stream> for Realtime
-  //     Signal (<sigtimedwait>) based implementation of Proactor.
 public:
+  /// Constructor.
   ACE_POSIX_SIG_Asynch_Read_Stream (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-  // Constructor.
 
+  /// This starts off an asynchronous read.  Upto <bytes_to_read> will
+  /// be read and stored in the <message_block>.
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
             int priority,
             int signal_number);
-  // This starts off an asynchronous read.  Upto <bytes_to_read> will
-  // be read and stored in the <message_block>.
 
+  /// Destructor.
   virtual ~ACE_POSIX_SIG_Asynch_Read_Stream (void);
-  // Destructor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 protected:
+  /// This is the method which does the real work and is there so that
+  /// the ACE_Asynch_Read_File class can use it too.
   int shared_read (ACE_POSIX_Asynch_Read_Stream_Result *result);
-  // This is the method which does the real work and is there so that
-  // the ACE_Asynch_Read_File class can use it too.
 };
 
+
+/**
+ * @class ACE_POSIX_Asynch_Write_Stream_Result
+ *
+ * @brief This class provides concrete implementation for
+ *     <ACE_Asynch_Write_Stream::Result> on POSIX platforms. 
+ *
+ *
+ *     This class has all the information necessary for the
+ *     <handler> to uniquiely identify the completion of the
+ *     asynchronous write.
+ */
 class ACE_Export ACE_POSIX_Asynch_Write_Stream_Result : public virtual ACE_Asynch_Write_Stream_Result_Impl,
                                                         public ACE_POSIX_Asynch_Result
 {
-  // = TITLE
-  //     This class provides concrete implementation for
-  //     <ACE_Asynch_Write_Stream::Result> on POSIX platforms.
-  //
-  // = DESCRIPTION
-  //     This class has all the information necessary for the
-  //     <handler> to uniquiely identify the completion of the
-  //     asynchronous write.
-
+  /// Factory classes will have special privilages.
   friend class ACE_POSIX_AIOCB_Asynch_Write_Stream;
   friend class ACE_POSIX_SIG_Asynch_Write_Stream;
-  // Factory classes will have special privilages.
 
+  /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
-  // The Proactor constructs the Result class for faking results.
 
 public:
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous write.
   u_long bytes_to_write (void) const;
-  // The number of bytes which were requested at the start of the
-  // asynchronous write.
 
+  /// Message block that contains the data to be written.
   ACE_Message_Block &message_block (void) const;
-  // Message block that contains the data to be written.
 
+  /// I/O handle used for writing.
   ACE_HANDLE handle (void) const;
-  // I/O handle used for writing.
-  
+
   // = Base class operations. These operations are here to kill
-  //   dominance warnings. These methods call the base class methods. 
+  //   dominance warnings. These methods call the base class methods.
 
+  /// Number of bytes transferred by the operation.
   u_long bytes_transferred (void) const;
-  // Number of bytes transferred by the operation.
 
+  /// ACT associated with the operation.
   const void *act (void) const;
-  // ACT associated with the operation.
 
+  /// Did the operation succeed?
   int success (void) const;
-  // Did the operation succeed?
 
+  /**
+   * This is the ACT associated with the handle on which the
+   * Asynch_Operation takes place.
+   *
+   * @@ This is not implemented for POSIX4 platforms.
+   *
+   */
   const void *completion_key (void) const;
-  // This is the ACT associated with the handle on which the
-  // Asynch_Operation takes place.
-  //
-  // @@ This is not implemented for POSIX4 platforms.
-  //
 
+  /// Error value if the operation fail.
   u_long error (void) const;
-  // Error value if the operation fail.
 
+  /// This returns ACE_INVALID_HANDLE on POSIX4 platforms.
   ACE_HANDLE event (void) const;
-  // This returns ACE_INVALID_HANDLE on POSIX4 platforms.
 
+  /**
+   * This really make sense only when doing file I/O.
+   *
+   * @@ On POSIX4-Unix, offset_high should be supported using
+   *     aiocb64.
+   *
+   */
   u_long offset (void) const;
   u_long offset_high (void) const;
-  // This really make sense only when doing file I/O.
-  //
-  // @@ On POSIX4-Unix, offset_high should be supported using
-  //     aiocb64.
-  //
 
+  /// The priority of the asynchronous operation.
   int priority (void) const;
-  // The priority of the asynchronous operation.
 
+  /**
+   * POSIX4 realtime signal number to be used for the
+   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * on non-POSIX4 systems and returns 0.
+   */
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
-  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
-  // on non-POSIX4 systems and returns 0.
 
+  /// Post <this> to the Proactor.
   int post_completion (ACE_Proactor_Impl *proactor);
-  // Post <this> to the Proactor.
 
 protected:
   ACE_POSIX_Asynch_Write_Stream_Result (ACE_Handler &handler,
@@ -516,197 +564,216 @@ protected:
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Write_Stream factory.
 
+  /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
-  // ACE_Proactor will call this method when the write completes.
 
+  /// Destructor.
   virtual ~ACE_POSIX_Asynch_Write_Stream_Result (void);
-  // Destructor.
 
 protected:
   // aiocb::aio_nbytes
   // The number of bytes which were requested at the start of the
   // asynchronous write.
 
+  /// Message block that contains the data to be written.
   ACE_Message_Block &message_block_;
-  // Message block that contains the data to be written.
 
   // aiocb::aio_filedes
   // I/O handle used for writing.
 };
 
+/**
+ * @class ACE_POSIX_AIOCB_Asynch_Write_Stream
+ *
+ * @brief This class implements <ACE_Asynch_Write_Stream> for <AIOCB>
+ *     (Asynchronous I/O Control Blocks) based implementation of
+ *      Proactor.
+ */
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Write_Stream : public virtual ACE_Asynch_Write_Stream_Impl,
                                                        public ACE_POSIX_AIOCB_Asynch_Operation
 {
-  // = TITLE
-  //     This class implements <ACE_Asynch_Write_Stream> for <AIOCB>
-  //     (Asynchronous I/O Control Blocks) based implementation of
-  //      Proactor.
 public:
+  /// Constructor.
   ACE_POSIX_AIOCB_Asynch_Write_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Constructor.
 
+  /// This starts off an asynchronous write.  Upto <bytes_to_write>
+  /// will be written from the <message_block>.
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
              int priority,
              int signal_number = 0);
-  // This starts off an asynchronous write.  Upto <bytes_to_write>
-  // will be written from the <message_block>.
 
+  /// Destrcutor.
   virtual ~ACE_POSIX_AIOCB_Asynch_Write_Stream (void);
-  // Destrcutor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor =  0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 protected:
+  /// This is the method which does the real work and is there so that
+  /// the ACE_Asynch_Write_File class can use it too.
   int shared_write (ACE_POSIX_Asynch_Write_Stream_Result *result);
-  // This is the method which does the real work and is there so that
-  // the ACE_Asynch_Write_File class can use it too.
 };
 
+/**
+ * @class ACE_POSIX_SIG_Asynch_Write_Stream
+ *
+ * @brief  This class implements <ACE_Asynch_Write_Stream> for Realtime
+ *     Signal (<sigtimedwait>) based implementation of Proactor.
+ */
 class ACE_Export ACE_POSIX_SIG_Asynch_Write_Stream : public virtual ACE_Asynch_Write_Stream_Impl,
                                                      public ACE_POSIX_SIG_Asynch_Operation
 {
-  // = TITLE
-  //     This class implements <ACE_Asynch_Write_Stream> for Realtime
-  //     Signal (<sigtimedwait>) based implementation of Proactor.
 public:
+  /// Constrctor.
   ACE_POSIX_SIG_Asynch_Write_Stream (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-  // Constrctor.
 
+  /// This starts off an asynchronous write.  Upto <bytes_to_write>
+  /// will be written from the <message_block>.
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
              int priority,
              int signal_number);
-  // This starts off an asynchronous write.  Upto <bytes_to_write>
-  // will be written from the <message_block>.
 
+  /// Destructor.
   virtual ~ACE_POSIX_SIG_Asynch_Write_Stream (void);
-  // Destructor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 protected:
+  /// This is the method which does the real work and is there so that
+  /// the ACE_Asynch_Write_File class can use it too.
   int shared_write (ACE_POSIX_Asynch_Write_Stream_Result *result);
-  // This is the method which does the real work and is there so that
-  // the ACE_Asynch_Write_File class can use it too.
 };
 
+/**
+ * @class ACE_POSIX_Asynch_Read_File_Result
+ *
+ * @brief This class provides concrete implementation for
+ *     <ACE_Asynch_Read_File::Result> class for POSIX platforms.
+ */
 class ACE_Export ACE_POSIX_Asynch_Read_File_Result : public virtual ACE_Asynch_Read_File_Result_Impl,
                                                      public ACE_POSIX_Asynch_Read_Stream_Result
 {
-  // = TITLE
-  //     This class provides concrete implementation for
-  //     <ACE_Asynch_Read_File::Result> class for POSIX platforms.
 
+  /// Factory classes willl have special permissions.
   friend class ACE_POSIX_AIOCB_Asynch_Read_File;
   friend class ACE_POSIX_SIG_Asynch_Read_File;
-  // Factory classes willl have special permissions.
 
+  /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
-  // The Proactor constructs the Result class for faking results.
 
 public:
   // = These methods belong to ACE_POSIX_Asynch_Result class base
   //   class. These operations are here to kill dominance
   //   warnings. These methods call the base class methods.
 
+  /// Number of bytes transferred by the operation.
   u_long bytes_transferred (void) const;
-  // Number of bytes transferred by the operation.
 
+  /// ACT associated with the operation.
   const void *act (void) const;
-  // ACT associated with the operation.
 
+  /// Did the operation succeed?
   int success (void) const;
-  // Did the operation succeed?
 
+  /**
+   * This is the ACT associated with the handle on which the
+   * Asynch_Operation takes place.
+   *
+   * @@ This is not implemented for POSIX4 platforms.
+   *
+   */
   const void *completion_key (void) const;
-  // This is the ACT associated with the handle on which the
-  // Asynch_Operation takes place.
-  //
-  // @@ This is not implemented for POSIX4 platforms.
-  //
 
+  /// Error value if the operation fail.
   u_long error (void) const;
-  // Error value if the operation fail.
 
+  /// This returns ACE_INVALID_HANDLE on POSIX4 platforms.
   ACE_HANDLE event (void) const;
-  // This returns ACE_INVALID_HANDLE on POSIX4 platforms.
 
+  /**
+   * This really make sense only when doing file I/O.
+   *
+   * @@ On POSIX4-Unix, offset_high should be supported using
+   *     aiocb64.
+   *
+   */
   u_long offset (void) const;
   u_long offset_high (void) const;
-  // This really make sense only when doing file I/O.
-  //
-  // @@ On POSIX4-Unix, offset_high should be supported using
-  //     aiocb64.
-  //
 
+  /// The priority of the asynchronous operation.
   int priority (void) const;
-  // The priority of the asynchronous operation.
 
+  /**
+   * POSIX4 realtime signal number to be used for the
+   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * on non-POSIX4 systems and returns 0.
+   */
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
-  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
-  // on non-POSIX4 systems and returns 0.
-  
+
   // = The following methods belong to
-  //   ACE_POSIX_Asynch_Read_Stream_Result. They are here to avoid 
+  //   ACE_POSIX_Asynch_Read_Stream_Result. They are here to avoid
   //   dominance warnings. These methods route their call to the
   //   ACE_POSIX_Asynch_Read_Stream_Result base class.
 
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous read.
   u_long bytes_to_read (void) const;
-  // The number of bytes which were requested at the start of the
-  // asynchronous read.
 
+  /// Message block which contains the read data.
   ACE_Message_Block &message_block (void) const;
-  // Message block which contains the read data.
 
+  /// I/O handle used for reading.
   ACE_HANDLE handle (void) const;
-  // I/O handle used for reading.
 
+  /// Post <this> to the Proactor.
   int post_completion (ACE_Proactor_Impl *proactor);
-  // Post <this> to the Proactor.
 
 protected:
   ACE_POSIX_Asynch_Read_File_Result (ACE_Handler &handler,
@@ -722,40 +789,46 @@ protected:
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Read_File factory.
 
+  /// ACE_Proactor will call this method when the read completes.
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
-  // ACE_Proactor will call this method when the read completes.
 
+  /// Destructor.
   virtual ~ACE_POSIX_Asynch_Read_File_Result (void);
-  // Destructor.
 };
 
+/**
+ * @class ACE_POSIX_AIOCB_Asynch_Read_File
+ *
+ * @brief This class is a factory for starting off asynchronous reads
+ *     on a file. This class implements <ACE_Asynch_Read_File> for
+ *     <AIOCB> (Asynchronous I/O Control Blocks) based implementation
+ *     of Proactor.
+ *
+ *     Once <open> is called, multiple asynchronous <read>s can
+ *     started using this class.  A <ACE_Asynch_Read_File::Result>
+ *     will be passed back to the <handler> when the asynchronous
+ *     reads completes through the <ACE_Handler::handle_read_file>
+ *     callback.
+ *
+ *     This class differs slightly from <ACE_Asynch_Read_Stream> as it
+ *     allows the user to specify an offset for the read.
+ */
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
                                                     public ACE_POSIX_AIOCB_Asynch_Read_Stream
 {
-  // = TITLE
-  //     This class is a factory for starting off asynchronous reads
-  //     on a file. This class implements <ACE_Asynch_Read_File> for
-  //     <AIOCB> (Asynchronous I/O Control Blocks) based implementation
-  //     of Proactor.
-  //
-  // = DESCRIPTION
-  //
-  //     Once <open> is called, multiple asynchronous <read>s can
-  //     started using this class.  A <ACE_Asynch_Read_File::Result>
-  //     will be passed back to the <handler> when the asynchronous
-  //     reads completes through the <ACE_Handler::handle_read_file>
-  //     callback.
-  //
-  //     This class differs slightly from <ACE_Asynch_Read_Stream> as it
-  //     allows the user to specify an offset for the read.
 
 public:
+  /// Constructor.
   ACE_POSIX_AIOCB_Asynch_Read_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Constructor.
 
+  /**
+   * This starts off an asynchronous read.  Upto <bytes_to_read> will
+   * be read and stored in the <message_block>.  The read will start
+   * at <offset> from the beginning of the file.
+   */
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             u_long offset,
@@ -763,65 +836,72 @@ public:
             const void *act,
             int priority,
             int signal_number = 0);
-  // This starts off an asynchronous read.  Upto <bytes_to_read> will
-  // be read and stored in the <message_block>.  The read will start
-  // at <offset> from the beginning of the file.
 
+  /// Destructor.
   virtual ~ACE_POSIX_AIOCB_Asynch_Read_File (void);
-  // Destructor.
-  
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
 
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 private:
+  /**
+   * This belongs to ACE_POSIX_AIOCB_Asynch_Read_Stream. We have
+   * defined this here to avoid compiler warnings and forward the
+   * method to <ACE_POSIX_AIOCB_Asynch_Read_Stream::read>.
+   */
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
             int priority,
             int signal_number = 0);
-  // This belongs to ACE_POSIX_AIOCB_Asynch_Read_Stream. We have
-  // defined this here to avoid compiler warnings and forward the
-  // method to <ACE_POSIX_AIOCB_Asynch_Read_Stream::read>.
 };
 
+/**
+ * @class ACE_POSIX_SIG_Asynch_Read_File
+ *
+ * @brief This class is a factory for starting off asynchronous reads
+ *     on a file. This class implements <ACE_Asynch_Operation> for
+ *     Realtime Signal (<sigtimedwait>) based implementation of
+ *     Proactor.
+ *
+ *     Once <open> is called, multiple asynchronous <read>s can
+ *     started using this class.  A <ACE_Asynch_Read_File::Result>
+ *     will be passed back to the <handler> when the asynchronous
+ *     reads completes through the <ACE_Handler::handle_read_file>
+ *     callback.
+ */
 class ACE_Export ACE_POSIX_SIG_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
                                                   public ACE_POSIX_SIG_Asynch_Read_Stream
 {
-  // = TITLE
-  //     This class is a factory for starting off asynchronous reads
-  //     on a file. This class implements <ACE_Asynch_Operation> for
-  //     Realtime Signal (<sigtimedwait>) based implementation of
-  //     Proactor.
-  //
-  // = DESCRIPTION
-  //     Once <open> is called, multiple asynchronous <read>s can
-  //     started using this class.  A <ACE_Asynch_Read_File::Result>
-  //     will be passed back to the <handler> when the asynchronous
-  //     reads completes through the <ACE_Handler::handle_read_file>
-  //     callback.
-
 public:
+  /// Constructor.
   ACE_POSIX_SIG_Asynch_Read_File (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-  // Constructor.
 
+  /**
+   * This starts off an asynchronous read.  Upto <bytes_to_read> will
+   * be read and stored in the <message_block>.  The read will start
+   * at <offset> from the beginning of the file.
+   */
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             u_long offset,
@@ -829,132 +909,139 @@ public:
             const void *act,
             int priority,
             int signal_number);
-  // This starts off an asynchronous read.  Upto <bytes_to_read> will
-  // be read and stored in the <message_block>.  The read will start
-  // at <offset> from the beginning of the file.
 
+  /// Destructor.
   virtual ~ACE_POSIX_SIG_Asynch_Read_File (void);
-  // Destructor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 private:
+  /**
+   * This belongs to ACE_POSIX_SIG_Asynch_Read_Stream. We have
+   * defined this here to avoid compiler warnings and forward the
+   * method to <ACE_POSIX_SIG_Asynch_Read_Stream::read>.
+   */
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
             int priority,
             int signal_number);
-  // This belongs to ACE_POSIX_SIG_Asynch_Read_Stream. We have
-  // defined this here to avoid compiler warnings and forward the
-  // method to <ACE_POSIX_SIG_Asynch_Read_Stream::read>.
 };
 
+/**
+ * @class ACE_POSIX_Asynch_Write_File_Result
+ *
+ * @brief This class provides implementation for
+ *     <ACE_Asynch_Write_File_Result> for POSIX platforms.
+ *
+ *     This class has all the information necessary for the
+ *     <handler> to uniquiely identify the completion of the
+ *     asynchronous write.
+ *
+ *     This class differs slightly from
+ *     <ACE_Asynch_Write_Stream::Result> as it calls back
+ *     <ACE_Handler::handle_write_file> on the <handler> instead of
+ *     <ACE_Handler::handle_write_stream>.  No additional state is
+ *     required by this class as <ACE_Asynch_Result> can store the
+ *     <offset>.
+ */
 class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_Write_File_Result_Impl,
                                                       public ACE_POSIX_Asynch_Write_Stream_Result
 {
-  // = TITLE
-  //     This class provides implementation for
-  //     <ACE_Asynch_Write_File_Result> for POSIX platforms.
-  //
-  // = DESCRIPTION
-  //
-  //     This class has all the information necessary for the
-  //     <handler> to uniquiely identify the completion of the
-  //     asynchronous write.
-  //
-  //     This class differs slightly from
-  //     <ACE_Asynch_Write_Stream::Result> as it calls back
-  //     <ACE_Handler::handle_write_file> on the <handler> instead of
-  //     <ACE_Handler::handle_write_stream>.  No additional state is
-  //     required by this class as <ACE_Asynch_Result> can store the
-  //     <offset>.
-
+  /// Factory classes will have special permissions.
   friend class ACE_POSIX_AIOCB_Asynch_Write_File;
   friend class ACE_POSIX_SIG_Asynch_Write_File;
-  // Factory classes will have special permissions.
 
+  /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
-  // The Proactor constructs the Result class for faking results.
 
 public:
   // = Base class operations. These operations are here to kill some
   //   warnings. These methods call the base class methods.
 
+  /// Number of bytes transferred by the operation.
   u_long bytes_transferred (void) const;
-  // Number of bytes transferred by the operation.
 
+  /// ACT associated with the operation.
   const void *act (void) const;
-  // ACT associated with the operation.
 
+  /// Did the operation succeed?
   int success (void) const;
-  // Did the operation succeed?
 
+  /**
+   * This is the ACT associated with the handle on which the
+   * Asynch_Operation takes place.
+   *
+   * @@ This is not implemented for POSIX4 platforms.
+   *
+   */
   const void *completion_key (void) const;
-  // This is the ACT associated with the handle on which the
-  // Asynch_Operation takes place.
-  //
-  // @@ This is not implemented for POSIX4 platforms.
-  //
 
+  /// Error value if the operation fail.
   u_long error (void) const;
-  // Error value if the operation fail.
 
+  /// This returns ACE_INVALID_HANDLE on POSIX4 platforms.
   ACE_HANDLE event (void) const;
-  // This returns ACE_INVALID_HANDLE on POSIX4 platforms.
-  
+
+  /**
+   * This really make sense only when doing file I/O.
+   *
+   * @@ On POSIX4-Unix, offset_high should be supported using
+   *     aiocb64.
+   *
+   */
   u_long offset (void) const;
   u_long offset_high (void) const;
-  // This really make sense only when doing file I/O.
-  //
-  // @@ On POSIX4-Unix, offset_high should be supported using
-  //     aiocb64.
-  //
-  
-  int priority (void) const;
-  // The priority of the asynchronous operation.
 
+  /// The priority of the asynchronous operation.
+  int priority (void) const;
+
+  /**
+   * POSIX4 realtime signal number to be used for the
+   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * on non-POSIX4 systems and returns 0.
+   */
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
-  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
-  // on non-POSIX4 systems and returns 0.
-  
+
   // = The following methods belong to
   //   ACE_POSIX_Asynch_Write_Stream_Result. They are here to avoid
-  //   dominace warnings. These methods route their call to the 
-  //   ACE_POSIX_Asynch_Write_Stream_Result base class. 
+  //   dominace warnings. These methods route their call to the
+  //   ACE_POSIX_Asynch_Write_Stream_Result base class.
 
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous write.
   u_long bytes_to_write (void) const;
-  // The number of bytes which were requested at the start of the
-  // asynchronous write.
 
+  /// Message block that contains the data to be written.
   ACE_Message_Block &message_block (void) const;
-  // Message block that contains the data to be written.
 
+  /// I/O handle used for writing.
   ACE_HANDLE handle (void) const;
-  // I/O handle used for writing.
 
+  /// Post <this> to the Proactor.
   int post_completion (ACE_Proactor_Impl *proactor);
-  // Post <this> to the Proactor.
-  
+
 protected:
   ACE_POSIX_Asynch_Write_File_Result (ACE_Handler &handler,
                                       ACE_HANDLE handle,
@@ -969,31 +1056,37 @@ protected:
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Write_File factory.
 
+  /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
-  // ACE_Proactor will call this method when the write completes.
 
+  /// Destructor.
   virtual ~ACE_POSIX_Asynch_Write_File_Result (void);
-  // Destructor.
 };
 
+/**
+ * @class ACE_POSIX_AIOCB_Asynch_Write_File
+ *
+ *     This class provides concrete implementation for
+ *     <ACE_Asynch_Write_File> for POSIX platforms where the
+ *     completion strategy for Proactor is based on AIOCB (AIO
+ *     Control Blocks).
+ *
+ */
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Write_File : public virtual ACE_Asynch_Write_File_Impl,
                                                      public ACE_POSIX_AIOCB_Asynch_Write_Stream
 {
-  // = TITLE
-  //     This class provides concrete implementation for
-  //     <ACE_Asynch_Write_File> for POSIX platforms where the
-  //     completion strategy for Proactor is based on AIOCB (AIO
-  //     Control Blocks).
-  //
-  // = DESCRIPTION
-  //
 public:
+  /// Constructor.
   ACE_POSIX_AIOCB_Asynch_Write_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Constructor.
 
+  /**
+   * This starts off an asynchronous write.  Upto <bytes_to_write>
+   * will be write and stored in the <message_block>.  The write will
+   * start at <offset> from the beginning of the file.
+   */
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              u_long offset,
@@ -1001,65 +1094,72 @@ public:
              const void *act,
              int priority,
              int signal_number = 0);
-  // This starts off an asynchronous write.  Upto <bytes_to_write>
-  // will be write and stored in the <message_block>.  The write will
-  // start at <offset> from the beginning of the file.
 
+  /// Destructor.
   virtual ~ACE_POSIX_AIOCB_Asynch_Write_File (void);
-  // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 private:
+  /**
+   * This <write> belongs to ACE_POSIX_AIOCB_Asynch_Write_Stream. We
+   * have put this here to avoid compiler warnings. We forward this
+   * method call to the <ACE_POSIX_SIG_Asynch_Write_Stream::write>
+   * one.
+   */
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
              int priority,
              int signal_number = 0);
-  // This <write> belongs to ACE_POSIX_AIOCB_Asynch_Write_Stream. We
-  // have put this here to avoid compiler warnings. We forward this
-  // method call to the <ACE_POSIX_SIG_Asynch_Write_Stream::write>
-  // one.
 };
 
+/**
+ * @class ACE_POSIX_SIG_Asynch_Write_File
+ *
+ * @brief This class is a factory for starting off asynchronous reads
+ *     on a file. This class implements <ACE_Asynch_Operation> for
+ *     Realtime Signal (<sigtimedwait>) based implementation of
+ *     Proactor.
+ *
+ *     Once <open> is called, multiple asynchronous <read>s can
+ *     started using this class.  A <ACE_Asynch_Read_File::Result>
+ *     will be passed back to the <handler> when the asynchronous
+ *     reads completes through the <ACE_Handler::handle_read_file>
+ *     callback.
+ */
 class ACE_Export ACE_POSIX_SIG_Asynch_Write_File : public virtual ACE_Asynch_Write_File_Impl,
                                                    public ACE_POSIX_SIG_Asynch_Write_Stream
 {
-  // = TITLE
-  //     This class is a factory for starting off asynchronous reads
-  //     on a file. This class implements <ACE_Asynch_Operation> for
-  //     Realtime Signal (<sigtimedwait>) based implementation of
-  //     Proactor.
-  //
-  // = DESCRIPTION
-  //     Once <open> is called, multiple asynchronous <read>s can
-  //     started using this class.  A <ACE_Asynch_Read_File::Result>
-  //     will be passed back to the <handler> when the asynchronous
-  //     reads completes through the <ACE_Handler::handle_read_file>
-  //     callback.
-
 public:
+  /// Constructor.
   ACE_POSIX_SIG_Asynch_Write_File (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-  // Constructor.
 
+  /**
+   * This starts off an asynchronous write.  Upto <bytes_to_write>
+   * will be write and stored in the <message_block>.  The write will
+   * start at <offset> from the beginning of the file.
+   */
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              u_long offset,
@@ -1067,123 +1167,131 @@ public:
              const void *act,
              int priority,
              int signal_number);
-  // This starts off an asynchronous write.  Upto <bytes_to_write>
-  // will be write and stored in the <message_block>.  The write will
-  // start at <offset> from the beginning of the file.
 
+  /// Destrcutor.
   virtual ~ACE_POSIX_SIG_Asynch_Write_File (void);
-  // Destrcutor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 private:
+  /**
+   * This <write> belongs to ACE_POSIX_SIG_Asynch_Write_Stream. We
+   * have put this here to avoid compiler warnings. We forward this
+   * method call to the <ACE_POSIX_SIG_Asynch_Write_Stream::write>
+   * one.
+   */
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
              int priority,
              int signal_number);
-  // This <write> belongs to ACE_POSIX_SIG_Asynch_Write_Stream. We
-  // have put this here to avoid compiler warnings. We forward this
-  // method call to the <ACE_POSIX_SIG_Asynch_Write_Stream::write>
-  // one.
 };
 
+/**
+ * @class ACE_POSIX_Asynch_Accept_Result
+ *
+ * @brief This is that class which will be passed back to the
+ *     <handler> when the asynchronous accept completes.
+ *
+ *
+ *     This class has all the information necessary for the
+ *     <handler> to uniquiely identify the completion of the
+ *     asynchronous accept.
+ */
 class ACE_Export ACE_POSIX_Asynch_Accept_Result : public virtual ACE_Asynch_Accept_Result_Impl,
                                                   public ACE_POSIX_Asynch_Result
 {
-  // = TITLE
-  //     This is that class which will be passed back to the
-  //     <handler> when the asynchronous accept completes.
-  //
-  // = DESCRIPTION
-  //
-  //     This class has all the information necessary for the
-  //     <handler> to uniquiely identify the completion of the
-  //     asynchronous accept.
-
+  /// Factory classes willl have special permissions.
   friend class ACE_POSIX_AIOCB_Asynch_Accept;
   friend class ACE_POSIX_SIG_Asynch_Accept;
-  // Factory classes willl have special permissions.
 
+  /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
-  // The Proactor constructs the Result class for faking results.
 
 public:
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous accept.
   u_long bytes_to_read (void) const;
-  // The number of bytes which were requested at the start of the
-  // asynchronous accept.
 
+  /// Message block which contains the read data.
   ACE_Message_Block &message_block (void) const;
-  // Message block which contains the read data.
 
+  /// I/O handle used for accepting new connections.
   ACE_HANDLE listen_handle (void) const;
-  // I/O handle used for accepting new connections.
 
+  /// I/O handle for the new connection.
   ACE_HANDLE accept_handle (void) const;
-  // I/O handle for the new connection.
 
   // = Base class operations. These operations are here to kill
   //   dominance warnings. These methods call the base class methods.
 
+  /// Number of bytes transferred by the operation.
   u_long bytes_transferred (void) const;
-  // Number of bytes transferred by the operation.
 
+  /// ACT associated with the operation.
   const void *act (void) const;
-  // ACT associated with the operation.
 
+  /// Did the operation succeed?
   int success (void) const;
-  // Did the operation succeed?
 
+  /**
+   * This is the ACT associated with the handle on which the
+   * Asynch_Operation takes place.
+   *
+   * @@ This is not implemented for POSIX4 platforms.
+   *
+   */
   const void *completion_key (void) const;
-  // This is the ACT associated with the handle on which the
-  // Asynch_Operation takes place.
-  //
-  // @@ This is not implemented for POSIX4 platforms.
-  //
 
+  /// Error value if the operation fail.
   u_long error (void) const;
-  // Error value if the operation fail.
 
+  /// This returns ACE_INVALID_HANDLE on POSIX4 platforms.
   ACE_HANDLE event (void) const;
-  // This returns ACE_INVALID_HANDLE on POSIX4 platforms.
 
+  /**
+   * This really make sense only when doing file I/O.
+   *
+   * @@ On POSIX4-Unix, offset_high should be supported using
+   *     aiocb64.
+   *
+   */
   u_long offset (void) const;
   u_long offset_high (void) const;
-  // This really make sense only when doing file I/O.
-  //
-  // @@ On POSIX4-Unix, offset_high should be supported using
-  //     aiocb64.
-  //
 
+  /// The priority of the asynchronous operation.
   int priority (void) const;
-  // The priority of the asynchronous operation. 
 
+  /**
+   * POSIX4 realtime signal number to be used for the
+   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * on non-POSIX4 systems and returns 0.
+   */
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
-  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
-  // on non-POSIX4 systems and returns 0.
-  
+
+  /// Post <this> to the Proactor.
   int post_completion (ACE_Proactor_Impl *proactor);
-  // Post <this> to the Proactor.
 
 protected:
   ACE_POSIX_Asynch_Accept_Result (ACE_Handler &handler,
@@ -1198,241 +1306,271 @@ protected:
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Accept factory.
 
+  /// ACE_Proactor will call this method when the accept completes.
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
-  // ACE_Proactor will call this method when the accept completes.
 
+  /// Destructor.
   virtual ~ACE_POSIX_Asynch_Accept_Result (void);
-  // Destructor.
 
   // aiocb::aio_nbytes
   // Bytes requested when the asynchronous read was initiated.
   // Actually, on POSIX implementation, we dont read any intial data.
 
+  /// Message block for reading the data into.
   ACE_Message_Block &message_block_;
-  // Message block for reading the data into.
 
+  /// I/O handle used for accepting new connections.
   ACE_HANDLE listen_handle_;
-  // I/O handle used for accepting new connections.
 
   // aiocb::aio_filedes
   // I/O handle for the new connection.
 };
 
+/**
+ * @class ACE_POSIX_AIOCB_Asynch_Accept_Handler
+ *
+ * Forward declaration. This class is defined the in the cpp file,
+ * since this is internal  to the implementation.
+ */
 class ACE_POSIX_AIOCB_Asynch_Accept_Handler;
-// Forward declaration. This class is defined the in the cpp file,
-// since this is internal  to the implementation.
 
+/**
+ * @class ACE_POSIX_AIOCB_Asynch_Accept
+ *
+ */
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl,
                                                  public ACE_POSIX_AIOCB_Asynch_Operation
 {
 public:
+  /// Constructor.
   ACE_POSIX_AIOCB_Asynch_Accept (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Constructor.
 
+  /**
+   * This <open> belongs to ACE_AIOCB_Asynch_Operation. We forward
+   * this call to that method. We have put this here to avoid the
+   * compiler warnings.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // This <open> belongs to ACE_AIOCB_Asynch_Operation. We forward
-  // this call to that method. We have put this here to avoid the
-  // compiler warnings.
 
+  /**
+   * This starts off an asynchronous accept.  The asynchronous accept
+   * call also allows any initial data to be returned to the
+   * <handler>.  Upto <bytes_to_read> will be read and stored in the
+   * <message_block>.  The <accept_handle> will be used for the
+   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
+   * handle will be created.
+   *
+   * <message_block> must be specified. This is because the address of
+   * the new connection is placed at the end of this buffer.
+   */
   int accept (ACE_Message_Block &message_block,
               u_long bytes_to_read,
               ACE_HANDLE accept_handle,
               const void *act,
               int priority,
               int signal_number = 0);
-  // This starts off an asynchronous accept.  The asynchronous accept
-  // call also allows any initial data to be returned to the
-  // <handler>.  Upto <bytes_to_read> will be read and stored in the
-  // <message_block>.  The <accept_handle> will be used for the
-  // <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
-  // handle will be created.
-  //
-  // <message_block> must be specified. This is because the address of
-  // the new connection is placed at the end of this buffer.
 
+  /// Destructor.
   virtual ~ACE_POSIX_AIOCB_Asynch_Accept (void);
-  // Destructor.
 
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
-  
+
 private:
+  /// The thread function that does handle events.
   static void* thread_function  (void* reactor);
-  // The thread function that does handle events.
 
+  /// Reactor to wait on the <listen_handle>.
   ACE_Reactor reactor_;
-  // Reactor to wait on the <listen_handle>.
 
+  /// The Event Handler to do handle_input.
   ACE_POSIX_AIOCB_Asynch_Accept_Handler* accept_handler_;
-  // The Event Handler to do handle_input.
 };
 
+/**
+ * @class ACE_POSIX_SIG_Asynch_Accept_Handler;
+ *
+ * Forward declaration. This class is defined the in the cpp file,
+ * since this is internal  to the implementation.
+ */
 class ACE_POSIX_SIG_Asynch_Accept_Handler;
-// Forward declaration. This class is defined the in the cpp file,
-// since this is internal  to the implementation.
 
+/**
+ * @class ACE_POSIX_SIG_Asynch_Accept
+ *
+ * @brief This class implements <ACE_Asynch_Accept> for Realtime
+ *   Signal (<sigtimedwait>) based implementation of Proactor. 
+ */
 class ACE_Export ACE_POSIX_SIG_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl,
                                                public ACE_POSIX_SIG_Asynch_Operation
 {
-  // = TITLE
-  //     This class implements <ACE_Asynch_Accept> for Realtime
-  //     Signal (<sigtimedwait>) based implementation of Proactor.
 public:
+  /// Constructor.
   ACE_POSIX_SIG_Asynch_Accept (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-  // Constructor.
 
+  /**
+   * This <open> belongs to ACE_SIG_Asynch_Operation. We forward this
+   * call to that method. We have put this here to avoid the compiler
+   * warnings.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // This <open> belongs to ACE_SIG_Asynch_Operation. We forward this
-  // call to that method. We have put this here to avoid the compiler
-  // warnings.
 
+  /**
+   * This starts off an asynchronous accept.  The asynchronous accept
+   * call also allows any initial data to be returned to the
+   * <handler>.  Upto <bytes_to_read> will be read and stored in the
+   * <message_block>.  The <accept_handle> will be used for the
+   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
+   * handle will be created.
+   *
+   * <message_block> must be specified. This is because the address of
+   * the new connection is placed at the end of this buffer.
+   */
   int accept (ACE_Message_Block &message_block,
               u_long bytes_to_read,
               ACE_HANDLE accept_handle,
               const void *act,
               int priority,
               int signal_number);
-  // This starts off an asynchronous accept.  The asynchronous accept
-  // call also allows any initial data to be returned to the
-  // <handler>.  Upto <bytes_to_read> will be read and stored in the
-  // <message_block>.  The <accept_handle> will be used for the
-  // <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
-  // handle will be created.
-  //
-  // <message_block> must be specified. This is because the address of
-  // the new connection is placed at the end of this buffer.
 
+  /// Destructor.
   virtual ~ACE_POSIX_SIG_Asynch_Accept (void);
-  // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
   //   the call to the ACE_POSIX_Asynch_Operation base class.
- 
+
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 
 private:
+  /// The thread function that does handle events.
   static void* thread_function (void* reactor);
-  // The thread function that does handle events.
 
+  /// Reactor to wait on the <listen_handle>.
   ACE_Reactor reactor_;
-  // Reactor to wait on the <listen_handle>.
 
+  /// The Event Handler to do handle_input.
   ACE_POSIX_SIG_Asynch_Accept_Handler* accept_handler_;
-  // The Event Handler to do handle_input.
 };
 
+/**
+ * @class ACE_POSIX_Asynch_Transmit_File_Result
+ *
+ * @brief This is that class which will be passed back to the
+ *     <handler> when the asynchronous transmit file completes.
+ *
+ *     This class has all the information necessary for the
+ *     <handler> to uniquiely identify the completion of the
+ *     asynchronous transmit file.
+ */
 class ACE_Export ACE_POSIX_Asynch_Transmit_File_Result : public virtual ACE_Asynch_Transmit_File_Result_Impl,
                                                          public ACE_POSIX_Asynch_Result
 {
-  // = TITLE
-  //     This is that class which will be passed back to the
-  //     <handler> when the asynchronous transmit file completes.
-  //
-  // = DESCRIPTION
-  //     This class has all the information necessary for the
-  //     <handler> to uniquiely identify the completion of the
-  //     asynchronous transmit file.
-
+  /// Factory classes willl have special permissions.
   friend class ACE_POSIX_AIOCB_Asynch_Transmit_File;
   friend class ACE_POSIX_SIG_Asynch_Transmit_File;
-  // Factory classes willl have special permissions.
 
+  /// Handlers do all the job.
   friend class ACE_POSIX_Asynch_Transmit_Handler;
   friend class ACE_POSIX_AIOCB_Asynch_Transmit_Handler;
   friend class ACE_POSIX_SIG_Asynch_Transmit_Handler;
-  // Handlers do all the job.
 
+  /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
-  // The Proactor constructs the Result class for faking results.
 
 public:
+  /// Socket used for transmitting the file.
   ACE_HANDLE socket (void) const;
-  // Socket used for transmitting the file.
 
+  /// File from which the data is read.
   ACE_HANDLE file (void) const;
-  // File from which the data is read.
 
+  /// Header and trailer data associated with this transmit file.
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer (void) const;
-  // Header and trailer data associated with this transmit file.
 
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous transmit file.
   u_long bytes_to_write (void) const;
-  // The number of bytes which were requested at the start of the
-  // asynchronous transmit file.
 
+  /// Number of bytes per send requested at the start of the transmit
+  /// file.
   u_long bytes_per_send (void) const;
-  // Number of bytes per send requested at the start of the transmit
-  // file.
 
+  /// Flags which were passed into transmit file.
   u_long flags (void) const;
-  // Flags which were passed into transmit file.
 
   // = Base class operations. These operations are here to kill
   //   dominance warnings. These methods call the base class methods.
 
+  /// Number of bytes transferred by the operation.
   u_long bytes_transferred (void) const;
-  // Number of bytes transferred by the operation.
 
+  /// ACT associated with the operation.
   const void *act (void) const;
-  // ACT associated with the operation.
 
+  /// Did the operation succeed?
   int success (void) const;
-  // Did the operation succeed?
 
+  /**
+   * This is the ACT associated with the handle on which the
+   * Asynch_Operation takes place.
+   *
+   * @@ This is not implemented for POSIX4 platforms.
+   *
+   */
   const void *completion_key (void) const;
-  // This is the ACT associated with the handle on which the
-  // Asynch_Operation takes place.
-  //
-  // @@ This is not implemented for POSIX4 platforms.
-  //
 
+  /// Error value if the operation fail.
   u_long error (void) const;
-  // Error value if the operation fail.
 
+  /// This returns ACE_INVALID_HANDLE.
   ACE_HANDLE event (void) const;
-  // This returns ACE_INVALID_HANDLE.
 
+  /**
+   * This really make sense only when doing file I/O.
+   *
+   * @@ On POSIX4-Unix, offset_high should be supported using
+   *     aiocb64.
+   *
+   */
   u_long offset (void) const;
   u_long offset_high (void) const;
-  // This really make sense only when doing file I/O.
-  //
-  // @@ On POSIX4-Unix, offset_high should be supported using
-  //     aiocb64.
-  //
 
+  /// The priority of the asynchronous operation.
   int priority (void) const;
-  // The priority of the asynchronous operation.
 
+  /**
+   * POSIX4 realtime signal number to be used for the
+   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * on non-POSIX4 systems and returns 0.
+   */
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
-  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
-  // on non-POSIX4 systems and returns 0.
-  
+
+  /// Post <this> to the Proactor.
   int post_completion (ACE_Proactor_Impl *proactor);
-  // Post <this> to the Proactor.
 
 protected:
   ACE_POSIX_Asynch_Transmit_File_Result (ACE_Handler &handler,
@@ -1451,46 +1589,60 @@ protected:
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Transmit_File factory.
 
+  /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
-  // ACE_Proactor will call this method when the write completes.
 
+  /// Destructor.
   virtual ~ACE_POSIX_Asynch_Transmit_File_Result (void);
-  // Destructor.
 
+  /// Network I/O handle.
   ACE_HANDLE socket_;
-  // Network I/O handle.
 
   // aiocb::aio_filedes
   // File I/O handle.
 
+  /// Header and trailer data associated with this transmit file.
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer_;
-  // Header and trailer data associated with this transmit file.
 
   // aiocb::aio_nbytes
   // The number of bytes which were requested at the start of the
   // asynchronous transmit file.
 
+  /// Number of bytes per send requested at the start of the transmit
+  /// file.
   u_long bytes_per_send_;
-  // Number of bytes per send requested at the start of the transmit
-  // file.
 
+  /// Flags which were passed into transmit file.
   u_long flags_;
-  // Flags which were passed into transmit file.
 };
 
+/**
+ * @class ACE_POSIX_AIOCB_Asynch_Transmit_File
+ *
+ * @brief Implementation for transmit_file will make use of
+ *     POSIX_AIOCB_Asynch_Transmit_Handler.
+ */
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Transmit_File : public virtual ACE_Asynch_Transmit_File_Impl,
                                                         public ACE_POSIX_AIOCB_Asynch_Operation
 {
-  // = DESCRIPTION
-  //     Implementation for transmit_file will make use of
-  //     POSIX_AIOCB_Asynch_Transmit_Handler.
 public:
+  /// Constructor.
   ACE_POSIX_AIOCB_Asynch_Transmit_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Constructor.
 
+  /**
+   * This starts off an asynchronous transmit file. The <file> is a
+   * handle to an open file.  <header_and_trailer> is a pointer to a
+   * data structure that contains pointers to data to send before and
+   * after the file data is sent.  Set this parameter to 0 if you only
+   * want to transmit the file data.  Upto <bytes_to_write> will be
+   * written to the <socket>.  If you want to send the entire file,
+   * let <bytes_to_write> = 0.  <bytes_per_send> is the size of each
+   * block of data sent per send operation. Please read the POSIX
+   * documentation on what the flags should be.
+   */
   int transmit_file (ACE_HANDLE file,
                      ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
                      u_long bytes_to_write,
@@ -1501,50 +1653,57 @@ public:
                      const void *act,
                      int priority,
                      int signal_number = 0);
-  // This starts off an asynchronous transmit file. The <file> is a
-  // handle to an open file.  <header_and_trailer> is a pointer to a
-  // data structure that contains pointers to data to send before and
-  // after the file data is sent.  Set this parameter to 0 if you only
-  // want to transmit the file data.  Upto <bytes_to_write> will be
-  // written to the <socket>.  If you want to send the entire file,
-  // let <bytes_to_write> = 0.  <bytes_per_send> is the size of each
-  // block of data sent per send operation. Please read the POSIX
-  // documentation on what the flags should be.
 
+  /// Destructor.
   virtual ~ACE_POSIX_AIOCB_Asynch_Transmit_File (void);
-  // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 };
 
+/**
+ * @class ACE_POSIX_SIG_Asynch_Transmit_File
+ *
+ * @brief This class implements <ACE_Asynch_Transmit_File> for
+ *    Realtime Signal (<sigtimedwait>) based implementation of
+ *    Proactor.
+ */
 class ACE_Export ACE_POSIX_SIG_Asynch_Transmit_File : public virtual ACE_Asynch_Transmit_File_Impl,
                                                       public ACE_POSIX_SIG_Asynch_Operation
 {
-  // = TITLE
-  //     This class implements <ACE_Asynch_Transmit_File> for Realtime
-  //     Signal (<sigtimedwait>) based implementation of Proactor.
 public:
+  /// Constructor.
   ACE_POSIX_SIG_Asynch_Transmit_File (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-  // Constructor.
 
+  /**
+   * This starts off an asynchronous transmit file. The <file> is a
+   * handle to an open file.  <header_and_trailer> is a pointer to a
+   * data structure that contains pointers to data to send before and
+   * after the file data is sent.  Set this parameter to 0 if you only
+   * want to transmit the file data.  Upto <bytes_to_write> will be
+   * written to the <socket>.  If you want to send the entire file,
+   * let <bytes_to_write> = 0.  <bytes_per_send> is the size of each
+   * block of data sent per send operation.
+   */
   int transmit_file (ACE_HANDLE file,
                      ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
                      u_long bytes_to_write,
@@ -1555,37 +1714,31 @@ public:
                      const void *act,
                      int priority,
                      int signal_number);
-  // This starts off an asynchronous transmit file. The <file> is a
-  // handle to an open file.  <header_and_trailer> is a pointer to a
-  // data structure that contains pointers to data to send before and
-  // after the file data is sent.  Set this parameter to 0 if you only
-  // want to transmit the file data.  Upto <bytes_to_write> will be
-  // written to the <socket>.  If you want to send the entire file,
-  // let <bytes_to_write> = 0.  <bytes_per_send> is the size of each
-  // block of data sent per send operation.
 
+  /// Destructor.
   virtual ~ACE_POSIX_SIG_Asynch_Transmit_File (void);
-  // Destructor.
-  
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These  
-  //   methods are defined here to avoid dominace warnings. They route 
-  //   the call to the ACE_POSIX_Asynch_Operation base class. 
 
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  ///
+  /// @@ Not implemented. Returns 0.
   int cancel (void);
-  //
-  // @@ Not implemented. Returns 0.
-  
+
+  /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-  // Return the underlying proactor.
 };
 
 #if defined (__ACE_INLINE__)

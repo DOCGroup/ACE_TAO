@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Profile_Timer.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Profile_Timer.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_PROFILE_TIMER_H
 #define ACE_PROFILE_TIMER_H
@@ -27,22 +24,27 @@
 #include "ace/Time_Value.h"
 #include "ace/High_Res_Timer.h"
 
+/**
+ * @class ACE_Profile_Timer
+ *
+ * @brief This class provides both a timing mechanism and a mechanism
+ * for reporting the resource usage of a process.
+ */
 class ACE_Export ACE_Profile_Timer
 {
-  // = TITLE
-  //     This class provides both a timing mechanism and a mechanism
-  //     for reporting the resource usage of a process.
 public:
 
+  /**
+   * @class ACE_Elapsed_Time
+   *
+   * @brief Keeps track of the various user, system, and elapsed (real)
+   * times.
+   *
+   * If <ACE_HAS_FLOATING_POINT> is enabled these values are in
+   * microseconds, otherwise, they are in seconds.
+   */
   class ACE_Elapsed_Time
   {
-    // = TITLE
-    //    Keeps track of the various user, system, and elapsed (real)
-    //    times.
-    //
-    // = DESCRIPTION
-    //   If <ACE_HAS_FLOATING_POINT> is enabled these values are in
-    //   microseconds, otherwise, they are in seconds.
   public:
     ACE_timer_t real_time;
     ACE_timer_t user_time;
@@ -52,74 +54,74 @@ public:
   typedef ACE_Rusage Rusage;
 
   // = Initialization and termination methods.
+  /// Default constructor.
   ACE_Profile_Timer (void);
-  // Default constructor.
 
+  /// Shutdown the timer.
   ~ACE_Profile_Timer (void);
-  // Shutdown the timer.
 
   // = Timer methods.
+  /// Activate the timer.
   int start (void);
-  // Activate the timer.
 
+  /// Stop the timer.
   int stop (void);
-  // Stop the timer.
 
   // = Resource utilization methods.
+  /// Compute the time elapsed since <start>.
   int elapsed_time (ACE_Elapsed_Time &et);
-  // Compute the time elapsed since <start>.
 
+  /// Compute the amount of resource utilization since the start time.
   void elapsed_rusage (ACE_Profile_Timer::Rusage &rusage);
-  // Compute the amount of resource utilization since the start time.
 
+  /// Return the resource utilization (don't recompute it).
   void get_rusage (ACE_Profile_Timer::Rusage &rusage);
-  // Return the resource utilization (don't recompute it).
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Compute how much time has elapsed.
   void compute_times (ACE_Elapsed_Time &et);
-  // Compute how much time has elapsed.
 
+  /// Keep track of the starting resource utilization.
   ACE_Profile_Timer::Rusage begin_usage_;
-  // Keep track of the starting resource utilization.
 
+  /// Keep track of the ending resource utilization.
   ACE_Profile_Timer::Rusage end_usage_;
-  // Keep track of the ending resource utilization.
 
+  /// Keep track of the last rusage for incremental timing.
   ACE_Profile_Timer::Rusage last_usage_;
-  // Keep track of the last rusage for incremental timing.
 
 #if defined (ACE_HAS_PRUSAGE_T)
+  /// Substract two timestructs and store their difference.
   void subtract (timespec_t &tdiff, timespec_t &t0, timespec_t &t1);
-  // Substract two timestructs and store their difference.
 
+  /// I/O handle for /proc file system.
   ACE_HANDLE proc_handle_;
-  // I/O handle for /proc file system.
 
-#elif defined (ACE_HAS_GETRUSAGE) 
+#elif defined (ACE_HAS_GETRUSAGE)
+  /// Substract two timestructs and store their difference.
   void subtract (timeval &tdiff,
                  timeval &t0,
                  timeval &t1);
-  // Substract two timestructs and store their difference.
 
+  /// Keep track of the beginning time.
   timeval begin_time_;
-  // Keep track of the beginning time.
 
+  /// Keep track of the ending time.
   timeval end_time_;
-  // Keep track of the ending time.
 
+  /// Keep track of the last time for incremental timing.
   timeval last_time_;
-  // Keep track of the last time for incremental timing.
 #endif /* ACE_HAS_PRUSAGE_T */
 
 #if defined (ACE_WIN32) || (!defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE))
+  /// The high resolution timer
   ACE_High_Res_Timer timer_;
-  // The high resolution timer
 #endif /* ACE_WIN32 || !ACE_HAS_PRUSAGE_T && !ACE_HAS_GETRUSAGE */
 };
 
@@ -129,4 +131,3 @@ private:
 
 #include "ace/post.h"
 #endif /* ACE_PROFILE_TIMER_H */
-

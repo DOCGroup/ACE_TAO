@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Cached_Connect_Strategy_T.h
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cached_Connect_Strategy_T.h
+ *
+ *  $Id$
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CACHED_CONNECT_STRATEGY_T_H
 #define CACHED_CONNECT_STRATEGY_T_H
@@ -34,44 +31,48 @@
 // For linkers which cant grok long names...
 #define ACE_Cached_Connect_Strategy_Ex ACCSE
 
+/**
+ * @class ACE_Cached_Connect_Strategy_Ex
+ *
+ * @brief A connection strategy which caches connections to peers
+ * (represented by <SVC_HANDLER> instances), thereby allowing
+ * subsequent re-use of unused, but available, connections.
+ *
+ * <Cached_Connect_Strategy> is intended to be used as a
+ * plug-in connection strategy for <ACE_Strategy_Connector>.
+ * It's added value is re-use of established connections and
+ * tweaking the role of the cache as per the caching strategy.
+ */
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
 class ACE_Cached_Connect_Strategy_Ex : public ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
 {
-  // = TITLE
-  //     A connection strategy which caches connections to peers
-  //     (represented by <SVC_HANDLER> instances), thereby allowing
-  //     subsequent re-use of unused, but available, connections.
-  //
-  // = DESCRIPTION
-  //     <Cached_Connect_Strategy> is intended to be used as a
-  //     plug-in connection strategy for <ACE_Strategy_Connector>.
-  //     It's added value is re-use of established connections and
-  //     tweaking the role of the cache as per the caching strategy.
 
 public:
 
+  /// Constructor
   ACE_Cached_Connect_Strategy_Ex (CACHING_STRATEGY &caching_s,
                                   ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
                                   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
                                   ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0,
                                   MUTEX *lock = 0,
                                   int delete_lock = 0);
-  // Constructor
 
+  /// Destructor
   virtual ~ACE_Cached_Connect_Strategy_Ex (void);
-  // Destructor
 
+  /// Explicit purging of connection entries from the connection cache.
   virtual int purge_connections (void);
-  // Explicit purging of connection entries from the connection cache.
 
+  /// Mark as closed (non-locking version). This is used during the cleanup of the
+  /// connections purged.
   virtual int mark_as_closed_i (const void *recycling_act);
-  // Mark as closed (non-locking version). This is used during the cleanup of the
-  // connections purged.
 
+  /**
+   * Since g++ version < 2.8 arent happy with templates, this special
+   * method had to be devised to avoid memory leaks and perform
+   * cleanup of the <connection_cache_>.
+   */
   void cleanup (void);
-  // Since g++ version < 2.8 arent happy with templates, this special
-  // method had to be devised to avoid memory leaks and perform
-  // cleanup of the <connection_cache_>.
 
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
@@ -108,24 +109,24 @@ public:
 
 protected:
 
+  /// Find an idle handle.
   int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry);
-  // Find an idle handle.
 
+  /// Remove from cache (non-locking version).
   virtual int purge_i (const void *recycling_act);
-  // Remove from cache (non-locking version).
 
+  /// Add to cache (non-locking version).
   virtual int cache_i (const void *recycling_act);
-  // Add to cache (non-locking version).
 
+  /// Get/Set <recycle_state> (non-locking version).
   virtual int recycle_state_i (const void *recycling_act,
                                ACE_Recyclable_State new_state);
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
-  // Get/Set <recycle_state> (non-locking version).
 
+  /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
   virtual int cleanup_hint_i (const void *recycling_act,
                               void **act_holder);
-  // Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
 
   // = Helpers
   int check_hint_i (SVC_HANDLER *&sh,
@@ -157,6 +158,15 @@ protected:
                                      int perms,
                                      int &found);
 
+  /**
+   * Connection of the svc_handler with the remote host.  This method
+   * also encapsulates the connection done with auto_purging under the
+   * hood. If the connect failed due to the process running out of
+   * file descriptors then, auto_purging of some connections are done
+   * from the CONNECTION_CACHE. This frees the descriptors which get
+   * used in the connect process and hence the connect operation can
+   * succeed.
+   */
   virtual int cached_connect (SVC_HANDLER *&sh,
                               const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                               ACE_Time_Value *timeout,
@@ -164,16 +174,9 @@ protected:
                               int reuse_addr,
                               int flags,
                               int perms);
-  // Connection of the svc_handler with the remote host.  This method
-  // also encapsulates the connection done with auto_purging under the
-  // hood. If the connect failed due to the process running out of
-  // file descriptors then, auto_purging of some connections are done
-  // from the CONNECTION_CACHE. This frees the descriptors which get
-  // used in the connect process and hence the connect operation can
-  // succeed.
 
+  /// Table that maintains the cache of connected <SVC_HANDLER>s.
   CONNECTION_CACHE connection_cache_;
-  // Table that maintains the cache of connected <SVC_HANDLER>s.
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -181,25 +184,29 @@ protected:
 // For linkers which cant grok long names...
 #define ACE_Bounded_Cached_Connect_Strategy ABCCS
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
-class ACE_Bounded_Cached_Connect_Strategy : public
- ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>
- {
-  // = TITLE
-  //     A connection strategy which caches connections to peers
-  //     (represented by <SVC_HANDLER> instances), thereby allowing
-  //     subsequent re-use of unused, but available, connections.
-  //     This strategy should be used when the cache is bounded by
-  //     maximum size.
-  //
-  // = DESCRIPTION
-  //     <Bounded_Cached_Connect_Strategy> is intended to be used as a
-  //     plug-in connection strategy for <ACE_Strategy_Connector>.
-  //     It's added value is re-use of established connections and
-  //     tweaking the role of the cache as per the caching strategy.
-  //     Thanks to Edan Ayal  <edana@bandwiz.com> for contributing this
-  //     class and Susan Liebeskind  <shl@janis.gtri.gatech.edu> for
-  //     brainstorming about it.
+/**
+ * @class ACE_Bounded_Cached_Connect_Strategy
+ *
+ * @brief A connection strategy which caches connections to peers
+ *     (represented by <SVC_HANDLER> instances), thereby allowing
+ *     subsequent re-use of unused, but available, connections.
+ *     This strategy should be used when the cache is bounded by
+ *     maximum size.
+ *
+ *       <Bounded_Cached_Connect_Strategy> is intended to be used as a
+ *     plug-in connection strategy for <ACE_Strategy_Connector>.
+ *     It's added value is re-use of established connections and
+ *     tweaking the role of the cache as per the caching strategy.
+ *     Thanks to Edan Ayal  <edana@bandwiz.com> for contributing this
+ *     class and Susan Liebeskind  <shl@janis.gtri.gatech.edu> for
+ *     brainstorming about it.
+ */
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1,
+          class CACHING_STRATEGY, class ATTRIBUTES,
+          class MUTEX>
+  class ACE_Bounded_Cached_Connect_Strategy
+     : public ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>
+{
 
    typedef ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>
    CCSEBASE;
@@ -210,6 +217,7 @@ class ACE_Bounded_Cached_Connect_Strategy : public
 
  public:
 
+   /// Constructor
    ACE_Bounded_Cached_Connect_Strategy  (size_t  max_size,
                                          CACHING_STRATEGY &caching_s,
                                          ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
@@ -217,13 +225,12 @@ class ACE_Bounded_Cached_Connect_Strategy : public
                                          ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0,
                                          MUTEX *lock = 0,
                                          int delete_lock = 0);
-   // Constructor
 
+   /// Destructor
    virtual ~ACE_Bounded_Cached_Connect_Strategy (void);
-   // Destructor
 
+   /// Declare the dynamic allocation hooks.
    ACE_ALLOC_HOOK_DECLARE;
-   // Declare the dynamic allocation hooks.
 
  protected:
 
@@ -238,8 +245,8 @@ class ACE_Bounded_Cached_Connect_Strategy : public
                                              ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
                                              int &found);
 
+   /// max items in the cache, used as a bound for the creation of svc_handlers.
    size_t  max_size_;
-   // max items in the cache, used as a bound for the creation of svc_handlers.
 };
 
 

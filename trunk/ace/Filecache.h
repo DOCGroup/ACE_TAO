@@ -1,19 +1,15 @@
 /* -*- c++ -*- */
-// Hey, Emacs!  This is a C++ file!
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Filecache.h
-//
-// = AUTHOR
-//    James Hu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Filecache.h
+ *
+ *  $Id$
+ *
+ *  @author James Hu
+ */
+//=============================================================================
+
 
 #ifndef ACE_FILECACHE_H
 #define ACE_FILECACHE_H
@@ -37,44 +33,40 @@ enum ACE_Filecache_Flag
 
 class ACE_Filecache_Object;
 
+/**
+ * @class ACE_Filecache_Handle
+ *
+ * @brief Abstraction over a real file.  This is meant to be the entry
+ * point into the Cached Virtual Filesystem.
+ *
+ * This is a cached filesystem implementation based loosely on the
+ * implementation of JAWS_File.  The interfaces will be nearly the
+ * same.  The under-the-hood implementation should hopefully be a
+ * much faster thing.
+ * These will be given their own implementations later. For now, we
+ * borrow the implementation provided by JAWS.
+ * On creation, the cache is checked, and reference count is
+ * incremented.  On destruction, reference count is decremented.  If
+ * the reference count is 0, the file is removed from the cache.
+ * E.g. 1,
+ * {
+ * ACE_Filecache_Handle foo("foo.html");
+ * this->peer ().send (foo.address (), foo.size ());
+ * }
+ * E.g. 2,
+ * {
+ * ACE_Filecache_Handle foo("foo.html");
+ * io->transmitfile (foo.handle (), this->peer ().handle ());
+ * }
+ * E.g. 3,
+ * {
+ * ACE_Filecache_Handle foo("foo.html", content_length);
+ * this->peer ().recv (foo.address (), content_length);
+ * }
+ * TODO:
+ */
 class ACE_Export ACE_Filecache_Handle
 {
-  // = TITLE
-  //     Abstraction over a real file.  This is meant to be the entry
-  //     point into the Cached Virtual Filesystem.
-  //
-  // = DESCRIPTION
-  // This is a cached filesystem implementation based loosely on the
-  // implementation of JAWS_File.  The interfaces will be nearly the
-  // same.  The under-the-hood implementation should hopefully be a
-  // much faster thing.
-  //
-  // These will be given their own implementations later. For now, we
-  // borrow the implementation provided by JAWS.
-  //
-  // On creation, the cache is checked, and reference count is
-  // incremented.  On destruction, reference count is decremented.  If
-  // the reference count is 0, the file is removed from the cache.
-  //
-  //     E.g. 1,
-  //       {
-  //         ACE_Filecache_Handle foo("foo.html");
-  //         this->peer ().send (foo.address (), foo.size ());
-  //       }
-  //
-  //     E.g. 2,
-  //       {
-  //         ACE_Filecache_Handle foo("foo.html");
-  //         io->transmitfile (foo.handle (), this->peer ().handle ());
-  //       }
-  //
-  //     E.g. 3,
-  //       {
-  //         ACE_Filecache_Handle foo("foo.html", content_length);
-  //         this->peer ().recv (foo.address (), content_length);
-  //       }
-  //
-  // TODO:
 
   // (1) Get rid of the useless copying of files when reading.  Although
   // it does make sure the file you send isn't being changed, it doesn't
@@ -93,42 +85,44 @@ class ACE_Export ACE_Filecache_Handle
   //
 public:
 
+  /// Query cache for file, and acquire it.  Assumes the file is being
+  /// opened for reading.
   ACE_Filecache_Handle (const ACE_TCHAR *filename,
                         ACE_Filecache_Flag mapit = ACE_MAPIT);
-  // Query cache for file, and acquire it.  Assumes the file is being
-  // opened for reading.
 
+  /**
+   * Create new entry, and acquire it.  Presence of SIZE assumes the
+   * file is being opened for writing.  If SIZE is zero, assumes the
+   * file is to be removed from the cache.
+   */
   ACE_Filecache_Handle (const ACE_TCHAR *filename,
                         int size,
                         ACE_Filecache_Flag mapit = ACE_MAPIT);
-  // Create new entry, and acquire it.  Presence of SIZE assumes the
-  // file is being opened for writing.  If SIZE is zero, assumes the
-  // file is to be removed from the cache.
 
+  /// Closes any open handles, release acquired file.
   ~ACE_Filecache_Handle (void);
-  // Closes any open handles, release acquired file.
 
+  /// Base address of memory mapped file.
   void *address (void) const;
-  // Base address of memory mapped file.
 
+  /// A handle (e.g., UNIX file descriptor, or NT file handle).
   ACE_HANDLE handle (void) const;
-  // A handle (e.g., UNIX file descriptor, or NT file handle).
 
+  /// Any associated error in handle creation and acquisition.
   int error (void) const;
-  // Any associated error in handle creation and acquisition.
 
+  /// The size of the file.
   size_t size (void) const;
-  // The size of the file.
 
 protected:
+  /// Default do nothing constructor.  Prevent it from being called.
   ACE_Filecache_Handle (void);
-  // Default do nothing constructor.  Prevent it from being called.
 
+  /// Common initializations for constructors.
   void init (void);
-  // Common initializations for constructors.
 
 public:
-  // = These come from ACE_Filecache_Object, which is an internal class.
+  /// These come from ACE_Filecache_Object, which is an internal class.
   enum
   {
     ACE_SUCCESS = 0,
@@ -141,11 +135,11 @@ public:
   };
 
 private:
+  /// A reference to the low level instance.
   ACE_Filecache_Object *file_;
-  // A reference to the low level instance.
 
+  /// A <dup>'d version of the one from <file_>.
   ACE_HANDLE handle_;
-  // A <dup>'d version of the one from <file_>.
 
   int mapit_;
 };
@@ -164,36 +158,39 @@ typedef ACE_Hash_Map_Manager<ACE_TString, ACE_Filecache_Object *, ACE_Null_Mutex
         ACE_Filecache_Hash;
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
+/**
+ * @class ACE_Filecache
+ *
+ * @brief A hash table holding the information about entry point into
+ * the Cached Virtual Filesystem. On insertion, the reference
+ * count is incremented. On destruction, reference count is
+ * decremented.
+ */
 class ACE_Export ACE_Filecache
 {
-  // = TITLE
-  //     A hash table holding the information about entry point into
-  //     the Cached Virtual Filesystem. On insertion, the reference
-  //     count is incremented. On destruction, reference count is
-  //     decremented.
 public:
+  /// Singleton pattern.
   static ACE_Filecache *instance (void);
-  // Singleton pattern.
 
   ~ACE_Filecache (void);
 
+  /// Returns 0 if the file associated with ``filename'' is in the cache,
+  /// or -1 if not.
   int find (const ACE_TCHAR *filename);
-  // Returns 0 if the file associated with ``filename'' is in the cache,
-  // or -1 if not.
 
+  /// Return the file associated with ``filename'' if it is in the cache,
+  /// or create if not.
   ACE_Filecache_Object *fetch (const ACE_TCHAR *filename, int mapit = 1);
-  // Return the file associated with ``filename'' if it is in the cache,
-  // or create if not.
 
+  /// Remove the file associated with ``filename'' from the cache.
   ACE_Filecache_Object *remove (const ACE_TCHAR *filename);
-  // Remove the file associated with ``filename'' from the cache.
 
+  /// Create a new Filecache_Object, returns it.
   ACE_Filecache_Object *create (const ACE_TCHAR *filename, int size);
-  // Create a new Filecache_Object, returns it.
 
+  /// Release an acquired Filecache_Object, returns it again or NULL if it
+  /// was deleted.
   ACE_Filecache_Object *finish (ACE_Filecache_Object *&new_file);
-  // Release an acquired Filecache_Object, returns it again or NULL if it
-  // was deleted.
 
 protected:
   ACE_Filecache_Object *insert_i (const ACE_TCHAR *filename,
@@ -208,95 +205,98 @@ public:
 
   enum
   {
+    /// For this stupid implementation, use an array.  Someday, use a
+    /// balanced search tree, or real hash table.
     ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE = 512,
-    // For this stupid implementation, use an array.  Someday, use a
-    // balanced search tree, or real hash table.
 
+    /// This determines the highwater mark in megabytes for the cache.
+    /// This will be ignored for now.
     ACE_DEFAULT_VIRTUAL_FILESYSTEM_CACHE_SIZE = 20
-    // This determines the highwater mark in megabytes for the cache.
-    // This will be ignored for now.
   };
 
 protected:
+  /// Prevent it from being called.
   ACE_Filecache (void);
-  // Prevent it from being called.
 
 private:
   int size_;
 
+  /// The hash table
   ACE_Filecache_Hash hash_;
-  // The hash table
 
+  /// The reference to the instance
   static ACE_Filecache *cvf_;
-  // The reference to the instance
 
   // = Synchronization variables.
   ACE_SYNCH_RW_MUTEX hash_lock_[ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
   ACE_SYNCH_RW_MUTEX file_lock_[ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
 };
 
+/**
+ * @class ACE_Filecache_Object
+ *
+ * @brief Abstraction over a real file.  This is what the Virtual
+ * Filesystem contains.  This class is not intended for general
+ * consumption.  Please consult a physician before attempting to
+ * use this class.
+ */
 class ACE_Export ACE_Filecache_Object
 {
-  // = TITLE
-  //     Abstraction over a real file.  This is what the Virtual
-  //     Filesystem contains.  This class is not intended for general
-  //     consumption.  Please consult a physician before attempting to
-  //     use this class.
 public:
   friend class ACE_Filecache;
 
+  /// Creates a file for reading.
   ACE_Filecache_Object (const ACE_TCHAR *filename,
                         ACE_SYNCH_RW_MUTEX &lock,
                         LPSECURITY_ATTRIBUTES sa = 0,
                         int mapit = 1);
-  // Creates a file for reading.
 
+  /// Creates a file for writing.
   ACE_Filecache_Object (const ACE_TCHAR *filename,
                         int size,
                         ACE_SYNCH_RW_MUTEX &lock,
                         LPSECURITY_ATTRIBUTES sa = 0);
-  // Creates a file for writing.
 
+  /// Only if reference count is zero should this be called.
   ~ACE_Filecache_Object (void);
-  // Only if reference count is zero should this be called.
 
+  /// Increment the reference_count_.
   int acquire (void);
-  // Increment the reference_count_.
 
+  /// Decrement the reference_count_.
   int release (void);
-  // Decrement the reference_count_.
 
   // = error_ accessors
   int error (void) const;
   int error (int error_value,
              const ACE_TCHAR *s = ACE_LIB_TEXT ("ACE_Filecache_Object"));
 
+  /// filename_ accessor
   const ACE_TCHAR *filename (void) const;
-  // filename_ accessor
 
+  /// handle_ accessor.
   ACE_HANDLE handle (void) const;
-  // handle_ accessor.
 
+  /// Base memory address for memory mapped file.
   void *address (void) const;
-  // Base memory address for memory mapped file.
 
+  /// size_ accessor.
   size_t size (void) const;
-  // size_ accessor.
 
+  /// True if file on disk is newer than cached file.
   int update (void) const;
-  // True if file on disk is newer than cached file.
 
 protected:
+  /// Prevent from being called.
   ACE_Filecache_Object (void);
-  // Prevent from being called.
 
+  /// Common initialization code,
   void init (void);
-  // Common initialization code,
 
 private:
+  /// Internal error logging method, no locking.
   int error_i (int error_value,
                const ACE_TCHAR *s = ACE_LIB_TEXT ("ACE_Filecache_Object"));
-  // Internal error logging method, no locking.
 
 public:
 
@@ -318,34 +318,34 @@ public:
   };
 
 private:
+  /// The temporary file name and the real file name.  The real file is
+  /// copied into the temporary file for safety reasons.
   ACE_TCHAR *tempname_;
   ACE_TCHAR filename_[MAXPATHLEN + 1];
-  // The temporary file name and the real file name.  The real file is
-  // copied into the temporary file for safety reasons.
 
+  /// mmap_ holds the memory mapped version of the temporary file.
+  /// handle_ is the descriptor to the temporary file.
   ACE_Mem_Map mmap_;
   ACE_HANDLE handle_;
-  // mmap_ holds the memory mapped version of the temporary file.
-  // handle_ is the descriptor to the temporary file.
 
+  /// Used to compare against the real file to test if an update is needed.
   struct stat stat_;
   size_t size_;
-  // Used to compare against the real file to test if an update is needed.
 
+  /// Status indicators.
   int action_;
   int error_;
-  // Status indicators.
 
+  /// If set to 1, means the object is flagged for removal.
   int stale_;
-  // If set to 1, means the object is flagged for removal.
 
+  /// Security attribute object.
   LPSECURITY_ATTRIBUTES sa_;
-  // Security attribute object.
 
+  /// lock_ provides a bookkeeping mechanism for users of this object.
+  /// junklock_ is the default initializer
   ACE_SYNCH_RW_MUTEX junklock_;
   ACE_SYNCH_RW_MUTEX &lock_;
-  // lock_ provides a bookkeeping mechanism for users of this object.
-  // junklock_ is the default initializer
 };
 
 

@@ -1,26 +1,23 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    streams.h
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// = DESCRIPTION
-//    This file contains the portability ugliness for the Standard C++
-//    Library.  As implementations of the "standard" emerge, this file
-//    will need to be updated.
-//
-//    This files deals with the streams includes.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    streams.h
+ *
+ *  $Id$
+ *
+ *  @author Irfan Pyarali
+ *
+ *  This file contains the portability ugliness for the Standard C++
+ *  Library.  As implementations of the "standard" emerge, this file
+ *  will need to be updated.
+ *
+ *  This files deals with the streams includes.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef ACE_STREAMS_H
 #define ACE_STREAMS_H

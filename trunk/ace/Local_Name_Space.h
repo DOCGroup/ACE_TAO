@@ -1,20 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE
-//
-// = FILENAME
-//    Local_Name_Space.h
-//
-// = AUTHOR
-//    Prashant Jain (pjain@cs.wustl.edu), Irfan Pyarali
-//    (irfan@wuerl.wustl.edu), and Douglas C. Schmidt
-//    (schmidt@cs.wustl.edu).
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Local_Name_Space.h
+ *
+ *  $Id$
+ *
+ *  @author Prashant Jain (pjain@cs.wustl.edu)
+ *  @author Irfan Pyarali (irfan@wuerl.wustl.edu)
+ *  @author and Douglas C. Schmidt (schmidt@cs.wustl.edu).
+ */
+//=============================================================================
+
 
 #ifndef ACE_LOCAL_NAME_SPACE_H
 #define ACE_LOCAL_NAME_SPACE_H
@@ -30,89 +27,94 @@
 #include "ace/Malloc_T.h"
 #include "ace/Synch.h"
 
+/**
+ * @class ACE_NS_String
+ *
+ * @brief This class and ACE_NS_Internal are used as Adapters to work
+ * with the Map_Manager.
+ *
+ * In order to work correctly, this class must be able to
+ * convert back and forth with <ACE_WStrings>.  Note that this
+ * class must not have a destructor since otherwise we'll have
+ * problems...
+ */
 class ACE_Export ACE_NS_String
 {
-  // = TITLE
-  //     This class and ACE_NS_Internal are used as Adapters to work
-  //     with the Map_Manager.
-  //
-  // = DESCRIPTION
-  //     In order to work correctly, this class must be able to
-  //     convert back and forth with <ACE_WStrings>.  Note that this
-  //     class must not have a destructor since otherwise we'll have
-  //     problems...
 public:
   // = Initialization.
+  /// Default "no-op" constructor.
   ACE_NS_String (void);
-  // Default "no-op" constructor.
 
+  /// Initialization method.
   ACE_NS_String (ACE_USHORT16 *dst,
                  const ACE_USHORT16 *src,
                  size_t len);
-  // Initialization method.
 
+  /// Converts an ACE_WString to an ACE_NS_String;
   ACE_NS_String (const ACE_WString &);
-  // Converts an ACE_WString to an ACE_NS_String;
 
+  /// Converts an ACE_NS_String to fresh copy of an ACE_WString;
   operator ACE_WString () const;
-  // Converts an ACE_NS_String to fresh copy of an ACE_WString;
 
+  /// Return the ASCII character representation.
   char *char_rep (void) const;
-  // Return the ASCII character representation.
 
+  /// Matches on substrings.
   int strstr (const ACE_NS_String &) const;
-  // Matches on substrings.
 
+  /// Compare an ACE_NS_String.
   int operator == (const ACE_NS_String &) const;
-  // Compare an ACE_NS_String.
 
+  /// Compare an ACE_NS_String.
   int operator != (const ACE_NS_String &) const;
-  // Compare an ACE_NS_String.
 
+  /// Returns length of the string
   size_t len (void) const;
-  // Returns length of the string
 
+  /// Returns the underlying representation.
   ACE_USHORT16 *fast_rep (void) const;
-  // Returns the underlying representation.
 
+  /// Returns a hash value for this string.
   size_t hash (void) const;
-  // Returns a hash value for this string.
 
 private:
+  /// Length of the string.
   size_t len_;
-  // Length of the string.
 
+  /// This actually points into shared/persistent memory.
   ACE_USHORT16 *rep_;
-  // This actually points into shared/persistent memory.
 };
 
+/**
+ * @class ACE_NS_Internal
+ *
+ * @brief This class and ACE_NS_String are used as Adapters to work
+ * with the Map_Manager.
+ */
 class ACE_Export ACE_NS_Internal
 {
-  // = TITLE
-  //     This class and ACE_NS_String are used as Adapters to work
-  //     with the Map_Manager.
 public:
+  /// No-op constructor.
   ACE_NS_Internal (void);
-  // No-op constructor.
 
+  /// Constructor.
   ACE_NS_Internal (ACE_NS_String &value, const char *type);
-  // Constructor.
 
+  /// Compare an ACE_NS_Internal
   int operator == (const ACE_NS_Internal &) const;
-  // Compare an ACE_NS_Internal
 
+  /// Return value.
   ACE_NS_String value (void);
-  // Return value.
 
+  /// Return type.
   const char *type (void);
-  // Return type.
 
 private:
+  /// Contains the value of the string.
   ACE_NS_String value_;
-  // Contains the value of the string.
 
+  /// Contains the type of the string.
   const char *type_;
-  // Contains the type of the string.
 };
 
 // Include the ACE_Local_Name_Space templates stuff at this point.

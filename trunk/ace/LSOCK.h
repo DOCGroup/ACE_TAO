@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    LSOCK.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    LSOCK.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_LOCAL_SOCK_H
 #define ACE_LOCAL_SOCK_H
@@ -26,46 +23,49 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+/**
+ * @class ACE_LSOCK
+ *
+ * @brief Create a Local ACE_SOCK, which is used for passing file
+ * descriptors.
+ */
 class ACE_Export ACE_LSOCK
 {
-  // = TITLE
-  //     Create a Local ACE_SOCK, which is used for passing file
-  //     descriptors.
 public:
 #if defined (ACE_HAS_MSG)
+  /// Send an open FD to another process.
   int send_handle (const ACE_HANDLE handle) const;
-  // Send an open FD to another process.
 
+  /// Recv an open FD from another process.
   int recv_handle (ACE_HANDLE &handles,
                    char *pbuf = 0,
                    int *len = 0) const;
-  // Recv an open FD from another process.
 #endif /* ACE_HAS_MSG */
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
   // = Ensure that ACE_LSOCK is an abstract base class
 
+  /// Default constructor.
   ACE_LSOCK (void);
-  // Default constructor.
 
+  /// Initialize based on <handle>
   ACE_LSOCK (ACE_HANDLE handle);
-  // Initialize based on <handle>
 
+  /// Get handle.
   ACE_HANDLE get_handle (void) const;
-  // Get handle.
 
+  /// Set handle.
   void set_handle (ACE_HANDLE handle);
-  // Set handle.
 
 private:
+  /// An auxiliary handle used to avoid virtual base classes...
   ACE_HANDLE aux_handle_;
-  // An auxiliary handle used to avoid virtual base classes...
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

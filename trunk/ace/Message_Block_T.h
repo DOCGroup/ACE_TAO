@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Message_Block_T.h
-//
-// = AUTHOR
-//    Doug Schmidt & Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Message_Block_T.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt & Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef ACE_MESSAGE_BLOCK_T_H
 #define ACE_MESSAGE_BLOCK_T_H
@@ -24,43 +21,46 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Locked_Data_Block
+ *
+ * @brief A Data_Block with a concrete locking strategy.
+ *
+ * Data_Blocks can be parametric on the kind of lock they use; in
+ * many cases the lifetime of the lock is tied to the lifetime of
+ * the Data_Block itself. But since Data_Blocks are reference
+ * counted it is hard for users to control the lock lifetime.
+ * This class is parametric over the kind of lock used.
+ */
 template <class ACE_LOCK>
 class ACE_Locked_Data_Block : public ACE_Data_Block
 {
-  // = TITLE
-  //   A Data_Block with a concrete locking strategy.
-  //
-  // = DESCRIPTION
-  //   Data_Blocks can be parametric on the kind of lock they use; in
-  //   many cases the lifetime of the lock is tied to the lifetime of
-  //   the Data_Block itself. But since Data_Blocks are reference
-  //   counted it is hard for users to control the lock lifetime.
-  //   This class is parametric over the kind of lock used.
-  //
 public:
   // = Initialization and termination methods.
+  /// Default "do-nothing" constructor.
   ACE_Locked_Data_Block (void);
-  // Default "do-nothing" constructor.
 
+  /// Initialize.
   ACE_Locked_Data_Block (size_t size,
                          ACE_Message_Block::ACE_Message_Type msg_type,
                          const char *msg_data,
                          ACE_Allocator *allocator_strategy,
                          ACE_Message_Block::Message_Flags flags,
                          ACE_Allocator *data_block_allocator);
-  // Initialize.
 
+  /// Delete all the resources held in the message.
   virtual ~ACE_Locked_Data_Block (void);
-  // Delete all the resources held in the message.
 
+  /**
+   * Return an exact "deep copy" of the message, the dynamic type is
+   * ACE_Locked_Data_Block<>
+   * See the documentation in Message_Block.h for details.
+   */
   virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0) const;
-  // Return an exact "deep copy" of the message, the dynamic type is
-  // ACE_Locked_Data_Block<>
-  // See the documentation in Message_Block.h for details.
 
 private:
+  /// The lock
   ACE_LOCK lock_;
-  // The lock
 
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &))

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    DEV_Addr.h
-//
-// = AUTHOR
-//    Gerhard Lenzer and Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DEV_Addr.h
+ *
+ *  $Id$
+ *
+ *  @author Gerhard Lenzer and Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_DEV_ADDR_H
 #define ACE_DEV_ADDR_H
@@ -26,54 +23,57 @@
 
 #include "ace/ACE.h"
 
+/**
+ * @class ACE_DEV_Addr
+ *
+ * @brief Defines device address family address format.
+ */
 class ACE_Export ACE_DEV_Addr : public ACE_Addr
 {
-  // = TITLE
-  //    Defines device address family address format.
 public:
   // = Initialization methods.
+  /// Default constructor.
   ACE_DEV_Addr (void);
-  // Default constructor.
 
+  /// Copy constructor.
   ACE_DEV_Addr (const ACE_DEV_Addr &sa);
-  // Copy constructor.
 
+  /// Acts like a copy constructor.
   int set (const ACE_DEV_Addr &sa);
-  // Acts like a copy constructor.
 
+  /// Create a ACE_DEV_Addr from a device name.
   ACE_EXPLICIT ACE_DEV_Addr (const ACE_TCHAR *devname);
-  // Create a ACE_DEV_Addr from a device name.
 
+  /// Create a ACE_Addr from a ACE_DEV pathname.
   void set (const ACE_TCHAR *devname);
-  // Create a ACE_Addr from a ACE_DEV pathname.
 
+  /// Assignment operator.
   ACE_DEV_Addr &operator= (const ACE_DEV_Addr &);
-  // Assignment operator.
 
+  /// Return a pointer to the address.
   virtual void *get_addr (void) const;
-  // Return a pointer to the address.
 
+  /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
-  // Transform the current address into string format.
 
+  /// Compare two addresses for equality.
   int operator == (const ACE_DEV_Addr &SAP) const;
-  // Compare two addresses for equality.
 
+  /// Compare two addresses for inequality.
   int operator != (const ACE_DEV_Addr &SAP) const;
-  // Compare two addresses for inequality.
 
+  /// Return the path name used for the rendezvous point.
   const ACE_TCHAR *get_path_name (void) const;
-  // Return the path name used for the rendezvous point.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
+  /// Name of the device.
   ACE_TCHAR devname_[MAXNAMLEN + 1];
-  // Name of the device.
 };
 
 #if defined (__ACE_INLINE__)
