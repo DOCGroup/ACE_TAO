@@ -1,3 +1,8 @@
+Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/Repository.cpp: Added an explicit
+	  template instantiation parameter for ACE_Equal_To<>. 
+
 Thu Jun 24 21:30:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Any.cpp:
