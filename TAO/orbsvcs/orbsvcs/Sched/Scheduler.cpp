@@ -246,6 +246,7 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
 
 }
 
+int
 ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
                                        OS_Thread_Priority & priority,
                                        Dispatching_Type & d_type)
@@ -255,7 +256,7 @@ ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Config info for priority %lu could not be found\n", 
+                       "Config info for priority %lu could not be found\n",
                        p_priority),
                       -1);
   }
