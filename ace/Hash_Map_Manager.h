@@ -159,7 +159,7 @@ protected:
   // Returns 1 if <id1> == <id2>, else 0.  This is defined as a
   // separate method to facilitate template specialization.
 
-  size_t hash (const EXT_ID &ext_id);
+  u_long hash (const EXT_ID &ext_id);
   // Compute the hash value of the <ext_id>.  This is defined as a
   // separate method to facilitate template specialization.
 

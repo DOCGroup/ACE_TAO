@@ -192,7 +192,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::total_size (void)
   return this->total_size_;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> size_t
+template <class EXT_ID, class INT_ID, class LOCK> u_long
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::hash (const EXT_ID &ext_id)
 {
   return ext_id.hash ();
