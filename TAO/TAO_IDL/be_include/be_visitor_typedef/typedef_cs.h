@@ -1,4 +1,3 @@
-
 /* -*- c++ -*- */
 //
 // $Id$
@@ -44,7 +43,6 @@ public:
 
   virtual int visit_typedef (be_typedef *node);
   // visit typedef. We provide code for this method in the derived class
-
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_CS_H_*/

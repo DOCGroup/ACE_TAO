@@ -18,11 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, invoke_cs, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           invoke_cs, 
+           "$Id$")
 
 
 // ****************************************************************************
@@ -43,9 +41,8 @@ be_visitor_args_invoke_cs::
 int be_visitor_args_invoke_cs::visit_argument (be_argument *node)
 {
   this->ctx_->node (node); // save the argument node
-
-  // retrieve the type of the argument
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -59,8 +56,6 @@ int be_visitor_args_invoke_cs::visit_argument (be_argument *node)
   // inout parameters. Let this visitor deal with the type
 
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
-  os->indent ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -142,9 +137,8 @@ int be_visitor_args_invoke_cs::visit_argument (be_argument *node)
 
 int be_visitor_args_invoke_cs::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -158,7 +152,7 @@ int be_visitor_args_invoke_cs::visit_array (be_array *node)
         case AST_Argument::dir_INOUT:
           *os << node->name () << "_forany ("
               << arg->local_name () << ")";
-      break;
+          break;
         case AST_Argument::dir_OUT:
           break;
         }
@@ -170,17 +164,8 @@ int be_visitor_args_invoke_cs::visit_array (be_array *node)
         case AST_Argument::dir_IN:
           break;
         case AST_Argument::dir_INOUT:
-          *os << "_tao_argument_" << arg->local_name ();
-          break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == be_decl::VARIABLE)
-            {
-              *os << "_tao_argument_" << arg->local_name ();
-            }
-          else
-            {
-              *os << "_tao_argument_" << arg->local_name ();
-            }
+          *os << "_tao_argument_" << arg->local_name ();
           break;
         }
     }
@@ -192,14 +177,14 @@ int be_visitor_args_invoke_cs::visit_array (be_array *node)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
 int be_visitor_args_invoke_cs::visit_enum (be_enum *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -233,14 +218,14 @@ int be_visitor_args_invoke_cs::visit_enum (be_enum *)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
 int be_visitor_args_invoke_cs::visit_interface (be_interface *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -276,14 +261,14 @@ int be_visitor_args_invoke_cs::visit_interface (be_interface *)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
 int be_visitor_args_invoke_cs::visit_interface_fwd (be_interface_fwd *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -369,9 +354,8 @@ int be_visitor_args_invoke_cs::visit_valuetype (be_valuetype *)
 int
 be_visitor_args_invoke_cs::visit_valuetype_fwd (be_valuetype_fwd *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -407,13 +391,14 @@ be_visitor_args_invoke_cs::visit_valuetype_fwd (be_valuetype_fwd *)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
 int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get argument node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -424,6 +409,7 @@ int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
             case AST_PredefinedType::PT_any:
             case AST_PredefinedType::PT_long:
             case AST_PredefinedType::PT_ulong:
@@ -470,6 +456,7 @@ int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
             case AST_PredefinedType::PT_any:
             case AST_PredefinedType::PT_long:
             case AST_PredefinedType::PT_ulong:
@@ -506,6 +493,7 @@ int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
               *os << arg->local_name () << ".ptr ()";
               break;
             case AST_PredefinedType::PT_any:
@@ -552,14 +540,14 @@ int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
 int be_visitor_args_invoke_cs::visit_sequence (be_sequence *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -595,14 +583,14 @@ int be_visitor_args_invoke_cs::visit_sequence (be_sequence *)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
 int be_visitor_args_invoke_cs::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -618,10 +606,10 @@ int be_visitor_args_invoke_cs::visit_string (be_string *node)
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      // we need to make a distinction between bounded and unbounded strings
+      // We need to make a distinction between bounded and unbounded strings.
       if (node->max_size ()->ev ()->u.ulval == 0)
         {
-          // unbounded
+          // Unbounded.
           switch (this->direction ())
             {
             case AST_Argument::dir_IN:
@@ -636,7 +624,7 @@ int be_visitor_args_invoke_cs::visit_string (be_string *node)
         }
       else
         {
-          // bounded
+          // Bounded.
           switch (this->direction ())
             {
             case AST_Argument::dir_IN:
@@ -678,14 +666,14 @@ int be_visitor_args_invoke_cs::visit_string (be_string *node)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
 int be_visitor_args_invoke_cs::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -709,7 +697,7 @@ int be_visitor_args_invoke_cs::visit_structure (be_structure *node)
           *os << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == be_decl::VARIABLE)
+          if (node->size_type () == AST_Type::VARIABLE)
             *os << "*" << arg->local_name () << ".ptr ()";
           else
             *os << arg->local_name ();
@@ -724,14 +712,14 @@ int be_visitor_args_invoke_cs::visit_structure (be_structure *node)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
 int be_visitor_args_invoke_cs::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -755,7 +743,7 @@ int be_visitor_args_invoke_cs::visit_union (be_union *node)
           *os << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == be_decl::VARIABLE)
+          if (node->size_type () == AST_Type::VARIABLE)
             *os << "*" << arg->local_name () << ".ptr ()";
           else
             *os << arg->local_name ();
@@ -777,6 +765,7 @@ int be_visitor_args_invoke_cs::visit_union (be_union *node)
 int be_visitor_args_invoke_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -785,6 +774,7 @@ int be_visitor_args_invoke_cs::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }

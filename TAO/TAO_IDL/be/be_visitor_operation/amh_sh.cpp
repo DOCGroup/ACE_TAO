@@ -19,16 +19,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "ast_decl.h"
-#include "be_visitor_operation.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_operation, amh_sh, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           amh_sh, 
+           "$Id$")
 
 // ******************************************************
 // Visitor for generating AMH skeleton for "operation" in skeleton header.
@@ -117,7 +110,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
       *os << be_uidt_nl << "))" << be_uidt;
     }
 
-  *os << " = 0;\n" << be_nl;
+  *os << " = 0;" << be_nl << be_nl;
   return 0;
 }
 

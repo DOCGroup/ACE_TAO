@@ -70,8 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of AST_Type) and a boolean indicating whether the attribute is
 // readonly.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_attribute.h"
+#include "ast_visitor.h"
 
 ACE_RCSID(ast, ast_attribute, "$Id$")
 

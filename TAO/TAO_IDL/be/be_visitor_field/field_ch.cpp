@@ -18,39 +18,32 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_visitor_enum/enum_ch.h"
+#include "be_visitor_sequence/sequence_ch.h"
+#include "nr_extern.h"
 
-#include "be_visitor_field.h"
-
-ACE_RCSID(be_visitor_field, field_ch, "$Id$")
-
+ACE_RCSID (be_visitor_field, 
+           field_ch, 
+           "$Id$")
 
 // **********************************************
-//  visitor for field in the client header file
+//  Visitor for field in the client header file.
 // **********************************************
 
-// Constructor.
 be_visitor_field_ch::be_visitor_field_ch (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-// Destructor.
 be_visitor_field_ch::~be_visitor_field_ch (void)
 {
 }
 
-// Visit the field node.
 int
 be_visitor_field_ch::visit_field (be_field *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  // First generate the type information.
-  bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
 
   if (!bt)
     {
@@ -78,9 +71,8 @@ be_visitor_field_ch::visit_field (be_field *node)
   return 0;
 }
 
-// =Visit operations on all possible data types  that a field can be.
+// Visit operations on all possible data types  that a field can be.
 
-// Visit array type.
 int
 be_visitor_field_ch::visit_array (be_array *node)
 {
@@ -110,18 +102,9 @@ be_visitor_field_ch::visit_array (be_array *node)
 
       // First generate the array declaration
       ctx.state (TAO_CodeGen::TAO_ARRAY_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_array_ch visitor (&ctx);
 
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_ch::"
-                             "visit_array - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ch::"
@@ -129,8 +112,6 @@ be_visitor_field_ch::visit_array (be_array *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
 
       // Having defined all array type and its supporting operations, now
       // generate the actual variable that is a field of the structure.
@@ -159,7 +140,6 @@ be_visitor_field_ch::visit_array (be_array *node)
   return 0;
 }
 
-// Visit enum type.
 int
 be_visitor_field_ch::visit_enum (be_enum *node)
 {
@@ -186,18 +166,9 @@ be_visitor_field_ch::visit_enum (be_enum *node)
 
       // First generate the enum declaration.
       ctx.state (TAO_CodeGen::TAO_ENUM_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_enum_ch visitor (&ctx);
 
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_ch::"
-                             "visit_enum - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ch::"
@@ -205,8 +176,6 @@ be_visitor_field_ch::visit_enum (be_enum *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   // This was a typedefed array.
@@ -229,7 +198,6 @@ be_visitor_field_ch::visit_enum (be_enum *node)
   return 0;
 }
 
-// Visit interface type.
 int
 be_visitor_field_ch::visit_interface (be_interface *node)
 {
@@ -265,7 +233,6 @@ be_visitor_field_ch::visit_interface (be_interface *node)
   return 0;
 }
 
-// Visit interface forward type.
 int
 be_visitor_field_ch::visit_interface_fwd (be_interface_fwd *node)
 {
@@ -301,7 +268,6 @@ be_visitor_field_ch::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-// Visit valuetype type.
 int
 be_visitor_field_ch::visit_valuetype (be_valuetype *node)
 {
@@ -337,7 +303,6 @@ be_visitor_field_ch::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-// Visit valuetype forward type.
 int
 be_visitor_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
@@ -373,7 +338,6 @@ be_visitor_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   return 0;
 }
 
-// Visit predefined type.
 int
 be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
 {
@@ -389,26 +353,27 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
       bt = node;
     }
 
-  // If not a typedef and we are defined in the use scope, we must be defined.
-  if (node->pt () == AST_PredefinedType::PT_pseudo)
+  if (node->pt () == AST_PredefinedType::PT_object)
     {
-      // Check if we are dealing with a CORBA::Object,
-      if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
+      *os << bt->name () << "_var";
+    }
+  else if (node->pt () == AST_PredefinedType::PT_pseudo)
+    {
+      // This was a typedefed array.
+      // ACE_NESTED_CLASS macro generated by nested_type_name
+      // is necessary if the struct, union, or valuetype containing this
+      // field was not defined inside a module. In such a case, VC++
+      // complains that the non-module scope is not yet fully defined.
+      UTL_Scope *holds_container = this->ctx_->scope ()->defined_in ();
+      AST_Decl *hc_decl = ScopeAsDecl (holds_container);
+
+      if (hc_decl->node_type () != AST_Decl::NT_module)
         {
-          *os << bt->name () << "_var";
+          *os << bt->nested_type_name (this->ctx_->scope (), "_var");
         }
       else
         {
-          // ACE_NESTED_CLASS macro generated by nested_type_name
-          // is not necessary in all cases.
-          if (bt->defined_in ()->scope_node_type () == AST_Decl::NT_interface)
-            {
-              *os << bt->nested_type_name (this->ctx_->scope (), "_var");
-            }
-          else
-            {
-              *os << bt->name () << "_var";
-            }
+          *os << bt->name () << "_var";
         }
     }
   else
@@ -434,7 +399,6 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
   return 0;
 }
 
-// Visit sequence type.
 int
 be_visitor_field_ch::visit_sequence (be_sequence *node)
 {
@@ -450,29 +414,17 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
       bt = node;
     }
 
-  // If not a typedef and we are defined in the use scope, we must be defined
-  if (!this->ctx_->alias () // not a typedef
+  if (!this->ctx_->alias ()
       && node->is_child (this->ctx_->scope ()))
     {
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
 
       // First generate the sequence declaration.
       ctx.state (TAO_CodeGen::TAO_SEQUENCE_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_sequence_ch visitor (&ctx);
 
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_ch::"
-                             "visit_sequence - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ch::"
@@ -481,24 +433,17 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
                             -1);
         }
 
-      delete visitor;
-
       // If we are being reused by valutype, this would get generated
       // in the private section of the OBV_xx class, so we must
       // generate the typedef for that case elsewhere.
       if (this->ctx_->scope ()->node_type () != AST_Decl::NT_interface)
         {
-          // Generate the anonymous sequence member typedef
-          // but we must protect against certain versions of g++.
-          // This provides a consistent name to use instead of the
-          // implementation-specific name.
+          // Generate the anonymous sequence member typedef.
           be_decl *bs = this->ctx_->scope ();
-          *os << "\n#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-              << be_nl
-              << "typedef " << bt->nested_type_name (bs)
+
+          *os << "typedef " << bt->nested_type_name (bs)
               << " _" << this->ctx_->node ()->local_name ()
-              << "_seq;\n";
-          *os << "#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */\n" << be_nl;
+              << "_seq;" << be_nl;
         }
     }
 
@@ -527,15 +472,11 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
   return 0;
 }
 
-// Visit string type.
 int
 be_visitor_field_ch::visit_string (be_string *node)
 {
-  TAO_OutStream *os; // output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
-  os = this->ctx_->stream ();
-
-  // Set the right type.
   if (node->width () == (long) sizeof (char))
     {
       *os << "TAO_String_Manager";
@@ -548,7 +489,6 @@ be_visitor_field_ch::visit_string (be_string *node)
   return 0;
 }
 
-// Visit structure type.
 int
 be_visitor_field_ch::visit_structure (be_structure *node)
 {
@@ -564,29 +504,16 @@ be_visitor_field_ch::visit_structure (be_structure *node)
       bt = node;
     }
 
-  // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()))
     {
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
 
-      // First generate the struct declaration.
       ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_structure_ch visitor (&ctx);
 
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_ch::"
-                             "visit_struct - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ch::"
@@ -594,8 +521,6 @@ be_visitor_field_ch::visit_structure (be_structure *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   // This was a typedefed array.
@@ -657,29 +582,16 @@ be_visitor_field_ch::visit_union (be_union *node)
       bt = node;
     }
 
-  // If not a typedef and we are defined in the use scope, we must be defined.
-  if (!this->ctx_->alias () // not a typedef
+  if (!this->ctx_->alias ()
       && node->is_child (this->ctx_->scope ()))
     {
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
 
-      // First generate the union declaration.
       ctx.state (TAO_CodeGen::TAO_UNION_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_union_ch visitor (&ctx);
 
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_ch::"
-                             "visit_union - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ch::"
@@ -687,8 +599,6 @@ be_visitor_field_ch::visit_union (be_union *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   // This was a typedefed array.

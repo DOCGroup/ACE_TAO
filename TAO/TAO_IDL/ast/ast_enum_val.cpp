@@ -68,12 +68,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_EnumVals are a subclass of AST_Constant
 // AST_EnumVals have no additional fields.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_enum_val.h"
+#include "ast_visitor.h"
 
-ACE_RCSID(ast, ast_enum_val, "$Id$")
+ACE_RCSID (ast, 
+           ast_enum_val, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_EnumVal::AST_EnumVal (void)
 {
 }

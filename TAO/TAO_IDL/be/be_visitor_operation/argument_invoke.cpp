@@ -20,34 +20,31 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, argument_invoke, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           argument_invoke, 
+           "$Id$")
 
 // ************************************************************
 // operation visitor to handle the passing of arguments to the CDR operators
 // ************************************************************
 
-be_compiled_visitor_operation_argument_invoke::
-be_compiled_visitor_operation_argument_invoke (be_visitor_context
-                                               *ctx)
+be_visitor_operation_argument_invoke::be_visitor_operation_argument_invoke (
+    be_visitor_context
+    *ctx
+  )
   : be_visitor_operation_argument (ctx),
-    last_arg_printed_ (be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
+    last_arg_printed_ (be_visitor_operation_argument_invoke::TAO_ARG_NONE)
 {
 }
 
-be_compiled_visitor_operation_argument_invoke::
-~be_compiled_visitor_operation_argument_invoke (void)
+be_visitor_operation_argument_invoke::~be_visitor_operation_argument_invoke (
+    void
+  )
 {
 }
 
 int
-be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
+be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -57,7 +54,7 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) "
-                         "be_compiled_visitor_operation_argument_invoke"
+                         "be_visitor_operation_argument_invoke"
                          "::post_process - "
                          "Bad argument node\n"),
                         -1);
@@ -69,8 +66,8 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
-            *os << " &&\n";
+              be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+            *os << " &&" << be_nl;
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
@@ -81,14 +78,14 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
-            *os << " &&\n";
+              be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+            *os << " &&" << be_nl;
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
-            *os << " &&\n";
+              be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+            *os << " &&" << be_nl;
         }
       break;
     case AST_Argument::dir_OUT:
@@ -99,8 +96,8 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
-            *os << " &&\n";
+              be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+            *os << " &&" << be_nl;
         }
       break;
     }
@@ -109,7 +106,7 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
 }
 
 int
-be_compiled_visitor_operation_argument_invoke::post_process (be_decl *bd)
+be_visitor_operation_argument_invoke::post_process (be_decl *bd)
 {
   be_argument *arg = be_argument::narrow_from_decl (bd);
 
@@ -117,7 +114,7 @@ be_compiled_visitor_operation_argument_invoke::post_process (be_decl *bd)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) "
-                         "be_compiled_visitor_operation_argument_invoke"
+                         "be_visitor_operation_argument_invoke"
                          "::post_process - "
                          "Bad argument node\n"),
                         -1);
@@ -130,12 +127,12 @@ be_compiled_visitor_operation_argument_invoke::post_process (be_decl *bd)
         case AST_Argument::dir_IN:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_invoke::TAO_ARG_IN;
+            be_visitor_operation_argument_invoke::TAO_ARG_IN;
           break;
         case AST_Argument::dir_INOUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_invoke::TAO_ARG_INOUT;
+            be_visitor_operation_argument_invoke::TAO_ARG_INOUT;
           break;
         case AST_Argument::dir_OUT:
           // these arguments don't get printed for the << operator on the stub
@@ -151,19 +148,19 @@ be_compiled_visitor_operation_argument_invoke::post_process (be_decl *bd)
         case AST_Argument::dir_INOUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_invoke::TAO_ARG_INOUT;
+            be_visitor_operation_argument_invoke::TAO_ARG_INOUT;
           break;
         case AST_Argument::dir_OUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_invoke::TAO_ARG_OUT;
+            be_visitor_operation_argument_invoke::TAO_ARG_OUT;
           break;
         }
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) "
-                         "be_compiled_visitor_operation_argument_invoke"
+                         "be_visitor_operation_argument_invoke"
                          "::post_process - "
                          "Bad sub state\n"),
                         -1);

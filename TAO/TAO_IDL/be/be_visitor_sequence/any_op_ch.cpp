@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, any_op_ch, "$Id$")
-
+ACE_RCSID (be_visitor_sequence, 
+           any_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating Any operator declarations in the client header
@@ -52,7 +48,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the Any <<= and >>= operators
+  // Generate the Any <<= and >>= operators.
   os->indent ();
   *os << be_global->stub_export_macro ();
   *os << " void"

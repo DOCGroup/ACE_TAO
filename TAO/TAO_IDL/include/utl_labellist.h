@@ -62,14 +62,16 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _UTL_LABELLIST_UTL_LABELLIST_HH
 #define _UTL_LABELLIST_UTL_LABELLIST_HH
 
-// utl_labellist.hh
-//
-// List of AST_UnionBranch nodes
+#include "utl_list.h"
+
+class AST_UnionLabel;
+
+// List of AST_UnionBranch nodes.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
@@ -77,39 +79,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-/*
-** DEPENDENCIES: utl_list.hh, ast_union_label.hh
-**
-** USE: Included from util.hh
-*/
-
 class TAO_IDL_FE_Export UTL_LabelList : public UTL_List
 {
 public:
-  // Operations
+  UTL_LabelList (AST_UnionLabel *s, 
+                 UTL_LabelList *cdr);
 
-  // Constructor(s)
-  UTL_LabelList(AST_UnionLabel *s, UTL_LabelList *cdr);
-
-  // Get list item
-  AST_UnionLabel        *head();
+  // Get list item.
+  AST_UnionLabel *head (void);
 
 private:
-  // Data
-  AST_UnionLabel        *pd_car_data;   // List item
+  AST_UnionLabel *pd_car_data;
 };
 
-// Active iterator for UTL_LabelList
+// Active iterator for UTL_LabelList.
 class   UTL_LabellistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  // Operations
+  UTL_LabellistActiveIterator (UTL_LabelList *source);
 
-  // Constructor(s)
-  UTL_LabellistActiveIterator(UTL_LabelList *source);
-
-  // Get current item
-  AST_UnionLabel        *item();
+  // Get current item.
+  AST_UnionLabel *item (void);
 };
 
 #endif           // _UTL_LABELLIST_UTL_LABELLIST_HH

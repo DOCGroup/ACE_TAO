@@ -25,8 +25,10 @@
 #define BE_VALUETYPE_FWD_H
 
 #include "be_interface_fwd.h"
+#include "ast_valuetype_fwd.h"
 
-class be_valuetype_fwd : public virtual be_interface_fwd
+class be_valuetype_fwd : public virtual be_interface_fwd,
+                         public virtual AST_ValueTypeFwd
 {
   // =TITLE
   //   be_valuetype_fwd
@@ -44,13 +46,14 @@ public:
   virtual ~be_valuetype_fwd (void);
   // Destructor.
 
-  virtual void set_abstract_valuetype (void);
-
   // Visiting.
   virtual int accept (be_visitor* visitor);
 
+  // Cleanup
+  virtual void destroy (void);
+
   // Narrowing.
-  DEF_NARROW_METHODS1 (be_valuetype_fwd, be_interface_fwd);
+  DEF_NARROW_METHODS2 (be_valuetype_fwd, be_interface_fwd, AST_ValueTypeFwd);
   DEF_NARROW_FROM_DECL (be_valuetype_fwd);
 
 };

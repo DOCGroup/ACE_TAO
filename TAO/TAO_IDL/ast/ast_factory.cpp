@@ -68,12 +68,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Factory is a subclass of AST_Decl (it is not a type!)
 // and of UTL_Scope (the arguments are managed in a scope).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_factory.h"
+#include "ast_argument.h"
+#include "ast_visitor.h"
+#include "global_extern.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_factory, "$Id$")
-
-// Constructor(s) and destructor.
+ACE_RCSID (ast, 
+           ast_factory, 
+           "$Id$")
 
 AST_Factory::AST_Factory (void)
   : argument_count_ (-1),
@@ -217,14 +221,14 @@ void
 AST_Factory::dump (ostream &o)
 {
   AST_Decl *d = 0;
-  UTL_ScopeActiveIterator i (this,
-                             IK_decls);
 
   o << "factory ";
   this->local_name ()->dump (o);
   o << "(";
 
-  while (!i.is_done())
+  // Iterator must be explicitly advanced inside the loop.
+  for (UTL_ScopeActiveIterator i (this, IK_decls);
+       !i.is_done();)
     {
       d = i.item ();
       d->dump (o);

@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_operation, arglist, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           arglist, 
+           "$Id$")
 
 // ************************************************************
 //   operation visitor  to generate the argument list.
@@ -91,8 +86,8 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_uidt_nl // idt = 1
-      << ")" << be_uidt; // idt = 0
+  *os << be_uidt_nl
+      << ")"; // idt = 0
 
   // Now generate the throw specs.
   if (this->gen_throw_spec (node) == -1)

@@ -19,13 +19,9 @@
 //
 // ================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_interface_fwd.h"
-
-ACE_RCSID(be_visitor_interface_fwd, cdr_op_ci, "$Id$")
+ACE_RCSID (be_visitor_interface_fwd, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ****************************************************************
 // Interface visitor for generating CDR operator declarations in the
@@ -61,6 +57,7 @@ be_visitor_interface_fwd_cdr_op_ci::visit_interface_fwd (
 
   // generate the CDR << and >> operator declarations
   os->indent ();
+
   *os << be_global->stub_export_macro () << " CORBA::Boolean operator<< ("
       << be_idt << be_idt_nl
       << "TAO_OutputCDR &," << be_nl

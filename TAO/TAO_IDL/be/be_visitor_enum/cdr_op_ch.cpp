@@ -18,22 +18,17 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_enum.h"
-
-ACE_RCSID(be_visitor_enum, cdr_op_ch, "$Id$")
+ACE_RCSID (be_visitor_enum, 
+           cdr_op_ch, 
+           "$Id$")
 
 
 // ***************************************************************************
 // Enum visitor for generating Cdr operator declarations in the client header
 // ***************************************************************************
 
-be_visitor_enum_cdr_op_ch::be_visitor_enum_cdr_op_ch
-(be_visitor_context *ctx)
-  : be_visitor_scope (ctx)
+be_visitor_enum_cdr_op_ch::be_visitor_enum_cdr_op_ch (be_visitor_context *ctx)
+  : be_visitor_decl (ctx)
 {
 }
 
@@ -45,7 +40,9 @@ int
 be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
 {
   if (node->cli_hdr_cdr_op_gen () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -54,7 +51,7 @@ be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
   os->indent ();
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
-      << " &); // " << be_nl;
+      << " &);" << be_nl;
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);\n";

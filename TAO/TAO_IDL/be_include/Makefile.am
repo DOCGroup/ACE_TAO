@@ -18,6 +18,8 @@ noinst_HEADERS = \
   be_array.h \
   be_attribute.h \
   be_codegen.h \
+  be_component.h \
+  be_component_fwd.h \
   be_constant.h \
   be_decl.h \
   be_enum.h \
@@ -27,6 +29,7 @@ noinst_HEADERS = \
   be_field.h \
   be_generator.h \
   be_helper.h \
+  be_home.h \
   be_interface.h \
   be_interface_fwd.h \
   be_interface_strategy.h \
@@ -41,10 +44,12 @@ noinst_HEADERS = \
   be_stream_factory.h \
   be_string.h \
   be_structure.h \
+  be_structure_fwd.h \
   be_sunsoft.h \
   be_type.h \
   be_typedef.h \
   be_union.h \
+  be_union_fwd.h \
   be_union_branch.h \
   be_union_label.h \
   be_valuetype.h \
@@ -54,6 +59,8 @@ noinst_HEADERS = \
   be_visitor_argument.h \
   be_visitor_array.h \
   be_visitor_attribute.h \
+  be_visitor_component.h \
+  be_visitor_component_fwd.h \
   be_visitor_constant.h \
   be_visitor_context.h \
   be_visitor_decl.h \
@@ -61,6 +68,7 @@ noinst_HEADERS = \
   be_visitor_exception.h \
   be_visitor_factory.h \
   be_visitor_field.h \
+  be_visitor_home.h \
   be_visitor_interface.h \
   be_visitor_interface_fwd.h \
   be_visitor_module.h \

@@ -18,21 +18,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_union.h"
-
-ACE_RCSID(be_visitor_union, cdr_op_ci, "$Id$")
+ACE_RCSID (be_visitor_union, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ***************************************************************************
 // Union visitor for generating CDR operator declarations in the client
 // stubs file
 // ***************************************************************************
 
-be_visitor_union_cdr_op_ci::be_visitor_union_cdr_op_ci
-(be_visitor_context *ctx)
+be_visitor_union_cdr_op_ci::be_visitor_union_cdr_op_ci (
+    be_visitor_context *ctx
+  )
   : be_visitor_union (ctx)
 {
 }
@@ -45,28 +42,35 @@ int
 be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 {
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_inline_cdr_op_gen () ||
-      node->imported () ||
-      node->is_local ())
-    return 0;
+  if (node->cli_inline_cdr_op_gen () 
+      || node->imported () 
+      || node->is_local ())
+    {
+      return 0;
+    }
 
-  // set the substate as generating code for the types defined in our scope
+  // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
-  // all we have to do is to visit the scope and generate code
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cdr_op_ci"
                          "::visit_union - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  //  set the sub state as generating code for the output operator
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "ACE_INLINE CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -77,27 +81,28 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       case AST_Expression::EV_bool:
         *os << "CORBA_Any::from_boolean tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
-        break;
 
+        break;
       case AST_Expression::EV_char:
         *os << "CORBA_Any::from_char tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
-        break;
 
+        break;
       case AST_Expression::EV_wchar:
         *os << "CORBA_Any::from_wchar tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
-        break;
 
+        break;
       default:
         *os << "if ( !(strm << _tao_union._d ()) )" << be_idt_nl;
+
         break;
     }
 
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "CORBA::Boolean result = 1;" << be_nl
+      << "}" << be_uidt_nl << be_nl
+      << "CORBA::Boolean result = 1;" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt_nl;
 
@@ -106,7 +111,8 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cdr_op_ci::"
                          "visit_union - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   // If there is no explicit default case, but there
@@ -123,13 +129,14 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       *os << "break;";
     }
 
-  *os << be_uidt_nl << "}" << be_nl
+  *os << be_uidt_nl << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
-  // set the substate as generating code for the input operator
+  // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "ACE_INLINE CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -147,27 +154,28 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       case AST_Expression::EV_bool:
         *os << "CORBA_Any::to_boolean tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
-        break;
 
+        break;
       case AST_Expression::EV_char:
         *os << "CORBA_Any::to_char tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
-        break;
 
+        break;
       case AST_Expression::EV_wchar:
         *os << "CORBA_Any::to_wchar tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
-        break;
 
+        break;
       default:
         *os << "if ( !(strm >> _tao_discriminant) )" << be_idt_nl;
+
         break;
     }
 
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "CORBA::Boolean result = 1;" << be_nl
+      << "}" << be_uidt_nl << be_nl
+      << "CORBA::Boolean result = 1;" << be_nl << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt_nl;
 
@@ -176,7 +184,8 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cdr_op_ci::"
                          "visit_union - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   // If there is no explicit default case, but there
@@ -194,9 +203,9 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       *os << "break;" << be_uidt << be_uidt_nl;
     }
 
-  *os << "}" << be_nl
+  *os << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   node->cli_inline_cdr_op_gen (1);
   return 0;
@@ -206,6 +215,14 @@ int
 be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
 {
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)
+    {
+      return 0;
+    }
+
+  // Enum val nodes are added just to help check reference
+  // clashes, since an enum declared in our scope is not itself
+  // a scope.
+  if (bd->node_type () == AST_Decl::NT_enum_val)
     {
       return 0;
     }
@@ -244,9 +261,14 @@ be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
 }
 
 int
-be_visitor_union_cdr_op_ci::post_process (be_decl *)
+be_visitor_union_cdr_op_ci::post_process (be_decl *bd)
 {
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)
+    {
+      return 0;
+    }
+
+  if (bd->node_type () == AST_Decl::NT_enum_val)
     {
       return 0;
     }

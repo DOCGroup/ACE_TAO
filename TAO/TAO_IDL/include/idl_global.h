@@ -70,6 +70,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
+#include "idl_bool.h"
+#include "ast_expression.h"
+#include "ast_predefined_type.h"
+#include "utl_stack.h"
+
+class AST_Root;
+class AST_Generator;
+class UTL_Error;
+class UTL_String;
+class UTL_Indenter;
 
 // idl_global.hh
 //
@@ -85,29 +95,60 @@ public:
   // where context sensitive behavior is required
   enum ParseState {
       PS_NoState                // No state
-    , PS_TypeDeclSeen           // Seen complete typedef declaration
+    , PS_TypeDeclSeen           // Seen complete type declaration
+    , PS_TypeIdDeclSeen         // Seen complete typeId declaration
+    , PS_TypePrefixDeclSeen     // Seen complete type_prefix declaration
     , PS_ConstDeclSeen          // Seen complete const declaration
     , PS_ExceptDeclSeen         // Seen complete exception declaration
     , PS_InterfaceDeclSeen      // Seen complete interface declaration
     , PS_ModuleDeclSeen         // Seen complete module declaration
-    , PS_ValuetypeDeclSeen      // Seen complete valuetype declaration
+    , PS_ValueTypeDeclSeen      // Seen complete valuetype declaration
+    , PS_ComponentDeclSeen      // Seen complete component declaration
+    , PS_HomeDeclSeen           // Seen complete home declaration
+    , PS_EventDeclSeen          // Seen complete eventtype declartion
     , PS_AttrDeclSeen           // Seen complete attribute declaration
     , PS_OpDeclSeen             // Seen complete operation declaration
+    , PS_ProvidesDeclSeen       // Seen complete privides declaration
+    , PS_UsesDeclSeen           // Seen complete uses declaration
+    , PS_EmitsDeclSeen          // Seen complete emits declaration
+    , PS_PublishesDeclSeen      // Seen complete publishes declaration
+    , PS_FactoryDeclSeen        // Seen complete factory declaration
+    , PS_FinderDeclSeen         // Seen complete finder declaration
+    , PS_ConsumesDeclSeen       // Seen complete subscribes declaration
     , PS_ModuleSeen             // Seen a MODULE keyword
     , PS_ModuleIDSeen           // Seen the module ID
     , PS_ModuleSqSeen           // '{' seen for module
     , PS_ModuleQsSeen           // '}' seen for module
     , PS_ModuleBodySeen         // Seen complete module body
+    , PS_InheritColonSeen       // Seen ':' in inheritance list
+    , PS_InheritSpecSeen        // Seen a complete inheritance spec
+    , PS_SupportSpecSeen        // Seen a complete supports spec
+    , PS_ManagesSeen            // Seen a MANAGES keyword
+    , PS_ManagesIDSeen          // Seen the scoped name referred to by MANAGES
+    , PS_PrimaryKeySpecSeen     // Seen a complete primary key spec
     , PS_InterfaceSeen          // Seen an INTERFACE keyword
     , PS_InterfaceIDSeen        // Seen the interface ID
-    , PS_InheritSpecSeen        // Seen a complete inheritance spec
-    , PS_ForwardDeclSeen        // Forward interface decl seen
+    , PS_InterfaceForwardSeen   // Forward interface decl seen
     , PS_InterfaceSqSeen        // '{' seen for interface
     , PS_InterfaceQsSeen        // '}' seen for interface
     , PS_InterfaceBodySeen      // Seen an interface body
-    , PS_InheritColonSeen       // Seen ':' in inheritance list
-    , PS_ValuetypeSeen          // Seen a VALUETYPE keyword
-    , PS_ValuetypeIDSeen        // Seen the valuetype ID
+    , PS_ValueTypeSeen          // Seen a VALUETYPE keyword
+    , PS_ValueTypeForwardSeen   // Forward valuetype decl seen
+    , PS_ValueTypeIDSeen        // Seen the valuetype ID
+    , PS_ValueTypeSqSeen        // '{' seen for value type
+    , PS_ValueTypeQsSeen        // '}' seen for value type
+    , PS_ValueTypeBodySeen      // Seen a value type body
+    , PS_ComponentSeen          // Seen a component declaration
+    , PS_ComponentIDSeen        // Seen the component ID
+    , PS_ComponentForwardSeen   // Seen a forward declaration of a component
+    , PS_ComponentSqSeen        // '{' seen for component
+    , PS_ComponentQsSeen        // '}' seen for component
+    , PS_ComponentBodySeen      // Seen a component body
+    , PS_HomeSeen               // Seen a home declaration
+    , PS_HomeIDSeen             // Seen the home ID
+    , PS_HomeSqSeen             // '{' seen for home
+    , PS_HomeQsSeen             // '}' seen for home
+    , PS_HomeBodySeen           // Seen a home body
     , PS_SNListCommaSeen        // Seen ',' in list of scoped names
     , PS_ScopedNameSeen         // Seen a complete scoped name
     , PS_SN_IDSeen              // Seen an identifier as part of a scoped name
@@ -125,11 +166,13 @@ public:
     , PS_StructSqSeen           // '{' seen for struct
     , PS_StructQsSeen           // '}' seen for struct
     , PS_StructBodySeen         // Seen complete body of struct decl
+    , PS_StructForwardSeen      // Forward struct decl seen
     , PS_MemberTypeSeen         // Seen type of struct or except member
     , PS_MemberDeclsSeen        // Seen decls of struct or except members
     , PS_MemberDeclsCompleted   // Completed one struct or except member to ';'
     , PS_UnionSeen              // Seen a UNION keyword
     , PS_UnionIDSeen            // Seen the union ID
+    , PS_UnionForwardSeen       // Forward union decl seen
     , PS_SwitchSeen             // Seen the SWITCH keyword
     , PS_SwitchOpenParSeen      // Seen the switch open par.
     , PS_SwitchTypeSeen         // Seen the switch type spec
@@ -210,9 +253,7 @@ public:
   virtual ~IDL_GlobalData (void);
 
   // Operations
-  virtual UTL_ScopeStack   *scopes (void);              // Scopes stack
-  virtual void             set_scopes (UTL_ScopeStack *);
-                                                        // Set it
+  virtual UTL_ScopeStack   &scopes (void);              // Scopes stack
 
   virtual AST_Root         *root (void);                // Root of AST
   virtual void             set_root (AST_Root *);       // Set it
@@ -345,12 +386,24 @@ public:
   virtual idl_bool obv_support (void);
   // check if OBV (Valuetype) support is enabled
 
+  void component_support (idl_bool);
+  // set enable/disable CORBA component support
+
+  idl_bool component_support (void);
+  // check if CORBA component support is enabled
+
   virtual void case_diff_error (idl_bool);
   // report an error (1) for indentifiers in the same scope
   // that differ only by case, or report a warning (0).
 
   virtual idl_bool case_diff_error (void);
   // are we strict about case-only differences or not?
+
+  virtual void nest_orb (idl_bool);
+  // Set on or off whether we are using the NEST ORB.
+
+  virtual idl_bool nest_orb (void);
+  // are we beIng used with the NEST ORB?
 
   virtual void destroy (void);
   // Cleanup function.
@@ -384,7 +437,7 @@ public:
 
 private:
   // Data
-  UTL_ScopeStack             *pd_scopes;             // Store scopes stack
+  UTL_ScopeStack             pd_scopes;              // Store scopes stack
   AST_Root                   *pd_root;               // Store AST root
   AST_Generator              *pd_gen;                // Store generator
   UTL_Error                  *pd_err;                // Error object
@@ -436,9 +489,15 @@ private:
   idl_bool obv_support_;
   // Do we support OBV (Valuetype)?
 
+  idl_bool component_support_;
+  // Do we support the CCM (CORBA Component Model)?
+
   idl_bool case_diff_error_;
   // Do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
+
+  idl_bool nest_orb_;
+  // Is this front end being used for the NEST ORB?
 
   ACE_CString idl_flags_;
   // Concatenation of all the command line options.

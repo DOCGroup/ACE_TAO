@@ -25,7 +25,6 @@
 
 #include "be_decl.h"
 #include "ast_constant.h"
-#include "ast_expression.h"
 
 class be_visitor;
 
@@ -41,11 +40,11 @@ public:
                UTL_ScopedName *n);
   // Constructor.
 
-  const char *exprtype_to_string (void);
-  // Returns the appropriate type.
-
   // Visiting.
   virtual int accept (be_visitor *visitor);
+
+  //Cleanup.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_METHODS2 (be_constant, AST_Constant, be_decl);

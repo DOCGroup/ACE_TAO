@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_structure.h"
-
-ACE_RCSID(be_visitor_structure, any_op_cs, "$Id$")
-
+ACE_RCSID (be_visitor_structure, 
+           any_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Structure visitor for generating Any operator declarations in the client

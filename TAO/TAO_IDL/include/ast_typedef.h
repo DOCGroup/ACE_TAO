@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_TYPEDEF_AST_TYPEDEF_HH
 #define _AST_TYPEDEF_AST_TYPEDEF_HH
 
+#include "ast_type.h"
+
 // Representation of typedef declaration.
 // A typedef declaration is a renaming of a base type.
 
@@ -101,6 +103,13 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  // Cleanup.
+  virtual void destroy (void);
+
+protected:
+  virtual int compute_size_type (void);
+  // Compute the size type if it is unknown.
 
 private:
   // Data.

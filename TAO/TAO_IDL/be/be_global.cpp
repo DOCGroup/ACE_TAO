@@ -17,62 +17,92 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_global.h"
+#include "utl_string.h"
+#include "global_extern.h"
+#include "ace/ACE.h"
 
-ACE_RCSID(be, be_global, "$Id$")
+ACE_RCSID (be, 
+           be_global, 
+           "$Id$")
 
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
-    : changing_standard_include_files_ (1),
-      skel_export_macro_ (0),
-      skel_export_include_ (0),
-      stub_export_macro_ (0),
-      stub_export_include_ (0),
-      pch_include_ (0),
-      pre_include_ (0),
-      post_include_ (0),
-      client_hdr_ending_ (ACE::strnew ("C.h")),
-      client_stub_ending_ (ACE::strnew ("C.cpp")),
-      client_inline_ending_ (ACE::strnew ("C.i")),
-      server_hdr_ending_ (ACE::strnew ("S.h")),
-      implementation_hdr_ending_ (ACE::strnew ("I.h")),
-      implementation_skel_ending_ (ACE::strnew ("I.cpp")),
-      impl_class_prefix_ (ACE::strnew ("")),
-      impl_class_suffix_ (ACE::strnew ("_i")),
-      server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
-      server_skeleton_ending_ (ACE::strnew ("S.cpp")),
-      server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
-      server_inline_ending_ (ACE::strnew ("S.i")),
-      server_template_inline_ending_ (ACE::strnew ("S_T.i")),
-      output_dir_ (0),
-      any_support_ (I_TRUE),
-      tc_support_ (I_TRUE),
-      obv_opt_accessor_ (0),
-      gen_impl_files_ (I_FALSE),
-      gen_copy_ctor_ (I_FALSE),
-      gen_assign_op_ (I_FALSE),
-      gen_thru_poa_collocation_ (I_TRUE), // Default is thru_poa.
-      gen_direct_collocation_ (I_FALSE),
+  : changing_standard_include_files_ (1),
+    skel_export_macro_ (0),
+    skel_export_include_ (0),
+    stub_export_macro_ (0),
+    stub_export_include_ (0),
+    pch_include_ (0),
+    pre_include_ (0),
+    post_include_ (0),
+    client_hdr_ending_ (ACE::strnew ("C.h")),
+    client_stub_ending_ (ACE::strnew ("C.cpp")),
+    client_inline_ending_ (ACE::strnew ("C.i")),
+    server_hdr_ending_ (ACE::strnew ("S.h")),
+    implementation_hdr_ending_ (ACE::strnew ("I.h")),
+    implementation_skel_ending_ (ACE::strnew ("I.cpp")),
+    impl_class_prefix_ (ACE::strnew ("")),
+    impl_class_suffix_ (ACE::strnew ("_i")),
+    server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
+    server_skeleton_ending_ (ACE::strnew ("S.cpp")),
+    server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
+    server_inline_ending_ (ACE::strnew ("S.i")),
+    server_template_inline_ending_ (ACE::strnew ("S_T.i")),
+    output_dir_ (0),
+    any_support_ (I_TRUE),
+    tc_support_ (I_TRUE),
+    obv_opt_accessor_ (0),
+    gen_impl_files_ (I_FALSE),
+    gen_copy_ctor_ (I_FALSE),
+    gen_assign_op_ (I_FALSE),
+    gen_thru_poa_collocation_ (I_TRUE), // Default is thru_poa.
+    gen_direct_collocation_ (I_FALSE),
 #ifdef ACE_HAS_EXCEPTIONS
-      exception_support_ (I_TRUE),
+    exception_support_ (I_TRUE),
 #else
-      exception_support_ (I_FALSE),
+    exception_support_ (I_FALSE),
 #endif /* ACE_HAS_EXCEPTIONS */
-      use_raw_throw_ (I_FALSE),
-      opt_tc_ (I_FALSE),
-      ami_call_back_ (I_FALSE),
-      gen_amh_classes_ (I_FALSE),
-      gen_tie_classes_ (I_TRUE),
-      gen_smart_proxies_ (I_FALSE),
-      lookup_strategy_ (TAO_PERFECT_HASH)
+    use_raw_throw_ (I_FALSE),
+    opt_tc_ (I_FALSE),
+    ami_call_back_ (I_FALSE),
+    gen_amh_classes_ (I_FALSE),
+    gen_tie_classes_ (I_TRUE),
+    gen_smart_proxies_ (I_FALSE),
+    gen_inline_constants_ (I_FALSE),
+    lookup_strategy_ (TAO_PERFECT_HASH)
 {
 }
 
 BE_GlobalData::~BE_GlobalData (void)
 {
+  delete this->client_hdr_ending_;
+  this->client_hdr_ending_ = 0;
+  delete this->client_stub_ending_;
+  this->client_stub_ending_ = 0;
+  delete this->client_inline_ending_;
+  this->client_inline_ending_ = 0;
+  delete this->server_hdr_ending_;
+  this->server_hdr_ending_ = 0;
+  delete this->implementation_hdr_ending_;
+  this->implementation_hdr_ending_ = 0;
+  delete this->implementation_skel_ending_;
+  this->implementation_skel_ending_ = 0;
+  delete this->impl_class_prefix_;
+  this->impl_class_prefix_ = 0;
+  delete this->impl_class_suffix_;
+  this->impl_class_suffix_ = 0;
+  delete this->server_template_hdr_ending_;
+  this->server_template_hdr_ending_ = 0;
+  delete this->server_skeleton_ending_;
+  this->server_skeleton_ending_ = 0;
+  delete this->server_template_skeleton_ending_;
+  this->server_template_skeleton_ending_ = 0;
+  delete this->server_inline_ending_;
+  this->server_inline_ending_ = 0;
+  delete this->server_template_inline_ending_;
+  this->server_template_inline_ending_ = 0;
 }
 
 // To switch between changing or non-changing standard include files
@@ -301,7 +331,6 @@ BE_GlobalData::be_get_implementation_skel_fname (int base_name_only)
                                      base_name_only);
 }
 
-
 const char *
 BE_GlobalData::be_get_server_template_hdr_fname (int base_name_only)
 {
@@ -315,20 +344,11 @@ BE_GlobalData::be_get_server_skeleton_fname ()
   return be_get_server_skeleton (idl_global->stripped_filename ());
 }
 
-/*
-const char *
-BE_GlobalData::be_get_implementation_hdr_fname ()
-{
-  return be_get_implementation_hdr (idl_global->stripped_filename ());
-}
-*/
-
 const char *
 BE_GlobalData::be_get_implementation_skeleton_fname ()
 {
   return be_get_implementation_skel (idl_global->stripped_filename ());
 }
-
 
 const char *
 BE_GlobalData::be_get_server_template_skeleton_fname (int base_name_only)
@@ -508,7 +528,6 @@ BE_GlobalData::implementation_skel_ending (const char* s)
   this->implementation_skel_ending_ = ACE::strnew (s);
 }
 
-
 void
 BE_GlobalData::impl_class_prefix (const char* s)
 {
@@ -535,7 +554,6 @@ BE_GlobalData::implementation_hdr_ending (void) const
   return this->implementation_hdr_ending_;
 }
 
-
 const char*
 BE_GlobalData::impl_class_suffix (void) const
 {
@@ -547,8 +565,6 @@ BE_GlobalData::implementation_skel_ending (void) const
 {
   return this->implementation_skel_ending_;
 }
-
-
 
 void
 BE_GlobalData::server_template_hdr_ending (const char* s)
@@ -635,7 +651,7 @@ BE_GlobalData::any_support (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::any_support (void)
+BE_GlobalData::any_support (void) const
 {
   return this->any_support_;
 }
@@ -647,7 +663,7 @@ BE_GlobalData::tc_support (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::tc_support (void)
+BE_GlobalData::tc_support (void) const
 {
   return this->tc_support_;
 }
@@ -659,7 +675,7 @@ BE_GlobalData::obv_opt_accessor (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::obv_opt_accessor (void)
+BE_GlobalData::obv_opt_accessor (void) const
 {
   return this->obv_opt_accessor_;
 }
@@ -671,7 +687,7 @@ BE_GlobalData::gen_impl_files (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_impl_files (void)
+BE_GlobalData::gen_impl_files (void) const
 {
   return this->gen_impl_files_;
 }
@@ -683,7 +699,7 @@ BE_GlobalData::gen_copy_ctor (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_copy_ctor (void)
+BE_GlobalData::gen_copy_ctor (void) const
 {
   return this->gen_copy_ctor_;
 }
@@ -695,7 +711,7 @@ BE_GlobalData::gen_assign_op (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_assign_op (void)
+BE_GlobalData::gen_assign_op (void) const
 {
   return this->gen_assign_op_;
 }
@@ -707,7 +723,7 @@ BE_GlobalData::gen_thru_poa_collocation (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_thru_poa_collocation (void)
+BE_GlobalData::gen_thru_poa_collocation (void) const
 {
   return this->gen_thru_poa_collocation_;
 }
@@ -719,7 +735,7 @@ BE_GlobalData::gen_direct_collocation (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_direct_collocation (void)
+BE_GlobalData::gen_direct_collocation (void) const
 {
   return this->gen_direct_collocation_;
 }
@@ -731,7 +747,7 @@ BE_GlobalData::exception_support (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::exception_support (void)
+BE_GlobalData::exception_support (void) const
 {
   return this->exception_support_;
 }
@@ -743,7 +759,7 @@ BE_GlobalData::use_raw_throw (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::use_raw_throw (void)
+BE_GlobalData::use_raw_throw (void) const
 {
   return this->use_raw_throw_;
 }
@@ -755,7 +771,7 @@ BE_GlobalData::opt_tc (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::opt_tc (void)
+BE_GlobalData::opt_tc (void) const
 {
   return this->opt_tc_;
 }
@@ -767,7 +783,7 @@ BE_GlobalData::ami_call_back (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::ami_call_back (void)
+BE_GlobalData::ami_call_back (void) const
 {
   return this->ami_call_back_;
 }
@@ -779,7 +795,7 @@ BE_GlobalData::gen_amh_classes (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_amh_classes (void)
+BE_GlobalData::gen_amh_classes (void) const
 {
   return this->gen_amh_classes_;
 }
@@ -791,7 +807,7 @@ BE_GlobalData::gen_tie_classes (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_tie_classes (void)
+BE_GlobalData::gen_tie_classes (void) const
 {
   return this->gen_tie_classes_;
 }
@@ -803,9 +819,21 @@ BE_GlobalData::gen_smart_proxies (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_smart_proxies (void)
+BE_GlobalData::gen_smart_proxies (void) const
 {
   return this->gen_smart_proxies_;
+}
+
+void
+BE_GlobalData::gen_inline_constants (idl_bool val)
+{
+  this->gen_inline_constants_ = val;
+}
+
+idl_bool
+BE_GlobalData::gen_inline_constants (void) const
+{
+  return this->gen_inline_constants_;
 }
 
 void

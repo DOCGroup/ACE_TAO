@@ -20,15 +20,16 @@
 // ============================================================================
 
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_exception.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_exception, "$Id$")
+ACE_RCSID (be, 
+           be_exception, 
+           "$Id$")
 
 be_exception::be_exception (void)
 {
-  this->size_type (be_decl::VARIABLE); // always the case
+  this->size_type (AST_Type::VARIABLE); // always the case
 }
 
 be_exception::be_exception (UTL_ScopedName *n,
@@ -45,7 +46,7 @@ be_exception::be_exception (UTL_ScopedName *n,
                  abstract)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE);
+  this->size_type (AST_Type::VARIABLE);
 }
 
 void

@@ -67,8 +67,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ARRAY_AST_ARRAY_HH
 #define _AST_ARRAY_AST_ARRAY_HH
 
+#include "ast_concrete_type.h"
+
+class UTL_ExprList;
+class AST_Expression;
+class AST_Type;
+class ast_visitor;
+
 // Representation of array declaration:
-// An array is a combination of a list of dimensions and a base type
+// An array is a combination of a list of dimensions and a base type.
 
 class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
@@ -109,6 +116,10 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+protected:
+  virtual int compute_size_type (void);
+  // Compute the size type if it is unknown.
 
 private:
   // Data.

@@ -21,8 +21,6 @@ VPATH = .:driver
 MAKEFILE=Makefile.EXE
 
 FILES = tao_idl \
-	    driver/drv_init \
-            driver/drv_private \
             driver/drv_args \
             driver/drv_preproc
 

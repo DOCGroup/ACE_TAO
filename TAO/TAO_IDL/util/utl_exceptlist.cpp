@@ -62,7 +62,7 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 // utl_exceptlist.cc
 //
@@ -74,68 +74,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	 will cease to operate correctly if you use either multiple or
 //	 public virtual inheritance.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include	"utl_exceptlist.h"
 
-ACE_RCSID(util, utl_exceptlist, "$Id$")
+ACE_RCSID (util, 
+           utl_exceptlist, 
+           "$Id$")
 
-/*
- * Constructor(s)
- */
-
-UTL_ExceptList::UTL_ExceptList(AST_Exception *s, UTL_ExceptList *cdr)
-	      : UTL_List(cdr),
-	        pd_car_data(s)
+UTL_ExceptList::UTL_ExceptList (AST_Exception *s, 
+                                UTL_ExceptList *cdr)
+  : UTL_List (cdr),
+	  pd_car_data (s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-// Get list item
+// Get list item.
 AST_Exception *
-UTL_ExceptList::head()
+UTL_ExceptList::head (void)
 {
-  return pd_car_data;
+  return this->pd_car_data;
 }
 
-/*
- * Redefinition of inherited virtual operations
- */
-
-// UTL_ExceptList active iterator
-
-/*
- * Constructor
- */
-
-UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator(UTL_ExceptList *s)
-			    : UTL_ListActiveIterator(s)
+UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator (UTL_ExceptList *s)
+	: UTL_ListActiveIterator(s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-// Get current item
+// Get current item.
 AST_Exception *
-UTL_ExceptlistActiveIterator::item()
+UTL_ExceptlistActiveIterator::item (void)
 {
-  if (source == NULL)
-    return NULL;
-  return ((UTL_ExceptList *) source)->head();
+  if (source == 0)
+    {
+     return 0;
+    }
+
+  return ((UTL_ExceptList *) source)->head ();
 }
 
-/*
- * Redefinition of inherited virtual operations
- */

@@ -19,20 +19,17 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, ami_interface_ch, "$Id$")
-
+ACE_RCSID (be_visitor_interface, 
+           ami_interface_ch, 
+           "$Id$")
 
 // ******************************************************
 // Interface visitor for client header
 // ******************************************************
 
-be_visitor_ami_interface_ch::be_visitor_ami_interface_ch (be_visitor_context *ctx)
+be_visitor_ami_interface_ch::be_visitor_ami_interface_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
@@ -54,8 +51,6 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
 
   // Grab the stream.
   TAO_OutStream *os = this->ctx_->stream ();
-
-
   os->gen_ifdef_macro (node->replacement ()->flat_name (), "_ptr");
 
   // Forward declaration.
@@ -67,6 +62,5 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
       << "_ptr;" << be_nl << be_nl;
 
   os->gen_endif ();
-
   return 0;
 }

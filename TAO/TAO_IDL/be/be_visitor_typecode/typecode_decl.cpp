@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_typecode.h"
-
-ACE_RCSID(be_visitor_typecode, typecode_decl, "$Id$")
-
+ACE_RCSID (be_visitor_typecode, 
+           typecode_decl, 
+           "$Id$")
 
 // ******************************************************
 // TypeCode declarations
@@ -44,6 +39,9 @@ int
 be_visitor_typecode_decl::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if (node->is_nested ())
     {

@@ -19,13 +19,14 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_argument.h"
+#include "be_scope.h"
 #include "be_visitor_scope.h"
+#include "be_visitor_context.h"
 
-ACE_RCSID(be, be_visitor_scope, "$Id$")
-
+ACE_RCSID (be, 
+           be_visitor_scope, 
+           "$Id$")
 
 // ******************************************************
 //  Generic visitor for a scope.

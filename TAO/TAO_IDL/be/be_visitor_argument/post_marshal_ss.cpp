@@ -19,12 +19,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, post_marshal_ss, "$Id$")
-
+ACE_RCSID (be_visitor_argument, 
+           post_marshal_ss, 
+           "$Id$")
 
 // ************************************************************************
 //  visitor for doing any post-processing after the marshaling is done
@@ -45,6 +42,7 @@ int be_visitor_args_post_marshal_ss::visit_argument (be_argument *node)
 
   // retrieve the type
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -69,160 +67,10 @@ int be_visitor_args_post_marshal_ss::visit_argument (be_argument *node)
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_array (be_array *)
-{
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      break;
-    case AST_Argument::dir_INOUT:
-      break;
-    case AST_Argument::dir_OUT:
-      break;
-    }
-  return 0;
-}
-
-int be_visitor_args_post_marshal_ss::visit_enum (be_enum *)
-{
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      break;
-    case AST_Argument::dir_INOUT:
-      break;
-    case AST_Argument::dir_OUT:
-      break;
-    }
-  return 0;
-}
-
-int be_visitor_args_post_marshal_ss::visit_interface (be_interface *)
-{
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT: // inout
-    case AST_Argument::dir_OUT:
-      break;
-    }
-  return 0;
-}
-
-int be_visitor_args_post_marshal_ss::visit_interface_fwd (be_interface_fwd *)
-{
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT: // inout
-    case AST_Argument::dir_OUT:
-      break;
-    }
-  return 0;
-}
-
-int be_visitor_args_post_marshal_ss::visit_predefined_type (be_predefined_type *node)
-{
-  // check if the type is an any
-  if (node->pt () == AST_PredefinedType::PT_any)
-    {
-      switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  break;
-	case AST_Argument::dir_INOUT:
-	  break;
-	case AST_Argument::dir_OUT:
-	  break;
-	} // end switch direction
-    } // end of if
-  else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
-    {
-      switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  break;
-	case AST_Argument::dir_INOUT:
-	  break;
-	case AST_Argument::dir_OUT:
-	  break;
-	} // end switch direction
-    } // end else if
-  else // simple predefined types
-    {
-      switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  break;
-	case AST_Argument::dir_INOUT:
-	  break;
-	case AST_Argument::dir_OUT:
-	  break;
-	} // end switch direction
-    } // end of else
-
-  return 0;
-}
-
-int be_visitor_args_post_marshal_ss::visit_sequence (be_sequence *)
-{
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      break;
-    case AST_Argument::dir_INOUT:
-      break;
-    case AST_Argument::dir_OUT:
-      break;
-    }
-  return 0;
-}
-
-int be_visitor_args_post_marshal_ss::visit_string (be_string *)
-{
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      break;
-    case AST_Argument::dir_INOUT:
-      break;
-    case AST_Argument::dir_OUT:
-      break;
-    }
-  return 0;
-}
-
-int be_visitor_args_post_marshal_ss::visit_structure (be_structure *)
-{
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      break;
-    case AST_Argument::dir_INOUT:
-      break;
-    case AST_Argument::dir_OUT:
-      break;
-    }
-  return 0;
-}
-
-int be_visitor_args_post_marshal_ss::visit_union (be_union *)
-{
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      break;
-    case AST_Argument::dir_INOUT:
-      break;
-    case AST_Argument::dir_OUT:
-      break;
-    }
-  return 0;
-}
-
 int be_visitor_args_post_marshal_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -231,6 +79,7 @@ int be_visitor_args_post_marshal_ss::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }

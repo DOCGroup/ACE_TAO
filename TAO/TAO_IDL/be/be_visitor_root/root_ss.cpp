@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_root.h"
-
-ACE_RCSID(be_visitor_root, root_ss, "$Id$")
-
+ACE_RCSID (be_visitor_root, 
+           root_ss, 
+           "$Id$")
 
 // ******************************************************
 // Root visitor for server skeletons
@@ -51,7 +46,8 @@ be_visitor_root_ss::init (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_ss::init - "
-                         "Error opening server skeletons file\n"), -1);
+                         "Error opening server skeletons file\n"), 
+                        -1);
     }
 
   if (be_global->gen_tie_classes ())

@@ -44,7 +44,6 @@ public:
 
   virtual int visit_structure (be_structure *node);
   // visit structure
-
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_CDR_OP_CH_H_ */

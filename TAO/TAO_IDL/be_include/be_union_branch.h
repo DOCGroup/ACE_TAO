@@ -26,8 +26,10 @@
 #include "ast_union_branch.h"
 
 class UTL_LabelList;
-class UTL_Type;
+class AST_Type;
 class be_visitor;
+class TAO_OutStream;
+class be_union;
 
 class be_union_branch : public virtual AST_UnionBranch,
                         public virtual be_decl
@@ -55,10 +57,6 @@ public:
   // Narrowing.
   DEF_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl);
   DEF_NARROW_FROM_DECL (be_union_branch);
-
-protected:
-  virtual int compute_size_type (void);
-  // Compute the size type if it is unknown.
 };
 
 #endif

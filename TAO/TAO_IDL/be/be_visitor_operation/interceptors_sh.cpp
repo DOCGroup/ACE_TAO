@@ -18,25 +18,24 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+ACE_RCSID (be_visitor_operation, 
+           operation_interceptors_sh, 
+           "$Id$")
 
-#include "be_visitor_operation.h"
+// ******************************************************
+// primary visitor for "operation" in server header
+// ******************************************************
 
-ACE_RCSID(be_visitor_operation, operation_interceptors_sh, "$Id$")
-
-
-  // ******************************************************
-  // primary visitor for "operation" in server header
-  // ******************************************************
-
-  be_visitor_operation_interceptors_sh::be_visitor_operation_interceptors_sh (be_visitor_context *ctx)
-    : be_visitor_operation (ctx)
+be_visitor_operation_interceptors_sh::be_visitor_operation_interceptors_sh (
+    be_visitor_context *ctx
+  )
+  : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_interceptors_sh::~be_visitor_operation_interceptors_sh (void)
+be_visitor_operation_interceptors_sh::~be_visitor_operation_interceptors_sh (
+    void
+  )
 {
 }
 

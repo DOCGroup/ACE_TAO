@@ -19,11 +19,17 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_union_branch.h"
+#include "be_union.h"
+#include "be_type.h"
+#include "be_enum.h"
+#include "be_visitor.h"
+#include "be_helper.h"
+#include "ast_union_label.h"
 
-ACE_RCSID(be, be_union_branch, "$Id$")
+ACE_RCSID (be, 
+           be_union_branch, 
+           "$Id$")
 
 be_union_branch::be_union_branch (void)
 {
@@ -43,27 +49,6 @@ be_union_branch::be_union_branch (UTL_LabelList *ll,
     COMMON_Base (ft->is_local (),
                  ft->is_abstract ())
 {
-}
-
-// Compute the size type of the node in question.
-int
-be_union_branch::compute_size_type (void)
-{
-  be_type *type = be_type::narrow_from_decl (this->field_type ());
-
-  if (type == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_field::compute_size_type - "
-                         "bad field type\n"),
-                        -1);
-    }
-
-  // Our size type is the same as our type.
-  // As a side effect will also update the size type of parent.
-  this->size_type (type->size_type ());
-
-  return 0;
 }
 
 int
@@ -161,7 +146,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
       case AST_Expression::EV_bool:
         *os << dv.u.bool_val;
         break;
-      case AST_Expression::EV_any:
+      case AST_Expression::EV_enum:
         // The discriminant is an enum. Some compilers will
         // not accept a numeric value assigned to this
         // discriminant, so we must generate the string name.

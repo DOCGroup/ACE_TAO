@@ -68,6 +68,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_EXPRESSION_AST_EXPRESSION_HH
 
 #include "ace/CDR_Stream.h"
+#include "utl_scoped_name.h"
+
+class UTL_String;
+class UTL_Scope;
+class ast_visitor;
+class AST_Decl;
 
 // Representation of expression values.
 
@@ -111,6 +117,7 @@ public:
       , EK_longlong
       , EK_ulonglong
       , EK_octet
+      , EK_floating_point
     };
 
   // Enum to define expression type.
@@ -131,7 +138,18 @@ public:
       , EV_bool                   // Expression value is boolean.
       , EV_string                 // Expression value is char *.
       , EV_wstring                // Expression value is wide string.
-      , EV_any                    // Expression value is any of above.
+      , EV_enum                   // Expression value is from an enum.
+
+      // CORBA::Any and CORBA::Object are constructed in the parser first as
+      // expression values, then looked up by name to get the 
+      // AST_PredefinedType entry. This is so the grammar non-terminals
+      // integer_type, float_type, bool_type, etc. can also be expression
+      // values in order to serve double duty -- as productions of const_type
+      // and also (along with object_type) as productions of base_type_spec,
+      // as found in the OMG IDL grammar specification.
+      , EV_any                    // Used for CORBA::Any operation parameters
+      , EV_object                 // Used for CORBA::Object parameters
+
       , EV_void                   // Expression value is void (absent).
       , EV_none                   // Expression value is missing.
     };
@@ -234,32 +252,41 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Cleanup.
+  virtual void destroy (void);
+
   // Other operations.
 
   // Evaluation and value coercion.
 
-  virtual AST_ExprValue *eval (EvalKind ek);
+  AST_ExprValue *eval (EvalKind ek);
 
-  virtual AST_ExprValue *coerce (ExprType t);
+  AST_ExprValue *coerce (ExprType t);
+
+  // Top-level method, called only from yy_parse.
+  AST_ExprValue *check_and_coerce (ExprType t,
+                                   AST_Decl *d);
 
   // Evaluate then store value inside this AST_Expression.
-  virtual void evaluate (EvalKind ek);
+  void evaluate (EvalKind ek);
 
-  // Compare to AST_Expressions.
+  // Compare two AST_Expressions.
 
-  virtual long operator== (AST_Expression *vc);
+  long operator== (AST_Expression *vc);
 
-  virtual long compare (AST_Expression *vc);
+  long compare (AST_Expression *vc);
 
 protected:
   // Evaluate different sets of operators.
-  virtual AST_ExprValue *eval_bin_op (EvalKind ek);
+  AST_ExprValue *eval_bin_op (EvalKind ek);
 
-  virtual AST_ExprValue *eval_bit_op (EvalKind ek);
+  AST_ExprValue *eval_bit_op (EvalKind ek);
 
-  virtual AST_ExprValue *eval_un_op (EvalKind ek);
+  AST_ExprValue *eval_un_op (EvalKind ek);
 
-  virtual AST_ExprValue *eval_symbol (EvalKind ek);
+  AST_ExprValue *eval_symbol (EvalKind ek);
+
+  idl_bool type_mismatch (ExprType et);
 
 private:
   // Data.

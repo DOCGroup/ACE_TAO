@@ -25,6 +25,7 @@
 // ************************************************************
 // class be_visitor_args_marshal_ss
 // ************************************************************
+
 class be_visitor_args_marshal_ss : public be_visitor_args
 {
   //

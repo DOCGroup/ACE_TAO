@@ -71,55 +71,54 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // and the other for use in creating enumerators (see the class
 // AST_EnumVal).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_constant.h"
+#include "utl_identifier.h"
+#include "ast_visitor.h"
+#include "ast_generator.h"
+#include "nr_extern.h"
 
-ACE_RCSID(ast, ast_constant, "$Id$")
+ACE_RCSID (ast, 
+           ast_constant, 
+           "$Id$")
 
 // Static functions.
 
 // Convert a value from the enum AST_Expression::ExprType to a char *.
-static const char *
-exprtype_to_string (AST_Expression::ExprType et)
+const char *
+AST_Constant::exprtype_to_string (AST_Expression::ExprType et)
 {
   switch (et)
     {
     case AST_Expression::EV_short:
-      return "short";
+      return "Short";
     case AST_Expression::EV_ushort:
-      return "unsigned short";
+      return "UShort";
     case AST_Expression::EV_long:
-      return "long";
+      return "Long";
     case AST_Expression::EV_ulong:
-      return "unsigned long";
+      return "ULong";
     case AST_Expression::EV_float:
-      return "float";
+      return "Float";
     case AST_Expression::EV_double:
-      return "double";
+      return "Double";
     case AST_Expression::EV_char:
-      return "char";
+      return "Char";
     case AST_Expression::EV_octet:
-      return "octet";
+      return "Octet";
     case AST_Expression::EV_bool:
-      return "boolean";
+      return "Boolean";
     case AST_Expression::EV_string:
-      return "string";
-    case AST_Expression::EV_any:
-      return "any";
-    case AST_Expression::EV_void:
-      return "void";
-    case AST_Expression::EV_none:
-      return "none";
+      return "Char*";
     case AST_Expression::EV_ulonglong:
-      return "unsigned long long";
+      return "ULongLong";
     case AST_Expression::EV_longlong:
-      return "long long";
+      return "LongLong";
     case AST_Expression::EV_wchar:
-      return "wchar";
+      return "Wchar";
     case AST_Expression::EV_wstring:
-      return "wstring";
+      return "Wchar*";
     case AST_Expression::EV_longdouble:
-      return 0;
+      return "LongDouble";
     }
 
   return 0;
@@ -142,7 +141,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
 			                      UTL_ScopedName *n)
   : AST_Decl (nt,
               n),
-	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+	  pd_constant_value (v),
 	  pd_et (t),
     ifr_added_ (0)
 {
@@ -154,19 +153,29 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
 			                      UTL_ScopedName *n)
   : AST_Decl (AST_Decl::NT_const,
               n),
-	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+	  pd_constant_value (v),
 	  pd_et (t),
     ifr_added_ (0)
 {
+  // Avoids a truncation warning on MSVC when assigning a decimal
+  // literal to a float constant.
+  if (t == AST_Expression::EV_float)
+    {
+      AST_Expression::AST_ExprValue *ev = 
+        this->pd_constant_value->ev ();
+      ev->et = t;
+      ev->u.fval = (float) ev->u.dval;
+    }
+  // Allows the enum value string name to be used in generating the
+  // rhs of the constant assignment.
+  else if (t == AST_Expression::EV_enum)
+    {
+      this->pd_constant_value->ev ()->et = t;
+    }
 }
 
 AST_Constant::~AST_Constant (void)
 {
-  if (this->pd_constant_value != 0)
-    {
-      delete this->pd_constant_value;
-      this->pd_constant_value = 0;
-    }
 }
 
 // Redefinition of inherited virtual operations.
@@ -175,9 +184,12 @@ AST_Constant::~AST_Constant (void)
 void
 AST_Constant::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "const " << exprtype_to_string (pd_et) << " ";
+  o << "const " << this->exprtype_to_string () << " ";
+
   this->local_name ()->dump (o);
+
   o << " = ";
+
   this->pd_constant_value->dump (o);
 }
 
@@ -185,6 +197,17 @@ int
 AST_Constant::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_constant (this);
+}
+
+void
+AST_Constant::destroy (void)
+{
+  if (this->pd_constant_value != 0)
+    {
+      this->pd_constant_value->destroy ();
+      delete this->pd_constant_value;
+      this->pd_constant_value = 0;
+    }
 }
 
 // Data accessors.
@@ -211,6 +234,67 @@ void
 AST_Constant::ifr_added (idl_bool val)
 {
   this->ifr_added_ = val;
+}
+
+const char *
+AST_Constant::exprtype_to_string (void)
+{
+  switch (this->pd_et)
+    {
+    case AST_Expression::EV_short:
+      return "CORBA::Short";
+    case AST_Expression::EV_ushort:
+      return "CORBA::UShort";
+    case AST_Expression::EV_long:
+      return "CORBA::Long";
+    case AST_Expression::EV_ulong:
+      return "CORBA::ULong";
+    case AST_Expression::EV_float:
+      return "CORBA::Float";
+    case AST_Expression::EV_double:
+      return "CORBA::Double";
+    case AST_Expression::EV_char:
+      return "CORBA::Char";
+    case AST_Expression::EV_octet:
+      return "CORBA::Octet";
+    case AST_Expression::EV_bool:
+      return "CORBA::Boolean";
+    case AST_Expression::EV_string:
+      return "char *const";
+    case AST_Expression::EV_void:
+      return "void";
+    case AST_Expression::EV_none:
+      return "none";
+    case AST_Expression::EV_longlong:
+      return "CORBA::LongLong";
+    case AST_Expression::EV_ulonglong:
+      return "CORBA::ULongLong";
+    case AST_Expression::EV_wchar:
+      return "CORBA::WChar";
+    case AST_Expression::EV_wstring:
+      return "CORBA::WChar *const";
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_enum:
+      return 0;
+    }
+
+  return 0;
+}
+
+UTL_ScopedName *
+AST_Constant::enum_full_name (void)
+{
+  if (this->pd_et == AST_Expression::EV_enum)
+    {
+      UTL_Scope *s = this->defined_in ();
+      AST_Decl *d = s->lookup_by_name (this->pd_constant_value->n (),
+                                       1);
+      return (ScopeAsDecl (d->defined_in ()))->name ();
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 // Narrowing methods.

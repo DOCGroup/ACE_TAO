@@ -111,6 +111,14 @@ SOURCE=.\ast\ast_check.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ast\ast_component_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_concrete_type.cpp
 # End Source File
 # Begin Source File
@@ -148,6 +156,10 @@ SOURCE=.\ast\ast_field.cpp
 # Begin Source File
 
 SOURCE=.\ast\ast_generator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ast\ast_home.cpp
 # End Source File
 # Begin Source File
 
@@ -199,6 +211,10 @@ SOURCE=.\ast\ast_structure.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_structure_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_type.cpp
 # End Source File
 # Begin Source File
@@ -215,7 +231,19 @@ SOURCE=.\ast\ast_union_branch.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_union_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_union_label.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ast\ast_valuetype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ast\ast_valuetype_fwd.cpp
 # End Source File
 # Begin Source File
 
@@ -331,10 +359,6 @@ SOURCE=.\fe\y.tab.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\include\ast.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\include\ast_argument.h
 # End Source File
 # Begin Source File
@@ -344,6 +368,14 @@ SOURCE=.\include\ast_array.h
 # Begin Source File
 
 SOURCE=.\include\ast_attribute.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_component.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_component_fwd.h
 # End Source File
 # Begin Source File
 
@@ -391,6 +423,10 @@ SOURCE=.\include\ast_generator.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\ast_home.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\ast_interface.h
 # End Source File
 # Begin Source File
@@ -431,6 +467,10 @@ SOURCE=.\include\ast_structure.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\ast_structure_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\ast_type.h
 # End Source File
 # Begin Source File
@@ -447,7 +487,19 @@ SOURCE=.\include\ast_union_branch.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\ast_union_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\ast_union_label.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_valuetype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_valuetype_fwd.h
 # End Source File
 # Begin Source File
 
@@ -475,23 +527,11 @@ SOURCE=.\include\global_extern.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\include\idl.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\include\idl_bool.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\include\idl_defines.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\include\idl_extern.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\include\idl_fwd.h
 # End Source File
 # Begin Source File
 
@@ -508,10 +548,6 @@ SOURCE=.\include\nr_extern.h
 # Begin Source File
 
 SOURCE=.\TAO_IDL_FE_Export.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\include\util.h
 # End Source File
 # Begin Source File
 

@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_exception.h"
-
-ACE_RCSID(be_visitor_exception, any_op_cs, "$Id$")
-
+ACE_RCSID (be_visitor_exception, 
+           any_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Exception visitor for generating Any operator declarations in the client
@@ -52,8 +48,6 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
 
   *os << be_nl 
       << "// TAO_IDL - Generated from " << be_nl

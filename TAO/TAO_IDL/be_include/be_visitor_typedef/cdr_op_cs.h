@@ -51,9 +51,6 @@ public:
   virtual int visit_array (be_array *node);
   // visit a array
 
-  virtual int visit_enum (be_enum *node);
-  // visit an enum
-
   virtual int visit_sequence (be_sequence *node);
   // visit a sequence
 
@@ -62,7 +59,6 @@ public:
 
   virtual int visit_union (be_union *node);
   // visit a union
-
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_CDR_OP_CS_H_*/

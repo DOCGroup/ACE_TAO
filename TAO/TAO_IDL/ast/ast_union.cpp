@@ -73,12 +73,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Expression::ExprType and serves as a cache). This field is used
 // to compute coercions for labels based on the expected discriminator type.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_union.h"
+#include "ast_union_branch.h"
+#include "ast_union_label.h"
+#include "ast_field.h"
+#include "ast_predefined_type.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
+#include "utl_indenter.h"
+#include "global_extern.h"
 
-ACE_RCSID(ast, ast_union, "$Id$")
+ACE_RCSID (ast, 
+           ast_union, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Union::AST_Union (void)
 {
 }
@@ -155,7 +166,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     }
   else if (dt->node_type() == AST_Decl::NT_enum)
     {
-      this->pd_udisc_type = AST_Expression::EV_any;
+      this->pd_udisc_type = AST_Expression::EV_enum;
       this->pd_disc_type = dt;
     }
   else
@@ -425,7 +436,7 @@ AST_Union::lookup_branch (AST_UnionBranch *branch)
           return lookup_default ();
         }
 
-      if (this->pd_udisc_type == AST_Expression::EV_any)
+      if (this->pd_udisc_type == AST_Expression::EV_enum)
         {
           // CONVENTION: indicates enum discriminant.
           return lookup_enum (branch);
@@ -551,7 +562,7 @@ AST_Union::compute_default_value (void)
         }
 
       break;
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
       // Has to be enum.
       {
         AST_Decl *d = AST_Decl::narrow_from_decl (this->disc_type ());
@@ -647,7 +658,7 @@ AST_Union::compute_default_value (void)
     case AST_Expression::EV_bool:
       this->default_value_.u.bool_val = 0;
       break;
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
       this->default_value_.u.enum_val = 0;
       break;
     case AST_Expression::EV_longlong:
@@ -766,7 +777,7 @@ AST_Union::compute_default_value (void)
                             }
 
                           break;
-                        case AST_Expression::EV_any:
+                        case AST_Expression::EV_enum:
                           // this is the case of enums. We maintain
                           // evaluated values which always start with 0
                           if (this->default_value_.u.enum_val
@@ -825,6 +836,13 @@ AST_Union::compute_default_index (void)
         {
           // Get the next AST decl node.
           d = si.item ();
+
+          // If an enum is declared in our scope, its members are
+          // added to our scope as well, to detect clashes.
+          if (d->node_type () == AST_Decl::NT_enum_val)
+            {
+              continue;
+            }
 
           if (!d->imported ())
             {
@@ -912,6 +930,16 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
   this->add_to_referenced (t,
                            I_FALSE,
                            t->local_name ());
+
+  AST_Type *ft = t->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               I_FALSE,
+                               mru->first_component ());
+    }
 
   this->fields_.enqueue_tail (t);
 
@@ -1117,6 +1145,44 @@ AST_Union::dump (ACE_OSTREAM_TYPE &o)
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
   o << "}";
+}
+
+// Compute the size type of the node in question.
+int
+AST_Union::compute_size_type (void)
+{
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      // Get the next AST decl node.
+      AST_Decl *d = si.item ();
+
+      if (d->node_type () == AST_Decl::NT_enum_val)
+        {
+          continue;
+        }
+
+      AST_Field *f = AST_Field::narrow_from_decl (d);
+
+      if (f != 0)
+        {
+          AST_Type *t = f->field_type ();
+          // Our sizetype depends on the sizetype of our members. Although
+          // previous value of sizetype may get overwritten, we are
+          // guaranteed by the "size_type" call that once the value reached
+          // be_decl::VARIABLE, nothing else can overwrite it.
+          this->size_type (t->size_type ());
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING (%N:%l) be_union::compute_size_type - "
+                      "narrow_from_decl returned 0\n"));
+        }
+    }
+
+  return 0;
 }
 
 int

@@ -19,15 +19,16 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "be_enum.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_enum, "$Id$")
+ACE_RCSID (be, 
+           be_enum, 
+           "$Id$")
 
 be_enum::be_enum (void)
 {
-  this->size_type (be_decl::FIXED);
+  this->size_type (AST_Type::FIXED);
 }
 
 be_enum::be_enum (UTL_ScopedName *n,
@@ -42,15 +43,17 @@ be_enum::be_enum (UTL_ScopedName *n,
     COMMON_Base (local,
                  abstract)
 {
-  this->size_type (be_decl::FIXED);
+  this->size_type (AST_Type::FIXED);
 }
 
 void
 be_enum::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-//  be_type::destroy ();
+  // No need to call be_scope::destroy(). It has no
+  // allocated members, and AST_Enum::destroy() will
+  // call UTL_Scope::destroy().
+  this->AST_Enum::destroy ();
 }
 
 int

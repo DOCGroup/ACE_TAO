@@ -18,15 +18,13 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, argument, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           argument, 
+           "$Id$")
 
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
-  : be_visitor_decl (ctx)
-  , fixed_direction_ (-1)
+  : be_visitor_decl (ctx),
+    fixed_direction_ (-1)
 {
 }
 
@@ -47,23 +45,31 @@ be_visitor_args::type_name (be_type *node,
                             const char *suffix)
 {
   static char namebuf [NAMEBUFSIZE];
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  be_type *bt; // type to use
+  be_type *bt;
 
-  // use the typedefed name if that is the one used in the IDL defn
+  // Use the typedefed name if that is the one used in the IDL defn.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   ACE_OS::sprintf (namebuf,
                    "%s",
                    bt->full_name ());
 
   if (suffix)
-    ACE_OS::strcat (namebuf,
-                    suffix);
+    {
+      ACE_OS::strcat (namebuf,
+                      suffix);
+    }
 
   return namebuf;
 }
@@ -73,7 +79,9 @@ AST_Argument::Direction
 be_visitor_args::direction (void)
 {
   if (this->fixed_direction_ != -1)
-    return AST_Argument::Direction (this->fixed_direction_);
+    {
+      return AST_Argument::Direction (this->fixed_direction_);
+    }
 
   // grab the argument node. We know that our context has stored the right
   // argument node

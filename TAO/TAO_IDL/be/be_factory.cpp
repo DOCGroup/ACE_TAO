@@ -19,11 +19,12 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_factory.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_factory, "$Id$")
+ACE_RCSID (be, 
+           be_factory, 
+           "$Id$")
 
 be_factory::be_factory (void)
 {

@@ -22,7 +22,6 @@
 #ifndef TAO_BE_VISITOR_EXCEPTION_H
 #define TAO_BE_VISITOR_EXCEPTION_H
 
-#include "be_visitor.h"
 #include "be_visitor_scope.h"
 #include "be_visitor_enum.h"
 #include "be_visitor_structure.h"

@@ -44,7 +44,6 @@ public:
 
   virtual int visit_sequence (be_sequence *node);
   // visit sequence
-
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_CDR_OP_CH_H_ */

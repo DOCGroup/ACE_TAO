@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_root.h"
-
-ACE_RCSID(be_visitor_root, root_si, "$Id$")
-
+ACE_RCSID (be_visitor_root, 
+           root_si, 
+           "$Id$")
 
 // ***********************************************
 // Root visitor for server inline
@@ -49,7 +44,8 @@ be_visitor_root_si::init (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_si::init - "
-                         "server inline open failed\n"), -1);
+                         "server inline open failed\n"), 
+                        -1);
     }
 
   if (be_global->gen_tie_classes ())

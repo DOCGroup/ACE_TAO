@@ -42,14 +42,14 @@ public:
   // Visiting.
   virtual int accept (be_visitor* visitor);
 
+  // Cleanup.
+  virtual void destroy (void);
+
   // Narrowing.
   DEF_NARROW_METHODS2 (be_predefined_type, AST_PredefinedType, be_type);
   DEF_NARROW_FROM_DECL (be_predefined_type);
 
 protected:
-  virtual int compute_size_type (void);
-  // Compute the size type if it is unknown.
-
   virtual void compute_tc_name (void);
   // Overridden method.
 

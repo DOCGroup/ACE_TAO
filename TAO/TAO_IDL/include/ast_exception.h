@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXCEPTION_AST_EXCEPTION_HH
 #define _AST_EXCEPTION_AST_EXCEPTION_HH
 
+#include "ast_structure.h"
+
 // NOTE: add (AST_ConcreteType *) is defined here because an exception
 // can contain locally defined types in addition to fields.
 //
@@ -78,7 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
 {
 public:
-  // Constructor(s).
   AST_Exception (void);
 
   AST_Exception (UTL_ScopedName *n,
@@ -104,7 +105,7 @@ public:
 private:
   friend int tao_yyparse (void);
 
-  // Scope Management Protocol
+  // Scope Management Protocol.
   virtual AST_Field *fe_add_field (AST_Field *f);
   virtual AST_Union *fe_add_union (AST_Union *u);
   virtual AST_Structure *fe_add_structure (AST_Structure *s);

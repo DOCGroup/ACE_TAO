@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_union.h"
-
-ACE_RCSID(be_visitor_union, any_op_cs, "$Id$")
-
+ACE_RCSID (be_visitor_union, 
+           any_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Union visitor for generating Any operator declarations in the client
@@ -53,17 +49,10 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate the Any <<= and >>= operator definitions.
+  // Generate the Any <<= and >>= operator declarations.
   os->indent ();
 
-  *os << be_nl 
-      << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // Copying insertion oeprator.
-
-  *os << "// Copying insertion." << be_nl
-      << "void operator<<= (" << be_idt << be_idt_nl
+  *os << "void operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -261,10 +250,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 int
 be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt;
-
-  // First generate the type information.
-  bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
 
   if (!bt)
     {

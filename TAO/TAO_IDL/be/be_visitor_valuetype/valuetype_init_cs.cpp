@@ -20,14 +20,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype, valuetype_init_cs, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype, 
+           valuetype_init_cs, 
+           "$Id$")
 
 be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
     be_visitor_context *ctx
@@ -43,7 +38,7 @@ be_visitor_valuetype_init_cs::~be_visitor_valuetype_init_cs (void)
 int
 be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 {
-  if (node->is_abstract_valuetype ())
+  if (node->is_abstract ())
     {
       return 0;
     }
@@ -61,34 +56,40 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 
   FactoryStyle factory_style = determine_factory_style (node);
 
-  if(factory_style == FS_NO_FACTORY) // nothing to do
+  if (factory_style == FS_NO_FACTORY)
     {
-      return 0; // bail out
+      return 0;
     }
 
-
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-
-  os->indent (); // start with whatever indentation level we are at
+  TAO_OutStream *os = this->ctx_->stream ();
 
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_init", node->full_name ());
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::sprintf (fname, 
+                   "%s_init", 
+                   node->full_name ());
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_init", node->local_name ());
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::sprintf (lname, 
+                   "%s_init", 
+                   node->local_name ());
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // ctor
-  *os << fname << "::" << lname << " ()" << be_nl
+  *os << fname << "::" << lname << " (void)" << be_nl
       << "{" << be_nl << "}\n";
 
   // dtor
   *os << be_nl
-      << fname << "::~" << lname << " ()" << be_nl
+      << fname << "::~" << lname << " (void)" << be_nl
       << "{" << be_nl << "}\n";
 
   //tao_repository_id
@@ -98,24 +99,44 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       << "{" << be_idt_nl
       <<   "return " << node->full_name ()
       <<                "::_tao_obv_static_repository_id ();"
-      << be_uidt_nl << "}\n";
+      << be_uidt_nl << "}";
 
 
-  if(factory_style == FS_CONCRETE_FACTORY)
+  if (factory_style == FS_CONCRETE_FACTORY)
     {
       // generate create_for_unmarshal()
-      *os << be_nl
-          << "CORBA_ValueBase* " << be_nl
+      *os << be_nl << be_nl
+          << "CORBA_ValueBase *" << be_nl
           << fname << "::create_for_unmarshal" << " "
           << "(void)" << be_nl
           << "{" << be_idt_nl
-          << "CORBA_ValueBase* ret_val = 0;" << be_nl
-          << "ACE_NEW_RETURN(ret_val, " << be_nl
-          << "               OBV_" << node->full_name () << ", " << be_nl
-          << "               0);" << be_nl
+          << "CORBA_ValueBase *ret_val = 0;" << be_nl
+          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "ret_val," << be_nl
+          << "OBV_" << node->full_name () << "," << be_nl
+          << "0" << be_uidt_nl
+          << ");" << be_uidt_nl
           << "return ret_val;"
-          << be_uidt_nl << "}\n";
+          << be_uidt_nl << "}";
+
+        if (node->supports_abstract ())
+          {
+            *os << be_nl << be_nl
+                << "CORBA::AbstractBase_ptr" << be_nl
+                << fname << "::create_for_unmarshal_abstract (void)" << be_nl
+                << "{" << be_idt_nl
+                << "CORBA_AbstractBase *ret_val = 0;" << be_nl
+                << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+                << "ret_val," << be_nl
+                << "OBV_" << node->full_name () << "," << be_nl
+                << "0" << be_uidt_nl
+                << ");" << be_uidt_nl
+                << "return ret_val;"
+                << be_uidt_nl << "}";
+          }
     }
+
+  *os << be_nl << be_nl;
 
   return 0;
 }

@@ -18,16 +18,13 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+ACE_RCSID (be_visitor_interface, 
+           cdr_op_cs, 
+           "$Id$")
 
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, cdr_op_cs, "$Id$")
-
-be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs
-(be_visitor_context *ctx)
+be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
@@ -50,6 +47,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
+
   // Visit the scope and generate code.
   if (this->visit_scope (node) == -1)
     {
@@ -61,6 +59,9 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
@@ -69,7 +70,17 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "const " << node->full_name () << "_ptr _tao_objref" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
-  *os << "CORBA::Object_ptr _tao_corba_obj = _tao_objref;" << be_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_ptr";
+    }
+  else
+    {
+      *os << "CORBA::Object_ptr";
+    }
+
+  *os << " _tao_corba_obj = _tao_objref;" << be_nl;
   *os << "return (strm << _tao_corba_obj);" << be_uidt_nl
       << "}\n\n";
 
@@ -83,16 +94,53 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
   *os << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl;
-  *os << "CORBA::Object_var obj;" << be_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_var obj;" << be_nl << be_nl;
+    }
+  else
+    {
+      *os << "CORBA::Object_var obj;" << be_nl << be_nl;
+    }
+
   *os << "if ((strm >> obj.inout ()) == 0)" << be_idt_nl
+      << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "// narrow to the right type" << be_nl;
-  *os << "_tao_objref =" << be_idt_nl
-      << node->full_name () << "::_unchecked_narrow ("
-      << be_idt << be_idt_nl
-      << "obj.in ()" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl;
+      << "}" << be_uidt_nl << be_nl
+      << "// Narrow to the right type." << be_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << "if (obj->_is_objref ())" << be_idt_nl
+          << "{" << be_idt_nl
+          << "_tao_objref =" << be_idt_nl
+          << node->full_name () << "::_unchecked_narrow ("
+          << be_idt << be_idt_nl
+          << "obj.in ()" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl
+          << "_tao_objref =" << be_idt_nl
+          << node->full_name () << "::_unchecked_narrow ("
+          << be_idt << be_idt_nl
+          << "obj._retn ()" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+    }
+  else
+    {
+      *os << "_tao_objref =" << be_idt_nl
+          << node->full_name () << "::_unchecked_narrow ("
+          << be_idt << be_idt_nl
+          << "obj.in ()" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+    }
+
   *os << "ACE_TRY_CHECK;" << be_nl;
   *os << "return 1;" << be_uidt_nl;
   *os << "}" << be_nl

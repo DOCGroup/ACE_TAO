@@ -19,14 +19,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, rettype_assign_ss, "$Id$")
-
+ACE_RCSID (be_visitor_operation, 
+           rettype_assign_ss, 
+           "$Id$")
 
 // ****************************************************************************
 // visitor for assignment to a return value variable from the upcall
@@ -122,6 +117,7 @@ visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_void:
       break;
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_any:
     default:
       *os << "_tao_retval = ";

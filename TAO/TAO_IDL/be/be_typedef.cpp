@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_typedef.h"
+#include "be_visitor.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (be,
            be_typedef,
@@ -69,29 +69,6 @@ be_typedef::primitive_base_type (void)
   return d;
 }
 
-// Compute the size type of the node in question.
-int
-be_typedef::compute_size_type (void)
-{
-  be_type *type = be_type::narrow_from_decl (this->base_type ());
-
-  if (type == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_typedef::compute_size_type - "
-                         "bad base type\n"),
-                        -1);
-    }
-
-  // Our size type is the same as our type.
-  this->size_type (type->size_type ());
-
-  //While we're here, take care of has_constructor.
-  this->has_constructor (type->has_constructor ());
-
-  return 0;
-}
-
 AST_Decl::NodeType
 be_typedef::base_node_type (void) const
 {
@@ -105,7 +82,8 @@ be_typedef::base_node_type (void) const
 void
 be_typedef::destroy (void)
 {
-  // Do nothing
+  this->AST_Typedef::destroy ();
+  this->be_type::destroy ();
 }
 
 int

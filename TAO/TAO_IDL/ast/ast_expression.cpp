@@ -66,18 +66,26 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // AST_Expression nodes denote IDL expressions used in the IDL input.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_expression.h"
+#include "ast_constant.h"
+#include "ast_visitor.h"
+#include "global_extern.h"
+#include "utl_err.h"
+#include "utl_scope.h"
+#include "utl_string.h"
+#include "nr_extern.h"
 
-ACE_RCSID(ast, ast_expression, "$Id$")
+ACE_RCSID (ast, 
+           ast_expression, 
+           "$Id$")
 
 // Helper function to fill out the details of where this expression
 // is defined.
 void
 AST_Expression::fill_definition_details (void)
 {
-  this->pd_defined_in = idl_global->scopes()->depth() > 0
-                          ? idl_global->scopes()->top()
+  this->pd_defined_in = idl_global->scopes ().depth () > 0
+                          ? idl_global->scopes().top ()
                           : 0 ;
   this->pd_line = idl_global->lineno ();
   this->pd_file_name    = idl_global->filename ();
@@ -88,10 +96,10 @@ AST_Expression::fill_definition_details (void)
 // An AST_Expression denoting a symbolic name.
 AST_Expression::AST_Expression (UTL_ScopedName *nm)
   : pd_ec (EC_symbol),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (nm)
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (nm)
 {
   this->fill_definition_details ();
 }
@@ -99,11 +107,11 @@ AST_Expression::AST_Expression (UTL_ScopedName *nm)
 // An AST_Expression denoting a type coercion from another AST_Expression.
 AST_Expression::AST_Expression (AST_Expression *v,
                                 ExprType t)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -120,12 +128,12 @@ AST_Expression::AST_Expression (AST_Expression *v,
 // two other AST_Expressions.
 AST_Expression::AST_Expression (ExprComb c,
                                 AST_Expression *ev1,
-                                                  AST_Expression *ev2)
+                                AST_Expression *ev2)
   : pd_ec (c),
-                pd_ev (0),
-                pd_v1 (ev1),
-                pd_v2 (ev2),
-                pd_n (0)
+    pd_ev (0),
+    pd_v1 (ev1),
+    pd_v2 (ev2),
+    pd_n (0)
 {
   this->fill_definition_details ();
 }
@@ -133,10 +141,10 @@ AST_Expression::AST_Expression (ExprComb c,
 // An AST_Expression denoting a short integer.
 AST_Expression::AST_Expression (short sv)
   : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -150,10 +158,10 @@ AST_Expression::AST_Expression (short sv)
 // An AST_Expression denoting an unsigned short integer.
 AST_Expression::AST_Expression (unsigned short usv)
   : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -167,10 +175,10 @@ AST_Expression::AST_Expression (unsigned short usv)
 // An AST_Expression denoting a long integer.
 AST_Expression::AST_Expression (long lv)
   : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -184,11 +192,11 @@ AST_Expression::AST_Expression (long lv)
 // An AST_Expression denoting a long integer being used as a boolean.
 AST_Expression::AST_Expression (long lv,
                                 ExprType t)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -202,11 +210,11 @@ AST_Expression::AST_Expression (long lv,
 
 // An AST_Expression denoting an unsigned long integer.
 AST_Expression::AST_Expression (unsigned long ulv)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (NULL)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (NULL)
 {
   this->fill_definition_details ();
 
@@ -219,11 +227,11 @@ AST_Expression::AST_Expression (unsigned long ulv)
 
 // An AST_Expression denoting a 32-bit floating point number.
 AST_Expression::AST_Expression (float fv)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -236,11 +244,11 @@ AST_Expression::AST_Expression (float fv)
 
 // An AST_Expression denoting a 64-bit floating point number.
 AST_Expression::AST_Expression (double dv)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (NULL),
-                pd_n (0)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (NULL),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -253,11 +261,11 @@ AST_Expression::AST_Expression (double dv)
 
 // An AST_Expression denoting a character.
 AST_Expression::AST_Expression (char cv)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -270,11 +278,11 @@ AST_Expression::AST_Expression (char cv)
 
 // An AST_Expression denoting a wide character.
 AST_Expression::AST_Expression (ACE_OutputCDR::from_wchar wcv)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -287,11 +295,11 @@ AST_Expression::AST_Expression (ACE_OutputCDR::from_wchar wcv)
 
 // An AST_Expression denoting an octet (unsigned char).
 AST_Expression::AST_Expression (unsigned char ov)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (NULL)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (NULL)
 {
   this->fill_definition_details ();
 
@@ -304,11 +312,11 @@ AST_Expression::AST_Expression (unsigned char ov)
 
 // An AST_Expression denoting a string (char * encapsulated as a String).
 AST_Expression::AST_Expression (UTL_String *sv)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -321,11 +329,11 @@ AST_Expression::AST_Expression (UTL_String *sv)
 
 // An AST_Expression denoting a wide string.
 AST_Expression::AST_Expression (char *sv)
-        : pd_ec (EC_none),
-                pd_ev (0),
-                pd_v1 (0),
-                pd_v2 (0),
-                pd_n (0)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0)
 {
   this->fill_definition_details ();
 
@@ -459,7 +467,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_string:
         case AST_Expression::EV_wstring:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -568,7 +576,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -660,7 +668,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -762,7 +770,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -837,7 +845,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -930,7 +938,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -998,7 +1006,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1082,7 +1090,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1154,7 +1162,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1274,7 +1282,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1383,7 +1391,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1503,15 +1511,16 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
         }
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
       switch (ev->et)
         {
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
+        case AST_Expression::EV_ulong:
           return ev;
         default:
           return 0;
@@ -1540,6 +1549,62 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
     }
 
   return 0;
+}
+
+// Integer literals may not be assigned to floating point constants,
+// and vice versa.
+static idl_bool 
+incompatible_types (AST_Expression::ExprType t1, 
+                    AST_Expression::ExprType t2)
+{
+  switch (t1)
+  {
+    case AST_Expression::EV_short:
+    case AST_Expression::EV_ushort:
+    case AST_Expression::EV_long:
+    case AST_Expression::EV_ulong:
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_octet:
+    case AST_Expression::EV_bool:
+      switch (t2)
+      {
+        case AST_Expression::EV_short:
+        case AST_Expression::EV_ushort:
+        case AST_Expression::EV_long:
+        case AST_Expression::EV_ulong:
+        case AST_Expression::EV_longlong:
+        case AST_Expression::EV_ulonglong:
+        case AST_Expression::EV_octet:
+        case AST_Expression::EV_bool:
+          return 0;
+        default:
+          return 1;
+      }
+    case AST_Expression::EV_float:
+    case AST_Expression::EV_double:
+    case AST_Expression::EV_longdouble:
+      switch (t2)
+      {
+        case AST_Expression::EV_float:
+        case AST_Expression::EV_double:
+        case AST_Expression::EV_longdouble:
+          return 0;
+        default:
+          return 1;
+      }  
+    case AST_Expression::EV_char:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_string:
+    case AST_Expression::EV_wstring:
+    case AST_Expression::EV_enum:
+    case AST_Expression::EV_any:
+    case AST_Expression::EV_object:
+    case AST_Expression::EV_void:
+    case AST_Expression::EV_none:
+    default:
+      return 0;
+  }
 }
 
 // Evaluate the expression wrt the evaluation kind requested. Supported
@@ -1594,29 +1659,30 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
     {
       return 0;
     }
-
+// @@@ (JP) See comment below.
+/*
   this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
 
   if (this->pd_v1->ev () == 0)
     {
       return 0;
     }
-
+*/
   this->pd_v1->set_ev (this->pd_v1->coerce (EV_double));
 
   if (this->pd_v1->ev () == 0)
     {
       return 0;
     }
-
+/*
   this->pd_v2->set_ev (this->pd_v2->eval_internal (ek));
 
   if (this->pd_v2->ev () == 0)
     {
       return 0;
     }
-
-  this->pd_v2->set_ev (this->pd_v2->coerce(EV_double));
+*/
+  this->pd_v2->set_ev (this->pd_v2->coerce (EV_double));
 
   if (pd_v2->ev () == 0)
     {
@@ -1659,12 +1725,21 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
         }
 
       retval->u.dval =
-        this->pd_v1->ev  ()->u.dval / this->pd_v2->ev  ()->u.dval;
+        this->pd_v1->ev ()->u.dval / this->pd_v2->ev  ()->u.dval;
       break;
     default:
       return 0;
     }
 
+  // @@@ (JP) CORBA 2.6 and earlier say that in a constant expression,
+  // each subexpression must fall within the range of the assigned type.
+  // However, this may be hard for the compiler in some cases (must
+  // evaluate all grouping possibilities). So there is an outstanding
+  // issue, #1139, and the best guess is that it will ultimately be
+  // decided that only the final value must fall within the range of
+  // the assigned type. So I've commented out the checks above, and
+  // added this final evaluation below. (02-06-25).
+//  return eval_kind (retval, ek);
   return retval;
 }
 
@@ -1892,9 +1967,9 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
     }
 
   // Get current scope for lookup.
-  if (idl_global->scopes ()->depth() > 0)
+  if (idl_global->scopes ().depth () > 0)
     {
-      s = idl_global->scopes ()->top_non_null ();
+      s = idl_global->scopes ().top_non_null ();
     }
 
   if (s == 0)
@@ -1931,6 +2006,64 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
     }
 
   return c->constant_value ()->eval_internal (ek);
+}
+
+idl_bool
+AST_Expression::type_mismatch (AST_Expression::ExprType t)
+{
+  if (this->pd_ev != 0)
+    {
+      return incompatible_types (this->pd_ev->et, t);
+    }
+
+  idl_bool v1_mismatch = 0;
+  idl_bool v2_mismatch = 0;
+
+  if (this->pd_v1 != 0)
+    {
+      v1_mismatch = this->pd_v1->type_mismatch (t);
+    }
+
+  if (this->pd_v2 != 0)
+    {
+      v2_mismatch = this->pd_v2->type_mismatch (t);
+    }
+
+  return v1_mismatch | v2_mismatch;
+}
+
+// Coerce "this" to the ExprType required. Returns a copy of the
+// original ExprValue with the coercion applied, if successful, or
+// 0 if failed.
+AST_Expression::AST_ExprValue *
+AST_Expression::check_and_coerce (AST_Expression::ExprType t,
+                                  AST_Decl *d)
+{
+  if (d != 0)
+    { 
+      AST_Decl *enum_val =
+        idl_global->scopes ().top_non_null ()->lookup_by_name (this->pd_n,
+                                                               1);
+
+      if (enum_val != 0)
+        {
+          AST_Decl *enum_decl = ScopeAsDecl (enum_val->defined_in ());
+
+          if (d != enum_decl)
+            {
+              idl_global->err ()->incompatible_type_error (this);
+              return 0;
+            }
+        }
+    }
+
+  if (this->type_mismatch (t))
+    {
+      idl_global->err ()->incompatible_type_error (this);
+      return 0;
+    }
+
+  return this->coerce (t);
 }
 
 // Coerce "this" to the ExprType required. Returns a copy of the
@@ -1989,7 +2122,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_longdouble:
     case EV_void:
     case EV_none:
-    case EV_any:
+    case EV_enum:
       return 0;
     case EV_short:
       copy->u.sval = this->pd_ev->u.sval;
@@ -2206,7 +2339,7 @@ AST_Expression::operator== (AST_Expression *vc)
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_longdouble:
     case EV_wstring:
-    case EV_any:
+    case EV_enum:
     case EV_void:
     case EV_none:
       return I_FALSE;
@@ -2293,7 +2426,7 @@ AST_Expression::compare (AST_Expression *vc)
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_longdouble:
     case EV_wstring:
-    case EV_any:
+    case EV_enum:
     case EV_void:
     case EV_none:
       return I_FALSE;
@@ -2372,7 +2505,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
       o << (ev->u.bval == I_TRUE ? "TRUE" : "FALSE");
       break;
     case AST_Expression::EV_string:
-      if (ev->u.strval != NULL)
+      if (ev->u.strval != 0)
         ev->u.strval->dump(o);
     case AST_Expression::EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
@@ -2386,7 +2519,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
       break;
     case AST_Expression::EV_longdouble:
     case AST_Expression::EV_wstring:
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
     case AST_Expression::EV_none:
     case AST_Expression::EV_void:
       break;
@@ -2502,6 +2635,13 @@ int
 AST_Expression::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_expression (this);
+}
+
+void
+AST_Expression::destroy (void)
+{
+//  delete this->pd_ev;
+//  this->pd_ev = 0;
 }
 
 // Data accessors.

@@ -19,17 +19,17 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, post_upcall_ss, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           post_upcall_ss, 
+           "$Id$")
 
 // ************************************************************************
 //  visitor for doing any post-processing after the upcall is made
 // ************************************************************************
 
-be_visitor_args_post_upcall_ss::be_visitor_args_post_upcall_ss (be_visitor_context *ctx)
+be_visitor_args_post_upcall_ss::be_visitor_args_post_upcall_ss (
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -50,10 +50,11 @@ int be_visitor_args_post_upcall_ss::visit_argument (be_argument *node)
 
   // retrieve the type
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_compiled_args_post_upcall::"
+                         "be_visitor_args_post_upcall::"
                          "visit_argument - "
                          "Bad argument type\n"),
                         -1);
@@ -65,7 +66,7 @@ int be_visitor_args_post_upcall_ss::visit_argument (be_argument *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_compiled_args_post_upcall::"
+                         "be_visitor_args_post_upcall::"
                          "visit_argument - "
                          "cannot accept visitor\n"),
                         -1);
@@ -81,8 +82,11 @@ int be_visitor_args_post_upcall_ss::visit_array (be_array *node)
 
   // if the current type is an alias, use that
   be_type *bt = node;
+
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
 
   switch (arg->direction ())
     {
@@ -105,6 +109,7 @@ int be_visitor_args_post_upcall_ss::visit_array (be_array *node)
               << arg->local_name () << be_uidt_nl
               << ");\n" << be_uidt;
         }
+
       break;
     }
   return 0;
@@ -113,14 +118,16 @@ int be_visitor_args_post_upcall_ss::visit_array (be_array *node)
 int be_visitor_args_post_upcall_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_compiled_args_post_upcall::"
+                         "be_visitor_args_post_upcall::"
                          "visit_typedef - "
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }

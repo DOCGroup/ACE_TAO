@@ -22,14 +22,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype_obv_ch, valuetype_obv_ch, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype, 
+           valuetype_obv_ch, 
+           "$Id$")
 
 // ******************************************************
 // Valuetype visitor for client header
@@ -50,7 +45,7 @@ int
 be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 {
   // Only visit non-abstract non-imported valuetype.
-  if (node->is_abstract_valuetype () || node->imported ())
+  if (node->is_abstract () || node->imported ())
     {
       return 0;
     }
@@ -104,14 +99,14 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
+      AST_Interface *inherited = 0;
+
       for (; i < node->n_inherits (); ++i)
         {
-          AST_Interface *inherited =
-            AST_Interface::narrow_from_decl(node->inherits ()[i]);
+          inherited = node->inherits ()[i];
 
-          // we need only concrete valuetypes
-          if (!inherited->is_valuetype ()
-              || inherited->is_abstract ())
+          // We need only concrete valuetypes.
+          if (inherited->is_abstract ())
             {
               continue;
             }
@@ -151,10 +146,18 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
                             -1);
         }
 
+      // If we inherit from both CORBA::ValueBase and CORBA::AbstractBase,
+      // we have to add this to avoid ambiguity.
+      if (node->supports_abstract ())
+        {
+          *os << "virtual void _add_ref (void);" << be_nl;
+          *os << "virtual void _remove_ref (void);";
+        }
+
       // Map fields to private data.
       if (!node->opt_accessor ())
         {
-          *os << be_uidt_nl << "protected:" << be_idt_nl;
+          *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
           *os << "virtual CORBA::Boolean _tao_marshal__"
               <<    node->flat_name () << " (TAO_OutputCDR &);" << be_nl;
           *os << "virtual CORBA::Boolean _tao_unmarshal__"
@@ -164,7 +167,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
               << "CORBA::Boolean "
               << "_tao_unmarshal_state (TAO_InputCDR &);"
               << be_uidt_nl << be_nl;
-          *os << "private:" << be_idt_nl;
+          *os << "private:" << be_idt;
 
           this->gen_pd (node);
         }
@@ -192,31 +195,19 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
   // Only in OBV_ class, if we are not optimizing accessors (and modifiers).
   if (!vt->opt_accessor ())
     {
-      be_visitor_context* ctx = new be_visitor_context (*this->ctx_);
-      ctx->state (TAO_CodeGen::TAO_FIELD_OBV_CH);
-      be_visitor_valuetype_field_ch *visitor =
-        new be_visitor_valuetype_field_ch (ctx);
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_FIELD_OBV_CH);
+      be_visitor_valuetype_field_ch visitor (&ctx);
 
-      if (!visitor)
+      visitor.setenclosings ("virtual ",";");
+
+      if (node->accept (&visitor) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_valuetype_obv_ch::"
-                             "visit_field - bad visitor\n"),
-                            -1);
-        }
-
-      visitor->setenclosings ("virtual ",";");
-
-      if (node->accept (visitor) == -1)
-        {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_obv_ch::"
                             "visit_field - codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   return 0;

@@ -20,23 +20,15 @@
 //
 // ============================================================================
 
-
-#include        "be.h"
-
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, gen_unbounded_obj_sequence_ch, "$Id$")
-
+ACE_RCSID (be_visitor_sequence, 
+           gen_unbounded_obj_sequence_ch, 
+           "$Id$")
 
 int
 be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  // Retrieve the base type since we may need to do some code
-  // generation for the base type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   if (!bt)
     {
@@ -46,8 +38,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  // Generate the class name.
-  be_type  *pt;
+  be_type *pt;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -60,16 +51,17 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       pt = bt;
     }
 
-  const char * class_name = node->instance_name ();
+  // Generate the class name.
+  const char *class_name = node->instance_name ();
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_sequence_base visitor (&ctx);
 
-  // !! Branching in either compile time template instantiation
-  // or manual template instatiation.
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+
   os->gen_ifdef_AHETI();
-
   os->gen_ifdef_macro (class_name);
 
   *os << "class TAO_EXPORT_MACRO " << class_name << be_idt_nl
@@ -89,7 +81,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       << "CORBA::ULong maximum," << be_nl
       << "CORBA::ULong length," << be_nl;
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os <<"* *value," << be_nl
       << "CORBA::Boolean release = 0" << be_uidt_nl
@@ -111,34 +103,30 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   // Accessors
   *os << "// = Accessors." << be_nl;
 
+  AST_Decl::NodeType nt = pt->node_type ();
+
   // operator[]
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
+
   int is_pseudo_object =
-    pt->node_type () == AST_Decl::NT_pre_defined
-    && prim && prim->pt () == AST_PredefinedType::PT_pseudo
-    && ACE_OS::strcmp (prim->local_name ()->get_string (),
-                       "Object") != 0;
-  int is_valuetype = 0;
+    nt == AST_Decl::NT_pre_defined
+    && prim 
+    && prim->pt () == AST_PredefinedType::PT_object;
 
   if (is_pseudo_object)
     {
       *os << "TAO_Pseudo_Object_Manager<";
     }
+  else if (nt == AST_Decl::NT_valuetype)
+    {
+      *os << "TAO_Valuetype_Manager<";
+    }
+  else if (node->base_type ()->is_abstract ())
+    { 
+      *os << "TAO_Abstract_Manager<";
+    }
   else
     {
-      be_interface *bf = be_interface::narrow_from_decl (pt);
-      if (bf != 0)
-        is_valuetype = bf->is_valuetype ();
-      else
-        {
-          be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
-          if (bff != 0)
-            is_valuetype = bff->is_valuetype ();
-        }
-
-      if (is_valuetype)
-        *os << "TAO_Valuetype_Manager<";
-      else
       *os << "TAO_Object_Manager<";
     }
 
@@ -152,14 +140,14 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   // allocbuf
   *os << "static ";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << " **allocbuf (CORBA::ULong nelems);" << be_nl;
 
   // freebuf
   *os << "static void freebuf (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << " **buffer);" << be_nl << be_nl;
 
@@ -173,14 +161,14 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
 
   // get_buffer
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "* *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
   *os << "const ";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "* *get_buffer (void) const;" << be_nl;
 
@@ -188,27 +176,27 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << "virtual void _shrink_buffer (" << be_idt << be_idt_nl
       << "CORBA::ULong nl," << be_nl
       << "CORBA::ULong ol" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");";
 
-  if (! (is_pseudo_object || is_valuetype))
+  if (! (is_pseudo_object || nt == AST_Decl::NT_valuetype))
     {
       // Pseudo objects do not require these methods.
-      *os << "virtual void _downcast (" << be_idt << be_idt_nl
-                << "void* target," << be_nl
-                << "CORBA_Object *src" << be_nl
-                << "ACE_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
-                << ");" << be_uidt_nl;
+      *os << be_uidt_nl << be_nl
+          << "virtual void _downcast (" << be_idt << be_idt_nl
+          << "void* target," << be_nl
+          << "CORBA_Object *src" << be_nl
+          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
+          << ");" << be_uidt_nl;
 
       *os << "virtual CORBA_Object* _upcast (void *src) const;";
     }
 
-  *os << be_uidt_nl << "};" << be_nl;
+  *os << be_uidt << be_uidt_nl << "};" << be_nl;
 
   os->gen_endif (); // endif macro
 
   // generate #endif for AHETI
   os->gen_endif_AHETI();
 
-  delete visitor;
   return 0;
 }

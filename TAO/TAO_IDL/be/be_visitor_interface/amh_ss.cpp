@@ -10,14 +10,13 @@
 */
 //=============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+ACE_RCSID (be_visitor_interface, 
+           amh_ss, 
+           "$Id$")
 
-#include "be_visitor_interface.h"
-#include "be_visitor_operation.h"
-
-be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (be_visitor_context *ctx)
+be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface_ss (ctx)
 {
 }
@@ -45,7 +44,9 @@ be_visitor_amh_interface_ss::visit_interface (be_interface *node)
 {
   // Do not generate AMH classes for any sort of implied IDL.
   if (node->original_interface () != 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return be_visitor_interface_ss::visit_interface (node);
 }

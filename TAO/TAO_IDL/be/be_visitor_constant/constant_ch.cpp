@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_constant.h"
-
-ACE_RCSID(be_visitor_constant, constant_ch, "$Id$")
+ACE_RCSID (be_visitor_constant, 
+           constant_ch, 
+           "$Id$")
 
 
 // ********************************************************************
@@ -45,18 +41,42 @@ be_visitor_constant_ch::~be_visitor_constant_ch (void)
 int
 be_visitor_constant_ch::visit_constant (be_constant *node)
 {
+  if (node->cli_hdr_gen () || node->imported ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!node->cli_hdr_gen () && !node->imported ())
-    {
-      // If we are defined in the outermost scope, then the value is assigned
-      // to us here itself, else it will be in the *.cpp file.
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-      // Is our enclosing scope a module? We need this check because for
-      // platforms that support namespaces, the typecode must be declared
-      // extern.
-      if (node->is_nested () &&
-          (node->defined_in ()->scope_node_type () == AST_Decl::NT_module))
+  // If we are defined in the outermost scope, then the value is assigned
+  // to us here itself, else it will be in the *.cpp file.
+
+  if (be_global->gen_inline_constants ())
+    {
+      if (node->et () == AST_Expression::EV_enum)
+        {
+          *os << node->enum_full_name ();
+        }
+      else
+        {
+          *os << node->exprtype_to_string ();
+        }
+
+      *os << " const "
+          << node->local_name () << " = "
+          << node->constant_value ();
+    }
+  // Is our enclosing scope a module? We need this check because for
+  // platforms that support namespaces, the constant must be declared
+  // extern.
+  else 
+    {
+      AST_Decl::NodeType nt = node->defined_in ()->scope_node_type ();
+
+      if (node->is_nested () && nt == AST_Decl::NT_module)
         {
           *os << "TAO_NAMESPACE_STORAGE_CLASS ";
         }
@@ -65,20 +85,29 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
           *os << "static ";
         }
 
-      *os << "const " << node->exprtype_to_string ()
-          << " " << node->local_name ();
+      *os << "const ";
+
+      if (node->et () == AST_Expression::EV_enum)
+        {
+          *os << node->enum_full_name ();
+        }
+      else
+        {
+          *os << node->exprtype_to_string ();
+        }
+
+      *os << " " << node->local_name ();
 
       if (!node->is_nested ())
         {
-          // We were defined at the outermost scope. So we put the value in the
-          // header itself.
+          // We were defined at the outermost scope. So we put the value
+          // in the header itself.
           *os << " = " << node->constant_value ();
         }
-
-      *os << ";" << be_nl << be_nl;
-
-      node->cli_hdr_gen (I_TRUE);
     }
 
+  *os << ";" << be_nl << be_nl;
+
+  node->cli_hdr_gen (I_TRUE);
   return 0;
 }

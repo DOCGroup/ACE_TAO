@@ -68,12 +68,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_Structure is a subclass of AST_ConcreteType and of UTL_Scope (the
 // structure's fields are managed in a scope).
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_union.h"
+#include "ast_field.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_indenter.h"
 
-ACE_RCSID(ast, ast_structure, "$Id$")
+ACE_RCSID (ast, 
+           ast_structure, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Structure::AST_Structure (void)
   : member_count_ (-1),
     local_struct_ (-1)
@@ -264,6 +270,16 @@ AST_Structure::fe_add_field (AST_Field *t)
   this->add_to_referenced (t,
                            I_FALSE,
                            t->local_name ());
+
+  AST_Type *ft = t->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               I_FALSE,
+                               mru->first_component ());
+    }
 
   this->fields_.enqueue_tail (t);
 
@@ -486,10 +502,6 @@ AST_Structure::dump (ACE_OSTREAM_TYPE &o)
     {
       o << "(local) ";
     }
-  else
-    {
-      o << "(abstract) ";
-    }
 
   o << "struct ";
   AST_Decl::dump (o);
@@ -497,6 +509,43 @@ AST_Structure::dump (ACE_OSTREAM_TYPE &o)
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
   o << "}";
+}
+
+// Compute the size type of the node in question.
+int
+AST_Structure::compute_size_type (void)
+{
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      // Get the next AST decl node.
+      AST_Decl *d = si.item ();
+
+      if (d->node_type () == AST_Decl::NT_enum_val)
+        {
+          continue;
+        }
+
+      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Type *t = f->field_type ();
+
+      if (t != 0)
+        {
+          this->size_type (t->size_type ());
+
+          // While we're iterating, we might as well do this one too.
+          this->has_constructor (t->has_constructor ());
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING (%N:%l) be_structure::compute_size_type - "
+                      "narrow_from_decl returned 0\n"));
+        }
+    }
+
+  return 0;
 }
 
 int

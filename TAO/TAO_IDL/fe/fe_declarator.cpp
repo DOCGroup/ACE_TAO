@@ -64,48 +64,47 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"fe_private.h"
+#include "fe_declarator.h"
+#include "ast_array.h"
+#include "ast_type.h"
+#include "utl_err.h"
+#include "global_extern.h"
+#include "ace/config-all.h"
 
-ACE_RCSID(fe, fe_declarator, "$Id$")
-
-// Constructor(s) and destructor
+ACE_RCSID (fe, 
+           fe_declarator, 
+           "$Id$")
 
 FE_Declarator::FE_Declarator (UTL_ScopedName *n,
                               DeclaratorType dt,
 			                        AST_Decl *cp)
  : pd_complex_part (cp),
-	 pd_name (n),
 	 pd_decl_type (dt)
 {
+  this->pd_name = n;
 }
-
-// Public operations.
 
 // Compose the type of the complex declarator (if any) with the base
 // type supplied in ct.
 AST_Type *
 FE_Declarator::compose (AST_Decl *d)
 {
+  AST_Decl::NodeType nt = d->node_type ();
+
+  if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_ADD,
+                                  d);
+
+      return 0;
+    }
+
   AST_Array	*arr = 0;
   AST_Type *ct = 0;
 
   ct = AST_Type::narrow_from_decl (d);
 
-  if (ct == 0)
-    {
-      idl_global->err ()->not_a_type (d);
-      return 0;
-    }
-
-  if (ct->node_type () == AST_Decl::NT_except)
-    {
-      idl_global->err ()->not_a_type (d);
-      return 0;
-    }
-
-  // All uses of forward declared interfaces, structs and unions must
+  // All uses of forward declared interfaces must
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
     {
@@ -135,6 +134,14 @@ FE_Declarator::compose (AST_Decl *d)
 
   // We shouldn't get here.
   return 0;
+}
+
+void
+FE_Declarator::destroy (void)
+{
+  this->pd_name->destroy ();
+  delete this->pd_name;
+  this->pd_name = 0;
 }
 
 // Data accessors.

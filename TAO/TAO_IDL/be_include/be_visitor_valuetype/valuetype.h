@@ -66,17 +66,20 @@ public:
   virtual int visit_enum (be_enum *node);
   // visit an enum
 
-  virtual int visit_operation (be_operation *node);
-  // visit operation
-
   virtual int visit_exception (be_exception *node);
   // visit exception (not used)
 
   virtual int visit_structure (be_structure *node);
   // visit a structure
 
+  virtual int visit_structure_fwd (be_structure_fwd *node);
+  // visit a forward declared structure
+
   virtual int visit_union (be_union *node);
   // visit a union
+
+  virtual int visit_union_fwd (be_union_fwd *node);
+  // visit a forward declared union
 
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef node

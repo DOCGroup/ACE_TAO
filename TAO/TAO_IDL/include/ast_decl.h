@@ -74,20 +74,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // records the type of the node. This may be useful for BEs to be able
 // to distinguish the real type of a node given only a superclass.
 
-/*
-** DEPENDENCIES: utl_scope.hh, utl_scoped_name.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
-
-#include "idl_fwd.h"
-#include "idl_narrow.h"
-#include "idl_bool.h"
 #include "utl_scoped_name.h"
-#include "utl_string.h"
+#include "idl_narrow.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
+
+class UTL_Scope;
+class UTL_String;
+class ast_visitor;
 
 // This class is needed (only for g++) to get around a bug in g++ which
 // causes virtual operations to not be looked up correctly if an operation
@@ -125,14 +120,18 @@ public:
       , NT_root                     // Denotes the root of AST
       , NT_interface                // Denotes an interface
       , NT_interface_fwd            // Fwd declared interface
+      , NT_valuetype                // Denotes a valuetype
+      , NT_valuetype_fwd            // Fwd declared valuetype
       , NT_const                    // Denotes a constant
       , NT_except                   // Denotes an exception
       , NT_attr                     // Denotes an attribute
       , NT_op                       // Denotes an operation
       , NT_argument                 // Denotes an op. argument
       , NT_union                    // Denotes a union
+      , NT_union_fwd                // Fwd declared union
       , NT_union_branch             // Denotes a union branch
       , NT_struct                   // Denotes a structure
+      , NT_struct_fwd               // Fwd declared struct
       , NT_field                    // Denotes a field in structure
       , NT_enum                     // Denotes an enumeration
       , NT_enum_val                 // Denotes an enum. value
@@ -146,6 +145,11 @@ public:
                                     // dependent on the programming
                                     // language
       , NT_factory                  // Denotes a OBV factory construct
+      , NT_component                // Denotes a CORBA component
+      , NT_component_fwd            // Denotes a forward declared component
+      , NT_home                     // Denotes a CORBA component home
+      , NT_finder                   // Denotes a home finder
+      , NT_eventtype                // Denotes a CCM event source or sink
   };
 
   // Operations.
@@ -193,6 +197,7 @@ public:
   void set_name (UTL_ScopedName *n);
 
   Identifier *local_name (void);
+  void local_name (Identifier *id);
 
   Identifier *compute_local_name (const char *prefix,
                                   const char *sufix);
@@ -200,6 +205,9 @@ public:
 
   virtual const char *full_name (void);
   // Return the stringified full name.
+
+  const char *flat_name (void);
+  // Return the flattened full scoped name.
 
   const char *repoID (void);
   void repoID (char *value);
@@ -211,10 +219,20 @@ public:
 
   const char *version (void);
   void version (char *value);
-  // Accessors for the version member.
+  // Accessors for the version_ member.
 
   idl_bool anonymous (void) const;
-  // Are we an anonymous (no repo ID) type?
+  // Accessors for the anonymous_ member.
+
+  idl_bool typeid_set (void) const;
+  void typeid_set (idl_bool val);
+  // Accessors for the typeid_set_ member.
+
+  void set_id_with_typeid (char *value);
+  // Called by a 'typeId' declaration.
+
+  void set_prefix_with_typeprefix (char *value);
+  // Called by a 'type_prefix' declaration.
 
   // If there is _cxx_ in the beginning, we will remove that and keep
   // a copy of the original name. TAO IDL's front end adds _cxx_
@@ -254,6 +272,12 @@ public:
   // Return TRUE if "this" is a child of "s".
   idl_bool is_child (AST_Decl *s);
 
+  idl_bool is_nested (void);
+  // Determines if we are inside of a nested scope or not.
+
+  UTL_ScopedName *last_referenced_as (void) const;
+  void last_referenced_as (UTL_ScopedName *n);
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor.
@@ -266,6 +290,9 @@ protected:
 
   void compute_full_name (void);
   // Computes the stringified scoped name.
+
+  void compute_flat_name (void);
+  // Compute the flattened fully scoped name.
 
 private:
   // Data
@@ -289,7 +316,6 @@ private:
   // What file defined in.
 
   UTL_ScopedName *pd_name;
-  // As given.
 
   Identifier *pd_local_name;
   // Name in scope.
@@ -312,10 +338,22 @@ private:
   idl_bool anonymous_;
   // Are we an anonymous (no repo ID) type?
 
-  // Operations
+  idl_bool typeid_set_;
+  // Has our repo id been set by a typeId declaration?
 
-  // Compute the full name of an AST node.
+  char *flat_name_;
+  // Flattened fully scoped name.
+
+  UTL_ScopedName *last_referenced_as_;
+  // Temporary holder of the most recent way we were reference.
+  // The top level component of this is added to pd_name_referenced.
+
+private:
   void compute_full_name (UTL_ScopedName *n);
+  // Compute the full name of an AST node.
+
+  void set_prefix_with_typeprefix_r (char *value);
+  // Non-top-level version of set_prefix_with_typeprefix.
 };
 
 #endif           // _AST_DECL_AST_DECL_HH
