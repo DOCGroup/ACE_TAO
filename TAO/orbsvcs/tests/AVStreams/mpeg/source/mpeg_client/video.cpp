@@ -606,7 +606,7 @@ VidStream * NewVidStream(void)
   
   /* Allocate memory for new structure. */
 
-  new_stream = (VidStream *) malloc(sizeof(VidStream));
+  new_stream = (VidStream *) ACE_OS::malloc(sizeof(VidStream));
 
   /* Initialize pointers to extension and user data. */
 
@@ -687,31 +687,31 @@ DestroyVidStream(VidStream *astream)
   int i;
 
   if (astream->ext_data != NULL)
-    free(astream->ext_data);
+    ACE_OS::free (astream->ext_data);
 
   if (astream->user_data != NULL)
-    free(astream->user_data);
+    ACE_OS::free (astream->user_data);
 
   if (astream->group.ext_data != NULL)
-    free(astream->group.ext_data);
+    ACE_OS::free (astream->group.ext_data);
 
   if (astream->group.user_data != NULL)
-    free(astream->group.user_data);
+    ACE_OS::free (astream->group.user_data);
 
   if (astream->picture.extra_info != NULL)
-    free(astream->picture.extra_info);
+    ACE_OS::free (astream->picture.extra_info);
 
   if (astream->picture.ext_data != NULL)
-    free(astream->picture.ext_data);
+    ACE_OS::free (astream->picture.ext_data);
 
   if (astream->picture.user_data != NULL)
-    free(astream->picture.user_data);
+    ACE_OS::free (astream->picture.user_data);
 
   if (astream->slice.extra_info != NULL)
-    free(astream->slice.extra_info);
+    ACE_OS::free (astream->slice.extra_info);
 
   if (astream->buf_start != NULL)
-    free(astream->buf_start);
+    ACE_OS::free (astream->buf_start);
 
   for (i = 0; i < RING_BUF_SIZE; i++) {
     if (astream->ring[i] != NULL) {
@@ -720,7 +720,7 @@ DestroyVidStream(VidStream *astream)
     }
   }
 
-  free((char *) astream);
+  ACE_OS::free ((char *) astream);
 }
 
 
@@ -751,10 +751,10 @@ NewPictImage(unsigned int width, unsigned int height)
 
   /* Allocate memory space for new structure. */
 
-  new_pi = (PictImage *) malloc(sizeof(PictImage));
-  new_pi->luminance = (unsigned char *) malloc(width * height);
-  new_pi->Cr = (unsigned char *) malloc(width * height / 4);
-  new_pi->Cb = (unsigned char *) malloc(width * height / 4);
+  new_pi = (PictImage *) ACE_OS::malloc(sizeof(PictImage));
+  new_pi->luminance = (unsigned char *) ACE_OS::malloc(width * height);
+  new_pi->Cr = (unsigned char *) ACE_OS::malloc(width * height / 4);
+  new_pi->Cb = (unsigned char *) ACE_OS::malloc(width * height / 4);
   
   /* Reset locked flag. */
 
@@ -786,15 +786,15 @@ void
 DestroyPictImage(PictImage *apictimage)
 {
   if (apictimage->luminance != NULL) {
-    free(apictimage->luminance);
+    ACE_OS::free (apictimage->luminance);
   }
   if (apictimage->Cr != NULL) {
-    free(apictimage->Cr);
+    ACE_OS::free (apictimage->Cr);
   }
   if (apictimage->Cb != NULL) {
-    free(apictimage->Cb);
+    ACE_OS::free (apictimage->Cb);
   }
-  free(apictimage);
+  ACE_OS::free (apictimage);
 }
 
 
@@ -832,8 +832,8 @@ int mpegVidRsrc(char *packet)
   i = 0;
   while (curVidStream->ring[i]->locked != 0)
   if (++i >= RING_BUF_SIZE) {
-    perror("VD fatal error. Ring buffer full.");
-    exit(1);
+   ACE_OS::perror ("VD fatal error. Ring buffer full.");
+    ACE_OS::exit (1);
   }
   curVidStream->current = curVidStream->ring[i];
   curVidStream->current->sh = p->sh;
@@ -863,7 +863,7 @@ int mpegVidRsrc(char *packet)
     if (data != SEQ_START_CODE) {
       fprintf(stderr, "VD error: This is not first packet of the an MPEG stream, data %u.", data);
       DestroyVidStream(curVidStream);
-      exit(1);
+      ACE_OS::exit (1);
     }
   }
   /* Get next 32 bits (size of start codes). */
@@ -1040,7 +1040,7 @@ ParseSeqHead(VidStream *vid_stream)
   /* If dither type is MBORDERED allocate ditherFlags. */
 
   if (ditherType == MBORDERED_DITHER) {
-    ditherFlags = (char *) malloc(vid_stream->mb_width*vid_stream->mb_height);
+    ditherFlags = (char *) ACE_OS::malloc(vid_stream->mb_width*vid_stream->mb_height);
   }
 
   /* Initialize lmaxx, lmaxy, cmaxx, cmaxy. */
@@ -1120,7 +1120,7 @@ ParseSeqHead(VidStream *vid_stream)
   if (next_bits(32, EXT_START_CODE)) {
     flush_bits32;
     if (vid_stream->ext_data != NULL) {
-      free(vid_stream->ext_data);
+      ACE_OS::free (vid_stream->ext_data);
       vid_stream->ext_data = NULL;
     }
     vid_stream->ext_data = get_ext_data();
@@ -1130,7 +1130,7 @@ ParseSeqHead(VidStream *vid_stream)
   if (next_bits(32, USER_START_CODE)) {
     flush_bits32;
     if (vid_stream->user_data != NULL) {
-      free(vid_stream->user_data);
+      ACE_OS::free (vid_stream->user_data);
       vid_stream->user_data = NULL;
     }
     vid_stream->user_data = get_ext_data();
@@ -1230,7 +1230,7 @@ ParseGOP(VidStream *vid_stream)
   if (next_bits(32, EXT_START_CODE)) {
     flush_bits32;
     if (vid_stream->group.ext_data != NULL) {
-      free(vid_stream->group.ext_data);
+      ACE_OS::free (vid_stream->group.ext_data);
       vid_stream->group.ext_data = NULL;
     }
     vid_stream->group.ext_data = get_ext_data();
@@ -1240,7 +1240,7 @@ ParseGOP(VidStream *vid_stream)
   if (next_bits(32, USER_START_CODE)) {
     flush_bits32;
     if (vid_stream->group.user_data != NULL) {
-      free(vid_stream->group.user_data);
+      ACE_OS::free (vid_stream->group.user_data);
       vid_stream->group.user_data = NULL;
     }
     vid_stream->group.user_data = get_ext_data();
@@ -1341,7 +1341,7 @@ ParsePicture(VidStream *vid_stream,TimeStamp time_stamp)
   /* Get extra bit picture info. */
 
   if (vid_stream->picture.extra_info != NULL) {
-    free(vid_stream->picture.extra_info);
+    ACE_OS::free (vid_stream->picture.extra_info);
     vid_stream->picture.extra_info = NULL;
   }
   vid_stream->picture.extra_info = get_extra_bit_info();
@@ -1355,7 +1355,7 @@ ParsePicture(VidStream *vid_stream,TimeStamp time_stamp)
     flush_bits32;
 
     if (vid_stream->picture.ext_data != NULL) {
-      free(vid_stream->picture.ext_data);
+      ACE_OS::free (vid_stream->picture.ext_data);
       vid_stream->picture.ext_data = NULL;
     }
     vid_stream->picture.ext_data = get_ext_data();
@@ -1366,7 +1366,7 @@ ParsePicture(VidStream *vid_stream,TimeStamp time_stamp)
     flush_bits32;
 
     if (vid_stream->picture.user_data != NULL) {
-      free(vid_stream->picture.user_data);
+      ACE_OS::free (vid_stream->picture.user_data);
       vid_stream->picture.user_data = NULL;
     }
     vid_stream->picture.user_data = get_ext_data();
@@ -1417,7 +1417,7 @@ ParseSlice(VidStream *vid_stream)
   /* Parse off extra bit slice info. */
 
   if (vid_stream->slice.extra_info != NULL) {
-    free(vid_stream->slice.extra_info);
+    ACE_OS::free (vid_stream->slice.extra_info);
     vid_stream->slice.extra_info = NULL;
   }
   vid_stream->slice.extra_info = get_extra_bit_info();
@@ -3398,7 +3398,7 @@ ProcessSkippedBFrameMBlocks(VidStream *vid_stream)
       
       for (rr = 0; rr < 16; rr++) {
 	
-	/* memcpy(dest, forw_lum+(rr<<4), 16);  */
+	/* ACE_OS::memcpy (dest, forw_lum+(rr<<4), 16);  */
 	dest[0] = src[0];
 	dest[1] = src[1];
 	dest[2] = src[2];
@@ -3414,7 +3414,7 @@ ProcessSkippedBFrameMBlocks(VidStream *vid_stream)
       
       for (rr = 0; rr < 8; rr++) {
 	/*
-	 * memcpy(dest, forw_cr+(rr<<3), 8); memcpy(dest1, forw_cb+(rr<<3),
+	 * ACE_OS::memcpy (dest, forw_cr+(rr<<3), 8); ACE_OS::memcpy (dest1, forw_cb+(rr<<3),
 	 * 8);
 	 */
 	
@@ -3454,7 +3454,7 @@ ProcessSkippedBFrameMBlocks(VidStream *vid_stream)
       
       for (rr = 0; rr < 8; rr++) {
 	/*
-	 * memcpy(dest, back_cr+(rr<<3), 8); memcpy(dest1, back_cb+(rr<<3),
+	 * ACE_OS::memcpy (dest, back_cr+(rr<<3), 8); ACE_OS::memcpy (dest1, back_cb+(rr<<3),
 	 * 8);
 	 */
 	

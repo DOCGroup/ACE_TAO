@@ -260,7 +260,7 @@ MakeWindow(void)
   else if (shmemFlag)
   {
     fprintf(stderr, "VP unexpected: display is NULL.\n");
-    exit(1);
+    ACE_OS::exit (1);
   }
   if(shmemFlag)
     CompletionType = /*XShmGetEventBase(display) +*/ ShmCompletion;
@@ -562,7 +562,7 @@ static void ClearWindow(void)
     size = win_width * win_height * 4;
   else
     size = win_width * win_height;
-  data = (char *)malloc(size);
+  data = (char *)ACE_OS::malloc(size);
   if (data != NULL) {
     memset(data, 0, size);
     ximage->data = data;
@@ -570,7 +570,7 @@ static void ClearWindow(void)
 	      ximage->width, ximage->height);
     XFlush(display);
     ximage->data = NULL;
-    free(data);
+    ACE_OS::free (data);
   }
 }
 
@@ -713,8 +713,8 @@ shmemerror:
     }
     if (ximage == NULL)
     {
-      perror("VP error: fails to XCreateImage ximage");
-      exit(1);
+     ACE_OS::perror ("VP error: fails to XCreateImage ximage");
+      ACE_OS::exit (1);
     }
   }
 #ifdef SH_MEM
@@ -884,17 +884,17 @@ static void DisplayInitialization(void)
 void VPinitWindow(Widget shell, Window monitorWindow, int cmdSock)
 {
   cmdSocket = cmdSock;
-  lum_values = (int *) malloc(LUM_RANGE*sizeof(int));
-  cr_values = (int *) malloc(CR_RANGE*sizeof(int));
-  cb_values = (int *) malloc(CB_RANGE*sizeof(int));
+  lum_values = (int *) ACE_OS::malloc(LUM_RANGE*sizeof(int));
+  cr_values = (int *) ACE_OS::malloc(CR_RANGE*sizeof(int));
+  cb_values = (int *) ACE_OS::malloc(CB_RANGE*sizeof(int));
 
   DisplayInitialization();
-  memcpy(shared->pixel, pixel, 256);
+  ACE_OS::memcpy (shared->pixel, pixel, 256);
   shared->pixelValid = 1;
   
-  free(lum_values);
-  free(cr_values);
-  free(cb_values);
+  ACE_OS::free (lum_values);
+  ACE_OS::free (cr_values);
+  ACE_OS::free (cb_values);
 #ifdef SH_MEM
   if (shmemFlag && display != NULL)
   {

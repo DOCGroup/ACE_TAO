@@ -73,7 +73,7 @@ InitHybridErrorDither()
 
 
   for (i=0; i<DITH_SIZE; i++) {
-    lmark = l_darrays[i] = (unsigned char *) malloc(256);
+    lmark = l_darrays[i] = (unsigned char *) ACE_OS::malloc(256);
 
     for (j=0; j<lum_values[0]; j++) {
       *lmark++ = 0;
@@ -248,8 +248,8 @@ HybridErrorDitherImage (unsigned char *lum, unsigned char *cr,
   /* If first time called, allocate error arrays. */
 
   if (first) {
-    cr_row_errs = (int *) malloc((w+5)*sizeof(int));
-    cb_row_errs = (int *) malloc((w+5)*sizeof(int));
+    cr_row_errs = (int *) ACE_OS::malloc((w+5)*sizeof(int));
+    cb_row_errs = (int *) ACE_OS::malloc((w+5)*sizeof(int));
     first = 0;
   }
 

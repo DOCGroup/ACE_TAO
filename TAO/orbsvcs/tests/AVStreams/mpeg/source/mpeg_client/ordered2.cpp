@@ -67,16 +67,16 @@ InitOrdered2Dither()
   int i, j, pos;
   int err_range, threshval;
 
-  pos_2_cb = (unsigned char ****) malloc (DITH_SIZE*sizeof(unsigned char ***));
-  cb_2_cr = (unsigned char ***) malloc(CB_RANGE*sizeof(unsigned char **));
-  cr_2_l = (unsigned char **) malloc(CR_RANGE*sizeof(unsigned char *));
+  pos_2_cb = (unsigned char ****) ACE_OS::malloc (DITH_SIZE*sizeof(unsigned char ***));
+  cb_2_cr = (unsigned char ***) ACE_OS::malloc(CB_RANGE*sizeof(unsigned char **));
+  cr_2_l = (unsigned char **) ACE_OS::malloc(CR_RANGE*sizeof(unsigned char *));
 
   for (pos=0; pos<DITH_SIZE; pos++) {
     
-    pos_2_cb[pos] = (unsigned char ***) malloc(256*(sizeof(unsigned char **)));
+    pos_2_cb[pos] = (unsigned char ***) ACE_OS::malloc(256*(sizeof(unsigned char **)));
 
     for (j=0; j<CB_RANGE; j++) {
-      cb_2_cr[j] = (unsigned char **) malloc(256*(sizeof(unsigned char *)));
+      cb_2_cr[j] = (unsigned char **) ACE_OS::malloc(256*(sizeof(unsigned char *)));
     }
 
     for (cb_val=0; cb_val<cb_values[0]; cb_val++) {
@@ -100,7 +100,7 @@ InitOrdered2Dither()
     for (cb_rval=0; cb_rval<CB_RANGE; cb_rval++) {
       
       for (j=0; j<CR_RANGE; j++) {
-	cr_2_l[j] = (unsigned char *) malloc(256*(sizeof(unsigned char)));
+	cr_2_l[j] = (unsigned char *) ACE_OS::malloc(256*(sizeof(unsigned char)));
       }
 
       for (cr_val=0; cr_val < cr_values[0]; cr_val++) {
