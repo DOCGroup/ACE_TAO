@@ -24,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+#include "ace/OS.h"
 #include <string.h>
 #include "sendpt.h"
 
@@ -60,22 +61,22 @@ void ComputeSendPattern(char * pat, char * buf, int len, int f)
       else  /* B frame */
         bs ++;
     }
-    f = len - f;	/* number of frames to drop */
+    f = len - f;        /* number of frames to drop */
     if (f < bs)  /* drops only B frames */
     {
       double scale = (double)bs / (double)f;
       int ptr = 0, ptr1 = 0;
       for (i = 0; i < len; i ++)
       {
-	if (pat[i] == 'B')
-	{
-	  if ( ptr == (int) ((double)ptr1 * scale + 0.5))
-	  {
-	    buf[i] = 0;
-	    ptr1 ++;
-	  }
-	  ptr ++;
-	}
+        if (pat[i] == 'B')
+        {
+          if ( ptr == (int) ((double)ptr1 * scale + 0.5))
+          {
+            buf[i] = 0;
+            ptr1 ++;
+          }
+          ptr ++;
+        }
       }
       goto endOfCompute;
     }
@@ -93,21 +94,21 @@ void ComputeSendPattern(char * pat, char * buf, int len, int f)
       int ptr = len - 1;
       for (i = 0; i < is; i ++)
       {
-	int j;
-	for (j = 0; j < (f - bs) / is; j ++)
-	{
-	  while (pat[ptr] != 'P') ptr --;
-	  buf[ptr] = 0;
-	  ptr --;
-	}
-	while (pat[ptr] != 'I') ptr --;
+        int j;
+        for (j = 0; j < (f - bs) / is; j ++)
+        {
+          while (pat[ptr] != 'P') ptr --;
+          buf[ptr] = 0;
+          ptr --;
+        }
+        while (pat[ptr] != 'I') ptr --;
       }
       ptr = len - 1;
       for (i = 0; i < (f - bs) % is; i ++)
       {
-	while (pat[ptr] != 'P' || buf[ptr] == 0) ptr --;
-	buf[ptr] = 0;
-	while (pat[ptr] != 'I') ptr --;
+        while (pat[ptr] != 'P' || buf[ptr] == 0) ptr --;
+        buf[ptr] = 0;
+        while (pat[ptr] != 'I') ptr --;
       }
       goto endOfCompute;
     }
@@ -123,15 +124,15 @@ void ComputeSendPattern(char * pat, char * buf, int len, int f)
       int ptr = 0, ptr1 = 0;
       for (i = 0; i < len; i ++)
       {
-	if (pat[i] == 'I')
-	{
-	  if ( ptr == (int) ((double)ptr1 * scale + 0.5))
-	  {
-	    buf[i] = 0;
-	    ptr1 ++;
-	  }
-	  ptr ++;
-	}
+        if (pat[i] == 'I')
+        {
+          if ( ptr == (int) ((double)ptr1 * scale + 0.5))
+          {
+            buf[i] = 0;
+            ptr1 ++;
+          }
+          ptr ++;
+        }
       }
       goto endOfCompute;
     }

@@ -24,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+#include "ace/OS.h"
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -77,8 +78,8 @@ long get_usec(void)
 {
   struct timeval tp;
   struct timezone tzp;
-  int err;
-  if (err=gettimeofday(&tp, &tzp))
+  int err =  gettimeofday(&tp, &tzp);
+  if (err)
   {
     return 0;
   }
@@ -94,8 +95,8 @@ long get_msec(void)
 {
   struct timeval tp;
   struct timezone tzp;
-  int err;
-  if (err=gettimeofday(&tp, &tzp))
+  int err=gettimeofday(&tp, &tzp);
+  if (err)
   {
     return 0;
   }
@@ -109,8 +110,8 @@ long get_sec(void)
 {
   struct timeval tp;
   struct timezone tzp;
-  int err;
-  if (err=gettimeofday(&tp, &tzp))
+  int err=gettimeofday(&tp, &tzp);
+if (err)
   {
     return 0;
   }
@@ -239,7 +240,7 @@ void enter_cs(int semaphore_id)
   {
     if (errno == EINTR)
       continue;
-    fprintf(stderr, "semop(enter_cs) error: pid=%d",ACE_OS::getpid ());
+    fprintf(stderr, "semop(enter_cs) error: pid=%ld",ACE_OS::getpid ());
    ACE_OS::perror ("");
     ACE_OS::exit (1);
   }
@@ -255,7 +256,7 @@ void leave_cs(int semaphore_id)
   {
     if (errno == EINTR)
       continue;
-    fprintf(stderr, "semop(leave_cs) error, pid=%d",ACE_OS::getpid ());
+    fprintf(stderr, "semop(leave_cs) error, pid=%ld",ACE_OS::getpid ());
    ACE_OS::perror ("");
     ACE_OS::exit (1);
   }
@@ -263,7 +264,6 @@ void leave_cs(int semaphore_id)
 
 int creat_semaphore(void)
 {
-  int i;
   int sem_val;
   int semaphore_id;
   if (semId == -1) {
@@ -277,8 +277,8 @@ int creat_semaphore(void)
   }
   else if (masterPid !=ACE_OS::getpid ()) {
     fprintf(stderr, "Error: this creat_semaphore() assumes semaphores are allocated\n");
-    fprintf(stderr, "  only in single process %d, while current pid=%d\n",
-	    masterPid,ACE_OS::getpid ());
+    fprintf(stderr, "  only in single process %d, while current pid=%ld\n",
+            masterPid,ACE_OS::getpid ());
     ACE_OS::exit (1);
   }
   semaphore_id = nextSem ++;
@@ -298,19 +298,19 @@ int creat_semaphore(void)
 void delete_semaphore()
 {
   if (masterPid ==ACE_OS::getpid () && semId >= 0) {
-	sem_union.val = 0;
+        sem_union.val = 0;
     ACE_OS::semctl (semId, 0, IPC_RMID, sem_union);
   } else {
     if (masterPid !=ACE_OS::getpid ())
-    fprintf(stderr, "Pid %d not supposed to remove semId created by pid %d\n",
-	   ACE_OS::getpid (), masterPid);
+    fprintf(stderr, "pid %ld not supposed to remove semId created by pid %d\n",
+           ACE_OS::getpid (), masterPid);
     else
     fprintf(stderr, "The semaphore has been deleted.\n");
   }
   return;
 }
 
-void remove_semaphore(int sid)
+void remove_semaphore(int /* sid */)
 {
   return;
   //  ACE_OS::semctl (semId, semaphore_id, IPC_RMID, 0);
@@ -318,16 +318,16 @@ void remove_semaphore(int sid)
 
 void remove_all_semaphores (void)
 {
-	sem_union.val = 0;
+        sem_union.val = 0;
   ACE_OS::semctl (semId,0, IPC_RMID, sem_union);
   return;
 }
 
 int get_semval(int sid)
 {
-  int val, val1 = 0;
+  int val;
   errno = 0;
-	sem_union.val = 0;
+        sem_union.val = 0;
   val = ACE_OS::semctl (semId, sid, GETVAL, sem_union);
   if (val == -1) {
    ACE_OS::perror ("getting value of a semaphore");
@@ -335,22 +335,22 @@ int get_semval(int sid)
   }
   /*
   if (val == 0) {
-    fprintf(stderr, "pid %d to call ACE_OS::semctl (%d, 0, GETZCNT)\n",ACE_OS::getpid (), sid);
-	sem_union.val = 0;
+    fprintf(stderr, "pid %ld to call ACE_OS::semctl (%d, 0, GETZCNT)\n",ACE_OS::getpid (), sid);
+        sem_union.val = 0;
     val = ACE_OS::semctl (semId, 0, GETZCNT, 0);
     if (val == -1) {
      ACE_OS::perror ("getting semzcnt of a semaphore");
       ACE_OS::exit (1);
     }
     
-    fprintf(stderr, "pid %d to call ACE_OS::semctl (%d, 0, GETNCNT)\n",ACE_OS::getpid (), sid);
+    fprintf(stderr, "pid %ld to call ACE_OS::semctl (%d, 0, GETNCNT)\n",ACE_OS::getpid (), sid);
     usleep(10000000);
-	sem_union.val = 0;
+        sem_union.val = 0;
     val1 = ACE_OS::semctl (semId, sid, GETNCNT, sem_union);
     if (val1 == -1) {
      ACE_OS::perror ("getting semncnt of a semaphore");
     }
-    fprintf(stderr, "pid %d to called ACE_OS::semctl (GETNCNT)\n",ACE_OS::getpid ());
+    fprintf(stderr, "pid %ld to called ACE_OS::semctl (GETNCNT)\n",ACE_OS::getpid ());
     
     fprintf(stderr, "Semval val %d, val1 %d\n", val, val1);
     return (0-(val + val1));
@@ -443,8 +443,8 @@ void setsignal(int sig, void (func)(int))
   */
 #else
   fprintf(stderr,
-	  "Error: code for setsignal(%d,func) is missing in source/mpeg_shared/routine.cpp\n",
-	  sig);
+          "Error: code for setsignal(%d,func) is missing in source/mpeg_shared/routine.cpp\n",
+          sig);
   ACE_OS::exit (1);
 #endif
 }

@@ -24,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+#include "ace/OS.h"
 #include <stdio.h>
 #include <limits.h>   /* INT_MIN, INT_MAX are defined here */
 #include <errno.h>
@@ -44,7 +45,6 @@ ACE_RCSID(mpeg_shared, filters, "$Id$")
 #define minval(a,b) ((a) < (b) ? (a) : (b))
 
 static float FLOAT_MIN = (float)INT_MIN;
-static float FLOAT_MAX = (float)INT_MAX;
 
 AverageFilter * NewAverageFilter(int nsamples)
 {
@@ -90,7 +90,6 @@ void FreeAverageFilter(AverageFilter * f)
 
 double DoAverageFilter(AverageFilter *f, double value)
 {
-  int offset;
   double oldval = f->buf[f->ptr];
   f->buf[f->ptr] = value;
   f->ptr = (f->ptr + 1) % f->nsamples;
@@ -155,7 +154,7 @@ double DoLowPassFilter(LowPassFilter * f, double value)
     }
     f->count ++;
     return (f->result = (1.0 - (1.0/(double)f->count)) * f->result +
-			 (1.0/(double)f->count) * value);
+                         (1.0/(double)f->count) * value);
   }
   return (f->result = (1.0 - f->R) * f->result + f->R * value);
 }
@@ -230,12 +229,12 @@ double DoMedianFilter(MedianFilter *f, double pvalue)
     f->stat = (int *)ACE_OS::malloc(f->statsize * sizeof(int));
     if (f->stat == NULL) {
       fprintf(stderr, "MedianFilter Failed to extend up stat to % items",
-	      f->statsize);
+              f->statsize);
      ACE_OS::perror ("");
       ACE_OS::exit (1);
     }
     memset((char *)(f->stat) + sizeof(int) * oldsize, 0,
-	   sizeof(int) * (f->statsize - oldsize));
+           sizeof(int) * (f->statsize - oldsize));
     ACE_OS::memcpy (f->stat, oldstat, oldsize * sizeof(int));
   }
   else if (value < f->min) {
@@ -246,13 +245,13 @@ double DoMedianFilter(MedianFilter *f, double pvalue)
     f->stat = (int *)ACE_OS::malloc(f->statsize * sizeof(int));
     if (f->stat == NULL) {
       fprintf(stderr, "MedianFilter Failed to extend down stat to % items",
-	      f->statsize);
+              f->statsize);
      ACE_OS::perror ("");
       ACE_OS::exit (1);
     }
     memset(f->stat, 0, sizeof(int) * (f->statsize - oldsize));
     ACE_OS::memcpy ((char *)(f->stat) + sizeof(int) * (f->statsize - oldsize),
-	   oldstat, sizeof(int) * oldsize);
+           oldstat, sizeof(int) * oldsize);
     f->med += f->statsize - oldsize;
   }
   f->buf[f->ptr] = value;
