@@ -1,3 +1,16 @@
+Thu Apr 18 14:07:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Table.h: 	
+	* tao/ORBInitializer_Registry.h (TAO_ORBInitializer_Registry):
+
+	  Export the internally used singleton via the "friend"
+	  declaration to get around Windows DLL singleton brain-damage.  I
+	  took this approach instead of the "TAO_SINGLETON_DECLARE" macro
+	  approach since the latter exhibits warnings in Release
+	  configuration builds.  Hopefully this will finally fix the
+	  multiple singletons that end up being created when using Windows
+	  DLLs.
+
 Thu Apr 18 13:10:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:

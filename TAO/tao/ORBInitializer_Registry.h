@@ -33,7 +33,7 @@
  */
 class TAO_Export TAO_ORBInitializer_Registry
 {
-  friend class TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>;
+  friend class TAO_Export TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>;
   friend void PortableInterceptor::register_orb_initializer (
                   PortableInterceptor::ORBInitializer_ptr init
                                   ACE_ENV_ARG_DECL_NOT_USED);
@@ -87,31 +87,6 @@ private:
 #if defined (__ACE_INLINE__)
 # include "tao/ORBInitializer_Registry.inl"
 #endif /* __ACE_INLINE__ */
-
-#if defined (_MSC_VER)
-// Disable "nonstandard extension used : 'extern' before template
-// explicit instantiation" warning.
-#pragma warning(disable:4231)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-# if !defined (TAO_BUILD_DLL)
-// The TAO_SINGLETON_DECLARE macro on its own does not work with
-// Borland C++. Therefore we use the following pragma to force
-// the template specialisation to be exported from the DLL.
-#   pragma option push -Jgx
-# endif
-#endif
-
-TAO_SINGLETON_DECLARE (TAO_Singleton,
-                       TAO_ORBInitializer_Registry,
-                       TAO_SYNCH_MUTEX)
-
-#if defined (__BORLANDC__)
-# if !defined(TAO_BUILD_DLL)
-#   pragma option pop
-# endif
-#endif
 
 #if defined (_MSC_VER)
 // Re-enable the warning.
