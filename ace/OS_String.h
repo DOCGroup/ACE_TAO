@@ -151,21 +151,25 @@ public:
 private:
   // = These are emulation or platform specific versions of methods.
   static const void *memchr_emulation (const void *s, int c, size_t len);
+
   static char *strchr_emulation (char *s, int c);
   static const char *strchr_emulation (const char *s, int c);
-  static char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
   static char *strrchr_emulation (char *s, int c);
   static const char *strrchr_emulation (const char *s, int c);
+  static size_t strcspn_emulation (const char *s, const char *reject);
   static int strcasecmp_emulation (const char *s, const char *t);
+  static int strncasecmp_emulation (const char *s, const char *t, size_t len);
+  static char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
 
 #if defined (ACE_HAS_WCHAR)
-  static wchar_t *strchr_emulation (wchar_t *s, wint_t c);
-  static const wchar_t *strchr_emulation (const wchar_t *s, wint_t c);
   static wchar_t *strrchr_emulation (wchar_t *s, wint_t c);
   static const wchar_t *strrchr_emulation (const wchar_t *s, wint_t c);
   static int strcasecmp_emulation (const wchar_t *s, const wchar_t *t);
+  static int strncasecmp_emulation (const wchar_t *s, 
+                                    const wchar_t *t, 
+                                    size_t len);
 #endif /* ACE_HAS_WCHAR */
-};
+};  
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
