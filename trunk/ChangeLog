@@ -1,3 +1,19 @@
+Sat Jan 17 00:45:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Multihomed_INET_Addr_Test_IPV6.dsp:
+	* tests/INET_Addr_Test_IPV6.dsp:
+	* tests/Max_Default_Port_Test_IPV6.dsp:
+	* tests/Multicast_Test_IPV6.dsp:
+	* tests/Proactor_Test_IPV6.dsp:
+	* tests/SOCK_Send_Recv_Test_IPV6.dsp:
+	* tests/SOCK_Test_IPv6.dsp:
+	  
+	  New dsp files for the tests
+	
+	* tests/tests.dsw:
+
+	  Workspace file with the mods.
+
 Sat Jan 17 00:12:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/run_test.lst:
