@@ -1,3 +1,7 @@
+Mon Jul 10 12:01:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/Makefile.bor: Removed IORS.obj from the makefile.
+
 Sun Jul 09 21:41:01 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/SMI_Iterator/client.dsp:
@@ -15,7 +19,7 @@ Sun Jul 09 19:31:47 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * test/Exposed_Policies/Server.dsp:
         * test/Exposed_Policies/Client.dsp:
-	  
+
 	  Updated project setting to fix link time errors.
 
 Sun Jul 09 15:51:46 2000  David L. Levine  <levine@cs.wustl.edu>
