@@ -1236,7 +1236,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   // Remove all children POAs
   for (CHILDREN::iterator iterator = this->children_.begin ();
-       iterator != this->children_.end () && env.exception () == 0;
+       iterator != this->children_.end () 
+         && env.exception () == 0;
        ++iterator)
     {
       TAO_POA *child_poa = (*iterator).int_id_;

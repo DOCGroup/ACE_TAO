@@ -223,7 +223,8 @@ ACE_INLINE TAO_Object_Table_Iterator_Impl *
 TAO_Dynamic_Hash_ObjTable::begin (void) const
 {
   TAO_Dynamic_Hash_ObjTable *non_const =
-    ACE_const_cast(TAO_Dynamic_Hash_ObjTable*, this);
+    ACE_const_cast (TAO_Dynamic_Hash_ObjTable *,
+                    this);
 
   TAO_Object_Table_Iterator_Impl *tmp;
   ACE_NEW_RETURN (tmp,
