@@ -1,3 +1,8 @@
+Mon Oct 23 11:37:06 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Init_ACE.cpp: 
+	  Removed the semicolon at the end of ACE_RCSID. 	  
+
 Mon Oct 23 11:20:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Malloc_T.i:
