@@ -112,7 +112,7 @@ TAO_Machine_Properties::evalDP (const char* prop_name,
                                 CORBA::TypeCode_ptr returned_type,
                                 const CORBA::Any& extra_info,
                                 CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
+  ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   CORBA::Any* return_value;
 

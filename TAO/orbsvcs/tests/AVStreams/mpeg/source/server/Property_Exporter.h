@@ -89,7 +89,7 @@ class TAO_Property_Exporter
   CosTrading::OfferId _cxx_export (const CORBA::Object_ptr object_ref,
                                    const CosTrading::ServiceTypeName type,
                                    CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      CosPropertyService::MultipleExceptions,
                      CosTrading::Register::InvalidObjectRef,
                      CosTrading::IllegalServiceType,
@@ -108,7 +108,7 @@ class TAO_Property_Exporter
                                    const TRADING_REPOS::PropStructSeq& props,
                                    const TRADING_REPOS::ServiceTypeNameSeq& stypes,
                                    CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      CosPropertyService::MultipleExceptions,
                      CosTrading::IllegalServiceType,
                      TRADING_REPOS::ServiceTypeExists,
@@ -169,7 +169,7 @@ public:
   // Modify a property from the current prop_set/offer.
 
   void commit (CosTrading::OfferId id, CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      CosPropertyService::MultipleExceptions,
                      CosTrading::NotImplemented,
                      CosTrading::IllegalOfferId,
