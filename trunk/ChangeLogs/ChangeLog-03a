@@ -1,3 +1,9 @@
+Fri Apr 13 05:30:04 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/ACE-bug-process.html: Updated this document to explain how
+	  bugs pertaining to OCI's TAO releases should be handled.  Thanks
+ 	  to Georg Lohrer <GeorgLohrer@web.de> for motivating this.
+
 Thu Apr 12 20:36:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS.i (thr_getspecific): Reorder the way in which we check
