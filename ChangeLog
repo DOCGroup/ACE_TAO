@@ -1,3 +1,11 @@
+Mon May 10 18:40:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added define of ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS. Cygwin
+          has this and first tests show that now some threading tests
+          run without problems. Let wait for a new fresh daily build to
+          tackle the next failing test.
+
 Mon May 10 12:15:45 2004  Simon McQueen  <sm@prismtechnologies.com>
 
         * ace/CDR_Stream.cpp (read_wchar):
@@ -6,12 +14,12 @@ Mon May 10 12:15:45 2004  Simon McQueen  <sm@prismtechnologies.com>
           account of the endianness of the stream when demarshalling
           a wchar. This closes bug 1807.
 
-Mon May 10 10:24:23 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Mon May 10 10:24:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.inl:
           Fixed incorrect trace
 
-Mon May 10 06:22:21 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Mon May 10 06:22:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
           The files with extension icc shouldn't be in the repo
@@ -30,14 +38,14 @@ Sun May 9 16:07:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 	are classified as an error (QNX limit), MPC files longer than 30 characters
 	lead to warnings as MPC can add some characters eg. .depend.GNUmakefile.
 
-Sun May  9 13:20:22 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Sun May  9 13:20:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
           Files with extension dsp and dsw and the GNUmakefile* files
           shouldn't be in the repo, so added these to the noncvs file
           check
 
-Sun May  9 12:59:11 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Sun May  9 12:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
           Updated name of project file we must build first when doing a static
