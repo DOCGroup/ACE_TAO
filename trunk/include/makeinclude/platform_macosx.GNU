@@ -1,9 +1,15 @@
 # $Id$
 # platform_macosx.GNU
-# support for Mac OS X 10.2
+# support for Mac OS X 10.2 (jaguar), 10.3 (panther)
+# Note: /sw/lib & /sw/include are inserted for the convience of Fink
+#       users. Non-Fink users should simply create these directories to
+#       eliminate the warnings.
 
 ifndef exceptions
   exceptions = 1
+endif
+ifeq (,$(threads))
+  threads = 1
 endif
 ifeq (,$(debug))
   debug = 1
@@ -28,14 +34,16 @@ LD              = $(CXX)
 LDFLAGS		+= -L/sw/lib -flat_namespace -undefined warning
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
 
-## dlcompat package (not part of base Darwin) is needed for dlopen().
+## dlcompat package (not part of base Darwin) is needed for dlopen() on 10.2.
 ## Fink installer puts libraries in /sw/lib and headers in /sw/include
 ## In order to install dlcompat do the following:
 ##   - download fink from http://fink.sf.net
 ##   - type:
 ##        fink install dlcompat
+## 10.3 does not need this package.
 LIBS            += -ldl 
-OCFLAGS         += -O3
+# 10.3 cannot do -03, this could be version dependent (probably on gcc)
+OCFLAGS         += -O2
 RANLIB          = ranlib
 SOEXT		= dylib
 SOFLAGS += -dynamic
