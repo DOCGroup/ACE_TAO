@@ -1,3 +1,13 @@
+Wed Sep 29 13:45:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	  Reversed the behavior of left shift and right shift operators
+	  in constant expressions - it was backwards. Thanks to Irfan
+	  for asking the question that led to the discovery of this
+	  bug.
+
 Wed Sep 29 13:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
