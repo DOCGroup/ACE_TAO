@@ -1,3 +1,7 @@
+Sat Jun 28 16:14:38 1997  Sumedh Mungee  <sumedh@cumbia.cs.wustl.edu>
+
+	* HTTP_Handler.cpp (open): Changed socket send-buffer to 64k
+
 Wed Jun 25 01:11:50 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* JAWS_File.cpp: Removed initialization of vfs_ (see below) and
