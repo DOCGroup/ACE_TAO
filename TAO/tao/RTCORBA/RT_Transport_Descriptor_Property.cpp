@@ -6,7 +6,7 @@
 #include "RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RTCORBA, TAO_RT_Transport_Descriptor_Property, "$id$")
+ACE_RCSID(RTCORBA, TAO_RT_Transport_Descriptor_Property, "$Id$")
 
 TAO_RT_Transport_Descriptor_Property::~TAO_RT_Transport_Descriptor_Property (void)
 {

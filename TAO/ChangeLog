@@ -1,8 +1,14 @@
+Mon Aug 25 13:58:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_Transport_Descriptor.cpp:
+        * tao/RTCORBA/RT_Transport_Descriptor_Property.cpp:
+          Fixed incorrect id tag
+
 Mon Aug 25 08:41:13 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Fixed
 	  CORBA::Environment related compile errors and warnings in
 	  RH71_Explicit_Templates build.
@@ -10,14 +16,13 @@ Mon Aug 25 08:41:13 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: Updated
 	  explicit template instantions to fix compile errors in
 	  RH71_Explicit_Templates build.
-	  
 
 Mon Aug 25 08:05:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Schedule/Schedule.h: 
+	* orbsvcs/examples/RtEC/Schedule/Schedule.h:
 	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Fixed compile errors caused
 	  by changes to compute_scheduling and dump_schedule methods.
-	  
+
 Mon Aug 25 08:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DynAny_Test/analyzer.{h,cpp}:
