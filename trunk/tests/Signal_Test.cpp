@@ -45,7 +45,7 @@ static pid_t parent_pid = 0;
 static int test_number = 0;
 
 // Coordinate the shutdown between threads.
-static ACE_Atomic_Op<ACE_SYNCH_RECURSIVE_MUTEX, int> shut_down (0);
+static sig_atomic_t shut_down = 0;
 
 static int
 handle_signal (int signum)
@@ -57,7 +57,7 @@ handle_signal (int signum)
   switch (signum)
     {
     case SIGCHLD:
-      // Signal to the main thread to shut_down.
+      // Signal to the main thread to shut down.
       shut_down = 1;
 
       // This should only occur for the asynchronous case, so we don't
@@ -66,12 +66,12 @@ handle_signal (int signum)
     case SIGINT:
       /* FALLTHRU */
     case SIGTERM:
-      // Shut_Down our thread using <ACE_Thread_Manager::exit>.
+      // Shut down our thread using <ACE_Thread_Manager::exit>.
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) shutting down due to %S\n"),
                   signum));
 
-      // Signal to the worker thread to shut_down.
+      // Signal to the worker thread to shut down.
       shut_down = 1;
 
       // Bail out and close down.
@@ -463,12 +463,6 @@ main (int argc, ASYS_TCHAR *argv[])
     }
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<ACE_SYNCH_RECURSIVE_MUTEX, int>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_RECURSIVE_MUTEX, int>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
 int
