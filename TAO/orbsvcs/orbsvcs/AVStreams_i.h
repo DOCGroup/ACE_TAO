@@ -28,7 +28,7 @@ class TAO_Basic_StreamCtrl : public virtual POA_AVStreams::Basic_StreamCtrl
 {
  public:
    // Constructor
-   TAO_Basic_StreamCtrl (void);
+   TAO_Basic_StreamCtrl (CORBA::ORB_var orb);
 
    // Stop the transfer or data of the stream
    // Empty the_spec means apply operation to all flows
@@ -76,6 +76,18 @@ class TAO_Basic_StreamCtrl : public virtual POA_AVStreams::Basic_StreamCtrl
    
    // Destructor
    virtual ~TAO_Basic_StreamCtrl (void);
+
+ protected:
+   // ORB reference
+   CORBA::ORB_var orb_;
+   
+   // The Virtual Devices for this stream
+   AVStreams::VDev_var vdev_a_;
+   AVStreams::VDev_var vdev_b_;
+   
+   // The Endpoints for this stream
+   AVStreams::StreamEndPoint_A_var stream_endpoint_a_;
+   AVStreams::StreamEndPoint_B_var stream_endpoint_b_;
 };
 
 class TAO_StreamCtrl : public virtual POA_AVStreams::StreamCtrl, 
@@ -116,17 +128,6 @@ public:
    // Destructor
    virtual ~TAO_StreamCtrl (void);
 
- private:
-   // ORB reference
-   CORBA::ORB_var orb_;
-   
-   // The Virtual Devices for this stream
-   AVStreams::VDev_var vdev_a_;
-   AVStreams::VDev_var vdev_b_;
-   
-   // The Endpoints for this stream
-   AVStreams::StreamEndPoint_A_var stream_endpoint_a_;
-   AVStreams::StreamEndPoint_B_var stream_endpoint_b_;
 };  
 
 class TAO_StreamEndPoint : public virtual POA_AVStreams::StreamEndPoint

@@ -17,10 +17,11 @@
 #include "AVStreams_i.h"
 
 // ----------------------------------------------------------------------
-// TAO_Basic_StreamCtrl_i
+// TAO_Basic_StreamCtrl
 // ----------------------------------------------------------------------
 
-TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (void)
+TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (CORBA::ORB_var orb)
+: orb_ (orb)
 {
 }
 
@@ -32,36 +33,38 @@ void
 TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &the_spec,  
                             CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (the_spec);
-  ACE_UNUSED_ARG (env);
+   if (CORBA::is_nil (stream_endpoint_a_.in ()))
+     return;
+   this->stream_endpoint_a_->stop (the_spec, env);
 }
 
 void
 TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (the_spec);
-  ACE_UNUSED_ARG (env);
+  if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
+    return;
+  this->stream_endpoint_a_->start (the_spec, env);
 }
 
 void
 TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &the_spec,  
                                CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (the_spec);
-  ACE_UNUSED_ARG (env);
+  if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
+    return;
+  this->stream_endpoint_a_->destroy (the_spec, env);
 }
-
 
 CORBA::Boolean 
 TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos, 
                                   const AVStreams::flowSpec &the_spec,  
                                   CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (new_qos);
-  ACE_UNUSED_ARG (the_spec);
-  ACE_UNUSED_ARG (env);
-  return 0;
+   ACE_UNUSED_ARG (new_qos);
+   ACE_UNUSED_ARG (the_spec);
+   ACE_UNUSED_ARG (env);
+   return 0;
 }
 
 void
@@ -86,6 +89,7 @@ TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &the_spec,
   ACE_UNUSED_ARG (env);
 }
 
+// @@ Need to throw not-supported exception here
 CORBA::Object_ptr 
 TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name,  
                                                  CORBA::Environment &env)
@@ -95,6 +99,7 @@ TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name,
   return 0;
 }
 
+// @@ Need to throw not-supported exception here
 void
 TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name, 
                                            CORBA::Object_ptr flow_connection,  
@@ -110,7 +115,7 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
 // ----------------------------------------------------------------------
 
 TAO_StreamCtrl::TAO_StreamCtrl (CORBA::ORB_var orb)
-  : orb_ (orb)
+  : TAO_Basic_StreamCtrl (orb)
 {
 }
 
@@ -151,28 +156,26 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                         env);
   TAO_CHECK_ENV_RETURN (env, 0);
   
-              
-  
   ACE_DEBUG ((LM_DEBUG,
               "\n(%P|%t) TAO_StreamCtrl::create_A: succeeded"));
 
   // Request b_party to create the endpoint and vdev
 
   this->stream_endpoint_b_ =
-    b_party-> create_B (this->_this (env),
-                        this->vdev_b_.out (),
-                        the_qos,
-                        met_qos,
-                        named_vdev.inout (),
-                        the_flows,
-                        env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+     b_party-> create_B (this->_this (env),
+			 this->vdev_b_.out (),
+			 the_qos,
+			 met_qos,
+			 named_vdev.inout (),
+			 the_flows,
+			 env);
+   TAO_CHECK_ENV_RETURN (env, 0);
   
-  ACE_DEBUG ((LM_DEBUG,
-              "\n(%P|%t) TAO_StreamCtrl::create_B: succeeded"));
+   ACE_DEBUG ((LM_DEBUG,
+	       "\n(%P|%t) TAO_StreamCtrl::create_B: succeeded"));
   
-  ACE_DEBUG ((LM_DEBUG, 
-              "\nstream_endpoint_b_ = %s", 
+   ACE_DEBUG ((LM_DEBUG, 
+	       "\nstream_endpoint_b_ = %s",
               this->orb_->object_to_string (this->stream_endpoint_b_,
                                             env)));
   TAO_CHECK_ENV_RETURN (env, 0);
