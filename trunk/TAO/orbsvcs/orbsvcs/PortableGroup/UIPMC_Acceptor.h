@@ -16,7 +16,7 @@
 #define TAO_UIPMC_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "tao/Pluggable.h"
+#include "tao/Transport_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
