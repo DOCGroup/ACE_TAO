@@ -1,3 +1,9 @@
+Tue Oct 15 14:10:29 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tests/IDL_Test/Makefile:
+
+          Updated dependencies.
+
 Tue Oct 15 13:34:15 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
