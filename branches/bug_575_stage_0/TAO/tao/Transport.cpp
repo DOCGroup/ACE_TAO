@@ -935,7 +935,6 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
 {
   // The write pointer which will be used for reading data from the
   // socket.
-  char *wr_ptr = 0;
   if (!this->incoming_message_queue_.is_complete_message ())
     {
       return this->consolidate_message_queue (incoming,

@@ -65,6 +65,8 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   ACE_Data_Block *db =
     this->reply_cdr_.clone_from (params.input_cdr_);
 
+  ACE_UNUSED_ARG (db);
+
   if (this->wait_strategy_ != 0)
     {
       if (this->wait_strategy_->reply_dispatched (
