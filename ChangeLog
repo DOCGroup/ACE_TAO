@@ -1,3 +1,11 @@
+Wed Feb 26 07:39:58 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Changed the defaulting behavior if neither exename, sharedname or
+          staticname are defined in an mpc file.
+
 Tue Feb 25 22:26:30 2003  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/Malloc.h:
@@ -44,29 +52,29 @@ Tue Feb 25 22:26:30 2003  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Tue Feb 25 10:00:54 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/CDR_Base.h (LongLong):
-	* ace/CDR_Base.inl:
-	* ace/CDR_Base.cpp:
+        * ace/CDR_Base.h (LongLong):
+        * ace/CDR_Base.inl:
+        * ace/CDR_Base.cpp:
 
-	  Removed newly added 32-bit assignment and comparison operators.
-	  Comparison is non-trivial in this signed case, and assignment
-	  operators are a potential source of confusion when implicit
-	  conversions are performed.  This change basically reverts
-	  ACE_CDR::LongLong to its previous implementation, and also
-	  addresses some build problems on platforms with non-native 64
-	  bit signed integers (e.g. VxWorks).
+          Removed newly added 32-bit assignment and comparison operators.
+          Comparison is non-trivial in this signed case, and assignment
+          operators are a potential source of confusion when implicit
+          conversions are performed.  This change basically reverts
+          ACE_CDR::LongLong to its previous implementation, and also
+          addresses some build problems on platforms with non-native 64
+          bit signed integers (e.g. VxWorks).
 
 Tue Feb 25 08:09:13 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Atomic_Op_T.h (mutex_):
+        * ace/Atomic_Op_T.h (mutex_):
 
-	  Removed "mutable" keyword from this reference member.  IBM's
-	  Visual Age C++ considers mutable reference members invalid.
+          Removed "mutable" keyword from this reference member.  IBM's
+          Visual Age C++ considers mutable reference members invalid.
 
-	* ace/Atomic_Op_T.i:
+        * ace/Atomic_Op_T.i:
 
-	  Go back to casting away the const-ness of the above mutex
-	  reference member in const methods.
+          Go back to casting away the const-ness of the above mutex
+          reference member in const methods.
 
 Tue Feb 25 09:57:07 2003  Chad Elliott  <elliott_c@ociweb.com>
 
