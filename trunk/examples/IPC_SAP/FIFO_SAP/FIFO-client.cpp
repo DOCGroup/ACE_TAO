@@ -11,7 +11,7 @@ main (int, char *[])
 
   while (ACE_OS::fgets (buf, sizeof buf, stdin) != 0)
     {
-      size_t n = ACE_OS::strlen (buf);
+      ssize_t n = ACE_OS::strlen (buf);
       
       if (client.send (buf, n) != n)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
