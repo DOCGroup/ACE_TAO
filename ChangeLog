@@ -1,3 +1,11 @@
+Tue Oct  5 13:12:56 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Signal.cpp:
+          Allow for bad status return from ACE_Sig_Set:is_member (int signo)
+          See Bugzilla #1954 for details.
+
 Tue Oct  5 11:16:53 2004  Dale Wilson  <wilson_d@ociweb.com>
         * ace/OS_NS_stdlib.cpp:
           Build error on VC7.1: initializing float w/ double may lose data
