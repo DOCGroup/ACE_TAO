@@ -1799,6 +1799,7 @@ Markus Stenberg <markus.stenberg@conformiq.com>
 Jonathan Pollack <pollack_j@ociweb.com>
 Hakim Souami <hakim.souami@fr.thalesgroup.com>
 John Poplett <John_Poplett@3com.com>
+Heiko Bachmann <h.bachmann@unicontrol.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
