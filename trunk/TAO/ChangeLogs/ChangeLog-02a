@@ -1,3 +1,10 @@
+Mon Nov 26 15:01:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/compiler.html:
+
+          Added to table the overlooked -Wb command line options
+          obv_opt_accessor, pre_include and post_include.
+
 Fri Nov 23 13:45:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_typedef.cpp:
