@@ -1,0 +1,28 @@
+This directory contains a Audio/Video Streaming 
+service client and server to measure the throughput achieved and also
+the stream establishment time. 
+
+server options:
+=============
+
+-p : Use Process strategy.
+
+-r : Use reactive strategy.
+
+Other standard orb options.
+
+client options:
+==============
+
+-b block_size to be used.
+
+-t No. of threads on the client side (to measure stream establishment
+        time for different threads.)
+
+-s Use the Datagram reactive strategy and streamendpoint.Default is
+   TTCP reactive strategy.
+
+-p Port number to listen on.
+
+-h hostname to bind to.
+
