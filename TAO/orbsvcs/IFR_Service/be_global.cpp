@@ -100,6 +100,11 @@ BE_GlobalData::ifr_scopes (void)
   return this->ifr_scopes_;
 }
 
+void
+BE_GlobalData::destroy (void)
+{
+}
+
 const char *
 BE_GlobalData::filename (void) const
 {

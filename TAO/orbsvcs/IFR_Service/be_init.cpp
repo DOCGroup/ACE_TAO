@@ -113,7 +113,7 @@ BE_init (int &argc, char *argv[])
 }
 
 TAO_IFR_BE_Export void
-BE_post_init (void)
+BE_post_init (const char *[], long)
 {
 }
 

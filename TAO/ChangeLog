@@ -1,3 +1,14 @@
+Tue Aug  3 08:34:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/be_extern.h:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_init.cpp:
+        
+          Changes corresponding to those in TAO_IDL_BE, made in
+
+          Sun Aug  1 20:57:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Mon Aug  2 14:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/AMH_Response_Handler.cpp:
