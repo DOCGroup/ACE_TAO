@@ -1,3 +1,11 @@
+Fri Nov 28 09:56:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
+          Fixed fuzz errors
+
 Fri Nov 28 09:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.bor:
