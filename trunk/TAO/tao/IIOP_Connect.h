@@ -94,6 +94,9 @@ public:
   virtual ACE_HANDLE fetch_handle (void);
   // Return the underlying handle
 
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  // Perform appropriate closing.
 protected:
 
   // = Event Handler overloads
@@ -106,10 +109,6 @@ protected:
   // handle_input() just delegates on handle_input_i() which timeouts
   // after <max_wait_time>, this is used in thread-per-connection to
   // ensure that server threads eventually exit.
-
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  // Perform appropriate closing.
 
 protected:
 
