@@ -47,6 +47,13 @@ public:
                                       TAO_OutStream *os);
   // Helper to generate the definitions for the operations
   // of any abstract parents we may have.
+
+private:
+  /// Helper method to generate _narrow and _unchecked_narrow. The
+  /// string <n> will contain the needed predicate that needs to be
+  /// generated.
+  bool gen_xxx_narrow (const char *n,
+                       be_interface *node);
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_CS_H_ */

@@ -50,6 +50,12 @@ public:
                                       TAO_OutStream *os);
   // Helper to generate the declarations for the operations
   // of any abstract parents we may have.
+private:
+  /// Helper to generate declarations for _narrow () and
+  /// _unchecked_narrow ()
+  bool gen_xxx_narrow (const char *n,
+                       be_interface *node,
+                       TAO_OutStream *os);
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_CH_H_ */

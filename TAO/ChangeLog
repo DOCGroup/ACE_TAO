@@ -1,3 +1,23 @@
+Tue Dec 23 17:47:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ch.h:
+	* TAO_IDL/be_include/be_visitor_interface/interface_cs.h:
+
+	  Added code generation for _unchecked_narrow (). Thanks to Jon
+	  Biggar and Milan Cvetkovic for motivating this. 
+	
+	* tao/Object_T.cpp:
+	* tao/Object_T.h:
+	* tao/Valuetype/AbstractBase_T.cpp:
+	* tao/Valuetype/AbstractBase_T.h:
+
+	  Provided interfaces that can be called by the generated
+	  code. The implementation of _unchecked_narrow () for interfaces
+	  and abstract interfaces stay within the ORB.
+	
 Tue Dec 23 21:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * *.bor:

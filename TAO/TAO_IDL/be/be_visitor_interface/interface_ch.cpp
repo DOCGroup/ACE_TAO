@@ -135,29 +135,40 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "typedef " << node->local_name () << "_var _var_type;"
       << be_nl << be_nl;
 
-  // Generate the static _duplicate, _narrow, and _nil operations.
+  // Generate the static _duplicate, _narrow, _unchecked_narrow and
+  // _nil operations.
   *os << "// The static operations." << be_nl
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
-      << node->local_name () << "_ptr obj);" << be_nl << be_nl
-      << "static " << node->local_name () << "_ptr "
-      << "_narrow (" << be_idt << be_idt_nl;
+      << node->local_name () << "_ptr obj);" << be_nl << be_nl;
 
-  if (node->is_abstract ())
+  if (this->gen_xxx_narrow ("_narrow",
+                            node,
+                            os) == false)
     {
-      *os << "CORBA::AbstractBase_ptr obj" << be_nl;
-    }
-  else
-    {
-      *os << "CORBA::Object_ptr obj" << be_nl;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Error in "
+                         "be_visitor_interface_ch::"
+                         "visit_interface while generating "
+                         "_narrow () declaration \n"),
+                        -1);
     }
 
-  *os << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+  if (this->gen_xxx_narrow ("_unchecked_narrow",
+                            node,
+                            os) == false)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Error in "
+                         "be_visitor_interface_ch::"
+                         "visit_interface while generating "
+                         "_unchecked_narrow () declaration \n"),
+                        -1);
+    }
 
   // This method is defined in the header file to workaround old
   // g++ problems.
   *os << "static " << node->local_name () << "_ptr _nil (void)"
-      << be_nl 
+      << be_nl
       << "{" << be_idt_nl
       << "return (" << node->local_name ()
       << "_ptr)0;" << be_uidt_nl
@@ -401,4 +412,27 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
     }
 
   return 0;
+}
+
+bool
+be_visitor_interface_ch::gen_xxx_narrow (const char *nar,
+                                         be_interface *node,
+                                         TAO_OutStream *os)
+{
+  *os << "static " << node->local_name () << "_ptr "
+      << nar << " (" << be_idt << be_idt_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_ptr obj" << be_nl;
+    }
+  else
+    {
+      *os << "CORBA::Object_ptr obj" << be_nl;
+    }
+
+  *os << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
+
+  return true;
 }
