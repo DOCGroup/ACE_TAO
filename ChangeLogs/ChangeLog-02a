@@ -1,3 +1,22 @@
+Thu Jun 13 19:05:57 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Added a rule to install a symlink to libfoo.so.3 under
+          $(ACE_ROOT)/ace. This should fix all the build errors. ld.so
+          needs libfoo.so.3 to be in LD_LIBRARY_PATH. libfoo.so doesn't
+          do. Thanks to Marvin Wolfthal <maw@weichi.com> for reporting the
+          problem.
+
+        * bin/make_release:
+
+          Changes to ensure that all major releases are named
+          ACE-[0-9]+.0.0 and all minor releases are named
+          ACE-[0-9]+.[0-9]+.0. PLEASE TAG THE REPOSITORY AS ACE_5_3_0 and
+          TAO_1_3_0 or ACE_6_0_0 and TAO_2_0_0 WHEN MAKING A MINOR OR A
+          MAJOR RELEASE. Pointers to add this to somewhere more prominent
+          are welcome.
+
 Thu Jun 13 14:45:13 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast_T.cpp: Added wchar support - remove
@@ -18,7 +37,7 @@ Wed Jun 12 18:29:11 2002  Krishnakumar B  <kitty@cs.wustl.edu>
         * include/makeinclude/platform_g++_common.GNU:
 
           Added support for shared library versioning. Libraries built
-          with GNU ld with be versioned by default.
+          with GNU ld will be versioned by default.
 
         * include/makeinclude/platform_aix4_cset++.GNU:
         * include/makeinclude/platform_aix4_g++.GNU:

@@ -42,7 +42,7 @@ my $which_host = $ENV{'OSTYPE'};
 
 my $release_host = substr ($which_host, 0, 5);
 
-## We are not going to use any Sun boxes for the release anymore.. 
+## We are not going to use any Sun boxes for the release anymore..
 
 if (! ($release_host eq 'linux')){
     die "$0: You are on the wrong OS, please move to linux box\n";
@@ -91,7 +91,7 @@ my $gnu = '/bin';
 $ENV{'PATH'} = "$gnu" . ':' . $ENV{'PATH'};
 
 ### Any tools in /usr/local/bin can also be added. We dont need that
-### for deuce.doc 
+### for deuce.doc
 my $gnu2 = '/usr/bin';
 
 ####### Add the path to /usr/bin unconditionally..
@@ -295,7 +295,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
       &ex ("cd ACE_wrappers && bin/generate_doxygen.pl -is_release -exclude_tao -perl_path $perl_path -dot_path $dot_path")
 	&& die "$0: failed to generate ACE man pages in $stage_dir\n";
 
-##      DONT generate the windex database on Linux. Things get screwed. 
+##      DONT generate the windex database on Linux. Things get screwed.
 ##      &ex ("cd ACE_wrappers/man && catman -w -M .")
 ##	&& die "$0: failed to generate man page index in $stage_dir\n";
     }
@@ -460,16 +460,15 @@ sub get_versions () {
 
   if ($release_type eq 'beta') {
     ++$beta_version;
-    $version = "$major_version.$minor_version.$beta_version";
   } elsif ($release_type eq 'minor' ) {
     $beta_version = 0;
     ++$minor_version;
-    $version = "$major_version.$minor_version";
   } elsif ($release_type eq 'major' ) {
     $minor_version = $beta_version = 0;
     ++$major_version;
-    $version = "$major_version.$minor_version";
   }
+
+  $version = "$major_version.$minor_version.$beta_version";
 
   print "new $KIT version: $version\n";
 
@@ -496,11 +495,7 @@ sub get_versions () {
     }
     close ACE_VERSION;
 
-    if ($ace_beta_version == 0) {
-      $ace_version = "$ace_major_version.$ace_minor_version";
-    } else {
-      $ace_version = "$ace_major_version.$ace_minor_version.$ace_beta_version";
-    }
+    $ace_version = "$ace_major_version.$ace_minor_version.$ace_beta_version";
   }
 
   0;
