@@ -34,6 +34,10 @@
 class TAO_ORB_Core;
 class ACE_Handle_Set;
 
+typedef ACE_Unbounded_Set<ACE_Event_Handler*> TAO_EventHandlerSet;
+typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
+        TAO_EventHandlerSetIterator;
+
 /**
  * @class TAO_Transport_Cache_Manager
  *
@@ -139,7 +143,8 @@ public:
 
   /// Close the underlying hash map manager and return the handle set
   /// that have been registered with the reactor
-  int close (ACE_Handle_Set &handle_set);
+  int close (ACE_Handle_Set &reactor_registered,
+             TAO_EventHandlerSet &unregistered);
 
   /// Return the current size of the cache.
   size_t current_size (void) const;
@@ -188,7 +193,8 @@ private:
   int make_idle_i (HASH_MAP_ENTRY *&entry);
 
   /// Non-locking version and actual implementation of close ()
-  int close_i (ACE_Handle_Set &handle_set);
+  int close_i (ACE_Handle_Set &reactor_registered,
+               TAO_EventHandlerSet &unregistered);
 
   /// Purge the entry from the Cache Map
   int purge_entry_i (HASH_MAP_ENTRY *&entry);

@@ -1,3 +1,21 @@
+Fri May  4 14:11:36 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:  
+
+          Added code to clean up unregistered connection handlers at ORB
+          shutdown.
+
+        * tao/Wait_On_Read.cpp: 
+
+          Close the transport if we get a -1 from the call to
+          read_process_message() on the transport.  This indicates an error,
+          in which case we need to clean up the connection handler.
+
 Fri May  4 12:08:55 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/NVList.cpp:
