@@ -1,3 +1,10 @@
+Tue May 25 17:38:03 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/MT_Client/simple-client.cpp: Simple version of
+	client.cpp.
+	* tests/MT_Client/MT-client.cpp: MT version of the above. But no
+	multiple iterations. 
+
 Mon May 24 16:32:25 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	Moving towards having a single Connection Handler. Abstracted out
