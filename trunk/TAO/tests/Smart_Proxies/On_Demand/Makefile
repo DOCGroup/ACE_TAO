@@ -15,8 +15,8 @@ endif # ! TAO_ROOT
 LDLIBS  = -lTAO 
 
 LIBNAME = libSmart_Test_Factory
-SHLIB   = $(LIBNAME).$(SOEXT)
-LIB     = $(LIBNAME).a
+SHLIB_UNCHECKED   = $(LIBNAME).$(SOEXT)
+LIB_UNCHECKED     = $(LIBNAME).a
 
 IDL_SRC = testC testS
 
@@ -32,7 +32,7 @@ SERVER_SRCS = $(addsuffix .cpp, $(SERVER_FILES))
 #SERVER_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(SERVER_FILES)))
 SERVER_OBJS = $(addsuffix .o,$(SERVER_FILES))
 
-BIN = client server
+BIN_UNCHECKED = client server
 ACE_SHLIBS = -lTAO -lACE
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
@@ -45,6 +45,13 @@ TAO_IDLFLAGS += -Ge 1 -Gsp
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(smart_proxies),1)
+BIN=$(BIN_UNCHECKED)
+SHLIB=$(SHLIB_UNCHECKED)
+LIB=$(LIB_UNCHECKED)
+endif # smart_proxies
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU

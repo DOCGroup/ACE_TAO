@@ -68,7 +68,7 @@ Identity_Server::init (int argc,
 
       CORBA::PolicyList policies (2);
       policies.length (2);
-      
+
       // Lifespan policy
       policies[0] =
         this->orb_manager_.root_poa()->create_lifespan_policy (PortableServer::PERSISTENT,
@@ -80,13 +80,13 @@ Identity_Server::init (int argc,
                                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->persistent_POA_  = 
+      this->persistent_POA_  =
         this->orb_manager_.root_poa()->create_POA ("persistent_server",
                                                    this->orb_manager_.poa_manager (),
                                                    policies,
                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
-                                                   
+
 
       // Destroy policy objects
       for (CORBA::ULong i = 0;
@@ -114,8 +114,8 @@ int
 Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
 {
 
-  
-  
+
+
   // Contact the <Object_Group_Factory> to create 2
   // <Object_Group>s, one random and one rr.
   CORBA::ORB_var orb = orb_manager_.orb ();
@@ -123,7 +123,7 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
     orb->string_to_object (this->group_factory_ior_,
                            ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   Load_Balancer::Object_Group_Factory_var factory =
     Load_Balancer::Object_Group_Factory::_narrow (obj.in (),
                                                   ACE_TRY_ENV);
@@ -134,9 +134,9 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
                        "Identity_Server::init: "
                        "problems using the factory ior\n"),
                       -1);
-  
-  
-  // Unbind the previously registered random group. 
+
+
+  // Unbind the previously registered random group.
   ACE_TRY_EX (UNBIND_RANDOM)
     {
       factory->unbind_random ("Random group",
@@ -146,10 +146,10 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%N | %l) <Unbind> harmless here \n")); 
+                  "(%N | %l) <Unbind> harmless here \n"));
     }
   ACE_ENDTRY;
-  
+
   // Unbind the previously registered round robin group
   ACE_TRY_EX (UNBIND_ROUND)
     {
@@ -160,22 +160,22 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%N | %l) <Unbind> harmless here \n")); 
+                  "(%N | %l) <Unbind> harmless here \n"));
     }
   ACE_ENDTRY;
-  
-  
-  // We want to make two groups Random & Round Robin. 
+
+
+  // We want to make two groups Random & Round Robin.
   Load_Balancer::Object_Group_var random_group =
     factory->make_random ("Random group",
                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   Load_Balancer::Object_Group_var rr_group =
     factory->make_round_robin ("Round Robin group",
                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
 
   // Create the requested number of <Identity> objects, and
   // register them with the random and round robin
@@ -184,8 +184,8 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
                         random_group.in (),
                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
-  
+
+
   this->create_objects (rr_objects_,
                         rr_group.in (),
                         ACE_TRY_ENV);
@@ -212,7 +212,7 @@ Identity_Server::create_objects (size_t number_of_objects,
       // Create and activate a servant.
       Identity_i * identity_servant;
       ACE_NEW_THROW_EX (identity_servant,
-                        Identity_i (id, this->persistent_POA_),
+                        Identity_i (id, this->persistent_POA_.in ()),
                         CORBA::NO_MEMORY ());
       ACE_CHECK;
 
@@ -222,13 +222,14 @@ Identity_Server::create_objects (size_t number_of_objects,
 
       CORBA::Object_var obj = identity_servant->_this (ACE_TRY_ENV);
       ACE_CHECK;
-      
+
       Load_Balancer::Member member;
       member.id = CORBA::string_dup (id);
-      member.obj = this->orb_manager_.orb ()->object_to_string (obj, 
-                                                                ACE_TRY_ENV);
+      member.obj =
+        this->orb_manager_.orb ()->object_to_string (obj.in (),
+                                                     ACE_TRY_ENV);
       ACE_CHECK;
-      
+
       // Do an unbind and then bind
       ACE_TRY_EX (UNBIND)
         {
@@ -245,7 +246,7 @@ Identity_Server::create_objects (size_t number_of_objects,
       // Bind the servant in the random <Object_Group>.
       group->bind (member, ACE_TRY_ENV);
       ACE_CHECK;
-   
+
     }
 }
 
@@ -276,7 +277,7 @@ main (int argc, char *argv[])
   // Check the non-ORB arguments.
   if (server.parse_args (argc, argv) == -1)
     return -1;
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {

@@ -42,7 +42,7 @@ PortableServer::POA_ptr
 Object_Group_Factory_i::_default_POA (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return PortableServer::POA::_duplicate (this->poa_);
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 
@@ -378,7 +378,7 @@ Object_Group_Factory_i::resolve (const char * id,
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
   Load_Balancer::Object_Group_ptr
-    object_group = Load_Balancer::Object_Group::_narrow (objref,
+    object_group = Load_Balancer::Object_Group::_narrow (objref.in (),
                                                          ACE_TRY_ENV);
 
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
@@ -585,7 +585,7 @@ PortableServer::POA_ptr
 Object_Group_i::_default_POA (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return PortableServer::POA::_duplicate (this->poa_);
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 
@@ -712,7 +712,7 @@ Object_Group_i::unbind (const char * id,
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->members_) == -1)
         {
-          ACE_THROW (Load_Balancer::no_such_member);
+          ACE_THROW (Load_Balancer::no_such_member ());
         }
     }
   // Check to make sure we have it.
@@ -732,7 +732,7 @@ Object_Group_i::unbind (const char * id,
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_)
           == -1)
-        ACE_THROW (Load_Balancer::no_such_member);
+        ACE_THROW (Load_Balancer::no_such_member ());
 
     }
 
@@ -958,7 +958,7 @@ RR_Object_Group::unbind (const char *id,
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->members_) == -1)
         {
-          ACE_THROW (Load_Balancer::no_such_member);
+          ACE_THROW (Load_Balancer::no_such_member ());
         }
     }
 
@@ -981,7 +981,7 @@ RR_Object_Group::unbind (const char *id,
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_)
           == -1)
-        ACE_THROW (Load_Balancer::no_such_member);
+        ACE_THROW (Load_Balancer::no_such_member ());
 
     }
 
@@ -1023,9 +1023,6 @@ template class ACE_Hash_Map_Manager_Ex<char *, char *, ACE_Hash<char *>, ACE_Equ
 template class ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_var, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA_Object_var,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>;
-template class ACE_Hash<char *>;
-template class ACE_Equal_To<char *>;
 template class ACE_Hash_Map_Entry<char *, Load_Balancer::Object_Group_var>;
 template class ACE_Hash_Map_Entry<ACE_CString, CORBA_Object_var>;
 template class ACE_Hash_Map_Entry<char *, char *>;
@@ -1035,7 +1032,6 @@ template class ACE_Hash_Map_Iterator_Ex<char *, CORBA::Object_var, ACE_Hash<char
 template class ACE_Hash_Map_Manager_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<char *, CORBA::Object_var, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<char *, CORBA::Object_var>;
-template class ACE_Hash_Map_Entry<char *, char *>;
 
 template class ACE_DLList<char *>;
 template class ACE_DLList_Iterator<char *>;
@@ -1052,10 +1048,6 @@ template class ACE_DLList_Iterator<char *>;
 #pragma instantiate  ACE_Hash_Map_Reverse_Iterator_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Reverse_Iterator_Ex<char *, CORBA_Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Manager_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash<char *>
-#pragma instantiate  ACE_Equal_To<char *>
-#pragma instantiate  ACE_Hash_Map_Entry<char *, char *>
 
 #pragma instantiate  ACE_Hash_Map_Iterator_Base_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Iterator<char *, CORBA::Object_var, ACE_Null_Mutex>

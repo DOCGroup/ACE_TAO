@@ -107,7 +107,7 @@ int main (int argc, char *argv[])
 
       CORBA::ORB_var orb = orb_manager->orb ();
       the_orb = orb.in ();
-      // No copying, because the global variable is not used after the 
+      // No copying, because the global variable is not used after the
       // event loop finishes...
 
       CORBA::Object_var poa_object =
@@ -244,15 +244,15 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
   // ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame\n"));
 
   for (const ACE_Message_Block *i = frame;
-       frame != 0;
-       frame = frame->cont ())
+       i != 0;
+       i = i->cont ())
     {
       ACE_hrtime_t stamp;
 
-      if (frame->length () < sizeof(stamp))
+      if (i->length () < sizeof(stamp))
         return 0;
 
-      ACE_OS::memcpy (&stamp, frame->rd_ptr (), sizeof(stamp));
+      ACE_OS::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       if (recv_base == 0)
@@ -305,7 +305,7 @@ Pong_Send_Callback::get_timeout (ACE_Time_Value *&tv,
 }
 
 int
-Pong_Send_Callback::handle_timeout (void *arg)
+Pong_Send_Callback::handle_timeout (void *)
 {
   // ACE_DEBUG ((LM_DEBUG, "pong timeout (ignored)\n"));
   return 0;
