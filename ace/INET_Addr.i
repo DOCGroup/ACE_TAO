@@ -178,3 +178,10 @@ ACE_INET_Addr::set (const wchar_t addr[])
 }
 
 #endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE void
+ACE_INET_Addr::set_addr (void *addr, int len)
+{
+  this->set_addr (addr, len, 0);
+}
+
