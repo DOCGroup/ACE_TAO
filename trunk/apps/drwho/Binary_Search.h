@@ -64,7 +64,7 @@ protected:
   Protocol_Record *protocol_record_;
   Protocol_Record **sorted_record_;
 
-  char *buffer_;
+  const char *buffer_;
   int buffer_size_;
 };
 

@@ -22,7 +22,7 @@
 class Host_Elem 
 {
 public:
-  char *host_name;
+  const char *host_name;
   in_addr host_addr;
   int checked_off;
   Host_Elem *next;

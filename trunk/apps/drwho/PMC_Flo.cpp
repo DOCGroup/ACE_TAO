@@ -99,7 +99,7 @@ Protocol_Record *
 PMC_Flo::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Client::insert_protocol_info (protocol_record);
-  int length	= strlen (prp->get_real ());
+  int length = ACE_OS::strlen (prp->get_real ());
 
   if (length > this->max_key_length)
     this->max_key_length = length;

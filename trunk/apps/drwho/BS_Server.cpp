@@ -75,8 +75,9 @@ BS_Server::insert (const char *key_name, int max_len)
 	{
 	  mid = (hi + lo + 1) / 2;
 
-          cmp = ACE_OS::strncmp (key_name, buffer[mid]->get_login (), max_len);
-
+          cmp = ACE_OS::strncmp (key_name,
+                                 buffer[mid]->get_login (),
+                                 max_len);
 	  if (cmp < 0)
 	    hi = mid - 1;
 	  else

@@ -13,7 +13,7 @@
 int
 PM_Server::process (void)
 {
-  RWho_DB_Manager  ru;
+  RWho_DB_Manager ru;
   Protocol_Record protocol_record (1);
 
   while (ru.get_next_user (protocol_record) > 0)

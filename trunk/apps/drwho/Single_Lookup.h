@@ -33,7 +33,7 @@ public:
   virtual Protocol_Record *get_each_entry (void);
 
 protected:
-  Protocol_Record *frp;
+  Protocol_Record *prp_;
 };
 
 #endif /* _SINGLE_LOOKUP_H */

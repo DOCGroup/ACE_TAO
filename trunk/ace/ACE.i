@@ -51,7 +51,7 @@ ACE::strecpy (char *s, const char *t)
   while ((*dscan++ = *sscan++) != '\0')
     continue;
 
-  return dscan - 1;
+  return dscan;
 }
 
 #if defined (ACE_HAS_UNICODE)
@@ -65,7 +65,7 @@ ACE::strecpy (wchar_t *s, const wchar_t *t)
   while ((*dscan++ = *sscan++) != '\0')
     continue;
 
-  return dscan - 1;
+  return dscan;
 }
 #endif /* ACE_HAS_UNICODE */
 

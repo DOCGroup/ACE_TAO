@@ -19,7 +19,7 @@ Protocol_Record *
 SL_Server::insert (const char *key_name, int max_len)
 {
   return ACE_OS::strncmp (key_name,
-                          this->prp->get_login (),
-                          max_len) == 0 ? this->prp : 0;
+                          this->prp_->get_login (),
+                          max_len) == 0 ? this->prp_ : 0;
 }
 

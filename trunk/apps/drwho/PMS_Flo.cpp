@@ -32,7 +32,6 @@ PMS_Flo::encode (char *packet, int &packet_length)
     buf_ptr = this->handle_protocol_entries (ACE::strecpy (buf_ptr,
                                                            prp->get_login ()),
                                              prp->get_drwho_list ());
-  
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
 

@@ -1,3 +1,8 @@
+Sat Sep 12 22:39:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.i: There was a bug with strecpy() -- it should return a
+ 	  pointer to 1 byte PAST the '\0'...
+
 Sat Sep 12 21:43:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Timer_Hash.cpp: Removed the #pragma template instantiation

@@ -26,13 +26,12 @@ class File_Manager
   // = TITLE
   //   This class provides a file ADT for our friends info.
 public:
-  int open_file (const char *filename);
-  int get_login_and_real_name (char *&login_name,
-                               char *&real_name);
-
   File_Manager (void);
   // Constructor.
 
+  int open_file (const char *filename);
+  void get_login_and_real_name (const char *&login_name,
+                                const char *&real_name);
 private:
   int number_of_friends;
   int max_key_length;
