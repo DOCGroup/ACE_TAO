@@ -9,7 +9,7 @@ rtti = 1
 
 CC              = cxx
 CXX             = $(CC)
-CFLAGS          += -I/usr/include/g++
+CFLAGS          +=
 
   #### RedHat 5.2 /usr/include/malloc.h has an extraneous semicolon.
   WARNING_FLAGS += -w0 -msg_disable 381
