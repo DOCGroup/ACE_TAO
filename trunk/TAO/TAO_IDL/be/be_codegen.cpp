@@ -169,6 +169,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "\"\n\n";
     }
 
+  // To get ACE_UNUSED_ARGS
   this->gen_standard_include (this->client_header_,
                               "ace/config-all.h");
 
@@ -1682,8 +1683,8 @@ TAO_CodeGen::gen_skel_src_includes (void)
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Malloc_Allocator.h");
   // To get ACE_UNUSED_ARGS
-  this->gen_standard_include (this->server_skeletons_,
-                              "ace/config-all.h");
+//  this->gen_standard_include (this->server_skeletons_,
+//                              "ace/config-all.h");
 }
 
 void
