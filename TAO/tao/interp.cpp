@@ -260,7 +260,7 @@ static table_element table [CORBA::TC_KIND_COUNT] =
     struct align_struct_ ## t \
     { \
       x one; \
-      char dummy [TAO_ALIGNMENT_MAGIC_NUMBER + 1 - sizeof(x)]; \
+      char dummy [TAO_MAXIMUM_NATIVE_TYPE_SIZE + 1 - sizeof(x)]; \
       x two; \
     }
 
@@ -269,7 +269,7 @@ static table_element table [CORBA::TC_KIND_COUNT] =
       align_struct_ ## t       align; \
       table [t].size = sizeof (x); \
       table [t].alignment = \
-      (char *) &align.two - (char *) &align.one - TAO_ALIGNMENT_MAGIC_NUMBER; \
+      (char *) &align.two - (char *) &align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE; \
     }
 #endif /* ! TAO_HAS_FIXED_BYTE_ALIGNMENT */
 
@@ -1231,7 +1231,7 @@ union_traverse (CDR *stream,
     {
       CDR temp_str;
       temp_str.setup_encapsulation (default_tc_ptr,
-				    default_tc_len);
+                                    default_tc_len);
 
       // Get and use the TypeCode.
       //
