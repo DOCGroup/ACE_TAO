@@ -21,6 +21,8 @@
 #ifndef TAO_SSLIOP_CONNECTOR_H
 #define TAO_SSLIOP_CONNECTOR_H
 
+#include "ace/pre.h"
+
 #include "tao/IIOP_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -194,7 +196,8 @@ private:
   // Caching strategy which decides the order of removal of entries
   // from the connection cache.
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
 };
+
+#include "ace/post.h"
 
 #endif  /* TAO_SSLIOP_CONNECTOR_H */

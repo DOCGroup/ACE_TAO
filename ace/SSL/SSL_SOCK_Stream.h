@@ -19,6 +19,8 @@
 #ifndef ACE_SSL_SOCK_STREAM_H
 #define ACE_SSL_SOCK_STREAM_H
 
+#include "ace/pre.h"
+
 #include "ace/SOCK_Stream.h"
 
 #if defined (ACE_HAS_SSL)
@@ -249,4 +251,7 @@ protected:
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SSL_SOCK_STREAM_H */
+
+#include "ace/post.h"
+
 #endif /* ACE_HAS_SSL */
