@@ -23,7 +23,7 @@ through a set of interfaces.
 The <home_finder_ior_output_file> points to the file name where the
 component server will output a IOR (for the HomeFinder interfaces)
 hosted on the component server.  Currently, Simple_Component_Server
-always instantiates a HomeRegistrar service within the process.
+always instantiates a HomeRegistrar service within the server process.
 
 
 Server Configuration:
