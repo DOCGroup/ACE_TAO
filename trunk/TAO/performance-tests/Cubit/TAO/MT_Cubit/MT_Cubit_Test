@@ -50,7 +50,7 @@ threads=`expr $1 + 1`
 ########
 ######## Enable signal handler.
 ########
-trap 'kill -15 $server_pid; /bin/rm -f $ior_file' 0 1 2 15
+trap 'kill -15 $server_pid; /bin/rm -f $ior_file; exit 0' 0 1 2 15
 
 
 ########
