@@ -46,43 +46,55 @@ be_visitor_args_pre_invoke_cs::~be_visitor_args_pre_invoke_cs (void)
 int
 be_visitor_args_pre_invoke_cs::void_return_type (void)
 {
-  // is the operation return type void?
+  // Get the return type.
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  ACE_ASSERT (arg != 0);
   be_operation *op = be_operation::narrow_from_scope (arg->defined_in ());
-  ACE_ASSERT (op != 0);
-
   be_type *bt = be_type::narrow_from_decl (op->return_type ());
-  if (bt->node_type () == AST_Decl::NT_pre_defined
+
+  // Is the operation return type void?
+  if (bt->base_node_type () == AST_Decl::NT_pre_defined
       && (be_predefined_type::narrow_from_decl (bt)->pt ()
           == AST_PredefinedType::PT_void))
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
-be_visitor_args_pre_invoke_cs::enum_return_type (void)
+be_visitor_args_pre_invoke_cs::cannot_return_zero (void)
 {
-  // is the operation return type void?
+  // Get the return type.
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  ACE_ASSERT (arg != 0);
   be_operation *op = be_operation::narrow_from_scope (arg->defined_in ());
-  ACE_ASSERT (op != 0);
-
   be_type *bt = be_type::narrow_from_decl (op->return_type ());
+
+  // Two types qualify - enum and fixed size struct.
   if (bt->base_node_type () == AST_Decl::NT_enum)
-    return 1;
+    {
+      return 1;
+    }
+  else if (bt->base_node_type () == AST_Decl::NT_struct
+           && bt->size_type () == be_decl::FIXED)
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int be_visitor_args_pre_invoke_cs::visit_argument (be_argument *node)
 {
-  this->ctx_->node (node); // save the argument node
+  this->ctx_->node (node);
 
-  // retrieve the type of the argument
+  // Retrieve the type of the argument.
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -94,7 +106,6 @@ int be_visitor_args_pre_invoke_cs::visit_argument (be_argument *node)
 
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
-
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -110,15 +121,20 @@ int be_visitor_args_pre_invoke_cs::visit_argument (be_argument *node)
 int
 be_visitor_args_pre_invoke_cs::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  // if the current type is an alias, use that
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+
+  // If the current type is an alias, use that.
   be_type *bt;
+
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   switch (this->direction ())
     {
@@ -126,32 +142,38 @@ be_visitor_args_pre_invoke_cs::visit_array (be_array *node)
       if (node->size_type () == be_decl::VARIABLE)
         {
           os->indent ();
+
           if (!this->void_return_type ())
             {
-              *os << "ACE_ALLOCATOR_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << "_alloc (), ";
+              *os << "ACE_ALLOCATOR_RETURN (" << be_idt << be_idt_nl
+                  << arg->local_name () << ".ptr ()," << be_nl 
+                  << bt->name () << "_alloc ()," << be_nl;
               
-              if (this->enum_return_type ())
+              if (this->cannot_return_zero ())
                 {
-                  *os << "_tao_retval);\n";
+                  *os <<"_tao_retval";
                 }
               else
                 {
-                  *os << "0);\n";
+                  *os << "0";
                 }
             }
           else
             {
-              *os << "ACE_ALLOCATOR (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << "_alloc ());\n";
+              *os << "ACE_ALLOCATOR (" << be_idt << be_idt_nl
+                  << arg->local_name () << ".ptr ()," << be_nl 
+                  << bt->name () << "_alloc ()";
             }
+
+          *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
         }
+
       break;
     default:
       break;
     }
-  return 0;
 
+  return 0;
 }
 
 int
@@ -169,12 +191,11 @@ be_visitor_args_pre_invoke_cs::visit_interface_fwd (be_interface_fwd *)
 int
 be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  // get the argument node
+  TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
 
 
-  // pre do_static_call processing is valid only for pseudo objects and for Any
+  // Pre_invoke processing is valid only for pseudo objects and for Any.
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
@@ -194,26 +215,31 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
         {
         case AST_Argument::dir_OUT:
           os->indent ();
+
           if (!this->void_return_type ())
             {
-              *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), CORBA::Any, ";
+              *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+                  << arg->local_name () << ".ptr ()," << be_nl
+                  << "CORBA::Any," << be_nl;
               
-              // The one case where we can't just return 0.
-              if (this->enum_return_type ())
+              if (this->cannot_return_zero ())
                 {
-                  *os << "_tao_retval);\n";
+                  *os << "_tao_retval";
                 }
               else
                 {
-                  *os << "0);\n";
+                  *os << "0";
                 }
             }
           else
             {
-              *os << "ACE_NEW (" << arg->local_name ()
-                  << ".ptr (), CORBA::Any);\n";
+              *os << "ACE_NEW (" << be_idt << be_idt_nl
+                  << arg->local_name () << ".ptr ()," << be_nl
+                  << "CORBA::Any";
             }
+
+          *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
+
           break;
         default:
           break;
@@ -223,51 +249,62 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
     default:
       break;
     }
+
   return 0;
 }
 
 int
 be_visitor_args_pre_invoke_cs::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  // if the current type is an alias, use that
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+
+  // If the current type is an alias, use that.
   be_type *bt;
+
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   switch (this->direction ())
     {
     case AST_Argument::dir_OUT:
-      // caller must have allocated the pointer
       os->indent ();
+
       if (!this->void_return_type ())
         {
-          *os << "ACE_NEW_RETURN (" << arg->local_name ()
-              << ".ptr (), " << bt->name () << ", ";
-              
-          // The one case where we can't just return 0.
-          if (this->enum_return_type ())
+          *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+              << arg->local_name () << ".ptr ()," << be_nl
+              << bt->name () << "," << be_nl;
+          
+          if (this->cannot_return_zero ())
             {
-              *os << "_tao_retval);\n";
+              *os << "_tao_retval";
             }
           else
             {
-              *os << "0);\n";
+              *os << "0";
             }
         }
       else
         {
-          *os << "ACE_NEW (" << arg->local_name ()
-              << ".ptr (), " << bt->name () << ");\n";
+          *os << "ACE_NEW (" << be_idt << be_idt_nl
+              << arg->local_name () << ".ptr ()," << be_nl
+              << bt->name ();
         }
+
+      *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
+
       break;
     default:
       break;
     }
+
   return 0;
 }
 
@@ -280,63 +317,78 @@ be_visitor_args_pre_invoke_cs::visit_string (be_string *)
 int
 be_visitor_args_pre_invoke_cs::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  // if the current type is an alias, use that
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+
+  // If the current type is an alias, use that.
   be_type *bt;
+
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (node->size_type () == be_type::VARIABLE)
     {
       switch (this->direction ())
         {
         case AST_Argument::dir_OUT:
-          // caller must have allocated the pointer
           os->indent ();
+
           if (!this->void_return_type ())
             {
-              *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ", ";
+              *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+                  << arg->local_name () << ".ptr ()," << be_nl
+                  << bt->name () << "," << be_nl;
               
-              // The one case where we can't just return 0.
-              if (this->enum_return_type ())
+              if (this->cannot_return_zero ())
                 {
-                  *os << "_tao_retval);\n";
+                  *os << "_tao_retval";
                 }
               else
                 {
-                  *os << "0);\n";
+                  *os << "0";
                 }
             }
           else
             {
-              *os << "ACE_NEW (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ");\n";
+              *os << "ACE_NEW (" << be_idt << be_idt_nl
+                  << arg->local_name () << ".ptr ()," << be_nl
+                  << bt->name ();
             }
+
+          *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
+
           break;
         default:
           break;
         }
     }
+
   return 0;
 }
 
 int
 be_visitor_args_pre_invoke_cs::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  // if the current type is an alias, use that
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+
+  // If the current type is an alias, use that.
   be_type *bt;
+
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (node->size_type () == be_type::VARIABLE)
     {
@@ -344,31 +396,37 @@ be_visitor_args_pre_invoke_cs::visit_union (be_union *node)
         {
         case AST_Argument::dir_OUT:
           os->indent ();
+
           if (!this->void_return_type ())
             {
-              *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ", ";
+              *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+                  << arg->local_name () << ".ptr ()," << be_nl
+                  << bt->name () << "," << be_nl;
               
-              // The one case where we can't just return 0.
-              if (this->enum_return_type ())
+              if (this->cannot_return_zero ())
                 {
-                  *os << "_tao_retval);\n";
+                  *os << "_tao_retval";
                 }
               else
                 {
-                  *os << "0);\n";
+                  *os << "0";
                 }
             }
           else
             {
-              *os << "ACE_NEW (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ");\n";
+              *os << "ACE_NEW (" << be_idt << be_idt_nl
+                  << arg->local_name () << ".ptr ()," << be_nl
+                  << bt->name ();
             }
+
+          *os << be_uidt_nl << ");" << be_uidt_nl << "\n";
+
           break;
         default:
           break;
         }
     }
+
   return 0;
 }
 
@@ -376,6 +434,7 @@ int
 be_visitor_args_pre_invoke_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -384,6 +443,7 @@ be_visitor_args_pre_invoke_cs::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }
