@@ -672,11 +672,16 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
   for (i = number_of_low_priority_servants; i > 0; i--)
     {
       char *args;
+      char *new_args;
 
       ACE_NEW_RETURN (args,
                       char [BUFSIZ],
                       -1);
 
+      ACE_NEW_RETURN (new_args,
+                      char [BUFSIZ],
+                      -1);
+      ACE_OS::strcpy (new_args,low_thread_args);
       ACE_OS::sprintf (args,
                        "-ORBport %d "
                        "-ORBhost %s "
@@ -686,10 +691,10 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                        GLOBALS::instance ()->base_port + i,
                        GLOBALS::instance ()->hostname);
 
-      ACE_OS::strcat (low_thread_args,args);
+      ACE_OS::strcat (new_args,args);
 
       ACE_NEW_RETURN (low_priority_task [i - 1],
-                      Cubit_Task (low_thread_args,
+                      Cubit_Task (new_args,
 				  "internet",
 				  1,
 				  &start_barrier,
