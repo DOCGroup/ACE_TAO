@@ -1,0 +1,58 @@
+.\" Process this file with
+.\" groff -man -Tascii TAO_Event_Service.1
+.\"
+.\" $Id$
+.\"
+.TH TAO_Event_Service 1 "April 1999" "CORBA Tools"
+.SH NAME
+TAO_Event_Service \- The TAO Real-time Event Service
+.SH SYNOPSIS
+.B TAO_Event_Service
+.B [
+.I OPTIONS
+.B ]
+.SH DESCRIPTION
+.B TAO_Event_Service
+
+.SH OPTIONS
+.TP
+.BI \-n \ service_name
+specify the name with which to register the Event Service
+.TP
+.BI \-s \ global | local
+specify if the scheduler is
+.I local
+or
+.I global
+
+If the scheduler option is
+.I global
+then the naming service is to locate the scheduling service with the name
+"ScheduleService."
+
+If the scheduler is
+.I local
+then a new scheduling service is created and started.
+.I local
+is the default.
+.TP
+.B \-t \ null_filtering | reactive | old_reactive | old_mt
+(FIXME: NEED OPTION DESCRIPTIONS)
+.SH BUGS
+(blank for now)
+.SH AUTHORS
+.IP
+Carlos O'Ryan <coryan@cs.wustl.edu>
+.IP
+Ossama Othman <othman@cs.wustl.edu>
+.SH "SEE ALSO"
+.BR TAO (1),
+.BR TAO_Concurrency_Service (1),
+.BR TAO_CosEvent_Service (1),
+.BR TAO_ImplRepo_Service (1),
+.BR TAO_LifeCycle_Service (1),
+.BR TAO_Logging_Service (1),
+.BR TAO_Naming_Service (1),
+.BR TAO_Scheduling_Service (1),
+.BR TAO_Time_Service (1),
+.BR TAO_Trading_Service (1)

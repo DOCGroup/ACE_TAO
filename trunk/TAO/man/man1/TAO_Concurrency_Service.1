@@ -1,0 +1,53 @@
+.\" Process this file with
+.\" groff -man -Tascii TAO_Concurrency_Service.1
+.\"
+.\" $Id$
+.\"
+.TH TAO_Concurrency_Service 1 "April 1999" "CORBA Tools"
+.SH NAME
+TAO_Concurrency_Service \- The TAO Concurrency Service
+.SH SYNOPSIS
+.B TAO_Concurrency_Service
+.B [
+\-d
+.B ]
+.B [
+\-s
+.B ]
+.B [
+\-o
+IOR_output_file
+.B ]
+.SH DESCRIPTION
+.B TAO_Concurrency_Service
+is an implentation of the CORBA Concurrency Service.  It provides a mechanism
+that allows clients to acquire and release various types of locks in a
+distributed system.
+.SH OPTIONS
+.TP
+.B \-d
+enable debugging
+.TP
+.B \-s
+prevent the concurrency server from using the naming server
+.TP
+.BI \-o IOR_output_file
+output the IOR of the lock set factory to a specified file
+.SH BUGS
+(blank for now)
+.SH AUTHORS
+.IP
+Torben Worm <tworm@cs.wustl.edu>
+.IP
+Ossama Othman <othman@cs.wustl.edu>
+.SH "SEE ALSO"
+.BR TAO (1),
+.BR TAO_CosEvent_Service (1),
+.BR TAO_Event_Service (1),
+.BR TAO_ImplRepo_Service (1),
+.BR TAO_LifeCycle_Service (1),
+.BR TAO_Logging_Service (1),
+.BR TAO_Naming_Service (1),
+.BR TAO_Scheduling_Service (1),
+.BR TAO_Time_Service (1),
+.BR TAO_Trading_Service (1)
