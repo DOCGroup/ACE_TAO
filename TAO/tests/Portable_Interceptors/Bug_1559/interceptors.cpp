@@ -528,8 +528,12 @@ Echo_Server_Request_Interceptor::send_reply (
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_reply from \"%s\"\n",
               this->myname_,
-              ri->operation ()));
+              operation.in ()));
 
+  if (ACE_OS::strcmp (operation.in (),
+                      "_is_a") == 0)
+    return;
+                             
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (::service_id ACE_ENV_ARG_PARAMETER);
