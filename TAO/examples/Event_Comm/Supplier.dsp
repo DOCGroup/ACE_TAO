@@ -151,7 +151,7 @@ InputPath=.\Event_Comm.idl
 InputName=Event_Comm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -189,7 +189,7 @@ InputPath=.\Event_Comm.idl
 InputName=Event_Comm
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

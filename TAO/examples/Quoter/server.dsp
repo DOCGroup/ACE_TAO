@@ -144,7 +144,7 @@ InputPath=.\Quoter.idl
 InputName=Quoter
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl -I../../orbsvcs/orbsvcs
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -182,7 +182,7 @@ InputPath=.\Quoter.idl
 InputName=Quoter
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl -I../../orbsvcs/orbsvcs
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

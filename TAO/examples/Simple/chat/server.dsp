@@ -161,7 +161,7 @@ InputPath=.\Broadcaster.idl
 InputName=Broadcaster
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -199,7 +199,7 @@ InputPath=.\Broadcaster.idl
 InputName=Broadcaster
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -244,7 +244,7 @@ InputPath=.\Receiver.idl
 InputName=Receiver
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -282,7 +282,7 @@ InputPath=.\Receiver.idl
 InputName=Receiver
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

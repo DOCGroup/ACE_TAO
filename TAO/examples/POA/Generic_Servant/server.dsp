@@ -142,7 +142,7 @@ InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -172,7 +172,7 @@ InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
