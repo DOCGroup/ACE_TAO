@@ -426,6 +426,8 @@ RR_Object_Group::unbind (const char *id,
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_CString, Load_Balancer::Object_Group_var, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA_Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_CString, Load_Balancer::Object_Group_var, ACE_Null_Mutex>;
 template class ACE_Hash<ACE_CString>;
@@ -448,6 +450,8 @@ template class ACE_Auto_Basic_Ptr<Object_Group_i>;
 #pragma instantiate  ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Iterator<ACE_CString, Load_Balancer::Object_Group_var, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Iterator_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString,Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA_Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Manager_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Manager<ACE_CString, Load_Balancer::Object_Group_var, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash<ACE_CString>
