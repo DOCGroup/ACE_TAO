@@ -9,10 +9,6 @@
 
 #define quote(x) #x
 
-const int max_sequence_length = 10;
-// Limit the sequence length, otherwise the time to run the test
-// increases to fast....
-
 // Constructor.
 NestedUpCalls_Client::NestedUpCalls_Client (void)
   : nested_up_calls_reactor_key_ (0),
