@@ -47,8 +47,7 @@ int
 FTP_Server_Callback::handle_end_stream (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::end_stream\n"));
-  CORBA::ORB_var orb = TAO_AV_CORE::instance ()->orb_manager ()->orb ();
-  orb->shutdown ();
+  TAO_AV_CORE::instance ()->stop_run ();
   return 0;
 }
 
@@ -134,7 +133,7 @@ Server::run (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_manager_->run (ACE_TRY_ENV);
+      TAO_AV_CORE::instance ()->run ();
       ACE_TRY_CHECK;
     }
     ACE_CATCHANY
