@@ -3,6 +3,10 @@ Wed Dec 09 22:43:19 1998  David L. Levine  <levine@cs.wustl.edu>
         * examples/Callback_Quoter/Consumer_Input_Handler.h:
           inserted #include of "ace/OS.h".
 
+        * examples/POA/Forwarding/Makefile: removed hard-coded
+          -g DCFLAG.  Not all platforms use -g, and DCFLAGS should
+          be set in $ACE_ROOT/include/makeinclude/platform_macros.GNU.
+
 Wed Dec  9 16:05:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Invocation.cpp (invoke): Fixed the memory leaks in preparing
