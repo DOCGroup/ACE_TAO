@@ -1,3 +1,20 @@
+Wed Jan 23 16:14:43  Boris Kolpackov  <bosk@ipmce.ru>
+        
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	  
+	  Fixed mistake in initialization of _tao_retval for valuetypes.
+
+	* tests/OBV/Any/Makefile:
+	* tests/OBV/Forward/Makefile:
+
+	  Fixed few stupid mistakes that made some time ago.
+
+	* tao/ValueBase.h
+
+	  Added work around for famous Sun CC "pure virtual function called"
+	  bug. Unfortunately this involves introduction of yet another #define.
+	  See include/makeinclude/platform_sunos5_sunc++.GNU for more information.
+	
 Wed Jan 23 06:43:27  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
